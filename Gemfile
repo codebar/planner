@@ -13,6 +13,8 @@ gem 'turbolinks'
 
 group :development, :test do
   gem 'rspec-rails'
+  gem 'faker'
+  gem 'capybara-webkit'
 end
 
 gem 'jbuilder', '~> 1.2'
