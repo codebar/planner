@@ -1,0 +1,10 @@
+= simple_form_for @member do |f|
+  = f.input :name
+  = f.input :surname
+
+  = f.input :email
+  = f.input :twitter
+
+  = f.input :about_you, as: :text, label: "Tell us a little bit about yourself"
+
+  = f.submit "Join #{t("brand")}"

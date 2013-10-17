@@ -10,9 +10,11 @@ gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.0.0'
 gem 'jquery-rails'
 gem 'turbolinks'
+gem 'simple_form'
 
 group :development, :test do
   gem 'rspec-rails'
+  gem 'fabrication'
   gem 'faker'
   gem 'capybara-webkit'
 end

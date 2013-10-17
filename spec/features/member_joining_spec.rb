@@ -12,6 +12,8 @@ feature 'a member can sign up' do
     fill_in "Email", with: Faker::Internet.email
     fill_in "Twitter", with: Faker::Name.first_name
 
+    fill_in "Tell us a little bit about yourself", with: Faker::Lorem.paragraph
+
     click_on "Join Codebar.io"
   end
 end
