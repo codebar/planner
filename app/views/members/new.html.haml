@@ -1,10 +1,18 @@
+%h2 Become a member
 = simple_form_for @member do |f|
-  = f.input :name
-  = f.input :surname
+  .row
+    .half
+      = f.input :name
+    .half
+      = f.input :surname
 
-  = f.input :email
-  = f.input :twitter
+  .row
+    .half
+      = f.input :email
+    .half
+      = f.input :twitter
 
   = f.input :about_you, as: :text, label: "Tell us a little bit about yourself"
 
-  = f.submit "Join #{t("brand")}"
+  .form-footer.right
+    = f.submit "Join #{t("brand")}"
