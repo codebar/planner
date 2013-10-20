@@ -1,18 +1,19 @@
-%h2 Become a member
-= simple_form_for @member do |f|
-  .row
-    .half
-      = f.input :name
-    .half
-      = f.input :surname
+#new_member
+  %h3 Become a member
+  = simple_form_for @member do |f|
+    .row
+      .half
+        = f.input :name
+      .half
+        = f.input :surname
 
-  .row
-    .half
-      = f.input :email
-    .half
-      = f.input :twitter
+    .row
+      .half
+        = f.input :email
+      .half
+        = f.input :twitter
 
-  = f.input :about_you, as: :text, label: "Tell us a little bit about yourself"
+    = f.input :about_you, as: :text, label: "Tell us a little bit about yourself"
 
-  .form-footer.right
-    = f.submit "Join #{t("brand")}"
+    .form-footer
+      = f.submit "Join #{t("brand")}"

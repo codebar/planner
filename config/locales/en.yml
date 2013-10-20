@@ -1,2 +1,11 @@
 en:
   brand: "Codebar.io"
+
+  date:
+      formats:
+        default: "%d/%m/%Y"
+  time:
+      formats:
+        default: "%a, %d %b %Y %H:%M "
+        short: "%d/%m/%Y %H:%M "
+        date: "%d %B %Y"
