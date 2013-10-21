@@ -16,6 +16,7 @@ group :development, :test do
   gem 'faker'
   gem 'capybara-webkit'
   gem 'sqlite3'
+  gem 'coveralls', require: false
 end
 
 group :production do
