@@ -1,0 +1,2 @@
+Fabricator(:sessions) do
+end
