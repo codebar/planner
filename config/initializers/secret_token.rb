@@ -1,5 +1,4 @@
-key = Rails.env.eql?("production") ? ENV['PLANNER_SECRET'] : "sample-key"
-
-raise "No secret!" if key.nil?
+key = ENV['PLANNER_SECRET']
+key = "sample-key" if Rails.env.development? or Rails.env.test?
 
 Planner::Application.config.secret_key_base = key
