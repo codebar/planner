@@ -6,9 +6,6 @@ script:
   - bundle exec rspec
 rvm:
   - 2.0.0
-branches:
-  only:
-    - master
 notifications:
   email:
     - social@codebar.io
