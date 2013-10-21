@@ -9,6 +9,10 @@ class Invitation < ActiveRecord::Base
   before_create :set_token
   after_create :email
 
+  def to_param
+    token
+  end
+
   private
 
   def email
@@ -21,4 +25,5 @@ class Invitation < ActiveRecord::Base
       break random_token unless Invitation.where(token: random_token).exists?
     end
   end
+
 end

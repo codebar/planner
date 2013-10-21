@@ -27,4 +27,10 @@ class InvitationMailer < ActionMailer::Base
       :to => member.email,
       :subject => subject }
   end
+
+  helper do
+    def full_url_for path
+      "#{@host}#{path}"
+    end
+  end
 end

@@ -3,4 +3,10 @@ Planner::Application.routes.draw do
 
   resource :members, only: [:new, :create]
 
+  resources :invitation, only: [] do
+    member do
+      get "accept"
+    end
+  end
+
 end

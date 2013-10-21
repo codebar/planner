@@ -25,7 +25,8 @@
             <h2 style="color: #2d183d; font-size: 27px; font-weight: 500;letter-spacing: 0.03em; margin-bottom: 0;">HTML by Codebar</h2>
             <p style="font-size: 16px; font-weight: 300; margin-top: 7px;">on <b style="color: #555555;font-size: 16px; font-weight: 600; margin-top: 0;">Wed, 23 October at 18:30</b></p>
             <div style="background-color: #F7F7F7;width: 70%; border-radius: 6px; box-shadow: 1px 1px 0 rgba(250, 250, 250, 0.5) inset, -1px -1px 2px rgba(250, 250, 250, 0.1) inset; font-size: 18px; padding: 5px 14px; text-align: center; margin: 31px 0 25px; border: 1px solid #dddddd;">
-              <p style="color: #663095; font-size: 25px; font-weight: 600; letter-spacing: 0.02em; margin: 10px; text-decoration: none; text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7);"><a style="text-decoration:none" href="">I want to attend</a></p>
+              <p style="color: #663095; font-size: 25px; font-weight: 600; letter-spacing: 0.02em; margin: 10px; text-decoration: none; text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7);">
+              <%= link_to "I want to attend", full_url_for(accept_invitation_url(@invitation)), style: "text-decoration:none"%></p>
             </div>
             <p style="color: #555555; font-size: 13px; font-weight: 600; margin-top: 6px;">Please confirm your attendance as we have limited space.</p>
           </div>
