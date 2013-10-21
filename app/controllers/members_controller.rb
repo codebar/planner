@@ -7,7 +7,7 @@ class MembersController < ApplicationController
     @member = Member.new(member_params)
 
     if @member.save
-      redirect_to root_path
+      redirect_to root_path, notice: "Thanks for signing up #{@member.name}!"
     else
       render "new"
     end
