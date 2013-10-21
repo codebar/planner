@@ -13,7 +13,9 @@
     <div id="top"></div>
     <div id="navlight"></div>
     <div class="logo">
-      <%= image_tag "logo.png", width: '180px'%>
+      <%=link_to root_path do %>
+        <%= image_tag "logo.png", width: '180px'%>
+      <% end %>
     </div>
     <div id="container">
       <%= render partial: 'layouts/messages' %>
