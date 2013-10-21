@@ -1,0 +1,14 @@
+language: ruby
+bundler_args: --without development
+script:
+  - bundle exec rake db:create
+  - bundle exec rake db:schema:load
+  - bundle exec rspec
+rvm:
+  - 2.0.0
+branches:
+  only:
+    - master
+notifications:
+  email:
+    - social@codebar.io
