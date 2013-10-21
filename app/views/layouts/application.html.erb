@@ -12,7 +12,9 @@
   <body>
     <div id="top"></div>
     <div id="navlight"></div>
-    <div class="logo"><img src="assets/logo.png" width='180px'></div>
+    <div class="logo">
+      <%= image_tag "logo.png", width: '180px'%>
+    </div>
     <div id="container">
       <%= render partial: 'layouts/messages' %>
       <%= yield %>
