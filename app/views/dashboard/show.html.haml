@@ -1,18 +1,19 @@
 %br
-.right
-  =link_to "Become a member", new_members_path
+  .rightside
+    .right
+      =link_to "Become a member", new_members_path
 
 %section
-
+  / =image_tag "logo.png", width: '180px'
 %h2
   Our Goal
 
 %p.lead
-  Making tech more diverse and welcoming by bringing people together and helping teach programming skills. We organize free session in HTML, CSS, Javascript and Ruby, targeted at different groups of people that are underrepresented in the tech industry and with help from our amazing coaches are able to offer close help and mentoring.
+  Making tech more diverse and welcoming by bringing people together and helping teach programming skills. We organize free sessions in HTML, CSS, Javascript and Ruby, targeted at different groups of people that are underrepresented in the tech industry and with help from our amazing coaches are able to offer close help and mentoring.
 
-%section
-  %h3 Upcoming meetings
+/ %section
+/   %h3 Upcoming meetings
 
-  - @sessions.each do |session|
-    = session.title
-    %small.date= l(session.date_and_time)
+/   - @sessions.each do |session|
+/     = session.title
+/     %small.date= l(session.date_and_time)
