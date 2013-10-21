@@ -3,6 +3,12 @@ Planner::Application.routes.draw do
 
   resource :members, only: [:new, :create]
 
+  resources :members, only: [] do
+    member do
+      get "unsubscribe"
+    end
+  end
+
   resources :invitation, only: [] do
     member do
       get "accept"

@@ -13,6 +13,13 @@ class MembersController < ApplicationController
     end
   end
 
+  def unsubscribe
+    @member = Member.find(params[:id])
+    @member.update_attribute(:unsubscribed, true)
+
+    redirect_to root_path, notice: "You have been unsubscribed succesfully"
+  end
+
   private
   def member_params
     params.require(:member).permit(:name, :surname, :email, :twitter, :about_you)
