@@ -5,9 +5,14 @@
     <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
     <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
     <link href='http://fonts.googleapis.com/css?family=Allerta' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="//use.typekit.net/hhc0xau.js"></script>
+    <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
     <%= csrf_meta_tags %>
   </head>
   <body>
+    <div id="top"></div>
+    <div id="navlight"></div>
+    <div class="logo"><img src="assets/logo.png" width='180px'></div>
     <div id="container">
       <%= render partial: 'layouts/messages' %>
       <%= yield %>
