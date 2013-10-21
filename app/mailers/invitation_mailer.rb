@@ -1,22 +1,23 @@
 class InvitationMailer < ActionMailer::Base
 
-  def invite session, member, invitation_token
-    puts "in here"
+  def invite sessions, member, invitation
+    @session = sessions
     @member = member
-    @session = session
-    @invitation_token = invitation_token
+    @invitation = invitation
+
+    load_attachments
 
     subject = "Post Rails Workshop sessions / HTML by Codebar - Wednesday Oct 23rd, 18:30"
 
     mail(mail_args(member, subject)) do |format|
-      format.html { render :layout => "mailer" }
+      format.html
     end
   end
 
   private
 
   def load_attachments
-    %w{logo.png twitter.png github.png}.each do |image|
+    %w{logo.png reevoo.jpg}.each do |image|
       attachments.inline[image] = File.read("#{Rails.root.to_s}/app/assets/images/#{image}")
     end
   end
