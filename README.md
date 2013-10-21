@@ -1,6 +1,6 @@
 # Planner
 
-A tool to help us keep organiser
+A tool to help us stay organised
 
 Concepts
 -----
