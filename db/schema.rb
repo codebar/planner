@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131021040356) do
+ActiveRecord::Schema.define(version: 20131021182241) do
 
   create_table "invitations", force: true do |t|
     t.integer  "sessions_id"
@@ -45,6 +45,7 @@ ActiveRecord::Schema.define(version: 20131021040356) do
     t.datetime "date_and_time"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "seats",         default: 15
   end
 
 end

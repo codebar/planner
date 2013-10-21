@@ -9,6 +9,8 @@ class Invitation < ActiveRecord::Base
   before_create :set_token
   after_create :email
 
+  scope :accepted, ->  { where(attending: true) }
+
   def to_param
     token
   end

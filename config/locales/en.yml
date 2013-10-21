@@ -9,3 +9,8 @@ en:
         default: "%a, %d %b %Y %H:%M "
         short: "%d/%m/%Y %H:%M "
         date: "%d %B %Y"
+
+  messages:
+    accepted_invitation: "Thanks for getting back to us %{name}. See you at the meeting!"
+    already_rsvped: "You have alredy confirmed you attendance for this meeting!"
+    no_available_seats: "Unfortunately there are no more spaces left :(. If you would like to join our waiting list send us an email at meetings@codebar.io."
