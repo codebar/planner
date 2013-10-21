@@ -1,18 +1,19 @@
-%br
-  .rightside
-    .right
-      =link_to "Become a member", new_members_path
+%section#main
+  .left-panel
+    %h2
+      Our Goal
 
-%section
-  / =image_tag "logo.png", width: '180px'
-%h2
-  Our Goal
+    %p.lead
+      Making tech more diverse and welcoming by bringing people together and helping teach programming skills. We organize free sessions in HTML, CSS, Javascript and Ruby, targeted at different groups of people that are underrepresented in the tech industry and with help from our amazing coaches are able to offer close help and mentoring.
 
-%p.lead
-  Making tech more diverse and welcoming by bringing people together and helping teach programming skills. We organize free sessions in HTML, CSS, Javascript and Ruby, targeted at different groups of people that are underrepresented in the tech industry and with help from our amazing coaches are able to offer close help and mentoring.
+  .right-panel
+    =link_to "Become a member", new_members_path, class: 'btn'
 
+
+/- if @sessions.any?
+/ %br
 / %section
-/   %h3 Upcoming meetings
+/   %h3 Sessions
 
 /   - @sessions.each do |session|
 /     = session.title

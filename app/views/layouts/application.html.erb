@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Planner</title>
+    <title>Codebar.io</title>
     <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
     <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
     <link href='http://fonts.googleapis.com/css?family=Allerta' rel='stylesheet' type='text/css'>
@@ -18,7 +18,11 @@
     <div id="container">
       <%= render partial: 'layouts/messages' %>
       <%= yield %>
+
     </div>
+    <footer>
+    <%=link_to "Follow us on twitter", "http://twitter.com/by_codebar" %>
+    </footer>
 
   </body>
 </html>
