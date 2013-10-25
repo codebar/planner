@@ -15,5 +15,7 @@
 
     = f.input :about_you, as: :text, label: "Tell us a little bit about yourself"
 
+    = f.association :roles, as: :check_boxes
+
     .form-footer
       = f.submit "Join #{t("brand")}"

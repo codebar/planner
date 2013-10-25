@@ -17,6 +17,7 @@ group :development, :test do
   gem 'capybara-webkit'
   gem 'sqlite3'
   gem 'coveralls', require: false
+  gem 'launchy'
 end
 
 group :production do
