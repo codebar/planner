@@ -15,7 +15,11 @@
 
     = f.input :about_you, as: :text, label: "Tell us a little bit about yourself"
 
-    = f.association :roles, as: :check_boxes
+    %p
+      Select the notifications you would like to receive
+      %br
+      %small e.g. if you would like to attend some of the sessions as a student but you may also be able to help out with coaching sometimes select both <b>Student</b> and <b>Coach</b>
+    = f.association :roles, as: :check_boxes, label: false
 
     .form-footer
       = f.submit "Join #{t("brand")}"

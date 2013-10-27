@@ -8,11 +8,13 @@ require 'coveralls'
 Coveralls.wear!
 
 
-Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
+Dir[Rails.root.join("spec/helpers/*.rb")].each { |f| require f }
 
 ActiveRecord::Migration.check_pending! if defined?(ActiveRecord::Migration)
 
 RSpec.configure do |config|
+  config.include MemberHelpers
+
   config.use_transactional_fixtures = true
 
   # If true, the base class of anonymous controllers will be inferred

@@ -9,7 +9,7 @@ feature 'a member can sign up', wip: true do
   let (:name) { Faker::Name.first_name }
 
   scenario 'when they fill in all the required details' do
-    join_as_member
+    fill_in_member_details name
     click_on "Join Codebar.io"
 
     page.should have_content "Thanks for signing up #{name}! You have not signed up for any notifications. If you change your mind, send us an email at meetins@codebar.io so we can change your settings"
@@ -17,28 +17,21 @@ feature 'a member can sign up', wip: true do
 
   context "a member can sign up" do
     scenario 'as a Student' do
-      join_as_member
+      fill_in_member_details name
       check "Student"
 
       click_on "Join Codebar.io"
 
       page.should have_content "Thanks for signing up #{name}! You will be receiving notifications for: Students"
     end
-  end
 
-  private
+    scenario 'as a Coach' do
+      fill_in_member_details "Maria"
+      check "Coach"
 
-  def join_as_member
-    visit root_path
-    click_on "Become a member"
+      click_on "Join Codebar.io"
 
-    fill_in "Name", with: name
-    fill_in "Surname", with: Faker::Name.last_name
-
-    fill_in "Email", with: Faker::Internet.email
-    fill_in "Twitter", with: Faker::Name.first_name
-
-    fill_in "Tell us a little bit about yourself", with: Faker::Lorem.paragraph
-
+      page.should have_content "Thanks for signing up Maria! You will be receiving notifications for: Coaches"
+    end
   end
 end
