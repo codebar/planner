@@ -9,7 +9,7 @@ describe InvitationMailer do
     sessions = Fabricate(:sessions)
     invitation_token = "token"
 
-    email_subject = "HTML by Codebar - Wednesday Oct 30th, 18:30"
+    email_subject = "HTML & CSS by Codebar - Wednesday Oct 30th, 18:30"
     InvitationMailer.invite(sessions, member, invitation_token).deliver
 
     expect(email.subject).to eq(email_subject)

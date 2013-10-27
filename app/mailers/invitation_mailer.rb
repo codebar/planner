@@ -7,7 +7,7 @@ class InvitationMailer < ActionMailer::Base
 
     load_attachments
 
-    subject = "HTML by Codebar - Wednesday Oct 30th, 18:30"
+    subject = "HTML & CSS by Codebar - Wednesday Oct 30th, 18:30"
 
     mail(mail_args(member, subject)) do |format|
       format.html
