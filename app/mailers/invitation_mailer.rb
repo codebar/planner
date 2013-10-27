@@ -7,7 +7,7 @@ class InvitationMailer < ActionMailer::Base
 
     load_attachments
 
-    subject = "Post Rails Workshop sessions / HTML by Codebar - Wednesday Oct 23rd, 18:30"
+    subject = "HTML & CSS by Codebar - Wednesday Oct 30th, 18:30"
 
     mail(mail_args(member, subject)) do |format|
       format.html
@@ -17,7 +17,7 @@ class InvitationMailer < ActionMailer::Base
   private
 
   def load_attachments
-    %w{logo.png reevoo.jpg}.each do |image|
+    %w{logo.png unboxed.jpg}.each do |image|
       attachments.inline[image] = File.read("#{Rails.root.to_s}/app/assets/images/#{image}")
     end
   end
