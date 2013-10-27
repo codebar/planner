@@ -13,41 +13,39 @@
       </div>
       <div style="width: 70%; border-radius:5px; padding: 20px 40px; margin: 70px auto 40px; border: 1px solid #ececec">
         <h2 style="font-weight: 400; font-size: 24px; border-bottom:1px solid #ececec; padding-bottom: 15px; margin-bottom:35px">Hi <%= @member.name %></h2>
-        <h3 style="font-weight: 600; font-size: 17px; letter-spacing: 0.02em; color: #3e4248">We are back from our time off and are ready to rock!</h3>
-        <p style="font-weight: 300; font-size: 16px; color: #2e2e2e; margin-bottom: 30px;">We will be making some changes to the way we have been running our sessions to make them better and more interesting.</p>
 
-        <h3 style="font-weight: 600; font-size: 17px; letter-spacing: 0.02em; color: #111111">Introducing a completely new format</h3>
-        <p style="font-weight: 300; font-size: 16px; color: #2e2e2e; margin-bottom: 50px;">The main focus will be on understanding different elements of web development.<br> You will be able to work in pairs, on group projects or on your own.<br> And of course, get help and guidance from our <b>superstar coaches</b>.</p>
-
-        <h3 style="font-weight: 600; font-size: 17px; letter-spacing: 0.02em; color: #3e4248">The next session</h3>
+        <h3 style="font-weight: 600; font-size: 17px; letter-spacing: 0.02em; color: #111111">We would like to invite you to the next <b>codebar</b> session</h3>
+        <p style="font-weight: 300; font-size: 16px; color: #2e2e2e; margin-bottom: 50px;"> There, you will be able to go through HTML/CSS, Javascript and Ruby tutorials with help and guidance from our <b>superstar coaches</b>. You will also get the opportunity to meet other people interested in coding and pair with them.<br></p>
 
         <div style="display:inline-block">
-          <div style="min-width:340px; padding-right: 50px; display: inline-block;">
+          <div style="width:340px; padding-right: 50px; display: inline-block;">
             <h2 style="color: #2d183d; font-size: 27px; font-weight: 500;letter-spacing: 0.03em; margin-bottom: 0;">HTML by Codebar</h2>
-            <p style="font-size: 16px; font-weight: 300; margin-top: 7px;">on <b style="color: #555555;font-size: 16px; font-weight: 600; margin-top: 0;">Wed, 23 October at 18:30</b></p>
+            <small>In this session we will be introducing CSS</small>
+            <p style="font-size: 16px; font-weight: 300; margin-top: 7px;">on <b style="color: #555555;font-size: 16px; font-weight: 600; margin-top: 0;">Wed, 30 October at 18:30</b></p>
             <div style="background-color: #F7F7F7; width: 90%; border-radius: 6px; box-shadow: 1px 1px 0 rgba(250, 250, 250, 0.5) inset, -1px -1px 2px rgba(250, 250, 250, 0.1) inset; font-size: 18px; padding: 5px 14px; text-align: center; margin: 31px 0 25px; border: 1px solid #dddddd;">
               <p> <%= link_to "I want to attend", full_url_for(accept_invitation_url(@invitation)), style: "text-decoration:none; color: #663095; font-size: 25px; font-weight: 600; letter-spacing: 0.02em; margin: 10px; text-decoration: none; text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7);"%></p>
             </div>
-            <p style="color: #555555; font-size: 13px; font-weight: 600; margin-top: 6px;">Please confirm your attendance as we have limited space.</p>
+            <p style="color: #555555; font-size: 13px; font-weight: 400; margin-top: 6px;">If you have responded but are unable to make it, <b style="font-weight: 800">reply to this email</b> and let us know. We have limited space and you may be taking away from someone else the opportunity to attend.</p>
           </div>
 
 
-          <div style="min-width:150px; border-left: 1px solid #ececec; padding-left: 50px; display: inline-block;">
-            <h3 style="color: #434950; font-size: 17px;font-weight: 600;letter-spacing: 0.02em;">Location:</h3>
-            <h2 style="color: #2D183D; font-weight: 400; ">Reevoo</h2>
-            <p style="color: #434950;font-size: 17px;font-weight: 400;">Friars Bridge Court <br>
-            41-45 Blackfriars Road <br>
-            London, SE1 8NZ<br></p>
-            <div style="width:120px; height:20px; margin-top: 33px;"><%=image_tag(attachments["reevoo.jpg"].url, width: "120px", height: "20px") %></div>
+          <div style="width:150px; border-left: 1px solid #ececec; padding-left: 50px; display: inline-block;">
+            <h3 style="color: #434950; font-size: 17px;font-weight: 600;letter-spacing: 0.02em;">Location</h3>
+            <h2 style="color: #2D183D; font-weight: 400; ">Unboxed Consulting</h2>
+            <p style="color: #434950;font-size: 17px;font-weight: 400;">
+            17 Blossom Street<br>
+            London, E1 6PL<br></p>
+            <a href="http://goo.gl/maps/AuKrs" style="color: #a369d5; text-decoration: underline" >view map</a>
+            <div style="width:120px; height:56px; margin-top: 33px;"><%=image_tag(attachments["unboxed.jpg"].url, width: "120px", height: "56px") %></div>
           </div>
 
         </div>
 
         <div style="clear:both; width: 100%; height: 10px;"></div>
-        <div style="color: #2E2E2E; font-size: 18px; font-weight: 600; margin-top: 40px;">We hope to see you soon!</div>
+        <div style="color: #2E2E2E; font-size: 18px; font-weight: 600; margin-top: 40px;">See you on Wednesday!</div>
 
         <div style="color: #111111; font-size: 15px; font-weight: 300; margin-top: 60px;">Despo & Maria</div>
-        <div style="color: #111111; font-size: 16px; font-weight: 600; margin-top: 5px;">Codebar</div>
+        <div style="color: #111111; font-size: 16px; font-weight: 600; margin-top: 5px;"><a href="http://codebar.io" style="color: #a369d5; text-decoration: none;">Codebar</a></div>
 
         <p style="color: #6d6a6a; font-size: 13px; font-weight: 600; margin-top: 90px;">If you dont want to receive these emails <%= link_to "unsubscribe", full_url_for(unsubscribe_member_url(@member)), style: "color: #a369d5; text-decoration: underline" %></p>
       </div>
