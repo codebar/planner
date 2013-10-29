@@ -1,4 +1,5 @@
 class InvitationMailer < ActionMailer::Base
+  layout 'email'
 
   def invite sessions, member, invitation
     @session = sessions
