@@ -9,9 +9,8 @@ A tool to help us keep organised
 
 Concepts
 -----
-* members
-* meetings/sessions
+* members (students, coaches, mentors)
+* sessions/courses
   * invitations
-* coaches/mentors
 * email announcements
 * admins
