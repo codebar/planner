@@ -11,7 +11,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131024224307) do
+ActiveRecord::Schema.define(version: 20131029210620) do
+
+  create_table "courses", force: true do |t|
+    t.string   "title"
+    t.string   "short_description"
+    t.text     "description"
+    t.integer  "tutor_id"
+    t.datetime "date_and_time"
+    t.integer  "seats",             default: 0
+    t.string   "slug"
+    t.string   "url"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "invitations", force: true do |t|
     t.integer  "sessions_id"

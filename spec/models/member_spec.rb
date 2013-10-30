@@ -42,5 +42,34 @@ describe Member do
         expect { Fabricate(:member, email: "sample@email.com") }.to raise_error
       end
     end
+
+    context "properties" do
+      let (:member) { Fabricate(:member) }
+
+      it "#full_name" do
+        member.full_name.should eq "#{member.name} #{member.surname}"
+      end
+
+      it "#avatar" do
+        encrypted_email = Digest::MD5.hexdigest(member.email.strip.downcase)
+        member.avatar.should eq "http://gravatar.com/avatar/#{encrypted_email}?s=100"
+      end
+    end
+
+    context "scopes" do
+      before do
+        3.times { Fabricate(:student) }
+        6.times { Fabricate(:coach) }
+        2.times { Fabricate(:member) }
+      end
+
+      it "#students" do
+        Member.students.count.should eq 3
+      end
+
+      it "#coaches" do
+        Member.coaches.count.should eq 6
+      end
+    end
   end
 end

@@ -7,4 +7,19 @@ class Member < ActiveRecord::Base
   scope :students, -> { joins(:roles).where(:roles => { :name => 'Student' }) }
   scope :coaches, -> { joins(:roles).where(:roles => { :name => 'Coach' }) }
 
+
+  def full_name
+    [name, surname].join " "
+  end
+
+  def avatar size=100
+    "http://gravatar.com/avatar/#{md5_email}?s=#{size}"
+  end
+
+  private
+
+  def md5_email
+    Digest::MD5.hexdigest(email.strip.downcase)
+  end
+
 end

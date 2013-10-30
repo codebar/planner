@@ -5,6 +5,7 @@ class InvitationController < ApplicationController
 
     if @invitation.attending.eql? true
       redirect_to root_path, notice: t("messages.already_rsvped")
+
     elsif has_remaining_seats?(@invitation)
       @invitation.update_attribute(:attending, true)
 
