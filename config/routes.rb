@@ -17,4 +17,6 @@ Planner::Application.routes.draw do
     end
   end
 
+  resources :courses, only: [:index, :show]
+
 end

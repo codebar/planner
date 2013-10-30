@@ -1,0 +1,20 @@
+%h2= @course.title
+
+=l(@course.date_and_time)
+
+%h3= @course.short_description
+
+%p
+  = @course.description
+  .right
+    =link_to "read more about the course", @course.url
+
+.tutor
+  .avatar
+    =image_tag @course.tutor.avatar
+
+  .about
+    %strong= @course.tutor.full_name
+    %br= @course.tutor.about_you
+
+
