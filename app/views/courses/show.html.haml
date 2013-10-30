@@ -1,20 +1,20 @@
-%h2= @course.title
+%h1= @course.title
 
 =l(@course.date_and_time)
 
 %h3= @course.short_description
 
-%p
-  = @course.description
+.description
+  = @course.description.html_safe
   .right
     =link_to "read more about the course", @course.url
 
 .tutor
   .avatar
-    =image_tag @course.tutor.avatar
+    =link_to twitter_url_for(@course.tutor.twitter) do
+      =image_tag @course.tutor.avatar
 
   .about
     %strong= @course.tutor.full_name
-    %br= @course.tutor.about_you
-
-
+    =link_to "@#{@course.tutor.twitter}", twitter_url_for(@course.tutor.twitter)
+    %br= @course.tutor.about_you.html_safe

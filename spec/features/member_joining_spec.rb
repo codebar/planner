@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-feature 'a member can sign up', wip: true do
+feature 'a member can sign up' do
 
   before do
     [ "Student", "Coach", "Mentor" ].each { |role| Role.create name: role }
