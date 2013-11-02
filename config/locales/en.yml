@@ -7,6 +7,8 @@ en:
   time:
       formats:
         default: "%a, %d %b %Y %H:%M "
+        email: "%a, %d %B at %H:%M "
+        email_title: "%A, %d %b at %H:%M"
         short: "%d/%m/%Y %H:%M "
         date: "%d %B %Y"
 

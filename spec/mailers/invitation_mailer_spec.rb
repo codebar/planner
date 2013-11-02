@@ -6,10 +6,10 @@ describe InvitationMailer do
 
   it "#invite" do
     member = Fabricate(:member)
-    sessions = Fabricate(:sessions)
+    sessions = Fabricate(:sessions, title: "HTML & CSS", date_and_time: DateTime.new(2013,10,30,18,30))
     invitation_token = "token"
 
-    email_subject = "HTML & CSS by Codebar - Wednesday Oct 30th, 18:30"
+    email_subject = "HTML & CSS by Codebar - Wednesday, 30 Oct at 18:30"
     InvitationMailer.invite(sessions, member, invitation_token).deliver
 
     expect(email.subject).to eq(email_subject)
