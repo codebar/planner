@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131102141049) do
+ActiveRecord::Schema.define(version: 20131102184043) do
 
   create_table "addresses", force: true do |t|
     t.string   "flat"
@@ -90,6 +90,9 @@ ActiveRecord::Schema.define(version: 20131102141049) do
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "sessions_id"
   end
+
+  add_index "sponsors", ["sessions_id"], name: "index_sponsors_on_sessions_id"
 
 end

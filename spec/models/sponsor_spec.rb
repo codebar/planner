@@ -6,6 +6,7 @@ describe Sponsor do
   it { should respond_to(:name) }
   it { should respond_to(:description) }
   it { should respond_to(:address) }
+  it { should respond_to(:sessions)}
   it { should be_valid }
 
   context 'validations' do
