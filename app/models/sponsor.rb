@@ -1,4 +1,5 @@
 class Sponsor < ActiveRecord::Base
+  has_one :address
 
-  validates :name, :description, presence: true
+  validates :name, :description, :address, presence: true
 end
