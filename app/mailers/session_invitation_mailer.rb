@@ -1,7 +1,7 @@
-class InvitationMailer < ActionMailer::Base
+class SessionInvitationMailer < ActionMailer::Base
   layout 'email'
 
-  def invite sessions, member, invitation
+  def invite_student sessions, member, invitation
     @session = sessions
     @member = member
     @invitation = invitation

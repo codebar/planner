@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe InvitationMailer do
+describe SessionInvitationMailer do
 
   let(:email) { ActionMailer::Base.deliveries.last }
 
@@ -10,7 +10,7 @@ describe InvitationMailer do
     invitation_token = "token"
 
     email_subject = "HTML & CSS by Codebar - Wednesday, 30 Oct at 18:30"
-    InvitationMailer.invite(sessions, member, invitation_token).deliver
+    SessionInvitationMailer.invite_student(sessions, member, invitation_token).deliver
 
     expect(email.subject).to eq(email_subject)
   end

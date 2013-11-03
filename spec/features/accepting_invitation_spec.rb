@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 feature 'a member can accept an invitation' do
-  let(:invitation) { Fabricate(:invitation) }
+  let(:invitation) { Fabricate(:session_invitation) }
 
   scenario 'when there are available spots' do
     visit accept_invitation_path(invitation)
