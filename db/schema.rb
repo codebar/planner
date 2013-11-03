@@ -11,7 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131029210620) do
+ActiveRecord::Schema.define(version: 20131103174325) do
+
+  create_table "addresses", force: true do |t|
+    t.string   "flat"
+    t.string   "street"
+    t.string   "postal_code"
+    t.integer  "sponsor_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "courses", force: true do |t|
     t.string   "title"
@@ -74,6 +83,24 @@ ActiveRecord::Schema.define(version: 20131029210620) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "seats",         default: 15
+  end
+
+  create_table "sponsor_sessions", force: true do |t|
+    t.integer  "sponsor_id"
+    t.integer  "sessions_id"
+    t.boolean  "host",        default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "sponsor_sessions", ["sessions_id"], name: "index_sponsor_sessions_on_sessions_id"
+  add_index "sponsor_sessions", ["sponsor_id"], name: "index_sponsor_sessions_on_sponsor_id"
+
+  create_table "sponsors", force: true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
 end
