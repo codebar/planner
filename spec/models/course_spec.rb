@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe Course do
+  let(:course) { Fabricate(:course) }
 
   context "validations" do
     it "#title" do
@@ -24,6 +25,13 @@ describe Course do
     it "#past" do
       Course.past.count.should eq 1
     end
+  end
+
+  it "#attending" do
+    2.times { Fabricate(:course_invitation, course: course, attending: true) }
+    1.times { Fabricate(:course_invitation, course: course, attending: false) }
+
+    course.reload.attending_invitations.length.should eq 2
   end
 end
 

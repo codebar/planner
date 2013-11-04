@@ -17,6 +17,14 @@ Planner::Application.routes.draw do
     end
   end
 
+  namespace :course do
+    resources :invitation, only: [] do
+      member do
+        get "accept"
+      end
+    end
+  end
+
   resources :courses, only: [:index, :show]
 
 end
