@@ -13,7 +13,7 @@ class InvitationManager
   end
 
   def self.send_session_reminders session
-    session.invitations.where(attending: true).map do |invitation|
+    session.attending_invitations.map do |invitation|
       invitation.send_reminder
     end
   end
