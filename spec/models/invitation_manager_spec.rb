@@ -27,9 +27,9 @@ describe InvitationManager do
   end
 
   it "#send_session_reminders" do
-    session.attending_invitations.each do |invitation|
-      invitation.should_receive(:send_reminder)
-    end
+    Fabricate(:attending_session_invitation, sessions: session)
+
+    SessionInvitation.any_instance.should_receive(:send_reminder)
 
     InvitationManager.send_session_reminders session
   end
