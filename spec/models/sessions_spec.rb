@@ -18,4 +18,11 @@ describe Sessions do
       Sessions.upcoming.length.should eq 2
     end
   end
+
+  it "#attending" do
+    3.times { Fabricate(:session_invitation, sessions: session, attending: true) }
+    1.times { Fabricate(:session_invitation, sessions: session, attending: false) }
+
+    session.reload.attending_invitations.length.should eq 3
+  end
 end

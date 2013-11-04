@@ -10,4 +10,3 @@ shared_examples InvitationConcerns do
     end
   end
 end
-
