@@ -2,10 +2,8 @@ require 'spec_helper'
 
 describe SessionInvitation do
   let(:invitation) { Fabricate(:session_invitation) }
+  let!(:accepted_invitation) { 2.times {  Fabricate(:session_invitation, attending: true) } }
 
-  it "has a token set on creation" do
-
-    invitation.token.should_not be nil
-  end
+  it_behaves_like InvitationConcerns
 
 end

@@ -4,6 +4,8 @@ module InvitationConcerns
   included do
     include InstanceMethods
 
+    belongs_to :member
+
     before_create :set_token
     after_create :email
 

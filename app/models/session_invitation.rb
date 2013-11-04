@@ -3,7 +3,6 @@ class SessionInvitation < ActiveRecord::Base
   include InvitationConcerns
 
   belongs_to :sessions
-  belongs_to :member
 
   validates :sessions, :member, presence: true
   validates :member_id, uniqueness: { scope: [:sessions ] }
