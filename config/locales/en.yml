@@ -13,8 +13,10 @@ en:
         date: "%d %B %Y"
 
   messages:
-    accepted_invitation: "Thanks for getting back to us %{name}. See you at the meeting!"
-    already_rsvped: "You have alredy confirmed you attendance for this meeting!"
+    accepted_invitation: "Thanks for getting back to us %{name}. See you at the session!"
+    rejected_invitation: "We are so sad you can't make it, but thanks for letting us know %{name}."
+    already_rsvped: "You have alredy confirmed you attendance!"
+    not_attending_already: "You have alredy confirmed you can't make it!"
     no_available_seats: "Unfortunately there are no more spaces left :(. If you would like to join our waiting list send us an email at meetings@codebar.io."
     member_notifications: "You will be receiving notifications for: %{roles}"
     no_roles: "You have not signed up for any notifications. If you change your mind, send us an email at meetins@codebar.io so we can change your settings"

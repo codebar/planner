@@ -14,6 +14,7 @@ Planner::Application.routes.draw do
   resources :invitation, only: [] do
     member do
       get "accept"
+      get "reject"
     end
   end
 
@@ -21,6 +22,7 @@ Planner::Application.routes.draw do
     resources :invitation, only: [] do
       member do
         get "accept"
+        get "reject"
       end
     end
   end

@@ -12,4 +12,10 @@ class InvitationManager
     end
   end
 
+  def self.send_session_reminders session
+    session.attending_invitations.map do |invitation|
+      invitation.send_reminder
+    end
+  end
+
 end
