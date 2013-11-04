@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-describe Invitation do
+describe SessionInvitation do
   it "has a token set on creation" do
-    invitation = Fabricate(:invitation)
+    invitation = Fabricate(:session_invitation)
 
     invitation.token.should_not be nil
   end

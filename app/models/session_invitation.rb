@@ -1,4 +1,4 @@
-class Invitation < ActiveRecord::Base
+class SessionInvitation < ActiveRecord::Base
   validates :sessions, :member, presence: true
   validates :member_id, uniqueness: { scope: [:sessions ] }
   validates :token, uniqueness: true
@@ -18,13 +18,13 @@ class Invitation < ActiveRecord::Base
   private
 
   def email
-    InvitationMailer.invite(self.sessions, self.member, self).deliver
+    SessionInvitationMailer.invite_student(self.sessions, self.member, self).deliver
   end
 
   def set_token
     self.token = loop do
       random_token = SecureRandom.urlsafe_base64(nil, false)
-      break random_token unless Invitation.where(token: random_token).exists?
+      break random_token unless SessionInvitation.where(token: random_token).exists?
     end
   end
 

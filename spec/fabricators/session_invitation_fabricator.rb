@@ -1,4 +1,4 @@
-Fabricator(:invitation) do
+Fabricator(:session_invitation) do
   member
   attending false
   attended nil

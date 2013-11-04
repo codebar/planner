@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131103174325) do
+ActiveRecord::Schema.define(version: 20131103210723) do
 
   create_table "addresses", force: true do |t|
     t.string   "flat"
@@ -34,21 +34,6 @@ ActiveRecord::Schema.define(version: 20131103174325) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  create_table "invitations", force: true do |t|
-    t.integer  "sessions_id"
-    t.integer  "member_id"
-    t.boolean  "attending"
-    t.boolean  "attended"
-    t.text     "note"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "token"
-  end
-
-  add_index "invitations", ["member_id"], name: "index_invitations_on_member_id"
-  add_index "invitations", ["sessions_id"], name: "index_invitations_on_sessions_id"
-  add_index "invitations", ["token"], name: "index_invitations_on_token", unique: true
 
   create_table "members", force: true do |t|
     t.string   "name"
@@ -75,6 +60,21 @@ ActiveRecord::Schema.define(version: 20131103174325) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "session_invitations", force: true do |t|
+    t.integer  "sessions_id"
+    t.integer  "member_id"
+    t.boolean  "attending"
+    t.boolean  "attended"
+    t.text     "note"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "token"
+  end
+
+  add_index "session_invitations", ["member_id"], name: "index_session_invitations_on_member_id"
+  add_index "session_invitations", ["sessions_id"], name: "index_session_invitations_on_sessions_id"
+  add_index "session_invitations", ["token"], name: "index_session_invitations_on_token", unique: true
 
   create_table "sessions", force: true do |t|
     t.string   "title"

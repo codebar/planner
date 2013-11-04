@@ -1,7 +1,7 @@
 class InvitationController < ApplicationController
 
   def accept
-    @invitation = Invitation.find_by_token(params[:id])
+    @invitation = SessionInvitation.find_by_token(params[:id])
 
     if @invitation.attending.eql? true
       redirect_to root_path, notice: t("messages.already_rsvped")
