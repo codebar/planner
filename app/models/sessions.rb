@@ -1,4 +1,5 @@
 class Sessions < ActiveRecord::Base
+  include Invitable
 
   has_many :invitations, class_name: "SessionInvitation"
   has_many :sponsor_sessions
@@ -6,7 +7,4 @@ class Sessions < ActiveRecord::Base
 
   scope :upcoming, ->  { where("date_and_time > ?",  DateTime.now) }
 
-  def attending_invitations
-    invitations.accepted
-  end
 end
