@@ -1,0 +1,54 @@
+<h2 style="font-weight: 400; font-size: 24px; border-bottom:1px solid #ececec; padding-bottom: 15px; margin-bottom:35px">Hi <%= @member.name %></h2>
+
+<h3 style="font-weight: 600; font-size: 17px; letter-spacing: 0.02em; color: #111111">We would like to invite you to the next <b>codebar</b> course</h3>
+<%= @course.short_description %>
+
+<div style="font-size: 15px"><%= @course.description.html_safe %></div>
+<% if @course.url %>
+  <div style="float: right;">
+    <%=link_to "read more about the course", @course.url, style: "color: #a369d5; text-decoration: underline" %>
+  </div>
+<% end %>
+
+<br/>
+<div style="padding-bottom: 20px;">
+  <h3>
+    <%=link_to "About the tutor :: #{@course.tutor.full_name}", "http://twitter.com/#{@course.tutor.twitter}", style: "text-decoration:none; color: #663095; font-size: 16px; margin-bottom: 20px; letter-spacing: 0.02em; text-decoration: none; text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7);" %>
+  </h3> 
+  <div>
+    <%= @course.tutor.about_you.html_safe %>
+  </div>
+</div>
+
+<div style="display:inline-block">
+  <div style="width:340px; padding-right: 40px; display: inline-block;">
+    <h2 style="color: #2d183d; font-size: 26px; font-weight: 500;letter-spacing: 0.03em; margin-bottom: 0;"><%= @course.title %> <small style="color: #4c4066"> by Codebar</small></h2>
+    <p style="font-size: 16px; font-weight: 300; margin-top: 7px;">on <b style="color: #555555;font-size: 16px; font-weight: 600; margin-top: 0;"><%= l(@course.date_and_time, format: :email)%></b></p>
+    <div style="background-color: #F7F7F7; width: 90%; border-radius: 6px; box-shadow: 1px 1px 0 rgba(250, 250, 250, 0.5) inset, -1px -1px 2px rgba(250, 250, 250, 0.1) inset; font-size: 18px; padding: 5px 14px; text-align: center; margin: 31px 0 25px; border: 1px solid #dddddd;">
+      <p> <%= link_to "I want to attend", full_url_for(accept_course_invitation_url(@invitation)), style: "text-decoration:none; color: #663095; font-size: 25px; font-weight: 600; letter-spacing: 0.02em; margin: 10px; text-decoration: none; text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7);"%></p>
+    </div>
+    <p style="color: #555555; font-size: 13px; font-weight: 400; margin-top: 6px;">If you have responded but are unable to make it, <b style="font-weight: 800">reply to this email</b> and let us know. We have limited space and you may be taking away from someone else the opportunity to attend.
+    <br/>
+    <br/>
+    We will also be getting in touch before the course to make sure that you are able to attend. Make sure you keep an eye for our email!
+    </p>
+  </div>
+
+
+  <div style="width:150px; border-left: 1px solid #ececec; padding-left: 50px; display: inline-block;">
+    <h3 style="color: #434950; font-size: 17px;font-weight: 600;letter-spacing: 0.02em;">Location</h3>
+    <h2 style="color: #2D183D; font-weight: 400; ">Tribesports</h2>
+    <p style="color: #434950;font-size: 16px; font-weight: 400;">
+    Unit 104,<br/>
+    Cremer Business Centre,<br/>
+    37 Cremer Street,<br/>
+    London E2 8HD<br/>
+    </p>
+    <a href="http://goo.gl/maps/UvFQN" style="color: #a369d5; text-decoration: underline" >view map</a>
+    <div style="background-color: black; width:180px; padding-top: 10px; height:56px; margin-top: 33px;"><%=image_tag(attachments["tribesports.png"].url, width: "180px") %></div>
+  </div>
+
+</div>
+
+<div style="clear:both; width: 100%; height: 10px;"></div>
+

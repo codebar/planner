@@ -6,8 +6,9 @@
 
 .description
   = @course.description.html_safe
-  .right
-    =link_to "read more about the course", @course.url
+  - if @course.url.present?
+    .right
+      =link_to "read more about the course", @course.url
 
 .tutor
   .avatar

@@ -4,7 +4,7 @@ describe SessionInvitationMailer do
 
   let(:email) { ActionMailer::Base.deliveries.last }
 
-  it "#invite" do
+  it "#invite_student" do
     member = Fabricate(:member)
     sessions = Fabricate(:sessions, title: "HTML & CSS", date_and_time: DateTime.new(2013,10,30,18,30))
     invitation_token = "token"
