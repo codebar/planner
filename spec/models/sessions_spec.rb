@@ -11,11 +11,19 @@ describe Sessions do
   it { should respond_to(:sponsor_sessions)}
 
   context "#scopes" do
-    it "#upcoming" do
-      Sessions.create date_and_time: DateTime.now-1.week
-      2.times { |n| Sessions.create date_and_time: DateTime.now+(n+1).week }
+    let(:set_upcoming) { 2.times.map { |n| Sessions.create date_and_time: DateTime.now+(n+1).week }  }
 
+    before do
+      Sessions.create date_and_time: DateTime.now-1.week
+      set_upcoming
+    end
+
+    it "#upcoming" do
       Sessions.upcoming.length.should eq 2
+    end
+
+    it "#next" do
+      Sessions.next.should eq set_upcoming.first
     end
   end
 

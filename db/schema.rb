@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131103212835) do
+ActiveRecord::Schema.define(version: 20131104030726) do
 
   create_table "addresses", force: true do |t|
     t.string   "flat"
@@ -67,6 +67,15 @@ ActiveRecord::Schema.define(version: 20131103212835) do
 
   add_index "members_roles", ["member_id", "role_id"], name: "index_members_roles_on_member_id_and_role_id"
   add_index "members_roles", ["member_id"], name: "index_members_roles_on_member_id"
+
+  create_table "reminders", force: true do |t|
+    t.string   "reminder_type"
+    t.string   "reminder_id"
+    t.datetime "date_and_time"
+    t.integer  "count"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "roles", force: true do |t|
     t.string   "name"

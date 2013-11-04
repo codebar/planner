@@ -5,6 +5,7 @@ class Sessions < ActiveRecord::Base
   has_many :sponsor_sessions
   has_many :sponsors, through: :sponsor_sessions
 
-  scope :upcoming, ->  { where("date_and_time > ?",  DateTime.now) }
+  scope :upcoming, -> { where("date_and_time >= ?", DateTime.now).order(:date_and_time) }
+  scope :next, ->  { upcoming.first }
 
 end
