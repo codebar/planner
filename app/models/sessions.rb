@@ -9,8 +9,6 @@ class Sessions < ActiveRecord::Base
   scope :next, ->  { upcoming.first }
 
   def host
-    Sponsor.joins(:sponsor_sessions)
-      .where('sponsor_sessions.host = ?', true)
-      .where('sponsor_sessions.sessions_id = ?', self.id).first
+    SponsorSession.hosts.for_session(self.id).first.sponsor
   end
 end
