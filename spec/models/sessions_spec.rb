@@ -28,7 +28,9 @@ describe Sessions do
 
     describe "#host" do
       let(:sponsor) { Fabricate(:sponsor) }
-      before { Fabricate(:sponsor_session, sponsor: sponsor, sessions: session, host: true) }
+      before do
+        Fabricate(:sponsor_session, sponsor: sponsor, sessions: session, host: true)
+      end
 
       it { expect(session.host).to eq(sponsor) }
     end
