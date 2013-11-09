@@ -2,7 +2,7 @@ namespace :reminders do
   desc "Send out reminders"
 
   task sessions: :environment do
-    Sessions.upcoming.first.tap do |session|
+    Sessions.next.tap do |session|
       unless Reminders.session(session).exists?
         invitations = InvitationManager.send_session_reminders(session)
 

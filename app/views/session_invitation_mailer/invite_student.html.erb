@@ -17,18 +17,24 @@
 
   <div style="width:150px; border-left: 1px solid #ececec; padding-left: 50px; display: inline-block;">
     <h3 style="color: #434950; font-size: 17px;font-weight: 600;letter-spacing: 0.02em;">Location</h3>
-    <h2 style="color: #2D183D; font-weight: 400; ">Shutl</h2>
+    <h2 style="color: #2D183D; font-weight: 400; ">ThoughtWorks</h2>
     <p style="color: #434950;font-size: 16px; font-weight: 400;">
-    The Courtyard building<br/>
-    11 Curtain Road, 2nd Floor<br/>
-    London, EC2A 3LT<br/>
+    Berkshire House<br/>
+    168-173 High Holborn<br/>
+    London, WC1V 7AA<br/>
     </p>
-    <a href="http://goo.gl/maps/nIfo6" style="color: #a369d5; text-decoration: underline" >view map</a>
-    <div style="width:120px; height:56px; margin-top: 33px;"><%=image_tag(attachments["shutl.png"].url, width: "120px") %></div>
+    <a href="http://goo.gl/maps/bDk7N" style="color: #a369d5; text-decoration: underline" >view map</a>
+    <div style="width:120px; height:56px; margin-top: 33px;"><%=image_tag(attachments["thoughtworks.png"].url, width: "120px") %></div>
   </div>
 
 </div>
 
+<div>
+  If you have any trouble finding the venue give us a call
+  <br/>
+  <% [ "Maria Khait   <b>07792142702</b><br/>", "Despo Pentara <b>07402887214</b><br/>" ].shuffle.each do |phone_details| %>
+    <%= phone_details.html_safe %>
+  <% end %>
+</div>
 <div style="clear:both; width: 100%; height: 10px;"></div>
 <div style="color: #2E2E2E; font-size: 18px; font-weight: 600; margin-top: 40px;">See you on Wednesday!</div>
-

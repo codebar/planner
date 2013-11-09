@@ -32,7 +32,7 @@ class SessionInvitationMailer < ActionMailer::Base
   private
 
   def load_attachments
-    %w{logo.png shutl.png}.each do |image|
+    %w{logo.png thoughtworks.png}.each do |image|
       attachments.inline[image] = File.read("#{Rails.root.to_s}/app/assets/images/#{image}")
     end
   end
