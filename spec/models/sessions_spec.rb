@@ -25,6 +25,15 @@ describe Sessions do
     it "#next" do
       Sessions.next.should eq set_upcoming.first
     end
+
+    describe "#host" do
+      let(:sponsor) { Fabricate(:sponsor) }
+      before do
+        Fabricate(:sponsor_session, sponsor: sponsor, sessions: session, host: true)
+      end
+
+      it { expect(session.host).to eq(sponsor) }
+    end
   end
 
   it "#attending" do

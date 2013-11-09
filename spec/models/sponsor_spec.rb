@@ -6,8 +6,9 @@ describe Sponsor do
   it { should respond_to(:name) }
   it { should respond_to(:description) }
   it { should respond_to(:address) }
-  it { should respond_to(:sessions)}
-  it { should respond_to(:sponsor_sessions)}
+  it { should respond_to(:sessions) }
+  it { should respond_to(:sponsor_sessions) }
+  it { should respond_to(:avatar) }
   it { should be_valid }
 
   context 'validations' do
@@ -29,6 +30,13 @@ describe Sponsor do
 
         it { should_not be_valid}
         it { should have(1).error_on(:address) }
+      end
+
+      describe '#avatar' do
+        before { sponsor.avatar = nil }
+
+        it{ should_not be_valid }
+        it{ should have(1).error_on(:avatar) }
       end
     end
   end

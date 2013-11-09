@@ -8,4 +8,7 @@ class Sessions < ActiveRecord::Base
   scope :upcoming, -> { where("date_and_time >= ?", DateTime.now).order(:date_and_time) }
   scope :next, ->  { upcoming.first }
 
+  def host
+    SponsorSession.hosts.for_session(self.id).first.sponsor
+  end
 end
