@@ -20,26 +20,29 @@
         </div>
         <div class="navigation">
           <ul class="navbar">
-            <li><a href="">Wall of Fame</a></li>
-            <li><a href="">Courses</a></li>
+              <%= link_to "Wall of Fame", wall_of_fame_path %>
+            </li>
+            <li>
+            <%= link_to "Courses", courses_path %>
+            </li>
             <li><a href="">Feedback</a></li>
             <%=link_to "Become a member", new_members_path, class: 'member-button'%>
           </ul>
         </div>
       </div>
     </div>
-   
-      <div id="container">
-        <%= render partial: 'layouts/messages' %>
-        <%= yield %>
-      </div>
+
+    <div id="container">
+      <%= render partial: 'layouts/messages' %>
+      <%= yield %>
+    </div>
 
     <footer>
-      <div id="footer-width">
-        <div class="dot-footer"></div>
-        <div class="footer-copy">Get in touch: <a href="mailto:hello@codebar.io?Subject=Hello%20Codebar">hello@codebar.io</a></div>
-        <div class="footer-copy right-float">&#169; 2013 Codebar</div>
-      </div>
+    <div id="footer-width">
+      <div class="dot-footer"></div>
+      <div class="footer-copy">Get in touch: <a href="mailto:hello@codebar.io?Subject=Hello%20Codebar">hello@codebar.io</a></div>
+      <div class="footer-copy right-float">&#169; 2013 Codebar</div>
+    </div>
     </footer>
 
   </body>

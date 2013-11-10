@@ -7,55 +7,53 @@
 
     .description
       %p.lead
-        Making tech more diverse and welcoming by bringing people together and helping teach programming skills. 
+        Making tech more diverse and welcoming by bringing people together and helping teach programming skills.
       %p.lead
-        We organize free sessions in HTML, CSS, Javascript and Ruby, targeted at different groups of people that are underrepresented in the tech industry. 
+        We organize free sessions in HTML, CSS, Javascript and Ruby and offer guidance on other programming related topics, targeted at different groups of people that are underrepresented in the tech industry.
       %p.lead
-        All these, with the help of our 
-        =link_to "amazing coaches", courses_path
+        All these, with the help of our
+        =link_to "amazing coaches", wall_of_fame_path
+      %br
       %p.lead
-        %b 
-          Please note we have a 
-          =link_to "code of conduct", courses_path
+        %b
+          If you would like to help out, make sure you first read our
+          =link_to "code of conduct", code_of_conduct_path
 
 
-    .titlebox.session
-      %h2
-        Next session
-      .dot
+    - if @next_session.present?
+      .titlebox.session
+        %h2
+          Next session
+        .dot
 
-    .description
-      .details-block
-        %h3 HTML & CSS by Codebar
-        %h5
-          Bringing style and presentation together
-        %h6
-          on Wednesday, 06 November 2013
-      %p.lead.move-top
-        We run our sessions every wednesday with a different topic, if you would like to attend as a student or a coach please register:
-      .sub-block
-        =link_to "Become a member", new_members_path, class: 'member-button'
+      .description
+        .details-block
+          %h3= @next_session.title
+          %h5= @next_session.description
+          %h6
+            = "on #{l(@next_session.date_and_time, format: :website_format)}"
+        %p.lead.move-top
+          We run sessions every week with a different topic, if you would like to attend as a student or help out as a coach you can do so by signing up.
+        .sub-block
+          =link_to "Become a member", new_members_path, class: 'member-button'
 
+    - if @next_course.present?
+      .titlebox.course
+        %h2
+          Next course
+        .dot
 
-    .titlebox.course
-      %h2
-        Next course
-      .dot
-
-    .description
-      .details-block
-        %h3 HTTP Fundamentals
-        %h5
-          Course run by 
-          %b
-            =link_to 'Najaf Ali', new_members_path
-        %h6
-          on Saturday, 16 November 2013
-      %p.lead.move-top
-        Learn what every web developer should know about HTTP in a hands-on workshop.
-        Aimed for people with little HTML and CSS knowledge who are interested in understanding how the web works.
-      .sub-block
-        =link_to "Become a member", new_members_path, class: 'member-button'
+      .description
+        .details-block
+          %h3= @next_course.title
+          %h5
+            Course run by
+            %b=link_to @next_course.tutor.full_name, twitter_url_for(@next_course.tutor.twitter)
+          %h6= "on #{l(@next_course.date_and_time, format: :website_format)}"
+        %p.lead.move-top
+          = @next_course.short_description.html_safe
+        .sub-block
+          =link_to "Become a member", new_members_path, class: 'member-button'
 
 
 
@@ -66,35 +64,31 @@
 
     .description
       %p.lead
-        Our events are dedicated to providing a harassment-free experience for everyone, regardless of gender, sexual orientation, disability, physical appearance, body size, race, or religion. 
+        Our events are dedicated to providing a harassment-free experience for everyone, regardless of gender, sexual orientation, disability, physical appearance, body size, race, or religion.
       %p.lead
         We do not tolerate harassment of our members or coaches in any form. Sexual language and imagery is not appropriate for any of our events, including talks, workshops, parties, Twitter and any other online media. Members violating these rules may be sanctioned or expelled from the event and any future events at the discretion of the organisers.
         %br
-        %b 
-          =link_to "Read full version", courses_path
-
-
+        %br
+        %b
+          =link_to "Read the full version", code_of_conduct_path
 
   .right-panel
     %ul.social
       %li
         =link_to image_tag("github.png", width: '33px'), "https://github.com/codebar"
       %li
-        =link_to image_tag("twitter.png", width: '33px'), "https://github.com/codebar"
+        =link_to image_tag("twitter.png", width: '33px'), "https://twitter.com/by_codebar"
       %li
-        =link_to image_tag("facebook.png", width: '33px'), "https://github.com/codebar"
+        =link_to image_tag("facebook.png", width: '33px'), "https://facebook.com/bycodebar"
     .right-block
       %h4 Our sponsors:
     .right-block
       %ul.sponsors
-        %li
-          =link_to image_tag("shutl.png", height: '70px'), "http://shutl.com/uk/"
-        %li
-          =link_to image_tag("unboxed.png", height: '70px'), "http://www.unboxedconsulting.com/"
-        %li
-          =link_to image_tag("reevoo.jpg", height: '70px'), "http://www.reevoo.com/"
+        - @sponsors.each do |sponsor|
+          %li
+            = link_to image_tag(sponsor.avatar, height: '70px'), sponsor.website
     .become-a-sponsor
-      =link_to "Become a sponsor", new_members_path, class: 'sponsor-button'
+      =mail_to "hello@codebar.io", "Sponsoring codebar.io", class: 'sponsor-button'
 
     .right-block
       %h4 Gallery
@@ -106,17 +100,3 @@
           =link_to image_tag("pic2.jpg", height: '183px'), "https://github.com/codebar"
         %li
           =link_to image_tag("pic3.jpg", height: '183px'), "https://github.com/codebar"
-
-
-    / =link_to "Become a member", new_members_path, class: 'btn'
-    / =link_to "Courses", courses_path, class: 'btn'
-
-
-/- if @sessions.any?
-/ %br
-/ %section
-/   %h3 Sessions
-
-/   - @sessions.each do |session|
-/     = session.title
-/     %small.date= l(session.date_and_time)
