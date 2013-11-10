@@ -8,4 +8,7 @@ class DashboardController < ApplicationController
 
   def about
   end
+
+  def coaches
+  end
 end
