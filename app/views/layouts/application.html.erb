@@ -11,19 +11,38 @@
   </head>
   <body>
     <div id="top"></div>
-    <div id="navlight"></div>
-    <div class="logo">
-      <%=link_to root_path do %>
-        <%= image_tag "logo.png", width: '180px'%>
-      <% end %>
+    <div id="navlight">
+      <div id="nav-inside">
+        <div class="logo">
+          <%=link_to root_path do %>
+            <%= image_tag "logo.png", width: '185px'%>
+          <% end %>
+        </div>
+        <div class="navigation">
+          <ul class="navbar">
+            <li><a href="">Wall of Fame</a></li>
+            <li><a href="">Courses</a></li>
+            <li><a href="">Feedback</a></li>
+            <%=link_to "Become a member", new_members_path, class: 'member-button'%>
+          </ul>
+        </div>
+      </div>
     </div>
-    <div id="container">
-      <%= render partial: 'layouts/messages' %>
-      <%= yield %>
+    <!-- <div id="main-layout"> -->
+      <!-- <div id="left-image"><%= image_tag "bg_2.jpg", width: '285px'%></div> -->
+      <div id="container">
+        <%= render partial: 'layouts/messages' %>
+        <%= yield %>
 
-    </div>
+      </div>
+      <!-- <div id="right-image"><%= image_tag "bg_1.jpg", width: '285px'%></div> -->
+    <!-- </div> -->
     <footer>
-      <%=link_to "Follow us on twitter", "http://twitter.com/by_codebar" %>
+      <div id="footer-width">
+        <div class="dot-footer"></div>
+        <div class="footer-copy">Get in touch: <a href="mailto:hello@codebar.io?Subject=Hello%20Codebar">hello@codebar.io</a></div>
+        <div class="footer-copy right-float">&#169; 2013 Codebar</div>
+      </div>
     </footer>
 
   </body>

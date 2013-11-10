@@ -1,19 +1,115 @@
 %section#main
   .left-panel
-    %h2
-      Our Goal
+    .titlebox.mission
+      %h2
+        Our mission
+      .dot
 
-    %p.lead
-      Making tech more diverse and welcoming by bringing people together and helping teach programming skills. We organize free sessions in HTML, CSS, Javascript and Ruby, targeted at different groups of people that are underrepresented in the tech industry. All these, with the help of our <b>amazing</b> coaches!
+    .description
+      %p.lead
+        Making tech more diverse and welcoming by bringing people together and helping teach programming skills. 
+      %p.lead
+        We organize free sessions in HTML, CSS, Javascript and Ruby, targeted at different groups of people that are underrepresented in the tech industry. 
+      %p.lead
+        All these, with the help of our 
+        =link_to "amazing coaches", courses_path
+      %p.lead
+        %b 
+          Please note we have a 
+          =link_to "code of conduct", courses_path
 
-    %h3
-      Code of conduct
-    %p.lead
-      Our events are dedicated to providing a harassment-free experience for everyone, regardless of gender, sexual orientation, disability, physical appearance, body size, race, or religion. We do not tolerate harassment of our members or coaches in any form. Sexual language and imagery is not appropriate for any of our events, including talks, workshops, parties, Twitter and any other online media. Members violating these rules may be sanctioned or expelled from the event and any future events at the discretion of the organisers.
-      = link_to  "read the full version", code_of_conduct_path
+
+    .titlebox.session
+      %h2
+        Next session
+      .dot
+
+    .description
+      .details-block
+        %h3 HTML & CSS by Codebar
+        %h5
+          Bringing style and presentation together
+        %h6
+          on Wednesday, 06 November 2013
+      %p.lead.move-top
+        We run our sessions every wednesday with a different topic, if you would like to attend as a student or a coach please register:
+      .sub-block
+        =link_to "Become a member", new_members_path, class: 'member-button'
+
+
+    .titlebox.course
+      %h2
+        Next course
+      .dot
+
+    .description
+      .details-block
+        %h3 HTTP Fundamentals
+        %h5
+          Course run by 
+          %b
+            =link_to 'Najaf Ali', new_members_path
+        %h6
+          on Saturday, 16 November 2013
+      %p.lead.move-top
+        Learn what every web developer should know about HTTP in a hands-on workshop.
+        Aimed for people with little HTML and CSS knowledge who are interested in understanding how the web works.
+      .sub-block
+        =link_to "Become a member", new_members_path, class: 'member-button'
+
+
+
+    .titlebox.code-of-conduct
+      %h2
+        Code of conduct
+      .dot
+
+    .description
+      %p.lead
+        Our events are dedicated to providing a harassment-free experience for everyone, regardless of gender, sexual orientation, disability, physical appearance, body size, race, or religion. 
+      %p.lead
+        We do not tolerate harassment of our members or coaches in any form. Sexual language and imagery is not appropriate for any of our events, including talks, workshops, parties, Twitter and any other online media. Members violating these rules may be sanctioned or expelled from the event and any future events at the discretion of the organisers.
+        %br
+        %b 
+          =link_to "Read full version", courses_path
+
+
+
   .right-panel
-    =link_to "Become a member", new_members_path, class: 'btn'
-    =link_to "Courses", courses_path, class: 'btn'
+    %ul.social
+      %li
+        =link_to image_tag("github.png", width: '33px'), "https://github.com/codebar"
+      %li
+        =link_to image_tag("twitter.png", width: '33px'), "https://github.com/codebar"
+      %li
+        =link_to image_tag("facebook.png", width: '33px'), "https://github.com/codebar"
+    .right-block
+      %h4 Our sponsors:
+    .right-block
+      %ul.sponsors
+        %li
+          =link_to image_tag("shutl.png", height: '67px'), "https://github.com/codebar"
+        %li
+          =link_to image_tag("unboxed.png", height: '67px'), "https://github.com/codebar"
+        %li
+          =link_to image_tag("reevoo.jpg", height: '67px'), "https://github.com/codebar"
+    .become-a-sponsor
+      =link_to "Become a sponsor", new_members_path, class: 'sponsor-button'
+
+    .right-block
+      %h4 Gallery
+    .right-block
+      %ul.gallery
+        %li
+          =link_to image_tag("pic1.jpg", height: '196px'), "https://github.com/codebar"
+        %li
+          =link_to image_tag("pic2.jpg", height: '196px'), "https://github.com/codebar"
+        %li
+          =link_to image_tag("pic3.jpg", height: '196px'), "https://github.com/codebar"
+
+
+    / =link_to "Become a member", new_members_path, class: 'btn'
+    / =link_to "Courses", courses_path, class: 'btn'
 
 
 /- if @sessions.any?
