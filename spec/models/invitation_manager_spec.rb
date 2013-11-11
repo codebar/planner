@@ -9,7 +9,7 @@ describe InvitationManager do
     Member.should_receive(:students).and_return(students)
 
     students.each do |student|
-      SessionInvitation.should_receive(:create).with(sessions: session, member: student)
+      SessionInvitation.should_receive(:create).with(sessions: session, member: student, role: "Student")
     end
 
     InvitationManager.send_session_emails session

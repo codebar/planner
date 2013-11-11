@@ -1,5 +1,6 @@
 class Member < ActiveRecord::Base
   has_and_belongs_to_many :roles
+  has_many :session_invitations
 
   validates :name, :surname, :email, :about_you, presence: true
   validates_uniqueness_of :email
@@ -14,6 +15,10 @@ class Member < ActiveRecord::Base
 
   def avatar size=100
     "http://gravatar.com/avatar/#{md5_email}?s=#{size}"
+  end
+
+  def attended_sessions
+    session_invitations.attended.map(&:sessions)
   end
 
   private

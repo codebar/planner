@@ -2,7 +2,7 @@ class InvitationManager
 
   def self.send_session_emails session
     Member.students.each do |student|
-      SessionInvitation.create sessions: session, member: student
+      SessionInvitation.create sessions: session, member: student, role: "Student"
     end
   end
 
