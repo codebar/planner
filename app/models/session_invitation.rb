@@ -11,6 +11,8 @@ class SessionInvitation < ActiveRecord::Base
   scope :attended, -> { where(attended: true) }
   scope :to_students, -> { where(role: "Student") }
   scope :to_coaches, -> { where(role: "Coach") }
+  scope :by_member, -> { group(:member_id) }
+
 
   def send_reminder
     if !role.eql?("Coach")
