@@ -85,7 +85,7 @@
       %ul.sponsors
         - @sponsors.each do |sponsor|
           %li
-            = link_to image_tag(sponsor.avatar, height: '70px'), sponsor.website
+            = link_to image_tag(sponsor.avatar, class: "sponsor-logo"), sponsor.website
     .become-a-sponsor
       =mail_to "hello@codebar.io", "Sponsor codebar.io", subject: "I would like to sponsor codebar", class: 'sponsor-button'
 
