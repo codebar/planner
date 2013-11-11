@@ -1,17 +1,24 @@
-- if @courses.upcoming.any?
-  %h2 Upcoming courses
-  %ul
-    - @courses.upcoming.each do |course|
-      %li
-        =link_to course_url(course) do
-          = course.title
-          %small=l(course.date_and_time)
+%section#courses
+  - if @courses.upcoming.any?
+    .titlebox.course
+      %h2 Upcoming courses
+      .dot
+    %ul
+      - @courses.upcoming.each do |course|
+        %li
+          =link_to course_url(course) do
+            = course.title
+          %br
+          %small=l(course.date_and_time, format: :website_format)
 
-- if @courses.past.any?
-  %h2 Past courses
-  %ul
-    - @courses.past.each do |course|
-      %li
-        =link_to course_url(course) do
-          = course.title
-          %small=l(course.date_and_time)
+  - if @courses.past.any?
+    .titlebox.course
+      %h2 Past courses
+      .dot
+    %ul
+      - @courses.past.each do |course|
+        %li
+          =link_to course_url(course) do
+            = course.title
+          %br
+          %small=l(course.date_and_time, format: :website_format)

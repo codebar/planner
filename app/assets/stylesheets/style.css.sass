@@ -1,39 +1,4 @@
-$main-stroke: #f2f2f4
-$navigation-gray: #fdfdfd
-$navigation-gray-separators: #dddedd
-$nav-block-border: #e5e2e0
-$gray-title-button: #f5f5f5
-
-$become-member-grey: #5e5a6b
-$become-member-white: #f1f1f3
-$become-member-drop-shadow-purple: #72629a
-$become-member-inner-purple: #a6a4b8
-
-$next-session-grey: #fbfbfb
-$become-sponsor-grey: #fafafa
-$become-sponsor-drop-shadow: #b0afc0
-$get-in-touch-purple: #b0afc0
-$become-sponsor-text: #8969a8
-$become-sponsor-border: #e2dded
-
-$navigation-links-purple: #613789
-
-$title-side: #342552
-$our-mission-purple: #6f4a93
-$next-session-yellow: #fdcc38
-$next-course-green: #57ae3b
-$code-of-conduct-purple: #ccc0d6
-
-$dark-purple: #1f1430
-$titles-dark-purple: #4c4066
-$paragraph: #393349
-$bold-par-light-grey: #6f6c7c
-$link-purple: #a26cd2
-$session-titles-dark-grey: #2d193c
-$session-day-gray: #555555
-$sub-session-desc-grey: #6e6b6c
-$dark-color: #0e001b
-
+@import 'partials/colors'
 
 body
   margin: 0
@@ -42,7 +7,6 @@ body
   font-size: 100%
   background-color: #ebe6e2
   background: url("images_bg_big_small.jpg") no-repeat scroll 0 0 rgba(0, 0, 0, 0)
-/*border-bottom: 1px dotted $link-purple*/
 
 ul
   list-style: none
@@ -168,12 +132,13 @@ a
   border-left: 8px solid rgba(242, 242, 244, 0.5)
   border-bottom: 8px solid rgba(242, 242, 244, 0.5)
   border-right: 8px solid rgba(242, 242, 244, 0.5)
-  -webkit-background-clip: padding-box 
-  background-clip: padding-box 
+  -webkit-background-clip: padding-box
+  background-clip: padding-box
   box-shadow: 1px 0px 0px rgba(177, 166, 204, 0.2) inset, -1px 0px 0px rgba(177, 166, 204, 0.2) inset
   -webkit-box-shadow: 1px 0px 0px rgba(177, 166, 204, 0.2) inset, -1px 0px 0px rgba(177, 166, 204, 0.2) inset
   -moz-box-shadow:    1px 0px 0px rgba(177, 166, 204, 0.2) inset, -1px 0px 0px rgba(177, 166, 204, 0.2) inset
   padding-bottom: 70px
+  min-height: 450px
 
 
   input, textarea
@@ -240,10 +205,8 @@ a
     font-size: 0.9em
     background-color: #f6f4f8
 
-  section#main, section#member
+  section
     padding-top: 20px
-
-
 
 .right
   text-align: right
@@ -279,14 +242,13 @@ a
   border-left: 10px solid $our-mission-purple
   background-color: $gray-title-button
 
-.code-of-conduct
+#code-of-conduct
   border-left: 10px solid $code-of-conduct-purple
   background-color: $gray-title-button
 
 .course
   border-left: 10px solid $next-course-green
   background-color: $next-session-grey
-
 
 .titlebox
   padding: 10px 20px
@@ -297,7 +259,7 @@ a
   -webkit-box-shadow: inset 0 0 1px rgba(177, 166, 204, 0.5)
   -moz-box-shadow: inset 0 0 1px rgba(177, 166, 204, 0.5)
   position: relative
-  
+
   h2
     color: $titles-dark-purple
     font-size: 34px
@@ -318,32 +280,40 @@ a
   margin-left: 50px
   width: 84%
   padding-bottom: 30px
+
   .sub-block
     margin-top: 10px
     padding: 30px 0
     .member-button
       margin-left: 0
+
   .lead
     a
       border-bottom: 1px dotted $link-purple
+
   .move-top
     padding-top: 10px
+
   .details-block
     padding-top: 10px
     border-bottom: 1px solid $nav-block-border
+
     a
       border-bottom: 1px dotted $link-purple
+
     h3
       font-weight: 600
       font-size: 28px
       margin: 0
       color: $title-side
+
     h5
       font-size: 16px
       font-weight: 400
       letter-spacing: 0.03em
       color: $sub-session-desc-grey
       margin: 0
+
     h6
       font-size: 15px
       font-weight: 600
@@ -364,25 +334,33 @@ a
   border-bottom: 1px solid $navigation-gray-separators
   padding: 0 0 24px 30px
   width: 74%
+
   h4
     color: $title-side
     margin: 0
     font-weight: 600
     font-size: 22px
+
   .sponsors
     padding: 5px 0 0 0
     margin-bottom: 0
+    margin-top: 0
+
     li
       margin-top: 20px
+
   .gallery
     padding: 5px 0 0 0
     margin-bottom: 0
+
     li
       margin-top: 0px
+
 .become-a-sponsor
   padding: 60px 0 60px 30px
   border-bottom: 1px solid $navigation-gray-separators
   margin-bottom: 29px
+
   .sponsor-button
     background-color: $become-sponsor-grey
     color: $become-sponsor-text
@@ -392,33 +370,34 @@ a
     box-shadow: 0 1px 1px rgba(114, 98, 154, 0.4)
     font-size: 20px
 
-
 footer
   border-top: 1px solid $nav-block-border
   background-color: $dark-purple
   padding-top: 20px
   margin-bottom: 0
   padding: 30px
+
   #footer-width
     margin: 0 auto
     max-width: 1100px
     min-width: 900px
     width: 100%
+
   .dot-footer
     background: url("dot.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0)
     height: 30px
     width: 30px
     display: inline-block
+
   .footer-copy
     color: $become-sponsor-drop-shadow
     display: inline-block
     margin-left: 20px
+
     a
       color: $become-sponsor-drop-shadow
       text-decoration: underline
+
   .right-float
     float: right
     margin: 15px
-
-
-

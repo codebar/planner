@@ -1,6 +1,8 @@
 %section#member
   .titlebox.mission
-    %h2 Become a member
+    %h2
+      Become a member
+      .dot
   .description
     %p.lead
     = simple_form_for @member do |f|
@@ -19,10 +21,15 @@
       = f.input :about_you, as: :text, label: "Tell us a little bit about yourself"
 
       %p
-        Select the notifications you would like to receive
-        %br
-        %small e.g. if you would like to attend some of the sessions as a student but you may also be able to help out with coaching sometimes select both <b>Student</b> and <b>Coach</b>
-      = f.association :roles, as: :check_boxes, label: false
+      = f.association :roles, as: :check_boxes, label: "Sign up as a"
+      %ul.hint
+        %li if you want to learn but also have some programming related skills you want to share, you can select both <b>Student</b> and <b>Coach</b>
+        %li
+          You can only sign up as a <b>Student</b>
+          %ul
+            %li if you are a woman, or
+            %li you are part of a group underrepresented in the tech industry, or
+            %li you succesfuly convince at least two women friends of yours, how amazing programming is and get them to join us and start attending our sesions.
 
       .form-footer
         = f.submit "Join #{t("brand")}"

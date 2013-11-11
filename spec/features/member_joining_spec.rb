@@ -12,7 +12,7 @@ feature 'a member can sign up' do
     fill_in_member_details name
     click_on "Join Codebar.io"
 
-    page.should have_content "Thanks for signing up #{name}! You have not signed up for any notifications. If you change your mind, send us an email at meetins@codebar.io so we can change your settings"
+    page.should have_content "Thanks for signing up #{name}! #{I18n.t("messages.no_roles")}"
   end
 
   context "a member can sign up" do

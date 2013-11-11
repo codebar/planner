@@ -12,5 +12,6 @@ class DashboardController < ApplicationController
   end
 
   def coaches
+    @coaches = Member.coaches.all
   end
 end

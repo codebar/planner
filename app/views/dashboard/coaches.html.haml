@@ -1,1 +1,19 @@
+%section#wall-of-fame
+  .titlebox.mission
+    %h2
+      Wall of Fame
+    .dot
+  %ul
+    - @coaches.each do |coach|
+      %li.tutor
+        .avatar
+          =link_to twitter_url_for(coach.twitter) do
+            =image_tag coach.avatar
+        .about
+          %strong
+          - if coach.twitter.present?
+            =link_to coach.full_name, twitter_url_for(coach.twitter)
+          - else
+            =coach.full_name
+          %br= coach.about_you.html_safe
 
