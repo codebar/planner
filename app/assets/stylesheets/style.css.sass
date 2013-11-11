@@ -1,18 +1,63 @@
+@import 'partials/colors'
+
 body
   margin: 0
   padding: 0
-  font-family: proxima-nova, Helvetical, Arial, sans-serif
-  min-width: 360px
+  font-family: proxima-nova, Helvetica, Arial, sans-serif
+  font-size: 100%
+  background-color: #ebe6e2
+  background: url("images_bg_big_small.jpg") no-repeat scroll 0 0 rgba(0, 0, 0, 0)
+
+ul
+  list-style: none
+  color: $navigation-links-purple
+
+.navbar
+  font-size: 19px
+  font-weight: 400
+  letter-spacing: 0.02em
+
+.navigation
+  float: right
+  margin-top: 8px
+
+.navbar li
+  border-left: 1px solid $navigation-gray-separators
+  display: inline
+  padding: 10px 20px
+
+.navbar li:first-child
+  border: none
+
+.member-button
+  background-color: $become-member-grey
+  border-radius: 6px
+  padding: 10px 25px
+  margin-left: 15px
+  color: $become-member-white
+  box-shadow: 0 1px 1px rgba(114, 98, 154, 0.1)
+
 
 a
   margin: 0
   padding: 0
-  border: 0
-  font-size: 100%
-  font: inherit
   vertical-align: baseline
   text-decoration: none
-  color: #652f93
+  color: $link-purple
+
+#left-image
+  display: block
+  float: left
+  width: 15%
+
+#right-image
+  display: inline
+  float: right
+  width: 15%
+
+#main-layout
+  width: 100%
+
 
 .right-panel, .left-panel
   display: inline-block
@@ -22,11 +67,10 @@ a
   padding-right: 30px
 
 .right-panel
-  margin-top: 45px
+  max-width: 403px
   vertical-align: top
-  min-width: 30%
-  background-color: #fff
-  text-align: right
+  width: 34%
+  margin-left: 30px
 
 .siteunder
   font-size: 18px
@@ -35,9 +79,8 @@ a
   margin-left: 20px
 
 .logo
-  width: 180px
-  margin: auto
-  margin-top: -30px
+  width: 185px
+  float: left
 
 #top
   width: 100%
@@ -45,16 +88,20 @@ a
   background-color: #2c173a
   border-bottom: 2px solid #b9b1bf
 
-#navlight
-  height: 40px
-  background-color: #f6f4f8
-  width: 100%
+#nav-inside
+  min-width: 900px
+  margin: 0 auto
+  max-width: 1100px
 
-.form-footer
-  border-top: 1px solid #e4eae9
-  margin-top: 20px
-  padding-top: 20px
-  margin-right: 200px
+#navlight
+  height: 80px
+  background-color: $navigation-gray
+  border-bottom: 1px solid $nav-block-border
+  width: 100%
+  padding-top: 10px
+
+.member-button
+  display: inline
 
 .row
   margin-bottom: 20px
@@ -67,73 +114,72 @@ a
   width: 25%
 
 .half
+  display: block
+  margin: 20px 20px 0 0
   width: 45%
 
 .third
   width: 33%
 
 
-footer
-  margin: 30px auto
-  text-align: center
-
-
 
 #container
+  background-color: #FFFFFF
   font-size: 1.4em
-  width: 80%
-  margin: 0 auto
-  min-height: 500px
+  margin: 0 auto 70px
+  max-width: 1100px
+  min-width: 900px
+  border-left: 8px solid rgba(242, 242, 244, 0.5)
+  border-bottom: 8px solid rgba(242, 242, 244, 0.5)
+  border-right: 8px solid rgba(242, 242, 244, 0.5)
+  -webkit-background-clip: padding-box
+  background-clip: padding-box
+  box-shadow: 1px 0px 0px rgba(177, 166, 204, 0.2) inset, -1px 0px 0px rgba(177, 166, 204, 0.2) inset
+  -webkit-box-shadow: 1px 0px 0px rgba(177, 166, 204, 0.2) inset, -1px 0px 0px rgba(177, 166, 204, 0.2) inset
+  -moz-box-shadow:    1px 0px 0px rgba(177, 166, 204, 0.2) inset, -1px 0px 0px rgba(177, 166, 204, 0.2) inset
+  padding-bottom: 70px
+  min-height: 450px
 
-  h1, h3, h2
-    color: #2D183D
-    font-weight: 400
-
-  h2
-    font-size: 1.6em
 
   input, textarea
     margin-right: 10px
 
   input[type="text"], input[type="email"], textarea
+    font-family: inherit
     width: 350px
     height: 35px
     margin-top: 10px
     padding: 5px 15px
-    border-radius: 5px
-    border: none
-    background-color: #e4eae9
+    border-radius: 6px
+    border: 1px solid $nav-block-border
+    background-color: $next-session-grey
     font-size: 1em
+    color: $become-member-grey
 
   .btn, .button, input[type='submit']
-    border: 1px solid #DDDDDD
+    background-color: $become-member-grey
     border-radius: 6px
-    box-shadow: 1px 1px 0 rgba(250, 250, 250, 0.5) inset, -1px -1px 2px rgba(250, 250, 250, 0.1) inset
-    font-size: 23px
-    display: block
-    font-weight: 400
-    padding: 10px 45px
-    text-align: center
-    min-width: 100px
-    margin-bottom: 20px
-
+    padding: 10px 25px
+    margin-left: 15px
+    box-shadow: 0 1px 1px rgba(114, 98, 154, 0.1)
+    font-size: 20px
     &:hover
       box-shadow: 1px 2px 2px  #652f93
 
   .button, input[type='submit']
-    background-color: white
     text-decoration: none
     transition-duration: 0.2s
-    color: #652f93
+    color: $become-member-white
 
 
   textarea
-    height: 100px
-    width: 750px
+    height: 107px
+    width: 805px
 
   .required
     abbr
       color: #F50000
+      border-bottom: none
 
   label
     display: block
@@ -143,10 +189,13 @@ footer
     font-weight: bold
 
   .lead
-    font-size: 20px
+    font-size: 18px
+    font-weight: 300
+    line-height: 21px
+    color: $paragraph
 
   .messages
-    margin-top: 20px
+    margin-top: 0px
 
   .messages
     padding: 0 100px
@@ -156,14 +205,14 @@ footer
     font-size: 0.9em
     background-color: #f6f4f8
 
-  section#main
-    display: inline-block
+  section
+    padding-top: 20px
 
 .right
   text-align: right
 
 
-.tutor
+.tutor, .coach
   margin-top: 50px
   .avatar, .about
     display: inline-block
@@ -178,9 +227,194 @@ footer
   .about
     max-width: 500px
 
+#wall-of-fame
+  .coach
+    .about
+      min-width: 300px
+      max-width: 300px
+      line-height: 0.8em
+
+      .name
+        font-size: 0.8em
+
+    .about_you
+      font-size: 0.6em
+
+  li
+    display: inline-block
+    width: 45%
+
 @media(max-width: 900px)
   .left-panel, .right-panel
     width: 100%
 
   .right-panel
     text-align: center
+
+.session
+  background-color: $next-session-grey
+  border-left: 10px solid $next-session-yellow
+
+.mission
+  border-left: 10px solid $our-mission-purple
+  background-color: $gray-title-button
+
+#code-of-conduct
+  border-left: 10px solid $code-of-conduct-purple
+  background-color: $gray-title-button
+
+.course
+  border-left: 10px solid $next-course-green
+  background-color: $next-session-grey
+
+.titlebox
+  padding: 10px 20px
+  width: 83%
+  margin: 30px 0 30px
+  padding: 20px 40px
+  box-shadow: inset 0 0 1px rgba(177, 166, 204, 0.5)
+  -webkit-box-shadow: inset 0 0 1px rgba(177, 166, 204, 0.5)
+  -moz-box-shadow: inset 0 0 1px rgba(177, 166, 204, 0.5)
+  position: relative
+
+  h2
+    color: $titles-dark-purple
+    font-size: 34px
+    text-shadow: 0px 0px 2px rgba(250, 250, 250, 1)
+    margin: 0
+    font-weight: 300
+
+  .dot
+    background: url("dot.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0)
+    height: 30px
+    position: absolute
+    right: 8px
+    top: 8px
+    width: 30px
+
+
+.description
+  margin-left: 50px
+  width: 84%
+  padding-bottom: 30px
+
+  .sub-block
+    margin-top: 10px
+    padding: 30px 0
+    .member-button
+      margin-left: 0
+
+  .lead
+    a
+      border-bottom: 1px dotted $link-purple
+
+  .move-top
+    padding-top: 10px
+
+  .details-block
+    padding-top: 10px
+    border-bottom: 1px solid $nav-block-border
+
+    a
+      border-bottom: 1px dotted $link-purple
+
+    h3
+      font-weight: 600
+      font-size: 28px
+      margin: 0
+      color: $title-side
+
+    h5
+      font-size: 16px
+      font-weight: 400
+      letter-spacing: 0.03em
+      color: $sub-session-desc-grey
+      margin: 0
+
+    h6
+      font-size: 15px
+      font-weight: 600
+      color: $title-side
+      margin: 21px 0 26px
+
+
+.social
+  margin: 10px 0 27px
+  border-bottom: 1px solid $navigation-gray-separators
+  padding-bottom: 16px
+  li
+    display: inline-block
+    margin-left: 43px
+
+
+.right-block
+  border-bottom: 1px solid $navigation-gray-separators
+  padding: 0 0 24px 30px
+  width: 74%
+
+  h4
+    color: $title-side
+    margin: 0
+    font-weight: 600
+    font-size: 22px
+
+  .sponsors
+    padding: 5px 0 0 0
+    margin-bottom: 0
+    margin-top: 0
+
+    li
+      margin-top: 20px
+
+  .gallery
+    padding: 5px 0 0 0
+    margin-bottom: 0
+
+    li
+      margin-top: 0px
+
+.become-a-sponsor
+  padding: 60px 0 60px 30px
+  border-bottom: 1px solid $navigation-gray-separators
+  margin-bottom: 29px
+
+  .sponsor-button
+    background-color: $become-sponsor-grey
+    color: $become-sponsor-text
+    border: 1px solid $become-sponsor-border
+    border-radius: 6px
+    padding: 13px 42px
+    box-shadow: 0 1px 1px rgba(114, 98, 154, 0.4)
+    font-size: 20px
+
+footer
+  border-top: 1px solid $nav-block-border
+  background-color: $dark-purple
+  padding-top: 20px
+  margin-bottom: 0
+  padding: 30px
+
+  #footer-width
+    margin: 0 auto
+    max-width: 1100px
+    min-width: 900px
+    width: 100%
+
+  .dot-footer
+    background: url("dot.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0)
+    height: 30px
+    width: 30px
+    display: inline-block
+
+  .footer-copy
+    color: $become-sponsor-drop-shadow
+    display: inline-block
+    margin-left: 20px
+
+    a
+      color: $become-sponsor-drop-shadow
+      text-decoration: underline
+
+  .right-float
+    float: right
+    margin: 15px

@@ -13,9 +13,11 @@ describe Course do
   end
 
   context "scopes" do
+    let!(:next_course) { Fabricate(:course, date_and_time: DateTime.now+2.days) }
+
     before do
-      2.times { Fabricate(:course, date_and_time: DateTime.now+1.week) }
-      1.times { Fabricate(:course, date_and_time: DateTime.now-1.week) }
+      Fabricate(:course, date_and_time: DateTime.now+1.week)
+      Fabricate(:course, date_and_time: DateTime.now-1.week)
     end
 
     it "#upcoming" do
@@ -24,6 +26,10 @@ describe Course do
 
     it "#past" do
       Course.past.count.should eq 1
+    end
+
+    it "#next" do
+      Course.next.should eq next_course
     end
   end
 

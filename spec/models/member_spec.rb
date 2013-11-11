@@ -54,6 +54,15 @@ describe Member do
         encrypted_email = Digest::MD5.hexdigest(member.email.strip.downcase)
         member.avatar.should eq "http://gravatar.com/avatar/#{encrypted_email}?s=100"
       end
+
+
+      it "#attended_sessions" do
+        member.session_invitations = 3.times.map { Fabricate(:attended_session_invitation) }
+        member.session_invitations << Fabricate(:session_invitation)
+
+        member.attended_sessions.count.should eq 3
+      end
+
     end
 
     context "scopes" do
@@ -71,5 +80,6 @@ describe Member do
         Member.coaches.count.should eq 6
       end
     end
+
   end
 end

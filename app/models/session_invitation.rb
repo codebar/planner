@@ -5,16 +5,27 @@ class SessionInvitation < ActiveRecord::Base
   belongs_to :sessions
 
   validates :sessions, :member, presence: true
-  validates :member_id, uniqueness: { scope: [:sessions ] }
+  validates :member_id, uniqueness: { scope: [:sessions, :role ] }
+  validates_inclusion_of :role, in: [ "Student", "Coach" ], allow_nil: true
+
+  scope :attended, -> { where(attended: true) }
+  scope :to_students, -> { where(role: "Student") }
+  scope :to_coaches, -> { where(role: "Coach") }
+  scope :by_member, -> { group(:member_id) }
+
 
   def send_reminder
-    SessionInvitationMailer.remind_student(self.sessions, self.member, self).deliver if attending
+    if !role.eql?("Coach")
+      SessionInvitationMailer.remind_student(self.sessions, self.member, self).deliver if attending
+    end
   end
 
   private
 
   def email
-    SessionInvitationMailer.invite_student(self.sessions, self.member, self).deliver
+    if role.eql?("Student")
+      SessionInvitationMailer.invite_student(self.sessions, self.member, self).deliver
+    end
   end
 
 end

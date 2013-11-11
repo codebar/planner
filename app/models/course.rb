@@ -9,6 +9,7 @@ class Course < ActiveRecord::Base
   validates :title, presence: true
 
   scope :upcoming, -> { where("date_and_time >= ?", DateTime.now).order(:date_and_time) }
+  scope :next, ->  { upcoming.first }
   scope :past, -> { where("date_and_time < ?", DateTime.now).order(:date_and_time) }
 
   def to_param

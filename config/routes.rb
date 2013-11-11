@@ -2,6 +2,7 @@ Planner::Application.routes.draw do
   root "dashboard#show"
 
   get "code-of-conduct" => "dashboard#code", as: :code_of_conduct
+  get "wall-of-fame" => "dashboard#wall_of_fame", as: :wall_of_fame
 
   resource :members, only: [:new, :create]
 

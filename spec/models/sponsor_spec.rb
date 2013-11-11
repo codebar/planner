@@ -4,7 +4,7 @@ describe Sponsor do
   subject(:sponsor) { Fabricate.build(:sponsor) }
 
   it { should respond_to(:name) }
-  it { should respond_to(:description) }
+  it { should respond_to(:website) }
   it { should respond_to(:address) }
   it { should respond_to(:sessions) }
   it { should respond_to(:sponsor_sessions) }
@@ -19,11 +19,11 @@ describe Sponsor do
         it { should_not be_valid }
         it { should have(1).error_on(:name) }
       end
-      describe '#description' do
-        before { sponsor.description = nil }
+      describe '#website' do
+        before { sponsor.website = nil }
 
         it { should_not be_valid}
-        it { should have(1).error_on(:description) }
+        it { should have(1).error_on(:website) }
       end
       describe '#address' do
         before { sponsor.address = nil }
@@ -38,6 +38,15 @@ describe Sponsor do
         it{ should_not be_valid }
         it{ should have(1).error_on(:avatar) }
       end
+    end
+  end
+
+  context "scopes" do
+    let!(:past) { 2.times.map { Fabricate(:sponsor) } }
+    let!(:latest) { 7.times.map { Fabricate(:sponsor) } }
+
+    it "#latest" do
+      Sponsor.latest.should eq latest.reverse
     end
   end
 

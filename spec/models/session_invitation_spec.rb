@@ -8,11 +8,30 @@ describe SessionInvitation do
 
   it "#send_reminder" do
     invitation.update_attribute(:attending, true)
-    mailer = mock(SessionInvitationMailer, deliver: nil)
+    mailer = double(SessionInvitationMailer, deliver: nil)
 
     SessionInvitationMailer.should_receive(:remind_student).
       with(invitation.sessions, invitation.member, invitation).and_return(mailer)
 
     invitation.send_reminder
   end
+
+  context "scopes" do
+    let!(:attended) { 3.times.map { Fabricate(:attended_session_invitation) } }
+    let!(:to_students) { 6.times.map { Fabricate(:student_session_invitation) } }
+    let!(:to_coaches) { 4.times.map { Fabricate(:coach_session_invitation) } }
+
+    it "#attended" do
+      SessionInvitation.attended.count.should eq attended.length
+    end
+
+    it "#to_coaches" do
+      SessionInvitation.to_coaches.count.should eq to_coaches.length
+    end
+
+    it "#to_student" do
+      SessionInvitation.to_students.count.should eq to_students.length
+    end
+  end
+
 end
