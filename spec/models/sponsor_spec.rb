@@ -9,6 +9,7 @@ describe Sponsor do
   it { should respond_to(:sessions) }
   it { should respond_to(:sponsor_sessions) }
   it { should respond_to(:avatar) }
+  it { should respond_to(:seats) }
   it { should be_valid }
 
   context 'validations' do
@@ -37,6 +38,12 @@ describe Sponsor do
 
         it{ should_not be_valid }
         it{ should have(1).error_on(:avatar) }
+      end
+
+      describe '#seats' do
+        before { sponsor.seats = nil }
+
+        it { should have(1).error_on(:seats) }
       end
     end
   end

@@ -7,7 +7,7 @@ feature 'a member can' do
     let(:accepting_invitation_path) { accept_invitation_path(invitation) }
     let(:rejecting_invitation_path) { reject_invitation_path(invitation) }
 
-    let(:set_no_available_slots) { invitation.sessions.update_attribute(:seats, 0) }
+    let(:set_no_available_slots) { invitation.sessions.host.update_attribute(:seats, 0) }
 
     it_behaves_like "invitation route"
 
