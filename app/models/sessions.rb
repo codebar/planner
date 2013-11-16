@@ -6,7 +6,7 @@ class Sessions < ActiveRecord::Base
   has_many :sponsors, through: :sponsor_sessions
 
   scope :upcoming, -> { where("date_and_time >= ?", DateTime.now).order(:date_and_time) }
-  scope :next, ->  { upcoming.first }
+  scope :next, ->  { upcoming.all.first }
 
   def host
     SponsorSession.hosts.for_session(self.id).first.sponsor
