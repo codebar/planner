@@ -9,6 +9,6 @@ class InvitationController < ApplicationController
   end
 
   def has_remaining_seats? invitation
-    invitation.sessions.seats > invitation.sessions.attending_invitations.length
+    invitation.sessions.host.seats > invitation.sessions.attending_invitations.length
   end
 end
