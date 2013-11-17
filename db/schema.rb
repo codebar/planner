@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131111024701) do
+ActiveRecord::Schema.define(version: 20131112221641) do
 
   create_table "addresses", force: true do |t|
     t.string   "flat"
@@ -106,7 +106,6 @@ ActiveRecord::Schema.define(version: 20131111024701) do
     t.datetime "date_and_time"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "seats",         default: 15
   end
 
   create_table "sponsor_sessions", force: true do |t|
@@ -127,6 +126,7 @@ ActiveRecord::Schema.define(version: 20131111024701) do
     t.datetime "updated_at"
     t.string   "avatar"
     t.string   "website"
+    t.integer  "seats",       default: 15
   end
 
 end

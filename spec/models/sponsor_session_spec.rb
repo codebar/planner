@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe SponsorSession do
-  subject(:sponsor_session) { Fabricate(:hosted_session) }
+  let!(:session) { Fabricate(:sessions) }
 
   context 'when the session has more than one host' do
     let(:other_sponsor) { Fabricate(:sponsor) }
@@ -9,7 +9,7 @@ describe SponsorSession do
     let(:another_host_session) do
       Fabricate.build(:sponsor_session,
       sponsor: other_sponsor,
-      sessions: sponsor_session.sessions,
+      sessions: session,
       host: true)
     end
 
@@ -17,16 +17,13 @@ describe SponsorSession do
   end
 
   context '#scopes' do
-    let!(:hosted_session) { Fabricate(:hosted_session) }
 
     it '#hosts' do
       expect(SponsorSession.hosts.length).to eq(1)
     end
 
-    describe '#for_session' do
-      let(:session) { hosted_session.sessions }
-
-      it { expect(SponsorSession.for_session(session.id).length).to eq(1) }
+    it '#for_session' do
+      expect(SponsorSession.for_session(session.id).length).to eq(1)
     end
   end
 end
