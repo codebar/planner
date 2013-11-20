@@ -18,4 +18,10 @@ class InvitationManager
     end
   end
 
+  def self.send_spots_available session
+    session.invitations.map do |invitation|
+      invitation.send_spots_available
+    end
+  end
+
 end
