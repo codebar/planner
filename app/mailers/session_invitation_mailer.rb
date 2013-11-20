@@ -29,6 +29,20 @@ class SessionInvitationMailer < ActionMailer::Base
     end
   end
 
+  def spots_available session, member, invitation
+    @session = session
+    @member = member
+    @invitation = invitation
+
+    load_attachments
+
+    subject = "Spots available for #{@session.title} by Codebar - #{l(@session.date_and_time, format: :email_title)}"
+
+    mail(mail_args(member, subject)) do |format|
+      format.html
+    end
+  end
+
   private
 
   def load_attachments

@@ -20,6 +20,12 @@ class SessionInvitation < ActiveRecord::Base
     end
   end
 
+  def send_spots_available
+    if role.eql?("Student")
+      SessionInvitationMailer.spots_available(self.sessions, self.member, self).deliver if attending.eql?(nil)
+    end
+  end
+
   private
 
   def email
