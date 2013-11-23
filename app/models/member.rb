@@ -7,6 +7,7 @@ class Member < ActiveRecord::Base
 
   scope :students, -> { joins(:roles).where(:roles => { :name => 'Student' }) }
   scope :coaches, -> { joins(:roles).where(:roles => { :name => 'Coach' }) }
+  scope :admins, -> { joins(:roles).where(:roles => { :name => 'Admin' }) }
 
   attr_accessor :attendance
 
