@@ -18,6 +18,7 @@ class SessionInvitationMailer < ActionMailer::Base
 
   def remind_student session, member, invitation
     @session = session
+    @host_address = AddressDecorator.decorate(@session.host.address)
     @member = member
     @invitation = invitation
 
@@ -32,6 +33,7 @@ class SessionInvitationMailer < ActionMailer::Base
 
   def spots_available session, member, invitation
     @session = session
+    @host_address = AddressDecorator.decorate(@session.host.address)
     @member = member
     @invitation = invitation
 

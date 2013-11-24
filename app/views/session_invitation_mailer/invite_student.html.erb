@@ -21,7 +21,7 @@
     <p style="color: #434950; font-size: 16px; font-weight: 400; padding-bottom: 15px;">
     <%= @host_address.to_html %>
     </p>
-    <a href="https://maps.google.com/maps?q=<%= @host_address.postal_code %>" style="color: a369d5" text-decoration: underline"> view map </a>
+    <a href="https://maps.google.com/maps?q=<%= @host_address.postal_code %>" style="color: a369d5 text-decoration: underline"> view map </a>
     <div style="width:120px; height:41px; margin-top: 33px;"><%=image_tag(@session.host.avatar, width: "120px") %></div>
   </div>
 
