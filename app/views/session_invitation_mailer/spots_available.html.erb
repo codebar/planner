@@ -4,7 +4,7 @@
 <p style="font-weight: 300; font-size: 16px; color: #2e2e2e; margin-bottom: 50px;"> In our sessions, you will be able to go through HTML/CSS, Javascript and Ruby tutorials and also get guidance on your personal projects with help from our <b>superstar coaches</b>. You will also get the opportunity to meet other people interested in coding and pair with them.<br></p>
 
 <div style="display:inline-block">
-  <div style="width:340px; padding-right: 40px; display: inline-block;">
+  <div style="width:340px; padding-right: 40px; display: inline-block; vertical-align: top;">
     <h2 style="color: #2d183d; font-size: 27px; font-weight: 500;letter-spacing: 0.03em; margin-bottom: 0;"><%= @session.title %> by Codebar</h2>
     <small><%= @session.description %></small>
     <p style="font-size: 16px; font-weight: 300; margin-top: 7px;">on <b style="color: #555555;font-size: 16px; font-weight: 600; margin-top: 0;"><%= l(@session.date_and_time, format: :email)%></b></p>
@@ -16,14 +16,12 @@
 
   <div style="width:150px; border-left: 1px solid #ececec; padding-left: 50px; display: inline-block;">
     <h3 style="color: #434950; font-size: 17px;font-weight: 600;letter-spacing: 0.02em;">Location</h3>
-    <h2 style="color: #2D183D; font-weight: 400; ">Digital Science</h2>
-    <p style="color: #434950;font-size: 16px; font-weight: 400;">
-    The Macmillan Building<br/>
-    4 Crinan Street<br/>
-    London, N1 9XW<br/>
+    <h2 style="color: #2D183D; font-weight: 400; "><%= @session.host.name %></h2>
+    <p style="color: #434950; font-size: 16px; font-weight: 400; padding-bottom: 15px;">
+    <%= @host_address.to_html %>
     </p>
-    <a href="http://goo.gl/maps/df23L" style="color: #a369d5; text-decoration: underline" >view map</a>
-    <div style="width:120px; height:41px; margin-top: 33px;"><%=image_tag(attachments["digital-science.png"].url, width: "120px") %></div>
+    <a href="https://maps.google.com/maps?q=<%= @host_address.postal_code %>" style="color: a369d5 text-decoration: underline"> view map </a>
+    <div style="width:120px; height:41px; margin-top: 33px;"><%=image_tag(@session.host.avatar, width: "120px") %></div>
   </div>
 
 </div>

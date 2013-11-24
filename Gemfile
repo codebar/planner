@@ -9,6 +9,7 @@ gem 'coffee-rails', '~> 4.0.0'
 gem 'jquery-rails'
 gem 'turbolinks'
 gem 'simple_form'
+gem 'draper'
 
 group :development, :test do
   gem 'rspec-rails'

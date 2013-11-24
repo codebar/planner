@@ -3,6 +3,7 @@ class SessionInvitationMailer < ActionMailer::Base
 
   def invite_student sessions, member, invitation
     @session = sessions
+    @host_address = AddressDecorator.decorate(@session.host.address)
     @member = member
     @invitation = invitation
 
@@ -17,6 +18,7 @@ class SessionInvitationMailer < ActionMailer::Base
 
   def remind_student session, member, invitation
     @session = session
+    @host_address = AddressDecorator.decorate(@session.host.address)
     @member = member
     @invitation = invitation
 
@@ -31,6 +33,7 @@ class SessionInvitationMailer < ActionMailer::Base
 
   def spots_available session, member, invitation
     @session = session
+    @host_address = AddressDecorator.decorate(@session.host.address)
     @member = member
     @invitation = invitation
 
@@ -46,7 +49,7 @@ class SessionInvitationMailer < ActionMailer::Base
   private
 
   def load_attachments
-    %w{logo.png digital-science.png}.each do |image|
+    %w{logo.png}.each do |image|
       attachments.inline[image] = File.read("#{Rails.root.to_s}/app/assets/images/#{image}")
     end
   end
