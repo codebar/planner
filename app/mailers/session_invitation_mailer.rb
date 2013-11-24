@@ -3,6 +3,7 @@ class SessionInvitationMailer < ActionMailer::Base
 
   def invite_student sessions, member, invitation
     @session = sessions
+    @host_address = AddressDecorator.decorate(@session.host.address)
     @member = member
     @invitation = invitation
 
