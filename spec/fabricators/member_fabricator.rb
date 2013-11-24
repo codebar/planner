@@ -12,3 +12,8 @@ end
 Fabricator(:coach, from: :member) do
   roles { [ Fabricate(:coach_role) ] }
 end
+
+Fabricator(:admin, from: :member) do
+  roles { [ Fabricate(:admin_role) ] }
+end
+
