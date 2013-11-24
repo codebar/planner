@@ -1,6 +1,6 @@
 %section#courses
   - if @courses.upcoming.any?
-    .titlebox.course
+    .titlebox.course.upcoming
       %h2 Upcoming courses
       .dot
     %ul
@@ -12,7 +12,7 @@
           %small=l(course.date_and_time, format: :website_format)
 
   - if @courses.past.any?
-    .titlebox.course
+    .titlebox.course.past
       %h2 Past courses
       .dot
     %ul
