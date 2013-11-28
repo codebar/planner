@@ -1,0 +1,26 @@
+%section#sessions
+  - if @sessions.upcoming.any?
+    .titlebox.session.upcoming
+      %h2 Upcoming sessions
+      .dot
+    %ul
+      - @sessions.upcoming.each do |session|
+        %li
+          = session.title
+          %br
+          %small= session.description
+          %br
+          %small=l(session.date_and_time, format: :website_format)
+
+  - if @sessions.past.any?
+    .titlebox.session.past
+      %h2 Past sessions
+      .dot
+    %ul
+      - @sessions.past.each do |session|
+        %li
+          = session.title
+          %br
+          %small= session.description
+          %br
+          %small=l(session.date_and_time, format: :website_format)
