@@ -3,6 +3,7 @@ Fabricator(:member) do
   surname { Faker::Name.last_name }
   email { Faker::Internet.email }
   about_you { Faker::Lorem.paragraph }
+  twitter { Faker::Name.first_name }
 end
 
 Fabricator(:student, from: :member) do
@@ -10,7 +11,7 @@ Fabricator(:student, from: :member) do
 end
 
 Fabricator(:coach, from: :member) do
-  roles { [ Fabricate(:coach_role) ] }
+  roles { [ Role.find_by_name("Coach") || Fabricate(:coach_role) ] }
 end
 
 Fabricator(:admin, from: :member) do

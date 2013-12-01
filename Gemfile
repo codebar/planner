@@ -15,7 +15,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'fabrication'
   gem 'faker'
-  gem 'capybara-webkit'
+  gem 'capybara'
   gem 'sqlite3'
   gem 'coveralls', require: false
   gem 'launchy'
