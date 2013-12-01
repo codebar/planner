@@ -1,4 +1,4 @@
-# Planner
+# Planner [![Gittip](http://img.shields.io/gittip/shields.io.png)](https://www.gittip.com/by_codebar/)
 
 A tool to help us keep organised
 
