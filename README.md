@@ -13,20 +13,20 @@ First thing you will need, is to install Ruby 2.0.0
 
 ### Using [rvm](https://rvm.io/rvm/install)
 
-```
+```bash
 rvm install 2.0.0-p353
 ```
 
 ### Using [rbenv](https://github.com/sstephenson/rbenv)
 
-```
+```bash
 rbenv install 2.0.0-p353
 rbenv global 2.0.0-p353
 ```
 
 ### Install the gems!
 
-```
+```bash
 gem install bundler
 bundle install --without production
 ```
@@ -35,19 +35,19 @@ _You need to user the --wihout production flag to avoid requiring the **pg** gem
 
 ### Setup the database
 
-```
+```bash
 bundle exec rake db:create
 bundle exec rake db:migrate db:test:prepare
 ```
 
 ### Generate some data!
 
-```
+```bash
 bundle exec rake db:seed
 ```
 
 ### Run the tests
-```
+```bash
 bundle exec rake
 ```
 
