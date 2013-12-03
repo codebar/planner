@@ -12,18 +12,25 @@ ul
   list-style: none
   color: $navigation-links-purple
 
+.navigation
+  float: right
+  margin: 15px 10px 0 0
+  min-width: 200px
+
 .navbar
+  float: left
   font-size: 19px
   font-weight: 400
   letter-spacing: 0.02em
+  margin: 0
+  height: 42px
 
-.navigation
-  float: right
-  margin-top: 8px
+#mobile-nav-icon
+  display: none
 
 .navbar li
   border-left: 1px solid $navigation-gray-separators
-  display: inline
+  float: left
   padding: 10px 20px
 
 .navbar li:first-child
@@ -36,7 +43,7 @@ ul
   margin-left: 15px
   color: $become-member-white
   box-shadow: 0 1px 1px rgba(114, 98, 154, 0.1)
-
+  float: right
 
 a
   margin: 0
@@ -87,7 +94,7 @@ a
   height: 6px
   background-color: #2c173a
   border-bottom: 2px solid #b9b1bf
-  min-width: 908px
+  min-width: 100%
 
 #nav-inside
   min-width: 900px
@@ -101,9 +108,6 @@ a
   width: 100%
   min-width: 908px
   padding-top: 10px
-
-.member-button
-  display: inline
 
 .row
   margin-bottom: 20px
@@ -122,8 +126,6 @@ a
 
 .third
   width: 33%
-
-
 
 #container
   background-color: #FFFFFF
@@ -425,44 +427,3 @@ footer
   .right-float
     float: right
     margin: 15px
-
-@media (max-width: 960px)
-  #container
-    border: none
-
-  .left-panel, .right-panel
-    max-width: none
-
-  .left-panel
-    padding-right: 0
-    width: 100%
-
-  .right-panel
-    width: 92%
-
-  .right-block
-    width: 96%
-
-  .sponsors
-    li
-      display: inline-block
-      width: 260px
-
-  .gallery
-    padding: 5px 0 0 0
-    margin-bottom: 0
-
-    li
-      margin-top: 0px
-      display: inline-block
-
-      img
-        width: 250px
-        height: 166px
-
-  .social
-    padding-left: 0
-
-    li:first-child
-      margin-left: 20px
-
