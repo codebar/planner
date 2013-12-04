@@ -11,6 +11,14 @@
 // about supported directives.
 //
 //= require jquery
-//= require jquery_ujs
-//= require turbolinks
 //= require_tree .
+
+'use strict';
+
+$(document).ready(function(){
+
+	$('#mobile-nav-icon').on('click', function(){
+		$('.navigation').slideToggle();
+	});
+
+});

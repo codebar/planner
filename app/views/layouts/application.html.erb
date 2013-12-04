@@ -18,6 +18,11 @@
             <%= image_tag "logo.png", width: '185px'%>
           <% end %>
         </div>
+        <span id="mobile-nav-icon">
+          <span class="line one"></span>
+          <span class="line two"></span>
+          <span class="line three"></span>
+        </span>
         <div class="navigation">
           <ul class="navbar">
             <li>
@@ -29,8 +34,8 @@
             <li>
             <%= link_to "Courses", courses_path %>
             </li>
-            <%=link_to "Become a member", new_members_path, class: 'member-button'%>
           </ul>
+          <%=link_to "Become a member", new_members_path, class: 'member-button'%>
         </div>
       </div>
     </div>
