@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131112221641) do
+ActiveRecord::Schema.define(version: 20131208030336) do
 
   create_table "addresses", force: true do |t|
     t.string   "flat"
@@ -45,6 +45,27 @@ ActiveRecord::Schema.define(version: 20131112221641) do
     t.integer  "seats",             default: 0
     t.string   "slug"
     t.string   "url"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "meeting_talks", force: true do |t|
+    t.integer  "meeting_id"
+    t.string   "title"
+    t.string   "description"
+    t.text     "abstract"
+    t.integer  "speaker_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "meeting_talks", ["meeting_id"], name: "index_meeting_talks_on_meeting_id"
+
+  create_table "meetings", force: true do |t|
+    t.datetime "date_and_time"
+    t.integer  "duration",      default: 120
+    t.string   "lanyrd_url"
+    t.integer  "venue_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
