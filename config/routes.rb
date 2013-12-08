@@ -28,7 +28,8 @@ Planner::Application.routes.draw do
     end
   end
 
-  resources :courses, only: [:index, :show]
-  resources :sessions, only: [:index]
+  resources :courses, only: [ :index, :show ]
+  resources :sessions, only: [ :index ]
+  resources :meetings, only: [ :show ]
 
 end

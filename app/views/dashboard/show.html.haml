@@ -19,6 +19,29 @@
           Before you continue, you should read our
           =link_to "code of conduct", "#code-of-conduct"
 
+    - if @meeting.present?
+      .titlebox.meeting
+        %h2
+          =link_to @meeting.title, @meeting
+        .dot
+      .description
+        - @meeting.meeting_talks.each do |talk|
+          .talk
+            .speaker
+              =link_to talk.speaker.full_name, twitter_url_for(talk.speaker.twitter)
+
+            .information
+              =talk.title
+              - if talk.description.present?
+                %br
+                %small=talk.description
+        %h6
+          = "#{l(@meeting.date_and_time, format: :meeting_format)}"
+          to
+          = "#{l(@meeting.end_time, format: :time)}"
+        .sub-block
+          =link_to "Read more and RSVP", @meeting, class: 'member-button'
+
     - if @next_session.present?
       .titlebox.session
         %h2
