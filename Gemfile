@@ -19,6 +19,8 @@ group :development, :test do
   gem 'sqlite3'
   gem 'coveralls', require: false
   gem 'launchy'
+  gem 'cucumber-rails', require: false
+  gem 'database_cleaner'
 end
 
 group :production do

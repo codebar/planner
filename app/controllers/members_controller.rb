@@ -9,6 +9,8 @@ class MembersController < ApplicationController
     set_roles(@member)
 
     if @member.save
+      MemberSignupMailer.welcome_email(@member).deliver
+
       redirect_to root_path, notice: sign_up_message(@member)
     else
       render "new"
