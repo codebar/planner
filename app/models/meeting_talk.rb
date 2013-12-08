@@ -4,4 +4,6 @@ class MeetingTalk < ActiveRecord::Base
 
   validates :title, :abstract, :speaker, :meeting, presence: true
 
+  default_scope -> { order("title asc") }
+
 end
