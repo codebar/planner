@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131208030336) do
+ActiveRecord::Schema.define(version: 20131208145950) do
 
   create_table "addresses", force: true do |t|
     t.string   "flat"
@@ -21,6 +21,16 @@ ActiveRecord::Schema.define(version: 20131208030336) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "auth_services", force: true do |t|
+    t.integer  "member_id"
+    t.string   "provider"
+    t.string   "uid"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "auth_services", ["member_id"], name: "index_auth_services_on_member_id"
 
   create_table "course_invitations", force: true do |t|
     t.integer  "course_id"
@@ -79,6 +89,7 @@ ActiveRecord::Schema.define(version: 20131208030336) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "unsubscribed"
+    t.boolean  "can_log_in",   default: false, null: false
   end
 
   create_table "members_roles", id: false, force: true do |t|

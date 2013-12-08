@@ -1,17 +1,21 @@
 class MembersController < ApplicationController
 
-  def new
-    @member = Member.new
+  def edit
+    if current_member?
+      @member = current_member
+    else
+      redirect_to "/auth/github"
+    end
   end
 
-  def create
-    @member = Member.new(member_params)
+  def update
+    @member = current_member
     set_roles(@member)
 
-    if @member.save
+    if @member.update_attributes(member_params)
       redirect_to root_path, notice: sign_up_message(@member)
     else
-      render "new"
+      render "edit"
     end
   end
 

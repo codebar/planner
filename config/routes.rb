@@ -4,9 +4,7 @@ Planner::Application.routes.draw do
   get "code-of-conduct" => "dashboard#code", as: :code_of_conduct
   get "wall-of-fame" => "dashboard#wall_of_fame", as: :wall_of_fame
 
-  resource :members, only: [:new, :create]
-
-  resources :members, only: [] do
+  resource :member, only: [:new, :edit, :update] do
     member do
       get "unsubscribe"
     end
@@ -32,4 +30,7 @@ Planner::Application.routes.draw do
   resources :sessions, only: [ :index ]
   resources :meetings, only: [ :show ]
 
+  match '/auth/:service/callback' => 'auth_services#create', via: %i(get post)
+  match '/auth/failure' => 'auth_services#failure', via: %i(get post)
+  match '/logout' => 'auth_sessions#destroy', via: %i(get delete), as: :logout
 end

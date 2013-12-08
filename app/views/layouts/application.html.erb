@@ -35,7 +35,12 @@
             <%= link_to "Courses", courses_path %>
             </li>
           </ul>
-          <%=link_to "Become a member", new_members_path, class: 'member-button'%>
+          <% if logged_in? %>
+              <%= link_to "Log Out", logout_path, class: "member-button" %>
+          <% else %>
+              <%= link_to "Become a member", new_member_path, class: 'member-button'%>
+              <%= link_to "Sign In", "/auth/github", class: "member-button" %>
+          <% end %>
         </div>
       </div>
     </div>
