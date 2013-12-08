@@ -15,4 +15,17 @@ if Rails.env.development?
     Fabricate(:attended_session_invitation, role: "Coach", member: coach, sessions: sessions.sample )  rescue "Coach already attended"
   end
 
+  meeting = Meeting.create(venue: Sponsor.all.shuffle.first,
+                           date_and_time: DateTime.now+1.year-11.months,
+                           duration: 120,
+                           lanyrd_url: "http://lanyrd.com/2013/by-codebar/")
+  meeting.meeting_talks << MeetingTalk.create(title: "Becoming a Software Engineer",
+                                              description: "Inspiring a New Generation of Developers",
+                                              speaker_id: Member.first.id,
+                                              abstract: Faker::Lorem.paragraph)
+
+  meeting.meeting_talks << MeetingTalk.create(title: "Kickstart your development career",
+                                              speaker_id: Member.last.id,
+                                              abstract: Faker::Lorem.paragraph)
+
 end

@@ -12,6 +12,9 @@ en:
         short: "%d/%m/%Y %H:%M "
         date: "%d %B %Y"
         website_format: "%A, %d %B %Y at %H:%M"
+        month: "%B"
+        meeting_format: "%A, %d %B %Y,  %H:%M"
+        time: "%H:%M"
 
   messages:
     accepted_invitation: "Thanks for getting back to us %{name}. See you at the session!"

@@ -26,8 +26,9 @@ Planner::Application.routes.draw do
     end
   end
 
-  resources :courses, only: [:index, :show]
-  resources :sessions, only: [:index]
+  resources :courses, only: [ :index, :show ]
+  resources :sessions, only: [ :index ]
+  resources :meetings, only: [ :show ]
 
   match '/auth/:service/callback' => 'auth_services#create', via: %i(get post)
   match '/auth/failure' => 'auth_services#failure', via: %i(get post)

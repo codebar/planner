@@ -13,6 +13,10 @@ ul
   list-style: none
   color: $navigation-links-purple
 
+hr
+  border-style: dashed
+  border-color: rgba(177, 166, 204, 0.5)
+
 .navigation
   float: right
   margin: 15px 10px 0 0
@@ -112,8 +116,9 @@ a
 
 .row
   margin-bottom: 20px
+  width: 100%
 
-.quarter, .half, .third, .row
+.quarter, .half, .third, .two-thirds, .row
   display: inline-block
   padding-right: 20px
 
@@ -121,12 +126,35 @@ a
   width: 25%
 
 .half
-  display: block
   margin: 20px 20px 0 0
   width: 45%
 
 .third
   width: 33%
+
+.two-thirds
+  padding-right: 0
+  width: 66%
+
+.venue
+  .third
+    padding-right: 0
+    vertical-align: top
+.talk
+  width: 100%
+  display: inline-block
+  padding-bottom: 10px
+
+  .information, .speaker
+    display: inline-block
+    vertical-align: top
+
+  .information
+    font-size: 0.9em
+
+  .speaker
+    width: 170px
+    font-size: 0.8em
 
 #container
   background-color: #FFFFFF
@@ -252,14 +280,14 @@ a
 .center
   text-align: center
 
-
 .session
-  background-color: $next-session-grey
   border-left: 10px solid $next-session-yellow
 
 .mission
   border-left: 10px solid $our-mission-purple
-  background-color: $gray-title-button
+
+.meeting
+  border-left: 10px solid $meeting-title
 
 #code-of-conduct
   border-left: 10px solid $code-of-conduct-purple
@@ -281,6 +309,7 @@ a
   -webkit-box-shadow: inset 0 0 1px rgba(177, 166, 204, 0.5)
   -moz-box-shadow: inset 0 0 1px rgba(177, 166, 204, 0.5)
   position: relative
+  background-color: $gray-title-button
 
   h2
     color: $titles-dark-purple
@@ -342,6 +371,8 @@ a
       color: $title-side
       margin: 21px 0 26px
 
+#sessions ul li
+  margin-bottom: 15px
 
 .social
   margin: 10px 0 27px
@@ -377,6 +408,10 @@ a
 
     li
       margin-top: 0px
+
+#meeting
+  .tutor
+    font-size: 0.8em
 
 .sponsor-logo
   max-height: 70px
@@ -425,6 +460,7 @@ footer
       color: $become-sponsor-drop-shadow
       text-decoration: underline
 
-  .right-float
-    float: right
-    margin: 15px
+.right-float
+  float: right
+  margin: 15px
+
