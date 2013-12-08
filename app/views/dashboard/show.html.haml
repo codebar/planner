@@ -34,7 +34,7 @@
         %p.lead.move-top
           We run sessions weekly where we offer guided help in going through HTML/CSS, Javascript and Ruby tutorials - and not just that! There, you will also get the opportunity to meet other people interested in coding and pair with them. If you would like to attend as a student or help out as a coach you can do so by signing up.
         .sub-block
-          =link_to "Sign up to the session", new_members_path, class: 'member-button'
+          = link_to "Sign up to the session", "/auth/github", class: 'member-button'
 
     - if @next_course.present?
       .titlebox.course
@@ -54,7 +54,7 @@
           %small
             =link_to "read more about the course", @next_course
         .sub-block
-          =link_to "Sign up to the course", new_members_path, class: 'member-button'
+          =link_to "Sign up to the course", new_member_path, class: 'member-button'
 
 
     .titlebox#code-of-conduct

@@ -19,14 +19,11 @@ feature 'viewing a course' do
   end
 
   context "signing up is not available" do
-
     scenario "when there are seats left" do
       course.update_attribute(:seats, 0)
       visit course_path(course)
 
       expect(page).to have_content "This course is fully booked!"
-
     end
   end
 end
-

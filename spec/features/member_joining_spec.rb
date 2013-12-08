@@ -1,12 +1,12 @@
 require 'spec_helper'
 
-feature 'a member sign up' do
-
+feature 'a member sign up', pending: "Need to test with github redirect" do
   before do
     [ "Student", "Coach", "Mentor", "Admin" ].each { |role| Role.create name: role }
   end
 
-  let (:name) { Faker::Name.first_name }
+  let(:member) { Fabricate(:member) }
+  let(:name) { Faker::Name.first_name }
 
   scenario 'when they fill in all the required details' do
     fill_in_member_details name
@@ -17,7 +17,11 @@ feature 'a member sign up' do
 
   context "a member can sign up" do
     scenario 'as a Student' do
+      log_in_member member
+
+      visit "/member/edit"
       fill_in_member_details name
+
       check "Student"
 
       click_on "Join Codebar.io"

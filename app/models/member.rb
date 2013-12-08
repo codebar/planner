@@ -1,8 +1,10 @@
 class Member < ActiveRecord::Base
   has_and_belongs_to_many :roles
   has_many :session_invitations
+  has_many :auth_services
 
-  validates :name, :surname, :email, :about_you, presence: true
+  validates :auth_services, presence: true
+  validates :name, :surname, :email, :about_you, presence: true, if: :can_log_in?
   validates_uniqueness_of :email
 
   scope :students, -> { joins(:roles).where(:roles => { :name => 'Student' }) }
@@ -23,10 +25,14 @@ class Member < ActiveRecord::Base
     session_invitations.attended.map(&:sessions)
   end
 
+  def requires_additional_details?
+    can_log_in? && !valid?
+  end
+
+
   private
 
   def md5_email
     Digest::MD5.hexdigest(email.strip.downcase)
   end
-
 end
