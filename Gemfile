@@ -11,6 +11,9 @@ gem 'turbolinks'
 gem 'simple_form'
 gem 'draper'
 
+gem 'omniauth'
+gem 'omniauth-github'
+
 group :development, :test do
   gem 'rspec-rails'
   gem 'fabrication'
@@ -19,6 +22,7 @@ group :development, :test do
   gem 'sqlite3'
   gem 'coveralls', require: false
   gem 'launchy'
+  gem 'pry-debugger'
 end
 
 group :production do
