@@ -15,7 +15,7 @@ shared_examples "invitation route" do
       expect(page).to have_content("You have alredy confirmed you attendance!")
     end
 
-    scenario 'when there are available spots' do
+    scenario 'when there are no available spots' do
       set_no_available_slots
       visit accepting_invitation_path
 
