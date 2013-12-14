@@ -7,6 +7,7 @@ feature 'a member sign up' do
   end
 
   let (:name) { Faker::Name.first_name }
+  let (:email) { ActionMailer::Base.deliveries.last }
 
   scenario 'when they fill in all the required details' do
     fill_in_member_details name
@@ -14,7 +15,7 @@ feature 'a member sign up' do
     click_on "Join Codebar.io"
 
     page.should have_content "Thanks for signing up #{name}! #{I18n.t("messages.no_roles")}"
-    ActionMailer::Base.deliveries.last.to.should == ['joe@test.com']
+    email.to.should == ['joe@test.com']
   end
 
   context "a member can sign up" do
@@ -26,7 +27,7 @@ feature 'a member sign up' do
       click_on "Join Codebar.io"
 
       page.should have_content "Thanks for signing up #{name}! You will be receiving notifications for: Students"
-      ActionMailer::Base.deliveries.last.to.should == ['joe@test.com']
+      email.to.should == ['joe@test.com']
     end
 
     scenario 'as a Coach' do
@@ -37,7 +38,7 @@ feature 'a member sign up' do
       click_on "Join Codebar.io"
 
       page.should have_content "Thanks for signing up Maria! You will be receiving notifications for: Coaches"
-      ActionMailer::Base.deliveries.last.to.should == ['maria@test.com']
+      email.to.should == ['maria@test.com']
     end
   end
 
