@@ -1,6 +1,9 @@
 require "spec_helper"
 
 describe MemberSignupMailer do
+
+  let(:email) { ActionMailer::Base.deliveries.last }
+
   let(:member) do
     double(
       Member,
@@ -8,11 +11,9 @@ describe MemberSignupMailer do
     )
   end
 
-  describe "#welcome_email" do
-    subject { described_class.welcome_email(member).deliver }
+  it "#welcome_email" do
+    MemberSignupMailer.welcome_email(member).deliver
 
-    it "delivers the welome email" do
-      expect(subject.to).to eq(['test@test.com'])
-    end
+    expect(email.to).to eq(['test@test.com'])
   end
 end
