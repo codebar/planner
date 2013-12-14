@@ -7,7 +7,6 @@ module MemberHelpers
     fill_in "Name", with: name
     fill_in "Surname", with: Faker::Name.last_name
 
-    fill_in "Email", with: Faker::Internet.email
     fill_in "Twitter", with: Faker::Name.first_name
 
     fill_in "Tell us a little bit about yourself", with: Faker::Lorem.paragraph
