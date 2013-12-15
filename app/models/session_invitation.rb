@@ -14,6 +14,10 @@ class SessionInvitation < ActiveRecord::Base
   scope :by_member, -> { group(:member_id) }
 
 
+  def parent
+    sessions
+  end
+
   def send_reminder
     if !role.eql?("Coach")
       SessionInvitationMailer.remind_student(self.sessions, self.member, self).deliver if attending

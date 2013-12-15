@@ -1,0 +1,53 @@
+%section#sessions
+
+  .titlebox.session.upcoming
+    %h2
+      Session
+    %small=l(@invitation.sessions.date_and_time, format: :website_format)
+    .dot
+  .row
+    .two-thirds
+      .description
+        .details-block
+          %h3= @invitation.sessions.title
+          %h5= @invitation.sessions.description
+          %br
+      .description
+        %small
+          In our coding sessions, you will get to go through any of our available tutorials with help from our coaches. Our latest tutorial is <b>#{@invitation.sessions.title}</b>
+          %br
+          %br
+          - if @invitation.sessions.date_and_time < DateTime.now
+            This session has already taken place!
+          - else
+            .rsvp
+              - if @invitation.attending.eql?(true)
+                =link_to "Attending", "#", class: "btn"
+                - if @invitation.sessions.date_and_time-1.day <= DateTime.now
+                  %br
+                  %br
+                  %small The session is on in less than 24 hours! If you can no longer make it, please send us a text so we can try to reallocate your spot.
+                - else
+                  =link_to "Unable to attend", reject_invitation_url(@invitation), class: "button"
+              - else
+                =link_to "Attend", accept_invitation_url(@invitation), class: "button"
+
+    .quarter
+      .description
+        %h4 Venue
+        = image_tag @invitation.sessions.host.avatar, class: 'sponsor-logo'
+        %p.address
+          = @host_address.to_html
+          %small= link_to "view map", "https://maps.google.com/maps?q=#{@host_address.postal_code}"
+
+        %hr
+
+        %h4 Contact details
+        %ul.contact-details
+          %li
+            Despo
+            %b 07402887214
+          %li
+            Maria
+            %b 07792142702
+
