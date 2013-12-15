@@ -293,12 +293,19 @@ a
   border-left: 10px solid $code-of-conduct-purple
   background-color: $gray-title-button
 
-.course, .session
+.course,
   border-left: 10px solid $next-course-green
   background-color: $next-session-grey
 
   &.past
-    border-left: 10px solid $red
+    border-left: 10px solid $lightgreen
+
+.session 
+  &.upcoming
+    background-color: $next-session-grey
+  &.past
+    border-left: 10px solid $lightyellow
+    background-color: $next-session-grey
 
 .titlebox
   padding: 10px 20px
@@ -370,6 +377,12 @@ a
       font-weight: 600
       color: $title-side
       margin: 21px 0 26px
+
+    ul
+      color: inherit
+
+    .short
+      width: 54%
 
 #sessions ul li
   margin-bottom: 15px
