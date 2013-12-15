@@ -35,6 +35,7 @@
         = image_tag @invitation.sessions.host.avatar, class: 'sponsor-logo'
         %p.address
           = @host_address.to_html
+          %br
           %small= link_to "view map", "https://maps.google.com/maps?q=#{@host_address.postal_code}"
 
         %hr
