@@ -15,6 +15,7 @@ module InvitationControllerConcerns
 
       elsif has_remaining_seats?(@invitation)
         @invitation.update_attribute(:attending, true)
+        SessionInvitationMailer.attending(@invitation.sessions, @invitation.member, @invitation).deliver
 
         redirect_to :back, notice: t("messages.accepted_invitation",
                                          name: @invitation.member.name)
