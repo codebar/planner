@@ -11,24 +11,29 @@ module InvitationControllerConcerns
 
     def accept
       if @invitation.attending.eql? true
-        redirect_to root_path, notice: t("messages.already_rsvped")
+        redirect_to :back, notice: t("messages.already_rsvped")
 
       elsif has_remaining_seats?(@invitation)
         @invitation.update_attribute(:attending, true)
+        SessionInvitationMailer.attending(@invitation.sessions, @invitation.member, @invitation).deliver
 
-        redirect_to root_path, notice: t("messages.accepted_invitation",
+        redirect_to :back, notice: t("messages.accepted_invitation",
                                          name: @invitation.member.name)
       else
-        redirect_to root_path, notice: t("messages.no_available_seats")
+        redirect_to :back, notice: t("messages.no_available_seats")
       end
     end
 
     def reject
-      if @invitation.attending.eql? false
-        redirect_to root_path, notice: t("messages.not_attending_already")
+      if @invitation.parent.date_and_time-1.day >= DateTime.now
+        if @invitation.attending.eql? false
+          redirect_to :back, notice: t("messages.not_attending_already")
+        else
+          @invitation.update_attribute(:attending, false)
+          redirect_to :back, notice: t("messages.rejected_invitation", name: @invitation.member.name)
+        end
       else
-        @invitation.update_attribute(:attending, false)
-        redirect_to root_path, notice: t("messages.rejected_invitation", name: @invitation.member.name)
+          redirect_to :back, notice: "You can only change your RSVP status up to 24 hours before the session"
       end
     end
   end

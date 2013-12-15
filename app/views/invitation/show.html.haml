@@ -1,0 +1,50 @@
+%section#sessions
+
+  .titlebox.session.upcoming
+    %h2
+      Session
+    %small=l(@invitation.sessions.date_and_time, format: :website_format)
+    .dot
+  .row
+    .two-thirds
+      .description
+        Hi #{@invitation.member.name},
+        %p Please let us know if you will be attending our session by setting your attendance status.
+
+        %p In our coding sessions, you will get to go through any of our available tutorials with help from our coaches. Our latest tutorial is <b> #{@invitation.sessions.title}</b> - #{@invitation.sessions.description}
+        %hr
+        %p.rsvp
+          - if @invitation.sessions.date_and_time < DateTime.now
+            %em This session has already taken place!
+          - else
+            %h3 RSVP
+            - if @invitation.attending.eql?(true)
+              =link_to "Attending", "#", class: "btn"
+              - if @invitation.sessions.date_and_time-1.day <= DateTime.now
+                %br
+                %br
+                %small The session is on in less than 24 hours so you can no longer change you attendance status through here. If you can no longer make it, please send us a text or email meetings@codebar.io so we can try to reallocate your spot.
+              - else
+                =link_to "Unable to attend", reject_invitation_url(@invitation), class: "button"
+            - else
+              =link_to "Attend", accept_invitation_url(@invitation), class: "button"
+
+    .quarter
+      .description
+        %h4 Venue
+        = image_tag @invitation.sessions.host.avatar, class: 'sponsor-logo'
+        %p.address
+          = @host_address.to_html
+          %small= link_to "view map", "https://maps.google.com/maps?q=#{@host_address.postal_code}"
+
+        %hr
+
+        %h4 Contact details
+        %ul.contact-details
+          %li
+            Despo
+            %b 07402887214
+          %li
+            Maria
+            %b 07792142702
+

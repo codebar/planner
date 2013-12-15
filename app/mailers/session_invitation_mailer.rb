@@ -16,6 +16,21 @@ class SessionInvitationMailer < ActionMailer::Base
     end
   end
 
+  def attending sessions, member, invitation
+    @session = sessions
+    @host_address = AddressDecorator.decorate(@session.host.address)
+    @member = member
+    @invitation = invitation
+
+    load_attachments
+
+    subject = "Attendance confirmation - #{l(@session.date_and_time, format: :email_title)}"
+
+    mail(mail_args(member, subject)) do |format|
+      format.html
+    end
+  end
+
   def remind_student session, member, invitation
     @session = session
     @host_address = AddressDecorator.decorate(@session.host.address)
