@@ -2,4 +2,9 @@
 <p>
   You have successfully signed up to Codebar.io.
 </p>
+
+<% @member.roles.each do |role| %>
+  <%= render partial: "member_signup_mailer/#{role.name.downcase}" %>
+<% end %>
+
 <p>Thanks for joining and have a great day!</p>
