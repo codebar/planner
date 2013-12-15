@@ -16,6 +16,7 @@ group :development, :test do
   gem 'fabrication'
   gem 'faker'
   gem 'capybara'
+  gem 'capybara-email'
   gem 'sqlite3'
   gem 'coveralls', require: false
   gem 'launchy'
