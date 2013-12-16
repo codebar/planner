@@ -25,6 +25,11 @@
         </span>
         <div class="navigation">
           <ul class="navbar">
+            <% if logged_in? %>
+              <li>
+                <%= link_to "Portal", portal_index_path %>
+              </li>
+            <% end %>
             <li>
               <%= link_to "Wall of Fame", wall_of_fame_path %>
             </li>

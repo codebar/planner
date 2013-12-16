@@ -17,6 +17,8 @@ Planner::Application.routes.draw do
     end
   end
 
+  resources :portal, only: [ :index ]
+
   namespace :course do
     resources :invitation, only: [] do
       member do

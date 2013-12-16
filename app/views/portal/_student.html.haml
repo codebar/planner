@@ -1,0 +1,38 @@
+#student.content
+  .titlebox.mission
+    %h2
+      Upcoming
+    .dot
+
+  .description
+    - if @upcoming.any?
+      .details-block
+        - @upcoming.each do |invitation|
+          .three-quarters
+            %h3
+              = invitation.parent.title
+              .right-float
+                =link_to attendance_status(invitation), invitation_path(invitation), class: "button"
+            %h5= invitation.parent.description
+            %h6
+              = "on #{l(invitation.parent.date_and_time, format: :website_format)}"
+    - else
+      %em There are no upcoming events
+
+  .titlebox.mission
+    %h2
+      Attended
+    .dot
+  .description
+    - if @attended.any?
+      .details-block
+        - @attended.each do |invitation|
+          %h3
+            = invitation.parent.title
+            .right-float
+              =link_to "View", invitation_path(invitation), class: "button"
+          %h5= invitation.parent.description
+          %h6
+            = "on #{l(invitation.parent.date_and_time, format: :website_format)}"
+    - else
+      %em You have not attended any of our events yet :(

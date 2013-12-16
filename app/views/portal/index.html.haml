@@ -1,0 +1,14 @@
+%section#main
+  #tabs{ "data-tab" => true }
+    - if current_member.is_student?
+      =link_to "Student", "#student"
+    - if current_member.is_coach?
+      =link_to "Coach", "#coach"
+
+
+  #tabs-content
+    - if current_member.is_student?
+      =render partial: "student"
+
+    - if current_member.is_coach?
+      =render partial: "coach"

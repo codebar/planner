@@ -29,7 +29,13 @@ class Member < ActiveRecord::Base
     can_log_in? && !valid?
   end
 
+  def is_student?
+    roles.map(&:name).include?("Student")
+  end
 
+  def is_coach?
+    roles.map(&:name).include?("Coach")
+  end
   private
 
   def md5_email
