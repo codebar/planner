@@ -1,4 +1,5 @@
 class PortalController < ApplicationController
+  before_action :logged_in?
 
   def index
     if current_member.is_student?
@@ -11,5 +12,4 @@ class PortalController < ApplicationController
       @coached = SessionInvitation.to_coaches.where(member: current_member).attended
     end
   end
-
 end

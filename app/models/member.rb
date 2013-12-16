@@ -36,6 +36,11 @@ class Member < ActiveRecord::Base
   def is_coach?
     roles.map(&:name).include?("Coach")
   end
+
+  def is_admin?
+    roles.map(&:name).include?("Admin")
+  end
+
   private
 
   def md5_email
