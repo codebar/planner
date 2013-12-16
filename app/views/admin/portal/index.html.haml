@@ -1,0 +1,17 @@
+%section#admin
+  .titlebox
+    %h2 Upcoming events
+  .description
+    - @sessions.each do |session|
+      .details-block
+        %h3=session.title
+        %h5=session.description
+        %h6=l(session.date_and_time, format: :website_format)
+
+        %h4 Attending
+        %ul.attendances
+          - session.attending_invitations.each do |invitation|
+            %li
+              =invitation.member.full_name
+
+

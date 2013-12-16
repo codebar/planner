@@ -1,0 +1,29 @@
+#coach.content
+  .titlebox.mission
+    %h2
+      Upcoming
+    .dot
+
+  .description
+    .details-block
+      - @upcoming_sessions.each do |session|
+        .three-quarters
+          %h3
+            = session.title
+          %h5= session.description
+          %h6
+            = "on #{l(session.date_and_time, format: :website_format)}"
+
+  .titlebox.mission
+    %h2
+      Sessions coached
+    .dot
+
+  .description
+    - @coached.each do |invitation|
+      .details-block
+        %h3
+          = invitation.parent.title
+        %h5= invitation.parent.description
+        %h6
+          = "on #{l(invitation.parent.date_and_time, format: :website_format)}"

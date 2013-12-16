@@ -17,6 +17,8 @@ Planner::Application.routes.draw do
     end
   end
 
+  resources :portal, only: [ :index ]
+
   namespace :course do
     resources :invitation, only: [] do
       member do
@@ -29,6 +31,10 @@ Planner::Application.routes.draw do
   resources :courses, only: [ :index, :show ]
   resources :sessions, only: [ :index ]
   resources :meetings, only: [ :show ]
+
+  namespace :admin do
+    root "portal#index"
+  end
 
   match '/auth/:service/callback' => 'auth_services#create', via: %i(get post)
   match '/auth/failure' => 'auth_services#failure', via: %i(get post)
