@@ -14,12 +14,12 @@
 
     - if @course.seats > @course.attending_invitations.length
       .sub-block
-        =link_to "Sign up to the course", new_members_path, class: 'member-button'
+        =link_to "Sign up to the course", new_member_path, class: 'member-button'
     - else
       .sub-block
         %small
           %em
-            This course is fully booked! If you would like to receive an invitation to other courses we will be running, you should #{link_to("sign up", new_members_path)}.
+            This course is fully booked! If you would like to receive an invitation to other courses we will be running, you should #{link_to("sign up", new_member_path)}.
 
   .description
     .tutor

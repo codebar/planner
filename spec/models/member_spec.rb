@@ -2,31 +2,31 @@ require 'spec_helper'
 
 describe Member do
   context "mandatory attributes" do
-    context "validations" do
+    context "validations for a logginable member" do
       context "presence" do
         it "#name" do
-          member = Fabricate.build(:member, name: nil)
+          member = Fabricate.build(:member, can_log_in: true, name: nil)
 
           member.should_not be_valid
           member.should have(1).error_on(:name)
         end
 
         it "#surname" do
-          member = Fabricate.build(:member, surname: nil)
+          member = Fabricate.build(:member, can_log_in: true, surname: nil)
 
           member.should_not be_valid
           member.should have(1).error_on(:surname)
         end
 
         it "#email" do
-          member = Fabricate.build(:member, email: nil)
+          member = Fabricate.build(:member, can_log_in: true,  email: nil)
 
           member.should_not be_valid
           member.should have(1).error_on(:email)
         end
 
         it "#about_you" do
-          member = Fabricate.build(:member, about_you: nil)
+          member = Fabricate.build(:member, can_log_in: true, about_you: nil)
 
           member.should_not be_valid
           member.should have(1).error_on(:about_you)

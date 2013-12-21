@@ -1,5 +1,5 @@
 Fabricator(:address) do
-  flat { "flat 1" }
-  street { "fake street" }
-  postal_code { "NW1 9KJ" }
+  flat { Faker::Address.street_name }
+  street { Faker::Address.street_address }
+  postal_code { Faker::Address.postcode }
 end

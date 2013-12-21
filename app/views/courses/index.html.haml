@@ -3,22 +3,26 @@
     .titlebox.course.upcoming
       %h2 Upcoming courses
       .dot
-    %ul
-      - @courses.upcoming.each do |course|
-        %li
-          =link_to course_url(course) do
-            = course.title
-          %br
-          %small=l(course.date_and_time, format: :website_format)
+    .description
+      .details-block
+        %ul.short
+          - @courses.upcoming.each do |course|
+            %li
+              %h3
+                =link_to course_url(course) do
+                  = course.title
+              %h6=l(course.date_and_time, format: :website_format)
 
   - if @courses.past.any?
     .titlebox.course.past
       %h2 Past courses
       .dot
-    %ul
-      - @courses.past.each do |course|
-        %li
-          =link_to course_url(course) do
-            = course.title
-          %br
-          %small=l(course.date_and_time, format: :website_format)
+    - @courses.past.each do |course|
+      .description
+        .details-block
+          %ul.short
+            %li
+              %h3
+                =link_to course_url(course) do
+                  = course.title
+              %h6=l(course.date_and_time, format: :website_format)

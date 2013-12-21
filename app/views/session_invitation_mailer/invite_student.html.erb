@@ -1,19 +1,17 @@
 <h2 style="font-weight: 400; font-size: 24px; border-bottom:1px solid #ececec; padding-bottom: 15px; margin-bottom:35px">Hi <%= @member.name %></h2>
 
 <h3 style="font-weight: 600; font-size: 17px; letter-spacing: 0.02em; color: #111111">We would like to invite you to the next <b>codebar</b> session</h3>
-<p style="font-weight: 300; font-size: 16px; color: #2e2e2e; margin-bottom: 50px;"> In our sessions, you will be able to go through HTML/CSS, Javascript and Ruby tutorials and also get guidance on your personal projects with help from our <b>superstar coaches</b>. You will also get the opportunity to meet other people interested in coding and pair with them.<br></p>
+<p style="font-weight: 300; font-size: 16px; color: #2e2e2e; margin-bottom: 50px;"> In our sessions, you will be able to go through any of our available HTML/CSS and Javascript tutorials or get guidance on your personal projects with help from our <b>superstar coaches</b>. You will also get the opportunity to meet other people interested in coding and pair with them.<br></p>
 
-<div style="display: inline-block;">
-  <div style="width: 340px; padding-right: 40px; display: inline-block;">
+<div style="display: block;">
+  <div style="width: 340px; padding-right: 40px; display: inline-block; vertical-align: top;">
     <h2 style="color: #2d183d; font-size: 27px; font-weight: 500;letter-spacing: 0.03em; margin-bottom: 0;"><%= @session.title %> by Codebar</h2>
     <small><%= @session.description %></small>
     <p style="font-size: 16px; font-weight: 300; margin-top: 7px;">on <b style="color: #555555;font-size: 16px; font-weight: 600; margin-top: 0;"><%= l(@session.date_and_time, format: :email)%></b></p>
     <div style="background-color: #F7F7F7; width: 90%; border-radius: 6px; box-shadow: 1px 1px 0 rgba(250, 250, 250, 0.5) inset, -1px -1px 2px rgba(250, 250, 250, 0.1) inset; font-size: 18px; padding: 5px 14px; text-align: center; margin: 31px 0 25px; border: 1px solid #dddddd;">
-      <p> <%= link_to "I want to attend", full_url_for(accept_invitation_url(@invitation)), style: "text-decoration:none; color: #663095; font-size: 25px; font-weight: 600; letter-spacing: 0.02em; margin: 10px; text-decoration: none; text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7);"%></p>
+      <p> <%= link_to "RSVP to the session", full_url_for(invitation_url(@invitation)), style: "text-decoration:none; color: #663095; font-size: 25px; font-weight: 600; letter-spacing: 0.02em; margin: 10px; text-decoration: none; text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7);"%></p>
     </div>
-    <p style="color: #555555; font-size: 13px; font-weight: 400; margin-top: 6px;">If you have responded but are unable to make it, <b style="font-weight: 800">reply to this email</b> and let us know. We have limited space and you may be taking away from someone else the opportunity to attend.</p>
   </div>
-
 
   <div style="width:150px; border-left: 1px solid #ececec; padding-left: 50px; display: inline-block;">
     <h3 style="color: #434950; font-size: 17px;font-weight: 600;letter-spacing: 0.02em;">Location</h3>
@@ -27,12 +25,4 @@
 
 </div>
 
-<div style="padding-top: 10px;">
-  If you have any trouble finding the venue give us a call
-  <br/>
-  <% [ "Maria Khait   <b>07792142702</b><br/>", "Despo Pentara <b>07402887214</b><br/>" ].shuffle.each do |phone_details| %>
-    <%= phone_details.html_safe %>
-  <% end %>
-</div>
 <div style="clear:both; width: 100%; height: 10px;"></div>
-<div style="color: #2E2E2E; font-size: 18px; font-weight: 600; margin-top: 40px;">See you on Wednesday!</div>

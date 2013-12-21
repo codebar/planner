@@ -36,6 +36,6 @@ feature 'when visiting the homepage' do
     click_on "Become a member"
 
     expect(page).to have_content "Become a member"
-    expect(page).to have_content "You can only sign up"
+    expect(page).to have_content "sign up with github"
   end
 end

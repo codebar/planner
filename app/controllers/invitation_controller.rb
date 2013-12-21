@@ -1,6 +1,9 @@
 class InvitationController < ApplicationController
   include InvitationControllerConcerns
 
+  def show
+    @host_address = AddressDecorator.decorate(@invitation.parent.host.address)
+  end
 
   private
 

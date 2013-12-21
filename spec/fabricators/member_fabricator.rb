@@ -4,6 +4,7 @@ Fabricator(:member) do
   email { Faker::Internet.email }
   about_you { Faker::Lorem.paragraph }
   twitter { Faker::Name.first_name }
+  auth_services(count: 1) { Fabricate(:auth_service) }
 end
 
 Fabricator(:student, from: :member) do
@@ -17,4 +18,3 @@ end
 Fabricator(:admin, from: :member) do
   roles { [ Fabricate(:admin_role) ] }
 end
-

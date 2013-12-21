@@ -25,6 +25,11 @@
         </span>
         <div class="navigation">
           <ul class="navbar">
+            <% if logged_in? %>
+              <li>
+                <%= link_to "Portal", portal_index_path %>
+              </li>
+            <% end %>
             <li>
               <%= link_to "Wall of Fame", wall_of_fame_path %>
             </li>
@@ -35,7 +40,12 @@
             <%= link_to "Courses", courses_path %>
             </li>
           </ul>
-          <%=link_to "Become a member", new_members_path, class: 'member-button'%>
+          <% if logged_in? %>
+              <%= link_to "Log Out", logout_path, class: "member-button" %>
+          <% else %>
+              <%= link_to "Become a member", new_member_path, class: 'member-button'%>
+              <%= link_to "Sign In", "/auth/github", class: "member-button" %>
+          <% end %>
         </div>
       </div>
     </div>

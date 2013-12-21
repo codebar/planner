@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131201091346) do
+ActiveRecord::Schema.define(version: 20131208145950) do
 
   create_table "addresses", force: true do |t|
     t.string   "flat"
@@ -21,6 +21,16 @@ ActiveRecord::Schema.define(version: 20131201091346) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "auth_services", force: true do |t|
+    t.integer  "member_id"
+    t.string   "provider"
+    t.string   "uid"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "auth_services", ["member_id"], name: "index_auth_services_on_member_id"
 
   create_table "course_invitations", force: true do |t|
     t.integer  "course_id"
@@ -61,6 +71,27 @@ ActiveRecord::Schema.define(version: 20131201091346) do
   add_index "feedbacks", ["coach_id"], name: "index_feedbacks_on_coach_id"
   add_index "feedbacks", ["tutorial_id"], name: "index_feedbacks_on_tutorial_id"
 
+  create_table "meeting_talks", force: true do |t|
+    t.integer  "meeting_id"
+    t.string   "title"
+    t.string   "description"
+    t.text     "abstract"
+    t.integer  "speaker_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "meeting_talks", ["meeting_id"], name: "index_meeting_talks_on_meeting_id"
+
+  create_table "meetings", force: true do |t|
+    t.datetime "date_and_time"
+    t.integer  "duration",      default: 120
+    t.string   "lanyrd_url"
+    t.integer  "venue_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "members", force: true do |t|
     t.string   "name"
     t.string   "surname"
@@ -70,6 +101,7 @@ ActiveRecord::Schema.define(version: 20131201091346) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "unsubscribed"
+    t.boolean  "can_log_in",   default: false, null: false
   end
 
   create_table "members_roles", id: false, force: true do |t|
