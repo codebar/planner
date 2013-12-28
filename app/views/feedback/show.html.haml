@@ -1,0 +1,13 @@
+- if @feedback.errors.any?
+	%ul
+	- @feedback.errors.full_messages.each do |error_message|
+		%li=error_message
+
+= form_for @feedback, url: submit_feedback_path(@feedback.token), html: {method: "patch"} do |f|
+	= f.hidden_field :token
+	= f.text_field :request
+	= f.text_field :rating
+	= f.collection_select :coach_id, Member.coaches, :id, :full_name, {include_blank: '-- select coach --'}
+	= f.collection_select :tutorial_id, Tutorial.all, :id, :title, {include_blank: '-- select tutorial --'}
+	= f.text_area :suggestions
+	= f.submit 'Submit feedback'

@@ -12,6 +12,8 @@ if Rails.env.development?
 
   tutorials = 10.times.map { |n| Fabricate(:tutorial, course: courses.sample) }
 
+  # feedbacks_not_submited = Feedback.new(token: 'feedback_valid_token').save(validate: false)
+  
   feedbacks = 5.times { Fabricate(:feedback, tutorial: tutorials.sample, coach: coaches.sample) }
 
   40.times do |n|
@@ -31,5 +33,4 @@ if Rails.env.development?
   meeting.meeting_talks << MeetingTalk.create(title: "Kickstart your development career",
                                               speaker_id: Member.last.id,
                                               abstract: Faker::Lorem.paragraph)
-
 end

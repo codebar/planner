@@ -2,7 +2,9 @@ class Feedback < ActiveRecord::Base
   belongs_to :tutorial
   belongs_to :coach, class_name: "Member" 
 
+  # validates :coach_id, presence: true
   validates :coach, presence: true
+  validates :tutorial, presence: true
   validate :coach_field_has_a_coach_role?
 
   def coach_field_has_a_coach_role?
@@ -13,4 +15,16 @@ class Feedback < ActiveRecord::Base
   		errors.add(:coach, "Coach member doesn't have 'coach' role.")
   	end
   end
+
+  def self.submit_feedback params
+    return false unless Feedback.new(params).valid?
+    return false unless feedback = Feedback.find_by_token(params[:token])
+
+    feedback.update_attributes(params)
+  end
+
+  def self.create_token token
+    Feedback.new(token: token).save(validate: false) unless token.blank?
+  end
+
 end
