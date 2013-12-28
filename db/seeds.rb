@@ -1,5 +1,4 @@
 if Rails.env.development?
-  puts "in here"
 
   Fabricate(:student_role)
   Fabricate(:coach_role)
