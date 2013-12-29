@@ -14,7 +14,46 @@ describe Feedback do
   it { should respond_to(:tutorial)}
 
   context "validations" do
+    context '#rating' do
+      it 'should not be blank' do
+        feedback = Fabricate.build(:feedback, rating: nil)
+
+        feedback.should_not be_valid
+        feedback.should have(3).error_on(:rating)
+      end
+
+      it 'should accept numbers from 1 to 5' do
+        (1..5).each do |rating|
+          feedback = Fabricate.build(:feedback, rating: rating)
+
+          feedback.should be_valid
+        end
+      end
+
+      it 'should be invalid with number higher than 5' do
+        feedback = Fabricate.build(:feedback, rating: 6)
+
+        feedback.should_not be_valid
+        feedback.should have(1).error_on(:rating)
+      end
+
+      it 'should be invalid with number lower than 1' do
+        feedback = Fabricate.build(:feedback, rating: 0)
+
+        feedback.should_not be_valid
+        feedback.should have(1).error_on(:rating)
+      end
+
+      it 'should be numerical' do
+        feedback = Fabricate.build(:feedback, rating: 'alpha')
+
+        feedback.should_not be_valid
+        feedback.should have(2).error_on(:rating)
+      end
+    end
+
     context "#coach" do
+
       it "accepts memeber with 'coach' role" do
         feedback = Fabricate.build(:feedback, coach: Fabricate(:coach))
 
@@ -56,6 +95,7 @@ describe Feedback do
     let (:valid_params) do
       {
         token: valid_feedback_token,
+        rating: 4,
         coach: Fabricate(:coach),
         tutorial: Fabricate(:tutorial)
       }
@@ -64,6 +104,7 @@ describe Feedback do
     let(:invalid_token_params) do
       { 
         token: invalid_feedback_token, 
+        rating: 4,
         coach: Fabricate(:coach), 
         tutorial: Fabricate(:tutorial)
       }

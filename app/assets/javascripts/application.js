@@ -12,6 +12,7 @@
 //
 //= require jquery
 //= require_tree .
+//= require 'jsimple-star-rating.min.js'
 
 'use strict';
 

@@ -1,13 +1,40 @@
-- if @feedback.errors.any?
-	%ul
-	- @feedback.errors.full_messages.each do |error_message|
-		%li=error_message
+%section#member
+  .titlebox.mission
+    %h2
+      Please give us your feedback
+      .dot
+    Your opinion is very important to us. We appreciate your feedback and will use it to evaluate changes and make improvements in what we do.
+  .description
+    - if @feedback.errors.any?
+      .validation_errors
+        %ul
+          - @feedback.errors.full_messages.each do |error_message|
+            %li=error_message
 
-= form_for @feedback, url: submit_feedback_path(@feedback.token), html: {method: "patch"} do |f|
-	= f.hidden_field :token
-	= f.text_field :request
-	= f.text_field :rating
-	= f.collection_select :coach_id, Member.coaches, :id, :full_name, {include_blank: '-- select coach --'}
-	= f.collection_select :tutorial_id, Tutorial.all, :id, :title, {include_blank: '-- select tutorial --'}
-	= f.text_area :suggestions
-	= f.submit 'Submit feedback'
+    %p.lead
+    = simple_form_for @feedback, url: submit_feedback_path(@feedback.token), html: {method: "patch"} do |f|
+      = f.hidden_field :token
+      = f.hidden_field :rating
+      .row
+        %label.required
+          %abbr(title='required') *
+          Your overall rating of tutorial
+        .rating{:data => {:rating_max => 5 }}
+      .row
+        = f.association :coach, collection: Member.coaches, label_method: :full_name, value_method: :id, label: 'Who was your coach?', include_blank: '- Select Coach -'
+      .row
+        = f.association :tutorial, label_method: :title, value_method: :id, label: 'What tutorial did you go through?', include_blank: '- Select Tutorial -'
+      .row
+        = f.input :request, label: 'If you could choose to work on something else, what would it be?'
+      .row
+        = f.input :suggestions, label: 'What can we do to improve your experience?'
+      .row
+        = f.submit 'Submit feedback'
+
+%script{:type => "text/javascript"}
+  $(".rating").starRating({
+  minus: false
+  });
+  $('input[name="commit"]').click(function(){
+  $('#feedback_rating').val($('.rating').data('val'))
+  });
