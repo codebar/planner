@@ -30,7 +30,7 @@ group :production do
   gem 'rails_12factor'
 end
 
-gem 'jbuilder', '~> 1.2'
+gem 'jbuilder'
 
 group :doc do
   gem 'sdoc', require: false
