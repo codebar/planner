@@ -37,9 +37,10 @@ feature 'member feedback' do
     end
   end
 
-  scenario "I get error message when invalid token given" do
+  scenario "I get error message when invalid token given and link to homepage" do
     visit feedback_path(invalid_token)
 
+    find_link('Return to homepage >>')[:href].should == root_path
     expect(page).to have_content('Sorry, feedback link seems to be invalid.')
   end
 

@@ -180,11 +180,11 @@ ActiveRecord::Schema.define(version: 20131222160002) do
     t.string   "title"
     t.text     "description"
     t.string   "url"
-    t.integer  "course_id"
+    t.integer  "sessions_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "tutorials", ["course_id"], name: "index_tutorials_on_course_id"
+  add_index "tutorials", ["sessions_id"], name: "index_tutorials_on_sessions_id"
 
 end

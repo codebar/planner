@@ -4,7 +4,7 @@ class CreateTutorials < ActiveRecord::Migration
       t.string :name
       t.text :description
       t.string :url
-      t.references :course, index: true
+      t.references :sessions, index: true
 
       t.timestamps
     end
