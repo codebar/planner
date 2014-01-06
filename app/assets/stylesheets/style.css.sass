@@ -499,3 +499,71 @@ footer
   .active
     border-left: 5px solid
     transition-duration: 0.2s
+
+.message_container
+  padding: 90px
+  text-align: center
+  line-height: 2em
+  
+  .success
+    color: #005000
+    border: 1px solid #0f0
+    background-color: #D0FFD4
+    margin: 0px 20px
+    padding: 20px
+    border-radius: 5px
+
+  .error
+    color: #500000
+    border: 1px solid #fc5959
+    background-color: #FFBEBE
+    margin: 0px 20px
+    padding: 20px
+    border-radius: 5px
+
+.validation_errors
+  font-size: 14px
+  border: 1px solid #fc5959
+  background-color: #FFBEBE
+  margin: 20px 0px
+  border-radius: 5px
+
+  ul
+    color: #000
+    list-style-type: disc
+
+
+/* star rating */
+.rating
+  float: left
+
+  ul
+    list-style: none
+    float: left
+    padding: 0
+    margin: 0
+
+    li
+      float: left
+      margin-left: 2px
+      background: url("star-rating.gif") no-repeat
+      width: 25px
+      height: 25px
+      cursor: pointer
+
+    li:first-child
+      margin-left: 0
+
+    li.hover
+      background-position: -25px
+
+    li.active
+      background-position: -50px
+
+  span.less
+    cursor: pointer
+    background: url("star-rating.gif") -75px no-repeat
+    display: block
+    float: left
+    height: 25px
+    width: 25px

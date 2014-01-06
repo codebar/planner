@@ -5,9 +5,15 @@ if Rails.env.development?
 
   sessions = 10.times.map { |n| Fabricate(:sessions, date_and_time: DateTime.now+14.days-n.weeks) }
 
-  courses = 5.times { |n| Fabricate(:course, date_and_time: DateTime.now+14.days-n.weeks) }
+  courses = 5.times.map { |n| Fabricate(:course, date_and_time: DateTime.now+14.days-n.weeks) }
 
   coaches = 20.times.map { |n| Fabricate(:coach) }
+
+  tutorials = 10.times.map { |n| Fabricate(:tutorial, sessions: sessions.sample) }
+
+  feedbacks_not_submited = Feedback.new(token: 'feedback_valid_token').save(validate: false)
+  
+  feedbacks = 5.times { Fabricate(:feedback, tutorial: tutorials.sample, coach: coaches.sample) }
 
   40.times do |n|
     coach = coaches.sample
@@ -26,5 +32,4 @@ if Rails.env.development?
   meeting.meeting_talks << MeetingTalk.create(title: "Kickstart your development career",
                                               speaker_id: Member.last.id,
                                               abstract: Faker::Lorem.paragraph)
-
 end

@@ -24,6 +24,8 @@ en:
     no_available_seats: "Unfortunately there are no more spaces left :(. If you would like to join our waiting list send us an email at meetings@codebar.io."
     member_notifications: "You will be receiving notifications for: %{roles}"
     no_roles: "You have not selected any roles so you won't be receiving any notifications. If you change your mind, send us an email at hello@codebar.io so we can change your settings."
+    feedback_saved: "Feedback was successfully submited. Thank you!"
+    feedback_not_found: "Sorry, feedback link seems to be invalid."
 
   notifications:
     provider_already_connected: 'You are already signed in!'

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131208145950) do
+ActiveRecord::Schema.define(version: 20131222160002) do
 
   create_table "addresses", force: true do |t|
     t.string   "flat"
@@ -58,6 +58,21 @@ ActiveRecord::Schema.define(version: 20131208145950) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "feedbacks", force: true do |t|
+    t.integer  "tutorial_id"
+    t.text     "request"
+    t.integer  "coach_id"
+    t.text     "suggestions"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "token"
+    t.integer  "rating"
+  end
+
+  add_index "feedbacks", ["coach_id"], name: "index_feedbacks_on_coach_id"
+  add_index "feedbacks", ["token"], name: "index_feedbacks_on_token", unique: true
+  add_index "feedbacks", ["tutorial_id"], name: "index_feedbacks_on_tutorial_id"
 
   create_table "meeting_talks", force: true do |t|
     t.integer  "meeting_id"
@@ -160,5 +175,16 @@ ActiveRecord::Schema.define(version: 20131208145950) do
     t.string   "website"
     t.integer  "seats",       default: 15
   end
+
+  create_table "tutorials", force: true do |t|
+    t.string   "title"
+    t.text     "description"
+    t.string   "url"
+    t.integer  "sessions_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "tutorials", ["sessions_id"], name: "index_tutorials_on_sessions_id"
 
 end

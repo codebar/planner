@@ -31,6 +31,13 @@ Planner::Application.routes.draw do
   resources :courses, only: [ :index, :show ]
   resources :sessions, only: [ :index ]
   resources :meetings, only: [ :show ]
+  resources :feedback, only: [ :show ] do
+    member do
+      patch "submit"
+      get "success"
+      get "not_found"
+    end
+  end
 
   namespace :admin do
     root "portal#index"
