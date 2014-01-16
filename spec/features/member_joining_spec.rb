@@ -38,12 +38,4 @@ feature 'a member sign up', pending: "Need to test with github redirect" do
       page.should have_content "Thanks for signing up Maria! You will be receiving notifications for: Coaches"
     end
   end
-
-  context "a member can not sign up" do
-    scenario 'as an Admin' do
-      visit new_members_path
-
-      page.should_not have_selector('.collection_check_boxes', text: 'Admin')
-    end
-  end
 end

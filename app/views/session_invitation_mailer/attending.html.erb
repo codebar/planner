@@ -1,6 +1,10 @@
 <h2 style="font-weight: 400; font-size: 24px; border-bottom:1px solid #ececec; padding-bottom: 15px; margin-bottom:35px">Hi <%= @member.name %></h2>
 
-<p style="font-weight: 300; font-size: 16px; color: #2e2e2e; margin-bottom: 50px;"> Thank you for confirming you attendance. See you at our session!</p> 
+<% if @invitation.role.eql?("Coach") %>
+  <p style="font-weight: 300; font-size: 16px; color: #2e2e2e; margin-bottom: 50px;">Thanks for offering to coach, this means a lot to us. See you at the session!</p> 
+<%  elsif @invitation.role.eql?("Student") %>
+  <p style="font-weight: 300; font-size: 16px; color: #2e2e2e; margin-bottom: 50px;"> Thank you for confirming you attendance. See you at our session!</p> 
+<% end %>
 
 <div style="display: block;">
   <div style="width: 340px; padding-right: 40px; display: inline-block; vertical-align: top;">

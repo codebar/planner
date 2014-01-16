@@ -10,8 +10,7 @@
 
         %h4 Attending
         %ul.attendances
-          - session.attending_invitations.each do |invitation|
+          - session.attending_students.each do |invitation|
             %li
               =invitation.member.full_name
-
 
