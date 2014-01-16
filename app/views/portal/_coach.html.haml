@@ -6,13 +6,15 @@
 
   .description
     .details-block
-      - @upcoming_sessions.each do |session|
+      - @upcoming.each do |invitation|
         .three-quarters
           %h3
-            = session.title
-          %h5= session.description
+            = invitation.parent.title
+            .right-float
+              =link_to attendance_status(invitation), invitation_path(invitation), class: "button"
+          %h5= invitation.parent.description
           %h6
-            = "on #{l(session.date_and_time, format: :website_format)}"
+            = "on #{l(invitation.parent.date_and_time, format: :website_format)}"
 
   .titlebox.mission
     %h2

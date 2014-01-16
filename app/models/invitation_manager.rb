@@ -4,6 +4,14 @@ class InvitationManager
     Member.students.each do |student|
       SessionInvitation.create sessions: session, member: student, role: "Student"
     end
+
+    Member.coaches.each do |coach|
+      invitation = SessionInvitation.new sessions: session, member: coach, role: "Coach"
+
+      if invitation.save
+        SessionInvitationMailer.invite_coach(session, coach, invitation).deliver
+      end
+    end
   end
 
   def self.send_course_emails course
@@ -23,5 +31,4 @@ class InvitationManager
       invitation.send_spots_available
     end
   end
-
 end

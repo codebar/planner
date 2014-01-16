@@ -16,6 +16,23 @@ class SessionInvitationMailer < ActionMailer::Base
     end
   end
 
+  def invite_coach sessions, member, invitation
+    @session = sessions
+    @host_address = AddressDecorator.decorate(@session.host.address)
+    @member = member
+    @invitation = invitation
+    puts invitation.inspect
+    @spots = (@session.host.seats/2.0).round
+
+    load_attachments
+
+    subject = "Request for coaches - #{l(@session.date_and_time, format: :email_title)}"
+
+    mail(mail_args(member, subject)) do |format|
+      format.html
+    end
+  end
+
   def attending sessions, member, invitation
     @session = sessions
     @host_address = AddressDecorator.decorate(@session.host.address)

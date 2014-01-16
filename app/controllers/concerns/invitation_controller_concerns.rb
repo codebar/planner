@@ -12,13 +12,14 @@ module InvitationControllerConcerns
     def accept
       if @invitation.attending.eql? true
         redirect_to :back, notice: t("messages.already_rsvped")
+      end
 
-      elsif has_remaining_seats?(@invitation)
+      if available_student_slots?(@invitation) or more_coaches_needed?(@invitation)
         @invitation.update_attribute(:attending, true)
         SessionInvitationMailer.attending(@invitation.sessions, @invitation.member, @invitation).deliver
 
         redirect_to :back, notice: t("messages.accepted_invitation",
-                                         name: @invitation.member.name)
+                                     name: @invitation.member.name)
       else
         redirect_to :back, notice: t("messages.no_available_seats")
       end
@@ -33,8 +34,16 @@ module InvitationControllerConcerns
           redirect_to :back, notice: t("messages.rejected_invitation", name: @invitation.member.name)
         end
       else
-          redirect_to :back, notice: "You can only change your RSVP status up to 24 hours before the session"
+        redirect_to :back, notice: "You can only change your RSVP status up to 24 hours before the session"
       end
+    end
+
+    def more_coaches_needed? invitation
+      invitation.role.eql?("Coach") and (invitation.sessions.host.seats/2.0).round > invitation.sessions.attending_coaches.length
+    end
+
+    def available_student_slots? invitation
+      invitation.role.eql?("Student") and invitation.sessions.host.seats > invitation.sessions.attending_students.length
     end
   end
 end

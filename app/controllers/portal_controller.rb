@@ -8,7 +8,7 @@ class PortalController < ApplicationController
     end
 
     if current_member.is_coach?
-      @upcoming_sessions = Sessions.upcoming
+      @upcoming = SessionInvitation.to_coaches.where(member: current_member).joins(:sessions).where("date_and_time >= ?", DateTime.now)
       @coached = SessionInvitation.to_coaches.where(member: current_member).attended
     end
   end
