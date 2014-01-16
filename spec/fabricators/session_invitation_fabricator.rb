@@ -4,6 +4,7 @@ Fabricator(:session_invitation) do
   attended nil
   note "I'd love to attend"
   sessions
+  role "Student"
 end
 
 Fabricator(:attending_session_invitation, from: :session_invitation) do

@@ -12,7 +12,7 @@
       .right
         =link_to "read more about the course", @course.url
 
-    - if @course.seats > @course.attending_invitations.length
+    - if @course.seats > @course.attending.length
       .sub-block
         =link_to "Sign up to the course", new_member_path, class: 'member-button'
     - else

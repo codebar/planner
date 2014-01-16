@@ -1,5 +1,4 @@
 class Course < ActiveRecord::Base
-  include Invitable
   include Listable
 
   has_many :invitations, class_name: "CourseInvitation"
@@ -8,6 +7,10 @@ class Course < ActiveRecord::Base
   before_save :set_slug
 
   validates :title, presence: true
+
+  def attending
+    invitations.accepted
+  end
 
   def to_param
     slug

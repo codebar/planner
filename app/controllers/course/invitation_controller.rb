@@ -31,6 +31,6 @@ class Course::InvitationController < ApplicationController
   end
 
   def has_remaining_seats? invitation
-    invitation.course.seats > invitation.course.attending_invitations.length
+    invitation.course.seats > invitation.course.attending.length
   end
 end

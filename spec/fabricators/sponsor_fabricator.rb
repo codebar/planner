@@ -10,4 +10,3 @@ Fabricator(:sponsor) do
   avatar { avatars.sample }
   address { Fabricate(:address) }
 end
-

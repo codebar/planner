@@ -27,18 +27,34 @@ describe Sessions do
 
     describe "#host" do
       let(:sponsor) { Fabricate(:sponsor) }
+
       before do
         Fabricate(:sponsor_session, sponsor: sponsor, sessions: session, host: true)
       end
 
       it { expect(session.host).to eq(sponsor) }
     end
-  end
 
-  it "#attending" do
-    3.times { Fabricate(:session_invitation, sessions: session, attending: true) }
-    1.times { Fabricate(:session_invitation, sessions: session, attending: false) }
+    context "attendances" do
+      let(:sponsor) { Fabricate(:sponsor) }
 
-    session.reload.attending_invitations.length.should eq 3
+      before do
+        Fabricate(:sponsor_session, sponsor: sponsor, sessions: session, host: true)
+      end
+
+      it "#attending_students" do
+        3.times { Fabricate(:session_invitation, sessions: session, attending: true) }
+        1.times { Fabricate(:session_invitation, sessions: session, attending: false) }
+
+        session.reload.attending_students.length.should eq 3
+      end
+
+      it "#attending_members" do
+        2.times { Fabricate(:coach_session_invitation, sessions: session, attending: true) }
+        1.times { Fabricate(:coach_session_invitation, sessions: session, attending: false) }
+
+        session.reload.attending_coaches.length.should eq 2
+      end
+    end
   end
 end

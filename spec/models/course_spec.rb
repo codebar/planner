@@ -37,7 +37,7 @@ describe Course do
     2.times { Fabricate(:course_invitation, course: course, attending: true) }
     1.times { Fabricate(:course_invitation, course: course, attending: false) }
 
-    course.reload.attending_invitations.length.should eq 2
+    course.reload.attending.length.should eq 2
   end
 end
 
