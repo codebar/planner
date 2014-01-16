@@ -21,7 +21,6 @@ class SessionInvitationMailer < ActionMailer::Base
     @host_address = AddressDecorator.decorate(@session.host.address)
     @member = member
     @invitation = invitation
-    puts invitation.inspect
     @spots = (@session.host.seats/2.0).round
 
     load_attachments
