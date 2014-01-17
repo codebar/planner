@@ -3,6 +3,7 @@ Planner::Application.routes.draw do
 
   get "code-of-conduct" => "dashboard#code", as: :code_of_conduct
   get "wall-of-fame" => "dashboard#wall_of_fame", as: :wall_of_fame
+  get "sponsoring" => "dashboard#sponsoring", as: :sponsoring
 
   resource :member, only: [:new, :edit, :update]
 

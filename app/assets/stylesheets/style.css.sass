@@ -17,6 +17,9 @@ hr
   border-style: dashed
   border-color: rgba(177, 166, 204, 0.5)
 
+p
+  font-size: 18px
+
 .navigation
   float: right
   margin: 15px 10px 0 0
@@ -171,7 +174,7 @@ a
   box-shadow: 1px 0px 0px rgba(177, 166, 204, 0.2) inset, -1px 0px 0px rgba(177, 166, 204, 0.2) inset
   -webkit-box-shadow: 1px 0px 0px rgba(177, 166, 204, 0.2) inset, -1px 0px 0px rgba(177, 166, 204, 0.2) inset
   -moz-box-shadow:    1px 0px 0px rgba(177, 166, 204, 0.2) inset, -1px 0px 0px rgba(177, 166, 204, 0.2) inset
-  padding-bottom: 70px
+  padding-bottom: 20px
   min-height: 450px
 
 
@@ -389,16 +392,15 @@ a
   margin-bottom: 15px
 
 .social
-  margin: 10px 0 27px
+  margin: 10px auto
   border-bottom: 1px solid $navigation-gray-separators
   padding-bottom: 16px
   li
     display: inline-block
-    margin-left: 43px
+    margin: auto 10px
 
 
 .right-block
-  border-bottom: 1px solid $navigation-gray-separators
   padding: 0 0 24px 30px
   width: 74%
 
@@ -408,13 +410,18 @@ a
     font-weight: 600
     font-size: 22px
 
-  .sponsors
-    padding: 5px 0 0 0
-    margin-bottom: 0
-    margin-top: 0
+  &.sponsors
+    ul
+      padding: 5px 0 0 0
+      margin-bottom: 0
+      margin-top: 0
 
-    li
-      margin-top: 20px
+      li
+        margin-top: 20px
+
+    .view-all
+      margin: 29px 0
+      text-align: center
 
   .gallery
     padding: 5px 0 0 0
@@ -422,6 +429,19 @@ a
 
     li
       margin-top: 0px
+
+.right-block:not(:last-child)
+  border-bottom: 1px solid $navigation-gray-separators
+
+section#sponsors
+  border-top: 1px solid $navigation-gray-separators
+  padding: 5px 0 0 0
+  margin-bottom: 0
+  margin-top: 0
+
+  li
+    margin: 20px
+    display: inline-block
 
 #meeting
   .tutor
@@ -436,16 +456,16 @@ a
   border-bottom: 1px solid $navigation-gray-separators
   margin-bottom: 29px
 
-  .sponsor-button
-    background-color: $become-sponsor-grey
-    color: $become-sponsor-text
-    border: 1px solid $become-sponsor-border
-    border-radius: 6px
-    padding: 13px 42px
-    box-shadow: 0 1px 1px rgba(114, 98, 154, 0.4)
-    font-size: 20px
-    overflow: hidden
-    white-space: nowrap
+.sponsor-button
+  background-color: $become-sponsor-grey
+  color: $become-sponsor-text
+  border: 1px solid $become-sponsor-border
+  border-radius: 6px
+  padding: 13px 42px
+  box-shadow: 0 1px 1px rgba(114, 98, 154, 0.4)
+  font-size: 20px
+  overflow: hidden
+  white-space: nowrap
 
 footer
   border-top: 1px solid $nav-block-border
@@ -567,3 +587,14 @@ footer
     float: left
     height: 25px
     width: 25px
+
+#sponsoring
+  ul
+    list-style-type: disc
+    color: black
+
+    li
+      padding: 5px
+
+  .git-tip
+    text-align: center

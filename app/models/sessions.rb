@@ -6,6 +6,8 @@ class Sessions < ActiveRecord::Base
   has_many :sponsor_sessions
   has_many :sponsors, through: :sponsor_sessions
 
+  default_scope { order('date_and_time DESC') }
+
   def host
     SponsorSession.hosts.for_session(self.id).first.sponsor
   end
