@@ -50,7 +50,7 @@ describe Sponsor do
 
   context "scopes" do
     let!(:past) { 2.times.map { Fabricate(:sponsor) } }
-    let!(:latest) { 7.times.map { Fabricate(:sponsor) } }
+    let!(:latest) { 4.times.map { Fabricate(:sponsor) } }
 
     it "#latest" do
       Sponsor.latest.should eq latest.reverse
