@@ -58,6 +58,9 @@ GEM
     debugger-ruby_core_source (1.3.1)
     diff-lcs (1.2.5)
     docile (1.1.2)
+    dotenv (0.9.0)
+    dotenv-rails (0.9.0)
+      dotenv (= 0.9.0)
     draper (1.3.0)
       actionpack (>= 3.0)
       activemodel (>= 3.0)
@@ -214,6 +217,7 @@ DEPENDENCIES
   capybara
   coffee-rails (~> 4.0.1)
   coveralls
+  dotenv-rails
   draper
   fabrication
   faker
