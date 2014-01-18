@@ -44,6 +44,10 @@ Planner::Application.routes.draw do
 
   namespace :admin do
     root "portal#index"
+
+    resources :invitation, only: [] do
+      get :attended
+    end
   end
 
   match '/auth/:service/callback' => 'auth_services#create', via: %i(get post)
