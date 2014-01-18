@@ -8,9 +8,11 @@
         %h5=session.description
         %h6=l(session.date_and_time, format: :website_format)
 
-        %h4 Attending
-        %ul.attendances
-          - session.attending_students.each do |invitation|
-            %li
-              =invitation.member.full_name
+        .row
+          .half
+            %h4 Students
+            =render partial: 'attendances', locals: { invitations: session.attending_students }
 
+          .half
+            %h4 Coaches
+            =render partial: 'attendances', locals: { invitations: session.attending_coaches }
