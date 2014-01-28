@@ -2,7 +2,7 @@ class DashboardController < ApplicationController
   def show
     @next_session = Sessions.next
     @next_course = Course.next
-    @sponsors = Sponsor.all
+    @sponsors = Sponsor.all.shuffle
     @latest_sponsors = Sponsor.latest
     @meeting = Meeting.next
   end
