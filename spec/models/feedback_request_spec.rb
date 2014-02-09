@@ -49,7 +49,7 @@ describe FeedbackRequest do
     end
 
     it "sends request feedback email" do
-      FeedbackRequestMailer.stub(:request_feedback)
+      FeedbackRequestMailer.stub(:request_feedback) { double('feedback_request_mailer').as_null_object }
       Fabricate(:feedback_request)
       FeedbackRequestMailer.should have_received(:request_feedback)
     end

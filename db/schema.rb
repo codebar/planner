@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140119093708) do
+ActiveRecord::Schema.define(version: 20140202112853) do
 
   create_table "addresses", force: true do |t|
     t.string   "flat"
@@ -78,12 +78,10 @@ ActiveRecord::Schema.define(version: 20140119093708) do
     t.text     "suggestions"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "token"
     t.integer  "rating"
   end
 
   add_index "feedbacks", ["coach_id"], name: "index_feedbacks_on_coach_id"
-  add_index "feedbacks", ["token"], name: "index_feedbacks_on_token", unique: true
   add_index "feedbacks", ["tutorial_id"], name: "index_feedbacks_on_tutorial_id"
 
   create_table "meeting_talks", force: true do |t|

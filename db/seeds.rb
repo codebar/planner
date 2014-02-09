@@ -11,9 +11,9 @@ if Rails.env.development?
 
   tutorials = 10.times.map { |n| Fabricate(:tutorial, sessions: sessions.sample) }
 
-  feedbacks_not_submited = Feedback.new(token: 'feedback_valid_token').save(validate: false)
+  feedback_requests = 5.times.map { Fabricate(:feedback_request) }
   
-  feedbacks = 5.times { Fabricate(:feedback, tutorial: tutorials.sample, coach: coaches.sample) }
+  feedbacks = 5.times.map { Fabricate(:feedback, tutorial: tutorials.sample, coach: coaches.sample) }
 
   40.times do |n|
     coach = coaches.sample

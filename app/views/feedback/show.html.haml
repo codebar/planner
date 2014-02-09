@@ -11,8 +11,8 @@
           - @feedback.errors.full_messages.each do |error_message|
             %li=error_message
 
-    = simple_form_for @feedback, url: submit_feedback_path(@feedback.token), html: {method: "patch"} do |f|
-      = f.hidden_field :token
+    = simple_form_for @feedback, url: submit_feedback_path(params[:id]), html: {method: "patch"} do |f|
+      = f.hidden_field :token, :value => params[:id]
       = f.hidden_field :rating
       .row
         %label.required

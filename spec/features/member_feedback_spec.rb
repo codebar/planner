@@ -1,12 +1,12 @@
 require 'spec_helper'
 
 feature 'member feedback' do
-  let(:valid_token) { 'feedback_valid_token' }
+  let(:valid_token) { Fabricate(:feedback_request).token }
   let(:invalid_token) { 'feedback_invalid_token' }
   let(:feedback_submited_message) { I18n.t("messages.feedback_saved") }
   
   before do
-    Fabricate(:feedback, token: valid_token)
+    Fabricate(:feedback) 
     
     @coach = Fabricate(:coach, name: 'coach_name', surname: 'coach_surname')
     @tutorial = Fabricate(:tutorial, title: 'tutorial title')
@@ -59,6 +59,7 @@ feature 'member feedback' do
       find(:xpath, "//input[@id='feedback_rating']").set "4"
       select(@coach.full_name, from: 'feedback_coach_id')
       select(@tutorial.title, from: 'feedback_tutorial_id')
+      
       click_button('Submit feedback')
 
       current_path.should =~ /\/success/

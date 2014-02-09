@@ -7,7 +7,6 @@ describe Feedback do
   let(:invalid_feedback_token) { 'invalid_feedback_token' }
   
   it { should respond_to(:request) }
-  it { should respond_to(:token) }
   it { should respond_to(:rating) }
   it { should respond_to(:suggestions) }
   it { should respond_to(:coach) }
@@ -77,66 +76,31 @@ describe Feedback do
     end
   end
 
-  # context '#create_token' do
-  #   it 'is created when token is not blank' do
-  #     Feedback.create_token(valid_feedback_token)
-
-  #     Feedback.find_by_token(valid_feedback_token).should_not be_nil
-  #   end
-
-  #   it 'is not created when token is blank' do
-  #     Feedback.create_token('')
-
-  #     Feedback.find_by_token('').should be_nil
-  #   end
-  # end
-
   context "#submit_feedback" do
-    let (:valid_params) do
-      {
-        token: valid_feedback_token,
-        rating: 4,
-        coach: Fabricate(:coach),
-        tutorial: Fabricate(:tutorial)
-      }
+    let(:feedback_request) { Fabricate(:feedback_request) }
+    
+    let (:params) do
+      { rating: 4, coach: Fabricate(:coach), tutorial: Fabricate(:tutorial) }
     end
 
-    let(:invalid_token_params) do
-      { 
-        token: invalid_feedback_token, 
-        rating: 4,
-        coach: Fabricate(:coach), 
-        tutorial: Fabricate(:tutorial)
-      }
+    context 'with valid token' do
+      it 'is submited valid params' do
+        expect {
+          Feedback.submit_feedback(params, feedback_request.token) 
+        }.to change { Feedback.count }.by(1)
+      end
+      
+      it 'is not submited invalid params' do
+        expect {
+          Feedback.submit_feedback(params.except(:rating), feedback_request.token)
+        }.to_not change { Feedback.count }
+      end    
     end
 
-    let(:valid_token_invalid_params) do
-      { 
-        token: valid_feedback_token, 
-        coach: Fabricate(:coach) 
-      }
+    it 'is not submited with invalid token' do
+      expect {
+        Feedback.submit_feedback(params, 'invalid_token')
+      }.to_not change { Feedback.count }
     end
-
-    before do
-      Fabricate(:feedback_request, token: valid_feedback_token)
-    end
-
-    it 'is submited with valid token' do
-      Feedback.submit_feedback(valid_params)
-
-      Feedback.find_by(valid_params).should_not be_nil
-    end
-
-    xit 'is not submited with invalid token' do
-      Feedback.submit_feedback(invalid_token_params)
-
-      Feedback.find_by(invalid_token_params).should be_nil
-    end
-
-    xit 'is not submited with valid token but invalid params' do
-      Feedback.submit_feedback(valid_token_invalid_params)
-
-      Feedback.find_by(valid_token_invalid_params).should be_nil
-    end    
   end
 end
