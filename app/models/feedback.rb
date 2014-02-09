@@ -17,19 +17,14 @@ class Feedback < ActiveRecord::Base
   end
 
   def self.submit_feedback params
-    return false unless Feedback.new(params).valid?
-    
-    feedback = Feedback.find_by_token(params[:token])
-    
-    if feedback
-      feedback.update_attributes(params)
+    feedback = Feedback.new(params)
+    feedback_request = FeedbackRequest.find_by_token(params[:token])
+
+    if feedback.valid? && !feedback_request.submited
+      feedback_request.update_attributes(submited: true)
+      feedback.save(params)
     else
       false
     end
   end
-
-  def self.create_token token
-    Feedback.new(token: token).save(validate: false) unless token.blank?
-  end
-
 end

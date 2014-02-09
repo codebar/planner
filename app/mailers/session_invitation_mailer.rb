@@ -1,4 +1,6 @@
 class SessionInvitationMailer < ActionMailer::Base
+  include EmailHeaderHelper
+  
   layout 'email'
 
   def invite_student sessions, member, invitation
@@ -78,18 +80,6 @@ class SessionInvitationMailer < ActionMailer::Base
   end
 
   private
-
-  def load_attachments
-    %w{logo.png}.each do |image|
-      attachments.inline[image] = File.read("#{Rails.root.to_s}/app/assets/images/#{image}")
-    end
-  end
-
-  def mail_args(member, subject)
-    { :from => "Codebar.io <meetings@codebar.io>",
-      :to => member.email,
-      :subject => subject }
-  end
 
   helper do
     def full_url_for path

@@ -1,4 +1,6 @@
 class CourseInvitationMailer < ActionMailer::Base
+  include EmailHeaderHelper
+
   layout 'email'
 
   def invite_student course, member, invitation
@@ -21,12 +23,6 @@ class CourseInvitationMailer < ActionMailer::Base
     %w{logo.png tribesports.png}.each do |image|
       attachments.inline[image] = File.read("#{Rails.root.to_s}/app/assets/images/#{image}")
     end
-  end
-
-  def mail_args(member, subject)
-    { :from => "Codebar.io <meetings@codebar.io>",
-      :to => member.email,
-      :subject => subject }
   end
 
   helper do

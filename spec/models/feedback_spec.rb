@@ -77,19 +77,19 @@ describe Feedback do
     end
   end
 
-  context '#create_token' do
-    it 'is created when token is not blank' do
-      Feedback.create_token(valid_feedback_token)
+  # context '#create_token' do
+  #   it 'is created when token is not blank' do
+  #     Feedback.create_token(valid_feedback_token)
 
-      Feedback.find_by_token(valid_feedback_token).should_not be_nil
-    end
+  #     Feedback.find_by_token(valid_feedback_token).should_not be_nil
+  #   end
 
-    it 'is not created when token is blank' do
-      Feedback.create_token('')
+  #   it 'is not created when token is blank' do
+  #     Feedback.create_token('')
 
-      Feedback.find_by_token('').should be_nil
-    end
-  end
+  #     Feedback.find_by_token('').should be_nil
+  #   end
+  # end
 
   context "#submit_feedback" do
     let (:valid_params) do
@@ -117,22 +117,23 @@ describe Feedback do
       }
     end
 
+    before do
+      Fabricate(:feedback_request, token: valid_feedback_token)
+    end
+
     it 'is submited with valid token' do
-      Feedback.create_token(valid_feedback_token)
       Feedback.submit_feedback(valid_params)
 
       Feedback.find_by(valid_params).should_not be_nil
     end
 
-    it 'is not submited with invalid token' do
-      Feedback.create_token(valid_feedback_token)
+    xit 'is not submited with invalid token' do
       Feedback.submit_feedback(invalid_token_params)
 
       Feedback.find_by(invalid_token_params).should be_nil
     end
 
-    it 'is not submited with valid token but invalid params' do
-      Feedback.create_token(valid_feedback_token)
+    xit 'is not submited with valid token but invalid params' do
       Feedback.submit_feedback(valid_token_invalid_params)
 
       Feedback.find_by(valid_token_invalid_params).should be_nil

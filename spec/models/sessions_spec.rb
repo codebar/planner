@@ -11,10 +11,12 @@ describe Sessions do
 
   context "#scopes" do
     let(:set_upcoming) { 2.times.map { |n| Sessions.create date_and_time: DateTime.now+(n+1).week }  }
+    let(:most_recent) { Sessions.create date_and_time: 1.day.ago }
 
     before do
       Sessions.create date_and_time: DateTime.now-1.week
       set_upcoming
+      most_recent
     end
 
     it "#upcoming" do
@@ -23,6 +25,10 @@ describe Sessions do
 
     it "#next" do
       Sessions.next.should eq set_upcoming.first
+    end
+
+    it "#most_recent" do
+      Sessions.most_recent.should eq most_recent
     end
 
     describe "#host" do
