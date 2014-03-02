@@ -9,7 +9,7 @@ class SessionInvitationMailer < ActionMailer::Base
 
     load_attachments
 
-    subject = "#{@session.title} by Codebar - #{l(@session.date_and_time, format: :email_title)}"
+    subject = "Coding workshop by Codebar - #{l(@session.date_and_time, format: :email_title)}"
 
     mail(mail_args(member, subject)) do |format|
       format.html
