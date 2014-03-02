@@ -1,19 +1,18 @@
 <h2 style="font-weight: 400; font-size: 24px; border-bottom:1px solid #ececec; padding-bottom: 15px; margin-bottom:35px">Hi <%= @member.name %></h2>
 
-<h3 style="font-weight: 400; font-size: 17px; letter-spacing: 0.01em; color: #111111">We are looking for <%= @spots %> coaches for the <b>codebar</b> coding session that will take place on <%= l(@session.date_and_time, format: :email) %>. </h3>
+<h3 style="font-weight: 400; font-size: 17px; letter-spacing: 0.01em; color: #111111">We are looking for <%= @spots %> coaches for the <b>codebar</b> Coding workshop that will take place on <%= l(@session.date_and_time, format: :email) %>. </h3>
 
-<p style="font-weight: 300; font-size: 16px; color: #2e2e2e">The main theme of the session will be <span style="text-decoration: 'underline'"><%= @session.title %></span>. You will be able to access it through our tutorials page soon. Students can choose any of the available tutorials to go through or ask for help on their own projects, so we ask that all coaches familiarise themselves with the tutorials in general. </p>
+<p style="font-weight: 300; font-size: 16px; color: #2e2e2e">In our workshops you will be helping students work through any of our available tutorials or work on their own projects. </p>
 
 <p style="font-weight: 300; font-size: 16px; color: #2e2e2e;">You can find all of our available tutorials at <%= link_to "http://codebar.github.io/tutorials", "http://codebar.github.io/tutorials/", style: "text-decoration:none; color: #663095;"  %>. If you would like to improve any of the existing content, feel free to issue a pull request to our <%= link_to "github repository", "https://github.com/codebar/tutorials" , style: "text-decoration:none; color: #663095;" %>. </p>
 
-<p style="font-weight: 300; font-size: 16px; color: #2e2e2e;">Before committing to attend any of our sessions, make sure you read and understand our <%= link_to "code of conduct", "http://codebar.io/code-of-conduct", style: "text-decoration:none; color: #663095;"  %> as we have a zero tolerance policy and expect everyone to behave appropriately. </p>
+<p style="font-weight: 300; font-size: 16px; color: #2e2e2e;">Before committing to attend any of our workshops, make sure you read and understand our <%= link_to "code of conduct", "http://codebar.io/code-of-conduct", style: "text-decoration:none; color: #663095;"  %> as we have a zero tolerance policy and expect everyone to behave appropriately. </p>
 
 <p style="font-weight: 300; font-size: 16px; color: #2e2e2e; margin-bottom: 20px;">You should also go through our <b><%= link_to "How to be an effective teacher", "https://github.com/codebar/planner/issues/53", style: "text-decoration:none; color: #663095;" %></b> guide. If you have anything to add to it, please leave a comment on the page. </p>
 
 <div style="display: block;">
   <div style="width: 340px; padding-right: 40px; display: inline-block; vertical-align: top;">
-    <h2 style="color: #2d183d; font-size: 27px; font-weight: 500;letter-spacing: 0.03em; margin-bottom: 0;"><%= @session.title %> by Codebar</h2>
-    <small><%= @session.description %></small>
+    <h2 style="color: #2d183d; font-size: 27px; font-weight: 500;letter-spacing: 0.03em; margin-bottom: 0;">Coding Workshop</h2>
     <p style="font-size: 16px; font-weight: 300; margin-top: 7px;">on <b style="color: #555555;font-size: 16px; font-weight: 600; margin-top: 0;"><%= l(@session.date_and_time, format: :email)%></b></p>
     <div style="background-color: #F7F7F7; width: 90%; border-radius: 6px; box-shadow: 1px 1px 0 rgba(250, 250, 250, 0.5) inset, -1px -1px 2px rgba(250, 250, 250, 0.1) inset; font-size: 18px; padding: 5px 14px; text-align: center; margin: 31px 0 25px; border: 1px solid #dddddd;">
       <p> <%= link_to "Set your attendance", full_url_for(invitation_url(@invitation)), style: "text-decoration:none; color: #663095; font-size: 25px; font-weight: 600; letter-spacing: 0.02em; margin: 10px; text-decoration: none; text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7);"%></p>

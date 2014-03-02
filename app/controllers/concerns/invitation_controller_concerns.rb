@@ -20,6 +20,7 @@ module InvitationControllerConcerns
 
         redirect_to :back, notice: t("messages.accepted_invitation",
                                      name: @invitation.member.name)
+
       else
         redirect_to :back, notice: t("messages.no_available_seats")
       end
