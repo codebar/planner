@@ -53,7 +53,7 @@
           %h6
             = "#{l(@next_session.date_and_time, format: :website_format)}"
         %p.lead.move-top
-          We run weekly coding workshops where we offer guided help in going through HTML/CSS, Javascript and Ruby tutorials - and not just that! There, you will also get the opportunity to meet other people interested in coding and pair with them. If you would like to attend as a student or help out as a coach you can do so by signing up.
+          We run weekly coding workshops in London where we offer guided help in going through HTML/CSS, Javascript and Ruby tutorials - and not just that! There, you will also get the opportunity to meet other people interested in coding and pair with them. If you would like to attend as a student or help out as a coach you can do so by signing up.
         - unless logged_in?
           .sub-block
             = link_to "Sign up to the session", "/auth/github", class: 'member-button'
