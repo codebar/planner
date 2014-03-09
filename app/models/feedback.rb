@@ -2,7 +2,7 @@ class Feedback < ActiveRecord::Base
   belongs_to :tutorial
   belongs_to :coach, class_name: "Member" 
 
-  validates :rating, presence: true,  numericality: true, :inclusion => 1..5
+  validates :rating, inclusion: { in: 1..5, message: "can't be blank" }
   validates :coach, presence: true
   validates :tutorial, presence: true
   validate :coach_field_has_a_coach_role?
@@ -16,20 +16,15 @@ class Feedback < ActiveRecord::Base
   	end
   end
 
-  def self.submit_feedback params
-    return false unless Feedback.new(params).valid?
-    
-    feedback = Feedback.find_by_token(params[:token])
-    
-    if feedback
-      feedback.update_attributes(params)
+  def self.submit_feedback params, token
+    return false unless feedback_request = FeedbackRequest.find_by_token(token)
+    feedback = Feedback.new(params)
+
+    if feedback.valid? && !feedback_request.submited
+      feedback_request.update_attributes(submited: true)
+      feedback.save
     else
       false
     end
   end
-
-  def self.create_token token
-    Feedback.new(token: token).save(validate: false) unless token.blank?
-  end
-
 end

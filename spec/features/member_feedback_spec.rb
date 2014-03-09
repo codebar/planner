@@ -1,12 +1,13 @@
 require 'spec_helper'
 
 feature 'member feedback' do
-  let(:valid_token) { 'feedback_valid_token' }
+  let(:valid_token) { Fabricate(:feedback_request).token }
+  let(:submited_token) { Fabricate(:feedback_request, submited: true).token }
   let(:invalid_token) { 'feedback_invalid_token' }
   let(:feedback_submited_message) { I18n.t("messages.feedback_saved") }
   
   before do
-    Fabricate(:feedback, token: valid_token)
+    Fabricate(:feedback) 
     
     @coach = Fabricate(:coach, name: 'coach_name', surname: 'coach_surname')
     @tutorial = Fabricate(:tutorial, title: 'tutorial title')
@@ -37,15 +38,24 @@ feature 'member feedback' do
     end
   end
 
-  scenario "I get error message when invalid token given and link to homepage" do
-    visit feedback_path(invalid_token)
+  context "I get error message with link to homepage" do
+    scenario "when invalid token given" do
+      visit feedback_path(invalid_token)
 
-    find_link('Return to homepage >>')[:href].should == root_path
-    expect(page).to have_content('Sorry, feedback link seems to be invalid.')
+      find_link('Return to homepage >>')[:href].should == root_path
+      expect(page).to have_content('Sorry, feedback is already submited or link does not exists.')
+    end
+
+    scenario "when feedback has been already submited" do
+      visit feedback_path(submited_token)
+
+      find_link('Return to homepage >>')[:href].should == root_path
+      expect(page).to have_content('Sorry, feedback is already submited or link does not exists.')
+    end
   end
 
   context 'When form is submitted' do
-    scenario 'I can see validation errors when invalid data given' do
+    scenario 'I can see validation errors when invalid data is given' do
       visit feedback_path(valid_token)
       click_button('Submit feedback')
 
@@ -53,12 +63,13 @@ feature 'member feedback' do
       expect(page).to have_content("Tutorial can't be blank")
     end
 
-    scenario 'I can see success page with message and link to homepage when valid data' do
+    scenario 'I can see success page with message and link to homepage when valid data is given' do
       visit feedback_path(valid_token)
 
       find(:xpath, "//input[@id='feedback_rating']").set "4"
       select(@coach.full_name, from: 'feedback_coach_id')
       select(@tutorial.title, from: 'feedback_tutorial_id')
+      
       click_button('Submit feedback')
 
       current_path.should =~ /\/success/

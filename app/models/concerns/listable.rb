@@ -11,5 +11,8 @@ module Listable
     def next
       upcoming.load.first
     end
+    def most_recent
+      past.load.first
+    end
   end
 end
