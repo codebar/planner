@@ -4,9 +4,11 @@
 
 %p
   Before committing to attend any of our workshop, make sure you read and understand our
-  =link_to "code of conduct", "http://codebar.io/code-of-conduct"
-  , as we have a zero tolerance policy and expect everyone to behave appropriately and make sure you go through the
-  = link_to "taeching guide", teaching_guide_path
+  = succeed ',' do
+    =link_to "code of conduct", "http://codebar.io/code-of-conduct"
+  as we have a zero tolerance policy and expect everyone to behave appropriately and make sure you go through the
+  = succeed '.' do
+    = link_to "teaching guide", teaching_guide_path
 
 %p Our latest available tutorial is <b>#{@invitation.sessions.title}</b> - #{@invitation.sessions.description}
 
