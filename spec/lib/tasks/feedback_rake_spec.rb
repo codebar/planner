@@ -10,26 +10,32 @@ describe "feedback:request" do
     let(:student)          { Fabricate(:student) }
 
     before do
-      FeedbackRequest.stub(:create)
       STDOUT.stub(:puts)
+      STDOUT.stub(:print)
       STDIN.stub(:gets).and_return('y')
       student.session_invitations << Fabricate(:attended_session_invitation, member: student, sessions: session)
     end
 
+    it 'should gracefully run' do
+      expect { subject.invoke }.to_not raise_error
+    end
+
     it "generates a FeedbackRequest" do
+      FeedbackRequest.stub(:create)
       subject.invoke
-      FeedbackRequest.should have_received(:create).with(memeber: student, session: session, submited: false)
+      FeedbackRequest.should have_received(:create).with(member: student, sessions: session, submited: false)
     end
 
     context "confirmation message" do
       it "is displayed" do
-        confirmation_message = "Do you want to send feedback requests for session: #{session.title}? (y/N)"
+        confirmation_message = "Do you want to send feedback requests for session: #{session.title}? (y/N) "
 
         subject.invoke
-        STDOUT.should have_received(:puts).with(confirmation_message)
+        STDOUT.should have_received(:print).with(confirmation_message)
       end
 
       it "terminates rake task if negative answer is given" do
+        FeedbackRequest.stub(:create)
         STDIN.stub(:gets).and_return('N')
 
         subject.invoke
