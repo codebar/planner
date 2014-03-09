@@ -13,5 +13,6 @@ describe FeedbackRequestMailer do
     FeedbackRequestMailer.request_feedback(session, member, feedback_request).deliver
 
     expect(email.subject).to eq(email_subject)
+    expect(email.parts.first.body.raw_source).to include feedback_url(feedback_request.token)
   end
 end
