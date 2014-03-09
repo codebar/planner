@@ -1,0 +1,13 @@
+%ol.attendances
+  - invitations.each do |invitation|
+    %li.attendance
+      .two-thirds
+        =invitation.member.full_name
+        %br
+        %small=mail_to invitation.member.email, invitation.member.email
+      .quarter
+        - if invitation.attended.nil?
+          =link_to "Attended", admin_invitation_attended_path(invitation, attended: true), class: "btn small"
+        - else
+          =image_tag "ok.png"
+

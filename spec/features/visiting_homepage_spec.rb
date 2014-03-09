@@ -11,8 +11,6 @@ feature 'when visiting the homepage' do
 
   scenario "i can view the next session" do
 
-    expect(page).to have_content next_session.title
-    expect(page).to have_content next_session.description
     expect(page).to have_content I18n.l(next_session.date_and_time, format: :website_format)
   end
 

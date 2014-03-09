@@ -4,6 +4,7 @@ Planner::Application.routes.draw do
   get "code-of-conduct" => "dashboard#code", as: :code_of_conduct
   get "wall-of-fame" => "dashboard#wall_of_fame", as: :wall_of_fame
   get "sponsoring" => "dashboard#sponsoring", as: :sponsoring
+  get "effective-teacher-guide" => "dashboard#effective-teacher-guide", as: :teaching_guide
 
   resource :member, only: [:new, :edit, :update]
 
@@ -44,6 +45,10 @@ Planner::Application.routes.draw do
 
   namespace :admin do
     root "portal#index"
+
+    resources :invitation, only: [] do
+      get :attended
+    end
   end
 
   match '/auth/:service/callback' => 'auth_services#create', via: %i(get post)

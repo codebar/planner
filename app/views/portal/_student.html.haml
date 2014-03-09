@@ -5,9 +5,9 @@
     .dot
 
   .description
-    - if @upcoming.any?
+    - if @upcoming_student.any?
       .details-block
-        - @upcoming.each do |invitation|
+        - @upcoming_student.each do |invitation|
           .three-quarters
             %h3
               = invitation.parent.title

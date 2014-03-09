@@ -23,6 +23,7 @@ group :development, :test do
   gem 'coveralls', require: false
   gem 'launchy'
   gem 'pry-debugger'
+  gem 'dotenv-rails'
 end
 
 group :production do

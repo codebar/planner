@@ -9,7 +9,7 @@
       %p.lead
         Making tech more diverse and welcoming by bringing people together and helping teach programming skills.
       %p.lead
-        We organise free sessions in HTML, CSS, Javascript, Ruby and offer guidance and advice on a variety of programming related topics. Our target is to help groups of people that are underrepresented in the tech industry.
+        We organise free workshops in HTML, CSS, Javascript, Ruby and offer guidance and advice on a variety of programming related topics. Our target is to help groups of people that are underrepresented in the tech industry.
       %p.lead
         All these, with the help of our
         =link_to "amazing coaches", wall_of_fame_path
@@ -45,17 +45,15 @@
     - if @next_session.present?
       .titlebox.session
         %h2
-          Next session
+          Upcoming workshop
         .dot
 
       .description
         .details-block
-          %h3= @next_session.title
-          %h5= @next_session.description
           %h6
-            = "on #{l(@next_session.date_and_time, format: :website_format)}"
+            = "#{l(@next_session.date_and_time, format: :website_format)}"
         %p.lead.move-top
-          We run sessions weekly where we offer guided help in going through HTML/CSS, Javascript and Ruby tutorials - and not just that! There, you will also get the opportunity to meet other people interested in coding and pair with them. If you would like to attend as a student or help out as a coach you can do so by signing up.
+          We run weekly coding workshops in London where we offer guided help in going through HTML/CSS, Javascript and Ruby tutorials - and not just that! There, you will also get the opportunity to meet other people interested in coding and pair with them. If you would like to attend as a student or help out as a coach you can do so by signing up.
         - unless logged_in?
           .sub-block
             = link_to "Sign up to the session", "/auth/github", class: 'member-button'
@@ -63,7 +61,7 @@
     - if @next_course.present?
       .titlebox.course
         %h2
-          Next course
+          Upcoming course
         .dot
 
       .description
@@ -109,6 +107,9 @@
     .right-block.center
       %br
       %script{ :"data-gittip-username" => "by_codebar", :src => "//gttp.co/v1.js" }
+      %br
+      %br
+      =link_to "Sponsoring", sponsoring_path, class: 'sponsor-button'
       %br
 
     .right-block

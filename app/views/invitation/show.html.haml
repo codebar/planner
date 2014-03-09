@@ -26,6 +26,7 @@
                 =link_to "Unable to attend", reject_invitation_url(@invitation), class: "button"
             - else
               =link_to "Attend", accept_invitation_url(@invitation), class: "button"
+      %hr
 
     .quarter
       .description
@@ -46,4 +47,22 @@
           %li
             Maria
             %b 07792142702
+
+  .row
+    .description
+      %h2 Attendances
+      .half
+        %h4 Students
+        %ol.attendances
+          - @invitation.sessions.attending_students.each do |invitation|
+            %li.attendance
+              .two-thirds
+                =invitation.member.full_name
+      .half
+        %h4 Coaches
+        %ol.attendances
+          - @invitation.sessions.attending_coaches.each do |invitation|
+            %li.attendance
+              .two-thirds
+                =invitation.member.full_name
 
