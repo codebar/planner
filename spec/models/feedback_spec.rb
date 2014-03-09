@@ -18,7 +18,7 @@ describe Feedback do
         feedback = Fabricate.build(:feedback, rating: nil)
 
         feedback.should_not be_valid
-        feedback.should have(3).error_on(:rating)
+        feedback.should have(1).error_on(:rating)
       end
 
       it 'should accept numbers from 1 to 5' do
@@ -47,7 +47,7 @@ describe Feedback do
         feedback = Fabricate.build(:feedback, rating: 'alpha')
 
         feedback.should_not be_valid
-        feedback.should have(2).error_on(:rating)
+        feedback.should have(1).error_on(:rating)
       end
     end
 
