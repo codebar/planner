@@ -1,10 +1,14 @@
 <h2 style="font-weight: 400; font-size: 24px; border-bottom:1px solid #ececec; padding-bottom: 10px; margin-bottom:35px">Hi <%= @member.name %></h2>
 
 <h3 style="font-weight: 600; font-size: 17px; letter-spacing: 0.02em; color: #111111; margin-bottom: 10px;">We would like to invite you to the next <b>codebar</b> workshop</h3>.
-<p style="font-weight: 300; font-size: 16px; color: #2e2e2e;"> In our workshops, you will be able to go through any of our available <%= link_to "HTML/CSS, Javascript and Ruby tutorials", "http://codebar.github.io/tutorials", style: "color: #a369d5; text-decoration: none;" %> or get guidance on your personal projects with help from our <b>superstar coaches</b>. You will also get the opportunity to meet other people interested in coding and pair with them.<br></p>
+<p style="font-weight: 300; font-size: 16px; color: #2e2e2e;"> In our workshops, you will be able to go through any of our available <%= link_to "HTML/CSS, Javascript and Ruby tutorials", "http://codebar.github.io/tutorials", style: "color: #a369d5; text-decoration: none;" %> or get guidance on your personal projects with help from our <b><%= link_to "superstar coaches", full_url_for(wall_of_fame_url), style: "color: #a369d5; text-decoration: none;" %></b>. You will also get the opportunity to meet other people interested in coding and pair with them.<br></p>
+
+<p style="font-weight: 300; font-size: 16px; color: #2e2e2e; margin-bottom: 10px;">
+If you are not a woman, but are part of an underrepresented minority or have any other reasons that you think you should be attending our workshops, reply to this email and let us know why. <b>codebar</b> exists to promote diversity and help breach the gender gap in the programming world, so you cannot attend without us agreeing to it first.
+</p>
 
 <p style="font-weight: 300; font-size: 16px; color: #2e2e2e; margin-bottom: 50px;">
-If you are not a woman, but are part of an underrepresented minority or have any other reasons that you think you should be attending our workshops, reply to this email and let us know why. <b>codebar</b> exists to promote diversity and help breach the gender gap in the programming world, so you cannot attend without us agreeing to it first.
+Codebar is now on gitter. <%= link_to "Join the chat", "https://gitter.im/codebar/tutorials", style: "color: #a369d5; text-decoration: none;" %> to ask your questions and get help from other students and coaches.
 </p>
 
 <div style="display: block;">
