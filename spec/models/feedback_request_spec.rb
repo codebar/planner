@@ -10,13 +10,6 @@ describe FeedbackRequest do
 
   context "validations" do
     context 'presence' do
-      it '#member should not be blank' do
-        feedback_request = Fabricate.build(:feedback_request, member: nil)
-
-        feedback_request.should_not be_valid
-        feedback_request.should have(1).error_on(:member)
-      end
-
       it '#session should not be blank' do
         feedback_request = Fabricate.build(:feedback_request, sessions: nil)
 
