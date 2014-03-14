@@ -24,14 +24,7 @@ describe FeedbackRequest do
         feedback_request.should have(1).error_on(:sessions)
       end
 
-      it '#token should not be blank' do
-        feedback_request = Fabricate.build(:feedback_request, token: nil)
-
-        feedback_request.should_not be_valid
-        feedback_request.should have(1).error_on(:token)
-      end
-
-      it '#submited should not be blank' do
+      it '#submitted should not be blank' do
         feedback_request = Fabricate.build(:feedback_request, submited: nil)
 
         feedback_request.should_not be_valid
