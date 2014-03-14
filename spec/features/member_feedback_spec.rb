@@ -43,14 +43,14 @@ feature 'member feedback' do
       visit feedback_path(invalid_token)
 
       find_link('Return to homepage >>')[:href].should == root_path
-      expect(page).to have_content('Sorry, feedback is already submited or link does not exists.')
+      expect(page).to have_content('You have already submitted feedback for this event.')
     end
 
     scenario "when feedback has been already submited" do
       visit feedback_path(submited_token)
 
       find_link('Return to homepage >>')[:href].should == root_path
-      expect(page).to have_content('Sorry, feedback is already submited or link does not exists.')
+      expect(page).to have_content('You have already submitted feedback for this event.')
     end
   end
 
