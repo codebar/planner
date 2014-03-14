@@ -11,7 +11,7 @@ class FeedbackRequestMailer  < ActionMailer::Base
 
     load_attachments
 
-    subject = "Feedback for #{@session.title} by Codebar - #{l(@session.date_and_time, format: :email_title)}"
+    subject = "Feedback for Codebar workshop - #{l(@session.date_and_time, format: :email_title)}"
 
     mail(mail_args(member, subject)) do |format|
       format.html

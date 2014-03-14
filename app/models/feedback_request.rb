@@ -2,12 +2,12 @@ class FeedbackRequest < ActiveRecord::Base
   belongs_to :member
   belongs_to :sessions
 
-  validates :member, presence: true
+  validates :member, presence: true, uniqueness: true
   validates :sessions, presence: true
   validates :token, uniqueness: true, presence: true
   validates_inclusion_of :submited, :in => [true, false]
 
-  before_create :set_token
+  before_validation :set_token
   after_create :email
 
   private

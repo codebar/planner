@@ -1,11 +1,14 @@
 <h2 style="font-weight: 400; font-size: 24px; border-bottom:1px solid #ececec; padding-bottom: 15px; margin-bottom:35px">Hi <%= @member.name %></h2>
 
-<h3 style="font-weight: 400; font-size: 17px; letter-spacing: 0.01em; color: #111111">Thanks for attending our codebar sessions!</h3>
+<h3 style="font-weight: 400; font-size: 17px; letter-spacing: 0.01em; color: #111111">Thanks for attending our Coding workshop!</h3>
 
-<p style="font-weight: 300; font-size: 16px; color: #2e2e2e">We would like to ask you to give us feedback, so we could improve and make the Codebar better for you and others. It's completely anonymous and it will take just a couple of minutes.</p>
+<p style="font-weight: 300; font-size: 16px; color: #2e2e2e">We would be grateful for any feedback, suggestions, concerns and comments you can offer us about your experience. Your opinion and suggestions are very important in making <b>codebar</b> better and improving what we are offering.
+<br/>
+<br/>
+Feedback is completely anonymous. Filling in the form should only take you a couple of minutes.</p>
 
    <div style="background-color: #F7F7F7; width: 90%; border-radius: 6px; box-shadow: 1px 1px 0 rgba(250, 250, 250, 0.5) inset, -1px -1px 2px rgba(250, 250, 250, 0.1) inset; font-size: 18px; padding: 5px 14px; text-align: center; margin: 31px 0 25px; border: 1px solid #dddddd;">
       <p> <%= link_to "Submit feedback", full_url_for(feedback_url(@feedback_request.token)), style: "text-decoration:none; color: #663095; font-size: 25px; font-weight: 600; letter-spacing: 0.02em; margin: 10px; text-decoration: none; text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7);"%></p>
     </div>
 
-<p style="font-weight: 300; font-size: 16px; color: #2e2e2e;">Thank you.</p>
+<p style="font-weight: 300; margin-top: 10px; font-size: 18px; color: #2e2e2e;">Thank you!</p>
