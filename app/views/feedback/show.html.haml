@@ -1,9 +1,11 @@
 %section#member
   .titlebox.mission
     %h2
-      Please give us your feedback
-      .dot
-    Your opinion is very important to us. We appreciate your feedback and will use it to evaluate changes and make improvements in what we do.
+      Feedback - Coding workshop
+    %small
+      Your submission will be completely anonymous. We read every piece of feedback and use it to help us improve our workshops
+    .dot
+
   .description
     - if @feedback.errors.any?
       .validation_errors
@@ -17,16 +19,16 @@
       .row
         %label.required
           %abbr(title='required') *
-          Your overall rating of tutorial
+          Your overall rating of the workshop
         .rating{:data => {:rating_max => 5 }}
       .row
         = f.association :coach, collection: Member.coaches, label_method: :full_name, value_method: :id, label: 'Who was your coach?', include_blank: '- Select Coach -'
       .row
         = f.association :tutorial, label_method: :title, value_method: :id, label: 'What tutorial did you go through?', include_blank: '- Select Tutorial -'
       .row
-        = f.input :request, label: 'If you could choose to work on something else, what would it be?'
+        = f.input :request, label: 'How did you find the workshop?'
       .row
-        = f.input :suggestions, label: 'What can we do to improve your experience?'
+        = f.input :suggestions, label: "Was there something you didn't like? What can we do to improve your experience?"
       .row
         = f.submit 'Submit feedback'
 

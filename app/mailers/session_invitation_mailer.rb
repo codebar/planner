@@ -1,6 +1,6 @@
 class SessionInvitationMailer < ActionMailer::Base
   include EmailHeaderHelper
-  
+
   layout 'email'
 
   def invite_student sessions, member, invitation
