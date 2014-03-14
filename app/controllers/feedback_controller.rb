@@ -1,8 +1,10 @@
 class FeedbackController < ApplicationController
 
   def show
-    redirect_to action: 'not_found' unless FeedbackRequest.find_by(token: params[:id], submited: false)
+    feedback_request = FeedbackRequest.find_by(token: params[:id], submited: false)
+    redirect_to action: 'not_found' and return if feedback_request.nil?
 
+    @coaches = feedback_request.sessions.invitations.to_coaches.attended.map(&:member)
     @feedback = Feedback.new
   end
 

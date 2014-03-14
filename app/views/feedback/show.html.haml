@@ -22,7 +22,7 @@
           Your overall rating of the workshop
         .rating{:data => {:rating_max => 5 }}
       .row
-        = f.association :coach, collection: Member.coaches, label_method: :full_name, value_method: :id, label: 'Who was your coach?', include_blank: '- Select Coach -'
+        = f.association :coach, collection: @coaches, label_method: :full_name, value_method: :id, label: 'Who was your coach?', include_blank: '- Select Coach -'
       .row
         = f.association :tutorial, label_method: :title, value_method: :id, label: 'What tutorial did you go through?', include_blank: '- Select Tutorial -'
       .row
