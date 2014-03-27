@@ -36,6 +36,11 @@
             <li>
             <%= link_to "Courses", courses_path %>
             </li>
+            <% if logged_in? %>
+              <li>
+                <%= link_to "My Profile", edit_member_path %>
+              </li>
+            <% end %>
           </ul>
           <% if logged_in? %>
               <%= link_to "Log Out", logout_path, class: "member-button" %>
