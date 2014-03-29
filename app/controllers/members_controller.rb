@@ -29,7 +29,7 @@ class MembersController < ApplicationController
   private
 
   def member_params
-    params.require(:member).permit(:name, :surname, :email, :twitter, :about_you, :role_ids)
+    params.require(:member).permit(:name, :surname, :email, :mobile, :twitter, :about_you, :role_ids)
   end
 
   def member_roles_params
