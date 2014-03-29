@@ -2,7 +2,7 @@ class FeedbackRequest < ActiveRecord::Base
   belongs_to :member
   belongs_to :sessions
 
-  validates :member, presence: true, uniqueness: true
+  validates :member_id, presence: true, uniqueness: { scope: [:sessions] }
   validates :sessions, presence: true
   validates :token, uniqueness: true, presence: true
   validates_inclusion_of :submited, :in => [true, false]

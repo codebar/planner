@@ -1,21 +1,23 @@
 require 'spec_helper'
 
 feature 'member feedback' do
-  let(:valid_token) { Fabricate(:feedback_request).token }
+  let(:feedback_request) { Fabricate(:feedback_request) }
+  let(:valid_token) { feedback_request.token }
   let(:submited_token) { Fabricate(:feedback_request, submited: true).token }
   let(:invalid_token) { 'feedback_invalid_token' }
   let(:feedback_submited_message) { I18n.t("messages.feedback_saved") }
-  
+
   before do
-    Fabricate(:feedback) 
-    
-    @coach = Fabricate(:coach, name: 'coach_name', surname: 'coach_surname')
+    Fabricate(:feedback)
+
+    @coach = Fabricate(:coach)
     @tutorial = Fabricate(:tutorial, title: 'tutorial title')
+    Fabricate(:attended_session_invitation, sessions: feedback_request.sessions, member: @coach, role: "Coach")
   end
 
   context 'Feedback form' do
     scenario "I can view a feedback form when token is valid" do
-      visit feedback_path(valid_token) 
+      visit feedback_path(valid_token)
 
       expect(page).to have_select 'feedback_coach_id'
       expect(page).to have_select 'feedback_tutorial_id'
@@ -54,14 +56,7 @@ feature 'member feedback' do
     end
   end
 
-  context 'When form is submitted' do
-    scenario 'I can see validation errors when invalid data is given' do
-      visit feedback_path(valid_token)
-      click_button('Submit feedback')
-
-      expect(page).to have_content("Coach can't be blank")
-      expect(page).to have_content("Tutorial can't be blank")
-    end
+  context 'Submitting a feedback request' do
 
     scenario 'I can see success page with message and link to homepage when valid data is given' do
       visit feedback_path(valid_token)
@@ -69,7 +64,7 @@ feature 'member feedback' do
       find(:xpath, "//input[@id='feedback_rating']").set "4"
       select(@coach.full_name, from: 'feedback_coach_id')
       select(@tutorial.title, from: 'feedback_tutorial_id')
-      
+
       click_button('Submit feedback')
 
       current_path.should =~ /\/success/
