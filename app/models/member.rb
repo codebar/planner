@@ -11,6 +11,8 @@ class Member < ActiveRecord::Base
   scope :coaches, -> { joins(:roles).where(:roles => { :name => 'Coach' }) }
   scope :admins, -> { joins(:roles).where(:roles => { :name => 'Admin' }) }
 
+  default_scope -> { where(unsubscribed: [false, nil]) }
+
   attr_accessor :attendance
 
   def full_name
