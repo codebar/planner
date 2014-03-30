@@ -28,8 +28,9 @@ describe FeedbackRequest do
 
   context "after create hook" do
     it "#email" do
-      feedback_request = Fabricate.build(:feedback_request, member_id: 1)
+      feedback_request = Fabricate.build(:feedback_request)
       feedback_request.stub(:email)
+      feedback_request.stub(member_id: :member_id)
       feedback_request.save
       feedback_request.should have_received(:email)
     end
