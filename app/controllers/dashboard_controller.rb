@@ -16,7 +16,7 @@ class DashboardController < ApplicationController
   def wall_of_fame
     sessions_count = Sessions.count
     @coaches = order_by_attendance(attendance_stats_by_coach).map do |member_id, attendances|
-      member = Member.find(member_id)
+      member = Member.unscoped.find(member_id)
       member.attendance = attendances
       member
     end
