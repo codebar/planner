@@ -22,8 +22,8 @@ en:
     already_rsvped: "You have alredy confirmed you attendance!"
     not_attending_already: "You have alredy confirmed you can't make it!"
     no_available_seats: "Unfortunately there are no more spaces left :(. If you would like to join our waiting list send us an email at meetings@codebar.io."
-    member_notifications: "You will be receiving notifications for: %{roles}"
-    no_roles: "You have not selected any roles so you won't be receiving any notifications. If you change your mind, send us an email at hello@codebar.io so we can change your settings."
+    member_notifications: "You are are subscribed to %{roles} emails."
+    no_roles: "You are not subscribed to any emails."
     feedback_saved: "Thank you for taking the time to give us feedback!"
     feedback_not_found: "You have already submitted feedback for this event."
 

@@ -8,6 +8,8 @@ Planner::Application.routes.draw do
 
   resource :member, only: [:new, :edit, :update]
 
+  get '/profile' => "members#profile", as: :profile
+
   resources :members, only: [] do
     member do
       get "unsubscribe"

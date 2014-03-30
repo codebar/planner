@@ -27,8 +27,11 @@
       .description
         - @meeting.meeting_talks.each do |talk|
           .talk
-            .speaker
-              =link_to talk.speaker.full_name, twitter_url_for(talk.speaker.twitter)
+            - if talk.speaker
+              .speaker
+                =link_to talk.speaker.full_name, twitter_url_for(talk.speaker.twitter)
+            - else
+              .speaker
 
             .information
               =talk.title

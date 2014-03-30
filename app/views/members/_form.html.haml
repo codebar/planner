@@ -1,0 +1,33 @@
+= simple_form_for @member do |f|
+  .row
+    .half
+      = f.input :name
+    .half
+      = f.input :surname
+
+  .row
+    .half
+      = f.input :email
+    .half
+      = f.input :twitter
+  .row
+    .half
+      = f.input :mobile
+
+  = f.input :about_you, as: :text, label: "Tell us a little bit about yourself"
+  %small
+    * for coaches, this is used on our #{link_to("wall of fame", wall_of_fame_path)}
+
+  %p
+  = f.association :roles, collection: Role.no_admins, as: :check_boxes, label: "Sign up as a"
+  %ul.hint
+    %li if you want to learn but also have some programming related skills you want to share, you can select both <b>Student</b> and <b>Coach</b>
+    %li
+      You can only sign up as a <b>Student</b>
+      %ul
+        %li if you are a woman, or
+        %li you are part of a group underrepresented in the tech industry, or
+        %li you succesfuly convince at least two people you know, from underrepresented groups, how amazing programming is and get them to join us and start attending our sessions.
+
+  .form-footer
+    = f.submit submit_text

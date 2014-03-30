@@ -1,19 +1,22 @@
 class MembersController < ApplicationController
+  before_action :logged_in?, only: [:edit, :show]
 
   def edit
-    if current_member?
-      @member = current_member
-    else
-      redirect_to "/auth/github"
-    end
+    @member = current_member
+  end
+
+  def profile
+    @member = current_member
+
+    render :show
   end
 
   def update
     @member = current_member
-    set_roles(@member)
 
     if @member.update_attributes(member_params)
-      redirect_to root_path, notice: sign_up_message(@member)
+      set_roles(@member)
+      redirect_to root_path, notice: update_message(@member)
     else
       render "edit"
     end
@@ -38,15 +41,15 @@ class MembersController < ApplicationController
   end
 
   def set_roles member
-    member_roles_params.each { |role| member.roles << Role.find(role) }
+    member.role_ids = member_roles_params
   end
 
   def roles member
-    member.roles.map { |r| r.name.pluralize }.join(", ")
+    member.roles.map { |r| r.name }.join(" and ")
   end
 
-  def sign_up_message member
-    message = "Thanks for signing up #{member.name}! "
+  def update_message member
+    message = "Your details have been updated. "
     if member.roles.any?
       message << I18n.t("messages.member_notifications", roles: roles(member))
     else
