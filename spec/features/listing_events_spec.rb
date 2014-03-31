@@ -16,7 +16,8 @@ feature 'event listing' do
     within(".upcoming") do
       expect(page).to have_content "Upcoming"
       expect(page).to have_content upcoming_course.title
-      expect(page).to have_content upcoming_session.title
+      expect(page).to have_content "Workshop"
+      expect(page).to have_content I18n.l(upcoming_session.date_and_time, format: :website_format)
     end
   end
 
@@ -25,7 +26,7 @@ feature 'event listing' do
     within(".past") do
       expect(page).to have_content "Past"
       expect(page).to have_content past_course.title
-      expect(page).to have_content past_session.title
+      expect(page).to have_content "Workshop"
     end
   end
 end
