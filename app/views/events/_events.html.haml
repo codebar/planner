@@ -1,0 +1,11 @@
+.events
+  %ul
+    - events.each do |event|
+      %li{ class: event.class.to_s.downcase}
+        %h3
+          - unless event.is_a?(Sessions)
+            =link_to event do
+              = event.to_s
+          - else
+            = event.to_s
+        =l(event.date_and_time, format: :website_format)
