@@ -34,8 +34,8 @@ Planner::Application.routes.draw do
     end
   end
 
-  resources :courses, only: [ :index, :show ]
-  resources :sessions, only: [ :index ]
+  resources :events, only: [ :index ]
+  resources :courses, only: [ :show ]
   resources :meetings, only: [ :show ]
   resources :feedback, only: [ :show ] do
     member do
