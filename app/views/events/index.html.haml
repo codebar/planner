@@ -11,9 +11,9 @@
               %h3
                 - if !event.is_a? Sessions
                   =link_to event do
-                    = event.title
+                    = event.to_s
                 - else
-                  = event.title
+                  = event.to_s
               =l(event.date_and_time, format: :website_format)
 
   - if @past_events.any?
@@ -28,7 +28,7 @@
               %h3
                 - if event.is_a? Course
                   =link_to course_url(event) do
-                    = event.title
+                    = event.to_s
                 - else
-                  = event.title
+                  = event.to_s
               =l(event.date_and_time, format: :website_format)

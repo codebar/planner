@@ -14,4 +14,8 @@ class Meeting < ActiveRecord::Base
   def end_time
     date_and_time+duration*60
   end
+
+  def to_s
+    title
+  end
 end

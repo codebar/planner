@@ -16,6 +16,10 @@ class Course < ActiveRecord::Base
     slug
   end
 
+  def to_s
+    title
+  end
+
   private
 
   def set_slug

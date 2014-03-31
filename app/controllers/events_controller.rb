@@ -11,5 +11,4 @@ class EventsController < ApplicationController
     @events << Meeting.upcoming
     @events.flatten!.sort_by!(&:date_and_time)
   end
-
 end

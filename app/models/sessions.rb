@@ -11,4 +11,8 @@ class Sessions < ActiveRecord::Base
   def host
     SponsorSession.hosts.for_session(self.id).first.sponsor
   end
+
+  def to_s
+    "Workshop"
+  end
 end
