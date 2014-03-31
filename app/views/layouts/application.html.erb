@@ -44,7 +44,7 @@
             <% end %>
           <% if logged_in? %>
             <li>
-              <%= link_to "Log Out", logout_path %>
+              <%= link_to "Log Out", logout_path, class: "login-button" %>
             </li>
           <% else %>
             <li>

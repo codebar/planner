@@ -42,8 +42,8 @@
           = "#{l(@meeting.date_and_time, format: :meeting_format)}"
           to
           = "#{l(@meeting.end_time, format: :time)}"
-        .sub-block
-          =link_to "Read more and RSVP", @meeting, class: 'member-button'
+        %p.lead
+          =link_to "Read more and RSVP", @meeting
 
     - if @next_session.present?
       .titlebox.session
@@ -53,13 +53,23 @@
 
       .description
         .details-block
-          %h6
-            = "#{l(@next_session.date_and_time, format: :website_format)}"
-        %p.lead.move-top
-          We run weekly coding workshops in London where we offer guided help in going through HTML/CSS, Javascript and Ruby tutorials - and not just that! There, you will also get the opportunity to meet other people interested in coding and pair with them. If you would like to attend as a student or help out as a coach you can do so by signing up.
-        - unless logged_in?
-          .sub-block
-            = link_to "Sign up to the session", "/auth/github", class: 'member-button'
+          %h5
+            = l(@next_session.date_and_time, format: :website_format)
+          %p.lead.move-top
+            %p.half
+              = link_to @next_session.host.name, @next_session.host.website
+              %br
+              = AddressDecorator.decorate(@next_session.host.address).to_html
+            %p.third= image_tag @next_session.host.avatar, class: 'sponsor-logo'
+        %p.lead
+          %br
+          Codebar workshops take place every week. Come along to to work on any of our #{link_to("tutorials", "http://tutorials.codebar.io")} and receive guidance from our coaches.
+          - unless logged_in?
+            %br
+            %br
+            It's important to us that we offer a safe and friendly environment to our members so if you would like to attend a workshop,
+            = link_to "sign up", "/auth/github"
+            to receive an invitation.
 
     - if @next_course.present?
       .titlebox.course

@@ -30,10 +30,7 @@ feature 'when visiting the homepage' do
     expect(page).to have_content "The Long Version"
   end
 
-  scenario "i can access becoming a member" do
-    click_on "Become a member"
-
-    expect(page).to have_content "Become a member"
-    expect(page).to have_content "sign up with github"
+  scenario "i can sign up" do
+    expect(page).to have_content "Sign up"
   end
 end
