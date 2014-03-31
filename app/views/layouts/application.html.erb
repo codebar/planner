@@ -26,10 +26,13 @@
         <div class="navigation">
           <ul class="navbar">
             <li>
-              <%= link_to "Wall of Fame", wall_of_fame_path %>
+            <%= link_to "Events", events_path %>
             </li>
             <li>
-            <%= link_to "Courses", courses_path %>
+              <%= link_to "Tutorials", "http://tutorials.codebar.io" %>
+            </li>
+            <li>
+              <%= link_to "Wall of Fame", wall_of_fame_path %>
             </li>
             <% if logged_in? %>
               <li>
@@ -39,13 +42,16 @@
                 <%= link_to "Portal", portal_index_path %>
               </li>
             <% end %>
-          </ul>
           <% if logged_in? %>
-              <%= link_to "Log Out", logout_path, class: "member-button" %>
+            <li>
+              <%= link_to "Log Out", logout_path %>
+            </li>
           <% else %>
-              <%= link_to "Become a member", new_member_path, class: 'member-button'%>
-              <%= link_to "Sign In", "/auth/github", class: "member-button" %>
+            <li>
+              <%= link_to "Sign in", "/auth/github", class: "login-button" %>
+            </li
           <% end %>
+          </ul>
         </div>
       </div>
     </div>

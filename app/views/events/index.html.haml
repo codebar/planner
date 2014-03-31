@@ -1,0 +1,34 @@
+%section#events
+  - if @events.any?
+    .upcoming
+      .titlebox
+        %h2 Upcoming
+        .dot
+      .events
+        %ul
+          - @events.each do |event|
+            %li{ class: event.class.to_s.downcase}
+              %h3
+                - if !event.is_a? Sessions
+                  =link_to event do
+                    = event.title
+                - else
+                  = event.title
+              =l(event.date_and_time, format: :website_format)
+
+  - if @past_events.any?
+    .past
+      .titlebox
+        %h2 Past
+        .dot
+      .events
+        %ul
+          - @past_events.each do |event|
+            %li{ class: event.class.to_s.downcase}
+              %h3
+                - if event.is_a? Course
+                  =link_to course_url(event) do
+                    = event.title
+                - else
+                  = event.title
+              =l(event.date_and_time, format: :website_format)
