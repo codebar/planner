@@ -10,6 +10,9 @@ class DashboardController < ApplicationController
   def code
   end
 
+  def faq
+  end
+
   def about
   end
 

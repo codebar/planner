@@ -5,6 +5,7 @@ Planner::Application.routes.draw do
   get "wall-of-fame" => "dashboard#wall_of_fame", as: :wall_of_fame
   get "sponsoring" => "dashboard#sponsoring", as: :sponsoring
   get "effective-teacher-guide" => "dashboard#effective-teacher-guide", as: :teaching_guide
+  get "faq" => "dashboard#faq"
 
   resource :member, only: [:new, :edit, :update]
 
