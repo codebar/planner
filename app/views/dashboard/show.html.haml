@@ -80,9 +80,9 @@
       .description
         .details-block
           %h3= @next_course.title
-          %h5
-            Course run by
-            %b=link_to @next_course.tutor.full_name, twitter_url_for(@next_course.tutor.twitter)
+          %h5.tutors
+            - @next_course.tutors.each do |tutor|
+              %b=link_to tutor.full_name, twitter_url_for(tutor.twitter)
           %h6= "on #{l(@next_course.date_and_time, format: :website_format)}"
         %p.lead.move-top
           = @next_course.short_description.html_safe
