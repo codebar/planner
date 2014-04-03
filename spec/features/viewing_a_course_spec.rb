@@ -10,12 +10,11 @@ feature 'viewing a course' do
     visit course_path(course)
 
     expect(page).to have_content course.title
-    expect(page).to have_content course.tutor.full_name
     expect(page).to have_content course.description
     expect(page).to have_content course.short_description
     expect(page).to have_content course.url
 
-    expect(page).to have_content "Sign up to the course"
+    expect(page).to have_content "Sign up to receive an invitation to the course."
   end
 
   context "signing up is not available" do

@@ -14,20 +14,21 @@
 
     - if @course.seats > @course.attending.length
       .sub-block
-        =link_to "Sign up to the course", new_member_path, class: 'member-button'
+        #{link_to "Sign up", new_member_path} to receive an invitation to the course.
     - else
       .sub-block
         %small
           %em
             This course is fully booked! If you would like to receive an invitation to other courses we will be running, you should #{link_to("sign up", new_member_path)}.
 
-  .description
-    .tutor
-      .avatar
-        =link_to twitter_url_for(@course.tutor.twitter) do
-          =image_tag @course.tutor.avatar
+  .row.description
+    - @course.tutors.each do |tutor|
+      .tutor.half
+        .avatar
+          =link_to twitter_url_for(tutor.twitter) do
+            =image_tag tutor.avatar(80)
 
-      .about
-        %strong= @course.tutor.full_name
-        =link_to "@#{@course.tutor.twitter}", twitter_url_for(@course.tutor.twitter)
-        %br= @course.tutor.about_you.html_safe
+        .about
+          %strong= tutor.full_name
+          =link_to "@#{tutor.twitter}", twitter_url_for(tutor.twitter)
+          %br= tutor.about_you.html_safe
