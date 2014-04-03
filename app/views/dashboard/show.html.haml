@@ -88,9 +88,6 @@
           = @next_course.short_description.html_safe
           %small
             =link_to "read more about the course", @next_course
-        - unless logged_in?
-          .sub-block
-            =link_to "Sign up to the course", new_member_path, class: 'member-button'
 
 
     .titlebox#code-of-conduct

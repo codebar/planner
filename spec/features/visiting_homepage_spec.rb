@@ -31,6 +31,6 @@ feature 'when visiting the homepage' do
   end
 
   scenario "i can sign up" do
-    expect(page).to have_content "Sign up"
+    expect(page).to have_content "Sign in"
   end
 end
