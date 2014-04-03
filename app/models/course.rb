@@ -2,6 +2,9 @@ class Course < ActiveRecord::Base
   include Listable
 
   has_many :invitations, class_name: "CourseInvitation"
+  has_many :course_tutors
+  has_many :tutors, through: :course_tutors, class_name: "Member"
+
   belongs_to :tutor, class_name: 'Member', foreign_key: 'tutor_id'
 
   before_save :set_slug
