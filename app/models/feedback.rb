@@ -3,7 +3,6 @@ class Feedback < ActiveRecord::Base
   belongs_to :coach, class_name: "Member"
 
   validates :rating, inclusion: { in: 1..5, message: "can't be blank" }
-  validates :coach, presence: true
   validates :tutorial, presence: true
   validate :coach_field_has_a_coach_role?
 
