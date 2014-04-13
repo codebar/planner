@@ -1,12 +1,12 @@
 <h2 style="font-weight: 400; font-size: 24px; border-bottom:1px solid #ececec; padding-bottom: 15px; margin-bottom:35px">Hi <%= @member.name %></h2>
 
-<h3 style="font-weight: 400; font-size: 17px; letter-spacing: 0.01em; color: #111111">We are looking for <%= @spots %> coaches for the <b>codebar</b> Coding workshop that will take place on <%= l(@session.date_and_time, format: :email) %>. </h3>
+<h3 style="font-weight: 400; font-size: 17px; letter-spacing: 0.01em; color: #111111">We are looking for coaches for the <b>codebar</b> workshop that will take place on <%= l(@session.date_and_time, format: :email) %>. </h3>
 
-<p style="font-weight: 300; font-size: 16px; color: #2e2e2e">In our workshops you will be helping students work through any of our available tutorials or work on their own projects. </p>
+<p style="font-weight: 300; font-size: 16px; color: #2e2e2e">In our workshops you will be guiding students while they work through our tutorials or help them out in other programming related areas that they request help in. </p>
 
 <p style="font-weight: 300; font-size: 16px; color: #2e2e2e;">You can find all of our available tutorials at <%= link_to "http://codebar.github.io/tutorials", "http://codebar.github.io/tutorials/", style: "text-decoration:none; color: #663095;"  %>. If you would like to improve any of the existing content, feel free to issue a pull request to our <%= link_to "github repository", "https://github.com/codebar/tutorials" , style: "text-decoration:none; color: #663095;" %>. </p>
 
-<p style="font-weight: 300; font-size: 16px; color: #2e2e2e;">Before committing to attend any of our workshops, make sure you read and understand our <%= link_to "code of conduct", "http://codebar.io/code-of-conduct", style: "text-decoration:none; color: #663095;"  %> as we have a zero tolerance policy and expect everyone to behave appropriately. You should also go through our <b><%= link_to "How to be an effective teacher", "https://github.com/codebar/planner/issues/53", style: "text-decoration:none; color: #663095;" %></b> guide. If you have anything to add to it, please leave a comment on the page. </p>
+<p style="font-weight: 300; font-size: 16px; color: #2e2e2e;">Before attending, please make sure you read and understand our <%= link_to "code of conduct", "http://codebar.io/code-of-conduct", style: "text-decoration:none; color: #663095;"  %> as we have a zero tolerance policy and expect everyone to behave appropriately. You should also go through our <b><%= link_to "How to be an effective teacher", "https://github.com/codebar/planner/issues/53", style: "text-decoration:none; color: #663095;" %></b> guide. If you have anything to add to it, please leave a comment on the github issue. </p>
 
 <p style="font-weight: 300; font-size: 16px; color: #2e2e2e; margin-bottom: 50px;">
 Codebar is now on gitter. <%= link_to "Join the chat", "https://gitter.im/codebar/tutorials", style: "color: #a369d5; text-decoration: none;" %> to offer online help and guidance to students going through the tutorials.
