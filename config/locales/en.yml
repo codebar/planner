@@ -15,6 +15,7 @@ en:
         month: "%B"
         meeting_format: "%A, %d %B %Y,  %H:%M"
         time: "%H:%M"
+        year_month: "%Y-%B"
 
   messages:
     accepted_invitation: "Thanks for getting back to us %{name}. See you at the session!"

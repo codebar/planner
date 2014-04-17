@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140403004924) do
+ActiveRecord::Schema.define(version: 20140417154809) do
 
   create_table "addresses", force: true do |t|
     t.string   "flat"
@@ -113,6 +113,9 @@ ActiveRecord::Schema.define(version: 20140403004924) do
     t.integer  "venue_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "name"
+    t.string   "description"
+    t.string   "slug"
   end
 
   create_table "members", force: true do |t|
