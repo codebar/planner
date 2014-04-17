@@ -33,10 +33,7 @@
             =link_to "@#{talk.speaker.twitter}", twitter_url_for(talk.speaker.twitter)
             %br= talk.speaker.about_you.html_safe
     .sub-block
-      %strong
-        =link_to "Sign up for the meeting", @meeting.lanyrd_url
-      but first
-      =link_to "read our code of conduct", code_of_conduct_path
+      To secure a place at the meeting, you must #{link_to "register with our host, <strong>#{@meeting.venue.name}</strong>".html_safe, @meeting.lanyrd_url}
     %br
     %hr
       .venue
