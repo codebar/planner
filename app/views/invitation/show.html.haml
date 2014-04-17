@@ -16,16 +16,31 @@
             %em This session has already taken place!
           - else
             %h3 RSVP
-            - if @invitation.attending.eql?(true)
-              =link_to "Attending", "#", class: "btn"
-              - if @invitation.sessions.date_and_time-1.day <= DateTime.now
-                %br
-                %br
-                %small The session is on in less than 24 hours so you can no longer change you attendance status through here. If you can no longer make it, please send us a text or email meetings@codebar.io so we can try to reallocate your spot.
+            %p
+              - if @invitation.attending.eql?(true)
+                You are attending this workshop.
+                - if @invitation.role.eql?("Student")
+                  %br
+                  %strong Note
+                  = @invitation.note
+                - if @invitation.sessions.date_and_time-6.hours <= DateTime.now
+                  %br
+                  %br
+                  %small The session is on in less than 6 hours so you can no longer change you attendance. Please send a text at 07402887214 or email meetings@codebar.io so we can try to reallocate your spot.
+                - else
+                  %br
+                  %br
+                  =link_to "I can no longer attend", reject_invitation_url(@invitation), class: "button"
               - else
-                =link_to "Unable to attend", reject_invitation_url(@invitation), class: "button"
-            - else
-              =link_to "Attend", accept_invitation_url(@invitation), class: "button"
+                - if @invitation.role.eql?("Coach")
+                  = link_to "Attend", accept_invitation_url(@invitation), class: "button"
+                - else
+                  = simple_form_for @invitation, url: :accept_with_note_invitation, method: :post do |f|
+                    = f.input :note, required: true, label: "What do you plan to work on at the workshop?"
+                    %small This will help us make the workshop easier to manage as we can figure out upfront with whom to pair you on the day.
+                    %br
+                    .right
+                      = f.button :submit, "Attend",  class: "button"
       %hr
 
     .quarter

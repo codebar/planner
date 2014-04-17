@@ -19,6 +19,7 @@ Planner::Application.routes.draw do
 
   resources :invitation, only: [ :show ] do
     member do
+      post "accept_with_note", as: :accept_with_note
       get "accept"
       get "reject"
     end

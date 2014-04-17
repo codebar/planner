@@ -4,7 +4,7 @@ shared_examples "invitation route" do
       visit invitation_route
       click_on "Attend"
 
-      expect(page).to have_link "Unable to attend"
+      expect(page).to have_link "I can no longer attend"
       expect(page).to have_content("Thanks for getting back to us #{invitation.member.name}.")
     end
 
@@ -14,7 +14,6 @@ shared_examples "invitation route" do
       click_on "Attend"
 
       current_url.should eq invitation_url(invitation)
-      expect(page).to have_link "Attend"
       expect(page).to have_content("Unfortunately there are no more spaces left :(.")
     end
   end
@@ -24,7 +23,7 @@ shared_examples "invitation route" do
       invitation.update_attribute(:attending, true)
       visit invitation_route
 
-      click_on "Unable to attend"
+      click_on "I can no longer attend"
       expect(page).to have_content(I18n.t("messages.rejected_invitation", name: invitation.member.name))
     end
 
@@ -32,7 +31,8 @@ shared_examples "invitation route" do
       invitation.update_attribute(:attending, false)
       visit invitation_route
 
-      expect(page).to have_link "Attend"
+      expect(page).to have_content "Attend"
+      expect(page).to_not have_content "I can no longer attend"
     end
   end
 end
