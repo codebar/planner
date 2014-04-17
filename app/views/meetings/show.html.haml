@@ -11,6 +11,9 @@
     .dot
 
   .description
+    - if @meeting.description.present?
+      %p.lead
+        =@meeting.description
     - @meeting.meeting_talks.each do |talk|
       .talk
 

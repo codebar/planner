@@ -25,25 +25,30 @@
           =link_to @meeting.title, @meeting
         .dot
       .description
-        - @meeting.meeting_talks.each do |talk|
-          .talk
-            - if talk.speaker
-              .speaker
-                =link_to talk.speaker.full_name, twitter_url_for(talk.speaker.twitter)
-            - else
-              .speaker
+        .details-block
+          %h5
+            ="#{l(@meeting.date_and_time, format: :meeting_format)}"
+            to
+            ="#{l(@meeting.end_time, format: :time)}"
+          - if @meeting.description.present?
+            %p.lead
+              %small=@meeting.description
+          %p.lead
+            - @meeting.meeting_talks.each do |talk|
+              .talk
+                - if talk.speaker
+                  .speaker
+                    =link_to talk.speaker.full_name, twitter_url_for(talk.speaker.twitter)
+                - else
+                  .speaker
 
-            .information
-              =talk.title
-              - if talk.description.present?
-                %br
-                %small=talk.description
-        %h6
-          = "#{l(@meeting.date_and_time, format: :meeting_format)}"
-          to
-          = "#{l(@meeting.end_time, format: :time)}"
-        %p.lead
-          =link_to "Read more and RSVP", @meeting
+                .information
+                  =talk.title
+                  - if talk.description.present?
+                    %br
+                    %small=talk.description
+          %p.lead
+            =link_to "Read more and RSVP", @meeting
 
     - if @next_session.present?
       .titlebox.session

@@ -8,7 +8,7 @@ class Meeting < ActiveRecord::Base
   validates :date_and_time, :duration, :lanyrd_url, :venue, presence: true
 
   def title
-    "#{I18n.l(date_and_time, format: :month)} Meeting"
+    self.name or "#{I18n.l(date_and_time, format: :month)} Meeting"
   end
 
   def end_time
