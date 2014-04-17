@@ -15,8 +15,7 @@ feature 'viewing a meeeting' do
     expect(page).to have_content meeting_talk.description
     expect(page).to have_content meeting_talk.abstract
 
-    expect(page).to have_content "read our code of conduct"
-    expect(page).to have_link "Sign up for the meeting", href: meeting.lanyrd_url
+    expect(page).to have_content "To secure a place at the meeting, you must register"
   end
 end
 
