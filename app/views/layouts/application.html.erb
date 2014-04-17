@@ -6,7 +6,7 @@
 
     <title>Codebar.io</title>
     <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
-    <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+    <%= javascript_include_tag "vendor/modernizr" %>
     <link href='http://fonts.googleapis.com/css?family=Allerta' rel='stylesheet' type='text/css'>
     <script type="text/javascript" src="//use.typekit.net/hhc0xau.js"></script>
     <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
@@ -14,53 +14,7 @@
   </head>
   <body>
     <div id="top"></div>
-    <div id="navlight">
-      <div id="nav-inside">
-        <div class="logo">
-          <%=link_to root_path do %>
-            <%= image_tag "logo.png", width: '185px'%>
-          <% end %>
-        </div>
-        <span id="mobile-nav-icon">
-          <span class="line one"></span>
-          <span class="line two"></span>
-          <span class="line three"></span>
-        </span>
-        <div class="navigation">
-          <ul class="navbar">
-            <li>
-            <%= link_to "Events", events_path %>
-            </li>
-            <li>
-            <%= link_to "FAQ", faq_path %>
-            </li>
-            <li>
-              <%= link_to "Tutorials", "http://tutorials.codebar.io" %>
-            </li>
-            <li>
-              <%= link_to "Wall of Fame", wall_of_fame_path %>
-            </li>
-            <% if logged_in? %>
-              <li>
-                <%= link_to "My Profile", profile_path %>
-              </li>
-              <li>
-                <%= link_to "Portal", portal_index_path %>
-              </li>
-            <% end %>
-          <% if logged_in? %>
-            <li>
-              <%= link_to "Log Out", logout_path, class: "login-button" %>
-            </li>
-          <% else %>
-            <li>
-              <%= link_to "Sign in", "/auth/github", class: "login-button" %>
-            </li
-          <% end %>
-          </ul>
-        </div>
-      </div>
-    </div>
+    <%= render partial: 'layouts/navigation' %>
 
     <div id="container">
       <%= render partial: 'layouts/messages' %>
@@ -74,6 +28,7 @@
       <div class="footer-copy right-float">&#169; 2014 codebar</div>
     </div>
     </footer>
+    <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
 
   </body>
 </html>

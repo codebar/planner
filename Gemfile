@@ -14,6 +14,8 @@ gem 'draper'
 gem 'omniauth'
 gem 'omniauth-github'
 
+gem 'foundation-rails'
+
 group :development, :test do
   gem 'rspec-rails'
   gem 'fabrication'
