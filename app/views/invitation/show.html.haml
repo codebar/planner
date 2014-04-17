@@ -36,7 +36,7 @@
                   = link_to "Attend", accept_invitation_url(@invitation), class: "button"
                 - else
                   = simple_form_for @invitation, url: :accept_with_note_invitation, method: :post do |f|
-                    = f.input :note, label: "What do you plan to work on at the workshop?"
+                    = f.input :note, label: "What do you plan to work on at the workshop?", placeholder: "e.g. I know a bit of HTML and CSS or the second JQuery tutorial"
                     %small This will help us make the workshop easier to manage as we can figure out upfront with whom to pair you on the day.
                     %br
                     .right
