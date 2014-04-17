@@ -5,6 +5,9 @@
         =invitation.member.full_name
         %br
         %small=mail_to invitation.member.email, invitation.member.email
+        %br
+        %small
+          %em=invitation.note
       .quarter
         - if invitation.attended.nil?
           =link_to "Attended", admin_invitation_attended_path(invitation, attended: true), class: "btn small"
