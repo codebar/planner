@@ -5,4 +5,3 @@ class MeetingsController < ApplicationController
     @map_address = AddressDecorator.new(@meeting.venue.address).for_map
   end
 end
-
