@@ -13,7 +13,6 @@
 //= require jquery
 //= require foundation
 //= require 'jsimple-star-rating.min.js'
-//= require portal
 //= require analytics
 
 
