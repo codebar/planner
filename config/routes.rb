@@ -2,7 +2,7 @@ Planner::Application.routes.draw do
   root "dashboard#show"
 
   get "code-of-conduct" => "dashboard#code", as: :code_of_conduct
-  get "wall-of-fame" => "dashboard#wall_of_fame", as: :wall_of_fame
+  get "coaches" => "dashboard#wall_of_fame", as: :coaches
   get "sponsoring" => "dashboard#sponsoring", as: :sponsoring
   get "effective-teacher-guide" => "dashboard#effective-teacher-guide", as: :teaching_guide
   get "faq" => "dashboard#faq"

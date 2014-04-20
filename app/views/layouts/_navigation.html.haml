@@ -1,21 +1,21 @@
-#navlight
-  #nav-inside
-    .logo
+%nav.top-bar{ "data-topbar" => "" }
+  %ul.title-area
+    %li.name
       =link_to root_path do
-        = image_tag "logo.png", width: '185px'
-    %span#mobile-nav-icon
-      %span.line.one
-      %span.line.two
-      %span.line.three
-    .navigation
-      %ul.navbar
-        %li= link_to "Events", events_path
-        %li= link_to "FAQ", faq_path
-        %li= link_to "Tutorials", "http://tutorials.codebar.io"
-        %li= link_to "Wall of Fame", wall_of_fame_path
-        - if logged_in?
-          %li= link_to "My Profile", profile_path
-          %li= link_to "Portal", portal_index_path
-          %li= link_to "Log Out", logout_path, class: "login-button"
-        - else
-          %li= link_to "Sign in", "/auth/github", class: "login-button"
+        .brand codebar
+    %li.toggle-topbar.menu-icon
+      =link_to "Menu", "#"
+
+  %section.top-bar-section
+    %ul.right
+      %li= link_to "Events", events_path
+      %li= link_to "FAQ", faq_path
+      %li= link_to "Tutorials", "http://tutorials.codebar.io"
+      %li= link_to "Our Coaches", coaches_path
+      %li= link_to "Sponsoring", sponsoring_path
+      - if logged_in?
+        %li= link_to "My Profile", profile_path
+        %li= link_to "Portal", portal_index_path
+        %li= link_to "Log Out", logout_path, class: "login-button"
+      - else
+        %li= link_to "Sign in", "/auth/github", class: "login-button"

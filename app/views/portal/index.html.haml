@@ -1,13 +1,19 @@
-%section#main
-  #tabs{ "data-tab" => true }
-    - if current_member.is_student?
-      =link_to "Student", "#student"
-    - if current_member.is_coach?
-      =link_to "Coach", "#coach"
+= render partial: 'shared/title', locals: { title: "Member portal", date: nil }
+%section
+  - if current_member.is_student? and current_member.is_coach?
+    .inner-nav{ "data-magellan-expedition" => "fixed" }
+      %dl.sub-nav
+        .row
+          %dd{ "data-magellan-arrival" => "student" }
+            =link_to "Student", "#student"
+          %dd{ "data-magellan-arrival" => "coach" }
+            =link_to "Coach", "#coach"
 
-  #tabs-content
-    - if current_member.is_student?
-      =render partial: "student"
 
-    - if current_member.is_coach?
-      =render partial: "coach"
+  .row
+    .large-12.columns
+      - if current_member.is_student? and
+        =render partial: "student"
+
+      - if current_member.is_coach?
+        =render partial: "coach"

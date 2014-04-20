@@ -1,37 +1,32 @@
-#coach.content
-  .titlebox.mission
-    %h2
-      Upcoming
-    .dot
+%a{ name: "coach" }
+%h3{ "data-magellan-destination" => "coach"} Coach
 
-  .description
-    - if @upcoming_coach.any?
-      .details-block
-        - @upcoming_coach.each do |invitation|
-          .three-quarters
-            %h3
-              = link_to invitation.parent.title, invitation_path(invitation)
-              .right-float
-                =link_to attendance_status(invitation), invitation_path(invitation), class: "button"
-            %h5= invitation.parent.description
-            %h6
-              = "on #{l(invitation.parent.date_and_time, format: :website_format)}"
-    - else
-      %em There are no upcoming events
+%h4 Upcoming
 
-  - if @coached.any?
-    .titlebox.mission
-      %h2
-        Sessions coached
-      .dot
+- if @upcoming_coach.any?
+  %ul.small-block-grid-2.medium-block-grid-3.large-block-grid-4
+    - @upcoming_coach.each do |invitation|
+      %li.panel
+        %p
+          %h4
+            = link_to invitation.parent.to_s, invitation_path(invitation)
+          .date= "on #{l(invitation.parent.date_and_time, format: :website_format)}"
+          %br
 
-    .description
+          =link_to attendance_status(invitation), invitation_path(invitation), class: "button round expand"
+- else
+  %em There are no upcoming events
+
+- if @coached.any?
+  %hr
+  %p
+    %h4 Attended
+
+    %ul.small-block-grid-2.medium-block-grid-3.large-block-grid-4
       - @coached.each do |invitation|
-        .details-block
-          %h3
-            = link_to invitation.parent.title, invitation_path(invitation)
-            .right-float
-              =link_to "View", invitation_path(invitation), class: "button"
-          %h5= invitation.parent.description
-          %h6
-            = "on #{l(invitation.parent.date_and_time, format: :website_format)}"
+        %li.panel
+          %h4
+            = link_to invitation.parent.to_s, invitation_path(invitation)
+          .date= " #{l(invitation.parent.date_and_time, format: :website_format)}"
+          %br
+          =link_to "View", invitation_path(invitation), class: "button round expand"

@@ -1,33 +1,27 @@
 = simple_form_for @member do |f|
   .row
-    .half
+    .large-6.columns
       = f.input :name
-    .half
+    .large-6.columns
       = f.input :surname
 
   .row
-    .half
+    .large-6.columns
       = f.input :email
-    .half
+    .large-6.columns
       = f.input :twitter
   .row
-    .half
+    .large-6.columns
       = f.input :mobile
 
-  = f.input :about_you, as: :text, label: "Tell us a little bit about yourself"
-  %small
-    * this is used on our #{link_to("wall of fame", wall_of_fame_path)}
+  .row
+    .large-12.columns
+      = f.input :about_you, as: :text, label: "Tell us a little bit about yourself", required: true, hint: "for coaches, this is also displayed #{link_to("here", coaches_path)}".html_safe
 
-  %p
-  = f.association :roles, collection: Role.no_admins, as: :check_boxes, label: "Subscribe as"
-  %ul.hint
-    %li if you want to learn but also have some programming related skills you want to share, you can select both <b>Student</b> and <b>Coach</b>
-    %li
-      You can only sign up as a <b>Student</b>
-      %ul
-        %li if you are a woman, or
-        %li you are part of a group underrepresented in the tech industry, or
-        %li you succesfuly convince at least two people you know, from underrepresented groups, how amazing programming is and get them to join us and start attending our sessions.
+  .row
+    .large-12.columns
+      = f.association :roles, collection: Role.no_admins, as: :check_boxes, label: "Subscribe as"
 
-  .form-footer
-    = f.submit submit_text
+  .row
+    .large-12.columns.text-right
+      = f.submit submit_text, class: 'button round right'

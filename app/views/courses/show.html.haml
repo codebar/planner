@@ -1,34 +1,28 @@
-%section#courses
-  .titlebox.course
-    %h2
-      = @course.title
-    %small= "#{l(@course.date_and_time, format: :website_format)}"
-    .dot
+= render partial: 'shared/title', locals: { title: @course.title, date:  l(@course.date_and_time, format: :website_format) }
+%section.course
+  .row
+    .large-12.columns
+      %p= @course.short_description
+      %p= @course.description.html_safe
 
-  .description
-    %h4= @course.short_description
-    = @course.description.html_safe
-    - if @course.url.present?
-      .right
-        =link_to "read more about the course", @course.url
+      - if @course.url.present?
+        =link_to "Read more about the course", @course.url
 
-    - if @course.seats > @course.attending.length
-      .sub-block
-        #{link_to "Sign up", new_member_path} to receive an invitation to the course.
-    - else
-      .sub-block
-        %small
-          %em
-            This course is fully booked! If you would like to receive an invitation to other courses we will be running, you should #{link_to("sign up", new_member_path)}.
+      - if @course.seats > @course.attending.length
+        #{link_to "Sign up", new_member_path, class: 'button tiny round'} to receive an invitation to the course.
+      - else
+        This course is fully booked! If you would like to receive an invitation to other courses we will be running, you should #{link_to("sign up", new_member_path)}.
 
-  .row.description
-    - @course.tutors.each do |tutor|
-      .tutor.half
-        .avatar
-          =link_to twitter_url_for(tutor.twitter) do
-            =image_tag tutor.avatar(80)
-
-        .about
-          %strong= tutor.full_name
-          =link_to "@#{tutor.twitter}", twitter_url_for(tutor.twitter)
-          %br= tutor.about_you.html_safe
+  .row
+    .large-12.columns
+      %ul.small-block-grid-1.medium-block-grid-2.large-block-grid-2
+        - @course.tutors.each do |tutor|
+          %li.coach
+            .row
+              .small-2.columns
+                =link_to twitter_url_for(tutor.twitter) do
+                  =image_tag tutor.avatar(106), class: 'th radius'
+              .small-10.columns
+                =link_to twitter_url_for(tutor.twitter) do
+                  = tutor.full_name
+                %p= tutor.about_you.html_safe

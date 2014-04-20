@@ -1,8 +1,8 @@
-%section#member
-  .titlebox.mission
-    %h2
-      Become a member
-      .dot
-  .description
-    %p.lead Please sign in or sign up with github
-    = link_to "Github", "/auth/github", class: "button"
+%section#banner
+  .row
+    .medium-12.columns
+      %p Before signing up, have a look at our #{link_to "code of conduct", code_of_conduct_path}.
+      %p To receive invitations for our events, make sure you subscribe as a Student /or a Coach and fill in your required profile details when you come back to our website.
+      %p Invitations are send out periodically, so don't worry if you don't receive one as soon as you sign up.
+      = link_to "Sign up", "/auth/github", class: "button round tiny"
+

@@ -11,18 +11,13 @@
 // about supported directives.
 //
 //= require jquery
-//= require_tree .
+//= require foundation
 //= require 'jsimple-star-rating.min.js'
+//= require portal
+//= require analytics
 
-'use strict';
 
-$(document).ready(function(){
-  $('#mobile-nav-icon').on('click', function(){
-    $('.navigation').slideToggle('slow', function() {
-      $(this).toggleClass('expand-mobile');
-      $(this).css("display","");
-    });
-  });
+$(function(){
+  $(document).foundation();
 });
 
-$(function(){ $(document).foundation(); });

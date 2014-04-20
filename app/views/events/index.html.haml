@@ -1,14 +1,16 @@
-%section#events
-  - if @events.any?
-    .upcoming
-      .titlebox
-        %h2 Upcoming
-        .dot
-      = render partial: 'events', locals: { events: @events }
+= render partial: 'shared/title', locals: { title: "Events", date: nil }
+%section#banner
+  .row
+    .large-12.columns
+      - if @events.any?
+        .upcoming
+          .titlebox
+            %h3 Upcoming
+          = render partial: 'events', locals: { events: @events }
 
-  - if @past_events.any?
-    .past
-      .titlebox
-        %h2 Past
-        .dot
-      = render partial: 'events', locals: { events: @past_events }
+    .large-12.columns
+      - if @past_events.any?
+        .past
+          .titlebox
+            %h3 Past
+          = render partial: 'events', locals: { events: @past_events }

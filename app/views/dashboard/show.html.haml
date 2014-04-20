@@ -1,158 +1,86 @@
-%section#main
-  .left-panel
-    .titlebox.mission
-      %h2
-        Our mission
-      .dot
+= render partial: 'shared/title', locals: { title: "Coding is easier than you think", date: nil }
+%section#banner
+  .container
+    .row
+      .medium-12.columns
+        %p
+          Codebar is an initiative aiming to bridge the diversity gap in the tech industry by running free weekly coding workshops and other programming related events aimed at women, LGBTQ and people otherwise underrepresented.
+        %p
+          If you would like to attend our events as a student or help out as a coach just #{link_to "sign up", new_member_path}.
+        %p
+          Do you have any questions? Have a look at our #{link_to "FAQ", faq_path}.
 
-    .description
-      %p.lead
-        Making tech more diverse and welcoming by bringing people together and helping teach programming skills.
-      %p.lead
-        We organise free workshops in HTML, CSS, Javascript, Ruby and offer guidance and advice on a variety of programming related topics. Our target is to help groups of people that are underrepresented in the tech industry.
-      %p.lead
-        All these, with the help of our
-        =link_to "amazing coaches", wall_of_fame_path
-        \.
-      %p.lead
-        %b
-          Before you continue, you should read our
-          =link_to "code of conduct", "#code-of-conduct"
+      .row
+        .medium-12.columns
+          %ul.inline-list.right.social-media
+            %li.github
+              =link_to "https://github.com/codebar" do
+                %span.fa-stack.fa-lg
+                  %i.fa.fa-square.fa-stack-2x
+                  %i.fa.fa-github.fa-stack-1x.fa-inverse
+            %li.twitter
+              =link_to  "https://twitter.com/by_codebar" do
+                %span.fa-stack.fa-lg
+                  %i.fa.fa-square.fa-stack-2x
+                  %i.fa.fa-twitter.fa-stack-1x.fa-inverse
+            %li.facebook
+              =link_to "https://facebook.com/bycodebar" do
+                %span.fa-stack.fa-lg
+                  %i.fa.fa-square.fa-stack-2x
+                  %i.fa.fa-facebook.fa-stack-1x.fa-inverse
 
-    - if @meeting.present?
-      .titlebox.meeting
-        %h2
-          =link_to @meeting.title, @meeting
-        .dot
-      .description
-        .details-block
-          %h5
-            ="#{l(@meeting.date_and_time, format: :meeting_format)}"
-            to
-            ="#{l(@meeting.end_time, format: :time)}"
-          - if @meeting.description.present?
-            %p.lead
-              %small=@meeting.description
-          %p.lead
-            - @meeting.meeting_talks.each do |talk|
-              .talk
-                - if talk.speaker
-                  .speaker
-                    =link_to talk.speaker.full_name, twitter_url_for(talk.speaker.twitter)
-                - else
-                  .speaker
+%section
+  .events
+    .row
+      %hr
+      .large-12.columns
+        %h4 Upcoming events
+        .row{ "data-equalizer" => "" }
+          - if @meeting.present?
+            .large-4.columns
+              %ul.pricing-table.meeting{ "data-equalizer-watch" => '' }
+                %li.title=@meeting.title
+                %li.description
+                  ="#{l(@meeting.date_and_time, format: :meeting_format)}"
+                  to
+                  ="#{l(@meeting.end_time, format: :time)}"
+                %li.bullet-item
+                  %ul.square
+                    - @meeting.meeting_talks.each do |talk|
+                      %li
+                        =talk.title
+                %li.cta-button
+                  =link_to "RSVP", @meeting, class: "button round tiny"
 
-                .information
-                  =talk.title
-                  - if talk.description.present?
-                    %br
-                    %small=talk.description
-          %p.lead
-            =link_to "Read more and RSVP", @meeting
+          - if @next_session.present?
+            .large-4.columns
+              %ul.pricing-table.workshop{ "data-equalizer-watch" => '' }
+                %li.title Coding Workshop
+                %li.description
+                  = l(@next_session.date_and_time, format: :website_format)
+                %li.bullet-item
+                  = link_to @next_session.host.name, @next_session.host.website
+                  %br
+                  = AddressDecorator.decorate(@next_session.host.address).to_html
+                %li.cta-button
+                  = link_to "RSVP", "/auth/github", class: "button round tiny"
 
-    - if @next_session.present?
-      .titlebox.session
-        %h2
-          Upcoming workshop
-        .dot
+          - if @next_course.present?
+            .large-4.columns
+              %ul.course.pricing-table{ "data-equalizer-watch" => '' }
+                %li.title= @next_course.title
+                %li.description
+                  = l(@next_course.date_and_time, format: :website_format)
+                %li.bullet-item
+                  = @next_course.short_description.html_safe
+                %li.cta-button
+                  =link_to "Read more", @next_course, class: "button round tiny "
 
-      .description
-        .details-block
-          %h5
-            = l(@next_session.date_and_time, format: :website_format)
-          %p.lead.move-top
-            %p.half
-              = link_to @next_session.host.name, @next_session.host.website
-              %br
-              = AddressDecorator.decorate(@next_session.host.address).to_html
-            %p.third= image_tag @next_session.host.avatar, class: 'sponsor-logo'
-        %p.lead
-          %br
-          Codebar workshops take place every week. Come along to to work on any of our #{link_to("tutorials", "http://tutorials.codebar.io")} and receive guidance from our coaches.
-          - unless logged_in?
-            %br
-            %br
-            It's important to us that we offer a safe and friendly environment to our members so if you would like to attend a workshop,
-            = link_to "sign up", "/auth/github"
-            to receive an invitation.
-
-    - if @next_course.present?
-      .titlebox.course
-        %h2
-          Upcoming course
-        .dot
-
-      .description
-        .details-block
-          %h3= @next_course.title
-          %h5.tutors
-            - @next_course.tutors.each do |tutor|
-              %b=link_to tutor.full_name, twitter_url_for(tutor.twitter)
-          %h6= "on #{l(@next_course.date_and_time, format: :website_format)}"
-        %p.lead.move-top
-          = @next_course.short_description.html_safe
-          %small
-            =link_to "read more about the course", @next_course
-
-
-    .titlebox#code-of-conduct
-      %h2
-        Code of conduct
-      .dot
-
-    .description
-      %p.lead
-        Our events are dedicated to providing a harassment-free experience for everyone, regardless of gender, sexual orientation, disability, physical appearance, body size, race, or religion.
-      %p.lead
-        We do not tolerate harassment of our members in any form. Sexual language and imagery is not appropriate for any of our events, including talks, workshops, parties, Twitter and any other online media. Members violating these rules may be sanctioned or expelled from the event and any future events at the discretion of the organisers.
-        %br
-        %br
-        =link_to "Read the full version", code_of_conduct_path
-
-  .right-panel
-    %ul.social
-      %li
-        =link_to image_tag("github.png", width: '33px'), "https://github.com/codebar"
-      %li
-        =link_to image_tag("twitter.png", width: '33px'), "https://twitter.com/by_codebar"
-      %li
-        =link_to image_tag("facebook.png", width: '33px'), "https://facebook.com/bycodebar"
-    .right-block.support-us
-      %h4 Support us
-    .right-block.center
-      %br
-      %script{ :"data-gittip-username" => "by_codebar", :src => "//gttp.co/v1.js" }
-      %br
-      %br
-      =link_to "Sponsoring", sponsoring_path, class: 'sponsor-button'
-      %br
-
-    .right-block
-      %br
-      %h4 Sponsors & Hosts
-    .right-block.sponsors
-      %ul
-        - @latest_sponsors.each do |sponsor|
+  .row
+    %hr
+    .large-12.columns
+      %h4 Sponsors
+      %ul.small-block-grid-2.medium-block-grid-5.large-block-grid-6
+        - @sponsors.each do |sponsor|
           %li
             = link_to image_tag(sponsor.avatar, class: "sponsor-logo", alt: sponsor.name), sponsor.website
-
-      .view-all
-        = link_to "View all", "#sponsors", class: "sponsor-button"
-
-    .right-block
-      %br
-      %h4 Gallery
-    .right-block
-      %ul.gallery
-        %li
-          =image_tag("pic1.jpg", height: '183px')
-        %li
-          =image_tag("pic2.jpg", height: '183px')
-        %li
-          =image_tag("pic3.jpg", height: '183px')
-
-  %section#sponsors
-    %ul
-      - @sponsors.each do |sponsor|
-        %li
-          = link_to image_tag(sponsor.avatar, class: "sponsor-logo", alt: sponsor.name), sponsor.website

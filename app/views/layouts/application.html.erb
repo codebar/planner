@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lan="en">
   <head>
     <%= render partial: 'layouts/meta' %>
     <link rel="image_src" href="http://codebar.io/images/logo-square.png">
@@ -7,28 +7,18 @@
     <title>Codebar.io</title>
     <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
     <%= javascript_include_tag "vendor/modernizr" %>
-    <link href='http://fonts.googleapis.com/css?family=Allerta' rel='stylesheet' type='text/css'>
-    <script type="text/javascript" src="//use.typekit.net/hhc0xau.js"></script>
-    <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+    <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+    <link href='http://fonts.googleapis.com/css?family=Gabriela' rel='stylesheet' type='text/css'>
     <%= csrf_meta_tags %>
   </head>
   <body>
     <div id="top"></div>
     <%= render partial: 'layouts/navigation' %>
+    <%= render partial: 'layouts/messages' %>
 
-    <div id="container">
-      <%= render partial: 'layouts/messages' %>
-      <%= yield %>
-    </div>
+    <%= yield %>
 
-    <footer>
-    <div id="footer-width">
-      <div class="dot-footer"></div>
-      <div class="footer-copy">Get in touch: <a href="mailto:hello@codebar.io?Subject=Hello%20Codebar">hello@codebar.io</a></div>
-      <div class="footer-copy right-float">&#169; 2014 codebar</div>
-    </div>
-    </footer>
-    <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+    <%= render partial: 'layouts/footer' %>
 
   </body>
 </html>

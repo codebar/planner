@@ -1,9 +1,6 @@
-%section#member
-  .titlebox.mission
-    %h2
-      Become a member
-      .dot
-    Thanks for signing up. Please fill in your details.
-  .description
-    %p.lead
+= render partial: 'shared/title', locals: { title: "Become a member", date: nil }
+%section#banner
+  .row
+    .large-12.columns
+      Thanks for signing up. Please fill in your details.
       = render partial: 'members/form', locals: { submit_text: "Join #{t("brand")}" }

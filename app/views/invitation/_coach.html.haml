@@ -1,20 +1,8 @@
-%p Please let us know if you will be coaching at our workshop by setting your attendance status.
-
-%p The main theme of the workshop will be #{@invitation.parent.title}. You will be able to access it through our tutorials page soon. Students can choose any of the available tutorials to go through or ask for help on their own projects, so we ask that all coaches familiarise themselves with the tutorials in general.
-
 %p
-  Before committing to attend any of our workshop, make sure you read and understand our
+  If you have not attended our workshops before, make sure you read our
   = succeed ',' do
     =link_to "code of conduct", "http://codebar.io/code-of-conduct"
-  as we have a zero tolerance policy and expect everyone to behave appropriately and make sure you go through the
+  as we have a zero tolerance policy and expect everyone to behave appropriately. You should also  go through our
   = succeed '.' do
-    = link_to "teaching guide", teaching_guide_path
-
-%p Our latest available tutorial is <b>#{@invitation.sessions.title}</b> - #{@invitation.sessions.description}
-
-%h3 Resources
-%ul
-  %li
-    =link_to "Codebar Tutorials", "https://codebar.github.io/tutorials"
-  %li
-    =link_to "How to be an effective teacher guide", teaching_guide_path
+    = link_to "coaching guide", teaching_guide_path
+%p In case you are unable to attend after you RSVP, please make sure you come back and update your attendance as we rely on coaches showing up in order for our workshops to run smoothly.
