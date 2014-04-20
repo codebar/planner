@@ -11,11 +11,23 @@
       - if logged_in?
         %li.has-form
           = link_to "Your account", portal_index_path, class: 'button'
-      %li= link_to "Events", events_path
-      %li= link_to "FAQ", faq_path
+      - if current_page?(events_path)
+        %li.active= link_to "Events", events_path
+      - else
+        %li= link_to "Events", events_path
+      - if current_page?(faq_path)
+        %li.active= link_to "FAQ", faq_path
+      - else
+        %li= link_to "FAQ", faq_path
       %li= link_to "Tutorials", "http://tutorials.codebar.io"
-      %li= link_to "Our Coaches", coaches_path
-      %li= link_to "Sponsoring", sponsoring_path
+      - if current_page?(coaches_path)
+        %li.active= link_to "Our Coaches", coaches_path
+      - else
+        %li= link_to "Our Coaches", coaches_path
+      - if current_page?(sponsoring_path)
+        %li.active= link_to "Sponsoring", sponsoring_path
+      - else
+        %li= link_to "Sponsoring", sponsoring_path
       - if logged_in?
         %li= link_to "Log Out", logout_path, class: "login-button"
       - else
