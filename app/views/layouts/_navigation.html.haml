@@ -8,14 +8,15 @@
 
   %section.top-bar-section
     %ul.right
+      - if logged_in?
+        %li.has-form
+          = link_to "Your account", portal_index_path, class: 'button'
       %li= link_to "Events", events_path
       %li= link_to "FAQ", faq_path
       %li= link_to "Tutorials", "http://tutorials.codebar.io"
       %li= link_to "Our Coaches", coaches_path
       %li= link_to "Sponsoring", sponsoring_path
       - if logged_in?
-        %li= link_to "My Profile", profile_path
-        %li= link_to "Portal", portal_index_path
         %li= link_to "Log Out", logout_path, class: "login-button"
       - else
         %li= link_to "Sign in", "/auth/github", class: "login-button"

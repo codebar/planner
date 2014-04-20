@@ -1,0 +1,24 @@
+li.facebook a {
+  color: #4e69a2;
+  color: rgba(78, 105, 162, 0.8);
+
+  &:hover {
+    color: rgba(78, 105, 162, 1);
+  }
+}
+
+li.twitter a {
+  color: rgba(85, 172, 238, 0.8);
+
+  &:hover {
+    color: rgba(85, 172, 238, 1);
+  }
+}
+
+li.github a {
+  color: rgba(51, 51, 51, 0.8);
+
+  &:hover {
+    color: rgba(51, 51, 51, 1);
+  }
+}
