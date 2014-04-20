@@ -25,11 +25,11 @@
                 You will be working on
                 %em= @invitation.note
 
-              - if @invitation.sessions.date_and_time-6.hours <= DateTime.now
-                %br
-                %small Please send a text at 07402887214 or email meetings@codebar.io so we can try to reallocate your spot.
-              - else
-                =link_to "I can no longer attend", reject_invitation_url(@invitation), class: "expand button round"
+            - if @invitation.sessions.date_and_time-6.hours <= DateTime.now
+              %br
+              %small Please send a text at 07402887214 or email meetings@codebar.io so we can try to reallocate your spot.
+            - else
+              =link_to "I can no longer attend", reject_invitation_url(@invitation), class: "expand button round"
           - else
             - if @invitation.role.eql?("Coach")
               = link_to "Attend", accept_invitation_url(@invitation), class: "expand button round center"

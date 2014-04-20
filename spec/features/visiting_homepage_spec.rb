@@ -22,8 +22,7 @@ feature 'when visiting the homepage' do
   end
 
   scenario "i can access the code of conduct" do
-    click_on "code of conduct"
-    click_on "Read the full version"
+    click_on "Code of conduct"
 
     expect(page).to have_content "Code of conduct"
     expect(page).to have_content "The Quick Version"
@@ -31,6 +30,7 @@ feature 'when visiting the homepage' do
   end
 
   scenario "i can sign up" do
+    visit root_path
     expect(page).to have_content "Sign in"
   end
 end
