@@ -28,10 +28,9 @@
                 %li.description
                   = humanize_date_with_time(@meeting.date_and_time)
                 %li.bullet-item
-                  %dl
-                    - @meeting.meeting_talks.each do |talk|
-                      %dd
-                        =talk.title
+                  - @meeting.meeting_talks.each do |talk|
+                    =talk.title
+                    %br
                 %li.cta-button
                   =link_to "RSVP", @meeting, class: "button round tiny"
 
