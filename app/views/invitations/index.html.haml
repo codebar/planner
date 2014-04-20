@@ -15,5 +15,7 @@
       - if current_member.is_student? and
         =render partial: "student"
 
+      - if current_member.is_student? and current_member.is_coach?
+        %hr
       - if current_member.is_coach?
         =render partial: "coach"

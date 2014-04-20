@@ -1,32 +1,34 @@
 %a{ name: "coach" }
 %h3{ "data-magellan-destination" => "coach"} Coach
 
-%h4 Upcoming
+%h5 Upcoming
 
 - if @upcoming_coach.any?
-  %ul.small-block-grid-2.medium-block-grid-3.large-block-grid-4
+  .row
     - @upcoming_coach.each do |invitation|
-      %li.panel
-        %p
-          %h4
-            = link_to invitation.parent.to_s, invitation_path(invitation)
-          .date= "on #{l(invitation.parent.date_and_time, format: :website_format)}"
-          %br
+      .medium-4.small-12.columns
+        .panel
+          %p
+            %h4
+              = link_to invitation.parent.to_s, invitation_path(invitation)
+            .date= "on #{l(invitation.parent.date_and_time, format: :website_format)}"
+            %br
 
-          =link_to attendance_status(invitation), invitation_path(invitation), class: "button round expand"
+            =link_to attendance_status(invitation), invitation_path(invitation), class: "button round expand"
 - else
   %em There are no upcoming events
 
 - if @coached.any?
-  %hr
   %p
-    %h4 Attended
+    %h5 Attended
 
-    %ul.small-block-grid-2.medium-block-grid-3.large-block-grid-4
+    .row
       - @coached.each do |invitation|
-        %li.panel
-          %h4
-            = link_to invitation.parent.to_s, invitation_path(invitation)
-          .date= " #{l(invitation.parent.date_and_time, format: :website_format)}"
-          %br
-          =link_to "View", invitation_path(invitation), class: "button round expand"
+        .medium-4.small-12.columns
+          .panel
+            %p
+              %h4
+                = link_to invitation.parent.to_s, invitation_path(invitation)
+              .date= " #{l(invitation.parent.date_and_time, format: :website_format)}"
+              %br
+              =link_to "View", invitation_path(invitation), class: "button round expand"
