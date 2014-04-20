@@ -1,5 +1,13 @@
 = render partial: 'shared/title', locals: { title: "Workshop", date: l(@invitation.sessions.date_and_time, format: :website_format) }
-%section#banner
+%section
+  .inner-nav{ "data-magellan-expedition" => "fixed" }
+    .row
+      %dl.sub-nav
+        %dd{ "data-magellan-arrival" => "location" }
+          =link_to "Location", "#location"
+        %dd{ "data-magellan-arrival" => "attendees" }
+          =link_to "Who will be there?", "#attendees"
+
   .row
     .large-8.columns
       %p
@@ -33,7 +41,10 @@
 
 
   .row
-    %hr
+    .large-12.columns
+      %a{ name: "location" }
+      %h4{ "data-magellan-destination" => "location"} Location
+  .row
     .large-9.columns
       %iframe{ width: '100%', height: '350', frameborder: '0', scrolling: 'no', marginheight: '0', marginwidth: '0', src: %{https://maps.google.com/maps?f=q&source=s_q&hl=en&amp;geocode=&q=#{@host_address.for_map}&ie=UTF8&t=m&z=15&output=embed} }
       =link_to "View larger map", %{https://maps.google.com/maps?f=q&source=s_q&hl=en&amp;geocode=&q=#{@host_address.for_map}&ie=UTF8&hq=&t=m&z=15}, style: "color:#0000FF;text-align:left"
@@ -44,10 +55,14 @@
       %p
         %h5 Contact
         Despo 07402887214
+
   .row
-    %hr
+    .large-12.columns
+      %hr
+      %a{ name: "attendees" }
+      %h4{ "data-magellan-destination" => "attendees"}  Who else will be there?
+  .row
     .large-9.columns
-      %h3 Who else will be there?
       .row
         .large-6.columns
           %h4 Students
