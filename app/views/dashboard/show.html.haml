@@ -22,21 +22,21 @@
         %h4 Upcoming events
         .row{ "data-equalizer" => "" }
           - if @meeting.present?
-            .large-4.columns
+            .large-4.medium-6.columns
               %ul.pricing-table.meeting{ "data-equalizer-watch" => '' }
                 %li.title=@meeting.title
                 %li.description
                   = humanize_date_with_time(@meeting.date_and_time)
                 %li.bullet-item
-                  %ul.square
+                  %dl
                     - @meeting.meeting_talks.each do |talk|
-                      %li
+                      %dd
                         =talk.title
                 %li.cta-button
                   =link_to "RSVP", @meeting, class: "button round tiny"
 
           - if @next_session.present?
-            .large-4.columns
+            .large-4.medium-6.columns
               %ul.pricing-table.workshop{ "data-equalizer-watch" => '' }
                 %li.title Coding Workshop
                 %li.description
@@ -49,7 +49,7 @@
                   = link_to "RSVP", "/auth/github", class: "button round tiny"
 
           - if @next_course.present?
-            .large-4.columns
+            .large-4.medium-6.columns
               %ul.course.pricing-table{ "data-equalizer-watch" => '' }
                 %li.title= @next_course.title
                 %li.description
