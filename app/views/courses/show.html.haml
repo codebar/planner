@@ -1,5 +1,5 @@
 = render partial: 'shared/title', locals: { title: @course.title, date:  l(@course.date_and_time, format: :website_format) }
-%section.course
+%section#banner
   .row
     .large-12.columns
       %p= @course.short_description
@@ -8,10 +8,11 @@
       - if @course.url.present?
         =link_to "Read more about the course", @course.url
 
+      %p
       - if @course.seats > @course.attending.length
-        #{link_to "Sign up", new_member_path, class: 'button tiny round'} to receive an invitation to the course.
+        #{link_to "Sign up", new_member_path, class: 'button tiny round'} to receive an invitation.
       - else
-        This course is fully booked! If you would like to receive an invitation to other courses we will be running, you should #{link_to("sign up", new_member_path)}.
+        This course is fully booked. To receive an invitation to other courses we will be running, #{link_to("sign up", new_member_path)}.
 
   .row
     .large-12.columns
