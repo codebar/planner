@@ -7,7 +7,7 @@
             %li.title
               = event.to_s
             %li.description
-              =l(event.date_and_time, format: :website_format)
+              = humanize_date_with_time(event.date_and_time)
             %li.cta-button
               - unless event.is_a?(Sessions)
                 =link_to "View details", event, class: "button round tiny"

@@ -1,4 +1,4 @@
-= render partial: 'shared/title', locals: { title: @meeting.title, date: "#{l(@meeting.date_and_time, format: :meeting_format)} to #{l(@meeting.end_time, format: :time)}" }
+= render partial: 'shared/title', locals: { title: @meeting.title, date: humanize_date_with_time(@meeting.date_and_time) }
 
 %section.meeting
   .row

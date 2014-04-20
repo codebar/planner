@@ -1,4 +1,4 @@
-= render partial: 'shared/title', locals: { title: @course.title, date:  l(@course.date_and_time, format: :website_format) }
+= render partial: 'shared/title', locals: { title: @course.title, date:  humanize_date_with_time(@course.date_and_time) }
 %section#banner
   .row
     .large-12.columns

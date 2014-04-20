@@ -26,9 +26,7 @@
               %ul.pricing-table.meeting{ "data-equalizer-watch" => '' }
                 %li.title=@meeting.title
                 %li.description
-                  ="#{l(@meeting.date_and_time, format: :meeting_format)}"
-                  to
-                  ="#{l(@meeting.end_time, format: :time)}"
+                  = humanize_date_with_time(@meeting.date_and_time)
                 %li.bullet-item
                   %ul.square
                     - @meeting.meeting_talks.each do |talk|
@@ -42,7 +40,7 @@
               %ul.pricing-table.workshop{ "data-equalizer-watch" => '' }
                 %li.title Coding Workshop
                 %li.description
-                  = l(@next_session.date_and_time, format: :website_format)
+                  = humanize_date_with_time(@next_session.date_and_time)
                 %li.bullet-item
                   = link_to @next_session.host.name, @next_session.host.website
                   %br
@@ -55,7 +53,7 @@
               %ul.course.pricing-table{ "data-equalizer-watch" => '' }
                 %li.title= @next_course.title
                 %li.description
-                  = l(@next_course.date_and_time, format: :website_format)
+                  = humanize_date_with_time(@next_course.date_and_time)
                 %li.bullet-item
                   = @next_course.short_description.html_safe
                 %li.cta-button
