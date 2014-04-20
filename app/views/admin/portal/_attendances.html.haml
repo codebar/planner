@@ -1,16 +1,14 @@
-%ol.attendances
-  - invitations.each do |invitation|
-    %li.attendance
-      .two-thirds
+- invitations.each do |invitation|
+  .panel
+    .row
+      .large-8.columns
         =invitation.member.full_name
         %br
-        %small=mail_to invitation.member.email, invitation.member.email
-        %br
-        %small
-          %em=invitation.note
-      .quarter
-        - if invitation.attended.nil?
-          =link_to "Attended", admin_invitation_attended_path(invitation, attended: true), class: "btn small"
-        - else
-          =image_tag "ok.png"
-
+        =mail_to invitation.member.email, invitation.member.email
+        %p=invitation.note
+      .large-4.columns
+        %p
+          - if invitation.attended.nil?
+            =link_to "Attended", admin_invitation_attended_path(invitation, attended: true), class: "button round expand"
+          - else
+            %i.fa.fa-check-circle.fa-2x.right

@@ -1,18 +1,18 @@
+= render partial: 'shared/title', locals: { title: "Manage attendees", date: nil }
 %section#admin
-  .titlebox
-    %h2 Upcoming events
-  .description
-    - @sessions.each do |session|
-      .details-block
-        %h3=session.title
-        %h5=session.description
-        %h6=l(session.date_and_time, format: :website_format)
+  - @sessions.each do |session|
+    .row
+      .large-12.columns
+        %h3
+          =session.to_s
+          %small=humanize_date_with_time(session.date_and_time)
+        %hr
 
         .row
-          .half
-            %h4 Students
+          .medium-6.columns
+            %h4 Students (#{session.attending_students.count})
             =render partial: 'attendances', locals: { invitations: session.attending_students }
 
-          .half
-            %h4 Coaches
+          .medium-6.columns
+            %h4 Coaches(#{session.attending_coaches.count})
             =render partial: 'attendances', locals: { invitations: session.attending_coaches }
