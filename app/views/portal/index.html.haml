@@ -1,19 +1,16 @@
 = render partial: 'shared/title', locals: { title: "Member portal", date: nil }
-%section
-  - if current_member.is_student? and current_member.is_coach?
-    .inner-nav{ "data-magellan-expedition" => "fixed" }
-      %dl.sub-nav
-        .row
-          %dd{ "data-magellan-arrival" => "student" }
-            =link_to "Student", "#student"
-          %dd{ "data-magellan-arrival" => "coach" }
-            =link_to "Coach", "#coach"
 
-
-  .row
-    .large-12.columns
-      - if current_member.is_student? and
-        =render partial: "student"
-
-      - if current_member.is_coach?
-        =render partial: "coach"
+#banner
+.row
+  .large-4.columns
+    .panel
+      %h4 Profile
+      %p
+        Update your profile and your subscriptions
+      =link_to "Profile", profile_path, class: 'button round expand'
+  .large-4.columns
+    .panel
+      %h4 Manage invitations
+      %p
+        View your invitations and RSVP to upcoming workshops
+      =link_to "Invitations", invitations_path, class: 'button round expand'

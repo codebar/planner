@@ -9,7 +9,7 @@
             .row
               .small-2.columns
                 =link_to twitter_url_for(coach.twitter) do
-                  =image_tag coach.avatar(96), class: 'th radius'
+                  =image_tag coach.avatar(96), class: 'th radius', title: coach.full_name
 
               .small-10.columns
                 =link_to twitter_url_for(coach.twitter) do
