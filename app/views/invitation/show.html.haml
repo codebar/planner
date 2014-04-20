@@ -1,80 +1,81 @@
-%section#sessions
+= render partial: 'shared/title', locals: { title: "Workshop", date: l(@invitation.sessions.date_and_time, format: :website_format) }
+%section
+  .inner-nav{ "data-magellan-expedition" => "fixed" }
+    .row
+      %dl.sub-nav
+        %dd{ "data-magellan-arrival" => "location" }
+          =link_to "Location", "#location"
+        %dd{ "data-magellan-arrival" => "attendees" }
+          =link_to "Who will be there?", "#attendees"
 
-  .titlebox.session.upcoming
-    %h2
-      Session
-    %small=l(@invitation.sessions.date_and_time, format: :website_format)
-    .dot
   .row
-    .two-thirds
-      .description
+    .large-8.columns
+      %p
         Hi #{@invitation.member.name},
         = render partial: @invitation.role.downcase
-        %hr
-        %p.rsvp
-          - if @invitation.sessions.date_and_time < DateTime.now
-            %em This session has already taken place!
+
+    .large-4.columns
+      .panel
+        - if @invitation.sessions.date_and_time < DateTime.now
+          %em This session has already taken place!
+        - else
+          - if @invitation.attending.eql?(true)
+            - if @invitation.role.eql?("Student")
+              %p
+                You will be working on
+                %em= @invitation.note
+
+            - if @invitation.sessions.date_and_time-6.hours <= DateTime.now
+              %br
+              %small Please send a text at 07402887214 or email meetings@codebar.io so we can try to reallocate your spot.
+            - else
+              =link_to "I can no longer attend", reject_invitation_url(@invitation), class: "expand button round"
           - else
-            %h3 RSVP
-            %p
-              - if @invitation.attending.eql?(true)
-                You are attending this workshop.
-                - if @invitation.role.eql?("Student")
-                  %br
-                  %strong Note
-                  = @invitation.note
-                - if @invitation.sessions.date_and_time-6.hours <= DateTime.now
-                  %br
-                  %br
-                  %small The session is on in less than 6 hours so you can no longer change you attendance. Please send a text at 07402887214 or email meetings@codebar.io so we can try to reallocate your spot.
-                - else
-                  %br
-                  %br
-                  =link_to "I can no longer attend", reject_invitation_url(@invitation), class: "button"
-              - else
-                - if @invitation.role.eql?("Coach")
-                  = link_to "Attend", accept_invitation_url(@invitation), class: "button"
-                - else
-                  = simple_form_for @invitation, url: :accept_with_note_invitation, method: :post do |f|
-                    = f.input :note, label: "What do you plan to work on at the workshop?", placeholder: "e.g. I know a bit of HTML and CSS or the second JQuery tutorial"
-                    %small This will help us make the workshop easier to manage as we can figure out upfront with whom to pair you on the day.
-                    %br
-                    .right
-                      = f.button :submit, "Attend",  class: "button"
-      %hr
+            - if @invitation.role.eql?("Coach")
+              = link_to "Attend", accept_invitation_url(@invitation), class: "expand button round center"
+            - else
+              = simple_form_for @invitation, url: :accept_with_note_invitation, method: :post do |f|
+                = f.input :note, label: "I will be working on... ", placeholder: "e.g. I know a bit of HTML and CSS or the second JQuery tutorial"
+                = f.button :submit, "Attend",  class: "button expand round"
+                %label *Letting us know what you plan to work on will help us manage things easier.
 
-    .quarter
-      .description
-        %h4 Venue
-        = image_tag @invitation.sessions.host.avatar, class: 'sponsor-logo'
-        %p.address
-          = @host_address.to_html
-          %br
-          %small= link_to "view map", "https://maps.google.com/maps?q=#{@host_address.postal_code}"
-
-        %hr
-
-        %h4 Contact details
-        %ul.contact-details
-          %li
-            Despo
-            %b 07402887214
 
   .row
-    .description
-      %h2 Attendances
-      .half
-        %h4 Students
-        %ol.attendances
-          - @invitation.sessions.attending_students.each do |invitation|
-            %li.attendance
-              .two-thirds
-                =invitation.member.full_name
-      .half
-        %h4 Coaches
-        %ol.attendances
-          - @invitation.sessions.attending_coaches.each do |invitation|
-            %li.attendance
-              .two-thirds
-                =invitation.member.full_name
+    .large-12.columns
+      %a{ name: "location" }
+      %h4{ "data-magellan-destination" => "location"} Location
+  .row
+    .large-9.columns
+      %iframe{ width: '100%', height: '350', frameborder: '0', scrolling: 'no', marginheight: '0', marginwidth: '0', src: %{https://maps.google.com/maps?f=q&source=s_q&hl=en&amp;geocode=&q=#{@host_address.for_map}&ie=UTF8&t=m&z=15&output=embed} }
+      =link_to "View larger map", %{https://maps.google.com/maps?f=q&source=s_q&hl=en&amp;geocode=&q=#{@host_address.for_map}&ie=UTF8&hq=&t=m&z=15}, style: "color:#0000FF;text-align:left"
+    .large-3.columns
+      = image_tag @invitation.sessions.host.avatar, class: 'sponsor-logo'
+      %p
+        = @host_address.to_html
+      %p
+        %h5 Contact
+        Despo 07402887214
+
+  .row
+    .large-12.columns
+      %hr
+      %a{ name: "attendees" }
+      %h4{ "data-magellan-destination" => "attendees"}  Who else will be there?
+  .row
+    .large-9.columns
+      .row
+        .large-6.columns
+          %h4 Students
+          %ol.attendances
+            - @invitation.sessions.attending_students.each do |invitation|
+              %li.attendance
+                .two-thirds
+                  =invitation.member.full_name
+        .large-6.columns
+          %h4 Coaches
+          %ol.attendances
+            - @invitation.sessions.attending_coaches.each do |invitation|
+              %li.attendance
+                .two-thirds
+                  =invitation.member.full_name
 

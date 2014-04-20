@@ -31,7 +31,7 @@ shared_examples "invitation route" do
       invitation.update_attribute(:attending, false)
       visit invitation_route
 
-      expect(page).to have_content "Attend"
+      expect(page).to have_selector(:link_or_button, "Attend")
       expect(page).to_not have_content "I can no longer attend"
     end
   end

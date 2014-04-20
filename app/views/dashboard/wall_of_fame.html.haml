@@ -1,18 +1,17 @@
-%section#wall-of-fame
-  .titlebox.mission
-    %h2
-      Wall of Fame
-    .dot
-  %ul
-    - @coaches.each do |coach|
-      %li.coach
-        .avatar
-          =link_to twitter_url_for(coach.twitter) do
-            =image_tag coach.avatar(70)
-        .about
-          .name
-            - if coach.twitter.present?
-              =link_to coach.full_name, twitter_url_for(coach.twitter)
-            - else
-              =coach.full_name
-          %span.about_you=coach.about_you.html_safe
+= render partial: 'shared/title', locals: { title: "Our coaches", date: nil }
+%section#banner
+  .row
+    .large-12.columns
+      %p Do you want to coach at codebar? #{link_to "Sign up!", "/auth/github" }
+      %ul.small-block-grid-1.medium-block-grid-2.large-block-grid-2
+        - @coaches.each do |coach|
+          %li.coach
+            .row
+              .small-2.columns
+                =link_to twitter_url_for(coach.twitter) do
+                  =image_tag coach.avatar(96), class: 'th radius', title: coach.full_name
+
+              .small-10.columns
+                =link_to twitter_url_for(coach.twitter) do
+                  = coach.full_name
+                %p= coach.about_you

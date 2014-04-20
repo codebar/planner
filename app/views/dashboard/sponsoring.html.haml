@@ -1,42 +1,40 @@
-%section#sponsoring
-  .titlebox.mission
-    %h2
-      Sponsoring
-    .dot
-  .description
-    %p
-      There are different ways that you can sponsor <b>codebar</b>.
-    %ul
-      %li
-        hosting:
-        %ul
-          %li our coding sessions. They are on every Wednesday between 18:30-21:00 (40 people or more)
-          %li our courses. They are always on weekends, usually Saturdays. (20 people)
-          %li our monthly meetups. We don't have a definite day planned for this yet.
-      %li providing food for any of our events. Gluten free food is a plus!
-      %li
-        helping us with monetary sponsorship so we can cover some of our
-        =link_to "existing costs", "https://github.com/codebar/planner/issues/59"
-      %li
-        paying for some of the expenses
-        =link_to "we've already covered", "https://github.com/codebar/planner/issues/59"
-        ourselves.
+= render partial: 'shared/title', locals: { title: "Sponsoring", date: nil }
+%section#banner
+  .row
+    .large-12.columns
+      %p
+        There are different ways that you can sponsor <b>codebar</b>.
+      %ul
+        %li
+          hosting:
+          %ul
+            %li our coding sessions. They are on every Wednesday between 18:30-21:00 (40 people or more)
+            %li our courses. They are always on weekends, usually Saturdays. (20 people)
+            %li our monthly meetups. We don't have a definite day planned for this yet.
+        %li providing food for any of our events. Gluten free food is a plus!
+        %li
+          helping us with monetary sponsorship so we can cover some of our
+          =link_to "existing costs", "https://github.com/codebar/planner/issues/59"
+        %li
+          paying for some of the expenses
+          =link_to "we've already covered", "https://github.com/codebar/planner/issues/59"
+          ourselves.
 
-    %p
-      We don't distinguish between sponsors (we display all logos on our website in a random order) and would prefer to not accept monetary donations greater than £100. The money will be used for small ongoing expenses such as server usage, as well as to help subsidise travel tickets for some of our students.
+      %p
+        We don't distinguish between sponsors (we display all logos on our website in a random order) and would prefer to not accept monetary donations greater than £100. The money will be used for small ongoing expenses such as server usage, as well as to help subsidise travel tickets for some of our students.
 
-    %p
-      We can also accept sponsorship in the form of supplies such as stickers and badges. We'd appreciate it if there was a single person from the sponsor's company we could coordinate with, rather than playing "pass the message"!
+      %p
+        We can also accept sponsorship in the form of supplies such as stickers and badges. We'd appreciate it if there was a single person from the sponsor's company we could coordinate with, rather than playing "pass the message"!
 
-    %p
-      Unfortunately we can't accept donations of spare infrastructure (e.g. web space, email accounts) as we need to have the authority to control our systems. That said, Heroku credit is also a form of sponsorship we would be able to accept.
+      %p
+        Unfortunately we can't accept donations of spare infrastructure (e.g. web space, email accounts) as we need to have the authority to control our systems. That said, Heroku credit is also a form of sponsorship we would be able to accept.
 
-    %p
-      We also accept anonymous donations via Gittip.
-      .git-tip
-        %script{ :"data-gittip-username" => "by_codebar", :src => "//gttp.co/v1.js" }
+      %p
+        We also accept anonymous donations via Gittip.
+        .git-tip
+          %script{ :"data-gittip-username" => "by_codebar", :src => "//gttp.co/v1.js" }
 
-    %p
-      <b>As a thank you</b> we will list your logo on our website and tweet about how you've helped us. You can also put up your company's banner up in a session and give us some swag to give out. However, we are not comfortable with recruitment at any of our events. If you have internships, apprenticeships or junior positions that our students might be interested in,
-      = mail_to "hello@codebar.io", "send us an email"
-      so we can discuss this further.
+      %p
+        <b>As a thank you</b> we will list your logo on our website and tweet about how you've helped us. You can also put up your company's banner up in a session and give us some swag to give out. However, we are not comfortable with recruitment at any of our events. If you have internships, apprenticeships or junior positions that our students might be interested in,
+        = mail_to "hello@codebar.io", "send us an email"
+        so we can discuss this further.

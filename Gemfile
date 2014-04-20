@@ -10,9 +10,12 @@ gem 'jquery-rails'
 gem 'turbolinks'
 gem 'simple_form'
 gem 'draper'
+gem 'font-awesome-rails'
 
 gem 'omniauth'
 gem 'omniauth-github'
+
+gem 'foundation-rails'
 
 group :development, :test do
   gem 'rspec-rails'

@@ -1,0 +1,42 @@
+@import 'partials/layout';
+@import 'partials/events';
+@import 'partials/social_media';
+
+section.title {
+  background-image: image-url('codebar-3.png');
+  background-position: 0 -10px;
+  background-size: 100% auto;
+  background-repeat: no-repeat;
+  margin-bottom: 10px;
+  padding: 60px 0;
+
+  h1 {
+    color: #e5e5e5;
+    font-weight: bold;
+
+    span {
+      background-color: rgba(51, 51, 51, 0.4);
+      padding: 0 5px;
+    }
+  }
+
+  .date {
+    background-color: rgba(51, 51, 51, 0.4);
+    color: #e5e5e5;
+    padding: 5px;
+    font-size: 1.3em;
+    font-weight: bold;
+  }
+}
+
+@media only screen and (max-width: 40em) {
+  section.title {
+    background-position: 0 0px;
+    padding: 20px;
+  }
+}
+
+#banner {
+  margin-top: 30px;
+  margin-bottom: 10px;
+}

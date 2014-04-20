@@ -1,0 +1,17 @@
+%footer
+  .row
+    .large-4.columns
+      %p.copyright
+        &#169; 2014 codebar
+
+      %p.contact
+        Send us an email at
+        =mail_to "hello@codebar.io?Subject=Hello%20Codebar", "hello@codebar.io"
+
+    .large-4.columns
+      %ul.no-bullet
+        %li= link_to "Code of conduct", code_of_conduct_path
+        %li= link_to "Coach guide", teaching_guide_path
+        %li= link_to "Tutorials", teaching_guide_path
+    .large-4.columns
+      = render partial: 'shared/social_media'

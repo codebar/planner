@@ -1,66 +1,49 @@
-%section#faq
-
-  .titlebox.session.upcoming
-    %h2 Frequently Asked Questions
-
+= render partial: 'shared/title', locals: { title: "Frequently Asked Questions", date: nil }
+%section#banner
   .row
-    .description
-      %ul.qa
-        %li
-          .question Do I need to pay to attend Codebar?
-          %p.answer
-            Absolutely not! We are lucky enough to have some great companies who are able to host the workshops and/or kindly provide food, and our #{link_to "amazing coaches", wall_of_fame_path} give their time freely to help the community.
+    .large-12.columns
+      %dl
+        %dt Do I need to pay to attend Codebar?
+        %dd
+          Absolutely not! We are lucky enough to have some great companies who are able to host the workshops and/or kindly provide food, and our #{link_to "awesome coaches", coaches_path} give their time freely to help the community.
 
-        %li
-          .question
-            I want to attend a workshop. Do I qualify?
-          %p.answer
-            Our workshops are available to women, LGBTQ and people otherwise underrepresented in the tech industry. Don't worry if you don't fall under these groups, bring a friend who does and you can come along too.
-            Alternatively, there some other great initiatives like <a href="http://www.meetup.com/opentechschool-london">Open Tech School London</a> where you can learn in a collaborative environment.
-        %li
-          .question Is Codebar only aimed at people who want to move into a career as developers?
-          %p.answer
-            No! Codebar is about getting people excited about programming by teaching them some basic coding skills, as well as how to explore and do things on their own. For those who do want to become developers, we will provide help and guidance to help them achieve their goal.
+        %dt What technologies do you teach?
+        %dd We have a variety of available tutorials in HTML, CSS, Javascript and Ruby. If you want to learn something else don't hesitate to #{mail_to "hello@codebar.io", "send us an email"} as we might still be able to find someone to help you out.
 
-        %li 
-          .question What is the format of the workshops?
-          %p.answer
-            We try to have one coach for every two students. Students who want to work on the same tutorial are paired together, and are then assigned a coach. The rest just happens.
-        %li 
-          .question Do I need to bring a laptop with me at the workshops?
-          %p.answer
-            Yes, we suggest that you bring a laptop as it will be easier for you to carry on working on things after the workshops. It you don't have one, <a href="mailto:contact@codebar.io">send us an email</a> so we can try and help out.
+        %dt I want to attend a workshop. Do I qualify?
+        %dd
+          Our workshops are available to women, LGBTQ and people otherwise underrepresented in the tech industry. Don't worry if you don't fall under these groups, bring a friend who does and you can come along too.
+          Alternatively, there some other great initiatives like <a href="http://www.meetup.com/opentechschool-london">Open Tech School London</a> where you can learn in a collaborative environment.
+        %dt Is Codebar only aimed at people who want to move into a career as developers?
+        %dd No! Codebar is about getting people excited about programming by teaching them some basic coding skills, as well as how to explore and do things on their own. For those who do want to become developers, we will provide help and guidance to help them achieve their goal.
 
-        %li 
-          .question There are so many online resources, why should I come to Codebar?
-          %p.answer
-            Coding can be intimidating and a lot of people find it hard to get started. By putting you in touch with people who can help and guide you we make the experience and learning process easier and more enjoyable.
+        %dt What is the format of the workshops?
+        %dd
+          We try to have one coach for every two students. Students who want to work on the same tutorial are paired together, and are then assigned a coach. The rest just happens.
 
-        %li
-          .question
-            I would like to coach at Codebar. Is there anything I should do besides signing up?
-          %p.answer
-            Yes. First you should read our #{link_to "coaching guide", teaching_guide_path} and then spend sometime familiarising yourself with the <a href="http://tutorials.codebar.io">tutorials</a>. As the tutorials are open source, if there is something that you want to improve, please open an issue on the github repository or send a pull request.
+        %dt Do I need to bring a laptop with me at the workshops?
+        %dd
+          Yes, we suggest that you bring a laptop as it will be easier for you to carry on working on things after the workshops. It you don't have one, <a href="mailto:contact@codebar.io">send us an email</a> so we can try and help out.
 
-            We don't expect the coaches to be familiar with all the technologies and languages we have material on.
-        %li
-          .question
-            Where do the workshops take place?
-          %p.answer
-            As we don't have a permanent venue, our workshops are hosted by different companies in various locations around London. So far we've run workshops in Shoreditch, London Bridge, Holborn and Kings Cross.
-        %li
-          .question
-            Is there disabled access at the workshops?
-          %p.answer
-            Unfortunately, that depends entirely on where we are hosting our workshops and if the venue has disabled access. If you would like to attend, send us an email at <a href="mailto:meetings@codebar.io">meetings[at]codebar.io</a> so we can enquire about it and let you know.
+        %dt There are so many online resources, why should I come to Codebar?
+        %dd
+          Coding can be intimidating and a lot of people find it hard to get started. By putting you in touch with people who can help and guide you we make the experience and learning process easier and more enjoyable.
 
-        %li
-          .question
-            I would like to bring Codebar to my city. Can I do that?
-          %p.answer
-            Of course. Codebar is about building a community of experienced developers that are able to give up some of their time to help others. If you are keen on running Codebar where you live, we would love to speak to you about it and see how we can help make this happen, so send <a href="mailto:contact@codebar.io">us an email</a>.
-        %li
-          .question
-            What is the wall of fame?
-          %p.answer
-            The wall of fame is a listing of all the coaches that have helped out in our workshops, ordered by number of workshops they have coached at. This is our way of showing our appreciation to them, as without them, we wouldn't be able to exist.
+        %dt I would like to coach at Codebar. Is there anything I should do besides signing up?
+        %dd
+          Yes. First you should read our #{link_to "coaching guide", teaching_guide_path} and then spend sometime familiarising yourself with the <a href="http://tutorials.codebar.io">tutorials</a>. As the tutorials are open source, if there is something that you want to improve, please open an issue on the github repository or send a pull request.
+
+          We don't expect the coaches to be familiar with all the technologies and languages we have material on.
+        %dt Where do the workshops take place?
+        %dd
+          As we don't have a permanent venue, our workshops are hosted by different companies in various locations around London. So far we've run workshops in Shoreditch, London Bridge, Holborn and Kings Cross.
+
+        %dt Is there disabled access at the workshops?
+        %dd
+          Unfortunately, that depends entirely on where we are hosting our workshops and if the venue has disabled access. If you would like to attend, send us an email at <a href="mailto:meetings@codebar.io">meetings[at]codebar.io</a> so we can enquire about it and let you know.
+
+        %dt I would like to bring Codebar to my city. Can I do that?
+        %dd Of course. Codebar is about building a community of experienced developers that are able to give up some of their time to help others. If you are keen on running Codebar where you live, we would love to speak to you about it and see how we can help make this happen, so send <a href="mailto:contact@codebar.io">us an email</a>.
+
+        %dt Our coaches
+        %dd You can see all the coaches have helped out in our workshops on the #{link_to "coaches page", coaches_path}. They are ordered by number of attendances. This is our way of showing our appreciation to them, as without them, we wouldn't be able to exist.

@@ -1,0 +1,31 @@
+%a{ name: "student" }
+%h3{ "data-magellan-destination" => "student"} Student
+
+%h5 Upcoming
+
+- if @upcoming_student.any?
+  .row
+    - @upcoming_student.each do |invitation|
+      .medium-4.small-12.columns
+        .panel
+          %p
+            %h4
+              = link_to invitation.parent.to_s, invitation_path(invitation)
+            .date #{l(invitation.parent.date_and_time, format: :website_format)}
+            %br
+            =link_to attendance_status(invitation), invitation_path(invitation), class: "button round expand"
+- else
+  %em There are no upcoming events
+
+- if @attended.any?
+  %h5 Attended
+  .row
+    - @attended.each do |invitation|
+      .medium-4.small-12.columns
+        .panel
+          %p
+            %h4
+              = link_to invitation.parent.to_s, invitation_path(invitation)
+            .date= "#{l(invitation.parent.date_and_time, format: :website_format)}"
+            %br
+            =link_to "View", invitation_path(invitation), class: "button round expand"

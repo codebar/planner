@@ -13,7 +13,7 @@ en:
         date: "%d %B %Y"
         website_format: "%A, %d %B %Y at %H:%M"
         month: "%B"
-        meeting_format: "%A, %d %B %Y,  %H:%M"
+        meeting_format: "%a %d %B %H:%M"
         time: "%H:%M"
         year_month: "%Y-%B"
 
