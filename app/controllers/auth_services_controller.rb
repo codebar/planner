@@ -18,7 +18,8 @@ class AuthServicesController < ApplicationController
 
         finish_registration or redirect_to root_path
       else
-        member         = Member.find_or_create_by_email(omnihash[:info][:email])
+        member = Member.find_by_email(omnihash[:info][:email])
+        member = Member.new(email: (omnihash[:info][:email])) if member.nil?
 
         member.name    ||= omnihash[:info][:name].split(" ").first rescue("")
         member.surname ||= omnihash[:info][:name].split(" ").drop(1).join(" ") rescue("")
