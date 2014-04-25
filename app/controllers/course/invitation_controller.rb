@@ -3,6 +3,8 @@ class Course::InvitationController < ApplicationController
   before_action :set_invitation
 
   def show
+    @next_session = Sessions.next
+    @meeting = Meeting.next
     @host_address = AddressDecorator.decorate(@invitation.course.sponsor.address)
   end
 

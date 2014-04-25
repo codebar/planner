@@ -4,8 +4,8 @@
   .inner-nav{ "data-magellan-expedition" => "fixed" }
     .row
       %dl.sub-nav
-        %dd{ "data-magellan-arrival" => "location" }
-          =link_to "Location", "#location"
+        %dd{ "data-magellan-arrival" => "tutors" }
+          =link_to "Tutors", "#tutors"
 
   .row
     .large-8.columns
@@ -15,24 +15,41 @@
       %p
         We would like to invite you to our upcoming #{@invitation.course.to_s} course.
       %p
-        The course is 4 hours long and will take place on #{humanize_date_with_time(@invitation.course.date_and_time)}. Please make sure you are there on time.
+        As this course has limited space it is entirely limited to women, LGBTQ and people otherwise underrepresented.
+
+      %hr
+      %h5= @invitation.course.short_description
+      %p= @invitation.course.description.html_safe
+
+      - if @invitation.course.url.present?
+        %p
+          =link_to "Read more about the course", @invitation.course.url, class: 'button tiny round'
     .large-4.columns
       .panel
         - if @invitation.course.date_and_time < DateTime.now
           %em This session has already taken place!
         - else
           = link_to "Get your ticket", @invitation.course.ticket_url, class: "expand button round center"
+      - if !@next_session.nil? or !@meeting.nil?
+        %hr
+        .panel
+          %h4 Upcoming events
+          %dl
+            - if @next_session.present?
+              =link_to invitation_path do
+                %dt
+                  Coding Workshop
+                %dd= humanize_date_with_time(@next_session.date_and_time)
+            - if @meeting
+              =link_to @meeting do
+                %dt= @meeting.title
+                %dd= humanize_date_with_time(@meeting.date_and_time)
 
-    %hr
+
   .row
     .large-12.columns
-      %p= @invitation.course.short_description
-      %p= @invitation.course.description.html_safe
-
-      - if @invitation.course.url.present?
-        =link_to "Read more about the course", @invitation.course.url
-
-
+      %a{ name: "tutors" }
+      %h4{ "data-magellan-destination" => "tutors"} Tutors
   .row
     .large-12.columns
       %ul.small-block-grid-1.medium-block-grid-2.large-block-grid-2

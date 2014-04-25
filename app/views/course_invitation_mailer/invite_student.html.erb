@@ -1,7 +1,8 @@
 <h2 style="font-weight: 400; font-size: 24px; border-bottom:1px solid #ececec; padding-bottom: 15px; margin-bottom:35px">Hi <%= @member.name %></h2>
 
-<h3 style="font-weight: 600; font-size: 17px; letter-spacing: 0.02em; color: #111111">We would like to invite you to the next <b>codebar</b> course</h3>
-<%= @course.short_description %>
+<h3 style="font-weight: 600; font-size: 17px; letter-spacing: 0.02em; color: #111111">We would like to invite you to our upcoming <b><%= @course.to_s %></b> course</h3>
+
+<div style="font-size: 18px; padding: 10px 0;"><%= @course.short_description %></div>
 
 <div style="font-size: 15px"><%= @course.description.html_safe %></div>
 <% if @course.url %>
