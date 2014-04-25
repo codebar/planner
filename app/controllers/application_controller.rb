@@ -56,4 +56,10 @@ class ApplicationController < ActionController::Base
   def redirect_path
     "/auth/github"
   end
+
+  def admin?
+    current_member? and current_member.is_admin?
+  end
+
+  helper_method :admin?
 end

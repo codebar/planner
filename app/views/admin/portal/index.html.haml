@@ -1,18 +1,10 @@
-= render partial: 'shared/title', locals: { title: "Manage attendees", date: nil }
+= render partial: 'shared/title', locals: { title: "Admin", date: nil }
 %section#admin
-  - @sessions.each do |session|
-    .row
-      .large-12.columns
-        %h3
-          =session.to_s
-          %small=humanize_date_with_time(session.date_and_time)
-        %hr
+  .row
+    .large-4.columns
+      .panel
+        =link_to "Manage attendances", admin_workshop_index_path, class: 'button round expand'
 
-        .row
-          .medium-6.columns
-            %h4 Students (#{session.attending_students.count})
-            =render partial: 'attendances', locals: { invitations: session.attending_students }
-
-          .medium-6.columns
-            %h4 Coaches(#{session.attending_coaches.count})
-            =render partial: 'attendances', locals: { invitations: session.attending_coaches }
+    .large-4.columns
+      .panel
+        =link_to "View feedback", admin_feedback_index_path, class: 'button round expand'
