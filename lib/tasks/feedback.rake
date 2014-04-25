@@ -4,7 +4,7 @@ namespace :feedback do
   task request: :environment do
     raise 'Sorry. No recent sessions found.' if Sessions.most_recent.nil?
 
-    STDOUT.print "Do you want to send feedback requests for session: #{Sessions.most_recent.title}? (y/N) "
+    STDOUT.print "Do you want to send feedback requests for workshop: #{I18n.l(Sessions.most_recent.date_and_time, format: :email_title)}? (y/N) "
 
     if STDIN.gets.chomp == 'y'
       STDOUT.puts "Sending feedback requests to:"
