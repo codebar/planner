@@ -33,7 +33,7 @@
       - if !@next_session.nil? or !@meeting.nil?
         %hr
         .panel
-          %h4 Other events
+          %h4 Upcoming events
           %dl
             - if @next_session.present?
               =link_to invitation_path do
