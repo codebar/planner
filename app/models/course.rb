@@ -4,6 +4,7 @@ class Course < ActiveRecord::Base
   has_many :invitations, class_name: "CourseInvitation"
   has_many :course_tutors
   has_many :tutors, through: :course_tutors, class_name: "Member"
+  belongs_to :sponsor
 
   belongs_to :tutor, class_name: 'Member', foreign_key: 'tutor_id'
 

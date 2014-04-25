@@ -29,7 +29,7 @@ Planner::Application.routes.draw do
   resources :invitations, only: [ :index ]
 
   namespace :course do
-    resources :invitation, only: [] do
+    resources :invitation, only: [:show] do
       member do
         get "accept"
         get "reject"

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140417154809) do
+ActiveRecord::Schema.define(version: 20140425160722) do
 
   create_table "addresses", force: true do |t|
     t.string   "flat"
@@ -67,7 +67,11 @@ ActiveRecord::Schema.define(version: 20140417154809) do
     t.string   "url"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "sponsor_id"
+    t.string   "ticket_url"
   end
+
+  add_index "courses", ["sponsor_id"], name: "index_courses_on_sponsor_id"
 
   create_table "feedback_requests", force: true do |t|
     t.integer  "member_id"
