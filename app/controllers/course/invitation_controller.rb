@@ -2,6 +2,10 @@ class Course::InvitationController < ApplicationController
 
   before_action :set_invitation
 
+  def show
+    @host_address = AddressDecorator.decorate(@invitation.course.sponsor.address)
+  end
+
   def accept
     if @invitation.attending.eql? true
       redirect_to root_path, notice: t("messages.already_rsvped")
