@@ -28,7 +28,7 @@ describe "feedback:request" do
 
     context "confirmation message" do
       it "is displayed" do
-        confirmation_message = "Do you want to send feedback requests for session: #{session.title}? (y/N) "
+        confirmation_message = "Do you want to send feedback requests for workshop: #{I18n.l(session.date_and_time, format: :email_title)}? (y/N) "
 
         subject.invoke
         STDOUT.should have_received(:print).with(confirmation_message)

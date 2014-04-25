@@ -14,7 +14,7 @@ feature 'viewing a course' do
     expect(page).to have_content course.short_description
     expect(page).to have_content course.url
 
-    expect(page).to have_content "Sign up to receive an invitation to the course."
+    expect(page).to have_content "Sign up to receive an invitation."
   end
 
   context "signing up is not available" do
@@ -22,7 +22,7 @@ feature 'viewing a course' do
       course.update_attribute(:seats, 0)
       visit course_path(course)
 
-      expect(page).to have_content "This course is fully booked!"
+      expect(page).to have_content "This course is fully booked."
     end
   end
 end

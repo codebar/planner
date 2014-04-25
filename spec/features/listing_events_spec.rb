@@ -17,7 +17,7 @@ feature 'event listing' do
       expect(page).to have_content "Upcoming"
       expect(page).to have_content upcoming_course.title
       expect(page).to have_content "Workshop"
-      expect(page).to have_content I18n.l(upcoming_session.date_and_time, format: :website_format)
+      expect(page).to have_content humanize_date_with_time(upcoming_session.date_and_time)
     end
   end
 

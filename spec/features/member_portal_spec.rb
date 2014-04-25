@@ -4,7 +4,7 @@ feature 'member portal' do
   subject { page }
   before do
     visit root_path
-    should_not have_content("Your account")
+    should_not have_content("My account")
 
     login(member)
     visit root_path
@@ -14,7 +14,7 @@ feature 'member portal' do
     let(:member) { Fabricate(:coach) }
 
     scenario 'a coach can access the member portal' do
-      click_on "Your account"
+      click_on "My account"
       click_on "Invitations"
 
       should have_content("Coach")
@@ -25,7 +25,7 @@ feature 'member portal' do
     let(:member) { Fabricate(:student) }
 
     scenario 'can access the member portal' do
-      click_on "Your account"
+      click_on "My account"
       click_on "Invitations"
 
       should have_content("Student")

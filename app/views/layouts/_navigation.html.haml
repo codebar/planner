@@ -10,7 +10,7 @@
     %ul.right
       - if logged_in?
         %li.has-form
-          = link_to "Your account", portal_index_path, class: 'button'
+          = link_to "My account", portal_index_path, class: 'button'
       - if current_page?(events_path)
         %li.active= link_to "Events", events_path
       - else
