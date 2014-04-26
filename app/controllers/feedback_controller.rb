@@ -2,7 +2,11 @@ class FeedbackController < ApplicationController
 
   def show
     feedback_request = FeedbackRequest.find_by(token: params[:id], submited: false)
-    redirect_to action: 'not_found' and return if feedback_request.nil?
+
+    if feedback_request.nil?
+      flash[:notice] = I18n.t("messages.feedback_not_found")
+      redirect_to root_path and return
+    end
 
     set_coaches(feedback_request.sessions)
 
@@ -27,10 +31,6 @@ class FeedbackController < ApplicationController
       render 'show'
     end
   end
-
-  def not_found; end
-
-  def success; end
 
   private
 
