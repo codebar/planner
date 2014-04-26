@@ -40,18 +40,18 @@ feature 'member feedback' do
     end
   end
 
-  context "I get error message with link to homepage" do
+  context "I get redirected to the main page" do
     scenario "when invalid token given" do
       visit feedback_path(invalid_token)
 
-      find_link('Return to homepage >>')[:href].should == root_path
+      current_url.should eq root_url
       expect(page).to have_content('You have already submitted feedback for this event.')
     end
 
     scenario "when feedback has been already submited" do
       visit feedback_path(submited_token)
 
-      find_link('Return to homepage >>')[:href].should == root_path
+      current_url.should eq root_url
       expect(page).to have_content('You have already submitted feedback for this event.')
     end
   end
@@ -67,8 +67,8 @@ feature 'member feedback' do
 
       click_button('Submit feedback')
 
-      current_path.should =~ /\/success/
-      find_link('Return to homepage >>')[:href].should == root_path
+      current_url.should eq root_url
+
       expect(page).to have_content(feedback_submited_message)
     end
   end

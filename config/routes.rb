@@ -53,7 +53,11 @@ Planner::Application.routes.draw do
 
     resources :invitation, only: [] do
       get :attended
+      post :not_attending
     end
+
+    resources :feedback, only: [:index]
+    resources :workshop, only: [:index]
   end
 
   match '/auth/:service/callback' => 'auth_services#create', via: %i(get post)

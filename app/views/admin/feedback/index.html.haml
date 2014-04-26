@@ -1,0 +1,29 @@
+= render partial: 'admin/shared/title', locals: { title: "Student feedback", date: nil }
+%section#admin#banner
+  .row
+    .large-12.columns
+      - @feedback.each do |feedback|
+        .row
+          .large-2.columns
+            %h5=I18n.l(feedback.created_at, format: :date)
+          .large-3.columns
+            %h5.subheader
+              =feedback.tutorial.title
+          .large-2.columns
+            - if feedback.coach.present?
+              =feedback.coach
+              =image_tag feedback.coach.avatar(96), class: 'th radius', title: feedback.coach.full_name
+          .large-2.columns
+            - (0...feedback.rating).each do |rating|
+              .fa.fa-star
+        - if feedback.request.present?
+          .row
+            .large-12.columns
+              %h5 How did you find the workshop?
+              %p=feedback.request
+        - if feedback.suggestions.present?
+          .row
+            .large-12.columns
+              %h5 Suggestions
+              %p=feedback.suggestions
+        %hr

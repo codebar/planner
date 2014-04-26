@@ -9,6 +9,7 @@
       .large-4.columns
         %p
           - if invitation.attended.nil?
-            =link_to "Attended", admin_invitation_attended_path(invitation, attended: true), class: "button round expand"
+            =link_to "Attended", admin_invitation_attended_path(invitation, attended: true), class: "button round expand tiny sucess"
+            =link_to "Not attending", admin_invitation_attended_path(invitation), class: "button round expand tiny alert", method: :post
           - else
             %i.fa.fa-check-circle.fa-2x.right
