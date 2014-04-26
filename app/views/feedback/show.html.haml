@@ -1,41 +1,41 @@
-%section#member
-  .titlebox.mission
-    %h2
-      Feedback - Coding workshop
-    %small
-      Your submission will be completely anonymous. We read every piece of feedback and use it to help us improve our workshops
-    .dot
+= render partial: 'shared/title', locals: { title: "Workshop Feedback" , date:  humanize_date_with_time(@session.date_and_time) }
+%section#banner
+  .row
+    .large-12.columns
+      %p
+        Your submission will be completely anonymous. We read every piece of feedback and use it to help us improve our workshops
 
-  .description
-    - if @feedback.errors.any?
-      .validation_errors
-        %ul
-          - @feedback.errors.full_messages.each do |error_message|
-            %li=error_message
+  .row
+    .large-12.columns
+      = simple_form_for @feedback, url: submit_feedback_path(params[:id]), html: {method: "patch"} do |f|
+        = f.hidden_field :token, :value => params[:id]
+        = f.hidden_field :rating
+        .row
+          .large-6.columns
+            %label.required
+              %abbr(title='required') *
+              Your overall rating of the workshop
+            .rating{:data => {:rating_max => 5 }}
+        .row
+          .large-6.columns
+            = f.association :coach, collection: @coaches, label_method: :full_name, value_method: :id, label: 'Who was your coach?', include_blank: '- Select Coach -'
+        .row
+          .large-6.columns
+            = f.association :tutorial, label_method: :title, value_method: :id, label: 'What tutorial did you go through?', include_blank: '- Select Tutorial -'
+        .row
+          .large-12.columns
+            = f.input :request, label: 'How did you find the workshop?'
+        .row
+          .large-12.columns
+            = f.input :suggestions, label: "Was there something you didn't like? What can we do to improve your experience?"
+        .row
+          .large-12.columns.text-right
+            = f.submit 'Submit feedback', class: 'button round right'
 
-    = simple_form_for @feedback, url: submit_feedback_path(params[:id]), html: {method: "patch"} do |f|
-      = f.hidden_field :token, :value => params[:id]
-      = f.hidden_field :rating
-      .row
-        %label.required
-          %abbr(title='required') *
-          Your overall rating of the workshop
-        .rating{:data => {:rating_max => 5 }}
-      .row
-        = f.association :coach, collection: @coaches, label_method: :full_name, value_method: :id, label: 'Who was your coach?', include_blank: '- Select Coach -'
-      .row
-        = f.association :tutorial, label_method: :title, value_method: :id, label: 'What tutorial did you go through?', include_blank: '- Select Tutorial -'
-      .row
-        = f.input :request, label: 'How did you find the workshop?'
-      .row
-        = f.input :suggestions, label: "Was there something you didn't like? What can we do to improve your experience?"
-      .row
-        = f.submit 'Submit feedback'
-
-%script{:type => "text/javascript"}
+:javascript
   $(".rating").starRating({
-  minus: false
-  });
-  $('input[name="commit"]').click(function(){
-  $('#feedback_rating').val($('.rating').data('val'))
+    minus: false
+    });
+    $('input[name="commit"]').click(function(){
+    $('#feedback_rating').val($('.rating').data('val'))
   });
