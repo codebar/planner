@@ -8,11 +8,12 @@
       - if @course.url.present?
         =link_to "Read more about the course", @course.url
 
-      %p
-      - if @course.seats > @course.attending.length
-        #{link_to "Sign up", new_member_path, class: 'button tiny round'} to receive an invitation.
-      - else
-        This course is fully booked. To receive an invitation to other courses we will be running, #{link_to("sign up", new_member_path)}.
+      - if @course.date_and_time.future?
+        %p
+        - if @course.seats > @course.attending.length
+          #{link_to "Sign up", new_member_path, class: 'button tiny round'} to receive an invitation.
+        - else
+          This course is fully booked. To receive an invitation to other courses we will be running, #{link_to("sign up", new_member_path)}.
 
   .row
     .large-12.columns
