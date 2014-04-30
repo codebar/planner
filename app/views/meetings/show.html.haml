@@ -24,6 +24,7 @@
                 =link_to twitter_url_for(talk.speaker.twitter) do
                   = talk.speaker.full_name
                 %p= talk.speaker.about_you.html_safe
+          %br
       %hr
       %p To secure a place at the meeting, you must #{link_to "register with our host, <strong>#{@meeting.venue.name}</strong>".html_safe, @meeting.lanyrd_url}
       .row
