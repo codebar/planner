@@ -14,3 +14,11 @@
       %p
         View your invitations and RSVP to upcoming workshops
       =link_to "Invitations", invitations_path, class: 'button round expand'
+  - if is_verified_coach_or_admin?
+    .large-4.columns
+      .panel
+        %h4 Workshop feedback
+        %p
+          Student feedback for the workshops
+          %br
+        =link_to "View Feedback", coach_feedback_index_path, class: 'button round expand'

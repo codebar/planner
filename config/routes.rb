@@ -60,6 +60,10 @@ Planner::Application.routes.draw do
     resources :workshop, only: [:index]
   end
 
+  namespace :coach do
+    resources :feedback, only: [ :index ]
+  end
+
   match '/auth/:service/callback' => 'auth_services#create', via: %i(get post)
   match '/auth/failure' => 'auth_services#failure', via: %i(get post)
   match '/logout' => 'auth_sessions#destroy', via: %i(get delete), as: :logout

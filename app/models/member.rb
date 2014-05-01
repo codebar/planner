@@ -2,6 +2,7 @@ class Member < ActiveRecord::Base
   has_and_belongs_to_many :roles
   has_many :session_invitations
   has_many :auth_services
+  has_many :feedbacks, foreign_key: :coach_id
 
   validates :auth_services, presence: true
   validates :name, :surname, :email, :about_you, presence: true, if: :can_log_in?

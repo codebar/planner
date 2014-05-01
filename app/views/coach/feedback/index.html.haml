@@ -1,20 +1,18 @@
-= render partial: 'admin/shared/title', locals: { title: "Student feedback", date: nil }
+= render partial: 'shared/title', locals: { title: "Workshop feedback", date: nil }
 %section#admin#banner
   .row
     .large-12.columns
+    %p Feedback related to your coaching sessions is highlighted.
+  .row
+    .large-12.columns
       - @feedback.each do |feedback|
-        .panel
+        .panel{ class: current_member.eql?(feedback.coach) ? 'callout' : "" }
           .row
-            .large-2.columns
-              %h5=I18n.l(feedback.created_at, format: :date)
             .large-3.columns
+              %h5=I18n.l(feedback.created_at, format: :date)
+            .large-7.columns
               %h5.subheader
                 =feedback.tutorial.title
-            - if feedback.coach.present?
-              .large-1.columns
-                =image_tag feedback.coach.avatar(50), class: 'th radius', title: feedback.coach.full_name
-              .large-2.columns
-                =feedback.coach.full_name
             .large-2.columns
               - (0...feedback.rating).each do |rating|
                 .fa.fa-star

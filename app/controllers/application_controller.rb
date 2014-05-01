@@ -62,4 +62,10 @@ class ApplicationController < ActionController::Base
   end
 
   helper_method :admin?
+
+  def is_verified_coach_or_admin?
+    current_member.is_admin? or (current_member.is_coach? and current_member.verified?)
+  end
+
+  helper_method :is_verified_coach_or_admin?
 end
