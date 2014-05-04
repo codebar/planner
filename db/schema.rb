@@ -103,8 +103,13 @@ ActiveRecord::Schema.define(version: 20140504171455) do
     t.text     "description"
     t.string   "location"
     t.datetime "expiry_date"
+    t.string   "email"
+    t.string   "link_to_job"
     t.integer  "created_by_id"
-    t.boolean  "approved"
+    t.boolean  "approved",      default: false
+    t.boolean  "submitted",     default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.string   "company"
   end
 
