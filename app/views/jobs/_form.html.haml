@@ -1,6 +1,6 @@
 .row
   .medium-12.columns
-    %p Jobs will appear after they are reviewed and authorised. We want to create a listing of places that our community trusts and can vouch for so please think twice before adding a listing.
+    %p.panel Jobs will appear after they are reviewed and authorised. Please think twice before posting a job, as we want to create a job board that our community trusts.
     = simple_form_for @job do |f|
       .row
         .large-6.columns
@@ -16,13 +16,13 @@
           = f.input :description, placeholder: 'Use text or markdown for the job description', input_html: { rows: 10 }, required: true
       .row
         .large-6.columns
-          = f.input :email, required: true
+          = f.input :email, label: "Job application email", required: true
       .row
         .large-6.columns
           = f.input :link_to_job, required: true
       .row
         .large-6.columns
-          = f.input :expiry_date, as: :date, order: [:day, :month, :year], input_html: { class: 'medium-3 columns'  }, required: true
+          = f.input :expiry_date, as: :date, order: [:day, :month, :year], start_year: Date.today.year, start_month: Date.today.month, end_year: (Date.today+2.months).year, default: Date.today+2.weeks, input_html: { class: 'medium-3 columns'  }, required: true
       .row
         .large-12.columns.text-right
           = f.submit "Update", class: "button round tiny"
