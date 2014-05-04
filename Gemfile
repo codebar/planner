@@ -11,6 +11,7 @@ gem 'turbolinks'
 gem 'simple_form'
 gem 'draper'
 gem 'font-awesome-rails'
+gem 'github-markdown'
 
 gem 'omniauth'
 gem 'omniauth-github'

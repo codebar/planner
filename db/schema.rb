@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140501015844) do
+ActiveRecord::Schema.define(version: 20140504171455) do
 
   create_table "addresses", force: true do |t|
     t.string   "flat"
@@ -97,6 +97,18 @@ ActiveRecord::Schema.define(version: 20140501015844) do
 
   add_index "feedbacks", ["coach_id"], name: "index_feedbacks_on_coach_id"
   add_index "feedbacks", ["tutorial_id"], name: "index_feedbacks_on_tutorial_id"
+
+  create_table "jobs", force: true do |t|
+    t.string   "title"
+    t.text     "description"
+    t.string   "location"
+    t.datetime "expiry_date"
+    t.integer  "created_by_id"
+    t.boolean  "approved"
+    t.string   "company"
+  end
+
+  add_index "jobs", ["created_by_id"], name: "index_jobs_on_created_by_id"
 
   create_table "meeting_talks", force: true do |t|
     t.integer  "meeting_id"

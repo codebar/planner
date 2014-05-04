@@ -48,8 +48,18 @@ Planner::Application.routes.draw do
     end
   end
 
+  resources :jobs, except: [:destroy] do
+    get 'preview'
+    get 'submit'
+    get 'pending', on: :collection
+  end
+
   namespace :admin do
     root "portal#index"
+
+    resources :jobs, only: [ :index, :show] do
+      get 'approve'
+    end
 
     resources :invitation, only: [] do
       get :attended

@@ -1,0 +1,28 @@
+.row
+  .medium-12.columns
+    %p Jobs will appear after they are reviewed and authorised. We want to create a listing of places that our community trusts and can vouch for so please think twice before adding a listing.
+    = simple_form_for @job do |f|
+      .row
+        .large-6.columns
+          = f.input :title, label: "Job title", required: true, placeholder: "e.g. Internship"
+      .row
+        .large-6.columns
+          = f.input :company, required: true, placeholder: "e.g. Codebar", required: true
+      .row
+        .large-6.columns
+          = f.input :location, required: true, placeholder: "e.g. London or Remote", required: true
+      .row
+        .large-12.columns
+          = f.input :description, placeholder: 'Use text or markdown for the job description', input_html: { rows: 10 }, required: true
+      .row
+        .large-6.columns
+          = f.input :email, required: true
+      .row
+        .large-6.columns
+          = f.input :link_to_job, required: true
+      .row
+        .large-6.columns
+          = f.input :expiry_date, as: :date, order: [:day, :month, :year], input_html: { class: 'medium-3 columns'  }, required: true
+      .row
+        .large-12.columns.text-right
+          = f.submit "Update", class: "button round tiny"
