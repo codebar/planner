@@ -1,5 +1,5 @@
 class PortalController < ApplicationController
-  before_action :logged_in?
+  before_action :is_member?
 
   def index
     @pending_jobs = current_member.jobs.where(submitted: false)

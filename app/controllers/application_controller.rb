@@ -68,4 +68,8 @@ class ApplicationController < ActionController::Base
   end
 
   helper_method :is_verified_coach_or_admin?
+
+  def is_member?
+    redirect_to root_path unless logged_in?
+  end
 end
