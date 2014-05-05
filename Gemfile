@@ -13,6 +13,7 @@ gem 'draper'
 gem 'font-awesome-rails'
 gem 'github-markdown'
 gem 'premailer-rails'
+gem 'nokogiri'
 
 gem 'omniauth'
 gem 'omniauth-github'
