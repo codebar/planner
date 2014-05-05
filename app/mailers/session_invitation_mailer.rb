@@ -1,17 +1,12 @@
 class SessionInvitationMailer < ActionMailer::Base
   include EmailHeaderHelper
 
-  layout 'email'
-
   def invite_student sessions, member, invitation
     @session = sessions
-    @host_address = AddressDecorator.decorate(@session.host.address)
     @member = member
     @invitation = invitation
 
-    load_attachments
-
-    subject = "Coding workshop by Codebar - #{l(@session.date_and_time, format: :email_title)}"
+    subject = "Workshop Invitation for #{l(@session.date_and_time, format: :email_title)}"
 
     mail(mail_args(member, subject)) do |format|
       format.html
@@ -20,14 +15,10 @@ class SessionInvitationMailer < ActionMailer::Base
 
   def invite_coach sessions, member, invitation
     @session = sessions
-    @host_address = AddressDecorator.decorate(@session.host.address)
     @member = member
     @invitation = invitation
-    @spots = (@session.host.seats/2.0).round
 
-    load_attachments
-
-    subject = "Request for coaches - #{l(@session.date_and_time, format: :email_title)}"
+    subject = "Workshop Coach Invitation for #{l(@session.date_and_time, format: :email_title)}"
 
     mail(mail_args(member, subject)) do |format|
       format.html
@@ -40,9 +31,7 @@ class SessionInvitationMailer < ActionMailer::Base
     @member = member
     @invitation = invitation
 
-    load_attachments
-
-    subject = "Attendance confirmation - #{l(@session.date_and_time, format: :email_title)}"
+    subject = "Attendance confirmation for #{l(@session.date_and_time, format: :email_title)}"
 
     mail(mail_args(member, subject)) do |format|
       format.html
@@ -61,19 +50,17 @@ class SessionInvitationMailer < ActionMailer::Base
     subject = "#{title}: #{@session.title} by Codebar - #{l(@session.date_and_time, format: :email_title)}"
 
     mail(mail_args(member, subject)) do |format|
-      format.html
+      format.html { render layout: "email" }
     end
   end
 
-  def remind_student session, member, invitation
+  def reminder session, member, invitation
     @session = session
     @host_address = AddressDecorator.decorate(@session.host.address)
     @member = member
     @invitation = invitation
 
-    load_attachments
-
-    subject = "Reminder for #{@session.title} by Codebar - #{l(@session.date_and_time, format: :email_title)}"
+    subject = "Workshop Reminder for #{l(@session.date_and_time, format: :email_title)}"
 
     mail(mail_args(member, subject)) do |format|
       format.html
@@ -91,7 +78,7 @@ class SessionInvitationMailer < ActionMailer::Base
     subject = "Spots available for #{@session.title} by Codebar - #{l(@session.date_and_time, format: :email_title)}"
 
     mail(mail_args(member, subject)) do |format|
-      format.html
+      format.html { render layout: "email" }
     end
   end
 

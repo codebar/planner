@@ -1,0 +1,45 @@
+=render partial: 'shared_mailers/header', locals: { title: "Workshop Attendance Reminder" }
+%body{ bgcolor: "#FFFFFF" }
+
+  =render partial: 'shared_mailers/body_header', locals: { title: "Workshop Attendance Reminder" }
+
+  %table{ class: "body-wrap"}
+    %tr
+      %td
+      %td{ class: "container", bgcolor: "#FFFFFF" }
+
+        .content
+          %table
+            %tr
+              %td
+                %h3 Hi, #{@member.name}
+                %p.lead
+                  This is a quick email to remind you that you have signed up for tomorrow's workshop.
+
+        .content
+          %table{ bgcolor: "#FFFFFF" }
+            %tr
+              %td.small{ width: "30%", style: "vertical-align: top; padding-right:10px;"}
+                =image_tag(@session.host.avatar)
+              %td
+                %h4
+                  Workshop
+                  %small #{l(@session.date_and_time, format: :email)}
+                %p
+                  #{@session.host.name}
+                  %br
+                  #{@host_address.to_html}
+                = link_to "See who will be there and update you attendance", full_url_for(invitation_url(@invitation)), class: 'btn'
+
+        .content
+          %table
+            %tr
+              %td
+                %p
+                  If you have any trouble finding the venue give Despo a call at 07402887214.
+
+        .content
+          = render partial: 'shared_mailers/social'
+      %td
+
+  = render partial: 'shared_mailers/footer'

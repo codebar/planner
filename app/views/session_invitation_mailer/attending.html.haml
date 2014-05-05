@@ -1,0 +1,48 @@
+=render partial: 'shared_mailers/header', locals: { title: "Workshop Attendance Confirmation" }
+%body{ bgcolor: "#FFFFFF" }
+
+  =render partial: 'shared_mailers/body_header', locals: { title: "Workshop Attendance Confirmation" }
+
+  %table{ class: "body-wrap"}
+    %tr
+      %td
+      %td{ class: "container", bgcolor: "#FFFFFF" }
+
+        .content
+          %table
+            %tr
+              %td
+                %h3 Hi, #{@member.name}
+                %p.lead
+                  - if @invitation.role.eql?("Coach")
+                    Thanks for signing up as coach to the workshop. This means a lot to us.
+                  - elsif @invitation.role.eql?("Student")
+                    Thank you for confirming you attendance. See you at our workshop!
+
+        .content
+          %table{ bgcolor: "#FFFFFF" }
+            %tr
+              %td.small{ width: "30%", style: "vertical-align: top; padding-right:10px;"}
+                =image_tag(@session.host.avatar)
+              %td
+                %h4
+                  Workshop
+                  %small #{l(@session.date_and_time, format: :email)}
+                %p
+                  #{@session.host.name}
+                  %br
+                  #{@host_address.to_html}
+                = link_to "Who else will be there?", full_url_for(invitation_url(@invitation)), class: 'btn'
+
+        .content
+          %table
+            %tr
+              %td
+                %p
+                  If you have any trouble finding the venue give Despo a call at 07402887214.
+
+        .content
+          = render partial: 'shared_mailers/social'
+      %td
+
+  = render partial: 'shared_mailers/footer'

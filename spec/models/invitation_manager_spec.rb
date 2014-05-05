@@ -26,19 +26,12 @@ describe InvitationManager do
     InvitationManager.send_course_emails course
   end
 
-  it "#send_session_reminders" do
+  it "#send_workshop_attendance_reminders" do
     Fabricate(:attending_session_invitation, sessions: session)
 
-    SessionInvitation.any_instance.should_receive(:send_reminder)
+    SessionInvitationMailer.any_instance.should_receive(:reminder)
 
-    InvitationManager.send_session_reminders session
+    InvitationManager.send_workshop_attendance_reminders(session)
   end
 
-  it "#send_spots_available" do
-    Fabricate(:attending_session_invitation, sessions: session)
-
-    SessionInvitation.any_instance.should_receive(:send_reminder)
-
-    InvitationManager.send_session_reminders session
-  end
 end

@@ -13,6 +13,6 @@ class Sessions < ActiveRecord::Base
   end
 
   def to_s
-    "Coding Workshop"
+    "Workshop"
   end
 end

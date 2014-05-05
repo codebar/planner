@@ -11,8 +11,6 @@ describe "feedback:request" do
 
     before do
       STDOUT.stub(:puts)
-      STDOUT.stub(:print)
-      STDIN.stub(:gets).and_return('y')
       student.session_invitations << Fabricate(:attended_session_invitation, member: student, sessions: session)
     end
 
@@ -21,32 +19,9 @@ describe "feedback:request" do
     end
 
     it "generates a FeedbackRequest" do
-      FeedbackRequest.stub(:create)
+      FeedbackRequest.should_receive(:create).with(member: student, sessions: session, submited: false)
+
       subject.invoke
-      FeedbackRequest.should have_received(:create).with(member: student, sessions: session, submited: false)
-    end
-
-    context "confirmation message" do
-      it "is displayed" do
-        confirmation_message = "Do you want to send feedback requests for workshop: #{I18n.l(session.date_and_time, format: :email_title)}? (y/N) "
-
-        subject.invoke
-        STDOUT.should have_received(:print).with(confirmation_message)
-      end
-
-      it "terminates rake task if negative answer is given" do
-        FeedbackRequest.stub(:create)
-        STDIN.stub(:gets).and_return('N')
-
-        subject.invoke
-        FeedbackRequest.should_not have_received(:create)
-      end
-    end
-  end
-
-  context "when there is no sessions" do
-    it "raises error" do
-      expect { subject.invoke }.to raise_error(RuntimeError, 'Sorry. No recent sessions found.')
     end
   end
 end

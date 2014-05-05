@@ -20,7 +20,7 @@ en:
         year_month: "%Y-%B"
 
   messages:
-    accepted_invitation: "Thanks for getting back to us %{name}. See you at the session!"
+    accepted_invitation: "Thanks for getting back to us %{name}. See you at the workshop!"
     rejected_invitation: "We are so sad you can't make it, but thanks for letting us know %{name}."
     already_rsvped: "You have alredy confirmed you attendance!"
     not_attending_already: "You have alredy confirmed you can't make it!"

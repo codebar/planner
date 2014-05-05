@@ -7,6 +7,10 @@ module Invitable
 
   module InstanceMethods
 
+    def attendances
+      invitations.accepted
+    end
+
     def attending_students
       invitations.where(role: "Student").accepted
     end

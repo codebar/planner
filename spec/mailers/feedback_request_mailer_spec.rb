@@ -8,7 +8,7 @@ describe FeedbackRequestMailer do
   let(:feedback_request) { Fabricate(:feedback_request, sessions: session, member: member) }
 
   it "#request_feedback" do
-    email_subject = "Feedback for Codebar workshop - #{I18n.l(session.date_and_time, format: :email_title)}"
+    email_subject = "Workshop Feedback for #{I18n.l(session.date_and_time, format: :email_title)}"
 
     FeedbackRequestMailer.request_feedback(session, member, feedback_request).deliver
 
