@@ -37,7 +37,7 @@ class JobsController < ApplicationController
   def submit
     @job.update_attribute(:submitted, true)
 
-    flash[:notice] = "Job listing submitted, we will let you know when the job is approved"
+    flash[:notice] = "Job submitted. You will receive an email when the job has ben approved."
     redirect_to root_path
   end
 
