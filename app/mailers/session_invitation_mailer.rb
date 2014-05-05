@@ -6,7 +6,7 @@ class SessionInvitationMailer < ActionMailer::Base
     @member = member
     @invitation = invitation
 
-    subject = "Workshop Invitation - #{l(@session.date_and_time, format: :email_title)}"
+    subject = "Workshop Invitation for #{l(@session.date_and_time, format: :email_title)}"
 
     mail(mail_args(member, subject)) do |format|
       format.html
@@ -15,17 +15,13 @@ class SessionInvitationMailer < ActionMailer::Base
 
   def invite_coach sessions, member, invitation
     @session = sessions
-    @host_address = AddressDecorator.decorate(@session.host.address)
     @member = member
     @invitation = invitation
-    @spots = (@session.host.seats/2.0).round
 
-    load_attachments
-
-    subject = "Request for coaches - #{l(@session.date_and_time, format: :email_title)}"
+    subject = "Workshop Coach Invitation for #{l(@session.date_and_time, format: :email_title)}"
 
     mail(mail_args(member, subject)) do |format|
-      format.html { render layout: "email" }
+      format.html
     end
   end
 

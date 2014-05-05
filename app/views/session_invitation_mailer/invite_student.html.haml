@@ -37,28 +37,8 @@
                 =link_to "View invitation and RSVP", full_url_for(invitation_url(@invitation)), class: 'btn'
 
         .content
-          %table.social{ width: "100%" }
-            %tr
-              %td
+          = render partial: 'shared_mailers/social'
 
-                %table{ align: "left", class: "column"}
-                  %tr
-                    %td
-
-                      %h5 Connect with Us:
-                      %p
-                        %a{ href: "https://www.facebook.com/codebarHQ", class: 'soc-btn fb'} Like us on facebook
-                        %a{ href: "http://twitter.com/by_codebar", class: "soc-btn tw" }Follow us on twitter
-                        %a{ href: "https://www.facebook.com/groups/codebarcommunity", class: 'soc-btn fb'} Join our facebook community
-
-
-                %table.column{ align: "left" }
-                  %tr
-                    %td
-                      %h5 Contact Info:
-                      %p Email: <strong><a href="emailto:hello@codebar.io">hello@codebar.io</a></strong>
-
-                %span.clear
       %td
 
   = render partial: 'shared_mailers/footer'
