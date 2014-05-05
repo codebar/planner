@@ -29,7 +29,7 @@
                     =talk.title
                     %br
                 %li.cta-button
-                  =link_to "RSVP", @meeting, class: "button round tiny"
+                  =link_to "View details", @meeting, class: "button round tiny"
 
           - if @next_session.present?
             .large-4.medium-6.columns
@@ -42,7 +42,10 @@
                   %br
                   = AddressDecorator.decorate(@next_session.host.address).to_html
                 %li.cta-button
-                  = link_to "RSVP", "/auth/github", class: "button round tiny"
+                  - if logged_in?
+                    = link_to "RSVP", invitations_path, class: "button round tiny"
+                  - else
+                    = link_to "RSVP", "/auth/github", class: "button round tiny"
 
           - if @next_course.present?
             .large-4.medium-6.columns

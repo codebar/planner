@@ -10,12 +10,17 @@
         .panel
           %p
             %h4
-              = link_to invitation.parent.to_s, invitation_path(invitation)
+              = invitation.parent.to_s
             .date #{l(invitation.parent.date_and_time, format: :website_format)}
             %br
-            =link_to attendance_status(invitation), invitation_path(invitation), class: "button round expand"
+            - if invitation.is_a? SessionInvitation
+              =link_to attendance_status(invitation), invitation_path(invitation), class: "button round expand"
+            - elsif invitation.is_a? CourseInvitation
+              =link_to attendance_status(invitation), course_invitation_path(invitation), class: "button round expand"
+- elsif @upcoming_session
+  %em You have no invitations. If you just signed up you should receive one soon.
 - else
-  %em There are no upcoming events
+  %em There are no upcoming events.
 
 - if @attended.any?
   %h5 Attended
@@ -25,7 +30,7 @@
         .panel
           %p
             %h4
-              = link_to invitation.parent.to_s, invitation_path(invitation)
+              = invitation.parent.to_s
             .date= "#{l(invitation.parent.date_and_time, format: :website_format)}"
             %br
             =link_to "View", invitation_path(invitation), class: "button round expand"
