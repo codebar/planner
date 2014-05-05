@@ -8,3 +8,7 @@
     .large-4.columns
       .panel
         =link_to "View feedback", admin_feedback_index_path, class: 'button round expand'
+
+    .large-4.columns
+      .panel
+        =link_to "Approve jobs (#{@jobs_pending_approval})", admin_jobs_path, class: 'button round expand'

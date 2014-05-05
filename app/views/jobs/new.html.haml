@@ -1,0 +1,4 @@
+- if @pending_jobs
+  %p You have  #{@pending_jobs.count}
+= render partial: 'shared/title', locals: { title: "Add a job", date: nil }
+= render partial: 'form'

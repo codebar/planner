@@ -11,4 +11,8 @@ module ApplicationHelper
     human_date << " at #{I18n.l(date, format: :time)}"
   end
 
+  def dot_markdown(text)
+    GitHub::Markdown.render_gfm(text).html_safe
+  end
+
 end

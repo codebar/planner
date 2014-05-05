@@ -1,0 +1,29 @@
+= render partial: 'admin/shared/title', locals: { title: "#{@job.title} at #{@job.company}", date: nil }
+.row
+  .large-12.columns
+    %h2 Review job
+.row
+  .large-12.columns.panel
+    .row
+      .large-12.columns
+        %h1
+          #{@job.title} at #{link_to(@job.company, @job.link_to_job)}
+          %small.fa.fa-location-arrow
+            = @job.location
+
+    .row
+      .large-12.columns
+        = dot_markdown(@job.description)
+        %p
+          %em posted by <b>#{@job.created_by.full_name}</b> on #{l(@job.created_at, format: :date)}
+
+        %p
+          %b This job will expire in #{distance_of_time_in_words(Time.now, @job.expiry_date)}
+
+    .row
+      .large-12.columns.text-right
+        =mail_to @job.email, "Apply", class: 'button alert round'
+
+  .row
+    .large-12.columns.text-right
+      =link_to "Approve", admin_job_approve_path(@job), class: 'button round alert'

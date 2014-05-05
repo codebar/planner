@@ -1,0 +1,26 @@
+= render partial: 'shared/title', locals: { title: "Jobs ", date: nil }
+- if is_verified_coach_or_admin?
+  .row
+    .large-12.columns.text-right
+      =link_to "List a job", new_job_path, class: 'button round alert'
+
+- unless @jobs.any?
+  .row
+    .large-12.columns
+      %p
+        There are no jobs available at the moment
+
+- @jobs.each do |job|
+  .row
+    .large-12.columns
+      .panel.callout
+        %h4
+          =link_to job do
+            #{job.title} at #{job.company}
+            %small.fa.fa-location-arrow
+              = job.location
+        =link_to job do
+          %p
+            =truncate(sanitize(dot_markdown(job.description), tags: { }), length: 200)
+        %p.text-right
+          Posted by #{job.created_by.full_name} on #{l(job.created_at, format: :date)}

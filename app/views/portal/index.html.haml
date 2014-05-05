@@ -22,3 +22,14 @@
           Student feedback for the workshops
           %br
         =link_to "View Feedback", coach_feedback_index_path, class: 'button round expand'
+  - if is_verified_coach_or_admin?
+    .large-4.columns
+      .panel
+        %h4 List a job
+        -if @pending_jobs.any?
+          =link_to pending_jobs_path, class: 'button alert round tiny' do
+            #{@pending_jobs.count} job(s) pending submission
+        %p
+          Help codebar students find trusted jobs.
+          %br
+        =link_to "Add Job", new_job_path, class: 'button round expand'

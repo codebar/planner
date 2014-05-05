@@ -13,7 +13,12 @@
           = link_to "Admin", admin_root_path, class: 'button alert'
       - if logged_in?
         %li.has-form
-          = link_to "My account", portal_index_path, class: 'button'
+          = link_to "My account", portal_index_path, class: 'button success'
+        %li
+          - if current_page?(jobs_path)
+            %li.active= link_to "Jobs", jobs_path
+          - else
+            = link_to "Jobs", jobs_path
 
       - if current_page?(events_path)
         %li.active= link_to "Events", events_path
