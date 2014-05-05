@@ -70,6 +70,7 @@ class ApplicationController < ActionController::Base
   helper_method :is_verified_coach_or_admin?
 
   def is_member?
+    flash[:notice] = "Only authorised members can access that link. If you are a member please sign in"
     redirect_to root_path unless logged_in?
   end
 end
