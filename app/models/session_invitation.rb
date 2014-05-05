@@ -18,12 +18,6 @@ class SessionInvitation < ActiveRecord::Base
     sessions
   end
 
-  def send_reminder
-    if !role.eql?("Coach")
-      SessionInvitationMailer.remind_student(self.sessions, self.member, self).deliver if attending
-    end
-  end
-
   def send_spots_available
     if role.eql?("Student")
       SessionInvitationMailer.spots_available(self.sessions, self.member, self).deliver if attending.eql?(nil)

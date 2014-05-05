@@ -8,16 +8,6 @@ describe SessionInvitation do
 
     it_behaves_like InvitationConcerns
 
-    it "#send_reminder" do
-      invitation.update_attribute(:attending, true)
-      mailer = double(SessionInvitationMailer, deliver: nil)
-
-      SessionInvitationMailer.should_receive(:remind_student).
-        with(invitation.sessions, invitation.member, invitation).and_return(mailer)
-
-      invitation.send_reminder
-    end
-
     it "#send_spots_available" do
       invitation.update_attribute(:attending, nil)
       mailer = double(SessionInvitationMailer, deliver: nil)

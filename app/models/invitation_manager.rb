@@ -20,9 +20,9 @@ class InvitationManager
     end
   end
 
-  def self.send_session_reminders session
-    session.attending_students.map do |invitation|
-      invitation.send_reminder
+  def self.send_workshop_attendance_reminders session
+    session.attendances.each do |invitation|
+      SessionInvitationMailer.reminder(session, invitation.member, invitation).deliver
     end
   end
 

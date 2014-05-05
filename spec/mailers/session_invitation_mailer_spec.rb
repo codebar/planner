@@ -16,9 +16,9 @@ describe SessionInvitationMailer do
     expect(email.subject).to eq(email_subject)
   end
 
-  it "#remind_student" do
-    email_subject = "Reminder for #{session.title} by Codebar - #{I18n.l(session.date_and_time, format: :email_title)}"
-    SessionInvitationMailer.remind_student(session, member, invitation).deliver
+  it "#reminder" do
+    email_subject = "Workshop Reminder for #{I18n.l(session.date_and_time, format: :email_title)}"
+    SessionInvitationMailer.reminder(session, member, invitation).deliver
 
     expect(email.subject).to eq(email_subject)
   end
