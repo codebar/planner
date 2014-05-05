@@ -26,8 +26,8 @@
                 %em= @invitation.note
 
             - if @invitation.sessions.date_and_time-6.hours <= DateTime.now
-              %br
-              %small Please send a text at 07402887214 or email meetings@codebar.io so we can try to reallocate your spot.
+              %p
+                If you can no longer make it, send a text at 07402887214 or email meetings@codebar.io so we can try to reallocate your spot.
             - else
               =link_to "I can no longer attend", reject_invitation_url(@invitation), class: "expand button round"
           - else

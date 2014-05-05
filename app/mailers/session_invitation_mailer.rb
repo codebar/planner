@@ -32,12 +32,10 @@ class SessionInvitationMailer < ActionMailer::Base
     @member = member
     @invitation = invitation
 
-    load_attachments
-
-    subject = "Attendance confirmation - #{l(@session.date_and_time, format: :email_title)}"
+    subject = "Attendance confirmation for #{l(@session.date_and_time, format: :email_title)}"
 
     mail(mail_args(member, subject)) do |format|
-      format.html { render layout: "email" }
+      format.html
     end
   end
 
