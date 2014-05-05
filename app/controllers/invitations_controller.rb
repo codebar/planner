@@ -1,5 +1,5 @@
 class InvitationsController < ApplicationController
-  before_action :logged_in?
+  before_action :is_member?
 
   def index
     if current_member.is_student?
