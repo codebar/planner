@@ -31,7 +31,9 @@ class AuthServicesController < ApplicationController
         })
 
         member.save!
-        member.roles << Role.where("lower(name) =?", session[:role]).first
+
+        role = Role.where("lower(name) =?", session[:role]).first
+        member.roles << role unless role.nil?
         member.toggle!(:can_log_in)
 
         session[:member_id]          = member.id
