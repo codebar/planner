@@ -2,13 +2,15 @@
 %section#banner
   .container
     .row
-      .medium-12.columns
+      .medium-9.columns
         %p
           Codebar is an initiative aiming to bridge the diversity gap in the tech industry by running free weekly coding workshops and other programming related events aimed at women, LGBTQ and people otherwise underrepresented.
         %p
-          If you would like to attend our events as a student or help out as a coach just #{link_to "sign up", new_member_path}.
-        %p
           Do you have any questions? Have a look at our #{link_to "FAQ", faq_path}.
+      .medium-3.columns
+        .panel.callout
+          =link_to "Sign up as a student", new_member_path(role:"student"), class: 'button expand round'
+          =link_to "Sign up as a coach", new_member_path(role: "coach"), class: 'button expand round'
 
 
 %section
@@ -44,8 +46,6 @@
                 %li.cta-button
                   - if logged_in?
                     = link_to "RSVP", invitations_path, class: "button round tiny"
-                  - else
-                    = link_to "RSVP", "/auth/github", class: "button round tiny"
 
           - if @next_course.present?
             .large-4.medium-6.columns
