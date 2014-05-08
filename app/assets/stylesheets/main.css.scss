@@ -4,11 +4,11 @@
 
 section.title {
   background-image: image-url('bg.JPG');
-  background-position: 0 -10px;
+  background-position: 0 0px;
   background-size: 100% auto;
   background-repeat: no-repeat;
   margin-bottom: 10px;
-  padding: 60px 0;
+  padding: 100px 0;
 
   h1 {
     color: #e5e5e5;
@@ -32,7 +32,7 @@ section.title {
 @media only screen and (max-width: 40em) {
   section.title {
     background-position: 0 0px;
-    padding: 20px;
+    padding: 20px 20px 60px;
   }
 }
 
