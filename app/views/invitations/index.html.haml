@@ -1,4 +1,4 @@
-= render partial: 'shared/title', locals: { title: "Member portal", date: nil }
+= render partial: 'shared/title', locals: { title: "Invitations", date: nil }
 %section
   - if current_member.is_student? and current_member.is_coach?
     .inner-nav{ "data-magellan-expedition" => "fixed" }
