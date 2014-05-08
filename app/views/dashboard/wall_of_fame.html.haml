@@ -2,7 +2,7 @@
 %section#banner
   .row
     .large-12.columns
-      %p Do you want to coach at codebar? #{link_to "Sign up!", "/auth/github" }
+      %p Do you want to coach at our workshops? #{link_to "Sign up", new_member_path(role: "Coach") }
       %ul.small-block-grid-1.medium-block-grid-2.large-block-grid-2
         - @coaches.each do |coach|
           %li.coach

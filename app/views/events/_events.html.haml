@@ -12,4 +12,4 @@
               - unless event.is_a?(Sessions)
                 =link_to "View details", event, class: "button round tiny"
               - else
-                =link_to "Sign up", '/auth/github', class: "button round tiny"
+                =link_to "Sign up", new_member_path, class: "button round tiny"

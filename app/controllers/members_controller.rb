@@ -1,6 +1,12 @@
 class MembersController < ApplicationController
   before_action :logged_in?, only: [:edit, :show]
 
+  def new
+    @role = params["role"] ? params["role"] : nil
+    @page_title = "Sign up as a #{@role}" if @role
+    @page_title ||= "Sign up"
+  end
+
   def edit
     @member = current_member
   end
