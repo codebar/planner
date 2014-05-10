@@ -33,19 +33,27 @@
                 %li.cta-button
                   =link_to "View details", @meeting, class: "button round tiny"
 
-          - if @next_session.present?
-            .large-4.medium-6.columns
-              %ul.pricing-table.workshop{ "data-equalizer-watch" => '' }
-                %li.title Coding Workshop
-                %li.description
-                  = humanize_date_with_time(@next_session.date_and_time)
-                %li.bullet-item
-                  = link_to @next_session.host.name, @next_session.host.website
-                  %br
-                  = AddressDecorator.decorate(@next_session.host.address).to_html
-                %li.cta-button
-                  - if logged_in?
-                    = link_to "RSVP", invitations_path, class: "button round tiny"
+          - if @upcoming_workshops.present?
+            - @upcoming_workshops.each do |workshop|
+              .large-4.medium-6.columns
+                %ul.pricing-table.workshop{ "data-equalizer-watch" => '' }
+                  %li.title
+                    Coding Workshop
+                    - if workshop.location.present?
+                      (#{workshop.location})
+                  %li.description
+                    = humanize_date_with_time(workshop.date_and_time)
+                  %li.bullet-item
+                    = link_to workshop.host.name, workshop.host.website
+                    %br
+                    = AddressDecorator.decorate(workshop.host.address).to_html
+                  - if workshop.invitable?
+                    %li.cta-button
+                      - if logged_in?
+                        = link_to "RSVP", invitations_path, class: "button round tiny"
+                  - else
+                    %li.cta-button
+                      = link_to "Sign up", workshop.sign_up_url, class: "button round tiny"
 
           - if @next_course.present?
             .large-4.medium-6.columns

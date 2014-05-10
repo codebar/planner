@@ -1,6 +1,6 @@
 class DashboardController < ApplicationController
   def show
-    @next_session = Sessions.next
+    @upcoming_workshops = Sessions.upcoming
     @next_course = Course.next
     @sponsors = Sponsor.all.shuffle
     @latest_sponsors = Sponsor.latest

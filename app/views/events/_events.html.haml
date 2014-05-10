@@ -9,7 +9,9 @@
             %li.description
               = humanize_date_with_time(event.date_and_time)
             %li.cta-button
-              - unless event.is_a?(Sessions)
+              - if !event.is_a?(Sessions)
                 =link_to "View details", event, class: "button round tiny"
+              - elsif event.sign_up_url.present?
+                = link_to "Sign up", event.sign_up_url, class: "button round tiny"
               - else
                 =link_to "Sign up", new_member_path, class: "button round tiny"

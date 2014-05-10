@@ -15,4 +15,8 @@ class Sessions < ActiveRecord::Base
   def to_s
     "Workshop"
   end
+
+  def location
+    host.address.city rescue ""
+  end
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140504171455) do
+ActiveRecord::Schema.define(version: 20140510234035) do
 
   create_table "addresses", force: true do |t|
     t.string   "flat"
@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(version: 20140504171455) do
     t.integer  "sponsor_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "city"
   end
 
   create_table "auth_services", force: true do |t|
@@ -199,6 +200,8 @@ ActiveRecord::Schema.define(version: 20140504171455) do
     t.datetime "date_and_time"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "invitable",     default: true
+    t.string   "sign_up_url"
   end
 
   create_table "sponsor_sessions", force: true do |t|
