@@ -1,6 +1,6 @@
 %footer
   .row
-    .large-4.columns
+    .large-3.columns
       %p.copyright
         &#169; 2014 codebar
 
@@ -8,10 +8,17 @@
         Send us an email at
         =mail_to "hello@codebar.io?Subject=Hello%20Codebar", "hello@codebar.io"
 
-    .large-4.columns
+    .large-3.columns
       %ul.no-bullet
         %li= link_to "Code of conduct", code_of_conduct_path
         %li= link_to "Coach guide", teaching_guide_path
         %li= link_to "Tutorials", "http://tutorials.codebar.io"
-    .large-4.columns
+        %li= link_to "Becoming a sponsor", sponsoring_path
+
+    .large-3.columns
+      %span.git-tip
+        %script{ :"data-gittip-username" => "by_codebar", :src => "//gttp.co/v1.js" }
+      %br
+      %br
+    .large-3.columns
       = render partial: 'shared/social_media'
