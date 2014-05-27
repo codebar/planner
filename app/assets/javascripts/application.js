@@ -14,6 +14,7 @@
 //= require foundation
 //= require 'jsimple-star-rating.min.js'
 //= require analytics
+//= require gosquared
 
 
 $(function(){
