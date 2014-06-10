@@ -34,6 +34,9 @@
             %li=link_to "Manage attendances", admin_workshop_index_path
             %li=link_to "View feedback", admin_feedback_index_path
             %li=link_to "Review jobs (#{jobs_pending_approval})", admin_jobs_path
+            %li
+              %label Account
+            %li=link_to "Manage subscriptions", subscriptions_path
         .row
           .large-12.columns
             = yield

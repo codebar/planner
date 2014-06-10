@@ -75,4 +75,8 @@ class ApplicationController < ActionController::Base
       redirect_to root_path
     end
   end
+
+  def has_access?
+    redirect_to root_path unless logged_in?
+  end
 end

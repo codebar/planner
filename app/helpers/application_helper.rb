@@ -15,4 +15,7 @@ module ApplicationHelper
     GitHub::Markdown.render_gfm(text).html_safe
   end
 
+  def belongs_to_group? group
+    current_member.groups.include?(group)
+  end
 end

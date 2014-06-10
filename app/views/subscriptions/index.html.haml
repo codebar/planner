@@ -1,0 +1,23 @@
+= render partial: 'shared/title', locals: { title: "Subscriptions", date: nil }
+%section#banner
+.row
+  .large-12.columns
+    - @groups.group_by(&:chapter).each do |chapter, groups|
+      %h4= chapter.name
+      %hr
+      - groups.each do |group|
+        .row
+          .medium-9.columns
+            %p= group.name
+          .medium-3.columns
+            - if belongs_to_group?(group)
+              = simple_form_for :subscription, method: :delete do |f|
+                = f.input :subscription_id, as: :hidden, input_html: { value: nil }
+                = f.input :group_id, as: :hidden, input_html: { value: group.id }
+                = f.submit "Subscribed", class: 'button tiny expand success'
+            - else
+              = simple_form_for :subscription do |f|
+                = f.input :group_id, as: :hidden, input_html: { value: group.id }
+                = f.submit "Subscribe", class: 'button tiny expand warn'
+
+    %hr

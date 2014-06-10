@@ -11,6 +11,9 @@ Planner::Application.routes.draw do
 
   get '/profile' => "members#profile", as: :profile
 
+  resources :subscriptions, only: [ :index, :create ]
+  delete '/subscriptions' => 'subscriptions#destroy', as: :destroy_subscriptions
+
   resources :members, only: [] do
     member do
       get "unsubscribe"
