@@ -1,0 +1,14 @@
+%section#banner
+  .row
+    .medium-12.columns
+      %h2 New Chapter
+      = simple_form_for [:admin, @chapter] do |f|
+        .row
+          .large-6.columns
+            = f.input :name, placeholder: "e.g. Codebar Cambridge"
+        .row
+          .large-6.columns
+            = f.input :city
+        .row
+          .large-12.columns.text-right
+            = f.submit "Create chapter", class: "button"

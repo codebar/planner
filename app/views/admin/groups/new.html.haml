@@ -1,0 +1,17 @@
+%section#banner
+  .row
+    .medium-12.columns
+      %h2 New Group
+      = simple_form_for [:admin, @group] do |f|
+        .row
+          .large-6.columns
+            = f.input :name, placeholder: "e.g. Students"
+        .row
+          .large-6.columns
+            = f.input :description
+        .row
+          .large-6.columns
+            = f.association :chapter, required: true
+        .row
+          .large-12.columns.text-right
+            = f.submit "Create group", class: "button"

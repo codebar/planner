@@ -61,6 +61,10 @@ Planner::Application.routes.draw do
       get 'approve'
     end
 
+    resources :chapters, only: [ :index, :new, :create, :show]
+    resources :groups, only: [ :index, :new, :create, :show]
+    resources :sponsors, only: [ :show ]
+
     resources :invitation, only: [] do
       get :attended
       get :not_attending

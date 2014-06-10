@@ -1,0 +1,23 @@
+.row
+  .large-4.columns
+    %h3 Workshops
+    %ul.side-nav
+      - @workshops.each do |workshop|
+        %li
+          link_to workshop.name, admin_workshop_path
+          %hr
+  .large-4.columns
+    %h3 Sponsors
+    %ul.side-nav
+      - @sponsors.each do |sponsor|
+        %li
+          = link_to sponsor.name, [ :admin, sponsor ]
+  .large-4.columns
+    %h3 Groups
+    %ul.no-bullet
+      - @groups.each do |group|
+        %li
+          =link_to group.name, [ :admin, group ]
+.row
+  .large-4.columns
+    %h3 Subscriptions

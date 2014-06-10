@@ -1,0 +1,43 @@
+!!!DOCTYPE html
+%html{ lang: "en" }
+  %head
+    = render partial: 'layouts/meta'
+    %link{ rel: "image_src", href: "http://codebar.io/images/logo-square.png" }
+
+    %title Codebar.io
+    = stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true
+    = javascript_include_tag "vendor/modernizr"
+    = javascript_include_tag "application", "data-turbolinks-track" => true
+    %link{ href: 'http://fonts.googleapis.com/css?family=Gabriela', rel: 'stylesheet', type: 'text/css' }
+    = csrf_meta_tags
+  %body
+    #top
+    = render partial: 'layouts/navigation'
+    = render partial: 'layouts/messages'
+
+    .off-canvas-wrap{ "data-offcanvas" => true }
+      .inner-wrap
+        %span
+        =link_to "#", class: "left-off-canvas-toggle button alert" do
+          =fa_icon "list"
+
+          Admin Menu
+
+        %aside.left-off-canvas-menu
+          %ul.off-canvas-list
+            %li
+              %label Admin
+            %li=link_to "New chapter", new_admin_chapter_path
+            %li=link_to "New group", new_admin_group_path
+            %li
+              %label Manage
+            %li=link_to "Manage attendances", admin_workshop_index_path
+            %li=link_to "View feedback", admin_feedback_index_path
+            %li=link_to "Review jobs (#{jobs_pending_approval})", admin_jobs_path
+        .row
+          .large-12.columns
+            = yield
+
+
+        = render partial: 'layouts/footer'
+        %a.exit-off-canvas

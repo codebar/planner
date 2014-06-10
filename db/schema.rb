@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140510234035) do
+ActiveRecord::Schema.define(version: 20140610155915) do
 
   create_table "addresses", force: true do |t|
     t.string   "flat"
@@ -32,6 +32,13 @@ ActiveRecord::Schema.define(version: 20140510234035) do
   end
 
   add_index "auth_services", ["member_id"], name: "index_auth_services_on_member_id"
+
+  create_table "chapters", force: true do |t|
+    t.string   "name"
+    t.string   "city"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "course_invitations", force: true do |t|
     t.integer  "course_id"
@@ -99,6 +106,16 @@ ActiveRecord::Schema.define(version: 20140510234035) do
   add_index "feedbacks", ["coach_id"], name: "index_feedbacks_on_coach_id"
   add_index "feedbacks", ["tutorial_id"], name: "index_feedbacks_on_tutorial_id"
 
+  create_table "groups", force: true do |t|
+    t.integer  "chapter_id"
+    t.string   "name"
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "groups", ["chapter_id"], name: "index_groups_on_chapter_id"
+
   create_table "jobs", force: true do |t|
     t.string   "title"
     t.text     "description"
@@ -162,6 +179,15 @@ ActiveRecord::Schema.define(version: 20140510234035) do
   add_index "members_roles", ["member_id", "role_id"], name: "index_members_roles_on_member_id_and_role_id"
   add_index "members_roles", ["member_id"], name: "index_members_roles_on_member_id"
 
+  create_table "posts", force: true do |t|
+    t.string   "title"
+    t.text     "content"
+    t.integer  "created_by_id"
+    t.text     "slug"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "reminders", force: true do |t|
     t.string   "reminder_type"
     t.string   "reminder_id"
@@ -224,6 +250,16 @@ ActiveRecord::Schema.define(version: 20140510234035) do
     t.string   "website"
     t.integer  "seats",       default: 15
   end
+
+  create_table "subscriptions", force: true do |t|
+    t.integer  "group_id"
+    t.integer  "member_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "subscriptions", ["group_id"], name: "index_subscriptions_on_group_id"
+  add_index "subscriptions", ["member_id"], name: "index_subscriptions_on_member_id"
 
   create_table "tutorials", force: true do |t|
     t.string   "title"
