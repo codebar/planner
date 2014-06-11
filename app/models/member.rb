@@ -1,5 +1,6 @@
 class Member < ActiveRecord::Base
-  has_and_belongs_to_many :roles
+  rolify role_cname: 'Permission', role_table_name: :permission, role_join_table_name: :members_permissions
+
   has_many :session_invitations
   has_many :auth_services
   has_many :feedbacks, foreign_key: :coach_id

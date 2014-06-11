@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140610212001) do
+ActiveRecord::Schema.define(version: 20140611191143) do
 
   create_table "addresses", force: true do |t|
     t.string   "flat"
@@ -171,6 +171,13 @@ ActiveRecord::Schema.define(version: 20140610212001) do
     t.boolean  "verified"
   end
 
+  create_table "members_permissions", id: false, force: true do |t|
+    t.integer "member_id"
+    t.integer "permission_id"
+  end
+
+  add_index "members_permissions", ["member_id", "permission_id"], name: "index_members_permissions_on_member_id_and_permission_id"
+
   create_table "members_roles", id: false, force: true do |t|
     t.integer "member_id"
     t.integer "role_id"
@@ -178,6 +185,17 @@ ActiveRecord::Schema.define(version: 20140610212001) do
 
   add_index "members_roles", ["member_id", "role_id"], name: "index_members_roles_on_member_id_and_role_id"
   add_index "members_roles", ["member_id"], name: "index_members_roles_on_member_id"
+
+  create_table "permissions", force: true do |t|
+    t.string   "name"
+    t.integer  "resource_id"
+    t.string   "resource_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "permissions", ["name", "resource_type", "resource_id"], name: "index_permissions_on_name_and_resource_type_and_resource_id"
+  add_index "permissions", ["name"], name: "index_permissions_on_name"
 
   create_table "posts", force: true do |t|
     t.string   "title"

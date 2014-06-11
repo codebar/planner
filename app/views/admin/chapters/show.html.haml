@@ -4,7 +4,7 @@
     %ul.side-nav
       - @workshops.each do |workshop|
         %li
-          link_to workshop.name, admin_workshop_path
+          =link_to humanize_date_with_time(workshop.date_and_time, workshop.time), admin_workshop_path
           %hr
   .large-4.columns
     %h3 Sponsors
@@ -20,4 +20,8 @@
           =link_to group.name, [ :admin, group ]
 .row
   .large-4.columns
-    %h3 Subscriptions
+    %h3 Subscribers
+    %ul.no-bullet
+      - @groups.map(&:members).flatten.uniq.each do |member|
+        %li
+          = member.full_name

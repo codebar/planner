@@ -15,6 +15,7 @@ gem 'github-markdown'
 gem 'premailer-rails'
 gem 'nokogiri'
 gem 'pickadate-rails'
+gem 'rolify'
 
 gem 'omniauth'
 gem 'omniauth-github'
