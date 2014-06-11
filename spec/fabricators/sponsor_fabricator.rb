@@ -8,5 +8,5 @@ Fabricator(:sponsor) do
   name { Faker::Name.name }
   website { Faker::Internet.domain_name }
   avatar { avatars.sample }
-  address { Fabricate(:address) }
+  address
 end

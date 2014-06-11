@@ -14,6 +14,7 @@ gem 'font-awesome-rails'
 gem 'github-markdown'
 gem 'premailer-rails'
 gem 'nokogiri'
+gem 'pickadate-rails'
 
 gem 'omniauth'
 gem 'omniauth-github'

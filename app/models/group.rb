@@ -4,4 +4,6 @@ class Group < ActiveRecord::Base
   has_many :members, through: :subscriptions
 
   validates :name, :chapter_id, presence: true
+
+  alias_attribute :city, :chapter
 end

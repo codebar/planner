@@ -6,9 +6,9 @@ module ApplicationHelper
     human_date << I18n.l(date, format: :month)
   end
 
-  def humanize_date_with_time(date)
+  def humanize_date_with_time(date, time=date)
     human_date = humanize_date(date)
-    human_date << " at #{I18n.l(date, format: :time)}"
+    human_date << " at #{I18n.l(time, format: :time)}"
   end
 
   def dot_markdown(text)

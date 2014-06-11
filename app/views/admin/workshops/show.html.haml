@@ -1,0 +1,77 @@
+%section#banner
+  .row
+    .medium-12.columns
+      %h4.subheader=@workshop.chapter.name
+      %h2
+        Workshop
+        %small.subheader= humanize_date_with_time(@workshop.date_and_time, @workshop.time)
+      %hr
+
+  - if @workshop.has_host?
+    .row
+      .medium-12.columns
+        %strong.label.round.secondary #{@workshop.host.seats} spots
+        %br
+        %br
+  .row
+    .medium-6.columns#host
+      %h4 Host
+      - unless @workshop.has_host?
+        = simple_form_for [:admin, @workshop], url: admin_workshop_host_path(workshop_id: @workshop), method: :post do |f|
+          .row
+            .medium-8.columns
+              = f.association :sponsors, label: false, input_html: { multiple: false }
+          = f.submit "Set host", class: "button round tiny"
+      - else
+        .row
+          .medium-6.columns
+            %span
+              = @workshop.host.name
+              = link_to admin_workshop_destroy_host_path(workshop_id: @workshop.id), data: { confirm: "Are you sure?" }, method: :delete do
+                =fa_icon "times"
+    .medium-6.columns#sponsors
+      %h4 Sponsors
+      .row
+        .medium-6.columns
+          = simple_form_for [:admin, @workshop], url: admin_workshop_sponsor_path(workshop_id: @workshop), method: :post do |f|
+            .row
+              .medium-12.columns
+                = f.association :sponsors, label: false, input_html: { multiple: false }
+            = f.submit "Add sponsor", class: "button round tiny"
+        .medium-6.columns
+          %ul.no-bullet
+            - @workshop.sponsors.each do |sponsor|
+              %li
+                %span
+                  = sponsor.name
+                  = link_to admin_workshop_destroy_sponsor_path(workshop_id: @workshop.id, sponsor_id: sponsor.id), data: { confirm: "Are you sure?" }, method: :delete do
+                    =fa_icon "times"
+
+  - if @workshop.has_host?
+    %hr
+    .row
+      .medium-4.columns
+        %h4 Students
+        %ol.attendances
+          - @workshop.attending_students.each do |invitation|
+            %li.attendance
+              .two-thirds
+                =invitation.member.full_name
+                %br
+                %em=invitation.note
+      .medium-4.columns
+        %h4 Coaches
+        %ol.attendances
+          - @workshop.attending_coaches.each do |invitation|
+            %li.attendance
+              .two-thirds
+                =invitation.member.full_name
+  .row
+    .medium-12.columns
+      %h4 Invitations
+      - if @workshop.has_host?
+        =link_to "Send Invitations", "#", class: "button round"
+      - else
+        =link_to "Send Invitations", "#", class: "button round disabled"
+        %br
+        %small you must specify a host before sending out invitations

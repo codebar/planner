@@ -13,4 +13,7 @@
  *= require font-awesome
  *= require main
  *= require star-rating
+ *= require pickadate/default
+ *= require pickadate/default.date
+ *= require pickadate/default.time
  */

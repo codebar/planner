@@ -66,7 +66,7 @@ Planner::Application.routes.draw do
 
     resources :chapters, only: [ :index, :new, :create, :show]
     resources :groups, only: [ :index, :new, :create, :show]
-    resources :sponsors, only: [ :show ]
+    resources :sponsors, only: [ :show, :new ]
 
     resources :invitation, only: [] do
       get :attended
@@ -75,6 +75,13 @@ Planner::Application.routes.draw do
 
     resources :feedback, only: [:index]
     resources :workshop, only: [:index]
+    resources :workshops, only: [:new, :create, :show, :index] do
+      post :host
+      delete '/host' => "workshops#destroy_host", as: :destroy_host
+      post :sponsor
+      delete '/sponsor' => "workshops#destroy_sponsor", as: :destroy_sponsor
+    end
+    resources :sponsors, only: [:new, :create]
   end
 
   namespace :coach do
