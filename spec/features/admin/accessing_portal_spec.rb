@@ -4,7 +4,6 @@ feature 'admin portal' do
 
   scenario 'non admin cannot access the admin portal' do
     member = Fabricate(:member)
-
     login(member)
     visit admin_root_path
 
