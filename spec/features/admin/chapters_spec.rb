@@ -1,16 +1,14 @@
 require 'spec_helper'
 
 feature 'chapters' do
+  let(:member) { Fabricate(:member) }
 
   context "#creating a new chapter" do
-    let(:admin) { Fabricate(:admin) }
-
     before do
-      login(admin)
+      login_as_admin(member)
     end
 
     scenario "an admin can create a new chapter" do
-
       visit new_admin_chapter_path
 
       fill_in "Name", with: "Codebar Brighton"

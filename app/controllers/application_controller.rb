@@ -1,4 +1,10 @@
 class ApplicationController < ActionController::Base
+  include Pundit
+
+  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+  rescue_from Pundit::AuthorizationNotPerformedError, with: :user_not_authorized
+
+
   protect_from_forgery with: :exception
 
   helper_method :logged_in?
@@ -8,12 +14,15 @@ class ApplicationController < ActionController::Base
   protected
 
   def current_member
+    return Member.last
     if session.has_key?(:member_id)
       @current_member ||= Member.find(session[:member_id])
     end
   rescue ActiveRecord::RecordNotFound
     session[:member_id] = nil
   end
+
+  alias_method :current_user, :current_member
 
   def current_service
     if session.has_key?(:service_id)
@@ -57,11 +66,11 @@ class ApplicationController < ActionController::Base
     "/auth/github"
   end
 
-  def admin?
-    current_member? and current_member.is_admin?
+  def manager?
+    current_user.is_admin? or current_user.is_organiser?
   end
 
-  helper_method :admin?
+  helper_method :manager?
 
   def is_verified_coach_or_admin?
     current_member and (current_member.is_admin? or (current_member.is_coach? and current_member.verified?))
@@ -78,5 +87,15 @@ class ApplicationController < ActionController::Base
 
   def has_access?
     redirect_to root_path unless logged_in?
+  end
+
+  private
+
+  def user_not_authorized
+    redirect_to(user_path, notice: "You are not authorized to perform this action.")
+  end
+
+  def user_path
+    request.referrer or root_path
   end
 end

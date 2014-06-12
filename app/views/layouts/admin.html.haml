@@ -27,9 +27,10 @@
           %ul.off-canvas-list
             %li
               %label Admin
+            - if current_member.is_admin?
+              %li=link_to "New chapter", new_admin_chapter_path
+              %li=link_to "New group", new_admin_group_path
             %li=link_to "New workshop", new_admin_workshop_path
-            %li=link_to "New chapter", new_admin_chapter_path
-            %li=link_to "New group", new_admin_group_path
             %li
               %label Manage
             %li=link_to "Manage attendances", admin_workshop_index_path

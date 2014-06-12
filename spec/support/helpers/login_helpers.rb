@@ -4,6 +4,11 @@ module LoginHelpers
   end
 end
 
+def login_as_admin(member)
+  member.add_role(:admin)
+  login(member)
+end
+
 RSpec.configure do |config|
   config.include LoginHelpers, :type => :feature
 end

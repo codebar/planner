@@ -8,7 +8,7 @@
 
   %section.top-bar-section
     %ul.right
-      - if admin?
+      - if manager?
         %li.has-form
           = link_to "Admin", admin_root_path, class: 'button alert'
       - if logged_in?

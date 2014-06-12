@@ -1,10 +1,15 @@
 class Admin::ChaptersController < Admin::ApplicationController
+  after_action :verify_authorized
+
   def new
     @chapter = Chapter.new
+    authorize @chapter
   end
 
   def create
     @chapter = Chapter.new(chapter_params)
+    authorize(@chapter)
+
     if @chapter.save
       flash[:notice] = "Chapter #{@chapter.name} has been succesfuly created"
       redirect_to [:admin, @chapter ]
@@ -16,12 +21,15 @@ class Admin::ChaptersController < Admin::ApplicationController
 
   def show
     @chapter = Chapter.find(params[:id])
+    authorize(@chapter)
+
     @workshops = Sessions.upcoming
     @sponsors = Sponsor.all
     @groups = Group.all
   end
 
   private
+
   def chapter_params
     params.require(:chapter).permit(:name, :city)
   end

@@ -16,6 +16,7 @@ gem 'premailer-rails'
 gem 'nokogiri'
 gem 'pickadate-rails'
 gem 'rolify'
+gem "pundit"
 
 gem 'omniauth'
 gem 'omniauth-github'
