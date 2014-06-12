@@ -11,10 +11,10 @@ feature 'admin portal' do
   end
 
   context "an admin user" do
-    let(:member) { Fabricate(:admin) }
+    let(:member) { Fabricate(:member) }
 
     before do
-      login(member)
+      login_as_admin(member)
     end
 
     scenario 'can access the admin portal' do
