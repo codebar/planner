@@ -1,12 +1,12 @@
 module LoginHelpers
   def login(member)
-    ApplicationController.any_instance.stub(:current_member).and_return(member)
+    ApplicationController.any_instance.stub(:current_user).and_return(member)
   end
-end
 
-def login_as_admin(member)
-  member.add_role(:admin)
-  login(member)
+  def login_as_admin(member)
+    member.add_role(:admin)
+    login(member)
+  end
 end
 
 RSpec.configure do |config|

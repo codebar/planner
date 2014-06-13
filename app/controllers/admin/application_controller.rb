@@ -8,9 +8,8 @@ class Admin::ApplicationController < ApplicationController
   private
 
   def has_permissions?
-    redirect_to root_path unless current_user.is_admin? or current_user.is_organiser?
+    redirect_to root_path unless manager?
   end
-
 
   def jobs_pending_approval
     @jobs_pending_approval ||= Job.where(approved: false, submitted: true).count

@@ -3,10 +3,10 @@ require 'spec_helper'
 feature "an admin can" do
   feature 'verify workshop attendees' do
 
-    let(:admin) { Fabricate(:admin) }
+    let(:member) { Fabricate(:member) }
 
     before do
-      login(admin)
+      login_as_admin(member)
     end
 
     scenario 'can verify that a member has attended the meeting' do

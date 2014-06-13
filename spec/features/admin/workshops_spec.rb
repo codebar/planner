@@ -1,12 +1,12 @@
 require 'spec_helper'
 
 feature 'Managing workshops' do
-  let(:admin) { Fabricate(:admin) }
+  let(:member) { Fabricate(:member) }
   let!(:chapter) { Fabricate(:chapter) }
   let!(:sponsor) { Fabricate(:sponsor) }
 
   before do
-    login(admin)
+    login_as_admin(member)
   end
 
   scenario "creating a new workshop" do
