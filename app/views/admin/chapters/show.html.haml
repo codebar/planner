@@ -4,7 +4,10 @@
     %ul.side-nav
       - @workshops.each do |workshop|
         %li
-          =link_to humanize_date_with_time(workshop.date_and_time, workshop.time), admin_workshop_path(workshop)
+          =link_to admin_workshop_path(workshop) do
+            = humanize_date_with_time(workshop.date_and_time, workshop.time)
+            - if workshop.invitable?
+              (#{workshop.invitations.accepted.count})
           %hr
   .large-4.columns
     %h3 Sponsors

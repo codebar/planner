@@ -6,7 +6,7 @@
   .row
     .large-12.columns
       - @feedback.each do |feedback|
-        .panel{ class: current_member.eql?(feedback.coach) ? 'callout' : "" }
+        .panel{ class: current_user.eql?(feedback.coach) ? 'callout' : "" }
           .row
             .large-3.columns
               %h5=I18n.l(feedback.created_at, format: :date)

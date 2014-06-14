@@ -8,17 +8,17 @@ class MembersController < ApplicationController
   end
 
   def edit
-    @member = current_member
+    @member = current_user
   end
 
   def profile
-    @member = current_member
+    @member = current_user
 
     render :show
   end
 
   def update
-    @member = current_member
+    @member = current_user
 
     if @member.update_attributes(member_params)
       set_roles(@member)

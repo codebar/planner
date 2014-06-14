@@ -1,4 +1,11 @@
 %nav.top-bar{ "data-topbar" => "" }
+  - if logged_in?
+    #profile
+      =link_to "#", class: "left-off-canvas-toggle menu" do
+        .fa-stack.fa-lg
+          .fa.fa-circle.fa-stack-2x
+          .fa.fa-stack-1x.fa-chevron-right.fa-inverse
+
   %ul.title-area
     %li.name
       =link_to root_path do
@@ -8,18 +15,6 @@
 
   %section.top-bar-section
     %ul.right
-      - if manager?
-        %li.has-form
-          = link_to "Admin", admin_root_path, class: 'button alert'
-      - if logged_in?
-        %li.has-form
-          = link_to "My account", portal_index_path, class: 'button success'
-        %li
-          - if current_page?(jobs_path)
-            %li.active= link_to "Jobs", jobs_path
-          - else
-            = link_to "Jobs", jobs_path
-
       - if current_page?(events_path)
         %li.active= link_to "Events", events_path
       - else

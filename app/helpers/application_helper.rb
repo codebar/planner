@@ -16,6 +16,6 @@ module ApplicationHelper
   end
 
   def belongs_to_group? group
-    current_member.groups.include?(group)
+    current_user.groups.include?(group)
   end
 end

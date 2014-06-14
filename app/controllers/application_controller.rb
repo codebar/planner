@@ -37,7 +37,7 @@ class ApplicationController < ActionController::Base
 
   def authenticate_member!
     if session.has_key?(:member_id)
-      current_member
+      current_user
       finish_registration
     else
       redirect_to redirect_path
@@ -45,7 +45,7 @@ class ApplicationController < ActionController::Base
   end
 
   def finish_registration
-    if current_member.requires_additional_details?
+    if current_user.requires_additional_details?
       flash[:notice] = "We need to know a little more about you. Please finish the registration form below."
       redirect_to edit_member_path
     end
@@ -67,7 +67,7 @@ class ApplicationController < ActionController::Base
   helper_method :manager?
 
   def is_verified_coach_or_admin?
-    current_member.verified?
+    current_user.verified?
   end
 
   helper_method :is_verified_coach_or_admin?

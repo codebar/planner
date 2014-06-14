@@ -6,7 +6,7 @@ class SubscriptionsController < ApplicationController
   end
 
   def create
-    @subscription = Subscription.new(group_id: subscription_params[:group_id], member: current_member)
+    @subscription = Subscription.new(group_id: subscription_params[:group_id], member: current_user)
     if @subscription.save
       flash[:notice] = "You have subscribed to #{@subscription.group.chapter.city}'s #{@subscription.group.name} group"
     else
@@ -16,7 +16,7 @@ class SubscriptionsController < ApplicationController
   end
 
   def destroy
-    @subscription = current_member.subscriptions.find_by_group_id(subscription_params[:group_id])
+    @subscription = current_user.subscriptions.find_by_group_id(subscription_params[:group_id])
     @subscription.destroy
     flash[:notice] = "You have unsubscribed from #{@subscription.group.chapter.city}'s #{@subscription.group.name} group"
     redirect_to :back

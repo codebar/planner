@@ -10,7 +10,7 @@ feature 'member feedback' do
   before do
     Fabricate(:feedback)
 
-    @coach = Fabricate(:coach)
+    @coach = Fabricate(:member)
     @tutorial = Fabricate(:tutorial, title: 'tutorial title')
     Fabricate(:attended_session_invitation, sessions: feedback_request.sessions, member: @coach, role: "Coach")
   end

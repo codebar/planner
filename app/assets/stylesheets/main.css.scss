@@ -40,3 +40,29 @@ section.title {
   margin-top: 30px;
   margin-bottom: 10px;
 }
+
+#profile {
+  vertical-align: top;
+  width: auto;
+  float: left;
+  background-color: #444444;
+}
+
+nav a.menu {
+    margin: 20px;
+    top: 20px;
+  }
+
+.top-bar {
+  line-height: 60px;
+}
+
+.user {
+  color: #E3573E;
+}
+
+.left-off-canvas-menu {
+  left: 10px;
+  background-color: #444444;
+  padding-right: 10px;
+}

@@ -28,7 +28,6 @@ Planner::Application.routes.draw do
     end
   end
 
-  resources :portal, only: [ :index ], path: 'account'
   resources :invitations, only: [ :index ]
 
   namespace :course do

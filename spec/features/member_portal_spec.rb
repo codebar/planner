@@ -2,33 +2,22 @@ require 'spec_helper'
 
 feature 'member portal' do
   subject { page }
-  before do
-    visit root_path
-    should_not have_content("My account")
+  let(:member) { Fabricate(:member) }
 
-    login(member)
-    visit root_path
-  end
+  context "signed in" do
+    it "should be able to access the portal menu" do
+      login(member)
+      visit root_path
 
-  context "coach" do
-    let(:member) { Fabricate(:coach) }
-
-    scenario 'a coach can access the member portal' do
-      click_on "My account"
-      click_on "Invitations"
-
-      should have_content("Coach")
+      expect(page).to have_selector("#profile")
     end
   end
 
-  context "student" do
-    let(:member) { Fabricate(:student) }
+  context "not signed in" do
+    it "not should be able to access the portal menu" do
+      visit root_path
 
-    scenario 'can access the member portal' do
-      click_on "My account"
-      click_on "Invitations"
-
-      should have_content("Student")
+      expect(page).to_not have_selector("#profile")
     end
   end
 end

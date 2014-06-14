@@ -12,10 +12,6 @@ class Member < ActiveRecord::Base
   validates :name, :surname, :email, :about_you, presence: true, if: :can_log_in?
   validates_uniqueness_of :email
 
-  scope :students, -> { joins(:roles).where(:roles => { :name => 'Student' }) }
-  scope :coaches, -> { joins(:roles).where(:roles => { :name => 'Coach' }) }
-  scope :admins, -> { joins(:roles).where(:roles => { :name => 'Admin' }) }
-
   default_scope -> { where(unsubscribed: [false, nil]) }
 
   attr_accessor :attendance

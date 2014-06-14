@@ -1,6 +1,4 @@
 class Admin::ApplicationController < ApplicationController
-  layout 'admin'
-
   include Pundit
 
   before_action :has_permissions?

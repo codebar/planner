@@ -1,5 +1,5 @@
 Fabricator(:feedback) do
-  coach
+  coach { member }
   tutorial
   rating 5
   request { Faker::Lorem.paragraph }

@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe InvitationManager do
 
-  let(:students) { 3.times.map { Fabricate(:student) } }
+  let(:students) { 3.times.map { Fabricate(:member) } }
   let(:session) { Fabricate(:sessions) }
 
   it "#send_session_emails" do
