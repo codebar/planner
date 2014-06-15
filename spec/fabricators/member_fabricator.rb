@@ -6,3 +6,11 @@ Fabricator(:member) do
   twitter { Faker::Name.first_name }
   auth_services(count: 1) { Fabricate(:auth_service) }
 end
+
+Fabricator(:student, from: :member) do
+  groups(count: 2) { |attrs, i| Fabricate(:students) }
+end
+
+Fabricator(:coach, from: :member) do
+  groups(count: 2) { |attrs, i| Fabricate(:coaches) }
+end

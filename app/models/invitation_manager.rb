@@ -3,11 +3,11 @@ class InvitationManager
   def self.send_session_emails session
     return "Workshop is not invitable" unless session.invitable?
 
-    Member.students.each do |student|
+    session.chapter.students.each do |student|
       SessionInvitation.create sessions: session, member: student, role: "Student"
     end
 
-    Member.coaches.each do |coach|
+    session.chapter.coches.each do |coach|
       invitation = SessionInvitation.new sessions: session, member: coach, role: "Coach"
 
       if invitation.save

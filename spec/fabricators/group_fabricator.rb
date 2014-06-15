@@ -9,3 +9,9 @@ Fabricator(:students, class_name: :group) do
   description { Faker::Lorem.paragraph }
   chapter
 end
+
+Fabricator(:coaches, class_name: :group) do
+  name "Coaches"
+  description { Faker::Lorem.paragraph }
+  chapter
+end

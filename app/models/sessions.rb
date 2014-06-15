@@ -8,6 +8,9 @@ class Sessions < ActiveRecord::Base
 
   belongs_to :chapter
 
+  scope :students, -> { joins(:invitations).where(invitation: { name: 'Student', attended: true }) }
+  scope :coaches, -> { joins(:invitations).where(invitations: { name: 'Coach', attended: true  }) }
+
   validates :chapter_id, presence: true
 
   default_scope { order('date_and_time DESC') }

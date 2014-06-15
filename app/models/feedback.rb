@@ -9,8 +9,7 @@ class Feedback < ActiveRecord::Base
   def coach_field_has_a_coach_role?
     return false unless coach_id
 
-    coach_roles = Member.find(coach_id).roles.select { |role| role.name == 'Coach' }
-    if coach_roles.empty?
+    unless Member.find(coach_id).groups.coaches.any?
       errors.add(:coach, "Coach member doesn't have 'coach' role.")
     end
   end
