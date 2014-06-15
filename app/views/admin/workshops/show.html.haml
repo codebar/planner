@@ -1,10 +1,16 @@
 %section#banner
   .row
     .medium-12.columns
-      %h4.subheader=@workshop.chapter.name
+      %h4.subheader
+        =link_to [:admin, @workshop.chapter] do
+          =@workshop.chapter.name
       %h2
         Workshop
         %small.subheader= humanize_date_with_time(@workshop.date_and_time, @workshop.time)
+        %small
+          =link_to edit_admin_workshop_path(@workshop) do
+            Edit
+            %i.fa.fa-pencil
       %hr
 
   - if @workshop.has_host?

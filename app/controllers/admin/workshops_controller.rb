@@ -1,6 +1,8 @@
 class Admin::WorkshopsController < Admin::ApplicationController
   include  Admin::SponsorConcerns
 
+  before_filter :set_workshop_by_id, only: [:show, :edit]
+
   def new
     @workshop = Sessions.new
   end
@@ -13,11 +15,6 @@ class Admin::WorkshopsController < Admin::ApplicationController
     else
       render 'new'
     end
-
-  end
-
-  def show
-    @workshop = Sessions.find(params[:id])
   end
 
   private
@@ -28,5 +25,9 @@ class Admin::WorkshopsController < Admin::ApplicationController
 
   def sponsor_id
     workshop_params[:sponsor_ids][1]
+  end
+
+  def set_workshop_by_id
+    @workshop = Sessions.find(params[:id])
   end
 end

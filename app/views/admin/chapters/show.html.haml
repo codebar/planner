@@ -1,30 +1,34 @@
-.row
-  .large-4.columns
-    %h3 Workshops
-    %ul.side-nav
-      - @workshops.each do |workshop|
-        %li
-          =link_to admin_workshop_path(workshop) do
-            = humanize_date_with_time(workshop.date_and_time, workshop.time)
-            - if workshop.invitable?
-              (#{workshop.invitations.accepted.count})
-          %hr
-  .large-4.columns
-    %h3 Sponsors
-    %ul.side-nav
-      - @sponsors.each do |sponsor|
-        %li
-          = link_to sponsor.name, [ :admin, sponsor ]
-  .large-4.columns
-    %h3 Groups
-    %ul.no-bullet
-      - @groups.each do |group|
-        %li
-          =link_to group.name, [ :admin, group ]
-.row
-  .large-4.columns
-    %h3 Subscribers
-    %ul.no-bullet
-      - @groups.map(&:members).flatten.uniq.each do |member|
-        %li
-          = member.full_name
+%section#banner
+  .row
+    .medium-12.columns
+      %h4.subheader
+        =@chapter.name
+  .row
+    .large-4.columns
+      %h3 Workshops
+      %ul.side-nav
+        - @workshops.each do |workshop|
+          %li
+            =link_to admin_workshop_path(workshop) do
+              = humanize_date_with_time(workshop.date_and_time, workshop.time)
+              - if workshop.invitable?
+                (#{workshop.invitations.accepted.count})
+    .large-4.columns
+      %h3 Sponsors
+      %ul.side-nav
+        - @sponsors.each do |sponsor|
+          %li
+            = link_to sponsor.name, [ :admin, sponsor ]
+    .large-4.columns
+      %h3 Groups
+      %ul.no-bullet
+        - @groups.each do |group|
+          %li
+            =link_to group.name, [ :admin, group ]
+  .row
+    .large-4.columns
+      %h3 Subscribers
+      %ul.no-bullet
+        - @groups.map(&:members).flatten.uniq.each do |member|
+          %li
+            = member.full_name

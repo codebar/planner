@@ -14,7 +14,7 @@
             =link_to admin_workshop_path(workshop) do
               %strong=workshop.chapter.name
               %br
-              =humanize_date_with_time(workshop.date_and_time)
+              =humanize_date_with_time(workshop.date_and_time, workshop.time)
   %hr
   .row
     .large-4.columns
@@ -22,12 +22,18 @@
       %ul.no-bullet
         - @groups.each do |group|
           %li
-            = group.name
+            = link_to group.name, [:admin, group]
     .large-4.columns
-      %h3 Subscriptions
+      %h3 Subscribers
+      %ul.no-bullet
+        - @subscribers.each do |member|
+          %li
+            = member.full_name
+            %br
+            %small= member.groups.map { |g| "#{g.name} #{g.chapter.name}" }.join(", ")
     .large-4.columns
       %h3 Sponsors
-      %ul.side-nav
+      %ul.no-bullet
         - @sponsors.each do |sponsor|
           %li
             = link_to sponsor.name, [ :admin, sponsor ]

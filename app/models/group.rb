@@ -3,6 +3,8 @@ class Group < ActiveRecord::Base
   has_many :subscriptions
   has_many :members, through: :subscriptions
 
+  scope :latest_members, -> { joins(:members).order('created_at') }
+
   scope :students, -> { where(name: 'Students') }
   scope :coaches, -> { where(name: 'Coaches') }
 

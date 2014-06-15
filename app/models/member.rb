@@ -13,6 +13,7 @@ class Member < ActiveRecord::Base
   validates_uniqueness_of :email
 
   default_scope -> { where(unsubscribed: [false, nil]) }
+  scope :subscribers, -> { joins(:subscriptions).uniq }
 
   attr_accessor :attendance
 

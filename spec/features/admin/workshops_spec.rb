@@ -16,7 +16,7 @@ feature 'Managing workshops' do
     fill_in "Date and time", with: Date.today
     fill_in "Time", with: "11:30"
 
-    click_on "Create"
+    click_on "Save"
 
     expect(page).to have_content "Send Invitations"
   end
