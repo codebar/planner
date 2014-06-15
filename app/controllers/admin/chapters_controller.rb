@@ -24,7 +24,7 @@ class Admin::ChaptersController < Admin::ApplicationController
     authorize(@chapter)
 
     @workshops = @chapter.workshops
-    @sponsors = Sponsor.all
+    @sponsors = @chapter.sponsors
     @groups = @chapter.groups
   end
 

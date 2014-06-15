@@ -5,7 +5,7 @@
         =@chapter.name
   .row
     .large-4.columns
-      %h3 Workshops
+      %h4 Workshops
       %ul.side-nav
         - @workshops.each do |workshop|
           %li
@@ -14,20 +14,20 @@
               - if workshop.invitable?
                 (#{workshop.invitations.accepted.count})
     .large-4.columns
-      %h3 Sponsors
+      %h4 Sponsors
       %ul.side-nav
         - @sponsors.each do |sponsor|
           %li
             = link_to sponsor.name, [ :admin, sponsor ]
     .large-4.columns
-      %h3 Groups
+      %h4 Groups
       %ul.no-bullet
         - @groups.each do |group|
           %li
             =link_to group.name, [ :admin, group ]
   .row
     .large-4.columns
-      %h3 Subscribers
+      %h4 Subscribers
       %ul.no-bullet
         - @groups.map(&:members).flatten.uniq.each do |member|
           %li
