@@ -9,7 +9,7 @@ describe Feedback do
   it { should respond_to(:request) }
   it { should respond_to(:rating) }
   it { should respond_to(:suggestions) }
-  it { should respond_to(:member) }
+  it { should respond_to(:coach) }
   it { should respond_to(:tutorial)}
 
   context "validations" do
