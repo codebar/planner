@@ -23,6 +23,10 @@ class Sessions < ActiveRecord::Base
     SponsorSession.exists?(host: true, sessions: self)
   end
 
+  def has_valid_host?
+    has_host? and host.address.present?
+  end
+
   def to_s
     "Workshop"
   end

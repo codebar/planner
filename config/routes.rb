@@ -79,6 +79,7 @@ Planner::Application.routes.draw do
       delete '/host' => "workshops#destroy_host", as: :destroy_host
       post :sponsor
       delete '/sponsor' => "workshops#destroy_sponsor", as: :destroy_sponsor
+      post :invite
     end
     resources :sponsors, only: [:new, :create]
   end

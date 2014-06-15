@@ -17,6 +17,22 @@ class Admin::WorkshopsController < Admin::ApplicationController
     end
   end
 
+  def update
+    @workshop = Sessions.find(params[:id])
+    @workshop.update_attributes(workshop_params)
+    redirect_to admin_workshop_path(@workshop), notice: "Workshops updated succesfully"
+  rescue
+    redirect_to admin_workshop_path(@workshop), notice: "Something went wrong"
+  end
+
+  def invite
+    set_workshop
+
+    InvitationManager.send_session_emails(@workshop)
+
+    redirect_to admin_workshop_path(@workshop), notice: "Invitations sent!"
+  end
+
   private
 
   def workshop_params

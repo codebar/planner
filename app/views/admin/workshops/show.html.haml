@@ -52,32 +52,38 @@
                   = sponsor.name
                   = link_to admin_workshop_destroy_sponsor_path(workshop_id: @workshop.id, sponsor_id: sponsor.id), data: { confirm: "Are you sure?" }, method: :delete do
                     =fa_icon "times"
-
-  - if @workshop.has_host?
-    %hr
+  - if @workshop.invitable?
     .row
       .medium-4.columns
-        %h4 Students
-        %ol.attendances
-          - @workshop.attending_students.each do |invitation|
-            %li.attendance
-              .two-thirds
-                =invitation.member.full_name
-                %br
-                %em=invitation.note
-      .medium-4.columns
-        %h4 Coaches
-        %ol.attendances
-          - @workshop.attending_coaches.each do |invitation|
-            %li.attendance
-              .two-thirds
-                =invitation.member.full_name
-  .row
-    .medium-12.columns
-      %h4 Invitations
-      - if @workshop.has_host?
-        =link_to "Send Invitations", "#", class: "button round"
-      - else
-        =link_to "Send Invitations", "#", class: "button round disabled"
-        %br
-        %small you must specify a host before sending out invitations
+        %h4
+          Invitations
+          - if @workshop.invitations.any?
+            (#{@workshop.invitations.count})
+        - if !@workshop.date_and_time.future?
+          =link_to "Send Invitations", "#", class: "button round disabled"
+          %br
+          %small The workshop has already taken place
+        - elsif @workshop.has_valid_host?
+          =link_to "Send Invitations", admin_workshop_invite_path(@workshop), method: :post, class: "button round"
+        - else
+          =link_to "Send Invitations", "#", class: "button round disabled"
+          %br
+          %small you must specify a host before sending out invitations
+
+      - if @workshop.invitations.any?
+        .medium-4.columns
+          %h4 Students
+          %ol.attendances
+            - @workshop.attending_students.each do |invitation|
+              %li.attendance
+                .two-thirds
+                  =invitation.member.full_name
+                  %br
+                  %em=invitation.note
+        .medium-4.columns
+          %h4 Coaches
+          %ol.attendances
+            - @workshop.attending_coaches.each do |invitation|
+              %li.attendance
+                .two-thirds
+                  =invitation.member.full_name
