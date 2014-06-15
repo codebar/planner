@@ -21,7 +21,7 @@ describe InvitationManager do
 
   it "#send_course_emails" do
     course = Fabricate(:course)
-    Member.should_receive(:students).and_return(students)
+    course.chapter.should_receive(:students).and_return(students)
 
     students.members.each do |student|
       CourseInvitation.should_receive(:create).with(course: course, member: student)

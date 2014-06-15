@@ -1,4 +1,6 @@
-Fabricator(:chapter) do
-  name { Faker::Lorem.word }
+Fabricator(:chapter) do |chapter|
+  name { sequence(:name) { |i| "#{Faker::Lorem.word}-#{i}" } }
   city { Faker::Lorem.word }
 end
+
+

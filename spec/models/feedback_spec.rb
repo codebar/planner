@@ -5,6 +5,7 @@ describe Feedback do
 
   let(:valid_feedback_token) { 'valid_feedback_token' }
   let(:invalid_feedback_token) { 'invalid_feedback_token' }
+  let(:chapter) { Fabriate(:chapter) }
 
   it { should respond_to(:request) }
   it { should respond_to(:rating) }

@@ -3,6 +3,7 @@ Fabricator(:course) do
   short_description { Faker::Lorem.sentence }
   title { Faker::Lorem.sentence }
   tutor { Fabricate(:member) }
+  chapter
   date_and_time  { DateTime.now+1.week }
 
   seats 1
