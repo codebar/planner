@@ -92,4 +92,10 @@ class ApplicationController < ActionController::Base
   def user_path
     request.referrer or root_path
   end
+
+  def jobs_pending_approval
+    @jobs_pending_approval ||= Job.where(approved: false, submitted: true).count
+  end
+
+  helper_method :jobs_pending_approval
 end
