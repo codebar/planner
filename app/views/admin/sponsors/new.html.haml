@@ -10,7 +10,8 @@
             = f.input :name
             .row
               .large-12.columns
-                = f.input :avatar
+                = f.input :avatar, as: :file
+                = f.hidden_field :image_cache
             .row
               .large-12.columns
                 = f.input :website

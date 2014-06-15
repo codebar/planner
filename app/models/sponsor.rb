@@ -5,6 +5,8 @@ class Sponsor < ActiveRecord::Base
 
   validates :name, :address, :avatar, :website, :seats, presence: true
 
+  mount_uploader(:avatar, AvatarUploader)
+
   accepts_nested_attributes_for :address
   scope :latest, -> { order("updated_at desc").limit(4) }
 

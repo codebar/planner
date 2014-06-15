@@ -17,6 +17,10 @@ class Admin::SponsorsController < Admin::ApplicationController
     end
   end
 
+  def show
+    @sponsor = Sponsor.find(params[:id])
+  end
+
   private
   def sponsor_params
     params.require(:sponsor).permit(:name, :avatar, :website, :seats, address: [])
