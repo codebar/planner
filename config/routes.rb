@@ -73,7 +73,6 @@ Planner::Application.routes.draw do
     end
 
     resources :feedback, only: [:index]
-    resources :workshop, only: [:index]
     resources :workshops do
       post :host
       delete '/host' => "workshops#destroy_host", as: :destroy_host

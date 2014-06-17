@@ -25,27 +25,21 @@
                   %label Manage
                   %li.has-form
                     = link_to "Dashboard", admin_root_path
-                - if current_user.is_admin?
-                  %li=link_to "New chapter", new_admin_chapter_path
-                  %li=link_to "New group", new_admin_group_path
                 %li=link_to "New workshop", new_admin_workshop_path
-                %li
-                  %label Manage
-                - if current_user.is_admin?
-                  %li=link_to "Manage attendances", admin_workshop_index_path
-                - if current_user.is_organiser? or current_user.is_admin?
-                  %li=link_to "View feedback", admin_feedback_index_path
-                %li=link_to "Moderated Feedback", coach_feedback_index_path
-                - if current_user.is_admin?
-                  %li=link_to "Review jobs (#{jobs_pending_approval})", admin_jobs_path
-              %li
-                %label Portal
+              - if current_user.is_organiser? or current_user.is_admin?
+                %li=link_to "View feedback", admin_feedback_index_path
+              %li=link_to "Moderated Feedback", coach_feedback_index_path
+              - if current_user.is_admin?
+                %li=link_to "Review jobs (#{jobs_pending_approval})", admin_jobs_path
               %li= link_to "Jobs", jobs_path
-              %li=link_to "Invitations", invitations_path
               %li
                 %label Account
+              %li=link_to "Invitations", invitations_path
               %li=link_to "Update Profile", profile_path
               %li=link_to "Manage subscriptions", subscriptions_path
+              - if current_user.is_admin?
+                %li=link_to "New chapter", new_admin_chapter_path
+                %li=link_to "New group", new_admin_group_path
         = yield
 
 

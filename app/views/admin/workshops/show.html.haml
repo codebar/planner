@@ -70,20 +70,12 @@
           %br
           %small you must specify a host before sending out invitations
 
-      - if @workshop.invitations.any?
-        .medium-4.columns
-          %h4 Students
-          %ol.attendances
-            - @workshop.attending_students.each do |invitation|
-              %li.attendance
-                .two-thirds
-                  =invitation.member.full_name
-                  %br
-                  %em=invitation.note
-        .medium-4.columns
-          %h4 Coaches
-          %ol.attendances
-            - @workshop.attending_coaches.each do |invitation|
-              %li.attendance
-                .two-thirds
-                  =invitation.member.full_name
+  - if @workshop.invitations.any?
+    .row
+      %hr
+      .medium-6.columns
+        %h4 Students
+        =render partial: 'admin/workshop/attendances', locals: { invitations: @workshop.attending_students }
+      .medium-6.columns
+        %h4 Coaches
+        =render partial: 'admin/workshop/attendances', locals: { invitations: @workshop.attending_coaches }

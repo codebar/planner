@@ -24,13 +24,11 @@
           %li
             = link_to group.name, [:admin, group]
     .large-4.columns
-      %h3 Subscribers
-      %ul.no-bullet
+      %h3 Latest Subscribers
+      %ul.side-nav
         - @subscribers.each do |member|
           %li
-            = member.full_name
-            %br
-            %small= member.groups.map { |g| "#{g.name} #{g.chapter.name}" }.join(", ")
+            #{member.full_name}, #{l(member.created_at, format: :log)}
     .large-4.columns
       %h3 Sponsors
       %ul.no-bullet
