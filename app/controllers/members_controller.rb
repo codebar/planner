@@ -2,12 +2,11 @@ class MembersController < ApplicationController
   before_action :logged_in?, only: [:edit, :show]
 
   def new
-    @role = params["role"] ? params["role"] : nil
-    @page_title = "Sign up as a #{@role}" if @role
-    @page_title ||= "Sign up"
+    @page_title = "Sign up"
   end
 
   def edit
+    @groups = Group.all
     @member = current_user
   end
 
@@ -21,8 +20,7 @@ class MembersController < ApplicationController
     @member = current_user
 
     if @member.update_attributes(member_params)
-      set_roles(@member)
-      redirect_to root_path, notice: update_message(@member)
+      redirect_to :back, notice: "Your details have been updated"
     else
       render "edit"
     end
@@ -38,28 +36,7 @@ class MembersController < ApplicationController
   private
 
   def member_params
-    params.require(:member).permit(:name, :surname, :email, :mobile, :twitter, :about_you, :role_ids)
+    params.require(:member).permit(:name, :surname, :email, :mobile, :twitter, :about_you)
   end
 
-  def member_roles_params
-    params[:member][:role_ids].delete("")
-    params[:member][:role_ids]
-  end
-
-  def set_roles member
-    member.role_ids = member_roles_params
-  end
-
-  def roles member
-    member.roles.map { |r| r.name }.join(" and ")
-  end
-
-  def update_message member
-    message = "Your details have been updated. "
-    if member.roles.any?
-      message << I18n.t("messages.member_notifications", roles: roles(member))
-    else
-      message << I18n.t("messages.no_roles")
-    end
-  end
 end

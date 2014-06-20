@@ -4,6 +4,6 @@
     .medium-12.columns
       %p Before you continue, have a look at our #{link_to "code of conduct", code_of_conduct_path}. We offer a welcoming, inclusive and learning-friendly environment, and have a zero tolerance policy towards any form of harassment or inappropriate behavior.
       %p Invitations are send out periodically, so don't worry if you don't receive one as soon as you register.
-      = link_to registration_path(role: @role), class: "button round" do
+      = link_to registration_path, class: "button round" do
         Sign in with Github
         %i.fa.fa-github.fa-fw
