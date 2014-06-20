@@ -10,7 +10,7 @@ en:
         email: "%a, %d %B at %H:%M"
         email_title: "%A, %d %b at %H:%M"
         short: "%d/%m/%Y %H:%M "
-        date: "%d %B %Y"
+        date: "%d %b %Y"
         website_format: "%a, %d %B %Y at %H:%M"
         day_in_words: "%a"
         day: "%d"

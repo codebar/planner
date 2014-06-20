@@ -18,4 +18,8 @@ module ApplicationHelper
   def belongs_to_group? group
     current_user.groups.include?(group)
   end
+
+  def can_access?(resource)
+    current_user.has_role?(:admin) or current_user.has_role?(:organiser) or current_user.has_role?(:organiser, resource)
+  end
 end

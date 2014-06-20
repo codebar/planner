@@ -1288,3 +1288,8 @@ $topbar-media-query: $medium-up;
 .row .columns:last-child {
  float: left;
 }
+
+
+ul.off-canvas-list li label {
+  background: none repeat scroll 0 0 #333333;
+}

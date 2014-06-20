@@ -98,4 +98,10 @@ class ApplicationController < ActionController::Base
   end
 
   helper_method :jobs_pending_approval
+
+  def upcoming_workshops
+    Sessions.upcoming
+  end
+
+  helper_method :upcoming_workshops
 end

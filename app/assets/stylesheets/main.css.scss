@@ -41,13 +41,6 @@ section.title {
   margin-bottom: 10px;
 }
 
-#profile {
-  vertical-align: top;
-  width: auto;
-  float: left;
-  background-color: #444444;
-}
-
 nav a.menu {
     margin: 20px;
     top: 20px;
@@ -55,6 +48,10 @@ nav a.menu {
 
 .top-bar {
   line-height: 60px;
+
+  .name {
+    display: inline-block;
+  }
 }
 
 .user {

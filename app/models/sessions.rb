@@ -2,6 +2,8 @@ class Sessions < ActiveRecord::Base
   include Invitable
   include Listable
 
+  resourcify :permissions, role_cname: 'Permission', role_table_name: :permission
+
   has_many :invitations, class_name: "SessionInvitation"
   has_many :sponsor_sessions
   has_many :sponsors, through: :sponsor_sessions

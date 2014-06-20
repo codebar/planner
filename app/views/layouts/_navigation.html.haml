@@ -1,12 +1,12 @@
 %nav.top-bar{ "data-topbar" => "" }
-  - if logged_in?
-    #profile
-      =link_to "#", class: "left-off-canvas-toggle menu" do
-        .fa-stack.fa-lg
-          .fa.fa-circle.fa-stack-2x
-          .fa.fa-stack-1x.fa-chevron-right.fa-inverse
-
   %ul.title-area
+    - if logged_in?
+      %li#profile
+        =link_to "#", class: "left-off-canvas-toggle menu" do
+          .fa-stack.fa-lg
+            .fa.fa-stack-2x
+            .fa.fa-stack-1x.fa-outdent
+
     %li.name
       =link_to root_path do
         .brand codebar
@@ -33,6 +33,14 @@
       - else
         %li= link_to "Sponsoring", sponsoring_path
       - if logged_in?
-        %li= link_to "Log Out", logout_path, class: "login-button"
+        %li
+          =link_to logout_path do
+            %i.fa-stack.fa-lg
+              %i.fa.fa-stack-2x
+              %i.fa.fa-sign-out.fa-stack-1x
       - else
-        %li= link_to "Sign in", "/auth/github", class: "login-button"
+        %li
+          = link_to "/auth/github" do
+            %i.fa-stack.fa-lg
+              %i.fa.fa-stack-2x
+              %i.fa.fa-sign-in.fa-stack-1x
