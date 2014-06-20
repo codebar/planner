@@ -5,20 +5,26 @@
         - if can_access?(workshop)
           %li
             = link_to "(#{workshop.chapter.city}) #{l(workshop.date_and_time, format: :date)}", admin_workshop_path(workshop)
+    - chapters.each do |chapter|
+      - if current_user.has_role?(:organiser, chapter)
+        %li
+          = link_to chapter.name, admin_chapter_path(chapter)
     - if current_user.is_admin? or current_user.is_organiser?
       %li
         = link_to "Dashboard", admin_root_path
       %li=link_to "New workshop", new_admin_workshop_path
-      %li=link_to "Feedback", coach_feedback_index_path
+      %li=link_to "New sponsor", new_admin_sponsor_path
     - if current_user.is_admin?
       %li=link_to "Review jobs (#{jobs_pending_approval})", admin_jobs_path
     %li= link_to "Jobs", jobs_path
+    - if is_verified_coach_or_admin?
+      %li=link_to "View Feedback", coach_feedback_index_path
 
 
     %li
       %label Account
     %li=link_to "Invitations", invitations_path
-    %li=link_to "Update Profile", profile_path
+    %li=link_to "Profile", profile_path
     %li=link_to "Manage subscriptions", subscriptions_path
     - if current_user.is_admin?
       %li

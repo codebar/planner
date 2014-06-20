@@ -97,7 +97,11 @@ class ApplicationController < ActionController::Base
     @jobs_pending_approval ||= Job.where(approved: false, submitted: true).count
   end
 
-  helper_method :jobs_pending_approval
+  def chapters
+    @chapters ||= Chapter.all
+  end
+
+  helper_method :jobs_pending_approval, :chapters
 
   def upcoming_workshops
     Sessions.upcoming
