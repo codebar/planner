@@ -22,5 +22,5 @@
           %li
             %strong=member.full_name
             %br
-            =@group.subscriptions.where(member: member).map(&:group).map { |g| "#{g.name} (#{g.chapter.name})" }.join(", ")
+            = member.subscriptions.map(&:group).map { |g| "#{g.name} (#{g.chapter.name})" }.join(", ")
 

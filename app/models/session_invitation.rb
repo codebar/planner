@@ -1,5 +1,4 @@
 class SessionInvitation < ActiveRecord::Base
-
   include InvitationConcerns
 
   belongs_to :sessions
@@ -31,5 +30,4 @@ class SessionInvitation < ActiveRecord::Base
       SessionInvitationMailer.invite_student(self.sessions, self.member, self).deliver
     end
   end
-
 end
