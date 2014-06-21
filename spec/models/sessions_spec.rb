@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe Sessions do
-  subject(:session) { Fabricate.build(:sessions) }
+describe Sessions, :se => true do
+  subject(:session) { Fabricate(:sessions) }
 
   it { should respond_to(:title) }
   it { should respond_to(:description) }
@@ -10,11 +10,11 @@ describe Sessions do
   it { should respond_to(:sponsor_sessions)}
 
   context "#scopes" do
-    let(:set_upcoming) { 2.times.map { |n| Sessions.create date_and_time: DateTime.now+(n+1).week }  }
-    let(:most_recent) { Sessions.create date_and_time: 1.day.ago }
+    let(:set_upcoming) { 2.times.map { |n| Fabricate(:sessions, date_and_time: DateTime.now+(n+1).week)  } }
+    let(:most_recent) { Fabricate(:sessions, date_and_time: 1.day.ago) }
 
     before do
-      Sessions.create date_and_time: DateTime.now-1.week
+      Fabricate(:sessions, date_and_time: DateTime.now-1.week)
       set_upcoming
       most_recent
     end
@@ -35,6 +35,7 @@ describe Sessions do
       let(:sponsor) { Fabricate(:sponsor) }
 
       before do
+        session.sponsor_sessions.delete_all
         Fabricate(:sponsor_session, sponsor: sponsor, sessions: session, host: true)
       end
 

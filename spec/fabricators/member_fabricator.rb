@@ -8,13 +8,9 @@ Fabricator(:member) do
 end
 
 Fabricator(:student, from: :member) do
-  roles { [ Fabricate(:student_role) ] }
+  groups(count: 2) { |attrs, i| Fabricate(:students) }
 end
 
 Fabricator(:coach, from: :member) do
-  roles { [ Role.find_by_name("Coach") || Fabricate(:coach_role) ] }
-end
-
-Fabricator(:admin, from: :member) do
-  roles { [ Fabricate(:admin_role) ] }
+  groups(count: 2) { |attrs, i| Fabricate(:coaches) }
 end

@@ -1,16 +1,15 @@
-= render partial: 'shared/title', locals: { title: "Manage Jobs ", date: nil }
-
-- @jobs.each do |job|
-  .row
-    .large-12.columns
-      .panel.callout
-        %h4
+%section#banner
+  - @jobs.each do |job|
+    .row
+      .large-12.columns
+        .panel.callout
+          %h4
+            =link_to admin_job_path(job) do
+              #{job.title} at #{job.company}
+              %small.fa.fa-location-arrow
+                = job.location
           =link_to admin_job_path(job) do
-            #{job.title} at #{job.company}
-            %small.fa.fa-location-arrow
-              = job.location
-        =link_to admin_job_path(job) do
-          %p
-            =truncate(sanitize(dot_markdown(job.description), tags: { }), length: 200)
-        %p.text-right
-          Posted by #{job.created_by.full_name} on #{l(job.created_at, format: :date)}
+            %p
+              =truncate(sanitize(dot_markdown(job.description), tags: { }), length: 200)
+          %p.text-right
+            Posted by #{job.created_by.full_name} on #{l(job.created_at, format: :date)}

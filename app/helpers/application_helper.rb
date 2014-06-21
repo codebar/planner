@@ -6,13 +6,20 @@ module ApplicationHelper
     human_date << I18n.l(date, format: :month)
   end
 
-  def humanize_date_with_time(date)
+  def humanize_date_with_time(date, time=date)
     human_date = humanize_date(date)
-    human_date << " at #{I18n.l(date, format: :time)}"
+    human_date << " at #{I18n.l(time, format: :time)}"
   end
 
   def dot_markdown(text)
     GitHub::Markdown.render_gfm(text).html_safe
   end
 
+  def belongs_to_group? group
+    current_user.groups.include?(group)
+  end
+
+  def can_access?(resource)
+    current_user.has_role?(:admin) or current_user.has_role?(:organiser) or current_user.has_role?(:organiser, resource)
+  end
 end

@@ -1,0 +1,27 @@
+%aside.left-off-canvas-menu
+  %ul.off-canvas-list
+    - chapters.each do |chapter|
+      - if current_user.has_role?(:organiser, chapter)
+        %li
+          = link_to chapter.name, admin_chapter_path(chapter)
+    - if current_user.is_admin? or current_user.is_organiser? or current_user.has_role?(:organiser, Chapter)
+      %li= link_to "Dashboard", admin_root_path
+      %li=link_to "New workshop", new_admin_workshop_path
+      %li=link_to "New sponsor", new_admin_sponsor_path
+    - if current_user.is_admin?
+      %li=link_to "Review jobs (#{jobs_pending_approval})", admin_jobs_path
+    %li= link_to "Jobs", jobs_path
+    - if is_verified_coach_or_admin?
+      %li=link_to "View Feedback", coach_feedback_index_path
+
+
+    %li
+      %label Account
+    %li=link_to "Invitations", invitations_path
+    %li=link_to "Profile", profile_path
+    %li=link_to "Manage subscriptions", subscriptions_path
+    - if current_user.is_admin?
+      %li
+        %label Admin
+      %li=link_to "New chapter", new_admin_chapter_path
+      %li=link_to "New group", new_admin_group_path

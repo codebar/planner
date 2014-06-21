@@ -5,7 +5,8 @@ describe Feedback do
 
   let(:valid_feedback_token) { 'valid_feedback_token' }
   let(:invalid_feedback_token) { 'invalid_feedback_token' }
-  
+  let(:chapter) { Fabriate(:chapter) }
+
   it { should respond_to(:request) }
   it { should respond_to(:rating) }
   it { should respond_to(:suggestions) }
@@ -78,7 +79,7 @@ describe Feedback do
 
   context "#submit_feedback" do
     let(:feedback_request) { Fabricate(:feedback_request) }
-    
+
     let (:params) do
       { rating: 4, coach: Fabricate(:coach), tutorial: Fabricate(:tutorial) }
     end
@@ -86,15 +87,15 @@ describe Feedback do
     context 'with valid token' do
       it 'is submited valid params' do
         expect {
-          Feedback.submit_feedback(params, feedback_request.token) 
+          Feedback.submit_feedback(params, feedback_request.token)
         }.to change { Feedback.count }.by(1)
       end
-      
+
       it 'is not submited invalid params' do
         expect {
           Feedback.submit_feedback(params.except(:rating), feedback_request.token)
         }.to_not change { Feedback.count }
-      end    
+      end
     end
 
     it 'is not submited with invalid token' do

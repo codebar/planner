@@ -6,13 +6,13 @@ feature 'member feedback' do
   let(:submited_token) { Fabricate(:feedback_request, submited: true).token }
   let(:invalid_token) { 'feedback_invalid_token' }
   let(:feedback_submited_message) { I18n.t("messages.feedback_saved") }
+  let(:coach) { Fabricate(:coach) }
 
   before do
-    Fabricate(:feedback)
+    Fabricate(:feedback, coach: coach)
 
-    @coach = Fabricate(:coach)
     @tutorial = Fabricate(:tutorial, title: 'tutorial title')
-    Fabricate(:attended_session_invitation, sessions: feedback_request.sessions, member: @coach, role: "Coach")
+    Fabricate(:attended_session_invitation, sessions: feedback_request.sessions, member: coach, role: "Coach")
   end
 
   context 'Feedback form' do
@@ -30,7 +30,7 @@ feature 'member feedback' do
     scenario 'I can select form coaches list in feedback form' do
       visit feedback_path(valid_token)
 
-      expect(page).to have_select('feedback_coach_id', :with_options => [@coach.full_name])
+      expect(page).to have_select('feedback_coach_id', :with_options => [coach.full_name])
     end
 
     scenario 'I can select form tutorials list in feedback form' do
@@ -62,7 +62,7 @@ feature 'member feedback' do
       visit feedback_path(valid_token)
 
       find(:xpath, "//input[@id='feedback_rating']").set "4"
-      select(@coach.full_name, from: 'feedback_coach_id')
+      select(coach.full_name, from: 'feedback_coach_id')
       select(@tutorial.title, from: 'feedback_tutorial_id')
 
       click_button('Submit feedback')

@@ -1,5 +1,12 @@
 %nav.top-bar{ "data-topbar" => "" }
   %ul.title-area
+    - if logged_in?
+      %li#profile
+        =link_to "#", class: "left-off-canvas-toggle menu" do
+          .fa-stack.fa-lg
+            .fa.fa-stack-2x
+            .fa.fa-stack-1x.fa-outdent
+
     %li.name
       =link_to root_path do
         .brand codebar
@@ -8,18 +15,6 @@
 
   %section.top-bar-section
     %ul.right
-      - if admin?
-        %li.has-form
-          = link_to "Admin", admin_root_path, class: 'button alert'
-      - if logged_in?
-        %li.has-form
-          = link_to "My account", portal_index_path, class: 'button success'
-        %li
-          - if current_page?(jobs_path)
-            %li.active= link_to "Jobs", jobs_path
-          - else
-            = link_to "Jobs", jobs_path
-
       - if current_page?(events_path)
         %li.active= link_to "Events", events_path
       - else
@@ -38,6 +33,14 @@
       - else
         %li= link_to "Sponsoring", sponsoring_path
       - if logged_in?
-        %li= link_to "Log Out", logout_path, class: "login-button"
+        %li
+          =link_to logout_path do
+            %i.fa-stack.fa-lg
+              %i.fa.fa-stack-2x
+              %i.fa.fa-sign-out.fa-stack-1x
       - else
-        %li= link_to "Sign in", "/auth/github", class: "login-button"
+        %li
+          = link_to "/auth/github" do
+            %i.fa-stack.fa-lg
+              %i.fa.fa-stack-2x
+              %i.fa.fa-sign-in.fa-stack-1x

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140510234035) do
+ActiveRecord::Schema.define(version: 20140615030540) do
 
   create_table "addresses", force: true do |t|
     t.string   "flat"
@@ -32,6 +32,13 @@ ActiveRecord::Schema.define(version: 20140510234035) do
   end
 
   add_index "auth_services", ["member_id"], name: "index_auth_services_on_member_id"
+
+  create_table "chapters", force: true do |t|
+    t.string   "name"
+    t.string   "city"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "course_invitations", force: true do |t|
     t.integer  "course_id"
@@ -70,8 +77,10 @@ ActiveRecord::Schema.define(version: 20140510234035) do
     t.datetime "updated_at"
     t.integer  "sponsor_id"
     t.string   "ticket_url"
+    t.integer  "chapter_id"
   end
 
+  add_index "courses", ["chapter_id"], name: "index_courses_on_chapter_id"
   add_index "courses", ["sponsor_id"], name: "index_courses_on_sponsor_id"
 
   create_table "feedback_requests", force: true do |t|
@@ -98,6 +107,16 @@ ActiveRecord::Schema.define(version: 20140510234035) do
 
   add_index "feedbacks", ["coach_id"], name: "index_feedbacks_on_coach_id"
   add_index "feedbacks", ["tutorial_id"], name: "index_feedbacks_on_tutorial_id"
+
+  create_table "groups", force: true do |t|
+    t.integer  "chapter_id"
+    t.string   "name"
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "groups", ["chapter_id"], name: "index_groups_on_chapter_id"
 
   create_table "jobs", force: true do |t|
     t.string   "title"
@@ -154,6 +173,13 @@ ActiveRecord::Schema.define(version: 20140510234035) do
     t.boolean  "verified"
   end
 
+  create_table "members_permissions", id: false, force: true do |t|
+    t.integer "member_id"
+    t.integer "permission_id"
+  end
+
+  add_index "members_permissions", ["member_id", "permission_id"], name: "index_members_permissions_on_member_id_and_permission_id"
+
   create_table "members_roles", id: false, force: true do |t|
     t.integer "member_id"
     t.integer "role_id"
@@ -161,6 +187,26 @@ ActiveRecord::Schema.define(version: 20140510234035) do
 
   add_index "members_roles", ["member_id", "role_id"], name: "index_members_roles_on_member_id_and_role_id"
   add_index "members_roles", ["member_id"], name: "index_members_roles_on_member_id"
+
+  create_table "permissions", force: true do |t|
+    t.string   "name"
+    t.integer  "resource_id"
+    t.string   "resource_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "permissions", ["name", "resource_type", "resource_id"], name: "index_permissions_on_name_and_resource_type_and_resource_id"
+  add_index "permissions", ["name"], name: "index_permissions_on_name"
+
+  create_table "posts", force: true do |t|
+    t.string   "title"
+    t.text     "content"
+    t.integer  "created_by_id"
+    t.text     "slug"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "reminders", force: true do |t|
     t.string   "reminder_type"
@@ -202,7 +248,11 @@ ActiveRecord::Schema.define(version: 20140510234035) do
     t.datetime "updated_at"
     t.boolean  "invitable",     default: true
     t.string   "sign_up_url"
+    t.integer  "chapter_id"
+    t.datetime "time"
   end
+
+  add_index "sessions", ["chapter_id"], name: "index_sessions_on_chapter_id"
 
   create_table "sponsor_sessions", force: true do |t|
     t.integer  "sponsor_id"
@@ -223,7 +273,18 @@ ActiveRecord::Schema.define(version: 20140510234035) do
     t.string   "avatar"
     t.string   "website"
     t.integer  "seats",       default: 15
+    t.string   "image_cache"
   end
+
+  create_table "subscriptions", force: true do |t|
+    t.integer  "group_id"
+    t.integer  "member_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "subscriptions", ["group_id"], name: "index_subscriptions_on_group_id"
+  add_index "subscriptions", ["member_id"], name: "index_subscriptions_on_member_id"
 
   create_table "tutorials", force: true do |t|
     t.string   "title"

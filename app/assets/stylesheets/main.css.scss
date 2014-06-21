@@ -40,3 +40,26 @@ section.title {
   margin-top: 30px;
   margin-bottom: 10px;
 }
+
+nav a.menu {
+    margin: 20px;
+    top: 20px;
+  }
+
+.top-bar {
+  line-height: 60px;
+
+  .name {
+    display: inline-block;
+  }
+}
+
+.user {
+  color: #E3573E;
+}
+
+.left-off-canvas-menu {
+  left: 10px;
+  background-color: #444444;
+  padding-right: 10px;
+}

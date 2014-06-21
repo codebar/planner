@@ -8,7 +8,7 @@ class JobsController < ApplicationController
   end
 
   def pending
-    @jobs = current_member.jobs.where(submitted: false)
+    @jobs = current_user.jobs.where(submitted: false)
   end
 
   def new
@@ -17,7 +17,7 @@ class JobsController < ApplicationController
 
   def create
     @job = Job.new(job_params)
-    @job.created_by_id = current_member.id
+    @job.created_by_id = current_user.id
     if @job.save
       redirect_to job_preview_path(@job)
     else

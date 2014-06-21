@@ -11,13 +11,18 @@
 // about supported directives.
 //
 //= require jquery
+//= require jquery_ujs
 //= require foundation
 //= require 'jsimple-star-rating.min.js'
+//= require pickadate/picker
+//= require pickadate/picker.date
+//= require pickadate/picker.time
 //= require analytics
 //= require gosquared
 
-
 $(function(){
   $(document).foundation();
+  $('#sessions_date_and_time').pickadate();
+  $('#sessions_time').pickatime();
 });
 

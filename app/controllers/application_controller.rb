@@ -1,13 +1,16 @@
 class ApplicationController < ActionController::Base
-  protect_from_forgery with: :exception
+  include Pundit
+
+  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+  rescue_from Pundit::AuthorizationNotPerformedError, with: :user_not_authorized
 
   helper_method :logged_in?
-  helper_method :current_member
+  helper_method :current_user
   helper_method :current_service
 
   protected
 
-  def current_member
+  def current_user
     if session.has_key?(:member_id)
       @current_member ||= Member.find(session[:member_id])
     end
@@ -24,17 +27,17 @@ class ApplicationController < ActionController::Base
     session[:service_id] = nil
   end
 
-  def current_member?
-    !!current_member
+  def current_user?
+    !!current_user
   end
 
   def logged_in?
-    current_member?
+    current_user?
   end
 
   def authenticate_member!
     if session.has_key?(:member_id)
-      current_member
+      current_user
       finish_registration
     else
       redirect_to redirect_path
@@ -42,7 +45,7 @@ class ApplicationController < ActionController::Base
   end
 
   def finish_registration
-    if current_member.requires_additional_details?
+    if current_user.requires_additional_details?
       flash[:notice] = "We need to know a little more about you. Please finish the registration form below."
       redirect_to edit_member_path
     end
@@ -57,14 +60,14 @@ class ApplicationController < ActionController::Base
     "/auth/github"
   end
 
-  def admin?
-    current_member? and current_member.is_admin?
+  def manager?
+    logged_in? and (current_user.is_admin? or current_user.is_organiser?)
   end
 
-  helper_method :admin?
+  helper_method :manager?
 
   def is_verified_coach_or_admin?
-    current_member and (current_member.is_admin? or (current_member.is_coach? and current_member.verified?))
+    current_user.verified?
   end
 
   helper_method :is_verified_coach_or_admin?
@@ -75,4 +78,34 @@ class ApplicationController < ActionController::Base
       redirect_to root_path
     end
   end
+
+  def has_access?
+    is_member?
+  end
+
+  private
+
+  def user_not_authorized
+    redirect_to(user_path, notice: "You are not authorized to perform this action.")
+  end
+
+  def user_path
+    request.referrer or root_path
+  end
+
+  def jobs_pending_approval
+    @jobs_pending_approval ||= Job.where(approved: false, submitted: true).count
+  end
+
+  def chapters
+    @chapters ||= Chapter.all
+  end
+
+  helper_method :jobs_pending_approval, :chapters
+
+  def upcoming_workshops
+    Sessions.upcoming
+  end
+
+  helper_method :upcoming_workshops
 end

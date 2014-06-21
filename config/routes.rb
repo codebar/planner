@@ -11,6 +11,9 @@ Planner::Application.routes.draw do
 
   get '/profile' => "members#profile", as: :profile
 
+  resources :subscriptions, only: [ :index, :create ]
+  delete '/subscriptions' => 'subscriptions#destroy', as: :destroy_subscriptions
+
   resources :members, only: [] do
     member do
       get "unsubscribe"
@@ -25,7 +28,6 @@ Planner::Application.routes.draw do
     end
   end
 
-  resources :portal, only: [ :index ], path: 'account'
   resources :invitations, only: [ :index ]
 
   namespace :course do
@@ -61,13 +63,24 @@ Planner::Application.routes.draw do
       get 'approve'
     end
 
+    resources :chapters, only: [ :index, :new, :create, :show]
+    resources :groups, only: [ :index, :new, :create, :show]
+    resources :sponsors, only: [ :show, :new ]
+
     resources :invitation, only: [] do
       get :attended
       get :not_attending
     end
 
     resources :feedback, only: [:index]
-    resources :workshop, only: [:index]
+    resources :workshops do
+      post :host
+      delete '/host' => "workshops#destroy_host", as: :destroy_host
+      post :sponsor
+      delete '/sponsor' => "workshops#destroy_sponsor", as: :destroy_sponsor
+      post :invite
+    end
+    resources :sponsors, only: [:new, :create]
   end
 
   namespace :coach do

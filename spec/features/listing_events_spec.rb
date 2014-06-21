@@ -3,7 +3,7 @@ require 'spec_helper'
 feature 'event listing' do
 
   let!(:upcoming_course) { Fabricate(:course) }
-  let!(:past_course) { Fabricate(:course, date_and_time: DateTime.new-1.week) }
+  let!(:past_course) { Fabricate(:course, chapter: upcoming_course.chapter, date_and_time: DateTime.new-1.week) }
   let!(:upcoming_session) { Fabricate(:sessions) }
   let!(:past_session) { Fabricate(:sessions, date_and_time: DateTime.new-1.week) }
 

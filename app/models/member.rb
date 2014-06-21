@@ -1,19 +1,19 @@
 class Member < ActiveRecord::Base
-  has_and_belongs_to_many :roles
+  rolify role_cname: 'Permission', role_table_name: :permission, role_join_table_name: :members_permissions
+
   has_many :session_invitations
   has_many :auth_services
   has_many :feedbacks, foreign_key: :coach_id
   has_many :jobs, foreign_key: :created_by_id
+  has_many :subscriptions
+  has_many :groups, through: :subscriptions
 
   validates :auth_services, presence: true
   validates :name, :surname, :email, :about_you, presence: true, if: :can_log_in?
   validates_uniqueness_of :email
 
-  scope :students, -> { joins(:roles).where(:roles => { :name => 'Student' }) }
-  scope :coaches, -> { joins(:roles).where(:roles => { :name => 'Coach' }) }
-  scope :admins, -> { joins(:roles).where(:roles => { :name => 'Admin' }) }
-
   default_scope -> { where(unsubscribed: [false, nil]) }
+  scope :subscribers, -> { joins(:subscriptions).uniq }
 
   attr_accessor :attendance
 
@@ -31,18 +31,6 @@ class Member < ActiveRecord::Base
 
   def requires_additional_details?
     can_log_in? && !valid?
-  end
-
-  def is_student?
-    roles.map(&:name).include?("Student")
-  end
-
-  def is_coach?
-    roles.map(&:name).include?("Coach")
-  end
-
-  def is_admin?
-    roles.map(&:name).include?("Admin")
   end
 
   private

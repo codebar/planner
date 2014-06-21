@@ -14,6 +14,12 @@ gem 'font-awesome-rails'
 gem 'github-markdown'
 gem 'premailer-rails'
 gem 'nokogiri'
+gem 'pickadate-rails'
+gem 'rolify'
+gem "pundit"
+gem 'cloudinary'
+gem 'carrierwave'
+gem 'mini_magick'
 
 gem 'omniauth'
 gem 'omniauth-github'
