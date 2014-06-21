@@ -56,7 +56,7 @@
                     Workshop
                     (#{workshop.chapter.name})
                   %li.description
-                    = humanize_date_with_time(workshop.date_and_time)
+                    = humanize_date_with_time(workshop.date_and_time, workshop.time)
                   - if workshop.has_host?
                     %li.bullet-item
                       = link_to workshop.host.name, workshop.host.website
