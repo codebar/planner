@@ -65,7 +65,7 @@ Planner::Application.routes.draw do
 
     resources :chapters, only: [ :index, :new, :create, :show]
     resources :groups, only: [ :index, :new, :create, :show]
-    resources :sponsors, only: [ :show, :new ]
+    resources :sponsors, only: [:new, :edit, :update, :show, :create]
 
     resources :invitation, only: [] do
       get :attended

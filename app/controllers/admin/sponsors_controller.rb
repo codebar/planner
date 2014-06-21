@@ -1,5 +1,7 @@
 class Admin::SponsorsController < Admin::ApplicationController
 
+  before_filter :set_sponsor, only: [ :show, :edit, :update]
+
   def new
     @sponsor = Sponsor.new
     @sponsor.build_address
@@ -17,12 +19,18 @@ class Admin::SponsorsController < Admin::ApplicationController
     end
   end
 
-  def show
-    @sponsor = Sponsor.find(params[:id])
+  def update
+    @sponsor.update_attributes(sponsor_params)
+
+    redirect_to admin_sponsor_path(@sponsor), notice: "Updated!"
   end
 
   private
   def sponsor_params
-    params.require(:sponsor).permit(:name, :avatar, :website, :seats, address: [])
+    params.require(:sponsor).permit(:name, :avatar, :website, :seats, address_attributes: [:flat, :street, :postal_code, :city])
+  end
+
+  def set_sponsor
+    @sponsor = Sponsor.find(params[:id])
   end
 end
