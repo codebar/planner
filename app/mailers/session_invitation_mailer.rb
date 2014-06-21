@@ -1,12 +1,14 @@
 class SessionInvitationMailer < ActionMailer::Base
   include EmailHeaderHelper
+  include ApplicationHelper
+  helper ApplicationHelper
 
   def invite_student sessions, member, invitation
     @session = sessions
     @member = member
     @invitation = invitation
 
-    subject = "Workshop Invitation for #{l(@session.date_and_time, format: :email_title)}"
+    subject = "Workshop Invitation #{humanize_date_with_time(@session.date_and_time, @session.time)}"
 
     mail(mail_args(member, subject)) do |format|
       format.html
@@ -18,7 +20,7 @@ class SessionInvitationMailer < ActionMailer::Base
     @member = member
     @invitation = invitation
 
-    subject = "Workshop Coach Invitation for #{l(@session.date_and_time, format: :email_title)}"
+    subject = "Workshop Coach Invitation #{humanize_date_with_time(@session.date_and_time, @session.time)}"
 
     mail(mail_args(member, subject)) do |format|
       format.html
@@ -31,7 +33,7 @@ class SessionInvitationMailer < ActionMailer::Base
     @member = member
     @invitation = invitation
 
-    subject = "Attendance confirmation for #{l(@session.date_and_time, format: :email_title)}"
+    subject = "Attendance confirmation for #{humanize_date_with_time(@session.date_and_time, @session.time)}"
 
     mail(mail_args(member, subject)) do |format|
       format.html
@@ -47,7 +49,7 @@ class SessionInvitationMailer < ActionMailer::Base
 
     load_attachments
 
-    subject = "#{title}: #{@session.title} by Codebar - #{l(@session.date_and_time, format: :email_title)}"
+    subject = "#{title}: #{@session.title} by Codebar - #{humanize_date_with_time(@session.date_and_time, @session.time)}"
 
     mail(mail_args(member, subject)) do |format|
       format.html { render layout: "email" }
@@ -60,7 +62,7 @@ class SessionInvitationMailer < ActionMailer::Base
     @member = member
     @invitation = invitation
 
-    subject = "Workshop Reminder for #{l(@session.date_and_time, format: :email_title)}"
+     subject = "Workshop Reminder #{humanize_date_with_time(@session.date_and_time, @session.time)}"
 
     mail(mail_args(member, subject)) do |format|
       format.html
