@@ -1,20 +1,52 @@
 = render partial: 'shared/title', locals: { title: "Invitations", date: nil }
 %section
-  - if current_user.is_student? and current_user.is_coach?
-    .inner-nav{ "data-magellan-expedition" => "fixed" }
-      %dl.sub-nav
-        .row
-          %dd{ "data-magellan-arrival" => "student" }
-            =link_to "Student", "#student"
-          %dd{ "data-magellan-arrival" => "coach" }
-            =link_to "Coach", "#coach"
+  .inner-nav{ "data-magellan-expedition" => "fixed" }
+    %dl.sub-nav
+      .row
+        %dd{ "data-magellan-arrival" => "upcoming" }
+          =link_to "Upcoming", "#upcoming"
+        %dd{ "data-magellan-arrival" => "attended" }
+          =link_to "Attended", "#attended"
+
 
   .row
     .large-12.columns
-      - if current_user.is_student? and
-        =render partial: "student"
+      %a{ name: "upcoming" }
+      %h3{ "data-magellan-destination" => "upcoming"} Upcoming
 
-      - if current_user.is_student? and current_user.is_coach?
-        %hr
-      - if current_user.is_coach?
-        =render partial: "coach"
+      - if @upcoming_invitations.any?
+        .row
+          - @upcoming_invitations.each do |invitation|
+            .medium-4.small-12.columns
+              .panel
+                %p
+                  %h4
+                    = invitation.parent.to_s
+                    %br
+                    %small.subheader #{invitation.parent.chapter.name}
+                  .date #{humanize_date_with_time(invitation.parent.date_and_time, invitation.parent.time)}
+                  %br
+                  - if invitation.is_a? SessionInvitation
+                    =link_to attendance_status(invitation), invitation_path(invitation), class: "button round expand"
+                  - elsif invitation.is_a? CourseInvitation
+                    =link_to attendance_status(invitation), course_invitation_path(invitation), class: "button round expand"
+      - elsif @upcoming_session
+        %em You have no invitations. If you just signed up you should receive one soon.
+      - else
+        %em There are no upcoming events.
+
+      %a{ name: "attended" }
+      %h3{ "data-magellan-destination" => "attended"} Attended
+      - unless @attended_invitations.any?
+        You haven't attended any events yet.
+      - else
+        .row
+          - @attended_invitations.each do |invitation|
+            .medium-4.small-12.columns
+              .panel
+                %p
+                  %h4
+                    (#{invitation.parent.chapter.name})
+                  .date #{humanize_date_with_time(invitation.parent.date_and_time, invitation.parent.time)}
+                  %br
+                  =link_to "View", invitation_path(invitation), class: "button round expand"
