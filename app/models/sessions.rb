@@ -36,4 +36,8 @@ class Sessions < ActiveRecord::Base
   def location
     host.address.city rescue ""
   end
+
+  def self.policy_class
+    WorkshopPolicy
+  end
 end

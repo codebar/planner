@@ -1,17 +1,11 @@
 %aside.left-off-canvas-menu
   %ul.off-canvas-list
-    - if upcoming_workshops.any?
-      - upcoming_workshops.each do |workshop|
-        - if can_access?(workshop)
-          %li
-            = link_to "(#{workshop.chapter.city}) #{l(workshop.date_and_time, format: :date)}", admin_workshop_path(workshop)
     - chapters.each do |chapter|
       - if current_user.has_role?(:organiser, chapter)
         %li
           = link_to chapter.name, admin_chapter_path(chapter)
-    - if current_user.is_admin? or current_user.is_organiser?
-      %li
-        = link_to "Dashboard", admin_root_path
+    - if current_user.is_admin? or current_user.is_organiser? or current_user.has_role?(:organiser, Chapter)
+      %li= link_to "Dashboard", admin_root_path
       %li=link_to "New workshop", new_admin_workshop_path
       %li=link_to "New sponsor", new_admin_sponsor_path
     - if current_user.is_admin?

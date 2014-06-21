@@ -5,10 +5,12 @@ class Admin::WorkshopsController < Admin::ApplicationController
 
   def new
     @workshop = Sessions.new
+    authorize @workshop
   end
 
   def create
     @workshop = Sessions.new(workshop_params)
+    authorize @workshop
     if @workshop.save
       flash[:notice] =  @workshop.errors.full_messages
       redirect_to admin_workshop_path(@workshop)
@@ -17,16 +19,26 @@ class Admin::WorkshopsController < Admin::ApplicationController
     end
   end
 
+  def edit
+    authorize @workshop
+  end
+
+  def show
+    authorize @workshop
+  end
+
   def update
     @workshop = Sessions.find(params[:id])
+    authorize @workshop
     @workshop.update_attributes(workshop_params)
     redirect_to admin_workshop_path(@workshop), notice: "Workshops updated succesfully"
-  rescue
-    redirect_to admin_workshop_path(@workshop), notice: "Something went wrong"
+  rescue Exception => e
+    redirect_to admin_workshop_path(@workshop), notice: e.inspect
   end
 
   def invite
     set_workshop
+    authorize @workshop
 
     InvitationManager.send_session_emails(@workshop)
 
