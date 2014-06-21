@@ -30,7 +30,7 @@
               %td
                 %h4
                   Workshop
-                  %small #{l(@session.date_and_time, format: :email)}
+                  %small= humanize_date_with_time(@session.date_and_time, @session.time)
                 %p
                   %b Venue
                   #{@session.host.name}
