@@ -14,7 +14,7 @@
               %td
                 %h3 Hi, #{@member.name}
                 %p.lead
-                  We are looking for coaches for the workshop that will take place on #{l(@session.date_and_time, format: :email)}
+                  We are looking for coaches for the workshop that will take place on #{humanize_date_with_time(@session.date_and_time, @session.time)}
 
                 %p In our workshops you will be guiding students while they work through our tutorials or in other programming related areas that they request help in.
 
@@ -32,7 +32,7 @@
               %td
                 %h4
                   Workshop
-                  %small #{l(@session.date_and_time, format: :email)}
+                  %small #{humanize_date_with_time(@session.date_and_time, @session.time)}
                 %p
                   %b Venue
                   #{@session.host.name}

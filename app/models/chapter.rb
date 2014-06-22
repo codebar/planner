@@ -7,7 +7,7 @@ class Chapter < ActiveRecord::Base
   has_many :workshops, class_name: Sessions
   has_many :groups
   has_many :sponsors, through: :workshops
-  has_many :members, -> { order('subscriptions.created_at') }, through: :groups
+  has_many :members, -> { order('subscriptions.created_at desc') }, through: :groups
 
   def organisers
     @organisers ||= Member.with_role(:organiser, self)

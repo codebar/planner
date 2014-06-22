@@ -27,7 +27,7 @@
               %td
                 %h4
                   Workshop
-                  %small #{l(@session.date_and_time, format: :email)}
+                  %small #{humanize_date_with_time(@session.date_and_time, @session.time)}
                 %p
                   #{@session.host.name}
                   %br
@@ -42,9 +42,10 @@
                   If you have any trouble finding the venue call
                   - @session.chapter.organisers.each do |organiser|
                     - if organiser.mobile.present?
-                      = organiser.full_name
-                      =organiser.mobile
-                      %br
+                      %p
+                        = organiser.full_name
+                        =organiser.mobile
+                        %br
 
         .content
           = render partial: 'shared_mailers/social'
