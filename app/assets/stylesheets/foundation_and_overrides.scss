@@ -1077,16 +1077,16 @@ $price-cta-align: right;
 // $include-html-table-classes: $include-html-classes;
 
 // These control the background color for the table and even rows
-// $table-bg: #fff;
-// $table-even-row-bg: #f9f9f9  ;
+ $table-bg: #fff;
+ $table-even-row-bg: #fff;
 
 // These control the table cell border style
-// $table-border-style: solid;
-// $table-border-size: 1px;
-// $table-border-color: #ddd;
+$table-border-style: none;
+$table-border-size: 0px;
+$table-border-color: #fff;
 
 // These control the table head styles
-// $table-head-bg: #f5f5f5  ;
+$table-head-bg: #ffffff;
 // $table-head-font-size: rem-calc(14);
 // $table-head-font-color: #222;
 // $table-head-font-weight: bold;

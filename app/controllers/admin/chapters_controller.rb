@@ -26,6 +26,7 @@ class Admin::ChaptersController < Admin::ApplicationController
     @workshops = @chapter.workshops
     @sponsors = @chapter.sponsors
     @groups = @chapter.groups
+    @subscribers = @chapter.members
   end
 
   private
