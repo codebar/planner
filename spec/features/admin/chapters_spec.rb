@@ -12,6 +12,7 @@ feature 'chapters' do
       visit new_admin_chapter_path
 
       fill_in "Name", with: "Codebar Brighton"
+      fill_in "Email", with: "brighton@codebar.io"
       fill_in "City", with: "Brighton"
 
       click_on "Create chapter"

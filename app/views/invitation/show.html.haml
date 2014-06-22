@@ -35,7 +35,7 @@
               = link_to "Attend", accept_invitation_url(@invitation), class: "expand button round center"
             - else
               = simple_form_for @invitation, url: :accept_with_note_invitation, method: :post do |f|
-                = f.input :note, label: "I will be working on... ", placeholder: "e.g. I know a bit of HTML and CSS or the second JQuery tutorial"
+                = f.input :note, label: "I will be working on... ", placeholder: "e.g. I know a bit of HTML and CSS or the second JQuery tutorial", required: true
                 = f.button :submit, "Attend",  class: "button expand round"
                 %label *Letting us know what you plan to work on will help us manage things easier.
 
