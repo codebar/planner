@@ -39,7 +39,12 @@
             %tr
               %td
                 %p
-                  If you have any trouble finding the venue give Despo a call at 07402887214.
+                  If you have any trouble finding the venue call
+                  - @session.chapter.organisers.each do |organiser|
+                    - if organiser.mobile.present?
+                      = organiser.full_name
+                      =organiser.mobile
+                      %br
 
         .content
           = render partial: 'shared_mailers/social'

@@ -22,11 +22,4 @@ describe SessionInvitationMailer do
 
     expect(email.subject).to eq(email_subject)
   end
-
-  it "#spots_available" do
-    email_subject = "Spots available for #{session.title} by Codebar - #{I18n.l(session.date_and_time, format: :email_title)}"
-    SessionInvitationMailer.spots_available(session, member, invitation).deliver
-
-    expect(email.subject).to eq(email_subject)
-  end
 end

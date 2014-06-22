@@ -1,4 +1,4 @@
-= render partial: 'shared/title', locals: { title: "Workshop", date: humanize_date_with_time(@invitation.sessions.date_and_time) }
+= render partial: 'shared/title', locals: { title: "Workshop", date: humanize_date_with_time(@invitation.sessions.date_and_time, @invitation.sessions.time) }
 %section
   .inner-nav{ "data-magellan-expedition" => "fixed" }
     .row
@@ -27,7 +27,7 @@
 
             - if @invitation.sessions.date_and_time-6.hours <= DateTime.now
               %p
-                If you can no longer make it, send a text at 07402887214 or email meetings@codebar.io so we can try to reallocate your spot.
+                If you can't make it or plan to arrive late please let us know by sending an email to #{@invitation.sessions.chapter.email}
             - else
               =link_to "I can no longer attend", reject_invitation_url(@invitation), class: "expand button round"
           - else
@@ -35,7 +35,7 @@
               = link_to "Attend", accept_invitation_url(@invitation), class: "expand button round center"
             - else
               = simple_form_for @invitation, url: :accept_with_note_invitation, method: :post do |f|
-                = f.input :note, label: "I will be working on... ", placeholder: "e.g. I know a bit of HTML and CSS or the second JQuery tutorial"
+                = f.input :note, label: "I will be working on... ", placeholder: "e.g. I know a bit of HTML and CSS or the second JQuery tutorial", required: true
                 = f.button :submit, "Attend",  class: "button expand round"
                 %label *Letting us know what you plan to work on will help us manage things easier.
 
@@ -53,8 +53,10 @@
       %p
         = @host_address.to_html
       %p
-        %h5 Contact
-        Despo 07402887214
+        %h5 Organisers
+        - @invitation.sessions.chapter.organisers.each do |organiser|
+          = organiser.full_name
+          = organiser.mobile
 
   .row
     .large-12.columns
