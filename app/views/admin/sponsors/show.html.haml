@@ -8,11 +8,13 @@
       =image_tag @sponsor.avatar
     .large-8.columns
       %h3 Sponsored
-      - @sponsor.sessions.each do |workshop|
-        =link_to admin_workshop_path(workshop) do
-          %strong=workshop.chapter.name
-          %br
-          = humanize_date_with_time(workshop.date_and_time, workshop.time)
+      %ul.no-bullet
+        - @sponsor.sessions.each do |workshop|
+          %li
+            =link_to admin_workshop_path(workshop) do
+              %strong=workshop.chapter.name
+              %br
+              = humanize_date_with_time(workshop.date_and_time, workshop.time)
 
   .row
     .large-12.columns.text-right

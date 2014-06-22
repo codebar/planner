@@ -6,6 +6,8 @@
           %ul.pricing-table{ "data-equalizer-watch" => '', class: event.class.to_s.downcase }
             %li.title
               = event.to_s
+              - if event.chapter.present?
+                (#{event.chapter.name})
             %li.description
               = event.is_a?(Sessions) ? humanize_date_with_time(event.date_and_time, event.time) : humanize_date_with_time(event.date_and_time)
             %li.cta-button
