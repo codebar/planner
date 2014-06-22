@@ -75,8 +75,8 @@
               .small-10.columns
                 =invitation.member.full_name
                 %br
-                %em=invitation.note
-            %hr
+                .subheader=invitation.note
+            %br
     .medium-6.columns
       %h4 Coaches
       %ul.attendances.no-bullet
@@ -87,5 +87,5 @@
                 =image_tag invitation.member.avatar(96), class: 'th radius', title: invitation.member.full_name
               .small-10.columns
                 =invitation.member.full_name
-            %hr
+            %br
 
