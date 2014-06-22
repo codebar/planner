@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140615030540) do
+ActiveRecord::Schema.define(version: 20140621234319) do
 
   create_table "addresses", force: true do |t|
     t.string   "flat"
@@ -38,6 +38,7 @@ ActiveRecord::Schema.define(version: 20140615030540) do
     t.string   "city"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "email"
   end
 
   create_table "course_invitations", force: true do |t|
