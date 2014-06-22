@@ -23,7 +23,7 @@
                   %h4
                     = invitation.parent.to_s
                     %br
-                    %small.subheader #{invitation.parent.chapter.name}
+                    %small.subheader #{invitation.parent.chapter.name} Group: #{invitation.role.pluralize}
                   .date #{humanize_date_with_time(invitation.parent.date_and_time, invitation.parent.time)}
                   %br
                   - if invitation.is_a? SessionInvitation
@@ -46,7 +46,9 @@
               .panel
                 %p
                   %h4
-                    (#{invitation.parent.chapter.name})
+                    = invitation.parent.to_s
+                    %br
+                    %small.subheader #{invitation.parent.chapter.name} Group: #{invitation.role.pluralize}
                   .date #{humanize_date_with_time(invitation.parent.date_and_time, invitation.parent.time)}
                   %br
                   =link_to "View", invitation_path(invitation), class: "button round expand"
