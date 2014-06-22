@@ -53,7 +53,7 @@
       %p
         = @host_address.to_html
       %p
-        %h5 Organised by
+        %h5 Organisers
         - @invitation.sessions.chapter.organisers.each do |organiser|
           = organiser.full_name
           = organiser.mobile

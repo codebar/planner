@@ -69,21 +69,6 @@ class SessionInvitationMailer < ActionMailer::Base
     end
   end
 
-  def spots_available session, member, invitation
-    @session = session
-    @host_address = AddressDecorator.decorate(@session.host.address)
-    @member = member
-    @invitation = invitation
-
-    load_attachments
-
-    subject = "Spots available for #{@session.title} by Codebar - #{l(@session.date_and_time, format: :email_title)}"
-
-    mail(mail_args(member, subject)) do |format|
-      format.html { render layout: "email" }
-    end
-  end
-
   private
 
   helper do
