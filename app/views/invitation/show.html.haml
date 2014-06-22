@@ -66,18 +66,24 @@
   .row
     .medium-6.columns
       %h4 Students
-      %ol.attendances
+      %ul.attendances.no-bullet
         - @invitation.sessions.attending_students.each do |invitation|
           %li.attendance
-            .two-thirds
-              =invitation.member.full_name
-              %br
-              %em=invitation.note
+            .row
+              .small-2.columns
+                =image_tag invitation.member.avatar(96), class: 'th radius', title: invitation.member.full_name
+              .small-10.columns
+                =invitation.member.full_name
+                %br
+                %em=invitation.note
     .medium-6.columns
       %h4 Coaches
-      %ol.attendances
+      %ul.attendances.no-bullet
         - @invitation.sessions.attending_coaches.each do |invitation|
           %li.attendance
-            .two-thirds
-              =invitation.member.full_name
+            .row
+              .small-2.columns
+                =image_tag invitation.member.avatar(96), class: 'th radius', title: invitation.member.full_name
+              .small-10.columns
+                =invitation.member.full_name
 
