@@ -4,7 +4,7 @@ class SessionInvitation < ActiveRecord::Base
   belongs_to :sessions
 
   validates :sessions, :member, presence: true
-  validates :member_id, uniqueness: { scope: [:sessions, :role ] }
+  validates :member_id, uniqueness: { scope: [:sessions_id, :role ] }
   validates_inclusion_of :role, in: [ "Student", "Coach" ], allow_nil: true
 
   scope :attended, -> { where(attended: true) }
