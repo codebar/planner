@@ -7,6 +7,6 @@ class Admin::PortalController < Admin::ApplicationController
     @chapters = Chapter.all
     @workshops = Sessions.upcoming
     @groups = Group.all
-    @subscribers = Member.subscribers
+    @subscribers = Member.subscribers.limit(20)
   end
 end
