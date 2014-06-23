@@ -7,7 +7,7 @@ Planner::Application.routes.draw do
   get "effective-teacher-guide" => "dashboard#effective-teacher-guide", as: :teaching_guide
   get "faq" => "dashboard#faq"
 
-  resource :member, only: [:new, :edit, :update]
+  resource :member, only: [:new, :edit, :update, :patch]
 
   get '/profile' => "members#profile", as: :profile
 
