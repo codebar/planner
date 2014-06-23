@@ -22,6 +22,7 @@ class MembersController < ApplicationController
     if @member.update_attributes(member_params)
       redirect_to :back, notice: "Your details have been updated"
     else
+      @groups = Group.all
       render "edit"
     end
   end
