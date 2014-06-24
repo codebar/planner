@@ -1,4 +1,4 @@
-= simple_form_for @member do |f|
+= simple_form_for @member, method: :put do |f|
   .row
     .large-6.columns
       = f.input :name
