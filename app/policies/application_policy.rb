@@ -37,5 +37,15 @@ class ApplicationPolicy
   def scope
     Pundit.policy_scope!(user, record.class)
   end
+
+  private
+
+  def is_admin_or_chapter_organiser?
+    user.is_admin? or user.has_role?(:organiser) or is_chapter_organiser?
+  end
+
+  def is_chapter_organiser?
+    Chapter.find_roles(:organiser, user).any?
+  end
 end
 

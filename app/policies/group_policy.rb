@@ -5,6 +5,6 @@ class GroupPolicy < ApplicationPolicy
   end
 
   def show?
-    user.is_organiser? or user.is_admin?
+    is_admin_or_chapter_organiser?
   end
 end

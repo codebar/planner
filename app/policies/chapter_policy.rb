@@ -5,6 +5,6 @@ class ChapterPolicy < ApplicationPolicy
   end
 
   def show?
-    user.is_organiser? or user.is_admin? or user.has_role?(:organiser, record)
+    user.is_admin? or user.has_role?(:organiser, record) or user.has_role?(:organiser)
   end
 end

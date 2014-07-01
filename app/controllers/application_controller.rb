@@ -74,7 +74,7 @@ class ApplicationController < ActionController::Base
 
   def is_member?
     unless logged_in?
-      flash[:notice] = "Only authorised members can access that link. If you are a member please sign in"
+      flash[:notice] = "Only members can access that link. If you are a member please sign in"
       redirect_to root_path
     end
   end
