@@ -7,6 +7,7 @@ feature 'Managing workshops' do
 
   before do
     login_as_admin(member)
+    member.add_role(:organiser, Chapter)
   end
 
   scenario "creating a new workshop" do

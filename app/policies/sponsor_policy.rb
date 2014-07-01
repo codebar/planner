@@ -1,18 +1,18 @@
 class SponsorPolicy < ApplicationPolicy
 
   def create?
-    user.is_admin? or user.is_organiser?
+    Chapter.find_roles(:organiser, user).any?
   end
 
   def show?
-    user.is_organiser? or user.is_admin?
+    Chapter.find_roles(:organiser, user).any?
   end
 
   def edit?
-    user.is_organiser? or user.is_admin?
+    Chapter.find_roles(:organiser, user).any?
   end
 
   def update?
-    user.is_organiser? or user.is_admin?
+    Chapter.find_roles(:organiser, user).any?
   end
 end

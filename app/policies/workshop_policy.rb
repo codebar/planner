@@ -1,23 +1,27 @@
 class WorkshopPolicy < ApplicationPolicy
 
+  def new?
+    Chapter.find_roles(:organiser, user).any?
+  end
 
   def create?
-    user.is_admin? or user.has_role?(:organiser, record) or user.has_role?(:organiser)
+    Chapter.find_roles(:organiser, user).any?
   end
 
   def show?
-    user.is_admin? or user.has_role?(:organiser, record) or user.has_role?(:organiser)
+    is_admin_or_chapter_organiser?
   end
 
   def invite?
-    user.is_admin? or user.has_role?(:organiser, record) or user.has_role?(:organiser)
-  end
-
-  def edit?
-    user.is_admin? or user.has_role?(:organiser, record) or user.has_role?(:organiser)
+    is_admin_or_chapter_organiser?
   end
 
   def update?
-    user.is_admin? or user.has_role?(:organiser, record) or user.has_role?(:organiser)
+    is_admin_or_chapter_organiser?
+  end
+
+  private
+  def is_chapter_organiser?
+    user.has_role?(:organiser, record.chapter) or user.has_role?(:organiser, Chapter)
   end
 end

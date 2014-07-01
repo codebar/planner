@@ -9,6 +9,12 @@ class Chapter < ActiveRecord::Base
   has_many :sponsors, through: :workshops
   has_many :members, -> { order('subscriptions.created_at desc') }, through: :groups
 
+  def self.available_to_user(user)
+    return Chapter.all if user.has_role?(:organiser) or user.has_role?(:admin) or user.has_role?(:organiser, Chapter)
+    return Chapter.find_roles(:organiser, user).map(&:resource)
+    []
+  end
+
   def organisers
     @organisers ||= Member.with_role(:organiser, self)
   end

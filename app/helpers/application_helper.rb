@@ -22,4 +22,8 @@ module ApplicationHelper
   def can_access?(resource)
     current_user.has_role?(:admin) or current_user.has_role?(:organiser) or current_user.has_role?(:organiser, resource)
   end
+
+  def has_permission?
+    current_user.has_role?(:admin) or current_user.has_role?(:organiser) or Chapter.find_roles(:organiser, current_user).any?
+  end
 end
