@@ -23,8 +23,8 @@ class Admin::ChaptersController < Admin::ApplicationController
     @chapter = Chapter.find(params[:id])
     authorize(@chapter)
 
-    @workshops = @chapter.workshops
-    @sponsors = @chapter.sponsors
+    @workshops = @chapter.workshops.upcoming
+    @sponsors = @chapter.sponsors.uniq
     @groups = @chapter.groups
     @subscribers = @chapter.members
   end
