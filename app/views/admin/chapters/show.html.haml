@@ -9,8 +9,8 @@
     .large-4.columns.panel
       %h4 Organisers
       %ul.no-bullet
-        %li
-          - @chapter.organisers.each do |organiser|
+        - @chapter.organisers.each do |organiser|
+          %li
             = organiser.full_name
             - if organiser.mobile.present?
               =organiser.mobile
