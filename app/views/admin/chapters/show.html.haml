@@ -28,6 +28,7 @@
               = humanize_date_with_time(workshop.date_and_time, workshop.time)
               - if workshop.invitable?
                 (#{workshop.invitations.accepted.count})
+      = link_to "All workshops", admin_chapter_workshops_path(@chapter), class: "button tiny"
     .large-4.columns
       %h4 Sponsors
       %ul.side-nav
@@ -42,10 +43,9 @@
             =link_to group.name, [ :admin, group ]
             (#{group.members.count})
   .row
-    .large-4.columns
+    .large-6.columns
       %h4 Last 10 subscribers
-      %ul.no-bullet
+      %ul
         - @subscribers.each do |member|
           %li
-            =image_tag member.avatar(24), class: 'th radius', title: member.full_name
-            = member.full_name
+            =link_to member.full_name, admin_member_path(member)

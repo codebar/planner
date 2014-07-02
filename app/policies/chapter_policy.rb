@@ -1,5 +1,9 @@
 class ChapterPolicy < ApplicationPolicy
 
+  def index?
+    show?
+  end
+
   def create?
     user.is_admin?
   end

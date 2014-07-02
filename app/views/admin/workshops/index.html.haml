@@ -1,0 +1,30 @@
+%section#banner
+  .row
+    .medium-12.columns
+      %h2.subheader
+        Workshops
+        %small=@chapter.name
+
+  .row
+    %table.large-12.columns
+      %thead
+        %td Date
+        %td Attendances
+        %td Sponsors
+        %td
+      %tbody
+        - @chapter.workshops.each do |workshop|
+          %tr
+            %td
+              = link_to admin_workshop_path(workshop) do
+                = humanize_date_with_time(workshop.date_and_time, workshop.time)
+            %td
+              #{workshop.invitations.accepted.count}
+            %td
+              - workshop.sponsors.each do |sponsor|
+                = image_tag sponsor.avatar_url(:thumb)
+            %td
+              - if workshop.date_and_time.future?
+                %label.label upcoming
+
+

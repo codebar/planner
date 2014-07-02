@@ -9,7 +9,7 @@ module Listable
 
   module ClassMethods
     def next
-      upcoming.load.first
+      unscoped.upcoming.load.first
     end
 
     def most_recent

@@ -63,7 +63,12 @@ Planner::Application.routes.draw do
       get 'approve'
     end
 
-    resources :chapters, only: [ :index, :new, :create, :show]
+    resources :members, only: [:show]
+
+    resources :chapters, only: [ :index, :new, :create, :show] do
+      resources :workshops, only: [ :index ]
+    end
+
     resources :groups, only: [ :index, :new, :create, :show]
     resources :sponsors, only: [:new, :edit, :update, :show, :create]
 

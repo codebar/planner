@@ -18,7 +18,7 @@ en:
         meeting_format: "%a %d %B %H:%M"
         time: "%H:%M"
         year_month: "%Y-%B"
-        log: "%H:%M on the %d/%m/%Y"
+        log: "at %H:%M on the %d/%m/%Y"
 
   messages:
     accepted_invitation: "Thanks for getting back to us %{name}. See you at the workshop!"

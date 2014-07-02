@@ -1,0 +1,44 @@
+%section#banner
+  .row
+    .medium-1.columns
+      =image_tag @member.avatar(100), class: 'th radius', title: @member.full_name
+    .medium-11.columns
+      %h2= @member.full_name
+
+  .row
+    .medium-8.columns
+      %dl
+        %dt Email
+        %dd= mail_to @member.email, @member.email
+
+        %dt Twitter
+        %dd= link_to "@#{@member.twitter}", twitter_url_for(@member.twitter)
+
+        %dt Phone number
+        %dd= @member.mobile || "N/A"
+
+        %dt About
+        %dd= @member.about_you
+
+    .medium-4.columns.panel
+      %h3 Subscriptions
+      %ul.no-bullet
+        - @member.groups.each do |group|
+          %li
+            = link_to [:admin, group] do
+              #{group.name} (#{group.chapter.name})
+  .row
+    %hr
+    .medium-12.columns
+      %h3 Attended workshops
+      - @member.session_invitations.attended.each do |invitation|
+        .row
+          .medium-4.columns
+            - workshop = invitation.sessions
+            =link_to invitation_path(invitation) do
+              %strong=workshop.chapter.name
+              %br
+              = humanize_date_with_time(workshop.date_and_time, workshop.time)
+          .medium-4.columns
+            = invitation.note
+
