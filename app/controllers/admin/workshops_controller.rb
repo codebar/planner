@@ -4,7 +4,7 @@ class Admin::WorkshopsController < Admin::ApplicationController
   before_filter :set_workshop_by_id, only: [:show, :edit]
 
   def index
-    @chapter = Chapter.find(3)
+    @chapter = Chapter.find(params[:chapter_id])
     authorize @chapter
   end
 
