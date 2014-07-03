@@ -13,7 +13,7 @@
               %td
                 =image_tag member.avatar(32), class: 'th radius', title: member.full_name
               %td
-                =link_to member.full_name, member
+                =link_to member.full_name, admin_member_path(member)
               %td
                 =mail_to member.email, member.email
               %td
