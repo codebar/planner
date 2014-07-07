@@ -13,15 +13,15 @@ describe FeedbackRequest do
       it '#session should not be blank' do
         feedback_request = Fabricate.build(:feedback_request, sessions: nil)
 
-        feedback_request.should_not be_valid
-        feedback_request.should have(1).error_on(:sessions)
+        expect(feedback_request).to_not be_valid
+        expect(feedback_request).to have(1).error_on(:sessions)
       end
 
       it '#submitted should not be blank' do
         feedback_request = Fabricate.build(:feedback_request, submited: nil)
 
-        feedback_request.should_not be_valid
-        feedback_request.should have(1).error_on(:submited)
+        expect(feedback_request).to_not be_valid
+        expect(feedback_request).to have(1).error_on(:submited)
       end
     end
   end
@@ -32,13 +32,13 @@ describe FeedbackRequest do
       feedback_request.stub(:email)
       feedback_request.stub(member_id: :member_id)
       feedback_request.save
-      feedback_request.should have_received(:email)
+      expect(feedback_request).to have_received(:email)
     end
 
     it "sends request feedback email" do
       FeedbackRequestMailer.stub(:request_feedback) { double('feedback_request_mailer').as_null_object }
       Fabricate(:feedback_request)
-      FeedbackRequestMailer.should have_received(:request_feedback)
+      expect(FeedbackRequestMailer).to have_received(:request_feedback)
     end
   end
  

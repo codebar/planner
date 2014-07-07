@@ -12,7 +12,7 @@ describe SessionInvitation do
       invitation.update_attribute(:attending, nil)
       mailer = double(SessionInvitationMailer, deliver: nil)
 
-      SessionInvitationMailer.should_receive(:spots_available).
+      expect(SessionInvitationMailer).to receive(:spots_available).
         with(invitation.sessions, invitation.member, invitation).and_return(mailer)
 
       invitation.send_spots_available
@@ -24,19 +24,19 @@ describe SessionInvitation do
     it "#attended" do
       4.times { Fabricate(:attended_session_invitation) }
 
-      SessionInvitation.attended.count.should eq 4
+      expect(SessionInvitation.attended.count).to eq(4)
     end
 
     it "#to_coaches" do
       6.times { Fabricate(:coach_session_invitation) }
 
-      SessionInvitation.to_coaches.count.should eq 6
+      expect(SessionInvitation.to_coaches.count).to eq(6)
     end
 
     it "#to_student" do
       4.times { Fabricate(:student_session_invitation) }
 
-      SessionInvitation.to_students.count.should eq 4
+      expect(SessionInvitation.to_students.count).to eq(4)
     end
   end
 
