@@ -7,8 +7,8 @@ describe Course do
     it "#title" do
       member = Fabricate.build(:course, title: nil)
 
-      member.should_not be_valid
-      member.should have(1).error_on(:title)
+      expect(member).to_not be_valid
+      expect(member).to have(1).error_on(:title)
     end
   end
 
@@ -21,15 +21,15 @@ describe Course do
     end
 
     it "#upcoming" do
-      Course.upcoming.count.should eq 2
+      expect(Course.upcoming.count).to eq(2)
     end
 
     it "#past" do
-      Course.past.count.should eq 1
+      expect(Course.past.count).to eq(1)
     end
 
     it "#next" do
-      Course.next.should eq next_course
+      expect(Course.next).to eq(next_course)
     end
   end
 
@@ -37,7 +37,7 @@ describe Course do
     2.times { Fabricate(:course_invitation, course: course, attending: true) }
     1.times { Fabricate(:course_invitation, course: course, attending: false) }
 
-    course.reload.attending.length.should eq 2
+    expect(course.reload.attending.length).to eq(2)
   end
 end
 

@@ -20,15 +20,15 @@ describe Sessions, :se => true do
     end
 
     it "#upcoming" do
-      Sessions.upcoming.length.should eq 2
+      expect(Sessions.upcoming.length).to eq(2)
     end
 
     it "#next" do
-      Sessions.next.should eq set_upcoming.first
+      expect(Sessions.next).to eq(set_upcoming.first)
     end
 
     it "#most_recent" do
-      Sessions.most_recent.should eq most_recent
+      expect(Sessions.most_recent).to eq(most_recent)
     end
 
     describe "#host" do
@@ -53,14 +53,14 @@ describe Sessions, :se => true do
         3.times { Fabricate(:session_invitation, sessions: session, attending: true) }
         1.times { Fabricate(:session_invitation, sessions: session, attending: false) }
 
-        session.reload.attending_students.length.should eq 3
+        expect(session.reload.attending_students.length).to eq(3)
       end
 
       it "#attending_members" do
         2.times { Fabricate(:coach_session_invitation, sessions: session, attending: true) }
         1.times { Fabricate(:coach_session_invitation, sessions: session, attending: false) }
 
-        session.reload.attending_coaches.length.should eq 2
+        expect(session.reload.attending_coaches.length).to eq(2)
       end
     end
   end

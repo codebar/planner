@@ -25,7 +25,7 @@ describe Meeting do
     subject(:meeting) { Meeting.new(date_and_time: DateTime.new(2014,8,20,18,30)) }
 
     it "is formatted correctly" do
-      meeting.title.should eq("August Meeting")
+      expect(meeting.title).to eq("August Meeting")
     end
   end
 
@@ -33,7 +33,7 @@ describe Meeting do
     subject(:meeting) { Meeting.new(date_and_time: DateTime.new(2014,8,20,18,30)) }
 
     it "defaults to two hours after the meeting starts" do
-      meeting.end_time.should eq(DateTime.new(2014,8,20,20,30))
+      expect(meeting.end_time).to eq(DateTime.new(2014,8,20,20,30))
     end
   end
 end
