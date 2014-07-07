@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '4.1.1'
+gem 'rails', '4.1.4'
 
 gem 'haml'
 gem 'sass-rails', '~> 4.0.1'
@@ -28,6 +28,8 @@ gem 'foundation-rails'
 
 group :development, :test do
   gem 'rspec-rails'
+  gem 'rspec-its'
+  gem 'rspec-collection_matchers'
   gem 'fabrication'
   gem 'faker'
   gem 'capybara'
