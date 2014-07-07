@@ -7,7 +7,7 @@ feature 'admin portal' do
     login(member)
     visit admin_root_path
 
-    current_url.should eq root_url
+    expect(current_url).to eq(root_url)
   end
 
   context "an admin user" do
@@ -20,7 +20,7 @@ feature 'admin portal' do
     scenario 'can access the admin portal' do
       visit admin_root_path
 
-      current_url.should eq admin_root_url
+      expect(current_url).to eq(admin_root_url)
     end
   end
 end

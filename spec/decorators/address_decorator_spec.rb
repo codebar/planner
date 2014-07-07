@@ -6,6 +6,6 @@ describe AddressDecorator do
   it "#to_html" do
     html_address = "#{address.flat}<br/>#{address.street}<br/>#{address.city}, #{address.postal_code}"
 
-    address.to_html.should eq(html_address)
+    expect(address.to_html).to eq(html_address)
   end
 end

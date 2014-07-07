@@ -23,7 +23,7 @@ feature 'a member can' do
       scenario 'when there are available spots' do
         visit accepting_invitation_path
 
-        current_url.should eq root_url
+        expect(current_url).to eq(root_url)
         expect(page).to have_content("Thanks for getting back to us #{invitation.member.name}.")
       end
 
@@ -31,7 +31,7 @@ feature 'a member can' do
         invitation.update_attribute(:attending, true)
         visit accepting_invitation_path
 
-        current_url.should eq root_url
+        expect(current_url).to eq(root_url)
         expect(page).to have_content("You have alredy confirmed you attendance!")
       end
 
@@ -39,7 +39,7 @@ feature 'a member can' do
         set_no_available_slots
         visit accepting_invitation_path
 
-        current_url.should eq root_url
+        expect(current_url).to eq(root_url)
         expect(page).to have_content("Unfortunately there are no more spaces left :(.")
       end
     end
@@ -49,7 +49,7 @@ feature 'a member can' do
         invitation.update_attribute(:attending, true)
         visit rejecting_invitation_path
 
-        current_url.should eq root_url
+        expect(current_url).to eq(root_url)
         expect(page).to have_content(I18n.t("messages.rejected_invitation", name: invitation.member.name))
       end
 
@@ -57,11 +57,10 @@ feature 'a member can' do
         invitation.update_attribute(:attending, false)
         visit rejecting_invitation_path
 
-        current_url.should eq root_url
+        expect(current_url).to eq(root_url)
         expect(page).to have_content(I18n.t("messages.not_attending_already"))
       end
 
     end
   end
 end
-

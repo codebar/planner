@@ -17,7 +17,7 @@ feature "an admin can" do
       visit admin_workshop_path(workshop)
 
       click_on "Attended"
-      page.should have_content "You have verified #{invitation.member.full_name}'s attendance"
+      expect(page).to have_content("You have verified #{invitation.member.full_name}'s attendance")
     end
   end
 end
