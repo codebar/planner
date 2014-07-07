@@ -29,14 +29,14 @@ describe FeedbackRequest do
   context "after create hook" do
     it "#email" do
       feedback_request = Fabricate.build(:feedback_request)
-      feedback_request.stub(:email)
-      feedback_request.stub(member_id: :member_id)
+      allow(feedback_request).to receive(:email)
+      allow(feedback_request).to receive(:member_id).and_return(:member_id)
       feedback_request.save
       expect(feedback_request).to have_received(:email)
     end
 
     it "sends request feedback email" do
-      FeedbackRequestMailer.stub(:request_feedback) { double('feedback_request_mailer').as_null_object }
+      allow(FeedbackRequestMailer).to receive(:request_feedback) { double('feedback_request_mailer').as_null_object }
       Fabricate(:feedback_request)
       expect(FeedbackRequestMailer).to have_received(:request_feedback)
     end

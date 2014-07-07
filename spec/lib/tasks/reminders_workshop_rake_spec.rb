@@ -11,7 +11,7 @@ describe "reminders:workshop" do
   end
 
   it "sends out reminders" do
-    InvitationManager.should_receive(:send_workshop_attendance_reminders).with(workshop)
+    expect(InvitationManager).to receive(:send_workshop_attendance_reminders).with(workshop)
 
     subject.invoke
   end
