@@ -5,19 +5,19 @@ describe MeetingTalk do
     subject { MeetingTalk.new }
 
     it "#title" do
-      should have(1).error_on(:title)
+      expect(subject).to have(1).error_on(:title)
     end
 
     it "#abstract" do
-      should have(1).error_on(:abstract)
+      expect(subject).to have(1).error_on(:abstract)
     end
 
     it "#speaker" do
-      should have(1).error_on(:speaker)
+      expect(subject).to have(1).error_on(:speaker)
     end
 
     it "#meeting" do
-      should have(1).error_on(:meeting)
+      expect(subject).to have(1).error_on(:meeting)
     end
   end
 

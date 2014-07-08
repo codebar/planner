@@ -13,7 +13,7 @@ shared_examples "invitation route" do
       visit invitation_route
       click_on "Attend"
 
-      current_url.should eq invitation_url(invitation)
+      expect(current_url).to eq(invitation_url(invitation))
       expect(page).to have_content("Unfortunately there are no more spaces left :(.")
     end
   end

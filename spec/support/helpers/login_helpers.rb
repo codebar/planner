@@ -1,6 +1,6 @@
 module LoginHelpers
   def login(member)
-    ApplicationController.any_instance.stub(:current_user).and_return(member)
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(member)
   end
 
   def login_as_admin(member)

@@ -53,7 +53,7 @@ describe Sponsor do
     let!(:latest) { 4.times.map { Fabricate(:sponsor) } }
 
     it "#latest" do
-      Sponsor.latest.should eq latest.reverse
+      expect(Sponsor.latest).to eq(latest.reverse)
     end
   end
 

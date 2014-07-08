@@ -44,14 +44,14 @@ feature 'member feedback' do
     scenario "when invalid token given" do
       visit feedback_path(invalid_token)
 
-      current_url.should eq root_url
+      expect(current_url).to eq(root_url)
       expect(page).to have_content('You have already submitted feedback for this event.')
     end
 
     scenario "when feedback has been already submited" do
       visit feedback_path(submited_token)
 
-      current_url.should eq root_url
+      expect(current_url).to eq(root_url)
       expect(page).to have_content('You have already submitted feedback for this event.')
     end
   end
@@ -67,7 +67,7 @@ feature 'member feedback' do
 
       click_button('Submit feedback')
 
-      current_url.should eq root_url
+      expect(current_url).to eq(root_url)
 
       expect(page).to have_content(feedback_submited_message)
     end

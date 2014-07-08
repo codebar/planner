@@ -8,13 +8,13 @@ describe Reminders do
     it "session" do
       Fabricate(:session_reminder, reminder_id: session.id)
 
-      Reminders.session(session).should_not be nil
+      expect(Reminders.session(session)).to_not be(nil)
     end
   end
 
   it "adds a reminder for the given session" do
     Reminders.add_for_session(session, 2)
 
-    Reminders.session(session).exists?.should eq true
+    expect(Reminders.session(session).exists?).to eq(true)
   end
 end

@@ -12,8 +12,8 @@ describe Tutorial do
     it "#title" do
       tutorial = Fabricate.build(:tutorial, title: nil)
 
-      tutorial.should_not be_valid
-      tutorial.should have(1).error_on(:title)
+      expect(tutorial).to_not be_valid
+      expect(tutorial).to have(1).error_on(:title)
     end
   end
 end

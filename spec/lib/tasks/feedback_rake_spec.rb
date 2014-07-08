@@ -12,7 +12,7 @@ describe "feedback:request" do
     let!(:subscription) { Fabricate(:subscription, group: group, member: student) }
 
     before do
-      STDOUT.stub(:puts)
+      allow(STDOUT).to receive(:puts)
       student.session_invitations << Fabricate(:attended_session_invitation, member: student, sessions: workshop)
     end
 
@@ -21,7 +21,7 @@ describe "feedback:request" do
     end
 
     it "generates a FeedbackRequest" do
-      FeedbackRequest.should_receive(:create).with(member: student, sessions: workshop, submited: false)
+      expect(FeedbackRequest).to receive(:create).with(member: student, sessions: workshop, submited: false)
 
       subject.invoke
     end

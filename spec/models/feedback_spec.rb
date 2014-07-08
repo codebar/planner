@@ -18,37 +18,37 @@ describe Feedback do
       it 'should not be blank' do
         feedback = Fabricate.build(:feedback, rating: nil)
 
-        feedback.should_not be_valid
-        feedback.should have(1).error_on(:rating)
+        expect(feedback).to_not be_valid
+        expect(feedback).to have(1).error_on(:rating)
       end
 
       it 'should accept numbers from 1 to 5' do
         (1..5).each do |rating|
           feedback = Fabricate.build(:feedback, rating: rating)
 
-          feedback.should be_valid
+          expect(feedback).to be_valid
         end
       end
 
       it 'should be invalid with number higher than 5' do
         feedback = Fabricate.build(:feedback, rating: 6)
 
-        feedback.should_not be_valid
-        feedback.should have(1).error_on(:rating)
+        expect(feedback).to_not be_valid
+        expect(feedback).to have(1).error_on(:rating)
       end
 
       it 'should be invalid with number lower than 1' do
         feedback = Fabricate.build(:feedback, rating: 0)
 
-        feedback.should_not be_valid
-        feedback.should have(1).error_on(:rating)
+        expect(feedback).to_not be_valid
+        expect(feedback).to have(1).error_on(:rating)
       end
 
       it 'should be numerical' do
         feedback = Fabricate.build(:feedback, rating: 'alpha')
 
-        feedback.should_not be_valid
-        feedback.should have(1).error_on(:rating)
+        expect(feedback).to_not be_valid
+        expect(feedback).to have(1).error_on(:rating)
       end
     end
 
@@ -57,14 +57,14 @@ describe Feedback do
       it "accepts memeber with 'coach' role" do
         feedback = Fabricate.build(:feedback, coach: Fabricate(:coach))
 
-        feedback.should be_valid
+        expect(feedback).to be_valid
       end
 
       it "is invalid with memeber with 'student' role" do
         feedback = Fabricate.build(:feedback, coach: Fabricate(:student))
 
-        feedback.should_not be_valid
-        feedback.should have(1).error_on(:coach)
+        expect(feedback).to_not be_valid
+        expect(feedback).to have(1).error_on(:coach)
       end
 
       it "should display correct error message when member with 'student' role given" do
@@ -72,7 +72,7 @@ describe Feedback do
 
         feedback.valid?
 
-        feedback.errors.messages[:coach].should include "Coach member doesn't have 'coach' role."
+        expect(feedback.errors.messages[:coach]).to include("Coach member doesn't have 'coach' role.")
       end
     end
   end
