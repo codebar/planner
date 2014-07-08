@@ -29,7 +29,7 @@ class Admin::SponsorsController < Admin::ApplicationController
 
   private
   def sponsor_params
-    params.require(:sponsor).permit(:name, :avatar, :website, :seats, address_attributes: [:flat, :street, :postal_code, :city])
+    params.require(:sponsor).permit(:name, :avatar, :website, :seats, :number_of_coaches, address_attributes: [:flat, :street, :postal_code, :city])
   end
 
   def set_sponsor

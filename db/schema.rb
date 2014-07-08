@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140621234319) do
+ActiveRecord::Schema.define(version: 20140708114919) do
 
   create_table "addresses", force: true do |t|
     t.string   "flat"
@@ -273,8 +273,9 @@ ActiveRecord::Schema.define(version: 20140621234319) do
     t.datetime "updated_at"
     t.string   "avatar"
     t.string   "website"
-    t.integer  "seats",       default: 15
+    t.integer  "seats",             default: 15
     t.string   "image_cache"
+    t.integer  "number_of_coaches"
   end
 
   create_table "subscriptions", force: true do |t|

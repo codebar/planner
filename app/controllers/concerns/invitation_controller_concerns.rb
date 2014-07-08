@@ -14,7 +14,7 @@ module InvitationControllerConcerns
         redirect_to :back, notice: t("messages.already_rsvped")
       end
 
-      if available_student_slots?(@invitation) or more_coaches_needed?(@invitation)
+      if (@invitation.role.eql?("Student") and available_student_slots?(@invitation)) or more_coaches_needed?(@invitation)
         @invitation.update_attribute(:attending, true)
         SessionInvitationMailer.attending(@invitation.sessions, @invitation.member, @invitation).deliver
 
@@ -22,7 +22,7 @@ module InvitationControllerConcerns
                                      name: @invitation.member.name)
 
       else
-        redirect_to :back, notice: t("messages.no_available_seats")
+        redirect_to :back, notice: t("messages.no_available_seats", email: @invitation.sessions.chapter.email)
       end
     end
 
@@ -39,8 +39,8 @@ module InvitationControllerConcerns
       end
     end
 
-    def more_coaches_needed? invitation
-      invitation.role.eql?("Coach") and (invitation.sessions.host.seats/2.0).round > invitation.sessions.attending_coaches.length
+    def more_coaches_needed?(invitation)
+      invitation.role.eql?("Coach") and invitation.sessions.host.coach_spots > invitation.sessions.attending_coaches.length
     end
 
     def available_student_slots? invitation

@@ -10,4 +10,8 @@ class Sponsor < ActiveRecord::Base
   accepts_nested_attributes_for :address
 
   scope :latest, -> { order("updated_at desc").limit(4) }
+
+  def coach_spots
+    number_of_coaches || (seats/2.0).round
+  end
 end
