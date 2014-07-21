@@ -8,7 +8,7 @@ namespace :feedback do
 
     if workshop.date_and_time < DateTime.now+12.hours and workshop.date_and_time < DateTime.now+36.hours
 
-      workshop.invitations.where(role: "Student").attended.map do |invitation|
+      workshop.invitations.where(role: "Student").accepted.map do |invitation|
         STDOUT.puts "#{invitation.member.full_name} <#{invitation.member.email}>"
         FeedbackRequest.create(member: invitation.member, sessions: invitation.sessions, submited: false)
       end

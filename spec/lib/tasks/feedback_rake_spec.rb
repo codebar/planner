@@ -13,7 +13,7 @@ describe "feedback:request" do
 
     before do
       allow(STDOUT).to receive(:puts)
-      student.session_invitations << Fabricate(:attended_session_invitation, member: student, sessions: workshop)
+      student.session_invitations << Fabricate(:attending_session_invitation, member: student, sessions: workshop)
     end
 
     it 'should gracefully run' do
