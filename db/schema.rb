@@ -200,15 +200,6 @@ ActiveRecord::Schema.define(version: 20140708114919) do
   add_index "permissions", ["name", "resource_type", "resource_id"], name: "index_permissions_on_name_and_resource_type_and_resource_id"
   add_index "permissions", ["name"], name: "index_permissions_on_name"
 
-  create_table "posts", force: true do |t|
-    t.string   "title"
-    t.text     "content"
-    t.integer  "created_by_id"
-    t.text     "slug"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "reminders", force: true do |t|
     t.string   "reminder_type"
     t.string   "reminder_id"
