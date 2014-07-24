@@ -42,6 +42,23 @@ bundle exec rake db:create
 bundle exec rake db:migrate db:test:prepare
 ```
 
+### Enable GitHub authentication
+
+Create an application at `https://github.com/settings/applications/new` with
+`http://localhost:3000` as the `Homepage URL` and `http://localhost:3000/auth/github`
+as the `Authorization callback URL`.
+
+Once your development application is setup, create a file named `.env` in the root of the
+application folder with the GitHub key and secret like so:
+
+    GITHUB_KEY=YOUR_KEY
+    GITHUB_SECRET=YOUR_SECRET
+
+Note: windows doesn't like creating a file named .env so do the following from a cmd prompt in your application folder:
+
+echo GITHUB_KEY=YOUR_KEY >> .env
+echo GITHUB_SECRET=YOUR_SECRET >> .env
+
 ### Generate some data!
 
 ```bash
@@ -53,17 +70,6 @@ bundle exec rake db:seed
 bundle exec rake
 ```
 
-### Enable GitHub authentication
-
-Create an application at `https://github.com/settings/applications/new` with
-`http://localhost:3000` as the `Homepage URL` and `http://localhost:3000/auth/github`
-as the `Authorization callback URL`.
-
-Once you development application is setup, create a file named `.env` in the root of the
-application folder with the GitHub key and secret like so:
-
-    GITHUB_KEY=YOUR_KEY
-    GITHUB_SECRET=YOUR_SECRET
 
 ### Find something to work on
 You can pick one of the open [issues](https://github.com/codebar/planner/issues), fix a bug, improve the interface, refactor the code or improve test coverage!
