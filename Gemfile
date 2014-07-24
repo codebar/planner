@@ -27,6 +27,8 @@ gem 'omniauth-github'
 
 gem 'foundation-rails'
 
+gem 'tzinfo-data'
+
 group :development, :test do
   gem 'rspec-rails'
   gem 'rspec-its'
