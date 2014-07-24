@@ -1,4 +1,5 @@
 source 'https://rubygems.org'
+ruby '2.1.2'
 
 gem 'rails', '4.1.4'
 
@@ -36,7 +37,8 @@ group :development, :test do
   gem 'sqlite3'
   gem 'coveralls', require: false
   gem 'launchy'
-  gem 'pry-debugger'
+  gem 'jazz_hands', github: 'nixme/jazz_hands', branch: 'bring-your-own-debugger'
+  gem 'pry-byebug'
   gem 'dotenv-rails'
 end
 
