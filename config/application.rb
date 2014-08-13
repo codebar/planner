@@ -27,3 +27,5 @@ module Planner
     config.i18n.enforce_available_locales = false
   end
 end
+
+require 'csv' # the standard library CSV Class
