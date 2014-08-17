@@ -3,4 +3,4 @@
     - csv << [invitation.member.full_name, 'STUDENT ' + truncate(invitation.note, length: 100 ) ]
   - @invitation.sessions.attending_coaches.each do |invitation|
     - csv << [ invitation.member.full_name, 'COACH' ]
-= csv_string
+= raw csv_string
