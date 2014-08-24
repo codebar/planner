@@ -1,11 +1,14 @@
 if Rails.env.development?
   begin
-    puts "Add seed data.."
+    puts "Adding seed data..."
+    chapters = [Fabricate(:chapter_with_groups, name: "London"),
+                Fabricate(:chapter_with_groups, name: "Brighton"),
+                Fabricate(:chapter_with_groups, name: "Cambridge")]
 
-    sessions = 10.times.map { |n| Fabricate(:sessions, date_and_time: DateTime.now+14.days-n.weeks) }
+    sessions = 10.times.map { |n| Fabricate(:sessions, chapter: chapters.sample, date_and_time: DateTime.now+14.days-n.weeks) }
 
-    courses = 5.times.map { |n| Fabricate(:course, date_and_time: DateTime.now+14.days-n.weeks) }
-    coaches = 20.times.map { |n| Fabricate(:coach) }
+    courses = 5.times.map { |n| Fabricate(:course, chapter: chapters.sample, date_and_time: DateTime.now+14.days-n.weeks) }
+    coaches = 20.times.map { |n| Fabricate(:coach, groups: Group.coaches.order("RANDOM()").limit(2)) }
     tutorials = 10.times.map { |n| Fabricate(:tutorial, sessions: sessions.sample) }
     feedback_requests = 5.times.map { Fabricate(:feedback_request) }
     feedbacks = 5.times.map { Fabricate(:feedback, tutorial: tutorials.sample, coach: coaches.sample) }
@@ -29,6 +32,7 @@ if Rails.env.development?
                                                 abstract: Faker::Lorem.paragraph)
     puts "..done!"
   rescue Exception => e
+    puts e.inspect
     puts "Something went wrong. Try running `bundle exec db:drop db:create db:migrate` first"
   end
 end

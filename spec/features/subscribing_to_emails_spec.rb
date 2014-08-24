@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-feature 'Managing subscriptionss' do
+feature 'Managing subscriptions' do
   let(:member) { Fabricate(:member) }
   let!(:group) { Fabricate(:group) }
 
