@@ -3,6 +3,9 @@ class InvitationController < ApplicationController
 
   def show
     @host_address = AddressDecorator.decorate(@invitation.parent.host.address)
+    @workshop = WorkshopPresenter.new(@invitation.sessions)
+
+    render text: @workshop.attendees_csv if request.format.csv?
   end
 
   def accept_with_note

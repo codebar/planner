@@ -1,6 +1,0 @@
-- csv_string = CSV.generate do |csv|
-  - @invitation.sessions.attending_students.each do |invitation|
-    - csv << [invitation.member.full_name, 'STUDENT ']
-  - @invitation.sessions.attending_coaches.each do |invitation|
-    - csv << [ invitation.member.full_name, 'COACH' ]
-= raw csv_string
