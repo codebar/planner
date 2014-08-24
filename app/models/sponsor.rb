@@ -5,7 +5,7 @@ class Sponsor < ActiveRecord::Base
 
   validates :name, :address, :avatar, :website, :seats, presence: true
 
-  mount_uploader(:avatar, AvatarUploader) unless Rails.env.test?
+  mount_uploader(:avatar, AvatarUploader) unless Rails.env.test? or Rails.env.development?
 
   accepts_nested_attributes_for :address
 
