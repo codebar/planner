@@ -1,6 +1,8 @@
 class CourseInvitationMailer < ActionMailer::Base
   include EmailHeaderHelper
 
+  helper ApplicationHelper
+
   layout 'email'
 
   def invite_student course, member, invitation

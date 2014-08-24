@@ -28,16 +28,26 @@ class MembersController < ApplicationController
   end
 
   def unsubscribe
-    @member = Member.find(params[:id])
-    @member.update_attribute(:unsubscribed, true)
+    require 'verifier'
+    member = Verifier.new(token: token).verify(Member)
 
-    redirect_to root_path, notice: "You have been unsubscribed succesfully"
+    session[:member_id] = member.id
+
+    authenticate_member!
+
+    redirect_to subscriptions_path
+  rescue
+    redirect_to root_path, notice: "Your token is invalid. "
   end
 
   private
 
   def member_params
     params.require(:member).permit(:name, :surname, :email, :mobile, :twitter, :about_you)
+  end
+
+  def token
+    params[:token]
   end
 
 end

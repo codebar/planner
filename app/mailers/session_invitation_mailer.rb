@@ -1,6 +1,7 @@
 class SessionInvitationMailer < ActionMailer::Base
   include EmailHeaderHelper
   include ApplicationHelper
+
   helper ApplicationHelper
 
   def invite_student sessions, member, invitation
