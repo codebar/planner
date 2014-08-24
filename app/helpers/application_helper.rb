@@ -26,4 +26,9 @@ module ApplicationHelper
   def has_permission?
     current_user.has_role?(:admin) or current_user.has_role?(:organiser) or Chapter.find_roles(:organiser, current_user).any?
   end
+
+  def member_token(member)
+    require 'verifier'
+    Verifier.new(id: member.id).access_token
+  end
 end

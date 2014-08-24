@@ -14,11 +14,7 @@ Planner::Application.routes.draw do
   resources :subscriptions, only: [ :index, :create ]
   delete '/subscriptions' => 'subscriptions#destroy', as: :destroy_subscriptions
 
-  resources :members, only: [] do
-    member do
-      get "unsubscribe"
-    end
-  end
+  get "unsubscribe/:token" => "members#unsubscribe", as: :unsubscribe
 
   resources :invitation, only: [ :show ] do
     member do

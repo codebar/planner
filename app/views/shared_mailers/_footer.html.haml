@@ -7,6 +7,6 @@
           %tr
             %td{ align: "center" }
               %p
-                %a{ href: full_url_for(unsubscribe_member_url(@member)) }
+                %a{ href: full_url_for(unsubscribe_url(member_token(@member))) }
                   %unsubscribe Unsubscribe
     %td
