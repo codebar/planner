@@ -1,35 +1,34 @@
 if Rails.env.development?
+  begin
+    puts "Add seed data.."
 
-  Fabricate(:student_role)
-  Fabricate(:coach_role)
+    sessions = 10.times.map { |n| Fabricate(:sessions, date_and_time: DateTime.now+14.days-n.weeks) }
 
-  sessions = 10.times.map { |n| Fabricate(:sessions, date_and_time: DateTime.now+14.days-n.weeks) }
+    courses = 5.times.map { |n| Fabricate(:course, date_and_time: DateTime.now+14.days-n.weeks) }
+    coaches = 20.times.map { |n| Fabricate(:coach) }
+    tutorials = 10.times.map { |n| Fabricate(:tutorial, sessions: sessions.sample) }
+    feedback_requests = 5.times.map { Fabricate(:feedback_request) }
+    feedbacks = 5.times.map { Fabricate(:feedback, tutorial: tutorials.sample, coach: coaches.sample) }
 
-  courses = 5.times.map { |n| Fabricate(:course, date_and_time: DateTime.now+14.days-n.weeks) }
+    40.times do |n|
+      coach = coaches.sample
+      Fabricate(:attended_session_invitation, role: "Coach", member: coach, sessions: sessions.sample )  rescue "Coach already attended"
+    end
 
-  coaches = 20.times.map { |n| Fabricate(:coach) }
+    meeting = Meeting.create(venue: Sponsor.all.shuffle.first,
+                             date_and_time: DateTime.now+1.year-11.months,
+                             duration: 120,
+                             lanyrd_url: "http://lanyrd.com/2013/by-codebar/")
+    meeting.meeting_talks << MeetingTalk.create(title: "Becoming a Software Engineer",
+                                                description: "Inspiring a New Generation of Developers",
+                                                speaker_id: Member.first.id,
+                                                abstract: Faker::Lorem.paragraph)
 
-  tutorials = 10.times.map { |n| Fabricate(:tutorial, sessions: sessions.sample) }
-
-  feedback_requests = 5.times.map { Fabricate(:feedback_request) }
-  
-  feedbacks = 5.times.map { Fabricate(:feedback, tutorial: tutorials.sample, coach: coaches.sample) }
-
-  40.times do |n|
-    coach = coaches.sample
-    Fabricate(:attended_session_invitation, role: "Coach", member: coach, sessions: sessions.sample )  rescue "Coach already attended"
+    meeting.meeting_talks << MeetingTalk.create(title: "Kickstart your development career",
+                                                speaker_id: Member.last.id,
+                                                abstract: Faker::Lorem.paragraph)
+    puts "..done!"
+  rescue Exception => e
+    puts "Something went wrong. Try running `bundle exec db:drop db:create db:migrate` first"
   end
-
-  meeting = Meeting.create(venue: Sponsor.all.shuffle.first,
-                           date_and_time: DateTime.now+1.year-11.months,
-                           duration: 120,
-                           lanyrd_url: "http://lanyrd.com/2013/by-codebar/")
-  meeting.meeting_talks << MeetingTalk.create(title: "Becoming a Software Engineer",
-                                              description: "Inspiring a New Generation of Developers",
-                                              speaker_id: Member.first.id,
-                                              abstract: Faker::Lorem.paragraph)
-
-  meeting.meeting_talks << MeetingTalk.create(title: "Kickstart your development career",
-                                              speaker_id: Member.last.id,
-                                              abstract: Faker::Lorem.paragraph)
 end
