@@ -23,8 +23,9 @@ class InvitationManager
   end
 
   def self.send_workshop_attendance_reminders session
-    session.attendances.each do |invitation|
+    session.attendances.where(reminded_at: nil).each do |invitation|
       SessionInvitationMailer.reminder(session, invitation.member, invitation).deliver
+      invitation.update_attribute(:reminded_at, DateTime.now)
     end
   end
 
