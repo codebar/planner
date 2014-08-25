@@ -8,4 +8,10 @@ describe AddressDecorator do
 
     expect(address.to_html).to eq(html_address)
   end
+
+  it "#to_s" do
+    address_to_s = "#{address.flat}, #{address.street}, #{address.city}, #{address.postal_code}"
+
+    expect(address.to_s).to eq(address_to_s)
+  end
 end
