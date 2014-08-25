@@ -36,6 +36,11 @@ class SessionInvitationMailer < ActionMailer::Base
 
     subject = "Attendance confirmation for #{humanize_date_with_time(@session.date_and_time, @session.time)}"
 
+
+    attachments['codebar.ics'] = { mime_type: 'text/calendar',
+                                   content: WorkshopCalendar.new(@session).calendar.to_ical }
+
+
     mail(mail_args(member, subject)) do |format|
       format.html
     end
@@ -63,7 +68,7 @@ class SessionInvitationMailer < ActionMailer::Base
     @member = member
     @invitation = invitation
 
-     subject = "Workshop Reminder #{humanize_date_with_time(@session.date_and_time, @session.time)}"
+    subject = "Workshop Reminder #{humanize_date_with_time(@session.date_and_time, @session.time)}"
 
     mail(mail_args(member, subject)) do |format|
       format.html

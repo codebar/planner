@@ -29,6 +29,8 @@ gem 'foundation-rails'
 
 gem 'tzinfo-data'
 
+gem 'icalendar'
+
 group :development, :test do
   gem 'rspec-rails'
   gem 'rspec-its'

@@ -8,4 +8,8 @@ class AddressDecorator < Draper::Decorator
   def for_map
     [ flat, street, city, postal_code ].compact.join(",+")
   end
+
+  def to_s
+    [ flat, street, city, postal_code ].compact.join(", ")
+  end
 end
