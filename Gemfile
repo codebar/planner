@@ -37,13 +37,18 @@ group :development, :test do
   gem 'rspec-collection_matchers'
   gem 'fabrication'
   gem 'faker'
-  gem 'capybara'
   gem 'sqlite3'
   gem 'coveralls', require: false
   gem 'launchy'
   gem 'jazz_hands', github: 'nixme/jazz_hands', branch: 'bring-your-own-debugger'
   gem 'pry-byebug'
   gem 'dotenv-rails'
+end
+
+group :test do
+  gem 'capybara'
+  gem 'database_cleaner'
+  gem 'poltergeist'
 end
 
 group :production do

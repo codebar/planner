@@ -70,6 +70,9 @@ bundle exec rake db:seed
 bundle exec rake
 ```
 
+NOTE: JavaScript acceptance tests are relying on the [Poltegeist](https://github.com/teampoltergeist/poltergeist) driver, which requires
+[PhantomJS](http://phantomjs.org). For more information about installing PhantomJS, please take a look
+[here](https://github.com/teampoltergeist/poltergeist#installing-phantomjs).
 
 ### Find something to work on
 You can pick one of the open [issues](https://github.com/codebar/planner/issues), fix a bug, improve the interface, refactor the code or improve test coverage!
@@ -77,4 +80,3 @@ You can pick one of the open [issues](https://github.com/codebar/planner/issues)
 If there is something else that you would like to work on, open an issue first so we can discuss it. We are always open to new ideas and ways of improving planner!
 
 [Guidelines on contributing to planner](https://github.com/codebar/planner/blob/master/CONTRIBUTING.md)
-

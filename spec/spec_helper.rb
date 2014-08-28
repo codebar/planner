@@ -7,7 +7,7 @@ require 'rspec/its'
 require 'coveralls'
 Coveralls.wear!
 
-Dir[Rails.root.join("spec/support/*/*.rb")].each { |f| require f }
+Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 
 ActiveRecord::Migration.check_pending! if defined?(ActiveRecord::Migration)
 
@@ -20,5 +20,16 @@ RSpec.configure do |config|
   config.order = "random"
   config.expect_with :rspec do |c|
     c.syntax = :expect
+  end
+
+  config.before(:suite) do
+    DatabaseCleaner.clean_with(:truncation)
+    DatabaseCleaner.strategy = :deletion
+  end
+
+  config.around(:each) do |example|
+    DatabaseCleaner.cleaning do
+      example.run
+    end
   end
 end
