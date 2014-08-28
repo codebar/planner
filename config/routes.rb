@@ -70,7 +70,7 @@ Planner::Application.routes.draw do
 
     resources :invitation, only: [] do
       get :attended
-      get :not_attending
+      post :not_attending
     end
 
     resources :feedback, only: [:index]
