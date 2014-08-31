@@ -29,12 +29,6 @@ class InvitationManager
     end
   end
 
-  def self.send_spots_available session
-    session.invitations.map do |invitation|
-      invitation.send_spots_available
-    end
-  end
-
   def self.send_change_of_details session, title="Change of details", sponsor
     session.invitations.accepted.map do |invitation|
       SessionInvitationMailer.change_of_details(session, sponsor, invitation.member, invitation, title).deliver
