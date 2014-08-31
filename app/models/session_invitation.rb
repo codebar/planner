@@ -17,12 +17,6 @@ class SessionInvitation < ActiveRecord::Base
     sessions
   end
 
-  def send_spots_available
-    if role.eql?("Student")
-      SessionInvitationMailer.spots_available(self.sessions, self.member, self).deliver if attending.eql?(nil)
-    end
-  end
-
   private
 
   def email
