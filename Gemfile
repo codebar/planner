@@ -22,7 +22,7 @@ group :development, :test do
   gem 'sqlite3'
   gem 'coveralls', require: false
   gem 'launchy'
-  gem 'pry-debugger'
+  gem 'pry-byebug'
   gem 'dotenv-rails'
 end
 
