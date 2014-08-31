@@ -33,7 +33,7 @@ gem install bundler
 bundle install --without production
 ```
 
-_You need to user the --wihout production flag to avoid requiring the **pg** gem, and Postgres. You don't need it anyway on development!_
+You can use the `--wihout production` flag to avoid installing the `pg` gem for PostgreSQL. You don't need it anyway on development!
 
 ### Setup the database
 
@@ -54,10 +54,10 @@ application folder with the GitHub key and secret like so:
     GITHUB_KEY=YOUR_KEY
     GITHUB_SECRET=YOUR_SECRET
 
-Note: windows doesn't like creating a file named .env so do the following from a cmd prompt in your application folder:
+Note: Windows doesn't like creating a file named .env so do the following from a cmd prompt in your application folder:
 
-echo GITHUB_KEY=YOUR_KEY >> .env
-echo GITHUB_SECRET=YOUR_SECRET >> .env
+    echo GITHUB_KEY=YOUR_KEY >> .env
+    echo GITHUB_SECRET=YOUR_SECRET >> .env
 
 ### Generate some data!
 
@@ -70,7 +70,7 @@ bundle exec rake db:seed
 bundle exec rake
 ```
 
-NOTE: JavaScript acceptance tests are relying on the [Poltegeist](https://github.com/teampoltergeist/poltergeist) driver, which requires
+Note: JavaScript acceptance tests are relying on the [Poltegeist](https://github.com/teampoltergeist/poltergeist) driver, which requires
 [PhantomJS](http://phantomjs.org). For more information about installing PhantomJS, please take a look
 [here](https://github.com/teampoltergeist/poltergeist#installing-phantomjs).
 
