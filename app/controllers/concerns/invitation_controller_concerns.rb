@@ -5,6 +5,8 @@ module InvitationControllerConcerns
     before_action :set_invitation
 
     include InstanceMethods
+
+    helper_method :available_student_slots?, :more_coaches_needed?
   end
 
   module InstanceMethods
@@ -14,7 +16,7 @@ module InvitationControllerConcerns
         redirect_to :back, notice: t("messages.already_rsvped")
       end
 
-      if (@invitation.role.eql?("Student") and available_student_slots?(@invitation)) or more_coaches_needed?(@invitation)
+      if available_student_slots?(@invitation) or more_coaches_needed?(@invitation)
         @invitation.update_attribute(:attending, true)
         SessionInvitationMailer.attending(@invitation.sessions, @invitation.member, @invitation).deliver
 
@@ -28,10 +30,20 @@ module InvitationControllerConcerns
 
     def reject
       if @invitation.parent.date_and_time-6.hours >= DateTime.now
+
         if @invitation.attending.eql? false
           redirect_to :back, notice: t("messages.not_attending_already")
         else
           @invitation.update_attribute(:attending, false)
+
+          next_spot = WaitingList.next_spot(@invitation.role, @invitation.sessions)
+
+          if next_spot.exists?
+            invitation = next_spot.invitation
+            invitation.update_attribute(:attending, true)
+            SessionInvitationMailer.attending(invitation.sessions, invitation.member, invitation, true).deliver
+          end
+
           redirect_to :back, notice: t("messages.rejected_invitation", name: @invitation.member.name)
         end
       else
@@ -43,7 +55,7 @@ module InvitationControllerConcerns
       invitation.role.eql?("Coach") and invitation.sessions.host.coach_spots > invitation.sessions.attending_coaches.length
     end
 
-    def available_student_slots? invitation
+    def available_student_slots?(invitation)
       invitation.role.eql?("Student") and invitation.sessions.host.seats > invitation.sessions.attending_students.length
     end
   end

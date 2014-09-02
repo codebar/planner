@@ -1,0 +1,10 @@
+- if invitation.waiting_list.blank?
+  %p There are no more spots left.
+  = link_to "Add to Waiting List", invitation_waiting_list_path(invitation), method: :post, class: 'button round expand'
+  = link_to "Not sure, just remind me", invitation_waiting_list_path(invitation, auto_rsvp: false), method: :post, class: "button round expand"
+- else
+  - if invitation.waiting_list.auto_rsvp?
+    %p We will RSVP you if any spots become available
+    = link_to "Remove from Waiting list", invitation_waiting_list_path(invitation), method: :delete, class: 'button expand round alert', "data-confirm" => "Are you sure you want to let go of your spot?"
+  - else
+    = link_to "Don't send me a reminder", invitation_waiting_list_path(invitation), method: :delete, class: 'button expand round alert'

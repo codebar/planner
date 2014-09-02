@@ -28,14 +28,14 @@ class SessionInvitationMailer < ActionMailer::Base
     end
   end
 
-  def attending sessions, member, invitation
+  def attending sessions, member, invitation, waiting_list=false
     @session = sessions
     @host_address = AddressDecorator.decorate(@session.host.address)
     @member = member
     @invitation = invitation
+    @waiting_list = waiting_list
 
-    subject = "Attendance confirmation for #{humanize_date_with_time(@session.date_and_time, @session.time)}"
-
+    subject = "Attendance Confirmation for #{humanize_date_with_time(@session.date_and_time, @session.time)}"
 
     attachments['codebar.ics'] = { mime_type: 'text/calendar',
                                    content: WorkshopCalendar.new(@session).calendar.to_ical }

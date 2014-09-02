@@ -14,10 +14,11 @@
               %td
                 %h3 Hi, #{@member.name}
                 %p.lead
-                  - if @invitation.role.eql?("Coach")
-                    Thanks for signing up as coach to the workshop. This means a lot to us.
-                  - elsif @invitation.role.eql?("Student")
-                    Thank you for confirming you attendance. See you at our workshop!
+                  - if @waiting_list
+                    A spot became available and your attendance has now been confirmed.
+                  - else
+                    Thank you for confirming you attendance.
+                  See you at our workshop!
 
         .content
           %table{ bgcolor: "#FFFFFF" }
