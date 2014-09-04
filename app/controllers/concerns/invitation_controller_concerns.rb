@@ -18,6 +18,7 @@ module InvitationControllerConcerns
 
       if available_student_slots?(@invitation) or more_coaches_needed?(@invitation)
         @invitation.update_attribute(:attending, true)
+        @invitation.waiting_list.delete  if @invitation.waiting_list.present?
         SessionInvitationMailer.attending(@invitation.sessions, @invitation.member, @invitation).deliver
 
         redirect_to :back, notice: t("messages.accepted_invitation",
@@ -36,10 +37,11 @@ module InvitationControllerConcerns
         else
           @invitation.update_attribute(:attending, false)
 
-          next_spot = WaitingList.next_spot(@invitation.role, @invitation.sessions)
+          next_spot = WaitingList.next_spot(@invitation.sessions, @invitation.role)
 
-          if next_spot.exists?
+          if next_spot.present?
             invitation = next_spot.invitation
+            next_spot.delete
             invitation.update_attribute(:attending, true)
             SessionInvitationMailer.attending(invitation.sessions, invitation.member, invitation, true).deliver
           end

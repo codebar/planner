@@ -40,4 +40,20 @@ class InvitationManager
       SessionInvitationMailer.change_of_details(session, sponsor, invitation.member, invitation, title).deliver
     end
   end
+
+  def self.send_waiting_list_emails(workshop)
+    if workshop.host.coach_spots > workshop.attending_coaches.length
+      WaitingList.by_workshop(workshop).where_role("Coach").each do |waiting_list|
+        SessionInvitationMailer.notify_waiting_list(waiting_list.invitation).deliver
+        waiting_list.delete
+      end
+
+      if workshop.host.seats > workshop.attending_students.length
+        WaitingList.by_workshop(workshop).where_role("Student").each do |waiting_list|
+          SessionInvitationMailer.notify_waiting_list(waiting_list.invitation).deliver
+          waiting_list.delete
+        end
+      end
+    end
+  end
 end

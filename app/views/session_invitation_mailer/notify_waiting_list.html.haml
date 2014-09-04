@@ -1,0 +1,51 @@
+=render partial: 'shared_mailers/header', locals: { title: "Waiting List" }
+%body{ bgcolor: "#FFFFFF" }
+
+  =render partial: 'shared_mailers/body_header', locals: { title: "Waiting List spot available" }
+
+  %table{ class: "body-wrap"}
+    %tr
+      %td
+      %td{ class: "container", bgcolor: "#FFFFFF" }
+
+        .content
+          %table
+            %tr
+              %td
+                %h3 Hi, #{@member.name}
+                %p.lead
+                  A spot just opened up for the workshop. If you would like to attend, please RSVP.
+
+        .content
+          %table{ bgcolor: "#FFFFFF" }
+            %tr
+              %td.small{ width: "30%", style: "vertical-align: top; padding-right:10px;"}
+                =image_tag(@session.host.avatar)
+              %td
+                %h4
+                  Workshop
+                  %small #{humanize_date_with_time(@session.date_and_time, @session.time)}
+                %p
+                  #{@session.host.name}
+                  %br
+                  #{@host_address.to_html}
+                = link_to "RSVP", full_url_for(invitation_url(@invitation)), class: 'btn'
+
+        .content
+          %table
+            %tr
+              %td
+                %p
+                  If you have any trouble finding the venue call
+                  - @session.chapter.organisers.each do |organiser|
+                    - if organiser.mobile.present?
+                      %p
+                        = organiser.full_name
+                        =organiser.mobile
+                        %br
+
+        .content
+          = render partial: 'shared_mailers/social'
+      %td
+
+  = render partial: 'shared_mailers/footer'

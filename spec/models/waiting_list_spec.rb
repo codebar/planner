@@ -24,7 +24,7 @@ RSpec.describe WaitingList, type: :model do
         invitation = Fabricate(:session_invitation, sessions: workshop)
         WaitingList.add(invitation)
 
-        expect(WaitingList.next_spot(workshop, "Student").map(&:invitation)).to eq([invitation])
+        expect(WaitingList.next_spot(workshop, "Student").invitation).to eq(invitation)
       end
     end
   end

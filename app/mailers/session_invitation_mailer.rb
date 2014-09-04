@@ -69,8 +69,20 @@ class SessionInvitationMailer < ActionMailer::Base
     @invitation = invitation
 
     subject = "Workshop Reminder #{humanize_date_with_time(@session.date_and_time, @session.time)}"
-
     mail(mail_args(member, subject)) do |format|
+      format.html
+    end
+  end
+
+  def notify_waiting_list(invitation)
+    @session = invitation.sessions
+    @host_address = AddressDecorator.decorate(@session.host.address)
+    @member = invitation.member
+    @invitation = invitation
+
+    subject = "A spot just became available"
+
+    mail(mail_args(@member, subject)) do |format|
       format.html
     end
   end
