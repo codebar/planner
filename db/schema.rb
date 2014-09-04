@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140825005743) do
+ActiveRecord::Schema.define(version: 20140828194906) do
 
   create_table "addresses", force: true do |t|
     t.string   "flat"
@@ -281,5 +281,14 @@ ActiveRecord::Schema.define(version: 20140825005743) do
   end
 
   add_index "tutorials", ["sessions_id"], name: "index_tutorials_on_sessions_id"
+
+  create_table "waiting_lists", force: true do |t|
+    t.integer  "invitation_id"
+    t.boolean  "auto_rsvp",     default: true
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "waiting_lists", ["invitation_id"], name: "index_waiting_lists_on_invitation_id"
 
 end

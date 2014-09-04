@@ -28,14 +28,14 @@ class SessionInvitationMailer < ActionMailer::Base
     end
   end
 
-  def attending sessions, member, invitation
+  def attending sessions, member, invitation, waiting_list=false
     @session = sessions
     @host_address = AddressDecorator.decorate(@session.host.address)
     @member = member
     @invitation = invitation
+    @waiting_list = waiting_list
 
-    subject = "Attendance confirmation for #{humanize_date_with_time(@session.date_and_time, @session.time)}"
-
+    subject = "Attendance Confirmation for #{humanize_date_with_time(@session.date_and_time, @session.time)}"
 
     attachments['codebar.ics'] = { mime_type: 'text/calendar',
                                    content: WorkshopCalendar.new(@session).calendar.to_ical }
@@ -69,8 +69,20 @@ class SessionInvitationMailer < ActionMailer::Base
     @invitation = invitation
 
     subject = "Workshop Reminder #{humanize_date_with_time(@session.date_and_time, @session.time)}"
-
     mail(mail_args(member, subject)) do |format|
+      format.html
+    end
+  end
+
+  def notify_waiting_list(invitation)
+    @session = invitation.sessions
+    @host_address = AddressDecorator.decorate(@session.host.address)
+    @member = invitation.member
+    @invitation = invitation
+
+    subject = "A spot just became available"
+
+    mail(mail_args(@member, subject)) do |format|
       format.html
     end
   end

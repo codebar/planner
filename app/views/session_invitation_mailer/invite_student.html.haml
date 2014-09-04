@@ -34,7 +34,7 @@
                 %p
                   %b Venue
                   #{@session.host.name}
-                =link_to "View invitation and RSVP", full_url_for(invitation_url(@invitation)), class: 'btn'
+                =link_to "RSVP", full_url_for(invitation_url(@invitation)), class: 'btn'
 
         .content
           = render partial: 'shared_mailers/social'

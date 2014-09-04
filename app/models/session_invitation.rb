@@ -2,6 +2,7 @@ class SessionInvitation < ActiveRecord::Base
   include InvitationConcerns
 
   belongs_to :sessions
+  has_one :waiting_list, foreign_key: :invitation_id
 
   validates :sessions, :member, presence: true
   validates :member_id, uniqueness: { scope: [:sessions_id, :role ] }

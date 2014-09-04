@@ -19,6 +19,7 @@
         - if @invitation.sessions.date_and_time < DateTime.now
           %em This session has already taken place!
         - else
+
           - if @invitation.attending.eql?(true)
             - if @invitation.role.eql?("Student")
               %p
@@ -32,12 +33,18 @@
               =link_to "I can no longer attend", reject_invitation_url(@invitation), class: "expand button round"
           - else
             - if @invitation.role.eql?("Coach")
-              = link_to "Attend", accept_invitation_url(@invitation), class: "expand button round center"
+              - if more_coaches_needed?(@invitation)
+                = link_to "Attend", accept_invitation_url(@invitation), class: "expand button round center"
+              - else
+                = render partial: 'invitation/waiting_list', locals: { invitation: @invitation }
             - else
-              = simple_form_for @invitation, url: :accept_with_note_invitation, method: :post do |f|
-                = f.input :note, label: "I will be working on... ", placeholder: "e.g. I know a bit of HTML and CSS or the second JQuery tutorial", required: true
-                = f.button :submit, "Attend",  class: "button expand round"
-                %label *Letting us know what you plan to work on will help us manage things easier.
+              - if available_student_slots?(@invitation)
+                = simple_form_for @invitation, url: :accept_with_note_invitation, method: :post do |f|
+                  = f.input :note, label: "I will be working on... ", placeholder: "e.g. I know a bit of HTML and CSS or the second JQuery tutorial", required: true
+                  = f.button :submit, "Attend",  class: "button expand round"
+                  %label *Letting us know what you plan to work on will help us manage things easier.
+              - else
+                = render partial: 'invitation/waiting_list', locals: { invitation: @invitation }
       .panel.callout
         Sign up to codebar's discussion forum at
         =link_to "discuss.codebar.io", "http://discuss.codebar.io"

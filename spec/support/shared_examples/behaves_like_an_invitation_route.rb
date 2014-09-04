@@ -11,10 +11,9 @@ shared_examples "invitation route" do
     scenario 'when there are no available spots' do
       set_no_available_slots
       visit invitation_route
-      click_on "Attend"
 
       expect(current_url).to eq(invitation_url(invitation))
-      expect(page).to have_content("Unfortunately there are no more spaces left :(.")
+      expect(page).to have_content("There are no more spots left")
     end
   end
 

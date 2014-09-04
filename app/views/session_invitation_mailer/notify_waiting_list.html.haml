@@ -1,7 +1,7 @@
-=render partial: 'shared_mailers/header', locals: { title: "Workshop Attendance Confirmation" }
+=render partial: 'shared_mailers/header', locals: { title: "Waiting List" }
 %body{ bgcolor: "#FFFFFF" }
 
-  =render partial: 'shared_mailers/body_header', locals: { title: "Workshop Attendance Confirmation" }
+  =render partial: 'shared_mailers/body_header', locals: { title: "Waiting List spot available" }
 
   %table{ class: "body-wrap"}
     %tr
@@ -14,11 +14,7 @@
               %td
                 %h3 Hi, #{@member.name}
                 %p.lead
-                  - if @waiting_list
-                    A spot became available and your attendance has now been confirmed.
-                  - else
-                    Thank you for confirming you attendance.
-                  See you at our workshop!
+                  A spot just opened up for the workshop. If you would like to attend, please RSVP.
 
         .content
           %table{ bgcolor: "#FFFFFF" }
@@ -33,7 +29,7 @@
                   #{@session.host.name}
                   %br
                   #{@host_address.to_html}
-                = link_to "Who else will be there?", full_url_for(invitation_url(@invitation)), class: 'btn'
+                = link_to "RSVP", full_url_for(invitation_url(@invitation)), class: 'btn'
 
         .content
           %table

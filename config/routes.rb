@@ -22,6 +22,8 @@ Planner::Application.routes.draw do
       get "accept"
       get "reject"
     end
+
+    resource :waiting_list, only: [:create, :destroy]
   end
 
   resources :invitations, only: [ :index ]
