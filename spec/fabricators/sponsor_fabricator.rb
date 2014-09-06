@@ -6,7 +6,7 @@ avatars = [
 
 Fabricator(:sponsor) do
   name { Faker::Name.name }
-  website { Faker::Internet.domain_name }
+  website { "http://#{Faker::Internet.domain_name}" }
   avatar { avatars.sample }
   address
 end
