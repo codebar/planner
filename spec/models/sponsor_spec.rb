@@ -24,7 +24,7 @@ describe Sponsor do
         before { sponsor.website = nil }
 
         it { should_not be_valid}
-        it { should have(1).error_on(:website) }
+        it { should have(2).errors_on(:website) }
       end
       describe '#address' do
         before { sponsor.address = nil }
@@ -44,6 +44,28 @@ describe Sponsor do
         before { sponsor.seats = nil }
 
         it { should have(1).error_on(:seats) }
+      end
+    end
+
+    context 'format' do
+      describe '#website' do
+        describe "nonsense is not valid." do
+          before { sponsor.website = "lkjdlkfgjj" }
+          it { should_not be_valid }
+          it { should have(1).error_on(:website) }
+        end
+
+        describe "websites without a protocol are not valid" do
+          before { sponsor.website = "www.google.com" }
+
+          it { should_not be_valid }
+          it { should have(1).error_on(:website) }
+        end
+
+        describe "full URLs are valid" do
+          before { sponsor.website = "http://google.com" }
+          it { should be_valid }
+        end
       end
     end
   end
