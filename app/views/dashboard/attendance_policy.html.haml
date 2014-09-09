@@ -1,0 +1,18 @@
+= render partial: 'shared/title', locals: { title: "Attendance Policy", date: nil }
+
+%section#banner
+  .row
+    .large-12.columns
+      %p We have a simple attendance policy in place, as our workshops have been getting busy and want to try to give everyone who can make it the opportunity to attend.
+      %ul
+        %li
+          To attend, you need to meet our
+          =link_to "eligibility criteria", "http://codebar.io/faq#attendance-eligibility"
+        %li
+          Only RSVP “yes” for events you can attend as by not attending:
+          %ul
+            %li you are taking someone else's spot
+            %li we will arrange more coaches than needed
+        %li If you fail to attend, without any communication, <b>three times</b>, we will stop sending you invitations for four weeks.
+        %li If this is repeated, it may result in you not being allowed to rejoin our events.
+        %li We can appreciate that something can come up last minute - it's never too late to let us know, just send an email to your local group.

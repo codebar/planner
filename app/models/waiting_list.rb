@@ -3,7 +3,6 @@ class WaitingList < ActiveRecord::Base
   belongs_to :invitation, class: SessionInvitation
 
   scope :by_workshop, -> (workshop) { joins(:invitation).where("session_invitations.sessions_id = ?", workshop.id) }
-
   scope :where_role, -> (role) { where("session_invitations.role = ?", role) }
 
   def self.add(invitation, auto_rsvp=true)

@@ -31,4 +31,12 @@ module ApplicationHelper
     require 'verifier'
     Verifier.new(id: member.id).access_token
   end
+
+  def twitter
+    Planner::Application.config.twitter
+  end
+
+  def twitter_id
+    Planner::Application.config.twitter_id
+  end
 end
