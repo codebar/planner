@@ -1,7 +1,7 @@
 = render partial: 'shared/title', locals: { title: @chapter.name, date: nil }
 %section#chapter
   .row
-    .large-7.medium-12.small-12.columns
+    .large-7.medium-6.small-12.columns
       - if @upcoming_workshops.empty?
         %p.lead
           There are no upcoming workshops.
@@ -13,7 +13,7 @@
         - @upcoming_workshops.each do |workshop|
           = render partial: 'events/event', locals: { event: workshop }
 
-    .large-offset-1.large-4.medium-12.small-12.columns
+    .large-offset-1.large-4.medium-6.small-12.columns
       %a.twitter-timeline{href: "https://twitter.com/#{@chapter.twitter_handle}", "data-widget-id" => @chapter.twitter_id }="Tweets by #{@chapter.twitter_handle}"
       :javascript
         !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
@@ -24,7 +24,7 @@
       %a{ name: "organisers" }
       %h4 The team
 
-      %ul.small-block-grid-3
+      %ul.small-block-grid-1.medium-block-grid-3
         - @chapter.organisers.shuffle.each do |organiser|
           %li.organiser
             .row
