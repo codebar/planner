@@ -11,14 +11,14 @@ feature 'when visiting the homepage' do
 
   scenario "i can view the next session" do
 
-    expect(page).to have_content humanize_date_with_time(next_session.date_and_time)
+    expect(page).to have_content I18n.l(next_session.date_and_time, format: :month).upcase
   end
 
   scenario "i can view the next course" do
 
     expect(page).to have_content next_course.title
     expect(page).to have_content next_course.short_description
-    expect(page).to have_content humanize_date_with_time(next_course.date_and_time)
+    expect(page).to have_content I18n.l(next_course.date_and_time, format: :month).upcase
   end
 
   scenario "i can access the code of conduct" do

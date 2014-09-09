@@ -1,14 +1,16 @@
 class EventsController < ApplicationController
 
   def index
-    @past_events = [ Sessions.past.all ]
-    @past_events << Course.past.all
-    @past_events << Meeting.past.all
-    @past_events.flatten!.sort_by!(&:date_and_time).reverse!
+    events = [ Sessions.past.all ]
+    events << Course.past.all
+    events << Meeting.past.all
+    events.flatten!.sort_by!(&:date_and_time).reverse!
+    @past_events = EventPresenter.decorate_collection(events)
 
-    @events = [ Sessions.upcoming.all ]
-    @events << Course.upcoming.all
-    @events << Meeting.upcoming.all
-    @events.flatten!.sort_by!(&:date_and_time)
+    events = [ Sessions.upcoming.all ]
+    events << Course.upcoming.all
+    events << Meeting.upcoming.all
+    events.flatten!.sort_by!(&:date_and_time)
+    @events = EventPresenter.decorate_collection(events)
   end
 end

@@ -3,66 +3,28 @@
   .container
     .row
       .medium-8.columns
-        %p
-          Codebar is an initiative aiming to bridge the diversity gap in the tech industry by running free weekly coding workshops and other programming related events aimed at women, LGBTQ and people otherwise underrepresented.
-        %p
-          Do you have any questions? Have a look at our #{link_to "FAQ", faq_path}.
-      .medium-4.columns
+        %p.lead
+          Join our weekly workshops in #{link_to "London", chapter_url("london")},  #{link_to "Brighton", chapter_url("brighton")} and #{link_to "Cambridge", chapter_url("cambridge")} to get to grips with the basics of programming and web development.
+      .medium-offset-1.medium-3.columns
         =link_to "Sign up as a student", new_member_path(role:"student"), class: 'button round expand'
         =link_to "Sign up as a coach", new_member_path(role: "coach"), class: 'button round expand'
 
-%section
+
+%section#chapter
   .events
     .row
       %hr
-      .large-12.columns
-        %h4 Upcoming events
-        .row{ "data-equalizer" => "" }
-          - if @meeting.present?
-            .large-4.medium-6.columns
-              %ul.pricing-table.meeting{ "data-equalizer-watch" => '' }
-                %li.title=@meeting.title
-                %li.description
-                  = humanize_date_with_time(@meeting.date_and_time)
-                %li.bullet-item
-                  - @meeting.meeting_talks.each do |talk|
-                    =talk.title
-                    %br
-                %li.cta-button
-                  =link_to "View details", @meeting, class: "button round tiny"
-
-          - if @upcoming_workshops.present?
+      .large-7.columns
+        - if @upcoming_workshops.present?
+          %ul.no-bullet
             - @upcoming_workshops.each do |workshop|
-              .large-4.medium-6.columns
-                %ul.pricing-table.workshop{ "data-equalizer-watch" => '' }
-                  %li.title
-                    Workshop
-                    (#{workshop.chapter.name})
-                  %li.description
-                    = humanize_date_with_time(workshop.date_and_time, workshop.time)
-                  - if workshop.has_host?
-                    %li.bullet-item
-                      = link_to workshop.host.name, workshop.host.website
-                      %br
-                      = AddressDecorator.decorate(workshop.host.address).to_html
-                  - if workshop.invitable?
-                    %li.cta-button
-                      - if logged_in?
-                        = link_to "RSVP", invitations_path, class: "button round tiny"
-                  - elsif workshop.sign_up_url.present?
-                    %li.cta-button
-                      = link_to "Sign up", workshop.sign_up_url, class: "button round tiny"
-
-          - if @next_course.present?
-            .large-4.medium-6.columns
-              %ul.course.pricing-table{ "data-equalizer-watch" => '' }
-                %li.title= @next_course.title
-                %li.description
-                  = humanize_date_with_time(@next_course.date_and_time)
-                %li.bullet-item
-                  = @next_course.short_description.html_safe
-                %li.cta-button
-                  =link_to "View details", @next_course, class: "button round tiny "
+              = render partial: 'events/event', locals: { event: workshop }
+            %li
+              =link_to "View events", events_url, class: "button round expand"
+      .large-offset-1.large-4.medium-12.small-12.columns
+        %a.twitter-timeline{href: "https://twitter.com/#{twitter}", "data-widget-id" => twitter_id}="Tweets by #{twitter}"
+        :javascript
+          !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
 
   .row
     %hr

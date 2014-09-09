@@ -1,10 +1,9 @@
 class DashboardController < ApplicationController
   def show
-    @upcoming_workshops = Sessions.upcoming
-    @next_course = Course.next
+    @upcoming_workshops = EventPresenter.decorate_collection(upcoming_events)
+
     @sponsors = Sponsor.all.shuffle
     @latest_sponsors = Sponsor.latest
-    @meeting = Meeting.next
   end
 
   def code
@@ -33,5 +32,14 @@ class DashboardController < ApplicationController
 
   def order_by_attendance member_stats
     member_stats.sort_by { |member_id, attendance| attendance }.reverse
+  end
+
+  def upcoming_events
+    workshops = Sessions.upcoming || []
+    course = Course.next
+    meeting = Meeting.next
+    events = workshops << course << meeting
+    events = events.compact.flatten
+    events.sort_by!(&:date_and_time)
   end
 end
