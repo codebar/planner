@@ -4,8 +4,32 @@ describe WorkshopPresenter do
   let(:invitations) { [Fabricate(:student_session_invitation),
                        Fabricate(:student_session_invitation),
                        Fabricate(:coach_session_invitation)] }
-  let(:sessions) { double(:workshop, attendances: invitations )}
+  let(:chapter) { Fabricate(:chapter) }
+  let(:sessions) { double(:workshop, attendances: invitations, host: Fabricate(:sponsor), chapter: chapter )}
   let(:workshop) { WorkshopPresenter.new(sessions) }
+
+  it "#venue" do
+    expect(sessions).to receive(:host)
+
+    workshop.venue
+  end
+
+  it "#organisers" do
+    expect(sessions).to receive(:permissions)
+    expect(sessions).to receive(:chapter).and_return(chapter)
+
+    workshop.organisers
+  end
+
+  it "#time" do
+    expect(sessions).to receive(:time).and_return(DateTime.new)
+
+    workshop.time
+  end
+
+  it "#path" do
+    expect(workshop.path).to eq("/#{chapter.name.downcase}")
+  end
 
   it "#attendess_csv" do
 
