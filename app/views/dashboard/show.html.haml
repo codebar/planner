@@ -15,12 +15,16 @@
     .row
       %hr
       .large-7.columns
+        - if @upcoming_workshops.empty?
+          %p
+            There are no upcoming workshops.
+          %p
+            =link_to "View past events", events_url, class: "button round expand"
+
         - if @upcoming_workshops.present?
           %ul.no-bullet
             - @upcoming_workshops.each do |workshop|
               = render partial: 'events/event', locals: { event: workshop }
-            %li
-              =link_to "View events", events_url, class: "button round expand"
       .large-offset-1.large-4.medium-12.small-12.columns
         %a.twitter-timeline{href: "https://twitter.com/#{twitter}", "data-widget-id" => twitter_id}="Tweets by #{twitter}"
         :javascript
