@@ -5,12 +5,13 @@
       - if @events.any?
         .upcoming
           .titlebox
-            %h3 Upcoming
           = render partial: 'events', locals: { events: @events }
 
-    .large-12.columns
-      - if @past_events.any?
-        .past
-          .titlebox
-            %h3 Past
-          = render partial: 'events', locals: { events: @past_events }
+  .past__container
+    .row
+      .large-12.columns
+        - if @past_events.any?
+          .past
+            .titlebox
+              %h2 Past
+            = render partial: 'events', locals: { events: @past_events }

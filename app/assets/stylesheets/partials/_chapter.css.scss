@@ -1,0 +1,45 @@
+#chapter {
+
+  .date {
+    text-align: center;
+    font-family: "Cousine";
+  }
+
+  .month {
+    font-weight: bold;
+    font-size: 1em;
+    font-case: upcase;
+  }
+
+  .time {
+    font-size: 1em;
+  }
+
+  .day {
+    font-size: 2.5em;
+  }
+
+  .workshop {
+    border-radius: 2px;
+    padding: 0 0 30px;
+    margin: 0 0 20px 0;
+  }
+
+  .workshop:not(:last-child) {
+    border-bottom: 1px solid #ddd2e9;
+  }
+
+  .organisers {
+    margin-top: 15px;
+  }
+}
+
+.organiser  {
+  border: 1px solid #f7f4fa;
+  margin: 4px;
+  .row {
+    text-align: center;
+    padding: 15px;
+    margin: 0 5px;
+  }
+}

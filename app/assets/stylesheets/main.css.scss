@@ -1,6 +1,7 @@
 @import 'partials/layout';
 @import 'partials/events';
 @import 'partials/social_media';
+@import 'partials/chapter';
 
 section.title {
   background-image: image-url('bg.JPG');
@@ -36,9 +37,8 @@ section.title {
   }
 }
 
-#banner {
+#banner, #chapter {
   margin-top: 30px;
-  margin-bottom: 10px;
 }
 
 nav a.menu {

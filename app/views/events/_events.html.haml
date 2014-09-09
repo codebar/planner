@@ -1,19 +1,4 @@
-.events
-  - events.each_slice(3).each do |grouped_events|
-    .row{ "data-equalizer" => "" }
-      - grouped_events.each do |event|
-        .large-4.columns
-          %ul.pricing-table{ "data-equalizer-watch" => '', class: event.class.to_s.downcase }
-            %li.title
-              = event.to_s
-              - if event.is_a?(Sessions)
-                (#{event.chapter.name})
-            %li.description
-              = event.is_a?(Sessions) ? humanize_date_with_time(event.date_and_time, event.time) : humanize_date_with_time(event.date_and_time)
-            %li.cta-button
-              - if !event.is_a?(Sessions)
-                =link_to "View details", event, class: "button round tiny"
-              - elsif event.sign_up_url.present?
-                = link_to "Sign up", event.sign_up_url, class: "button round tiny"
-              - else
-                =link_to "Sign up", new_member_path, class: "button round tiny"
+.events#chapter
+  %ul.no-bullet
+    - events.each do |event|
+      = render partial: 'event', locals: { event: event }

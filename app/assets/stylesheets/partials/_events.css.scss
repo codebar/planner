@@ -20,20 +20,19 @@
   }
 }
 
-.pricing-table {
-  background-color: rgba(253,253,253,0.8);
+.past__container {
+  padding-top: 50px;
+  background-color: #eeeeee;
+}
 
-  &.meeting .title {
-    border-left: 7px solid #241a62;
-  }
+.meeting.date {
+  color: #968ae0;
+}
 
-  &.workshop, &.sessions  {
-    .title {
-      border-left: 7px solid #ccc0d6;
-    }
-  }
+.sessions.date  {
+  color: #ab97bb;
+}
 
-  &.course .title {
-    border-left: 7px solid #57ae3b;
-  }
+.course.date {
+  color: #d9699e;
 }
