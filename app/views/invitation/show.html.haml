@@ -59,13 +59,15 @@
       %iframe{ width: '100%', height: '350', frameborder: '0', scrolling: 'no', marginheight: '0', marginwidth: '0', src: %{https://maps.google.com/maps?f=q&source=s_q&hl=en&amp;geocode=&q=#{@host_address.for_map}&ie=UTF8&t=m&z=15&output=embed} }
       =link_to "View larger map", %{https://maps.google.com/maps?f=q&source=s_q&hl=en&amp;geocode=&q=#{@host_address.for_map}&ie=UTF8&hq=&t=m&z=15}, style: "color:#0000FF;text-align:left"
     .medium-3.columns
-      = image_tag @invitation.sessions.host.avatar, class: 'sponsor-logo'
+      = image_tag @workshop.venue.avatar, class: 'sponsor-logo'
       %p
         = @host_address.to_html
-      %p
-        %h5 Organisers
-        - @invitation.sessions.chapter.organisers.each do |organiser|
+      %strong Organisers
+      - @workshop.organisers.each do |organiser|
+        %p
           = organiser.full_name
+          %br
+          =03432423
           = organiser.mobile
 
   .row
