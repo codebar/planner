@@ -6,6 +6,7 @@ class SessionInvitationMailer < ActionMailer::Base
 
   def invite_student sessions, member, invitation
     @session = sessions
+    @workshop = WorkshopPresenter.new(sessions)
     @member = member
     @invitation = invitation
 
@@ -30,6 +31,7 @@ class SessionInvitationMailer < ActionMailer::Base
 
   def attending sessions, member, invitation, waiting_list=false
     @session = sessions
+    @workshop = WorkshopPresenter.new(sessions)
     @host_address = AddressDecorator.decorate(@session.host.address)
     @member = member
     @invitation = invitation
@@ -64,6 +66,7 @@ class SessionInvitationMailer < ActionMailer::Base
 
   def reminder session, member, invitation
     @session = session
+    @workshop = WorkshopPresenter.new(session)
     @host_address = AddressDecorator.decorate(@session.host.address)
     @member = member
     @invitation = invitation

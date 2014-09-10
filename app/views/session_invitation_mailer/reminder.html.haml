@@ -37,7 +37,7 @@
               %td
                 %p
                   If you have any trouble finding the venue call
-                  - @session.chapter.organisers.each do |organiser|
+                  - @workshop.organisers.each do |organiser|
                     - if organiser.mobile.present?
                       = organiser.full_name
                       =organiser.mobile
