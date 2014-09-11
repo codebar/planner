@@ -67,7 +67,6 @@
         %p
           = organiser.full_name
           %br
-          =03432423
           = organiser.mobile
 
   .row
@@ -77,7 +76,7 @@
       %h4{ "data-magellan-destination" => "attendees"}  Who else will be there?
   .row
     .medium-6.columns
-      %h4 Students
+      %h4 Students (#{@invitation.sessions.attending_students.count})
       %ul.attendances.no-bullet
         - @invitation.sessions.attending_students.each do |invitation|
           %li.attendance
@@ -90,7 +89,7 @@
                 .subheader=invitation.note
             %br
     .medium-6.columns
-      %h4 Coaches
+      %h4 Coaches (#{@invitation.sessions.attending_coaches.count})
       %ul.attendances.no-bullet
         - @invitation.sessions.attending_coaches.each do |invitation|
           %li.attendance
