@@ -26,7 +26,7 @@ class Admin::ChaptersController < Admin::ApplicationController
     @workshops = @chapter.workshops.upcoming
     @sponsors = @chapter.sponsors.uniq
     @groups = @chapter.groups
-    @subscribers = @chapter.members.uniq.last(10).reverse
+    @subscribers = @chapter.subscriptions.last(20).reverse
   end
 
   private
