@@ -32,6 +32,10 @@ class Member < ActiveRecord::Base
     can_log_in? && !valid?
   end
 
+  def verified?
+    session_invitations.exists?(role: "Coach", attended: true)
+  end
+
   private
 
   def md5_email
