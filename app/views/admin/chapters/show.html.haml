@@ -16,7 +16,15 @@
               =organiser.mobile
             - else
               .label.alert Phone number not set
-    %hr
+    .large-offset-1.large-3.columns
+      %ul.side-nav
+        - @groups.each do |group|
+          %li
+            =link_to [ :admin, group ] do
+              #{group.name} (#{group.members.count})
+    .large-3.columns.end
+      =link_to "View all sponsors", admin_sponsors_path, class: 'button round expand small'
+      =link_to "View all workshops", admin_chapter_workshops_path(@chapter), class: 'button round expand small'
 
   .row
     .large-4.columns
@@ -28,24 +36,6 @@
               = humanize_date_with_time(workshop.date_and_time, workshop.time)
               - if workshop.invitable?
                 (#{workshop.invitations.accepted.count})
-      = link_to "All workshops", admin_chapter_workshops_path(@chapter), class: "button tiny"
-    .large-4.columns
-      %h4 Sponsors
-      %ul.side-nav
-        - @sponsors.each do |sponsor|
-          %li
-            = link_to sponsor.name, [ :admin, sponsor ]
-    .large-4.columns
-      %h4 Groups
-      %ul.no-bullet
-        - @groups.each do |group|
-          %li
-            =link_to group.name, [ :admin, group ]
-            (#{group.members.count})
-  .row
-    .large-6.columns
-      %h4 Last 10 subscribers
-      %ul
-        - @subscribers.each do |member|
-          %li
-            =link_to member.full_name, admin_member_path(member)
+    .large-8.columns
+      %h4 Latest subscribers
+      = render partial: 'admin/subscriptions/index', locals: { subscribers: @subscribers }

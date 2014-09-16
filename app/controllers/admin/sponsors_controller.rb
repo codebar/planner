@@ -2,6 +2,10 @@ class Admin::SponsorsController < Admin::ApplicationController
 
   before_filter :set_sponsor, only: [ :show, :edit, :update]
 
+  def index
+    @sponsors = Sponsor.joins(:sponsor_sessions).all
+  end
+
   def new
     @sponsor = Sponsor.new
     @sponsor.build_address
