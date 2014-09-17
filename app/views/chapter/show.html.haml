@@ -1,4 +1,10 @@
 = render partial: 'shared/title', locals: { title: @chapter.name, date: nil }
+.row
+  .large-7.medium-6-small-12.columns
+    Our workshops are open to anyone under-represented in the tech industry, but places are limited.
+    =link_to "Sign up", new_member_path
+    to receive invitations to our upcoming workshops.
+
 %section#chapter
   .row
     .large-7.medium-6.small-12.columns
