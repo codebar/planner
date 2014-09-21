@@ -41,20 +41,14 @@ class Sessions < ActiveRecord::Base
 
   # Is there space for coaches at this event?
   def coach_spaces?
-    if has_host?
-      host.coach_spots > attending_coaches.length
-    else
-      false
-    end
+    return host.coach_spots > attending_coaches.length if has_host?
+    false
   end
 
   # Is there space for students at this event?
   def student_spaces?
-    if has_host?
-      host.seats > attending_students.length
-    else
-      false
-    end
+    return host.seats > attending_students.length if has_host?
+    false
   end
 
   def to_s
