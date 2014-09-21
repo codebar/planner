@@ -21,7 +21,7 @@
         - else
 
           - if @invitation.attending.eql?(true)
-            - if @invitation.role.eql?("Student")
+            - if @invitation.for_student?
               %p
                 You will be working on
                 %em= @invitation.note
@@ -32,13 +32,13 @@
             - else
               =link_to "I can no longer attend", reject_invitation_url(@invitation), class: "expand button round"
           - else
-            - if @invitation.role.eql?("Coach")
-              - if more_coaches_needed?(@invitation)
+            - if @invitation.for_coach?
+              - if @invitation.coach_spaces?
                 = link_to "Attend", accept_invitation_url(@invitation), class: "expand button round center"
               - else
                 = render partial: 'invitation/waiting_list', locals: { invitation: @invitation }
             - else
-              - if available_student_slots?(@invitation)
+              - if @invitation.student_spaces?
                 = simple_form_for @invitation, url: :accept_with_note_invitation, method: :post do |f|
                   = f.input :note, label: "I will be working on... ", placeholder: "e.g. I know a bit of HTML and CSS or the second JQuery tutorial", required: true
                   = f.button :submit, "Attend",  class: "button expand round"

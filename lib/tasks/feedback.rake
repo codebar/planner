@@ -1,5 +1,5 @@
 namespace :feedback do
-  desc "Request feedback from students that attendanted last session"
+  desc "Request feedback from students that attended our last session"
 
   task request: :environment do
 
