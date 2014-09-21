@@ -20,12 +20,24 @@ module InvitationConcerns
       token
     end
 
+    # Are there any spaces left at this meeting for students?
     def student_spaces?
-      role.eql?("Student") and sessions.student_spaces?
+      for_student? && sessions.student_spaces?
     end
 
+    # Are there any spaces left at this meeting for coaches?
     def coach_spaces?
-      role.eql?("Coach") and sessions.coach_spaces?
+      for_coach? && sessions.coach_spaces?
+    end
+
+    # Is this an invitation for a student?
+    def for_student?
+      role.eql?("Student")
+    end
+
+    # Is this an invitation for a coach?
+    def for_coach?
+      role.eql?("Coach")
     end
 
     private

@@ -21,7 +21,7 @@ class SessionInvitation < ActiveRecord::Base
   private
 
   def email
-    if role.eql?("Student")
+    if for_student?
       SessionInvitationMailer.invite_student(self.sessions, self.member, self).deliver
     end
   end
