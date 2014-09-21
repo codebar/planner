@@ -6,6 +6,10 @@ describe "reminders:workshop" do
   its(:prerequisites) { should include("environment") }
   let!(:workshop) { Fabricate(:sessions, date_and_time: DateTime.now+29.hours) }
 
+  before do
+    allow(STDOUT).to receive(:puts)
+  end
+
   it 'should gracefully run' do
     expect { subject.invoke }.to_not raise_error
   end
