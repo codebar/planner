@@ -20,6 +20,14 @@ module InvitationConcerns
       token
     end
 
+    def student_spaces?
+      role.eql?("Student") and sessions.student_spaces?
+    end
+
+    def coach_spaces?
+      role.eql?("Coach") and sessions.coach_spaces?
+    end
+
     private
 
     def set_token

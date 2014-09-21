@@ -38,7 +38,7 @@
               - else
                 = render partial: 'invitation/waiting_list', locals: { invitation: @invitation }
             - else
-              - if available_student_slots?(@invitation)
+              - if @invitation.student_spaces?
                 = simple_form_for @invitation, url: :accept_with_note_invitation, method: :post do |f|
                   = f.input :note, label: "I will be working on... ", placeholder: "e.g. I know a bit of HTML and CSS or the second JQuery tutorial", required: true
                   = f.button :submit, "Attend",  class: "button expand round"

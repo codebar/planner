@@ -5,8 +5,6 @@ module InvitationControllerConcerns
     before_action :set_invitation
 
     include InstanceMethods
-
-    helper_method :available_student_slots?, :more_coaches_needed?
   end
 
   module InstanceMethods
@@ -16,7 +14,7 @@ module InvitationControllerConcerns
         redirect_to :back, notice: t("messages.already_rsvped")
       end
 
-      if available_student_slots?(@invitation) or more_coaches_needed?(@invitation)
+      if @invitation.student_spaces? or @invitation.coach_spaces?
         @invitation.update_attribute(:attending, true)
         @invitation.waiting_list.delete  if @invitation.waiting_list.present?
         SessionInvitationMailer.attending(@invitation.sessions, @invitation.member, @invitation).deliver
@@ -51,14 +49,6 @@ module InvitationControllerConcerns
       else
         redirect_to :back, notice: "You can only change your RSVP status up to 24 hours before the session"
       end
-    end
-
-    def more_coaches_needed?(invitation)
-      invitation.role.eql?("Coach") and invitation.sessions.host.coach_spots > invitation.sessions.attending_coaches.length
-    end
-
-    def available_student_slots?(invitation)
-      invitation.role.eql?("Student") and invitation.sessions.host.seats > invitation.sessions.attending_students.length
     end
   end
 end

@@ -13,7 +13,7 @@ class InvitationController < ApplicationController
   def accept_with_note
     @invitation.update_attribute(:note, params[:session_invitation][:note])
 
-    if available_student_slots?(@invitation)
+    if @invitation.student_spaces?
       @invitation.update_attribute(:attending, true)
       SessionInvitationMailer.attending(@invitation.sessions, @invitation.member, @invitation).deliver
 

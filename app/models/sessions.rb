@@ -29,6 +29,34 @@ class Sessions < ActiveRecord::Base
     has_host? and host.address.present?
   end
 
+  # Is this event in the past?
+  def past?
+    date_and_time < Time.now
+  end
+
+  # Is there any space at this event?
+  def spaces?
+    coach_spaces? || student_spaces?
+  end
+
+  # Is there space for coaches at this event?
+  def coach_spaces?
+    if has_host?
+      host.coach_spots > attending_coaches.length
+    else
+      false
+    end
+  end
+
+  # Is there space for students at this event?
+  def student_spaces?
+    if has_host?
+      host.seats > attending_students.length
+    else
+      false
+    end
+  end
+
   def to_s
     "Workshop"
   end
