@@ -16,7 +16,7 @@
   - if @workshop.has_host?
     .row
       .medium-12.columns
-        %strong.label.round.secondary #{@workshop.host.seats} spots
+        %strong.label.round.secondary #{@workshop.host.seats} seats, #{@workshop.host.coach_spots} coach spots
         %br
         %br
   .row
@@ -74,8 +74,8 @@
     .row
       %hr
       .medium-6.columns
-        %h4 Students
+        %h4 Students (#{@workshop.attending_students.count})
         =render partial: 'admin/workshop/attendances', locals: { invitations: @workshop.attending_students }
       .medium-6.columns
-        %h4 Coaches
+        %h4 Coaches (#{@workshop.attending_coaches.count})
         =render partial: 'admin/workshop/attendances', locals: { invitations: @workshop.attending_coaches }
