@@ -1,6 +1,6 @@
 .row
   .large-12.columns
-    %ul{ "data-orbit" => true, "data-options" => " animation:fade;timer_speed:20000;next_on_click:false;bullets:false;slide_number:false;circular:true;navigation_arrows:false;pause_on_hover:false;" }
+    %ul{ "data-orbit" => true, "data-options" => " animation:fade;timer_speed:60000;next_on_click:false;bullets:false;slide_number:false;circular:true;navigation_arrows:false;pause_on_hover:false;" }
       - @testimonials.each_with_index do |testimonial, index|
         %li{ "data-orbit-slide" => "testimonial-#{index}" }
           %blockquote
