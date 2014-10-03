@@ -1,36 +1,20 @@
 = render partial: 'shared/title', locals: { title: "Coding is easier than you think", date: nil }
 %section#banner
-  .container
-    .row
-      .medium-12.columns
-        %p.lead.text-center
-          Join our weekly workshops in #{link_to "London", chapter_url("london")},  #{link_to "Brighton", chapter_url("brighton")} and #{link_to "Cambridge", chapter_url("cambridge")} to get to grips with the basics of programming and web development.
-    %br
-    .row
-      .medium-offset-2.medium-4.columns
-        =link_to "Sign up as a student", new_member_path(role:"student"), class: 'button round expand'
-      .medium-4.columns
-        =link_to "Sign up as a coach", new_member_path(role: "coach"), class: 'button round expand'
+  .row
+    .medium-12.columns
+      %p.lead.text-center
+        Join our  <i>free</i> weekly workshops in #{link_to "London", chapter_url("london")},  #{link_to "Brighton", chapter_url("brighton")} and #{link_to "Cambridge", chapter_url("cambridge")} to get to grips with the basics of programming and web development.
+  %br
+  .row
+    .medium-offset-2.medium-4.columns
+      =link_to "Students", new_member_path(role:"student"), class: 'button round expand'
+    .medium-4.columns
+      =link_to "Coaches", new_member_path(role: "coach"), class: 'button round expand'
 %br
 
-%section.testimonials
-  .row
-    .large-12.columns
-      %ul{ "data-orbit" => true, "data-options" => " animation:fade;timer_speed:10000;next_on_click:false;bullets:false;slide_number:false;circular:true;navigation_arrows:false;pause_on_hover:false;" }
-        %li{ "data-orbit-slide" => "headline-1" }
-          %blockquote
-            %p I have benefitted from learning how to code in so many ways, not only in breaking things down and thinking them through logically but also through creating interesting projects and realising the potential of what is possible through writing good code.
-            %cite Priya Patil
-
-        %li{ "data-orbit-slide" => "headline-2" }
-          %blockquote
-            %p I started attending Codebar to learn how to code an idea I had, but I ended up learning more than just the basics! I built my initial prototype in just a few weeks and have progressed far more than I thought I could. The best part about the workshops are the coaches, they are very patient and help you understand difficult concepts. Attending the weekly workshops has now given me the confidence to code any idea into a prototype – something I didn’t think I could do a year ago! Learning to code is an excellent skill to add to your repertoire and it enhances any career path. I would highly recommend Codebar to anyone, especially if you come from a non-technical background like me!
-            %cite Harini Manivannan
-        %li{ "data-orbit-slide" => "headline-3" }
-          %blockquote
-            %p Codebar is awesome! The atmosphere is excellent - everyone is really friendly and the coaches really want to help in any way they can. Coding alone in your room isn't great for when you get stuck and so meeting other coders at Codebar made me realise that others were struggling with the same problems that I was. This really helped boost my confidence, which is vital when learning a new subject. Thoroughly recommended.
-            %cite Nishita
-
+- if @testimonials.any?
+  %section.testimonials
+    = render partial: 'members/testimonials'
 
 %section#chapter
   .events

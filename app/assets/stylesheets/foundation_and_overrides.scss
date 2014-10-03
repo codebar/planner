@@ -1131,11 +1131,12 @@ $table-margin-bottom: rem-calc(10);
 $thumb-border-style: none;
 $thumb-border-width: 1px;
 // $thumb-border-color: #fff;
-$thumb-box-shadow: 0 0 0 2px rgba(#000,.2);
-$thumb-box-shadow-hover: 0 0 10px 2px rgba($primary-color,0.5);
+$thumb-box-shadow: 1px 3px 3px 0 rgba(0, 0, 0, 0.5);
+$thumb-box-shadow-hover: 1px 3px 6px 0 rgba(0, 0, 0, 1);
+
 
 // Radius and transition speed for thumbs
-$thumb-radius: 45px;
+$thumb-radius: 50px;
 
 // $thumb-transition-speed: 200ms;
 
@@ -1308,6 +1309,6 @@ table thead tr td {
 }
 
 blockquote p {
-  font-size: 1em;
-  line-height: 1.2em;
+  font-size: 0.8em;
+  line-height: 1.3em;
 }

@@ -1,6 +1,7 @@
 class DashboardController < ApplicationController
   def show
     @upcoming_workshops = EventPresenter.decorate_collection(upcoming_events)
+    @testimonials = Testimonial.order("RANDOM() ").limit(10)
 
     @sponsors = Sponsor.latest
   end
