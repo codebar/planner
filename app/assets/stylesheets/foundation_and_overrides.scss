@@ -336,11 +336,11 @@ $alert-bottom-margin: rem-calc(0);
 
 // We use these to control button text styles.
 // $button-font-family: $body-font-family;
-// $button-font-color: #fff;
+ $button-font-color: #8e69b4;
 // $button-font-color-alt: #333;
 // $button-font-tny: rem-calc(11);
 // $button-font-sml: rem-calc(13);
-// $button-font-med: rem-calc(16);
+$button-font-med: rem-calc(16);
 // $button-font-lrg: rem-calc(20);
 // $button-font-weight: normal;
 // $button-font-align: center;
@@ -349,9 +349,9 @@ $alert-bottom-margin: rem-calc(0);
 // $button-function-factor: -20%;
 
 // We use these to control button border styles.
-// $button-border-width: 0px;
-// $button-border-style: solid;
-// $bg: $primary-color;
+$button-border-width: 2px;
+$button-border-style: solid;
+$bg: #ffffff;
 // $button-border-color: scale-color($bg, $lightness: $button-function-factor);
 
 // We use this to set the default radius used throughout the core.
@@ -1078,15 +1078,15 @@ $price-cta-align: right;
 
 // These control the background color for the table and even rows
  $table-bg: #fff;
- $table-even-row-bg: #fff;
 
 // These control the table cell border style
 $table-border-style: none;
 $table-border-size: 0px;
-$table-border-color: #fff;
+$table-border-color: #333;
 
 // These control the table head styles
 $table-head-bg: #ffffff;
+ $table-even-row-bg: #fff;
 // $table-head-font-size: rem-calc(14);
 // $table-head-font-color: #222;
 // $table-head-font-weight: bold;
@@ -1094,13 +1094,13 @@ $table-head-bg: #ffffff;
 
 // These control the row padding and font styles
 // $table-row-padding: rem-calc(9 10);
-// $table-row-font-size: rem-calc(14);
+$table-row-font-size: rem-calc(16);
 // $table-row-font-color: #222;
-// $table-line-height: rem-calc(18);
+$table-line-height: rem-calc(16);
 
 // These are for controlling the display and margin of tables
 // $table-display: table-cell;
-// $table-margin-bottom: rem-calc(20);
+$table-margin-bottom: rem-calc(10);
 
 //
 // TABS
@@ -1293,4 +1293,21 @@ $topbar-media-query: $medium-up;
 
 ul.off-canvas-list li label {
   background: none repeat scroll 0 0 #333333;
+}
+
+table thead tr td {
+  border-bottom: 1px solid rgb(34, 34, 34);
+}
+
+.button {
+  background-color: #fff;
+}
+
+.button:hover {
+  color: #ffffff;
+}
+
+blockquote p {
+  font-size: 1em;
+  line-height: 1.2em;
 }
