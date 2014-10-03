@@ -1,0 +1,12 @@
+.row
+  .large-12.columns
+    %ul{ "data-orbit" => true, "data-options" => " animation:fade;timer_speed:20000;next_on_click:false;bullets:false;slide_number:false;circular:true;navigation_arrows:false;pause_on_hover:false;" }
+      - @testimonials.each_with_index do |testimonial, index|
+        %li{ "data-orbit-slide" => "testimonial-#{index}" }
+          %blockquote
+            .row
+              .small-8.medium-10.columns
+                %p= testimonial.text
+                %cite.text-right= testimonial.member.full_name
+              .small-4.medium-2.columns
+                = image_tag testimonial.member.avatar, class: 'th radius'

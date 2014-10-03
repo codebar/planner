@@ -97,6 +97,7 @@ Planner::Application.routes.draw do
   match '/logout' => 'auth_sessions#destroy', via: %i(get delete), as: :logout
   match '/register' => 'auth_sessions#create', via: %i(get), as: :registration
 
+  resources :sponsors, only: [:index]
   resources :chapter, only: [ :show ], path: ""
 
 end

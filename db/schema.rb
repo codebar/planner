@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140916134752) do
+ActiveRecord::Schema.define(version: 20141003172945) do
 
   create_table "addresses", force: true do |t|
     t.string   "flat"
@@ -271,6 +271,15 @@ ActiveRecord::Schema.define(version: 20140916134752) do
 
   add_index "subscriptions", ["group_id"], name: "index_subscriptions_on_group_id"
   add_index "subscriptions", ["member_id"], name: "index_subscriptions_on_member_id"
+
+  create_table "testimonials", force: true do |t|
+    t.integer  "member_id"
+    t.string   "text"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "testimonials", ["member_id"], name: "index_testimonials_on_member_id"
 
   create_table "tutorials", force: true do |t|
     t.string   "title"
