@@ -11,10 +11,12 @@ class Sponsor < ActiveRecord::Base
 
   accepts_nested_attributes_for :address
 
-  scope :latest, -> { joins(:sponsor_sessions).order("created_at desc").limit(15) }
-
   def coach_spots
     number_of_coaches || (seats/2.0).round
+  end
+
+  def self.latest
+    SponsorSession.order("created_at desc").limit(15).map(&:sponsor)
   end
 
   private
