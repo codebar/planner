@@ -76,6 +76,8 @@
       .medium-6.columns
         %h4 Students (#{@workshop.attending_students.count})
         =render partial: 'admin/workshop/attendances', locals: { invitations: @workshop.attending_students }
+        =render partial: 'admin/workshop/waiting_list', locals: { waiting_list: @student_waiting_list }
       .medium-6.columns
         %h4 Coaches (#{@workshop.attending_coaches.count})
         =render partial: 'admin/workshop/attendances', locals: { invitations: @workshop.attending_coaches }
+        =render partial: 'admin/workshop/waiting_list', locals: { waiting_list: @coach_waiting_list }

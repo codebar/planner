@@ -62,4 +62,13 @@ class Sessions < ActiveRecord::Base
   def self.policy_class
     WorkshopPolicy
   end
+
+  def date_and_time
+    read_attribute(:date_and_time).change(hour: time.hour, minute: time.min)
+  end
+
+  def date_and_time=(date_and_time)
+    write_attribute(:date_and_time, date_and_time.to_date)
+    write_attribute(:time, date_and_time.to_time)
+  end
 end
