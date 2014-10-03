@@ -274,7 +274,7 @@ ActiveRecord::Schema.define(version: 20141003172945) do
 
   create_table "testimonials", force: true do |t|
     t.integer  "member_id"
-    t.string   "text"
+    t.text     "text"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
