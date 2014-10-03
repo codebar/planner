@@ -1312,3 +1312,10 @@ blockquote p {
   font-size: 0.8em;
   line-height: 1.3em;
 }
+
+.button.alert {
+  color: #fff;
+  &:hover {
+    color: #fff;
+  }
+}
