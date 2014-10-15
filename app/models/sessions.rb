@@ -21,6 +21,18 @@ class Sessions < ActiveRecord::Base
     SponsorSession.hosts.for_session(self.id).first.sponsor rescue nil
   end
 
+  def waiting_list
+    invitations
+  end
+
+  def student_waiting_list
+    waiting_list.select(&:for_student?)
+  end
+
+  def coach_waiting_list
+    waiting_list.select(&:for_coach?)
+  end
+
   def has_host?
     SponsorSession.exists?(host: true, sessions: self)
   end
@@ -32,6 +44,10 @@ class Sessions < ActiveRecord::Base
   # Is this event in the past?
   def past?
     date_and_time < Time.now
+  end
+
+  def today?
+    date_and_time.today?
   end
 
   # Is there any space at this event?
