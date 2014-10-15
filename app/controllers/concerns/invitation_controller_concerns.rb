@@ -28,7 +28,7 @@ module InvitationControllerConcerns
     end
 
     def reject
-      if @invitation.parent.date_and_time-6.hours >= DateTime.now
+      if @invitation.parent.date_and_time-3.5.hours >= DateTime.now
 
         if @invitation.attending.eql? false
           redirect_to :back, notice: t("messages.not_attending_already")
@@ -47,7 +47,7 @@ module InvitationControllerConcerns
           redirect_to :back, notice: t("messages.rejected_invitation", name: @invitation.member.name)
         end
       else
-        redirect_to :back, notice: "You can only change your RSVP status up to 24 hours before the session"
+        redirect_to :back, notice: "You can only change your RSVP status up to 3.5 hours before the workshop"
       end
     end
   end

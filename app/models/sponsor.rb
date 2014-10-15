@@ -7,14 +7,17 @@ class Sponsor < ActiveRecord::Base
   validates :name, :address, :avatar, :website, :seats, presence: true
   validate :website_is_url
 
+  default_scope -> { order('updated_at desc') }
   mount_uploader(:avatar, AvatarUploader) unless Rails.env.test? or Rails.env.development?
 
   accepts_nested_attributes_for :address
 
-  scope :latest, -> { order("updated_at desc").limit(4) }
-
   def coach_spots
     number_of_coaches || (seats/2.0).round
+  end
+
+  def self.latest
+    SponsorSession.order("created_at desc").limit(15).map(&:sponsor)
   end
 
   private

@@ -1,6 +1,7 @@
 - if invitation.waiting_list.blank?
   %p There are no more spots left.
-  = link_to "Add to Waiting List", invitation_waiting_list_path(invitation), method: :post, class: 'button round expand'
+  = link_to "Add to Waiting List", invitation_waiting_list_path(invitation), method: :post, class: 'button round expand', "data-confirm" => "You will automatically be RSVPed until #{l(invitation.sessions.date_and_time-3.5.hours, format: :time)} on the day of the event, so make sure you keep an eye on your email."
+
   = link_to "Not sure, just remind me", invitation_waiting_list_path(invitation, auto_rsvp: false), method: :post, class: "button round expand"
 - else
   - if invitation.waiting_list.auto_rsvp?
