@@ -11,12 +11,15 @@
           =link_to edit_admin_workshop_path(@workshop) do
             Edit
             %i.fa.fa-pencil
+      - unless @workshop.spaces?
+        .workshop-status
+          Workshop full
       %hr
 
   - if @workshop.has_host?
     .row
       .medium-12.columns
-        %strong.label.round.secondary #{@workshop.host.seats} seats, #{@workshop.host.coach_spots} coach spots
+        %strong.label.round.secondary #{@workshop.host.seats} student spots, #{@workshop.host.coach_spots} coach spots
         %br
         %br
   .row
@@ -74,10 +77,16 @@
     .row
       %hr
       .medium-6.columns
-        %h4 Students (#{@workshop.attending_students.count})
+        %h4 Students (#{@workshop.attending_students.count}#{(" of " + @workshop.host.seats.to_s) if @workshop.has_host?})
+        - unless @workshop.student_spaces?
+          %small
+            #{@student_waiting_list.length} on the waiting list
         =render partial: 'admin/workshop/attendances', locals: { invitations: @workshop.attending_students }
         =render partial: 'admin/workshop/waiting_list', locals: { waiting_list: @student_waiting_list }
       .medium-6.columns
-        %h4 Coaches (#{@workshop.attending_coaches.count})
+        %h4 Coaches (#{@workshop.attending_coaches.count}#{(" of " + @workshop.host.coach_spots.to_s) if @workshop.has_host?})
+        - unless @workshop.coach_spaces?
+          %small
+            #{@coach_waiting_list.length} on the waiting list
         =render partial: 'admin/workshop/attendances', locals: { invitations: @workshop.attending_coaches }
         =render partial: 'admin/workshop/waiting_list', locals: { waiting_list: @coach_waiting_list }

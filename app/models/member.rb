@@ -20,6 +20,21 @@ class Member < ActiveRecord::Base
     [name, surname].join " "
   end
 
+  # Is this user a student?
+  def student?
+    groups.students.count > 0
+  end
+
+  # Is this user a coach?
+  def coach?
+    groups.coaches.count > 0
+  end
+
+  # Has this user ever attended a Codebar session?
+  def newbie?
+    (attended_sessions.count == 0) || (attended_sessions.count == 1 && attended_sessions.first.today?)
+  end
+
   def avatar size=100
     "http://gravatar.com/avatar/#{md5_email}?s=#{size}"
   end
