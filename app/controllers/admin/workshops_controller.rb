@@ -30,6 +30,8 @@ class Admin::WorkshopsController < Admin::ApplicationController
 
   def show
     authorize @workshop
+    @coach_waiting_list = WaitingListPresenter.new(WaitingList.by_workshop(@workshop).where_role("Coach"))
+    @student_waiting_list = WaitingListPresenter.new(WaitingList.by_workshop(@workshop).where_role("Student"))
   end
 
   def update

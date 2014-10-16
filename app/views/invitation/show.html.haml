@@ -26,7 +26,7 @@
                 You will be working on
                 %em= @invitation.note
 
-            - if @invitation.sessions.date_and_time-6.hours <= DateTime.now
+            - if @invitation.sessions.date_and_time-3.5.hours <= DateTime.now
               %p
                 If you can't make it or plan to arrive late please let us know by sending an email to #{@invitation.sessions.chapter.email}
             - else

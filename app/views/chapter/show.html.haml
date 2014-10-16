@@ -26,17 +26,19 @@
       %a{ name: "organisers" }
       %h4 The team
 
-      %ul.small-block-grid-1.medium-block-grid-3
+      .row
         - @chapter.organisers.shuffle.each do |organiser|
-          %li.organiser
-            .row
-              .small-12.columns
-                =link_to twitter_url_for(organiser.twitter) do
-                  =image_tag organiser.avatar(96), class: 'th radius', title: organiser.full_name
-            .row
-              .small-12.columns
-                =link_to twitter_url_for(organiser.twitter) do
-                  = organiser.full_name
+          .small-12.medium-6.large-3.columns.end
+            .organiser
+              .row
+                .small-12.columns
+                  =link_to twitter_url_for(organiser.twitter) do
+                    =image_tag organiser.avatar(65), class: 'th radius', title: organiser.full_name
+              .row
+                .small-12.columns
+                  =link_to twitter_url_for(organiser.twitter) do
+                    = organiser.full_name
 
+      %br
       .panel
         To contact the #{@chapter.name} team, send an email to #{@chapter.email}

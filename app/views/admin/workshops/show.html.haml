@@ -82,9 +82,11 @@
           %small
             #{@workshop.student_waiting_list.length} on the waiting list
         =render partial: 'admin/workshop/attendances', locals: { invitations: @workshop.attending_students }
+        =render partial: 'admin/workshop/waiting_list', locals: { waiting_list: @student_waiting_list }
       .medium-6.columns
         %h4 Coaches (#{@workshop.attending_coaches.count}#{(" of " + @workshop.host.coach_spots.to_s) if @workshop.has_host?})
         - unless @workshop.coach_spaces?
           %small
             #{@workshop.student_waiting_list.length} on the waiting list
         =render partial: 'admin/workshop/attendances', locals: { invitations: @workshop.attending_coaches }
+        =render partial: 'admin/workshop/waiting_list', locals: { waiting_list: @coach_waiting_list }

@@ -22,7 +22,7 @@
               #{workshop.invitations.accepted.count}
             %td
               - workshop.sponsors.each do |sponsor|
-                = image_tag sponsor.avatar_url(:thumb)
+                = link_to sponsor.name, sponsor.website
             %td
               - if workshop.date_and_time.future?
                 %label.label upcoming

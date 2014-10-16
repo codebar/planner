@@ -4,6 +4,18 @@ en:
   date:
       formats:
         default: "%d/%m/%Y"
+        email: "%a, %d %B at %H:%M"
+        email_title: "%A, %d %b at %H:%M"
+        short: "%d/%m/%Y %H:%M "
+        date: "%d %b %Y"
+        website_format: "%a, %d %B %Y at %H:%M"
+        day_in_words: "%a"
+        day: "%d"
+        month: "%B"
+        meeting_format: "%a %d %B %H:%M"
+        time: "%H:%M"
+        year_month: "%Y-%B"
+        log: "at %H:%M on the %d/%m/%Y"
   time:
       formats:
         default: "%a, %d %b %Y %H:%M "
