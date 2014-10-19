@@ -1,0 +1,32 @@
+%h1 Hi #{@member.name}!
+
+Welcome to Codebar. We're looking forward to seeing you at one of our events soon.
+
+- if @member.subscriptions.any?
+  You'll automatically receive invitations to our weekly workshops via email.
+- else
+  We send out invitations to our events via email.
+  = link_to "Sign up from the subscriptions page", subscriptions_url
+  to receive invites to our weekly workshops.
+Places are limited, so be sure to respond quickly if you want to attend.
+
+Our workshops start with around 30 minutes of socialising and food, before we assign
+you to a coach with one or two other students. You can either work through
+= link_to "one of our tutorials", "http://tutorials.codebar.io/"
+or get help with your own project. After 2 hours of coaching, we retire to a nearby
+pub for some post-Codebar relaxation.
+
+It's important to us that our workshops are a welcoming &amp; accepting environment
+for everyone. Please make sure you
+= link_to "read our code of conduct", attendance_policy_url
+before attending.
+
+If you have any questions, reply to this email or chat to one of the organisers at
+the workshop. We'll be at the table with the name stickers. We're here to help
+with anything on your mind.
+
+
+We hope to see you at a workshop soon!
+
+#{"-- "}
+The Codebar organisational team
