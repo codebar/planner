@@ -36,14 +36,9 @@ class Member < ActiveRecord::Base
   end
 
   def received_welcome_for?(subscription)
-    case subscription.try(:group).try(:name)
-      when "Students"
-        received_student_welcome_email
-      when "Coaches"
-        received_coach_welcome_email
-      else
-        true
-    end
+    return received_student_welcome_email if subscription.student?
+    return received_coach_welcome_email if subscription.coach?
+    true
   end
 
   def avatar size=100

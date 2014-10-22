@@ -11,10 +11,10 @@ class MemberMailer < ActionMailer::Base
 
   def welcome_for_subscription(subscription)
     member = subscription.member
-    if subscription.group.name.downcase == "students"
+    if subscription.student?
       welcome_student(member)
       member.received_student_welcome_email = true
-    elsif subscription.group.name.downcase == "coaches"
+    elsif subscription.coach?
       welcome_coach(member)
       member.received_coach_welcome_email = true
     end
