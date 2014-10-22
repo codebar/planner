@@ -3,10 +3,22 @@ class MemberMailer < ActionMailer::Base
 
   def welcome(member)
     if member.student?
-      welcome_student member
+      welcome_student(member)
     elsif member.coach?
-      welcome_coach member
+      welcome_coach(member)
     end
+  end
+
+  def welcome_for_subscription(subscription)
+    member = subscription.member
+    if subscription.group.name.downcase == "students"
+      welcome_student(member)
+      member.received_student_welcome_email = true
+    elsif subscription.group.name.downcase == "coaches"
+      welcome_coach(member)
+      member.received_coach_welcome_email = true
+    end
+    member.save
   end
 
   def welcome_student(member)
@@ -15,7 +27,7 @@ class MemberMailer < ActionMailer::Base
 
     mail(mail_args(member, subject)) do |format|
       format.html { render 'welcome_student' }
-    end
+    end.deliver
   end
 
   def welcome_coach(member)
@@ -24,6 +36,6 @@ class MemberMailer < ActionMailer::Base
 
     mail(mail_args(member, subject)) do |format|
       format.html { render 'welcome_coach' }
-    end
+    end.deliver
   end
 end

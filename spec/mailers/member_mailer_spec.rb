@@ -45,6 +45,20 @@ RSpec.describe MemberMailer, :type => :mailer do
       expect_any_instance_of(MemberMailer).to receive(:welcome_student)
       MemberMailer.welcome member
     end
+
+    it "actually sends a coach email" do
+      member = Fabricate(:coach)
+      expect {
+        MemberMailer.welcome member
+      }.to change {ActionMailer::Base.deliveries.count}.by 1
+    end
+
+    it "actually sends a student email" do
+      member = Fabricate(:student)
+      expect {
+        MemberMailer.welcome member
+      }.to change {ActionMailer::Base.deliveries.count}.by 1
+    end
   end
 
 end
