@@ -6,7 +6,7 @@ RSpec.describe MemberMailer, :type => :mailer do
     let(:mail) { MemberMailer.welcome_student(member) }
 
     it "renders the headers" do
-      expect(mail.subject).to eq("Welcome to Codebar!")
+      expect(mail.subject).to eq("How Codebar works")
       expect(mail.to).to eq([member.email])
       expect(mail.from).to eq(["meetings@codebar.io"])
     end
@@ -21,7 +21,7 @@ RSpec.describe MemberMailer, :type => :mailer do
     let(:mail) { MemberMailer.welcome_coach(member) }
 
     it "renders the headers" do
-      expect(mail.subject).to eq("Welcome to Codebar!")
+      expect(mail.subject).to eq("How Codebar works")
       expect(mail.to).to eq([member.email])
       expect(mail.from).to eq(["meetings@codebar.io"])
     end
