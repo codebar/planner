@@ -35,6 +35,17 @@ class Member < ActiveRecord::Base
     (attended_sessions.count == 0) || (attended_sessions.count == 1 && attended_sessions.first.today?)
   end
 
+  def received_welcome_for?(subscription)
+    case subscription.try(:group).try(:name)
+      when "Students"
+        received_student_welcome_email
+      when "Coaches"
+        received_coach_welcome_email
+      else
+        true
+    end
+  end
+
   def avatar size=100
     "http://gravatar.com/avatar/#{md5_email}?s=#{size}"
   end
