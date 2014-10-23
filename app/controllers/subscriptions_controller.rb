@@ -8,6 +8,9 @@ class SubscriptionsController < ApplicationController
   def create
     @subscription = Subscription.new(group_id: subscription_params[:group_id], member: current_user)
     if @subscription.save
+      unless current_user.received_welcome_for? @subscription
+        MemberMailer.welcome_for_subscription @subscription
+      end
       flash[:notice] = "You have subscribed to #{@subscription.group.chapter.city}'s #{@subscription.group.name} group"
     else
       flash[:notice] = @subscription.errors.inspect

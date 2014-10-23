@@ -34,4 +34,7 @@ Planner::Application.configure do
 
   # Print deprecation notices to the stderr.
   config.active_support.deprecation = :stderr
+
+  # Fake omniauth for testing
+  OmniAuth.config.test_mode = true
 end

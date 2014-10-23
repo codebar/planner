@@ -1,0 +1,54 @@
+%h1 Hi #{@member.name}!
+
+%p
+  Welcome to Codebar. Thanks so much for volunteering - we rely on coaches
+  to make our workshops a success, and it really helps the students who attend.
+  We're looking forward to seeing you at one of our events soon.
+
+%p
+  - if @member.subscriptions.any?
+    You'll automatically receive invitations to our weekly workshops via email.
+  - else
+    We send out invitations to our events via email.
+    = link_to "Sign up from the subscriptions page", subscriptions_url
+    to receive invites to our weekly workshops.
+  Places are limited, so be sure to respond quickly if you want to attend.
+
+%p
+  %strong
+    The success of our workshops depends on coaches attending.
+  If you accept an invitation but can't make it any more, please let us know
+  %strong
+    as soon as possible
+  so we can allocate your place to someone on the waiting list. If you take a place
+  on the waiting list, please keep that evening free and watch your email like a hawk
+  on the day of the event. The waiting list will automatically upgrade you to 'attending'
+  if someone else drops out.
+
+%p
+  Our workshops start with around 30 minutes of socialising and food, before we assign
+  you to coach one or two students. They'll either be working on
+  = link_to "one of our tutorials", "http://tutorials.codebar.io/"
+  or looking for help with their own projects. Don't worry if you're not an expert on
+  the topics - your role is not about having all the answers! Guiding a student through
+  solving their own problem is more useful in the long run. There are more
+  =link_to "tips for coaching on the Codebar website.", teaching_guide_url
+
+%p
+  It's important to us that our workshops are a welcoming &amp; accepting environment
+  for everyone. Please make sure you
+  = link_to "read our code of conduct", attendance_policy_url
+  before attending.
+
+%p
+  If you have any questions, reply to this email or chat to one of the organisers at
+  the workshop. We'll be at the table with the name stickers. We're here to help
+  with anything on your mind.
+
+%p
+  We hope to see you at a workshop soon, and thanks for volunteering!
+
+%p
+  #{"-- "}
+  %br
+  The Codebar organisational team

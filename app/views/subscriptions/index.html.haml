@@ -14,10 +14,10 @@
               = simple_form_for :subscription, method: :delete do |f|
                 = f.input :subscription_id, as: :hidden, input_html: { value: nil }
                 = f.input :group_id, as: :hidden, input_html: { value: group.id }
-                = f.submit "Subscribed", class: 'button tiny expand success'
+                = f.submit "Subscribed", class: 'button tiny expand success', id: "#{chapter.name.downcase}-#{group.name.downcase}"
             - else
               = simple_form_for :subscription do |f|
                 = f.input :group_id, as: :hidden, input_html: { value: group.id }
-                = f.submit "Subscribe", class: 'button tiny expand warn'
+                = f.submit "Subscribe", class: 'button tiny expand warn', id: "#{chapter.name.downcase}-#{group.name.downcase}"
 
     %hr

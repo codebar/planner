@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141003195205) do
+ActiveRecord::Schema.define(version: 20141022052135) do
 
   create_table "addresses", force: true do |t|
     t.string   "flat"
@@ -171,8 +171,10 @@ ActiveRecord::Schema.define(version: 20141003195205) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "unsubscribed"
-    t.boolean  "can_log_in",   default: false, null: false
+    t.boolean  "can_log_in",                     default: false, null: false
     t.string   "mobile"
+    t.boolean  "received_coach_welcome_email",   default: false
+    t.boolean  "received_student_welcome_email", default: false
   end
 
   create_table "members_permissions", id: false, force: true do |t|
