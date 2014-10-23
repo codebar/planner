@@ -44,7 +44,7 @@ end
 # https://github.com/intridea/omniauth/wiki/Integration-Testing
 feature "A new student signs up", js: false do
   before do
-    OmniAuth.config.mock_auth[:github] = {
+    OmniAuth.config.mock_auth[:github] = OmniAuth::AuthHash.new({
       provider: "Github",
       uid: 42,
       credentials: {token: "Fake token"},
@@ -52,7 +52,7 @@ feature "A new student signs up", js: false do
         email: Faker::Internet.email,
         name: Faker::Name.name
       }
-    }
+    })
 
     [ "Student", "Coach", "Mentor", "Admin" ].each { |role| Role.create name: role }
   end
