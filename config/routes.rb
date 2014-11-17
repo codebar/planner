@@ -71,7 +71,7 @@ Planner::Application.routes.draw do
     end
 
     resources :groups, only: [ :index, :new, :create, :show]
-    resources :sponsors, only: [:index, :new, :edit, :update, :show, :create]
+    resources :sponsors, except: [:destroy]
 
     resources :invitation, only: [] do
       get :attended
