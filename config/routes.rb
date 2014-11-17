@@ -98,6 +98,5 @@ Planner::Application.routes.draw do
   match '/register' => 'auth_sessions#create', via: %i(get), as: :registration
 
   resources :sponsors, only: [:index]
-  resources :chapter, only: [ :show ], path: ""
-
+  get ':id' => 'chapter#show', as: :chapter
 end
