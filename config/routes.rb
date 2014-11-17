@@ -81,9 +81,9 @@ Planner::Application.routes.draw do
     resources :feedback, only: [:index]
     resources :workshops do
       post :host
-      delete '/host' => "workshops#destroy_host", as: :destroy_host
+      delete 'host', action: 'destroy_host', as: :destroy_host
       post :sponsor
-      delete '/sponsor' => "workshops#destroy_sponsor", as: :destroy_sponsor
+      delete 'sponsor', action: 'destroy_sponsor', as: :destroy_sponsor
       post :invite
     end
     resources :sponsors, only: [:new, :create]
