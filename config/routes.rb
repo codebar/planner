@@ -1,13 +1,14 @@
 Planner::Application.routes.draw do
   root "dashboard#show"
 
-  get "code-of-conduct" => "dashboard#code", as: :code_of_conduct
-  get "coaches" => "dashboard#wall_of_fame", as: :coaches
-  get "sponsoring" => "dashboard#sponsoring", as: :sponsoring
-  get "effective-teacher-guide" => "dashboard#effective-teacher-guide", as: :teaching_guide
-  get "faq" => "dashboard#faq"
-  get "attendance-policy" => "dashboard#attendance_policy"
-
+  scope controller: 'dashboard' do
+    get 'code-of-conduct', action: 'code'
+    get 'coaches', action: 'wall_of_fame'
+    get 'sponsoring', action: 'sponsoring'
+    get 'effective-teacher-guide', action: 'effective-teacher-guide', as: :teaching_guide
+    get 'faq', action: 'faq'
+    get 'attendance-policy', action: 'attendance_policy'
+  end
 
   resource :member, only: [:new, :edit, :update, :patch]
 
