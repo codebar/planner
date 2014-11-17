@@ -86,7 +86,6 @@ Planner::Application.routes.draw do
       delete 'sponsor', action: 'destroy_sponsor', as: :destroy_sponsor
       post :invite
     end
-    resources :sponsors, only: [:new, :create]
   end
 
   namespace :coach do
