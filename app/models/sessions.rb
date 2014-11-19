@@ -41,6 +41,7 @@ class Sessions < ActiveRecord::Base
     has_host? and host.address.present?
   end
 
+
   # Is this event in the past?
   def past?
     date_and_time < Time.now
@@ -48,6 +49,11 @@ class Sessions < ActiveRecord::Base
 
   def today?
     date_and_time.today?
+  end
+
+  # Is this event in the future?
+  def future?
+    date_and_time > Time.now
   end
 
   # Is there any space at this event?
@@ -69,6 +75,11 @@ class Sessions < ActiveRecord::Base
 
   def to_s
     "Workshop"
+  end
+
+  # Which Members are organising this meeting?
+  def organisers
+    permissions.find_by_name("organiser").members rescue chapter.organisers
   end
 
   def location
