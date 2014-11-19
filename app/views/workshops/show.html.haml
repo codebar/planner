@@ -1,0 +1,69 @@
+= render partial: 'shared/title', locals: { title: "Coding is easier than you think", date: nil }
+%section#banner
+  .container
+    .row
+      .medium-8.columns
+        %h1.workshop.header
+          = @workshop.to_s
+          - if @workshop.has_host?
+            at
+            =@workshop.host.name
+          - else
+            without a home
+        %p.workshop.schedule
+          = @workshop.date_and_time.strftime "%A, %e %B %Y at %R"
+          %small
+            - if @workshop.past?
+              (#{distance_of_time_in_words_to_now @workshop.date_and_time} ago)
+            - else
+              (in #{distance_of_time_in_words_to_now @workshop.date_and_time})
+
+        %p.exposition Our workshops are a safe, supportive environment that help you learn web development at your own pace. We start with around 30 minutes of socialising, before students are divided into small groups with a coach. Students spend a couple of hours working through the <a href="http://tutorials.codebar.io">tutorials</a> (or on their own project) with their coach's help, before we retire to a nearby pub for a quiet drink.
+
+        .row
+          .medium-6.columns
+            - if @workshop.has_host?
+              This workshop is hosted at:
+              %br
+              = @workshop.host.name
+              %br
+              = AddressDecorator.decorate(@workshop.host.address).to_html
+              %br
+              = link_to "View map", "#"
+            - else
+              We're not sure where this workshop will be hosted yet.
+              = link_to "Can you help?", sponsoring_path
+          .medium-6.columns
+            Workshop co-ordinators:
+            = @workshop.organisers_as_list
+
+
+
+
+        - if @workshop.sponsors.any?
+          .sponsors
+            %p This meeting #{@workshop.past? ? "was" : "is"} generously sponsored by:
+            - @workshop.sponsors.each do |s|
+              = link_to s.website do
+                = image_tag s.avatar, title: s.name
+
+
+
+      - if @workshop.past?
+        .medium-offset-1.medium-3.sign-up.past.columns
+          This workshop was held in the past, so you can't sign up to it.
+      - else
+        .medium-offset-1.medium-3.sign-up.columns
+          - if @workshop.spaces?
+            Come along and join us!
+          - else
+            This workshop is full, but you can join the waiting list.
+          - if @workshop.student_spaces?
+            = link_to "Sign up as a student", new_member_path(role:"student"), class: 'button round expand'
+          - else
+            = link_to "Join the student waiting list", new_member_path(role:"student"), class: 'button round expand'
+
+          - if @workshop.coach_spaces?
+            = link_to "Sign up as a coach", new_member_path(role: "coach"), class: 'button round expand'
+          - else
+            = link_to "Join the coach waiting list", new_member_path(role: "coach"), class: 'button round expand'
