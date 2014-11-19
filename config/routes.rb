@@ -50,6 +50,7 @@ Planner::Application.routes.draw do
 
   resources :courses, only: [ :show ]
   resources :meetings, only: [ :show ]
+  resources :workshops, only: [ :show ]
   resources :feedback, only: [ :show ] do
     member do
       patch "submit"

@@ -9,6 +9,16 @@ describe Sessions, :se => true do
   it { should respond_to(:sponsors) }
   it { should respond_to(:sponsor_sessions)}
 
+  context "#coach_spaces?" do
+    let(:sponsor) { Fabricate(:sponsor) }
+
+    before do
+      session.sponsor_sessions.delete_all
+      Fabricate(:sponsor_session, sponsor: sponsor, sessions: session, host: true)
+    end
+
+  end
+
   context "#scopes" do
     let(:set_upcoming) { 2.times.map { |n| Fabricate(:sessions, date_and_time: DateTime.now+(n+1).week) } }
     let(:most_recent) { Fabricate(:sessions, date_and_time: 1.day.ago) }
