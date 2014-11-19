@@ -25,7 +25,6 @@ class EventPresenter < SimpleDelegator
     @organisers ||= model.permissions.find_by_name("organiser").members rescue []
   end
 
-
   def month
     I18n.l(model.date_and_time, format: :month).upcase
   end
@@ -50,10 +49,6 @@ class EventPresenter < SimpleDelegator
 
   def attendee_array
     model.attendances.map {|i| [i.member.full_name, i.role.upcase] }
-  end
-
-  def chapter_organisers
-    model.chapter.permissions.find_by_name("organiser").members
   end
 
   def model

@@ -33,6 +33,7 @@ class WorkshopPresenter < EventPresenter
 
   def path
     Rails.application.routes.url_helpers.chapter_path(model.chapter.name.downcase)
+    Rails.application.routes.url_helpers.workshop_path model
   end
 
   private
