@@ -1,0 +1,107 @@
+.past__container
+  .row
+    .large-12.columns
+      %h2= @event.name
+      %h3
+        %small #{l(@event.date_and_time)} to #{l(@event.ends_at, format: :time) }
+      %p.lead= @event.description
+
+  .row
+    .large-10.columns
+      =link_to "#", class: 'button round disabled ' do
+        Get started with Open Source!
+      =link_to "#", class: 'button round disabled ' do
+        Attend as a coach
+      %br
+      %small
+        %i Registrations for the event will be open from Thursday, the 4th of December at 12:00
+      %br
+      %br
+
+%br
+%br
+.row
+  .large-7.columns
+    %a{ name: "schedule" }
+    %h4{ "data-magellan-destination" => "schedule"} Schedule
+    = @event.schedule.html_safe
+  .large-5.columns
+    %h4 Location
+    .row
+      .medium-8.columns
+        %p
+          = @host_address.to_html
+      .medium-4.columns
+        = image_tag @event.venue.avatar, class: 'sponsor-logo'
+    .row
+      .large-12.columns
+        %iframe{ width: '100%', height: '250', frameborder: '0', scrolling: 'no', marginheight: '0', marginwidth: '0', src: %{https://maps.google.com/maps?f=q&source=s_q&hl=en&amp;geocode=&q=#{@host_address.for_map}&ie=UTF8&t=m&z=15&output=embed} }
+        =link_to "View larger map", %{https://maps.google.com/maps?f=q&source=s_q&hl=en&amp;geocode=&q=#{@host_address.for_map}&ie=UTF8&hq=&t=m&z=15}, style: "color:#0000FF;text-align:left"
+      .medium-6.columns
+.past__container
+  .row
+    .large-12.columns
+      %a{ name: "faq" }
+        %h2{ "data-magellan-destination" => "faq"}
+          .text-center FAQ
+      %ul.small-block-grid-3
+        %li
+          %small
+            %b How experienced should I be to join the workshop?
+          %p
+            %small
+              You must have a general idea about programming and preferably to have already finished the #{link_to("HTML tutorials", "http://tutorials.codebar.io")} or a similar level of understanding and basic git knowledge.
+        %li
+          %small
+            %b Do I need to bring a laptop with me?
+          %p
+            %small
+              Yes, you should bring your laptop. If you don't one #{mail_to("24pullrequests@codebar.io", "send an email" )} so we can help you out!
+        %li
+          %small
+            %b How about a keyboard?
+          %p
+            %small
+              You will spend the day pairing with someone, so a keyboard would be helpful.
+
+
+
+%br
+%br
+.row
+  .large-12.columns
+    %a{ name: "sponsors" }
+    %h2{ "data-magellan-destination" => "sponsors"}
+      .text-center Sponsors
+    %p.text-center
+      %i A big thanks to all of our sponsors for making the event possible!
+    %br
+    - if @event.sponsors.any?
+      %ul.no-bullet
+        - @event.sponsors.each do |sponsor|
+          %li
+            .row
+              .large-2.columns
+                = image_tag sponsor.avatar, class: 'sponsor'
+              .large-10.columns
+                =link_to sponsor.name, sponsor.website
+                %p
+                  = sponsor.description
+            %br
+%br
+.past__container
+  .row
+    .large-12.columns
+      %a{ name: "organisers" }
+        %h2{ "data-magellan-destination" => "organisers"}
+          .text-center Organisers
+      %br
+      - if @event.organisers.any?
+        %ul.small-block-grid-3
+          - @event.organisers.each do |organiser|
+            %li.text-center
+              =link_to twitter_url_for(organiser.twitter) do
+                =image_tag organiser.avatar(56), class: 'th radius', title: organiser.full_name
+                %br
+                %br
+                = organiser.full_name

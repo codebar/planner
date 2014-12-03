@@ -40,7 +40,7 @@ Planner::Application.routes.draw do
     end
   end
 
-  resources :events, only: [ :index ]
+  resources :events, only: [ :index, :show ]
   resources :courses, only: [ :show ]
   resources :meetings, only: [ :show ]
   resources :feedback, only: [ :show ] do

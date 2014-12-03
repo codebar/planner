@@ -1,7 +1,8 @@
 class EventPresenter < SimpleDelegator
   PRESENTER = { sessions: "WorkshopPresenter",
                 course: "CoursePresenter",
-                meeting: "MeetingPresenter" }
+                meeting: "MeetingPresenter",
+                event: "EventPresenter" }
 
 
   def self.decorate_collection(collection)
@@ -17,11 +18,11 @@ class EventPresenter < SimpleDelegator
   end
 
   def description
-    nil
+    model.description rescue nil
   end
 
   def organisers
-    @organisers ||= []
+    @organisers ||= model.permissions.find_by_name("organiser").members rescue []
   end
 
   def month

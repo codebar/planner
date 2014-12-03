@@ -13,4 +13,11 @@ class EventsController < ApplicationController
     events.flatten!.sort_by!(&:date_and_time)
     @events = EventPresenter.decorate_collection(events)
   end
+
+  def show
+    event = Event.find_by_slug(params[:id])
+    @event = EventPresenter.new(event)
+    @host_address = AddressDecorator.new(@event.venue.address)
+
+  end
 end

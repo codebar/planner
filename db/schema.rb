@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141022052135) do
+ActiveRecord::Schema.define(version: 20141203034740) do
 
   create_table "addresses", force: true do |t|
     t.string   "flat"
@@ -85,6 +85,20 @@ ActiveRecord::Schema.define(version: 20141022052135) do
 
   add_index "courses", ["chapter_id"], name: "index_courses_on_chapter_id"
   add_index "courses", ["sponsor_id"], name: "index_courses_on_sponsor_id"
+
+  create_table "events", force: true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.datetime "date_and_time"
+    t.datetime "ends_at"
+    t.integer  "venue_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "slug"
+    t.text     "schedule"
+  end
+
+  add_index "events", ["venue_id"], name: "index_events_on_venue_id"
 
   create_table "feedback_requests", force: true do |t|
     t.integer  "member_id"
@@ -264,6 +278,16 @@ ActiveRecord::Schema.define(version: 20141022052135) do
     t.integer  "number_of_coaches"
   end
 
+  create_table "sponsorships", force: true do |t|
+    t.integer  "event_id"
+    t.integer  "sponsor_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "sponsorships", ["event_id"], name: "index_sponsorships_on_event_id"
+  add_index "sponsorships", ["sponsor_id"], name: "index_sponsorships_on_sponsor_id"
+
   create_table "subscriptions", force: true do |t|
     t.integer  "group_id"
     t.integer  "member_id"
@@ -276,7 +300,7 @@ ActiveRecord::Schema.define(version: 20141022052135) do
 
   create_table "testimonials", force: true do |t|
     t.integer  "member_id"
-    t.text     "text"
+    t.text     "text",       limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
