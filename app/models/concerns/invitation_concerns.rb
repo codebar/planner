@@ -7,7 +7,6 @@ module InvitationConcerns
     belongs_to :member
 
     before_create :set_token
-    after_create :email
 
     validates :token, uniqueness: true
 
