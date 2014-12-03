@@ -6,6 +6,8 @@ feature 'event listing' do
   let!(:past_course) { Fabricate(:course, chapter: upcoming_course.chapter, date_and_time: DateTime.new-1.week) }
   let!(:upcoming_session) { Fabricate(:sessions) }
   let!(:past_session) { Fabricate(:sessions, date_and_time: DateTime.new-1.week) }
+  let!(:event) { Fabricate(:event) }
+  let!(:past_event) { Fabricate(:event, date_and_time: DateTime.new-2.weeks) }
 
   before do
     visit events_path
@@ -16,6 +18,7 @@ feature 'event listing' do
     within(".upcoming") do
       expect(page).to have_content upcoming_course.title
       expect(page).to have_content "Workshop"
+      expect(page).to have_content event.name
     end
   end
 
@@ -25,6 +28,7 @@ feature 'event listing' do
       expect(page).to have_content "Past"
       expect(page).to have_content past_course.title
       expect(page).to have_content "Workshop"
+      expect(page).to have_content past_event.name
     end
   end
 end
