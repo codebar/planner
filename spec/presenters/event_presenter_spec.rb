@@ -17,7 +17,7 @@ describe EventPresenter do
   end
 
   it "#description" do
-    expect(event.description).to be(nil)
+    expect(event.description).to be(workshop.description)
   end
 
   it "#organisers" do

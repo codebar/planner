@@ -19,8 +19,9 @@
         %br
         = AddressDecorator.decorate(event.venue.address).to_html
     .large-3.medium-3.small-3.columns
-      - event.sponsors.each do |sponsor|
-        = image_tag sponsor.avatar, class: 'sponsor'
+      - if event.sponsors.any?
+        - event.sponsors.each do |sponsor|
+          = image_tag sponsor.avatar, class: 'sponsor'
       - if event.organisers.any?
         .organisers
           %small organisers

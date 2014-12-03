@@ -38,8 +38,10 @@ class DashboardController < ApplicationController
     workshops = Sessions.upcoming || []
     course = Course.next
     meeting = Meeting.next
-    events = workshops << course << meeting
-    events = events.compact.flatten
-    events.sort_by!(&:date_and_time)
+    event = Event.next
+
+    all_events = workshops << course << meeting << event
+    all_events = all_events.compact.flatten
+    all_events.sort_by!(&:date_and_time)
   end
 end
