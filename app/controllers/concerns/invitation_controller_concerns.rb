@@ -10,7 +10,7 @@ module InvitationControllerConcerns
   module InstanceMethods
 
     def accept
-      if @invitation.attending.eql? true
+      if @invitation.attending.eql?(true)
         redirect_to :back, notice: t("messages.already_rsvped")
       end
 
