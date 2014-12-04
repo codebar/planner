@@ -7,6 +7,7 @@ class Invitation < ActiveRecord::Base
 
   belongs_to :event
   belongs_to :member
+  belongs_to :verified_by, class: Member
 
   scope :verified, -> { where(verified: true).order(:updated_at) }
 

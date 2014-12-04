@@ -77,6 +77,13 @@ Planner::Application.routes.draw do
       resources :workshops, only: [ :index ]
     end
 
+    resources :events, only: [:show] do
+      resources :invitation do
+        post 'verify'
+        post 'cancel'
+      end
+    end
+
     resources :groups, only: [ :index, :new, :create, :show]
     resources :sponsors, except: [:destroy]
 

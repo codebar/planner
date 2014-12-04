@@ -1,0 +1,45 @@
+.past__container
+  .row
+    .large-12.columns
+      %h2= @event.name
+      %h3
+        %small #{l(@event.date_and_time)} to #{l(@event.ends_at, format: :time) }
+      %p.lead= @event.description
+
+      %br
+
+%br
+- if (@attending_students.count - @attending_students.verified.count) > 0 or (@attending_coaches.count - @attending_coaches.count) > 0
+  .row
+    .large-12.columns
+      %p.panel
+        %i.fa.fa-warning
+
+        There are unverified students and/or coaches.
+%br
+.row
+  .large-6.columns
+    %h4 Students (#{@attending_students.count} of #{@event.student_spaces.to_s})
+    =render partial: 'attendances', locals: { invitations: @attending_students }
+  .large-6.columns
+    %h4 Coaches (#{@attending_coaches.count} of #{@event.coach_spaces.to_s})
+    =render partial: 'attendances', locals: { invitations: @attending_coaches }
+%br
+%br
+%br
+.past__container
+  .row
+    .large-12.columns
+      %a{ name: "organisers" }
+        %h2{ "data-magellan-destination" => "organisers"}
+          .text-center Organisers
+      %br
+      - if @event.organisers.any?
+        %ul.small-block-grid-3
+          - @event.organisers.each do |organiser|
+            %li.text-center
+              =link_to twitter_url_for(organiser.twitter) do
+                =image_tag organiser.avatar(56), class: 'th radius', title: organiser.full_name
+                %br
+                %br
+                = organiser.full_name

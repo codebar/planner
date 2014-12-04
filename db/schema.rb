@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141203034740) do
+ActiveRecord::Schema.define(version: 20141204232033) do
 
   create_table "addresses", force: true do |t|
     t.string   "flat"
@@ -150,10 +150,14 @@ ActiveRecord::Schema.define(version: 20141203034740) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "token"
+    t.boolean  "verified"
+    t.integer  "verified_by_id"
   end
 
   add_index "invitations", ["event_id"], name: "index_invitations_on_event_id"
   add_index "invitations", ["member_id"], name: "index_invitations_on_member_id"
+  add_index "invitations", ["verified_by_id"], name: "index_invitations_on_verified_by_id"
+
   create_table "jobs", force: true do |t|
     t.string   "title"
     t.text     "description"
