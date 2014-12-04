@@ -41,6 +41,10 @@ class EventPresenter < SimpleDelegator
     model.class.to_s.downcase
   end
 
+  def questionnaire(invitation)
+    invitation.for_coach? ? coach_questionnaire : student_questionnaire
+  end
+
   private
 
   def attendee_array

@@ -40,7 +40,12 @@ Planner::Application.routes.draw do
     end
   end
 
-  resources :events, only: [ :index, :show ]
+  resources :events, only: [ :index, :show ] do
+    get 'invitation/:token' => 'invitations#show', as: :invitation
+    post 'invitation/:token/attend' => 'invitations#attend', as: :attend
+    post 'invitation/:token/reject' => 'invitations#reject', as: :reject
+  end
+
   resources :courses, only: [ :show ]
   resources :meetings, only: [ :show ]
   resources :feedback, only: [ :show ] do
