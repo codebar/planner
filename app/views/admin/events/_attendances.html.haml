@@ -11,7 +11,7 @@
           %p
             %small=invitation.note
         .medium-4.small-12.columns
-          - if invitation.verified.nil?
+          - if invitation.verified.blank?
             =link_to "Verify", admin_event_invitation_verify_path(@event, invitation), class: "button round expand tiny sucess", method: :post
           =link_to "Cancel attendance", admin_event_invitation_cancel_path(@event, invitation), class: "button round expand tiny alert", method: :post
 
