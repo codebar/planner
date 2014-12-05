@@ -1,0 +1,2 @@
+Fabricator(:sponsorship) do
+end

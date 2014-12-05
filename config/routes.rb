@@ -40,7 +40,14 @@ Planner::Application.routes.draw do
     end
   end
 
-  resources :events, only: [ :index, :show ]
+  resources :events, only: [ :index, :show ] do
+    get 'student', as: :student_rsvp
+    get 'coach', as: :coach_rsvp
+    get 'invitation/:token' => 'invitations#show', as: :invitation
+    post 'invitation/:token/attend' => 'invitations#attend', as: :attend
+    post 'invitation/:token/reject' => 'invitations#reject', as: :reject
+  end
+
   resources :courses, only: [ :show ]
   resources :meetings, only: [ :show ]
   resources :feedback, only: [ :show ] do
@@ -68,6 +75,13 @@ Planner::Application.routes.draw do
 
     resources :chapters, only: [ :index, :new, :create, :show] do
       resources :workshops, only: [ :index ]
+    end
+
+    resources :events, only: [:show] do
+      resources :invitation do
+        post 'verify'
+        post 'cancel'
+      end
     end
 
     resources :groups, only: [ :index, :new, :create, :show]

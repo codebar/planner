@@ -7,7 +7,6 @@ module InvitationConcerns
     belongs_to :member
 
     before_create :set_token
-    after_create :email
 
     validates :token, uniqueness: true
 
@@ -22,7 +21,7 @@ module InvitationConcerns
 
     # Are there any spaces left at this meeting for students?
     def student_spaces?
-      for_student? && sessions.student_spaces?
+      for_student? && parent.student_spaces?
     end
 
     # Are there any spaces left at this meeting for coaches?

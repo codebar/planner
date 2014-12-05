@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141203034740) do
+ActiveRecord::Schema.define(version: 20141204232033) do
 
   create_table "addresses", force: true do |t|
     t.string   "flat"
@@ -96,6 +96,12 @@ ActiveRecord::Schema.define(version: 20141203034740) do
     t.datetime "updated_at"
     t.string   "slug"
     t.text     "schedule"
+    t.integer  "coach_spaces"
+    t.integer  "student_spaces"
+    t.string   "coach_questionnaire"
+    t.string   "student_questionnaire"
+    t.text     "coach_description"
+    t.string   "info"
   end
 
   add_index "events", ["venue_id"], name: "index_events_on_venue_id"
@@ -134,6 +140,23 @@ ActiveRecord::Schema.define(version: 20141203034740) do
   end
 
   add_index "groups", ["chapter_id"], name: "index_groups_on_chapter_id"
+
+  create_table "invitations", force: true do |t|
+    t.integer  "event_id"
+    t.boolean  "attending"
+    t.integer  "member_id"
+    t.string   "role"
+    t.text     "note"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "token"
+    t.boolean  "verified"
+    t.integer  "verified_by_id"
+  end
+
+  add_index "invitations", ["event_id"], name: "index_invitations_on_event_id"
+  add_index "invitations", ["member_id"], name: "index_invitations_on_member_id"
+  add_index "invitations", ["verified_by_id"], name: "index_invitations_on_verified_by_id"
 
   create_table "jobs", force: true do |t|
     t.string   "title"

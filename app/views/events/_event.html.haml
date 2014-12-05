@@ -14,6 +14,7 @@
         =link_to event.to_s, event.path
       %small= event.description
       - if event.venue.present?
+        %br
         Kindly hosted by
         = link_to event.venue.name, event.venue.website
         %br

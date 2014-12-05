@@ -4,17 +4,55 @@
       %h2= @event.name
       %h3
         %small #{l(@event.date_and_time)} to #{l(@event.ends_at, format: :time) }
-      %p.lead= @event.description
+      - if @invitation.for_student?
+        %p.lead= @event.description
+      - elsif @invitation.for_coach?
+        %p.lead= @event.coach_description
 
   .row
     .large-10.columns
-      =link_to event_student_rsvp_path(@event), class: 'button round' do
-        Get started with Open Source!
-      =link_to event_coach_rsvp_path(@event), class: 'button round' do
-        Attend as a coach
-      %br
+      - if @invitation.for_student?
+        - if !@invitation.attending
+          - if @invitation.student_spaces?
+            =link_to event_attend_path, class: 'button round', method: :post do
+              Attend as a student
+          - else
+            Unfortunatelly there are no more student spots left. Send us an email at 24pullrequests@codebar.io to be added to the waiting list.
+        - else
+          =link_to event_reject_path, class: 'button round', method: :post, "data-confirm" => "Are you sure you won't be able to attend the event? There may not be any spots available later on." do
+            I can't attend anymore
+
+
+      - if @invitation.for_coach?
+        - if !@invitation.attending
+          - if @invitation.coach_spaces?
+            = link_to event_attend_path, class: 'button round', method: :post do
+              I want to volunteer as a coach
+          - else
+            %p
+              Unfortunatelly there are no more coach spots left. Send an email at 24pullrequests@codebar.io to be added to the waiting list.
+        - else
+          =link_to event_reject_path, class: 'button round', method: :post, "data-confirm" => "Are you sure you won't be able to attend the event? There may not be any spots available later on." do
+            I can't attend anymore
       %br
 
+  - if @invitation.attending
+    .row
+      .large-12.columns
+        - if !@invitation.verified
+          %p.alert-box.info{ "data-alert" => true }
+            %i.fa.fa-warning.warning
+            To complete signing up for the event, you must also #{link_to("complete our questionnaire", @event.questionnaire(@invitation))} as we need to know a couple of things in advance to plan the day.
+            %br
+            %u You will receive an email when your attendance is verified.
+          %br
+        - else
+          .label.label-info Your spot has been verified.
+
+          %br
+          %br
+          %p.panel=@event.info.html_safe
+    %br
 %br
 %br
 .row
@@ -107,7 +145,6 @@
                 %br
                 %br
                 = coach.full_name
-  %br
 %br
 .row
   .large-12.columns
@@ -116,7 +153,7 @@
         .text-center Organisers
     %br
     - if @event.organisers.any?
-      %ul.small-block-grid-2.medium-block-grid-4
+      %ul.small-block-grid-1.medium-block-grid-4
         - @event.organisers.each do |organiser|
           %li.text-center
             =link_to twitter_url_for(organiser.twitter) do
@@ -124,4 +161,3 @@
               %br
               %br
               = organiser.full_name
-  %br
