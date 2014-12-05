@@ -18,6 +18,10 @@
         There are unverified students and/or coaches.
 %br
 .row
+  .large-12.columns
+    %h4 #{@event.invitations.count} Invitations
+    %hr
+.row
   .large-6.columns
     %h4 Students (#{@attending_students.count} of #{@event.student_spaces.to_s})
     =render partial: 'attendances', locals: { invitations: @attending_students }
@@ -35,7 +39,7 @@
           .text-center Organisers
       %br
       - if @event.organisers.any?
-        %ul.small-block-grid-3
+        %ul.small-block-grid-2.medium-block-grid-4
           - @event.organisers.each do |organiser|
             %li.text-center
               =link_to twitter_url_for(organiser.twitter) do
