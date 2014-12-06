@@ -42,11 +42,10 @@
                 %p
                   If you have any trouble finding the venue, give us a call
                   - @workshop.organisers.each do |organiser|
-                    - if organiser.mobile.present?
-                      %p
-                        = organiser.full_name
-                        =organiser.mobile
-                        %br
+                    %p
+                      = organiser.full_name
+                      =organiser.mobile
+                      %br
 
         .content
           = render partial: 'shared_mailers/social'
