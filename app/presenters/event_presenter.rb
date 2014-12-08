@@ -25,20 +25,6 @@ class EventPresenter < SimpleDelegator
     @organisers ||= model.permissions.find_by_name("organiser").members rescue []
   end
 
-  # Gets an HTML list of the organisers, with mobile numbers if the event's
-  # not past and the user's logged in.
-  def organisers_as_list
-    list = organisers.shuffle.map do |o|
-      item = "<li>".html_safe
-      item << link_to(o.full_name, twitter_url_for(o))
-      item << "- #{o.mobile}" if logged_in? && model.future?
-      item << "</li>".html_safe
-    end.join
-    if list.blank?
-      list = "<li>Nobody yet</li>".html_safe
-    end
-    "<ul>".html_safe << list << "</ul>".html_safe
-  end
 
   def month
     I18n.l(model.date_and_time, format: :month).upcase
@@ -64,6 +50,10 @@ class EventPresenter < SimpleDelegator
 
   def attendee_array
     model.attendances.map {|i| [i.member.full_name, i.role.upcase] }
+  end
+
+  def chapter_organisers
+    model.chapter.permissions.find_by_name("organiser").members
   end
 
   def model
