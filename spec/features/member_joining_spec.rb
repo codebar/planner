@@ -68,6 +68,7 @@ feature "A new student signs up", js: false do
     visit root_path
     click_on "Students"
     click_on "Sign in with Github"
+    expect(current_path).to eq(step1_member_path)
     expect(page).to have_selector("form")
     fill_in "member_name", with: "Bob"
     fill_in "member_surname", with: "Smith"
