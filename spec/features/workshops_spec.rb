@@ -12,7 +12,7 @@ feature 'Viewing a workshop page' do
   end
 
   scenario "A logged-in user can view an event" do
-    log_in_member member
+    login member
     visit workshop_path workshop
 
     expect(page).to be
@@ -22,7 +22,7 @@ feature 'Viewing a workshop page' do
     visit workshop_path workshop
 
     expect(page).to have_content("Sign up")
-    expect(page).to have_content("Sign in")
+    expect(page).to have_content("Log in")
   end
 
   scenario "A logged-in user viewing a past event cannot interact with that event"
