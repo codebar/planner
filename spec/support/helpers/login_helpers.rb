@@ -10,5 +10,5 @@ module LoginHelpers
 end
 
 RSpec.configure do |config|
-  config.include LoginHelpers, :type => :feature
+  config.include LoginHelpers, :type => [:feature, :controller]
 end
