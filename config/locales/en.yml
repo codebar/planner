@@ -46,3 +46,45 @@ en:
 
   notifications:
     provider_already_connected: 'You are already signed in!'
+
+  navigation:
+    dashboard: "Dahsboard"
+    code_of_conduct: "Code of conduct"
+    coach_guide: "Coach guide"
+    tutorials: "Tutorials"
+    becoming_sponsor: "Becoming a sponsor"
+
+  dashboard:
+    join_workshops_in: "Join our <i>free weekly</i> workshops in"
+    workshops_goal: "to get to grips with the basics of programming and web development."
+    tweets_by: "Tweets by"
+    latest_sponsors: "Latest Sponsors"
+
+  events:
+    no_upcoming_events: "There are no upcoming events."
+    view_past_events: "View past events"
+    view_all: "View all"
+    kindly_hosted_by: "Kindly hosted by"
+    organisers: "organisers"
+
+  coaches:
+    want_to_coach: "Do you want to coach at our workshops?"
+
+  sponsors:
+    sponsoring: "Sponsoring"
+
+  members:
+    sign_up: "Sign up"
+    sign_in_with_github: "Sign in with Github"
+    code_of_conduct: "code of conduct"
+    new:
+      intro: "We offer a welcoming, inclusive and learning-friendly environment, and have a zero tolerance policy towards any form of harassment or inappropriate behavior. Before you sign up, read our"
+      students:
+        intro: "If you are a student, make sure you meet our"
+        criteria_link: "eligibility criteria"
+        criteria_brief: "as our workshops are only available to women, LGBTQ and other minorities in tech."
+      invitations: "Invitations are sent out periodically, so don't worry if you don't receive one as soon as you register."
+
+  footer:
+    email_us: "Send us an email at"
+    contact_info: "Contact Info:"

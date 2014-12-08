@@ -5,15 +5,15 @@
         &#169; 2014 codebar
 
       %p.contact
-        Send us an email at
+        =t("footer.email_us")
         =mail_to "hello@codebar.io?Subject=Hello%20Codebar", "hello@codebar.io"
 
     .large-3.columns
       %ul.no-bullet
-        %li= link_to "Code of conduct", code_of_conduct_path
-        %li= link_to "Coach guide", teaching_guide_path
-        %li= link_to "Tutorials", "http://tutorials.codebar.io"
-        %li= link_to "Becoming a sponsor", sponsoring_path
+        %li= link_to t("navigation.code_of_conduct"), code_of_conduct_path
+        %li= link_to t("navigation.coach_guide"), teaching_guide_path
+        %li= link_to t("navigation.tutorials"), "http://tutorials.codebar.io"
+        %li= link_to t("navigation.becoming_sponsor"), sponsoring_path
 
     .large-3.columns
       %span.git-tip

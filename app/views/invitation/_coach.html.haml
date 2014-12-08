@@ -7,4 +7,6 @@
     = link_to "coaching guide", teaching_guide_path
 %p In case you are unable to attend after you RSVP, please make sure you come back and update your attendance as we rely on coaches showing up in order for our workshops to run smoothly.
 
-%p PS: There will also be food at the workshop. We always make an effort to have vegetarian, vegan and gluten-free options available. If you have any other dietary requirements, send us email at #{mail_to @invitation.sessions.chapter.email, @invitation.sessions.chapter.email}.
+%p
+  = PS: There will also be food at the workshop. We always make an effort to have vegetarian, vegan and gluten-free options available. If you have any other dietary requirements, send us email at
+  = #{mail_to @invitation.sessions.chapter.email, @invitation.sessions.chapter.email}.
