@@ -51,6 +51,10 @@ class EventPresenter < SimpleDelegator
     model.attendances.map {|i| [i.member.full_name, i.role.upcase] }
   end
 
+  def chapter_organisers
+    model.chapter.permissions.find_by_name("organiser").members
+  end
+
   def model
     __getobj__
   end
