@@ -70,6 +70,21 @@ en:
   coaches:
     want_to_coach: "Do you want to coach at our workshops?"
 
+  code_of_conduct:
+    summary:
+      title: "The Quick Version"
+      intro: "Our events are dedicated to providing a harassment-free experience for everyone, regardless of gender, sexual orientation, disability, physical appearance, body size, race, or religion. We do not tolerate harassment of our members in any form. Sexual language and imagery is not appropriate for any of our events, including talks, workshops, parties, Twitter and any other online media. Members violating these rules may be sanctioned or expelled from the event and any future events at the discretion of the organisers."
+
+    title: "The Long Version"
+    harassment: "Harassment includes offensive verbal comments related to gender, sexual orientation, disability, physical appearance, body size, race, religion, sexual images in public spaces, deliberate intimidation, stalking, following, harassing photography or recording, sustained disruption of talks or other events, inappropriate physical contact, and unwelcome sexual attention."
+    comply: "We expect any participants asked to stop any harassing behaviour to comply immediately."
+    sponsors: "Sponsors are also subject to the anti-harassment policy. In particular, sponsors should not use sexualized images, activities, or other material. Staff (including volunteers) should not use sexualized clothing/uniforms/costumes, or otherwise create a sexualized environment."
+    sanctions: "If a participant engages in harassing behaviour the organisers may take any action they deem appropriate. This includes warning the offender or expulsion."
+    concerns: "If you are being harassed, notice that someone else is being harassed, or have any other concerns, please contact one of the organisers immediately."
+    applies_to: "We expect participants to follow these rules at all <b>codebar</b> events."
+    questions: "If you have any questions or concerns about this code please"
+    email_subject: "Regarding code of conduct"
+
   sponsors:
     sponsoring: "Sponsoring"
 
