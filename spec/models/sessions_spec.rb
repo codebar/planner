@@ -72,6 +72,42 @@ describe Sessions, :se => true do
 
         expect(session.reload.attending_coaches.length).to eq(2)
       end
+
+      it "#attendee? for students" do
+        attendee_invites = 4.times.collect { Fabricate(:session_invitation, sessions: session, attending: true) }
+        nonattendee_invites = 2.times.collect { Fabricate(:session_invitation, sessions: session, attending: false) }
+
+        attendee_invites.each {|a| expect(session.attendee? a.member).to be true }
+        nonattendee_invites.each {|a| expect(session.attendee? a.member).to be false }
+      end
+
+      it "#attendee? for coaches" do
+        attendee_invites = 4.times.collect { Fabricate(:coach_session_invitation, sessions: session, attending: true) }
+        nonattendee_invites = 2.times.collect { Fabricate(:coach_session_invitation, sessions: session, attending: false) }
+
+        attendee_invites.each {|a| expect(session.attendee? a.member).to be true }
+        nonattendee_invites.each {|a| expect(session.attendee? a.member).to be false }
+      end
+    end
+
+    context "Waitlist attendance" do
+      it "#waitlisted? for students" do
+        invitations = 5.times.collect { Fabricate(:session_invitation, sessions: session) }
+        invitations.each { |invitation| WaitingList.add(invitation) }
+        attendee_invites = 4.times.collect { Fabricate(:session_invitation, sessions: session, attending: true) }
+
+        invitations.each {|a| expect(session.waitlisted? a.member).to be true }
+        attendee_invites.each {|a| expect(session.waitlisted? a.member).to be false }
+      end
+
+      it "#waitlisted? for coaches" do
+        invitations = 5.times.collect { Fabricate(:coach_session_invitation, sessions: session) }
+        invitations.each { |invitation| WaitingList.add(invitation) }
+        attendee_invites = 4.times.collect { Fabricate(:coach_session_invitation, sessions: session, attending: true) }
+
+        invitations.each {|a| expect(session.waitlisted? a.member).to be true }
+        attendee_invites.each {|a| expect(session.waitlisted? a.member).to be false }
+      end
     end
   end
 end
