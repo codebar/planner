@@ -14,13 +14,17 @@ class WorkshopsController < ApplicationController
     case params[:role]
       when "student"
         @invitation = SessionInvitation.where(sessions: @workshop, member: current_user, role: "Student").first_or_create
-        unless @workshop.student_spaces?
+        if @workshop.student_spaces?
+          @invitation.update_attribute(:attending, true)
+        else
           WaitingList.add(@invitation, true)
           waiting_listed = true
         end
       when "coach"
         @invitation = SessionInvitation.where(sessions: @workshop, member: current_user, role: "Coach").first_or_create
-        unless @workshop.coach_spaces?
+        if @workshop.coach_spaces?
+          @invitation.update_attribute(:attending, true)
+        else
           WaitingList.add(@invitation, true)
           waiting_listed = true
         end
