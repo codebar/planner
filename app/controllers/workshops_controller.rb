@@ -45,10 +45,14 @@ class WorkshopsController < ApplicationController
     unless logged_in?
       redirect_to "/auth/github" and return
     end
-    @workshop = EventPresenter.new(Sessions.find(params[:id]))
-    invitation.update_attribute(:attending, false)
-    WaitingList.find_by_invitation_id(invitation.id).delete
-    redirect_to @workshop and return
+    workshop = Sessions.find(params[:id])
+    invitation = SessionInvitation.where(sessions: workshop, member: current_user).first
+    if invitation
+      invitation.update_attribute(:attending, false)
+      waiting_list = WaitingList.find_by_invitation_id(invitation.id)
+      waiting_list.delete if waiting_list
+    end
+    redirect_to removed_workshop_path(workshop) and return
   end
 
 
