@@ -26,6 +26,7 @@ feature 'Viewing a workshop page' do
   end
 
   scenario "A logged-in user viewing a past event cannot interact with that event"
+
   scenario "A logged-in user viewing a future event with student space can register to attend" do
     login member
     visit workshop_path workshop
@@ -35,6 +36,12 @@ feature 'Viewing a workshop page' do
     expect(page).to have_content("You're coming to Codebar!")
     expect(current_path).to eq(added_workshop_path workshop)
     expect(workshop.attendee? member).to be true
+  end
+
+  scenario "A logged-in user registering to attend an event doesn't receive an invite email" do
+    login member
+    visit workshop_path workshop
+    expect { click_button "Attend as a student"}.not_to change { ActionMailer::Base.deliveries.count }
   end
 
   scenario "A logged-in user viewing a future event without student space can join the student waiting list"
