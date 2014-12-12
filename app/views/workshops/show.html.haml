@@ -65,7 +65,6 @@
         - if logged_in?
           - if @workshop.attendee?(current_user) || @workshop.waitlisted?(current_user)
             = form_tag remove_workshop_path, method: :post do
-              = hidden_field_tag :role, :student
               - if @workshop.attendee?(current_user)
                 = submit_tag "Cancel your attendance", class: 'button round expand'
               - else
@@ -75,7 +74,6 @@
             = form_tag add_workshop_path, method: :post do
               = hidden_field_tag :role, :student
               - if @workshop.student_spaces?
-
                 = submit_tag "Attend as a student", class: 'button round expand'
               - else
                 = submit_tag "Join the student waiting list", class: 'button round expand'
