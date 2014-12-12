@@ -26,7 +26,17 @@ feature 'Viewing a workshop page' do
   end
 
   scenario "A logged-in user viewing a past event cannot interact with that event"
-  scenario "A logged-in user viewing a future event with student space can register to attend"
+  scenario "A logged-in user viewing a future event with student space can register to attend" do
+    login member
+    visit workshop_path workshop
+    expect(workshop.attendee? member).to be false
+    click_button "Attend as a student"
+
+    expect(page).to have_content("You're coming to Codebar!")
+    expect(current_path).to eq(added_workshop_path workshop)
+    expect(workshop.attendee? member).to be true
+  end
+
   scenario "A logged-in user viewing a future event without student space can join the student waiting list"
   scenario "A logged-in user viewing a future event with coach space can register to attend"
   scenario "A logged-in user viewing a future event without coach space can join the coach waiting list"
