@@ -26,7 +26,7 @@
                 You will be working on...
                 = form_tag update_note_invitation_path(@invitation) do
                   = text_area_tag :note, @invitation.note
-                  = submit_tag 'Save'
+                  = submit_tag 'Save', class: "expand button round center"
 
 
             - if @invitation.sessions.date_and_time-3.5.hours <= DateTime.now
