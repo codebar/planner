@@ -63,4 +63,9 @@ feature 'a member can' do
 
     end
   end
+
+  context "edit invitation" do
+    let(:invitation) { Fabricate(:session_invitation) }
+    scenario "logged in user with invitation can edit the description"
+  end
 end
