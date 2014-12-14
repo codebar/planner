@@ -46,10 +46,9 @@ class WorkshopsController < ApplicationController
       redirect_to "/auth/github" and return
     end
     workshop = Sessions.find(params[:id])
-    invitation = SessionInvitation.where(sessions: workshop, member: current_user).first
-    if invitation
-      invitation.update_attribute(:attending, false)
-      waiting_list = WaitingList.find_by_invitation_id(invitation.id)
+    SessionInvitation.where(sessions: workshop, member: current_user).each do |i|
+      i.update_attribute(:attending, false)
+      waiting_list = WaitingList.find_by_invitation_id(i.id)
       waiting_list.delete if waiting_list
     end
     redirect_to removed_workshop_path(workshop) and return
