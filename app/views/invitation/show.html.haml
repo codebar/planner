@@ -23,8 +23,11 @@
           - if @invitation.attending.eql?(true)
             - if @invitation.for_student?
               %p
-                You will be working on
-                %em= @invitation.note
+                You will be working on...
+                = form_tag update_note_invitation_path(@invitation) do
+                  = text_area_tag :note, @invitation.note
+                  = submit_tag 'Save', class: "expand button round"
+
 
             - if @invitation.sessions.date_and_time-3.5.hours <= DateTime.now
               %p
@@ -42,7 +45,7 @@
                 = simple_form_for @invitation, url: :accept_with_note_invitation, method: :post do |f|
                   = f.input :note, label: "I will be working on... ", placeholder: "e.g. I know a bit of HTML and CSS or the second JQuery tutorial", required: true
                   = f.button :submit, "Attend",  class: "button expand round"
-                  %label *Letting us know what you plan to work on will help us manage things easier.
+                  %label *Letting us know what you plan to work on will help us pair you up with a coach.
               - else
                 = render partial: 'invitation/waiting_list', locals: { invitation: @invitation }
       .panel.callout
