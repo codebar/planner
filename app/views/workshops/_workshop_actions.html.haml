@@ -1,0 +1,41 @@
+- if @workshop.past?
+  - if logged_in?
+    This workshop's already happened.
+  - else
+    This workshop's already happened, but you can sign up to receive invites to our future events.
+- elsif @workshop.attendee? current_user
+  You're attending this event.
+- elsif @workshop.waitlisted? current_user
+  You're on the waiting list for this event.
+- else
+  - if @workshop.spaces?
+    Come along and join us!
+  - else
+    This workshop is full, but you can join the waiting list.
+
+- if logged_in? && !@workshop.past?
+  - if @workshop.attendee?(current_user) || @workshop.waitlisted?(current_user)
+    = form_tag remove_workshop_path, method: :post do
+      - if @workshop.attendee?(current_user)
+        = submit_tag "Cancel your attendance", class: 'button round expand'
+      - else
+        = submit_tag "Leave the waiting list", class: 'button round expand'
+
+  - else
+    = form_tag add_workshop_path, method: :post do
+      = hidden_field_tag :role, :student
+      - if @workshop.student_spaces?
+        = submit_tag "Attend as a student", class: 'button round expand'
+      - else
+        = submit_tag "Join the student waiting list", class: 'button round expand'
+
+    = form_tag add_workshop_path, method: :post do
+      = hidden_field_tag :role, :coach
+      - if @workshop.coach_spaces?
+        = submit_tag "Attend as a coach", class: 'button round expand'
+      - else
+        = submit_tag "Join the coach waiting list", class: 'button round expand'
+- else
+  = link_to "Sign up as a student", new_member_path(role: "student"), class: 'button round expand'
+  = link_to "Sign up as a coach", new_member_path(role: "coach"), class: 'button round expand'
+  = link_to "Log in with existing account", "/auth/github", class: 'button round expand'#", class: 'button round expand'#", class: 'button round expand'
