@@ -1,4 +1,6 @@
 class WorkshopPresenter < EventPresenter
+  include ActionView::Helpers::TagHelper
+  include ActionView::Context
 
   def venue
     model.host
@@ -12,15 +14,14 @@ class WorkshopPresenter < EventPresenter
   # not past and the user's logged in.
   def organisers_as_list(logged_in=false)
     list = organisers.shuffle.map do |o|
-      item = "<li>".html_safe
-      item << ActionController::Base.helpers.link_to(o.full_name, o.twitter_url)
-      item << "- #{o.mobile}" if logged_in && model.future?
-      item << "</li>".html_safe
-    end.join
+      organiser = ActionController::Base.helpers.link_to(o.full_name, o.twitter_url)
+      organiser << " - #{o.mobile}" if logged_in && model.future? && o.mobile
+      content_tag(:li, organiser)
+    end.join.html_safe
     if list.blank?
-      list = "<li>Nobody yet</li>".html_safe
+      list = content_tag(:li, "Nobody yet")
     end
-    "<ul>".html_safe << list << "</ul>".html_safe
+    content_tag(:ul, list)
   end
 
   def attendees_csv

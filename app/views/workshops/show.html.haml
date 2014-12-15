@@ -35,7 +35,7 @@
               = link_to "Can you help?", sponsoring_path
           .medium-6.columns
             Workshop co-ordinators:
-            = @workshop.organisers_as_list
+            = @workshop.organisers_as_list(logged_in?)
 
 
 
