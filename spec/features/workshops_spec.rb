@@ -193,4 +193,26 @@ feature 'Viewing a workshop page' do
     expect(current_path).to eq(removed_workshop_path workshop)
     expect(workshop.waitlisted? member).to be false
   end
+
+  scenario "A user with both coach and student invites, waitlisted as a student, sees the student messaging on the waitlisted page" do
+    invite = Fabricate(:student_session_invitation, sessions: workshop, member: member)
+    Fabricate(:coach_session_invitation, sessions: workshop, member: member)
+    WaitingList.add(invite)
+
+    login member
+    visit waitlisted_workshop_path workshop
+    expect(page).not_to have_content("As a coach")
+    expect(page).to have_content("As a student")
+  end
+
+  scenario "A user with both coach and student invites, waitlisted as a coach, sees the coach messaging on the waitlisted page" do
+    Fabricate(:student_session_invitation, sessions: workshop, member: member)
+    invite = Fabricate(:coach_session_invitation, sessions: workshop, member: member)
+    WaitingList.add(invite)
+
+    login member
+    visit waitlisted_workshop_path workshop
+    expect(page).to have_content("As a coach")
+    expect(page).not_to have_content("As a student")
+  end
 end
