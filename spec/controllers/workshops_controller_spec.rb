@@ -58,8 +58,36 @@ describe WorkshopsController, type: :controller do
       expect(response).to redirect_to removed_workshop_path(workshop)
     end
 
-    it "Removes a student from the attendees, if the user's got an invite"
-    it "Removes a student from the waiting list, if the user's on the waiting list"
+    it "Removes a student from the attendees, if the user's got an invite" do
+      Fabricate(:student_session_invitation, member: member, sessions: workshop, attending: true)
+      expect(workshop.attendee? member).to be true
+
+      login member
+      post :remove, id: workshop.id
+      expect(workshop.attendee? member).to be false
+    end
+
+    it "Removes a coach from the attendees, if the user has an invite" do
+      Fabricate(:coach_session_invitation, member: member, sessions: workshop, attending: true)
+      expect(workshop.attendee? member).to be true
+
+      login member
+      post :remove, id: workshop.id
+      expect(workshop.attendee? member).to be false
+    end
+
+    it "Removes a student from the waiting list, if the user's on the waiting list" do
+      invite = Fabricate(:student_session_invitation, sessions: workshop, member: member)
+      WaitingList.add(invite)
+      expect(workshop.attendee? member).to be false
+      expect(workshop.waitlisted? member).to be true
+
+      login member
+      post :remove, id: workshop.id
+      expect(workshop.attendee? member).to be false
+      expect(workshop.waitlisted? member).to be false
+    end
+
     it "Removes both invites if the student has somehow got both a student and coach invite" do
       Fabricate(:student_session_invitation, member: member, sessions: workshop, attending: true)
       Fabricate(:coach_session_invitation, member: member, sessions: workshop, attending: true)

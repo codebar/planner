@@ -25,7 +25,18 @@ feature 'Viewing a workshop page' do
     expect(page).to have_content("Log in")
   end
 
-  scenario "A logged-in user viewing a past event cannot interact with that event"
+  scenario "A logged-in user viewing a past event cannot interact with that event" do
+    workshop.update_attribute(:date_and_time, 2.weeks.ago)
+
+    login member
+    visit workshop_path workshop
+
+    expect(page).not_to have_button("Attend as a student")
+    expect(page).not_to have_button("Attend as a coach")
+    expect(page).not_to have_button("Join the student waiting list")
+    expect(page).not_to have_button("Join the coach waiting list")
+    expect(page).to have_content("already happened")
+  end
 
   scenario "A logged-in user viewing a future event with student space can register to attend" do
     login member
@@ -135,10 +146,51 @@ feature 'Viewing a workshop page' do
     expect(workshop.waitlisted? member).to be false
   end
 
-  scenario "A logged-in user on the student waiting list sees that they're on the waiting list"
-  scenario "A logged-in user on the student waiting list can see their waiting list position"
-  scenario "A logged-in user on the student waiting list can remove themself from the waiting list"
-  scenario "A logged-in user on the coach waiting list sees that they're on the waiting list"
-  scenario "A logged-in user on the coach waiting list can see their waiting list position"
-  scenario "A logged-in user on the coach waiting list can remove themself from the waiting list"
+  scenario "A logged-in user on the student waiting list sees that they're on the waiting list" do
+    invite = Fabricate(:student_session_invitation, sessions: workshop, member: member)
+    WaitingList.add(invite)
+    expect(workshop.attendee? member).to be false
+    expect(workshop.waitlisted? member).to be true
+
+    login member
+    visit workshop_path workshop
+    expect(page).to have_content("You're on the waiting list")
+    expect(page).to have_button("Leave the waiting list")
+  end
+
+  scenario "A logged-in user on the student waiting list can remove themself from the waiting list" do
+    invite = Fabricate(:student_session_invitation, sessions: workshop, member: member)
+    WaitingList.add(invite)
+    expect(workshop.waitlisted? member).to be true
+
+    login member
+    visit workshop_path workshop
+    click_button "Leave the waiting list"
+    expect(current_path).to eq(removed_workshop_path workshop)
+    expect(workshop.waitlisted? member).to be false
+  end
+
+  scenario "A logged-in user on the coach waiting list sees that they're on the waiting list" do
+    invite = Fabricate(:coach_session_invitation, sessions: workshop, member: member)
+    WaitingList.add(invite)
+    expect(workshop.attendee? member).to be false
+    expect(workshop.waitlisted? member).to be true
+
+    login member
+    visit workshop_path workshop
+    expect(page).to have_content("You're on the waiting list")
+    expect(page).to have_button("Leave the waiting list")
+  end
+
+  scenario "A logged-in user on the coach waiting list can remove themself from the waiting list" do
+    invite = Fabricate(:coach_session_invitation, sessions: workshop, member: member)
+    WaitingList.add(invite)
+    expect(workshop.waitlisted? member).to be true
+
+    login member
+    visit workshop_path workshop
+    click_button "Leave the waiting list"
+    expect(current_path).to eq(removed_workshop_path workshop)
+    expect(workshop.waitlisted? member).to be false
+  end
 end
