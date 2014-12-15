@@ -51,7 +51,10 @@
 
       .medium-offset-1.medium-3.sign-up.columns
         - if @workshop.past?
-          This workshop was held in the past, but you can sign up to receive invites to our future events.
+          - if logged_in?
+            This workshop's already happened.
+          - else
+            This workshop's already happened, but you can sign up to receive invites to our future events.
         - elsif @workshop.attendee? current_user
           You're attending this event.
         - elsif @workshop.waitlisted? current_user
@@ -62,7 +65,7 @@
           - else
             This workshop is full, but you can join the waiting list.
 
-        - if logged_in?
+        - if logged_in? && !@workshop.past?
           - if @workshop.attendee?(current_user) || @workshop.waitlisted?(current_user)
             = form_tag remove_workshop_path, method: :post do
               - if @workshop.attendee?(current_user)
