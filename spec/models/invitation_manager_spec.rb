@@ -31,6 +31,23 @@ describe InvitationManager do
     InvitationManager.send_course_emails course
   end
 
+  it "#send_event_emails" do
+    event = Fabricate(:event)
+    chapter = Fabricate(:chapter_with_groups)
+    expect(chapter.groups).to receive(:students).and_return([students])
+    expect(chapter.groups).to receive(:coaches).and_return([coaches])
+
+    students.members.each do |student|
+      expect(Invitation).to receive(:create).with(course: course, member: student, role: "Student")
+    end
+
+    coaches.members.each do |student|
+      expect(Invitation).to receive(:create).with(course: course, member: student, role: "Coach")
+    end
+
+    InvitationManager.send_event_emails(event, chapter)
+  end
+
   it "#send_workshop_attendance_reminders" do
     Fabricate(:attending_session_invitation, sessions: session)
 

@@ -1,13 +1,14 @@
 Planner::Application.routes.draw do
   root "dashboard#show"
 
-  get "code-of-conduct" => "dashboard#code", as: :code_of_conduct
-  get "coaches" => "dashboard#wall_of_fame", as: :coaches
-  get "sponsoring" => "dashboard#sponsoring", as: :sponsoring
-  get "effective-teacher-guide" => "dashboard#effective-teacher-guide", as: :teaching_guide
-  get "faq" => "dashboard#faq"
-  get "attendance-policy" => "dashboard#attendance_policy"
-
+  scope controller: 'dashboard' do
+    get 'code-of-conduct', action: 'code'
+    get 'coaches', action: 'wall_of_fame'
+    get 'sponsoring', action: 'sponsoring'
+    get 'effective-teacher-guide', action: 'effective-teacher-guide', as: :teaching_guide
+    get 'faq', action: 'faq'
+    get 'attendance-policy', action: 'attendance_policy'
+  end
 
   resource :member, only: [:new, :edit, :update, :patch]
 
@@ -21,6 +22,7 @@ Planner::Application.routes.draw do
   resources :invitation, only: [ :show ] do
     member do
       post "accept_with_note", as: :accept_with_note
+      post "update_note"
       get "accept"
       get "reject"
     end
@@ -39,7 +41,14 @@ Planner::Application.routes.draw do
     end
   end
 
-  resources :events, only: [ :index ]
+  resources :events, only: [ :index, :show ] do
+    get 'student', as: :student_rsvp
+    get 'coach', as: :coach_rsvp
+    get 'invitation/:token' => 'invitations#show', as: :invitation
+    post 'invitation/:token/attend' => 'invitations#attend', as: :attend
+    post 'invitation/:token/reject' => 'invitations#reject', as: :reject
+  end
+
   resources :courses, only: [ :show ]
   resources :meetings, only: [ :show ]
   resources :feedback, only: [ :show ] do
@@ -69,8 +78,15 @@ Planner::Application.routes.draw do
       resources :workshops, only: [ :index ]
     end
 
+    resources :events, only: [:show] do
+      resources :invitation do
+        post 'verify'
+        post 'cancel'
+      end
+    end
+
     resources :groups, only: [ :index, :new, :create, :show]
-    resources :sponsors, only: [:index, :new, :edit, :update, :show, :create]
+    resources :sponsors, except: [:destroy]
 
     resources :invitation, only: [] do
       get :attended
@@ -80,12 +96,11 @@ Planner::Application.routes.draw do
     resources :feedback, only: [:index]
     resources :workshops do
       post :host
-      delete '/host' => "workshops#destroy_host", as: :destroy_host
+      delete 'host', action: 'destroy_host', as: :destroy_host
       post :sponsor
-      delete '/sponsor' => "workshops#destroy_sponsor", as: :destroy_sponsor
+      delete 'sponsor', action: 'destroy_sponsor', as: :destroy_sponsor
       post :invite
     end
-    resources :sponsors, only: [:new, :create]
   end
 
   namespace :coach do
@@ -98,6 +113,5 @@ Planner::Application.routes.draw do
   match '/register' => 'auth_sessions#create', via: %i(get), as: :registration
 
   resources :sponsors, only: [:index]
-  resources :chapter, only: [ :show ], path: ""
-
+  get ':id' => 'chapter#show', as: :chapter
 end

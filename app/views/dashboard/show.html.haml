@@ -19,7 +19,7 @@
 %section#chapter
   .events
     .row
-      .large-7.columns
+      .large-12.columns
         %h4 Events
         %hr
         - if @upcoming_workshops.empty?
@@ -32,10 +32,6 @@
           %ul.no-bullet
             - @upcoming_workshops.each do |workshop|
               = render partial: 'events/event', locals: { event: workshop }
-      .large-offset-1.large-4.medium-12.small-12.columns
-        %a.twitter-timeline{href: "https://twitter.com/#{twitter}", "data-widget-id" => twitter_id}="Tweets by #{twitter}"
-        :javascript
-          !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
 
   .row
     .large-12.columns

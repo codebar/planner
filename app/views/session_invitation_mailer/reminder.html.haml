@@ -29,7 +29,7 @@
                   #{@session.host.name}
                   %br
                   #{@host_address.to_html}
-                = link_to "See who will be there and update you attendance", full_url_for(invitation_url(@invitation)), class: 'btn'
+                = link_to "See who will be there and update your attendance", full_url_for(invitation_url(@invitation)), class: 'btn'
 
         .content
           %table
@@ -38,10 +38,9 @@
                 %p
                   If you have any trouble finding the venue call
                   - @workshop.organisers.each do |organiser|
-                    - if organiser.mobile.present?
-                      = organiser.full_name
-                      =organiser.mobile
-                      %br
+                    = organiser.full_name
+                    =organiser.mobile
+                    %br
 
         .content
           = render partial: 'shared_mailers/social'

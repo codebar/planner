@@ -31,6 +31,10 @@ gem 'tzinfo-data' # More timezone data
 
 gem 'icalendar' # Export data in iCal format
 
+group :development do
+  gem 'letter_opener' # Open emails in the browser
+end
+
 group :development, :test do
   gem 'rspec-rails'
   gem 'rspec-its'

@@ -39,3 +39,35 @@ feature 'a member sign up', pending: "Need to test with github redirect" do
     end
   end
 end
+
+# These tests don't test the oAuth path - they presume success. See
+# https://github.com/intridea/omniauth/wiki/Integration-Testing
+feature "A new student signs up", js: false do
+  before do
+    OmniAuth.config.mock_auth[:github] = OmniAuth::AuthHash.new({
+      provider: "Github",
+      uid: 42,
+      credentials: {token: "Fake token"},
+      info: {
+        email: Faker::Internet.email,
+        name: Faker::Name.name
+      }
+    })
+
+    [ "Student", "Coach", "Mentor", "Admin" ].each { |role| Role.create name: role }
+  end
+
+  scenario "A student can sign up via the front page" do
+    visit root_path
+    click_on "Students"
+    expect(current_path).to eq(new_member_path)
+
+    click_on "Sign in with Github"
+    expect(current_path).to eq(edit_member_path)
+    expect(page).to have_selector("form")
+    fill_in 'member_about_you', with: "I'm a test user and am not actually real"
+    click_on "Save"
+
+    expect(page).to have_text "Your details have been updated"
+  end
+end

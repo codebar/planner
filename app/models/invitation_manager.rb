@@ -22,6 +22,18 @@ class InvitationManager
     end
   end
 
+  def self.send_event_emails event, chapter
+    chapter.groups.students.map(&:members).flatten.uniq.each do |student|
+      invitation = Invitation.new(event: event, member: student, role: "Student")
+      EventInvitationMailer.invite_student(event, student, invitation).deliver if invitation.save
+    end
+
+    chapter.groups.coaches.map(&:members).flatten.uniq.each do |coach|
+      invitation = Invitation.new(event: event, member: coach, role: "Coach")
+      EventInvitationMailer.invite_coach(event, coach, invitation).deliver if invitation.save
+    end
+  end
+
   def self.send_workshop_attendance_reminders session
     session.attendances.where(reminded_at: nil).each do |invitation|
       SessionInvitationMailer.reminder(session, invitation.member, invitation).deliver

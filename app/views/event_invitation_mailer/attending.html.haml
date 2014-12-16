@@ -1,0 +1,56 @@
+=render partial: 'shared_mailers/header', locals: { title: "Workshop Attendance Confirmation" }
+%body{ bgcolor: "#FFFFFF" }
+
+  =render partial: 'shared_mailers/body_header', locals: { title: "Workshop Attendance Confirmation" }
+
+  %table{ class: "body-wrap"}
+    %tr
+      %td
+      %td{ class: "container", bgcolor: "#FFFFFF" }
+
+        .content
+          %table
+            %tr
+              %td
+                %h3 Hi, #{@member.name}
+
+                %p
+                  Your spot for the #{@event.name} event has been verified.
+
+                %p
+                  See you at the event!
+
+
+        .content
+          %table{ bgcolor: "#FFFFFF" }
+            %tr
+              %td.small{ width: "30%", style: "vertical-align: top; padding-right:10px;"}
+                =image_tag(@event.venue.avatar)
+              %td
+                %h4
+                  =@event.name
+                  #{l(@event.date_and_time)} to #{l(@event.ends_at, format: :time) }
+                %p
+                  #{@event.venue.name}
+                  %br
+                  #{@host_address.to_html}
+                = link_to "Access your invitation", full_url_for(event_invitation_url(@event.id, @invitation.token)), class: 'btn'
+
+        .content
+          %table
+            %tr
+              %td
+                %p
+                  If you have any trouble finding the venue, give us a call
+                  - @event.organisers.each do |organiser|
+                    - if organiser.mobile.present?
+                      %p
+                        = organiser.full_name
+                        =organiser.mobile
+                        %br
+
+        .content
+          = render partial: 'shared_mailers/social'
+      %td
+
+  = render partial: 'shared_mailers/footer'

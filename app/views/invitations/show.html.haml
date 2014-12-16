@@ -1,0 +1,138 @@
+.past__container
+  .row
+    .large-12.columns
+      %h2= @event.name
+      %h3
+        %small #{l(@event.date_and_time)} to #{l(@event.ends_at, format: :time) }
+      - if @invitation.for_student?
+        %p.lead= @event.description
+      - elsif @invitation.for_coach?
+        %p.lead= @event.coach_description
+
+  .row
+    .large-10.columns
+      - if @invitation.for_student?
+        - if !@invitation.attending
+          - if @invitation.student_spaces?
+            =link_to event_attend_path, class: 'button round', method: :post do
+              Attend as a student
+          - else
+            Unfortunatelly there are no more student spots left. Send us an email at 24pullrequests@codebar.io to be added to the waiting list.
+        - else
+          =link_to event_reject_path, class: 'button round', method: :post, "data-confirm" => "Are you sure you won't be able to attend the event? There may not be any spots available later on." do
+            I can't attend anymore
+
+
+      - if @invitation.for_coach?
+        - if !@invitation.attending
+          - if @invitation.coach_spaces?
+            = link_to event_attend_path, class: 'button round', method: :post do
+              I want to volunteer as a coach
+          - else
+            %p
+              Unfortunatelly there are no more coach spots left. Send an email at 24pullrequests@codebar.io to be added to the waiting list.
+        - else
+          =link_to event_reject_path, class: 'button round', method: :post, "data-confirm" => "Are you sure you won't be able to attend the event? There may not be any spots available later on." do
+            I can't attend anymore
+      %br
+
+  - if @invitation.attending
+    .row
+      .large-12.columns
+        - if !@invitation.verified
+          %p.alert-box.info{ "data-alert" => true }
+            %i.fa.fa-warning.warning
+            To complete signing up for the event, you must also #{link_to("complete our questionnaire", @event.questionnaire(@invitation))} as we need to know a couple of things in advance to plan the day.
+            %br
+            %u You will receive an email when your attendance is verified.
+          %br
+        - else
+          .label.label-info Your spot has been verified.
+
+          %br
+          %br
+          %p.panel=@event.info.html_safe
+    %br
+%br
+%br
+.row
+  .large-7.columns
+    %a{ name: "schedule" }
+    %h4{ "data-magellan-destination" => "schedule"} Schedule
+    = @event.schedule.html_safe
+  .large-5.columns
+    %h4 Location
+    .row
+      .medium-8.columns
+        %p
+          = @host_address.to_html
+      .medium-4.columns
+        = image_tag @event.venue.avatar, class: 'sponsor-logo'
+    .row
+      .large-12.columns
+        %iframe{ width: '100%', height: '250', frameborder: '0', scrolling: 'no', marginheight: '0', marginwidth: '0', src: %{https://maps.google.com/maps?f=q&source=s_q&hl=en&amp;geocode=&q=#{@host_address.for_map}&ie=UTF8&t=m&z=15&output=embed} }
+        =link_to "View larger map", %{https://maps.google.com/maps?f=q&source=s_q&hl=en&amp;geocode=&q=#{@host_address.for_map}&ie=UTF8&hq=&t=m&z=15}, style: "color:#0000FF;text-align:left"
+      .medium-6.columns
+.past__container
+  .row
+    .large-12.columns
+      %a{ name: "faq" }
+        %h2{ "data-magellan-destination" => "faq"}
+          .text-center FAQ
+      = render partial: 'events/faq'
+
+%br
+%br
+.row
+  .large-12.columns
+    %a{ name: "sponsors" }
+    %h2{ "data-magellan-destination" => "sponsors"}
+      .text-center Sponsors
+    %p.text-center
+      %i A big thanks to all of our sponsors for making the event possible!
+    %br
+    - if @event.sponsors.any?
+      %ul.no-bullet
+        - @event.sponsors.each do |sponsor|
+          %li
+            .row
+              .large-2.columns
+                = image_tag sponsor.avatar, class: 'sponsor'
+              .large-10.columns
+                =link_to sponsor.name, sponsor.website
+                %p
+                  = sponsor.description
+            %br
+%br
+.past__container
+  .row
+    .large-12.columns
+      %a{ name: "coaches" }
+        %h2{ "data-magellan-destination" => "coaches"}
+          .text-center Coaches
+      %br
+      - if @event.verified_coaches.any?
+        %ul.small-block-grid-2.medium-block-grid-5
+          - @event.verified_coaches.each do |coach|
+            %li.text-center
+              =link_to twitter_url_for(coach.twitter) do
+                =image_tag coach.avatar(56), class: 'th radius', title: coach.full_name
+                %br
+                %br
+                = coach.full_name
+%br
+.row
+  .large-12.columns
+    %a{ name: "organisers" }
+      %h2{ "data-magellan-destination" => "organisers"}
+        .text-center Organisers
+    %br
+    - if @event.organisers.any?
+      %ul.small-block-grid-1.medium-block-grid-4
+        - @event.organisers.each do |organiser|
+          %li.text-center
+            =link_to twitter_url_for(organiser.twitter) do
+              =image_tag organiser.avatar(56), class: 'th radius', title: organiser.full_name
+              %br
+              %br
+              = organiser.full_name

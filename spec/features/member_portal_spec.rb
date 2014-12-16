@@ -11,6 +11,15 @@ feature 'member portal' do
 
       expect(page).to have_selector("#profile")
     end
+
+    it "should not send a welcome email when signing in" do
+      expect_any_instance_of(MemberMailer).not_to receive(:welcome)
+      expect_any_instance_of(MemberMailer).not_to receive(:welcome_student)
+      expect_any_instance_of(MemberMailer).not_to receive(:welcome_coach)
+
+      login(member)
+      visit root_path
+    end
   end
 
   context "not signed in" do
