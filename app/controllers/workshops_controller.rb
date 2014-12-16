@@ -1,6 +1,7 @@
 class WorkshopsController < ApplicationController
   def show
     @workshop = WorkshopPresenter.new(Sessions.find(params[:id]))
+    @host_address = AddressDecorator.decorate(@workshop.host.address) if @workshop.has_host?
   end
 
 

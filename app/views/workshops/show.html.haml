@@ -20,21 +20,26 @@
 
         %p.exposition Our workshops are a safe, supportive environment that help you learn web development at your own pace. We start with around 30 minutes of socialising, before students are divided into small groups with a coach. Students spend a couple of hours working through the <a href="http://tutorials.codebar.io">tutorials</a> (or on their own project) with their coach's help, before we retire to a nearby pub for a quiet drink.
 
-        .row
+        .row.people-and-place
+          - if @host_address
+            .medium-6.columns
+              %iframe{ width: '100%', height: '350', frameborder: '0', scrolling: 'no', marginheight: '0', marginwidth: '0', src: %{https://maps.google.com/maps?f=q&source=s_q&hl=en&amp;geocode=&q=#{@host_address.for_map}&ie=UTF8&t=m&z=15&output=embed} }
+              = link_to "View larger map", %{https://maps.google.com/maps?f=q&source=s_q&hl=en&amp;geocode=&q=#{@host_address.for_map}&ie=UTF8&hq=&t=m&z=15}, style: "color:#0000FF;text-align:left"
           .medium-6.columns
-            - if @workshop.has_host?
-              This workshop is hosted at:
-              %br
-              = @workshop.host.name
-              %br
-              = AddressDecorator.decorate(@workshop.host.address).to_html
-              %br
-              = link_to "View map", "#"
+            - if @host_address
+              %p
+                This workshop is hosted at:
+                %br
+                = @workshop.host.name
+                %br
+                  = @host_address.to_html
+                %br
             - else
-              We're not sure where this workshop will be hosted yet.
-              = link_to "Can you help?", sponsoring_path
-          .medium-6.columns
-            Workshop co-ordinators:
+              %p
+                We're not sure where this workshop will be hosted yet.
+                = link_to "Can you help?", sponsoring_path
+
+            %p Workshop co-ordinators
             = @workshop.organisers_as_list(logged_in?)
 
 
