@@ -1,17 +1,18 @@
-- if @workshop.past?
-  - if logged_in?
-    This workshop's already happened.
+%p
+  - if @workshop.past?
+    - if logged_in?
+      This workshop's already happened.
+    - else
+      This workshop's already happened, but you can sign up to receive invites to our future events.
+  - elsif @workshop.attendee? current_user
+    You're attending this event.
+  - elsif @workshop.waitlisted? current_user
+    You're on the waiting list for this event.
   - else
-    This workshop's already happened, but you can sign up to receive invites to our future events.
-- elsif @workshop.attendee? current_user
-  You're attending this event.
-- elsif @workshop.waitlisted? current_user
-  You're on the waiting list for this event.
-- else
-  - if @workshop.spaces?
-    Come along and join us!
-  - else
-    This workshop is full, but you can join the waiting list.
+    - if @workshop.spaces?
+      Come along and join us!
+    - else
+      This workshop is full, but you can join the waiting list.
 
 - if logged_in? && !@workshop.past?
   - if @workshop.attendee?(current_user) || @workshop.waitlisted?(current_user)
