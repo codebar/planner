@@ -16,6 +16,7 @@ en:
         time: "%H:%M"
         year_month: "%Y-%B"
         log: "at %H:%M on the %d/%m/%Y"
+        workshop: "%A, %e %B %Y at %R"
   time:
       formats:
         default: "%a, %d %b %Y %H:%M "
@@ -31,6 +32,7 @@ en:
         time: "%H:%M"
         year_month: "%Y-%B"
         log: "at %H:%M on the %d/%m/%Y"
+        workshop: "%A, %e %B %Y at %R"
 
   messages:
     accepted_invitation: "Thanks for getting back to us %{name}. See you at the workshop!"
