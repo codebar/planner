@@ -2,7 +2,7 @@ class AuthSessionsController < ApplicationController
 
   def create
     session[:role] = params["role"]
-    redirect_to "/auth/github"
+    redirect_to redirect_path
   end
 
   def destroy
