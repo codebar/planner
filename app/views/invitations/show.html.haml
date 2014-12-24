@@ -120,19 +120,39 @@
                 %br
                 %br
                 = coach.full_name
+
+%br
 %br
 .row
   .large-12.columns
-    %a{ name: "organisers" }
-      %h2{ "data-magellan-destination" => "organisers"}
-        .text-center Organisers
-    %br
-    - if @event.organisers.any?
-      %ul.small-block-grid-1.medium-block-grid-4
-        - @event.organisers.each do |organiser|
-          %li.text-center
-            =link_to twitter_url_for(organiser.twitter) do
-              =image_tag organiser.avatar(56), class: 'th radius', title: organiser.full_name
-              %br
-              %br
-              = organiser.full_name
+    %a{ name: "students" }
+      %h2{ "data-magellan-destination" => "students"}
+        .text-center Students
+      %br
+      - if @event.verified_students.any?
+        %ul.small-block-grid-2.medium-block-grid-5
+          - @event.verified_students.each do |student|
+            %li.text-center
+              =link_to twitter_url_for(student.twitter) do
+                =image_tag student.avatar(56), class: 'th radius', title: student.full_name
+                %br
+                %br
+                = student.full_name
+
+%br
+.past__container
+  .row
+    .large-12.columns
+      %a{ name: "organisers" }
+        %h2{ "data-magellan-destination" => "organisers"}
+          .text-center Organisers
+      %br
+      - if @event.organisers.any?
+        %ul.small-block-grid-1.medium-block-grid-4
+          - @event.organisers.each do |organiser|
+            %li.text-center
+              =link_to twitter_url_for(organiser.twitter) do
+                =image_tag organiser.avatar(56), class: 'th radius', title: organiser.full_name
+                %br
+                %br
+                = organiser.full_name
