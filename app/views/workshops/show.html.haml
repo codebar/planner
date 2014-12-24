@@ -11,7 +11,7 @@
           - else
             without a home
         %p.workshop.schedule
-          = @workshop.date_and_time.strftime "%A, %e %B %Y at %R"
+          = l @workshop.date_and_time, format: :workshop
           %small
             - if @workshop.past?
               (#{distance_of_time_in_words_to_now @workshop.date_and_time} ago)
