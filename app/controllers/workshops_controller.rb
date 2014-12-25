@@ -1,4 +1,6 @@
 class WorkshopsController < ApplicationController
+  before_action :authenticate_member!, except: [:show]
+
   def show
     @workshop = WorkshopPresenter.new(Sessions.find(params[:id]))
     @host_address = AddressDecorator.decorate(@workshop.host.address) if @workshop.has_host?
@@ -7,9 +9,6 @@ class WorkshopsController < ApplicationController
 
   # Add a user to this workshop, either to the attendees or the waiting list.
   def add
-    unless logged_in?
-      redirect_to "/auth/github" and return
-    end
     @workshop = Sessions.find(params[:id])
     waiting_listed = false
     case params[:role]
@@ -43,9 +42,6 @@ class WorkshopsController < ApplicationController
 
   # Remove a user from this workshop, either to the attendees or the waiting list.
   def remove
-    unless logged_in?
-      redirect_to "/auth/github" and return
-    end
     workshop = Sessions.find(params[:id])
     SessionInvitation.where(sessions: workshop, member: current_user).each do |i|
       i.update_attribute(:attending, false)
