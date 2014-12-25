@@ -56,6 +56,7 @@ class ApplicationController < ActionController::Base
     reset_session
   end
 
+  helper_method :redirect_path
   def redirect_path
     "/auth/github"
   end
