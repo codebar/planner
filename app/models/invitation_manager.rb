@@ -5,7 +5,7 @@ class InvitationManager
 
     session.chapter.groups.students.map(&:members).flatten.uniq.each do |student|
       so = SessionInvitation.create sessions: session, member: student, role: "Student"
-      so.email
+      so.email if so.persisted?
     end
 
     session.chapter.groups.coaches.map(&:members).flatten.uniq.each do |coach|
