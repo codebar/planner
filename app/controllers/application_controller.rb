@@ -36,8 +36,7 @@ class ApplicationController < ActionController::Base
   end
 
   def authenticate_member!
-    if session.has_key?(:member_id)
-      current_user
+    if current_user
       finish_registration
     else
       redirect_to redirect_path
