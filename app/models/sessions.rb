@@ -44,16 +44,25 @@ class Sessions < ActiveRecord::Base
 
   # Is this event in the past?
   def past?
-    date_and_time < Time.now
+    combined_date_and_time < Time.now
   end
 
   def today?
-    date_and_time.today?
+    combined_date_and_time.today?
+  end
+
+  # Is this workshop happening imminently?
+  def imminent?
+    future? && (3.hours.from_now > combined_date_and_time)
   end
 
   # Is this event in the future?
   def future?
-    date_and_time > Time.now
+    combined_date_and_time > Time.now
+  end
+
+  def combined_date_and_time
+    date_and_time.beginning_of_day + time.seconds_since_midnight
   end
 
   # Is there any space at this event?

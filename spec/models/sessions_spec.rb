@@ -16,7 +16,46 @@ describe Sessions, :se => true do
       session.sponsor_sessions.delete_all
       Fabricate(:sponsor_session, sponsor: sponsor, sessions: session, host: true)
     end
+  end
 
+  context "Date and time" do
+    context "#imminent?" do
+      it "Future events aren't imminent" do
+        session.date_and_time = 1.day.from_now
+        session.time = 1.hour.from_now
+        expect(session.imminent?).to be false
+
+        session.date_and_time = 3.days.from_now
+        expect(session.imminent?).to be false
+      end
+
+      it "Past events aren't imminent" do
+        session.date_and_time = 1.day.ago
+        session.time = 1.hour.ago
+        expect(session.imminent?).to be false
+
+        session.date_and_time = 3.days.ago
+        expect(session.imminent?).to be false
+
+        session.date_and_time = Date.today
+        expect(session.imminent?).to be false
+      end
+
+      it "Soon events are imminent" do
+        session.date_and_time = Date.today
+        session.time = 6.hours.from_now
+        expect(session.imminent?).to be false
+
+        session.time = 3.hours.from_now
+        expect(session.imminent?).to be true
+
+        session.time = 1.hour.from_now
+        expect(session.imminent?).to be true
+
+        session.time = 1.minute.from_now
+        expect(session.imminent?).to be true
+      end
+    end
   end
 
   context "#scopes" do

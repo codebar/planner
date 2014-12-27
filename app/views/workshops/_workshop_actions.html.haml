@@ -15,12 +15,21 @@
       This workshop is full, but you can join the waiting list.
 
 - if logged_in? && @workshop.future?
-  - if @workshop.attendee?(current_user) || @workshop.waitlisted?(current_user)
+  - if @workshop.attendee?(current_user)
+    - if @workshop.imminent?
+      You can't change your RSVP this close to the event. If you can no longer make it,
+      = link_to "email us and let us know", "mailto:#{@workshop.chapter.email}"
+    - else
+      = form_tag remove_workshop_path, method: :post do
+        = submit_tag "Cancel your attendance", class: 'button round expand'
+
+
+  - elsif @workshop.waitlisted?(current_user)
     = form_tag remove_workshop_path, method: :post do
+      = submit_tag "Leave the waiting list", class: 'button round expand'
       - if @workshop.attendee?(current_user)
         = submit_tag "Cancel your attendance", class: 'button round expand'
       - else
-        = submit_tag "Leave the waiting list", class: 'button round expand'
 
   - else
     = form_tag add_workshop_path, method: :post do
