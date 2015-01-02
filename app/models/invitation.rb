@@ -9,6 +9,8 @@ class Invitation < ActiveRecord::Base
   belongs_to :member
   belongs_to :verified_by, class: Member
 
+  scope :students, -> { where(role: 'Student') }
+  scope :coaches, -> { where(role: 'Coach') }
   scope :verified, -> { where(verified: true).order(:updated_at) }
 
   def student_spaces?
