@@ -41,13 +41,28 @@ class Sessions < ActiveRecord::Base
     has_host? and host.address.present?
   end
 
+
   # Is this event in the past?
   def past?
-    date_and_time < Time.now
+    combined_date_and_time < Time.now
   end
 
   def today?
-    date_and_time.today?
+    combined_date_and_time.today?
+  end
+
+  # Is this workshop happening imminently?
+  def imminent?
+    future? && (3.hours.from_now > combined_date_and_time)
+  end
+
+  # Is this event in the future?
+  def future?
+    combined_date_and_time > Time.now
+  end
+
+  def combined_date_and_time
+    date_and_time.beginning_of_day + time.seconds_since_midnight
   end
 
   # Is there any space at this event?
@@ -67,8 +82,27 @@ class Sessions < ActiveRecord::Base
     false
   end
 
+  # Is this person attending this event?
+  def attendee?(person)
+    return false if person.nil?
+    raise ArgumentError, "Person should be a Member, not a #{person.class}" unless person.is_a? Member
+    attending_students.map(&:member).include?(person) || attending_coaches.map(&:member).include?(person)
+  end
+
+  # Is this person on the waiting list for this event?
+  def waitlisted?(person)
+    return false if person.nil?
+    raise ArgumentError, "Person should be a Member" unless person.is_a? Member
+    WaitingList.students(self).include?(person) || WaitingList.coaches(self).include?(person)
+  end
+
   def to_s
     "Workshop"
+  end
+
+  # Which Members are organising this meeting?
+  def organisers
+    permissions.find_by_name("organiser").members rescue chapter.organisers
   end
 
   def location

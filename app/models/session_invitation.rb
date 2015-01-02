@@ -13,13 +13,9 @@ class SessionInvitation < ActiveRecord::Base
   scope :to_coaches, -> { where(role: "Coach") }
   scope :by_member, -> { group(:member_id) }
 
-  after_create :email
-
   def parent
     sessions
   end
-
-  private
 
   def email
     if for_student?

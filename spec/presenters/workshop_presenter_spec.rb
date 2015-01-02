@@ -27,10 +27,6 @@ describe WorkshopPresenter do
     workshop.time
   end
 
-  it "#path" do
-    expect(workshop.path).to eq("/#{chapter.name.downcase}")
-  end
-
   it "#attendess_csv" do
 
     invitations.each do |invitation|

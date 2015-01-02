@@ -4,7 +4,8 @@ class InvitationManager
     return "Workshop is not invitable" unless session.invitable?
 
     session.chapter.groups.students.map(&:members).flatten.uniq.each do |student|
-      SessionInvitation.create sessions: session, member: student, role: "Student"
+      so = SessionInvitation.create sessions: session, member: student, role: "Student"
+      so.email if so.persisted?
     end
 
     session.chapter.groups.coaches.map(&:members).flatten.uniq.each do |coach|
