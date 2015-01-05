@@ -51,6 +51,15 @@ Planner::Application.routes.draw do
 
   resources :courses, only: [ :show ]
   resources :meetings, only: [ :show ]
+  resources :workshops, only: [ :show ] do
+    member do
+      post "add"
+      post "remove"
+      get "added"
+      get "removed"
+      get "waitlisted"
+    end
+  end
   resources :feedback, only: [ :show ] do
     member do
       patch "submit"

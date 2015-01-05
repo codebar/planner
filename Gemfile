@@ -46,6 +46,7 @@ group :development, :test do
   gem 'launchy' # Open things in a browser automatically
   gem 'jazz_hands', github: 'nixme/jazz_hands', branch: 'bring-your-own-debugger' # A collection of debugging gems, mostly Pry
   gem 'pry-byebug'
+  gem 'pry-remote' # Connect to Pry remotely, handy if you're using Pow
   gem 'dotenv-rails' # Secret management in .env file
 end
 

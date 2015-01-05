@@ -57,6 +57,10 @@ class Member < ActiveRecord::Base
     session_invitations.exists?(role: "Coach", attended: true)
   end
 
+  def twitter_url
+    "http://twitter.com/#{twitter}"
+  end
+
   private
 
   def md5_email

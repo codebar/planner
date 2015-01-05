@@ -1,0 +1,17 @@
+= render partial: 'shared/title', locals: { title: "Coding is easier than you think", date: nil }
+%section
+  .container
+    .row
+      .medium-8.columns
+        %h1 Sorry to see you go. ☹
+        %p
+          We're sad that you can't make it to this Codebar event - but thanks for letting us know!
+          By cancelling your attendance, you're letting us give your place to someone else on the waiting list. And that's awesome.
+
+        %p
+          Even though you can't make it to this Codebar, we're looking forward to seeing you at another Codebar soon!
+          = link_to "Drop us an email", "mailto:hello@codebar.io"
+          if you have any questions.
+        %p
+          = link_to "« Return to the workshop page", workshop_path(@workshop)
+

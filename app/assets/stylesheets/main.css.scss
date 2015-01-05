@@ -64,6 +64,47 @@ nav a.menu {
   padding-right: 10px;
 }
 
+.sign-up {
+  border-radius: 1rem;
+  padding: 1rem;
+  border: 1px solid #FFEE2C;
+  background-color: #FFEEA6;
+}
+
+.sign-up.past {
+  border: 1px solid grey;
+  background-color: #CCC;
+}
+
+.workshop.title {
+  color: grey;
+  font-style: italic;
+  line-height: 1.2;
+  margin-bottom: 0.5rem;
+}
+
+.workshop.schedule small {
+  color: grey;
+}
+
+.exposition {
+  font-size: 0.8rem;
+  margin-bottom: 3rem;
+}
+
+.row.people-and-place {
+  margin-bottom: 3rem;
+}
+
+.sponsors {
+  text-align: center;
+  margin: 0.5rem 0 2rem;
+
+  img {
+    max-height: 120px;
+  }
+}
+
 #sponsors {
   li img {
     max-height: 120px;

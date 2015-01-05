@@ -25,6 +25,7 @@ class EventPresenter < SimpleDelegator
     @organisers ||= model.permissions.find_by_name("organiser").members rescue []
   end
 
+
   def month
     I18n.l(model.date_and_time, format: :month).upcase
   end

@@ -21,7 +21,11 @@ class Event < ActiveRecord::Base
   end
 
   def verified_coaches
-    invitations.where(role: "Coach").accepted.verified.map(&:member)
+    invitations.coaches.accepted.verified.map(&:member)
+  end
+
+  def verified_students
+    invitations.students.accepted.verified.map(&:member)
   end
 
   # Is there space for coaches at this event?
