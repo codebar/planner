@@ -76,6 +76,20 @@ nav a.menu {
   background-color: #CCC;
 }
 
+
+.sign-up-wizard {
+  label.required abbr {
+    display: none;
+  }
+
+  .hint {
+    position: relative;
+    top: -1rem;
+    font-size: 65%;
+  }
+}
+
+
 .workshop.title {
   color: grey;
   font-style: italic;
