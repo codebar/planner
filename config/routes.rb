@@ -10,7 +10,10 @@ Planner::Application.routes.draw do
     get 'attendance-policy', action: 'attendance_policy'
   end
 
-  resource :member, only: [:new, :edit, :update, :patch]
+  resource :member, only: [:new, :edit, :update, :patch] do
+    get 'step1'
+    get 'step2'
+  end
 
   get '/profile' => "members#profile", as: :profile
 

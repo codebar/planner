@@ -25,4 +25,5 @@
 
     .row
       .large-6.large-offset-3.columns.text-right
+        = hidden_field_tag :next_page, step2_member_path
         = f.submit "Next", class: 'button round right'
