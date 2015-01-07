@@ -82,6 +82,14 @@ nav a.menu {
     margin-bottom: 2rem;
   }
 
+  .subscriptions .collapsed {
+    display: none;
+  }
+
+  .toggle {
+    cursor: pointer;
+  }
+
   label.required abbr {
     display: none;
   }

@@ -19,6 +19,7 @@
 //= require pickadate/picker.time
 //= require analytics
 //= require gosquared
+//= require subscriptions-toggle
 
 $(function(){
   $(document).foundation();
