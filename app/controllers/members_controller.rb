@@ -1,5 +1,5 @@
 class MembersController < ApplicationController
-  before_action :logged_in?, only: [:edit, :show]
+  before_action :logged_in?, only: [:edit, :show, :step1, :step2]
 
   def new
     @page_title = "Sign up"
@@ -8,6 +8,18 @@ class MembersController < ApplicationController
   def edit
     @groups = Group.all
     @member = current_user
+  end
+
+  # Show the first step of the new user flow. A custom edit form for the user.
+  def step1
+    @member = current_user
+  end
+
+  # Second step of the new user flow. Choose mailing lists.
+  def step2
+    @member = current_user
+    @coach_groups = Group.coaches
+    @student_groups = Group.students
   end
 
   def profile
@@ -20,7 +32,12 @@ class MembersController < ApplicationController
     @member = current_user
 
     if @member.update_attributes(member_params)
-      redirect_to :back, notice: "Your details have been updated"
+      notice = "Your details have been updated"
+      if params[:next_page]
+        redirect_to(params[:next_page], notice: notice) and return
+      else
+        redirect_to(:back, notice: notice) and return
+      end
     else
       @groups = Group.all
       render "edit"
