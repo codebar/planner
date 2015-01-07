@@ -76,14 +76,10 @@ nav a.menu {
   background-color: #CCC;
 }
 
-
+/* The new user flow. */
 .sign-up-wizard {
   .row.subscriptions {
     margin-bottom: 2rem;
-  }
-
-  .subscriptions .collapsed {
-    display: none;
   }
 
   .toggle {
@@ -100,6 +96,11 @@ nav a.menu {
     font-size: 65%;
   }
 }
+
+/* Show/hide togglable elements are controlled by JavaScript. */
+.sign-up-wizard .collapsed { display: none; }
+.no-js .sign-up-wizard .collapsed { display: block; }
+
 
 
 .workshop.title {
