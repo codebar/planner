@@ -1,0 +1,21 @@
+.row.subscriptions
+  .large-6.large-offset-3.columns
+    %h2.toggle
+      Students
+      - if collapsed
+        %i.fa.fa-chevron-right
+      - else
+        %i.fa.fa-chevron-down
+    .group-container{class: collapsed ? "collapsed" : ""}
+      - groups.each do |g|
+        - if belongs_to_group? g
+          = simple_form_for :subscription, url: :destroy_subscriptions, method: :delete do |f|
+            = f.input :subscription_id, as: :hidden, input_html: { value: nil }
+            = f.input :group_id, as: :hidden, input_html: { value: g.id }
+            = button_tag type: :submit, class: 'button expand success round' do
+              %i.fa.fa-check.fa-lg
+              Subscribed to #{g.chapter.name} student invites
+        - else
+          = simple_form_for :subscription, url: :subscriptions do |f|
+            = f.input :group_id, as: :hidden, input_html: { value: g.id }
+            = f.submit "Subscribe to #{g.chapter.name} student invites", class: 'button expand warn round'
