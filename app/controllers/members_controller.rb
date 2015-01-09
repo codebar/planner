@@ -12,11 +12,13 @@ class MembersController < ApplicationController
 
   # Show the first step of the new user flow. A custom edit form for the user.
   def step1
+    @suppress_notices = true
     @member = current_user
   end
 
   # Second step of the new user flow. Choose mailing lists.
   def step2
+    @suppress_notices = true
     @member = current_user
     @coach_groups = Group.coaches
     @student_groups = Group.students
