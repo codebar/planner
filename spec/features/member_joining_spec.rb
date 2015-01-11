@@ -57,7 +57,33 @@ feature "A new student signs up", js: false do
     [ "Student", "Coach", "Mentor", "Admin" ].each { |role| Role.create name: role }
   end
 
-  scenario "A student can sign up via the front page" do
+  scenario "A new student lands on step 1 after signing up via the front page" do
+    visit root_path
+    click_on "Students"
+    click_on "Sign in with Github"
+    expect(current_path).to eq(step1_member_path)
+  end
+
+  scenario "Filling in all the details on step 1 brings the user to step 2" do
+    visit root_path
+    click_on "Students"
+    click_on "Sign in with Github"
+    expect(page).to have_selector("form")
+    fill_in "member_name", with: "Bob"
+    fill_in "member_surname", with: "Smith"
+    fill_in "member_email", with: "someone@example.com"
+    fill_in "member_about_you", with: "I'm a test user created via the RSpec feature specs."
+    click_on "Next"
+    expect(current_path).to eq(step2_member_path)
+
+    member = Member.last
+    expect(member.name).to eq("Bob")
+    expect(member.surname).to eq("Smith")
+    expect(member.email).to eq("someone@example.com")
+    expect(member.about_you).to eq("I'm a test user created via the RSpec feature specs.")
+  end
+
+  scenario "A student can sign up via the front page", pending: "Transform into test for edit page" do
     visit root_path
     click_on "Students"
     expect(current_path).to eq(new_member_path)
