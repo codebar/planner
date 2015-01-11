@@ -2,7 +2,9 @@
   .row
     .medium-12.columns
       %h1 Almost there...
-      %p We need some more details from you to finish creating your account. We use these to help run our events &amp; match you with a suitable coach.
+      %p
+        We need some more details from you to finish creating your account. We use these to help run our events &amp; match you
+        with a suitable #{@member.coach? ? "student" : "coach"}.
 
   = simple_form_for @member, method: :put, html: {class: "sign-up-wizard"} do |f|
     .row
@@ -19,7 +21,7 @@
     .row
       .large-6.large-offset-3.columns
         - if @member.coach?
-          = f.input :about_you, as: :text, label: "What languages do you like to use? How do you spend your time? Tell us a little about yourself!", required: true
+          = f.input :about_you, as: :text, label: "What experience do you have? What languages do you like to use? Tell us a little about yourself!", required: true
         - else
           = f.input :about_you, as: :text, label: "What do you want to work on at Codebar? What have you done in the past? Tell us a little about yourself!", required: true
 
