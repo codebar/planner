@@ -41,7 +41,7 @@ class AuthServicesController < ApplicationController
         session[:oauth_token]        = omnihash[:credentials][:token]
         session[:oauth_token_secret] = omnihash[:credentials][:secret]
 
-        redirect_to edit_member_path, notice: 'Thanks for signing up. Please fill in your details to complete the registration process.'
+        redirect_to step1_member_path, notice: 'Thanks for signing up. Please fill in your details to complete the registration process.'
       end
     end
   end

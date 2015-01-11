@@ -1,5 +1,5 @@
 class MembersController < ApplicationController
-  before_action :logged_in?, only: [:edit, :show, :step1, :step2]
+  before_action :authenticate_member!, only: [:edit, :show, :step1, :step2]
 
   def new
     @page_title = "Sign up"
