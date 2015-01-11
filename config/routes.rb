@@ -12,6 +12,7 @@ Planner::Application.routes.draw do
 
   resource :member, only: [:new, :edit, :update, :patch] do
     get 'step1'
+    put 'step1'
     get 'step2'
   end
 
