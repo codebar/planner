@@ -14,7 +14,14 @@ class MembersController < ApplicationController
   def step1
     @suppress_notices = true
     @member = current_user
+
+    if request.post? or request.put?
+      if @member.update_attributes(member_params)
+        redirect_to step2_member_path and return
+      end
+    end
   end
+
 
   # Second step of the new user flow. Choose mailing lists.
   def step2
@@ -35,11 +42,7 @@ class MembersController < ApplicationController
 
     if @member.update_attributes(member_params)
       notice = "Your details have been updated"
-      if params[:next_page]
-        redirect_to(params[:next_page], notice: notice) and return
-      else
-        redirect_to(:back, notice: notice) and return
-      end
+      redirect_to(:back, notice: notice) and return
     else
       @groups = Group.all
       render "edit"

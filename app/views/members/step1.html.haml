@@ -6,7 +6,7 @@
         We need some more details from you to finish creating your account. We use these to help run our events &amp; match you
         with a suitable #{@member.coach? ? "student" : "coach"}.
 
-  = simple_form_for @member, method: :put, html: {class: "sign-up-wizard"} do |f|
+  = simple_form_for @member, method: :put, url: {action: :step1}, html: {class: "sign-up-wizard"} do |f|
     .row
       .large-6.large-offset-3.columns
         = f.input :name, label: "First name", required: true
