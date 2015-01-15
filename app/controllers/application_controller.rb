@@ -45,9 +45,12 @@ class ApplicationController < ActionController::Base
 
   def finish_registration
     if current_user.requires_additional_details?
-      flash[:notice] = "We need to know a little more about you. Please finish the registration form below."
-      redirect_to edit_member_path
+      redirect_to step1_member_path unless providing_additional_details?
     end
+  end
+
+  def providing_additional_details?
+    [edit_member_path, step1_member_path].include? request.path
   end
 
   def logout!

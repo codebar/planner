@@ -76,6 +76,37 @@ nav a.menu {
   background-color: #CCC;
 }
 
+/* The new user flow. */
+.sign-up-wizard {
+  .row.subscriptions {
+    margin-bottom: 2rem;
+  }
+
+  span.error {
+    margin-top: -17px;
+  }
+
+  .toggle {
+    cursor: pointer;
+  }
+
+  label.required abbr {
+    display: none;
+  }
+
+  .hint {
+    position: relative;
+    top: -1rem;
+    font-size: 65%;
+  }
+}
+
+/* Show/hide togglable elements are controlled by JavaScript. */
+.sign-up-wizard .collapsed { display: none; }
+.no-js .sign-up-wizard .collapsed { display: block; }
+
+
+
 .workshop.title {
   color: grey;
   font-style: italic;

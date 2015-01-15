@@ -19,10 +19,12 @@
 //= require pickadate/picker.time
 //= require analytics
 //= require gosquared
+//= require subscriptions-toggle
 
 $(function(){
   $(document).foundation();
   $('#sessions_date_and_time').pickadate();
   $('#sessions_time').pickatime();
+  $('body').removeClass('no-js');
 });
 

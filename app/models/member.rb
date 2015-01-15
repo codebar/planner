@@ -22,12 +22,12 @@ class Member < ActiveRecord::Base
 
   # Is this user a student?
   def student?
-    groups.students.count > 0
+    groups.students.count > 0 || roles.where(name: 'student').any?
   end
 
   # Is this user a coach?
   def coach?
-    groups.coaches.count > 0
+    groups.coaches.count > 0 || roles.where(name: 'coach').any?
   end
 
   # Has this user ever attended a Codebar session?

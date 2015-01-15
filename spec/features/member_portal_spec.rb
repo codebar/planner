@@ -20,6 +20,37 @@ feature 'member portal' do
       login(member)
       visit root_path
     end
+
+    it "should allow a user to edit their profile" do
+      login member
+      visit edit_member_path
+      expect(member.name).not_to eq "Bob"
+      fill_in "member_name", with: "Bob"
+      click_button "Save"
+      expect(member.name).to eq "Bob"
+    end
+
+    it "should allow a user to join new mailing lists" do
+      group = Fabricate(:group)
+      expect(group.members.include? member).to be false
+
+      login member
+      visit edit_member_path
+      click_button "Subscribe"
+      expect(group.members.include? member).to be true
+
+    end
+
+    it "should allow a user to leave a mailing list" do
+      group = Fabricate(:group)
+      group.members << member
+      expect(group.members.include? member).to be true
+
+      login member
+      visit edit_member_path
+      click_button "Subscribed"
+      expect(group.members.include? member).to be false
+    end
   end
 
   context "not signed in" do

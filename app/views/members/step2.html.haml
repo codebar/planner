@@ -1,0 +1,19 @@
+%section#banner.sign-up-wizard
+  .row
+    .medium-12.columns
+      %h1 Pick an invite list
+      %p
+        You can register for events on the Codebar site, but it's easier via email.
+        Join an email list below to receive invites for that location.
+
+  - if current_user.coach?
+    = render partial: 'coach_invite_subscriptions', locals: {groups: @coach_groups, collapsed: false}
+    = render partial: 'student_invite_subscriptions', locals: {groups: @student_groups, collapsed: true}
+  - else
+    = render partial: 'student_invite_subscriptions', locals: {groups: @student_groups, collapsed: false}
+    = render partial: 'coach_invite_subscriptions', locals: {groups: @coach_groups, collapsed: true}
+
+  .row
+    .large-6.large-offset-3.columns
+      %p
+        = link_to "Done", root_path, class: "button round right"
