@@ -1,0 +1,47 @@
+=render partial: 'shared_mailers/header', locals: { title: "Workshop Waiting List Reminder" }
+%body{ bgcolor: "#FFFFFF" }
+
+  =render partial: 'shared_mailers/body_header', locals: { title: "Workshop Waiting List Reminder" }
+
+  %table{ class: "body-wrap"}
+    %tr
+      %td
+      %td{ class: "container", bgcolor: "#FFFFFF" }
+
+        .content
+          %table
+            %tr
+              %td
+                %h3 Hi, #{@member.name}
+                %p.lead
+                  This is a quick email to remind you that you're on the waiting list for tomorrow's workshop.
+                %p
+                  If someone drops out, the next person on the waiting list will automatically get a place.
+                  %strong This often happens at short notice,
+                  so you should bring your laptop with you just in case a spot opens up.
+                %p
+                  Alternatively, if you know you can no longer make it, you should
+                  = link_to "remove yourself from the waiting list", full_url_for(invitation_url(@invitation))
+                  so someone else can come.
+
+
+        .content
+          %table{ bgcolor: "#FFFFFF" }
+            %tr
+              %td.small{ width: "30%", style: "vertical-align: top; padding-right:10px;"}
+                =image_tag(@session.host.avatar)
+              %td
+                %h4
+                  Workshop
+                  %small= humanize_date_with_time(@session.date_and_time, @session.time)
+                %p
+                  #{@session.host.name}
+                  %br
+                  #{@host_address.to_html}
+                = link_to "See who will be there and update your attendance", full_url_for(invitation_url(@invitation)), class: 'btn'
+
+        .content
+          = render partial: 'shared_mailers/social'
+      %td
+
+  = render partial: 'shared_mailers/footer'
