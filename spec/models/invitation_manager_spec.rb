@@ -67,12 +67,78 @@ describe InvitationManager do
     InvitationManager.send_event_emails(event, chapter)
   end
 
-  it "#send_workshop_attendance_reminders" do
-    Fabricate(:attending_session_invitation, sessions: session)
+  describe "Attendance reminders" do
+    # Create a workshop with 30 invites: 10 attendees, 10 waitlisted places, 10 people not coming.
+    before(:example) do
+      ActionMailer::Base.deliveries = [] # Start with no emails sent before each test.
+      populace = 30.times.map {Fabricate(:member) }.shuffle
+      @attending_students = populace.shift(5)
+      @attending_coaches = populace.shift(5)
+      @waitlisted_students = populace.shift(5)
+      @waitlisted_coaches = populace.shift(5)
+      @absent_students = populace.shift(5)
+      @absent_coaches = populace.shift(5)
+      @workshop = Fabricate(:sessions)
+      @attending_students.each {|as| Fabricate(:student_session_invitation, attending: true, sessions: @workshop, member: as) }
+      @attending_coaches.each {|ac| Fabricate(:coach_session_invitation, attending: true, sessions: @workshop, member: ac) }
+      @absent_students.each {|as| Fabricate(:student_session_invitation, sessions: @workshop, member: as) }
+      @absent_coaches.each {|ac| Fabricate(:coach_session_invitation, sessions: @workshop, member: ac) }
+      @waitlisted_students.each do |ws|
+        invite = Fabricate(:student_session_invitation, sessions: @workshop, member: ws)
+        WaitingList.add(invite)
+      end
+      @waitlisted_coaches.each do |wc|
+        invite = Fabricate(:coach_session_invitation, sessions: @workshop, member: wc)
+        WaitingList.add(invite)
+      end
+    end
 
-    allow_any_instance_of(SessionInvitationMailer).to receive(:reminder)
+    it "Sets up the workshop as expected" do
+      expect(@workshop.attendances.length).to eql 10
+      expect(@workshop.waiting_list.length).to eql 10
 
-    InvitationManager.send_workshop_attendance_reminders(session)
+      (@attending_students + @attending_coaches).each do |member|
+        expect(@workshop.attendee? member).to be true
+        expect(@workshop.waitlisted? member).to be false
+      end
+
+      (@waitlisted_students + @waitlisted_coaches).each do |member|
+        expect(@workshop.attendee? member).to be false
+        expect(@workshop.waitlisted? member).to be true
+      end
+
+      (@absent_students + @absent_coaches).each do |member|
+        expect(@workshop.attendee? member).to be false
+        expect(@workshop.waitlisted? member).to be false
+      end
+    end
+
+    it "sends out attendance reminders to attendees, and no-one else" do
+      expect {
+        InvitationManager.send_workshop_attendance_reminders(@workshop)
+      }.to change { ActionMailer::Base.deliveries.count }.by 10
+
+      ActionMailer::Base.deliveries.each do |mail|
+        expect((@attending_students + @attending_coaches).one? {|p| mail.to.include? p.email}).to be true
+        expect(@waitlisted_students.none? {|p| p.email == mail.to}).to be true
+        expect(@waitlisted_coaches.none? {|p| p.email == mail.to}).to be true
+        expect(@absent_coaches.none? {|p| p.email == mail.to}).to be true
+        expect(@absent_coaches.none? {|p| p.email == mail.to}).to be true
+      end
+    end
+
+    it "sends out waitlist reminders to waitlisted people only, and no-one else" do
+      expect {
+        InvitationManager.send_workshop_waiting_list_reminders(@workshop)
+      }.to change { ActionMailer::Base.deliveries.count }.by 10
+
+      ActionMailer::Base.deliveries.each do |mail|
+        expect(@attending_students.none? {|p| p.email == mail.to}).to be true
+        expect(@attending_coaches.none? {|p| p.email == mail.to}).to be true
+        expect((@waitlisted_students + @waitlisted_coaches).one? {|p| mail.to.include? p.email}).to be true
+        expect(@absent_coaches.none? {|p| p.email == mail.to}).to be true
+        expect(@absent_coaches.none? {|p| p.email == mail.to}).to be true
+      end
+    end
   end
-
 end
