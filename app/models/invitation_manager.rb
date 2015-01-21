@@ -42,6 +42,14 @@ class InvitationManager
     end
   end
 
+  def self.send_workshop_waiting_list_reminders session
+    # Only send out reminders to people where reminded_at is nil, ie. falsey.
+    session.waiting_list.reject(&:reminded_at).each do |invitation|
+      SessionInvitationMailer.waiting_list_reminder(session, invitation.member, invitation).deliver
+      invitation.update_attribute(:reminded_at, DateTime.now)
+    end
+  end
+
   def self.send_change_of_details session, title="Change of details", sponsor
     session.invitations.accepted.map do |invitation|
       SessionInvitationMailer.change_of_details(session, sponsor, invitation.member, invitation, title).deliver
