@@ -22,7 +22,7 @@ class Sessions < ActiveRecord::Base
   end
 
   def waiting_list
-    invitations
+    WaitingList.by_workshop(self).map(&:invitation)
   end
 
   def student_waiting_list
