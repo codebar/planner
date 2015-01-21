@@ -64,7 +64,7 @@ class SessionInvitationMailer < ActionMailer::Base
     end
   end
 
-  def reminder session, member, invitation
+  def attending_reminder session, member, invitation
     @session = session
     @workshop = WorkshopPresenter.new(session)
     @host_address = AddressDecorator.decorate(@session.host.address)
@@ -72,6 +72,19 @@ class SessionInvitationMailer < ActionMailer::Base
     @invitation = invitation
 
     subject = "Workshop Reminder #{humanize_date_with_time(@session.date_and_time, @session.time)}"
+    mail(mail_args(member, subject)) do |format|
+      format.html
+    end
+  end
+
+  def waiting_list_reminder session, member, invitation
+    @session = session
+    @workshop = WorkshopPresenter.new(session)
+    @host_address = AddressDecorator.decorate(@session.host.address)
+    @member = member
+    @invitation = invitation
+
+    subject = "Reminder: you're on the Codebar waiting list (#{humanize_date_with_time(@session.date_and_time, @session.time)})"
     mail(mail_args(member, subject)) do |format|
       format.html
     end
