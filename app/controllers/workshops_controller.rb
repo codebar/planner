@@ -10,32 +10,36 @@ class WorkshopsController < ApplicationController
   # Add a user to this workshop, either to the attendees or the waiting list.
   def add
     @workshop = Sessions.find(params[:id])
-    waiting_listed = false
-    case params[:role]
-      when "student"
-        @invitation = SessionInvitation.where(sessions: @workshop, member: current_user, role: "Student").first_or_create
-        if @workshop.student_spaces?
-          @invitation.update_attribute(:attending, true)
+    if @workshop.invitable
+      waiting_listed = false
+      case params[:role]
+        when "student"
+          @invitation = SessionInvitation.where(sessions: @workshop, member: current_user, role: "Student").first_or_create
+          if @workshop.student_spaces?
+            @invitation.update_attribute(:attending, true)
+          else
+            WaitingList.add(@invitation, true)
+            waiting_listed = true
+          end
+        when "coach"
+          @invitation = SessionInvitation.where(sessions: @workshop, member: current_user, role: "Coach").first_or_create
+          if @workshop.coach_spaces?
+            @invitation.update_attribute(:attending, true)
+          else
+            WaitingList.add(@invitation, true)
+            waiting_listed = true
+          end
         else
-          WaitingList.add(@invitation, true)
-          waiting_listed = true
-        end
-      when "coach"
-        @invitation = SessionInvitation.where(sessions: @workshop, member: current_user, role: "Coach").first_or_create
-        if @workshop.coach_spaces?
-          @invitation.update_attribute(:attending, true)
-        else
-          WaitingList.add(@invitation, true)
-          waiting_listed = true
-        end
-      else
-        redirect_to workshop_path(@workshop) and return
-    end
+          redirect_to workshop_path(@workshop) and return
+      end
 
-    if waiting_listed
-      redirect_to :waitlisted_workshop and return
-    else
-      redirect_to :added_workshop and return
+      if waiting_listed
+        redirect_to :waitlisted_workshop and return
+      else
+        redirect_to :added_workshop and return
+      end
+    else # This workshop isn't marked as invitable.
+      redirect_to workshop_path(@workshop) and return
     end
   end
 
