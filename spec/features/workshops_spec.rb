@@ -263,4 +263,14 @@ feature 'Viewing a workshop page' do
     expect(page).to have_content("As a coach")
     expect(page).not_to have_content("As a student")
   end
+
+  scenario "A logged-in user viewing a future event that's not invitable can't RSVP to that event" do
+    workshop.update(invitable: false)
+
+    login member
+    visit workshop_path workshop
+    expect(page).to have_content("This workshop isn't open for registrations yet")
+    expect(page).not_to have_button("Attend as a coach")
+    expect(page).not_to have_button("Attend as a student")
+  end
 end
