@@ -43,7 +43,7 @@ class WorkshopPresenter < EventPresenter
       if organisers.include? i.member
         [i.member.full_name, "ORGANISER"]
       else
-      [i.member.full_name, i.role.upcase]
+        [i.member.full_name, i.role.upcase]
       end
     end
   end
