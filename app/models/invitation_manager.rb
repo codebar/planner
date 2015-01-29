@@ -37,7 +37,15 @@ class InvitationManager
 
   def self.send_workshop_attendance_reminders session
     session.attendances.where(reminded_at: nil).each do |invitation|
-      SessionInvitationMailer.reminder(session, invitation.member, invitation).deliver
+      SessionInvitationMailer.attending_reminder(session, invitation.member, invitation).deliver
+      invitation.update_attribute(:reminded_at, DateTime.now)
+    end
+  end
+
+  def self.send_workshop_waiting_list_reminders session
+    # Only send out reminders to people where reminded_at is nil, ie. falsey.
+    session.waiting_list.reject(&:reminded_at).each do |invitation|
+      SessionInvitationMailer.waiting_list_reminder(session, invitation.member, invitation).deliver
       invitation.update_attribute(:reminded_at, DateTime.now)
     end
   end
