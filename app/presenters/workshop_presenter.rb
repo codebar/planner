@@ -39,7 +39,13 @@ class WorkshopPresenter < EventPresenter
   private
 
   def attendee_array
-    model.attendances.map {|i| [i.member.full_name, i.role.upcase] }
+    model.attendances.map do |i|
+      if organisers.include? i.member
+        [i.member.full_name, "ORGANISER"]
+      else
+        [i.member.full_name, i.role.upcase]
+      end
+    end
   end
 
   def model
