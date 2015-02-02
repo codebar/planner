@@ -7,6 +7,7 @@ class Member < ActiveRecord::Base
   has_many :jobs, foreign_key: :created_by_id
   has_many :subscriptions
   has_many :groups, through: :subscriptions
+  has_many :member_notes
 
   validates :auth_services, presence: true
   validates :name, :surname, :email, :about_you, presence: true, if: :can_log_in?
