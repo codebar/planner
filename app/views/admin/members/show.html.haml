@@ -47,4 +47,8 @@
         = render partial: "member_note", collection: @member.member_notes
       - else
         %em No notes.
+      = simple_form_for [:admin, @member_note] do |f|
+        = f.input :note, label: false
+        = f.hidden_field :member_id, value: @member.id
+        = f.submit "Add note"
 
