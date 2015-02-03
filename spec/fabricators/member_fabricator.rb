@@ -14,3 +14,10 @@ end
 Fabricator(:coach, from: :member) do
   groups(count: 2) { |attrs, i| Fabricate(:coaches) }
 end
+
+Fabricator(:chapter_organiser, from: :member) do
+  after_save do |member|
+    chapter = Fabricate(:chapter)
+    member.add_role :organiser, chapter
+  end
+end
