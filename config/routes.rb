@@ -86,6 +86,7 @@ Planner::Application.routes.draw do
     end
 
     resources :members, only: [:show]
+    resources :member_notes, only: [:create]
 
     resources :chapters, only: [ :index, :new, :create, :show] do
       resources :workshops, only: [ :index ]
