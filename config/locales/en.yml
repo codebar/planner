@@ -69,6 +69,13 @@ en:
 
   coaches:
     want_to_coach: "Do you want to coach at our workshops?"
+    read_before: "If you have not attended our workshops before, make sure you read our"
+    code_of_conduct: "code of conduct"
+    policy: "as we have a zero tolerance policy and expect everyone to behave appropriately. You should also  go through our"
+    guide: "coaching guide"
+    unable_attend: "In case you are unable to attend after you RSVP, please make sure you come back and update your attendance as we rely on coaches showing up in order for our workshops to run smoothly."
+    food: "PS: There will also be food at the workshop. We always make an effort to have vegetarian, vegan and gluten-free options available. If you have any other dietary requirements, send us email at"
+
 
   code_of_conduct:
     summary:

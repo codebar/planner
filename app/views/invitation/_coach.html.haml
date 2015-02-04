@@ -1,12 +1,13 @@
 %p
-  If you have not attended our workshops before, make sure you read our
+  = t('coaches.read_before')
   = succeed ',' do
-    =link_to "code of conduct", "http://codebar.io/code-of-conduct"
-  as we have a zero tolerance policy and expect everyone to behave appropriately. You should also  go through our
+    =link_to t('coaches.code_of_conduct'), "http://codebar.io/code-of-conduct"
+  = t('policy')
   = succeed '.' do
-    = link_to "coaching guide", teaching_guide_path
-%p In case you are unable to attend after you RSVP, please make sure you come back and update your attendance as we rely on coaches showing up in order for our workshops to run smoothly.
+    = link_to t('coaches.guide'), teaching_guide_path
+%p
+  = t('coaches.unable_attend')
 
 %p
-  = PS: There will also be food at the workshop. We always make an effort to have vegetarian, vegan and gluten-free options available. If you have any other dietary requirements, send us email at
+  = t('food')
   = #{mail_to @invitation.sessions.chapter.email, @invitation.sessions.chapter.email}.
