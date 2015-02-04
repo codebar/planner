@@ -62,7 +62,7 @@ feature "A new student signs up", js: false do
     click_on "Students"
     expect(current_path).to eq(new_member_path)
 
-    click_on "Sign in with Github"
+    click_on "Sign In With Github"
     expect(current_path).to eq(edit_member_path)
     expect(page).to have_selector("form")
     fill_in 'member_about_you', with: "I'm a test user and am not actually real"
