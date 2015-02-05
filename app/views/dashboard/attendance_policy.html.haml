@@ -4,26 +4,26 @@
   .row
     .large-12.columns
       %p
-        There’s high demand for our workshops and we have a waiting list on most weeks. To make sure as many people as possible can come, we have a straightforward attendance policy.
+        = t('dashboard.policy.intro')
         %ul
-          %li Before you RSVP make sure you are eligible to attend. If you’re not sure get in touch for a chat.
-          %li You must sign up and RSVP to attend our workshops.
-          %li If you RSVP then later realise you can’t make it, you must cancel. It only takes a few seconds to do through your confirmation email.
-          %li Please try to cancel with at least 24 hours notice.
-          %li We know that sometimes things come up last minute, but even if you only cancel an hour before the session, get in touch and let us know.
+          %li= t('dashboard.policy.rule1')
+          %li= t('dashboard.policy.rule2')
+          %li= t('dashboard.policy.rule3')
+          %li= t('dashboard.policy.rule4')
+          %li= t('dashboard.policy.rule5')
 
       %h3
-        What happens if I don’t respect the policy?
+        = t('dashboard.policy.what_happens')
       %p
-        We operate a three strikes system. That means if you don’t come in without cancelling an RSVP three times, we will take you off our invite list for four weeks. We’ll get in touch after your first absence to make sure you understand this.
+        = t('dashboard.policy.strikes_system')
       %p
-        If you fail to attend without cancelling another three times, we might have to remove you permanently from our invitation list.
+        = t('dashboard.policy.removing')
       %p
-        There is no penalty for RSVP-ing and then cancelling on a regular basis, but please avoid it. If you always struggle to make it in on a certain day then let us know – that kind of feedback is really important to us.
+        = t('dashboard.policy.rsvping')
       %h3
-        Another note on eligibility
+        = t('dashboard.policy.eligibility_note')
       %p
-        We’re a fairly relaxed bunch and we trust you, so we don’t police students as to their eligibility. However if it ever looks like this is being abused we may have to change that – which we really don’t want to do.
+        = t('dashboard.policy.abuse')
       %p
-        So please remember what these workshops are for – to open up tech to people that are underrepresented in the industry.
+        = t('dashboard.policy.reminder')
 
