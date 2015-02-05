@@ -3,13 +3,15 @@
   .row
     .medium-12.columns
       %p.lead.text-center
-        Join our  <i>free</i> weekly workshops in #{link_to "London", chapter_url("london")},  #{link_to "Brighton", chapter_url("brighton")} and #{link_to "Cambridge", chapter_url("cambridge")} to get to grips with the basics of programming and web development.
+        = raw t("dashboard.join_workshops_in")
+        #{link_to "London", chapter_url("london")}, #{link_to "Brighton", chapter_url("brighton")} and #{link_to "Cambridge", chapter_url("cambridge")}
+        = t("dashboard.workshops_goal")
   %br
   .row
     .medium-offset-2.medium-4.columns
-      =link_to "Students", new_member_path(role:"student"), class: 'button round expand'
+      =link_to t("Students"), new_member_path(role:"student"), class: 'button round expand'
     .medium-4.columns
-      =link_to "Coaches", new_member_path(role: "coach"), class: 'button round expand'
+      =link_to t("Coaches"), new_member_path(role: "coach"), class: 'button round expand'
 %br
 
 - if @testimonials.any?
@@ -20,13 +22,13 @@
   .events
     .row
       .large-12.columns
-        %h4 Events
+        %h4= t("Events")
         %hr
         - if @upcoming_workshops.empty?
           %p
-            There are no upcoming events.
+            = t("no_upcoming_events")
           %p
-            =link_to "View past events", events_url(anchor: 'past'), class: "button round expand"
+            =link_to t("view_past_events"), events_url(anchor: 'past'), class: "button round expand"
 
         - if @upcoming_workshops.present?
           %ul.no-bullet
@@ -36,9 +38,9 @@
   .row
     .large-12.columns
       %h4
-        Latest Sponsors
+        = t("latest_sponsors")
         %small.subheader
-          = link_to "View all", sponsors_path
+          = link_to t("view_all"), sponsors_path
       %hr
 
       %ul.small-block-grid-2.medium-block-grid-4.large-block-grid-5#sponsors

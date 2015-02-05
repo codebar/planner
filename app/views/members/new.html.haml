@@ -2,9 +2,16 @@
 %section#banner
   .row
     .medium-12.columns
-      %p.lead We offer a welcoming, inclusive and learning-friendly environment, and have a zero tolerance policy towards any form of harassment or inappropriate behavior. Before you sign up, read our #{link_to "code of conduct", code_of_conduct_path}.
-      %p If you are a student, make sure you meet our #{link_to "eligibility criteria",  faq_path(anchor: "attendance-eligibility")} as our workshops are only available to women, LGBTQ and other minorities in tech.
-      %p Invitations are sent out periodically, so don't worry if you don't receive one as soon as you register.
+      %p.lead
+        = t('members.new.intro')
+        = link_to t('members.code_of_conduct'), code_of_conduct_path
+        \.
+      %p
+        = t('members.new.students.intro')
+        = link_to t('members.new.students.criteria_link'), faq_path(anchor: "attendance-eligibility")
+        = t('members.new.students.criteria_brief')
+      %p
+        = t('members.new.invitations')
       = link_to registration_path, class: "button round" do
-        Sign in with Github
+        = t('members.sign_in_with_github')
         %i.fa.fa-github.fa-fw

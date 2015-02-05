@@ -3,48 +3,49 @@
   .row
     .large-12.columns
       %dl
-        %dt Do I need to pay to attend Codebar?
+        %dt= t('faq.payment.q')
         %dd
-          Absolutely not! We are lucky enough to have some great companies who are able to host the workshops and/or kindly provide food. And our #{link_to "awesome coaches", coaches_path} give their time freely to help the community.
+          = t('faq.payment.a_p1')
+          = link_to t('faq.payment.awesome_coaches'), coaches_path
+          = t('faq.payment.a_p1')
 
-        %dt What technologies do you teach?
-        %dd We have a variety of available tutorials in HTML, CSS, Javascript and Ruby. If you want to learn something else don't hesitate to #{mail_to "hello@codebar.io", "send us an email"} as we might still be able to find someone to help you out.
+        %dt= t('faq.technologies.q')
+        %dd= raw t('faq.technologies.a')
 
-        %dt#attendance-eligibility I want to attend a workshop. Am I eligible?
+        %dt#attendance-eligibility= t('faq.eligibility.q')
+        %dd= raw t('faq.eligibility.a')
+
+        %dt= t('faq.career.q')
+        %dd= t('faq.career.a')
+
+        %dt= t('faq.format.q')
+        %dd= t('faq.format.a')
+
+        %dt= t('faq.laptop.q')
+        %dd= raw t('faq.laptop.a')
+
+        %dt= t('faq.online_resources.q')
+        %dd= t('faq.online_resources.a')
+
+        %dt= t('faq.preperations.q')
         %dd
-          Our workshops are available to women, LGBTQ and people who are underrepresented in the tech industry. If you belong to one of these groups, you are more than welcome to attend.
+          = t('faq.preperations.a_p1')
+          = link_to t('faq.preperations.coaching_guide_tutorials'), teaching_guide_path
+          = t('faq.preperations.a_p2')
+          = raw t('faq.preperations.a_p3')
+          = t('faq.preperations.a_p4')
 
-          If not, there are some other great initiatives like <a href="http://www.meetup.com/opentechschool-london">Open Tech School London</a> where you can learn in a collaborative environment.
-        %dt Is Codebar only aimed at people who want to move into a career as a developer?
-        %dd No! Codebar is about getting people excited about programming. We'll help them learn some basic coding skills, as well as how to explore and do things on their own. For those who do want to become developers, we will provide help and guidance to help them achieve their goal.
+        %dt= t('faq.location.q')
+        %dd= t('faq.location.a')
 
-        %dt What is the format of the workshops?
+        %dt= t('faq.disabled_access.q')
+        %dd= raw t('faq.disabled_access.a')
+
+        %dt= t('faq.bring_codebar_to_my_city.q')
+        %dd= raw t('faq.bring_codebar_to_my_city.a')
+
+        %dt= t('faq.our_coaches.q')
         %dd
-          We try to have one coach for every two students. We will pair up students who want to work on the same tutorial, and assign them a coach. The rest just happens.
-
-        %dt Do I need to bring a laptop with me at the workshops?
-        %dd
-          Yes, we suggest that you bring a laptop as it will be easier for you to carry on working on things after the workshops. It you don't have one, <a href="mailto:contact@codebar.io">send us an email</a> so we can try and help out.
-
-        %dt There are so many online resources, why should I come to Codebar?
-        %dd
-          Coding can be intimidating and a lot of people find it hard to get started. By putting you in touch with people who can help and guide you we make the experience and learning process easier and more enjoyable.
-
-        %dt I would like to coach at Codebar. Is there anything I should do besides signing up?
-        %dd
-          Yes. First you should read our #{link_to "coaching guide", teaching_guide_path}. Then spend sometime familiarising yourself with the <a href="http://tutorials.codebar.io">tutorials</a>. The tutorials are open source so if there is something that you want to improve open an issue on the GitHub repository or send a pull request.
-
-          We don't expect the coaches to be familiar with all the technologies and languages we have material on.
-        %dt Where do the workshops take place?
-        %dd
-          As we don't have a permanent venue, our workshops are hosted by different companies in various locations around London. So far we've run workshops in Shoreditch, London Bridge, Holborn and Kings Cross.
-
-        %dt Is there disabled access at the workshops?
-        %dd
-          Unfortunately, that depends entirely on where we are hosting our workshops and if the venue has disabled access. If you would like to attend, send us an email at <a href="mailto:meetings@codebar.io">meetings[at]codebar.io</a> so we can enquire about it and let you know.
-
-        %dt I would like to bring Codebar to my city. Can I do that?
-        %dd Of course. Codebar is about building a community of experienced developers that are able to give up some of their time to help others. If you are keen on running Codebar where you live, we would love to speak to you about it and see how we can help make this happen, so send <a href="mailto:contact@codebar.io">us an email</a>.
-
-        %dt Our coaches
-        %dd You can see all the coaches have helped out in our workshops on the #{link_to "coaches page", coaches_path}. They are ordered by number of attendances. This is our way of showing our appreciation to them, as without them, we wouldn't be able to exist.
+          = t('faq.our_coaches.a_p1')
+          = link_to "coaches page", coaches_path
+          = t('faq.our_coaches.a_p2')

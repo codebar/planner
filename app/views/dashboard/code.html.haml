@@ -2,29 +2,29 @@
 %section#banner
   .row
     .large-12.columns
-      %h3 The Quick Version
+      %h3= t('code_of_conduct.summary.title')
       %p
-        Our events are dedicated to providing a harassment-free experience for everyone, regardless of gender, sexual orientation, disability, physical appearance, body size, race, or religion. We do not tolerate harassment of our members in any form. Sexual language and imagery is not appropriate for any of our events, including talks, workshops, parties, Twitter and any other online media. Members violating these rules may be sanctioned or expelled from the event and any future events at the discretion of the organisers.
+        = t('code_of_conduct.summary.intro')
 
       %h3 The Long Version
       %p
-        Harassment includes offensive verbal comments related to gender, sexual orientation, disability, physical appearance, body size, race, religion, sexual images in public spaces, deliberate intimidation, stalking, following, harassing photography or recording, sustained disruption of talks or other events, inappropriate physical contact, and unwelcome sexual attention.
+        = t('code_of_conduct.harassment')
 
       %p
-        We expect any participants asked to stop any harassing behaviour to comply immediately.
+        = t('code_of_conduct.comply')
 
       %p
-        Sponsors are also subject to the anti-harassment policy. In particular, sponsors should not use sexualized images, activities, or other material. Staff (including volunteers) should not use sexualized clothing/uniforms/costumes, or otherwise create a sexualized environment.
+        = t('code_of_conduct.sponsors')
 
       %p
-        If a participant engages in harassing behaviour the organisers may take any action they deem appropriate. This includes warning the offender or expulsion.
+        = t('code_of_conduct.sanctions')
 
       %p
-        If you are being harassed, notice that someone else is being harassed, or have any other concerns, please contact one of the organisers immediately.
+        = t('code_of_conduct.concerns')
 
       %p
-        We expect participants to follow these rules at all <b>codebar</b> events.
+        = raw t('code_of_conduct.applies_to')
 
       %p
-        If you have any questions or concerns about this code please
-        =mail_to "hello@codebar.io", "contact us", subject: "Regarding code of conduct"
+        = t('code_of_conduct.questions')
+        =mail_to "hello@codebar.io", "contact us", subject: t('code_of_conduct.email_subject')
