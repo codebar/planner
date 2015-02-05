@@ -7,6 +7,7 @@ class Member < ActiveRecord::Base
   has_many :jobs, foreign_key: :created_by_id
   has_many :subscriptions
   has_many :groups, through: :subscriptions
+  has_many :member_notes
 
   validates :auth_services, presence: true
   validates :name, :surname, :email, :about_you, presence: true, if: :can_log_in?
@@ -28,6 +29,11 @@ class Member < ActiveRecord::Base
   # Is this user a coach?
   def coach?
     groups.coaches.count > 0 || roles.where(name: 'coach').any?
+  end
+
+  # Is this user a chapter organiser?
+  def chapter_organiser?
+    roles.where(resource_type: "Chapter").any?
   end
 
   # Has this user ever attended a Codebar session?

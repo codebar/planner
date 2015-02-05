@@ -29,7 +29,7 @@
               #{group.name} (#{group.chapter.name})
   .row
     %hr
-    .medium-12.columns
+    .medium-8.columns
       %h3 Attended workshops
       - @member.session_invitations.attended.each do |invitation|
         .row
@@ -41,4 +41,14 @@
               = humanize_date_with_time(workshop.date_and_time, workshop.time)
           .medium-4.columns
             = invitation.note
+    .medium-4.columns
+      %h3 Member notes (#{@member.member_notes.count})
+      - if @member.member_notes.any?
+        = render partial: "member_note", collection: @member.member_notes
+      - else
+        %em No notes.
+      = simple_form_for [:admin, @member_note] do |f|
+        = f.input :note, label: false
+        = f.hidden_field :member_id, value: @member.id
+        = f.submit "Add note"
 

@@ -1,0 +1,16 @@
+.member_note {
+  margin-bottom: 1em;
+
+  border-bottom: 1px solid #ddd;
+  &:last-child {
+    border-bottom: none;
+  }
+
+  p {
+    margin-bottom: 0.2em;
+  }
+
+  cite {
+    font-size: 80%;
+  }
+}

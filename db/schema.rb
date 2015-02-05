@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141204232033) do
+ActiveRecord::Schema.define(version: 20150130001852) do
 
   create_table "addresses", force: true do |t|
     t.string   "flat"
@@ -198,6 +198,17 @@ ActiveRecord::Schema.define(version: 20141204232033) do
     t.string   "description"
     t.string   "slug"
   end
+
+  create_table "member_notes", force: true do |t|
+    t.integer  "member_id"
+    t.integer  "author_id"
+    t.text     "note"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "member_notes", ["author_id"], name: "index_member_notes_on_author_id"
+  add_index "member_notes", ["member_id"], name: "index_member_notes_on_member_id"
 
   create_table "members", force: true do |t|
     t.string   "name"
