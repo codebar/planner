@@ -187,3 +187,9 @@ en:
       q: "Our coaches"
       a_p1: "You can see all the coaches have helped out in our workshops on the"
       a_p2: ". They are ordered by number of attendances. This is our way of showing our appreciation to them, as without them, we wouldn't be able to exist."
+
+  chapters:
+    intro: "Our workshops are open to anyone under-represented in the tech industry, but places are limited."
+    sign_up: "to receive invitations to our upcoming workshops."
+    no_incoming: "There are no workshops coming up."
+    contact: "To contact the %{city} team, send an email to %{email}"

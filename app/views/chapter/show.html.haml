@@ -3,13 +3,13 @@
   .row
     .large-7.medium-6.small-12.columns
       %p.lead
-        Our workshops are open to anyone under-represented in the tech industry, but places are limited.
+        = t('chapters.intro')
         =link_to "Sign up", new_member_path
-        to receive invitations to our upcoming workshops.
+        = t('chapters.sign_up')
       %hr
 
       - if @upcoming_workshops.empty?
-        %em There are no workshops coming up.
+        %em= t('chapters.no_incoming')
 
       %ul.no-bullet
         - @upcoming_workshops.each do |workshop|
@@ -41,4 +41,4 @@
 
       %br
       .panel
-        To contact the #{@chapter.name} team, send an email to #{@chapter.email}
+        = t('chapters.contact', city: @chapter.name, email: @chapter.email)
