@@ -1,4 +1,4 @@
-= render partial: 'shared/title', locals: { title: "Events", date: nil }
+= render partial: 'shared/title', locals: { title: t('events.title'), date: nil }
 %section#banner
   .row
     .large-12.columns
@@ -13,5 +13,5 @@
         - if @past_events.any?
           .past#past
             .titlebox
-              %h2 Past
+              %h2= t('events.past')
             = render partial: 'events', locals: { events: @past_events }
