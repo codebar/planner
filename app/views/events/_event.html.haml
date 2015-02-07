@@ -8,14 +8,14 @@
           .day
             =l(event.date_and_time, format: :day)
           .time
-            at #{event.time}
+            = t('events.venue_at') #{event.time}
     .large-5.medium-5.small-5.columns
       .title
         =link_to event.to_s, event.path
       %small= event.description
       - if event.venue.present?
         %br
-        = t("kindly_hosted_by")
+        = t("events.kindly_hosted_by")
         = link_to event.venue.name, event.venue.website
         %br
         = AddressDecorator.decorate(event.venue.address).to_html
@@ -25,7 +25,7 @@
           = image_tag sponsor.avatar, class: 'sponsor'
       - if event.organisers.any?
         .organisers
-          %small= t("organisers")
+          %small= t("events.organisers")
           %br
           - event.organisers.each do |organiser|
             =link_to twitter_url_for(organiser.twitter) do
