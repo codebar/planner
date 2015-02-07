@@ -101,6 +101,32 @@ en:
     kindly_hosted_by: "Kindly hosted by"
     organisers: "organisers"
     venue_at: "at"
+    os_get_started: "Get started with Open Source!"
+    attend_as_coach: "Attend as a coach"
+    location: "Location"
+    sponsors: "Sponsors"
+    thx_to_sponsors: "A big thanks to all of our sponsors for making the event possible!"
+    coaches: "Coaches"
+    organisers: "Organisers"
+    schedule: "Schedule"
+    send_us_an_email: "send us an email"
+    faq:
+      experience:
+        q: "How experienced should I be to join the workshop?"
+        a:
+      contribution:
+        q: "What kind of contributions can I make?"
+        a:
+      laptop:
+        q: "Do I need to bring a laptop?"
+        a_html: "Yes, you should bring a laptop. If you don't have one %{link} as we may be able to help."
+      keyboard:
+        q: "Do I need to bring a keyboard?"
+        a_html: "A keyboard would help as you will spend the entire day pairing with someone on your latop. If you don't have a keyboard, %{link} and we'll try to organise something for you."
+      travel_costs:
+        q: "I will be commuting from Brighton/Cambridge. Can you help with my travel expenses?"
+        a: "Yes, we can help by covering your travel costs. Make sure you fill in the questionnaire and we'll get in touch."
+
 
   coaches:
     want_to_coach: "Do you want to coach at our workshops?"

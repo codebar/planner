@@ -9,9 +9,9 @@
   .row
     .large-10.columns
       =link_to event_student_rsvp_path(@event), class: 'button round' do
-        Get started with Open Source!
+        = t('events.os_get_started')
       =link_to event_coach_rsvp_path(@event), class: 'button round' do
-        Attend as a coach
+        = t('events.attend_as_coach')
       %br
       %br
 
@@ -20,10 +20,11 @@
 .row
   .large-7.columns
     %a{ name: "schedule" }
-    %h4{ "data-magellan-destination" => "schedule"} Schedule
+    %h4{ "data-magellan-destination" => "schedule"}
+      = t('events.schedule')
     = @event.schedule.html_safe
   .large-5.columns
-    %h4 Location
+    %h4= t('events.location')
     .row
       .medium-8.columns
         %p
@@ -49,9 +50,9 @@
   .large-12.columns
     %a{ name: "sponsors" }
     %h2{ "data-magellan-destination" => "sponsors"}
-      .text-center Sponsors
+      .text-center= t('events.sponsors')
     %p.text-center
-      %i A big thanks to all of our sponsors for making the event possible!
+      %i= t('events.thx_to_sponsors')
     %br
     - if @event.sponsors.any?
       %ul.no-bullet
@@ -71,7 +72,7 @@
     .large-12.columns
       %a{ name: "coaches" }
         %h2{ "data-magellan-destination" => "coaches"}
-          .text-center Coaches
+          .text-center= t('events.coaches')
       %br
       - if @event.verified_coaches.any?
         %ul.small-block-grid-2.medium-block-grid-5
@@ -88,7 +89,7 @@
   .large-12.columns
     %a{ name: "organisers" }
       %h2{ "data-magellan-destination" => "organisers"}
-        .text-center Organisers
+        .text-center= t('events.organisers')
     %br
     - if @event.organisers.any?
       %ul.small-block-grid-2.medium-block-grid-4
