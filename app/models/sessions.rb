@@ -16,6 +16,8 @@ class Sessions < ActiveRecord::Base
 
   validates :chapter_id, presence: true
 
+  before_save :combine_date_and_time
+
 
   def host
     SponsorSession.hosts.for_session(self.id).first.sponsor rescue nil
@@ -108,6 +110,16 @@ class Sessions < ActiveRecord::Base
 
   def self.policy_class
     WorkshopPolicy
+  end
+
+  private
+
+  def combine_date_and_time
+    self.date_and_time = DateTime.new(date_and_time.year,
+                                   date_and_time.month,
+                                   date_and_time.day,
+                                   time.hour,
+                                   time.min)
   end
 
 end

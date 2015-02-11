@@ -9,6 +9,19 @@ describe Sessions do
   it { should respond_to(:sponsors) }
   it { should respond_to(:sponsor_sessions)}
 
+  context "#before_save" do
+    let(:workshop) { Fabricate.build(:sessions, chapter: Fabricate(:chapter)) }
+
+    it "merges date_and_time and time" do
+      workshop.date_and_time = DateTime.new(2015,11,12,12,0)
+      workshop.time = Time.new(2000,01,01,18,30)
+
+      workshop.save
+
+      expect(workshop.date_and_time.utc).to eq(DateTime.new(2015,11,12,18,30).utc)
+    end
+  end
+
   context "#coach_spaces?" do
     let(:sponsor) { Fabricate(:sponsor) }
     let(:session) { Fabricate(:sessions_no_sponsor) }
