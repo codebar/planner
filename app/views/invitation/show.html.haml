@@ -32,7 +32,7 @@
               %p
                 You will be working on...
                 = form_tag update_note_invitation_path(@invitation) do
-                  = text_area_tag :note, @invitation.note
+                  = select_tag :note, options_for_select(@tutorial_titles, @invitation.note)
                   = submit_tag 'Update note', class: "expand button round"
 
             - if @workshop.rsvp_available?
@@ -49,7 +49,7 @@
             - else
               - if @invitation.student_spaces?
                 = simple_form_for @invitation, url: :accept_with_note_invitation, method: :post do |f|
-                  = f.input :note, label: "I will be working on... ", placeholder: "e.g. I know a bit of HTML and CSS or the second JQuery tutorial", required: true
+                  = f.input :note, label: "I will be working on... ", collection: @tutorial_titles, required: true, include_blank: false
                   = f.button :submit, "Attend",  class: "button expand round"
                   %label *Letting us know what you plan to work on will help us pair you up with a coach.
               - else

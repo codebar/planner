@@ -2,6 +2,7 @@ class InvitationController < ApplicationController
   include InvitationControllerConcerns
 
   def show
+    @tutorial_titles = Tutorial.all_titles
     @host_address = AddressDecorator.decorate(@invitation.parent.host.address)
     @workshop = WorkshopPresenter.new(@invitation.sessions)
 
