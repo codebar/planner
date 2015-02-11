@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Sessions, :se => true do
+describe Sessions do
   subject(:session) { Fabricate(:sessions) }
 
   it { should respond_to(:title) }
@@ -9,51 +9,50 @@ describe Sessions, :se => true do
   it { should respond_to(:sponsors) }
   it { should respond_to(:sponsor_sessions)}
 
+  context "#before_save" do
+    let(:workshop) { Fabricate.build(:sessions, chapter: Fabricate(:chapter)) }
+
+    it "merges date_and_time and time" do
+      workshop.date_and_time = DateTime.new(2015,11,12,12,0)
+      workshop.time = Time.new(2000,01,01,18,30)
+
+      workshop.save
+
+      expect(workshop.date_and_time.utc).to eq(DateTime.new(2015,11,12,18,30).utc)
+    end
+  end
+
   context "#coach_spaces?" do
     let(:sponsor) { Fabricate(:sponsor) }
+    let(:session) { Fabricate(:sessions_no_sponsor) }
 
     before do
-      session.sponsor_sessions.delete_all
       Fabricate(:sponsor_session, sponsor: sponsor, sessions: session, host: true)
     end
   end
 
-  context "Date and time" do
-    context "#imminent?" do
-      it "Future events aren't imminent" do
+  context "#rsvp_available?" do
+    context "rsvp is available" do
+      it "when the event is in the future" do
         session.date_and_time = 1.day.from_now
-        session.time = 1.hour.from_now
-        expect(session.imminent?).to be false
+        session.save
 
-        session.date_and_time = 3.days.from_now
-        expect(session.imminent?).to be false
+        expect(session.rsvp_available?).to be(true)
       end
 
-      it "Past events aren't imminent" do
-        session.date_and_time = 1.day.ago
-        session.time = 1.hour.ago
-        expect(session.imminent?).to be false
+      it "when rsvp_close_time is in the future" do
+        session.rsvp_close_time = 2.hours.from_now
 
-        session.date_and_time = 3.days.ago
-        expect(session.imminent?).to be false
-
-        session.date_and_time = Date.today
-        expect(session.imminent?).to be false
+        expect(session.rsvp_available?).to be(true)
       end
+    end
 
-      it "Soon events are imminent" do
-        session.date_and_time = Date.today
-        session.time = 6.hours.from_now
-        expect(session.imminent?).to be false
+    context "rsvp is not available" do
 
-        session.time = 3.hours.from_now
-        expect(session.imminent?).to be true
+      it "when the rsvp_close_time is in the past" do
+        session.rsvp_close_time = 2.hours.ago
 
-        session.time = 1.hour.from_now
-        expect(session.imminent?).to be true
-
-        session.time = 1.minute.from_now
-        expect(session.imminent?).to be true
+        expect(session.rsvp_available?).to be(false)
       end
     end
   end

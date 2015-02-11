@@ -10,12 +10,13 @@ class Sessions < ActiveRecord::Base
 
   belongs_to :chapter
 
+  default_scope { order('date_and_time DESC') }
   scope :students, -> { joins(:invitations).where(invitation: { name: 'Student', attended: true }) }
   scope :coaches, -> { joins(:invitations).where(invitations: { name: 'Coach', attended: true  }) }
 
   validates :chapter_id, presence: true
 
-  default_scope { order('date_and_time DESC') }
+  before_save :combine_date_and_time, :set_rsvp_close_time
 
   def host
     SponsorSession.hosts.for_session(self.id).first.sponsor rescue nil
@@ -41,28 +42,20 @@ class Sessions < ActiveRecord::Base
     has_host? and host.address.present?
   end
 
-
-  # Is this event in the past?
   def past?
-    combined_date_and_time < Time.now
+    date_and_time.past?
   end
 
   def today?
-    combined_date_and_time.today?
+    date_and_time.today?
   end
 
-  # Is this workshop happening imminently?
-  def imminent?
-    future? && (3.hours.from_now > combined_date_and_time)
+  def rsvp_available?
+    future? && rsvp_close_time.future?
   end
 
-  # Is this event in the future?
   def future?
-    combined_date_and_time > Time.now
-  end
-
-  def combined_date_and_time
-    date_and_time.beginning_of_day + time.seconds_since_midnight
+    date_and_time.future?
   end
 
   # Is there any space at this event?
@@ -92,7 +85,7 @@ class Sessions < ActiveRecord::Base
   # Is this person on the waiting list for this event?
   def waitlisted?(person)
     return false if person.nil?
-    raise ArgumentError, "Person should be a Member" unless person.is_a? Member
+    raise ArgumentError, "Person should be a Member" unless person.is_a?(Member)
     WaitingList.students(self).include?(person) || WaitingList.coaches(self).include?(person)
   end
 
@@ -111,6 +104,20 @@ class Sessions < ActiveRecord::Base
 
   def self.policy_class
     WorkshopPolicy
+  end
+
+  private
+
+  def combine_date_and_time
+    self.date_and_time = DateTime.new(date_and_time.year,
+                                   date_and_time.month,
+                                   date_and_time.day,
+                                   time.hour,
+                                   time.min)
+  end
+
+  def set_rsvp_close_time
+    self.rsvp_close_time ||= self.date_and_time
   end
 
 end

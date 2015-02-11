@@ -14,13 +14,13 @@ feature 'viewing an event' do
       expect(page).to have_content(event.schedule)
     end
 
-    scenario 'a student cannnot RSVP if they are not logged in', wip: true do
+    scenario 'a student cannnot RSVP if they are not logged in' do
       click_on 'Get started with Open Source!'
 
       expect(page).to have_content("The page is only available to Codebar members. Create an account or sign in first.")
     end
 
-    scenario 'a student cannnot RSVP if they are not logged in', wip: true do
+    scenario 'a student cannnot RSVP if they are not logged in' do
       click_on 'Attend as a coach'
 
       expect(page).to have_content("The page is only available to Codebar members. Create an account or sign in first.")

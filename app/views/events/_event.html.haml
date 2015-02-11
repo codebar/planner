@@ -8,7 +8,7 @@
           .day
             =l(event.date_and_time, format: :day)
           .time
-            = t('events.venue_at') #{event.time}
+            #{t('events.venue_at')} #{event.time}
     .large-5.medium-5.small-5.columns
       .title
         =link_to event.to_s, event.path
