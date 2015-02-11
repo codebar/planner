@@ -16,4 +16,11 @@ describe Tutorial do
       expect(tutorial).to have(1).error_on(:title)
     end
   end
+
+  it "gets all titles" do
+    tutorial_1 = Tutorial.create(title: "title1")
+    tutorial_2 = Tutorial.create(title: "title2")
+
+    expect(Tutorial.all_titles).to match_array(["title1", "title2"])
+  end
 end
