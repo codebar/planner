@@ -43,7 +43,7 @@ class Sessions < ActiveRecord::Base
   end
 
   def past?
-    date_and_time < Time.now
+    date_and_time.past?
   end
 
   def today?

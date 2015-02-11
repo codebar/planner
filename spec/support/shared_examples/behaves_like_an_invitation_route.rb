@@ -13,7 +13,7 @@ shared_examples "invitation route" do
       visit invitation_route
 
       expect(current_url).to eq(invitation_url(invitation))
-      expect(page).to have_content("There are no more spots left")
+      expect(page).to have_content("The workshop is full")
     end
   end
 
