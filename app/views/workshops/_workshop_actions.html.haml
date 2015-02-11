@@ -1,19 +1,17 @@
 %p
-  - if @workshop.past?
-    - if logged_in?
-      This workshop has already taken place.
-    - else
-      This workshop has already taken place, but you can sign up to receive invitations to our future events.
-  - elsif @workshop.attendee? current_user
-    You're attending this event.
-  - elsif @workshop.waitlisted? current_user
-    You are on the Waiting List.
+  - if !@workshop.invitable
+    Not open for registrations.
   - else
-    - if !@workshop.invitable
-      Registrations are not yet available.
-    - elsif @workshop.spaces?
-      Come along and join us!
-    - else
+    - if @workshop.past?
+      - if logged_in?
+        This workshop has already taken place.
+      - else
+        This workshop has already taken place, but you can sign up to receive invitations to our future events.
+    - elsif @workshop.attendee? current_user
+      You're attending this event.
+    - elsif @workshop.waitlisted? current_user
+      You are on the Waiting List.
+    - elsif !@workshop.spaces?
       This workshop is full, but you can join the waiting list.
 
 - if logged_in? && @workshop.future? && @workshop.invitable
