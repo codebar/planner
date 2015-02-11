@@ -20,7 +20,7 @@ feature 'Viewing a workshop page' do
     end
   end
 
-  context "logged in member" do
+  xcontext "logged in member" do
     before do
       login(member)
       visit workshop_path(workshop)

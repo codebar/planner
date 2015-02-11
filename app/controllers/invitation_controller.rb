@@ -5,8 +5,6 @@ class InvitationController < ApplicationController
     @host_address = AddressDecorator.decorate(@invitation.parent.host.address)
     @workshop = WorkshopPresenter.new(@invitation.sessions)
 
-    flash[:warning] = "This is a private link. Don't share it with others."
-
     render text: @workshop.attendees_csv if request.format.csv?
   end
 
@@ -15,9 +13,9 @@ class InvitationController < ApplicationController
 
     new_note = params[:note]
 
-    if new_note.blank? 
+    if new_note.blank?
       redirect_to :back, notice: "Couldn't update note. Note can't be blank."
-    else 
+    else
       @invitation.update_attribute(:note, params[:note])
       redirect_to :back, notice: t("messages.updated_note")
     end

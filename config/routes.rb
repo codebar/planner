@@ -57,6 +57,7 @@ Planner::Application.routes.draw do
   resources :meetings, only: [ :show ]
   resources :workshops, only: [ :show ] do
     member do
+      post 'rsvp'
       post "add"
       post "remove"
       get "added"

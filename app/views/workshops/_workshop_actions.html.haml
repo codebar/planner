@@ -12,25 +12,30 @@
     - elsif @workshop.waitlisted? current_user
       You are on the Waiting List.
     - elsif !@workshop.spaces?
-      This workshop is full, but you can join the waiting list.
+      This workshop is full, but you can still join the waiting list.
 
 - if logged_in? && @workshop.future? && @workshop.invitable
   - if @workshop.attendee?(current_user)
-    - if @workshop.rsvp_available?
+    = link_to "Manage your invitation", rsvp_workshop_path(@workshop), method: :post, class: 'button round expand'
+  - else
+    = link_to "Attend as a student", rsvp_workshop_path(@workshop, role: "Student"), method: :post,class: 'button round expand'
+    = link_to "Attend as a coach", rsvp_workshop_path(@workshop, role: "Coach"), method: :post, class: 'button round expand'
+
+    -#- if @workshop.rsvp_available?
       = form_tag remove_workshop_path, method: :post do
         = submit_tag "Cancel your attendance", class: 'button round expand'
-    - else
+    -#- else
       You can't change your RSVP this close to the event. If you can no longer make it, please
       = link_to "send us an email", "mailto:#{@workshop.chapter.email}"
 
 
-  - elsif @workshop.waitlisted?(current_user)
+  -#- elsif @workshop.waitlisted?(current_user)
     = form_tag remove_workshop_path, method: :post do
       = submit_tag "Remove from Waiting list", class: 'button round expand'
       - if @workshop.attendee?(current_user)
         = submit_tag "Cancel your attendance", class: 'button round expand'
 
-  - else
+  -#- else
     = form_tag add_workshop_path, method: :post do
       = hidden_field_tag :role, :student
       - if @workshop.student_spaces?
@@ -45,6 +50,5 @@
       - else
         = submit_tag "Join the coach waiting list", class: 'button round expand'
 - elsif not logged_in?
-  = link_to "Sign up as a student", new_member_path, class: 'button round expand'
-  = link_to "Sign up as a coach", new_member_path, class: 'button round expand'
+  = link_to "Sign up", new_member_path, class: 'button round expand'
   = link_to "Log in", redirect_path, class: 'button round expand'

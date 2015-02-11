@@ -25,14 +25,12 @@ gem 'mini_magick' # Smaller ImageMagick-like image processing library
 gem 'omniauth'
 gem 'omniauth-github'
 
-gem 'foundation-rails' # Foundation CSS framework
-
-gem 'tzinfo-data' # More timezone data
-
-gem 'icalendar' # Export data in iCal format
+gem 'foundation-rails'
+gem 'tzinfo-data'
+gem 'icalendar'
 
 group :development do
-  gem 'letter_opener' # Open emails in the browser
+   #gem 'letter_opener'
 end
 
 group :development, :test do
