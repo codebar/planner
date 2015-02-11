@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Sessions, :se => true do
+describe Sessions do
   subject(:session) { Fabricate(:sessions) }
 
   it { should respond_to(:title) }
@@ -11,9 +11,9 @@ describe Sessions, :se => true do
 
   context "#coach_spaces?" do
     let(:sponsor) { Fabricate(:sponsor) }
+    let(:session) { Fabricate(:sessions_no_sponsor) }
 
     before do
-      session.sponsor_sessions.delete_all
       Fabricate(:sponsor_session, sponsor: sponsor, sessions: session, host: true)
     end
   end

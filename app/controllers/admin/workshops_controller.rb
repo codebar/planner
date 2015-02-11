@@ -15,7 +15,8 @@ class Admin::WorkshopsController < Admin::ApplicationController
 
   def create
     @workshop = Sessions.new(workshop_params)
-    authorize @workshop
+    authorize(@workshop)
+
     if @workshop.save
       flash[:notice] = @workshop.errors.full_messages
       redirect_to admin_workshop_path(@workshop)
