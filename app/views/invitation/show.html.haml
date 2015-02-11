@@ -2,14 +2,16 @@
 .row
   .large-12.columns
     .alert-box.secondary
-      This is a private link, do not share it with others! You can access the public view of the workshop <strong> #{link_to("here", workshop_url(@workshop))}</strong>.
+      This link can be accessed without authentication so please don't share it with others. You can access and share the <strong> #{link_to("public listing", workshop_url(@workshop))}</strong> of the workshop.
 
 %section
   .inner-nav{ "data-magellan-expedition" => "fixed" }
     .row
       %dl.sub-nav
         %dd{ "data-magellan-arrival" => "location" }
-          =link_to "Location", "#location"
+          =link_to "Host & Sponsors", "#location"
+        %dd{ "data-magellan-arrival" => "organisers" }
+          =link_to "Organisers", "#organisers"
         %dd{ "data-magellan-arrival" => "attendees" }
           =link_to "Who will be there?", "#attendees"
 
@@ -59,23 +61,49 @@
 
 
   .row
+    %hr
     .large-12.columns
       %a{ name: "location" }
-      %h4{ "data-magellan-destination" => "location"} Location
+      %h4{ "data-magellan-destination" => "location"} Host & Sponsors
   .row
-    .medium-9.columns
+    .medium-8.columns
+      %p
+        %strong= @workshop.host.name
+        %br
+          = @host_address.to_html
+        %br
       %iframe{ width: '100%', height: '350', frameborder: '0', scrolling: 'no', marginheight: '0', marginwidth: '0', src: %{https://maps.google.com/maps?f=q&source=s_q&hl=en&amp;geocode=&q=#{@host_address.for_map}&ie=UTF8&t=m&z=15&output=embed} }
       =link_to "View larger map", %{https://maps.google.com/maps?f=q&source=s_q&hl=en&amp;geocode=&q=#{@host_address.for_map}&ie=UTF8&hq=&t=m&z=15}, style: "color:#0000FF;text-align:left"
-    .medium-3.columns
-      = image_tag @workshop.venue.avatar, class: 'sponsor-logo'
-      %p
-        = @host_address.to_html
-      %strong Organisers
-      - @workshop.organisers.each do |organiser|
-        %p
-          = organiser.full_name
+    .large-4.columns
+      %ul.no-bullet
+        - @workshop.sponsors.each do |sponsor|
+          %li
+            .row
+              .large-4.columns
+                = image_tag sponsor.avatar, class: 'sponsor'
+              .large-8.columns
+                =link_to sponsor.name, sponsor.website
+                %p
+                  = sponsor.description
           %br
-          = organiser.mobile
+  .row
+    .large-12.columns
+      %hr
+      %a{ name: "organisers" }
+      %h4{ "data-magellan-destination" => "organisers"}= t('events.organisers')
+  .row
+    .large-12.columns
+      %br
+      %ul.small-block-grid-2.medium-block-grid-4
+        - @workshop.organisers.each do |organiser|
+          %li.text-center
+            =link_to twitter_url_for(organiser.twitter) do
+              =image_tag organiser.avatar(56), class: 'th radius', title: organiser.full_name
+            %br
+            %br
+            = organiser.full_name
+            = organiser.mobile
+            %br
 
   .row
     .large-12.columns

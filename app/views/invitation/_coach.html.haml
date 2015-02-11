@@ -2,12 +2,12 @@
   = t('coaches.read_before')
   = succeed ',' do
     =link_to t('coaches.code_of_conduct'), "http://codebar.io/code-of-conduct"
-  = t('policy')
+  = t('coaches.policy')
   = succeed '.' do
     = link_to t('coaches.guide'), teaching_guide_path
 %p
   = t('coaches.unable_attend')
 
 %p
-  = t('food')
-  = #{mail_to @invitation.sessions.chapter.email, @invitation.sessions.chapter.email}.
+  = t('coaches.food')
+  #{mail_to @invitation.sessions.chapter.email, @invitation.sessions.chapter.email}.

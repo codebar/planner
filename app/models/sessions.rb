@@ -26,6 +26,10 @@ class Sessions < ActiveRecord::Base
     WaitingList.by_workshop(self).map(&:invitation)
   end
 
+  def waiting_list_count_for(role)
+    WaitingList.by_workshop(self).where_role(role).where(auto_rsvp: true).count
+  end
+
   def student_waiting_list
     waiting_list.select(&:for_student?)
   end
