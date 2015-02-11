@@ -33,18 +33,17 @@
                 You will be working on...
                 = form_tag update_note_invitation_path(@invitation) do
                   = text_area_tag :note, @invitation.note
-                  = submit_tag 'Save', class: "expand button round"
+                  = submit_tag 'Update note', class: "expand button round"
 
-
-            - if @invitation.sessions.date_and_time-3.5.hours <= DateTime.now
+            - if @workshop.rsvp_available?
+              =link_to "I can no longer attend", reject_invitation_url(@invitation), class: "expand button round alert"
+            - else
               %p
                 If you can't make it or plan to arrive late please let us know by sending an email to #{@invitation.sessions.chapter.email}
-            - else
-              =link_to "I can no longer attend", reject_invitation_url(@invitation), class: "expand button round"
           - else
             - if @invitation.for_coach?
               - if @invitation.coach_spaces?
-                = link_to "Attend", accept_invitation_url(@invitation), class: "expand button round center"
+                = link_to "Attend", accept_invitation_url(@invitation), class: "expand primary button round center"
               - else
                 = render partial: 'invitation/waiting_list', locals: { invitation: @invitation }
             - else
