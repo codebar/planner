@@ -11,12 +11,12 @@
           - else
             without a home
         %p.workshop.schedule
-          = l @workshop.combined_date_and_time, format: :workshop
+          = l(@workshop.date_and_time, format: :workshop)
           %small
             - if @workshop.past?
-              (#{distance_of_time_in_words_to_now @workshop.combined_date_and_time} ago)
+              (#{distance_of_time_in_words_to_now(@workshop.date_and_time)} ago)
             - else
-              (in #{distance_of_time_in_words_to_now @workshop.combined_date_and_time})
+              (in #{distance_of_time_in_words_to_now(@workshop.date_and_time)})
 
         %p.exposition Our workshops are a safe, supportive environment that help you learn web development at your own pace. We start with around 30 minutes of socialising, before students are divided into small groups with a coach. Students spend a couple of hours working through the <a href="http://tutorials.codebar.io">tutorials</a> (or on their own project) with their coach's help, before we retire to a nearby pub for a quiet drink.
 
@@ -42,16 +42,12 @@
             %p Workshop co-ordinators
             = @workshop.organisers_as_list(logged_in?)
 
-
-
-
         - if @workshop.sponsors.any?
           .sponsors
             %p This meeting #{@workshop.past? ? "was" : "is"} generously sponsored by:
-            - @workshop.sponsors.each do |s|
-              = link_to s.website do
-                = image_tag s.avatar, title: s.name
-
+            - @workshop.sponsors.each do |sponsor|
+              = link_to sponsor.website do
+                = image_tag sponsor.avatar, title: sponsor.name
 
 
       .medium-offset-1.medium-3.sign-up.columns

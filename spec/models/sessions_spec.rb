@@ -31,42 +31,28 @@ describe Sessions do
     end
   end
 
-  context "Date and time" do
-    context "#imminent?" do
-      it "Future events aren't imminent" do
+  context "#rsvp_available?" do
+    context "rsvp is available" do
+      it "when the event is in the future" do
         session.date_and_time = 1.day.from_now
-        session.time = 1.hour.from_now
-        expect(session.imminent?).to be false
+        session.save
 
-        session.date_and_time = 3.days.from_now
-        expect(session.imminent?).to be false
+        expect(session.rsvp_available?).to be(true)
       end
 
-      it "Past events aren't imminent" do
-        session.date_and_time = 1.day.ago
-        session.time = 1.hour.ago
-        expect(session.imminent?).to be false
+      it "when rsvp_close_time is in the future" do
+        session.rsvp_close_time = 2.hours.from_now
 
-        session.date_and_time = 3.days.ago
-        expect(session.imminent?).to be false
-
-        session.date_and_time = Date.today
-        expect(session.imminent?).to be false
+        expect(session.rsvp_available?).to be(true)
       end
+    end
 
-      it "Soon events are imminent" do
-        session.date_and_time = Date.today
-        session.time = 6.hours.from_now
-        expect(session.imminent?).to be false
+    context "rsvp is not available" do
 
-        session.time = 3.hours.from_now
-        expect(session.imminent?).to be true
+      it "when the rsvp_close_time is in the past" do
+        session.rsvp_close_time = 2.hours.ago
 
-        session.time = 1.hour.from_now
-        expect(session.imminent?).to be true
-
-        session.time = 1.minute.from_now
-        expect(session.imminent?).to be true
+        expect(session.rsvp_available?).to be(false)
       end
     end
   end

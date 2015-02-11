@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150130001852) do
+ActiveRecord::Schema.define(version: 20150211023345) do
 
   create_table "addresses", force: true do |t|
     t.string   "flat"
@@ -281,10 +281,11 @@ ActiveRecord::Schema.define(version: 20150130001852) do
     t.datetime "date_and_time"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "invitable",     default: true
+    t.boolean  "invitable",       default: true
     t.string   "sign_up_url"
     t.integer  "chapter_id"
     t.datetime "time"
+    t.datetime "rsvp_close_time"
   end
 
   add_index "sessions", ["chapter_id"], name: "index_sessions_on_chapter_id"
@@ -334,7 +335,7 @@ ActiveRecord::Schema.define(version: 20150130001852) do
 
   create_table "testimonials", force: true do |t|
     t.integer  "member_id"
-    t.text     "text",       limit: 255
+    t.text     "text"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

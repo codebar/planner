@@ -16,8 +16,7 @@ class Sessions < ActiveRecord::Base
 
   validates :chapter_id, presence: true
 
-  before_save :combine_date_and_time
-
+  before_save :combine_date_and_time, :set_rsvp_close_time
 
   def host
     SponsorSession.hosts.for_session(self.id).first.sponsor rescue nil
@@ -44,24 +43,19 @@ class Sessions < ActiveRecord::Base
   end
 
   def past?
-    combined_date_and_time < Time.now
+    date_and_time < Time.now
   end
 
   def today?
-    combined_date_and_time.today?
+    date_and_time.today?
   end
 
-  def imminent?
-    future? && (3.hours.from_now > combined_date_and_time)
+  def rsvp_available?
+    future? && rsvp_close_time.future?
   end
 
-  # Is this event in the future?
   def future?
-    combined_date_and_time > Time.now
-  end
-
-  def combined_date_and_time
-    date_and_time.beginning_of_day + time.seconds_since_midnight
+    date_and_time.future?
   end
 
   # Is there any space at this event?
@@ -120,6 +114,10 @@ class Sessions < ActiveRecord::Base
                                    date_and_time.day,
                                    time.hour,
                                    time.min)
+  end
+
+  def set_rsvp_close_time
+    self.rsvp_close_time ||= self.date_and_time
   end
 
 end
