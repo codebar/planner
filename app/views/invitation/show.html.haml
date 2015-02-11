@@ -43,7 +43,7 @@
           - else
             - if @invitation.for_coach?
               - if @invitation.coach_spaces?
-                = link_to "Attend", accept_invitation_url(@invitation), class: "expand primary button round center"
+                = link_to "Attend", accept_invitation_url(@invitation), class: "expand button round center"
               - else
                 = render partial: 'invitation/waiting_list', locals: { invitation: @invitation }
             - else

@@ -14,7 +14,7 @@ class SessionInvitation < ActiveRecord::Base
   scope :by_member, -> { group(:member_id) }
 
   def waiting_list_position
-    @waiting_list_position ||= WaitingList.by_workshop(self.sessions).where_role(self.role).map(&:invitation_id).index(self.id)+1
+    @waiting_list_position ||= WaitingList.by_workshop(self.sessions).where_role(self.role).order(:created_at).map(&:invitation_id).index(self.id)+1
   end
 
   def parent
