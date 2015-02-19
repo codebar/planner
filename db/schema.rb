@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150211023345) do
+ActiveRecord::Schema.define(version: 20150219223111) do
 
   create_table "addresses", force: true do |t|
     t.string   "flat"
@@ -41,6 +41,7 @@ ActiveRecord::Schema.define(version: 20150211023345) do
     t.string   "email"
     t.string   "twitter"
     t.string   "twitter_id"
+    t.string   "slug"
   end
 
   create_table "course_invitations", force: true do |t|
