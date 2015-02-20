@@ -113,11 +113,7 @@ class Sessions < ActiveRecord::Base
   private
 
   def combine_date_and_time
-    self.date_and_time = DateTime.new(date_and_time.year,
-                                   date_and_time.month,
-                                   date_and_time.day,
-                                   time.hour,
-                                   time.min)
+    self.date_and_time = date_and_time.change(hour: time.hour, min: time.min)
   end
 
   def set_rsvp_close_time
