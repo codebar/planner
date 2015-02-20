@@ -14,11 +14,11 @@ describe Sessions do
 
     it "merges date_and_time and time" do
       workshop.date_and_time = DateTime.new(2015,11,12,12,0)
-      workshop.time = Time.new(2000,01,01,18,30)
+      workshop.time = Time.utc(2000,01,01,18,30)
 
       workshop.save
 
-      expect(workshop.date_and_time.utc).to eq(DateTime.new(2015,11,12,18,30).utc)
+      expect(workshop.date_and_time).to eq(DateTime.new(2015,11,12,18,30))
     end
   end
 
