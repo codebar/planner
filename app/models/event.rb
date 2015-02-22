@@ -28,12 +28,10 @@ class Event < ActiveRecord::Base
     invitations.students.accepted.verified.map(&:member)
   end
 
-  # Is there space for coaches at this event?
   def coach_spaces?
     coach_spaces > attending_coaches.count
   end
 
-  # Is there space for students at this event?
   def student_spaces?
     student_spaces > attending_students.count
   end
