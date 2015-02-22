@@ -116,7 +116,7 @@ en:
         a:
       contribution:
         q: "What kind of contributions can I make?"
-        a:
+        a: "Your contributions can be tiny, as simple as fixing a typo, to something incredible. You can help with documentation, fix a bug that you found, improve the copy, help with design or even tackle bigger tasks and help introduce new features. Every little helps!"
       laptop:
         q: "Do I need to bring a laptop?"
         a_html: "Yes, you should bring a laptop. If you don't have one %{link} as we may be able to help."

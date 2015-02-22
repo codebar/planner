@@ -8,20 +8,28 @@
 
   .row
     .large-10.columns
-      =link_to event_student_rsvp_path(@event), class: 'button round' do
-        = t('events.os_get_started')
-      =link_to event_coach_rsvp_path(@event), class: 'button round' do
-        = t('events.attend_as_coach')
-      %br
-      %br
+      - if @event.announce_only
+        =link_to @event.url, class: 'button round' do
+          Sign up
+      - else
+        =link_to event_student_rsvp_path(@event), class: 'button round' do
+          = t('events.os_get_started')
+        =link_to event_coach_rsvp_path(@event), class: 'button round' do
+          = t('events.attend_as_coach')
+        %br
+        %br
 
 %br
 %br
 .row
   .large-7.columns
-    %a{ name: "schedule" }
-    %h4{ "data-magellan-destination" => "schedule"}
-      = t('events.schedule')
+    - if @event.announce_only
+      %a{ name: "information" }
+      %h4{ "data-magellan-destination" => "information"} Information
+    - else
+      %a{ name: "schedule" }
+      %h4{ "data-magellan-destination" => "schedule"}
+        = t('events.schedule')
     = @event.schedule.html_safe
   .large-5.columns
     %h4= t('events.location')
@@ -42,49 +50,44 @@
       %a{ name: "faq" }
         %h2{ "data-magellan-destination" => "faq"}
           .text-center FAQ
-      = render partial: 'events/faq'
+      - if @event.announce_only
+        %p.text-center If you have any questions, #{link_to("get in contact", @event.email)}
+
+      - else
+        = render partial: 'events/faq'
 
 %br
 %br
-.row
-  .large-12.columns
-    %a{ name: "sponsors" }
-    %h2{ "data-magellan-destination" => "sponsors"}
-      .text-center= t('events.sponsors')
-    %p.text-center
-      %i= t('events.thx_to_sponsors')
-    %br
-    - if @event.sponsors.any?
-      %ul.no-bullet
-        - @event.sponsors.each do |sponsor|
-          %li
-            .row
-              .large-2.columns
-                = image_tag sponsor.avatar, class: 'sponsor'
-              .large-10.columns
-                =link_to sponsor.name, sponsor.website
-                %p
-                  = sponsor.description
-            %br
-%br
-.past__container
+- unless @event.announce_only
   .row
     .large-12.columns
-      %a{ name: "coaches" }
-        %h2{ "data-magellan-destination" => "coaches"}
-          .text-center= t('events.coaches')
+      %a{ name: "sponsors" }
+      %h2{ "data-magellan-destination" => "sponsors"}
+        .text-center= t('events.sponsors')
+      %p.text-center
+        %i= t('events.thx_to_sponsors')
       %br
-      - if @event.verified_coaches.any?
-        %ul.small-block-grid-2.medium-block-grid-5
-          - @event.verified_coaches.each do |coach|
-            %li.text-center
-              =link_to twitter_url_for(coach.twitter) do
-                =image_tag coach.avatar(56), class: 'th radius', title: coach.full_name
-                %br
-                %br
-                = coach.full_name
+      - if @event.sponsors.any?
+        %ul.no-bullet
+          - @event.sponsors.each do |sponsor|
+            %li
+              .row
+                .large-2.columns
+                  = image_tag sponsor.avatar, class: 'sponsor'
+                .large-10.columns
+                  =link_to sponsor.name, sponsor.website
+                  %p
+                    = sponsor.description
+              %br
   %br
-%br
+  .past__container
+    .row
+      .large-12.columns
+        %a{ name: "coaches" }
+          %h2{ "data-magellan-destination" => "coaches"}
+            .text-center= t('events.coaches')
+    %br
+  %br
 .row
   .large-12.columns
     %a{ name: "organisers" }

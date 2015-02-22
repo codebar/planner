@@ -10,19 +10,19 @@
       %b= t('events.faq.contribution.q')
     %p
       %small
-        Your contributions can be tiny, as simple as fixing a typo, to something incredible. You can help with documentation, fix a bug that you found, improve the copy, help with design or even tackle bigger tasks and help introduce new features. Every little helps!
+        = t('events.faq.contribution.a')
   %li
     %small
       %b= t('events.faq.laptop.q')
     %p
       %small
-        = t('events.faq.laptop.a_html', link: mail_to("24pullrequests@codebar.io", t("events.send_us_an_email") ))
+        = t('events.faq.laptop.a_html', link: mail_to(@event.email, t("events.send_us_an_email") ))
   %li
     %small
       %b= t('events.faq.keyboard.q')
     %p
       %small
-        = t('events.faq.keyboard.a_html', link: mail_to("24pullrequests@codebar.io", t("events.send_us_an_email") ))
+        = t('events.faq.keyboard.a_html', link: mail_to(@event.email, t("events.send_us_an_email") ))
   %li
     %small
       %b= t('events.faq.travel_costs.q')
