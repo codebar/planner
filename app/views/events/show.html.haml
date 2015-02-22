@@ -51,7 +51,7 @@
         %h2{ "data-magellan-destination" => "faq"}
           .text-center FAQ
       - if @event.announce_only
-        %p.text-center If you have any questions, #{link_to("get in contact", @event.email)}
+        %p.text-center If you have any questions, #{mail_to(@event.email, "get in contact")}
 
       - else
         = render partial: 'events/faq'
