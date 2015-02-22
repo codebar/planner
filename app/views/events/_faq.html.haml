@@ -16,16 +16,16 @@
       %b Do I need to bring a laptop?
     %p
       %small
-        Yes, you should bring a laptop. If you don't have one #{mail_to("24pullrequests@codebar.io", "send us an email" )} as we may be able to help.
+        Yes, you should bring a laptop. If you don't have one #{mail_to(@event.email, "send us an email" )} as we may be able to help.
   %li
     %small
       %b Do I need to bring a keyboard?
     %p
       %small
-        A keyboard would help as you will spend the entire day pairing with someone on your latop. If you don't have a keyboard, #{mail_to("24pullrequests@codebar.io", "send us an email" )} and we'll try to organise something for you.
+        A keyboard would help as you will spend the entire day pairing with someone on your latop. If you don't have a keyboard, #{mail_to(@event.email, "send us an email" )} and we'll try to organise something for you.
   %li
     %small
-      %b I will be commuting from Brighton/Cambridge. Can you help with my travel expenses?
+      %b I will be commuting. Can you help with my travel expenses?
     %p
       %small
         Yes, we can help by covering your travel costs. Make sure you fill in the questionnaire and we'll get in touch.
