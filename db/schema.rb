@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141204232033) do
+ActiveRecord::Schema.define(version: 20150222110321) do
 
   create_table "addresses", force: true do |t|
     t.string   "flat"
@@ -102,6 +102,9 @@ ActiveRecord::Schema.define(version: 20141204232033) do
     t.string   "student_questionnaire"
     t.text     "coach_description"
     t.string   "info"
+    t.boolean  "announce_only"
+    t.string   "url"
+    t.string   "email"
   end
 
   add_index "events", ["venue_id"], name: "index_events_on_venue_id"
