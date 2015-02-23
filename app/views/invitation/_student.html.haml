@@ -4,4 +4,8 @@
 
 %p Please make sure you <b>bring your laptop</b> with you.
 
+- unless @invitation.sessions.invite_note.blank?
+  %p
+    = @invitation.sessions.invite_note.html_safe
+
 %p PS: There will also be food at the workshop. We always make an effort to have vegetarian, vegan and gluten-free options available. If you have any other dietary requirements, send us email at #{mail_to @invitation.sessions.chapter.email, @invitation.sessions.chapter.email}.
