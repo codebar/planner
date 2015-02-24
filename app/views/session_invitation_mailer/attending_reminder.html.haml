@@ -16,6 +16,10 @@
                 %p.lead
                   This is a quick email to remind you that you have signed up for tomorrow's workshop.
 
+                - unless @workshop.invite_note.blank?
+                  %p
+                    = @workshop.invite_note.html_safe
+
         .content
           %table{ bgcolor: "#FFFFFF" }
             %tr

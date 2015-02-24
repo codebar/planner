@@ -25,6 +25,10 @@
                   = link_to "remove yourself from the waiting list", full_url_for(invitation_url(@invitation))
                   so someone else can come to the workshop.
 
+                - unless @workshop.invite_note.blank?
+                  %p
+                    = @workshop.invite_note.html_safe
+
 
         .content
           %table{ bgcolor: "#FFFFFF" }
