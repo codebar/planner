@@ -33,5 +33,4 @@ class SubscriptionsController < ApplicationController
     params.require(:subscription).permit(:group_id)[:group_id]
   end
 
-  end
 end

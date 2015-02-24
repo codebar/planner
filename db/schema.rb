@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150222110321) do
+ActiveRecord::Schema.define(version: 20150224001247) do
 
   create_table "addresses", force: true do |t|
     t.string   "flat"
@@ -141,6 +141,7 @@ ActiveRecord::Schema.define(version: 20150222110321) do
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "mailing_list_id"
   end
 
   add_index "groups", ["chapter_id"], name: "index_groups_on_chapter_id"
