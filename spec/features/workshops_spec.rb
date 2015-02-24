@@ -18,6 +18,14 @@ feature 'Viewing a workshop page' do
       expect(page).to have_content("Sign up")
       expect(page).to have_content("Log in")
     end
+
+    scenario "can view extra session details" do
+      content = Faker::Lorem.paragraph
+      workshop.update_attribute(:invite_note, content)
+
+      visit workshop_path workshop
+      expect(page).to have_content(content)
+    end
   end
 
   xcontext "logged in member" do
