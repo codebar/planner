@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe EventInvitationMailer, wip: true do
+describe EventInvitationMailer do
 
   let(:email) { ActionMailer::Base.deliveries.last }
   let(:event) { Fabricate(:event, date_and_time: DateTime.new(2017,11,12,10,0), name: "Event of the day") }
@@ -20,5 +20,4 @@ describe EventInvitationMailer, wip: true do
 
     expect(email.subject).to eq(email_subject)
   end
-
 end

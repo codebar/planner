@@ -6,7 +6,8 @@ class SubscriptionsController < ApplicationController
   end
 
   def create
-    @subscription = Subscription.new(group_id: subscription_params[:group_id], member: current_user)
+    @subscription = Subscription.new(group_id: group_id, member: current_user)
+
     if @subscription.save
       unless current_user.received_welcome_for? @subscription
         MemberMailer.welcome_for_subscription @subscription
@@ -19,14 +20,17 @@ class SubscriptionsController < ApplicationController
   end
 
   def destroy
-    @subscription = current_user.subscriptions.find_by_group_id(subscription_params[:group_id])
+    @subscription = current_user.subscriptions.find_by_group_id(group_id)
     @subscription.destroy
     flash[:notice] = "You have unsubscribed from #{@subscription.group.chapter.city}'s #{@subscription.group.name} group"
+
     redirect_to :back
   end
 
   private
-  def subscription_params
-    params.require(:subscription).permit(:group_id)
+
+  def group_id
+    params.require(:subscription).permit(:group_id)[:group_id]
   end
+
 end

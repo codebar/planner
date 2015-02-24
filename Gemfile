@@ -29,6 +29,8 @@ gem 'foundation-rails'
 gem 'tzinfo-data'
 gem 'icalendar'
 
+gem 'gibbon'
+
 group :development do
    #gem 'letter_opener'
 end
