@@ -55,23 +55,35 @@
                   = sponsor.name
                   = link_to admin_workshop_destroy_sponsor_path(workshop_id: @workshop.id, sponsor_id: sponsor.id), data: { confirm: "Are you sure?" }, method: :delete do
                     =fa_icon "times"
-  - if @workshop.invitable?
-    .row
-      .medium-4.columns
-        %h4
-          Invitations
-          - if @workshop.invitations.any?
-            (#{@workshop.invitations.count})
-        - if !@workshop.date_and_time.future?
-          =link_to "Send Invitations", "#", class: "button round disabled"
-          %br
-          %small The workshop has already taken place
-        - elsif @workshop.has_valid_host?
-          =link_to "Send Invitations", admin_workshop_invite_path(@workshop), method: :post, class: "button round"
-        - else
-          =link_to "Send Invitations", "#", class: "button round disabled"
-          %br
-          %small you must specify a host before sending out invitations
+  .row
+    .medium-12.columns
+      %h4
+        Invitations
+        - if @workshop.invitations.any?
+          (#{@workshop.invitations.count})
+      .row
+        .medium-3.columns
+          - if !@workshop.invitable?
+            =link_to "Send Invitations", "#", class: "button round disabled"
+            %br
+            %small This workshop isn't marked as invitable.
+          - elsif !@workshop.date_and_time.future?
+            =link_to "Send Invitations", "#", class: "button round disabled"
+            %br
+            %small The workshop has already taken place
+          - elsif @workshop.has_valid_host?
+            =link_to "Send Invitations", admin_workshop_invite_path(@workshop), method: :post, class: "button round"
+          - else
+            =link_to "Send Invitations", "#", class: "button round disabled"
+            %br
+            %small you must specify a host before sending out invitations
+        .medium-9.columns
+          %p
+            Invitation note:
+            - if @workshop.invite_note.blank?
+              %em No invite note for this workshop.
+            - else
+              = @workshop.invite_note.html_safe
 
   - if @workshop.invitations.any?
     .row

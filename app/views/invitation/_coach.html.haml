@@ -8,6 +8,10 @@
 %p
   = t('coaches.unable_attend')
 
+- unless @invitation.sessions.invite_note.blank?
+  %p
+    = @invitation.sessions.invite_note.html_safe
+
 %p
   = t('coaches.food')
   #{mail_to @invitation.sessions.chapter.email, @invitation.sessions.chapter.email}.

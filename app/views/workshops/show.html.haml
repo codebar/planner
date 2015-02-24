@@ -23,6 +23,10 @@
         %p
           Attend our workshops to learn programming in a safe and supportive environment at your own pace, or to share your knowledge and mentor our students.
 
+        - unless @workshop.invite_note.blank?
+          %p
+            = @workshop.invite_note.html_safe
+
       .medium-4.columns
         .panel
           = render 'workshop_actions'

@@ -56,7 +56,7 @@ class Admin::WorkshopsController < Admin::ApplicationController
   private
 
   def workshop_params
-    params.require(:sessions).permit(:date_and_time, :time, :chapter_id, :invitable, :seats, sponsor_ids: [])
+    params.require(:sessions).permit(:date_and_time, :time, :chapter_id, :invitable, :seats, :invite_note, sponsor_ids: [])
   end
 
   def sponsor_id

@@ -10,16 +10,30 @@ feature 'Managing workshops' do
     member.add_role(:organiser, Chapter)
   end
 
-  scenario "creating a new workshop" do
-    visit new_admin_workshop_path
+  context "creating a new workshop" do
+    scenario "Creating a workshop without a note" do
+      visit new_admin_workshop_path
 
-    choose chapter.name
-    fill_in "Date and time", with: Date.today
-    fill_in "Time", with: "11:30"
+      choose chapter.name
+      fill_in "Date and time", with: Date.today
+      fill_in "Time", with: "11:30"
 
-    click_on "Save"
+      click_on "Save"
 
-    expect(page).to have_content "Send Invitations"
+      expect(page).to have_content "Send Invitations"
+    end
+
+    scenario "Creating a workshop with a note" do
+      note = Faker::Lorem.paragraph
+      visit new_admin_workshop_path
+      choose chapter.name
+      fill_in "Date and time", with: Date.today
+      fill_in "Time", with: "11:30"
+      fill_in "Invite note", with: note
+
+      click_on "Save"
+      expect(page).to have_content note
+    end
   end
 
   scenario "assigning a host to a workshop" do

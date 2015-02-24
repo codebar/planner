@@ -21,6 +21,9 @@
                   See you at our workshop!
                   %p
                     Please remember that removing the calendar entry will not cancel your invitation RSVP.
+                - unless @workshop.invite_note.blank?
+                  %p
+                    = @workshop.invite_note.html_safe
 
 
 
