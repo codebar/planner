@@ -2,7 +2,7 @@ namespace :mailing_list do
   require 'services/mailing_list'
 
   desc "Subscribe all group members to relevant mailing list"
-  task updated_all: :environment do
+  task update_all_subscribers: :environment do
 
     groups = Group.all
 

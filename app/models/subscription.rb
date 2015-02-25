@@ -1,3 +1,5 @@
+require 'services/mailing_list'
+
 class Subscription < ActiveRecord::Base
   belongs_to :group
   belongs_to :member
