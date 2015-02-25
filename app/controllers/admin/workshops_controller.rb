@@ -1,7 +1,9 @@
 class Admin::WorkshopsController < Admin::ApplicationController
   include  Admin::SponsorConcerns
 
+
   before_filter :set_workshop_by_id, only: [:show, :edit]
+  before_filter :set_and_decorate_workshop, only: [:coaches_checklist, :students_checklist]
 
   def index
     @chapter = Chapter.find(params[:chapter_id])
@@ -38,6 +40,18 @@ class Admin::WorkshopsController < Admin::ApplicationController
     @student_waiting_list = WaitingListPresenter.new(WaitingList.by_workshop(@workshop).where_role("Student"))
   end
 
+  def coaches_checklist
+    return render text: @workshop.coaches_checklist if request.format.text?
+
+    redirect_to admin_workshop_path(@workshop)
+  end
+
+  def students_checklist
+    return render text: @workshop.students_checklist if request.format.text?
+
+    redirect_to admin_workshop_path(@workshop)
+  end
+
   def update
     @workshop = Sessions.find(params[:id])
     authorize @workshop
@@ -68,5 +82,10 @@ class Admin::WorkshopsController < Admin::ApplicationController
 
   def set_workshop_by_id
     @workshop = Sessions.find(params[:id])
+  end
+
+  def set_and_decorate_workshop
+    workshop = Sessions.find(params[:workshop_id])
+    @workshop = WorkshopPresenter.new(workshop)
   end
 end

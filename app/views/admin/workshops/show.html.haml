@@ -18,13 +18,14 @@
 
   - if @workshop.has_host?
     .row
-      .medium-12.columns
       .medium-3.columns
         %strong.label.round.secondary #{@workshop.host.seats} student spots, #{@workshop.host.coach_spots} coach spots
         %br
         %br
       .medium-6.medium-offset-3.columns
         =link_to "Attendee CSV", admin_workshop_path(format: 'csv'), class: 'button round tiny'
+        =link_to "Students Checklist", admin_workshop_students_checklist_path(@workshop, format: 'text'), class: 'button round tiny'
+        =link_to "Coaches Checklist", admin_workshop_coaches_checklist_path(@workshop, format: 'text'), class: 'button round tiny'
   %br
   .row
     .medium-6.columns#host

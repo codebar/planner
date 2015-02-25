@@ -28,6 +28,18 @@ class WorkshopPresenter < EventPresenter
     CSV.generate {|csv| attendee_array.each { |a| csv << a } }
   end
 
+  def students_checklist
+    model.attending_students.order('note asc').each_with_index.map do |a, pos|
+      "#{member_info(a.member, pos)}\t\t\t#{note(a)}"
+    end.join("\n\n")
+  end
+
+  def coaches_checklist
+    model.attending_coaches.each_with_index.map do |a, pos|
+      "#{member_info(a.member, pos)}"
+    end.join("\n\n")
+  end
+
   def time
     I18n.l(model.time, format: :time)
   end
@@ -40,7 +52,7 @@ class WorkshopPresenter < EventPresenter
 
   def attendee_array
     model.attendances.map do |i|
-      if organisers.include? i.member
+      if organisers.include?(i.member)
         [i.member.full_name, "ORGANISER"]
       else
         [i.member.full_name, i.role.upcase]
@@ -50,5 +62,13 @@ class WorkshopPresenter < EventPresenter
 
   def model
     __getobj__
+  end
+
+  def member_info(member, pos)
+    "#{member.newbie? ? "I__" : "___"} #{pos+1}.\t #{member.full_name}"
+  end
+
+  def note(invitation)
+    "#{invitation.note.present? ? invitation.note : "__________________________"} "
   end
 end
