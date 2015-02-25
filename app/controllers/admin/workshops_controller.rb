@@ -31,6 +31,9 @@ class Admin::WorkshopsController < Admin::ApplicationController
 
   def show
     authorize @workshop
+
+    return render text: WorkshopPresenter.new(@workshop).attendees_csv if request.format.csv?
+
     @coach_waiting_list = WaitingListPresenter.new(WaitingList.by_workshop(@workshop).where_role("Coach"))
     @student_waiting_list = WaitingListPresenter.new(WaitingList.by_workshop(@workshop).where_role("Student"))
   end
