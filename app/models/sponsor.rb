@@ -8,7 +8,7 @@ class Sponsor < ActiveRecord::Base
   validate :website_is_url
 
   default_scope -> { order('updated_at desc') }
-  mount_uploader(:avatar, AvatarUploader) unless Rails.env.test? or Rails.env.development?
+  mount_uploader(:avatar, AvatarUploader) if Rails.env.production?
 
   accepts_nested_attributes_for :address
 

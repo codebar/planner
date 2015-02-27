@@ -3,24 +3,24 @@ ruby '2.1.2'
 
 gem 'rails', '4.1.5'
 
-gem 'haml' # Simple markup for HTML and email templates
+gem 'haml'
 gem 'sass-rails', '~> 4.0.1'
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.0.1'
 gem 'jquery-rails'
-gem 'turbolinks' # Load new pages via AJAX for performance
-gem 'simple_form' # Form generation library for more concise markup
-gem 'draper' # Componentise view elements. Deprecated; use SimpleDelegator instead.
-gem 'font-awesome-rails' # Icon font
-gem 'github-markdown' # Use Github's markdown parser.
-gem 'premailer-rails' # Automatically inline CSS rules in HTML emails
-gem 'nokogiri' # XML parsing library
-gem 'pickadate-rails' # Pickadate.js date picker component
-gem 'rolify' # Role-based permissions for individual resources
-gem "pundit" # Simple authorization/policy library
-gem 'cloudinary' # Upload images to the cloud
-gem 'carrierwave' # File attachments
-gem 'mini_magick' # Smaller ImageMagick-like image processing library
+gem 'turbolinks'
+gem 'simple_form'
+gem 'draper'
+gem 'font-awesome-rails'
+gem 'github-markdown'
+gem 'premailer-rails'
+gem 'nokogiri'
+gem 'pickadate-rails'
+gem 'rolify'
+gem "pundit"
+gem 'carrierwave'
+gem 'carrierwave-ftp', :require => 'carrierwave/storage/sftp'
+gem 'mini_magick'
 
 gem 'omniauth'
 gem 'omniauth-github'
