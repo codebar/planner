@@ -1,8 +1,9 @@
 # encoding: utf-8
 
 class AvatarUploader < CarrierWave::Uploader::Base
+  storage :ftp if Rails.env.production?
+
   include CarrierWave::MiniMagick
-  include Cloudinary::CarrierWave
 
   # Override the directory where uploaded files will be stored.
   # This is a sensible default for uploaders that are meant to be mounted:
