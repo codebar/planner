@@ -1,7 +1,7 @@
 # encoding: utf-8
 
 class AvatarUploader < CarrierWave::Uploader::Base
-  storage :ftp if Rails.env.production?
+  storage :sftp if Rails.env.production?
 
   include CarrierWave::MiniMagick
 
