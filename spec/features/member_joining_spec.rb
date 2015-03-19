@@ -1,10 +1,6 @@
 require 'spec_helper'
 
 feature 'a member sign up', pending: "Need to test with github redirect" do
-  before do
-    [ "Student", "Coach", "Mentor", "Admin" ].each { |role| Role.create name: role }
-  end
-
   let(:member) { Fabricate(:member) }
   let(:name) { Faker::Name.first_name }
 
@@ -53,8 +49,6 @@ feature "A new student signs up", js: false do
         name: Faker::Name.name
       }
     })
-
-    [ "Student", "Coach", "Mentor", "Admin" ].each { |role| Role.create name: role }
   end
 
   scenario "A new student lands on step 1 after signing up via the front page" do
