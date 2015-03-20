@@ -30,12 +30,13 @@
 
       .medium-4.columns
         .panel
-          - if @course.date_and_time.future?
-            - if @course.seats > @course.attending.length
+          - if logged_in?
+            - if @course.date_and_time.future?
               #{link_to("RSVP", course_rsvp_path(@course), class: 'button round expand')}
             - else
-              %p
-                This course is fully booked. To receive an invitation to other courses we will be running, #{link_to("sign up", new_member_path)}.
+              This course has already taken place.
+          - else
+            #{link_to("Sign up", new_member_path, class: 'button round expand')}
 
   %br
     .row
