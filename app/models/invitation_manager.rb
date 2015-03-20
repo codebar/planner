@@ -19,8 +19,8 @@ class InvitationManager
 
   def self.send_course_emails course
     course.chapter.groups.students.map(&:members).flatten.uniq.each do |student|
-      invitation  = CourseInvitation.create course: course, member: student
-      invitation.send(:email) if course.persisted?
+      invitation  = CourseInvitation.new(course: course, member: student)
+      invitation.send(:email) if invitation.save
     end
   end
 

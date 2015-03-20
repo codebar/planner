@@ -53,7 +53,9 @@ Planner::Application.routes.draw do
     post 'invitation/:token/reject' => 'invitations#reject', as: :reject
   end
 
-  resources :courses, only: [ :show ]
+  resources :courses, only: [ :show ] do
+    get "rsvp"
+  end
   resources :meetings, only: [ :show ]
   resources :workshops, only: [ :show ] do
     member do

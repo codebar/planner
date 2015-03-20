@@ -13,7 +13,7 @@ feature 'viewing a course' do
     expect(page).to have_content course.short_description
     expect(page).to have_content course.url
 
-    expect(page).to have_content "Sign up to receive an invitation."
+    expect(page).to have_content "RSVP"
   end
 
   context "signing up is not available" do

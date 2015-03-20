@@ -16,9 +16,4 @@ describe CoursePresenter do
     event.sponsors
   end
 
-  it "#description" do
-    expect(course).to receive(:short_description)
-
-    event.description
-  end
 end
