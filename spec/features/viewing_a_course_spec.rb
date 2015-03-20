@@ -13,15 +13,6 @@ feature 'viewing a course' do
     expect(page).to have_content course.short_description
     expect(page).to have_content course.url
 
-    expect(page).to have_content "Sign up to receive an invitation."
-  end
-
-  context "signing up is not available" do
-    scenario "when there are seats left" do
-      course.update_attribute(:seats, 0)
-      visit course_path(course)
-
-      expect(page).to have_content "This course is fully booked."
-    end
+    expect(page).to have_content "Sign up"
   end
 end

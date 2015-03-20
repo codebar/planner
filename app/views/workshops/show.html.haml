@@ -1,25 +1,8 @@
-= render partial: 'shared/title', locals: { title: "Coding is easier than you think", date: nil }
+= render partial: 'shared/title', locals: { title: "Workshop at #{@workshop.host.name}", date: "#{ humanize_date_with_time(@workshop.date_and_time)} #{@workshop.distance_of_time}"}
 %section#banner
   .container
     .row
-      .medium-12.columns
-        %h1.workshop.header
-          = @workshop.to_s
-          - if @workshop.has_host?
-            at
-            =@workshop.host.name
-          - else
-            without a home
-    .row
       .medium-8.columns
-        %p.workshop.schedule
-          = l(@workshop.date_and_time, format: :workshop)
-          %small
-            - if @workshop.past?
-              (#{distance_of_time_in_words_to_now(@workshop.date_and_time)} ago)
-            - else
-              (in #{distance_of_time_in_words_to_now(@workshop.date_and_time)})
-
         %p
           Attend our workshops to learn programming in a safe and supportive environment at your own pace, or to share your knowledge and mentor our students.
 

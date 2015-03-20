@@ -1,0 +1,52 @@
+=render partial: 'shared_mailers/header', locals: { title: "Course Invitation" }
+%body{ bgcolor: "#FFFFFF" }
+
+  =render partial: 'shared_mailers/body_header', locals: { title: "Course Invitation" }
+
+  %table{ class: "body-wrap"}
+    %tr
+      %td
+      %td{ class: "container", bgcolor: "#FFFFFF" }
+
+        .content
+          %table
+            %tr
+              %td
+                %h3 Hi #{@member.name}
+                %p.lead
+                  We would like to invite you to our upcoming #{@course.to_s } course.
+
+                %p= @course.short_description
+
+                %p.callout= @course.description.html_safe
+
+                - if @course.url
+                  =link_to "read more about the course", @course.url, style: "color: #a369d5; text-decoration: underline"
+
+                %p
+                  %h3 Tutors
+                  - @course.tutors.each do |tutor|
+                    =link_to "#{tutor.full_name}", "http://twitter.com/#{tutor.twitter}", style: "text-decoration:none; color: #663095; font-size: 16px; margin-bottom: 20px; letter-spacing: 0.02em; text-decoration: none; text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7);"
+                    .about_you
+                      = tutor.about_you.html_safe
+
+
+        .content
+          %table{ bgcolor: "#FFFFFF" }
+            %tr
+              %td.small{ width: "30%", style: "vertical-align: top; padding-right:10px;"}
+                =image_tag(@course.venue.avatar)
+              %td
+                %h4
+                  Workshop
+                  %small #{humanize_date_with_time(@course.date_and_time)}
+                %p
+                  %b Venue
+                  #{@course.venue.name}
+                =link_to "View invitation and RSVP", full_url_for(course_invitation_url(@invitation)), class: 'btn'
+
+        .content
+          = render partial: 'shared_mailers/social'
+      %td
+
+  = render partial: 'shared_mailers/footer'

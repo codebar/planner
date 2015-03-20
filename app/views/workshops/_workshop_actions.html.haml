@@ -21,34 +21,6 @@
     = link_to "Attend as a student", rsvp_workshop_path(@workshop, role: "Student"), method: :post,class: 'button round expand'
     = link_to "Attend as a coach", rsvp_workshop_path(@workshop, role: "Coach"), method: :post, class: 'button round expand'
 
-    -#- if @workshop.rsvp_available?
-      = form_tag remove_workshop_path, method: :post do
-        = submit_tag "Cancel your attendance", class: 'button round expand'
-    -#- else
-      You can't change your RSVP this close to the event. If you can no longer make it, please
-      = link_to "send us an email", "mailto:#{@workshop.chapter.email}"
-
-
-  -#- elsif @workshop.waitlisted?(current_user)
-    = form_tag remove_workshop_path, method: :post do
-      = submit_tag "Remove from Waiting list", class: 'button round expand'
-      - if @workshop.attendee?(current_user)
-        = submit_tag "Cancel your attendance", class: 'button round expand'
-
-  -#- else
-    = form_tag add_workshop_path, method: :post do
-      = hidden_field_tag :role, :student
-      - if @workshop.student_spaces?
-        = submit_tag "Attend as a student", class: 'button round expand'
-      - else
-        = submit_tag "Join the student waiting list", class: 'button round expand'
-
-    = form_tag add_workshop_path, method: :post do
-      = hidden_field_tag :role, :coach
-      - if @workshop.coach_spaces?
-        = submit_tag "Attend as a coach", class: 'button round expand'
-      - else
-        = submit_tag "Join the coach waiting list", class: 'button round expand'
 - elsif not logged_in?
   = link_to "Sign up", new_member_path, class: 'button round expand'
   = link_to "Log in", redirect_path, class: 'button round expand'

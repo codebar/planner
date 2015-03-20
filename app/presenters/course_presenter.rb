@@ -8,10 +8,6 @@ class CoursePresenter < EventPresenter
     [ sponsor ].compact
   end
 
-  def description
-    model.short_description
-  end
-
   private
 
   def model

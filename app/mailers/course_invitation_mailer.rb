@@ -3,10 +3,8 @@ class CourseInvitationMailer < ActionMailer::Base
 
   helper ApplicationHelper
 
-  layout 'email'
-
   def invite_student course, member, invitation
-    @course = course
+    @course = CoursePresenter.new(course)
     @member = member
     @invitation = invitation
 

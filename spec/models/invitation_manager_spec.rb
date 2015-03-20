@@ -41,10 +41,11 @@ describe InvitationManager do
 
   it "#send_course_emails" do
     course = Fabricate(:course)
+    invitation = Fabricate(:course_invitation)
     expect(course.chapter.groups).to receive(:students).and_return([students])
 
     students.members.each do |student|
-      expect(CourseInvitation).to receive(:create).with(course: course, member: student)
+      expect(CourseInvitation).to receive(:new).with(course: course, member: student).and_return(invitation)
     end
 
     InvitationManager.send_course_emails course

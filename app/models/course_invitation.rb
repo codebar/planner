@@ -11,6 +11,11 @@ class CourseInvitation < ActiveRecord::Base
     course
   end
 
+  def role
+    "Student"
+  end
+
+
   private
 
   def email

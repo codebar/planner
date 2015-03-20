@@ -21,6 +21,10 @@ class EventPresenter < SimpleDelegator
     model.description rescue nil
   end
 
+  def short_description
+    model.short_description rescue model.description
+  end
+
   def organisers
     @organisers ||= model.permissions.find_by_name("organiser").members rescue []
   end

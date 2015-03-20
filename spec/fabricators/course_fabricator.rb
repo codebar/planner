@@ -5,6 +5,7 @@ Fabricator(:course) do
   tutor { Fabricate(:member) }
   chapter
   date_and_time  { DateTime.now+1.week }
+  sponsor
 
   seats 1
 end
