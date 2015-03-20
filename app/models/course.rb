@@ -1,6 +1,8 @@
 class Course < ActiveRecord::Base
   include Listable
 
+  resourcify :permissions, role_cname: 'Permission', role_table_name: :permission
+
   has_many :invitations, class_name: "CourseInvitation"
   has_many :course_tutors
   has_many :tutors, through: :course_tutors, class_name: "Member"
@@ -23,6 +25,10 @@ class Course < ActiveRecord::Base
 
   def to_s
     title
+  end
+
+  def time
+    date_and_time.time
   end
 
   private
