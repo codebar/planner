@@ -12,10 +12,13 @@
         =link_to @event.url, class: 'button round' do
           Sign up
       - else
-        =link_to event_student_rsvp_path(@event), class: 'button round' do
-          = t('events.attend_as_student')
-        =link_to event_coach_rsvp_path(@event), class: 'button round' do
-          = t('events.attend_as_coach')
+        - if @event.invitable
+          =link_to event_student_rsvp_path(@event), class: 'button round' do
+            = t('events.attend_as_student')
+          =link_to event_coach_rsvp_path(@event), class: 'button round' do
+            = t('events.attend_as_coach')
+        - else
+            %em= t('event.not_open_for_rsvp')
         %br
         %br
 
