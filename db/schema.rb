@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150224001247) do
+ActiveRecord::Schema.define(version: 20150328102113) do
 
   create_table "addresses", force: true do |t|
     t.string   "flat"
@@ -32,6 +32,20 @@ ActiveRecord::Schema.define(version: 20150224001247) do
   end
 
   add_index "auth_services", ["member_id"], name: "index_auth_services_on_member_id"
+
+  create_table "black_lists", force: true do |t|
+    t.integer  "member_id"
+    t.integer  "added_by_id"
+    t.string   "reason"
+    t.text     "note"
+    t.boolean  "permanent"
+    t.datetime "expires_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "black_lists", ["added_by_id"], name: "index_black_lists_on_added_by_id"
+  add_index "black_lists", ["member_id"], name: "index_black_lists_on_member_id"
 
   create_table "chapters", force: true do |t|
     t.string   "name"
@@ -106,6 +120,7 @@ ActiveRecord::Schema.define(version: 20150224001247) do
     t.boolean  "announce_only"
     t.string   "url"
     t.string   "email"
+    t.boolean  "invitable",             default: false
   end
 
   add_index "events", ["venue_id"], name: "index_events_on_venue_id"
@@ -340,7 +355,7 @@ ActiveRecord::Schema.define(version: 20150224001247) do
 
   create_table "testimonials", force: true do |t|
     t.integer  "member_id"
-    t.text     "text"
+    t.text     "text",       limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end

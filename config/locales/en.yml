@@ -110,6 +110,7 @@ en:
     organisers: "Organisers"
     schedule: "Schedule"
     send_us_an_email: "send us an email"
+    not_open_for_rsvp: This event is not open for RSVP yet.
     faq:
       experience:
         q: "How experienced should I be to join the workshop?"
