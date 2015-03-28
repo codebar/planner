@@ -17,6 +17,10 @@ class EventPresenter < SimpleDelegator
     model.sponsors
   end
 
+  def invitable
+    model.invitable || false
+  end
+
   def description
     model.description rescue nil
   end
