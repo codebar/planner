@@ -124,8 +124,8 @@ en:
         q: "Do I need to bring a keyboard?"
         a_html: "A keyboard would help as you will spend the entire day pairing with someone on your latop. If you don't have a keyboard, %{link} and we'll try to organise something for you."
       travel_costs:
-        q: "I will be commuting from Brighton/Cambridge. Can you help with my travel expenses?"
-        a: "Yes, we can help by covering your travel costs. Make sure you fill in the questionnaire and we'll get in touch."
+        q: "I will be commuting. Can you help with my travel expenses?"
+        a: "We will be offering some travel grants. Just make sure you fill in the questionnaire after you RSVP and we will get in touch."
 
 
   coaches:
