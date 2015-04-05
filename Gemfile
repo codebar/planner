@@ -32,7 +32,7 @@ gem 'icalendar'
 gem 'gibbon'
 
 group :development do
-   #gem 'letter_opener'
+  #  gem 'letter_opener'
 end
 
 group :development, :test do
@@ -41,7 +41,7 @@ group :development, :test do
   gem 'rspec-collection_matchers'
   gem 'fabrication' # Generator for fake models/objects
   gem 'faker' # Generator for fake names, emails, urls, and other data
-  gem 'sqlite3'
+  gem 'pg'
   gem 'coveralls', require: false # Code coverage reports on Github
   gem 'launchy' # Open things in a browser automatically
   gem 'jazz_hands', github: 'nixme/jazz_hands', branch: 'bring-your-own-debugger' # A collection of debugging gems, mostly Pry
@@ -57,7 +57,6 @@ group :test do
 end
 
 group :production do
-  gem 'pg'
   gem 'puma' # Alternative Rack HTTP server
   gem 'rails_12factor' # Helper gem for configuring an app a la Heroku
 end
