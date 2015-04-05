@@ -15,7 +15,7 @@ RSpec.describe WaitingList, type: :model do
         invitations = 2.times.map { Fabricate(:session_invitation, sessions: workshop) }
         invitations.each { |invitation| WaitingList.add(invitation) }
 
-        expect(WaitingList.by_workshop(workshop).map(&:invitation)).to eq(invitations)
+        expect(WaitingList.by_workshop(workshop).map(&:invitation)).to match_array(invitations)
       end
     end
 
