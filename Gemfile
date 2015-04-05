@@ -21,7 +21,7 @@ gem "pundit"
 gem 'carrierwave'
 gem 'carrierwave-ftp', :require => 'carrierwave/storage/sftp'
 gem 'mini_magick'
-
+gem 'pg'
 gem 'omniauth'
 gem 'omniauth-github'
 
@@ -41,7 +41,6 @@ group :development, :test do
   gem 'rspec-collection_matchers'
   gem 'fabrication' # Generator for fake models/objects
   gem 'faker' # Generator for fake names, emails, urls, and other data
-  gem 'pg'
   gem 'coveralls', require: false # Code coverage reports on Github
   gem 'launchy' # Open things in a browser automatically
   gem 'jazz_hands', github: 'nixme/jazz_hands', branch: 'bring-your-own-debugger' # A collection of debugging gems, mostly Pry

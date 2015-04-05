@@ -112,9 +112,9 @@ GEM
       multipart-post (>= 1.2, < 3)
     font-awesome-rails (4.3.0.0)
       railties (>= 3.2, < 5.0)
-    foundation-rails (5.5.0.0)
+    foundation-rails (5.4.5.0)
       railties (>= 3.1.0)
-      sass (>= 3.2.0, < 3.4)
+      sass (>= 3.2.0)
     gibbon (1.1.5)
       httparty
       multi_json (>= 1.9.0)
@@ -311,7 +311,7 @@ GEM
       coffee-rails
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
-    tzinfo-data (1.2015.2)
+    tzinfo-data (1.2014.8)
       tzinfo (>= 1.0.0)
     uglifier (2.7.1)
       execjs (>= 0.3.0)
