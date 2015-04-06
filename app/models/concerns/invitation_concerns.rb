@@ -11,7 +11,7 @@ module InvitationConcerns
     validates :token, uniqueness: true
 
     scope :accepted, ->  { where(attending: true) }
-    scope :not_accepted, ->  { where(attending: nil) }
+    scope :not_accepted, ->  { where("attending is NULL or attending = false") }
 
   end
 
