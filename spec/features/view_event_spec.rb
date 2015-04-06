@@ -15,7 +15,7 @@ feature 'viewing an event' do
     end
 
     scenario 'a student cannnot RSVP if they are not logged in' do
-      click_on 'Get started with Open Source!'
+      click_on 'Attend as a student'
 
       expect(page).to have_content("The page is only available to Codebar members. Create an account or sign in first.")
     end
@@ -44,7 +44,7 @@ feature 'viewing an event' do
       end
 
       scenario "as a Student" do
-        click_on 'Get started with Open Source!'
+        click_on 'Attend as a student'
         click_on 'Attend as a student'
 
         expect(page).to have_content("You have RSVPed to #{event.name}. We will verify your attendance after you complete the questionnaire!")
