@@ -12,6 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require chosen-jquery
 //= require foundation
 //= require 'jsimple-star-rating.min.js'
 //= require pickadate/picker
@@ -26,5 +27,9 @@ $(function(){
   $('#sessions_date_and_time').pickadate();
   $('#sessions_time').pickatime();
   $('body').removeClass('no-js');
-});
 
+  $('select').chosen(function(){
+    allow_single_deselect: true
+    no_results_text: 'No results matched'
+  });
+});

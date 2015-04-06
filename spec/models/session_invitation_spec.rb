@@ -17,6 +17,12 @@ describe SessionInvitation do
       expect(SessionInvitation.attended.count).to eq(4)
     end
 
+    it "#not_accepted" do
+      4.times { Fabricate(:session_invitation) }
+
+      expect(SessionInvitation.not_accepted.count).to eq(4)
+    end
+
     it "#to_coaches" do
       6.times { Fabricate(:coach_session_invitation) }
 

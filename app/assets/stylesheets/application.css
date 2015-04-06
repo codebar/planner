@@ -16,4 +16,5 @@
  *= require pickadate/default
  *= require pickadate/default.date
  *= require pickadate/default.time
+ *= require chosen
  */

@@ -223,3 +223,8 @@ en:
     sign_up: "to receive invitations to our upcoming workshops."
     no_incoming: "There are no workshops coming up."
     contact: "To contact the %{city} team, send an email to %{email}"
+
+  admin:
+    workshop:
+      manage_rsvps:
+        text: 'RSVP Students and Coaches to the workshop. The attendance confirmation email will be trigerred and they will be remove them from the waiting list.'
