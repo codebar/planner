@@ -7,6 +7,7 @@ Fabricator(:event) do
   schedule Faker::Lorem.sentence
   venue { Fabricate(:sponsor) }
   coach_spaces 2
+  invitable true
   student_spaces 2
   slug "some-slug"
   info Faker::Lorem.sentence

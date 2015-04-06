@@ -1,6 +1,6 @@
 Fabricator(:session_invitation) do
   member
-  attending false
+  attending nil
   attended nil
   note "I'd love to attend"
   sessions

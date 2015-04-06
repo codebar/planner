@@ -17,7 +17,9 @@
                   - if @waiting_list
                     A spot became available and your attendance has now been confirmed.
                   - else
-                    Thank you for confirming you attendance.
+                    Your spot has been confirmed.
+                    - if @invitation.role.eql?("Student")
+                      If you haven't already, please remember to let us know what you will be working on through the invitation.
                   See you at our workshop!
                   %p
                     Please remember that removing the calendar entry will not cancel your invitation RSVP.

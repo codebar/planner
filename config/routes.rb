@@ -119,6 +119,8 @@ Planner::Application.routes.draw do
       post :invite
       get 'students_checklist'
       get 'coaches_checklist'
+
+      resource :invitations, only: [:update]
     end
   end
 

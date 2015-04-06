@@ -29,6 +29,8 @@ gem 'foundation-rails'
 gem 'tzinfo-data'
 gem 'icalendar'
 
+gem 'chosen-rails'
+
 gem 'gibbon'
 
 group :development do
@@ -39,25 +41,25 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'rspec-its'
   gem 'rspec-collection_matchers'
-  gem 'fabrication' # Generator for fake models/objects
-  gem 'faker' # Generator for fake names, emails, urls, and other data
-  gem 'coveralls', require: false # Code coverage reports on Github
-  gem 'launchy' # Open things in a browser automatically
-  gem 'jazz_hands', github: 'nixme/jazz_hands', branch: 'bring-your-own-debugger' # A collection of debugging gems, mostly Pry
+  gem 'fabrication'
+  gem 'faker'
+  gem 'coveralls', require: false
+  gem 'launchy'
+  gem 'jazz_hands', github: 'nixme/jazz_hands', branch: 'bring-your-own-debugger'
   gem 'pry-byebug'
-  gem 'pry-remote' # Connect to Pry remotely, handy if you're using Pow
-  gem 'dotenv-rails' # Secret management in .env file
+  gem 'pry-remote'
+  gem 'dotenv-rails'
 end
 
 group :test do
   gem 'capybara'
-  gem 'database_cleaner' # Quickly empty the database fter tests
-  gem 'poltergeist' # Driver for PhantomJS, so we can unit test JavaScript
+  gem 'database_cleaner'
+  gem 'poltergeist'
 end
 
 group :production do
-  gem 'puma' # Alternative Rack HTTP server
-  gem 'rails_12factor' # Helper gem for configuring an app a la Heroku
+  gem 'puma'
+  gem 'rails_12factor'
 end
 
 gem 'jbuilder'
