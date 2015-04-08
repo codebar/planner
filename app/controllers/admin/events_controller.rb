@@ -3,8 +3,9 @@ class Admin::EventsController < Admin::ApplicationController
 
   def show
     authorize @original_event
-    @attending_students = @original_event.attending_students
-    @attending_coaches = @original_event.attending_coaches
+
+    @attending_students = InvitationPresenter.decorate_collection(@original_event.attending_students)
+    @attending_coaches = InvitationPresenter.decorate_collection(@original_event.attending_coaches)
     @host_address = AddressDecorator.new(@event.venue.address)
   end
 
