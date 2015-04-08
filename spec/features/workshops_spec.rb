@@ -117,8 +117,6 @@ feature 'Viewing a workshop page' do
             expect(page).to have_content("Sorry to see you go")
           end
 
-          #expect(page).to have_content "If you can no longer make it, please send us an email at #{workshop.chapter.email}"
-
           context "#waiting list" do
             context "when there are no spots available" do
               let(:workshop) { Fabricate(:sessions_no_spots) }

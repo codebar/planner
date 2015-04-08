@@ -46,6 +46,7 @@ en:
 
   notifications:
     provider_already_connected: 'You are already signed in!'
+    not_logged_in: "You must be logged in to acess this page."
 
   navigation:
     dashboard: "Dahsboard"

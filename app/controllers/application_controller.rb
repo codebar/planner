@@ -75,15 +75,15 @@ class ApplicationController < ActionController::Base
 
   helper_method :is_verified_coach_or_admin?
 
-  def is_member?
+  def is_logged_in?
     unless logged_in?
-      flash[:notice] = "The page is only available to Codebar members. Create an account or sign in first."
-      redirect_to :back
+      flash[:notice] = t('notifications.not_logged_in')
+      redirect_to root_path
     end
   end
 
   def has_access?
-    is_member?
+    is_logged_in?
   end
 
   private

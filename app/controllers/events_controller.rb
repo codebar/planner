@@ -1,5 +1,5 @@
 class EventsController < ApplicationController
-  before_action :is_member?, only: [:student, :coach]
+  before_action :is_logged_in?, only: [:student, :coach]
 
   def index
     events = [ Sessions.past.all ]

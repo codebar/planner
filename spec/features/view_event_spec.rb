@@ -17,13 +17,13 @@ feature 'viewing an event' do
     scenario 'a student cannnot RSVP if they are not logged in' do
       click_on 'Attend as a student'
 
-      expect(page).to have_content("The page is only available to Codebar members. Create an account or sign in first.")
+      expect(page).to have_content(I18n.t('notifications.not_logged_in'))
     end
 
     scenario 'a student cannnot RSVP if they are not logged in' do
       click_on 'Attend as a coach'
 
-      expect(page).to have_content("The page is only available to Codebar members. Create an account or sign in first.")
+      expect(page).to have_content(I18n.t('notifications.not_logged_in'))
     end
   end
 
