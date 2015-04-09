@@ -1,5 +1,5 @@
 class JobsController < ApplicationController
-  before_filter :is_member?
+  before_filter :is_logged_in?
   before_filter :set_job, only: [:show, :preview, :edit, :update, :submit]
   before_filter :has_access?, only: [ :new, :create, :edit, :update, :submit]
 
