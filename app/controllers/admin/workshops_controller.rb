@@ -1,7 +1,6 @@
 class Admin::WorkshopsController < Admin::ApplicationController
   include  Admin::SponsorConcerns
 
-
   before_filter :set_workshop_by_id, only: [:show, :edit]
   before_filter :set_and_decorate_workshop, only: [:coaches_checklist, :students_checklist]
 
@@ -36,6 +35,8 @@ class Admin::WorkshopsController < Admin::ApplicationController
 
     return render text: WorkshopPresenter.new(@workshop).attendees_csv if request.format.csv?
 
+    @attending_students = InvitationPresenter.decorate_collection(@workshop.attending_students.all)
+    @attending_coaches = InvitationPresenter.decorate_collection(@workshop.attending_coaches.all)
     @coach_waiting_list = WaitingListPresenter.new(WaitingList.by_workshop(@workshop).where_role("Coach"))
     @student_waiting_list = WaitingListPresenter.new(WaitingList.by_workshop(@workshop).where_role("Student"))
   end

@@ -21,24 +21,12 @@ class Member < ActiveRecord::Base
     [name, surname].join " "
   end
 
-  # Is this user a student?
   def student?
-    groups.students.count > 0 || roles.where(name: 'student').any?
+    groups.students.count > 0
   end
 
-  # Is this user a coach?
   def coach?
-    groups.coaches.count > 0 || roles.where(name: 'coach').any?
-  end
-
-  # Is this user a chapter organiser?
-  def chapter_organiser?
-    roles.where(resource_type: "Chapter").any?
-  end
-
-  # Has this user ever attended a Codebar session?
-  def newbie?
-    (attended_sessions.count == 0) || (attended_sessions.count == 1 && attended_sessions.first.today?)
+    groups.coaches.count > 0
   end
 
   def received_welcome_for?(subscription)

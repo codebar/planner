@@ -9,14 +9,6 @@
       %br
 
 %br
-- if (@attending_students.count - @attending_students.verified.count) > 0 or (@attending_coaches.count - @attending_coaches.count) > 0
-  .row
-    .large-12.columns
-      %p.panel
-        %i.fa.fa-warning
-
-        There are unverified students and/or coaches.
-%br
 .row
   .large-12.columns
     %h4 #{@event.invitations.count} Invitations

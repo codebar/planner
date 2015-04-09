@@ -98,16 +98,16 @@
     .row
       %hr
       .medium-6.columns
-        %h4 Students (#{@workshop.attending_students.count}#{(" of " + @workshop.host.seats.to_s) if @workshop.has_host?})
+        %h4 Students (#{@attending_students.count}#{(" of " + @workshop.host.seats.to_s) if @workshop.has_host?})
         - unless @workshop.student_spaces?
           %small
             #{@student_waiting_list.length} on the waiting list
-        =render partial: 'admin/workshop/attendances', locals: { invitations: @workshop.attending_students }
+        =render partial: 'admin/workshop/attendances', locals: { invitations: @attending_students }
         =render partial: 'admin/workshop/waiting_list', locals: { waiting_list: @student_waiting_list }
       .medium-6.columns
         %h4 Coaches (#{@workshop.attending_coaches.count}#{(" of " + @workshop.host.coach_spots.to_s) if @workshop.has_host?})
         - unless @workshop.coach_spaces?
           %small
             #{@coach_waiting_list.length} on the waiting list
-        =render partial: 'admin/workshop/attendances', locals: { invitations: @workshop.attending_coaches }
+        =render partial: 'admin/workshop/attendances', locals: { invitations: @attending_coaches }
         =render partial: 'admin/workshop/waiting_list', locals: { waiting_list: @coach_waiting_list }
