@@ -9,6 +9,10 @@ class EventPresenter < SimpleDelegator
     collection.map {|e| PRESENTER[e.class.to_s.downcase.to_sym].constantize.new(e) }
   end
 
+  def chapter
+    model.try(:chapter)
+  end
+
   def venue
     model.venue
   end
@@ -32,7 +36,6 @@ class EventPresenter < SimpleDelegator
   def organisers
     @organisers ||= model.permissions.find_by_name("organiser").members rescue []
   end
-
 
   def month
     I18n.l(model.date_and_time, format: :month).upcase

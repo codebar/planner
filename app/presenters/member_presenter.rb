@@ -7,4 +7,14 @@ class MemberPresenter < SimpleDelegator
     session_invitations.attended.exists?
   end
 
+  def attending?(event)
+    event.invitations.accepted.where(member: member).exists?
+  end
+
+  private
+
+  def model
+    __getobj__
+  end
+
 end
