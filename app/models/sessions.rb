@@ -110,6 +110,10 @@ class Sessions < ActiveRecord::Base
     WorkshopPolicy
   end
 
+  def date
+    I18n.l(date_and_time, format: :dashboard)
+  end
+
   private
 
   def combine_date_and_time

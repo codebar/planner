@@ -8,6 +8,7 @@ Planner::Application.routes.draw do
     get 'effective-teacher-guide', action: 'effective-teacher-guide', as: :teaching_guide
     get 'faq', action: 'faq'
     get 'attendance-policy', action: 'attendance_policy'
+    get 'dashboard', action: 'dashboard'
   end
 
   resource :member, only: [:new, :edit, :update, :patch] do
@@ -88,6 +89,8 @@ Planner::Application.routes.draw do
       get 'approve'
     end
 
+
+    resources :announcements, only: [:new, :index, :create, :edit, :update]
     resources :members, only: [:show]
     resources :member_notes, only: [:create]
 

@@ -25,6 +25,7 @@
 $(function(){
   $(document).foundation();
   $('#sessions_date_and_time').pickadate();
+  $('#announcement_expires_at').pickadate();
   $('#sessions_time').pickatime();
   $('body').removeClass('no-js');
 

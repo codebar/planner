@@ -61,7 +61,7 @@ class EventPresenter < SimpleDelegator
   end
 
   def chapter_organisers
-    model.chapter.permissions.find_by_name("organiser").members
+    model.chapter.permissions.find_by_name("organiser").members rescue []
   end
 
   def model

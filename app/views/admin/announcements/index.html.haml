@@ -1,0 +1,26 @@
+#container
+  .row
+    .large-12.columns
+      %h1 Announcements
+  .row
+    .large-12.columns
+      %table
+        %thead
+          %td Created by
+          %td Message
+          %td Groups
+          %td Expires at
+        - @announcements.each do |announcement|
+          %tr
+            %td
+              = image_tag announcement.created_by.avatar(24)
+              = announcement.created_by.full_name
+            %td
+              = dot_markdown(announcement.message)
+            %td
+              %ul
+                - announcement.groups.each do |group|
+                  %li
+                    = group.to_s
+            %td
+              =l(announcement.expires_at, format: :date)

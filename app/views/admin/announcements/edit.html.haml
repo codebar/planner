@@ -1,0 +1,8 @@
+#container
+  .row
+    .large-12.columns
+      = simple_form_for [:admin, @announcement] do |f|
+        = f.association :groups, label_method: :to_s
+        = f.input :message
+        = f.input :expires_at, as: :string
+        = f.submit :update, class: 'button tiny'

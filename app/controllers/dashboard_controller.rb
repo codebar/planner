@@ -1,9 +1,18 @@
 class DashboardController < ApplicationController
+  before_action :is_logged_in?, only: [:dashboard]
+
   def show
     @upcoming_workshops = EventPresenter.decorate_collection(upcoming_events)
     @testimonials = Testimonial.order("RANDOM() ").limit(10)
 
     @sponsors = Sponsor.latest
+  end
+
+  def dashboard
+    @user = MemberPresenter.new(current_user)
+    @ordered_events = upcoming_events_for_user.map.inject({}) { |hash, (key, value)| hash[key] = EventPresenter.decorate_collection(value); hash}
+    @announcements = current_user.announcements.active
+
   end
 
   def code
@@ -36,12 +45,23 @@ class DashboardController < ApplicationController
 
   def upcoming_events
     workshops = Sessions.upcoming || []
+    all_events(workshops).sort_by!(&:date_and_time)
+  end
+
+  def upcoming_events_for_user
+    chapters = current_user.groups.map(&:chapter).uniq!
+    workshops = chapters.collect { |c| c.workshops.upcoming } if chapters
+    workshops ||= []
+    workshops << current_user.session_invitations.accepted.joins(:sessions).where("sessions.date_and_time > ?", DateTime.now).map(&:sessions)
+    all_events(workshops).group_by(&:date)
+  end
+
+  def all_events(workshops)
     course = Course.next
     meeting = Meeting.next
     event = Event.next
 
     all_events = workshops << course << meeting << event
     all_events = all_events.compact.flatten
-    all_events.sort_by!(&:date_and_time)
   end
 end

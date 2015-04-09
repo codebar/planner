@@ -1,0 +1,32 @@
+.event#minified
+  .row
+    .small-2.columns
+      .date
+        .time
+          = event.time
+      .text-center
+        - if @user.attending?(event.__getobj__)
+          = link_to  event.path do
+            %label.label.success Attending
+    .small-10.columns
+      .title
+        =link_to event.to_s, event.path
+        - if event.venue.present?
+          at
+          = link_to event.venue.name, event.venue.website
+
+        - if event.chapter
+          = event.chapter.name
+      .row
+        .medium-6.columns
+          - if event.organisers.any?
+            .organisers
+              - event.organisers.each do |organiser|
+                =link_to twitter_url_for(organiser.twitter) do
+                  =image_tag organiser.avatar(26), class: 'th radius', title: organiser.full_name
+        .medium-6.columns
+          - if event.sponsors.any?
+            - event.sponsors.each do |sponsor|
+              = image_tag sponsor.avatar, class: 'sponsor'
+
+      %br

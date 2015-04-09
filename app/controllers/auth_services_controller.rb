@@ -16,7 +16,7 @@ class AuthServicesController < ApplicationController
         session[:oauth_token]        = omnihash[:credentials][:token]
         session[:oauth_token_secret] = omnihash[:credentials][:secret]
 
-        finish_registration or redirect_to root_path
+        finish_registration or redirect_to dashboard_path
       else
         member = Member.find_by_email(omnihash[:info][:email])
         member = Member.new(email: (omnihash[:info][:email])) if member.nil?

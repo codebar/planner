@@ -35,4 +35,8 @@ class Event < ActiveRecord::Base
   def student_spaces?
     student_spaces > attending_students.count
   end
+
+  def date
+    I18n.l(date_and_time, format: :dashboard)
+  end
 end
