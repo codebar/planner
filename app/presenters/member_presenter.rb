@@ -8,7 +8,7 @@ class MemberPresenter < SimpleDelegator
     end
 
   def newbie?
-    session_invitations.attended.exists?
+    !session_invitations.attended.exists?
   end
 
   def attending?(event)
