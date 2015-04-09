@@ -8,6 +8,10 @@ class MeetingPresenter < EventPresenter
     model.description
   end
 
+  def admin_path
+  "#"
+  end
+
   private
 
   def model

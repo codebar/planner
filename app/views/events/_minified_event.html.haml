@@ -6,8 +6,11 @@
           = event.time
       .text-center
         - if @user.attending?(event.__getobj__)
-          = link_to  event.path do
+          = link_to event.path do
             %label.label.success Attending
+        - if @user.event_organiser?(event)
+          = link_to event.admin_path do
+            %label.label.label-deafault Manage
     .small-10.columns
       .title
         =link_to event.to_s, event.path

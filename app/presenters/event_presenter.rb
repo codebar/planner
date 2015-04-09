@@ -57,6 +57,10 @@ class EventPresenter < SimpleDelegator
     invitation.for_coach? ? coach_questionnaire : student_questionnaire
   end
 
+  def admin_path
+    Rails.application.routes.url_helpers.admin_event_path(model)
+  end
+
   private
 
   def attendee_array

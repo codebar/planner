@@ -8,6 +8,10 @@ class CoursePresenter < EventPresenter
     [ sponsor ].compact
   end
 
+  def admin_path
+    "#"
+  end
+
   private
 
   def model
