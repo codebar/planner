@@ -9,6 +9,10 @@ class EventPresenter < SimpleDelegator
     collection.map {|e| PRESENTER[e.class.to_s.downcase.to_sym].constantize.new(e) }
   end
 
+  def chapter
+    model.try(:chapter)
+  end
+
   def venue
     model.venue
   end
@@ -33,7 +37,6 @@ class EventPresenter < SimpleDelegator
     @organisers ||= model.permissions.find_by_name("organiser").members rescue []
   end
 
-
   def month
     I18n.l(model.date_and_time, format: :month).upcase
   end
@@ -54,6 +57,10 @@ class EventPresenter < SimpleDelegator
     invitation.for_coach? ? coach_questionnaire : student_questionnaire
   end
 
+  def admin_path
+    Rails.application.routes.url_helpers.admin_event_path(model)
+  end
+
   private
 
   def attendee_array
@@ -61,7 +68,7 @@ class EventPresenter < SimpleDelegator
   end
 
   def chapter_organisers
-    model.chapter.permissions.find_by_name("organiser").members
+    model.chapter.permissions.find_by_name("organiser").members rescue []
   end
 
   def model

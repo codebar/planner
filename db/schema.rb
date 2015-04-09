@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150328102113) do
+ActiveRecord::Schema.define(version: 20150409145541) do
 
   create_table "addresses", force: true do |t|
     t.string   "flat"
@@ -23,6 +23,15 @@ ActiveRecord::Schema.define(version: 20150328102113) do
     t.string   "city"
   end
 
+  create_table "announcements", force: true do |t|
+    t.datetime "expires_at"
+    t.text     "message"
+    t.integer  "created_by_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "announcements", ["created_by_id"], name: "index_announcements_on_created_by_id", using: :btree
   create_table "auth_services", force: true do |t|
     t.integer  "member_id"
     t.string   "provider"
@@ -147,8 +156,18 @@ ActiveRecord::Schema.define(version: 20150328102113) do
     t.integer  "rating"
   end
 
-  add_index "feedbacks", ["coach_id"], name: "index_feedbacks_on_coach_id"
-  add_index "feedbacks", ["tutorial_id"], name: "index_feedbacks_on_tutorial_id"
+  add_index "feedbacks", ["coach_id"], name: "index_feedbacks_on_coach_id", using: :btree
+  add_index "feedbacks", ["tutorial_id"], name: "index_feedbacks_on_tutorial_id", using: :btree
+
+  create_table "group_announcements", force: true do |t|
+    t.integer  "announcement_id"
+    t.integer  "group_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "group_announcements", ["announcement_id"], name: "index_group_announcements_on_announcement_id", using: :btree
+  add_index "group_announcements", ["group_id"], name: "index_group_announcements_on_group_id", using: :btree
 
   create_table "groups", force: true do |t|
     t.integer  "chapter_id"

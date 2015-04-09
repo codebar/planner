@@ -17,6 +17,7 @@ en:
         year_month: "%Y-%B"
         log: "at %H:%M on the %d/%m/%Y"
         workshop: "%A, %e %B %Y at %R"
+        dashboard: "%a, %d %b %Y, %H:%M"
   time:
       formats:
         default: "%a, %d %b %Y %H:%M "
@@ -33,6 +34,7 @@ en:
         year_month: "%Y-%B"
         log: "at %H:%M on the %d/%m/%Y"
         workshop: "%A, %e %B %Y at %R"
+        dashboard: "%A, %b %d"
 
   messages:
     accepted_invitation: "Thanks for getting back to us %{name}. See you at the workshop!"
@@ -99,7 +101,7 @@ en:
     no_upcoming_events: "There are no upcoming events."
     view_past_events: "View past events"
     view_all: "View all"
-    kindly_hosted_by: "Kindly hosted by"
+    hosted_by: "Hosted by"
     organisers: "organisers"
     venue_at: "at"
     attend_as_student: "Attend as a student"

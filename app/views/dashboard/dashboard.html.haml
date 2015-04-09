@@ -1,0 +1,41 @@
+= render partial: 'shared/title', locals: { title: "Your dashboard", date: nil }
+%section
+  .row
+    .large-3.columns#sidebar
+      =image_tag current_user.avatar(33)
+      = link_to @user.full_name, profile_path
+
+      %br
+      %br
+      %br
+      .row
+        .large-12.columns
+          %h4
+            Subscriptions
+            %small
+              =link_to "Edit", subscriptions_path
+          - if current_user.chapters.any?
+            %ul.stack.button-group.secondary.no-bullet
+              - current_user.chapters.each do |chapter|
+                %li= link_to chapter.name, chapter_url(chapter.slug)
+          - else
+            %i.fa.fa-warning
+            %small You are not subscribed to any groups.
+
+
+    .large-9.columns#main
+      - if @announcements.any?
+        %p.lead
+          %ul.panel.no-bullet
+            - @announcements.each do |announcement|
+              %li= dot_markdown(announcement.message)
+      %section#chapter
+        .large-12.columns.events
+          %h3
+          - @ordered_events.each do |date, workshops|
+            .row
+              .medium-12.columns
+                %h4= date
+            - workshops.each do |workshop|
+              = render partial: 'events/minified_event', locals: { event:  workshop }
+            %br

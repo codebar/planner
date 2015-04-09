@@ -49,6 +49,10 @@ class WorkshopPresenter < EventPresenter
     Rails.application.routes.url_helpers.workshop_path(model)
   end
 
+  def admin_path
+    Rails.application.routes.url_helpers.admin_workshop_path(model)
+  end
+
   def distance_of_time
     past? ?  "(#{distance_of_time_in_words_to_now(date_and_time)} ago)" :
              "(in #{distance_of_time_in_words_to_now(date_and_time)})"

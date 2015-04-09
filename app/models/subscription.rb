@@ -3,9 +3,10 @@ require 'services/mailing_list'
 class Subscription < ActiveRecord::Base
   belongs_to :group
   belongs_to :member
+  has_one :chapter, through: :group
 
   validates_uniqueness_of :group, scope: :member_id
-  default_scope -> { order(:created_at) }
+  scope :ordered, -> { order(:created_at) }
 
   after_create :subscribe_to_mailing_list
   after_destroy :unsubscribe_from_mailing_list
