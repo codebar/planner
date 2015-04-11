@@ -20,9 +20,11 @@ class Admin::WorkshopsController < Admin::ApplicationController
     authorize(@workshop)
 
     if @workshop.save
-      flash[:notice] = @workshop.errors.full_messages
-      redirect_to admin_workshop_path(@workshop)
+      set_host(host_id)
+
+      redirect_to admin_workshop_path(@workshop), notice: "The workshop has been created."
     else
+      flash[:notice] = @workshop.errors.full_messages
       render 'new'
     end
   end
@@ -40,6 +42,21 @@ class Admin::WorkshopsController < Admin::ApplicationController
     set_admin_workshop_data
   end
 
+  def update
+    @workshop = Sessions.find(params[:id])
+    authorize @workshop
+
+    @workshop.update_attributes(workshop_params)
+
+    if organiser_ids
+      organiser_ids.reject(&:empty?).each { |oid| Member.find(oid).add_role(:organiser, @workshop) }
+    end
+
+    set_host(host_id)
+
+    redirect_to admin_workshop_path(@workshop), notice: "Workshops updated succesfully"
+  end
+
   def coaches_checklist
     return render text: @workshop.coaches_checklist if request.format.text?
 
@@ -50,31 +67,6 @@ class Admin::WorkshopsController < Admin::ApplicationController
     return render text: @workshop.students_checklist if request.format.text?
 
     redirect_to admin_workshop_path(@workshop)
-  end
-
-  def update
-    @workshop = Sessions.find(params[:id])
-    authorize @workshop
-
-    organiser_ids = params[:sessions][:organisers]
-    host_id = params[:sessions][:host]
-
-    @workshop.update_attributes(workshop_params)
-
-    if organiser_ids
-      organiser_ids.reject(&:empty?).each { |oid| Member.find(oid).add_role(:organiser, @workshop) }
-    end
-
-    if host_id
-      host = @workshop.sponsor_sessions.find_or_initialize_by(sponsor_id: host_id)
-      unless @workshop.host.eql?(host.sponsor)
-        @workshop.sponsor_sessions.where(sponsor: @workshop.host).delete_all
-
-        host.update(host: true)
-      end
-    end
-
-    redirect_to admin_workshop_path(@workshop), notice: "Workshops updated succesfully"
   end
 
   def invite
@@ -107,5 +99,25 @@ class Admin::WorkshopsController < Admin::ApplicationController
 
   def workshop_id
     params[:workshop_id] || params[:id]
+  end
+
+  private
+
+  def set_host(host_id)
+    return unless host_id
+
+    host = @workshop.sponsor_sessions.find_or_initialize_by(sponsor_id: host_id)
+    unless @workshop.host.eql?(host.sponsor)
+      @workshop.sponsor_sessions.where(sponsor: @workshop.host).delete_all
+      host.update(host: true)
+    end
+  end
+
+  def host_id
+    params[:sessions][:host]
+  end
+
+  def organiser_ids
+    params[:sessions][:organisers]
   end
 end

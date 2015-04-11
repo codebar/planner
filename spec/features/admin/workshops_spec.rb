@@ -13,8 +13,8 @@ feature 'Managing workshops' do
   scenario "creating a new workshop" do
     visit new_admin_workshop_path
 
-    choose chapter.name
-    fill_in "Date and time", with: Date.today
+    select chapter.name
+    fill_in "Date", with: Date.today
     fill_in "Time", with: "11:30"
 
     click_on "Save"

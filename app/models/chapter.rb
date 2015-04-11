@@ -8,7 +8,7 @@ class Chapter < ActiveRecord::Base
   has_many :groups
   has_many :sponsors, through: :workshops
   has_many :subscriptions, through: :groups
-  has_many :members, -> { select("subscriptions.created_at, members.*").order('subscriptions.created_at asc') }, through: :groups
+  has_many :members, through: :subscriptions
 
   before_save :set_slug
 

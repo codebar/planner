@@ -52,14 +52,14 @@
             =link_to "#", class: "button small secondary disabled", title: "The event has already taken place" do
               %i.fa.fa-send
               Invite
-        - elsif @workshop.has_valid_host?
+        - elsif @workshop.has_valid_host? and @workshop.invitable?
           %li
             =link_to admin_workshop_invite_path(@workshop), method: :post, class: "button secondary small" do
               %i.fa.fa-send
               Invite
         - else
           %li
-            =link_to "#", class: "button small secondary" do
+            =link_to "#", class: "button small secondary disabled", title: "The workshop is not invitable." do
               %i.fa.fa-send
               Invite
         %li
