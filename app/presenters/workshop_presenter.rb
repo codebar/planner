@@ -54,8 +54,8 @@ class WorkshopPresenter < EventPresenter
   end
 
   def distance_of_time
-    past? ?  "(#{distance_of_time_in_words_to_now(date_and_time)} ago)" :
-             "(in #{distance_of_time_in_words_to_now(date_and_time)})"
+    past? ? "(#{distance_of_time_in_words_to_now(date_and_time)} ago)" :
+            "(in #{distance_of_time_in_words_to_now(date_and_time)})"
   end
 
   private
@@ -75,7 +75,7 @@ class WorkshopPresenter < EventPresenter
   end
 
   def member_info(member, pos)
-    "#{member.newbie? ? "I__" : "___"} #{pos+1}.\t #{member.full_name}"
+    "#{MemberPresenter.new(member).newbie? ? "I__" : "___"} #{pos+1}.\t #{member.full_name}"
   end
 
   def note(invitation)
