@@ -6,6 +6,7 @@
       = f.input :date_and_time, as: :string, placeholder: Date.tomorrow.strftime('%d %b, %Y'), required: true
       = f.input :time, as: :string, placeholder: DateTime.new(2014,6,1,12,30).strftime("%H:%M %P"), required: true, input_html: { id: "sessions_time" }
       = f.input :invitable
+      = f.association :sponsors
   .row
     .large-12.columns.text-right
       = f.submit "Save", class: "button"

@@ -21,12 +21,16 @@
 //= require analytics
 //= require gosquared
 //= require subscriptions-toggle
+//= require invitations
 
 $(function(){
   $(document).foundation();
   $('#sessions_date_and_time').pickadate();
   $('#announcement_expires_at').pickadate();
-  $('#sessions_time').pickatime();
+  $('#sessions_time').pickatime({
+    format: 'HH:i'
+  });
+
   $('body').removeClass('no-js');
 
   $('select').chosen(function(){

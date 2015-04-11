@@ -19,30 +19,32 @@ feature 'Managing workshops' do
 
     click_on "Save"
 
-    expect(page).to have_content "Send Invitations"
+    expect(page).to have_content "Invite"
   end
 
   scenario "assigning a host to a workshop" do
     workshop = Fabricate(:sessions_no_sponsor)
-    visit admin_workshop_path(workshop)
+    visit edit_admin_workshop_path(workshop)
 
-    within '#host' do
-      select sponsor.name, from: "sessions[sponsor_ids]"
+    select sponsor.name, from: "sessions_host"
+
+    click_on "Save"
+
+    within "#host" do
+      expect(page).to have_content sponsor.name
     end
-    click_on "Set host"
-
-    expect(page).to have_content sponsor.name
   end
 
-  scenario "assigning a host to a workshop" do
+  scenario "assigning a sponsor to a workshop" do
     workshop = Fabricate(:sessions_no_sponsor)
-    visit admin_workshop_path(workshop)
+    visit edit_admin_workshop_path(workshop)
 
-    within '#sponsors' do
-      select sponsor.name, from: "sessions[sponsor_ids]"
+    select sponsor.name, from: "sessions_sponsor_ids"
+
+    click_on "Save"
+
+    within "#sponsors" do
+      expect(page).to have_content sponsor.name
     end
-
-    click_on "Add sponsor"
-    expect(page).to have_content sponsor.name
   end
 end

@@ -1,17 +1,52 @@
 class Admin::InvitationsController < Admin::ApplicationController
+  include  Admin::WorkshopConcerns
 
   def update
-    @workshop = Sessions.find(params[:workshop_id])
+    set_workshop
     authorize @workshop
 
-    @invitation = @workshop.invitations.find(params[:workshop][:invitations])
-    @invitation.update_attribute(:attending, true)
+    set_invitation
 
-    waiting_listed = WaitingList.where(invitation: @invitation).first
-    waiting_listed.delete if waiting_listed
+    if params.has_key?(:attending)
+      attending = params[:attending]
 
-    SessionInvitationMailer.attending(@workshop, @invitation.member, @invitation).deliver
+      if attending.eql?("true")
+        @invitation.update_attribute(:attending, true)
 
-    redirect_to :back, notice: "You have RSVPed #{@invitation.member.full_name} to the workshop. "
+        waiting_listed = WaitingList.where(invitation: @invitation).first
+        waiting_listed.delete if waiting_listed
+
+        SessionInvitationMailer.attending(@workshop, @invitation.member, @invitation).deliver if @workshop.future?
+
+        message = "You have added #{@invitation.member.full_name} to the workshop as a #{@invitation.role}."
+      else
+        @invitation.update_attribute(:attending, false)
+
+        message = "You have removed #{@invitation.member.full_name} from the workshop."
+      end
+    elsif params.has_key?(:attended)
+      @invitation.update_attribute(:attended, false)
+
+      message = "You have verified #{@invitation.member.full_name}'s attendace."
+    end
+
+    if request.xhr?
+      @workshop = WorkshopPresenter.new(@workshop)
+      set_admin_workshop_data
+
+      render partial: 'admin/workshops/invitation_management'
+    else
+      redirect_to :back, notice: message
+    end
+  end
+
+  private
+
+  def set_invitation
+    @invitation = @workshop.invitations.find_by_token(invitation_id)
+  end
+
+  def invitation_id
+    params.has_key?(:workshop) ? params[:workshop][:invitations] : params[:id]
   end
 end

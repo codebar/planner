@@ -1,0 +1,16 @@
+#attendances {
+  .button {
+    margin-bottom: 0;
+  }
+
+  a .fa {
+    color: black;
+    &:hover {
+      text-shadow: 1px 1px 1px #999;
+    }
+
+    &:active {
+      text-shadow: -2px 1px 1px #999;
+    }
+  }
+}
