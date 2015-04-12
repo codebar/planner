@@ -1,5 +1,6 @@
 class Admin::WorkshopsController < Admin::ApplicationController
   include  Admin::SponsorConcerns
+  include  Admin::WorkshopConcerns
 
   before_filter :set_workshop_by_id, only: [:show, :edit]
   before_filter :set_and_decorate_workshop, only: [:coaches_checklist, :students_checklist]
@@ -19,9 +20,11 @@ class Admin::WorkshopsController < Admin::ApplicationController
     authorize(@workshop)
 
     if @workshop.save
-      flash[:notice] = @workshop.errors.full_messages
-      redirect_to admin_workshop_path(@workshop)
+      set_host(host_id)
+
+      redirect_to admin_workshop_path(@workshop), notice: "The workshop has been created."
     else
+      flash[:notice] = @workshop.errors.full_messages
       render 'new'
     end
   end
@@ -33,12 +36,25 @@ class Admin::WorkshopsController < Admin::ApplicationController
   def show
     authorize @workshop
 
+    @address = AddressDecorator.decorate(@workshop.host.address) if @workshop.has_host?
     return render text: WorkshopPresenter.new(@workshop).attendees_csv if request.format.csv?
 
-    @attending_students = InvitationPresenter.decorate_collection(@workshop.attending_students.all)
-    @attending_coaches = InvitationPresenter.decorate_collection(@workshop.attending_coaches.all)
-    @coach_waiting_list = WaitingListPresenter.new(WaitingList.by_workshop(@workshop).where_role("Coach"))
-    @student_waiting_list = WaitingListPresenter.new(WaitingList.by_workshop(@workshop).where_role("Student"))
+    set_admin_workshop_data
+  end
+
+  def update
+    @workshop = Sessions.find(params[:id])
+    authorize @workshop
+
+    @workshop.update_attributes(workshop_params)
+
+    if organiser_ids
+      organiser_ids.reject(&:empty?).each { |oid| Member.find(oid).add_role(:organiser, @workshop) }
+    end
+
+    set_host(host_id)
+
+    redirect_to admin_workshop_path(@workshop), notice: "Workshops updated succesfully"
   end
 
   def coaches_checklist
@@ -51,15 +67,6 @@ class Admin::WorkshopsController < Admin::ApplicationController
     return render text: @workshop.students_checklist if request.format.text?
 
     redirect_to admin_workshop_path(@workshop)
-  end
-
-  def update
-    @workshop = Sessions.find(params[:id])
-    authorize @workshop
-    @workshop.update_attributes(workshop_params)
-    redirect_to admin_workshop_path(@workshop), notice: "Workshops updated succesfully"
-  rescue Exception => e
-    redirect_to admin_workshop_path(@workshop), notice: e.inspect
   end
 
   def invite
@@ -88,5 +95,29 @@ class Admin::WorkshopsController < Admin::ApplicationController
   def set_and_decorate_workshop
     workshop = Sessions.find(params[:workshop_id])
     @workshop = WorkshopPresenter.new(workshop)
+  end
+
+  def workshop_id
+    params[:workshop_id] || params[:id]
+  end
+
+  private
+
+  def set_host(host_id)
+    return unless host_id
+
+    host = @workshop.sponsor_sessions.find_or_initialize_by(sponsor_id: host_id)
+    unless @workshop.host.eql?(host.sponsor)
+      @workshop.sponsor_sessions.where(sponsor: @workshop.host).delete_all
+      host.update(host: true)
+    end
+  end
+
+  def host_id
+    params[:sessions][:host]
+  end
+
+  def organiser_ids
+    params[:sessions][:organisers]
   end
 end

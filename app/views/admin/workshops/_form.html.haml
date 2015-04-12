@@ -1,10 +1,21 @@
 = simple_form_for [:admin, @workshop], url: :admin_workshops do |f|
   .row
-    .large-12.columns
-      = f.association :chapter, as: :radio_buttons, collection: Chapter.available_to_user(current_user)
-
-      = f.input :date_and_time, as: :string, placeholder: Date.tomorrow.strftime('%d %b, %Y'), required: true
-      = f.input :time, as: :string, placeholder: DateTime.new(2014,6,1,12,30).strftime("%H:%M %P"), required: true, input_html: { id: "sessions_time" }
+    .large-3.columns
+      = f.association :chapter, as: :select, collection: Chapter.available_to_user(current_user)
+  .row
+    .large-3.columns
+      = f.input :date_and_time, as: :string, required: true, label: "Date", input_html: { data: { value: @workshop.date_and_time } }
+  .row
+    .large-3.columns
+      = f.input :time, as: :string, required: true, input_html: { id: "sessions_time"}
+  .row
+    .large-6.columns
+      = f.input :host, as: :select, collection: Sponsor.all, include_blank: true, selected: (@workshop.host.id rescue "")
+  .row
+    .large-6.columns
+      = f.association :sponsors
+  .row
+    .large-6.columns
       = f.input :invitable
   .row
     .large-12.columns.text-right

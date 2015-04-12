@@ -108,11 +108,6 @@ Planner::Application.routes.draw do
     resources :groups, only: [ :index, :new, :create, :show]
     resources :sponsors, except: [:destroy]
 
-    resources :invitation, only: [] do
-      get :attended
-      post :not_attending
-    end
-
     resources :feedback, only: [:index]
     resources :workshops do
       post :host
@@ -124,6 +119,8 @@ Planner::Application.routes.draw do
       get 'coaches_checklist'
 
       resource :invitations, only: [:update]
+      resources :invitations, only: [:update]
+
     end
   end
 
