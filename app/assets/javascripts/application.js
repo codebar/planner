@@ -25,7 +25,10 @@
 
 $(function(){
   $(document).foundation();
-  $('#sessions_date_and_time').pickadate();
+  $('#sessions_date_and_time').pickadate({
+    format: 'dd/mm/yyyy'
+  });
+
   $('#announcement_expires_at').pickadate();
   $('#sessions_time').pickatime({
     format: 'HH:i'
