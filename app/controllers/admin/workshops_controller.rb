@@ -20,6 +20,7 @@ class Admin::WorkshopsController < Admin::ApplicationController
     authorize(@workshop)
 
     if @workshop.save
+      grant_organiser_access(@workshop.chapter.organisers.map(&:id))
       set_host(host_id)
 
       redirect_to admin_workshop_path(@workshop), notice: "The workshop has been created."
@@ -48,9 +49,7 @@ class Admin::WorkshopsController < Admin::ApplicationController
 
     @workshop.update_attributes(workshop_params)
 
-    if organiser_ids
-      organiser_ids.reject(&:empty?).each { |oid| Member.find(oid).add_role(:organiser, @workshop) }
-    end
+    set_organisers(organiser_ids)
 
     set_host(host_id)
 
@@ -113,11 +112,27 @@ class Admin::WorkshopsController < Admin::ApplicationController
     end
   end
 
+  def set_organisers(organiser_ids)
+    organiser_ids.reject!(&:empty?)
+    grant_organiser_access(organiser_ids)
+    revoke_organiser_access(organiser_ids)
+  end
+
   def host_id
     params[:sessions][:host]
   end
 
   def organiser_ids
     params[:sessions][:organisers]
+  end
+
+  def grant_organiser_access(organiser_ids=[])
+    organiser_ids.each { |id| Member.find(id).add_role(:organiser, @workshop) }
+  end
+
+  def revoke_organiser_access(organiser_ids)
+    (@workshop.organisers.pluck(:id).map(&:to_s) - organiser_ids).each do |id|
+      Member.find(id).revoke(:organiser, @workshop)
+    end
   end
 end

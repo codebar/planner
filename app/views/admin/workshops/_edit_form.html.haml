@@ -16,7 +16,7 @@
       = f.association :sponsors
   .row
     .large-6.columns
-      = f.input :organisers, as: :select, collection: Member.all, include_blank: true, selected: @workshop.organisers.map(&:id), input_html: { multiple: true }
+      = f.collection_select :organisers, Member.all, :id, :full_name, { selected: @workshop.organisers.map(&:id) }, { multiple: true }
       = f.input :invitable
   .row
     .large-12.columns.text-right

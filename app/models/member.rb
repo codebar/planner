@@ -17,6 +17,7 @@ class Member < ActiveRecord::Base
 
   scope :subscribers, -> { joins(:subscriptions).order('created_at desc').uniq }
 
+
   attr_accessor :attendance
 
   def full_name

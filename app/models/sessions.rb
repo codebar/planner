@@ -7,6 +7,8 @@ class Sessions < ActiveRecord::Base
   has_many :invitations, class_name: "SessionInvitation"
   has_many :sponsor_sessions
   has_many :sponsors, through: :sponsor_sessions
+  has_many :organisers, -> { where("permissions.name" => "organiser") }, through: :permissions, source: :members
+
 
   belongs_to :chapter
 
@@ -95,11 +97,6 @@ class Sessions < ActiveRecord::Base
 
   def to_s
     "Workshop"
-  end
-
-  # Which Members are organising this meeting?
-  def organisers
-    permissions.find_by_name("organiser").members rescue chapter.organisers
   end
 
   def location
