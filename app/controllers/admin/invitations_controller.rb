@@ -25,7 +25,7 @@ class Admin::InvitationsController < Admin::ApplicationController
         message = "You have removed #{@invitation.member.full_name} from the workshop."
       end
     elsif params.has_key?(:attended)
-      @invitation.update_attribute(:attended, false)
+      @invitation.update_attribute(:attended, true)
 
       message = "You have verified #{@invitation.member.full_name}'s attendace."
     end

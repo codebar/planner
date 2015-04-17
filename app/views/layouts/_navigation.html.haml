@@ -15,32 +15,28 @@
 
   %section.top-bar-section
     %ul.right
+      %li= link_to "Blog", "http://blog.codebar.io"
       - if current_page?(events_path)
         %li.active= link_to "Events", events_path
       - else
         %li= link_to "Events", events_path
-      - if current_page?(faq_path)
-        %li.active= link_to "FAQ", faq_path
-      - else
-        %li= link_to "FAQ", faq_path
       %li= link_to "Tutorials", "http://tutorials.codebar.io"
       - if current_page?(coaches_path)
         %li.active= link_to "Coaches", coaches_path
       - else
         %li= link_to "Coaches", coaches_path
-      - if current_page?(sponsoring_path)
-        %li.active= link_to "Sponsoring", sponsoring_path
-      - else
-        %li= link_to "Sponsoring", sponsoring_path
+      %li= link_to "Donate", "http://donate.codebar.io"
       - if logged_in?
         %li
           =link_to logout_path do
+            Sign out
             %i.fa-stack.fa-lg
               %i.fa.fa-stack-2x
               %i.fa.fa-sign-out.fa-stack-1x
       - else
         %li
           = link_to "/auth/github" do
+            Sign in
             %i.fa-stack.fa-lg
               %i.fa.fa-stack-2x
               %i.fa.fa-sign-in.fa-stack-1x
