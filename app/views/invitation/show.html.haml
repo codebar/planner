@@ -1,20 +1,20 @@
-= render partial: 'shared/title', locals: { title: "Workshop", date: humanize_date_with_time(@invitation.sessions.date_and_time, @invitation.sessions.time) }
-.row
-  .large-12.columns
-    .alert-box.secondary
+.stripe.reverse
+  .row
+    .large-12.columns
+      %h2
+        Workshop at #{@workshop.host.name}
+        %br
+        %small #{humanize_date_with_time(@workshop.date_and_time)} #{@workshop.distance_of_time}
+      - if @workshop.date_and_time.past?
+        %label.label.warning This event has already taken place.
+.alert-box.secondary
+  .row
+    .large-12.columns
       This link can be accessed without authentication so please don't share it with others. You can access and share the <strong> #{link_to("public listing", workshop_url(@workshop))}</strong> of the workshop.
 
-%section
-  .inner-nav{ "data-magellan-expedition" => "fixed" }
-    .row
-      %dl.sub-nav
-        %dd{ "data-magellan-arrival" => "location" }
-          =link_to "Host & Sponsors", "#location"
-        %dd{ "data-magellan-arrival" => "organisers" }
-          =link_to "Organisers", "#organisers"
-        %dd{ "data-magellan-arrival" => "attendees" }
-          =link_to "Who will be there?", "#attendees"
 
+.stripe
+  %br
   .row
     .large-8.columns
       %p
@@ -23,7 +23,7 @@
 
     .large-4.columns
       .panel
-        - if @invitation.sessions.past?
+        - if @workshop.past?
           %em This workshop has already taken place.
         - else
 
@@ -33,21 +33,22 @@
                 You will be working on...
                 = form_tag update_note_invitation_path(@invitation) do
                   = select_tag :note, options_for_select(@tutorial_titles, @invitation.note)
-                  = submit_tag 'Update note', class: "expand button round"
-
+                  %br
+                  %br
+                  = submit_tag 'Update note', class: "expand button small"
             - if @workshop.rsvp_available?
-              =link_to "I can no longer attend", reject_invitation_url(@invitation), class: "expand button round alert"
+              =link_to "I can no longer attend", reject_invitation_url(@invitation), class: "expand button small alert"
             - else
               %p
                 If you can't make it or plan to arrive late please let us know by sending an email to #{@invitation.sessions.chapter.email}
           - else
             - if @invitation.for_coach?
-              - if @invitation.coach_spaces?
+              - if @workshop.coach_spaces?
                 = link_to "Attend", accept_invitation_url(@invitation), class: "expand button round center"
               - else
                 = render partial: 'invitation/waiting_list', locals: { invitation: @invitation }
             - else
-              - if @invitation.student_spaces?
+              - if @workshop.student_spaces?
                 = simple_form_for @invitation, url: :accept_with_note_invitation, method: :post do |f|
                   = f.input :note, label: "I will be working on... ", collection: @tutorial_titles, required: true, include_blank: false
                   = f.button :submit, "Attend",  class: "button expand round"
@@ -59,13 +60,11 @@
         =link_to "discuss.codebar.io", "http://discuss.codebar.io"
 
 
-  .row
-    %hr
-    .large-12.columns
-      %a{ name: "location" }
-      %h4{ "data-magellan-destination" => "location"} Host & Sponsors
+.stripe
   .row
     .medium-8.columns
+      %a{ name: "location" }
+      %h4{ "data-magellan-destination" => "location"} Venue
       %p
         %strong= @workshop.host.name
         %br
@@ -74,6 +73,7 @@
       %iframe{ width: '100%', height: '350', frameborder: '0', scrolling: 'no', marginheight: '0', marginwidth: '0', src: %{https://maps.google.com/maps?f=q&source=s_q&hl=en&amp;geocode=&q=#{@host_address.for_map}&ie=UTF8&t=m&z=15&output=embed} }
       =link_to "View larger map", %{https://maps.google.com/maps?f=q&source=s_q&hl=en&amp;geocode=&q=#{@host_address.for_map}&ie=UTF8&hq=&t=m&z=15}, style: "color:#0000FF;text-align:left"
     .large-4.columns
+      %h4 Sponsors
       %ul.no-bullet
         - @workshop.sponsors.each do |sponsor|
           %li
@@ -85,30 +85,15 @@
                 %p
                   = sponsor.description
           %br
-  .row
-    .large-12.columns
-      %hr
-      %a{ name: "organisers" }
-      %h4{ "data-magellan-destination" => "organisers"}= t('events.organisers')
-  .row
-    .large-12.columns
-      %br
-      %ul.small-block-grid-2.medium-block-grid-4
-        - @workshop.organisers.each do |organiser|
-          %li.text-center
-            =link_to twitter_url_for(organiser.twitter) do
-              =image_tag organiser.avatar(56), class: 'th radius', title: organiser.full_name
-            %br
-            %br
-            = organiser.full_name
-            %br= organiser.mobile
-            %br
 
-  .row
-    .large-12.columns
-      %hr
-      %a{ name: "attendees" }
-      %h4{ "data-magellan-destination" => "attendees"}  Who else will be there?
+.stripe
+  %br
+  %br
+  = render partial: 'members/organisers_grid', locals: { members: @workshop.organisers, show_info: true }
+  %br
+  %br
+
+.stripe
   .row
     .medium-6.columns
       %h4 Students (#{@invitation.sessions.attending_students.count})
