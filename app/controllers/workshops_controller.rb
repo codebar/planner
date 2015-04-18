@@ -19,14 +19,16 @@ class WorkshopsController < ApplicationController
     redirect_to invitation_path(@invitation)
   end
 
-  # Add a user to this workshop, either to the attendees or the waiting list.
   def add
-    @workshop = Sessions.find(params[:id])
+    workshop = Sessions.find(params[:id])
+    @workshop = WorkshopPresenter.new(workshop)
+
     if @workshop.invitable
       waiting_listed = false
+
       case params[:role]
         when "student"
-          @invitation = SessionInvitation.where(sessions: @workshop, member: current_user, role: "Student").first_or_create
+          @invitation = SessionInvitation.where(sessions: workshop, member: current_user, role: "Student").first_or_create
           if @workshop.student_spaces?
             @invitation.update_attribute(:attending, true)
           else
@@ -34,7 +36,7 @@ class WorkshopsController < ApplicationController
             waiting_listed = true
           end
         when "coach"
-          @invitation = SessionInvitation.where(sessions: @workshop, member: current_user, role: "Coach").first_or_create
+          @invitation = SessionInvitation.where(sessions: workshop, member: current_user, role: "Coach").first_or_create
           if @workshop.coach_spaces?
             @invitation.update_attribute(:attending, true)
           else
@@ -50,13 +52,12 @@ class WorkshopsController < ApplicationController
       else
         redirect_to :added_workshop and return
       end
-    else # This workshop isn't marked as invitable.
-      redirect_to workshop_path(@workshop) and return
+    else
+      redirect_to workshop_path(@workshop), notice: "Registrations for this event are not available."
     end
   end
 
 
-  # Remove a user from this workshop, either to the attendees or the waiting list.
   def remove
     workshop = Sessions.find(params[:id])
     SessionInvitation.where(sessions: workshop, member: current_user).each do |i|

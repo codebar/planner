@@ -61,6 +61,18 @@ class EventPresenter < SimpleDelegator
     Rails.application.routes.url_helpers.admin_event_path(model)
   end
 
+  def spaces?
+    coach_spaces? || student_spaces?
+  end
+
+  def coach_spaces?
+    venue.present? and venue.coach_spots > attending_coaches.length
+  end
+
+  def student_spaces?
+    venue.present? and venue.seats > attending_students.length if venue.present?
+  end
+
   private
 
   def attendee_array

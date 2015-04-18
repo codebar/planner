@@ -64,23 +64,6 @@ class Sessions < ActiveRecord::Base
     date_and_time.future?
   end
 
-  # Is there any space at this event?
-  def spaces?
-    coach_spaces? || student_spaces?
-  end
-
-  # Is there space for coaches at this event?
-  def coach_spaces?
-    return host.coach_spots > attending_coaches.length if has_host?
-    false
-  end
-
-  # Is there space for students at this event?
-  def student_spaces?
-    return host.seats > attending_students.length if has_host?
-    false
-  end
-
   # Is this person attending this event?
   def attendee?(person)
     return false if person.nil?
