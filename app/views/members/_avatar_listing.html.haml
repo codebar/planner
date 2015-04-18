@@ -1,0 +1,10 @@
+%ul.small-block-grid-2.medium-block-grid-4
+  - member.each do |member|
+    %li.text-center
+      =link_to twitter_url_for(member.twitter) do
+        =image_tag member.avatar(56), class: 'th radius', title: member.full_name
+      %br
+      %br
+      = member.full_name
+      - if show_info and show_info.eql?(true)
+        = member.mobile
