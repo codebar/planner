@@ -1,17 +1,18 @@
-= render partial: 'shared/title', locals: { title: @page_title, date: nil }
-%section#banner
+.stripe.reverse#banner
+  .row
+    .large-12.columns
+      %h2=@page_title
+.stripe.reverse
   .row
     .medium-12.columns
       %p.lead
         = t('members.new.intro')
         = link_to t('members.code_of_conduct'), code_of_conduct_path
         \.
-      %p
+      %p.lead
         = t('members.new.students.intro')
         = link_to t('members.new.students.criteria_link'), faq_path(anchor: "attendance-eligibility")
         = t('members.new.students.criteria_brief')
-      %p
-        = t('members.new.invitations')
       = link_to registration_path, class: "button round" do
         = t('members.sign_in_with_github')
         %i.fa.fa-github.fa-fw
