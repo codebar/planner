@@ -3,9 +3,9 @@ class MemberPresenter < SimpleDelegator
     has_role? :organiser, :any
   end
 
-    def event_organiser? event
-      has_role?(:organiser, event) || has_role?(:organiser, event.chapter) || has_role?(:admin)
-    end
+  def event_organiser? event
+    has_role?(:organiser, event) || has_role?(:organiser, event.chapter) || has_role?(:admin)
+  end
 
   def newbie?
     !session_invitations.attended.exists?
