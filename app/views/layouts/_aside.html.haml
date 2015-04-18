@@ -1,28 +1,38 @@
 %aside.left-off-canvas-menu
   %ul.off-canvas-list
+    - if current_user.has_role?(:organiser, :any)
+      %li
+        %label Admin panel
     - chapters.each do |chapter|
       - if current_user.has_role?(:organiser, chapter)
         %li
           = link_to chapter.name, admin_chapter_path(chapter)
     - if current_user.has_role?(:organiser) or current_user.is_admin?
       %li=link_to "Review jobs (#{jobs_pending_approval})", admin_jobs_path
-    - if current_user.verified?
-      %li=link_to "View Feedback", coach_feedback_index_path
+    %li=link_to "View Feedback", coach_feedback_index_path
     - if current_user.is_admin?
-      %li= link_to "Dashboard", admin_root_path
+      %li=link_to "New chapter", new_admin_chapter_path
+      %li=link_to "New group", new_admin_group_path
+      %li= link_to "Admin Dashboard", admin_root_path
     - if has_permission?
       %li=link_to "New workshop", new_admin_workshop_path
       %li=link_to "New sponsor", new_admin_sponsor_path
-    %li= link_to "Jobs", jobs_path
 
+    - if current_user.is_admin?
+      %li
+        %label Manage organisation
+      %li=link_to "New chapter", new_admin_chapter_path
+      %li=link_to "New group", new_admin_group_path
 
     %li
       %label Account
+    %li= link_to "Dashboard", dashboard_path
     %li=link_to "Invitations", invitations_path
     %li=link_to "Profile", profile_path
     %li=link_to "Manage subscriptions", subscriptions_path
-    - if current_user.is_admin?
-      %li
-        %label Admin
-      %li=link_to "New chapter", new_admin_chapter_path
-      %li=link_to "New group", new_admin_group_path
+    %li
+      =link_to logout_path do
+        Sign out
+        %i.fa-stack.fa-lg
+          %i.fa.fa-stack-2x
+          %i.fa.fa-sign-out.fa-stack-1x

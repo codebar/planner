@@ -1,42 +1,58 @@
-%nav.top-bar{ "data-topbar" => "" }
-  %ul.title-area
-    - if logged_in?
-      %li#profile
-        =link_to "#", class: "left-off-canvas-toggle menu" do
-          .fa-stack.fa-lg
-            .fa.fa-stack-2x
-            .fa.fa-stack-1x.fa-outdent
+.contain-to-grid.sticky
+  %nav.top-bar{ "data-topbar" => "" }
+    %ul.title-area
+      %li.name
+        =link_to root_path do
+          .brand 
+            = image_tag "logo.png", size: "100x100"
+      %li.toggle-topbar.menu-icon
+        =link_to "#" do
+          .fa.fa-stack-2x.fa-list
 
-    %li.name
-      =link_to root_path do
-        .brand codebar
-    %li.toggle-topbar.menu-icon
-      =link_to "Menu", "#"
+    %section.top-bar-section
+      %ul.right
+        %li
+          = link_to "http://blog.codebar.io" do
+            %span Blog
+        - if current_page?(events_path)
+          %li.active
+            = link_to events_path do
+              %span Events
+        - else
+          %li
+            = link_to events_path do
+              %span Events
+        %li
+          = link_to "http://tutorials.codebar.io" do
+            %span Tutorials
 
-  %section.top-bar-section
-    %ul.right
-      %li= link_to "Blog", "http://blog.codebar.io"
-      - if current_page?(events_path)
-        %li.active= link_to "Events", events_path
-      - else
-        %li= link_to "Events", events_path
-      %li= link_to "Tutorials", "http://tutorials.codebar.io"
-      - if current_page?(coaches_path)
-        %li.active= link_to "Coaches", coaches_path
-      - else
-        %li= link_to "Coaches", coaches_path
-      %li= link_to "Donate", "http://donate.codebar.io"
-      - if logged_in?
+        - if current_page?(coaches_path)
+          %li.active
+            = link_to coaches_path do
+              %span Coaches
+        - else
+          %li
+            = link_to coaches_path do
+              %span Coaches
+        - if current_page?(sponsors_path)
+          %li.active
+            = link_to sponsors_path do
+              %span Sponsors
+        - else
+          %li
+            = link_to sponsors_path do
+              %span Sponsors
         %li
-          =link_to logout_path do
-            Sign out
-            %i.fa-stack.fa-lg
-              %i.fa.fa-stack-2x
-              %i.fa.fa-sign-out.fa-stack-1x
-      - else
-        %li
-          = link_to "/auth/github" do
-            Sign in
-            %i.fa-stack.fa-lg
-              %i.fa.fa-stack-2x
-              %i.fa.fa-sign-in.fa-stack-1x
+          = link_to  "http://donate.codebar.io" do
+            %span
+              %highlight Donate
+        - if !logged_in?
+          %li
+            = link_to "/auth/github" do
+              %span
+                Sign in
+        - else
+          %li
+            =link_to "#", class: "left-off-canvas-toggle", id: 'profile' do
+              .fa.fa-list
+              Menu
