@@ -16,14 +16,18 @@
         %li= link_to t("navigation.becoming_sponsor"), "http://manual.codebar.io/becoming-a-sponsor"
         %li= link_to t("navigation.faq"), faq_path
 
+    .large-3.columns
+      %ul.no-bullet
+        %li= link_to t("navigation.blog"), "http://blog.codebar.io"
+        %li= link_to t("navigation.coaches"), coaches_path
+        %li= link_to t("navigation.sponsors"), sponsors_path
+        %li= link_to t("navigation.events"), events_path
+        %li.active= link_to t("navigation.donate"), "http://donate.codebar.io"
 
     .large-3.columns
+      = render partial: 'shared/social_media'
       %span.git-tip
         %script{ :"data-gittip-username" => "by_codebar", :src => "//gttp.co/v1.js" }
-      %br
-      %br
-    .large-3.columns
-      = render partial: 'shared/social_media'
   .row
     .large-12.columns
       = link_to "https://www.gosquared.com/", title: "GoSquared.com" do
