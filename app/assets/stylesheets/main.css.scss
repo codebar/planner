@@ -1,44 +1,14 @@
+@import 'partials/colors';
 @import 'partials/layout';
+@import 'partials/title';
 @import 'partials/events';
 @import 'partials/social_media';
 @import 'partials/chapter';
 @import 'partials/member_note';
 @import 'partials/attendances';
 @import 'partials/admin_workshop';
-
-section.title {
-  background-image: image-url('bg.jpg');
-  background-position: 0 0px;
-  background-size: 100% auto;
-  background-repeat: no-repeat;
-  margin-bottom: 10px;
-  padding: 120px 0;
-
-  h1 {
-    color: #e5e5e5;
-    font-weight: bold;
-
-    span {
-      background-color: rgba(51, 51, 51, 0.4);
-      padding: 0 5px;
-    }
-  }
-
-  .date {
-    background-color: rgba(51, 51, 51, 0.4);
-    color: #e5e5e5;
-    padding: 5px;
-    font-size: 1.3em;
-    font-weight: bold;
-  }
-}
-
-@media only screen and (max-width: 40em) {
-  section.title {
-    background-position: 0 0px;
-    padding: 20px 20px 60px;
-  }
-}
+@import 'partials/sponsors';
+@import 'partials/organisers';
 
 #banner, #chapter {
   margin-top: 30px;
@@ -50,8 +20,6 @@ nav a.menu {
   }
 
 .top-bar {
-  line-height: 60px;
-
   .name {
     display: inline-block;
   }
@@ -59,12 +27,6 @@ nav a.menu {
 
 .user {
   color: #E3573E;
-}
-
-.left-off-canvas-menu {
-  left: 10px;
-  background-color: #444444;
-  padding-right: 10px;
 }
 
 .sign-up {
@@ -151,4 +113,47 @@ img.sponsor {
 
 u {
   text-decoration: underline;
+}
+
+.fa-collaboration {
+  background-image: asset-url('collaboration.png');
+  background-size: 10px 10px;
+}
+
+#showcase img {
+  max-height: 60px;
+  padding-bottom: 10px;
+}
+
+.stripe:not(.reverse):first-child {
+  padding: 80px 0px 40px;
+}
+
+.stripe:not(.reverse):nth-child(even) {
+  background-color: #f5f6f7;
+  padding: 60px 0;
+}
+
+.stripe.reverse:nth-child(even) {
+  padding: 80px 0;
+}
+
+.stripe.reverse:nth-child(odd) {
+  background-color: #f5f6f7;
+  padding: 80px 0;
+}
+
+.stripe.reverse:first-child{
+  padding: 50px 0;
+}
+
+.grouped-events:not(:last-child) {
+  border-bottom: 1px dotted $primary-color;
+  margin-bottom: 20px;
+}
+
+
+.stripe:nth-child(even) .grouped-events:not(:last-child) {
+  border-bottom: 1px dotted $white;
+  margin-bottom: 20px;
 }

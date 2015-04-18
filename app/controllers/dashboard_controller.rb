@@ -2,7 +2,10 @@ class DashboardController < ApplicationController
   before_action :is_logged_in?, only: [:dashboard]
 
   def show
-    @upcoming_workshops = EventPresenter.decorate_collection(upcoming_events)
+    @chapters = Chapter.all.order(:created_at)
+    @user = current_user ? MemberPresenter.new(current_user) : nil
+    @upcoming_workshops = upcoming_events.map.inject({}) { |hash, (key, value)| hash[key] = EventPresenter.decorate_collection(value); hash}
+
     @testimonials = Testimonial.order("RANDOM() ").limit(10)
 
     @sponsors = Sponsor.latest
@@ -45,7 +48,7 @@ class DashboardController < ApplicationController
 
   def upcoming_events
     workshops = Sessions.upcoming || []
-    all_events(workshops).sort_by!(&:date_and_time)
+    all_events(workshops).sort_by(&:date_and_time).group_by(&:date)
   end
 
   def upcoming_events_for_user
