@@ -23,6 +23,10 @@ class Meeting < ActiveRecord::Base
     slug
   end
 
+  def date
+    I18n.l(date_and_time, format: :dashboard)
+  end
+
   private
 
   def set_slug
