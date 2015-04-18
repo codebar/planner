@@ -15,8 +15,8 @@ feature 'Managing events' do
 
     expect(page).to have_content(event.name)
 
-    expect(page).to have_content "Students"
-    expect(page).to have_content "Coaches"
+    expect(page).to have_content "Venue"
+    expect(page).to have_content event.venue.name
   end
 
   scenario "verifying an attendance" do

@@ -98,7 +98,7 @@ Planner::Application.routes.draw do
       resources :workshops, only: [ :index ]
     end
 
-    resources :events, only: [:show] do
+    resources :events, only: [:show, :edit, :update] do
       resources :invitation do
         post 'verify'
         post 'cancel'

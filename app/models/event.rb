@@ -2,15 +2,17 @@ class Event < ActiveRecord::Base
   include Listable
   include Invitable
 
+  attr_accessor :begins_at
   resourcify :permissions, role_cname: 'Permission', role_table_name: :permission
 
   belongs_to :venue, class: Sponsor
   has_many :sponsorships
   has_many :sponsors, through: :sponsorships
+  has_many :organisers, -> { where("permissions.name" => "organiser") }, through: :permissions, source: :members
 
   has_many :invitations
 
-  validates :info, :schedule, :description, :coach_description, presence: true
+  validates :name, :slug, :info, :schedule, :description, :coach_description, presence: true
 
   def to_s
     self.name
