@@ -19,7 +19,7 @@ shared_examples "invitation route" do
   end
 
   context "unable to attend" do
-    scenario 'when they are succesful' do
+    scenario 'when they are successful' do
       invitation.update_attribute(:attending, true)
       visit invitation_route
 
