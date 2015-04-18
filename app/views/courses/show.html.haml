@@ -1,81 +1,73 @@
-= render partial: 'shared/title', locals: { title: @course.title, date:  humanize_date_with_time(@course.date_and_time) }
-%section#banner
-  .container
-    .row
-      .medium-8.columns
-        .row
-          .large-12.columns
-            %h5= @course.short_description
-            %p= @course.description.html_safe
-
-            - if @course.url
-              #{link_to " Read more ", @course.url} about this event.
-              %br
-              %br
-
-        .row
-          .large-12.columns
-            %h5 Tutors
-            %ul.small-block-grid-1.medium-block-grid-2.large-block-grid-2
-              - @course.tutors.each do |tutor|
-                %li.coach
-                  .row
-                    .small-2.columns
-                      =link_to twitter_url_for(tutor.twitter) do
-                        =image_tag tutor.avatar(106), class: 'th radius'
-                    .small-10.columns
-                      =link_to twitter_url_for(tutor.twitter) do
-                        = tutor.full_name
-                      %p= tutor.about_you.html_safe
-
-      .medium-4.columns
-        .panel
-          - if logged_in?
-            - if @course.date_and_time.future?
-              #{link_to("RSVP", course_rsvp_path(@course), class: 'button round expand')}
-            - else
-              This course has already taken place.
-          - else
-            #{link_to("Sign up", new_member_path, class: 'button round expand')}
-
-  %br
-    .row
-      %hr
-      .medium-8.columns
-        %h4 Location
-        %p
-          %strong= @course.venue.name
-          %br
-            = @host_address.to_html
-          %br
-        %iframe{ width: '100%', height: '350', frameborder: '0', scrolling: 'no', marginheight: '0', marginwidth: '0', src: %{https://maps.google.com/maps?f=q&source=s_q&hl=en&amp;geocode=&q=#{@host_address.for_map}&ie=UTF8&t=m&z=15&output=embed} }
-        = link_to "View larger map", %{https://maps.google.com/maps?f=q&source=s_q&hl=en&amp;geocode=&q=#{@host_address.for_map}&ie=UTF8&hq=&t=m&z=15}, style: "color:#0000FF;text-align:left"
-      .large-4.columns
-        %h4 Sponsors
-        %ul.no-bullet
-          - @course.sponsors.each do |sponsor|
-            %li
-              .row
-                .large-4.columns
-                  = image_tag sponsor.avatar, class: 'sponsor'
-                .large-8.columns
-                  =link_to sponsor.name, sponsor.website
-                  %p
-                    = sponsor.description
-            %br
-
-
-    .row
-      .large-12.columns
-        %hr
-        %h4= t('events.organisers')
+.stripe.reverse
+  .row
+    .large-12.columns
+      %h2
+        = @course.title
         %br
-        %ul.small-block-grid-2.medium-block-grid-4
-          - @course.organisers.each do |organiser|
-            %li.text-center
-              =link_to twitter_url_for(organiser.twitter) do
-                =image_tag organiser.avatar(56), class: 'th radius', title: organiser.full_name
-              %br
-              %br
-              = organiser.full_name
-  %br
+        %small #{humanize_date_with_time(@course.date_and_time)}
+      - if @course.date_and_time.past?
+        %label.label.warning This event has already taken place.
+
+.stripe.reverse
+  .row
+    .large-12.columns
+      %h5= @course.short_description
+      %p= dot_markdown(@course.description)
+
+      - if @course.url
+        #{link_to " Read more ", @course.url} about this event.
+        %br
+        %br
+  .row
+    .large-12.columns
+      - if logged_in?
+        - if @course.date_and_time.future?
+          #{link_to("RSVP", course_rsvp_path(@course), class: 'button')}
+      - else
+        #{link_to("Sign up", new_member_path, class: 'button')}
+
+.stripe.reverse
+  .row
+    .large-12.columns
+      .text-center
+        %h3 Tutors
+      %br
+      %br
+      %ul.small-block-grid-1.medium-block-grid-2.large-block-grid-2
+        - @course.tutors.each do |tutor|
+          %li.coach
+            .row
+              .small-2.columns
+                =link_to twitter_url_for(tutor.twitter) do
+                  =image_tag tutor.avatar(106), class: 'th radius'
+              .small-10.columns
+                =link_to twitter_url_for(tutor.twitter) do
+                  = tutor.full_name
+                %p= tutor.about_you.html_safe
+
+
+.stripe.reverse
+  .row
+    .large-8.columns
+      %h4 Venue
+      %p
+        %strong= @course.venue.name
+        %br
+          = @host_address.to_html
+      %iframe{ width: '100%', height: '350', frameborder: '0', scrolling: 'no', marginheight: '0', marginwidth: '0', src: %{https://maps.google.com/maps?f=q&source=s_q&hl=en&amp;geocode=&q=#{@host_address.for_map}&ie=UTF8&t=m&z=15&output=embed} }
+      = link_to "View larger map", %{https://maps.google.com/maps?f=q&source=s_q&hl=en&amp;geocode=&q=#{@host_address.for_map}&ie=UTF8&hq=&t=m&z=15}, style: "color:#0000FF;text-align:left"
+    .large-4.columns
+      %h4 Sponsors
+      %ul.no-bullet
+        - @course.sponsors.each do |sponsor|
+          %li
+            .row
+              .large-4.columns
+                = image_tag sponsor.avatar, class: 'sponsor'
+              .large-8.columns
+                =link_to sponsor.name, sponsor.website
+                %p
+                  = sponsor.description
+
+.stripe.reverse
+  = render partial: 'members/organisers_grid', locals: { members: @course.organisers, show_info: false }
