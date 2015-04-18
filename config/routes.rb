@@ -4,7 +4,6 @@ Planner::Application.routes.draw do
   scope controller: 'dashboard' do
     get 'code-of-conduct', action: 'code'
     get 'coaches', action: 'wall_of_fame'
-    get 'sponsoring', action: 'sponsoring'
     get 'effective-teacher-guide', action: 'effective-teacher-guide', as: :teaching_guide
     get 'faq', action: 'faq'
     get 'attendance-policy', action: 'attendance_policy'
