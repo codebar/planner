@@ -1,8 +1,15 @@
-= render partial: 'shared/title', locals: { title: "Coaching guide", date: nil }
-%section#banner
+.stripe.reverse
   .row
     .large-12.columns
-      %ul.square
+      %h3
+        Coach Guide
+      %p
+        This is a brief guide we've put together for our coaches. If you have any suggestions to make open a #{link_to "pull request", "https://github.com/codebar/planner"} or #{link_to "create an issue", "https://github.com/codebar/planner/issues/new"}.
+
+.stripe.reverse
+  .row
+    .large-12.columns
+      %ul.circle
         %li= t('dashboard.teacher_guide.laptop')
         %li= t('dashboard.teacher_guide.keyboard')
         %li= t('dashboard.teacher_guide.typing')
@@ -20,4 +27,3 @@
 
   .row
     .large-12.columns
-      %p Do you have something to suggest? Make a #{link_to "pull request", "https://github.com/codebar/planner"} or #{link_to "create an issue", "https://github.com/codebar/planner/issues/new"}.
