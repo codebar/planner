@@ -1,76 +1,68 @@
-%section.stripe.reverse
-  .row
-    .medium-12.columns
-      %h2
-        Workshop
-        =link_to [:admin, @workshop.chapter] do
-          %small=@workshop.chapter.name
-      %h3
-        %small #{l(@workshop.date_and_time)}
-      - if @workshop.venue.present?
-        %strong.label.round.primary #{@workshop.venue.seats} student spots, #{@workshop.venue.coach_spots} coach spots
-        - unless @workshop.spaces?
-          %label.label.round.warning Full
+.icon-bar.five-up
+  =link_to edit_admin_workshop_path(@workshop), class: 'item' do
+    %i.fa.fa-pencil
+    %label Edit
+  - if !@workshop.date_and_time.future?
+    =link_to "#", class: "item disabled", title: "The event has already taken place" do
+      %i.fa.fa-send-o
+      %label Invite
+  - elsif @workshop.has_valid_host? and @workshop.invitable?
+    =link_to admin_workshop_invite_path(@workshop), method: :post, class: "item" do
+      %i.fa.fa-send-o
+      %label Invite
+  - else
+    =link_to "#", class: "item disabled", title: "The workshop is not invitable." do
+      %i.fa.fa-send-o
+      %label Invite
+  =link_to admin_workshop_path(format: 'csv'), class: 'item', title: "CSV for labels" do
+    %i.fa.fa-users
+    %label Labels
+  =link_to  admin_workshop_students_checklist_path(@workshop, format: 'text'), title: "Student checklist", class: 'item' do
+    %i.fa.fa-list-ul
+    %label Students
+  =link_to  admin_workshop_coaches_checklist_path(@workshop, format: 'text'), title: "Coach checklist", class: 'item' do
+    %i.fa.fa-list-ul
+    %label Coaches
 
-  %br
-
-  .row
-    .large-3.small-6.columns#host
-      - if @workshop.venue.present?
-        %h4 Venue
-        %strong= @workshop.venue.name
-        %br
-        %small
-          = @address.to_html
-    .large-3.small-6.columns#sponsors
-      - if (@workshop.sponsors - [@workshop.host]).any?
-        %h4 Sponsors
-        %ul.no-bullet
-          - (@workshop.sponsors - [@workshop.host]).each do |sponsor|
-            %li
-              %span
-                = link_to sponsor.name, [:admin, sponsor]
-    .large-6.small-12.columns
-      %h4 Team
-      - @workshop.organisers.each do |organiser|
-        %span{ "data-tooltip" =>"", "aria-haspopup" => "true",  class: "has-tip",  title: organiser.full_name }
-          = image_tag(organiser.avatar(40))
-
-  #manage
+%section
+  .stripe.reverse
     .row
-      .large-8.medium-12.columns
-        %ul.button-group.primary
-          %li
-            =link_to edit_admin_workshop_path(@workshop), class: 'button small primary' do
-              %i.fa.fa-pencil
-              Edit
-          - if !@workshop.date_and_time.future?
-            %li
-              =link_to "#", class: "button small primary disabled", title: "The event has already taken place" do
-                %i.fa.fa-send
-                Invite
-          - elsif @workshop.has_valid_host? and @workshop.invitable?
-            %li
-              =link_to admin_workshop_invite_path(@workshop), method: :post, class: "button primary small" do
-                %i.fa.fa-send
-                Invite
-          - else
-            %li
-              =link_to "#", class: "button small primary disabled", title: "The workshop is not invitable." do
-                %i.fa.fa-send
-                Invite
-          %li
-            =link_to admin_workshop_path(format: 'csv'), class: 'button small primary', title: "CSV for labels" do
-              %i.fa.fa-users
-              Labels
-          %li
-            =link_to  admin_workshop_students_checklist_path(@workshop, format: 'text'), title: "Student checklist", class: 'button small primary' do
-              %i.fa.fa-list-ul
-              Students
-          %li
-            =link_to  admin_workshop_coaches_checklist_path(@workshop, format: 'text'), title: "Coach checklist", class: 'button small primary' do
-              %i.fa.fa-list-ul
-              Coaches
+      .medium-12.columns
+        %h2
+          Workshop
+          =link_to [:admin, @workshop.chapter] do
+            %small=@workshop.chapter.name
+        %h3
+          %small #{l(@workshop.date_and_time)}
+        - if @workshop.venue.present?
+          %strong.label.round.primary #{@workshop.venue.seats} student spots, #{@workshop.venue.coach_spots} coach spots
+          - unless @workshop.spaces?
+            %label.label.round.warning Full
 
-.stripe.reverse#invitations
-  = render partial: 'invitation_management'
+    %br
+
+    .row
+      .large-3.small-6.columns#host
+        - if @workshop.venue.present?
+          %h4 Venue
+          %strong= @workshop.venue.name
+          %br
+          %small
+            = @address.to_html
+      .large-3.small-6.columns#sponsors
+        - if (@workshop.sponsors - [@workshop.host]).any?
+          %h4 Sponsors
+          %ul.no-bullet
+            - (@workshop.sponsors - [@workshop.host]).each do |sponsor|
+              %li
+                %span
+                  = link_to sponsor.name, [:admin, sponsor]
+      .large-6.small-12.columns
+        %h4 Team
+        - @workshop.organisers.each do |organiser|
+          %span{ "data-tooltip" =>"", "aria-haspopup" => "true",  class: "has-tip",  title: organiser.full_name }
+            = image_tag(organiser.avatar(40))
+
+
+  .stripe.reverse#invitations
+    = render partial: 'invitation_management'
