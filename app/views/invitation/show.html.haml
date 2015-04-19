@@ -14,6 +14,15 @@
 
 
 .stripe
+  .row
+    .large-12.columns
+      %br
+      .alert-box.info{ "data-alert" => true }
+        =link_to "#", class: 'close' do
+          &times;
+        %ul.no-bullet
+          - @announcements.each do |announcement|
+            %li= dot_markdown(announcement.message)
   %br
   .row
     .large-8.columns
@@ -26,7 +35,6 @@
         - if @workshop.past?
           %em This workshop has already taken place.
         - else
-
           - if @invitation.attending.eql?(true)
             - if @invitation.for_student?
               %p
@@ -41,6 +49,14 @@
             - else
               %p
                 If you can't make it or plan to arrive late please let us know by sending an email to #{@invitation.sessions.chapter.email}
+          - elsif @invitation.member.banned?
+            %p
+              %label.label.warning Your account has been suspended.
+              %br
+
+              %small
+                %strong Why?
+                = @invitation.member.bans.active.first.reason
           - else
             - if @invitation.for_coach?
               - if @workshop.coach_spaces?
@@ -55,9 +71,6 @@
                   %label *Letting us know what you plan to work on will help us pair you up with a coach.
               - else
                 = render partial: 'invitation/waiting_list', locals: { invitation: @invitation }
-      .panel.callout
-        Sign up to codebar's discussion forum at
-        =link_to "discuss.codebar.io", "http://discuss.codebar.io"
 
 
 .stripe
