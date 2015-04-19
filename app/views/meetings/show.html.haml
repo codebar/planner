@@ -1,6 +1,12 @@
-= render partial: 'shared/title', locals: { title: @meeting.title, date: humanize_date_with_time(@meeting.date_and_time) }
+%section.stripe.reverse
+  .row
+    .medium-12.columns
+      %h2
+        =@meeting.title
+      %h3
+        %small=humanize_date_with_time(@meeting.date_and_time)
 
-%section.meeting
+%section.meeting.stripe.reverse
   .row
     .large-12.columns
       %ul.no-bullet
@@ -8,8 +14,9 @@
           %li
             %h3
               =talk.title
-              - if talk.description.present?
-                .subheader
+            - if talk.description.present?
+              %h4
+                %small.subheader
                   =talk.description
 
             %p
@@ -20,12 +27,13 @@
                 =link_to twitter_url_for(talk.speaker.twitter) do
                   =image_tag talk.speaker.avatar(96), class: 'th radius'
 
-              .small-10.columns
+              .small-4.columns
                 =link_to twitter_url_for(talk.speaker.twitter) do
                   = talk.speaker.full_name
                 %p= talk.speaker.about_you.html_safe
-          %br
-      %hr
+.stripe.reverse
+  .row
+    .large-12.columns
       %p To secure a place at the meeting, you must #{link_to "register with our host, <strong>#{@meeting.venue.name}</strong>".html_safe, @meeting.lanyrd_url}
       .row
         .large-3.columns

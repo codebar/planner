@@ -37,9 +37,10 @@ class Admin::WorkshopsController < Admin::ApplicationController
   def show
     authorize @workshop
 
-    @address = AddressDecorator.decorate(@workshop.host.address) if @workshop.has_host?
-    return render text: WorkshopPresenter.new(@workshop).attendees_csv if request.format.csv?
+    @workshop = WorkshopPresenter.new(@workshop)
+    return render text: @workshop.attendees_csv if request.format.csv?
 
+    @address = AddressDecorator.decorate(@workshop.host.address) if @workshop.has_host?
     set_admin_workshop_data
   end
 
@@ -50,7 +51,6 @@ class Admin::WorkshopsController < Admin::ApplicationController
     @workshop.update_attributes(workshop_params)
 
     set_organisers(organiser_ids)
-
     set_host(host_id)
 
     redirect_to admin_workshop_path(@workshop), notice: "Workshops updated succesfully"
@@ -72,9 +72,9 @@ class Admin::WorkshopsController < Admin::ApplicationController
     set_workshop
     authorize @workshop
 
-    InvitationManager.send_session_emails(@workshop)
+    InvitationManager.new.send_session_emails(@workshop)
 
-    redirect_to admin_workshop_path(@workshop), notice: "Invitations sent!"
+    redirect_to admin_workshop_path(@workshop), notice: "Invitations are being emailed out."
   end
 
   private

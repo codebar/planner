@@ -4,7 +4,6 @@ Planner::Application.routes.draw do
   scope controller: 'dashboard' do
     get 'code-of-conduct', action: 'code'
     get 'coaches', action: 'wall_of_fame'
-    get 'sponsoring', action: 'sponsoring'
     get 'effective-teacher-guide', action: 'effective-teacher-guide', as: :teaching_guide
     get 'faq', action: 'faq'
     get 'attendance-policy', action: 'attendance_policy'
@@ -91,14 +90,16 @@ Planner::Application.routes.draw do
 
 
     resources :announcements, only: [:new, :index, :create, :edit, :update]
-    resources :members, only: [:show]
+    resources :members, only: [:show] do
+      resources :bans, only: [ :new, :creat ]
+    end
     resources :member_notes, only: [:create]
 
     resources :chapters, only: [ :index, :new, :create, :show] do
       resources :workshops, only: [ :index ]
     end
 
-    resources :events, only: [:show] do
+    resources :events, only: [:show, :edit, :update] do
       resources :invitation do
         post 'verify'
         post 'cancel'

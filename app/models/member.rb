@@ -1,6 +1,7 @@
 class Member < ActiveRecord::Base
   rolify role_cname: 'Permission', role_table_name: :permission, role_join_table_name: :members_permissions
 
+  has_many :bans
   has_many :session_invitations
   has_many :auth_services
   has_many :feedbacks, foreign_key: :coach_id
@@ -17,8 +18,11 @@ class Member < ActiveRecord::Base
 
   scope :subscribers, -> { joins(:subscriptions).order('created_at desc').uniq }
 
-
   attr_accessor :attendance
+
+  def banned?
+    bans.active.present?
+  end
 
   def full_name
     [name, surname].join " "

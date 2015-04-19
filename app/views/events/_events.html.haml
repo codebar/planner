@@ -1,4 +1,8 @@
 .events#chapter
   %ul.no-bullet
-    - events.each do |event|
-      = render partial: 'event', locals: { event: event }
+    - grouped_events.each do |date, workshops|
+      .row.grouped_events
+        .medium-12.columns
+          %h4= date
+        - workshops.each do |workshop|
+          = render partial: 'events/minified_event', locals: { event:  workshop }

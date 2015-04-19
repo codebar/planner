@@ -53,14 +53,14 @@ feature "A new student signs up", js: false do
 
   scenario "A new student lands on step 1 after signing up via the front page" do
     visit root_path
-    click_on "Students"
+    click_on "Learn to code!"
     click_on "Sign in with Github"
     expect(current_path).to eq(step1_member_path)
   end
 
   scenario "Filling in all the details on step 1 brings the user to step 2" do
     visit root_path
-    click_on "Students"
+    click_on "Learn to code!"
     click_on "Sign in with Github"
     expect(page).to have_selector("form")
     fill_in "member_name", with: "Bob"

@@ -25,7 +25,6 @@ feature 'event listing' do
   scenario 'i can view a list with past events' do
 
     within(".past") do
-      expect(page).to have_content "Past"
       expect(page).to have_content past_course.title
       expect(page).to have_content "Workshop"
       expect(page).to have_content past_event.name

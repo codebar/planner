@@ -1,19 +1,28 @@
-= render partial: 'shared/title', locals: { title: "Workshop at #{@workshop.host.name}", date: "#{ humanize_date_with_time(@workshop.date_and_time)} #{@workshop.distance_of_time}"}
-%section#banner
-  .container
+#container
+  .stripe.reverse
+    .row
+      .large-12.columns
+        %h2
+          Workshop at #{@workshop.host.name}
+          %br
+          %small #{humanize_date_with_time(@workshop.date_and_time)} #{@workshop.distance_of_time}
+        - if @workshop.date_and_time.past?
+          %label.label.warning This event has already taken place.
+    %section#banner
+      .container
+        .row
+          .medium-12.columns
+            %p.lead
+              Attend our workshops to learn programming in a safe and supportive environment at your own pace, or to share your knowledge and mentor our students.
+
+            - unless current_user and current_user.banned?
+              .medium-12.columns
+                = render 'workshop_actions'
+
+  .stripe.reverse
     .row
       .medium-8.columns
-        %p
-          Attend our workshops to learn programming in a safe and supportive environment at your own pace, or to share your knowledge and mentor our students.
-
-      .medium-4.columns
-        .panel
-          = render 'workshop_actions'
-
-    .row
-      %hr
-      .medium-8.columns
-        %h4 Location
+        %h3 Location
         %p
           %strong= @workshop.host.name
           %br
@@ -22,7 +31,7 @@
         %iframe{ width: '100%', height: '350', frameborder: '0', scrolling: 'no', marginheight: '0', marginwidth: '0', src: %{https://maps.google.com/maps?f=q&source=s_q&hl=en&amp;geocode=&q=#{@host_address.for_map}&ie=UTF8&t=m&z=15&output=embed} }
         = link_to "View larger map", %{https://maps.google.com/maps?f=q&source=s_q&hl=en&amp;geocode=&q=#{@host_address.for_map}&ie=UTF8&hq=&t=m&z=15}, style: "color:#0000FF;text-align:left"
       .large-4.columns
-        %h4 Sponsors
+        %h3 Sponsors
         %ul.no-bullet
           - @workshop.sponsors.each do |sponsor|
             %li
@@ -36,17 +45,5 @@
             %br
 
 
-    .row
-      .large-12.columns
-        %hr
-        %h4= t('events.organisers')
-        %br
-        %ul.small-block-grid-2.medium-block-grid-4
-          - @workshop.organisers.each do |organiser|
-            %li.text-center
-              =link_to twitter_url_for(organiser.twitter) do
-                =image_tag organiser.avatar(56), class: 'th radius', title: organiser.full_name
-              %br
-              %br
-              = organiser.full_name
-  %br
+  .stripe.reverse
+    = render partial: 'members/organisers_grid', locals: { members: @workshop.organisers, show_info: false }

@@ -1,11 +1,13 @@
-= render partial: 'shared/title', locals: { title: "Coaches", date: nil }
-%section#banner
+.stripe.reverse#banner
   .row
     .large-12.columns
-      %p
-        = t('coaches.want_to_coach')
-        = link_to t('coaches.sign_up'), new_member_path(role: "Coach")
-      %ul.small-block-grid-1.medium-block-grid-2.large-block-grid-2
+      %h2 Coaches
+      %p.lead
+        Do you want to help out by coaching at our workshops? Read our #{ link_to "teaching guide", teaching_guide_path } and sign up as a Coach!
+.stripe.reverse
+  .row
+    .large-12.columns
+      %ul.small-block-grid-1.medium-block-grid-2.large-block-grid-3
         - @coaches.each do |coach|
           %li.coach
             .row

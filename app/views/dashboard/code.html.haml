@@ -1,9 +1,12 @@
-= render partial: 'shared/title', locals: { title: "Code of conduct", date: nil }
-%section#banner
+.stripe.reverse#code-of-conduct
+  .row
+    .large-12.columns
+      %h2 Code of conduct
+.stripe.reverse
   .row
     .large-12.columns
       %h3= t('code_of_conduct.summary.title')
-      %p
+      %p.lead
         = t('code_of_conduct.summary.intro')
 
       %h3 The Long Version

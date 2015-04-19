@@ -6,15 +6,15 @@ class EventsController < ApplicationController
     events << Course.past.all
     events << Meeting.past.all
     events << Event.past.all
-    events.flatten!.sort_by!(&:date_and_time).reverse!
-    @past_events = EventPresenter.decorate_collection(events)
+    events = events.compact.flatten.sort_by(&:date_and_time).reverse.group_by(&:date)
+    @past_events = events.map.inject({}) { |hash, (key, value)| hash[key] = EventPresenter.decorate_collection(value); hash}
 
     events = [ Sessions.upcoming.all ]
     events << Course.upcoming.all
     events << Meeting.upcoming.all
     events << Event.upcoming.all
-    events.flatten!.sort_by!(&:date_and_time)
-    @events = EventPresenter.decorate_collection(events)
+    events = events.compact.flatten.sort_by(&:date_and_time).group_by(&:date)
+    @events = events.map.inject({}) { |hash, (key, value)| hash[key] = EventPresenter.decorate_collection(value); hash}
   end
 
   def show

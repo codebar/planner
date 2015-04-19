@@ -1,50 +1,75 @@
-= render partial: 'shared/title', locals: { title: "Coding is easier than you think", date: nil }
-%section#banner
+%section.title.opaque
   .row
-    .medium-12.columns
-      %p.lead.text-center
-        = raw t("dashboard.join_workshops_in")
-        #{link_to "London", chapter_url("london")}, #{link_to "South London", chapter_url("south-london")}, #{link_to "Brighton", chapter_url("brighton")}, #{link_to "Birmingham", chapter_url("birmingham")}, #{link_to "Cambridge", chapter_url("cambridge")} and soon #{link_to "Florianopolis", chapter_url("florianopolis")}
-        = t("dashboard.workshops_goal")
-  %br
-  .row
-    .medium-offset-2.medium-4.columns
-      =link_to t("Students"), new_member_path(role:"student"), class: 'button round expand'
-    .medium-4.columns
-      =link_to t("Coaches"), new_member_path(role: "coach"), class: 'button round expand'
-%br
+    .medium-offset-1.medium-6.columns
+      %p.lead
+        <strong>codebar</strong> is a non-profit initiative that facilitates the growth of a diverse tech community by running regular programming workshops.
 
-- if @testimonials.any?
-  %section.testimonials
-    = render partial: 'members/testimonials'
-
-%section#chapter
-  .events
-    .row
-      .large-12.columns
-        %h4= t("Events")
-        %hr
-        - if @upcoming_workshops.empty?
-          %p
-            = t("no_upcoming_events")
-          %p
-            =link_to t("view_past_events"), events_url(anchor: 'past'), class: "button round expand"
-
-        - if @upcoming_workshops.present?
-          %ul.no-bullet
-            - @upcoming_workshops.each do |workshop|
-              = render partial: 'events/event', locals: { event: workshop }
-
+%section.testimonials
+  .stripe
   .row
     .large-12.columns
-      %h4
-        = t("latest_sponsors")
-        %small.subheader
-          = link_to t("view_all"), sponsors_path
-      %hr
+      %p.lead
+        Our goal is to enable underrepresented groups to learn programming in a safe and collaborative environment and expand their career opportunities. To achieve this, we run free weekly workshops, regular events and try to create opportunities for our students making technology and coding more accessible.
+  - if @testimonials.any?
+    .row
+      .large-offset-1.large-11.columns
+        = render partial: 'members/testimonials'
 
-      %ul.small-block-grid-2.medium-block-grid-4.large-block-grid-5#sponsors
-        - @sponsors.each do |sponsor|
-          %li
-            = link_to image_tag(sponsor.avatar, class: "sponsor-logo", alt: sponsor.name), sponsor.website
-  %br
+  .stripe
+    .row#showcase
+      .large-4.columns
+        .text-center
+          %h4 Our students
+          = image_tag "students.png"
+        %p Our students come from a variety of backgrounds. Some want to become developers and others would simply like to learn the basics of coding in a supportive and social environment.
+        %p
+          Sign up to join our vibrant community and to attend our workshops and programming events.
+
+        .text-center
+          = link_to "Learn to code!", new_member_path, class: 'button secondary tiny'
+      .large-4.columns
+        .text-center
+          %h4 What we teach
+          = image_tag "teaching.png"
+        %p
+          We encourage new students to get started by working on our #{link_to "tutorials", "http://tutorials.codebar.io"} and learning HTML & CSS before moving into JavaScript, Ruby or Python. We also help them understand programming concepts!
+        %p We are always on the lookout for more developers to join our community and teach at our workshops.
+        .text-center
+          = link_to "Help out by becoming a coach", new_member_path, class: 'button tiny'
+      .large-4.columns
+        .text-center
+          %h4 Workshops
+          = image_tag "collaboration.png"
+          %br
+        %p We are sponsored and hosted by some amazing companies who support our cause. We usually spend the first 30' checking people in and having some food and a chat, followed by a lightning talk and <strong>lot's of coding</strong>!
+        %p
+          Help our expansion and enable us to provide help and support to our chapters by hosting and sponsoring our workshops.
+
+
+        .text-center
+          = link_to "Sponsor a workshop", new_member_path, class: 'button tiny'
+
+
+  %section#chapter.stripe
+    .events
+      .row
+        .large-8.columns
+          - if @upcoming_workshops.empty?
+            %p
+              = t("no_upcoming_events")
+            %p
+              =link_to t("view_past_events"), events_url(anchor: 'past'), class: "button round expand"
+
+          - if @upcoming_workshops.any?
+            - @upcoming_workshops.each do |date, workshops|
+              .row.grouped-events
+                .medium-12.columns
+                  %h4= date
+                - workshops.each do |workshop|
+                  = render partial: 'events/minified_event', locals: { event: workshop }
+        .large-4.columns#chapters
+          %h3 Local chapters
+          %ul.no-bullet
+            - @chapters.each do |chapter|
+              %li
+                = link_to chapter.name, chapter_path(chapter.slug)

@@ -18,7 +18,7 @@ describe WorkshopsController, type: :controller do
 
     it "Adds a student to the waiting list, if the user's a student and there's no space" do
       login member
-      expect_any_instance_of(Sessions).to receive(:student_spaces?).and_return(false)
+      expect_any_instance_of(WorkshopPresenter).to receive(:student_spaces?).and_return(false)
 
       post :add, {id: workshop.id, role: 'student'}
       expect(response).to redirect_to :waitlisted_workshop
@@ -26,13 +26,14 @@ describe WorkshopsController, type: :controller do
 
     it "Adds a coach to the attendees, if the user's a coach and there's space" do
       login member
+
       post :add, {id: workshop.id, role: 'coach'}
       expect(response).to redirect_to :added_workshop
     end
 
     it "Adds a coach to the waiting list, if the user's a coach and there's no space" do
       login member
-      expect_any_instance_of(Sessions).to receive(:coach_spaces?).and_return(false)
+      expect_any_instance_of(WorkshopPresenter).to receive(:coach_spaces?).and_return(false)
 
       post :add, {id: workshop.id, role: 'coach'}
       expect(response).to redirect_to :waitlisted_workshop

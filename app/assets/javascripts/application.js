@@ -25,12 +25,12 @@
 
 $(function(){
   $(document).foundation();
-  $('#sessions_date_and_time').pickadate({
+  $('#sessions_date_and_time, #event_date_and_time').pickadate({
     format: 'dd/mm/yyyy'
   });
 
-  $('#announcement_expires_at').pickadate();
-  $('#sessions_time').pickatime({
+  $('#announcement_expires_at, #ban_expires_at').pickadate();
+  $('#sessions_time, #event_begins_at, #event_ends_at').pickatime({
     format: 'HH:i'
   });
 

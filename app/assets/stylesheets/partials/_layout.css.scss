@@ -1,32 +1,21 @@
-body {
-  border-top: 5px solid #2b1d39;
-}
-
 nav .brand {
-  font-family: 'Gabriela', serif;
   padding-left: 10px;
   font-size: 2em;
 }
 
-#top {
-  border-top: 3px solid #b9b1bf;
-}
-
-
 footer {
-  background-color: #a0a0a0;
+  background-color: $primary-color;
   padding: 60px 0;
 
   a {
-    color: #774f9f;
-  }
-}
+    color: $white;
 
-#profile {
-  vertical-align: top;
-  width: auto;
-  display: inline-block;
-  padding-top: 5px;
-  padding-bottom: 7px;
-  background-color: #444;
+    &:hover {
+      color: $secondary-color;
+    }
+  }
+
+  .social-media a {
+    border-bottom: none;
+  }
 }

@@ -12,21 +12,17 @@ feature 'when visiting the homepage' do
 
   scenario "i can view the next session" do
 
-    expect(page).to have_content I18n.l(next_session.date_and_time, format: :month).upcase
+    expect(page).to have_content "Workshop at #{next_session.host.name}"
   end
 
   scenario "i can view the next course" do
 
     expect(page).to have_content next_course.title
-    expect(page).to have_content next_course.short_description
-    expect(page).to have_content I18n.l(next_course.date_and_time, format: :month).upcase
   end
 
   scenario "i can view upcoming events" do
 
     expect(page).to have_content event.name
-    expect(page).to have_content event.description
-    expect(page).to have_content I18n.l(event.date_and_time, format: :month).upcase
   end
 
   scenario "i can access the code of conduct" do
@@ -37,9 +33,23 @@ feature 'when visiting the homepage' do
     expect(page).to have_content "The Long Version"
   end
 
-  scenario "i can sign up" do
+  scenario "i can sign in" do
     visit root_path
 
-    expect(find('.fa-sign-in')).to_not be nil
+    expect(page).to have_content "Sign in"
+  end
+
+  context "signing up" do
+    scenario "i can sign up as a student" do
+      visit root_path
+
+      expect(page).to have_content "Learn to code!"
+    end
+
+    scenario "i can sign up as a coach" do
+      visit root_path
+
+      expect(page).to have_content "Help out by becoming a coach"
+    end
   end
 end

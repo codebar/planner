@@ -3,24 +3,24 @@
     Not open for registrations.
   - else
     - if @workshop.past?
+      - unless logged_in?
+        Sign up to be invited to future events.
+    - else
       - if logged_in?
-        This workshop has already taken place.
-      - else
-        This workshop has already taken place, but you can sign up to receive invitations to our future events.
-    - elsif @workshop.attendee? current_user
-      You're attending this event.
-    - elsif @workshop.waitlisted? current_user
-      You are on the Waiting List.
-    - elsif !@workshop.spaces?
-      This workshop is full, but you can still join the waiting list.
+        - if @workshop.attendee? current_user
+          You are attending this event.
+        - elsif @workshop.waitlisted? current_user
+          You are on the Waiting List.
+        - elsif !@workshop.spaces?
+          This workshop is full, but you can still join the waiting list.
 
 - if logged_in? && @workshop.future? && @workshop.invitable
   - if @workshop.attendee?(current_user)
-    = link_to "Manage your invitation", rsvp_workshop_path(@workshop), method: :post, class: 'button round expand'
+    = link_to "Manage your invitation", rsvp_workshop_path(@workshop), method: :post, class: 'button round '
   - else
-    = link_to "Attend as a student", rsvp_workshop_path(@workshop, role: "Student"), method: :post,class: 'button round expand'
-    = link_to "Attend as a coach", rsvp_workshop_path(@workshop, role: "Coach"), method: :post, class: 'button round expand'
+    = link_to "Attend as a student", rsvp_workshop_path(@workshop, role: "Student"), method: :post,class: 'button round '
+    = link_to "Attend as a coach", rsvp_workshop_path(@workshop, role: "Coach"), method: :post, class: 'button round '
 
 - elsif not logged_in?
-  = link_to "Sign up", new_member_path, class: 'button round expand'
-  = link_to "Log in", redirect_path, class: 'button round expand'
+  = link_to "Sign up", new_member_path, class: 'button'
+  = link_to "Log in", redirect_path, class: 'button'

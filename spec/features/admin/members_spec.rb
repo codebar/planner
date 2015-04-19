@@ -18,14 +18,9 @@ feature "Managing users" do
 
   scenario "Add a note to a user" do
     visit admin_member_path member
-    expect(page).not_to have_content "Bananas and custard"
+    fill_in "member_note_note", with: "Bananas and custard"
+    click_on "Add note"
 
-    expect {
-      fill_in "member_note_note", with: "Bananas and custard"
-      click_on "Add note"
-    }.to change { MemberNote.all.count}.by 1
-
-    expect(page).to have_content "Member notes (1)"
     expect(page).to have_content "Bananas and custard"
   end
 end

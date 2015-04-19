@@ -23,8 +23,9 @@
                   %h4
                     = invitation.parent.to_s
                     %br
-                    %small.subheader #{invitation.parent.chapter.name} Group: #{invitation.role.pluralize}
-                  .date #{humanize_date_with_time(invitation.parent.date_and_time, invitation.parent.time)}
+                    - if invitation.parent.present?
+                      %small.subheader #{invitation.parent.chapter.name} Group: #{invitation.role.pluralize}
+                      .date #{humanize_date_with_time(invitation.parent.date_and_time, invitation.parent.time)}
                   %br
                   - if invitation.is_a? SessionInvitation
                     =link_to attendance_status(invitation), invitation_path(invitation), class: "button round expand"
@@ -48,7 +49,8 @@
                   %h4
                     = invitation.parent.to_s
                     %br
-                    %small.subheader #{invitation.parent.chapter.name} Group: #{invitation.role.pluralize}
-                  .date #{humanize_date_with_time(invitation.parent.date_and_time, invitation.parent.time)}
+                    - if invitation.parent.present?
+                      %small.subheader #{invitation.parent.chapter.name} Group: #{invitation.role.pluralize}
+                      .date #{humanize_date_with_time(invitation.parent.date_and_time, invitation.parent.time)}
                   %br
                   =link_to "View", invitation_path(invitation), class: "button round expand"

@@ -12,6 +12,7 @@ class SessionInvitation < ActiveRecord::Base
   scope :to_students, -> { where(role: "Student") }
   scope :to_coaches, -> { where(role: "Coach") }
   scope :by_member, -> { group(:member_id) }
+  scope :order_by_latest, -> { joins(:sessions).order('sessions.date_and_time desc') }
 
   def waiting_list_position
     @waiting_list_position ||= WaitingList.by_workshop(self.sessions).where_role(self.role).where(auto_rsvp: true).order(:created_at).map(&:invitation_id).index(self.id)+1

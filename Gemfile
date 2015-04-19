@@ -24,6 +24,8 @@ gem 'mini_magick'
 gem 'pg'
 gem 'omniauth'
 gem 'omniauth-github'
+gem 'delayed_job'
+gem 'delayed_job_active_record'
 
 gem 'foundation-rails'
 gem 'tzinfo-data'

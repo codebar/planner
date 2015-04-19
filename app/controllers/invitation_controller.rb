@@ -2,6 +2,7 @@ class InvitationController < ApplicationController
   include InvitationControllerConcerns
 
   def show
+    @announcements = @invitation.member.announcements.active
     @tutorial_titles = Tutorial.all_titles
     @host_address = AddressDecorator.decorate(@invitation.parent.host.address)
     @workshop = WorkshopPresenter.new(@invitation.sessions)
@@ -15,7 +16,7 @@ class InvitationController < ApplicationController
     new_note = params[:note]
 
     if new_note.blank?
-      redirect_to :back, notice: "Couldn't update note. Note can't be blank."
+      redirect_to :back, notice: "You must select a note"
     else
       @invitation.update_attribute(:note, params[:note])
       redirect_to :back, notice: t("messages.updated_note")
@@ -23,9 +24,10 @@ class InvitationController < ApplicationController
   end
 
   def accept_with_note
+    @workshop = WorkshopPresenter.new(@invitation.sessions)
     @invitation.update_attribute(:note, params[:session_invitation][:note])
 
-    if @invitation.student_spaces?
+    if @workshop.student_spaces?
       @invitation.update_attribute(:attending, true)
       SessionInvitationMailer.attending(@invitation.sessions, @invitation.member, @invitation).deliver
 

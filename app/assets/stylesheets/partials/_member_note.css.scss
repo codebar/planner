@@ -1,7 +1,9 @@
-.member_note {
+#note  {
   margin-bottom: 1em;
+  padding-bottom: 1em;
 
   border-bottom: 1px solid #ddd;
+
   &:last-child {
     border-bottom: none;
   }
@@ -11,6 +13,6 @@
   }
 
   cite {
-    font-size: 80%;
+    font-size: 0.8rem;
   }
 }

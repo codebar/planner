@@ -14,7 +14,8 @@ module InvitationControllerConcerns
         redirect_to :back, notice: t("messages.already_rsvped")
       end
 
-      if @invitation.student_spaces? or @invitation.coach_spaces?
+      @workshop = WorkshopPresenter.new(@invitation.sessions)
+      if (@invitation.for_student? and @workshop.student_spaces?) or (@invitation.for_coach? and @workshop.coach_spaces?)
         @invitation.update_attribute(:attending, true)
         @invitation.waiting_list.delete  if @invitation.waiting_list.present?
         SessionInvitationMailer.attending(@invitation.sessions, @invitation.member, @invitation).deliver

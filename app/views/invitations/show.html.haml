@@ -17,7 +17,7 @@
             =link_to event_attend_path, class: 'button round', method: :post do
               Attend as a student
           - else
-            Unfortunatelly there are no more student spots left. Send us an email at #{@event.email} to be added to the waiting list.
+            Unfortunately there are no more student spots left. Send us an email at #{@event.email} to be added to the waiting list.
         - else
           =link_to event_reject_path, class: 'button round', method: :post, "data-confirm" => "Are you sure you won't be able to attend the event? There may not be any spots available later on." do
             I can't attend anymore
@@ -30,7 +30,7 @@
               I want to volunteer as a coach
           - else
             %p
-              Unfortunatelly there are no more coach spots left. Send an email at 24pullrequests@codebar.io to be added to the waiting list.
+              Unfortunately there are no more coach spots left. Send an email at 24pullrequests@codebar.io to be added to the waiting list.
         - else
           =link_to event_reject_path, class: 'button round', method: :post, "data-confirm" => "Are you sure you won't be able to attend the event? There may not be any spots available later on." do
             I can't attend anymore

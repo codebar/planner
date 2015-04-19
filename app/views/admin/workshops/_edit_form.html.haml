@@ -16,6 +16,7 @@
       = f.association :sponsors
   .row
     .large-6.columns
+      %label Organisers
       = f.collection_select :organisers, Member.all, :id, :full_name, { selected: @workshop.organisers.map(&:id) }, { multiple: true }
       = f.input :invitable
   .row
