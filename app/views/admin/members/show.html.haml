@@ -1,88 +1,131 @@
-%section#banner.stripe.reverse
-  .row
-    .medium-1.columns
-      =image_tag @member.avatar(100), class: 'th radius', title: @member.full_name
-    .medium-11.columns
-      %h2= @member.full_name
+.icon-bar.six-up
+  =link_to new_admin_member_ban_path(@member), class: 'item' do
+    %i.fa.fa-ban.warning
+    %label Ban
+  =link_to "#", class: 'item', "data-reveal-id" => "note-modal" do
+    %i.fa.fa-pencil
+    %label Note
+%section
+  .stripe.reverse
+    .row
+      .medium-1.columns
+        =image_tag @member.avatar(100), class: 'th radius', title: @member.full_name
+      .medium-11.columns
+        %h2
+          = @member.full_name
+    .row
+      .medium-8.columns
+        %dl
+          %dt Email
+          %dd= mail_to @member.email, @member.email
 
-  .row
-    .medium-8.columns
-      %dl
-        %dt Email
-        %dd= mail_to @member.email, @member.email
+          %dt Twitter
+          %dd= link_to "@#{@member.twitter}", twitter_url_for(@member.twitter)
 
-        %dt Twitter
-        %dd= link_to "@#{@member.twitter}", twitter_url_for(@member.twitter)
+          %dt Phone number
+          %dd= @member.mobile || "N/A"
 
-        %dt Phone number
-        %dd= @member.mobile || "N/A"
+          %dt About
+          %dd= @member.about_you
 
-        %dt About
-        %dd= @member.about_you
+      .medium-4.columns
+        - if @member.banned?
 
-    .medium-4.columns
-      - if @member.groups.any?
-        %h3 Subscriptions
-        %ul.no-bullet
-          - @member.groups.each do |group|
-            %li
-              = link_to [:admin, group] do
-                #{group.name} (#{group.chapter.name})
-      - else
-        %label.label.secondary #{@member.name} is not subscribed to any groups
-      Member since
-      %em #{l(@member.created_at, format: :website_format)}
+          %span{ "data-tooltip" =>"", "aria-haspopup" => "true",  class: "has-tip",  title: "expires on #{l(@member.bans.active.first.expires_at, format: :date)}" }
+            %span.fa-stack.fa-lg
+              %i.fa.fa-user.fa-stack-1x
+              %i.fa.fa-ban.fa-stack-2x.warning
+            %label.label.warning Banned
+        - if @member.groups.any?
+          %h3 Subscriptions
+          %ul.no-bullet
+            - @member.groups.each do |group|
+              %li
+                = link_to [:admin, group] do
+                  #{group.name} (#{group.chapter.name})
+        - else
+          %label.label.secondary #{@member.name} is not subscribed to any groups
+        %br
+        Member since
+        %em #{l(@member.created_at, format: :website_format)}
 
-.stripe.reverse
-  .row
-    .medium-8.columns
-      - if @member.session_invitations.accepted.any?
-        .panel
+  .stripe.reverse
+    .row
+      .medium-8.columns
+        - if @member.session_invitations.accepted.any?
+          .panel
+            %p
+              #{@member.name} RSVPed to
+              %label.label.secondary.round #{@member.session_invitations.accepted.count}
+              workshops and attended
+              %label.label.secondary.round #{@invitations.count}.
+              - if @invitations.to_coaches.any? or @invitations.to_students.any?
+                %h4 Attended
+                %ul.no-bullet
+                  - if @invitations.to_coaches.any?
+                    %li
+                      %label.label.round #{@invitations.to_coaches.count}
+                      times as a coach
+                  - if @invitations.to_students.any?
+                    %li
+                      %label.label.secondary.round #{@invitations.to_students.count}
+                      times as a student
+        - if @invitations.any?
           %p
-            #{@member.name} RSVPed to
-            %label.label.secondary.round #{@member.session_invitations.accepted.count}
-            workshops and attended
-            %label.label.secondary.round #{@invitations.count}.
-            - if @invitations.to_coaches.any? or @invitations.to_students.any?
-              %h4 Attended
-              %ul.no-bullet
-                - if @invitations.to_coaches.any?
-                  %li
-                    %label.label.round #{@invitations.to_coaches.count}
-                    times as a coach
-                - if @invitations.to_students.any?
-                  %li
-                    %label.label.secondary.round #{@invitations.to_students.count}
-                    times as a student
-      - if @invitations.any?
-        %p
-          The last workshop they attended was on <u> #{l(@last_attendance.date_and_time, format: :date)}</u>
-      - else
-        %label.label.secondary
-          #{@member.name} has not attended any events!
+            The last workshop they attended was on <u> #{l(@last_attendance.date_and_time, format: :date)}</u>
+        - else
+          %label.label.secondary
+            #{@member.name} has not attended any events!
 
 
-
-      - if @invitations.any?
-        %h3 Events
-        %table
-          - @invitations.each do |invitation|
-            - workshop = invitation.sessions
-            - if workshop.present?
+        - if @invitations.any?
+          %h3 Events
+          %table
+            - @invitations.each do |invitation|
+              - workshop = invitation.sessions
+              - if workshop.present?
+                %tr
+                  %td
+                    =link_to invitation_path(invitation) do
+                      %label.label=workshop.chapter.name
+                  %td
+                    = l(workshop.date_and_time, format: :date)
+                  %td
+                    = invitation.note
+      .medium-4.columns
+        - if @member.member_notes.any?
+          %dl.accordion{ "data-accordion" => true }
+            %dd.accordion-navigation
+              =link_to "#notes" do
+                Notes (#{@member.member_notes.count})
+              #notes.content
+                = render partial: "member_note", collection: @member.member_notes
+  - if @member.bans.any?
+    .stripe.reverse
+      .row
+        .medium-12.columns
+          %h3 Bans
+          %table
+            %thead
+              %tr
+                %th
+                %th
+                  expires on
+                %th
+                  reason
+                %th
+                  admin note
+            - @member.bans.each do |ban|
               %tr
                 %td
-                  =link_to invitation_path(invitation) do
-                    %label.label=workshop.chapter.name
+                  - if ban.active?
+                    %label.label.success Active
                 %td
-                  = l(workshop.date_and_time, format: :date)
+                  = l(ban.expires_at, format: :date)
                 %td
-                  = invitation.note
-    .medium-4.columns
-      = simple_form_for [:admin, @member_note] do |f|
-        = f.input :note, label: false, placeholder: 'e.g. very enthusiastic student.'
-        = f.hidden_field :member_id, value: @member.id
-        = f.submit "Add note", class: 'button small'
-      - if @member.member_notes.any?
-        = render partial: "member_note", collection: @member.member_notes
-      - else
-        %em No notes.
+                  = ban.reason
+                %td
+                  = ban.note
+
+= render partial: 'note'
+

@@ -29,7 +29,7 @@ $(function(){
     format: 'dd/mm/yyyy'
   });
 
-  $('#announcement_expires_at').pickadate();
+  $('#announcement_expires_at, #ban_expires_at').pickadate();
   $('#sessions_time, #event_begins_at, #event_ends_at').pickatime({
     format: 'HH:i'
   });

@@ -11,7 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150409145541) do
+ActiveRecord::Schema.define(version: 20150419004358) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "addresses", force: true do |t|
     t.string   "flat"
@@ -32,6 +35,7 @@ ActiveRecord::Schema.define(version: 20150409145541) do
   end
 
   add_index "announcements", ["created_by_id"], name: "index_announcements_on_created_by_id", using: :btree
+
   create_table "auth_services", force: true do |t|
     t.integer  "member_id"
     t.string   "provider"
@@ -40,7 +44,20 @@ ActiveRecord::Schema.define(version: 20150409145541) do
     t.datetime "updated_at"
   end
 
-  add_index "auth_services", ["member_id"], name: "index_auth_services_on_member_id"
+  add_index "auth_services", ["member_id"], name: "index_auth_services_on_member_id", using: :btree
+
+  create_table "bans", force: true do |t|
+    t.integer  "member_id"
+    t.datetime "expires_at"
+    t.string   "reason"
+    t.text     "note"
+    t.integer  "added_by_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "bans", ["added_by_id"], name: "index_bans_on_added_by_id", using: :btree
+  add_index "bans", ["member_id"], name: "index_bans_on_member_id", using: :btree
 
   create_table "black_lists", force: true do |t|
     t.integer  "member_id"
@@ -53,8 +70,8 @@ ActiveRecord::Schema.define(version: 20150409145541) do
     t.datetime "updated_at"
   end
 
-  add_index "black_lists", ["added_by_id"], name: "index_black_lists_on_added_by_id"
-  add_index "black_lists", ["member_id"], name: "index_black_lists_on_member_id"
+  add_index "black_lists", ["added_by_id"], name: "index_black_lists_on_added_by_id", using: :btree
+  add_index "black_lists", ["member_id"], name: "index_black_lists_on_member_id", using: :btree
 
   create_table "chapters", force: true do |t|
     t.string   "name"
@@ -78,8 +95,8 @@ ActiveRecord::Schema.define(version: 20150409145541) do
     t.datetime "updated_at"
   end
 
-  add_index "course_invitations", ["course_id"], name: "index_course_invitations_on_course_id"
-  add_index "course_invitations", ["member_id"], name: "index_course_invitations_on_member_id"
+  add_index "course_invitations", ["course_id"], name: "index_course_invitations_on_course_id", using: :btree
+  add_index "course_invitations", ["member_id"], name: "index_course_invitations_on_member_id", using: :btree
 
   create_table "course_tutors", force: true do |t|
     t.integer  "course_id"
@@ -88,8 +105,8 @@ ActiveRecord::Schema.define(version: 20150409145541) do
     t.datetime "updated_at"
   end
 
-  add_index "course_tutors", ["course_id"], name: "index_course_tutors_on_course_id"
-  add_index "course_tutors", ["tutor_id"], name: "index_course_tutors_on_tutor_id"
+  add_index "course_tutors", ["course_id"], name: "index_course_tutors_on_course_id", using: :btree
+  add_index "course_tutors", ["tutor_id"], name: "index_course_tutors_on_tutor_id", using: :btree
 
   create_table "courses", force: true do |t|
     t.string   "title"
@@ -107,8 +124,24 @@ ActiveRecord::Schema.define(version: 20150409145541) do
     t.integer  "chapter_id"
   end
 
-  add_index "courses", ["chapter_id"], name: "index_courses_on_chapter_id"
-  add_index "courses", ["sponsor_id"], name: "index_courses_on_sponsor_id"
+  add_index "courses", ["chapter_id"], name: "index_courses_on_chapter_id", using: :btree
+  add_index "courses", ["sponsor_id"], name: "index_courses_on_sponsor_id", using: :btree
+
+  create_table "delayed_jobs", force: true do |t|
+    t.integer  "priority",   default: 0, null: false
+    t.integer  "attempts",   default: 0, null: false
+    t.text     "handler",                null: false
+    t.text     "last_error"
+    t.datetime "run_at"
+    t.datetime "locked_at"
+    t.datetime "failed_at"
+    t.string   "locked_by"
+    t.string   "queue"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
 
   create_table "events", force: true do |t|
     t.string   "name"
@@ -132,7 +165,7 @@ ActiveRecord::Schema.define(version: 20150409145541) do
     t.boolean  "invitable",             default: false
   end
 
-  add_index "events", ["venue_id"], name: "index_events_on_venue_id"
+  add_index "events", ["venue_id"], name: "index_events_on_venue_id", using: :btree
 
   create_table "feedback_requests", force: true do |t|
     t.integer  "member_id"
@@ -143,8 +176,8 @@ ActiveRecord::Schema.define(version: 20150409145541) do
     t.datetime "updated_at"
   end
 
-  add_index "feedback_requests", ["member_id"], name: "index_feedback_requests_on_member_id"
-  add_index "feedback_requests", ["sessions_id"], name: "index_feedback_requests_on_sessions_id"
+  add_index "feedback_requests", ["member_id"], name: "index_feedback_requests_on_member_id", using: :btree
+  add_index "feedback_requests", ["sessions_id"], name: "index_feedback_requests_on_sessions_id", using: :btree
 
   create_table "feedbacks", force: true do |t|
     t.integer  "tutorial_id"
@@ -178,7 +211,7 @@ ActiveRecord::Schema.define(version: 20150409145541) do
     t.string   "mailing_list_id"
   end
 
-  add_index "groups", ["chapter_id"], name: "index_groups_on_chapter_id"
+  add_index "groups", ["chapter_id"], name: "index_groups_on_chapter_id", using: :btree
 
   create_table "invitations", force: true do |t|
     t.integer  "event_id"
@@ -193,9 +226,9 @@ ActiveRecord::Schema.define(version: 20150409145541) do
     t.integer  "verified_by_id"
   end
 
-  add_index "invitations", ["event_id"], name: "index_invitations_on_event_id"
-  add_index "invitations", ["member_id"], name: "index_invitations_on_member_id"
-  add_index "invitations", ["verified_by_id"], name: "index_invitations_on_verified_by_id"
+  add_index "invitations", ["event_id"], name: "index_invitations_on_event_id", using: :btree
+  add_index "invitations", ["member_id"], name: "index_invitations_on_member_id", using: :btree
+  add_index "invitations", ["verified_by_id"], name: "index_invitations_on_verified_by_id", using: :btree
 
   create_table "jobs", force: true do |t|
     t.string   "title"
@@ -212,7 +245,7 @@ ActiveRecord::Schema.define(version: 20150409145541) do
     t.string   "company"
   end
 
-  add_index "jobs", ["created_by_id"], name: "index_jobs_on_created_by_id"
+  add_index "jobs", ["created_by_id"], name: "index_jobs_on_created_by_id", using: :btree
 
   create_table "meeting_talks", force: true do |t|
     t.integer  "meeting_id"
@@ -224,7 +257,7 @@ ActiveRecord::Schema.define(version: 20150409145541) do
     t.datetime "updated_at"
   end
 
-  add_index "meeting_talks", ["meeting_id"], name: "index_meeting_talks_on_meeting_id"
+  add_index "meeting_talks", ["meeting_id"], name: "index_meeting_talks_on_meeting_id", using: :btree
 
   create_table "meetings", force: true do |t|
     t.datetime "date_and_time"
@@ -246,8 +279,8 @@ ActiveRecord::Schema.define(version: 20150409145541) do
     t.datetime "updated_at"
   end
 
-  add_index "member_notes", ["author_id"], name: "index_member_notes_on_author_id"
-  add_index "member_notes", ["member_id"], name: "index_member_notes_on_member_id"
+  add_index "member_notes", ["author_id"], name: "index_member_notes_on_author_id", using: :btree
+  add_index "member_notes", ["member_id"], name: "index_member_notes_on_member_id", using: :btree
 
   create_table "members", force: true do |t|
     t.string   "name"
@@ -269,15 +302,15 @@ ActiveRecord::Schema.define(version: 20150409145541) do
     t.integer "permission_id"
   end
 
-  add_index "members_permissions", ["member_id", "permission_id"], name: "index_members_permissions_on_member_id_and_permission_id"
+  add_index "members_permissions", ["member_id", "permission_id"], name: "index_members_permissions_on_member_id_and_permission_id", using: :btree
 
   create_table "members_roles", id: false, force: true do |t|
     t.integer "member_id"
     t.integer "role_id"
   end
 
-  add_index "members_roles", ["member_id", "role_id"], name: "index_members_roles_on_member_id_and_role_id"
-  add_index "members_roles", ["member_id"], name: "index_members_roles_on_member_id"
+  add_index "members_roles", ["member_id", "role_id"], name: "index_members_roles_on_member_id_and_role_id", using: :btree
+  add_index "members_roles", ["member_id"], name: "index_members_roles_on_member_id", using: :btree
 
   create_table "permissions", force: true do |t|
     t.string   "name"
@@ -287,8 +320,8 @@ ActiveRecord::Schema.define(version: 20150409145541) do
     t.datetime "updated_at"
   end
 
-  add_index "permissions", ["name", "resource_type", "resource_id"], name: "index_permissions_on_name_and_resource_type_and_resource_id"
-  add_index "permissions", ["name"], name: "index_permissions_on_name"
+  add_index "permissions", ["name", "resource_type", "resource_id"], name: "index_permissions_on_name_and_resource_type_and_resource_id", using: :btree
+  add_index "permissions", ["name"], name: "index_permissions_on_name", using: :btree
 
   create_table "roles", force: true do |t|
     t.string   "name"
@@ -310,9 +343,9 @@ ActiveRecord::Schema.define(version: 20150409145541) do
     t.datetime "reminded_at"
   end
 
-  add_index "session_invitations", ["member_id"], name: "index_session_invitations_on_member_id"
-  add_index "session_invitations", ["sessions_id"], name: "index_session_invitations_on_sessions_id"
-  add_index "session_invitations", ["token"], name: "index_session_invitations_on_token", unique: true
+  add_index "session_invitations", ["member_id"], name: "index_session_invitations_on_member_id", using: :btree
+  add_index "session_invitations", ["sessions_id"], name: "index_session_invitations_on_sessions_id", using: :btree
+  add_index "session_invitations", ["token"], name: "index_session_invitations_on_token", unique: true, using: :btree
 
   create_table "sessions", force: true do |t|
     t.string   "title"
@@ -327,7 +360,7 @@ ActiveRecord::Schema.define(version: 20150409145541) do
     t.datetime "rsvp_close_time"
   end
 
-  add_index "sessions", ["chapter_id"], name: "index_sessions_on_chapter_id"
+  add_index "sessions", ["chapter_id"], name: "index_sessions_on_chapter_id", using: :btree
 
   create_table "sponsor_sessions", force: true do |t|
     t.integer  "sponsor_id"
@@ -337,8 +370,8 @@ ActiveRecord::Schema.define(version: 20150409145541) do
     t.datetime "updated_at"
   end
 
-  add_index "sponsor_sessions", ["sessions_id"], name: "index_sponsor_sessions_on_sessions_id"
-  add_index "sponsor_sessions", ["sponsor_id"], name: "index_sponsor_sessions_on_sponsor_id"
+  add_index "sponsor_sessions", ["sessions_id"], name: "index_sponsor_sessions_on_sessions_id", using: :btree
+  add_index "sponsor_sessions", ["sponsor_id"], name: "index_sponsor_sessions_on_sponsor_id", using: :btree
 
   create_table "sponsors", force: true do |t|
     t.string   "name"
@@ -359,8 +392,8 @@ ActiveRecord::Schema.define(version: 20150409145541) do
     t.datetime "updated_at"
   end
 
-  add_index "sponsorships", ["event_id"], name: "index_sponsorships_on_event_id"
-  add_index "sponsorships", ["sponsor_id"], name: "index_sponsorships_on_sponsor_id"
+  add_index "sponsorships", ["event_id"], name: "index_sponsorships_on_event_id", using: :btree
+  add_index "sponsorships", ["sponsor_id"], name: "index_sponsorships_on_sponsor_id", using: :btree
 
   create_table "subscriptions", force: true do |t|
     t.integer  "group_id"
@@ -369,17 +402,17 @@ ActiveRecord::Schema.define(version: 20150409145541) do
     t.datetime "updated_at"
   end
 
-  add_index "subscriptions", ["group_id"], name: "index_subscriptions_on_group_id"
-  add_index "subscriptions", ["member_id"], name: "index_subscriptions_on_member_id"
+  add_index "subscriptions", ["group_id"], name: "index_subscriptions_on_group_id", using: :btree
+  add_index "subscriptions", ["member_id"], name: "index_subscriptions_on_member_id", using: :btree
 
   create_table "testimonials", force: true do |t|
     t.integer  "member_id"
-    t.text     "text",       limit: 255
+    t.text     "text"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "testimonials", ["member_id"], name: "index_testimonials_on_member_id"
+  add_index "testimonials", ["member_id"], name: "index_testimonials_on_member_id", using: :btree
 
   create_table "tutorials", force: true do |t|
     t.string   "title"
@@ -390,7 +423,7 @@ ActiveRecord::Schema.define(version: 20150409145541) do
     t.datetime "updated_at"
   end
 
-  add_index "tutorials", ["sessions_id"], name: "index_tutorials_on_sessions_id"
+  add_index "tutorials", ["sessions_id"], name: "index_tutorials_on_sessions_id", using: :btree
 
   create_table "waiting_lists", force: true do |t|
     t.integer  "invitation_id"
@@ -399,6 +432,6 @@ ActiveRecord::Schema.define(version: 20150409145541) do
     t.datetime "updated_at"
   end
 
-  add_index "waiting_lists", ["invitation_id"], name: "index_waiting_lists_on_invitation_id"
+  add_index "waiting_lists", ["invitation_id"], name: "index_waiting_lists_on_invitation_id", using: :btree
 
 end

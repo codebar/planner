@@ -1,47 +1,49 @@
-.stripe.reverse
-  .row
-    .large-12.columns
-      %h2
-        Workshop at #{@workshop.host.name}
-        %br
-        %small #{humanize_date_with_time(@workshop.date_and_time)} #{@workshop.distance_of_time}
-      - if @workshop.date_and_time.past?
-        %label.label.warning This event has already taken place.
-  %section#banner
-    .container
-      .row
-        .medium-12.columns
-          %p.lead
-            Attend our workshops to learn programming in a safe and supportive environment at your own pace, or to share your knowledge and mentor our students.
-
-        .medium-12.columns
-          = render 'workshop_actions'
-
-.stripe.reverse
-  .row
-    .medium-8.columns
-      %h3 Location
-      %p
-        %strong= @workshop.host.name
-        %br
-          = @host_address.to_html
-        %br
-      %iframe{ width: '100%', height: '350', frameborder: '0', scrolling: 'no', marginheight: '0', marginwidth: '0', src: %{https://maps.google.com/maps?f=q&source=s_q&hl=en&amp;geocode=&q=#{@host_address.for_map}&ie=UTF8&t=m&z=15&output=embed} }
-      = link_to "View larger map", %{https://maps.google.com/maps?f=q&source=s_q&hl=en&amp;geocode=&q=#{@host_address.for_map}&ie=UTF8&hq=&t=m&z=15}, style: "color:#0000FF;text-align:left"
-    .large-4.columns
-      %h3 Sponsors
-      %ul.no-bullet
-        - @workshop.sponsors.each do |sponsor|
-          %li
-            .row
-              .large-4.columns
-                = image_tag sponsor.avatar, class: 'sponsor'
-              .large-8.columns
-                =link_to sponsor.name, sponsor.website
-                %p
-                  = sponsor.description
+#container
+  .stripe.reverse
+    .row
+      .large-12.columns
+        %h2
+          Workshop at #{@workshop.host.name}
           %br
+          %small #{humanize_date_with_time(@workshop.date_and_time)} #{@workshop.distance_of_time}
+        - if @workshop.date_and_time.past?
+          %label.label.warning This event has already taken place.
+    %section#banner
+      .container
+        .row
+          .medium-12.columns
+            %p.lead
+              Attend our workshops to learn programming in a safe and supportive environment at your own pace, or to share your knowledge and mentor our students.
+
+            - unless current_user and current_user.banned?
+              .medium-12.columns
+                = render 'workshop_actions'
+
+  .stripe.reverse
+    .row
+      .medium-8.columns
+        %h3 Location
+        %p
+          %strong= @workshop.host.name
+          %br
+            = @host_address.to_html
+          %br
+        %iframe{ width: '100%', height: '350', frameborder: '0', scrolling: 'no', marginheight: '0', marginwidth: '0', src: %{https://maps.google.com/maps?f=q&source=s_q&hl=en&amp;geocode=&q=#{@host_address.for_map}&ie=UTF8&t=m&z=15&output=embed} }
+        = link_to "View larger map", %{https://maps.google.com/maps?f=q&source=s_q&hl=en&amp;geocode=&q=#{@host_address.for_map}&ie=UTF8&hq=&t=m&z=15}, style: "color:#0000FF;text-align:left"
+      .large-4.columns
+        %h3 Sponsors
+        %ul.no-bullet
+          - @workshop.sponsors.each do |sponsor|
+            %li
+              .row
+                .large-4.columns
+                  = image_tag sponsor.avatar, class: 'sponsor'
+                .large-8.columns
+                  =link_to sponsor.name, sponsor.website
+                  %p
+                    = sponsor.description
+            %br
 
 
-.stripe.reverse
-  = render partial: 'members/organisers_grid', locals: { members: @workshop.organisers, show_info: false }
+  .stripe.reverse
+    = render partial: 'members/organisers_grid', locals: { members: @workshop.organisers, show_info: false }

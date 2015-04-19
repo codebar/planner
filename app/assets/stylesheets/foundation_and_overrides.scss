@@ -1076,7 +1076,7 @@ $price-cta-align: right;
 // $include-html-table-classes: $include-html-classes;
 
 // These control the background color for the table and even rows
- $table-bg: #fff;
+ $table-bg: transparent;
 
 // These control the table cell border style
 $table-border-style: none;
@@ -1084,7 +1084,7 @@ $table-border-size: 0px;
 $table-border-color: #333;
 
 // These control the table head styles
-$table-head-bg: #ffffff;
+$table-head-bg: transparent;
  $table-even-row-bg: #fff;
 // $table-head-font-size: rem-calc(14);
 // $table-head-font-color: #222;
@@ -1284,6 +1284,24 @@ $topbar-media-query: $medium-up;
 // $range-slider-handle-bg-hover-color: scale-color($primary-color, $lightness: -12%);
 // $range-slider-handle-cursor: pointer;
 
+
+//$include-html-icon-bar-classes: $include-html-classes;
+
+// We use these to style the icon-bar and items
+$icon-bar-bg: $primary-color;
+$icon-bar-font-color: $white;
+$icon-bar-font-color-hover: $secondary-color;
+$icon-bar-font-size: 0.9rem;
+$icon-bar-hover-color: scale-color($primary-color, $lightness: 35%);
+$icon-bar-icon-color: $white;
+$icon-bar-icon-color-hover: $icon-bar-icon-color;
+$icon-bar-icon-size: 1.875rem;
+$icon-bar-image-width: 1.875rem;
+$icon-bar-image-height: 1.875rem;
+$icon-bar-active-color: $primary-color;
+$icon-bar-item-padding: 1.25rem;
+$icon-bar-disabled-opacity: 0.9;
+
 @import 'foundation';
 
 .row .columns:last-child {
@@ -1357,6 +1375,10 @@ a {
   border-bottom: 1px dashed $secondary-color;
 }
 
-.top-bar a, #sponsors a {
+.top-bar a, #sponsors a, .icon-bar a {
   border-bottom: none;
+}
+
+.warning, .icon-bar .warning {
+  color: $warning-color;
 }
