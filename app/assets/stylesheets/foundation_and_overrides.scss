@@ -1223,8 +1223,9 @@ $topbar-button-top: 15px;
 // $topbar-menu-link-transform: uppercase;
 // $topbar-menu-link-font-size: rem-calc(13);
 // $topbar-menu-link-weight: bold;
-$topbar-menu-link-color: #a26cd2;
-$topbar-menu-icon-color: #a26cd2;
+$topbar-menu-link-color: $primary-color;
+
+$topbar-menu-icon-color: $secondary-color;
 // $topbar-menu-link-color-toggled: #888;
 // $topbar-menu-icon-color-toggled: #888;
 
@@ -1381,4 +1382,8 @@ a {
 
 .warning, .icon-bar .warning {
   color: $warning-color;
+}
+
+.top-bar {
+  padding-right: 10px;
 }
