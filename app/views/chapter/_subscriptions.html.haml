@@ -2,8 +2,13 @@
   .medium-12.columns
     - @chapter.groups.each do |group|
       - if belongs_to_group?(group)
-        = link_to subscriptions_path(subscription: { group_id: group }), method: 'delete', class: 'button secondary small' do
-          =group.name
-          %i.fa.fa-check
+        %span{ "data-tooltip" =>"", "aria-haspopup" => "true",  class: "has-tip", title: "Unsubscribe from #{@chapter.name} #{group.name}" }
+          = link_to subscriptions_path(subscription: { group_id: group }), method: 'delete', class: 'button secondary small' do
+            =group.name
+            %i.fa.fa-check
       - else
-        = link_to group.name, subscriptions_path(subscription: { group_id: group }), method: 'post', class: 'button small', title: "Subscribe to #{@chapter.name} #{group.name}"
+        %span{ "data-tooltip" =>"", "aria-haspopup" => "true",  class: "has-tip", title: "Subscribe to #{@chapter.name} #{group.name}" }
+
+          = link_to subscriptions_path(subscription: { group_id: group }), method: 'post', class: 'button small' do
+            = group.name
+            %i.fa.fa-rss
