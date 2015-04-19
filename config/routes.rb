@@ -91,7 +91,7 @@ Planner::Application.routes.draw do
 
     resources :announcements, only: [:new, :index, :create, :edit, :update]
     resources :members, only: [:show] do
-      resources :bans, only: [ :new, :creat ]
+      resources :bans, only: [ :index, :new, :create ]
     end
     resources :member_notes, only: [:create]
 
