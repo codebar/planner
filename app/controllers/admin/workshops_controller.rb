@@ -72,9 +72,9 @@ class Admin::WorkshopsController < Admin::ApplicationController
     set_workshop
     authorize @workshop
 
-    InvitationManager.send_session_emails(@workshop)
+    InvitationManager.new.send_session_emails(@workshop)
 
-    redirect_to admin_workshop_path(@workshop), notice: "Invitations sent!"
+    redirect_to admin_workshop_path(@workshop), notice: "Invitations are being emailed out."
   end
 
   private

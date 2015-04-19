@@ -12,7 +12,6 @@ class SessionInvitation < ActiveRecord::Base
   scope :to_students, -> { where(role: "Student") }
   scope :to_coaches, -> { where(role: "Coach") }
   scope :by_member, -> { group(:member_id) }
-  scope :latest, -> { joins(:sessions).order('sessions.date_and_time').last }
   scope :order_by_latest, -> { joins(:sessions).order('sessions.date_and_time desc') }
 
   def waiting_list_position

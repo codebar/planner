@@ -1,6 +1,6 @@
 class InvitationManager
 
-  def self.send_session_emails session
+  def send_session_emails session
     return "Workshop is not invitable" unless session.invitable?
 
     session.chapter.groups.students.map(&:members).flatten.uniq.each do |student|
@@ -16,6 +16,8 @@ class InvitationManager
       end
     end
   end
+
+  handle_asynchronously :send_session_emails
 
   def self.send_course_emails course
     course.chapter.groups.students.map(&:members).flatten.uniq.each do |student|

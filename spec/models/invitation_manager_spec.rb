@@ -18,7 +18,7 @@ describe InvitationManager do
       expect(SessionInvitation).to receive(:create).with(sessions: session, member: student, role: "Student").and_call_original
     end
 
-    InvitationManager.send_session_emails session
+    InvitationManager.new.send_session_emails session
   end
 
   it "Sends emails when a SessionInvitation is created" do
@@ -26,7 +26,7 @@ describe InvitationManager do
     expect(chapter.groups).to receive(:coaches).and_return([coaches])
 
     expect {
-      InvitationManager.send_session_emails session
+      InvitationManager.new.send_session_emails(session)
     }.to change { ActionMailer::Base.deliveries.count }
   end
 
@@ -35,7 +35,7 @@ describe InvitationManager do
     expect(SessionInvitation).to receive(:create).at_least(:once).and_return(SessionInvitation.new)
 
     expect {
-      InvitationManager.send_session_emails session
+      InvitationManager.new.send_session_emails(session)
     }.not_to change { ActionMailer::Base.deliveries.count }
   end
 
