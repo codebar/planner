@@ -52,10 +52,6 @@ class EventsController < ApplicationController
     head :ok
   end
 
-  def invite
-    set_event
-  end
-
   private
 
   def find_invitation_and_redirect_to_event(role)
