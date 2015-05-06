@@ -38,14 +38,14 @@ feature 'viewing an event' do
 
       scenario "as a Coach" do
         click_on 'Attend as a coach'
-        click_on 'I want to volunteer as a coach'
+        click_on 'RSV'
 
         expect(page).to have_content("You have RSVPed to #{event.name}. We will verify your attendance after you complete the questionnaire!")
       end
 
       scenario "as a Student" do
         click_on 'Attend as a student'
-        click_on 'Attend as a student'
+        click_on 'RSV'
 
         expect(page).to have_content("You have RSVPed to #{event.name}. We will verify your attendance after you complete the questionnaire!")
       end

@@ -1,85 +1,102 @@
-%section.stripe.reverse
-  .row
-    .medium-12.columns
-      %h2
-        =@event.to_s
-      %h3
-        %small #{l(@event.date_and_time)} to #{l(@event.ends_at, format: :time) }
+.icon-bar.five-up
+  =link_to edit_admin_event_path(@event), class: 'item' do
+    %i.fa.fa-pencil
+    %label Edit
+  - if !@event.date_and_time.future?
+    =link_to "#", class: "item disabled", title: "The event has already taken place" do
+      %i.fa.fa-send-o
+      %label Invite
+  - elsif @event.venue and @event.invitable?
+    =link_to admin_event_invite_path(@event), method: :post, class: "item" do
+      %i.fa.fa-send-o
+      %label Invite
+  - else
+    =link_to "#", class: "item disabled", title: "The event is not invitable." do
+      %i.fa.fa-send-o
+      %label Invite
 
-  .row
-    - if @event.venue.present?
-      .medium-1.columns
-        - unless @event.spaces?
-          %label.label.warning Workshop full
-      .medium-3.columns
-        %strong.label.round.primary #{@event.venue.seats} student spots, #{@event.venue.coach_spots} coach spots
-        %br
-        %br
-
-  .row
-    .large-3.small-6.columns#host
-      - if @event.venue.present?
-        %h4 Venue
-        %strong= @event.venue.name
-        %br
-        %small
-          = @address.to_html
-    .large-3.small-6.columns#sponsors
-      - if @event.sponsors.any?
-        %h4 Sponsors
-        %ul.no-bullet
-          - @event.sponsors.each do |sponsor|
-            %li
-              %span
-                = link_to sponsor.name, [:admin, sponsor]
-    .large-6.small-12.columns
-      %h4 Team
-      - @event.organisers.each do |organiser|
-        %span{ "data-tooltip" =>"", "aria-haspopup" => "true",  class: "has-tip",  title: organiser.full_name }
-          = image_tag(organiser.avatar(40))
-
-  %br
-  .row
-    .large-12.columns
-      %p.lead= @event.description
-  .row
-    .large-6.columns
-      %dl.accordion{ "data-accordion" => true }
-        %dd.accordion-navigation
-          =link_to "#schedule" do
-            Schedule
-          #schedule.content
-            = dot_markdown(@event.schedule)
-
-
-  #manage
+%section
+  .stripe.reverse
     .row
-      .large-6.medium-12.columns
-        %ul.button-group.primary
-          %li
-            =link_to edit_admin_event_path(@event), class: 'button small' do
-              %i.fa.fa-pencil
-              Edit
-          - if @event.date_and_time.past?
-            %li
-              =link_to "#", class: "button small primary disabled", title: "The event has already taken place" do
-                %i.fa.fa-send
-                Invite
-          - elsif @event.venue.present? and @event.invitable?
-            %li
-              =link_to "#", method: :post, class: "button disabled primary small", title: 'This feature has not been implemented yet' do
-                %i.fa.fa-send
-                Invite
-          - else
-            %li
-              =link_to "#", class: "button small primary disabled", title: "The event is not invitable." do
-                %i.fa.fa-send
-                Invite
-          %li
-            =link_to admin_event_path(format: 'csv'), class: 'button small primary', title: "CSV for labels" do
-              %i.fa.fa-users
-              Labels
+      .medium-12.columns
+        %h2
+          =@event.to_s
+        %h3
+          %small #{l(@event.date_and_time)} to #{l(@event.ends_at, format: :time) }
 
+    .row
+      - if @event.venue.present?
+        .medium-1.columns
+          - unless @event.spaces?
+            %label.label.warning Workshop full
+        .medium-6.columns
+          %strong.label.round.primary #{@event.student_spaces} student spots, #{@event.coach_spaces} coach spots
+          %br
+          %br
+          %strong Chapters
+          %ul.inline-list
+            -@event.chapters.each do |chapter|
+              %li= link_to chapter.name, [:admin, chapter]
 
-#invitations.stripe.reverse
-  = render partial: 'invitation_management'
+    .row
+      .large-3.small-6.columns#host
+        - if @event.venue.present?
+          %h4 Venue
+          %strong= @event.venue.name
+          %br
+          %small
+            = @address.to_html
+      .large-3.small-6.columns#sponsors
+        - if @event.sponsors.any?
+          %h4 Sponsors
+          %ul.no-bullet
+            - @event.sponsors.each do |sponsor|
+              %li
+                %span
+                  = link_to sponsor.name, [:admin, sponsor]
+      .large-6.small-12.columns
+        %h4 Team
+        - @event.organisers.each do |organiser|
+          %span{ "data-tooltip" =>"", "aria-haspopup" => "true",  class: "has-tip",  title: organiser.full_name }
+            = image_tag(organiser.avatar(40))
+
+    %br
+    .row
+      .large-12.columns
+        %p.lead= @event.description
+    - if @event.tito_url.present?
+      .row
+        .large-6.columns
+          .row
+            .large-12.columns
+              %strong Student ticket url
+              %p.lead= link_to @event.tito_url, @event.tito_url
+          .row
+            .large-12.columns
+              - if @event.student_questionnaire.present?
+                .row
+                  .large-12.columns
+                    %strong Student questionnaire
+                    %p.lead= link_to @event.student_questionnaire, @event.student_questionnaire
+              - if @event.coach_questionnaire.present?
+                .row
+                  .large-12.columns
+                    %strong Coach questionnaire
+                    %p.lead= link_to @event.coach_questionnaire, @event.coach_questionnaire
+
+        .large-6.columns
+          .panel
+            %strong Webhook url for student tickets
+            %p.lead= event_rsvp_url(@event)
+            %small You can setup this up in ti.to unde <strong>Customise/Webhooks</strong>
+    .row
+      .large-6.columns
+        %dl.accordion{ "data-accordion" => true }
+          %dd.accordion-navigation
+            =link_to "#schedule" do
+              Schedule
+            #schedule.content
+              = dot_markdown(@event.schedule)
+
+  #invitations.stripe.reverse
+    = render partial: 'invitation_management'
