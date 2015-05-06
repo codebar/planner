@@ -1,7 +1,10 @@
 .past__container
   .row
     .large-12.columns
-      %h2= @event.name
+      %h2
+        = @event.name
+        - if @invitation.attending
+          %label.label.success Attending
       %h3
         %small #{l(@event.date_and_time)} to #{l(@event.ends_at, format: :time) }
       - if @invitation.for_student?
@@ -13,27 +16,31 @@
     .large-10.columns
       - if @invitation.for_student?
         - if !@invitation.attending
-          - if @invitation.student_spaces?
-            =link_to event_attend_path, class: 'button round', method: :post do
-              Attend as a student
+          - if @event.student_spaces?
+            - if @event.tito_url.present?
+              =link_to @event.tito_url, class: 'button round', method: :post do
+                RSVP
+            - else
+              =link_to event_attend_path, class: 'button round', method: :post do
+                RSVP
           - else
-            Unfortunately there are no more student spots left. Send us an email at #{@event.email} to be added to the waiting list.
+            %p Unfortunately there are no more student spots left. Send us an email at #{@event.email} to be added to the waiting list.
         - else
-          =link_to event_reject_path, class: 'button round', method: :post, "data-confirm" => "Are you sure you won't be able to attend the event? There may not be any spots available later on." do
-            I can't attend anymore
+          =link_to event_reject_path, class: 'tiny warning button round', method: :post, "data-confirm" => "Are you sure you won't be able to attend the event? There may not be any spots available later on." do
+            Cancel my spot
 
 
       - if @invitation.for_coach?
         - if !@invitation.attending
           - if @invitation.coach_spaces?
             = link_to event_attend_path, class: 'button round', method: :post do
-              I want to volunteer as a coach
+              RSVP
           - else
             %p
-              Unfortunately there are no more coach spots left. Send an email at 24pullrequests@codebar.io to be added to the waiting list.
+              There are no more coach spots left. Send an email at #{@event.email} to be added to the waiting list.
         - else
-          =link_to event_reject_path, class: 'button round', method: :post, "data-confirm" => "Are you sure you won't be able to attend the event? There may not be any spots available later on." do
-            I can't attend anymore
+          =link_to event_reject_path, class: 'tiny button round warning', method: :post, "data-confirm" => "Are you sure you won't be able to attend the event? There may not be any spots available later on." do
+            Cancel my spot
       %br
 
   - if @invitation.attending
@@ -42,7 +49,7 @@
         - if !@invitation.verified
           %p.alert-box.info{ "data-alert" => true }
             %i.fa.fa-warning.warning
-            To complete signing up for the event, you must also #{link_to("complete our questionnaire", @event.questionnaire(@invitation))} as we need to know a couple of things in advance to plan the day.
+            To complete signing up for the event, you must #{link_to("complete our questionnaire", @event.questionnaire(@invitation))} as we need to know a couple of things in advance to plan the day.
             %br
             %u You will receive an email when your attendance is verified.
           %br
@@ -59,7 +66,7 @@
   .large-7.columns
     %a{ name: "schedule" }
     %h4{ "data-magellan-destination" => "schedule"} Schedule
-    = @event.schedule.html_safe
+    = dot_markdown(@event.schedule)
   .large-5.columns
     %h4 Location
     .row

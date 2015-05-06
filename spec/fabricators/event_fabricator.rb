@@ -8,9 +8,13 @@ Fabricator(:event) do
   venue { Fabricate(:sponsor) }
   coach_spaces 2
   invitable true
+  coach_questionnaire { "http://#{Faker::Internet.domain_name}" }
+  student_questionnaire { "http://#{Faker::Internet.domain_name}" }
   student_spaces 2
   slug "some-slug"
   info Faker::Lorem.sentence
+  begins_at "11:00"
+  chapters { [Fabricate(:chapter)]}
   after_build do |event|
     Fabricate(:sponsorship, event: event, sponsor: Fabricate(:sponsor))
   end

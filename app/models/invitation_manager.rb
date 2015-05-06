@@ -1,7 +1,7 @@
 class InvitationManager
 
   def send_session_emails session
-    return "Workshop is not invitable" unless session.invitable?
+    return "The workshop is not invitable" unless session.invitable?
 
     session.chapter.groups.students.map(&:members).flatten.uniq.each do |student|
       return if student.banned?
@@ -21,14 +21,9 @@ class InvitationManager
 
   handle_asynchronously :send_session_emails
 
-  def self.send_course_emails course
-    course.chapter.groups.students.map(&:members).flatten.uniq.each do |student|
-      invitation  = CourseInvitation.new(course: course, member: student)
-      invitation.send(:email) if invitation.save
-    end
-  end
+  def send_event_emails event, chapter
+    return "The event is not invitable" unless event.invitable?
 
-  def self.send_event_emails event, chapter
     chapter.groups.students.map(&:members).flatten.uniq.each do |student|
       invitation = Invitation.new(event: event, member: student, role: "Student")
       EventInvitationMailer.invite_student(event, student, invitation).deliver if invitation.save
@@ -37,6 +32,15 @@ class InvitationManager
     chapter.groups.coaches.map(&:members).flatten.uniq.each do |coach|
       invitation = Invitation.new(event: event, member: coach, role: "Coach")
       EventInvitationMailer.invite_coach(event, coach, invitation).deliver if invitation.save
+    end
+  end
+
+  handle_asynchronously :send_event_emails
+
+  def self.send_course_emails course
+    course.chapter.groups.students.map(&:members).flatten.uniq.each do |student|
+      invitation  = CourseInvitation.new(course: course, member: student)
+      invitation.send(:email) if invitation.save
     end
   end
 

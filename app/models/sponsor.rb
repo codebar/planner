@@ -8,6 +8,7 @@ class Sponsor < ActiveRecord::Base
   validate :website_is_url
 
   default_scope -> { order('updated_at desc') }
+
   mount_uploader(:avatar, AvatarUploader) if Rails.env.production?
 
   accepts_nested_attributes_for :address
@@ -21,6 +22,7 @@ class Sponsor < ActiveRecord::Base
   end
 
   private
+
   def website_is_url
     begin
       uri = URI.parse(website)

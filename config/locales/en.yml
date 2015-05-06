@@ -169,9 +169,9 @@ en:
     new:
       intro: "We offer a welcoming, inclusive and learning-friendly environment, and have a zero tolerance policy towards any form of harassment or inappropriate behavior. Before you sign up, read our"
       students:
-        intro: "If you are a student, make sure you meet our"
+        intro: "If you would like to attend as a student, make sure you meet our"
         criteria_link: "eligibility criteria"
-        criteria_brief: "as our workshops are only available to women, LGBTQ and other minorities in tech."
+        criteria_brief: "as our workshops are only available to women, LGBTQ, people from underrepresented minority groups."
       invitations: "Invitations are sent out periodically, so don't worry if you don't receive one as soon as you register."
 
   footer:

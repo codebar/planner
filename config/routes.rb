@@ -46,6 +46,7 @@ Planner::Application.routes.draw do
   end
 
   resources :events, only: [ :index, :show ] do
+    post 'rsvp'
     get 'student', as: :student_rsvp
     get 'coach', as: :coach_rsvp
     get 'invitation/:token' => 'invitations#show', as: :invitation
@@ -100,6 +101,7 @@ Planner::Application.routes.draw do
     end
 
     resources :events, only: [:show, :edit, :update] do
+      post 'invite'
       resources :invitation do
         post 'verify'
         post 'cancel'

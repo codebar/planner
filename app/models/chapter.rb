@@ -5,6 +5,7 @@ class Chapter < ActiveRecord::Base
   validates  :city, presence: true
 
   has_many :workshops, class_name: Sessions
+  has_and_belongs_to_many :events
   has_many :groups
   has_many :sponsors, through: :workshops
   has_many :subscriptions, through: :groups
