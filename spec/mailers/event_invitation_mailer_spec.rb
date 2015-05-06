@@ -8,14 +8,14 @@ describe EventInvitationMailer do
   let(:invitation) { Fabricate(:invitation, event: event, member: member) }
 
   it "#invite_student" do
-    email_subject = "Join us for a day long Codebar #{event.name} event on the 12th!"
+    email_subject = "Invitation: #{event.name}"
     EventInvitationMailer.invite_student(event, member, invitation).deliver
 
     expect(email.subject).to eq(email_subject)
   end
 
   it "#invite_coach" do
-    email_subject = "Join us for a day long Codebar #{event.name} event on the 12th!"
+    email_subject = "Coach Invitation: #{event.name}"
     EventInvitationMailer.invite_coach(event, member, invitation).deliver
 
     expect(email.subject).to eq(email_subject)
