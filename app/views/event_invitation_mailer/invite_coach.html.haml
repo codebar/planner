@@ -1,7 +1,7 @@
-=render partial: 'shared_mailers/header', locals: { title: "Workshop Coach Invitation" }
+=render partial: 'shared_mailers/header', locals: { title: "Coach Invitation" }
 %body{ bgcolor: "#FFFFFF" }
 
-  =render partial: 'shared_mailers/body_header', locals: { title: "Workshop Coach Invitation" }
+  = render partial: 'shared_mailers/body_header', locals: { title: "Coach Invitation" }
 
   %table{ class: "body-wrap"}
     %tr
@@ -14,21 +14,29 @@
               %td
                 %h3 Hi #{@member.name}
                 %p.lead
-                  = @event.coach_description
+                  #{@event.coach_description}.
 
         .content
           %table{ bgcolor: "#FFFFFF" }
             %tr
-              %td.small{ width: "30%", style: "vertical-align: top; padding-right:10px;"}
-                =image_tag(@event.venue.avatar)
-              %td
-                %h4
-                  = @event.name
-                  #{l(@event.date_and_time)} to #{l(@event.ends_at, format: :time) }
-                %p
-                  %b Venue
-                  #{@event.venue.name}
-                =link_to "Find out more and RSVP", full_url_for(event_invitation_url(event_id: @event.slug, token: @invitation.token)), class: 'btn'
+              %td.small{ width: "50%", style: "vertical-align: top; padding-right:10px;"}
+                %h5 When?
+                #{l(@event.date_and_time)} to #{l(@event.ends_at, format: :time) }
+                %br
+                %br
+                %h5 Venue
+                =link_to @event.venue.website do
+                  =image_tag(@event.venue.avatar)
+                %br
+                %br
+              %td{ width: "50%", style: "text-align: center;"}
+                =link_to "Attend", full_url_for(event_invitation_url(event_id: @event.slug, token: @invitation.token)), class: 'btn'
+            %tr
+              %td{ width: "50%", style: "vertical-align: top; padding-right:10px;"}
+                %h5 Sponsors
+                - @event.sponsors.each do |sponsor|
+                  =link_to sponsor.website do
+                    = image_tag sponsor.avatar, style: 'max-width: 100px;'
 
         .content
           = render partial: 'shared_mailers/social'
