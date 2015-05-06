@@ -5,45 +5,72 @@
 
       = simple_form_for [:admin, @event] do |f|
         .row
-          .large-6.columns
+          .large-12.columns
             .row
-              .large-12.columns
+              .large-4.columns
                 = f.input :name
-              .large-12.columns
+            .row
+              .large-4.columns
+                = f.input :email, as: :email, label: "Contact email"
+              .large-4.columns
                 = f.input :slug
             .row
               .large-6.columns
-                = f.input :date_and_time, as: :string, required: true, label: "Date", input_html: { data: { value: @event.date_and_time } }
-              .large-6.columns
-                .row
-                  .large-12.columns
-                    = f.input :begins_at, as: :string, required: true, input_html: { data: { value: @event.date_and_time.time }}
-                  .large-12.columns
-                    = f.input :ends_at, as: :string, required: true, input_html: { data: { value: @event.ends_at }}
-          .large-6.columns
+                = f.input :date_and_time, as: :string, required: true, label: "Date", input_html: { data: { value: @event.date_and_time.strftime("%d/%m/%Y") } }
             .row
-              = f.input :coach_spaces
-            .row
-              = f.input :student_spaces
+              .large-3.columns
+                = f.input :begins_at, as: :string, required: true, input_html: { data: { value: @event.date_and_time.time.strftime("%H:%M") }}
+              .large-3.columns
+                = f.input :ends_at, as: :string, required: true, input_html: { data: { value: @event.ends_at.strftime("%H:%M") }}
         .row
           .large-12.columns
             = f.input :description, as: :text
         .row
           .large-12.columns
-            = f.input :schedule
+            = f.input :info
         .row
           .large-12.columns
-            = f.input :info
+            = f.input :schedule
         .row
           .large-3.columns
             = f.association :venue, input_html: { data: { placeholder: "Select sponsors" }}, required: true
         .row
-          .large-3.columns
+          .large-6.columns
+            %br
             = f.association :sponsors, input_html: { data: { placeholder: "Select sponsors" }}
         .row
           .large-6.columns
+            %br
             %label Organisers
             = f.collection_select :organisers, Member.all, :id, :full_name, { selected: @event.organisers.map(&:id) }, { multiple: true }
+        .row
+          .large-12.columns
+            %br
+            = f.input :announce_only, as: :boolean, hint: "Events where invitations are not handled via our application"
+        .row
+          .large-12.columns
+            %h5 Invitation details
+            .panel.callout
+              .row
+                .large-12.columns
+                  = f.input :tito_url, as: :url, hint: "Only used for student tickets"
+                .large-6.columns
+                  = f.input :coach_spaces
+                .large-6.columns
+                  = f.input :student_spaces
+              .row
+                .large-12.columns
+                  = f.input :coach_questionnaire
+              .row
+                .large-12.columns
+                  = f.input :student_questionnaire
+              .row
+                .large-12.columns
+                  = f.association :chapters, hint: 'Which chapters do you want to invite to this event? Only one invitation will be emailed out to members with multiple subscriptions.'
+              .row
+                .large-12.columns
+                  %br
+                  = f.input :invitable, as: :boolean, hint: "Allow members to RSVP"
         .row
           .large-12.columns.text-right
             = f.submit "Save", class: "button"

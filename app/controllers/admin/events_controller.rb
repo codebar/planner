@@ -17,7 +17,20 @@ class Admin::EventsController < Admin::ApplicationController
   def update
     if @event.update_attributes(event_params)
       redirect_to [:admin, @event], notice: "You have just updated the event"
+    else
+      render 'edit', notice: 'Error'
     end
+  end
+
+  def invite
+    @event = Event.find_by_slug(params[:event_id])
+    authorize @event
+
+    @event.chapters.each do |chapter|
+      InvitationManager.new.send_event_emails(@event, chapter)
+    end
+
+    redirect_to admin_event_path(@event), notice: "Invitations will be emailed out soon."
   end
 
   private
@@ -28,7 +41,7 @@ class Admin::EventsController < Admin::ApplicationController
   end
 
   def event_params
-    params.require(:event).permit(:name, :slug, :date_and_time, :begins_at, :ends_at, :description, :schedule, :venue_id, sponsor_ids: [])
+    params.require(:event).permit(:name, :slug, :date_and_time, :begins_at, :ends_at, :description, :schedule, :venue_id, :coach_spaces, :student_spaces, :email, :announce_only, :tito_url, :invitable, :student_questionnaire, :coach_questionnaire, sponsor_ids: [], chapter_ids: [])
   end
 
   def find_event

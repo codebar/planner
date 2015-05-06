@@ -9,7 +9,7 @@ class EventInvitationMailer < ActionMailer::Base
     @member = member
     @invitation = invitation
 
-    subject = "Join us for a day long Codebar #{@event.name} event on the #{ActiveSupport::Inflector.ordinalize(l(@event.date_and_time, format: :day))}!"
+    subject = "Invitation: #{@event.name}"
 
     mail(mail_args(member, subject)) do |format|
       format.html
@@ -21,7 +21,7 @@ class EventInvitationMailer < ActionMailer::Base
     @member = member
     @invitation = invitation
 
-    subject = "Join us for a day long Codebar #{@event.name} event on the #{ActiveSupport::Inflector.ordinalize(l(@event.date_and_time, format: :day))}!"
+    subject = "Coach Invitation: #{@event.name}"
 
     mail(mail_args(member, subject)) do |format|
       format.html
@@ -34,7 +34,11 @@ class EventInvitationMailer < ActionMailer::Base
     @invitation = invitation
     @host_address = AddressDecorator.decorate(@event.venue.address)
 
-    subject = "Attendance confirmation for #{@event.name}"
+    require 'services/event_calendar'
+    attachments['codebar.ics'] = { mime_type: 'text/calendar',
+                                   content: EventCalendar.new(@event).calendar.to_ical }
+
+    subject = "Your spot to #{@event.name} has been confirmed."
 
     mail(mail_args(member, subject)) do |format|
       format.html
