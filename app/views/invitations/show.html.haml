@@ -18,7 +18,7 @@
         - if !@invitation.attending
           - if @event.student_spaces?
             - if @event.tito_url.present?
-              =link_to @event.tito_url, class: 'button round', method: :post do
+              =link_to @event.tito_url, target: '_blank', class: 'button round', method: :post do
                 RSVP
             - else
               =link_to event_attend_path, class: 'button round', method: :post do
