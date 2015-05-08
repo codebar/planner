@@ -12,6 +12,7 @@ class Member < ActiveRecord::Base
   has_many :member_notes
   has_many :chapters, -> { uniq }, through: :groups
   has_many :announcements, -> { uniq }, through: :groups
+  has_many :sponsors
 
   validates :auth_services, presence: true
   validates :name, :surname, :email, :about_you, presence: true, if: :can_log_in?
