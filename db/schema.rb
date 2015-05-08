@@ -59,20 +59,6 @@ ActiveRecord::Schema.define(version: 20150505161414) do
   add_index "bans", ["added_by_id"], name: "index_bans_on_added_by_id", using: :btree
   add_index "bans", ["member_id"], name: "index_bans_on_member_id", using: :btree
 
-  create_table "black_lists", force: true do |t|
-    t.integer  "member_id"
-    t.integer  "added_by_id"
-    t.string   "reason"
-    t.text     "note"
-    t.boolean  "permanent"
-    t.datetime "expires_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "black_lists", ["added_by_id"], name: "index_black_lists_on_added_by_id", using: :btree
-  add_index "black_lists", ["member_id"], name: "index_black_lists_on_member_id", using: :btree
-
   create_table "chapters", force: true do |t|
     t.string   "name"
     t.string   "city"
