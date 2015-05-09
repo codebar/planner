@@ -14,12 +14,7 @@
                 = f.hidden_field :image_cache
             .row
               .large-12.columns
-                = f.input :website, as: :url
-            .row
-              .large-3.columns
-                = f.input :contact_first_name
-              .large-3.columns
-                = f.input :contact_surname
+                = f.input :website, as: :url               
             .row
               .large-3.columns
                 = f.input :seats, label: "Student Spots"
@@ -33,6 +28,18 @@
                 = a.input :street, label: "Line 2"
                 = a.input :postal_code
                 = a.input :city
+          .large-6.columns
+            .panel
+              %strong Contact Details
+              %p Complete the fields below and/or select a member(s)
+              .row
+                .large-6.columns
+                  = f.collection_select :members, Member.all, :id, :full_name, 
+                    { selected: @sponsor.members.map(&:id) }, { multiple: true }
+              = f.input :email
+              = f.input :contact_first_name, label: "Contact First Name"
+              = f.input :contact_surname, label: "Contact Surname"
+
         .row
           .large-6.columns
             = f.submit "Create sponsor", class: "button round"

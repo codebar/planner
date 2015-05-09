@@ -12,7 +12,7 @@ describe Admin::SponsorsController, type: :controller do
         post :create, sponsor: { 
           name: 'name', email: 'test@test.com', contact_first_name: 'john',
           contact_surname: 'smith', website: 'https://example.com', seats: 40, 
-          address: address, avatar: avatar 
+          address: address, avatar: avatar, members: [1,2]
         }
       }.to change(Sponsor, :count).by(0)
     end
@@ -29,25 +29,52 @@ describe Admin::SponsorsController, type: :controller do
       }.to change(Sponsor, :count).by(0)
     end
 
-    it "Allows chapter organisers to create sponsors" do
-      login admin
-      request.env["HTTP_REFERER"] = "/admin/member/3"
+    context "Allows chapter organisers to create sponsors with" do
+      it "only contact info" do
+        login admin
+        request.env["HTTP_REFERER"] = "/admin/member/3"
 
-      expect {
-        post :create, sponsor: { 
-          name: 'name', email: 'test@test.com', contact_first_name: 'john',
-          contact_surname: 'smith', website: 'https://example.com', seats: 40, 
-          address: address, avatar: avatar 
-        }
-      }.to change(Sponsor, :count).by(1)
+        expect {
+          post :create, sponsor: { 
+            name: 'name', email: 'test@test.com', contact_first_name: 'john',
+            contact_surname: 'smith', website: 'https://example.com', seats: 40, 
+            address: address, avatar: avatar, members: []
+          }
+        }.to change(Sponsor, :count).by(1)
+      end
+
+      it "only members as contacts" do
+        login admin
+        request.env["HTTP_REFERER"] = "/admin/member/3"
+
+        expect {
+          post :create, sponsor: { 
+            name: 'name', email: 'test@test.com', contact_first_name: 'john',
+            contact_surname: 'smith', website: 'https://example.com', seats: 40, 
+            address: address, avatar: avatar, members: []
+          }
+        }.to change(Sponsor, :count).by(1)
+      end
+
+      it "members as contacts and contact info" do
+        login admin
+        request.env["HTTP_REFERER"] = "/admin/member/3"
+
+        expect {
+          post :create, sponsor: { 
+            name: 'name', website: 'https://example.com', seats: 40, 
+            address: address, avatar: avatar, members: [1,2]
+          }
+        }.to change(Sponsor, :count).by(1)
+      end
     end
 
     it "Doesn't allow blank sponsors to be created" do
       expect {
         post :create, sponsor: { 
-          name: '', email: 'test@test.com', contact_first_name: 'john',
-          contact_surname: 'smith', website: 'https://example.com', seats: 40, 
-          address: address, avatar: avatar 
+          name: '', email: '', contact_first_name: '',
+          contact_surname: '', website: '', seats: '', 
+          address: '', avatar: '', members: []
         }
       }.to change(Sponsor, :count).by(0)
     end
