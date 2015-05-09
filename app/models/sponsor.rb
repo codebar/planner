@@ -3,7 +3,8 @@ class Sponsor < ActiveRecord::Base
   has_one :address
   has_many :sponsor_sessions
   has_many :sessions, through: :sponsor_sessions
-  belongs_to :member
+  has_many :contacts
+  has_many :members, through: :contacts
 
   validates :name, :address, :avatar, :website, :seats, presence: true
   validate :website_is_url 

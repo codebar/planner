@@ -1,7 +1,7 @@
 class SponsorPolicy < ApplicationPolicy
 
   def create?
-    Chapter.find_roles(:organiser, user).any?
+    user.has_role?(:admin) or Chapter.find_roles(:organiser, user).any?
   end
 
   def show?
