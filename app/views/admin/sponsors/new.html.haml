@@ -17,6 +17,11 @@
                 = f.input :website, as: :url
             .row
               .large-3.columns
+                = f.input :contact_first_name
+              .large-3.columns
+                = f.input :contact_surname
+            .row
+              .large-3.columns
                 = f.input :seats, label: "Student Spots"
               .large-3.columns
                 = f.input :number_of_coaches, label: "Coaches Spots"
