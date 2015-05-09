@@ -9,4 +9,7 @@ Fabricator(:sponsor) do
   website { "http://#{Faker::Internet.domain_name}" }
   avatar { avatars.sample }
   address
+  email { Faker::Internet.email }
+  contact_first_name { Faker::Name.first_name }
+  contact_surname { Faker::Name.last_name }
 end
