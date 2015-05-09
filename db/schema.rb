@@ -372,11 +372,13 @@ ActiveRecord::Schema.define(version: 20150508211109) do
     t.datetime "updated_at"
     t.string   "avatar"
     t.string   "website"
-    t.integer  "seats",             default: 15
+    t.integer  "seats",              default: 15
     t.string   "image_cache"
     t.integer  "number_of_coaches"
     t.integer  "member_id"
     t.string   "email"
+    t.string   "contact_first_name"
+    t.string   "contact_surname"
   end
 
   add_index "sponsors", ["member_id"], name: "index_sponsors_on_member_id", using: :btree

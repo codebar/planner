@@ -11,6 +11,8 @@ describe Sponsor do
   it { should respond_to(:avatar) }
   it { should respond_to(:seats) }
   it { should respond_to(:email) }
+  it { should respond_to(:contact_first_name) }
+  it { should respond_to(:contact_surname) }
   it { should be_valid }
 
   context 'validations' do
