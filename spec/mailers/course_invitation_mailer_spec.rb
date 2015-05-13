@@ -9,7 +9,7 @@ describe CourseInvitationMailer do
     course = Fabricate(:course, title: "HTTP Fundamentals", date_and_time: DateTime.new(2013,10,30,18,30))
     invitation_token = "token"
 
-    email_subject = "Course :: #{course.title} by Codebar - Wednesday, 30 Oct at 18:30"
+    email_subject = "Course :: #{course.title} by codebar - Wednesday, 30 Oct at 18:30"
     CourseInvitationMailer.invite_student(course, member, invitation_token).deliver
 
     expect(email.subject).to eq(email_subject)

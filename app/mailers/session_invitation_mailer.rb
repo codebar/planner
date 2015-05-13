@@ -57,7 +57,7 @@ class SessionInvitationMailer < ActionMailer::Base
 
     load_attachments
 
-    subject = "#{title}: #{@session.title} by Codebar - #{humanize_date_with_time(@session.date_and_time, @session.time)}"
+    subject = "#{title}: #{@session.title} by codebar - #{humanize_date_with_time(@session.date_and_time, @session.time)}"
 
     mail(mail_args(member, subject)) do |format|
       format.html { render layout: "email" }
@@ -84,7 +84,7 @@ class SessionInvitationMailer < ActionMailer::Base
     @member = member
     @invitation = invitation
 
-    subject = "Reminder: you're on the Codebar waiting list (#{humanize_date_with_time(@session.date_and_time, @session.time)})"
+    subject = "Reminder: you're on the codebar waiting list (#{humanize_date_with_time(@session.date_and_time, @session.time)})"
     mail(mail_args(member, subject)) do |format|
       format.html
     end

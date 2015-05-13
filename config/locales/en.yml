@@ -1,5 +1,5 @@
 en:
-  brand: "Codebar.io"
+  brand: "codebar.io"
 
   date:
       formats:
@@ -180,7 +180,7 @@ en:
 
   faq:
     payment:
-      q: "Do I need to pay to attend Codebar?"
+      q: "Do I need to pay to attend codebar?"
       a_p1: "Absolutely not! We are lucky enough to have some great companies who are able to host the workshops and/or kindly provide food. And our"
       awesome_coaches: "awesome coaches"
       a_p2: "give their time freely to help the community."
@@ -191,8 +191,8 @@ en:
       q: "I want to attend a workshop. Am I eligible?"
       a: "Our workshops are available to women, LGBTQ and people who are underrepresented in the tech industry. If you belong to one of these groups, you are more than welcome to attend. If not, there are some other great initiatives like <a href=\"http://www.meetup.com/opentechschool-london\">Open Tech School London</a> where you can learn in a collaborative environment."
     career:
-      q: "Is Codebar only aimed at people who want to move into a career as a developer?"
-      a: "No! Codebar is about getting people excited about programming. We'll help them learn some basic coding skills, as well as how to explore and do things on their own. For those who do want to become developers, we will provide help and guidance to help them achieve their goal."
+      q: "Is codebar only aimed at people who want to move into a career as a developer?"
+      a: "No! codebar is about getting people excited about programming. We'll help them learn some basic coding skills, as well as how to explore and do things on their own. For those who do want to become developers, we will provide help and guidance to help them achieve their goal."
     format:
       q: "What is the format of the workshops?"
       a: "We try to have one coach for every two students. We will pair up students who want to work on the same tutorial, and assign them a coach. The rest just happens."
@@ -200,10 +200,10 @@ en:
       q: "Do I need to bring a laptop with me at the workshops?"
       a: "Yes, we suggest that you bring a laptop as it will be easier for you to carry on working on things after the workshops. It you don't have one, <a href=\"mailto:contact@codebar.io\">send us an email</a> so we can try and help out."
     online_resources:
-      q: "There are so many online resources, why should I come to Codebar?"
+      q: "There are so many online resources, why should I come to codebar?"
       a: "Coding can be intimidating and a lot of people find it hard to get started. By putting you in touch with people who can help and guide you we make the experience and learning process easier and more enjoyable."
     preperations:
-      q: "I would like to coach at Codebar. Is there anything I should do besides signing up?"
+      q: "I would like to coach at codebar. Is there anything I should do besides signing up?"
       a_p1: "Yes. First you should read our"
       coaching_guide_tutorials: "coaching guide tutorials"
       a_p2: ". Then spend sometime familiarising yourself with the"
@@ -216,8 +216,8 @@ en:
       q: "Is there disabled access at the workshops?"
       a: "Unfortunately, that depends entirely on where we are hosting our workshops and if the venue has disabled access. If you would like to attend, send us an email at <a href='mailto:meetings@codebar.io'>meetings[at]codebar.io</a> so we can enquire about it and let you know."
     bring_codebar_to_my_city:
-      q: "I would like to bring Codebar to my city. Can I do that?"
-      a: "Of course. Codebar is about building a community of experienced developers that are able to give up some of their time to help others. If you are keen on running Codebar where you live, we would love to speak to you about it and see how we can help make this happen, so send <a href=\"mailto:contact@codebar.io\">us an email</a>.Of course. Codebar is about building a community of experienced developers that are able to give up some of their time to help others. If you are keen on running Codebar where you live, we would love to speak to you about it and see how we can help make this happen, so send <a href=\"mailto:contact@codebar.io\">us an email</a>."
+      q: "I would like to bring codebar to my city. Can I do that?"
+      a: "Of course. codebar is about building a community of experienced developers that are able to give up some of their time to help others. If you are keen on running codebar where you live, we would love to speak to you about it and see how we can help make this happen, so send <a href=\"mailto:contact@codebar.io\">us an email</a>.Of course. codebar is about building a community of experienced developers that are able to give up some of their time to help others. If you are keen on running codebar where you live, we would love to speak to you about it and see how we can help make this happen, so send <a href=\"mailto:contact@codebar.io\">us an email</a>."
     our_coaches:
       q: "Our coaches"
       a_p1: "You can see all the coaches have helped out in our workshops on the"

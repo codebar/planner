@@ -21,7 +21,7 @@ class WorkshopCalendar
       e.organizer = "#{workshop.chapter.email}"
       e.dtstart = DateTime.parse("#{start_date}#{start_time}")
       e.dtend = e.dtstart + 2.hours + 30.minutes
-      e.summary = "Codebar @ #{workshop.host.name}"
+      e.summary = "codebar @ #{workshop.host.name}"
       e.location = address.to_s
       e.ip_class = "PRIVATE"
     end
