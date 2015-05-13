@@ -1,4 +1,4 @@
-# Contributing to Codebar's planner
+# Contributing to codebar's planner
 
 ## Quick guide:
 

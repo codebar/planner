@@ -23,7 +23,7 @@ class MemberMailer < ActionMailer::Base
 
   def welcome_student(member)
     @member = member
-    subject = "How Codebar works"
+    subject = "How codebar works"
 
     mail(mail_args(member, subject)) do |format|
       format.html { render 'welcome_student' }
@@ -32,7 +32,7 @@ class MemberMailer < ActionMailer::Base
 
   def welcome_coach(member)
     @member = member
-    subject = "How Codebar works"
+    subject = "How codebar works"
 
     mail(mail_args(member, subject)) do |format|
       format.html { render 'welcome_coach' }
