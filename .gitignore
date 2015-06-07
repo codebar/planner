@@ -21,3 +21,4 @@ TAGS
 .DS_Store
 
 /vendor/bundle
+/.vagrant
