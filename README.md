@@ -11,6 +11,54 @@ A tool to help manage [codebar.io](http://codebar.io) members and events.
 
 ## Getting started
 
+You can choose to use the virtual machine or install everything manually
+
+### Use the virtual machine
+
+First you need to ensure you have vagrant and virtualbox installed.
+
+Go to vagrant website and follow the instructions for your platform.
+Go to virtualbox website and follow the instructions for your platform.
+
+Vagrant will run a provisioner, located at `salt/roots`, as defined in
+`Vagrantfile`. Using the VM works best under Linux or Mac OS X because shared
+folders require an NFS to work fast, so Windows users might prefer not to use
+the VM as it may be very slow. Linux users MAY need to install NFS manually,
+depending on the distribution.
+
+The provisioner will set up everything except the environment variables, which
+you still need to do yourself as is described below in 'Enable GitHub
+Authentication'.
+
+```bash
+vagrant up
+```
+
+Assuming you don't already have a local copy of the Ubuntu image required,
+expect vagrant to take over 30 minutes to run `vagrant up` command the first
+time.
+
+```bash
+vagrant ssh
+```
+
+Once you are logged into the virtual machine you will already be in the
+`/vagrant` directory, the root of the project directory inside the VM.
+
+
+
+
+
+
+
+
+
+
+  # You should run run `vagrant box update`
+
+
+### Manually install
+
 First thing you will need, is to install Ruby 2.1.5
 
 ### Using [rvm](https://rvm.io/rvm/install)
