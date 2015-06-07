@@ -19,7 +19,7 @@ gem 'premailer-rails'
 gem 'nokogiri'
 gem 'pickadate-rails'
 gem 'rolify'
-gem "pundit"
+gem 'pundit'
 gem 'carrierwave'
 gem 'carrierwave-ftp', :require => 'carrierwave/storage/sftp'
 gem 'mini_magick'
