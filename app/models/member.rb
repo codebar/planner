@@ -43,6 +43,10 @@ class Member < ActiveRecord::Base
     true
   end
 
+  def send_eligibility_email
+    MemberMailer.eligibility_check(self)
+  end
+
   def avatar size=100
     "http://gravatar.com/avatar/#{md5_email}?s=#{size}"
   end
