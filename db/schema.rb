@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150505161414) do
+ActiveRecord::Schema.define(version: 20150629202748) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -58,20 +58,6 @@ ActiveRecord::Schema.define(version: 20150505161414) do
 
   add_index "bans", ["added_by_id"], name: "index_bans_on_added_by_id", using: :btree
   add_index "bans", ["member_id"], name: "index_bans_on_member_id", using: :btree
-
-  create_table "black_lists", force: true do |t|
-    t.integer  "member_id"
-    t.integer  "added_by_id"
-    t.string   "reason"
-    t.text     "note"
-    t.boolean  "permanent"
-    t.datetime "expires_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "black_lists", ["added_by_id"], name: "index_black_lists_on_added_by_id", using: :btree
-  add_index "black_lists", ["member_id"], name: "index_black_lists_on_member_id", using: :btree
 
   create_table "chapters", force: true do |t|
     t.string   "name"
@@ -147,6 +133,16 @@ ActiveRecord::Schema.define(version: 20150505161414) do
   end
 
   add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
+
+  create_table "eligibility_inquiries", force: true do |t|
+    t.integer  "member_id"
+    t.integer  "sent_by_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "eligibility_inquiries", ["member_id"], name: "index_eligibility_inquiries_on_member_id", using: :btree
+  add_index "eligibility_inquiries", ["sent_by_id"], name: "index_eligibility_inquiries_on_sent_by_id", using: :btree
 
   create_table "events", force: true do |t|
     t.string   "name"
@@ -301,6 +297,7 @@ ActiveRecord::Schema.define(version: 20150505161414) do
     t.string   "mobile"
     t.boolean  "received_coach_welcome_email",   default: false
     t.boolean  "received_student_welcome_email", default: false
+    t.boolean  "confirmed_eligibility"
   end
 
   create_table "members_permissions", id: false, force: true do |t|

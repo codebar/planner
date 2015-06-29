@@ -12,4 +12,7 @@ class Admin::MembersController < Admin::ApplicationController
     @member.send_eligibility_email
     redirect_to [:admin, @member], notice: "You have sent an eligibility confirmation request."
   end
+
+  def send_attendance_warning
+  end
 end
