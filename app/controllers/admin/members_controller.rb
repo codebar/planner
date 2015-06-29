@@ -10,9 +10,7 @@ class Admin::MembersController < Admin::ApplicationController
   def send_eligibility_email
     @member = Member.find(params[:member_id])
     @member.send_eligibility_email
+    @member.eligibility_inquiries.create(sent_by_id: current_user.id)
     redirect_to [:admin, @member], notice: "You have sent an eligibility confirmation request."
-  end
-
-  def send_attendance_warning
   end
 end
