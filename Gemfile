@@ -1,12 +1,14 @@
 source 'https://rubygems.org'
-ruby '2.1.5'
+ruby '2.2.2'
 
-gem 'rails', '4.1.9'
+gem 'rails', '4.1.12'
 
 gem 'haml'
-gem 'sass-rails', '~> 4.0.1'
+gem 'compass-rails', github: 'Compass/compass-rails'
+gem 'foundation-rails'
+gem 'sass-rails', '~> 5.0.1'
 gem 'uglifier', '>= 1.3.0'
-gem 'coffee-rails', '~> 4.0.1'
+gem 'coffee-rails', '~> 4.0'
 gem 'jquery-rails'
 gem 'turbolinks'
 gem 'simple_form'
@@ -27,7 +29,6 @@ gem 'omniauth-github'
 gem 'delayed_job'
 gem 'delayed_job_active_record'
 
-gem 'foundation-rails'
 gem 'tzinfo-data'
 gem 'icalendar'
 

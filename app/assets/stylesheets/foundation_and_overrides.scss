@@ -63,8 +63,8 @@ $warning-color: #cb0432;
 // $info-color: #a0d3e8;
 
 // We use these to make sure border radius matches unless we want it different.
-$global-radius: 3px;
-$global-rounded: 0px;
+$global-radius: rem-calc(3);
+$global-rounded: 0;
 
 // We use these to control inset shadow shiny edges and depressions.
 // $shiny-edge-size: 0 1px 0;
@@ -349,7 +349,7 @@ $button-font-med: rem-calc(16);
 // $button-function-factor: -20%;
 
 // We use these to control button border styles.
-$button-border-width: 2px;
+$button-border-width: rem-calc(2);
 $button-border-style: solid;
 $bg: #ffffff;
 // $button-border-color: scale-color($bg, $lightness: $button-function-factor);
@@ -1080,7 +1080,7 @@ $price-cta-align: right;
 
 // These control the table cell border style
 $table-border-style: none;
-$table-border-size: 0px;
+$table-border-size: rem-calc(0);
 $table-border-color: #333;
 
 // These control the table head styles
@@ -1128,14 +1128,14 @@ $table-margin-bottom: rem-calc(10);
 
 // We use these to control border styles
 $thumb-border-style: none;
-$thumb-border-width: 1px;
+$thumb-border-width: rem-calc(1);
 // $thumb-border-color: #fff;
 $thumb-box-shadow: 1px 3px 3px 0 rgba(0, 0, 0, 0.5);
 $thumb-box-shadow-hover: 1px 3px 6px 0 rgba(0, 0, 0, 1);
 
 
 // Radius and transition speed for thumbs
-$thumb-radius: 50px;
+$thumb-radius: rem-calc(50);
 
 // $thumb-transition-speed: 200ms;
 
@@ -1177,9 +1177,9 @@ $thumb-radius: 50px;
  $topbar-bg: $topbar-bg-color;
 
 // Height and margin
- $topbar-height: 100px;
- $topbar-margin-top: 10px;
- $topbar-margin-bottom: 0px;
+ $topbar-height: rem-calc(100);
+ $topbar-margin-top: rem-calc(10);
+ $topbar-margin-bottom: rem-calc(0);
 
 // Controlling the styles for the title in the top bar
 // $topbar-title-weight: normal;
@@ -1208,10 +1208,10 @@ $topbar-link-bg-active: #ffffff;
 $topbar-link-bg-active-hover: #ffffff;
  $topbar-link-font-family: $body-font-family;
 // $topbar-link-text-transform: none;
-$topbar-link-padding: 10px 0px;
+$topbar-link-padding: rem-calc(10) rem-calc(0);
 
 // $topbar-button-font-size: 0.75rem;
-$topbar-button-top: 15px;
+$topbar-button-top: rem-calc(15);
 
 // $topbar-dropdown-label-color: #777;
 // $topbar-dropdown-label-text-transform: uppercase;
