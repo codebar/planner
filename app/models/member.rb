@@ -2,6 +2,7 @@ class Member < ActiveRecord::Base
   rolify role_cname: 'Permission', role_table_name: :permission, role_join_table_name: :members_permissions
 
   has_many :bans
+  has_many :eligibility_inquiries
   has_many :session_invitations
   has_many :invitations
   has_many :auth_services
@@ -41,6 +42,10 @@ class Member < ActiveRecord::Base
     return received_student_welcome_email if subscription.student?
     return received_coach_welcome_email if subscription.coach?
     true
+  end
+
+  def send_eligibility_email
+    MemberMailer.eligibility_check(self)
   end
 
   def avatar size=100
