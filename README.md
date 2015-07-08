@@ -19,7 +19,7 @@ First thing you will need, is to install Ruby 2.1.5
 rvm install 2.1.5
 ```
 
-### Using [rbenv](https://github.com/sstephenson/rbenv)
+### Using [rbenv](https://github.com/sstephenson/rbenv) and [ruby-build](https://github.com/sstephenson/ruby-build)
 
 ```bash
 rbenv install 2.1.5
@@ -34,6 +34,8 @@ bundle install --without production
 ```
 
 ### Setup the database
+
+Adjust `config/database.yml` as needed.
 
 ```bash
 bundle exec rake db:create
@@ -68,7 +70,7 @@ bundle exec rake db:seed
 bundle exec rake
 ```
 
-Note: JavaScript acceptance tests are relying on the [Poltegeist](https://github.com/teampoltergeist/poltergeist) driver, which requires
+Note: JavaScript acceptance tests are relying on the [Poltergeist](https://github.com/teampoltergeist/poltergeist) driver, which requires
 [PhantomJS](http://phantomjs.org). For more information about installing PhantomJS, please take a look
 [here](https://github.com/teampoltergeist/poltergeist#installing-phantomjs).
 
