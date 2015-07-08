@@ -2,10 +2,13 @@ source 'https://rubygems.org'
 ruby '2.1.5'
 
 gem 'rails', '4.1.9'
+gem 'puma'
+gem 'foreman'
 
 gem 'haml'
 gem 'sass-rails', '~> 4.0.1'
 gem 'uglifier', '>= 1.3.0'
+gem 'therubyracer'
 gem 'coffee-rails', '~> 4.0.1'
 gem 'jquery-rails'
 gem 'turbolinks'
@@ -17,7 +20,7 @@ gem 'premailer-rails'
 gem 'nokogiri'
 gem 'pickadate-rails'
 gem 'rolify'
-gem "pundit"
+gem 'pundit'
 gem 'carrierwave'
 gem 'carrierwave-ftp', :require => 'carrierwave/storage/sftp'
 gem 'mini_magick'
@@ -59,11 +62,7 @@ group :test do
   gem 'poltergeist'
 end
 
-group :production do
-  gem 'puma'
-  gem 'rails_12factor'
-  gem 'foreman'
-end
+gem 'rails_12factor', group: :production
 
 gem 'jbuilder'
 

@@ -19,3 +19,6 @@ coverage
 TAGS
 .env
 .DS_Store
+
+/vendor/bundle
+/.vagrant
