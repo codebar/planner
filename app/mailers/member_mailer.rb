@@ -38,4 +38,13 @@ class MemberMailer < ActionMailer::Base
       format.html { render 'welcome_coach' }
     end.deliver
   end
+
+  def eligibility_check(member)
+    @member = member
+    subject = "Eligibility confirmation"
+
+    mail(mail_args(member, subject, 'hello@codebar.io')) do |format|
+      format.html { render 'eligibility_check' }
+    end.deliver
+  end
 end

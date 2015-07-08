@@ -6,4 +6,11 @@ class Admin::MembersController < Admin::ApplicationController
     @last_attendance = @invitations.first.sessions if @invitations.any?
     @member_note = MemberNote.new
   end
+
+  def send_eligibility_email
+    @member = Member.find(params[:member_id])
+    @member.send_eligibility_email
+    @member.eligibility_inquiries.create(sent_by_id: current_user.id)
+    redirect_to [:admin, @member], notice: "You have sent an eligibility confirmation request."
+  end
 end
