@@ -33,8 +33,6 @@ gem install bundler
 bundle install --without production
 ```
 
-You can use the `--wihout production` flag to avoid installing the `pg` gem for PostgreSQL. You don't need it anyway on development!
-
 ### Setup the database
 
 ```bash
