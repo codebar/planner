@@ -35,6 +35,8 @@ bundle install --without production
 
 ### Setup the database
 
+Adjust `config/database.yml` as needed.
+
 ```bash
 bundle exec rake db:create
 bundle exec rake db:migrate db:test:prepare
