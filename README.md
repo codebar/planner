@@ -19,7 +19,7 @@ First thing you will need, is to install Ruby 2.1.5
 rvm install 2.1.5
 ```
 
-### Using [rbenv](https://github.com/sstephenson/rbenv)
+### Using [rbenv](https://github.com/sstephenson/rbenv) and [ruby-build](https://github.com/sstephenson/ruby-build)
 
 ```bash
 rbenv install 2.1.5
