@@ -11,19 +11,19 @@ A tool to help manage [codebar.io](http://codebar.io) members and events.
 
 ## Getting started
 
-First thing you will need, is to install Ruby 2.1.5
+First thing you will need, is to install Ruby 2.2.2
 
 ### Using [rvm](https://rvm.io/rvm/install)
 
 ```bash
-rvm install 2.1.5
+rvm install 2.2.2
 ```
 
 ### Using [rbenv](https://github.com/sstephenson/rbenv) and [ruby-build](https://github.com/sstephenson/ruby-build)
 
 ```bash
-rbenv install 2.1.5
-rbenv global 2.1.5
+rbenv install 2.2.2
+rbenv global 2.2.2
 ```
 
 ### Install the gems!

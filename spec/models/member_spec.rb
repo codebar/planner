@@ -39,7 +39,7 @@ describe Member do
       it "#email" do
         Fabricate(:member, email: "sample@email.com")
 
-        expect { Fabricate(:member, email: "sample@email.com") }.to raise_error
+        expect { Fabricate(:member, email: "sample@email.com") }.to raise_error ActiveRecord::RecordInvalid
       end
     end
 
