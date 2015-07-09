@@ -7,6 +7,7 @@ A tool to help manage [codebar.io](http://codebar.io) members and events.
 [![Code Climate](https://codeclimate.com/github/codebar/planner.png)](https://codeclimate.com/github/codebar/planner)
 [![Dependency Status](https://gemnasium.com/codebar/planner.png)](https://gemnasium.com/codebar/planner)
 
+### [We have a Gitter room!](https://gitter.im/codebar/planner)
 
 
 ## Getting started
