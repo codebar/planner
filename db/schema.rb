@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150629202748) do
+ActiveRecord::Schema.define(version: 20150714194446) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,6 +35,16 @@ ActiveRecord::Schema.define(version: 20150629202748) do
   end
 
   add_index "announcements", ["created_by_id"], name: "index_announcements_on_created_by_id", using: :btree
+
+  create_table "attendance_warnings", force: true do |t|
+    t.integer  "member_id"
+    t.integer  "sent_by_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "attendance_warnings", ["member_id"], name: "index_attendance_warnings_on_member_id", using: :btree
+  add_index "attendance_warnings", ["sent_by_id"], name: "index_attendance_warnings_on_sent_by_id", using: :btree
 
   create_table "auth_services", force: true do |t|
     t.integer  "member_id"
