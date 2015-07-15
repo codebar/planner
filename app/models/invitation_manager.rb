@@ -4,13 +4,13 @@ class InvitationManager
     return "The workshop is not invitable" unless session.invitable?
 
     session.chapter.groups.students.map(&:members).flatten.uniq.each do |student|
-      return if student.banned?
+      next if student.banned?
       so = SessionInvitation.create sessions: session, member: student, role: "Student"
       so.email if so.persisted?
     end
 
     session.chapter.groups.coaches.map(&:members).flatten.uniq.each do |coach|
-      return if coach.banned?
+      next if coach.banned?
       invitation = SessionInvitation.new sessions: session, member: coach, role: "Coach"
 
       if invitation.save
