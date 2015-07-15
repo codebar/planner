@@ -60,7 +60,10 @@
           %p
           Sent eligibility check email on
           %em #{l(@member.eligibility_inquiries.last.created_at, format: :website_format)}
-
+        - if @member.attendance_warnings.present?
+          %p
+          Sent attendance warning on
+          %em #{l(@member.attendance_warnings.last.created_at, format: :website_format)}
 
   .stripe.reverse
     .row
