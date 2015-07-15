@@ -47,4 +47,13 @@ class MemberMailer < ActionMailer::Base
       format.html { render 'eligibility_check' }
     end.deliver
   end
+
+  def attendance_warning(member)
+    @member = member
+    subject = "Attendance warning"
+
+    mail(mail_args(member, subject, 'hello@codebar.io')) do |format|
+      format.html { render 'attendance_warning' }
+    end.deliver
+  end
 end
