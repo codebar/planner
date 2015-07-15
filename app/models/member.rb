@@ -43,12 +43,14 @@ class Member < ActiveRecord::Base
     true
   end
 
-  def send_eligibility_email
+  def send_eligibility_email(user)
     MemberMailer.eligibility_check(self)
+    self.eligibility_inquiries.create(sent_by_id: user.id)
   end
 
-  def send_attendance_email
+  def send_attendance_email(user)
     MemberMailer.attendance_warning(self)
+    self.attendance_warnings.create(sent_by_id: user.id)
   end
 
   def avatar size=100
