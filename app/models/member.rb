@@ -1,6 +1,8 @@
 class Member < ActiveRecord::Base
   rolify role_cname: 'Permission', role_table_name: :permission, role_join_table_name: :members_permissions
 
+  has_many :attendance_warnings
+  has_many :bans
   has_many :eligibility_inquiries
   has_many :session_invitations
   has_many :invitations
