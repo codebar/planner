@@ -1,5 +1,5 @@
 class Admin::EventsController < Admin::ApplicationController
-  before_filter :set_event, ony: [:show]
+  before_filter :set_event, only: [:show]
   before_filter :find_event, only: [:edit, :update]
 
   def edit
