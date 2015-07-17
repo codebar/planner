@@ -1,6 +1,7 @@
 class Member < ActiveRecord::Base
   rolify role_cname: 'Permission', role_table_name: :permission, role_join_table_name: :members_permissions
 
+  has_many :attendance_warnings
   has_many :bans
   has_many :eligibility_inquiries
   has_many :session_invitations
@@ -44,8 +45,14 @@ class Member < ActiveRecord::Base
     true
   end
 
-  def send_eligibility_email
+  def send_eligibility_email(user)
     MemberMailer.eligibility_check(self)
+    self.eligibility_inquiries.create(sent_by_id: user.id)
+  end
+
+  def send_attendance_email(user)
+    MemberMailer.attendance_warning(self)
+    self.attendance_warnings.create(sent_by_id: user.id)
   end
 
   def avatar size=100
