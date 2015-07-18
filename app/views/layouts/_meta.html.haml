@@ -4,16 +4,16 @@
 %meta{property: "fb:admins", content: "622070503" }
 %meta{property: "og:type", content: "website" }
 %meta{property: "og:locale", content: "en_GB" }
-%meta{property: "og:site_name", content: "Codebar"}
+%meta{property: "og:site_name", content: "codebar"}
 %meta{name: "keywords", content: "codebar, programming, diversity, html, css, javascript, ruby"}
 %meta{property: "og:image", content: "http://codebar.io/images/logo-square.png"}
 %meta{ property: "og:url", content: "http://codebar.io#{url_for(nil)}" }
 - if @meeting and current_page?(meeting_path(@meeting))
-  %meta{property: "og:title", content: "Codebar - #{@meeting.title}"}
-  %meta{name: "title", content: "Codebar - #{@meeting.title}"}
+  %meta{property: "og:title", content: "codebar - #{@meeting.title}"}
+  %meta{name: "title", content: "codebar - #{@meeting.title}"}
   %meta{property: "og:description", content: "#{@meeting.description}. This month we will be presenting talks from #{all_speakers(@meeting)}." }
   %meta{ name: "description", content: "#{@meeting.description}. This month we will be presenting talks from #{all_speakers(@meeting)}." }
 - else
-  %meta{property: "og:title", content: "Codebar"}
+  %meta{property: "og:title", content: "codebar"}
   %meta{property: "og:description", content: "Making tech more diverse and welcoming by bringing people together and helping teach programming skills."}
   %meta{ name: "description", content: "Making tech more diverse and welcoming by bringing people together and helping teach programming skills."}

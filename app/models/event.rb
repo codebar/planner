@@ -5,7 +5,7 @@ class Event < ActiveRecord::Base
   attr_accessor :begins_at
   resourcify :permissions, role_cname: 'Permission', role_table_name: :permission
 
-  belongs_to :venue, class: Sponsor
+  belongs_to :venue, class_name: 'Sponsor'
   has_many :sponsorships
   has_many :sponsors, through: :sponsorships
   has_many :organisers, -> { where("permissions.name" => "organiser") }, through: :permissions, source: :members

@@ -7,7 +7,7 @@ class Invitation < ActiveRecord::Base
 
   belongs_to :event
   belongs_to :member
-  belongs_to :verified_by, class: Member
+  belongs_to :verified_by, class_name: 'Member'
 
   scope :students, -> { where(role: 'Student') }
   scope :coaches, -> { where(role: 'Coach') }

@@ -7,9 +7,10 @@ module EmailHeaderHelper
     end
   end
 
-  def mail_args(member, subject)
-    { :from => "Codebar.io <meetings@codebar.io>",
+  def mail_args(member, subject, cc = '')
+    { :from => "codebar.io <meetings@codebar.io>",
       :to => member.email,
+      :cc => cc,
       :subject => subject }
   end
 end

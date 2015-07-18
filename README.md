@@ -7,23 +7,24 @@ A tool to help manage [codebar.io](http://codebar.io) members and events.
 [![Code Climate](https://codeclimate.com/github/codebar/planner.png)](https://codeclimate.com/github/codebar/planner)
 [![Dependency Status](https://gemnasium.com/codebar/planner.png)](https://gemnasium.com/codebar/planner)
 
+### [We have a Gitter room!](https://gitter.im/codebar/planner)
 
 
 ## Getting started
 
-First thing you will need, is to install Ruby 2.1.5
+First thing you will need, is to install Ruby 2.2.2
 
 ### Using [rvm](https://rvm.io/rvm/install)
 
 ```bash
-rvm install 2.1.5
+rvm install 2.2.2
 ```
 
-### Using [rbenv](https://github.com/sstephenson/rbenv)
+### Using [rbenv](https://github.com/sstephenson/rbenv) and [ruby-build](https://github.com/sstephenson/ruby-build)
 
 ```bash
-rbenv install 2.1.5
-rbenv global 2.1.5
+rbenv install 2.2.2
+rbenv global 2.2.2
 ```
 
 ### Install the gems!
@@ -33,9 +34,9 @@ gem install bundler
 bundle install --without production
 ```
 
-You can use the `--wihout production` flag to avoid installing the `pg` gem for PostgreSQL. You don't need it anyway on development!
-
 ### Setup the database
+
+Adjust `config/database.yml` as needed.
 
 ```bash
 bundle exec rake db:create
@@ -70,7 +71,7 @@ bundle exec rake db:seed
 bundle exec rake
 ```
 
-Note: JavaScript acceptance tests are relying on the [Poltegeist](https://github.com/teampoltergeist/poltergeist) driver, which requires
+Note: JavaScript acceptance tests are relying on the [Poltergeist](https://github.com/teampoltergeist/poltergeist) driver, which requires
 [PhantomJS](http://phantomjs.org). For more information about installing PhantomJS, please take a look
 [here](https://github.com/teampoltergeist/poltergeist#installing-phantomjs).
 
