@@ -85,6 +85,16 @@ ActiveRecord::Schema.define(version: 20150714194446) do
     t.integer "event_id"
   end
 
+  create_table "contacts", force: true do |t|
+    t.integer  "sponsor_id"
+    t.integer  "member_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "contacts", ["member_id"], name: "index_contacts_on_member_id", using: :btree
+  add_index "contacts", ["sponsor_id"], name: "index_contacts_on_sponsor_id", using: :btree
+
   create_table "course_invitations", force: true do |t|
     t.integer  "course_id"
     t.integer  "member_id"
@@ -392,9 +402,12 @@ ActiveRecord::Schema.define(version: 20150714194446) do
     t.datetime "updated_at"
     t.string   "avatar"
     t.string   "website"
-    t.integer  "seats",             default: 15
+    t.integer  "seats",              default: 15
     t.string   "image_cache"
     t.integer  "number_of_coaches"
+    t.string   "email"
+    t.string   "contact_first_name"
+    t.string   "contact_surname"
   end
 
   create_table "sponsorships", force: true do |t|
