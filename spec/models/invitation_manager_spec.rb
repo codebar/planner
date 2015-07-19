@@ -21,7 +21,7 @@ describe InvitationManager do
         expect(SessionInvitation).to receive(:create).with(sessions: session, member: student, role: "Student").and_call_original
       end
 
-      manage.send_session_emails(session)
+      manager.send_session_emails(session)
     end
 
     it 'creates an invitation for each coach' do
