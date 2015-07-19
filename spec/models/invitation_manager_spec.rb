@@ -2,41 +2,70 @@ require 'spec_helper'
 
 describe InvitationManager do
 
-  let(:chapter) { Fabricate(:chapter) }
-  let(:students) { Fabricate(:students, chapter: chapter) }
-  let(:coaches) { Fabricate(:coaches, chapter: chapter) }
-  let!(:session) { Fabricate(:sessions, chapter: chapter) }
+  let(:chapter)   { Fabricate(:chapter) }
+  let(:students)  { Fabricate(:students, chapter: chapter) }
+  let(:coaches)   { Fabricate(:coaches, chapter: chapter) }
+  let!(:session)  { Fabricate(:sessions, chapter: chapter) }
 
-  let(:student) { Fabricate(:student, groups: [ students ]) }
+  let(:student)   { Fabricate(:student, groups: [ students ]) }
 
-  it "#send_session_emails" do
-    expect(chapter.groups).to receive(:students).and_return([students])
-    expect(chapter.groups).to receive(:coaches).and_return([coaches])
+  describe '#send_session_emails' do
+    subject(:manager) { InvitationManager.new }
 
-    expect(students.members.count).to be > 0
-    students.members.each do |student|
-      expect(SessionInvitation).to receive(:create).with(sessions: session, member: student, role: "Student").and_call_original
+    it 'creates an invitation for each student' do
+      expect(chapter.groups).to receive(:students).and_return([students])
+
+      expect(students.members.count).to be > 0
+
+      students.members.each do |student|
+        expect(SessionInvitation).to receive(:create).with(sessions: session, member: student, role: "Student").and_call_original
+      end
+
+      manage.send_session_emails(session)
     end
 
-    InvitationManager.new.send_session_emails session
-  end
+    it 'creates an invitation for each coach' do
+      allow(chapter.groups).to receive_messages(coaches: [coaches])
 
-  it "Sends emails when a SessionInvitation is created" do
-    expect(chapter.groups).to receive(:students).and_return([students])
-    expect(chapter.groups).to receive(:coaches).and_return([coaches])
+      manager.send_session_emails(session)
 
-    expect {
-      InvitationManager.new.send_session_emails(session)
-    }.to change { ActionMailer::Base.deliveries.count }
-  end
+      coach_invites = SessionInvitation.where(role: 'Coach')
 
-  it "Doesn't send emails when it's not created" do
-    expect(chapter.groups).to receive(:students).and_return([students])
-    expect(SessionInvitation).to receive(:create).at_least(:once).and_return(SessionInvitation.new)
+      expect(coach_invites.count).to eq 5
+    end
 
-    expect {
-      InvitationManager.new.send_session_emails(session)
-    }.not_to change { ActionMailer::Base.deliveries.count }
+    it 'does not invite banned coaches' do
+      banned_coach = coaches.members.second
+
+      allow(banned_coach).to receive_messages(banned?: true)
+      allow(chapter.groups).to receive_messages(coaches: [coaches])
+
+      manager.send_session_emails(session)
+
+      coach_invites = SessionInvitation.where(role: 'Coach')
+
+      expect(coach_invites.count).to eq 4
+
+      expect(coach_invites.where(member: banned_coach)).to be_empty
+    end
+
+    it "Sends emails when a SessionInvitation is created" do
+      expect(chapter.groups).to receive(:students).and_return([students])
+      expect(chapter.groups).to receive(:coaches).and_return([coaches])
+
+      expect {
+        InvitationManager.new.send_session_emails(session)
+      }.to change { ActionMailer::Base.deliveries.count }
+    end
+
+    it "Doesn't send emails when it's not created" do
+      expect(chapter.groups).to receive(:students).and_return([students])
+      expect(SessionInvitation).to receive(:create).at_least(:once).and_return(SessionInvitation.new)
+
+      expect {
+        InvitationManager.new.send_session_emails(session)
+      }.not_to change { ActionMailer::Base.deliveries.count }
+    end
   end
 
   it "#send_course_emails" do
