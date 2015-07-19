@@ -15,6 +15,9 @@ class InvitationManager
 
       if invitation.save
         SessionInvitationMailer.invite_coach(session, coach, invitation).deliver
+        Rails.logger.debug("Invitation to #{coach.email} sent")
+      else
+        Rails.logger.debug("Invitation to #{coach.email} not sent as invitation could not be saved")
       end
     end
   end
