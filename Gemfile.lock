@@ -323,6 +323,8 @@ GEM
     sdoc (0.4.1)
       json (~> 1.7, >= 1.7.7)
       rdoc (~> 4.0)
+    shoulda-matchers (2.8.0)
+      activesupport (>= 3.0.0)
     simple_form (3.1.0)
       actionpack (~> 4.0)
       activemodel (~> 4.0)
@@ -417,6 +419,7 @@ DEPENDENCIES
   rspec-rails
   sass-rails (~> 5.0.1)
   sdoc
+  shoulda-matchers
   simple_form
   turbolinks
   tzinfo-data
