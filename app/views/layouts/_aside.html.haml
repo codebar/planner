@@ -13,6 +13,7 @@
     - if current_user.is_admin?
       %li=link_to "New chapter", new_admin_chapter_path
       %li=link_to "New group", new_admin_group_path
+      %li=link_to "New event", new_admin_event_path
       %li= link_to "Admin Dashboard", admin_root_path
     - if has_permission?
       %li=link_to "New workshop", new_admin_workshop_path

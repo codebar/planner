@@ -11,7 +11,6 @@ class Admin::EventsController < Admin::ApplicationController
     if @event.save
       redirect_to [:admin, @event], notice: 'Event successfully created.'
     else
-      binding.pry
       render 'new', notice: 'Error'
     end
   end
