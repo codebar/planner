@@ -2,43 +2,4 @@
   .row
     .medium-12.columns
       %h2 New Sponsor
-      = simple_form_for [:admin, @sponsor], method: :post do |f|
-        .row
-          .large-12.columns
-            .row
-              .large-4.columns
-                = f.input :name
-              .large-4.columns
-                = f.input :website, as: :url 
-              
-        .row
-          .large-12.columns
-            .large-3.columns
-              = f.input :avatar, as: :file
-              = f.hidden_field :image_cache           
-            .large-2.columns
-              = f.input :seats, label: "Student Spots"
-            .large-2.columns
-              = f.input :number_of_coaches, label: "Coaches Spots"
-        .row
-          .large-6.columns
-            .panel
-              %strong Address
-              = f.simple_fields_for :address do |a|
-                = a.input :flat, label: "Line 1"
-                = a.input :street, label: "Line 2"
-                = a.input :postal_code
-                = a.input :city
-          .large-6.columns
-            .panel
-              %strong Contact Details
-              %p Complete the fields below and/or select a member(s)    
-              = f.collection_select :members, Member.all, :id, :full_name, 
-                { selected: @sponsor.members.map(&:id) }, { multiple: true }
-              = f.input :email
-              = f.input :contact_first_name, label: "Contact First Name"
-              = f.input :contact_surname, label: "Contact Surname"
-
-        .row
-          .large-6.columns
-            = f.submit "Create sponsor", class: "button round"
+      = render 'form'

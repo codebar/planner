@@ -7,7 +7,11 @@ A tool to help manage [codebar.io](http://codebar.io) members and events.
 [![Code Climate](https://codeclimate.com/github/codebar/planner.png)](https://codeclimate.com/github/codebar/planner)
 [![Dependency Status](https://gemnasium.com/codebar/planner.png)](https://gemnasium.com/codebar/planner)
 
-### [We have a Gitter room!](https://gitter.im/codebar/planner)
+If you are considering making a PR, please take a look at the Waffle board to see if someone else has already started work on an existing issue.
+
+#### [Waffle board](https://waffle.io/codebar/planner)
+
+#### [Gitter room](https://gitter.im/codebar/planner)
 
 
 ## Getting started
