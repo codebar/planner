@@ -14,7 +14,7 @@ class Event < ActiveRecord::Base
 
   has_many :invitations
 
-  validates :name, :slug, :info, :schedule, :description, :coach_description, presence: true
+  validates :name, :slug, :info, :schedule, :description, presence: true
 
   validate :invitability, if: :invitable?
 

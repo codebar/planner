@@ -2,6 +2,20 @@ class Admin::EventsController < Admin::ApplicationController
   before_filter :set_event, only: [:show]
   before_filter :find_event, only: [:edit, :update]
 
+  def new
+    @event = Event.new
+  end
+
+  def create
+    @event = Event.new(event_params)
+    if @event.save
+      redirect_to [:admin, @event], notice: 'Event successfully created.'
+    else
+      binding.pry
+      render 'new', notice: 'Error'
+    end
+  end
+
   def edit
   end
 
@@ -41,7 +55,7 @@ class Admin::EventsController < Admin::ApplicationController
   end
 
   def event_params
-    params.require(:event).permit(:name, :slug, :date_and_time, :begins_at, :ends_at, :description, :schedule, :venue_id, :coach_spaces, :student_spaces, :email, :announce_only, :tito_url, :invitable, :student_questionnaire, :coach_questionnaire, sponsor_ids: [], chapter_ids: [])
+    params.require(:event).permit(:name, :slug, :date_and_time, :begins_at, :ends_at, :description, :info, :schedule, :venue_id, :coach_spaces, :student_spaces, :email, :announce_only, :tito_url, :invitable, :student_questionnaire, :coach_questionnaire, sponsor_ids: [], chapter_ids: [])
   end
 
   def find_event
