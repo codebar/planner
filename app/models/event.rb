@@ -58,12 +58,10 @@ class Event < ActiveRecord::Base
   end
 
   def invitability
-      errors.add(:coach_questionnaire, "must be set") unless self.coach_questionnaire.present?
-      errors.add(:student_questionnaire, "must be set") unless self.student_questionnaire.present?
       errors.add(:coach_spaces, "must be set") unless self.coach_spaces.present?
       errors.add(:student_space, "must be set") unless self.student_spaces.present?
       errors.add(:chapters, "at least one must be selected") unless self.chapters.any?
-      errors.add(:invitable, "Fill in all invitations details to make the event invitable") unless self.coach_questionnaire.present? and self.student_questionnaire.present? and self.coach_spaces.present? and self.student_spaces.present? and self.chapters.any?
+      errors.add(:invitable, "Fill in all invitations details to make the event invitable") unless self.coach_spaces.present? and self.student_spaces.present? and self.chapters.any?
   end
 
 end
