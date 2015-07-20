@@ -38,6 +38,7 @@ gem 'gibbon', '~> 1.1.5'
 
 group :development do
   #  gem 'letter_opener'
+  gem 'better_errors'
 end
 
 group :development, :test do

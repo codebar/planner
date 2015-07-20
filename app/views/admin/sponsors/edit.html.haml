@@ -2,32 +2,4 @@
   .row
     .medium-12.columns
       %h2 Edit Sponsor
-      = simple_form_for [:admin, @sponsor], method: :put do |f|
-        .row
-          .large-6.columns
-            .row
-              .large-12.columns
-            = f.input :name
-            .row
-              .large-12.columns
-                = f.input :avatar, as: :file
-                = f.hidden_field :image_cache
-            .row
-              .large-12.columns
-                = f.input :website, as: :url
-            .row
-              .large-3.columns
-                = f.input :seats, label: "Spots"
-              .large-3.columns
-                = f.input :number_of_coaches, label: "Coaches Spots"
-          .large-6.columns
-            .panel
-              %strong Address
-              = f.simple_fields_for :address do |a|
-                = a.input :flat, label: "Line 1"
-                = a.input :street, label: "Line 2"
-                = a.input :postal_code
-                = a.input :city
-        .row
-          .large-6.columns
-            = f.submit "Save changes", class: "button round"
+      = render 'form'
