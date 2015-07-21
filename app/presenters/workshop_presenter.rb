@@ -33,6 +33,10 @@ class WorkshopPresenter < EventPresenter
     "Students \n\n" + students_checklist + "\n\n\n\n Coaches \n\n" + coaches_checklist
   end
 
+  def attendees_emails
+    model.attendances.map {|m| m.member.email if m.member }.join(', ')
+  end
+
   def time
     I18n.l(model.time, format: :time)
   end

@@ -3,7 +3,7 @@ class Admin::WorkshopsController < Admin::ApplicationController
   include  Admin::WorkshopConcerns
 
   before_filter :set_workshop_by_id, only: [:show, :edit]
-  before_filter :set_and_decorate_workshop, only: [:attendees_checklist]
+  before_filter :set_and_decorate_workshop, only: [:attendees_checklist, :attendees_emails]
 
   def index
     @chapter = Chapter.find(params[:chapter_id])
@@ -58,6 +58,12 @@ class Admin::WorkshopsController < Admin::ApplicationController
 
   def attendees_checklist
     return render text: @workshop.attendees_checklist if request.format.text?
+
+    redirect_to admin_workshop_path(@workshop)
+  end
+
+  def attendees_emails
+    return render text: @workshop.attendees_emails if request.format.text?
 
     redirect_to admin_workshop_path(@workshop)
   end

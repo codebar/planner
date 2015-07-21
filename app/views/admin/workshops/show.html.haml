@@ -20,7 +20,7 @@
   =link_to admin_workshop_attendees_checklist_path(@workshop, format: 'text'), title: "Attendee checklist", class: 'item' do
     %i.fa.fa-list-ul
     %label Attendees
-  =link_to '#', title: "Emails", class: 'item' do
+  =link_to admin_workshop_attendees_emails_path(@workshop, format: 'text'), title: "Attendee emails", class: 'item' do
     %i.fa.fa-at
     %label Emails
 
