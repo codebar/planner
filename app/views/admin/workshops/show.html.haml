@@ -17,12 +17,13 @@
   =link_to admin_workshop_path(format: 'csv'), class: 'item', title: "CSV for labels" do
     %i.fa.fa-users
     %label Labels
-  =link_to  admin_workshop_students_checklist_path(@workshop, format: 'text'), title: "Student checklist", class: 'item' do
+  =link_to admin_workshop_attendees_checklist_path(@workshop, format: 'text'), title: "Attendee checklist", class: 'item' do
     %i.fa.fa-list-ul
-    %label Students
-  =link_to  admin_workshop_coaches_checklist_path(@workshop, format: 'text'), title: "Coach checklist", class: 'item' do
-    %i.fa.fa-list-ul
-    %label Coaches
+    %label Attendees
+  =link_to '#', title: "Emails", class: 'item' do
+    %i.fa.fa-at
+    %label Emails
+
 
 %section
   .stripe.reverse
