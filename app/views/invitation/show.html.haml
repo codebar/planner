@@ -17,12 +17,13 @@
   .row
     .large-12.columns
       %br
-      .alert-box.info{ "data-alert" => true }
-        =link_to "#", class: 'close' do
-          &times;
-        %ul.no-bullet
-          - @announcements.each do |announcement|
-            %li= dot_markdown(announcement.message)
+        - if @announcements.present?
+          .alert-box.info{ "data-alert" => true }
+            =link_to "#", class: 'close' do
+              &times;
+            %ul.no-bullet
+              - @announcements.each do |announcement|
+                %li= dot_markdown(announcement.message)
   %br
   .row
     .large-8.columns
@@ -132,4 +133,3 @@
               .small-10.columns
                 =invitation.member.full_name
             %br
-
