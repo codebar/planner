@@ -3,7 +3,7 @@ class Admin::WorkshopsController < Admin::ApplicationController
   include  Admin::WorkshopConcerns
 
   before_filter :set_workshop_by_id, only: [:show, :edit]
-  before_filter :set_and_decorate_workshop, only: [:coaches_checklist, :students_checklist]
+  before_filter :set_and_decorate_workshop, only: [:attendees_checklist, :attendees_emails]
 
   def index
     @chapter = Chapter.find(params[:chapter_id])
@@ -56,14 +56,14 @@ class Admin::WorkshopsController < Admin::ApplicationController
     redirect_to admin_workshop_path(@workshop), notice: "Workshops updated succesfully"
   end
 
-  def coaches_checklist
-    return render text: @workshop.coaches_checklist if request.format.text?
+  def attendees_checklist
+    return render text: @workshop.attendees_checklist if request.format.text?
 
     redirect_to admin_workshop_path(@workshop)
   end
 
-  def students_checklist
-    return render text: @workshop.students_checklist if request.format.text?
+  def attendees_emails
+    return render text: @workshop.attendees_emails if request.format.text?
 
     redirect_to admin_workshop_path(@workshop)
   end
@@ -99,8 +99,6 @@ class Admin::WorkshopsController < Admin::ApplicationController
   def workshop_id
     params[:workshop_id] || params[:id]
   end
-
-  private
 
   def set_host(host_id)
     return unless host_id

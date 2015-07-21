@@ -29,16 +29,12 @@ class WorkshopPresenter < EventPresenter
     CSV.generate {|csv| attendee_array.each { |a| csv << a } }
   end
 
-  def students_checklist
-    model.attending_students.order('note asc').each_with_index.map do |a, pos|
-      "#{member_info(a.member, pos)}\t\t\t#{note(a)}"
-    end.join("\n\n")
+  def attendees_checklist
+    "Students \n\n" + students_checklist + "\n\n\n\n Coaches \n\n" + coaches_checklist
   end
 
-  def coaches_checklist
-    model.attending_coaches.each_with_index.map do |a, pos|
-      "#{member_info(a.member, pos)}"
-    end.join("\n\n")
+  def attendees_emails
+    model.attendances.map {|m| m.member.email if m.member }.compact.join(', ')
   end
 
   def time
@@ -59,6 +55,18 @@ class WorkshopPresenter < EventPresenter
   end
 
   private
+
+  def students_checklist
+    model.attending_students.order('note asc').each_with_index.map do |a, pos|
+      "#{member_info(a.member, pos)}\t\t\t#{note(a)}"
+    end.join("\n\n")
+  end
+
+  def coaches_checklist
+    model.attending_coaches.each_with_index.map do |a, pos|
+      "#{member_info(a.member, pos)}"
+    end.join("\n\n")
+  end
 
   def attendee_array
     model.attendances.map do |i|

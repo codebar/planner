@@ -119,8 +119,8 @@ Planner::Application.routes.draw do
       post :sponsor
       delete 'sponsor', action: 'destroy_sponsor', as: :destroy_sponsor
       post :invite
-      get 'students_checklist'
-      get 'coaches_checklist'
+      get 'attendees_checklist'
+      get 'attendees_emails'
 
       resource :invitations, only: [:update]
       resources :invitations, only: [:update]
