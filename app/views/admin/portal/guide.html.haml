@@ -1,0 +1,27 @@
+%section#banner
+  .row
+    .medium-12.columns
+      %h2 Using the codebar application
+
+      %h3 Managing admin privileges
+
+      %p To manage roles, we use the Rolify gem. At the moment, the only way to add and remove privileges is through Rails console. There are two types of special roles: organisers and admins.
+
+      %p Organisers can create and modify sponsors and workshops only for chapters that they are permissioned. To make a member into an organiser of a chapter,
+
+      = raw @markdown.render("`Member.find(:id).add_role(:organiser, Chapter.find(:id))`")
+
+      %p Admins can create and modify sponsors, workshops, and events across all chapters. Admins can also create new chapters. To permission a member as an admin,
+      = raw @markdown.render("`Member.find(:id).add_role(:admin)`")
+
+      %p Similarly, to remove privileges,
+
+      = raw @markdown.render("`Member.find(:id).remove_role(:organiser)`")
+
+      %p You can also check if a member has permissions. The second argument for organiser roles can be a specific chapter or :any.
+
+      = raw @markdown.render("`Member.find(:id).has_role?(:organiser, :any)`")
+
+      %p You can query all of the organisers from a Chapter as well.
+
+      = raw @markdown.render("`Member.with_role(:organiser, Chapter.find(:13))`")
