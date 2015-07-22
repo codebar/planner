@@ -3,7 +3,7 @@ class Admin::SponsorsController < Admin::ApplicationController
   before_filter :set_sponsor, only: [ :show, :edit, :update]
 
   def index
-    @sponsors = Sponsor.joins(:sponsor_sessions).all
+    @sponsors = Sponsor.all.order(:name)
   end
 
   def new
@@ -33,7 +33,7 @@ class Admin::SponsorsController < Admin::ApplicationController
 
   private
   def sponsor_params
-    params.require(:sponsor).permit(:name, :avatar, :website, :seats, :number_of_coaches, :email, 
+    params.require(:sponsor).permit(:name, :avatar, :website, :seats, :number_of_coaches, :email,
       :contact_first_name, :contact_surname, :member_id, address_attributes: [:flat, :street, :postal_code, :city])
   end
 
