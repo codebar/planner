@@ -85,6 +85,7 @@ Planner::Application.routes.draw do
   namespace :admin do
     root "portal#index"
 
+    get '/guide' => "portal#guide", as: :guide
     resources :jobs, only: [ :index, :show] do
       get 'approve'
     end

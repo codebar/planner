@@ -285,6 +285,7 @@ GEM
     rb-inotify (0.9.5)
       ffi (>= 0.5.0)
     rdoc (4.2.0)
+    redcarpet (3.3.2)
     request_store (1.2.0)
     rest-client (1.8.0)
       http-cookie (>= 1.0.2, < 2.0)
@@ -413,6 +414,7 @@ DEPENDENCIES
   pundit
   rails (= 4.1.12)
   rails_12factor
+  redcarpet
   rolify
   rspec-collection_matchers
   rspec-its
