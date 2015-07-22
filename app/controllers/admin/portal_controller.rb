@@ -10,4 +10,8 @@ class Admin::PortalController < Admin::ApplicationController
     @groups = Group.all
     @subscribers = Subscription.last(20).reverse
   end
+
+  def guide
+    @markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, fenced_code_blocks: true, hard_wrap: true)
+  end
 end

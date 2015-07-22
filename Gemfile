@@ -33,6 +33,7 @@ gem 'tzinfo-data'
 gem 'icalendar'
 
 gem 'chosen-rails'
+gem 'redcarpet'
 
 gem 'gibbon', '~> 1.1.5'
 

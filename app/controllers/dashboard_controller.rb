@@ -15,7 +15,6 @@ class DashboardController < ApplicationController
     @user = MemberPresenter.new(current_user)
     @ordered_events = upcoming_events_for_user.map.inject({}) { |hash, (key, value)| hash[key] = EventPresenter.decorate_collection(value); hash}
     @announcements = current_user.announcements.active
-
   end
 
   def code
