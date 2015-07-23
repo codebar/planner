@@ -67,8 +67,12 @@ class ApplicationController < ActionController::Base
     redirect_to root_path, notice: "You can't be here" unless logged_in? and current_user.has_role?(:admin)
   end
 
+  def authenticate_admin_or_organiser!
+    redirect_to root_path, notice: "You can't be here" unless manager?
+  end
+
   def manager?
-    logged_in? and (current_user.is_admin? or current_user.is_organiser?)
+    logged_in? and (current_user.is_admin? or current_user.has_role?(:organiser, :any))
   end
 
   helper_method :manager?
