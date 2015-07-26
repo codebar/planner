@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150714194446) do
+ActiveRecord::Schema.define(version: 20150725165534) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -293,6 +293,13 @@ ActiveRecord::Schema.define(version: 20150714194446) do
     t.string   "slug"
   end
 
+  create_table "member_contacts", force: true do |t|
+    t.integer  "sponsor_id"
+    t.integer  "member_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "member_notes", force: true do |t|
     t.integer  "member_id"
     t.integer  "author_id"
@@ -317,7 +324,6 @@ ActiveRecord::Schema.define(version: 20150714194446) do
     t.string   "mobile"
     t.boolean  "received_coach_welcome_email",   default: false
     t.boolean  "received_student_welcome_email", default: false
-    t.boolean  "confirmed_eligibility"
   end
 
   create_table "members_permissions", id: false, force: true do |t|

@@ -3,8 +3,8 @@ class Sponsor < ActiveRecord::Base
   has_one :address
   has_many :sponsor_sessions
   has_many :sessions, through: :sponsor_sessions
-  has_many :contacts
-  has_many :members, through: :contacts
+  has_many :member_contacts
+  has_many :contacts, through: :member_contacts, class_name: 'Member', foreign_key: 'member_id'
 
   validates :name, :address, :avatar, :website, :seats, presence: true
   validate :website_is_url 
@@ -13,7 +13,7 @@ class Sponsor < ActiveRecord::Base
 
   mount_uploader(:avatar, AvatarUploader) if Rails.env.production?
 
-  accepts_nested_attributes_for :address
+  accepts_nested_attributes_for :address, :contacts
 
   def coach_spots
     number_of_coaches || (seats/2.0).round

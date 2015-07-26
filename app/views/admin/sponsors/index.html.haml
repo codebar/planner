@@ -1,17 +1,27 @@
 %section#banner
   .row
     %h1 Sponsors
-  - @sponsors.each do |sponsor|
+    .row
+      %hr
+      .large-3.columns
+        NAME / ADDRESS
+      .large-4.columns
+        LOGO
+      .large-3.columns
+        CONTACT(s)
+  - @sponsors.each do |sponsor|  
     .row
       %hr
       .large-3.columns
         = sponsor.name
-      .large-4.columns
-        = AddressDecorator.new(sponsor.address).to_html
+        %p
+          = AddressDecorator.new(sponsor.address).to_html
       .large-4.columns
         = image_tag sponsor.avatar, class: 'sponsor'
+      .large-3.columns
+        %p
+          = SponsorDecorator.new(sponsor).contact_info
+
       .large-1.columns
         = link_to "Edit", edit_admin_sponsor_path(sponsor), class: 'button round small'
-
-
   %br
