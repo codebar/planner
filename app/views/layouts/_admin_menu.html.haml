@@ -1,0 +1,16 @@
+%li
+  %label Admin Menu
+%li= link_to "Admin Dashboard", admin_root_path
+%li=link_to "View Feedback", coach_feedback_index_path
+- if has_permission?
+  %li=link_to "New workshop", new_admin_workshop_path
+  %li=link_to "New sponsor", new_admin_sponsor_path
+%li=link_to "New event", new_admin_event_path
+%li=link_to "New chapter", new_admin_chapter_path
+%li=link_to "New group", new_admin_group_path
+%li=link_to "Review jobs (#{jobs_pending_approval})", admin_jobs_path
+- if current_user.has_role?(:organiser, :any)
+  %li
+    %label My Chapters
+  - current_user.organised_chapters.each do |chapter|
+    %li=link_to chapter.name, admin_chapter_path(chapter)
