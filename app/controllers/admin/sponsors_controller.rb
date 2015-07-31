@@ -16,9 +16,8 @@ class Admin::SponsorsController < Admin::ApplicationController
 
   def create
     @sponsor = Sponsor.new(sponsor_params)
-    authorize @sponsor
     @sponsor.build_address unless @sponsor.address.present?
-    @sponsor.contacts.build
+    authorize @sponsor
     if @sponsor.save
       flash[:notice] = "Sponsor #{@sponsor.name} created"
       redirect_to [:admin, @sponsor]
