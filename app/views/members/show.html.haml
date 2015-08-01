@@ -2,4 +2,11 @@
 %section#banner
   .row
     .large-12.columns
+      .row
+        .large-12.columns.avatar-container
+          =image_tag current_user.avatar(75)
+          %span
+            You can change your avatar at
+            =link_to('gravatar.com.', 'http://en.gravatar.com/')
+            You may need to sign up with the same email you use for codebar.
       = render partial: 'members/form', locals: { submit_text: "Update" }
