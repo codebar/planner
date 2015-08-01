@@ -1,4 +1,4 @@
 class Contact < ActiveRecord::Base
-  belongs_to :member
-  belongs_to :sponsor
+  has_many :member_contacts
+  has_many :sponsors, through: :member_contacts
 end
