@@ -11,8 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150725165534) do
-
+ActiveRecord::Schema.define(version: 20150801134457) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -24,6 +23,8 @@ ActiveRecord::Schema.define(version: 20150725165534) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "city"
+    t.string   "latitude"
+    t.string   "longitude"
   end
 
   create_table "announcements", force: true do |t|
@@ -87,12 +88,12 @@ ActiveRecord::Schema.define(version: 20150725165534) do
 
   create_table "contacts", force: true do |t|
     t.integer  "sponsor_id"
-    t.integer  "member_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "member_contact_id"
   end
 
-  add_index "contacts", ["member_id"], name: "index_contacts_on_member_id", using: :btree
+  add_index "contacts", ["member_contact_id"], name: "index_contacts_on_member_contact_id", using: :btree
   add_index "contacts", ["sponsor_id"], name: "index_contacts_on_sponsor_id", using: :btree
 
   create_table "course_invitations", force: true do |t|

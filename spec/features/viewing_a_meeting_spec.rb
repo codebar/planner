@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-feature 'viewing a meeeting' do
+feature 'viewing a meeting' do
 
   let!(:meeting) { create_meeting }
 
