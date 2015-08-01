@@ -55,8 +55,8 @@ describe Admin::SponsorsController, type: :controller do
           }
         }.to change(Sponsor, :count).by(1)
       end
-      
-        it "latitude and longitude for its address" do
+
+      it "latitude and longitude for its address" do
         login admin
         request.env["HTTP_REFERER"] = "/admin/member/3"
 

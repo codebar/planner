@@ -6,7 +6,11 @@ class AddressDecorator < Draper::Decorator
   end
 
   def for_map
-    [ flat, street, city, postal_code ].delete_if(&:empty?).join(",+")
+    if latitude.present? && longitude.present?
+      [latitude,longitude].join(",")
+    else
+      [ flat, street, city, postal_code ].delete_if(&:empty?).join(",+")
+    end
   end
 
   def to_s
