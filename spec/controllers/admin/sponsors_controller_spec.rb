@@ -55,6 +55,20 @@ describe Admin::SponsorsController, type: :controller do
           }
         }.to change(Sponsor, :count).by(1)
       end
+      
+        it "latitude and longitude for its address" do
+        login admin
+        request.env["HTTP_REFERER"] = "/admin/member/3"
+
+        expect {
+          post :create, sponsor: { 
+            name: 'name', email: 'test@test.com', contact_first_name: 'john',
+            contact_surname: 'smith', website: 'https://example.com', seats: 40, 
+            address: Fabricate(:address, latitude: "54.47474", longitude: "-0.12345"), 
+            avatar: avatar, members: []
+          }
+        }.to change(Sponsor, :count).by(1)
+      end
 
       it "members as contacts and contact info" do
         login admin
