@@ -2,7 +2,11 @@ class AddressDecorator < Draper::Decorator
   delegate_all
 
   def to_html
-    [ flat, street, "#{city}, #{postal_code}" ].compact.delete_if(&:empty?).join("<br/>").html_safe
+    lat = latitude.present? ? "Latitude: #{latitude}" : nil
+    lng =  longitude.present? ? "Longitude: #{longitude}" : nil
+
+    [ flat, street, "#{city}, #{postal_code}", lat, lng ]
+      .compact.delete_if(&:empty?).join("<br/>").html_safe
   end
 
   def for_map

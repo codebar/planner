@@ -30,6 +30,9 @@
     .large-6.columns
       .panel
         %strong Contact Details
+        %p Complete the fields below and/or select a member(s)
+        = f.collection_select :contact_ids, Member.all, :id, :full_name, 
+          { selected: @sponsor.contacts.map(&:id) }, { multiple: true }
         = f.input :email
         = f.input :contact_first_name, label: "Contact First Name"
         = f.input :contact_surname, label: "Contact Surname"
