@@ -1,6 +1,8 @@
 Planner::Application.routes.draw do
   root "dashboard#show"
 
+  match "/404" => "errors#error404", via: [ :get, :post, :patch, :delete ]
+
   scope controller: 'dashboard' do
     get 'code-of-conduct', action: 'code'
     get 'coaches', action: 'wall_of_fame'
