@@ -11,12 +11,9 @@
     .medium-6.columns
       %h4
         Students
-        %label.label.round.secondary #{@attending_students.count}#{(" of " + @event.venue.seats.to_s) if @event.venue.present?}
       =render partial: 'admin/events/attendances', locals: { invitations: @attending_students }
     .medium-6.columns
       .row
         %h4
           Coaches
-          %label.label.round.secondary #{@event.attending_coaches.count}#{(" of " + @event.venue.coach_spots.to_s) if @event.venue.present?}
       =render partial: 'admin/events/attendances', locals: { invitations: @attending_coaches }
-
