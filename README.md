@@ -11,7 +11,7 @@ If you are considering making a PR, please take a look at the Waffle board to se
 
 #### [Waffle board](https://waffle.io/codebar/planner)
 
-#### [Gitter room](https://gitter.im/codebar/planner)
+#### [We're on Slack!](https://codebar-slack.herokuapp.com)
 
 
 ## Getting started
