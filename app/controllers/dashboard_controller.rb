@@ -35,6 +35,9 @@ class DashboardController < ApplicationController
     end
   end
 
+  def participant_guide
+  end
+
   private
 
   def attendance_stats_by_coach
