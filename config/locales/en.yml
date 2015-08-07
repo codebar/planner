@@ -128,7 +128,7 @@ en:
         a_html: "Yes, you should bring a laptop. If you don't have one %{link} as we may be able to help."
       keyboard:
         q: "Do I need to bring a keyboard?"
-        a_html: "A keyboard would help as you will spend the entire day pairing with someone on your latop. If you don't have a keyboard, %{link} and we'll try to organise something for you."
+        a_html: "A keyboard would help as you will spend the entire day pairing with someone on your laptop. If you don't have a keyboard, %{link} and we'll try to organise something for you."
       travel_costs:
         q: "I will be commuting. Can you help with my travel expenses?"
         a: "We will be offering some travel grants. Just make sure you fill in the questionnaire after you RSVP and we will get in touch."
