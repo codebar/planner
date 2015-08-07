@@ -8,6 +8,7 @@ Planner::Application.routes.draw do
     get 'faq', action: 'faq'
     get 'attendance-policy', action: 'attendance_policy'
     get 'dashboard', action: 'dashboard'
+    get 'participant-guide', action: 'participant_guide'
   end
 
   resource :member, only: [:new, :edit, :update, :patch] do

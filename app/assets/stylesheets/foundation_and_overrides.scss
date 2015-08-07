@@ -1394,3 +1394,16 @@ a {
     margin-left: 0.5rem;
   }
 }
+
+.underline {
+  text-decoration: underline;
+  display: inline-block;
+}
+
+#attendance:before, #eligibility:before {
+  display: block;
+  content: " ";
+  margin-top: -105px;
+  height: 105px;
+  visibility: hidden;
+}
