@@ -6,7 +6,12 @@ feature 'a member can' do
     let(:invitation) { Fabricate(:session_invitation) }
     let(:invitation_route) { invitation_path(invitation) }
 
+    let(:member) { Fabricate(:member) }
     let(:set_no_available_slots) { invitation.sessions.host.update_attribute(:seats, 0) }
+
+    before(:each) do
+      login(member)
+    end
 
     it_behaves_like "invitation route"
 
