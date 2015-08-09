@@ -79,7 +79,15 @@ class Member < ActiveRecord::Base
     "http://twitter.com/#{twitter}"
   end
 
+  def has_existing_RSVP_on date
+    invitations_on(date).count > 0
+  end
+
   private
+
+  def invitations_on date
+    session_invitations.joins(:sessions).where('sessions.date_and_time BETWEEN ? AND ?', date.beginning_of_day, date.end_of_day).where(attending: true)
+  end
 
   def md5_email
     Digest::MD5.hexdigest(email.strip.downcase)

@@ -326,7 +326,6 @@ ActiveRecord::Schema.define(version: 20150801134457) do
     t.string   "mobile"
     t.boolean  "received_coach_welcome_email",   default: false
     t.boolean  "received_student_welcome_email", default: false
-    t.boolean  "confirmed_eligibility"
   end
 
   create_table "members_permissions", id: false, force: true do |t|
