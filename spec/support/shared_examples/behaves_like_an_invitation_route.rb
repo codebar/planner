@@ -34,5 +34,18 @@ shared_examples "invitation route" do
       expect(page).to have_selector(:link_or_button, "Attend")
       expect(page).to_not have_content "I can no longer attend"
     end
+
+    scenario 'when already RSVPd to another event on same evening' do
+      invitation.update_attributes(attending: true, member_id: member.id)
+
+      invitation2 = Fabricate(:coach_session_invitation)
+      invitation2_route = invitation_path(invitation2)
+
+      visit invitation2_route
+      click_on "Attend"
+      
+      expect(page).to have_content("You have already RSVP'd to another workshop on this date. If you would prefer to attend this workshop, please cancel your other RSVP first.")
+      expect(page).to have_selector(:link_or_button, "Attend")
+    end
   end
 end
