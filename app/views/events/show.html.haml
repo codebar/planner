@@ -13,10 +13,12 @@
           Sign up
       - else
         - if @event.invitable
-          =link_to event_student_rsvp_path(@event), class: 'button round' do
-            = t('events.attend_as_student')
-          =link_to event_coach_rsvp_path(@event), class: 'button round' do
-            = t('events.attend_as_coach')
+          - unless @event.coaches_only?
+            =link_to event_student_rsvp_path(@event), class: 'button round' do
+              = t('events.attend_as_student')
+          - unless @event.students_only?
+            =link_to event_coach_rsvp_path(@event), class: 'button round' do
+              = t('events.attend_as_coach')
         - else
           %em= t('event.not_open_for_rsvp')
         %br
@@ -48,17 +50,19 @@
           %iframe{ width: '100%', height: '250', frameborder: '0', scrolling: 'no', marginheight: '0', marginwidth: '0', src: %{https://maps.google.com/maps?f=q&source=s_q&hl=en&amp;geocode=&q=#{@host_address.for_map}&ie=UTF8&t=m&z=15&output=embed} }
           =link_to "View larger map", %{https://maps.google.com/maps?f=q&source=s_q&hl=en&amp;geocode=&q=#{@host_address.for_map}&ie=UTF8&hq=&t=m&z=15}, style: "color:#0000FF;text-align:left"
         .medium-6.columns
-.stripe.reverse
-  .row
-    .large-12.columns
-      %a{ name: "faq" }
-        %h2{ "data-magellan-destination" => "faq"}
-          .text-center FAQ
-      - if @event.announce_only
-        %p.text-center If you have any questions, #{mail_to(@event.email, "get in contact")}
 
-      - else
-        = render partial: 'events/faq'
+- if @event.show_faq?
+  .stripe.reverse
+    .row
+      .large-12.columns
+        %a{ name: "faq" }
+          %h2{ "data-magellan-destination" => "faq"}
+            .text-center FAQ
+        - if @event.announce_only
+          %p.text-center If you have any questions, #{mail_to(@event.email, "get in contact")}
+
+        - else
+          = render partial: 'events/faq'
 
 - unless @event.announce_only
   .stripe.reverse

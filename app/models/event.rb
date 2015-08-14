@@ -41,12 +41,24 @@ class Event < ActiveRecord::Base
     invitations.students.accepted.verified.map(&:member)
   end
 
+  def coaches_only?
+    student_spaces == 0
+  end
+
+  def students_only?
+    coach_spaces == 0
+  end
+
   def coach_spaces?
     coach_spaces > attending_coaches.count
   end
 
   def student_spaces?
     student_spaces > attending_students.count
+  end
+
+  def show_faq?
+    show_faq
   end
 
   def date
