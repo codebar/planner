@@ -71,6 +71,9 @@
                 .large-12.columns
                   %br
                   = f.input :invitable, as: :boolean, hint: "Allow members to RSVP"
+              .row
+                .large-12.columns
+                  = f.input :show_faq, as: :boolean, hint: "Display FAQ?"
         .row
           .large-12.columns.text-right
             = f.submit "Save", class: "button"
