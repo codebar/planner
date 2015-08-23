@@ -29,7 +29,8 @@ module Planner
     config.i18n.fallbacks = true
     config.i18n.available_locales = [:en]
     #config.i18n.enforce_available_locales = false
-    config.exceptions_app = self.routes  end
+    config.exceptions_app = self.routes  
+  end
 end
 
 require 'csv' # the standard library CSV Class
