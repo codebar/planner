@@ -20,6 +20,7 @@ class Member < ActiveRecord::Base
   validates_uniqueness_of :email
 
   scope :subscribers, -> { joins(:subscriptions).order('created_at desc').uniq }
+  acts_as_taggable_on :skills
 
   attr_accessor :attendance
 
