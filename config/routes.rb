@@ -2,6 +2,7 @@ Planner::Application.routes.draw do
   root "dashboard#show"
 
   match "/404" => "errors#error404", via: [ :get, :post, :patch, :delete ]
+  match "/500" => "errors#error500", via: [ :get, :post, :patch, :delete ]
 
   scope controller: 'dashboard' do
     get 'code-of-conduct', action: 'code'

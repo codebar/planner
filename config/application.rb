@@ -29,10 +29,7 @@ module Planner
     config.i18n.fallbacks = true
     config.i18n.available_locales = [:en]
     #config.i18n.enforce_available_locales = false
-
-    require Rails.root.join("lib/custom_public_exceptions")
-    config.exceptions_app = CustomPublicExceptions.new(Rails.public_path)
-  end
+    config.exceptions_app = self.routes  end
 end
 
 require 'csv' # the standard library CSV Class
