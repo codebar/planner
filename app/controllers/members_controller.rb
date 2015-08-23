@@ -65,7 +65,9 @@ class MembersController < ApplicationController
   private
 
   def member_params
-    params.require(:member).permit(:name, :surname, :email, :mobile, :twitter, :about_you)
+    params.require(:member).permit(
+      :name, :surname, :email, :mobile, :twitter, :about_you, :skill_list
+    )
   end
 
   def token

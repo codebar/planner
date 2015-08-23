@@ -3,6 +3,7 @@ ruby '2.2.2'
 
 gem 'rails', '4.1.12'
 
+gem 'acts-as-taggable-on', '~> 3.4'
 gem 'haml'
 gem 'compass-rails', github: 'Compass/compass-rails'
 gem 'foundation-rails'
