@@ -83,6 +83,8 @@ Planner::Application.routes.draw do
     get 'pending', on: :collection
   end
 
+  resources :skills, only: [:show]
+
   namespace :admin do
     root "portal#index"
 
