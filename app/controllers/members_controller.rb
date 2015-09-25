@@ -1,5 +1,6 @@
 class MembersController < ApplicationController
   before_action :authenticate_member!, only: [:edit, :show, :step1, :step2]
+  autocomplete :skill, :name, class_name: 'ActsAsTaggableOn::Tag'
 
   def new
     @page_title = "Sign up"

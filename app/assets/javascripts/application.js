@@ -12,6 +12,8 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require jquery-ui
+//= require autocomplete-rails
 //= require chosen-jquery
 //= require foundation
 //= require 'jsimple-star-rating.min.js'
