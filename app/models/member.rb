@@ -24,6 +24,10 @@ class Member < ActiveRecord::Base
 
   attr_accessor :attendance
 
+  def self.with_skill(skill_name)
+    tagged_with(skill_name)
+  end
+
   def banned?
     bans.active.present?
   end
