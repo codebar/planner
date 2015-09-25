@@ -55,14 +55,20 @@ describe Member do
         expect(member.avatar).to eq("http://gravatar.com/avatar/#{encrypted_email}?s=100")
       end
 
-
       it "#attended_sessions" do
         member.session_invitations = 3.times.map { Fabricate(:attended_session_invitation) }
         member.session_invitations << Fabricate(:session_invitation)
 
         expect(member.attended_sessions.count).to eq(3)
       end
+    end
+  end
 
+  describe ".with_skill" do
+    it "returns members with the specified skill" do
+      ruby_member = Fabricate(:coach, skill_list: "ruby, rails")
+      non_ruby_member = Fabricate(:coach, skill_list: "html, jQuery")
+      expect(Member.with_skill('ruby')).to eq [ruby_member]
     end
   end
 
