@@ -6,14 +6,12 @@ class EventsController < ApplicationController
   def index
     events = [ Sessions.past.all ]
     events << Course.past.all
-    events << Meeting.past.all
     events << Event.past.all
     events = events.compact.flatten.sort_by(&:date_and_time).reverse.group_by(&:date)
     @past_events = events.map.inject({}) { |hash, (key, value)| hash[key] = EventPresenter.decorate_collection(value); hash}
 
     events = [ Sessions.upcoming.all ]
     events << Course.upcoming.all
-    events << Meeting.upcoming.all
     events << Event.upcoming.all
     events = events.compact.flatten.sort_by(&:date_and_time).group_by(&:date)
     @events = events.map.inject({}) { |hash, (key, value)| hash[key] = EventPresenter.decorate_collection(value); hash}
