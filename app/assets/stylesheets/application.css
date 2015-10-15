@@ -18,4 +18,5 @@
  *= require pickadate/classic.date
  *= require pickadate/classic.time
  *= require chosen
+ *= require jquery-ui
  */

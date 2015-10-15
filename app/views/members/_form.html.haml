@@ -15,8 +15,11 @@
       = f.input :mobile
 
   .row
-    .large-12.columns
+    .large-6.columns
       = f.input :about_you, as: :text, label: "Tell us a little bit about yourself", required: true
+    - if @member.coach?
+      .large-6.columns
+        = f.input :skill_list, label: "Skills, enter as a comma separated list", url: autocomplete_skill_name_members_path, as: :autocomplete, input_html: {'data-delimiter' => ','}
 
   .row
     .large-12.columns.text-right

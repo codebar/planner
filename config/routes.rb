@@ -15,8 +15,13 @@ Planner::Application.routes.draw do
     get 'step1'
     put 'step1'
     get 'step2'
+    
   end
 
+  resource :members do
+    get :autocomplete_skill_name, on: :collection
+  end
+  
   get '/profile' => "members#profile", as: :profile
 
   resources :subscriptions, only: [ :index, :create ]
@@ -82,6 +87,8 @@ Planner::Application.routes.draw do
     get 'submit'
     get 'pending', on: :collection
   end
+
+  resources :skills, only: [:show]
 
   namespace :admin do
     root "portal#index"

@@ -1,5 +1,6 @@
 class MembersController < ApplicationController
   before_action :authenticate_member!, only: [:edit, :show, :step1, :step2]
+  autocomplete :skill, :name, class_name: 'ActsAsTaggableOn::Tag'
 
   def new
     @page_title = "Sign up"
@@ -65,7 +66,9 @@ class MembersController < ApplicationController
   private
 
   def member_params
-    params.require(:member).permit(:name, :surname, :email, :mobile, :twitter, :about_you)
+    params.require(:member).permit(
+      :name, :surname, :email, :mobile, :twitter, :about_you, :skill_list
+    )
   end
 
   def token
