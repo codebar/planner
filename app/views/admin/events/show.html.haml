@@ -39,14 +39,10 @@
               %li= link_to chapter.name, [:admin, chapter]
 
     .row
-      .large-3.small-6.columns#host
+      .medium-6.columns#host
         - if @event.venue.present?
-          %h4 Venue
-          %strong= @event.venue.name
-          %br
-          %small
-            = @address.to_html
-      .large-3.small-6.columns#sponsors
+          = render 'shared/venue', venue: @address, map: false
+      .medium-6.columns#sponsors
         - if @event.sponsors.any?
           %h4 Sponsors
           %ul.no-bullet
@@ -54,7 +50,8 @@
               %li
                 %span
                   = link_to sponsor.name, [:admin, sponsor]
-      .large-6.small-12.columns
+    .row
+      .medium-12.columns
         %h4 Team
         - @event.organisers.each do |organiser|
           %span{ "data-tooltip" =>"", "aria-haspopup" => "true",  class: "has-tip",  title: organiser.full_name }

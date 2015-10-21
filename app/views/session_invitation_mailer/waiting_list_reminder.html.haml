@@ -7,7 +7,6 @@
     %tr
       %td
       %td{ class: "container", bgcolor: "#FFFFFF" }
-
         .content
           %table
             %tr
@@ -25,7 +24,6 @@
                   = link_to "remove yourself from the waiting list", full_url_for(invitation_url(@invitation))
                   so someone else can come to the workshop.
 
-
         .content
           %table{ bgcolor: "#FFFFFF" }
             %tr
@@ -35,10 +33,7 @@
                 %h4
                   Workshop
                   %small= humanize_date_with_time(@session.date_and_time, @session.time)
-                %p
-                  #{@session.host.name}
-                  %br
-                  #{@host_address.to_html}
+                = render 'shared_mailers/venue', venue: @host_address
                 = link_to "See who will be there and update your attendance", full_url_for(invitation_url(@invitation)), class: 'btn'
 
         .content

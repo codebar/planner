@@ -14,4 +14,12 @@ describe AddressDecorator do
 
     expect(address.to_s).to eq(address_to_s)
   end
+
+  it "#info" do
+    address.note = "No lift."
+    address.accessible = true;
+
+    expect(address.info).to include(address.note)
+    expect(address.info).to include(I18n.t('address.fully_accessible'))
+  end
 end

@@ -3,4 +3,5 @@ Fabricator(:address) do
   street { Faker::Address.street_address }
   postal_code { Faker::Address.postcode }
   city { Faker::Address.city }
+  accessible true
 end

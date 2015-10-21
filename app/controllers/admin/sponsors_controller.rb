@@ -19,11 +19,10 @@ class Admin::SponsorsController < Admin::ApplicationController
     @sponsor.build_address unless @sponsor.address.present?
     authorize @sponsor
     if @sponsor.save
-      flash[:notice] = "Sponsor #{@sponsor.name} created"
-      redirect_to [:admin, @sponsor]
+      redirect_to admin_sponsors_path, notice: "Sponsor #{@sponsor.name} created"
     else
       flash[:notice] = @sponsor.errors.full_messages.to_s
-      render 'new'
+      render :new
     end
   end
 
@@ -35,15 +34,18 @@ class Admin::SponsorsController < Admin::ApplicationController
   end
 
   def update
-    @sponsor.update_attributes(sponsor_params)
-    redirect_to admin_sponsor_path(@sponsor), notice: "Updated!"
+    if (@sponsor.update_attributes(sponsor_params))
+      redirect_to admin_sponsors_path, notice: "Sponsor #{@sponsor.name} updated"
+    else
+      render :edit
+    end
   end
 
   private
   def sponsor_params
     params.require(:sponsor).permit(:name, :avatar, :website, :seats, :number_of_coaches, 
       :email, :contact_first_name, :contact_surname, contact_ids: [],
-      address_attributes: [:flat, :street, :postal_code, :city, :latitude, :longitude])
+      address_attributes: [:flat, :street, :postal_code, :city, :latitude, :longitude, :accessible, :note])
   end
 
   def set_sponsor

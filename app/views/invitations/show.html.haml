@@ -68,18 +68,7 @@
     %h4{ "data-magellan-destination" => "schedule"} Schedule
     = dot_markdown(@event.schedule)
   .large-5.columns
-    %h4 Location
-    .row
-      .medium-8.columns
-        %p
-          = @host_address.to_html
-      .medium-4.columns
-        = image_tag @event.venue.avatar, class: 'sponsor-logo'
-    .row
-      .large-12.columns
-        %iframe{ width: '100%', height: '250', frameborder: '0', scrolling: 'no', marginheight: '0', marginwidth: '0', src: %{https://maps.google.com/maps?f=q&source=s_q&hl=en&amp;geocode=&q=#{@host_address.for_map}&ie=UTF8&t=m&z=15&output=embed} }
-        =link_to "View larger map", %{https://maps.google.com/maps?f=q&source=s_q&hl=en&amp;geocode=&q=#{@host_address.for_map}&ie=UTF8&hq=&t=m&z=15}, style: "color:#0000FF;text-align:left"
-      .medium-6.columns
+    = render 'shared/venue', venue: @host_address
 .past__container
   .row
     .large-12.columns

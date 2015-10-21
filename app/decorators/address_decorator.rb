@@ -20,4 +20,12 @@ class AddressDecorator < Draper::Decorator
   def to_s
     [ flat, street, city, postal_code ].delete_if(&:empty?).join(", ")
   end
+
+  def info
+    "#{accessibility_message} #{note}".strip
+  end
+
+  def accessibility_message
+    accessible? ? I18n.t('address.fully_accessible') : I18n.t('address.not_fully_accessible')
+  end
 end
