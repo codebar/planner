@@ -10,6 +10,7 @@ class Sponsor < ActiveRecord::Base
   validate :website_is_url 
 
   default_scope -> { order('updated_at desc') }
+  scope :active, -> { joins(:sponsor_sessions) }
 
   mount_uploader(:avatar, AvatarUploader) if Rails.env.production?
 
