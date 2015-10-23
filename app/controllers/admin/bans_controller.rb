@@ -13,7 +13,7 @@ class Admin::BansController < Admin::ApplicationController
     @ban.added_by = current_user
 
     if @ban.save
-      redirect_to [:admin, @member], notice: 'The user has been baned'
+      redirect_to [:admin, @member], notice: 'The user has been banned'
     else
       render 'new'
     end
