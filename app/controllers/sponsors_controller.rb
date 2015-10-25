@@ -1,5 +1,5 @@
 class SponsorsController < ApplicationController
   def index
-    @sponsors = Sponsor.active
+    @sponsors = Sponsor.active.uniq
   end
 end
