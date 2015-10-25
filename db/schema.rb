@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150823215453) do
+ActiveRecord::Schema.define(version: 20151020175658) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,6 +26,8 @@ ActiveRecord::Schema.define(version: 20150823215453) do
     t.string   "city"
     t.string   "latitude"
     t.string   "longitude"
+    t.text     "note"
+    t.boolean  "accessible",  default: true
   end
 
   create_table "announcements", force: true do |t|

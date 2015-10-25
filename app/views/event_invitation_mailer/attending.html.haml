@@ -32,11 +32,7 @@
                 #{l(@event.date_and_time)} to #{l(@event.ends_at, format: :time) }
                 %br
                 %br
-                %h5 Venue
-                =link_to @event.venue.website do
-                  = @event.venue.name
-                %p
-                  #{@host_address.to_html}
+                = render 'shared_mailers/venue', venue: @host_address
               %td{ width: "50%", style: "text-align: center;"}
                 %h4
                 = link_to "Update your invitation", full_url_for(event_invitation_url(@event.id, @invitation.token)), class: 'btn'

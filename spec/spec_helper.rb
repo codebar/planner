@@ -25,6 +25,7 @@ RSpec.configure do |config|
   config.before(:suite) do
     DatabaseCleaner.clean_with(:truncation)
     DatabaseCleaner.strategy = :deletion
+    FileUtils.rm_rf(CarrierWave::Uploader::Base.root)
   end
 
   config.around(:each) do |example|

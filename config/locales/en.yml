@@ -163,6 +163,10 @@ en:
   sponsors:
     sponsoring: "Sponsoring"
 
+  address:
+    fully_accessible: "The venue is fully accessible to all."
+    not_fully_accessible: "The venue is not fully accessible."
+
   members:
     sign_up: "Sign up"
     sign_in_with_github: "Sign in with Github"

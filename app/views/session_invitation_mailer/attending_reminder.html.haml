@@ -25,10 +25,7 @@
                 %h4
                   Workshop
                   %small= humanize_date_with_time(@session.date_and_time, @session.time)
-                %p
-                  #{@session.host.name}
-                  %br
-                  #{@host_address.to_html}
+                = render 'shared_mailers/venue', venue: @host_address
                 = link_to "See who will be there and update your attendance", full_url_for(invitation_url(@invitation)), class: 'btn'
 
         .content
@@ -36,7 +33,7 @@
             %tr
               %td
                 %p
-                  If you have any trouble finding the venue call
+                  If you have any trouble finding the venue call:
                   - @workshop.organisers.each do |organiser|
                     = organiser.full_name
                     =organiser.mobile

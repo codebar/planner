@@ -1,8 +1,6 @@
 # encoding: utf-8
 
 class AvatarUploader < CarrierWave::Uploader::Base
-  storage :sftp if Rails.env.production?
-
   include CarrierWave::MiniMagick
 
   # Override the directory where uploaded files will be stored.

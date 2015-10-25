@@ -6,16 +6,15 @@
           = f.input :name
         .large-6.columns
           = f.input :website, as: :url
-
   .row
     .large-12.columns
-      .large-6.columns
-        = f.input :avatar, as: :file
-        = f.hidden_field :image_cache
-      .large-3.columns
-        = f.input :seats, label: "Student Spots"
-      .large-3.columns
-        = f.input :number_of_coaches, label: "Coaches Spots"
+      .row
+        .large-6.columns
+          = f.input :avatar, as: :file, required: @sponsor.avatar.blank?
+        .large-3.columns
+          = f.input :seats, label: "Student Spots"
+        .large-3.columns
+          = f.input :number_of_coaches, label: "Coaches Spots"
   .row
     .large-6.columns
       .panel
@@ -25,8 +24,13 @@
           = a.input :street, label: "Line 2"
           = a.input :postal_code
           = a.input :city
-          = a.input :latitude
-          = a.input :longitude
+          .row
+            .large-6.columns
+              = a.input :latitude
+            .large-6.columns
+              = a.input :longitude
+          = a.input :accessible
+          = a.input :note
     .large-6.columns
       .panel
         %strong Contact Details
@@ -39,7 +43,7 @@
 
   .row
     .large-6.columns
-      - if params[:action] == 'new'
+      - if @sponsor.new_record?
         = f.submit "Create sponsor", class: "button round"
-      - elsif params[:action] == 'edit'
+      - else
         = f.submit "Save changes", class: "button round"
