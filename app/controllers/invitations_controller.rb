@@ -17,6 +17,8 @@ class InvitationsController < ApplicationController
   end
 
   def attend
+    event = @invitation.event
+
     if @invitation.attending.eql?(true)
       redirect_to :back, notice: t("messages.already_rsvped")
     end
@@ -24,7 +26,10 @@ class InvitationsController < ApplicationController
     if @invitation.student_spaces? or @invitation.coach_spaces?
       @invitation.update_attribute(:attending, true)
 
-      redirect_to :back, notice: "You have RSVPed to #{@invitation.event.name}. We will verify your attendance after you complete the questionnaire!"
+      notice = "You have RSVPed to #{@invitation.event.name}."
+      notice += " We will verify your attendance after you complete the questionnaire!" if event.require_coach_questionnaire? or event.require_student_questionnaire?
+
+      redirect_to :back, notice: notice
     else
       redirect_to :back, notice: t("messages.no_available_seats", email: @invitation.chapter.first.email)
     end
