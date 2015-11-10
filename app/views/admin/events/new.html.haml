@@ -74,6 +74,12 @@
               .row
                 .large-12.columns
                   = f.input :show_faq, as: :boolean, hint: "Display FAQ section?"
+              .row
+                .large-12.columns
+                  = f.input :display_coaches, as: :boolean
+              .row
+                .large-12.columns
+                  = f.input :display_students, as: :boolean
         .row
           .large-12.columns.text-right
             = f.submit "Save", class: "button"
