@@ -1,7 +1,7 @@
 development:
   adapter: postgresql
   encoding: unicode
-  database: planner_development
+  database: codebar-production-backup
   pool: 5
   host: localhost
 # username: codebar
