@@ -47,6 +47,10 @@ bundle exec rake db:create
 bundle exec rake db:migrate db:test:prepare
 ```
 
+*If you are running OSX Yosemite, you may experience a problem connecting to
+Postgres. Please see the second answer on [this SO
+question](http://stackoverflow.com/questions/26447736/unable-to-connect-to-postgresql-database-after-upgrading-to-yosemite-10-10).*
+
 ### Enable GitHub authentication
 
 Create an application at `https://github.com/settings/applications/new` with
