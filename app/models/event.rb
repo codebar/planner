@@ -20,6 +20,8 @@ class Event < ActiveRecord::Base
 
   attr_accessor :publish_day, :publish_time
 
+  scope :upcoming, ->(n) { order('date_and_time').where('date_and_time > ?', Date.today).take(n) }
+
   before_save do
     begins_at = Time.parse(self.begins_at)
     self.date_and_time = self.date_and_time.change(hour: begins_at.hour, minute: begins_at.min)
@@ -27,6 +29,10 @@ class Event < ActiveRecord::Base
 
   def to_s
     self.name
+  end
+
+  def next_upcoming(n)
+    Event.order('date_and_time').where('date_and_time > ?', Date.today).take(3) 
   end
 
   def to_param
