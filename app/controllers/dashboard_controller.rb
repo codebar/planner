@@ -1,5 +1,6 @@
 class DashboardController < ApplicationController
   before_action :is_logged_in?, only: [:dashboard]
+  DEFAULT_UPCOMING_EVENTS = 5
 
   def show
     @chapters = Chapter.all.order(:created_at)
@@ -64,7 +65,7 @@ class DashboardController < ApplicationController
   def all_events(workshops)
     course = Course.next
     meeting = Meeting.next
-    event = Event.upcoming(3)
+    event = Event.future(DEFAULT_UPCOMING_EVENTS)
 
     all_events = workshops << course << meeting << event
     all_events = all_events.compact.flatten
