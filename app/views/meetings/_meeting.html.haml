@@ -1,0 +1,17 @@
+.event#minified
+  .row
+    .small-2.columns
+      .date
+        .time
+          = meeting.time
+    .small-10.columns
+      .title
+        =link_to meeting.to_s, meeting.path
+        - if meeting.venue.present?
+          at
+          = link_to meeting.venue.name, meeting.venue.website
+      .row
+        .medium-6.columns
+        .medium-6.columns#sponsors
+
+      %br
