@@ -64,8 +64,7 @@
             - @upcoming_workshops.each do |date, workshops|
               .grouped-events
                 %h4= date
-                - workshops.each do |workshop|
-                  = render partial: 'events/minified_event', locals: { event: workshop }
+                = render workshops
         .large-4.columns#chapters
           %h3 Local chapters
           %ul.no-bullet
