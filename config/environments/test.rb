@@ -35,6 +35,9 @@ Planner::Application.configure do
   # Print deprecation notices to the stderr.
   config.active_support.deprecation = :stderr
 
+  # Use test adapter for job queueing
+  config.active_job.queue_adapter = :test
+
   # Fake omniauth for testing
   OmniAuth.config.test_mode = true
 end
