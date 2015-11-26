@@ -43,7 +43,7 @@ module InvitationControllerConcerns
 
           next_spot = WaitingList.next_spot(@invitation.sessions, @invitation.role)
 
-          if next_spot.present?
+          if next_spot.present? and next_spot.invitation.can_accept?
             invitation = next_spot.invitation
             next_spot.delete
             invitation.update_attribute(:attending, true)
