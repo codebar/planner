@@ -60,6 +60,10 @@ class Sessions < ActiveRecord::Base
     future? && rsvp_close_time.future?
   end
 
+  def can_accept?
+    random_allocate_at.nil? or random_allocate_at.past?
+  end
+
   def future?
     date_and_time.future?
   end
