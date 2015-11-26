@@ -29,6 +29,10 @@ class SessionInvitation < ActiveRecord::Base
   end
 
   def can_accept?
+    if not sessions.can_accept?
+      return false
+    end
+
     if for_student?
       return sessions.student_spaces?
     end
