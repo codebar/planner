@@ -14,8 +14,13 @@
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /tmp
-coverage
+/coverage/
 
 TAGS
 .env
 .DS_Store
+
+# Emacs
+*~
+\#*\#
+.\#*
