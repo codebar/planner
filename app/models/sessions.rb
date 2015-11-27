@@ -18,7 +18,7 @@ class Sessions < ActiveRecord::Base
 
   validates :chapter_id, presence: true
 
-  before_save :combine_date_and_time, :set_rsvp_close_time
+  before_save :combine_date_and_time, :set_rsvp_close_time, :schedule_allocation
 
   def host
     SponsorSession.hosts.for_session(self.id).first.sponsor rescue nil
@@ -114,6 +114,12 @@ class Sessions < ActiveRecord::Base
 
   def set_rsvp_close_time
     self.rsvp_close_time ||= self.date_and_time
+  end
+
+  def schedule_allocation
+    if allocation_time and random_allocate_at_changed?
+      AllocateSpacesJob.perform_when_needed(self)
+    end
   end
 
 end
