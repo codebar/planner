@@ -14,13 +14,13 @@ feature 'viewing an event' do
       expect(page).to have_content(event.schedule)
     end
 
-    scenario 'a student cannnot RSVP if they are not logged in' do
+    scenario 'a student cannot RSVP if they are not logged in' do
       click_on 'Attend as a student'
 
       expect(page).to have_content(I18n.t('notifications.not_logged_in'))
     end
 
-    scenario 'a student cannnot RSVP if they are not logged in' do
+    scenario 'a student cannot RSVP if they are not logged in' do
       click_on 'Attend as a coach'
 
       expect(page).to have_content(I18n.t('notifications.not_logged_in'))

@@ -11,7 +11,7 @@ class Admin::GroupsController < Admin::ApplicationController
     authorize @group
 
     if @group.save
-      flash[:notice] = "Group #{@group.name} for chapter #{@group.chapter.name} has been succesfuly created"
+      flash[:notice] = "Group #{@group.name} for chapter #{@group.chapter.name} has been successfully created"
       redirect_to [ :admin, @group ]
     else
       flash[:notice] = @group.errors.full_messages

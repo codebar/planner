@@ -11,7 +11,7 @@ class Admin::ChaptersController < Admin::ApplicationController
     authorize(@chapter)
 
     if @chapter.save
-      flash[:notice] = "Chapter #{@chapter.name} has been succesfuly created"
+      flash[:notice] = "Chapter #{@chapter.name} has been successfully created"
       redirect_to [:admin, @chapter ]
     else
       flash[:notice] = @chapter.errors.full_messages

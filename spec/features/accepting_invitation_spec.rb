@@ -37,7 +37,7 @@ feature 'a member can' do
         visit accepting_invitation_path
 
         expect(current_url).to eq(root_url)
-        expect(page).to have_content("You have alredy confirmed you attendance!")
+        expect(page).to have_content("You have already confirmed you attendance!")
       end
 
       scenario 'when there are no available spots' do
@@ -50,7 +50,7 @@ feature 'a member can' do
     end
 
     context "reject an invitation" do
-      scenario 'when they are succesful' do
+      scenario 'when they are successful' do
         invitation.update_attribute(:attending, true)
         visit rejecting_invitation_path
 
