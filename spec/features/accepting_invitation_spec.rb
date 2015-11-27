@@ -15,6 +15,11 @@ feature 'a member can' do
 
     it_behaves_like "invitation route"
 
+    scenario "when spots are randomly allocated" do
+      invitation.sessions.update_attribute(:random_allocate_at, DateTime.now + 2.days)
+      visit invitation_route
+      expect(page).to have_content("Places for this workshop will be allocated at")
+    end
   end
 
   context "#course" do
