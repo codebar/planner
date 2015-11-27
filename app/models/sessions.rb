@@ -64,6 +64,12 @@ class Sessions < ActiveRecord::Base
     random_allocate_at.nil? or random_allocate_at.past?
   end
 
+  # nil if allocations are being made immediately, otherwise the time
+  # when allocations will be made
+  def allocation_time
+    can_accept? ? nil : random_allocate_at
+  end
+
   def future?
     date_and_time.future?
   end
