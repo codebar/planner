@@ -53,7 +53,7 @@ class Admin::WorkshopsController < Admin::ApplicationController
     set_organisers(organiser_ids)
     set_host(host_id)
 
-    redirect_to admin_workshop_path(@workshop), notice: "Workshops updated succesfully"
+    redirect_to admin_workshop_path(@workshop), notice: "Workshops updated successfully"
   end
 
   def attendees_checklist

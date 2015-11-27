@@ -10,7 +10,7 @@ class Admin::AnnouncementsController < Admin::ApplicationController
 
   def create
     @announcement = Announcement.new(announcement_params.merge!(created_by: current_user))
-    redirect_to dashboard_path, notice: "Announcement successfuly created" if @announcement.save
+    redirect_to dashboard_path, notice: "Announcement successfully created" if @announcement.save
   end
 
   def update

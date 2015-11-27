@@ -11,7 +11,7 @@ module Admin::SponsorConcerns
   module InstanceMethods
     def sponsor
       if sponsor_session.save
-        flash[:notice] = "Sponsor added succesfully"
+        flash[:notice] = "Sponsor added successfully"
       else
         flash[:notice] = sponsor_session.errors.full_messages.to_s
       end
@@ -28,7 +28,7 @@ module Admin::SponsorConcerns
       set_sponsor
       @sponsor_session = SponsorSession.where(sessions: @workshop, sponsor: @sponsor).first_or_create
       @sponsor_session.update_attribute(:host, true)
-      flash[:notice] = "Host set succesfully"
+      flash[:notice] = "Host set successfully"
 
       redirect_to :back
     end
