@@ -1,0 +1,23 @@
+- present(@workshop, WorkshopPresenter) do |workshop|
+  .input.random_allocate_at
+    .input
+      %input#random_allocate{type: "checkbox", name: "random_allocate", value: "enabled",
+                             checked: (not @workshop.random_allocate_at.nil?)}
+      %label.control-label{for: "random_allocate"}
+        Randomly assign spaces
+    .input.required
+      %label.required.control-label{for: "random_allocate_input_date"}
+        Random assignment date
+      %input{type: "text", name: "random_allocate_date",
+             id: "random_allocate_input_date",
+             class: ["random_allocate_input", "date"],
+             data: {value: workshop.random_allocate_date },
+             required: true}
+    .input.required
+      %label.required.control-label{for: "random_allocate_input_time"}
+        Random assignment time
+      %input{type: "text", name: "random_allocate_time",
+             id: "random_allocate_input_time",
+             class: ["random_allocate_input", "time"],
+             data: {value: workshop.random_allocate_time },
+             required: true}
