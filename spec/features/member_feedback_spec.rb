@@ -48,7 +48,7 @@ feature 'member feedback' do
       expect(page).to have_content('You have already submitted feedback for this event.')
     end
 
-    scenario "when feedback has been already submited" do
+    scenario "when feedback has been already submitted" do
       visit feedback_path(submited_token)
 
       expect(current_url).to eq(root_url)

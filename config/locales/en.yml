@@ -39,8 +39,8 @@ en:
   messages:
     accepted_invitation: "Thanks for getting back to us %{name}. See you at the workshop!"
     rejected_invitation: "We are so sad you can't make it, but thanks for letting us know %{name}."
-    already_rsvped: "You have alredy confirmed you attendance!"
-    not_attending_already: "You have alredy confirmed you can't make it!"
+    already_rsvped: "You have already confirmed you attendance!"
+    not_attending_already: "You have already confirmed you can't make it!"
     no_available_seats: "Unfortunately there are no more spaces left :(. If you would like to join our waiting list send us an email at %{email}"
     feedback_saved: "Thank you for taking the time to give us feedback!"
     feedback_not_found: "You have already submitted feedback for this event."
@@ -48,7 +48,7 @@ en:
 
   notifications:
     provider_already_connected: 'You are already signed in!'
-    not_logged_in: "You must be logged in to acess this page."
+    not_logged_in: "You must be logged in to access this page."
 
   navigation:
     dashboard: "Dashboard"
@@ -86,7 +86,7 @@ en:
       keyboard: "Do not take over the keyboard! This can be off-putting and scary."
       typing: "Encourage the students to type and not copy paste."
       questions: "Explain that there are no dumb questions."
-      mistakes: "Explain to students that it's ok to make mistakes."
+      mistakes: "Explain to students that it's OK to make mistakes."
       introduction: "Always introduce yourself. Say why you want to help out and are spending your own time on this, why you like programming."
       backgrounds: "Give your students the opportunity to get to know each other. Ask their names, why they are here, what they do in their day jobs. Encourage a brief discussion before starting."
       limits: "Assume that anyone you're teaching has no knowledge but infinite intelligence."
@@ -187,7 +187,7 @@ en:
       a_p2: "give their time freely to help the community."
     technologies:
       q: "What technologies do you teach?"
-      a: "We have a variety of available tutorials in HTML, CSS, Javascript and Ruby. If you want to learn something else don't hesitate to <a href=\"mailto:contact@codebar.io\">send us an email</a> as we might still be able to find someone to help you out."
+      a: "We have a variety of available tutorials in HTML, CSS, JavaScript and Ruby. If you want to learn something else don't hesitate to <a href=\"mailto:contact@codebar.io\">send us an email</a> as we might still be able to find someone to help you out."
     eligibility:
       q: "I want to attend a workshop. Am I eligible?"
       a: "Our workshops are available to women, LGBTQ and people who are underrepresented in the tech industry. If you belong to one of these groups, you are more than welcome to attend. If not, there are some other great initiatives like <a href=\"http://www.meetup.com/opentechschool-london\">Open Tech School London</a> where you can learn in a collaborative environment. Please see our <a href=\"http://codebar.io/student-guide\">student guide</a> for more information."
@@ -233,4 +233,4 @@ en:
   admin:
     workshop:
       manage_rsvps:
-        text: 'RSVP Students and Coaches to the workshop. The attendance confirmation email will be trigerred and they will be removed from the waiting list.'
+        text: 'RSVP Students and Coaches to the workshop. The attendance confirmation email will be triggered and they will be removed from the waiting list.'

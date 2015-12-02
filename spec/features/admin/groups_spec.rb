@@ -17,7 +17,7 @@ feature 'admin groups' do
       select "Brighton", from: "group[chapter_id]"
       click_on "Create group"
 
-      expect(page).to have_content("Group Students for chapter Brighton has been succesfuly created")
+      expect(page).to have_content("Group Students for chapter Brighton has been successfully created")
     end
   end
 end

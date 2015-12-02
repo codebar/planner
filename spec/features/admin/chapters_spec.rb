@@ -17,7 +17,7 @@ feature 'chapters' do
 
       click_on "Create chapter"
 
-      expect(page).to have_content("Chapter codebar Brighton has been succesfuly created")
+      expect(page).to have_content("Chapter codebar Brighton has been successfully created")
     end
   end
 end
