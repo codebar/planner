@@ -1,11 +1,18 @@
-# This file is copied to spec/ when you run 'rails generate rspec:install'
+require 'simplecov'
+require 'coveralls'
+SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter[
+  SimpleCov::Formatter::HTMLFormatter,
+  Coveralls::SimpleCov::Formatter
+]
+SimpleCov.start 'rails' do
+  add_group "Presenters", "app/presenters"
+  add_group "Policies", "app/policies"
+end
+
 ENV["RAILS_ENV"] ||= 'test'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'rspec/its'
-
-require 'coveralls'
-Coveralls.wear!
 
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 
