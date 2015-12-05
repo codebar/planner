@@ -18,7 +18,8 @@ class Sessions < ActiveRecord::Base
 
   validates :chapter_id, presence: true
 
-  before_save :combine_date_and_time, :set_rsvp_close_time, :schedule_allocation
+  before_save :combine_date_and_time, :set_rsvp_close_time
+  after_save :schedule_allocation
 
   def host
     SponsorSession.hosts.for_session(self.id).first.sponsor rescue nil
