@@ -9,6 +9,7 @@ class SessionInvitationMailer < ActionMailer::Base
     @workshop = WorkshopPresenter.new(sessions)
     @member = member
     @invitation = invitation
+    @chapter = @session.chapter
 
     subject = "Workshop Invitation #{humanize_date_with_time(@session.date_and_time, @session.time)}"
 
@@ -21,6 +22,7 @@ class SessionInvitationMailer < ActionMailer::Base
     @session = sessions
     @member = member
     @invitation = invitation
+    @chapter = @session.chapter
 
     subject = "Workshop Coach Invitation #{humanize_date_with_time(@session.date_and_time, @session.time)}"
 
@@ -36,6 +38,7 @@ class SessionInvitationMailer < ActionMailer::Base
     @member = member
     @invitation = invitation
     @waiting_list = waiting_list
+    @chapter = @session.chapter
 
     subject = "Attendance Confirmation for #{humanize_date_with_time(@session.date_and_time, @session.time)}"
 
@@ -54,6 +57,7 @@ class SessionInvitationMailer < ActionMailer::Base
     @host_address = AddressDecorator.decorate(@session.host.address)
     @member = member
     @invitation = invitation
+    @chapter = @session.chapter
 
     load_attachments
 
@@ -70,6 +74,7 @@ class SessionInvitationMailer < ActionMailer::Base
     @host_address = AddressDecorator.decorate(@session.host.address)
     @member = member
     @invitation = invitation
+    @chapter = @session.chapter
 
     subject = "Workshop Reminder #{humanize_date_with_time(@session.date_and_time, @session.time)}"
     mail(mail_args(member, subject)) do |format|
@@ -83,6 +88,7 @@ class SessionInvitationMailer < ActionMailer::Base
     @host_address = AddressDecorator.decorate(@session.host.address)
     @member = member
     @invitation = invitation
+    @chapter = @session.chapter
 
     subject = "Reminder: you're on the codebar waiting list (#{humanize_date_with_time(@session.date_and_time, @session.time)})"
     mail(mail_args(member, subject)) do |format|
@@ -95,6 +101,7 @@ class SessionInvitationMailer < ActionMailer::Base
     @host_address = AddressDecorator.decorate(@session.host.address)
     @member = invitation.member
     @invitation = invitation
+    @chapter = @session.chapter
 
     subject = "A spot just became available"
 
