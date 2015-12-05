@@ -12,7 +12,7 @@ feature "managing workshop attendances" do
     end
 
     context" #verify_attendance" do
-      let(:workshop) { Fabricate(:sessions, chapter: chapter, date_and_time: DateTime.now-1.day) }
+      let(:workshop) { Fabricate(:sessions, chapter: chapter, date_and_time: Time.zone.now-1.day) }
 
       scenario 'can verify that a member has attended the workshop' do
         visit admin_workshop_path(workshop)

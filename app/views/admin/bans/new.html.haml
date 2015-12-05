@@ -11,6 +11,6 @@
       = simple_form_for [:admin, @member, @ban], method: :post do |f|
         = f.input :reason, as: :select, collection: [ "Violated attendance policy", "Violated code of conduct", "Violated attendance eligibility", "Offensive behavior" ]
         = f.input :note, placehoder: 'This is only visible by admins', hint: 'The note is only visible to other administrators.'
-        = f.input :expires_at, as: :string, required: true, label: "Date", input_html: { data: { value: DateTime.now+1.month } }
+        = f.input :expires_at, as: :string, required: true, label: "Date", input_html: { data: { value: Time.zone.now+1.month } }
         .text-right
           = f.submit "Ban user", class: 'button small'

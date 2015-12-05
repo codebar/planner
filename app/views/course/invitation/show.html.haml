@@ -32,7 +32,7 @@
           =link_to "Read more about the course", @invitation.course.url, class: 'button tiny round'
     .large-4.columns
       .panel
-        - if @course.date_and_time < DateTime.now
+        - if @course.date_and_time < Time.zone.now
           %em This session has already taken place!
         - else
           = link_to "Get your ticket", @invitation.course.ticket_url, class: "expand button round center"

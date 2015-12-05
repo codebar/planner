@@ -13,11 +13,11 @@ describe Course do
   end
 
   context "scopes" do
-    let!(:next_course) { Fabricate(:course, date_and_time: DateTime.now+2.days) }
+    let!(:next_course) { Fabricate(:course, date_and_time: Time.zone.now+2.days) }
 
     before do
-      Fabricate(:course, date_and_time: DateTime.now+1.week)
-      Fabricate(:course, date_and_time: DateTime.now-1.week)
+      Fabricate(:course, date_and_time: Time.zone.now+1.week)
+      Fabricate(:course, date_and_time: Time.zone.now-1.week)
     end
 
     it "#upcoming" do
