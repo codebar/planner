@@ -18,6 +18,7 @@ class Event < ActiveRecord::Base
 
   validate :invitability, if: :invitable?
 
+  validates :coach_spaces, :student_spaces, :numericality => { :greater_than => 0 }
   attr_accessor :publish_day, :publish_time
 
   scope :future, ->(n) { order('date_and_time').where('date_and_time > ?', Date.today).take(n) }
