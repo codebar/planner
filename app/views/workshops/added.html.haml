@@ -15,7 +15,7 @@
 
         %p
           We're looking forward to seeing you at codebar soon!
-          = link_to "Drop us an email", "mailto:hello@codebar.io"
+          = link_to "Drop us an email", "mailto:#{@chapter.email}&cc=hello@codebar.io"
           if you have any questions.
         %p
           = link_to "« Return to the workshop page", workshop_path(@workshop)

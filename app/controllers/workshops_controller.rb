@@ -78,6 +78,7 @@ class WorkshopsController < ApplicationController
   def added
     @workshop = Sessions.find(params[:id])
     @coach = SessionInvitation.where(sessions: @workshop, member: current_user, attending: true, role: "Coach").any?
+    @chapter = @workshop.chapter
   end
 
   # Show a "You've been waitlisted for this event" page.
