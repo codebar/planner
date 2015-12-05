@@ -19,8 +19,7 @@
           .row.grouped-events
             .medium-12.columns
               %h4= date
-            - workshops.each do |workshop|
-              = render partial: 'events/minified_event', locals: { event: workshop }
+            = render workshops
 
       - if @latest_workshops.any?
         %h3 Latest events
@@ -29,8 +28,7 @@
           .row.grouped-events
             .medium-12.columns
               %h4= date
-            - workshops.each do |workshop|
-              = render partial: 'events/minified_event', locals: { event: workshop }
+            = render workshops
 
     .large-4.columns
       %a.twitter-timeline{href: "https://twitter.com/#{@chapter.twitter_handle}", "data-widget-id" => @chapter.twitter_id }="Tweets by #{@chapter.twitter_handle}"

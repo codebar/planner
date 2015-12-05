@@ -4,5 +4,4 @@
       .row.grouped_events
         .medium-12.columns
           %h4= date
-        - workshops.each do |workshop|
-          = render partial: 'events/minified_event', locals: { event:  workshop }
+        = render workshops
