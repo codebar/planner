@@ -17,6 +17,10 @@
         %tr
           %td
             %h5=t("footer.contact_info")
-            %p Email: <strong><a href="emailto:hello@codebar.io">hello@codebar.io</a></strong>
+            %p
+              - if @session
+                %strong= link_to "Email us", "mailto:#{@session.chapter.email}?cc=hello@codebar.io"
+              - else
+                %strong= link_to "Email us", "mailto:hello@codebar.io"
 
       %span.clear

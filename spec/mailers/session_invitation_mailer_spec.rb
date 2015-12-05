@@ -3,7 +3,8 @@ require "spec_helper"
 describe SessionInvitationMailer do
 
   let(:email) { ActionMailer::Base.deliveries.last }
-  let(:session) { Fabricate(:sessions, title: "HTML & CSS") }
+  let(:chapter) { Fabricate(:chapter, email: "london@codebar.io") }
+  let(:session) { Fabricate(:sessions, title: "HTML & CSS", chapter: chapter) }
   let(:member) { Fabricate(:member) }
   let(:invitation) { Fabricate(:session_invitation, sessions: session, member: member) }
 
@@ -14,6 +15,8 @@ describe SessionInvitationMailer do
     SessionInvitationMailer.invite_student(session, member, invitation).deliver
 
     expect(email.subject).to eq(email_subject)
+    expect(email.body.encoded).to match(chapter.email)
+    expect(email.body.encoded).to match("cc=hello@codebar.io")
   end
 
   it "#attending_reminder" do
@@ -21,5 +24,8 @@ describe SessionInvitationMailer do
     SessionInvitationMailer.attending_reminder(session, member, invitation).deliver
 
     expect(email.subject).to eq(email_subject)
+    expect(email.body.encoded).to match(chapter.email)
+    expect(email.body.encoded).to match("cc=hello@codebar.io")
   end
+
 end
