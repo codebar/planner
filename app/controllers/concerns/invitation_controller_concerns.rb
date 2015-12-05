@@ -35,7 +35,7 @@ module InvitationControllerConcerns
     end
 
     def reject
-      if @invitation.parent.date_and_time-3.5.hours >= DateTime.now
+      if @invitation.parent.date_and_time-3.5.hours >= Time.zone.now
 
         if @invitation.attending.eql? false
           redirect_to :back, notice: t("messages.not_attending_already")

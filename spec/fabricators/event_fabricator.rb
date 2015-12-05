@@ -1,6 +1,6 @@
 Fabricator(:event) do
-  date_and_time DateTime.now+2.days
-  ends_at DateTime.now+2.days+8.hours
+  date_and_time Time.zone.now+2.days
+  ends_at Time.zone.now+2.days+8.hours
   name Faker::Lorem.sentence
   description Faker::Lorem.sentence
   coach_description Faker::Lorem.sentence
