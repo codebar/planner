@@ -25,13 +25,13 @@ describe EventPresenter do
   end
 
   it "#month" do
-    expect(workshop).to receive(:date_and_time).and_return(DateTime.new(2014,9,3,16,30))
+    expect(workshop).to receive(:date_and_time).and_return(Time.zone.local(2014,9,3,16,30))
 
     expect(event.month).to eq("SEPTEMBER")
   end
 
   it "#time" do
-    expect(workshop).to receive(:date_and_time).and_return(DateTime.new)
+    expect(workshop).to receive(:date_and_time).and_return(Time.zone.now)
 
     event.time
   end

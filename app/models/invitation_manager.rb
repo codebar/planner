@@ -3,13 +3,13 @@ class InvitationManager
   def send_session_emails session
     return "The workshop is not invitable" unless session.invitable?
 
-    session.chapter.groups.students.map(&:members).flatten.uniq.each do |student|
+    session.chapter.groups.students.map(&:members).flatten.uniq.shuffle.each do |student|
       next if student.banned?
       so = SessionInvitation.create sessions: session, member: student, role: "Student"
       so.email if so.persisted?
     end
 
-    session.chapter.groups.coaches.map(&:members).flatten.uniq.each do |coach|
+    session.chapter.groups.coaches.map(&:members).flatten.uniq.shuffle.each do |coach|
       next if coach.banned?
       invitation = SessionInvitation.new sessions: session, member: coach, role: "Coach"
 
@@ -50,7 +50,7 @@ class InvitationManager
   def self.send_workshop_attendance_reminders session
     session.attendances.where(reminded_at: nil).each do |invitation|
       SessionInvitationMailer.attending_reminder(session, invitation.member, invitation).deliver
-      invitation.update_attribute(:reminded_at, DateTime.now)
+      invitation.update_attribute(:reminded_at, Time.zone.now)
     end
   end
 
@@ -58,7 +58,7 @@ class InvitationManager
     # Only send out reminders to people where reminded_at is nil, ie. falsey.
     session.waiting_list.reject(&:reminded_at).each do |invitation|
       SessionInvitationMailer.waiting_list_reminder(session, invitation.member, invitation).deliver
-      invitation.update_attribute(:reminded_at, DateTime.now)
+      invitation.update_attribute(:reminded_at, Time.zone.now)
     end
   end
 

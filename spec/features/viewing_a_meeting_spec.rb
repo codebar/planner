@@ -21,7 +21,7 @@ end
 
 def create_meeting
   meeting = Meeting.create(venue: Fabricate(:sponsor),
-                           date_and_time: DateTime.now+1.year-11.months,
+                           date_and_time: Time.zone.now+1.year-11.months,
                            duration: 120,
                            lanyrd_url: "http://lanyrd.com/2013/by-codebar/")
   meeting.meeting_talks << MeetingTalk.create(title: "Becoming a Software Engineer",

@@ -3,11 +3,11 @@ require 'spec_helper'
 feature 'event listing' do
 
   let!(:upcoming_course) { Fabricate(:course) }
-  let!(:past_course) { Fabricate(:course, chapter: upcoming_course.chapter, date_and_time: DateTime.new-1.week) }
+  let!(:past_course) { Fabricate(:course, chapter: upcoming_course.chapter, date_and_time: Time.zone.now-1.week) }
   let!(:upcoming_session) { Fabricate(:sessions) }
-  let!(:past_session) { Fabricate(:sessions, date_and_time: DateTime.new-1.week) }
+  let!(:past_session) { Fabricate(:sessions, date_and_time: Time.zone.now-1.week) }
   let!(:event) { Fabricate(:event) }
-  let!(:past_event) { Fabricate(:event, date_and_time: DateTime.new-2.weeks) }
+  let!(:past_event) { Fabricate(:event, date_and_time: Time.zone.now-2.weeks) }
 
   before do
     visit events_path

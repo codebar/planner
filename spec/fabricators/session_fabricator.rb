@@ -1,6 +1,6 @@
 Fabricator(:sessions) do
-  date_and_time DateTime.now+2.days
-  time DateTime.now
+  date_and_time Time.zone.now+2.days
+  time Time.zone.now
   title Faker::Lorem.sentence
   description Faker::Lorem.sentence
   chapter
@@ -10,16 +10,16 @@ Fabricator(:sessions) do
 end
 
 Fabricator(:sessions_no_sponsor, class_name: :sessions) do
-  date_and_time DateTime.now+2.days
-  time DateTime.now
+  date_and_time Time.zone.now+2.days
+  time Time.zone.now
   title Faker::Lorem.sentence
   description Faker::Lorem.sentence
   chapter
 end
 
 Fabricator(:sessions_no_spots, class_name: :sessions) do
-  date_and_time DateTime.now+2.days
-  time DateTime.now
+  date_and_time Time.zone.now+2.days
+  time Time.zone.now
   title Faker::Lorem.sentence
   description Faker::Lorem.sentence
   chapter
