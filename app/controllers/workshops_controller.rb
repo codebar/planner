@@ -72,6 +72,7 @@ class WorkshopsController < ApplicationController
   # Show a "You've been removed from this event" page.
   def removed
     @workshop = WorkshopPresenter.new(Sessions.find(params[:id]))
+    @chapter = @workshop.chapter
   end
 
   # Show a "You've been added to this event" page.
@@ -85,6 +86,7 @@ class WorkshopsController < ApplicationController
   def waitlisted
     @workshop = Sessions.find(params[:id])
     @coach = WaitingList.coaches(@workshop).include? current_user
+    @chapter = @workshop.chapter
   end
 
   private
