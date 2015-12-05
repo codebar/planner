@@ -22,7 +22,7 @@
           = f.input :link_to_job, required: true
       .row
         .large-6.columns
-          = f.input :expiry_date, as: :date, order: [:day, :month, :year], start_year: Date.today.year, start_month: Date.today.month, end_year: (Date.today+2.months).year, default: Date.today+2.weeks, input_html: { class: 'medium-3 columns'  }, required: true
+          = f.input :expiry_date, as: :date, order: [:day, :month, :year], start_year: Date.current.year, start_month: Date.current.month, end_year: (Date.current+2.months).year, default: Date.current+2.weeks, input_html: { class: 'medium-3 columns'  }, required: true
       .row
         .large-12.columns.text-right
           = f.submit "Update", class: "button round tiny"

@@ -6,7 +6,7 @@ class Ban < ActiveRecord::Base
 
   validate :valid_expiry_date?
 
-  scope :active, -> { where('expires_at < ?', Date.today).first }
+  scope :active, -> { where('expires_at < ?', Date.current).first }
 
   def active?
     expires_at.future?
