@@ -1,7 +1,11 @@
 - if not invitation.waiting_list.blank?
   - if invitation.waiting_list.auto_rsvp?
-
-    .text-center Waiting List position: <strong>#{invitation.waiting_list_position}</strong>/#{@workshop.waiting_list_count_for(invitation.role)}
+    - if not invitation.sessions.allocation_time.nil?
+      .text-center
+        You are on the waiting list. Places for this workshop will be
+        allocated at #{l(invitation.sessions.allocation_time)}.
+    - else
+      .text-center Waiting List position: <strong>#{invitation.waiting_list_position}</strong>/#{@workshop.waiting_list_count_for(invitation.role)}
     %br
     = link_to "Remove from Waiting list", invitation_waiting_list_path(invitation), method: :delete, class: 'button expand round alert', "data-confirm" => "Are you sure you want to let go of your spot? You cannot undo this."
   - else
