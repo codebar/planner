@@ -53,10 +53,10 @@ feature 'Managing workshops' do
 
     select chapter.name
     fill_in "Date", with: Date.today
-    fill_in "Time", with: "11:30"
+    fill_in "Time", with: Time.now + 2.hour
     check "Randomly assign spaces"
     fill_in "Random assignment date", with: Date.today
-    fill_in "Random assignment time", with: "9:30"
+    fill_in "Random assignment time", with: Time.now + 1.hour
 
     click_on "Save"
 
