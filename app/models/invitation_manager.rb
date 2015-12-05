@@ -3,13 +3,13 @@ class InvitationManager
   def send_session_emails session
     return "The workshop is not invitable" unless session.invitable?
 
-    session.chapter.groups.students.map(&:members).flatten.uniq.each do |student|
+    session.chapter.groups.students.map(&:members).flatten.uniq.shuffle.each do |student|
       next if student.banned?
       so = SessionInvitation.create sessions: session, member: student, role: "Student"
       so.email if so.persisted?
     end
 
-    session.chapter.groups.coaches.map(&:members).flatten.uniq.each do |coach|
+    session.chapter.groups.coaches.map(&:members).flatten.uniq.shuffle.each do |coach|
       next if coach.banned?
       invitation = SessionInvitation.new sessions: session, member: coach, role: "Coach"
 
