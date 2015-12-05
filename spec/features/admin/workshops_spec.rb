@@ -14,7 +14,7 @@ feature 'Managing workshops' do
     visit new_admin_workshop_path
 
     select chapter.name
-    fill_in "Date", with: Date.today
+    fill_in "Date", with: Date.current
     fill_in "Time", with: "11:30"
 
     click_on "Save"
