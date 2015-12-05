@@ -22,7 +22,7 @@ describe Meeting do
   end
 
   context "#title" do
-    subject(:meeting) { Meeting.new(date_and_time: DateTime.new(2014,8,20,18,30)) }
+    subject(:meeting) { Meeting.new(date_and_time: Time.zone.local(2014,8,20,18,30)) }
 
     it "is formatted correctly" do
       expect(meeting.title).to eq("August Meeting")
@@ -30,10 +30,10 @@ describe Meeting do
   end
 
   context "#end_time" do
-    subject(:meeting) { Meeting.new(date_and_time: DateTime.new(2014,8,20,18,30)) }
+    subject(:meeting) { Meeting.new(date_and_time: Time.zone.local(2014,8,20,18,30)) }
 
     it "defaults to two hours after the meeting starts" do
-      expect(meeting.end_time).to eq(DateTime.new(2014,8,20,20,30))
+      expect(meeting.end_time).to eq(Time.zone.local(2014,8,20,20,30))
     end
   end
 end

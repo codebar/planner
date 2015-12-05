@@ -3,8 +3,8 @@ module Listable
 
   included do
 
-    scope :upcoming, -> { where("date_and_time >= ?", DateTime.now).order(:date_and_time) }
-    scope :past, -> { where("date_and_time < ?", DateTime.now).order(:date_and_time) }
+    scope :upcoming, -> { where("date_and_time >= ?", Time.zone.now).order(:date_and_time) }
+    scope :past, -> { where("date_and_time < ?", Time.zone.now).order(:date_and_time) }
   end
 
   module ClassMethods

@@ -24,7 +24,7 @@ describe WorkshopPresenter do
   end
 
   it "#time" do
-    expect(sessions).to receive(:time).and_return(DateTime.new)
+    expect(sessions).to receive(:time).and_return(Time.zone.now)
 
     workshop.time
   end

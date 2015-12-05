@@ -5,9 +5,9 @@ if Rails.env.development?
                 Fabricate(:chapter_with_groups, name: "Brighton"),
                 Fabricate(:chapter_with_groups, name: "Cambridge")]
 
-    sessions = 10.times.map { |n| Fabricate(:sessions, chapter: chapters.sample, date_and_time: DateTime.now+14.days-n.weeks) }
+    sessions = 10.times.map { |n| Fabricate(:sessions, chapter: chapters.sample, date_and_time: Time.zone.now+14.days-n.weeks) }
 
-    courses = 5.times.map { |n| Fabricate(:course, chapter: chapters.sample, date_and_time: DateTime.now+14.days-n.weeks) }
+    courses = 5.times.map { |n| Fabricate(:course, chapter: chapters.sample, date_and_time: Time.zone.now+14.days-n.weeks) }
     coaches = 20.times.map { |n| Fabricate(:coach, groups: Group.coaches.order("RANDOM()").limit(2)) }
     tutorials = 10.times.map { |n| Fabricate(:tutorial, sessions: sessions.sample) }
     feedback_requests = 5.times.map { Fabricate(:feedback_request) }
@@ -19,7 +19,7 @@ if Rails.env.development?
     end
 
     meeting = Meeting.create(venue: Sponsor.all.shuffle.first,
-                             date_and_time: DateTime.now+1.year-11.months,
+                             date_and_time: Time.zone.now+1.year-11.months,
                              duration: 120,
                              lanyrd_url: "http://lanyrd.com/2013/by-codebar/")
     meeting.meeting_talks << MeetingTalk.create(title: "Becoming a Software Engineer",

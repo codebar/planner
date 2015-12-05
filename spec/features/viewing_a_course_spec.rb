@@ -2,7 +2,7 @@ require 'spec_helper'
 
 feature 'viewing a course' do
 
-  let(:date_and_time) { DateTime.now+1.week }
+  let(:date_and_time) { Time.zone.now+1.week }
   let!(:course) { Fabricate(:course) }
 
   scenario "i can view a course's information" do

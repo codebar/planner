@@ -4,7 +4,7 @@ describe "reminders:workshop" do
   include_context "rake"
 
   its(:prerequisites) { should include("environment") }
-  let!(:workshop) { Fabricate(:sessions, date_and_time: DateTime.now+29.hours, time: DateTime.now+29.hours) }
+  let!(:workshop) { Fabricate(:sessions, date_and_time: Time.zone.now+29.hours, time: Time.zone.now+29.hours) }
 
   before do
     allow(STDOUT).to receive(:puts)

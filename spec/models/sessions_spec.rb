@@ -13,12 +13,12 @@ describe Sessions do
     let(:workshop) { Fabricate.build(:sessions, chapter: Fabricate(:chapter)) }
 
     it "merges date_and_time and time" do
-      workshop.date_and_time = DateTime.new(2015,11,12,12,0)
+      workshop.date_and_time = Time.zone.local(2015,11,12,12,0)
       workshop.time = Time.utc(2000,01,01,18,30)
 
       workshop.save
 
-      expect(workshop.date_and_time).to eq(DateTime.new(2015,11,12,18,30))
+      expect(workshop.date_and_time).to eq(Time.zone.local(2015,11,12,18,30))
     end
   end
 
@@ -58,11 +58,11 @@ describe Sessions do
   end
 
   context "#scopes" do
-    let(:set_upcoming) { 2.times.map { |n| Fabricate(:sessions, date_and_time: DateTime.now+(n+1).week) } }
+    let(:set_upcoming) { 2.times.map { |n| Fabricate(:sessions, date_and_time: Time.zone.now+(n+1).week) } }
     let(:most_recent) { Fabricate(:sessions, date_and_time: 1.day.ago) }
 
     before do
-      Fabricate(:sessions, date_and_time: DateTime.now-1.week)
+      Fabricate(:sessions, date_and_time: Time.zone.now-1.week)
       set_upcoming
       most_recent
     end
