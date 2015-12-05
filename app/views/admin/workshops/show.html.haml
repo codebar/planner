@@ -39,6 +39,10 @@
           %strong.label.round.primary #{@workshop.venue.seats} student spots, #{@workshop.venue.coach_spots} coach spots
           - unless @workshop.spaces?
             %label.label.round.warning Full
+    .row
+      .medium-12.columns
+        - if not @workshop.random_allocate_at.nil? and @workshop.random_allocate_at.future?
+          Spots will be randomly allocated at #{l(@workshop.random_allocate_at)}
 
     %br
 

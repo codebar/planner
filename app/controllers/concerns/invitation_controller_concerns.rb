@@ -20,8 +20,7 @@ module InvitationControllerConcerns
         return redirect_to :back, notice: "You have already RSVP'd to another workshop on this date. If you would prefer to attend this workshop, please cancel your other RSVP first."
       end
 
-      @workshop = WorkshopPresenter.new(@invitation.sessions)
-      if (@invitation.for_student? and @workshop.student_spaces?) or (@invitation.for_coach? and @workshop.coach_spaces?)
+      if @invitation.can_accept?
         @invitation.update_attribute(:attending, true)
         @invitation.waiting_list.delete  if @invitation.waiting_list.present?
         SessionInvitationMailer.attending(@invitation.sessions, @invitation.member, @invitation).deliver
@@ -44,7 +43,7 @@ module InvitationControllerConcerns
 
           next_spot = WaitingList.next_spot(@invitation.sessions, @invitation.role)
 
-          if next_spot.present?
+          if next_spot.present? and next_spot.invitation.can_accept?
             invitation = next_spot.invitation
             next_spot.delete
             invitation.update_attribute(:attending, true)

@@ -54,6 +54,16 @@ class WorkshopPresenter < EventPresenter
             "(in #{distance_of_time_in_words_to_now(date_and_time)})"
   end
 
+  def random_allocate_date
+    model.random_allocate_at.nil? ? "" :
+      model.random_allocate_at.strftime("%d/%m/%Y")
+  end
+
+  def random_allocate_time
+    model.random_allocate_at.nil? ? "" :
+      model.random_allocate_at.strftime("%H:%M")
+  end
+
   private
 
   def students_checklist

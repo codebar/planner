@@ -24,10 +24,9 @@ class InvitationController < ApplicationController
   end
 
   def accept_with_note
-    @workshop = WorkshopPresenter.new(@invitation.sessions)
     @invitation.update_attribute(:note, params[:session_invitation][:note])
 
-    if @workshop.student_spaces?
+    if @invitation.can_accept?
       @invitation.update_attribute(:attending, true)
       SessionInvitationMailer.attending(@invitation.sessions, @invitation.member, @invitation).deliver
 
