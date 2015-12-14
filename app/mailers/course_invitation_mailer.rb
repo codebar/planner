@@ -8,8 +8,6 @@ class CourseInvitationMailer < ActionMailer::Base
     @member = member
     @invitation = invitation
 
-    load_attachments
-
     subject = "Course :: #{@course.title} by codebar - #{l(@course.date_and_time, format: :email_title)}"
 
     mail(mail_args(member, subject)) do |format|
@@ -18,12 +16,6 @@ class CourseInvitationMailer < ActionMailer::Base
   end
 
   private
-
-  def load_attachments
-    %w{logo.png}.each do |image|
-      attachments.inline[image] = File.read("#{Rails.root.to_s}/app/assets/images/#{image}")
-    end
-  end
 
   helper do
     def full_url_for path
