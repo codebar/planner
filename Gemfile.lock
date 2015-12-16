@@ -40,6 +40,8 @@ GEM
       activesupport (= 4.1.12)
       builder (~> 3.1)
       erubis (~> 2.7.0)
+    activejob_backport (0.0.3)
+      activesupport (>= 4.0.0)
     activemodel (4.1.12)
       activesupport (= 4.1.12)
       builder (~> 3.1)
@@ -382,6 +384,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  activejob_backport
   acts-as-taggable-on (~> 3.4)
   better_errors
   capybara
@@ -440,4 +443,4 @@ DEPENDENCIES
   uglifier (>= 1.3.0)
 
 BUNDLED WITH
-   1.10.5
+   1.10.6

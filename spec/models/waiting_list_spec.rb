@@ -19,6 +19,16 @@ RSpec.describe WaitingList, type: :model do
       end
     end
 
+    context "#waiting_for" do
+      it "returns all the students waiting" do
+        invitations = 5.times.map { |n| Fabricate(:session_invitation, sessions: workshop) }
+        invitations.map { |invitation| WaitingList.add(invitation) }
+
+        expect(WaitingList.waiting_for(workshop, "Student").map {
+                 |w| w.invitation}).to match_array(invitations)
+      end
+    end
+
     context "#next_spot" do
       it "returns the next spot to be allocated" do
         invitation = Fabricate(:session_invitation, sessions: workshop)

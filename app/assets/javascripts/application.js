@@ -27,12 +27,12 @@
 
 $(function(){
   $(document).foundation();
-  $('#sessions_date_and_time, #event_date_and_time').pickadate({
+  $('#sessions_date_and_time, #event_date_and_time, .random_allocate_input.date').pickadate({
     format: 'dd/mm/yyyy'
   });
 
   $('#announcement_expires_at, #ban_expires_at').pickadate();
-  $('#sessions_time, #event_begins_at, #event_ends_at').pickatime({
+  $('#sessions_time, #event_begins_at, #event_ends_at, .random_allocate_input.time').pickatime({
     format: 'HH:i'
   });
 
@@ -42,4 +42,12 @@ $(function(){
     allow_single_deselect: true
     no_results_text: 'No results matched'
   });
+
+  var random_allocate_enable = function() {
+     var enabled = $('input#random_allocate').prop('checked');
+     $('.random_allocate_input').prop('disabled', !enabled);
+  };
+
+  $('input#random_allocate').change(random_allocate_enable);
+  random_allocate_enable();
 });

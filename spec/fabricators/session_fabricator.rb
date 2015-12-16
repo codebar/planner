@@ -28,3 +28,14 @@ Fabricator(:sessions_no_spots, class_name: :sessions) do
   end
 end
 
+Fabricator(:sessions_random_allocate, class_name: :sessions) do
+  date_and_time DateTime.now+2.days
+  time DateTime.now
+  title Faker::Lorem.sentence
+  description Faker::Lorem.sentence
+  chapter
+  random_allocate_at DateTime.now
+  after_build do |sessions|
+    Fabricate(:sponsor_session, sessions: sessions, sponsor: Fabricate(:sponsor), host: true )
+  end
+end

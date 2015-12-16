@@ -29,6 +29,9 @@ module Planner
     config.i18n.fallbacks = true
     config.i18n.available_locales = [:en]
     #config.i18n.enforce_available_locales = false
+
+    # Use delayed_job adapter for job queueing
+    config.active_job.queue_adapter = :delayed_job
   end
 end
 
