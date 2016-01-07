@@ -14,12 +14,12 @@
               %td
                 %h3 Hi, #{@member.name}
                 %p.lead
-                  This is a quick email to remind you that you're on the waiting list for tomorrow's workshop.
+                  This is a quick email to remind you that you're on the waiting list for the workshop on #{humanize_date_with_time(@session.date_and_time, @session.time)}.
                 %p
                   If an attendee drops out, the next person on the waiting list will automatically get their place.
                   We'll email you if this happens.
                   %strong Attendees often drop out at short notice,
-                  so you should keep your laptop with you and check your email tomorrow afternoon.
+                  so you should keep your laptop with you and check your email during the afternoon on the day of the workshop.
                 %p
                   Alternatively, if you know you can no longer make it, you should
                   = link_to "remove yourself from the waiting list", full_url_for(invitation_url(@invitation))

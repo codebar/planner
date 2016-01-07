@@ -19,7 +19,12 @@ describe SessionInvitationMailer do
   it "#attending_reminder" do
     email_subject = "Workshop Reminder #{humanize_date_with_time(session.date_and_time, session.time)}"
     SessionInvitationMailer.attending_reminder(session, member, invitation).deliver
+    expect(email.subject).to eq(email_subject)
+  end
 
+  it "#waitlist_reminder" do
+    email_subject = "Reminder: you're on the codebar waiting list (#{humanize_date_with_time(session.date_and_time, session.time)})"
+    SessionInvitationMailer.waiting_list_reminder(session, member, invitation).deliver
     expect(email.subject).to eq(email_subject)
   end
 end
