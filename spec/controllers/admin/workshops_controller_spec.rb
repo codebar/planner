@@ -56,7 +56,6 @@ describe Admin::WorkshopsController, type: :controller do
                                        " and/or workshop information is on the website for a while " \
                                        "long enough that it cannot be deleted.")
         end
-
       end
     end
 
