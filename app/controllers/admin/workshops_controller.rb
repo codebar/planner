@@ -2,8 +2,10 @@ class Admin::WorkshopsController < Admin::ApplicationController
   include  Admin::SponsorConcerns
   include  Admin::WorkshopConcerns
 
-  before_filter :set_workshop_by_id, only: [:show, :edit]
+  before_filter :set_workshop_by_id, only: [:show, :edit, :destroy]
   before_filter :set_and_decorate_workshop, only: [:attendees_checklist, :attendees_emails]
+
+  WORKSHOP_DELETION_TIME_FRAME_SINCE_CREATION = 4.hours
 
   def index
     @chapter = Chapter.find(params[:chapter_id])
@@ -77,6 +79,19 @@ class Admin::WorkshopsController < Admin::ApplicationController
     redirect_to admin_workshop_path(@workshop), notice: "Invitations are being emailed out."
   end
 
+  def destroy
+    if workshop_has_no_invitees? && workshop_created_within_specific_time_frame?
+      @workshop.destroy
+
+      redirect_to admin_root_path, notice: "Workshop deleted succesfully"
+    else
+      redirect_to admin_workshop_path(@workshop),
+                  notice: "Workshop cannot be deleted. This is because it has invitees" \
+                          " and/or workshop information is on the website for a while " \
+                          "long enough that it cannot be deleted."
+    end
+  end
+
   private
 
   def workshop_params
@@ -132,5 +147,14 @@ class Admin::WorkshopsController < Admin::ApplicationController
     (@workshop.organisers.pluck(:id).map(&:to_s) - organiser_ids).each do |id|
       Member.find(id).revoke(:organiser, @workshop)
     end
+  end
+
+  def workshop_has_no_invitees?
+    @workshop.invitations.blank?
+  end
+
+  def workshop_created_within_specific_time_frame?
+    Time.zone.now.between?(@workshop.created_at,
+                           @workshop.created_at + WORKSHOP_DELETION_TIME_FRAME_SINCE_CREATION)
   end
 end
