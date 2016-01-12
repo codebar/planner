@@ -26,9 +26,7 @@ describe Admin::WorkshopsController, type: :controller do
         it "should display workshop can't be deleted related flash message" do
           delete :destroy, id: workshop.id
 
-          expect(flash[:notice]).to eq("Workshop cannot be deleted. This is because it has invitees" \
-                                       " and/or workshop information is on the website for a while " \
-                                       "long enough that it cannot be deleted.")
+          expect(flash[:notice]).to eq(I18n.t('admin.workshop.destroy.failure'))
         end
       end
 
@@ -52,9 +50,7 @@ describe Admin::WorkshopsController, type: :controller do
           delete :destroy, id: workshop.id
           Timecop.return
 
-          expect(flash[:notice]).to eq("Workshop cannot be deleted. This is because it has invitees" \
-                                       " and/or workshop information is on the website for a while " \
-                                       "long enough that it cannot be deleted.")
+          expect(flash[:notice]).to eq(I18n.t('admin.workshop.destroy.failure'))
         end
       end
     end
@@ -70,7 +66,7 @@ describe Admin::WorkshopsController, type: :controller do
         it "should display workshop deleted successfully related flash message" do
           delete :destroy, id: workshop.id
 
-          expect(flash[:notice]).to eq("Workshop deleted succesfully")
+          expect(flash[:notice]).to eq(I18n.t('admin.workshop.destroy.success'))
         end
       end
 
@@ -94,9 +90,7 @@ describe Admin::WorkshopsController, type: :controller do
           delete :destroy, id: workshop.id
           Timecop.return
 
-          expect(flash[:notice]).to eq("Workshop cannot be deleted. This is because it has invitees" \
-                                       " and/or workshop information is on the website for a while " \
-                                       "long enough that it cannot be deleted.")
+          expect(flash[:notice]).to eq(I18n.t('admin.workshop.destroy.failure'))
         end
       end
     end

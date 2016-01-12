@@ -83,12 +83,9 @@ class Admin::WorkshopsController < Admin::ApplicationController
     if workshop_has_no_invitees? && workshop_created_within_specific_time_frame?
       @workshop.destroy
 
-      redirect_to admin_root_path, notice: "Workshop deleted succesfully"
+      redirect_to admin_root_path, notice: t('admin.workshop.destroy.success')
     else
-      redirect_to admin_workshop_path(@workshop),
-                  notice: "Workshop cannot be deleted. This is because it has invitees" \
-                          " and/or workshop information is on the website for a while " \
-                          "long enough that it cannot be deleted."
+      redirect_to admin_workshop_path(@workshop), notice: t('admin.workshop.destroy.failure')
     end
   end
 
