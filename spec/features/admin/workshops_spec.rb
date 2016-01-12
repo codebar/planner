@@ -47,4 +47,21 @@ feature 'Managing workshops' do
       expect(page).to have_content sponsor.name
     end
   end
+
+  scenario "creating a workshop with random allocation" do
+    visit new_admin_workshop_path
+
+    select chapter.name
+    fill_in "Date", with: Date.today
+    fill_in "Time", with: Time.now + 2.hour
+    check "Randomly assign spaces"
+    fill_in "Random assignment date", with: Date.today
+    fill_in "Random assignment time", with: Time.now + 1.hour
+
+    click_on "Save"
+
+    expect(page).to have_content "Invite"
+    expect(page).to have_content "will be randomly allocated"
+  end
+
 end

@@ -27,4 +27,21 @@ class SessionInvitation < ActiveRecord::Base
       SessionInvitationMailer.invite_student(self.sessions, self.member, self).deliver
     end
   end
+
+  def can_accept?
+    if not sessions.can_accept?
+      return false
+    end
+
+    if for_student?
+      return sessions.student_spaces?
+    end
+
+    if for_coach?
+      return sessions.coach_spaces?
+    end
+
+    # We'll fall off the end falsely if the invitation is neither a
+    # student nor a coach
+  end
 end

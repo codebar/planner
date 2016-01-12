@@ -29,6 +29,30 @@ describe WorkshopPresenter do
     workshop.time
   end
 
+  context "#random_allocate_date" do
+    it "returns the empty string when no date is set" do
+      expect(sessions).to receive(:random_allocate_at).and_return(nil)
+      expect(workshop.random_allocate_date).to be == ""
+    end
+
+    it "returns a date when a date is set" do
+      expect(sessions).to receive(:random_allocate_at).twice.and_return(DateTime.new)
+      expect(workshop.random_allocate_date).to match(%r{.*/.*/.*})
+    end
+  end
+
+  context "#random_allocate_time" do
+    it "returns the empty string when no time is set" do
+      expect(sessions).to receive(:random_allocate_at).and_return(nil)
+      expect(workshop.random_allocate_time).to be == ""
+    end
+
+    it "returns a date when a time is set" do
+      expect(sessions).to receive(:random_allocate_at).twice.and_return(DateTime.new)
+      expect(workshop.random_allocate_time).to match(%r{.*:.*})
+    end
+  end
+
   it "#attendees_csv" do
     expect(workshop).to receive(:organisers).at_least(:once).and_return [invitations.last.member]
     expect(workshop.attendees_csv).not_to be_blank

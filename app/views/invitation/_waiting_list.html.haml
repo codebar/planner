@@ -1,13 +1,25 @@
-- if invitation.waiting_list.blank?
-  %p The workshop is full.
-  = link_to "Join the Waiting List", invitation_waiting_list_path(invitation), method: :post, class: 'button round expand', "data-confirm" => "Are you sure you want to join the waiting list? If any spots become available, even last minute, you will get a spot for the workshop."
-
-  = link_to "Not sure, just remind me", invitation_waiting_list_path(invitation, auto_rsvp: false), method: :post, class: "button round expand"
-- else
+- if not invitation.waiting_list.blank?
   - if invitation.waiting_list.auto_rsvp?
-
-    .text-center Waiting List position: <strong>#{invitation.waiting_list_position}</strong>/#{@workshop.waiting_list_count_for(invitation.role)}
+    - if not invitation.sessions.allocation_time.nil?
+      .text-center
+        You are on the waiting list. Places for this workshop will be
+        allocated at #{l(invitation.sessions.allocation_time)}.
+    - else
+      .text-center Waiting List position: <strong>#{invitation.waiting_list_position}</strong>/#{@workshop.waiting_list_count_for(invitation.role)}
     %br
     = link_to "Remove from Waiting list", invitation_waiting_list_path(invitation), method: :delete, class: 'button expand round alert', "data-confirm" => "Are you sure you want to let go of your spot? You cannot undo this."
   - else
     = link_to "Don't send me a reminder", invitation_waiting_list_path(invitation), method: :delete, class: 'button expand round alert'
+
+- else
+  - if not invitation.sessions.allocation_time.nil?
+    %p
+      Places for this workshop will be allocated at
+      #{l(invitation.sessions.allocation_time)}. Sign up now and we'll
+      allocate a space if one is available.
+  - else invitation.waiting_list.blank?
+    %p The workshop is full.
+
+  = link_to "Join the Waiting List", invitation_waiting_list_path(invitation), method: :post, class: 'button round expand', "data-confirm" => "Are you sure you want to join the waiting list? If any spots become available, even last minute, you will get a spot for the workshop."
+
+  = link_to "Not sure, just remind me", invitation_waiting_list_path(invitation, auto_rsvp: false), method: :post, class: "button round expand"
