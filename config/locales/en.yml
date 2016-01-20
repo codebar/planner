@@ -234,3 +234,6 @@ en:
     workshop:
       manage_rsvps:
         text: 'RSVP Students and Coaches to the workshop. The attendance confirmation email will be triggered and they will be removed from the waiting list.'
+      destroy:
+        success: "Workshop deleted successfully"
+        failure: "Workshop cannot be deleted. This is because it has invitees and/or workshop information is on the website for a while long enough that it cannot be deleted."

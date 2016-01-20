@@ -58,6 +58,7 @@ group :development, :test do
   gem 'pry-byebug'
   gem 'pry-remote'
   gem 'dotenv-rails'
+  gem 'timecop'
 end
 
 group :test do
