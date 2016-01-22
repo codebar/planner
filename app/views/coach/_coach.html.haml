@@ -13,10 +13,8 @@
                 =link_to twitter_url_for(coach.twitter) do
                   = coach.full_name
                 %p= coach.about_you
-                - if coach.skills.length != 0
+                - if coach.skills.any?
                   %p 
                     skills: 
                     - coach.skills.each do |skill|
                       = link_to skill.name, skill_url(skill.name), class: "skill"
-                -else
-                  = ""
