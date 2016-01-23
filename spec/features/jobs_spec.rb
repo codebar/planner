@@ -40,6 +40,17 @@ feature 'Jobs' do
           expect(page).to_not have_content(expired.first.title)
         end
 
+        scenario 'can view an approved job listing' do
+          job = Fabricate.create(:job)
+
+          visit root_path
+          click_on "Jobs"
+          click_on job.title
+
+          expect(page).to have_content(job.description)
+          expect(page).to have_content("posted by #{job.created_by.full_name}")
+        end
+
         scenario 'can preview and list a new job' do
           visit new_job_path
 
