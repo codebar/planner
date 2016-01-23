@@ -25,10 +25,14 @@
             %label{for: 'to-the-point'} The post is short and to the point
 
 %br
-= render partial: 'jobs/show'
+%br
+=render partial: 'jobs/show', locals: { admin: true }
 
 %br
 .stripe.reverse
   .row
     .large-12.columns.text-right
-      =link_to "Approve", admin_job_approve_path(@job), class: 'button round alert'
+      - if @job.approved?
+        %label.label.success Approved
+      - else
+        =link_to "Approve", admin_job_approve_path(@job), class: 'button round alert'

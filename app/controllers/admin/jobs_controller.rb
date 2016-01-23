@@ -2,13 +2,21 @@ class Admin::JobsController < Admin::ApplicationController
 
   def index
     @jobs = Job.submitted.ordered
+    authorize @jobs
   end
 
   def show
     @job = Job.find(params[:id])
+    authorize @job
+  end
+
+  def all
+    @jobs = Job.unscoped.ordered
+    authorize @jobs
   end
 
   def approve
+    authorize @job
     @job = Job.find(params[:job_id])
     @job.update_attribute(:approved, true)
     @job.update_attribute(:approved_by, current_user)
