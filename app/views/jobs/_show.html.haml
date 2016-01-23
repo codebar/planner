@@ -20,7 +20,7 @@
 
 .row
   .large-6.columns
-    %b Application deadline: #{I18n.l(@job.expiry_date, format: :default_date)} (in#{distance_of_time_in_words(Time.now, @job.expiry_date)})
+    %b Application deadline: #{I18n.l(@job.expiry_date, format: :default_date)} (in #{distance_of_time_in_words(Time.now, @job.expiry_date)})
   .large-6.columns.text-right
     %p
       %em posted by <b>#{link_to @job.created_by.full_name, admin_member_path(@job.created_by)}</b> on #{l(@job.created_at, format: :date)}

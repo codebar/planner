@@ -1,7 +1,7 @@
 class JobsController < ApplicationController
   before_filter :set_job, only: [:show, :preview, :edit, :update, :submit]
   before_filter :is_logged_in?
-  before_filter :has_access?, only: [ :new, :create, :edit, :update, :submit]
+  before_filter :has_access?, only: [ :edit, :update, :submit]
 
   def index
     @jobs = Job.approved.ordered
@@ -29,6 +29,7 @@ class JobsController < ApplicationController
   end
 
   def edit
+    redirect_to root_path, notice: "As the post has already been approved if you need to make any amendments please get in touch with the organisers at london@codebar.io." if @job.approved?
   end
 
   def show
@@ -59,6 +60,6 @@ class JobsController < ApplicationController
   end
 
   def has_access?
-    redirect_to root_path unless logged_in? and is_verified_coach_or_admin?
+    redirect_to root_path unless logged_in? and @job.created_by.eql?(current_user)
   end
 end

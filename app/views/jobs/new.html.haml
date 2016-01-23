@@ -1,4 +1,11 @@
-- if @pending_jobs
-  %p You have  #{@pending_jobs.count}
-= render partial: 'shared/title', locals: { title: "Add a job", date: nil }
-= render partial: 'form'
+.stripe.reverse
+  .row
+    .large-12.columns
+      %h2 Post a job
+      %p
+        A #{link_to("minimum donation of £25", "https://donate.codebar.io")} is required to process a job post. Posted jobs will only be visible to our members after they are reviewed and approved by an organisers. Please be considerate when posting and only post jobs that will truly be valuable to our students.
+
+.stripe.reverse
+  .row
+    .large-12.columns
+      = render partial: 'form'
