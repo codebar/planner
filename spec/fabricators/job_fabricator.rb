@@ -1,5 +1,5 @@
 Fabricator(:job) do
-  title { Faker::Lorem.word }
+  title { Faker::Lorem.sentence }
   description { Faker::Lorem.paragraph }
   location { Faker::Address.city }
   email { Faker::Address.city }

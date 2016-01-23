@@ -11,10 +11,11 @@ class Admin::JobsController < Admin::ApplicationController
   def approve
     @job = Job.find(params[:job_id])
     @job.update_attribute(:approved, true)
+    @job.update_attribute(:approved_by, current_user)
 
     JobMailer.job_approved(@job).deliver!
 
-    flash[:notice] = "Job #{@job.title} at #{@job.company} has been approved and #{@job.created_by.full_name} has been sent an email."
+    flash[:notice] = "The job has been approved and an email has been sent out to #{@job.created_by.full_name} at #{@job.created_by.email}"
 
     redirect_to admin_jobs_path
   end
