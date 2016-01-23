@@ -1,4 +1,7 @@
 class JobMailer < ActionMailer::Base
+  include ApplicationHelper
+
+  helper ApplicationHelper
 
   def job_approved(job)
     @job = job
