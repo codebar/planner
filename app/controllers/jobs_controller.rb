@@ -1,10 +1,10 @@
 class JobsController < ApplicationController
-  before_filter :is_logged_in?
   before_filter :set_job, only: [:show, :preview, :edit, :update, :submit]
+  before_filter :is_logged_in?
   before_filter :has_access?, only: [ :new, :create, :edit, :update, :submit]
 
   def index
-    @jobs = Job.where(approved: true, submitted: true)
+    @jobs = Job.approved.ordered
   end
 
   def pending
