@@ -16,8 +16,9 @@ class Admin::JobsController < Admin::ApplicationController
   end
 
   def approve
-    authorize @job
     @job = Job.find(params[:job_id])
+    authorize @job
+
     @job.update_attribute(:approved, true)
     @job.update_attribute(:approved_by, current_user)
 

@@ -8,6 +8,10 @@ class JobPolicy < ApplicationPolicy
     user.has_role?(:admin) or Chapter.find_roles(:organiser, user).any?
   end
 
+  def approve?
+    user.has_role?(:admin) or Chapter.find_roles(:organiser, user).any?
+  end
+
   def all?
     is_admin_or_chapter_organiser?
   end
