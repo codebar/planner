@@ -1,29 +1,34 @@
-%section#banner
+.stripe.reverse
   .row
     .large-12.columns
       %h1 Review job
+.alert-box
   .row
-    .large-12.columns.panel
-      .row
-        .large-12.columns
-          %h1
-            #{@job.title} at #{link_to(@job.company, @job.link_to_job)}
-            %small.fa.fa-location-arrow
-              = @job.location
+    .large-12.columns
+      %p
+        Before approving this job make sure
+        %ul.no-bullet
+          %li
+            %input#work_details{type: 'checkbox'}
+            %label{for: 'work_details'} The post details the work that will have to be undertaken
+          %li
+            %input#roles{type: 'checkbox'}
+            %label{for: 'roles'} It's suitable for people looking for Internships and Junior roles that will enable them to build up their career
+          %li
+            %input#reliable_source{type: 'checkbox'}
+            %label{for: 'reliable_source'} It was posted by someone you know or a reliable source
+          %li
+            %input#payment{type: 'checkbox'}
+            %label{for: 'payment'} Payment confirmation was posted in the London organisers Slack channel
+          %li
+            %input#to-the-point{type: 'checkbox'}
+            %label{for: 'to-the-point'} The post is short and to the point
 
-      .row
-        .large-12.columns
-          = dot_markdown(@job.description)
-          %p
-            %em posted by <b>#{@job.created_by.full_name}</b> on #{l(@job.created_at, format: :date)}
+%br
+= render partial: 'jobs/show'
 
-          %p
-            %b This job will expire in #{distance_of_time_in_words(Time.now, @job.expiry_date)}
-
-      .row
-        .large-12.columns.text-right
-          =mail_to @job.email, "Apply", class: 'button alert round'
-
-    .row
-      .large-12.columns.text-right
-        =link_to "Approve", admin_job_approve_path(@job), class: 'button round alert'
+%br
+.stripe.reverse
+  .row
+    .large-12.columns.text-right
+      =link_to "Approve", admin_job_approve_path(@job), class: 'button round alert'

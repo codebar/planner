@@ -1,15 +1,22 @@
-%section#banner
-  - @jobs.each do |job|
-    .row
-      .large-12.columns
-        .panel.callout
-          %h4
+.stripe.reverse
+  .row
+    .large-12.columns
+      %h1 Jobs pending approval
+
+.stripe.reverse
+  .row
+    .large-12.columns
+      - if @jobs.none?
+        %p
+          there are no jobs available at the moment
+
+      %dl
+        - @jobs.each do |job|
+          %dt
             =link_to admin_job_path(job) do
-              #{job.title} at #{job.company}
-              %small.fa.fa-location-arrow
-                = job.location
-          =link_to admin_job_path(job) do
-            %p
-              =truncate(sanitize(dot_markdown(job.description), tags: { }), length: 200)
-          %p.text-right
-            Posted by #{job.created_by.full_name} on #{l(job.created_at, format: :date)}
+              #{job.title}
+            %small.fa.fa-location-arrow
+              = job.location
+            - if job.expiry_date.past?
+              %label.label.alert expired
+          %dd submitted #{distance_of_time_in_words(Time.now, job.created_at)} ago

@@ -1,7 +1,7 @@
 class Admin::JobsController < Admin::ApplicationController
 
   def index
-    @jobs = Job.where(approved: false, submitted: true).order('created_at ASC')
+    @jobs = Job.submitted.ordered
   end
 
   def show
