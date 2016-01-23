@@ -8,17 +8,17 @@
         Before posting, make sure that:
         %ul.no-bullet
           %li
-            %input{type: 'checkbox'}
-              %label Your post details the work that will have to be undertaken
+            %input#work-details{type: 'checkbox'}
+            %label{for: 'work-details'} Your post details the work that will have to be undertaken
           %li
-            %input{type: 'checkbox'}
-              %label It's suitable for people looking for Internships and Junior roles that will enable them to build up their career
+            %input#roles{type: 'checkbox'}
+            %label{for: 'roles'} It's suitable for people looking for Internships and Junior roles that will enable them to build up their career
           %li
-            %input{type: 'checkbox'}
-              %label The job pays an appropriate salary
+            %input#pay{type: 'checkbox'}
+            %label{for: 'pay'} The job pays an appropriate salary
           %li
-            %input{type: 'checkbox'}
-              %label It's short and to the point
+            %input#short{type: 'checkbox'}
+            %label{for: 'short'} It's short and to the point
 
       =link_to "Make payment", "https://donate.codebar.io", class: 'button tiny round'
       %br
