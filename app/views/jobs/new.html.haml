@@ -3,7 +3,26 @@
     .large-12.columns
       %h2 Post a job
       %p
-        A #{link_to("minimum donation of £25", "https://donate.codebar.io")} is required to process a job post. Posted jobs will only be visible to our members after they are reviewed and approved by an organisers. Please be considerate when posting and only post jobs that will truly be valuable to our students.
+        A minimum payment of <b>£25</b> is required to list a job (all proceeds go towards running our events and sustaining codebar).
+      %p
+        Before posting, make sure that:
+        %ul.no-bullet
+          %li
+            %input{type: 'checkbox'}
+              %label Your post details the work that will have to be undertaken
+          %li
+            %input{type: 'checkbox'}
+              %label It's suitable for people looking for Internships and Junior roles that will enable them to build up their career
+          %li
+            %input{type: 'checkbox'}
+              %label The job pays an appropriate salary
+          %li
+            %input{type: 'checkbox'}
+              %label It's short and to the point
+
+      =link_to "Make payment", "https://donate.codebar.io", class: 'button tiny round'
+      %br
+      %small *Posted jobs will only be visible to our members after they are reviewed and approved by an organiser.
 
 .stripe.reverse
   .row
