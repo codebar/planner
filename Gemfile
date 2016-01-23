@@ -72,9 +72,3 @@ group :production do
   gem 'rails_12factor'
   gem 'foreman'
 end
-
-gem 'jbuilder'
-
-group :doc do
-  gem 'sdoc', require: false
-end
