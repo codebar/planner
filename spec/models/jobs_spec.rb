@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Job, wip: true do
+describe Job do
   context "#fields" do
     subject(:job) { Fabricate.build(:job) }
 
