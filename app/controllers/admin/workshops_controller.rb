@@ -21,6 +21,8 @@ class Admin::WorkshopsController < Admin::ApplicationController
     @workshop = Sessions.new(workshop_params)
     authorize(@workshop)
 
+    set_random_allocate
+
     if @workshop.save
       grant_organiser_access(@workshop.chapter.organisers.map(&:id))
       set_host(host_id)
@@ -52,6 +54,7 @@ class Admin::WorkshopsController < Admin::ApplicationController
 
     @workshop.update_attributes(workshop_params)
 
+    set_random_allocate
     set_organisers(organiser_ids)
     set_host(host_id)
 
@@ -126,6 +129,16 @@ class Admin::WorkshopsController < Admin::ApplicationController
     organiser_ids.reject!(&:empty?)
     grant_organiser_access(organiser_ids)
     revoke_organiser_access(organiser_ids)
+  end
+
+  def set_random_allocate
+    if params[:random_allocate] == "enabled"
+      date = DateTime.parse(params[:random_allocate_date])
+      time = Time.parse(params[:random_allocate_time])
+      @workshop.update(random_allocate_at: date.change(hour: time.hour, min: time.min))
+    else
+      @workshop.update(random_allocate_at: nil)
+    end
   end
 
   def host_id

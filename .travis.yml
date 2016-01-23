@@ -5,7 +5,7 @@ script:
   - bundle exec rake db:schema:load
   - bundle exec rspec
 rvm:
-  - 2.2.2
+  - 2.2.4
 notifications:
   email:
     - social@codebar.io

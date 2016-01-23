@@ -18,5 +18,8 @@
     .large-6.columns
       = f.input :invitable
   .row
+    .large-4.columns
+      = render partial: "random_allocate_input"
+  .row
     .large-12.columns.text-right
       = f.submit "Save", class: "button"

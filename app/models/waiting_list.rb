@@ -18,7 +18,11 @@ class WaitingList < ActiveRecord::Base
     by_workshop(workshop).where_role('Coach').where(auto_rsvp: true).map(&:member)
   end
 
+  def self.waiting_for(workshop, role)
+    by_workshop(workshop).where_role(role).where(auto_rsvp: true)
+  end
+
   def self.next_spot(workshop, role)
-    by_workshop(workshop).where_role(role).where(auto_rsvp: true).first
+    self.waiting_for(workshop, role).first
   end
 end

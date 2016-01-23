@@ -19,6 +19,7 @@ class Sessions < ActiveRecord::Base
   validates :chapter_id, presence: true
 
   before_save :combine_date_and_time, :set_rsvp_close_time
+  after_save :schedule_allocation
 
   def host
     SponsorSession.hosts.for_session(self.id).first.sponsor rescue nil
@@ -60,8 +61,26 @@ class Sessions < ActiveRecord::Base
     future? && rsvp_close_time.future?
   end
 
+  def can_accept?
+    random_allocate_at.nil? or random_allocate_at.past?
+  end
+
+  # nil if allocations are being made immediately, otherwise the time
+  # when allocations will be made
+  def allocation_time
+    can_accept? ? nil : random_allocate_at
+  end
+
   def future?
     date_and_time.future?
+  end
+
+  def coach_spaces?
+    not host.nil? and host.coach_spots > attending_coaches.length
+  end
+
+  def student_spaces?
+    not host.nil? and host.seats > attending_students.length
   end
 
   # Is this person attending this event?
@@ -102,6 +121,12 @@ class Sessions < ActiveRecord::Base
 
   def set_rsvp_close_time
     self.rsvp_close_time ||= self.date_and_time
+  end
+
+  def schedule_allocation
+    if allocation_time and random_allocate_at_changed?
+      AllocateSpacesJob.perform_when_needed(self)
+    end
   end
 
 end
