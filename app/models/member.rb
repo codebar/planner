@@ -65,7 +65,7 @@ class Member < ActiveRecord::Base
   end
 
   def avatar size=100
-    "http://gravatar.com/avatar/#{md5_email}?s=#{size}"
+    "https://secure.gravatar.com/avatar/#{md5_email}?s=#{size}"
   end
 
   def attended_sessions

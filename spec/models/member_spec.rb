@@ -52,7 +52,7 @@ describe Member do
 
       it "#avatar" do
         encrypted_email = Digest::MD5.hexdigest(member.email.strip.downcase)
-        expect(member.avatar).to eq("http://gravatar.com/avatar/#{encrypted_email}?s=100")
+        expect(member.avatar).to eq("https://secure.gravatar.com/avatar/#{encrypted_email}?s=100")
       end
 
       it "#attended_sessions" do
