@@ -1,10 +1,10 @@
 .event#minified
   .row
-    .small-2.columns
+    .small-3.medium-2.columns
       .date
         .time
           = meeting.time
-    .small-10.columns
+    .small-9.medium-10.columns
       .title
         =link_to meeting.to_s, meeting.path
         - if meeting.venue.present?
