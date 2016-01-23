@@ -80,6 +80,8 @@ class Admin::WorkshopsController < Admin::ApplicationController
   end
 
   def destroy
+    authorize(@workshop)
+
     if workshop_has_no_invitees? && workshop_created_within_specific_time_frame?
       @workshop.destroy
 
