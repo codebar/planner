@@ -84,7 +84,7 @@ Planner::Application.routes.draw do
 
   resources :jobs, except: [:destroy] do
     get 'preview'
-    get 'submit'
+    post 'submit'
     get 'pending', on: :collection
   end
 
