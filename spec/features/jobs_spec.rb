@@ -63,7 +63,6 @@ feature 'Jobs' do
           click_on "Update"
 
           expect(page).to have_content("This is a preview. Submit to verify your post or Edit to amend.")
-          expect(page).to have_content("in 13 days")
 
           click_on "Submit"
           expect(page).to have_content("Job submitted. You will receive an email when the job has ben approved.")
