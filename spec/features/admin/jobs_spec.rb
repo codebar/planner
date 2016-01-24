@@ -40,4 +40,18 @@ feature 'Admin Jobs' do
 
   end
 
+  scenario 'An admin can view all reviewed jobs jobs' do
+    job = Fabricate(:job)
+    expired_job = Fabricate(:job, expiry_date: Date.today-1.week)
+
+    visit all_admin_jobs_path
+
+    expect(page).to have_content(job.title)
+    expect(page).to have_content(expired_job.title)
+
+    click_on expired_job.title
+
+    expect(page).to have_content(expired_job.description)
+
+  end
 end

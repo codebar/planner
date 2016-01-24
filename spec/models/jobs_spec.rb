@@ -39,4 +39,12 @@ describe Job do
     end
 
   end
+
+  context "#expired?" do
+    it "checks if the job post has past its expiry_date" do
+      job = Job.new(expiry_date: Date.today-1.day)
+
+      expect(job.expired?).to eq(true)
+    end
+  end
 end

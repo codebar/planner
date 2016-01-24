@@ -9,4 +9,8 @@ class Job < ActiveRecord::Base
   scope :ordered, -> { order('created_at desc') }
   default_scope -> { where('expiry_date > ?', Date.today) }
 
+  def expired?
+    self.expiry_date.past?
+  end
+
 end
