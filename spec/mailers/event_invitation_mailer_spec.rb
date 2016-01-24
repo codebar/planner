@@ -9,14 +9,14 @@ describe EventInvitationMailer do
 
   it "#invite_student" do
     email_subject = "Invitation: #{event.name}"
-    EventInvitationMailer.invite_student(event, member, invitation).deliver
+    EventInvitationMailer.invite_student(event, member, invitation).deliver_now
 
     expect(email.subject).to eq(email_subject)
   end
 
   it "#invite_coach" do
     email_subject = "Coach Invitation: #{event.name}"
-    EventInvitationMailer.invite_coach(event, member, invitation).deliver
+    EventInvitationMailer.invite_coach(event, member, invitation).deliver_now
 
     expect(email.subject).to eq(email_subject)
   end

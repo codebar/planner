@@ -22,7 +22,7 @@ class Admin::JobsController < Admin::ApplicationController
     @job.update_attribute(:approved, true)
     @job.update_attribute(:approved_by, current_user)
 
-    JobMailer.job_approved(@job).deliver!
+    JobMailer.job_approved(@job).deliver_now!
 
     flash[:notice] = "The job has been approved and an email has been sent out to #{@job.created_by.full_name} at #{@job.created_by.email}"
 

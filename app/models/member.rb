@@ -56,12 +56,12 @@ class Member < ActiveRecord::Base
   end
 
   def send_eligibility_email(user)
-    MemberMailer.eligibility_check(self)
+    MemberMailer.eligibility_check(self).deliver_now
     self.eligibility_inquiries.create(sent_by_id: user.id)
   end
 
   def send_attendance_email(user)
-    MemberMailer.attendance_warning(self)
+    MemberMailer.attendance_warning(self).deliver_now
     self.attendance_warnings.create(sent_by_id: user.id)
   end
 

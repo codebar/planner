@@ -24,7 +24,7 @@ module InvitationControllerConcerns
       if (@invitation.for_student? and @workshop.student_spaces?) or (@invitation.for_coach? and @workshop.coach_spaces?)
         @invitation.update_attribute(:attending, true)
         @invitation.waiting_list.delete  if @invitation.waiting_list.present?
-        SessionInvitationMailer.attending(@invitation.sessions, @invitation.member, @invitation).deliver
+        SessionInvitationMailer.attending(@invitation.sessions, @invitation.member, @invitation).deliver_now
 
         redirect_to :back, notice: t("messages.accepted_invitation",
                                      name: @invitation.member.name)
@@ -48,7 +48,7 @@ module InvitationControllerConcerns
             invitation = next_spot.invitation
             next_spot.delete
             invitation.update_attribute(:attending, true)
-            SessionInvitationMailer.attending(invitation.sessions, invitation.member, invitation, true).deliver
+            SessionInvitationMailer.attending(invitation.sessions, invitation.member, invitation, true).deliver_now
           end
 
           redirect_to :back, notice: t("messages.rejected_invitation", name: @invitation.member.name)

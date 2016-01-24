@@ -7,7 +7,7 @@ class Admin::InvitationController < Admin::ApplicationController
     invitation = Invitation.find_by_token(params[:invitation_id])
     invitation.update_attributes(verified: true, verified_by: current_user)
 
-    EventInvitationMailer.attending(invitation.event, invitation.member, invitation).deliver
+    EventInvitationMailer.attending(invitation.event, invitation.member, invitation).deliver_now
 
     redirect_to :back, notice: "You have verified #{invitation.member.full_name}'s spot at the event!"
   end
