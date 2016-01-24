@@ -10,10 +10,11 @@
       %li=link_to "List a job",  new_job_path
     %li
       %label Account
-    %li= link_to "Dashboard", dashboard_path
+    %li=link_to "My Profile", profile_path
+    %li=link_to "My Dashboard", dashboard_path
     %li=link_to "Invitations", invitations_path
-    %li=link_to "Profile", profile_path
     %li=link_to "Manage subscriptions", subscriptions_path
+    %li=link_to "Update details", edit_member_path
     %li
       =link_to logout_path do
         Sign out

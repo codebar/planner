@@ -1,5 +1,8 @@
 = simple_form_for @member, method: :put do |f|
   .row
+    .large-4.column
+      = f.input :preferred_pronoun
+  .row
     .large-6.columns
       = f.input :name
     .large-6.columns
