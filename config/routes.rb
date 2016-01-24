@@ -15,13 +15,13 @@ Planner::Application.routes.draw do
     get 'step1'
     put 'step1'
     get 'step2'
-    
+
   end
 
   resource :members do
     get :autocomplete_skill_name, on: :collection
   end
-  
+
   get '/profile' => "members#profile", as: :profile
 
   resources :subscriptions, only: [ :index, :create ]
@@ -84,7 +84,7 @@ Planner::Application.routes.draw do
 
   resources :jobs, except: [:destroy] do
     get 'preview'
-    get 'submit'
+    post 'submit'
     get 'pending', on: :collection
   end
 
@@ -94,7 +94,10 @@ Planner::Application.routes.draw do
     root "portal#index"
 
     get '/guide' => "portal#guide", as: :guide
+
+
     resources :jobs, only: [ :index, :show] do
+      get 'all', on: :collection
       get 'approve'
     end
 

@@ -1,15 +1,14 @@
 .stripe.reverse
   .row
     .large-12.columns
-      %h1 Jobs pending approval
-      =link_to "View all jobs", all_admin_jobs_path
+      %h1 All Jobs
 
 .stripe.reverse
   .row
     .large-12.columns
       - if @jobs.none?
         %p
-          there are no jobs available at the moment
+          No jobs have been posted so far!
 
       %dl
         - @jobs.each do |job|
@@ -18,6 +17,10 @@
               #{job.title}
             %small.fa.fa-location-arrow
               = job.location
+            - if job.approved?
+              %label.label.success approved
             - if job.expiry_date.past?
               %label.label.alert expired
-          %dd submitted #{distance_of_time_in_words(Time.now, job.created_at)} ago
+          %dd
+            submitted #{distance_of_time_in_words(Time.now, job.created_at)} ago
+            %small approved by #{job.approved_by.full_name rescue ""}

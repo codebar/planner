@@ -20,6 +20,10 @@ class WorkshopPolicy < ApplicationPolicy
     is_admin_or_chapter_organiser?
   end
 
+  def destroy?
+    is_admin_or_chapter_organiser?
+  end
+
   private
   def is_chapter_organiser?
     user.has_role?(:organiser, record) or user.has_role?(:organiser, record.chapter) or user.has_role?(:organiser, Chapter)
