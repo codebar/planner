@@ -2,11 +2,12 @@
   .row
     .large-3.columns
       %p.copyright
-        &#169; 2015 codebar
+        &#169; 2016 codebar
 
       %p.contact
         =t("footer.email_us")
-        =mail_to "hello@codebar.io?Subject=Hello%20codebar", "hello@codebar.io"
+        -# encoded email address
+        <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#104;&#101;&#108;&#108;&#111;&#64;&#99;&#111;&#100;&#101;&#98;&#97;&#114;&#46;&#105;&#111;&#63;&#83;&#117;&#98;&#106;&#101;&#99;&#116;&#61;&#72;&#101;&#108;&#108;&#111;&#32;&#99;&#111;&#100;&#101;&#98;&#97;&#114;">&#104;&#101;&#108;&#108;&#111;&#64;&#99;&#111;&#100;&#101;&#98;&#97;&#114;&#46;&#105;&#111;</a>
 
     .large-3.columns
       %ul.no-bullet
@@ -27,8 +28,6 @@
 
     .large-3.columns
       = render partial: 'shared/social_media'
-      %span.git-tip
-        %script{ :"data-gittip-username" => "~by_codebar", :src => "//gttp.co/v1.js" }
   .row
     .large-12.columns
       = link_to "https://www.gosquared.com/", title: "GoSquared.com" do
