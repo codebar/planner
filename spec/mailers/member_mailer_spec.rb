@@ -3,7 +3,7 @@ require "spec_helper"
 RSpec.describe MemberMailer, :type => :mailer do
   describe "welcome_student" do
     let(:member) { Fabricate(:member) }
-    let(:mail) { MemberMailer.welcome_student(member) }
+    let(:mail) { MemberMailer.welcome_student(member).deliver_now }
 
     it "renders the headers" do
       expect(mail.subject).to eq("How codebar works")
@@ -18,7 +18,7 @@ RSpec.describe MemberMailer, :type => :mailer do
 
   describe "welcome_coach" do
     let(:member) { Fabricate(:member) }
-    let(:mail) { MemberMailer.welcome_coach(member) }
+    let(:mail) { MemberMailer.welcome_coach(member).deliver_now }
 
     it "renders the headers" do
       expect(mail.subject).to eq("How codebar works")
@@ -34,29 +34,30 @@ RSpec.describe MemberMailer, :type => :mailer do
   describe "welcome" do
     it "sends the coach welcome email to coaches" do
       member = Fabricate(:coach)
+
       expect_any_instance_of(MemberMailer).to receive(:welcome_coach)
       expect_any_instance_of(MemberMailer).not_to receive(:welcome_student)
-      MemberMailer.welcome member
+      MemberMailer.welcome(member).deliver_now
     end
 
     it "sends the student welcome email to students" do
       member = Fabricate(:student)
       expect_any_instance_of(MemberMailer).not_to receive(:welcome_coach)
       expect_any_instance_of(MemberMailer).to receive(:welcome_student)
-      MemberMailer.welcome member
+      MemberMailer.welcome(member).deviver_now
     end
 
     it "actually sends a coach email" do
       member = Fabricate(:coach)
       expect {
-        MemberMailer.welcome member
+        MemberMailer.welcome(member).deliver_now
       }.to change {ActionMailer::Base.deliveries.count}.by 1
     end
 
     it "actually sends a student email" do
       member = Fabricate(:student)
       expect {
-        MemberMailer.welcome member
+        MemberMailer.welcome(member).deliver_now
       }.to change {ActionMailer::Base.deliveries.count}.by 1
     end
   end

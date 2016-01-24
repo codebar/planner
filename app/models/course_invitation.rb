@@ -19,6 +19,6 @@ class CourseInvitation < ActiveRecord::Base
   private
 
   def email
-    CourseInvitationMailer.invite_student(self.course, self.member, self).deliver
+    CourseInvitationMailer.invite_student(self.course, self.member, self).deliver_now
   end
 end

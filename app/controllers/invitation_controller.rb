@@ -29,7 +29,7 @@ class InvitationController < ApplicationController
 
     if @workshop.student_spaces?
       @invitation.update_attribute(:attending, true)
-      SessionInvitationMailer.attending(@invitation.sessions, @invitation.member, @invitation).deliver
+      SessionInvitationMailer.attending(@invitation.sessions, @invitation.member, @invitation).deliver_now
 
       redirect_to :back, notice: t("messages.accepted_invitation",
                                    name: @invitation.member.name)

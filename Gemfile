@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 ruby '2.2.4'
 
-gem 'rails', '4.1.12'
+gem 'rails', '4.2.5'
 
 gem 'acts-as-taggable-on', '~> 3.4'
 gem 'haml'
