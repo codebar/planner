@@ -2,6 +2,11 @@
   .row
     .large-12.columns
       %h2 Details
+      .avatar-container
+        =image_tag current_user.avatar(75)
+      %span
+        You can change your avatar at
+        =link_to('gravatar.com.', 'http://en.gravatar.com/')
       = render partial: 'members/new', locals: { submit_text: "Save" }
   .row
     .large-12.columns

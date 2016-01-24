@@ -95,7 +95,7 @@ feature "A new student signs up", js: false do
     expect(current_path).to eq(step2_member_path) # Make sure we didn't get redirected to step1 for missing details
 
     expect(page).to have_selector('form')
-    click_button "Subscribe to #{group.chapter.name} student invites"
+    click_button group.chapter.name
     expect(group.members.include? member).to be true
     expect(coach_group.members.include? member).to be false
   end
