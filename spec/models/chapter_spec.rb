@@ -17,6 +17,17 @@ describe Chapter do
 
         expect(chapter.slug).to eq("new-york")
       end
+
+      context "scopes" do
+        context "#default_scope" do
+          it "only returns active Chapters" do
+            2.times { Fabricate(:chapter) }
+            3.times { Fabricate(:chapter, active: false) }
+
+            expect(Chapter.all.count).to eq(2)
+          end
+        end
+      end
     end
   end
 end

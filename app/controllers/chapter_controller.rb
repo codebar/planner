@@ -2,7 +2,7 @@ class ChapterController < ApplicationController
 
   def show
     chapter = Chapter.find_by_slug(slug)
-    redirect_to root_path and return if chapter.nil?
+    redirect_to root_path, notice: "We can't find the chapter you are looking for" and return if chapter.nil?
 
     @chapter = ChapterPresenter.new(chapter)
 
