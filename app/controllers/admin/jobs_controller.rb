@@ -6,7 +6,7 @@ class Admin::JobsController < Admin::ApplicationController
   end
 
   def show
-    @job = Job.find(params[:id])
+    @job = Job.unscoped.find(params[:id])
     authorize @job
   end
 
