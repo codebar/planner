@@ -39,8 +39,8 @@ class MembersController < ApplicationController
     @member = current_user
 
     if @member.update_attributes(member_params)
-      notice = "Your details have been updated"
-      redirect_to(:back, notice: notice) and return
+      notice = "Your details have been updated."
+      redirect_to(profile_path, notice: notice) and return
     else
       @groups = Group.all
       render "edit"
@@ -64,7 +64,7 @@ class MembersController < ApplicationController
 
   def member_params
     params.require(:member).permit(
-      :name, :surname, :email, :mobile, :twitter, :about_you, :skill_list
+      :preferred_pronoun, :name, :surname, :email, :mobile, :twitter, :about_you, :skill_list
     )
   end
 

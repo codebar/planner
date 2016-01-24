@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160123192121) do
+ActiveRecord::Schema.define(version: 20160124024112) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -330,6 +330,7 @@ ActiveRecord::Schema.define(version: 20160123192121) do
     t.string   "mobile"
     t.boolean  "received_coach_welcome_email",   default: false
     t.boolean  "received_student_welcome_email", default: false
+    t.string   "preferred_pronoun"
   end
 
   create_table "members_permissions", id: false, force: true do |t|

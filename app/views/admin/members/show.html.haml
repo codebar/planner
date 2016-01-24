@@ -24,6 +24,9 @@
     .row
       .medium-8.columns
         %dl
+          %dt Preferred pronoun
+          %dd= @member.preferred_pronoun || "Not specified"
+
           %dt Email
           %dd= mail_to @member.email, @member.email
 
