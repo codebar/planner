@@ -6,7 +6,7 @@ gem 'rails', '4.1.12'
 gem 'acts-as-taggable-on', '~> 3.4'
 gem 'haml'
 gem 'compass-rails', github: 'Compass/compass-rails'
-gem 'foundation-rails', "5.5.2.1"
+gem 'foundation-rails', "5.5.3.2"
 gem 'sass-rails', '~> 5.0.1'
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.0'
