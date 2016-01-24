@@ -7,7 +7,6 @@ class MembersController < ApplicationController
   end
 
   def edit
-    @groups = Group.all
     @member = current_user
   end
 
@@ -42,7 +41,6 @@ class MembersController < ApplicationController
       notice = "Your details have been updated."
       redirect_to(profile_path, notice: notice) and return
     else
-      @groups = Group.all
       render "edit"
     end
   end
