@@ -19,8 +19,7 @@ class Admin::JobsController < Admin::ApplicationController
     @job = Job.find(params[:job_id])
     authorize @job
 
-    @job.update_attribute(:approved, true)
-    @job.update_attribute(:approved_by, current_user)
+    @job.update_attributes(approved: true, approved_by_id: current_user.id)
 
     JobMailer.job_approved(@job).deliver_now
 
