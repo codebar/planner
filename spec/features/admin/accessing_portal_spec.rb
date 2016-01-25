@@ -17,10 +17,18 @@ feature 'admin portal' do
       login_as_admin(member)
     end
 
-    scenario 'can access the admin portal' do
+    scenario 'can view all active chapters listed' do
+      chapter = Fabricate(:chapter_with_groups)
+      inactive_chapter = Fabricate(:chapter_with_groups, active: false)
       visit admin_root_path
 
-      expect(current_url).to eq(admin_root_url)
+      chapter.groups.each do |group|
+        expect(page).to have_content(group.to_s)
+      end
+
+      inactive_chapter.groups.each do |group|
+        expect(page).to_not have_content(group.to_s)
+      end
     end
   end
 end

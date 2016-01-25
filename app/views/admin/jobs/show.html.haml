@@ -35,7 +35,10 @@
   .row
     .large-12.columns.text-right
       - if @job.approved?
-        %label.label.success Approved
+        %label.label.success
+          Approved
+          - if @job.approved_by_id?
+            by #{@job.approved_by.full_name}
       - else
         - unless @job.expired?
           =link_to "Approve", admin_job_approve_path(@job), class: 'button round alert'

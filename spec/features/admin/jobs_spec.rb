@@ -35,9 +35,10 @@ feature 'Admin Jobs' do
     expect(page).to have_content("The job has been approved and an email has been sent out to #{job.created_by.full_name} at #{job.created_by.email}")
 
     visit admin_jobs_path
+    click_on "View all jobs"
+    click_on job.title
 
-    expect(page).to_not have_content(job.title)
-
+    expect(page).to have_content("Approved by #{job.reload.approved_by.full_name}")
   end
 
   scenario 'An admin can view all reviewed jobs jobs' do
