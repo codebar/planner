@@ -1,5 +1,6 @@
 class Meeting < ActiveRecord::Base
   include Listable
+  include Invitable
 
   has_many :meeting_talks
   belongs_to :venue, class_name: "Sponsor"

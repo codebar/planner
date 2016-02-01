@@ -63,7 +63,6 @@ Planner::Application.routes.draw do
   resources :courses, only: [ :show ] do
     get "rsvp"
   end
-  resources :meetings, only: [ :show ]
   resources :workshops, only: [ :show ] do
     member do
       post 'rsvp'
@@ -119,6 +118,10 @@ Planner::Application.routes.draw do
         post 'verify'
         post 'cancel'
       end
+    end
+
+    resources :meetings, only: [:new, :create, :show, :edit, :update] do
+
     end
 
     resources :groups, only: [ :index, :new, :create, :show]
