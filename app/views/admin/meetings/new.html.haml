@@ -13,7 +13,7 @@
                 = f.input :slug, placeholder: 'for URI, e.g. monthly-feb-2016'
             .row
               .large-6.columns
-                = f.input :date_and_time, as: :string, required: true, label: "Date"
+                = f.input :date_and_time, as: :datetime, required: true, label: "Date"
         .row
           .large-12.columns
             = f.input :description, as: :text
