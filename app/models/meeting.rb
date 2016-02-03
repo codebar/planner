@@ -4,16 +4,12 @@ class Meeting < ActiveRecord::Base
 
   has_many :meeting_talks
   belongs_to :venue, class_name: "Sponsor"
-  validates :date_and_time, :duration, :lanyrd_url, :venue, presence: true
+  validates :date_and_time, :venue, presence: true
 
   before_save :set_slug
 
   def title
     self.name or "#{I18n.l(date_and_time, format: :month)} Meeting"
-  end
-
-  def end_time
-    date_and_time+duration*60
   end
 
   def to_s
