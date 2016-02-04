@@ -2,7 +2,9 @@ class Meeting < ActiveRecord::Base
   include Listable
   include Invitable
 
-  has_many :meeting_talks
+  resourcify :permissions, role_cname: 'Permission', role_table_name: :permission
+
+  has_many :organisers, -> { where("permissions.name" => "organiser") }, through: :permissions, source: :members
   belongs_to :venue, class_name: "Sponsor"
   validates :date_and_time, :venue, presence: true
 

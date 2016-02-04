@@ -19,7 +19,16 @@
             = f.input :description, as: :text
         .row
           .large-3.columns
+            = f.input :spaces, as: :integer
+        .row
+          .large-3.columns
             = f.association :venue, input_html: { data: { placeholder: "Select sponsors" }}, required: true
+        .row
+          .large-6.columns
+            %label Organisers
+            = f.collection_select :organisers, Member.all,
+            :id, :full_name, { selected: @meeting.organisers.map(&:id) }, { multiple: true }
+
         -#.row
         -#  .large-6.columns
         -#    %br
