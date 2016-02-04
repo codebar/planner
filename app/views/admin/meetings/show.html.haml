@@ -13,12 +13,10 @@
           %small #{l(@meeting.date_and_time)}
 
     .row
-      - if @meeting.venue.present?
-        .medium-1.columns
-          - unless @meeting.spaces?
-            %label.label.warning Workshop full
-          %br
-          %br
+      .medium-2.columns
+        %strong #{@meeting.spaces} spaces
+        %br
+        %br
 
     .row
       .large-3.small-6.columns#host
@@ -26,9 +24,12 @@
           %h4 Venue
           %strong= @meeting.venue.name
           %br
-      -#.large-6.small-12.columns
-      -#  %h4 Team
-        -#- @meeting.organisers.each do |organiser|
-        -#  %span{ "data-tooltip" =>"", "aria-haspopup" => "true",  class: "has-tip",  title: organiser.full_name }
-        -#    = image_tag(organiser.avatar(40))
+
+
+
+      .large-6.small-12.columns
+        %h4 Team
+        - @meeting.organisers.each do |organiser|
+          %span{ "data-tooltip" =>"", "aria-haspopup" => "true",  class: "has-tip",  title: organiser.full_name }
+            = image_tag(organiser.avatar(40))
 
