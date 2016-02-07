@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160201210920) do
+ActiveRecord::Schema.define(version: 20160207151405) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -279,6 +279,19 @@ ActiveRecord::Schema.define(version: 20160201210920) do
   end
 
   add_index "jobs", ["created_by_id"], name: "index_jobs_on_created_by_id", using: :btree
+
+  create_table "meeting_invitations", force: :cascade do |t|
+    t.integer  "meeting_id"
+    t.boolean  "attending"
+    t.integer  "member_id"
+    t.string   "role"
+    t.text     "note"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "meeting_invitations", ["meeting_id"], name: "index_meeting_invitations_on_meeting_id", using: :btree
+  add_index "meeting_invitations", ["member_id"], name: "index_meeting_invitations_on_member_id", using: :btree
 
   create_table "meeting_talks", force: :cascade do |t|
     t.integer  "meeting_id"
