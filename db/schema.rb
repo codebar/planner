@@ -286,6 +286,7 @@ ActiveRecord::Schema.define(version: 20160207151405) do
     t.integer  "member_id"
     t.string   "role"
     t.text     "note"
+    t.string   "token"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

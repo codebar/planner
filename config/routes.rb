@@ -41,7 +41,10 @@ Planner::Application.routes.draw do
 
   resources :invitations, only: [ :index ]
 
-  resources :meetings, only: [:show]
+  resources :meetings, only: [:show] do
+    get 'invitation/attend' => 'invitations#rsvp_meeting', as: :invitation
+    get 'invitation/:token/cancel' => 'invitations#cancel_meeting', as: :cancel
+  end
 
   namespace :course do
     resources :invitation, only: [:show] do

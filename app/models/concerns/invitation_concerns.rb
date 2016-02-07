@@ -28,6 +28,10 @@ module InvitationConcerns
       role.eql?("Coach")
     end
 
+    def for_participant?
+      role.eql?("Participant") # meetings do not distinguish
+    end
+
     private
 
     def set_token
