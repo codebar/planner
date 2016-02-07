@@ -1,13 +1,11 @@
 class Admin::MeetingsController < Admin::ApplicationController
-
-
   def new
     @meeting = Meeting.new
   end
 
   def create
     @meeting = Meeting.new(meeting_params)
-    # set_organisers(organiser_ids)
+    set_organisers(organiser_ids)
 
     if @meeting.save
       redirect_to [:admin, @meeting], notice: 'Meeting successfully created.'
@@ -20,6 +18,12 @@ class Admin::MeetingsController < Admin::ApplicationController
     set_meeting
   end
 
+  def edit
+  end
+
+  def update
+  end
+
   private
 
   def set_meeting
@@ -28,5 +32,25 @@ class Admin::MeetingsController < Admin::ApplicationController
 
   def meeting_params
     params.require(:meeting).permit(:name, :description, :slug, :date_and_time, :invitable, :spaces, :venue_id, :sponsor_id)
+  end
+
+  def organiser_ids
+    params[:meeting][:organisers]
+  end
+
+  def grant_organiser_access(organiser_ids=[])
+    organiser_ids.each { |id| Member.find(id).add_role(:organiser, @meeting) }
+  end
+
+  def revoke_organiser_access(organiser_ids)
+    (@meeting.organisers.pluck(:id).map(&:to_s) - organiser_ids).each do |id|
+      Member.find(id).revoke(:organiser, @meeting)
+    end
+  end
+
+  def set_organisers(organiser_ids)
+    organiser_ids.reject!(&:empty?)
+    grant_organiser_access(organiser_ids)
+    revoke_organiser_access(organiser_ids)
   end
 end

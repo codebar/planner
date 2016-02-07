@@ -8,7 +8,7 @@
     .row
       .medium-12.columns
         %h2
-          =@meeting.to_s
+          =@meeting.name
         %h3
           %small #{l(@meeting.date_and_time)}
 
@@ -28,7 +28,7 @@
 
 
       .large-6.small-12.columns
-        %h4 Team
+        %h4 Hello world
         - @meeting.organisers.each do |organiser|
           %span{ "data-tooltip" =>"", "aria-haspopup" => "true",  class: "has-tip",  title: organiser.full_name }
             = image_tag(organiser.avatar(40))
