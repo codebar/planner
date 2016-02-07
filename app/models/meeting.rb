@@ -6,6 +6,8 @@ class Meeting < ActiveRecord::Base
 
   has_many :organisers, -> { where("permissions.name" => "organiser") }, through: :permissions, source: :members
   belongs_to :venue, class_name: "Sponsor"
+  has_many :meeting_invitations
+
   validates :date_and_time, :venue, presence: true
 
   before_save :set_slug
@@ -24,6 +26,10 @@ class Meeting < ActiveRecord::Base
 
   def date
     I18n.l(date_and_time, format: :dashboard)
+  end
+
+  def attending?(member)
+    MeetingInvitation.where(meeting: self, member: member, attending: true).present?
   end
 
   private

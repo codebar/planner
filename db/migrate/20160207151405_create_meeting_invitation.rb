@@ -6,6 +6,7 @@ class CreateMeetingInvitation < ActiveRecord::Migration
       t.references :member, index: true
       t.string :role
       t.text :note
+      t.string :token
 
       t.timestamps
     end
