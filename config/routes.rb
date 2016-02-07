@@ -15,7 +15,6 @@ Planner::Application.routes.draw do
     get 'step1'
     put 'step1'
     get 'step2'
-
   end
 
   resource :members do
@@ -41,6 +40,8 @@ Planner::Application.routes.draw do
   end
 
   resources :invitations, only: [ :index ]
+
+  resources :meetings, only: [:show]
 
   namespace :course do
     resources :invitation, only: [:show] do
@@ -88,6 +89,7 @@ Planner::Application.routes.draw do
   end
 
   resources :skills, only: [:show]
+
 
   namespace :admin do
     root "portal#index"
