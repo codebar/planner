@@ -17,6 +17,7 @@ class Admin::MeetingsController < Admin::ApplicationController
   end
 
   def show
+    @invitations = @meeting.meeting_invitations.accepted
   end
 
   def edit

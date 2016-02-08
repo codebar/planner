@@ -131,6 +131,8 @@ Planner::Application.routes.draw do
       end
     end
 
+    resources :meeting_invitations, only: [:create, :update]
+
     resources :groups, only: [ :index, :new, :create, :show]
     resources :sponsors, except: [:destroy]
 

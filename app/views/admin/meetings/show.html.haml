@@ -34,3 +34,5 @@
           %span{ "data-tooltip" =>"", "aria-haspopup" => "true",  class: "has-tip",  title: organiser.full_name }
             = image_tag(organiser.avatar(40))
 
+#invitations.stripe.reverse
+  = render partial: 'invitation_management'

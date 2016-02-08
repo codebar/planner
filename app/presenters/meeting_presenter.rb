@@ -15,7 +15,7 @@ class MeetingPresenter < EventPresenter
   def attendees_emails
     model.meeting_invitations.accepted.map {|m| m.member.email if m.member }.compact.join(', ')
   end
-  
+
   private
 
   def model
