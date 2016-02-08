@@ -29,11 +29,11 @@ class Meeting < ActiveRecord::Base
   end
 
   def attending?(member)
-    meeting_invitations.where(member: member, attending: true).present?
+    meeting_invitations.accepted.where(member: member).present?
   end
 
   def not_full
-    meeting_invitations.where(attending: true).count < spaces
+    meeting_invitations.accepted.count < spaces
   end
 
   private
@@ -41,5 +41,4 @@ class Meeting < ActiveRecord::Base
   def set_slug
     self.slug = "#{I18n.l(date_and_time, format: :year_month).downcase}-#{title.parameterize}" if self.slug.nil?
   end
-
 end

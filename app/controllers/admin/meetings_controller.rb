@@ -1,4 +1,6 @@
 class Admin::MeetingsController < Admin::ApplicationController
+  before_action :set_meeting, except: [:new, :create]
+
   def new
     @meeting = Meeting.new
   end
@@ -15,15 +17,12 @@ class Admin::MeetingsController < Admin::ApplicationController
   end
 
   def show
-    set_meeting
   end
 
   def edit
-    set_meeting
   end
 
   def update
-    set_meeting
     set_organisers(organiser_ids)
 
     if @meeting.update_attributes(meeting_params)
@@ -31,7 +30,13 @@ class Admin::MeetingsController < Admin::ApplicationController
     else
       render 'edit', notice: "Something went wrong"
     end
+  end
 
+  def attendees_emails
+    meeting = MeetingPresenter.new(@meeting)
+    return render text: meeting.attendees_emails if request.format.text?
+
+    redirect_to admin_meeting_path(@meeting)
   end
 
   private

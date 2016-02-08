@@ -125,8 +125,10 @@ Planner::Application.routes.draw do
       end
     end
 
-    resources :meetings, only: [:new, :create, :show, :edit, :update] do
-
+    resources :meetings do
+      member do
+        get 'attendees_emails'
+      end
     end
 
     resources :groups, only: [ :index, :new, :create, :show]

@@ -7,4 +7,5 @@ class MeetingInvitation < ActiveRecord::Base
   belongs_to :member
 
   scope :participants, -> { where(role: "Participant") }
+  scope :accepted, -> { where(attending: true) }
 end
