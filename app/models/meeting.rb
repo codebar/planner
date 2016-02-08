@@ -29,7 +29,11 @@ class Meeting < ActiveRecord::Base
   end
 
   def attending?(member)
-    MeetingInvitation.where(meeting: self, member: member, attending: true).present?
+    meeting_invitations.where(member: member, attending: true).present?
+  end
+
+  def not_full
+    meeting_invitations.where(attending: true).count < spaces
   end
 
   private
