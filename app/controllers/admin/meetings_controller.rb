@@ -19,9 +19,19 @@ class Admin::MeetingsController < Admin::ApplicationController
   end
 
   def edit
+    set_meeting
   end
 
   def update
+    set_meeting
+    set_organisers(organiser_ids)
+
+    if @meeting.update_attributes(meeting_params)
+      redirect_to [:admin, @meeting], notice: "You have successfully updated the details of this meeting"
+    else
+      render 'edit', notice: "Something went wrong"
+    end
+
   end
 
   private
