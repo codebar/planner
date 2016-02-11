@@ -15,11 +15,7 @@ class Meeting < ActiveRecord::Base
   def title
     self.name or "#{I18n.l(date_and_time, format: :month)} Meeting"
   end
-
-  def to_s
-    title
-  end
-
+  
   def to_param
     slug
   end
