@@ -47,6 +47,8 @@ class InvitationsController < ApplicationController
   end
 
   def rsvp_meeting
+    return redirect_to :back, notice: "Please login first" unless logged_in?
+
     meeting = Meeting.find_by_slug(params[:meeting_id])
 
     invitation = MeetingInvitation.where(meeting: meeting, member: current_user, role: "Participant").first_or_create
