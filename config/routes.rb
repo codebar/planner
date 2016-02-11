@@ -15,7 +15,6 @@ Planner::Application.routes.draw do
     get 'step1'
     put 'step1'
     get 'step2'
-
   end
 
   resource :members do
@@ -42,6 +41,11 @@ Planner::Application.routes.draw do
 
   resources :invitations, only: [ :index ]
 
+  resources :meetings, only: [:show] do
+    get 'invitation/attend' => 'invitations#rsvp_meeting', as: :invitation
+    get 'invitation/:token/cancel' => 'invitations#cancel_meeting', as: :cancel
+  end
+
   namespace :course do
     resources :invitation, only: [:show] do
       member do
@@ -63,7 +67,6 @@ Planner::Application.routes.draw do
   resources :courses, only: [ :show ] do
     get "rsvp"
   end
-  resources :meetings, only: [ :show ]
   resources :workshops, only: [ :show ] do
     member do
       post 'rsvp'
@@ -89,6 +92,7 @@ Planner::Application.routes.draw do
   end
 
   resources :skills, only: [:show]
+
 
   namespace :admin do
     root "portal#index"
@@ -120,6 +124,14 @@ Planner::Application.routes.draw do
         post 'cancel'
       end
     end
+
+    resources :meetings do
+      member do
+        get 'attendees_emails'
+      end
+    end
+
+    resources :meeting_invitations, only: [:create, :update]
 
     resources :groups, only: [ :index, :new, :create, :show]
     resources :sponsors, except: [:destroy]

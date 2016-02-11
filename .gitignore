@@ -26,3 +26,4 @@ TAGS
 .\#*
 
 .idea/
+*.log

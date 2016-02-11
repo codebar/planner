@@ -1,0 +1,38 @@
+.icon-bar.five-up
+  =link_to edit_admin_meeting_path(@meeting), class: 'item' do
+    %i.fa.fa-pencil
+    %label Edit
+  =link_to attendees_emails_admin_meeting_path(@meeting, format: 'text'), class: 'item' do
+    %i.fa.fa-at
+    %label Emails
+
+%section
+  .stripe.reverse
+    .row
+      .medium-12.columns
+        %h2
+          =@meeting.name
+        %h3
+          %small #{l(@meeting.date_and_time)}
+
+    .row
+      .medium-2.columns
+        %strong #{@meeting.spaces} spaces
+        %br
+        %br
+
+    .row
+      .large-3.small-6.columns#host
+        - if @meeting.venue.present?
+          %h4 Venue
+          %strong= @meeting.venue.name
+          %br
+
+      .large-6.small-12.columns
+        %h4 Team
+        - @meeting.organisers.each do |organiser|
+          %span{ "data-tooltip" =>"", "aria-haspopup" => "true",  class: "has-tip",  title: organiser.full_name }
+            = image_tag(organiser.avatar(40))
+
+#invitations.stripe.reverse
+  = render partial: 'invitation_management'

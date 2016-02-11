@@ -1,48 +1,55 @@
 %section.stripe.reverse
   .row
-    .medium-12.columns
+    .medium-6.columns
       %h2
-        =@meeting.title
+        =@meeting.name
       %h3
         %small=humanize_date_with_time(@meeting.date_and_time)
 
-%section.meeting.stripe.reverse
+
   .row
-    .large-12.columns
-      %ul.no-bullet
-        - @meeting.meeting_talks.each do |talk|
-          %li
-            %h3
-              =talk.title
-            - if talk.description.present?
-              %h4
-                %small.subheader
-                  =talk.description
+    .medium-4.columns#host
+      - if @meeting.venue.present?
+        %h4 Venue
+        %strong= @meeting.venue.name
+        %p= @host_address
 
-            %p
-              = talk.abstract.html_safe
+    .medium-6.columns
+      %h4 Agenda
+      %p= @meeting.description.html_safe
 
-            .row
-              .small-2.columns
-                =link_to twitter_url_for(talk.speaker.twitter) do
-                  =image_tag talk.speaker.avatar(96), class: 'th radius'
+  %br
+  .row
+    .large-10.columns
+      - if @meeting.invitable && @meeting.not_full
 
-              .small-4.columns
-                =link_to twitter_url_for(talk.speaker.twitter) do
-                  = talk.speaker.full_name
-                %p= talk.speaker.about_you.html_safe
+        - if @meeting.attending?(current_user)
+          %h5 You are attending this event.
+          %strong
+            = link_to "Can't make it anymore? Click here to cancel your spot.", meeting_cancel_path(meeting_id: @meeting.id, token: @invitation.token)
+        - else
+          = link_to meeting_invitation_path(@meeting), class: 'button round' do
+            = "Attend"
+      - elsif !@meeting.not_full
+        %h5 This event is now full.
+        %strong To join the waitlist, please <a href="mailto:london@codebar.io">email us</a>.
+
 .stripe.reverse
   .row
     .large-12.columns
-      %p To secure a place at the meeting, you must #{link_to "register with our host, <strong>#{@meeting.venue.name}</strong>".html_safe, @meeting.lanyrd_url}
-      .row
-        .large-3.columns
-          = link_to image_tag(@meeting.venue.avatar, class: "sponsor-logo", alt: @meeting.venue.name), @meeting.venue.website
-          %br
-          = AddressDecorator.decorate(@meeting.venue.address).to_html
-        .large-9.columns
-          %iframe{ width: '100%', height: '350', frameborder: '0', scrolling: 'no', marginheight: '0', marginwidth: '0', src: %{https://maps.google.com/maps?f=q&source=s_q&hl=en&amp;geocode=&q=#{@map_address}&ie=UTF8&t=m&z=15&output=embed} }
-          %br
-          %small
-            =link_to "View larger map", %{https://maps.google.com/maps?f=q&source=s_q&hl=en&amp;geocode=&q=#{@map_address}&ie=UTF8&hq=&t=m&z=15}, style: "color:#0000FF;text-align:left"
+      %iframe{ width: '100%', height: '250', frameborder: '0', scrolling: 'no', marginheight: '0', marginwidth: '0', src: %{https://maps.google.com/maps?f=q&source=s_q&hl=en&amp;geocode=&q=#{@host_address.for_map}&ie=UTF8&t=m&z=15&output=embed} }
+        =link_to "View larger map", %{https://maps.google.com/maps?f=q&source=s_q&hl=en&amp;geocode=&q=#{@host_address.for_map}&ie=UTF8&hq=&t=m&z=15}, style: "color:#0000FF;text-align:left"
+
+.stripe.reverse
+  .row
+    .large-12.columns
+      %h4.text-center Who else will be there?
+      %br
+      %ul.small-block-grid-2.medium-block-grid-4
+        - @attendees.each do |a|
+          %li.text-center
+            =image_tag a.member.avatar(96), class: 'th radius', title: a.member.full_name
+            %br
+            %br
+            =a.member.full_name
 
