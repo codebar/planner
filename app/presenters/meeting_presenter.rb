@@ -1,7 +1,7 @@
 class MeetingPresenter < EventPresenter
 
-  def sponsors
-    model.sponsors
+  def venue
+    model.venue
   end
 
   def description
@@ -18,6 +18,10 @@ class MeetingPresenter < EventPresenter
 
   def to_s
     model.name
+  end
+
+  def admin_path
+    Rails.application.routes.url_helpers.admin_meeting_path(model)
   end
 
   private

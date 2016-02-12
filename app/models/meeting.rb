@@ -6,7 +6,7 @@ class Meeting < ActiveRecord::Base
 
   has_many :organisers, -> { where("permissions.name" => "organiser") }, through: :permissions, source: :members
   belongs_to :venue, class_name: "Sponsor"
-  has_many :meeting_invitations
+  has_many :invitations, foreign_key: "meeting_id", class_name: "MeetingInvitation"
 
   validates :date_and_time, :venue, presence: true
 
@@ -25,11 +25,11 @@ class Meeting < ActiveRecord::Base
   end
 
   def attending?(member)
-    meeting_invitations.accepted.where(member: member).present?
+    invitations.accepted.where(member: member).present?
   end
 
   def not_full
-    meeting_invitations.accepted.count < spaces
+    invitations.accepted.count < spaces
   end
 
   private
