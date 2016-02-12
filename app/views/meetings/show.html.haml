@@ -53,3 +53,5 @@
             %br
             =a.member.full_name
 
+.stripe.reverse
+  = render partial: 'members/organisers_grid', locals: { members: @meeting.organisers, show_info: false }
