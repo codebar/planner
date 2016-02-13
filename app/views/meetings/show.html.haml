@@ -14,13 +14,6 @@
         %strong= @meeting.venue.name
         %p= @host_address
 
-    .medium-6.columns
-      %h4 Agenda
-      %p= @meeting.description.html_safe
-
-  %br
-  .row
-    .large-10.columns
       - if @meeting.invitable && @meeting.not_full
 
         - if @meeting.attending?(current_user)
@@ -33,6 +26,10 @@
       - elsif !@meeting.not_full
         %h5 This event is now full.
         %strong To join the waitlist, please <a href="mailto:london@codebar.io">email us</a>.
+
+    .medium-8.columns
+      %h4 Agenda
+      %p= @meeting.description.html_safe
 
 .stripe.reverse
   .row

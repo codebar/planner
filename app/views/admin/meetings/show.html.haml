@@ -33,6 +33,11 @@
         - @meeting.organisers.each do |organiser|
           %span{ "data-tooltip" =>"", "aria-haspopup" => "true",  class: "has-tip",  title: organiser.full_name }
             = image_tag(organiser.avatar(40))
+    .row
+      .large-8.columns
+        %h4 Agenda
+        %br
+        = @meeting.description.html_safe
 
 #invitations.stripe.reverse
   = render partial: 'invitation_management'
