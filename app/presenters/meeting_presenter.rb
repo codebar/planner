@@ -13,7 +13,7 @@ class MeetingPresenter < EventPresenter
   end
 
   def attendees_emails
-    model.meeting_invitations.accepted.map {|m| m.member.email if m.member }.compact.join(', ')
+    model.invitations.accepted.map {|m| m.member.email if m.member }.compact.join(', ')
   end
 
   def to_s
