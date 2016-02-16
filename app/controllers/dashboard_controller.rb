@@ -67,7 +67,7 @@ class DashboardController < ApplicationController
     meeting = Meeting.next
     event = Event.future(DEFAULT_UPCOMING_EVENTS)
 
-    all_events = workshops << course << meeting << event
+    all_events = workshops << course << event << meeting
     all_events = all_events.compact.flatten
   end
 end

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-feature 'member portal' do
+feature 'Member portal' do
   subject { page }
   let(:member) { Fabricate(:member) }
 
@@ -21,35 +21,33 @@ feature 'member portal' do
       visit root_path
     end
 
-    it "should allow a user to edit their profile" do
+    it "a member can update their details" do
       login member
-      visit edit_member_path
-      expect(member.name).not_to eq "Bob"
-      fill_in "member_name", with: "Bob"
+      visit profile_path
+
+      within "#member_profile" do
+        click_on "Update details"
+      end
+
+      fill_in "member_name", with: "Jane"
+      fill_in "member_surname", with: "Doe"
       click_button "Save"
-      expect(member.name).to eq "Bob"
+
+      expect(page).to have_content("Jane Doe")
     end
 
-    it "should allow a user to join new mailing lists" do
+    it "a member can subscribe to mailing lists" do
       group = Fabricate(:group)
-      expect(group.members.include? member).to be false
-
       login member
-      visit edit_member_path
-      click_button "Subscribe"
+
+      visit profile_path
+      within "#member_profile" do
+        click_on "Manage subscriptions"
+      end
+      click_on "Subscribe"
+
       expect(group.members.include? member).to be true
 
-    end
-
-    it "should allow a user to leave a mailing list" do
-      group = Fabricate(:group)
-      group.members << member
-      expect(group.members.include? member).to be true
-
-      login member
-      visit edit_member_path
-      click_button "Subscribed"
-      expect(group.members.include? member).to be false
     end
   end
 

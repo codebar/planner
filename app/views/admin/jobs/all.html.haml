@@ -1,0 +1,26 @@
+.stripe.reverse
+  .row
+    .large-12.columns
+      %h1 All Jobs
+
+.stripe.reverse
+  .row
+    .large-12.columns
+      - if @jobs.none?
+        %p
+          No jobs have been posted so far!
+
+      %dl
+        - @jobs.each do |job|
+          %dt
+            =link_to admin_job_path(job) do
+              #{job.title}
+            %small.fa.fa-location-arrow
+              = job.location
+            - if job.approved?
+              %label.label.success approved
+            - if job.expiry_date.past?
+              %label.label.alert expired
+          %dd
+            submitted #{distance_of_time_in_words(Time.now, job.created_at)} ago
+            %small approved by #{job.approved_by.full_name rescue ""}

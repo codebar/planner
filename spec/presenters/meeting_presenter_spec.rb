@@ -4,7 +4,7 @@ describe MeetingPresenter do
   let(:meeting) { double(:meeting) }
   let(:event) { MeetingPresenter.new(meeting) }
 
-  it "#sponsors" do
+  xit "#sponsors" do
     expect(event.sponsors).to eq([])
   end
 

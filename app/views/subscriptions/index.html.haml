@@ -2,6 +2,8 @@
 %section#banner
 .row
   .large-12.columns
+    %p.lead Subscriptions control the emails you receive. e.g. If you want to receive invitations to Brighton and London events, select Brighton (Students) and London (Students)
+    %br
     - @groups.group_by(&:chapter).each do |chapter, groups|
       %h4= chapter.name
       %hr

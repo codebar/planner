@@ -7,11 +7,9 @@ class MembersController < ApplicationController
   end
 
   def edit
-    @groups = Group.all
     @member = current_user
   end
 
-  # Show the first step of the new user flow. A custom edit form for the user.
   def step1
     @suppress_notices = true
     @member = current_user
@@ -23,8 +21,6 @@ class MembersController < ApplicationController
     end
   end
 
-
-  # Second step of the new user flow. Choose mailing lists.
   def step2
     @suppress_notices = true
     @member = current_user
@@ -42,10 +38,9 @@ class MembersController < ApplicationController
     @member = current_user
 
     if @member.update_attributes(member_params)
-      notice = "Your details have been updated"
-      redirect_to(:back, notice: notice) and return
+      notice = "Your details have been updated."
+      redirect_to(profile_path, notice: notice) and return
     else
-      @groups = Group.all
       render "edit"
     end
   end
@@ -67,7 +62,7 @@ class MembersController < ApplicationController
 
   def member_params
     params.require(:member).permit(
-      :name, :surname, :email, :mobile, :twitter, :about_you, :skill_list
+      :preferred_pronoun, :name, :surname, :email, :mobile, :twitter, :about_you, :skill_list
     )
   end
 

@@ -1,6 +1,6 @@
 .event#minified
   .row
-    .small-2.columns
+    .small-3.medium-2.columns
       .date
         .time
           = event.time
@@ -15,7 +15,7 @@
           - if @user.event_organiser?(event)
             = link_to event.admin_path do
               %label.label Manage
-    .small-10.columns
+    .small-9.medium-10.columns
       .title
         =link_to event.to_s, event.path
         - if event.venue.present?

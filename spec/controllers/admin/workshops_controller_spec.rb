@@ -1,19 +1,18 @@
 require 'spec_helper'
 
 describe Admin::WorkshopsController, type: :controller do
-  let(:admin) { Fabricate(:chapter_organiser) }
   let!(:workshop) { Fabricate(:sessions) }
-  let(:member) { Fabricate(:member) }
+  let(:admin) { Fabricate(:member) }
 
   before :each do
-    login admin
+    login_as_organiser(admin, workshop.chapter)
   end
 
   describe "DELETE #destroy" do
     context "workshop invitations have been sent" do
 
       before :each do
-        Fabricate(:student_session_invitation, member: member, sessions: workshop, attending: true)
+        Fabricate(:attending_session_invitation, sessions: workshop)
       end
 
       context "workshop deletion tried within specific time frame since it's creation" do

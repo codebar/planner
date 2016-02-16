@@ -27,7 +27,7 @@ class MemberMailer < ActionMailer::Base
 
     mail(mail_args(member, subject)) do |format|
       format.html { render 'welcome_student' }
-    end.deliver
+    end
   end
 
   def welcome_coach(member)
@@ -36,7 +36,7 @@ class MemberMailer < ActionMailer::Base
 
     mail(mail_args(member, subject)) do |format|
       format.html { render 'welcome_coach' }
-    end.deliver
+    end
   end
 
   def eligibility_check(member)
@@ -45,7 +45,7 @@ class MemberMailer < ActionMailer::Base
 
     mail(mail_args(member, subject, 'hello@codebar.io')) do |format|
       format.html { render 'eligibility_check' }
-    end.deliver
+    end
   end
 
   def attendance_warning(member)

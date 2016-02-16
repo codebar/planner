@@ -10,7 +10,7 @@ describe CourseInvitationMailer do
     invitation_token = "token"
 
     email_subject = "Course :: #{course.title} by codebar - Wednesday, 30 Oct at 18:30"
-    CourseInvitationMailer.invite_student(course, member, invitation_token).deliver
+    CourseInvitationMailer.invite_student(course, member, invitation_token).deliver_now
 
     expect(email.subject).to eq(email_subject)
   end

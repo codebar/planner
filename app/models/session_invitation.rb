@@ -24,7 +24,7 @@ class SessionInvitation < ActiveRecord::Base
 
   def email
     if for_student?
-      SessionInvitationMailer.invite_student(self.sessions, self.member, self).deliver
+      SessionInvitationMailer.invite_student(self.sessions, self.member, self).deliver_now
     end
   end
 end

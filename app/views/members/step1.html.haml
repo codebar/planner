@@ -9,6 +9,9 @@
   = simple_form_for @member, method: :put, url: {action: :step1}, html: {class: "sign-up-wizard"} do |f|
     .row
       .large-6.large-offset-3.columns
+        = f.input :preferred_pronoun
+    .row
+      .large-6.large-offset-3.columns
         = f.input :name, label: "First name", required: true
     .row
       .large-6.large-offset-3.columns
@@ -16,7 +19,7 @@
 
     .row
       .large-6.large-offset-3.columns
-        = f.input :email, label: "Email address", hint: "We send you invites to our events via email.", required: true
+        = f.input :email, label: "Email address", hint: "We will send you invitations to our events via email.", required: true
 
     .row
       .large-6.large-offset-3.columns

@@ -13,6 +13,8 @@ class Chapter < ActiveRecord::Base
 
   before_save :set_slug
 
+  default_scope -> { where(active: true) }
+
   def self.available_to_user(user)
     return Chapter.all if user.has_role?(:organiser) or user.has_role?(:admin) or user.has_role?(:organiser, Chapter)
     return Chapter.find_roles(:organiser, user).map(&:resource)

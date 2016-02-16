@@ -5,7 +5,8 @@
   %li=link_to "New workshop", new_admin_workshop_path
   %li=link_to "New sponsor", new_admin_sponsor_path
 %li=link_to "Review jobs (#{jobs_pending_approval})", admin_jobs_path
-%li
-  %label My Chapters
-- current_user.organised_chapters.each do |chapter|
-  %li=link_to chapter.name, admin_chapter_path(chapter)
+-if current_user.organised_chapters.any?
+  %li
+    %label My Chapters
+  - current_user.organised_chapters.each do |chapter|
+    %li=link_to chapter.name, admin_chapter_path(chapter)

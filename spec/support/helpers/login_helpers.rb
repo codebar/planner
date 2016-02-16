@@ -7,6 +7,11 @@ module LoginHelpers
     member.add_role(:admin)
     login(member)
   end
+
+  def login_as_organiser(member, chapter)
+    member.add_role(:organiser, chapter)
+    login(member)
+  end
 end
 
 RSpec.configure do |config|

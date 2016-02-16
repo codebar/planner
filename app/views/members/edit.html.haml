@@ -1,30 +1,16 @@
 %section#banner
   .row
     .large-12.columns
-      %h2 Details
-      = render partial: 'members/new', locals: { submit_text: "Save" }
+      %h2 Update your details
+      .subheader Make sure your details are always up to date!
   .row
     .large-12.columns
-      %h2
-        Subscriptions
-      .subheader Subscriptions control the emails you receive. e.g. If you want to receive invitations to Brighton and London events, select Brighton (Students) and London (Students)
-
-      - @groups.group_by(&:chapter).each do |chapter, groups|
-        %h4= chapter.name
-        %hr
-        - groups.each do |group|
-          .row
-            .medium-9.columns
-              %p= group.name
-            .medium-3.columns
-              - if belongs_to_group?(group)
-                = simple_form_for :subscription, url: :destroy_subscriptions, method: :delete do |f|
-                  = f.input :subscription_id, as: :hidden, input_html: { value: nil }
-                  = f.input :group_id, as: :hidden, input_html: { value: group.id }
-                  = f.submit "Subscribed", class: 'button tiny expand success'
-              - else
-                = simple_form_for :subscription, url: :subscriptions do |f|
-                  = f.input :group_id, as: :hidden, input_html: { value: group.id }
-                  = f.submit "Subscribe", class: 'button tiny expand warn'
-
+      .avatar-container
+        =image_tag current_user.avatar(75)
+      %span
+        You can change your avatar at
+        =link_to('gravatar.com.', 'http://en.gravatar.com/')
+      %br
+      %br
+      = render partial: 'members/new', locals: { submit_text: "Save" }
       %hr

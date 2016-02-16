@@ -16,19 +16,19 @@ If you are considering making a PR, please take a look at the Waffle board to se
 
 ## Getting started
 
-First thing you will need, is to install Ruby 2.2.2
+First thing you will need, is to install Ruby 2.2.4
 
 ### Using [rvm](https://rvm.io/rvm/install)
 
 ```bash
-rvm install 2.2.2
+rvm install 2.2.4
 ```
 
 ### Using [rbenv](https://github.com/sstephenson/rbenv) and [ruby-build](https://github.com/sstephenson/ruby-build)
 
 ```bash
-rbenv install 2.2.2
-rbenv global 2.2.2
+rbenv install 2.2.4
+rbenv global 2.2.4
 ```
 
 ### Install the gems!

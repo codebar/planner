@@ -15,13 +15,12 @@ Planner::Application.routes.draw do
     get 'step1'
     put 'step1'
     get 'step2'
-    
   end
 
   resource :members do
     get :autocomplete_skill_name, on: :collection
   end
-  
+
   get '/profile' => "members#profile", as: :profile
 
   resources :subscriptions, only: [ :index, :create ]
@@ -41,6 +40,11 @@ Planner::Application.routes.draw do
   end
 
   resources :invitations, only: [ :index ]
+
+  resources :meetings, only: [:show] do
+    get 'invitation/attend' => 'invitations#rsvp_meeting', as: :invitation
+    get 'invitation/:token/cancel' => 'invitations#cancel_meeting', as: :cancel
+  end
 
   namespace :course do
     resources :invitation, only: [:show] do
@@ -63,7 +67,6 @@ Planner::Application.routes.draw do
   resources :courses, only: [ :show ] do
     get "rsvp"
   end
-  resources :meetings, only: [ :show ]
   resources :workshops, only: [ :show ] do
     member do
       post 'rsvp'
@@ -84,17 +87,21 @@ Planner::Application.routes.draw do
 
   resources :jobs, except: [:destroy] do
     get 'preview'
-    get 'submit'
+    post 'submit'
     get 'pending', on: :collection
   end
 
   resources :skills, only: [:show]
 
+
   namespace :admin do
     root "portal#index"
 
     get '/guide' => "portal#guide", as: :guide
+
+
     resources :jobs, only: [ :index, :show] do
+      get 'all', on: :collection
       get 'approve'
     end
 
@@ -117,6 +124,14 @@ Planner::Application.routes.draw do
         post 'cancel'
       end
     end
+
+    resources :meetings do
+      member do
+        get 'attendees_emails'
+      end
+    end
+
+    resources :meeting_invitations, only: [:create, :update]
 
     resources :groups, only: [ :index, :new, :create, :show]
     resources :sponsors, except: [:destroy]

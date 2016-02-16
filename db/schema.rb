@@ -11,12 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151110180108) do
+ActiveRecord::Schema.define(version: 20160211182925) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "addresses", force: true do |t|
+  create_table "addresses", force: :cascade do |t|
     t.string   "flat"
     t.string   "street"
     t.string   "postal_code"
@@ -28,7 +28,7 @@ ActiveRecord::Schema.define(version: 20151110180108) do
     t.string   "longitude"
   end
 
-  create_table "announcements", force: true do |t|
+  create_table "announcements", force: :cascade do |t|
     t.datetime "expires_at"
     t.text     "message"
     t.integer  "created_by_id"
@@ -38,7 +38,7 @@ ActiveRecord::Schema.define(version: 20151110180108) do
 
   add_index "announcements", ["created_by_id"], name: "index_announcements_on_created_by_id", using: :btree
 
-  create_table "attendance_warnings", force: true do |t|
+  create_table "attendance_warnings", force: :cascade do |t|
     t.integer  "member_id"
     t.integer  "sent_by_id"
     t.datetime "created_at"
@@ -48,7 +48,7 @@ ActiveRecord::Schema.define(version: 20151110180108) do
   add_index "attendance_warnings", ["member_id"], name: "index_attendance_warnings_on_member_id", using: :btree
   add_index "attendance_warnings", ["sent_by_id"], name: "index_attendance_warnings_on_sent_by_id", using: :btree
 
-  create_table "auth_services", force: true do |t|
+  create_table "auth_services", force: :cascade do |t|
     t.integer  "member_id"
     t.string   "provider"
     t.string   "uid"
@@ -58,7 +58,7 @@ ActiveRecord::Schema.define(version: 20151110180108) do
 
   add_index "auth_services", ["member_id"], name: "index_auth_services_on_member_id", using: :btree
 
-  create_table "bans", force: true do |t|
+  create_table "bans", force: :cascade do |t|
     t.integer  "member_id"
     t.datetime "expires_at"
     t.string   "reason"
@@ -71,7 +71,7 @@ ActiveRecord::Schema.define(version: 20151110180108) do
   add_index "bans", ["added_by_id"], name: "index_bans_on_added_by_id", using: :btree
   add_index "bans", ["member_id"], name: "index_bans_on_member_id", using: :btree
 
-  create_table "chapters", force: true do |t|
+  create_table "chapters", force: :cascade do |t|
     t.string   "name"
     t.string   "city"
     t.datetime "created_at"
@@ -80,14 +80,18 @@ ActiveRecord::Schema.define(version: 20151110180108) do
     t.string   "twitter"
     t.string   "twitter_id"
     t.string   "slug"
+    t.boolean  "active",     default: true
   end
 
-  create_table "chapters_events", force: true do |t|
+  create_table "chapters_events", force: :cascade do |t|
     t.integer "chapter_id"
     t.integer "event_id"
   end
 
-  create_table "contacts", force: true do |t|
+  add_index "chapters_events", ["chapter_id"], name: "index_chapters_events_on_chapter_id", using: :btree
+  add_index "chapters_events", ["event_id"], name: "index_chapters_events_on_event_id", using: :btree
+
+  create_table "contacts", force: :cascade do |t|
     t.integer  "sponsor_id"
     t.integer  "member_id"
     t.datetime "created_at"
@@ -97,7 +101,7 @@ ActiveRecord::Schema.define(version: 20151110180108) do
   add_index "contacts", ["member_id"], name: "index_contacts_on_member_id", using: :btree
   add_index "contacts", ["sponsor_id"], name: "index_contacts_on_sponsor_id", using: :btree
 
-  create_table "course_invitations", force: true do |t|
+  create_table "course_invitations", force: :cascade do |t|
     t.integer  "course_id"
     t.integer  "member_id"
     t.boolean  "attending"
@@ -111,7 +115,7 @@ ActiveRecord::Schema.define(version: 20151110180108) do
   add_index "course_invitations", ["course_id"], name: "index_course_invitations_on_course_id", using: :btree
   add_index "course_invitations", ["member_id"], name: "index_course_invitations_on_member_id", using: :btree
 
-  create_table "course_tutors", force: true do |t|
+  create_table "course_tutors", force: :cascade do |t|
     t.integer  "course_id"
     t.integer  "tutor_id"
     t.datetime "created_at"
@@ -121,7 +125,7 @@ ActiveRecord::Schema.define(version: 20151110180108) do
   add_index "course_tutors", ["course_id"], name: "index_course_tutors_on_course_id", using: :btree
   add_index "course_tutors", ["tutor_id"], name: "index_course_tutors_on_tutor_id", using: :btree
 
-  create_table "courses", force: true do |t|
+  create_table "courses", force: :cascade do |t|
     t.string   "title"
     t.string   "short_description"
     t.text     "description"
@@ -139,8 +143,9 @@ ActiveRecord::Schema.define(version: 20151110180108) do
 
   add_index "courses", ["chapter_id"], name: "index_courses_on_chapter_id", using: :btree
   add_index "courses", ["sponsor_id"], name: "index_courses_on_sponsor_id", using: :btree
+  add_index "courses", ["tutor_id"], name: "index_courses_on_tutor_id", using: :btree
 
-  create_table "delayed_jobs", force: true do |t|
+  create_table "delayed_jobs", force: :cascade do |t|
     t.integer  "priority",   default: 0, null: false
     t.integer  "attempts",   default: 0, null: false
     t.text     "handler",                null: false
@@ -156,7 +161,7 @@ ActiveRecord::Schema.define(version: 20151110180108) do
 
   add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
 
-  create_table "eligibility_inquiries", force: true do |t|
+  create_table "eligibility_inquiries", force: :cascade do |t|
     t.integer  "member_id"
     t.integer  "sent_by_id"
     t.datetime "created_at"
@@ -166,7 +171,7 @@ ActiveRecord::Schema.define(version: 20151110180108) do
   add_index "eligibility_inquiries", ["member_id"], name: "index_eligibility_inquiries_on_member_id", using: :btree
   add_index "eligibility_inquiries", ["sent_by_id"], name: "index_eligibility_inquiries_on_sent_by_id", using: :btree
 
-  create_table "events", force: true do |t|
+  create_table "events", force: :cascade do |t|
     t.string   "name"
     t.text     "description"
     t.datetime "date_and_time"
@@ -194,7 +199,7 @@ ActiveRecord::Schema.define(version: 20151110180108) do
 
   add_index "events", ["venue_id"], name: "index_events_on_venue_id", using: :btree
 
-  create_table "feedback_requests", force: true do |t|
+  create_table "feedback_requests", force: :cascade do |t|
     t.integer  "member_id"
     t.integer  "sessions_id"
     t.string   "token"
@@ -206,7 +211,7 @@ ActiveRecord::Schema.define(version: 20151110180108) do
   add_index "feedback_requests", ["member_id"], name: "index_feedback_requests_on_member_id", using: :btree
   add_index "feedback_requests", ["sessions_id"], name: "index_feedback_requests_on_sessions_id", using: :btree
 
-  create_table "feedbacks", force: true do |t|
+  create_table "feedbacks", force: :cascade do |t|
     t.integer  "tutorial_id"
     t.text     "request"
     t.integer  "coach_id"
@@ -219,7 +224,7 @@ ActiveRecord::Schema.define(version: 20151110180108) do
   add_index "feedbacks", ["coach_id"], name: "index_feedbacks_on_coach_id", using: :btree
   add_index "feedbacks", ["tutorial_id"], name: "index_feedbacks_on_tutorial_id", using: :btree
 
-  create_table "group_announcements", force: true do |t|
+  create_table "group_announcements", force: :cascade do |t|
     t.integer  "announcement_id"
     t.integer  "group_id"
     t.datetime "created_at"
@@ -229,7 +234,7 @@ ActiveRecord::Schema.define(version: 20151110180108) do
   add_index "group_announcements", ["announcement_id"], name: "index_group_announcements_on_announcement_id", using: :btree
   add_index "group_announcements", ["group_id"], name: "index_group_announcements_on_group_id", using: :btree
 
-  create_table "groups", force: true do |t|
+  create_table "groups", force: :cascade do |t|
     t.integer  "chapter_id"
     t.string   "name"
     t.text     "description"
@@ -240,7 +245,7 @@ ActiveRecord::Schema.define(version: 20151110180108) do
 
   add_index "groups", ["chapter_id"], name: "index_groups_on_chapter_id", using: :btree
 
-  create_table "invitations", force: true do |t|
+  create_table "invitations", force: :cascade do |t|
     t.integer  "event_id"
     t.boolean  "attending"
     t.integer  "member_id"
@@ -257,7 +262,7 @@ ActiveRecord::Schema.define(version: 20151110180108) do
   add_index "invitations", ["member_id"], name: "index_invitations_on_member_id", using: :btree
   add_index "invitations", ["verified_by_id"], name: "index_invitations_on_verified_by_id", using: :btree
 
-  create_table "jobs", force: true do |t|
+  create_table "jobs", force: :cascade do |t|
     t.string   "title"
     t.text     "description"
     t.string   "location"
@@ -265,16 +270,31 @@ ActiveRecord::Schema.define(version: 20151110180108) do
     t.string   "email"
     t.string   "link_to_job"
     t.integer  "created_by_id"
-    t.boolean  "approved",      default: false
-    t.boolean  "submitted",     default: false
+    t.boolean  "approved",       default: false
+    t.boolean  "submitted",      default: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "company"
+    t.integer  "approved_by_id"
   end
 
   add_index "jobs", ["created_by_id"], name: "index_jobs_on_created_by_id", using: :btree
 
-  create_table "meeting_talks", force: true do |t|
+  create_table "meeting_invitations", force: :cascade do |t|
+    t.integer  "meeting_id"
+    t.boolean  "attending"
+    t.integer  "member_id"
+    t.string   "role"
+    t.text     "note"
+    t.string   "token"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "meeting_invitations", ["meeting_id"], name: "index_meeting_invitations_on_meeting_id", using: :btree
+  add_index "meeting_invitations", ["member_id"], name: "index_meeting_invitations_on_member_id", using: :btree
+
+  create_table "meeting_talks", force: :cascade do |t|
     t.integer  "meeting_id"
     t.string   "title"
     t.string   "description"
@@ -285,27 +305,31 @@ ActiveRecord::Schema.define(version: 20151110180108) do
   end
 
   add_index "meeting_talks", ["meeting_id"], name: "index_meeting_talks_on_meeting_id", using: :btree
+  add_index "meeting_talks", ["speaker_id"], name: "index_meeting_talks_on_speaker_id", using: :btree
 
-  create_table "meetings", force: true do |t|
+  create_table "meetings", force: :cascade do |t|
     t.datetime "date_and_time"
-    t.integer  "duration",      default: 120
-    t.string   "lanyrd_url"
     t.integer  "venue_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "name"
-    t.string   "description"
+    t.text     "description"
     t.string   "slug"
+    t.boolean  "invitable"
+    t.integer  "spaces"
+    t.integer  "sponsor_id"
   end
 
-  create_table "member_contacts", force: true do |t|
+  add_index "meetings", ["venue_id"], name: "index_meetings_on_venue_id", using: :btree
+
+  create_table "member_contacts", force: :cascade do |t|
     t.integer  "sponsor_id"
     t.integer  "member_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "member_notes", force: true do |t|
+  create_table "member_notes", force: :cascade do |t|
     t.integer  "member_id"
     t.integer  "author_id"
     t.text     "note"
@@ -316,7 +340,7 @@ ActiveRecord::Schema.define(version: 20151110180108) do
   add_index "member_notes", ["author_id"], name: "index_member_notes_on_author_id", using: :btree
   add_index "member_notes", ["member_id"], name: "index_member_notes_on_member_id", using: :btree
 
-  create_table "members", force: true do |t|
+  create_table "members", force: :cascade do |t|
     t.string   "name"
     t.string   "surname"
     t.string   "email"
@@ -329,16 +353,17 @@ ActiveRecord::Schema.define(version: 20151110180108) do
     t.string   "mobile"
     t.boolean  "received_coach_welcome_email",   default: false
     t.boolean  "received_student_welcome_email", default: false
+    t.string   "preferred_pronoun"
   end
 
-  create_table "members_permissions", id: false, force: true do |t|
+  create_table "members_permissions", id: false, force: :cascade do |t|
     t.integer "member_id"
     t.integer "permission_id"
   end
 
   add_index "members_permissions", ["member_id", "permission_id"], name: "index_members_permissions_on_member_id_and_permission_id", using: :btree
 
-  create_table "members_roles", id: false, force: true do |t|
+  create_table "members_roles", id: false, force: :cascade do |t|
     t.integer "member_id"
     t.integer "role_id"
   end
@@ -346,7 +371,7 @@ ActiveRecord::Schema.define(version: 20151110180108) do
   add_index "members_roles", ["member_id", "role_id"], name: "index_members_roles_on_member_id_and_role_id", using: :btree
   add_index "members_roles", ["member_id"], name: "index_members_roles_on_member_id", using: :btree
 
-  create_table "permissions", force: true do |t|
+  create_table "permissions", force: :cascade do |t|
     t.string   "name"
     t.integer  "resource_id"
     t.string   "resource_type"
@@ -357,14 +382,14 @@ ActiveRecord::Schema.define(version: 20151110180108) do
   add_index "permissions", ["name", "resource_type", "resource_id"], name: "index_permissions_on_name_and_resource_type_and_resource_id", using: :btree
   add_index "permissions", ["name"], name: "index_permissions_on_name", using: :btree
 
-  create_table "roles", force: true do |t|
+  create_table "roles", force: :cascade do |t|
     t.string   "name"
     t.string   "description"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "session_invitations", force: true do |t|
+  create_table "session_invitations", force: :cascade do |t|
     t.integer  "sessions_id"
     t.integer  "member_id"
     t.boolean  "attending"
@@ -381,7 +406,7 @@ ActiveRecord::Schema.define(version: 20151110180108) do
   add_index "session_invitations", ["sessions_id"], name: "index_session_invitations_on_sessions_id", using: :btree
   add_index "session_invitations", ["token"], name: "index_session_invitations_on_token", unique: true, using: :btree
 
-  create_table "sessions", force: true do |t|
+  create_table "sessions", force: :cascade do |t|
     t.string   "title"
     t.text     "description"
     t.datetime "date_and_time"
@@ -396,7 +421,7 @@ ActiveRecord::Schema.define(version: 20151110180108) do
 
   add_index "sessions", ["chapter_id"], name: "index_sessions_on_chapter_id", using: :btree
 
-  create_table "sponsor_sessions", force: true do |t|
+  create_table "sponsor_sessions", force: :cascade do |t|
     t.integer  "sponsor_id"
     t.integer  "sessions_id"
     t.boolean  "host",        default: false
@@ -407,7 +432,7 @@ ActiveRecord::Schema.define(version: 20151110180108) do
   add_index "sponsor_sessions", ["sessions_id"], name: "index_sponsor_sessions_on_sessions_id", using: :btree
   add_index "sponsor_sessions", ["sponsor_id"], name: "index_sponsor_sessions_on_sponsor_id", using: :btree
 
-  create_table "sponsors", force: true do |t|
+  create_table "sponsors", force: :cascade do |t|
     t.string   "name"
     t.text     "description"
     t.datetime "created_at"
@@ -422,7 +447,7 @@ ActiveRecord::Schema.define(version: 20151110180108) do
     t.string   "contact_surname"
   end
 
-  create_table "sponsorships", force: true do |t|
+  create_table "sponsorships", force: :cascade do |t|
     t.integer  "event_id"
     t.integer  "sponsor_id"
     t.datetime "created_at"
@@ -432,7 +457,7 @@ ActiveRecord::Schema.define(version: 20151110180108) do
   add_index "sponsorships", ["event_id"], name: "index_sponsorships_on_event_id", using: :btree
   add_index "sponsorships", ["sponsor_id"], name: "index_sponsorships_on_sponsor_id", using: :btree
 
-  create_table "subscriptions", force: true do |t|
+  create_table "subscriptions", force: :cascade do |t|
     t.integer  "group_id"
     t.integer  "member_id"
     t.datetime "created_at"
@@ -442,7 +467,7 @@ ActiveRecord::Schema.define(version: 20151110180108) do
   add_index "subscriptions", ["group_id"], name: "index_subscriptions_on_group_id", using: :btree
   add_index "subscriptions", ["member_id"], name: "index_subscriptions_on_member_id", using: :btree
 
-  create_table "taggings", force: true do |t|
+  create_table "taggings", force: :cascade do |t|
     t.integer  "tag_id"
     t.integer  "taggable_id"
     t.string   "taggable_type"
@@ -455,14 +480,14 @@ ActiveRecord::Schema.define(version: 20151110180108) do
   add_index "taggings", ["tag_id", "taggable_id", "taggable_type", "context", "tagger_id", "tagger_type"], name: "taggings_idx", unique: true, using: :btree
   add_index "taggings", ["taggable_id", "taggable_type", "context"], name: "index_taggings_on_taggable_id_and_taggable_type_and_context", using: :btree
 
-  create_table "tags", force: true do |t|
+  create_table "tags", force: :cascade do |t|
     t.string  "name"
     t.integer "taggings_count", default: 0
   end
 
   add_index "tags", ["name"], name: "index_tags_on_name", unique: true, using: :btree
 
-  create_table "testimonials", force: true do |t|
+  create_table "testimonials", force: :cascade do |t|
     t.integer  "member_id"
     t.text     "text"
     t.datetime "created_at"
@@ -471,7 +496,7 @@ ActiveRecord::Schema.define(version: 20151110180108) do
 
   add_index "testimonials", ["member_id"], name: "index_testimonials_on_member_id", using: :btree
 
-  create_table "tutorials", force: true do |t|
+  create_table "tutorials", force: :cascade do |t|
     t.string   "title"
     t.text     "description"
     t.string   "url"
@@ -482,7 +507,7 @@ ActiveRecord::Schema.define(version: 20151110180108) do
 
   add_index "tutorials", ["sessions_id"], name: "index_tutorials_on_sessions_id", using: :btree
 
-  create_table "waiting_lists", force: true do |t|
+  create_table "waiting_lists", force: :cascade do |t|
     t.integer  "invitation_id"
     t.boolean  "auto_rsvp",     default: true
     t.datetime "created_at"

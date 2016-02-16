@@ -1,0 +1,38 @@
+.stripe
+  .row
+    .large-12.columns
+      .row
+        .large-12.columns
+          %h2
+            #{@job.title}
+            - if @job.expiry_date.past?
+              %label.label.alert Expired
+          %p.lead
+            = link_to(@job.company, @job.link_to_job)
+            %small.fa.fa-location-arrow
+              = @job.location
+
+%br
+%br
+.row
+  .large-12.columns
+    = dot_markdown(@job.description)
+
+.row
+  .large-6.columns
+    %b Application deadline: #{I18n.l(@job.expiry_date, format: :default_date)} (in #{distance_of_time_in_words(Time.now, @job.expiry_date)})
+  .large-6.columns.text-right
+    %p
+      - if admin
+        %em posted by <b>#{link_to @job.created_by.full_name, admin_member_path(@job.created_by)}</b> on #{l(@job.created_at, format: :date)}
+      - else
+        %em posted by <b>#{link_to @job.created_by.full_name, twitter_url_for(@job.created_by.twitter)}</b> on #{l(@job.created_at, format: :date)}
+%br
+.row
+  .large-12.columns.text-right
+    %p
+      - if @job.expiry_date.future?
+        - if @job.email?
+          =mail_to @job.email, "Apply for this job", class: 'button round small'
+        - else
+          =link_to "Apply for this job", @job.link_to_job, class: 'button round small'

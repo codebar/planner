@@ -20,6 +20,6 @@ class FeedbackRequest < ActiveRecord::Base
   end
 
   def email
-    FeedbackRequestMailer.request_feedback(self.sessions, self.member, self).deliver
+    FeedbackRequestMailer.request_feedback(self.sessions, self.member, self).deliver_now
   end
 end

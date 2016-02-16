@@ -33,7 +33,8 @@ class Member < ActiveRecord::Base
   end
 
   def full_name
-    [name, surname].join " "
+    pronoun  = self.preferred_pronoun.present? ? "(#{self.preferred_pronoun})" : nil
+    [name, surname, pronoun].compact.join " "
   end
 
   def student?
@@ -55,17 +56,17 @@ class Member < ActiveRecord::Base
   end
 
   def send_eligibility_email(user)
-    MemberMailer.eligibility_check(self)
+    MemberMailer.eligibility_check(self).deliver_now
     self.eligibility_inquiries.create(sent_by_id: user.id)
   end
 
   def send_attendance_email(user)
-    MemberMailer.attendance_warning(self)
+    MemberMailer.attendance_warning(self).deliver_now
     self.attendance_warnings.create(sent_by_id: user.id)
   end
 
   def avatar size=100
-    "http://gravatar.com/avatar/#{md5_email}?s=#{size}"
+    "https://secure.gravatar.com/avatar/#{md5_email}?s=#{size}"
   end
 
   def attended_sessions

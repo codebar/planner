@@ -1,17 +1,34 @@
 .event#minified
   .row
-    .small-2.columns
+    .small-3.medium-2.columns
       .date
         .time
           = meeting.time
-    .small-10.columns
+      .text-center
+        - if @user
+          - if @user.attending?(meeting)
+            %label.label.success Attending
+          - if @user.event_organiser?(meeting)
+            = link_to meeting.admin_path do
+              %label.label Manage
+
+    .small-9.medium-10.columns
       .title
-        =link_to meeting.to_s, meeting.path
+        =link_to meeting.name, meeting_path(meeting.slug)
         - if meeting.venue.present?
           at
           = link_to meeting.venue.name, meeting.venue.website
       .row
         .medium-6.columns
+          - if meeting.organisers.any?
+            .organisers
+              - meeting.organisers.each do |organiser|
+                =link_to twitter_url_for(organiser.twitter) do
+                  =image_tag organiser.avatar(26), class: 'th radius', title: organiser.full_name
+
         .medium-6.columns#sponsors
+          - if meeting.venue.present?
+            = link_to meeting.venue.website do
+              = image_tag meeting.venue.avatar, class: 'sponsor'
 
       %br
