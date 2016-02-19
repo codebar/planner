@@ -15,5 +15,5 @@
     .large-12.columns
       %ul.small-block-grid-2.medium-block-grid-3.large-block-grid-3#sponsors
         - @sponsors.each do |sponsor|
-          %li
-            = link_to image_tag(sponsor.avatar, class: "sponsor-logo", alt: sponsor.name), sponsor.website
+          %li.sponsor
+            = link_to image_tag(sponsor.avatar, class: "sponsor-image", alt: sponsor.name), sponsor.website
