@@ -56,6 +56,7 @@ class InvitationsController < ApplicationController
     invitation.update_attribute(:attending, true)
 
     if invitation.save
+      MeetingInvitationMailer.attending(meeting, current_user, invitation).deliver_now
       redirect_to meeting_path(meeting), notice: "Your RSVP was successful. We look forward to seeing you at the Monthly!"
     else
       redirect_to :back, notice: "Sorry, something went wrong"
