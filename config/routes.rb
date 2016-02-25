@@ -118,6 +118,7 @@ Planner::Application.routes.draw do
     end
 
     resources :events, only: [:new, :create, :show, :edit, :update] do
+      get 'attendees_emails'
       post 'invite'
       resources :invitation do
         post 'verify'

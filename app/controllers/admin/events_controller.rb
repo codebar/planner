@@ -50,6 +50,19 @@ class Admin::EventsController < Admin::ApplicationController
     redirect_to admin_event_path(@event), notice: "Invitations will be emailed out soon."
   end
 
+  def attendees_emails
+    event = Event.find_by_slug(params[:event_id])
+
+    students = event.student_emails.join(", ")
+    coaches = event.coach_emails.join(", ")
+
+    @list = "STUDENTS\n\n" + students + "\n\nCOACHES\n\n" + coaches
+
+    return render text: @list if request.format.text?
+
+    redirect_to admin_event_path(event)
+  end
+
   private
 
   def set_event

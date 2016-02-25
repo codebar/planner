@@ -86,4 +86,12 @@ class Event < ActiveRecord::Base
       errors.add(:invitable, "Fill in all invitations details to make the event invitable") unless self.coach_spaces.present? and self.student_spaces.present?
   end
 
+  def student_emails
+    invitations.students.where(attending: true).map {|i| i.member.email}
+  end
+
+  def coach_emails
+    invitations.coaches.where(attending: true).map {|i| i.member.email}
+  end
+
 end
