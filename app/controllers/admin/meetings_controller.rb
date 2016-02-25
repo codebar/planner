@@ -18,6 +18,8 @@ class Admin::MeetingsController < Admin::ApplicationController
 
   def show
     @invitations = @meeting.invitations.accepted
+
+    return render text: @meeting.attendees_csv if request.format.csv?
   end
 
   def edit

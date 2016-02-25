@@ -32,9 +32,17 @@ class Meeting < ActiveRecord::Base
     invitations.accepted.count < spaces
   end
 
+  def attendees_csv
+    CSV.generate {|csv| attendees_array.each { |a| csv << a } }
+  end
+
   private
 
   def set_slug
     self.slug = "#{I18n.l(date_and_time, format: :year_month).downcase}-#{title.parameterize}" if self.slug.nil?
+  end
+
+  def attendees_array
+    invitations.accepted.map {|a| [a.member.full_name]}
   end
 end

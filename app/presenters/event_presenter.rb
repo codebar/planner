@@ -73,6 +73,10 @@ class EventPresenter < SimpleDelegator
     venue.present? and venue.seats > attending_students.length if venue.present?
   end
 
+  def attendees_csv
+    CSV.generate {|csv| attendee_array.each { |a| csv << a } }
+  end
+
   private
 
   def attendee_array

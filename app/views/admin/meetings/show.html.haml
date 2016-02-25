@@ -5,6 +5,10 @@
   =link_to attendees_emails_admin_meeting_path(@meeting, format: 'text'), class: 'item' do
     %i.fa.fa-at
     %label Emails
+  =link_to admin_meeting_path(@meeting, format: 'csv'), class: 'item', title: "CSV for labels" do
+    %i.fa.fa-users
+    %label Labels
+
 
 %section
   .stripe.reverse
