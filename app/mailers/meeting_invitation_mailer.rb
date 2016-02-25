@@ -14,4 +14,16 @@ class MeetingInvitationMailer < ActionMailer::Base
       format.html
     end
   end
+
+  def approve_from_waitlist meeting, member, invitation
+    @member = member
+    @meeting = meeting
+    @host_address = AddressDecorator.new(@meeting.venue.address)
+
+    subject = "A spot opened up for #{@meeting.name} on #{humanize_date(@meeting.date_and_time)}"
+    mail(mail_args(member, subject)) do |format|
+      format.html
+    end
+
+  end
 end

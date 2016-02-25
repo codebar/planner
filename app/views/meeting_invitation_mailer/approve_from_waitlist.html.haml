@@ -1,0 +1,55 @@
+=render partial: 'shared_mailers/header', locals: { title: "codebar Monthly Attendance Confirmation" }
+%body{ bgcolor: "#FFFFFF" }
+
+  =render partial: 'shared_mailers/body_header', locals: { title: "Attendance Confirmation" }
+
+  %table{ class: "body-wrap"}
+    %tr
+      %td
+      %td{ class: "container", bgcolor: "#FFFFFF" }
+
+        .content
+          %table
+            %tr
+              %td
+                %h3 Hi, #{@member.name}
+                %p.lead
+                  A spot opened up for the next codebar Monthly!
+                %h4
+                  Agenda
+                %p
+                  = @meeting.description.html_safe
+                %h4
+                  Can't make it anymore?
+                %p= "Please #{link_to 'cancel your attendance', meeting_path(@meeting)} by following the instructions on the event page.".html_safe
+
+        .content
+          %table{ bgcolor: "#FFFFFF" }
+            %tr
+              %td.small{ width: "30%", style: "vertical-align: top; padding-right:10px;"}
+                =image_tag(@meeting.venue.avatar)
+              %td
+                %h4
+                  Workshop
+                  %small #{humanize_date_with_time(@meeting.date_and_time)}
+                %p
+                  #{@meeting.venue.name}
+                  %br
+                  #{@host_address.to_html}
+
+        .content
+          %table
+            %tr
+              %td
+                %p
+                  If you have any trouble finding the venue, give us a call
+                  - @meeting.organisers.each do |organiser|
+                    %p
+                      = organiser.full_name
+                      = organiser.mobile
+                      %br
+
+        .content
+          = render partial: 'shared_mailers/social'
+      %td
+

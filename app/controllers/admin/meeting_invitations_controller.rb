@@ -20,7 +20,7 @@ class Admin::MeetingInvitationsController < Admin::ApplicationController
 
     if invite.save
       redirect_to [:admin, meeting], notice: "#{member.full_name} has been successfully added and notified via email."
-      MeetingInvitationMailer.attending(meeting, member, invite).deliver_now
+      MeetingInvitationMailer.approve_from_waitlist(meeting, member, invite).deliver_now
     else
       redirect_to [:admin, meeting], notice: "Something went wrong, #{member.full_name} has not been added."
     end
