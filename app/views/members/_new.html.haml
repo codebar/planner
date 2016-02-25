@@ -1,12 +1,12 @@
 = simple_form_for @member, method: :put do |f|
   .row
     .large-6.columns
-      = f.input :preferred_pronoun
-  .row
-    .large-6.columns
       = f.input :name
     .large-6.columns
       = f.input :surname
+  .row
+    .large-6.columns
+      = f.input :preferred_pronoun, placeholder: "e.g. she/her"
 
   .row
     .large-6.columns
