@@ -47,7 +47,7 @@ describe Member do
       let (:member) { Fabricate(:member) }
 
       it "#full_name" do
-        expect(member.full_name).to eq("#{member.name} #{member.surname} (#{member.preferred_pronoun})")
+        expect(member.full_name).to eq("#{member.name} #{member.surname} (#{member.pronouns})")
       end
 
       it "#avatar" do
