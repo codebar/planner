@@ -41,7 +41,7 @@ feature "A new student signs up", js: false do
     visit new_member_path
     click_on "Sign in with Github"
 
-    fill_in "member_preferred_pronoun", with: "she"
+    fill_in "member_pronouns", with: "she"
     fill_in "member_name", with: "Jane"
     fill_in "member_surname", with: "Doe"
     fill_in "member_email", with: "jane@codebar.io"
@@ -52,7 +52,7 @@ feature "A new student signs up", js: false do
 
     click_on "Done"
 
-    expect(page).to have_content("Preferred pronoun")
+    expect(page).to have_content("Pronouns")
     expect(page).to have_content("she")
     expect(page).to have_content("Jane Doe")
     expect(page).to have_link("jane@codebar.io")

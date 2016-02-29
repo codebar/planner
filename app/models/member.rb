@@ -33,7 +33,7 @@ class Member < ActiveRecord::Base
   end
 
   def full_name
-    pronoun  = self.preferred_pronoun.present? ? "(#{self.preferred_pronoun})" : nil
+    pronoun  = self.pronouns.present? ? "(#{self.pronouns})" : nil
     [name, surname, pronoun].compact.join " "
   end
 
