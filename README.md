@@ -74,6 +74,11 @@ Note: Windows doesn't like creating a file named .env so do the following from a
 bundle exec rake db:seed
 ```
 
+### Run the app
+```bash
+bundle exec rails server
+```
+
 ### Run the tests
 ```bash
 bundle exec rake
