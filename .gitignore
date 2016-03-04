@@ -27,3 +27,6 @@ TAGS
 
 .idea/
 *.log
+
+# Local ruby version
+.ruby-version
