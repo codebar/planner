@@ -10,8 +10,9 @@
     .row
       .medium-8.columns
         %dl
-          %dt Pronouns
-          %dd= member.pronouns || "Not specified"
+          - if member.pronouns.present?
+            %dt Pronouns
+            %dd= member.pronouns || "Not specified"
 
           %dt Email
           %dd= mail_to member.email, member.email
