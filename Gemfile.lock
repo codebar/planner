@@ -220,6 +220,7 @@ GEM
       net-ssh (>= 2.6.5)
     net-ssh (3.0.2)
     netrc (0.11.0)
+    newrelic_rpm (3.15.0.314)
     nokogiri (1.6.7.2)
       mini_portile2 (~> 2.0.0.rc2)
     oauth2 (1.0.0)
@@ -430,6 +431,7 @@ DEPENDENCIES
   launchy
   letter_opener
   mini_magick
+  newrelic_rpm
   nokogiri
   omniauth
   omniauth-github

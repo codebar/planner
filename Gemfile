@@ -74,3 +74,5 @@ group :production do
   gem 'rails_12factor'
   gem 'foreman'
 end
+
+gem 'newrelic_rpm'
