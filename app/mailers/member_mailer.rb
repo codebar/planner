@@ -25,7 +25,7 @@ class MemberMailer < ActionMailer::Base
     @member = member
     subject = "How codebar works"
 
-    mail(mail_args(member, subject)) do |format|
+    mail(mail_args(member, subject, 'hello@codebar.io', "hello@codebar.io")) do |format|
       format.html { render 'welcome_student' }
     end
   end
@@ -34,7 +34,7 @@ class MemberMailer < ActionMailer::Base
     @member = member
     subject = "How codebar works"
 
-    mail(mail_args(member, subject)) do |format|
+    mail(mail_args(member, subject, 'hello@codebar.io', "hello@codebar.io")) do |format|
       format.html { render 'welcome_coach' }
     end
   end
@@ -43,7 +43,7 @@ class MemberMailer < ActionMailer::Base
     @member = member
     subject = "Eligibility confirmation"
 
-    mail(mail_args(member, subject, 'hello@codebar.io')) do |format|
+    mail(mail_args(member, subject, 'hello@codebar.io', "hello@codebar.io")) do |format|
       format.html { render 'eligibility_check' }
     end
   end
@@ -52,7 +52,7 @@ class MemberMailer < ActionMailer::Base
     @member = member
     subject = "Attendance warning"
 
-    mail(mail_args(member, subject, 'hello@codebar.io')) do |format|
+    mail(mail_args(member, subject, 'hello@codebar.io', "hello@codebar.io")) do |format|
       format.html { render 'attendance_warning' }
     end.deliver
   end
