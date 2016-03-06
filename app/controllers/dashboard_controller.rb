@@ -7,7 +7,7 @@ class DashboardController < ApplicationController
     @user = current_user ? MemberPresenter.new(current_user) : nil
     @upcoming_workshops = upcoming_events.map.inject({}) { |hash, (key, value)| hash[key] = EventPresenter.decorate_collection(value); hash}
 
-    @testimonials = Testimonial.order("RANDOM() ").limit(10)
+    @testimonials = Testimonial.order("RANDOM() ").limit(5).includes(:member)
 
     @sponsors = Sponsor.latest
   end
