@@ -8,7 +8,8 @@ RSpec.describe MemberMailer, :type => :mailer do
     it "renders the headers" do
       expect(mail.subject).to eq("How codebar works")
       expect(mail.to).to eq([member.email])
-      expect(mail.from).to eq(["meetings@codebar.io"])
+      expect(mail.from).to eq(["hello@codebar.io"])
+      expect(mail.cc).to eq(["hello@codebar.io"])
     end
 
     it "renders the body" do
@@ -23,13 +24,47 @@ RSpec.describe MemberMailer, :type => :mailer do
     it "renders the headers" do
       expect(mail.subject).to eq("How codebar works")
       expect(mail.to).to eq([member.email])
-      expect(mail.from).to eq(["meetings@codebar.io"])
+      expect(mail.from).to eq(["hello@codebar.io"])
+      expect(mail.cc).to eq(["hello@codebar.io"])
     end
 
     it "renders the body" do
       expect(mail.body.encoded).to match("depends on coaches attending")
     end
   end
+
+  describe "eligibility check" do
+    let(:member) { Fabricate(:member) }
+    let(:mail) { MemberMailer.eligibility_check(member).deliver_now }
+
+    it "renders the headers" do
+      expect(mail.subject).to eq("Eligibility confirmation")
+      expect(mail.to).to eq([member.email])
+      expect(mail.from).to eq(["hello@codebar.io"])
+      expect(mail.cc).to eq(["hello@codebar.io"])
+    end
+
+    it "renders the body" do
+      expect(mail.body.encoded).to match("we hope you understand why we need to ask")
+    end
+  end
+
+  describe "attendance warning" do
+    let(:member) { Fabricate(:member) }
+    let(:mail) { MemberMailer.attendance_warning(member).deliver_now }
+
+    it "renders the headers" do
+      expect(mail.subject).to eq("Attendance warning")
+      expect(mail.to).to eq([member.email])
+      expect(mail.from).to eq(["hello@codebar.io"])
+      expect(mail.cc).to eq(["hello@codebar.io"])
+    end
+
+    it "renders the body" do
+      expect(mail.body.encoded).to match("you have missed more than 3 workshops")
+    end
+  end
+
 
   describe "welcome" do
     it "sends the coach welcome email to coaches" do
