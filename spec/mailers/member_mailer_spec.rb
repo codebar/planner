@@ -1,8 +1,9 @@
 require "spec_helper"
 
 RSpec.describe MemberMailer, :type => :mailer do
+  let(:member) { Fabricate(:member) }
+
   describe "welcome_student" do
-    let(:member) { Fabricate(:member) }
     let(:mail) { MemberMailer.welcome_student(member).deliver_now }
 
     it "renders the headers" do
@@ -18,7 +19,6 @@ RSpec.describe MemberMailer, :type => :mailer do
   end
 
   describe "welcome_coach" do
-    let(:member) { Fabricate(:member) }
     let(:mail) { MemberMailer.welcome_coach(member).deliver_now }
 
     it "renders the headers" do
@@ -34,7 +34,6 @@ RSpec.describe MemberMailer, :type => :mailer do
   end
 
   describe "eligibility check" do
-    let(:member) { Fabricate(:member) }
     let(:mail) { MemberMailer.eligibility_check(member).deliver_now }
 
     it "renders the headers" do
@@ -50,7 +49,6 @@ RSpec.describe MemberMailer, :type => :mailer do
   end
 
   describe "attendance warning" do
-    let(:member) { Fabricate(:member) }
     let(:mail) { MemberMailer.attendance_warning(member).deliver_now }
 
     it "renders the headers" do
@@ -64,7 +62,6 @@ RSpec.describe MemberMailer, :type => :mailer do
       expect(mail.body.encoded).to match("you have missed more than 3 workshops")
     end
   end
-
 
   describe "welcome" do
     it "sends the coach welcome email to coaches" do
@@ -96,5 +93,4 @@ RSpec.describe MemberMailer, :type => :mailer do
       }.to change {ActionMailer::Base.deliveries.count}.by 1
     end
   end
-
 end
