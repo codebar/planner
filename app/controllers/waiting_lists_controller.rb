@@ -1,8 +1,9 @@
 class WaitingListsController < ApplicationController
 
   def create
+    invitation.update_attribute(:note, note) if note.present?
     WaitingList.add(invitation, auto_rsvp)
-    message = auto_rsvp.eql?(true) ? "You have been added to the Waiting list" :
+    message = auto_rsvp.eql?(true) ? "You have been added to the waiting list" :
                           "We will send you an email if any spots become available"
     redirect_to invitation_path(invitation), notice: message
   end
@@ -20,7 +21,11 @@ class WaitingListsController < ApplicationController
   end
 
   def auto_rsvp
-    params[:auto_rsvp] || true
+    true
+  end
+
+  def note
+    params.has_key?(:invitation) ? params[:invitation][:note] : params[:note]
   end
 
   def invitation
