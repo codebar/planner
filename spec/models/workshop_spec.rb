@@ -7,7 +7,7 @@ describe Workshop do
   it { should respond_to(:description) }
   it { should respond_to(:date_and_time) }
   it { should respond_to(:sponsors) }
-  it { should respond_to(:sponsor_sessions)}
+  it { should respond_to(:workshop_sponsors)}
 
   context "#before_save" do
     let(:workshop) { Fabricate.build(:workshop, chapter: Fabricate(:chapter)) }
@@ -24,10 +24,10 @@ describe Workshop do
 
   context "#coach_spaces?" do
     let(:sponsor) { Fabricate(:sponsor) }
-    let(:workshop) { Fabricate(:sessions_no_sponsor) }
+    let(:workshop) { Fabricate(:workshop_no_sponsor) }
 
     before do
-      Fabricate(:sponsor_session, sponsor: sponsor, workshop: workshop, host: true)
+      Fabricate(:workshop_sponsor, sponsor: sponsor, workshop: workshop, host: true)
     end
   end
 
@@ -83,8 +83,8 @@ describe Workshop do
       let(:sponsor) { Fabricate(:sponsor) }
 
       before do
-        workshop.sponsor_sessions.delete_all
-        Fabricate(:sponsor_session, sponsor: sponsor, workshop: workshop, host: true)
+        workshop.workshop_sponsors.delete_all
+        Fabricate(:workshop_sponsor, sponsor: sponsor, workshop: workshop, host: true)
       end
 
       it { expect(workshop.host).to eq(sponsor) }
@@ -94,7 +94,7 @@ describe Workshop do
       let(:sponsor) { Fabricate(:sponsor) }
 
       before do
-        Fabricate(:sponsor_session, sponsor: sponsor, workshop: workshop, host: true)
+        Fabricate(:workshop_sponsor, sponsor: sponsor, workshop: workshop, host: true)
       end
 
       it "#attending_students" do

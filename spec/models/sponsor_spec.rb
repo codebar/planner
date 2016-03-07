@@ -7,7 +7,7 @@ describe Sponsor do
   it { should respond_to(:website) }
   it { should respond_to(:address) }
   it { should respond_to(:workshops) }
-  it { should respond_to(:sponsor_sessions) }
+  it { should respond_to(:workshop_sponsors) }
   it { should respond_to(:avatar) }
   it { should respond_to(:seats) }
   it { should respond_to(:email) }

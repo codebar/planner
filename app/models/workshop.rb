@@ -5,8 +5,8 @@ class Workshop < ActiveRecord::Base
   resourcify :permissions, role_cname: 'Permission', role_table_name: :permission
 
   has_many :invitations, class_name: "SessionInvitation"
-  has_many :sponsor_sessions
-  has_many :sponsors, through: :sponsor_sessions
+  has_many :workshop_sponsors
+  has_many :sponsors, through: :workshop_sponsors
   has_many :organisers, -> { where("permissions.name" => "organiser") }, through: :permissions, source: :members
 
 
@@ -21,7 +21,7 @@ class Workshop < ActiveRecord::Base
   before_save :combine_date_and_time, :set_rsvp_close_time
 
   def host
-    SponsorSession.hosts.for_session(self.id).first.sponsor rescue nil
+    WorkshopSponsor.hosts.for_session(self.id).first.sponsor rescue nil
   end
 
   def waiting_list
@@ -41,7 +41,7 @@ class Workshop < ActiveRecord::Base
   end
 
   def has_host?
-    SponsorSession.exists?(host: true, workshop: self)
+    WorkshopSponsor.exists?(host: true, workshop: self)
   end
 
   def has_valid_host?

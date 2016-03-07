@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160306234034) do
+ActiveRecord::Schema.define(version: 20160307015747) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -399,16 +399,6 @@ ActiveRecord::Schema.define(version: 20160306234034) do
   add_index "session_invitations", ["token"], name: "index_session_invitations_on_token", unique: true, using: :btree
   add_index "session_invitations", ["workshop_id"], name: "index_session_invitations_on_workshop_id", using: :btree
 
-  create_table "sponsor_sessions", force: :cascade do |t|
-    t.integer  "sponsor_id"
-    t.integer  "workshop_id"
-    t.boolean  "host",        default: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "sponsor_sessions", ["sponsor_id"], name: "index_sponsor_sessions_on_sponsor_id", using: :btree
-  add_index "sponsor_sessions", ["workshop_id"], name: "index_sponsor_sessions_on_workshop_id", using: :btree
 
   create_table "sponsors", force: :cascade do |t|
     t.string   "name",               limit: 255
@@ -493,6 +483,17 @@ ActiveRecord::Schema.define(version: 20160306234034) do
   end
 
   add_index "waiting_lists", ["invitation_id"], name: "index_waiting_lists_on_invitation_id", using: :btree
+
+  create_table "workshop_sponsors", force: :cascade do |t|
+    t.integer  "sponsor_id"
+    t.integer  "workshop_id"
+    t.boolean  "host",        default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "workshop_sponsors", ["sponsor_id"], name: "index_workshop_sponsors_on_sponsor_id", using: :btree
+  add_index "workshop_sponsors", ["workshop_id"], name: "index_workshop_sponsors_on_workshop_id", using: :btree
 
   create_table "workshops", force: :cascade do |t|
     t.string   "title",           limit: 255

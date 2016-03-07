@@ -1,16 +1,16 @@
 require 'spec_helper'
 
-describe SponsorSession do
+describe WorkshopSponsor do
   let!(:workshop) { Fabricate(:workshop) }
 
   context '#scopes' do
 
     it '#hosts' do
-      expect(SponsorSession.hosts.length).to eq(1)
+      expect(WorkshopSponsor.hosts.length).to eq(1)
     end
 
     it '#for_session' do
-      expect(SponsorSession.for_session(workshop).length).to eq(1)
+      expect(WorkshopSponsor.for_session(workshop).length).to eq(1)
     end
   end
 end
