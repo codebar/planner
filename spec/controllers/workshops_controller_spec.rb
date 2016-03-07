@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe WorkshopsController, type: :controller do
-  let(:workshop) { Fabricate(:sessions) }
+  let(:workshop) { Fabricate(:workshop) }
   let(:member) { Fabricate(:member) }
 
   describe "POST #add" do
@@ -60,7 +60,7 @@ describe WorkshopsController, type: :controller do
     end
 
     it "Removes a student from the attendees, if the user's got an invite" do
-      Fabricate(:student_session_invitation, member: member, sessions: workshop, attending: true)
+      Fabricate(:student_session_invitation, member: member, workshop: workshop, attending: true)
       expect(workshop.attendee? member).to be true
 
       login member
@@ -69,7 +69,7 @@ describe WorkshopsController, type: :controller do
     end
 
     it "Removes a coach from the attendees, if the user has an invite" do
-      Fabricate(:coach_session_invitation, member: member, sessions: workshop, attending: true)
+      Fabricate(:coach_session_invitation, member: member, workshop: workshop, attending: true)
       expect(workshop.attendee? member).to be true
 
       login member
@@ -78,7 +78,7 @@ describe WorkshopsController, type: :controller do
     end
 
     it "Removes a student from the waiting list, if the user's on the waiting list" do
-      invite = Fabricate(:student_session_invitation, sessions: workshop, member: member)
+      invite = Fabricate(:student_session_invitation, workshop: workshop, member: member)
       WaitingList.add(invite)
       expect(workshop.attendee? member).to be false
       expect(workshop.waitlisted? member).to be true
@@ -90,8 +90,8 @@ describe WorkshopsController, type: :controller do
     end
 
     it "Removes both invites if the student has somehow got both a student and coach invite" do
-      Fabricate(:student_session_invitation, member: member, sessions: workshop, attending: true)
-      Fabricate(:coach_session_invitation, member: member, sessions: workshop, attending: true)
+      Fabricate(:student_session_invitation, member: member, workshop: workshop, attending: true)
+      Fabricate(:coach_session_invitation, member: member, workshop: workshop, attending: true)
       expect(workshop.attendee? member).to be true
 
       login member

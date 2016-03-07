@@ -6,7 +6,7 @@ class Admin::PortalController < Admin::ApplicationController
     @jobs_pending_approval = Job.where(approved: false, submitted: true).count
     @sponsors = Sponsor.last(5)
     @chapters = Chapter.all
-    @workshops = Sessions.upcoming
+    @workshops = Workshop.upcoming
     @groups = Group.all
     @subscribers = Subscription.last(20).reverse
   end

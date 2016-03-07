@@ -2,12 +2,12 @@ class Sponsor < ActiveRecord::Base
   require 'uri'
   has_one :address
   has_many :sponsor_sessions
-  has_many :sessions, through: :sponsor_sessions
+  has_many :workshops, through: :sponsor_sessions
   has_many :member_contacts
   has_many :contacts, through: :member_contacts, class_name: 'Member', foreign_key: 'member_id'
 
   validates :name, :address, :avatar, :website, :seats, presence: true
-  validate :website_is_url 
+  validate :website_is_url
 
   default_scope -> { order('updated_at desc') }
   scope :active, -> { joins(:sponsor_sessions) }

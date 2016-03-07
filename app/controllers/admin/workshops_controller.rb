@@ -13,12 +13,12 @@ class Admin::WorkshopsController < Admin::ApplicationController
   end
 
   def new
-    @workshop = Sessions.new
+    @workshop = Workshop.new
     authorize @workshop
   end
 
   def create
-    @workshop = Sessions.new(workshop_params)
+    @workshop = Workshop.new(workshop_params)
     authorize(@workshop)
 
     if @workshop.save
@@ -47,7 +47,7 @@ class Admin::WorkshopsController < Admin::ApplicationController
   end
 
   def update
-    @workshop = Sessions.find(params[:id])
+    @workshop = Workshop.find(params[:id])
     authorize @workshop
 
     @workshop.update_attributes(workshop_params)
@@ -94,7 +94,7 @@ class Admin::WorkshopsController < Admin::ApplicationController
   private
 
   def workshop_params
-    params.require(:sessions).permit(:date_and_time, :time, :chapter_id, :invitable, :seats, sponsor_ids: [])
+    params.require(:workshop).permit(:date_and_time, :time, :chapter_id, :invitable, :seats, sponsor_ids: [])
   end
 
   def sponsor_id
@@ -102,11 +102,11 @@ class Admin::WorkshopsController < Admin::ApplicationController
   end
 
   def set_workshop_by_id
-    @workshop = Sessions.find(params[:id])
+    @workshop = Workshop.find(params[:id])
   end
 
   def set_and_decorate_workshop
-    workshop = Sessions.find(params[:workshop_id])
+    workshop = Workshop.find(params[:workshop_id])
     @workshop = WorkshopPresenter.new(workshop)
   end
 
@@ -131,11 +131,11 @@ class Admin::WorkshopsController < Admin::ApplicationController
   end
 
   def host_id
-    params[:sessions][:host]
+    params[:workshop][:host]
   end
 
   def organiser_ids
-    params[:sessions][:organisers]
+    params[:workshop][:organisers]
   end
 
   def grant_organiser_access(organiser_ids=[])

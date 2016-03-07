@@ -1,4 +1,4 @@
-class Sessions < ActiveRecord::Base
+class Workshop < ActiveRecord::Base
   include Invitable
   include Listable
 
@@ -41,7 +41,7 @@ class Sessions < ActiveRecord::Base
   end
 
   def has_host?
-    SponsorSession.exists?(host: true, sessions: self)
+    SponsorSession.exists?(host: true, workshop: self)
   end
 
   def has_valid_host?

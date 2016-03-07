@@ -49,7 +49,7 @@
               =link_to "I can no longer attend", reject_invitation_url(@invitation), class: "expand button small alert"
             - else
               %p
-                If you can't make it or plan to arrive late please let us know by sending an email to #{@invitation.sessions.chapter.email}
+                If you can't make it or plan to arrive late please let us know by sending an email to #{@invitation.workshop.chapter.email}
           - elsif @invitation.member.banned?
             %p
               %label.label.warning Your account has been suspended.
@@ -111,9 +111,9 @@
 .stripe
   .row
     .medium-6.columns
-      %h4 Students (#{@invitation.sessions.attending_students.count})
+      %h4 Students (#{@invitation.workshop.attending_students.count})
       %ul.attendances.no-bullet
-        - @invitation.sessions.attending_students.each do |invitation|
+        - @invitation.workshop.attending_students.each do |invitation|
           %li.attendance
             .row
               .small-2.columns
@@ -124,9 +124,9 @@
                 .subheader=invitation.note
             %br
     .medium-6.columns
-      %h4 Coaches (#{@invitation.sessions.attending_coaches.count})
+      %h4 Coaches (#{@invitation.workshop.attending_coaches.count})
       %ul.attendances.no-bullet
-        - @invitation.sessions.attending_coaches.each do |invitation|
+        - @invitation.workshop.attending_coaches.each do |invitation|
           %li.attendance
             .row
               .small-2.columns

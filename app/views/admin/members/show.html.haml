@@ -101,7 +101,7 @@
           %h3 Events
           %table
             - @invitations.each do |invitation|
-              - workshop = invitation.sessions
+              - workshop = invitation.workshop
               - if workshop.present?
                 %tr
                   %td

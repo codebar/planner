@@ -3,7 +3,7 @@ class InvitationsController < ApplicationController
   before_action :set_invitation, only: [ :show, :attend, :reject ]
 
   def index
-    @upcoming_session = Sessions.next
+    @upcoming_session = Workshop.next
 
     @upcoming_invitations = SessionInvitation.where(member: current_user).joins(:sessions).where("date_and_time >= ?", Time.zone.now)
     @upcoming_invitations += CourseInvitation.where(member: current_user).joins(:course).where("date_and_time >= ?", Time.zone.now)

@@ -2,7 +2,7 @@ require 'spec_helper'
 
 feature 'Viewing a workshop page' do
 
-  let(:workshop) { Fabricate(:sessions) }
+  let(:workshop) { Fabricate(:workshop) }
   let(:member) { Fabricate(:member) }
 
   context "visitor" do
@@ -27,7 +27,7 @@ feature 'Viewing a workshop page' do
     end
 
     context "#past events" do
-      let!(:workshop) { Fabricate(:sessions, date_and_time: 2.weeks.ago) }
+      let!(:workshop) { Fabricate(:workshop, date_and_time: 2.weeks.ago) }
 
       scenario "cannot interact with a past event" do
 

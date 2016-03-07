@@ -1,20 +1,20 @@
 class InvitationManager
 
-  def send_session_emails session
-    return "The workshop is not invitable" unless session.invitable?
+  def send_session_emails workshop
+    return "The workshop is not invitable" unless workshop.invitable?
 
-    session.chapter.groups.students.map(&:members).flatten.uniq.shuffle.each do |student|
+    workshop.chapter.groups.students.map(&:members).flatten.uniq.shuffle.each do |student|
       next if student.banned?
-      so = SessionInvitation.create sessions: session, member: student, role: "Student"
+      so = SessionInvitation.create workshop: workshop, member: student, role: "Student"
       so.email if so.persisted?
     end
 
-    session.chapter.groups.coaches.map(&:members).flatten.uniq.shuffle.each do |coach|
+    workshop.chapter.groups.coaches.map(&:members).flatten.uniq.shuffle.each do |coach|
       next if coach.banned?
-      invitation = SessionInvitation.new sessions: session, member: coach, role: "Coach"
+      invitation = SessionInvitation.new workshop: workshop, member: coach, role: "Coach"
 
       if invitation.save
-        SessionInvitationMailer.invite_coach(session, coach, invitation).deliver_now
+        SessionInvitationMailer.invite_coach(workshop, coach, invitation).deliver_now
         Rails.logger.debug("Invitation to #{coach.email} sent")
       else
         Rails.logger.debug("Invitation to #{coach.email} not sent as invitation could not be saved")
@@ -47,24 +47,24 @@ class InvitationManager
     end
   end
 
-  def self.send_workshop_attendance_reminders session
-    session.attendances.where(reminded_at: nil).each do |invitation|
-      SessionInvitationMailer.attending_reminder(session, invitation.member, invitation).deliver_now
+  def self.send_workshop_attendance_reminders workshop
+    workshop.attendances.where(reminded_at: nil).each do |invitation|
+      SessionInvitationMailer.attending_reminder(workshop, invitation.member, invitation).deliver_now
       invitation.update_attribute(:reminded_at, Time.zone.now)
     end
   end
 
-  def self.send_workshop_waiting_list_reminders session
+  def self.send_workshop_waiting_list_reminders workshop
     # Only send out reminders to people where reminded_at is nil, ie. falsey.
-    session.waiting_list.reject(&:reminded_at).each do |invitation|
-      SessionInvitationMailer.waiting_list_reminder(session, invitation.member, invitation).deliver_now
+    workshop.waiting_list.reject(&:reminded_at).each do |invitation|
+      SessionInvitationMailer.waiting_list_reminder(workshop, invitation.member, invitation).deliver_now
       invitation.update_attribute(:reminded_at, Time.zone.now)
     end
   end
 
-  def self.send_change_of_details session, title="Change of details", sponsor
-    session.invitations.accepted.map do |invitation|
-      SessionInvitationMailer.change_of_details(session, sponsor, invitation.member, invitation, title).deliver_now
+  def self.send_change_of_details workshop, title="Change of details", sponsor
+    workshop.invitations.accepted.map do |invitation|
+      SessionInvitationMailer.change_of_details(workshop, sponsor, invitation.member, invitation, title).deliver_now
     end
   end
 

@@ -1,9 +1,9 @@
 class SponsorSession < ActiveRecord::Base
   belongs_to :sponsor
-  belongs_to :sessions
+  belongs_to :workshop
 
-  validates :sponsor_id, uniqueness: { scope: :sessions_id, message: "already a sponsor" }
+  validates :sponsor_id, uniqueness: { scope: :workshop_id, message: "already a sponsor" }
 
   scope :hosts, -> { where('sponsor_sessions.host = ?', true) }
-  scope :for_session, ->(session_id)  { where('sponsor_sessions.sessions_id = ?', session_id) }
+  scope :for_session, ->(workshop_id)  { where('sponsor_sessions.workshop_id = ?', workshop_id) }
 end

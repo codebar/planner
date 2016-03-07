@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe SponsorSession do
-  let!(:session) { Fabricate(:sessions) }
+  let!(:workshop) { Fabricate(:workshop) }
 
   context '#scopes' do
 
@@ -10,7 +10,7 @@ describe SponsorSession do
     end
 
     it '#for_session' do
-      expect(SponsorSession.for_session(session.id).length).to eq(1)
+      expect(SponsorSession.for_session(workshop).length).to eq(1)
     end
   end
 end

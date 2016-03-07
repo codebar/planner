@@ -6,7 +6,7 @@ describe Tutorial do
   it { should respond_to(:title) }
   it { should respond_to(:description) }
   it { should respond_to(:url) }
-  it { should respond_to(:sessions)}
+  it { should respond_to(:workshop)}
 
   context "validations" do
     it "#title" do

@@ -26,7 +26,7 @@ module Admin::SponsorConcerns
 
     def host
       set_sponsor
-      @sponsor_session = SponsorSession.where(sessions: @workshop, sponsor: @sponsor).first_or_create
+      @sponsor_session = SponsorSession.where(workshop: @workshop, sponsor: @sponsor).first_or_create
       @sponsor_session.update_attribute(:host, true)
       flash[:notice] = "Host set successfully"
 
@@ -42,15 +42,15 @@ module Admin::SponsorConcerns
     private
 
     def set_workshop
-      @workshop = Sessions.find(params[:workshop_id])
+      @workshop = Workshop.find(params[:workshop_id])
     end
 
     def set_sponsor
-      @sponsor = Sponsor.find(params[:sessions][:sponsor_ids])
+      @sponsor = Sponsor.find(params[:workshop][:sponsor_ids])
     end
 
     def sponsor_session(host=false)
-      @sponsor_session ||= SponsorSession.new(sessions: @workshop, sponsor: @sponsor, host: host)
+      @sponsor_session ||= SponsorSession.new(workshop: @workshop, sponsor: @sponsor, host: host)
     end
 
   end
