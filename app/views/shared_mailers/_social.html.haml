@@ -17,6 +17,9 @@
         %tr
           %td
             %h5=t("footer.contact_info")
-            %p Email: <strong><a href="emailto:hello@codebar.io">hello@codebar.io</a></strong>
+            %p
+              Email:
+              %strong
+                =mail_to contact_email, contact_email
 
       %span.clear

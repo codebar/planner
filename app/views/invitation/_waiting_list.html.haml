@@ -1,13 +1,21 @@
 - if invitation.waiting_list.blank?
-  %p The workshop is full.
-  = link_to "Join the Waiting List", invitation_waiting_list_path(invitation), method: :post, class: 'button round expand', "data-confirm" => "Are you sure you want to join the waiting list? If any spots become available, even last minute, you will get a spot for the workshop."
-
-  = link_to "Not sure, just remind me", invitation_waiting_list_path(invitation, auto_rsvp: false), method: :post, class: "button round expand"
-- else
-  - if invitation.waiting_list.auto_rsvp?
-
-    .text-center Waiting List position: <strong>#{invitation.waiting_list_position}</strong>/#{@workshop.waiting_list_count_for(invitation.role)}
-    %br
-    = link_to "Remove from Waiting list", invitation_waiting_list_path(invitation), method: :delete, class: 'button expand round alert', "data-confirm" => "Are you sure you want to let go of your spot? You cannot undo this."
+  %p
+    %label.warning.label The workshop is full.
+  - if @invitation.for_student?
+    = simple_form_for :invitation, url: invitation_waiting_list_path(@invitation), method: :post do |f|
+      = f.input :note, label: "What do you plan to work on?", collection: @tutorial_titles, required: true, include_blank: true
+      %br
+      = f.button :submit, "Join the waiting list",  class: "button expand round"
   - else
-    = link_to "Don't send me a reminder", invitation_waiting_list_path(invitation), method: :delete, class: 'button expand round alert'
+    =link_to "Join the waiting list", invitation_waiting_list_path(invitation), method: :post, class: 'button round expand', "data-confirm" => "If any spots become available you will automatically be allocated one."
+
+- else
+  .text-center Waiting List position: <strong>#{invitation.waiting_list_position}</strong>/#{@workshop.waiting_list_count_for(invitation.role)}
+  %br
+  - if @invitation.for_student?
+    - if @invitation.note.present?
+      %small You will be working on...
+      %p #{@invitation.note}
+
+  = link_to "Remove from the waiting list", invitation_waiting_list_path(invitation), method: :delete, class: 'button expand round alert', "data-confirm" => "Are you sure you want to let go of your spot? You cannot undo this."
+

@@ -12,8 +12,6 @@
  *= require foundation_and_overrides
  *= require font-awesome
  *= require main
- *= require event
- *= require star-rating
  *= require pickadate/classic
  *= require pickadate/classic.date
  *= require pickadate/classic.time
