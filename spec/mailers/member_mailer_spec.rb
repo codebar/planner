@@ -59,7 +59,7 @@ RSpec.describe MemberMailer, :type => :mailer do
     end
 
     it "renders the body" do
-      expect(mail.body.encoded).to match("you have missed more than 3 workshops")
+      expect(mail.body.encoded).to match("you have missed more than 2 workshops")
     end
   end
 
