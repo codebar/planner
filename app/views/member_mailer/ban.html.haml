@@ -1,0 +1,18 @@
+%h1 Hi #{@member.name},
+
+%p
+  We are really sorry to have to do this, but your account has been suspended until #{@expiry_date}. This means that you will not be able to attend any of our events until then.
+
+%p
+  If this email has been sent because you have violated our attendancy policy you can read more about it #{link_to "here", attendance_policy_url}. Alternatively, please have a look at our eligibility criteria and code of conduct.
+  %ul
+    %li= link_to "Elibility criteria", student_guide_url(:eligibility_criteria)
+    %li= link_to "Code of conduct", code_of_conduct_url
+
+%p
+  Thanks for your understanding.
+
+%p
+  #{"-- "}
+  %br
+  The codebar organisational team

@@ -56,4 +56,14 @@ class MemberMailer < ActionMailer::Base
       format.html { render 'attendance_warning' }
     end.deliver
   end
+
+  def ban(member, ban)
+    @member = member
+    @reason = ban.reason
+    @expiry_date = I18n.l(ban.expires_at, format: :default)
+
+    mail(mail_args(member, @reason, 'hello@codebar.io', "hello@codebar.io")) do |format|
+      format.html { render 'ban' }
+    end.deliver
+  end
 end

@@ -23,4 +23,17 @@ feature "Managing users" do
 
     expect(page).to have_content "Bananas and custard"
   end
+
+  scenario "Ban a user" do
+    visit admin_member_path member
+    click_on "Ban"
+
+    select "Violated attendance policy", from: "ban_reason"
+    fill_in "ban_note", with: Faker::Lorem.word
+    fill_in "ban_expires_at", with: Date.today+1.month
+    click_on "Ban user"
+
+    expect(page).to have_content "The user has been banned"
+  end
+
 end

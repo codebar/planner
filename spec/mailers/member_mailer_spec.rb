@@ -63,6 +63,22 @@ RSpec.describe MemberMailer, :type => :mailer do
     end
   end
 
+  describe "ban email" do
+    let(:ban) { Fabricate(:ban, reason: "Attendance violation") }
+    let(:mail) { MemberMailer.ban(member, ban).deliver_now }
+
+    it "renders the headers" do
+      expect(mail.subject).to eq("Attendance violation")
+      expect(mail.to).to eq([member.email])
+      expect(mail.from).to eq(["hello@codebar.io"])
+      expect(mail.cc).to eq(["hello@codebar.io"])
+    end
+
+    it "renders the body" do
+      expect(mail.body.encoded).to match("your account has been suspended")
+    end
+  end
+
   describe "welcome" do
     it "sends the coach welcome email to coaches" do
       member = Fabricate(:coach)
@@ -78,6 +94,15 @@ RSpec.describe MemberMailer, :type => :mailer do
       expect_any_instance_of(MemberMailer).to receive(:welcome_student)
       MemberMailer.welcome(member).deviver_now
     end
+
+    it "sends a ban email to a member" do
+      member = Fabricate(:member)
+      ban = Fabricate(:ban)
+      expect_any_instance_of(MemberMailer).to receive(:ban).with(member, ban)
+
+      MemberMailer.ban(member, ban).deviver_now
+    end
+
 
     it "actually sends a coach email" do
       member = Fabricate(:coach)
