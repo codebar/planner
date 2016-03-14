@@ -2,7 +2,7 @@ class Admin::MembersController < Admin::ApplicationController
 
   def show
     @member = Member.includes(:member_notes).find(params[:id])
-    @invitations = @member.session_invitations.attended.order_by_latest rescue nil
+    @invitations = @member.session_invitations.accepted_or_attended.order_by_latest
     @last_attendance = @invitations.first.sessions if @invitations.any?
     @member_note = MemberNote.new
   end

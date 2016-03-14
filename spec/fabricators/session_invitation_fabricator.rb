@@ -2,7 +2,7 @@ Fabricator(:session_invitation) do
   member
   attending nil
   attended nil
-  note "I'd love to attend"
+  note { Faker::Lorem.word }
   sessions
   role "Student"
 end
