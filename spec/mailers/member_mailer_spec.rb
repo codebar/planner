@@ -92,7 +92,7 @@ RSpec.describe MemberMailer, :type => :mailer do
       member = Fabricate(:student)
       expect_any_instance_of(MemberMailer).not_to receive(:welcome_coach)
       expect_any_instance_of(MemberMailer).to receive(:welcome_student)
-      MemberMailer.welcome(member).deviver_now
+      MemberMailer.welcome(member).deliver_now
     end
 
     it "sends a ban email to a member" do
@@ -100,7 +100,7 @@ RSpec.describe MemberMailer, :type => :mailer do
       ban = Fabricate(:ban)
       expect_any_instance_of(MemberMailer).to receive(:ban).with(member, ban)
 
-      MemberMailer.ban(member, ban).deviver_now
+      MemberMailer.ban(member, ban).deliver_now
     end
 
 
