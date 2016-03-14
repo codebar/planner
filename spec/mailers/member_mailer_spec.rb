@@ -10,7 +10,7 @@ RSpec.describe MemberMailer, :type => :mailer do
       expect(mail.subject).to eq("How codebar works")
       expect(mail.to).to eq([member.email])
       expect(mail.from).to eq(["hello@codebar.io"])
-      expect(mail.cc).to eq(["hello@codebar.io"])
+      expect(mail.cc).to eq([])
     end
 
     it "renders the body" do
@@ -25,7 +25,7 @@ RSpec.describe MemberMailer, :type => :mailer do
       expect(mail.subject).to eq("How codebar works")
       expect(mail.to).to eq([member.email])
       expect(mail.from).to eq(["hello@codebar.io"])
-      expect(mail.cc).to eq(["hello@codebar.io"])
+      expect(mail.cc).to eq([])
     end
 
     it "renders the body" do
@@ -59,7 +59,23 @@ RSpec.describe MemberMailer, :type => :mailer do
     end
 
     it "renders the body" do
-      expect(mail.body.encoded).to match("you have missed more than 3 workshops")
+      expect(mail.body.encoded).to match("you have missed more than 2 workshops")
+    end
+  end
+
+  describe "ban email" do
+    let(:ban) { Fabricate(:ban, reason: "Attendance violation") }
+    let(:mail) { MemberMailer.ban(member, ban).deliver_now }
+
+    it "renders the headers" do
+      expect(mail.subject).to eq("Attendance violation")
+      expect(mail.to).to eq([member.email])
+      expect(mail.from).to eq(["hello@codebar.io"])
+      expect(mail.cc).to eq(["hello@codebar.io"])
+    end
+
+    it "renders the body" do
+      expect(mail.body.encoded).to match("your account has been suspended")
     end
   end
 
@@ -76,8 +92,17 @@ RSpec.describe MemberMailer, :type => :mailer do
       member = Fabricate(:student)
       expect_any_instance_of(MemberMailer).not_to receive(:welcome_coach)
       expect_any_instance_of(MemberMailer).to receive(:welcome_student)
-      MemberMailer.welcome(member).deviver_now
+      MemberMailer.welcome(member).deliver_now
     end
+
+    it "sends a ban email to a member" do
+      member = Fabricate(:member)
+      ban = Fabricate(:ban)
+      expect_any_instance_of(MemberMailer).to receive(:ban).with(member, ban)
+
+      MemberMailer.ban(member, ban).deliver_now
+    end
+
 
     it "actually sends a coach email" do
       member = Fabricate(:coach)
