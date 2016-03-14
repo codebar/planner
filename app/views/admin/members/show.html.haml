@@ -77,7 +77,7 @@
               #{@member.name} RSVPed to
               %label.label.secondary.round #{@invitations.accepted.count}
               workshops and attended
-              %label.label.secondary.round #{@invitations.count}.
+              %label.label.secondary.round #{@invitations.attended.count}.
               - if @invitations.to_coaches.any? or @invitations.to_students.any?
                 %h4 Attended
                 %ul.no-bullet

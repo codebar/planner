@@ -3,7 +3,7 @@ require 'spec_helper'
 feature "Managing users" do
   let(:member) { Fabricate(:member) }
   let(:admin) { Fabricate(:chapter_organiser) }
-  let!(:invitation) { Fabricate(:attended_session_invitation, member: member) }
+  let!(:invitation) { Fabricate(:attended_session_invitation, attending: true, member: member) }
   let!(:attending_invitation) { Fabricate(:attending_session_invitation, member: member) }
   let!(:other_invitation) { Fabricate(:session_invitation, member: member) }
 
@@ -14,6 +14,7 @@ feature "Managing users" do
   scenario "View a user" do
     visit admin_member_path member
 
+    expect(page).to have_content("RSVPed to 2 workshops and attended 1.")
     expect(page).to have_content member.name
     expect(page).to have_content member.email
     expect(page).to have_content member.about_you
