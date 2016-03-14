@@ -10,7 +10,7 @@ RSpec.describe MemberMailer, :type => :mailer do
       expect(mail.subject).to eq("How codebar works")
       expect(mail.to).to eq([member.email])
       expect(mail.from).to eq(["hello@codebar.io"])
-      expect(mail.cc).to eq(["hello@codebar.io"])
+      expect(mail.cc).to eq([])
     end
 
     it "renders the body" do
@@ -25,7 +25,7 @@ RSpec.describe MemberMailer, :type => :mailer do
       expect(mail.subject).to eq("How codebar works")
       expect(mail.to).to eq([member.email])
       expect(mail.from).to eq(["hello@codebar.io"])
-      expect(mail.cc).to eq(["hello@codebar.io"])
+      expect(mail.cc).to eq([])
     end
 
     it "renders the body" do
