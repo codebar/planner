@@ -29,7 +29,7 @@ exist are:
 
 * One global `admin` permission
 * One `organiser` permission for each `chapter`
-* One `organiser` permission for each `sessions`
+* One `organiser` permission for each `workshop`
 
 The `members_permissions` table stores the users which have been
 granted permissions. There is no ActiveRecord class for this table, it
@@ -57,30 +57,22 @@ Some `members` may be designated as contacts for a sponsor. The
 relationship between them is described by a `member_contact`, and
 exposed as `Sponsor#contacts`.
 
-## Sessions
+## Workshop
 
-> Note that this class is named `Sessions` and not `Session`. This is
-> surprising and means that things relating to it have unusual
-> names. In particular, don't be confused when you see `sessions`
-> referring to a single object.
+A workshop corresponds to the `WorkshopsController` and `WorkshopPresenter`.
 
-A `sessions` is also referred to as a `session` or a `workshop` in
-different parts of the code, and is called a workshop in the UI. In
-particular, the `Sessions` model corresponds to the
-`WorkshopsController` and `WorkshopPresenter`.
-
-A `sessions` belongs to a single `chapter`. It has organisers stored
+It belongs to a single `chapter`. It has organisers stored
 as permissions.
 
-Sessions/workshops work by sending invitations to the people
+Workshops work by sending invitations to the people
 substribed to their chapter, and will let those people accept the
 invitation up to the limits of the `venue`. If no spaces are left,
 people will instead be invited to join the waiting list, and will be
 accepted from the waiting list as spaces become available.
 
-### SponsorSession
+### WorkshopSponsor
 
-A `sponsor_session` describes which sponsors are sponsoring a given
+A `workshop_sponsor` describes which sponsors are sponsoring a given
 workshop. There should be exactly one such object where the `host`
 column is true, and zero or more where the `host` column is false. In
 other parts of the code, the one with `host` set to true will be
@@ -89,7 +81,7 @@ referred to as the `venue`.
 ### SessionInvitation
 
 A `session_invitation` describes a member's attendance status at a
-`session`. An invitation relates a single `sessions`, a single
+`workshop`. An invitation relates a single `workshop`, a single
 `member`, and a role that is either `"Student"` or `"Coach"`.
 
 The `attending` field is true if the member has been assigned a place
@@ -101,7 +93,7 @@ and its existence inhibits sending further emails.
 
 ### WaitingList
 
-A `waiting_list` describes a member's desire to attend at a `session`,
+A `waiting_list` describes a member's desire to attend at a `workshop`,
 should a place become available for them. It is associated directly to
 a `session_invitation`, and to a workshop through that object.
 
@@ -135,7 +127,7 @@ than the location.
 ### Invitation
 
 An `invitation` describes a member's attendance status at an
-`event`. An invitation relates a single `sessions`, a single `member`,
+`event`. An invitation relates a single `workshop`, a single `member`,
 and a role that is either `"Student"` or `"Coach"`.
 
 The `attending` field is true if the member has indicated that they

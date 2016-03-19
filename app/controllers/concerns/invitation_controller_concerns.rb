@@ -16,21 +16,21 @@ module InvitationControllerConcerns
 
       user = current_user || @invitation.member
 
-      if user.has_existing_RSVP_on(@invitation.sessions.date_and_time)
+      if user.has_existing_RSVP_on(@invitation.workshop.date_and_time)
         return redirect_to :back, notice: "You have already RSVP'd to another workshop on this date. If you would prefer to attend this workshop, please cancel your other RSVP first."
       end
 
-      @workshop = WorkshopPresenter.new(@invitation.sessions)
+      @workshop = WorkshopPresenter.new(@invitation.workshop)
       if (@invitation.for_student? and @workshop.student_spaces?) or (@invitation.for_coach? and @workshop.coach_spaces?)
         @invitation.update_attribute(:attending, true)
         @invitation.waiting_list.delete  if @invitation.waiting_list.present?
-        SessionInvitationMailer.attending(@invitation.sessions, @invitation.member, @invitation).deliver_now
+        SessionInvitationMailer.attending(@invitation.workshop, @invitation.member, @invitation).deliver_now
 
         redirect_to :back, notice: t("messages.accepted_invitation",
                                      name: @invitation.member.name)
 
       else
-        redirect_to :back, notice: t("messages.no_available_seats", email: @invitation.sessions.chapter.email)
+        redirect_to :back, notice: t("messages.no_available_seats", email: @invitation.workshop.chapter.email)
       end
     end
 
@@ -42,13 +42,13 @@ module InvitationControllerConcerns
         else
           @invitation.update_attribute(:attending, false)
 
-          next_spot = WaitingList.next_spot(@invitation.sessions, @invitation.role)
+          next_spot = WaitingList.next_spot(@invitation.workshop, @invitation.role)
 
           if next_spot.present?
             invitation = next_spot.invitation
             next_spot.delete
             invitation.update_attribute(:attending, true)
-            SessionInvitationMailer.attending(invitation.sessions, invitation.member, invitation, true).deliver_now
+            SessionInvitationMailer.attending(invitation.workshop, invitation.member, invitation, true).deliver_now
           end
 
           redirect_to :back, notice: t("messages.rejected_invitation", name: @invitation.member.name)

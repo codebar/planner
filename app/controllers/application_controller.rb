@@ -115,7 +115,7 @@ class ApplicationController < ActionController::Base
   helper_method :jobs_pending_approval, :chapters
 
   def upcoming_workshops
-    Sessions.upcoming
+    Workshop.upcoming
   end
 
   helper_method :upcoming_workshops

@@ -28,7 +28,7 @@ class DashboardController < ApplicationController
   end
 
   def wall_of_fame
-    sessions_count = Sessions.count
+    sessions_count = Workshop.count
     @coaches = order_by_attendance(attendance_stats_by_coach).map do |member_id, attendances|
       member = Member.unscoped.find(member_id)
       member.attendance = attendances
@@ -50,7 +50,7 @@ class DashboardController < ApplicationController
   end
 
   def upcoming_events
-    workshops = Sessions.upcoming || []
+    workshops = Workshop.upcoming || []
     all_events(workshops).sort_by(&:date_and_time).group_by(&:date)
   end
 
@@ -58,7 +58,7 @@ class DashboardController < ApplicationController
     chapters = current_user.groups.map(&:chapter).uniq!
     workshops = chapters.collect { |c| c.workshops.upcoming } if chapters
     workshops ||= []
-    workshops << current_user.session_invitations.accepted.joins(:sessions).where("sessions.date_and_time > ?", Time.zone.now).map(&:sessions)
+    workshops << current_user.session_invitations.accepted.joins(:workshop).where("workshop.date_and_time > ?", Time.zone.now).map(&:workshop)
     all_events(workshops).sort_by(&:date_and_time).group_by(&:date)
   end
 

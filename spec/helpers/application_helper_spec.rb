@@ -4,7 +4,7 @@ RSpec.describe ApplicationHelper, :type => :helper do
 
   describe "#contact_email" do
     it "returns the workshop chapter's email" do
-      @session = Fabricate(:sessions)
+      @session = Fabricate(:workshop)
       expect(helper.contact_email).to eq(@session.chapter.email)
     end
 

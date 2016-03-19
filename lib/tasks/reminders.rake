@@ -2,7 +2,7 @@ namespace :reminders do
   desc "Send out reminders"
 
   task workshop: :environment do
-    workshops = Sessions.upcoming
+    workshops = Workshop.upcoming
 
     workshops.each do |workshop|
       if Time.zone.now.between?(workshop.date_and_time-30.hours, workshop.date_and_time - 4.hours)

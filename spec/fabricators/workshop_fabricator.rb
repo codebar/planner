@@ -1,15 +1,15 @@
-Fabricator(:sessions) do
+Fabricator(:workshop) do
   date_and_time Time.zone.now+2.days
   time Time.zone.now
   title Faker::Lorem.sentence
   description Faker::Lorem.sentence
   chapter
-  after_build do |sessions|
-    Fabricate(:sponsor_session, sessions: sessions, sponsor: Fabricate(:sponsor), host: true )
+  after_build do |workshop|
+    Fabricate(:workshop_sponsor, workshop: workshop, sponsor: Fabricate(:sponsor), host: true )
   end
 end
 
-Fabricator(:sessions_no_sponsor, class_name: :sessions) do
+Fabricator(:workshop_no_sponsor, class_name: :workshop) do
   date_and_time Time.zone.now+2.days
   time Time.zone.now
   title Faker::Lorem.sentence
@@ -17,14 +17,13 @@ Fabricator(:sessions_no_sponsor, class_name: :sessions) do
   chapter
 end
 
-Fabricator(:sessions_no_spots, class_name: :sessions) do
+Fabricator(:workshop_no_spots, class_name: :workshop) do
   date_and_time Time.zone.now+2.days
   time Time.zone.now
   title Faker::Lorem.sentence
   description Faker::Lorem.sentence
   chapter
-  after_build do |sessions|
-    Fabricate(:sponsor_session, sessions: sessions, sponsor: Fabricate(:sponsor, seats: 0), host: true )
+  after_build do |workshop|
+    Fabricate(:workshop_sponsor, workshop: workshop, sponsor: Fabricate(:sponsor, seats: 0), host: true )
   end
 end
-

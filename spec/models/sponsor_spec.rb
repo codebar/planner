@@ -6,8 +6,8 @@ describe Sponsor do
   it { should respond_to(:name) }
   it { should respond_to(:website) }
   it { should respond_to(:address) }
-  it { should respond_to(:sessions) }
-  it { should respond_to(:sponsor_sessions) }
+  it { should respond_to(:workshops) }
+  it { should respond_to(:workshop_sponsors) }
   it { should respond_to(:avatar) }
   it { should respond_to(:seats) }
   it { should respond_to(:email) }
@@ -74,8 +74,8 @@ describe Sponsor do
   end
 
   context "scopes" do
-    let!(:past) { 2.times.map { Fabricate(:sessions)} .map(&:sponsors)  }
-    let!(:latest) { 4.times.map { Fabricate(:sessions)} .map(&:sponsors) }
+    let!(:past) { 2.times.map { Fabricate(:workshop)} .map(&:sponsors)  }
+    let!(:latest) { 4.times.map { Fabricate(:workshop)} .map(&:sponsors) }
 
     it "#latest" do
       expect(Sponsor.latest).to eq((latest.reverse+past.reverse).flatten)

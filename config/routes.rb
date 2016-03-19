@@ -70,11 +70,6 @@ Planner::Application.routes.draw do
   resources :workshops, only: [ :show ] do
     member do
       post 'rsvp'
-      post "add"
-      post "remove"
-      get "added"
-      get "removed"
-      get "waitlisted"
     end
   end
   resources :feedback, only: [ :show ] do

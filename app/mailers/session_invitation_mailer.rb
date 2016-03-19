@@ -90,7 +90,7 @@ class SessionInvitationMailer < ActionMailer::Base
   end
 
   def notify_waiting_list(invitation)
-    @session = invitation.sessions
+    @session = invitation.workshop
     @host_address = AddressDecorator.decorate(@session.host.address)
     @member = invitation.member
     @invitation = invitation

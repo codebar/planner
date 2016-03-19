@@ -4,15 +4,15 @@ feature "managing workshop attendances" do
   context 'an admin' do
     let(:member) { Fabricate(:member) }
     let(:chapter) { Fabricate(:chapter) }
-    let(:workshop) { Fabricate(:sessions, chapter: chapter) }
-    let!(:invitation) { Fabricate(:session_invitation, sessions: workshop, attending: true) }
+    let(:workshop) { Fabricate(:workshop, chapter: chapter) }
+    let!(:invitation) { Fabricate(:session_invitation, workshop: workshop, attending: true) }
 
     before do
       login_as_admin(member)
     end
 
     context" #verify_attendance" do
-      let(:workshop) { Fabricate(:sessions, chapter: chapter, date_and_time: Time.zone.now-1.day) }
+      let(:workshop) { Fabricate(:workshop, chapter: chapter, date_and_time: Time.zone.now-1.day) }
 
       scenario 'can verify that a member has attended the workshop' do
         visit admin_workshop_path(workshop)
@@ -31,7 +31,7 @@ feature "managing workshop attendances" do
     end
 
     scenario 'can move a member from the waiting list to the attendee list' do
-      other_invitation = Fabricate(:session_invitation, sessions: workshop, attending: nil)
+      other_invitation = Fabricate(:session_invitation, workshop: workshop, attending: nil)
       WaitingList.add(other_invitation)
 
       visit admin_workshop_path(workshop)
@@ -41,7 +41,7 @@ feature "managing workshop attendances" do
     end
 
     xscenario 'can rsvp an invited student the the workshop' do
-      other_invitation = Fabricate(:session_invitation, sessions: workshop, attending: nil)
+      other_invitation = Fabricate(:session_invitation, workshop: workshop, attending: nil)
 
       visit admin_workshop_path(workshop)
       expect(page).to have_content("1 are attending as students")

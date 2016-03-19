@@ -4,7 +4,7 @@ class Chapter < ActiveRecord::Base
   validates :name, :email, uniqueness: true, presence: true
   validates  :city, presence: true
 
-  has_many :workshops, class_name: Sessions
+  has_many :workshops
   has_and_belongs_to_many :events
   has_many :groups
   has_many :sponsors, through: :workshops
