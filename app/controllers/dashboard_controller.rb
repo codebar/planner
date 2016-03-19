@@ -58,7 +58,7 @@ class DashboardController < ApplicationController
     chapters = current_user.groups.map(&:chapter).uniq!
     workshops = chapters.collect { |c| c.workshops.upcoming } if chapters
     workshops ||= []
-    workshops << current_user.session_invitations.accepted.joins(:workshop).where("workshop.date_and_time > ?", Time.zone.now).map(&:workshop)
+    workshops << current_user.session_invitations.accepted.joins(:workshop).where("workshops.date_and_time > ?", Time.zone.now).map(&:workshop)
     all_events(workshops).sort_by(&:date_and_time).group_by(&:date)
   end
 
