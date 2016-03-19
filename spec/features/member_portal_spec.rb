@@ -5,11 +5,12 @@ feature 'Member portal' do
   let(:member) { Fabricate(:member) }
 
   context "signed in" do
-    it "should be able to access the portal menu" do
+    it "should be able to access the dashboard" do
       login(member)
-      visit root_path
+      visit dashboard_path
 
-      expect(page).to have_selector("#profile")
+      expect(page).to have_content("Dashboard")
+      expect(page).to have_content(member.full_name)
     end
 
     it "should not send a welcome email when signing in" do
