@@ -18,6 +18,8 @@ class Member < ActiveRecord::Base
 
   validates :auth_services, presence: true
   validates :name, :surname, :email, :about_you, presence: true, if: :can_log_in?
+  validates :name, length: { minimum: 1 }
+  validates :surname, length: { minimum: 1 }
   validates_uniqueness_of :email
 
   scope :subscribers, -> { joins(:subscriptions).order('created_at desc').uniq }
