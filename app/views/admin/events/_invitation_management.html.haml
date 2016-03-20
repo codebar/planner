@@ -8,19 +8,22 @@
             %br
             <strong>#{@attending_students.count}</strong> are attending as students and <strong>#{@attending_coaches.count}</strong> as coaches.
 
-  .row
-    .large-9.columns
-      %small
-      .row
-        = simple_form_for :invitations, url: admin_event_invitations_path do |f|
-          .medium-6.columns
-            = f.select :member, Member.all.map { |u| ["#{u.full_name}", u.id] }, { include_blank: true }, { class: 'chosen-select', required: true, data: { placeholder: 'Select a member to RSVP' } }
-
-            = f.input :meeting_id, :as => :hidden, :input_html => { :value => @meeting.slug }
-          .large-3.columns
-            %span{ "data-tooltip" => true, "aria-haspopup" => "true", class: "has-tip", title: t('admin.workshop.manage_rsvps.text') }
-              %i.fa.fa-info
-            = f.submit "Add"
+  -#.row
+  -#  .large-9.columns
+  -#    %small
+  -#    .row
+  -#      = simple_form_for :invitations, url: admin_invitation_index_path do |f|
+  -#        .medium-5.columns
+  -#          = f.select :member, Member.all.map { |u| ["#{u.full_name}", u.id] }, { include_blank: true }, { class: 'chosen-select', required: true, data: { placeholder: 'Select a member to RSVP' } }
+  -#        .medium-5.columns
+  -#          = f.select :role, ["Student", "Coach"], { include_blank: true }, { class: 'chosen-select', required: true,
+  -#          data: { placeholder: 'Select role' }}
+  -#
+  -#          = f.input :event_id, :as => :hidden, :input_html => { :value => @event.slug }
+  -#        .medium-2.columns
+  -#          %span{ "data-tooltip" => true, "aria-haspopup" => "true", class: "has-tip", title: t('admin.workshop.manage_rsvps.text') }
+  -#            %i.fa.fa-info
+  -#          = f.submit "Add"
   %br
   .row
     .medium-6.columns
