@@ -33,7 +33,7 @@
                 = link_to '', admin_meeting_invitation_path(invitation, attendance_status: true, attended: true),
                 class: 'fa fa-square-o',
                 method: :put
-                
+
             - else
               =link_to " ", admin_meeting_invitation_path(invitation, attendance_status: false, attended: false), class: "fa fa-minus-square-o", method: :put
 
