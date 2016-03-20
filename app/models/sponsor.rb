@@ -1,16 +1,16 @@
 class Sponsor < ActiveRecord::Base
   require 'uri'
   has_one :address
-  has_many :sponsor_sessions
-  has_many :sessions, through: :sponsor_sessions
+  has_many :workshop_sponsors
+  has_many :workshops, through: :workshop_sponsors
   has_many :member_contacts
   has_many :contacts, through: :member_contacts, class_name: 'Member', foreign_key: 'member_id'
 
   validates :name, :address, :avatar, :website, :seats, presence: true
-  validate :website_is_url 
+  validate :website_is_url
 
   default_scope -> { order('updated_at desc') }
-  scope :active, -> { joins(:sponsor_sessions) }
+  scope :active, -> { joins(:workshop_sponsors) }
 
   mount_uploader(:avatar, AvatarUploader) if Rails.env.production?
 
@@ -21,7 +21,7 @@ class Sponsor < ActiveRecord::Base
   end
 
   def self.latest
-    SponsorSession.order("created_at desc").limit(15).map(&:sponsor)
+    WorkshopSponsor.order("created_at desc").limit(15).map(&:sponsor)
   end
 
   private

@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe EventPresenter do
-  let(:workshop) { Fabricate(:sessions) }
+  let(:workshop) { Fabricate(:workshop) }
   let(:event) { EventPresenter.new(workshop) }
 
   it "#venue" do
@@ -41,7 +41,7 @@ describe EventPresenter do
   end
 
   it "#class_string" do
-    expect(event.class_string).to eq("sessions")
+    expect(event.class_string).to eq("workshop")
   end
 
 end

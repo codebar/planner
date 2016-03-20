@@ -4,10 +4,21 @@ feature 'Jobs' do
 
   context 'Listing' do
     context 'a non-logged in visitor to the website' do
-      scenario 'cannot access the job listing' do
+      scenario 'to be able to access the job listing' do
         visit jobs_path
 
-        expect(page).to_not have_content("Jobs")
+        expect(page).to have_content("Jobs")
+        expect(page).to have_content("There are no jobs available at the moment")
+
+      end
+
+      scenario 'to not be able to access the individual job listing' do
+        job = Fabricate.create(:job)
+        visit jobs_path
+
+        expect(page).to have_content("Jobs")
+        click_on job.title
+
         expect(page).to have_content("You must be logged in to access this page")
 
       end

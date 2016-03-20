@@ -2,7 +2,7 @@ namespace :workshop do
   desc "Send waiting list emails"
 
   task reminders: :environment do
-    workshops = Sessions.upcoming
+    workshops = Workshop.upcoming
 
     workshops.each do |workshop|
       waiting_list = WaitingList.by_workshop(workshop)

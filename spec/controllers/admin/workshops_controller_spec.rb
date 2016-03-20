@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Admin::WorkshopsController, type: :controller do
-  let!(:workshop) { Fabricate(:sessions) }
+  let!(:workshop) { Fabricate(:workshop) }
   let(:admin) { Fabricate(:member) }
 
   before :each do
@@ -12,14 +12,14 @@ describe Admin::WorkshopsController, type: :controller do
     context "workshop invitations have been sent" do
 
       before :each do
-        Fabricate(:attending_session_invitation, sessions: workshop)
+        Fabricate(:attending_session_invitation, workshop: workshop)
       end
 
       context "workshop deletion tried within specific time frame since it's creation" do
         it "should not delete the workshop" do
           expect {
             delete :destroy, id: workshop.id
-          }.not_to change {Sessions.count}
+          }.not_to change {Workshop.count}
         end
 
         it "should display workshop can't be deleted related flash message" do
@@ -37,7 +37,7 @@ describe Admin::WorkshopsController, type: :controller do
           Timecop.travel(new_current_time)
           expect {
             delete :destroy, id: workshop.id
-          }.not_to change {Sessions.count}
+          }.not_to change {Workshop.count}
           Timecop.return
         end
 
@@ -59,7 +59,7 @@ describe Admin::WorkshopsController, type: :controller do
         it "should successfully delete the workshop" do
           expect {
             delete :destroy, id: workshop.id
-          }.to change{Sessions.count}.by -1
+          }.to change{Workshop.count}.by -1
         end
 
         it "should display workshop deleted successfully related flash message" do
@@ -77,7 +77,7 @@ describe Admin::WorkshopsController, type: :controller do
           Timecop.travel(new_current_time)
           expect {
             delete :destroy, id: workshop.id
-          }.not_to change {Sessions.count}
+          }.not_to change {Workshop.count}
           Timecop.return
         end
 

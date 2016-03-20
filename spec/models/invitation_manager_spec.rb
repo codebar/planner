@@ -5,7 +5,7 @@ describe InvitationManager do
   let(:chapter)   { Fabricate(:chapter) }
   let(:students)  { Fabricate(:students, chapter: chapter) }
   let(:coaches)   { Fabricate(:coaches, chapter: chapter) }
-  let!(:session)  { Fabricate(:sessions, chapter: chapter) }
+  let!(:workshop)  { Fabricate(:workshop, chapter: chapter) }
 
   let(:student)   { Fabricate(:student, groups: [ students ]) }
 
@@ -18,16 +18,16 @@ describe InvitationManager do
       expect(students.members.count).to be > 0
 
       students.members.each do |student|
-        expect(SessionInvitation).to receive(:create).with(sessions: session, member: student, role: "Student").and_call_original
+        expect(SessionInvitation).to receive(:create).with(workshop: workshop, member: student, role: "Student").and_call_original
       end
 
-      manager.send_session_emails(session)
+      manager.send_session_emails(workshop)
     end
 
     it 'creates an invitation for each coach' do
       allow(chapter.groups).to receive_messages(coaches: [coaches])
 
-      manager.send_session_emails(session)
+      manager.send_session_emails(workshop)
 
       coach_invites = SessionInvitation.where(role: 'Coach')
 
@@ -40,7 +40,7 @@ describe InvitationManager do
       allow(banned_coach).to receive_messages(banned?: true)
       allow(chapter.groups).to receive_messages(coaches: [coaches])
 
-      manager.send_session_emails(session)
+      manager.send_session_emails(workshop)
 
       coach_invites = SessionInvitation.where(role: 'Coach')
 
@@ -54,7 +54,7 @@ describe InvitationManager do
       expect(chapter.groups).to receive(:coaches).and_return([coaches])
 
       expect {
-        InvitationManager.new.send_session_emails(session)
+        InvitationManager.new.send_session_emails(workshop)
       }.to change { ActionMailer::Base.deliveries.count }
     end
 
@@ -63,7 +63,7 @@ describe InvitationManager do
       expect(SessionInvitation).to receive(:create).at_least(:once).and_return(SessionInvitation.new)
 
       expect {
-        InvitationManager.new.send_session_emails(session)
+        InvitationManager.new.send_session_emails(workshop)
       }.not_to change { ActionMailer::Base.deliveries.count }
     end
   end
@@ -108,17 +108,17 @@ describe InvitationManager do
       @waitlisted_coaches = populace.shift(2)
       @absent_students = populace.shift(2)
       @absent_coaches = populace.shift(2)
-      @workshop = Fabricate(:sessions)
-      @attending_students.each {|as| Fabricate(:student_session_invitation, attending: true, sessions: @workshop, member: as) }
-      @attending_coaches.each {|ac| Fabricate(:coach_session_invitation, attending: true, sessions: @workshop, member: ac) }
-      @absent_students.each {|as| Fabricate(:student_session_invitation, sessions: @workshop, member: as) }
-      @absent_coaches.each {|ac| Fabricate(:coach_session_invitation, sessions: @workshop, member: ac) }
+      @workshop = Fabricate(:workshop)
+      @attending_students.each {|as| Fabricate(:student_session_invitation, attending: true, workshop: @workshop, member: as) }
+      @attending_coaches.each {|ac| Fabricate(:coach_session_invitation, attending: true, workshop: @workshop, member: ac) }
+      @absent_students.each {|as| Fabricate(:student_session_invitation, workshop: @workshop, member: as) }
+      @absent_coaches.each {|ac| Fabricate(:coach_session_invitation, workshop: @workshop, member: ac) }
       @waitlisted_students.each do |ws|
-        invite = Fabricate(:student_session_invitation, sessions: @workshop, member: ws)
+        invite = Fabricate(:student_session_invitation, workshop: @workshop, member: ws)
         WaitingList.add(invite)
       end
       @waitlisted_coaches.each do |wc|
-        invite = Fabricate(:coach_session_invitation, sessions: @workshop, member: wc)
+        invite = Fabricate(:coach_session_invitation, workshop: @workshop, member: wc)
         WaitingList.add(invite)
       end
     end

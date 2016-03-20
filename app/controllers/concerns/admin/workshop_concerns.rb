@@ -18,7 +18,7 @@ module Admin::WorkshopConcerns
     private
 
     def set_workshop
-      @workshop = Sessions.find(params[:workshop_id])
+      @workshop = Workshop.find(params[:workshop_id])
     end
   end
 end

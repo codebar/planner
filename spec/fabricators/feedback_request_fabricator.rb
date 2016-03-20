@@ -1,6 +1,6 @@
 Fabricator(:feedback_request) do
   member
-  sessions
+  workshop
   token { 'valid_token' }
   submited { false }
 end

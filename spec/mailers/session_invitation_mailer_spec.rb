@@ -3,9 +3,9 @@ require "spec_helper"
 describe SessionInvitationMailer do
 
   let(:email) { ActionMailer::Base.deliveries.last }
-  let(:workshop) { Fabricate(:sessions, title: "HTML & CSS") }
+  let(:workshop) { Fabricate(:workshop, title: "HTML & CSS") }
   let(:member) { Fabricate(:member) }
-  let(:invitation) { Fabricate(:session_invitation, sessions: workshop, member: member) }
+  let(:invitation) { Fabricate(:session_invitation, workshop: workshop, member: member) }
 
   it "#invite_student" do
     invitation_token = "token"

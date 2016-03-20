@@ -6,14 +6,14 @@ describe "feedback:request" do
   its(:prerequisites) { should include("environment") }
 
   context "when most recent workshop has attendances" do
-    let(:group)  { Fabricate(:students) }
-    let(:workshop)          { Fabricate(:sessions, date_and_time: 1.day.ago, chapter: group.chapter) }
-    let(:student)          { Fabricate(:member) }
+    let(:group) { Fabricate(:students) }
+    let(:workshop) { Fabricate(:workshop, date_and_time: 1.day.ago, chapter: group.chapter) }
+    let(:student) { Fabricate(:member) }
     let!(:subscription) { Fabricate(:subscription, group: group, member: student) }
 
     before do
       allow(STDOUT).to receive(:puts)
-      student.session_invitations << Fabricate(:attending_session_invitation, member: student, sessions: workshop)
+      student.session_invitations << Fabricate(:attending_session_invitation, member: student, workshop: workshop)
     end
 
     it 'should gracefully run' do
@@ -21,7 +21,7 @@ describe "feedback:request" do
     end
 
     it "generates a FeedbackRequest" do
-      expect(FeedbackRequest).to receive(:create).with(member: student, sessions: workshop, submited: false)
+      expect(FeedbackRequest).to receive(:create).with(member: student, workshop: workshop, submited: false)
 
       subject.invoke
     end

@@ -70,7 +70,7 @@ class Member < ActiveRecord::Base
   end
 
   def attended_sessions
-    session_invitations.attended.map(&:sessions)
+    session_invitations.attended.map(&:workshop)
   end
 
   def requires_additional_details?
@@ -92,7 +92,7 @@ class Member < ActiveRecord::Base
   private
 
   def invitations_on date
-    session_invitations.joins(:sessions).where('sessions.date_and_time BETWEEN ? AND ?', date.beginning_of_day, date.end_of_day).where(attending: true)
+    session_invitations.joins(:workshop).where('workshops.date_and_time BETWEEN ? AND ?', date.beginning_of_day, date.end_of_day).where(attending: true)
   end
 
   def md5_email

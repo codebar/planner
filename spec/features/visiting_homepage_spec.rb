@@ -2,7 +2,7 @@ require 'spec_helper'
 
 feature 'when visiting the homepage' do
 
-  let!(:next_session) { Fabricate(:sessions) }
+  let!(:next_workshop) { Fabricate(:workshop) }
   let!(:next_course) { Fabricate(:course) }
   let!(:event) { Fabricate(:event) }
 
@@ -10,9 +10,9 @@ feature 'when visiting the homepage' do
     visit root_path
   end
 
-  scenario "i can view the next session" do
+  scenario "i can view the next workshop" do
 
-    expect(page).to have_content "Workshop at #{next_session.host.name}"
+    expect(page).to have_content "Workshop at #{next_workshop.host.name}"
   end
 
   scenario "i can view the next course" do

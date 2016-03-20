@@ -1,5 +1,5 @@
 class EventPresenter < SimpleDelegator
-  PRESENTER = { sessions: "WorkshopPresenter",
+  PRESENTER = { workshop: "WorkshopPresenter",
                 course: "CoursePresenter",
                 meeting: "MeetingPresenter",
                 event: "EventPresenter" }

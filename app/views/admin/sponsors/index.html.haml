@@ -8,8 +8,8 @@
       .large-4.columns
         LOGO
       .large-3.columns
-        CONTACT(s)
-  - @sponsors.each do |sponsor|  
+        CONTACT(S)
+  - @sponsors.each do |sponsor|
     .row
       %hr
       .large-3.columns
@@ -19,7 +19,7 @@
         %p
           %em
             Sponsored
-            = sponsor.sponsor_sessions.count
+            = sponsor.workshop_sponsors.count
             sessions
 
       .large-4.columns

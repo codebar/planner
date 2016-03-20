@@ -1,9 +1,9 @@
 class FeedbackRequest < ActiveRecord::Base
   belongs_to :member
-  belongs_to :sessions
+  belongs_to :workshop
 
-  validates :member_id, presence: true, uniqueness: { scope: [:sessions] }
-  validates :sessions, presence: true
+  validates :member_id, presence: true, uniqueness: { scope: [:workshop] }
+  validates :workshop, presence: true
   validates :token, uniqueness: true, presence: true
   validates_inclusion_of :submited, :in => [true, false]
 
@@ -20,6 +20,6 @@ class FeedbackRequest < ActiveRecord::Base
   end
 
   def email
-    FeedbackRequestMailer.request_feedback(self.sessions, self.member, self).deliver_now
+    FeedbackRequestMailer.request_feedback(self.workshop, self.member, self).deliver_now
   end
 end
