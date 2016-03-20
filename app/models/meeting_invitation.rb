@@ -8,4 +8,8 @@ class MeetingInvitation < ActiveRecord::Base
 
   scope :participants, -> { where(role: "Participant") }
   scope :accepted, -> { where(attending: true) }
+
+  def attended?
+    self.attended
+  end
 end
