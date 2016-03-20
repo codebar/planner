@@ -19,8 +19,4 @@ class Admin::InvitationController < Admin::ApplicationController
     redirect_to :back, notice: "You have cancelled #{invitation.member.full_name}'s attendance."
   end
 
-  def create
-
-  end
-
 end

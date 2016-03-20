@@ -20,7 +20,7 @@ Planner::Application.configure do
   # To debug locally, you can use letter opener by uncommenting the line below.
   # Delayed emails will not send. To debug delayed tasks, comment out
   # 'handle_asynchronously' in the controller.
-  config.action_mailer.delivery_method = :letter_opener
+  # config.action_mailer.delivery_method = :letter_opener
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
