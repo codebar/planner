@@ -89,6 +89,10 @@
                     %li
                       %label.label.secondary.round #{@invitations.to_students.attended.count}
                       times as a student
+                  - if @monthly_invitations.any?
+                    %li
+                      %label.label.round #{@monthly_invitations.attended.count}
+                      Monthlies
         - if @invitations.any?
           %p
             The last workshop they attended was on <u> #{l(@last_attendance.date_and_time, format: :date)}</u>
@@ -98,7 +102,7 @@
 
 
         - if @invitations.any?
-          %h3 Events
+          %h3 Workshops
           %table
             - @invitations.each do |invitation|
               - workshop = invitation.workshop
@@ -116,6 +120,23 @@
                     = l(workshop.date_and_time, format: :date)
                   %td
                     = invitation.note
+
+        - if @monthly_invitations.any?
+          %h3 Monthlies/Events
+          %table
+            - @monthly_invitations.each do |invitation|
+              %tr
+                %td
+                  - if invitation.attended?
+                    %i.fa.fa-check
+                  - else
+                    %i.fa.fa-warning
+                %td
+                  = l(invitation.meeting.date_and_time, format: :date)
+                %td
+                  =invitation.meeting.venue.name
+
+
       .medium-4.columns
         - if @member.member_notes.any?
           %dl.accordion{ "data-accordion" => true }

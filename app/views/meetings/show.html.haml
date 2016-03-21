@@ -16,7 +16,10 @@
 
       %h4 RSVP
       - if logged_in?
-        - if @meeting.attending?(current_user)
+        - if current_user.banned?
+          %p Your invitations have been temporarily suspended.
+
+        - elsif @meeting.attending?(current_user)
           %h5 You are attending this event.
           %strong
             = link_to "Can't make it anymore? Click here to cancel your spot.", meeting_cancel_path(meeting_id: @meeting.id, token: @invitation.token)

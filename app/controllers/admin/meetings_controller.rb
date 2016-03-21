@@ -17,7 +17,7 @@ class Admin::MeetingsController < Admin::ApplicationController
   end
 
   def show
-    @invitations = @meeting.invitations.accepted
+    @invitations = @meeting.invitations.accepted.order(:created_at)
 
     return render text: @meeting.attendees_csv if request.format.csv?
   end

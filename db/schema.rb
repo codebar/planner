@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160307223728) do
+ActiveRecord::Schema.define(version: 20160320164227) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -285,6 +285,7 @@ ActiveRecord::Schema.define(version: 20160307223728) do
     t.string   "token"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "attended",   default: false
   end
 
   add_index "meeting_invitations", ["meeting_id"], name: "index_meeting_invitations_on_meeting_id", using: :btree
@@ -399,7 +400,6 @@ ActiveRecord::Schema.define(version: 20160307223728) do
   add_index "session_invitations", ["token"], name: "index_session_invitations_on_token", unique: true, using: :btree
   add_index "session_invitations", ["workshop_id"], name: "index_session_invitations_on_workshop_id", using: :btree
 
-
   create_table "sponsors", force: :cascade do |t|
     t.string   "name",               limit: 255
     t.text     "description"
@@ -496,16 +496,17 @@ ActiveRecord::Schema.define(version: 20160307223728) do
   add_index "workshop_sponsors", ["workshop_id"], name: "index_workshop_sponsors_on_workshop_id", using: :btree
 
   create_table "workshops", force: :cascade do |t|
-    t.string   "title",           limit: 255
+    t.string   "title",              limit: 255
     t.text     "description"
     t.datetime "date_and_time"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "invitable",                   default: true
-    t.string   "sign_up_url",     limit: 255
+    t.boolean  "invitable",                      default: true
+    t.string   "sign_up_url",        limit: 255
     t.integer  "chapter_id"
     t.datetime "time"
     t.datetime "rsvp_close_time"
+    t.datetime "random_allocate_at"
   end
 
   add_index "workshops", ["chapter_id"], name: "index_workshops_on_chapter_id", using: :btree
