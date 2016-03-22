@@ -5,7 +5,7 @@ class InvitationsController < ApplicationController
   def index
     @upcoming_session = Workshop.next
 
-    @upcoming_invitations = SessionInvitation.where(member: current_user).joins(:sessions).where("date_and_time >= ?", Time.zone.now)
+    @upcoming_invitations = SessionInvitation.where(member: current_user).joins(:workshop).where("date_and_time >= ?", Time.zone.now)
     @upcoming_invitations += CourseInvitation.where(member: current_user).joins(:course).where("date_and_time >= ?", Time.zone.now)
 
     @attended_invitations = SessionInvitation.where(member: current_user).attended
