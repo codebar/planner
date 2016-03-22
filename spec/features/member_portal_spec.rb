@@ -50,6 +50,18 @@ feature 'Member portal' do
       expect(group.members.include? member).to be true
 
     end
+
+    it "can view the events they invitations they rsvped to", wip: true do
+      invitations = 5.times.map { Fabricate(:attending_session_invitation, member: member) }
+      login(member)
+
+      visit invitations_path
+      expect(page).to have_content("Invitations")
+      invitations.each do |invitation|
+        expect(page).to have_content(invitation.parent.to_s)
+        expect(page).to have_content(invitation.parent.chapter.name)
+      end
+    end
   end
 
   context "not signed in" do
