@@ -9,34 +9,7 @@
 
   .row
     .medium-4.columns#host
-      - if @meeting.venue.present?
-        %h4 Venue
-        %strong= @meeting.venue.name
-        %p= @host_address
-
-      %h4 RSVP
-      - if logged_in?
-        - if current_user.banned?
-          %p Your invitations have been temporarily suspended.
-
-        - elsif @meeting.attending?(current_user)
-          %h5 You are attending this event.
-          %strong
-            = link_to "Can't make it anymore? Click here to cancel your spot.", meeting_cancel_path(meeting_id: @meeting.id, token: @invitation.token)
-
-        - elsif @meeting.invitable && @meeting.not_full
-          = link_to meeting_invitation_path(@meeting), class: 'button round' do
-            = "Attend"
-
-        - elsif !@meeting.not_full
-          %h5 This event is now full.
-          %strong To join the waitlist, please <a href="mailto:monthlies@codebar.io">email us</a>.
-
-        - else
-          %h5 This event is not open for RSVP.
-
-      - else
-        %strong You must be logged in first.
+      = render partial: 'meetings/actions'
 
     .medium-8.columns
       %h4 Agenda

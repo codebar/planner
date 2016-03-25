@@ -24,6 +24,10 @@ class Meeting < ActiveRecord::Base
     I18n.l(date_and_time, format: :dashboard)
   end
 
+  def past?
+    date_and_time < Date.today
+  end
+
   def attending?(member)
     invitations.accepted.where(member: member).present?
   end
