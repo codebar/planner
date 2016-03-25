@@ -42,7 +42,7 @@
       .medium-4.columns
         - if @member.banned?
 
-          %span{ "data-tooltip" =>"", "aria-haspopup" => "true",  class: "has-tip",  title: "expires on #{l(@member.bans.active.expires_at, format: :date)}" }
+          %span{ "data-tooltip" =>"", "aria-haspopup" => "true",  class: "has-tip",  title: "expires on #{l(@member.bans.active.first.expires_at, format: :date)}" }
             %span.fa-stack.fa-lg
               %i.fa.fa-user.fa-stack-1x
               %i.fa.fa-ban.fa-stack-2x.warning
@@ -110,7 +110,7 @@
                 %tr
                   %td
                     - if invitation.attended?
-                      %i.fa.fa-checkbans
+                      %i.fa.fa-check
                     - else
                       %i.fa.fa-warning
                   %td
