@@ -33,6 +33,10 @@ class Member < ActiveRecord::Base
     bans.active.present?
   end
 
+  def more_than_two_absences?
+    session_invitations.past.accepted.length - session_invitations.past.attended.length > 2
+  end
+
   def full_name
     pronoun  = self.pronouns.present? ? "(#{self.pronouns})" : nil
     [name, surname, pronoun].compact.join " "
