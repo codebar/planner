@@ -22,7 +22,7 @@ class Admin::BansController < Admin::ApplicationController
   private
 
   def ban_params
-    params.require(:ban).permit(:note, :reason, :permanent, :expires_at)
+    params.require(:ban).permit(:note, :reason, :permanent, :expires_at, :explanation)
   end
 
   def member_id

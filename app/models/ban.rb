@@ -6,7 +6,8 @@ class Ban < ActiveRecord::Base
 
   validate :valid_expiry_date?
 
-  scope :active, -> { where('expires_at < ?', Date.current).first }
+  scope :active, -> { where('expires_at > ?', Date.current) }
+  scope :permanent, -> { where(permanent: true) }
 
   def active?
     expires_at.future?
@@ -15,6 +16,10 @@ class Ban < ActiveRecord::Base
   def expiry_in_words
     "There is a permanent ban on the user" if permanent
     expires_at
+  end
+
+  def permanent?
+    permanent
   end
 
   private
