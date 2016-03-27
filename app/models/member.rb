@@ -30,7 +30,11 @@ class Member < ActiveRecord::Base
   end
 
   def banned?
-    bans.active.present?
+    bans.active.present? or bans.permanent.present?
+  end
+
+  def banned_permanently?
+    bans.permanent.present?
   end
 
   def more_than_two_absences?

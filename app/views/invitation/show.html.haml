@@ -57,7 +57,10 @@
 
               %small
                 %strong Why?
-                = @invitation.member.bans.active.first.reason
+                - if @invitation.member.banned_permanently?
+                  = @invitation.member.bans.permanent.first.reason
+                - else
+                  = @invitation.member.bans.active.first.reason
           - else
             - if @invitation.for_coach?
               - if @workshop.coach_spaces?

@@ -61,6 +61,7 @@ class MemberMailer < ActionMailer::Base
     @member = member
     @reason = ban.reason
     @expiry_date = I18n.l(ban.expires_at, format: :default)
+    @ban = ban
 
     mail(mail_args(member, @reason, 'hello@codebar.io', "hello@codebar.io")) do |format|
       format.html { render 'ban' }

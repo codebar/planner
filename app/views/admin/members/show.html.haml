@@ -42,11 +42,10 @@
       .medium-4.columns
         - if @member.banned?
 
-          %span{ "data-tooltip" =>"", "aria-haspopup" => "true",  class: "has-tip",  title: "expires on #{l(@member.bans.active.first.expires_at, format: :date)}" }
-            %span.fa-stack.fa-lg
-              %i.fa.fa-user.fa-stack-1x
-              %i.fa.fa-ban.fa-stack-2x.warning
-            %label.label.warning Banned
+          %span.fa-stack.fa-lg
+            %i.fa.fa-user.fa-stack-1x
+            %i.fa.fa-ban.fa-stack-2x.warning
+          %label.label.warning Banned
         - if @member.groups.any?
           %h3 Subscriptions
           %ul.no-bullet
@@ -160,16 +159,24 @@
                   reason
                 %th
                   admin note
+                %th
+                  explanation sent to user
             - @member.bans.each do |ban|
               %tr
                 %td
-                  - if ban.active?
+                  - if ban.permanent?
+                    %label.label.success Permanent
+                    %td
+                      Indefinite
+                  - elsif ban.active?
                     %label.label.success Active
-                %td
-                  = l(ban.expires_at, format: :date)
+                    %td
+                      = l(ban.expires_at, format: :date)
                 %td
                   = ban.reason
                 %td
                   = ban.note
+                %td
+                  = ban.explanation
 
 = render partial: 'note'

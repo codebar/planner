@@ -1,7 +1,18 @@
 %h1 Hi #{@member.name},
 
-%p
-  We are really sorry to have to do this, but your account has been suspended until #{@expiry_date}. This means that you will not be able to attend any of our events until then.
+
+- if @ban.permanent?
+  %p
+    We are sorry to have to do this, but your account has been suspended indefinitely. This means that you will not be able to attend any of our events in the future.
+- else
+  %p
+    We are sorry to have to do this, but your account has been suspended until #{@expiry_date}. This means that you will not be able to attend any of our events until then.
+
+- if @ban.explanation.present?
+  %p
+    The organisers have added the following explanation for your suspension:
+  %p
+    =@ban.explanation
 
 %p
   If this email has been sent because you have violated our attendancy policy you can read more about it #{link_to "here", attendance_policy_url}. Alternatively, please have a look at our eligibility criteria and code of conduct.
