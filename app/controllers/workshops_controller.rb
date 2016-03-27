@@ -13,6 +13,8 @@ class WorkshopsController < ApplicationController
     if role_params.nil?
       @invitation = SessionInvitation.where(workshop: @workshop, member: current_user, attending: true).first
     else
+      return redirect_to :back, notice: "You have already RSVPd or joined the waitlist for this workshop." if @workshop.attendee?(current_user) or @workshop.waitlisted?(current_user)
+
       @invitation = SessionInvitation.where(workshop: @workshop, member: current_user, role: role_params).first_or_create
     end
 

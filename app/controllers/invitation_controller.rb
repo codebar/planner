@@ -28,6 +28,8 @@ class InvitationController < ApplicationController
     @invitation.update_attribute(:note, params[:session_invitation][:note])
 
     if @workshop.student_spaces?
+      return redirect_to :back, notice: "You have already RSVPd or joined the waitlist for this workshop." if @workshop.attendee?(current_user) or @workshop.waitlisted?(current_user)
+
       @invitation.update_attribute(:attending, true)
       SessionInvitationMailer.attending(@invitation.workshop, @invitation.member, @invitation).deliver_now
 
