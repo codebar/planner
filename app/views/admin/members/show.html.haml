@@ -172,6 +172,11 @@
                     %label.label.success Active
                     %td
                       = l(ban.expires_at, format: :date)
+                  - else
+                    %label.label.success Expired
+                    %td
+                      = l(ban.expires_at, format: :date)
+
                 %td
                   = ban.reason
                 %td
