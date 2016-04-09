@@ -20,6 +20,7 @@ class Admin::SponsorsController < Admin::ApplicationController
     authorize @sponsor
     if @sponsor.save
       flash[:notice] = "Sponsor #{@sponsor.name} created"
+      $twitter_client.update(I18n.t('twitter_updates.new_sponsor_added', sponsor_name: @sponsor.name))
       redirect_to [:admin, @sponsor]
     else
       flash[:notice] = @sponsor.errors.full_messages.to_s

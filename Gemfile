@@ -39,6 +39,7 @@ gem 'chosen-rails'
 gem 'redcarpet'
 
 gem 'gibbon', '~> 1.1.5'
+gem 'twitter'
 
 group :development do
   gem 'letter_opener'
