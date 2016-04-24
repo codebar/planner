@@ -13,6 +13,10 @@ class Meeting < ActiveRecord::Base
 
   before_save :set_slug
 
+  def invitees
+    chapters.map{|c| c.members}.flatten.uniq
+  end
+
   def title
     self.name or "#{I18n.l(date_and_time, format: :month)} Meeting"
   end

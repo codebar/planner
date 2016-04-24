@@ -45,7 +45,9 @@ class Admin::MeetingsController < Admin::ApplicationController
   end
 
   def invite
-
+    @meeting.invitees.each do |invitee|
+      MeetingInvitationMailer.invite(@meeting, invitee).deliver_now
+    end
   end
 
   private
