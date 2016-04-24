@@ -38,7 +38,7 @@ class Member < ActiveRecord::Base
   end
 
   def more_than_two_absences?
-    session_invitations.past.accepted.length - session_invitations.past.attended.length > 2
+    session_invitations.last_six_months.accepted.length - session_invitations.last_six_months.attended.length > 2
   end
 
   def full_name
