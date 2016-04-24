@@ -45,11 +45,16 @@ class Admin::MeetingsController < Admin::ApplicationController
   end
 
   def invite
-    @meeting.invitees.each do |invitee|
-      MeetingInvitationMailer.invite(@meeting, invitee).deliver_now
+    notice = @meeting.invites_sent ? "Invitations were previously sent; they will not be sent again" : "Invitations are being sent out"
+
+    unless @meeting.invites_sent
+      @meeting.invitees.each do |invitee|
+        MeetingInvitationMailer.invite(@meeting, invitee).deliver_now
+      end
+      @meeting.update_attribute(:invites_sent, true)
     end
 
-    redirect_to admin_meeting_path(@meeting), notice: "Invitations are being sent out."
+    redirect_to admin_meeting_path(@meeting), notice: notice
   end
 
   private
