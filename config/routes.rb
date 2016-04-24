@@ -124,6 +124,7 @@ Planner::Application.routes.draw do
     resources :meetings do
       member do
         get 'attendees_emails'
+        get 'invite'
       end
     end
 

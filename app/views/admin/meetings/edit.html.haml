@@ -34,6 +34,11 @@
 
         .row
           .large-6.columns
+            %label Chapters
+            = f.collection_select :chapters, Chapter.all, :id, :name, { selected: @meeting.chapters.map(&:id) }, { multiple: true }
+
+        .row
+          .large-6.columns
             %br
             = f.input :invitable, as: :boolean, hint: "Allow members to RSVP"
 

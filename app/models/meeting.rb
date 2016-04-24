@@ -7,6 +7,7 @@ class Meeting < ActiveRecord::Base
   has_many :organisers, -> { where("permissions.name" => "organiser") }, through: :permissions, source: :members
   belongs_to :venue, class_name: "Sponsor"
   has_many :invitations, foreign_key: "meeting_id", class_name: "MeetingInvitation"
+  has_and_belongs_to_many :chapters
 
   validates :date_and_time, :venue, presence: true
 
