@@ -8,6 +8,7 @@ class Admin::MeetingsController < Admin::ApplicationController
   def create
     @meeting = Meeting.new(meeting_params)
     set_organisers(organiser_ids)
+    set_chapters(chapter_ids)
 
     if @meeting.save
       redirect_to [:admin, @meeting], notice: 'Meeting successfully created.'
@@ -27,6 +28,7 @@ class Admin::MeetingsController < Admin::ApplicationController
 
   def update
     set_organisers(organiser_ids)
+    set_chapters(chapter_ids)
 
     if @meeting.update_attributes(meeting_params)
       redirect_to [:admin, @meeting], notice: "You have successfully updated the details of this meeting"
@@ -42,6 +44,12 @@ class Admin::MeetingsController < Admin::ApplicationController
     redirect_to admin_meeting_path(@meeting)
   end
 
+  def invite
+    @meeting.invitees.each do |invitee|
+      MeetingInvitationMailer.invite(@meeting, invitee).deliver_now
+    end
+  end
+
   private
 
   def set_meeting
@@ -49,11 +57,15 @@ class Admin::MeetingsController < Admin::ApplicationController
   end
 
   def meeting_params
-    params.require(:meeting).permit(:name, :description, :slug, :date_and_time, :invitable, :spaces, :venue_id, :sponsor_id)
+    params.require(:meeting).permit(:name, :description, :slug, :date_and_time, :invitable, :spaces, :venue_id, :sponsor_id, :chapters)
   end
 
   def organiser_ids
     params[:meeting][:organisers]
+  end
+
+  def chapter_ids
+    params[:meeting][:chapters]
   end
 
   def grant_organiser_access(organiser_ids=[])
@@ -70,5 +82,10 @@ class Admin::MeetingsController < Admin::ApplicationController
     organiser_ids.reject!(&:empty?)
     grant_organiser_access(organiser_ids)
     revoke_organiser_access(organiser_ids)
+  end
+
+  def set_chapters(chapter_ids)
+    chapter_ids.reject!(&:empty?)
+    @meeting.chapters = chapter_ids.map{|id| Chapter.find(id) }
   end
 end
