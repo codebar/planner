@@ -28,8 +28,8 @@
                 = invitation.member.full_name
           %td.small-6.columns
             %small=invitation.note
-            - if invitation.reminded_at.present?
-              %span{ "data-tooltip" =>"", "aria-haspopup" => "true",  class: "has-tip",  title: "Email reminder." }
+            - if invitation.rsvp_time.present?
+              %span{ "data-tooltip" =>"", "aria-haspopup" => "true",  class: "has-tip",  title: "Time of RSVP" }
                 %small
                   %i.fa.fa-clock-o
-                  =l(invitation.reminded_at)
+                  =l(invitation.rsvp_time)

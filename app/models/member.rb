@@ -38,7 +38,7 @@ class Member < ActiveRecord::Base
   end
 
   def more_than_two_absences?
-    session_invitations.past.accepted.length - session_invitations.past.attended.length > 2
+    session_invitations.last_six_months.accepted.length - session_invitations.last_six_months.attended.length > 2
   end
 
   def full_name
@@ -96,6 +96,10 @@ class Member < ActiveRecord::Base
 
   def has_existing_RSVP_on date
     invitations_on(date).count > 0
+  end
+
+  def already_attending event
+    invitations.where(attending: true).map{|e| e.event.id}.include?(event.id)
   end
 
   private

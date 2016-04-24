@@ -1,0 +1,53 @@
+=render partial: 'shared_mailers/header', locals: { title: "codebar Monthly Invitation" }
+%body{ bgcolor: "#FFFFFF" }
+
+  =render partial: 'shared_mailers/body_header', locals: { title: "Monthly Talks Night Invitation" }
+
+  %table{ class: "body-wrap"}
+    %tr
+      %td
+      %td{ class: "container", bgcolor: "#FFFFFF" }
+
+        .content
+          %table
+            %tr
+              %td
+                %h3 Hi, #{@member.name}
+                %p.lead
+                  We're back for another installment of codebar Monthlies on #{humanize_date(@meeting.date_and_time)} at #{@meeting.venue.name}!
+                %p
+                  = "#{link_to 'You can RSVP here', @rsvp_url}, after logging into your codebar account.".html_safe
+                %h4
+                  Agenda
+                %p
+                  = @meeting.description.html_safe
+
+        .content
+          %table{ bgcolor: "#FFFFFF" }
+            %tr
+              %td.small{ width: "30%", style: "vertical-align: top; padding-right:10px;"}
+                =image_tag(@meeting.venue.avatar)
+              %td
+                %h4
+                  Details
+                %small #{humanize_date_with_time(@meeting.date_and_time)}
+                %p
+                  #{@meeting.venue.name}
+                  %br
+                  #{@host_address.to_html}
+
+        .content
+          %table
+            %tr
+              %td
+                %p
+                  If you have any trouble finding the venue, give us a call
+                  - @meeting.organisers.each do |organiser|
+                    %p
+                      = organiser.full_name
+                      = organiser.mobile
+                      %br
+
+        .content
+          = render partial: 'shared_mailers/social'
+      %td

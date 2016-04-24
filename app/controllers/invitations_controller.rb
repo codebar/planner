@@ -14,6 +14,7 @@ class InvitationsController < ApplicationController
   def show
     @event = EventPresenter.new(@invitation.event)
     @host_address = AddressDecorator.new(@event.venue.address)
+    @member = @invitation.member
   end
 
   def attend
@@ -26,8 +27,16 @@ class InvitationsController < ApplicationController
     if @invitation.student_spaces? or @invitation.coach_spaces?
       @invitation.update_attribute(:attending, true)
 
-      notice = "You have RSVPed to #{@invitation.event.name}."
-      notice += " We will verify your attendance after you complete the questionnaire!" if event.require_coach_questionnaire? or event.require_student_questionnaire?
+      notice = "Your spot has been confiremd for #{@invitation.event.name}! We look forward to seeing you there."
+
+      unless event.confirmation_required or event.surveys_required
+        @invitation.update_attribute(:verified, true)
+        EventInvitationMailer.attending(@invitation.event, @invitation.member, @invitation).deliver_now
+      end
+
+      if event.surveys_required
+        notice += " We will verify your attendance after you complete the questionnaire!"
+      end
 
       redirect_to :back, notice: notice
     else

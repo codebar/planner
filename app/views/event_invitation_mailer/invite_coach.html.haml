@@ -14,7 +14,9 @@
               %td
                 %h3 Hi #{@member.name}
                 %p.lead
-                  #{@event.coach_description}.
+                  We'd like to invite you to #{@event.name}. If you can come, please RSVP using the link in this email.
+                %p
+                  #{@event.description.html_safe}.
 
         .content
           %table{ bgcolor: "#FFFFFF" }
@@ -30,7 +32,7 @@
                 %br
                 %br
               %td{ width: "50%", style: "text-align: center;"}
-                =link_to "Attend", full_url_for(event_invitation_url(event_id: @event.slug, token: @invitation.token)), class: 'btn'
+                =link_to "RSVP", full_url_for(event_invitation_url(event_id: @event.slug, token: @invitation.token)), class: 'btn'
             %tr
               %td{ width: "50%", style: "vertical-align: top; padding-right:10px;"}
                 %h5 Sponsors

@@ -13,9 +13,6 @@ class Admin::InvitationsController < Admin::ApplicationController
       if attending.eql?("true")
         @invitation.update_attribute(:attending, true)
 
-        waiting_listed = WaitingList.where(invitation: @invitation).first
-        waiting_listed.delete if waiting_listed
-
         SessionInvitationMailer.attending(@workshop, @invitation.member, @invitation).deliver_now if @workshop.future?
 
         message = "You have added #{@invitation.member.full_name} to the workshop as a #{@invitation.role}."
@@ -24,6 +21,9 @@ class Admin::InvitationsController < Admin::ApplicationController
 
         message = "You have removed #{@invitation.member.full_name} from the workshop."
       end
+      waiting_listed = WaitingList.where(invitation: @invitation).first
+      waiting_listed.delete if waiting_listed
+
     elsif params.has_key?(:attended)
       @invitation.update_attribute(:attended, true)
 
