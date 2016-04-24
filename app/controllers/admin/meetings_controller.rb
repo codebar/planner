@@ -48,6 +48,8 @@ class Admin::MeetingsController < Admin::ApplicationController
     @meeting.invitees.each do |invitee|
       MeetingInvitationMailer.invite(@meeting, invitee).deliver_now
     end
+
+    redirect_to admin_meeting_path(@meeting), notice: "Invitations are being sent out."
   end
 
   private
