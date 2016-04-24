@@ -13,4 +13,15 @@ namespace :reminders do
       end
     end
   end
+
+  task meeting: :environment do
+    meetings = Meeting.upcoming
+
+    meetings.each do |meeting|
+      if Time.zone.now.between?(workshop.date_and_time-30.hours, workshop.date_and_time - 4.hours)
+        STDOUT.puts "Sending attendance reminders for #{meeting.name}..."
+        InvitationManager.send_monthly_attendance_reminder_emails meeting
+      end
+    end
+  end
 end

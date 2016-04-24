@@ -1,0 +1,90 @@
+= simple_form_for [:admin, @event] do |f|
+  .row
+    .large-12.columns
+      .row
+        .large-4.columns
+          = f.input :name, label: 'Event Name'
+      .row
+        .large-4.columns
+          = f.input :email, as: :email, label: "Contact email"
+        .large-4.columns
+          = f.input :slug, placeholder: 'for URI, e.g. 24-pull-requests'
+      .row
+        .large-6.columns
+          = f.input :date_and_time, as: :string, required: true, label: "Date"
+      .row
+        .large-3.columns
+          = f.input :begins_at, as: :string, required: true
+        .large-3.columns
+          = f.input :ends_at, as: :string, required: true
+  .row
+    .large-12.columns
+      = f.input :description, as: :text
+  .row
+    .large-12.columns
+      = f.input :info, label: 'RSVP instructions'
+  .row
+    .large-12.columns
+      = f.input :schedule
+  .row
+    .large-3.columns
+      = f.association :venue, input_html: { data: { placeholder: "Select sponsors" }}, required: true
+  .row
+    .large-6.columns
+      %br
+      = f.association :sponsors, input_html: { data: { placeholder: "Select sponsors" }}
+  .row
+    .large-6.columns
+      %br
+      %label Organisers
+      = f.collection_select :organisers, Member.all, :id, :full_name, { selected: @event.organisers.map(&:id) }, { multiple: true }
+  .row
+    .large-12.columns
+      %br
+      = f.input :announce_only, as: :boolean, hint: "Events where invitations are not handled via our application"
+    .large-12.columns
+      %br
+      = f.input :external_url, label: 'External Registration URL', placeholder: 'include protocol, e.g. https://codebar.io'
+  .row
+    .large-12.columns
+      %h5 Invitation details
+      .panel.callout
+        .row
+          .large-12.columns
+            = f.input :tito_url, as: :url, hint: "Only used for student tickets"
+          .large-6.columns
+            = f.input :coach_spaces
+          .large-6.columns
+            = f.input :student_spaces
+        .row
+          .large-12.columns
+            = f.input :coach_questionnaire
+        .row
+          .large-12.columns
+            = f.input :student_questionnaire
+        .row
+          .large-12.columns
+            = f.association :chapters, hint: 'Which chapters do you want to invite to this event? Only one invitation will be emailed out to members with multiple subscriptions when you click Invite from the event page.'
+        .row
+          .large-12.columns
+            %br
+            = f.input :invitable, as: :boolean, hint: "Allow members to RSVP"
+        .row
+          .large-12.columns
+            = f.input :show_faq, as: :boolean, hint: "Display FAQ section?"
+        .row
+          .large-12.columns
+            = f.input :display_coaches, as: :boolean
+        .row
+          .large-12.columns
+            = f.input :display_students, as: :boolean
+        .row
+          .large-12.columns
+            = f.input :confirmation_required, as: :boolean, hint: "Will we confirm each registration?"
+        .row
+          .large-12.columns
+            = f.input :surveys_required, as: :boolean, hint: "Do we need to collect additional info from attendees?"
+  .row
+    .large-12.columns.text-right
+      = f.submit "Save", class: "button"
+

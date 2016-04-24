@@ -15,6 +15,10 @@
                 %h3 Hi, #{@member.name}
                 %p.lead
                   This is a quick email to remind you that you have signed up for tomorrow's workshop.
+                %p
+                  If you can no longer make it, please cancel your invitation <strong>before 15:00</strong> on the day of the event.
+                  <a href="https://codebar.io/student-guide#attendance">We have a three-strikes attendance policy for no-shows.</a>
+
 
         .content
           %table{ bgcolor: "#FFFFFF" }
@@ -29,7 +33,7 @@
                   #{@session.host.name}
                   %br
                   #{@host_address.to_html}
-                = link_to "See who will be there and update your attendance", full_url_for(invitation_url(@invitation)), class: 'btn'
+                = link_to "Can't make it anymore?", full_url_for(invitation_url(@invitation)), class: 'btn'
 
         .content
           %table

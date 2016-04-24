@@ -5,7 +5,6 @@ feature "Managing users" do
   let(:admin) { Fabricate(:chapter_organiser) }
   let!(:invitation) { Fabricate(:attended_session_invitation, attending: true, member: member) }
   let!(:attending_invitation) { Fabricate(:attending_session_invitation, member: member) }
-  let!(:other_invitation) { Fabricate(:session_invitation, member: member) }
 
   before do
     login admin
@@ -20,7 +19,6 @@ feature "Managing users" do
     expect(page).to have_content member.about_you
     expect(page).to have_content invitation.note
     expect(page).to have_content attending_invitation.note
-    expect(page).to_not have_content other_invitation.note
   end
 
   scenario "Add a note to a user" do

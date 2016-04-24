@@ -25,7 +25,7 @@ class InvitationController < ApplicationController
 
   def accept_with_note
     @workshop = WorkshopPresenter.new(@invitation.workshop)
-    @invitation.update_attribute(:note, params[:session_invitation][:note])
+    @invitation.update_attributes(note: params[:session_invitation][:note], rsvp_time: DateTime.now)
 
     if @workshop.student_spaces?
       return redirect_to :back, notice: "You have already RSVPd or joined the waitlist for this workshop." if @workshop.attendee?(current_user) or @workshop.waitlisted?(current_user)
