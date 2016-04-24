@@ -47,18 +47,13 @@
     .row
       .large-12.columns
         - if !@invitation.verified
-          %p.alert-box.info{ "data-alert" => true }
-            %i.fa.fa-warning.warning
-            To complete signing up for the event, you must #{link_to("complete our questionnaire", @event.questionnaire(@invitation))} as we need to know a couple of things in advance to plan the day.
-            %br
-            %u You will receive an email when your attendance is verified.
+          - if @event.surveys_required
+            %p.alert-box.info{ "data-alert" => true }
+              %i.fa.fa-warning.warning
+              To complete signing up for the event, you must #{link_to("complete our questionnaire", @event.questionnaire(@invitation))} as we need to know a couple of things in advance to plan the day.
+              %br
+              %u You will receive an email when your attendance is verified.
           %br
-        - else
-          .label.label-info Your spot has been verified.
-
-          %br
-          %br
-          %p.panel=@event.info.html_safe
     %br
 %br
 %br
