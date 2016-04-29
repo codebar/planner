@@ -71,9 +71,10 @@ Planner::Application.configure do
     :port =>           '587',
     :address =>        'smtp.sendgrid.net',
     :user_name =>      ENV['SENDGRID_USERNAME'],
-    :password =>       ENV['SENDGRID_APIKEY'],
-    :domain =>         'codebar.io',
-    :authentication => :plain
+    :password =>       ENV['SENDGRID_PASSWORD'],
+    :domain =>         'heroku.com',
+    :authentication => :plain,
+    :enable_starttls_auto => true
   }
   ActionMailer::Base.delivery_method = :smtp
 

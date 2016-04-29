@@ -49,7 +49,9 @@ class Admin::MeetingsController < Admin::ApplicationController
 
     unless @meeting.invites_sent
       @meeting.invitees.each do |invitee|
-        MeetingInvitationMailer.invite(@meeting, invitee).deliver_now
+        unless invitee.banned?
+          MeetingInvitationMailer.invite(@meeting, invitee).deliver_now
+        end
       end
       @meeting.update_attribute(:invites_sent, true)
     end
