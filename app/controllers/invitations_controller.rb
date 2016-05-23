@@ -27,7 +27,15 @@ class InvitationsController < ApplicationController
       @invitation.update_attribute(:attending, true)
 
       notice = "You have RSVPed to #{@invitation.event.name}."
-      notice += " We will verify your attendance after you complete the questionnaire!" if event.require_coach_questionnaire? or event.require_student_questionnaire?
+
+      unless event.confirmation_required or event.surveys_required
+        @invitation.update_attribute(:verified, true)
+        EventInvitationMailer.attending(@invitation.event, @invitation.member, @invitation).deliver_now
+      end
+
+      if event.surveys_required
+        notice += " We will verify your attendance after you complete the questionnaire!"
+      end
 
       redirect_to :back, notice: notice
     else
