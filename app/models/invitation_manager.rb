@@ -40,6 +40,12 @@ class InvitationManager
 
   handle_asynchronously :send_event_emails
 
+  def self.send_monthly_attendance_reminder_emails monthly
+    monthly.attendances.map(&:member).each do |member|
+      MeetingInvitationMailer.attendance_reminder(monthly, member)
+    end
+  end
+
   def self.send_course_emails course
     course.chapter.groups.students.map(&:members).flatten.uniq.each do |student|
       invitation  = CourseInvitation.new(course: course, member: student)
