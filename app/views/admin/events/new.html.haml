@@ -47,6 +47,9 @@
           .large-12.columns
             %br
             = f.input :announce_only, as: :boolean, hint: "Events where invitations are not handled via our application"
+          .large-12.columns
+            %br
+            = f.input :external_url, label: 'External Registration URL', placeholder: 'include protocol, e.g. https://codebar.io'
         .row
           .large-12.columns
             %h5 Invitation details

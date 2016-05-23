@@ -73,7 +73,11 @@ class Admin::EventsController < Admin::ApplicationController
   end
 
   def event_params
-    params.require(:event).permit(:name, :slug, :date_and_time, :begins_at, :ends_at, :description, :info, :schedule, :venue_id, :coach_spaces, :student_spaces, :email, :announce_only, :tito_url, :invitable, :student_questionnaire, :coach_questionnaire, :show_faq, :display_coaches, :display_students, sponsor_ids: [], chapter_ids: [])
+    params.require(:event).permit(
+        :name, :slug, :date_and_time, :begins_at, :ends_at, :description, :info, :schedule, :venue_id, :external_url,
+        :coach_spaces, :student_spaces, :email, :announce_only, :tito_url, :invitable, :student_questionnaire,
+        :coach_questionnaire, :show_faq, :display_coaches, :display_students, sponsor_ids: [], chapter_ids: []
+    )
   end
 
   def organiser_ids

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160424175400) do
+ActiveRecord::Schema.define(version: 20160523171604) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -201,6 +201,7 @@ ActiveRecord::Schema.define(version: 20160424175400) do
     t.boolean  "show_faq"
     t.boolean  "display_students"
     t.boolean  "display_coaches"
+    t.string   "external_url"
   end
 
   add_index "events", ["venue_id"], name: "index_events_on_venue_id", using: :btree
@@ -358,7 +359,7 @@ ActiveRecord::Schema.define(version: 20160424175400) do
     t.string   "mobile",                         limit: 255
     t.boolean  "received_coach_welcome_email",               default: false
     t.boolean  "received_student_welcome_email",             default: false
-    t.string   "pronouns"
+    t.string   "pronouns",                       limit: 255
   end
 
   create_table "members_permissions", id: false, force: :cascade do |t|
@@ -449,9 +450,9 @@ ActiveRecord::Schema.define(version: 20160424175400) do
   create_table "taggings", force: :cascade do |t|
     t.integer  "tag_id"
     t.integer  "taggable_id"
-    t.string   "taggable_type"
+    t.string   "taggable_type", limit: 255
     t.integer  "tagger_id"
-    t.string   "tagger_type"
+    t.string   "tagger_type",   limit: 255
     t.string   "context",       limit: 128
     t.datetime "created_at"
   end
@@ -460,8 +461,8 @@ ActiveRecord::Schema.define(version: 20160424175400) do
   add_index "taggings", ["taggable_id", "taggable_type", "context"], name: "index_taggings_on_taggable_id_and_taggable_type_and_context", using: :btree
 
   create_table "tags", force: :cascade do |t|
-    t.string  "name"
-    t.integer "taggings_count", default: 0
+    t.string  "name",           limit: 255
+    t.integer "taggings_count",             default: 0
   end
 
   add_index "tags", ["name"], name: "index_tags_on_name", unique: true, using: :btree
@@ -507,16 +508,17 @@ ActiveRecord::Schema.define(version: 20160424175400) do
   add_index "workshop_sponsors", ["workshop_id"], name: "index_workshop_sponsors_on_workshop_id", using: :btree
 
   create_table "workshops", force: :cascade do |t|
-    t.string   "title",           limit: 255
+    t.string   "title",              limit: 255
     t.text     "description"
     t.datetime "date_and_time"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "invitable",                   default: true
-    t.string   "sign_up_url",     limit: 255
+    t.boolean  "invitable",                      default: true
+    t.string   "sign_up_url",        limit: 255
     t.integer  "chapter_id"
     t.datetime "time"
     t.datetime "rsvp_close_time"
+    t.datetime "random_allocate_at"
   end
 
   add_index "workshops", ["chapter_id"], name: "index_workshops_on_chapter_id", using: :btree
