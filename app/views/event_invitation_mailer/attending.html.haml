@@ -15,7 +15,7 @@
                 %h3 Hi, #{@member.name}
 
                 %p
-                  Your spot for the <strong>#{@event.name}</strong> event has been verified.
+                  Your spot for the <strong>#{@event.name}</strong> event has been confirmed.
 
                 %p
                   If you have any questions send us an email at #{mail_to(@event.email, @event.email)}.
@@ -39,7 +39,8 @@
                   #{@host_address.to_html}
               %td{ width: "50%", style: "text-align: center;"}
                 %h4
-                = link_to "Update your invitation", full_url_for(event_invitation_url(@event.id, @invitation.token)), class: 'btn'
+                = link_to "Can't make it anymore?", full_url_for(event_invitation_url(@event.id, @invitation.token)),
+                class: 'btn'
 
         .content
           %table
