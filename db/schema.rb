@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160523173346) do
+ActiveRecord::Schema.define(version: 20160526182452) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -361,7 +361,7 @@ ActiveRecord::Schema.define(version: 20160523173346) do
     t.string   "mobile",                         limit: 255
     t.boolean  "received_coach_welcome_email",               default: false
     t.boolean  "received_student_welcome_email",             default: false
-    t.string   "pronouns",                       limit: 255
+    t.string   "pronouns"
   end
 
   create_table "members_permissions", id: false, force: :cascade do |t|
@@ -408,6 +408,7 @@ ActiveRecord::Schema.define(version: 20160523173346) do
     t.string   "token",       limit: 255
     t.string   "role",        limit: 255
     t.datetime "reminded_at"
+    t.datetime "rsvp_time"
   end
 
   add_index "session_invitations", ["member_id"], name: "index_session_invitations_on_member_id", using: :btree
