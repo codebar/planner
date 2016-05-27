@@ -11,6 +11,10 @@
             %td.small-1.columns
               =link_to admin_workshop_invitation_path(@workshop, invitation, attending: true), class: 'waiting_list', method: :put, remote: true, title: "Add to attendees" do
                 %i.fa.fa-plus-square-o
+            %td.small-1.columns
+              =link_to admin_workshop_invitation_path(@workshop, invitation, attending: false), class: 'waiting_list',
+              method: :put, remote: true, title: "Remove from waitlist" do
+                %i.fa.fa-minus-square-o
             %td.small-5.columns
               - if MemberPresenter.new(invitation.member).newbie?
                 %span{ "data-tooltip" =>"", "aria-haspopup" => "true",  class: "has-tip",  title: "New attendee." }
@@ -20,6 +24,6 @@
                   = invitation.member.email
                 - else
                   = invitation.member.full_name
-            %td.small-6.columns
+            %td.small-5.columns
               %p
                 %small=invitation.note
