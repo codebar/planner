@@ -18,6 +18,8 @@
                 %p
                   If you can no longer make it, please cancel your invitation <strong>before 15:00</strong> on the day of the event.
                   <a href="https://codebar.io/student-guide#attendance">We have a three-strikes attendance policy for no-shows.</a>
+                %p
+                  <strong>Please do not turn up before #{(@session.date_and_time - 15.minutes).strftime("%H:%M")}.</strong> If you are early, please wait in a nearby cafe.
 
 
         .content
