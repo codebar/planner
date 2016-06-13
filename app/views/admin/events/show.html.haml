@@ -1,25 +1,26 @@
 .icon-bar.five-up
-  =link_to edit_admin_event_path(@event), class: 'item' do
+  = link_to edit_admin_event_path(@event), class: 'item' do
     %i.fa.fa-pencil
     %label Edit
+
   - if !@event.date_and_time.future?
-    =link_to "#", class: "item disabled", title: "The event has already taken place" do
+    = link_to '#', class: 'item disabled', title: 'The event has already taken place' do
       %i.fa.fa-send-o
       %label Invite
   - elsif @event.venue and @event.invitable?
-    =link_to admin_event_invite_path(@event), method: :post, class: "item" do
+    = link_to admin_event_invite_path(@event), method: :post, class: 'item' do
       %i.fa.fa-send-o
       %label Invite
   - else
-    =link_to "#", class: "item disabled", title: "The event is not invitable." do
+    = link_to '#', class: 'item disabled', title: 'The event is not invitable.' do
       %i.fa.fa-send-o
       %label Invite
 
-  =link_to admin_event_attendees_emails_path(@event, format: 'text'), class: 'item' do
+  = link_to admin_event_attendees_emails_path(@event, format: 'text'), class: 'item' do
     %i.fa.fa-at
     %label Emails
 
-  =link_to admin_event_path(@event, format: 'csv'), class: 'item', title: "CSV for labels" do
+  = link_to admin_event_path(@event, format: 'csv'), class: 'item', title: 'CSV for labels' do
     %i.fa.fa-users
     %label Labels
 
@@ -28,8 +29,7 @@
   .stripe.reverse
     .row
       .medium-12.columns
-        %h2
-          =@event.to_s
+        %h2= @event.to_s
         %h3
           %small #{l(@event.date_and_time)} to #{l(@event.ends_at, format: :time) }
 
@@ -41,7 +41,7 @@
           %br
           %strong Chapters
           %ul.inline-list
-            -@event.chapters.each do |chapter|
+            - @event.chapters.each do |chapter|
               %li= link_to chapter.name, [:admin, chapter]
 
     .row
@@ -63,7 +63,7 @@
       .large-6.small-12.columns
         %h4 Team
         - @event.organisers.each do |organiser|
-          %span{ "data-tooltip" =>"", "aria-haspopup" => "true",  class: "has-tip",  title: organiser.full_name }
+          %span.has-tip{ 'data-tooltip': '', 'aria-haspopup': 'true', title: organiser.full_name }
             = image_tag(organiser.avatar(40))
 
     %br
@@ -97,10 +97,9 @@
             %small You can setup this up in ti.to unde <strong>Customise/Webhooks</strong>
     .row
       .large-6.columns
-        %dl.accordion{ "data-accordion" => true }
+        %dl.accordion{ 'data-accordion': true }
           %dd.accordion-navigation
-            =link_to "#schedule" do
-              Schedule
+            = link_to 'Schedule', '#schedule'
             #schedule.content
               = dot_markdown(@event.schedule)
 

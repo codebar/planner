@@ -10,20 +10,20 @@
           Before approving this job make sure
           %ul.no-bullet
             %li
-              %input#work_details{type: 'checkbox'}
-              %label{for: 'work_details'} The post details the work that will have to be undertaken
+              %input#work_details{ type: 'checkbox' }
+              %label{ for: 'work_details' } The post details the work that will have to be undertaken
             %li
-              %input#roles{type: 'checkbox'}
-              %label{for: 'roles'} It's suitable for people looking for Internships and Junior roles that will enable them to build up their career
+              %input#roles{ type: 'checkbox' }
+              %label{ for: 'roles' } It's suitable for people looking for Internships and Junior roles that will enable them to build up their career
             %li
-              %input#reliable_source{type: 'checkbox'}
-              %label{for: 'reliable_source'} It was posted by someone you know or a reliable source
+              %input#reliable_source{ type: 'checkbox' }
+              %label{ for: 'reliable_source' } It was posted by someone you know or a reliable source
             %li
-              %input#payment{type: 'checkbox'}
-              %label{for: 'payment'} Payment confirmation was posted in the London organisers Slack channel
+              %input#payment{ type: 'checkbox' }
+              %label{ for: 'payment' } Payment confirmation was posted in the London organisers Slack channel
             %li
-              %input#to-the-point{type: 'checkbox'}
-              %label{for: 'to-the-point'} The post is short and to the point
+              %input#to-the-point{ type: 'checkbox' }
+              %label{ for: 'to-the-point' } The post is short and to the point
 
   %br
 
@@ -41,4 +41,4 @@
             by #{@job.approved_by.full_name}
       - else
         - unless @job.expired?
-          =link_to "Approve", admin_job_approve_path(@job), class: 'button round alert'
+          = link_to 'Approve', admin_job_approve_path(@job), class: 'button round alert'

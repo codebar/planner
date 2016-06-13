@@ -12,6 +12,7 @@
         %td Attendances
         %td Sponsors
         %td
+
       %tbody
         - @chapter.workshops.each do |workshop|
           %tr
@@ -19,7 +20,7 @@
               = link_to admin_workshop_path(workshop) do
                 = humanize_date_with_time(workshop.date_and_time, workshop.time)
             %td
-              #{workshop.invitations.accepted.count}
+              = workshop.invitations.accepted.count
             %td
               - workshop.sponsors.each do |sponsor|
                 = link_to sponsor.name, sponsor.website

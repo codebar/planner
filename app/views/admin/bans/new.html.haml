@@ -3,17 +3,17 @@
     .large-12.columns
       %h4
         Ban
-        =link_to [:admin, @member] do
+        = link_to [:admin, @member] do
           = @member.full_name
 .stripe.reverse
   .row
     .large-12.columns
       = simple_form_for [:admin, @member, @ban], method: :post do |f|
-        = f.input :reason, as: :select, collection: [ "Violated attendance policy", "Violated code of conduct", "Violated attendance eligibility", "Offensive behavior" ]
+        = f.input :reason, as: :select, collection: [ 'Violated attendance policy', 'Violated code of conduct', 'Violated attendance eligibility', 'Offensive behavior' ]
         = f.input :note, placeholder: 'This is only visible by admins. The note is only visible to other administrators.'
         = f.input :explanation, placeholder: 'Optional explanation. This note will be emailed to this user. Do not include confidential information about other codebar attendees.'
-        = f.input :expires_at, as: :string, required: true, label: "Date", input_html: { data: { value: Time.zone.now+1.month } }
+        = f.input :expires_at, as: :string, required: true, label: 'Date', input_html: { data: { value: Time.zone.now+1.month } }
         = f.input :permanent, as: :boolean
 
         .text-right
-          = f.submit "Ban user", class: 'button small'
+          = f.submit 'Ban user', class: 'button small'

@@ -5,7 +5,7 @@
       = simple_form_for [:admin, @group] do |f|
         .row
           .large-6.columns
-            = f.input :name, placeholder: "e.g. Students"
+            = f.input :name, placeholder: 'e.g. Students'
         .row
           .large-6.columns
             = f.input :description
@@ -14,4 +14,4 @@
             = f.association :chapter, required: true
         .row
           .large-12.columns.text-right
-            = f.submit "Create group", class: "button"
+            = f.submit 'Create group', class: 'button'

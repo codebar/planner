@@ -6,17 +6,17 @@
       = render 'layouts/organiser_menu'
     %li
       %label Portal
-      %li=link_to "Jobs",  jobs_path
-      %li=link_to "List a job",  new_job_path
+      %li= link_to 'Jobs',  jobs_path
+      %li= link_to 'List a job',  new_job_path
     %li
       %label Account
-    %li=link_to "My Profile", profile_path
-    %li=link_to "My Dashboard", dashboard_path
-    %li=link_to "Invitations", invitations_path
-    %li=link_to "Manage subscriptions", subscriptions_path
-    %li=link_to "Update details", edit_member_path
+    %li= link_to 'My Profile', profile_path
+    %li= link_to 'My Dashboard', dashboard_path
+    %li= link_to 'Invitations', invitations_path
+    %li= link_to 'Manage subscriptions', subscriptions_path
+    %li= link_to 'Update details', edit_member_path
     %li
-      =link_to logout_path do
+      = link_to logout_path do
         Sign out
         %i.fa-stack.fa-lg
           %i.fa.fa-stack-2x
