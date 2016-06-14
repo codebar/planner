@@ -27,18 +27,43 @@ class InvitationManager
   def send_event_emails event, chapter
     return "The event is not invitable" unless event.invitable?
 
-    chapter.groups.students.map(&:members).flatten.uniq.each do |student|
-      invitation = Invitation.new(event: event, member: student, role: "Student")
-      EventInvitationMailer.invite_student(event, student, invitation).deliver_now if invitation.save
-    end
+    students = chapter.groups.students.map(&:members).flatten.uniq
+    coaches = chapter.groups.coaches.map(&:members).flatten.uniq
 
-    chapter.groups.coaches.map(&:members).flatten.uniq.each do |coach|
-      invitation = Invitation.new(event: event, member: coach, role: "Coach")
-      EventInvitationMailer.invite_coach(event, coach, invitation).deliver_now if invitation.save
+    if event.audience == 'Students'
+      students.each do |student|
+        next if student.banned?
+        invitation = Invitation.new(event: event, member: student, role: "Student")
+        EventInvitationMailer.invite_student(event, student, invitation).deliver_now if invitation.save
+      end
+    elsif event.audience == 'Coaches'
+      coaches.each do |coach|
+        next if coach.banned?
+        invitation = Invitation.new(event: event, member: coach, role: "Coach")
+        EventInvitationMailer.invite_coach(event, coach, invitation).deliver_now if invitation.save
+      end
+    else
+      students.each do |student|
+        next if student.banned?
+        invitation = Invitation.new(event: event, member: student, role: "Student")
+        EventInvitationMailer.invite_student(event, student, invitation).deliver_now if invitation.save
+      end
+
+      coaches.each do |coach|
+        next if coach.banned?
+        invitation = Invitation.new(event: event, member: coach, role: "Coach")
+        EventInvitationMailer.invite_coach(event, coach, invitation).deliver_now if invitation.save
+      end
     end
   end
 
-  handle_asynchronously :send_event_emails
+  # handle_asynchronously :send_event_emails
+
+  def self.send_monthly_attendance_reminder_emails monthly
+    monthly.attendances.map(&:member).each do |member|
+      MeetingInvitationMailer.attendance_reminder(monthly, member)
+    end
+  end
 
   def self.send_monthly_attendance_reminder_emails monthly
     monthly.attendances.map(&:member).each do |member|
