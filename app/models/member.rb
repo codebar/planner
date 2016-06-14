@@ -98,6 +98,10 @@ class Member < ActiveRecord::Base
     invitations_on(date).count > 0
   end
 
+  def already_attending event
+    invitations.where(attending: true).map{|e| e.event.id}.include?(event.id)
+  end
+
   private
 
   def invitations_on date

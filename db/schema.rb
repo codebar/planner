@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160526182452) do
+ActiveRecord::Schema.define(version: 20160614203328) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -204,6 +204,7 @@ ActiveRecord::Schema.define(version: 20160526182452) do
     t.string   "external_url"
     t.boolean  "confirmation_required",             default: false
     t.boolean  "surveys_required",                  default: false
+    t.string   "audience"
   end
 
   add_index "events", ["venue_id"], name: "index_events_on_venue_id", using: :btree
@@ -361,7 +362,7 @@ ActiveRecord::Schema.define(version: 20160526182452) do
     t.string   "mobile",                         limit: 255
     t.boolean  "received_coach_welcome_email",               default: false
     t.boolean  "received_student_welcome_email",             default: false
-    t.string   "pronouns"
+    t.string   "pronouns",                       limit: 255
   end
 
   create_table "members_permissions", id: false, force: :cascade do |t|

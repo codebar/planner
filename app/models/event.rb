@@ -25,7 +25,7 @@ class Event < ActiveRecord::Base
 
   before_save do
     begins_at = Time.parse(self.begins_at)
-    self.date_and_time = self.date_and_time.change(hour: begins_at.hour, minute: begins_at.min)
+    self.date_and_time = self.date_and_time.change(hour: begins_at.hour, min: begins_at.min)
   end
 
   def to_s
@@ -92,6 +92,10 @@ class Event < ActiveRecord::Base
 
   def coach_emails
     invitations.coaches.where(attending: true).map {|i| i.member.email}
+  end
+
+  def permitted_audience_values
+    ['Students', 'Coaches']
   end
 
 end

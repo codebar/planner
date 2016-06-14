@@ -42,14 +42,14 @@ feature 'viewing an event' do
           click_on 'Attend as a coach'
           click_on 'RSVP'
 
-          expect(page).to have_content("You have RSVPed to #{closed_event.name}. We will verify your attendance after you complete the questionnaire!")
+          expect(page).to have_content("Your spot has been confirmed for #{closed_event.name}! We look forward to seeing you there. We will verify your attendance after you complete the questionnaire!")
         end
 
         scenario "as a Student" do
           click_on 'Attend as a student'
           click_on 'RSVP'
 
-          expect(page).to have_content("You have RSVPed to #{closed_event.name}. We will verify your attendance after you complete the questionnaire!")
+          expect(page).to have_content("Your spot has been confirmed for #{closed_event.name}! We look forward to seeing you there. We will verify your attendance after you complete the questionnaire!")
         end
       end
     end
@@ -73,7 +73,7 @@ feature 'viewing an event' do
           click_on 'Attend as a coach'
           click_on 'RSVP'
 
-          expect(page).to have_content("You have RSVPed to #{open_event.name}")
+          expect(page).to have_content("Your spot has been confirmed for #{open_event.name}! We look forward to seeing you there")
           expect(page).not_to have_content("We will verify your attendance after you complete the questionnaire!")
         end
 
@@ -81,7 +81,7 @@ feature 'viewing an event' do
           click_on 'Attend as a student'
           click_on 'RSVP'
 
-          expect(page).to have_content("You have RSVPed to #{open_event.name}")
+          expect(page).to have_content("Your spot has been confirmed for #{open_event.name}! We look forward to seeing you there")
           expect(page).not_to have_content("We will verify your attendance after you complete the questionnaire!")
         end
       end
