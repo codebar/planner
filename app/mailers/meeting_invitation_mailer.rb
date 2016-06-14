@@ -8,7 +8,7 @@ class MeetingInvitationMailer < ActionMailer::Base
     set_vars
 
     subject = "You are invited to codebar's #{@meeting.name} on #{humanize_date(@meeting.date_and_time)}"
-    mail(mail_args(member, subject)) do |format|
+    mail(mail_args(@member, subject)) do |format|
       format.html
     end
   end
@@ -17,7 +17,7 @@ class MeetingInvitationMailer < ActionMailer::Base
     set_vars
 
     subject = "See you at #{@meeting.name} on #{humanize_date(@meeting.date_and_time)}"
-    mail(mail_args(member, subject)) do |format|
+    mail(mail_args(@member, subject)) do |format|
       format.html
     end
   end
@@ -26,7 +26,7 @@ class MeetingInvitationMailer < ActionMailer::Base
     set_vars
 
     subject = "A spot opened up for #{@meeting.name} on #{humanize_date(@meeting.date_and_time)}"
-    mail(mail_args(member, subject)) do |format|
+    mail(mail_args(@member, subject)) do |format|
       format.html
     end
   end
@@ -35,7 +35,7 @@ class MeetingInvitationMailer < ActionMailer::Base
     set_vars
 
     subject = "Reminder: You have a spot for #{@meeting.name} on #{humanize_date(@meeting.date_and_time)}"
-    mail(mail_args(member, subject)) do |format|
+    mail(mail_args(@member, subject)) do |format|
       format.html
     end
   end
