@@ -24,7 +24,8 @@
                 = f.input :ends_at, as: :string, required: true, input_html: { data: { value: @event.ends_at.strftime("%H:%M") }}
         .row
           .large-12.columns
-            = f.input :description, as: :text
+            = f.input :description, as: :text,
+            placeholder: 'Use this space to write an invitation message and description of the event. This copy will also be used in the email invitation. You can use HTML here!'
         .row
           .large-12.columns
             = f.input :info
@@ -71,6 +72,11 @@
               .row
                 .large-12.columns
                   = f.association :chapters, hint: 'Which chapters do you want to invite to this event? Only one invitation will be emailed out to members with multiple subscriptions.'
+              %br
+              .row
+                .large-12.columns
+                  = f.input :audience, collection: @event.permitted_audience_values,
+                  hint: 'Optionally, specify if invitations should only be sent to students or coaches (ex. a CV workshop targeted toward students may not need invites sent to the entire coach listserv) If left blank, all subscribers to a chapter will be invited via email'
               .row
                 .large-12.columns
                   %br
