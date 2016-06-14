@@ -27,7 +27,7 @@ class InvitationsController < ApplicationController
     if @invitation.student_spaces? or @invitation.coach_spaces?
       @invitation.update_attribute(:attending, true)
 
-      notice = "Your spot has been confiremd for #{@invitation.event.name}! We look forward to seeing you there."
+      notice = "Your spot has been confirmed for #{@invitation.event.name}! We look forward to seeing you there."
 
       unless event.confirmation_required or event.surveys_required
         @invitation.update_attribute(:verified, true)
