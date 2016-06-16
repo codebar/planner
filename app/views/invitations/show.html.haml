@@ -17,7 +17,7 @@
             %p
               You have already RSVP'd to this event as a coach! Please cancel through the email confirmation you received if you wish to sign up as a student instead.
           - else
-            - if @event.student_spaces?
+            - if @event.event_student_spaces?
               - if @event.tito_url.present?
                 =link_to @event.tito_url, target: '_blank', class: 'button round', method: :post do
                   RSVP
@@ -37,9 +37,13 @@
             %p
               You have already RSVP'd to this event as a student! Please cancel through the email confirmation you received if you wish to sign up as a coach instead.
           - else
-            - if @invitation.coach_spaces?
-              = link_to event_attend_path, class: 'button round', method: :post do
-                RSVP as a coach
+            - if @event.event_coach_spaces?
+              - if @event.tito_url.present?
+                =link_to @event.tito_url, target: '_blank', class: 'button round', method: :post do
+                  RSVP
+              - else
+                =link_to event_attend_path, class: 'button round', method: :post do
+                  RSVP as a coach
             - else
               %p
                 There are no more coach spots left. Send an email at #{@event.email} to be added to the waiting list.

@@ -35,9 +35,6 @@
 
     .row
       - if @event.venue.present?
-        .medium-1.columns
-          - unless @event.spaces?
-            %label.label.warning Workshop full
         .medium-6.columns
           %strong.label.round.primary #{@event.student_spaces} student spots, #{@event.coach_spaces} coach spots
           %br
