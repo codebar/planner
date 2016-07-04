@@ -21,11 +21,8 @@
           <strong>#{@attending_students.count}</strong> are attending as students and <strong>#{@attending_coaches.count}</strong> as coaches.
   .row
     .medium-6.columns
-      %h4
-        Students
-      =render partial: 'admin/events/attendances', locals: { invitations: @attending_students }
+      %h4 Students
+      = render partial: 'admin/events/attendances', locals: { invitations: @attending_students }
     .medium-6.columns
-      .row
-        %h4
-          Coaches
-      =render partial: 'admin/events/attendances', locals: { invitations: @attending_coaches }
+      %h4 Coaches
+      = render partial: 'admin/events/attendances', locals: { invitations: @attending_coaches }

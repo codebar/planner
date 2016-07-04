@@ -5,13 +5,13 @@
       = simple_form_for [:admin, @chapter] do |f|
         .row
           .large-6.columns
-            = f.input :name, placeholder: "e.g. Cambridge", required: true
+            = f.input :name, placeholder: 'e.g. Cambridge', required: true
         .row
           .large-6.columns
-            = f.input :email, placeholder: "e.g. cambridge@codebar.io", required: true
+            = f.input :email, placeholder: 'e.g. cambridge@codebar.io', required: true
         .row
           .large-6.columns
             = f.input :city, required: true
         .row
           .large-12.columns.text-right
-            = f.submit "Create chapter", class: "button"
+            = f.submit 'Create chapter', class: 'button'

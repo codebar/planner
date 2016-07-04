@@ -2,8 +2,8 @@
   .row
     .medium-12.columns
       %h2.subheader
-        =@chapter.name
-        %small=@chapter.email
+        = @chapter.name
+        %small= @chapter.email
 
   .row
     .large-4.columns.panel
@@ -20,11 +20,11 @@
       %ul.side-nav
         - @groups.each do |group|
           %li
-            =link_to [ :admin, group ] do
+            = link_to [ :admin, group ] do
               #{group.name} (#{group.members.count})
     .large-3.columns.end
-      =link_to "View all sponsors", admin_sponsors_path, class: 'button round expand small'
-      =link_to "View all workshops", admin_chapter_workshops_path(@chapter), class: 'button round expand small'
+      = link_to 'View all sponsors', admin_sponsors_path, class: 'button round expand small'
+      = link_to 'View all workshops', admin_chapter_workshops_path(@chapter), class: 'button round expand small'
 
   .row
     .large-4.columns
@@ -32,7 +32,7 @@
       %ul.side-nav
         - @workshops.each do |workshop|
           %li
-            =link_to admin_workshop_path(workshop) do
+            = link_to admin_workshop_path(workshop) do
               = humanize_date_with_time(workshop.date_and_time, workshop.time)
               - if workshop.invitable?
                 (#{workshop.invitations.accepted.count})

@@ -1,9 +1,10 @@
 %section#banner
   .row
     .large-9.columns
-      %h2=@sponsor.name
+      %h2= @sponsor.name
     .large-3.columns
-      =link_to "Edit", edit_admin_sponsor_path(@sponsor), class: 'button round'
+      = link_to 'Edit', edit_admin_sponsor_path(@sponsor), class: 'button round'
+
   .row
     .large-3.columns
       %h4 Address
@@ -11,7 +12,7 @@
 
     .large-3.columns
       %h4 Logo
-      =image_tag @sponsor.avatar
+      = image_tag @sponsor.avatar
     .large-3.columns
       %h4 Contacts
       = SponsorDecorator.new(@sponsor).contact_info
@@ -20,7 +21,7 @@
       %ul.no-bullet
         - @sponsor.workshops.each do |workshop|
           %li
-            =link_to admin_workshop_path(workshop) do
+            = link_to admin_workshop_path(workshop) do
               %strong=workshop.chapter.name
               %br
               = humanize_date_with_time(workshop.date_and_time, workshop.time)
