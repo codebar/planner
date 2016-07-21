@@ -5,25 +5,25 @@
         .panel
           .row
             .large-2.columns
-              %h5=I18n.l(feedback.created_at, format: :date)
+              %h5= I18n.l(feedback.created_at, format: :date)
             .large-3.columns
               %h5.subheader
-                =feedback.tutorial.title
+                = feedback.tutorial.title
             - if feedback.coach.present?
               .large-1.columns
-                =image_tag feedback.coach.avatar(50), class: 'th radius', title: feedback.coach.full_name
+                = image_tag feedback.coach.avatar(50), class: 'th radius', title: feedback.coach.full_name
               .large-2.columns
-                =feedback.coach.full_name
+                = feedback.coach.full_name
             .large-2.columns
               - (0...feedback.rating).each do |rating|
-                .fa.fa-star
+                %i.fa.fa-star
           - if feedback.request.present?
             .row
               .large-12.columns
                 %h5 How did you find the workshop?
-                %p=feedback.request
+                %p= feedback.request
           - if feedback.suggestions.present?
             .row
               .large-12.columns
                 %h5 Suggestions
-                %p=feedback.suggestions
+                %p= feedback.suggestions

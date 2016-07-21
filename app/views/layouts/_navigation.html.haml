@@ -1,18 +1,18 @@
 .contain-to-grid.sticky
-  %nav.top-bar{ "data-topbar" => "" }
+  %nav.top-bar{ 'data-topbar': '' }
     %ul.title-area
       %li.name
-        =link_to root_path do
-          .brand 
-            = image_tag "logo.png", size: "100x100"
+        = link_to root_path do
+          .brand
+            = image_tag 'logo.png', size: '100x100'
       %li.toggle-topbar.menu-icon
-        =link_to "#" do
+        = link_to '#' do
           .fa.fa-stack-2x.fa-list
 
     %section.top-bar-section
       %ul.right
         %li
-          = link_to "https://medium.com/the-codelog" do
+          = link_to 'https://medium.com/the-codelog' do
             %span Blog
         - if current_page?(events_path)
           %li.active
@@ -23,7 +23,7 @@
             = link_to events_path do
               %span Events
         %li
-          = link_to "http://tutorials.codebar.io" do
+          = link_to 'http://tutorials.codebar.io' do
             %span Tutorials
 
         - if current_page?(coaches_path)
@@ -43,16 +43,16 @@
             = link_to sponsors_path do
               %span Sponsors
         %li
-          = link_to  "http://donate.codebar.io" do
+          = link_to  'http://donate.codebar.io' do
             %span
               %highlight Donate
         - if !logged_in?
           %li
-            = link_to "/auth/github" do
+            = link_to '/auth/github' do
               %span
                 Sign in
         - else
           %li
-            =link_to "#", class: "left-off-canvas-toggle", id: 'profile' do
+            = link_to '#', class: 'left-off-canvas-toggle', id: 'profile' do
               .fa.fa-navicon
               Menu

@@ -11,17 +11,17 @@
                 = f.input :name
             .row
               .large-4.columns
-                = f.input :email, as: :email, label: "Contact email"
+                = f.input :email, as: :email, label: 'Contact email'
               .large-4.columns
                 = f.input :slug
             .row
               .large-6.columns
-                = f.input :date_and_time, as: :string, required: true, label: "Date", input_html: { data: { value: @event.date_and_time.strftime("%d/%m/%Y") } }
+                = f.input :date_and_time, as: :string, required: true, label: 'Date', input_html: { data: { value: @event.date_and_time.strftime('%d/%m/%Y') } }
             .row
               .large-3.columns
-                = f.input :begins_at, as: :string, required: true, input_html: { data: { value: @event.date_and_time.time.strftime("%H:%M") }}
+                = f.input :begins_at, as: :string, required: true, input_html: { data: { value: @event.date_and_time.time.strftime('%H:%M') }}
               .large-3.columns
-                = f.input :ends_at, as: :string, required: true, input_html: { data: { value: @event.ends_at.strftime("%H:%M") }}
+                = f.input :ends_at, as: :string, required: true, input_html: { data: { value: @event.ends_at.strftime('%H:%M') }}
         .row
           .large-12.columns
             = f.input :description, as: :text,
@@ -34,11 +34,11 @@
             = f.input :schedule
         .row
           .large-3.columns
-            = f.association :venue, input_html: { data: { placeholder: "Select sponsors" }}, required: true
+            = f.association :venue, input_html: { data: { placeholder: 'Select sponsors' }}, required: true
         .row
           .large-6.columns
             %br
-            = f.association :sponsors, input_html: { data: { placeholder: "Select sponsors" }}
+            = f.association :sponsors, input_html: { data: { placeholder: 'Select sponsors' }}
         .row
           .large-6.columns
             %br
@@ -47,7 +47,7 @@
         .row
           .large-12.columns
             %br
-            = f.input :announce_only, as: :boolean, hint: "Events where invitations are not handled via our application"
+            = f.input :announce_only, as: :boolean, hint: 'Events where invitations are not handled via our application'
           .large-12.columns
             %br
             = f.input :external_url, label: 'External Registration URL', placeholder: 'include protocol, e.g. https://codebar.io'
@@ -58,7 +58,7 @@
             .panel.callout
               .row
                 .large-12.columns
-                  = f.input :tito_url, as: :url, hint: "Only used for student tickets"
+                  = f.input :tito_url, as: :url, hint: 'Only used for student tickets'
                 .large-6.columns
                   = f.input :coach_spaces
                 .large-6.columns
@@ -80,10 +80,10 @@
               .row
                 .large-12.columns
                   %br
-                  = f.input :invitable, as: :boolean, hint: "Allow members to RSVP"
+                  = f.input :invitable, as: :boolean, hint: 'Allow members to RSVP'
               .row
                 .large-12.columns
-                  = f.input :show_faq, as: :boolean, hint: "Display FAQ section?"
+                  = f.input :show_faq, as: :boolean, hint: 'Display FAQ section?'
               .row
                 .large-12.columns
                   = f.input :display_coaches, as: :boolean
@@ -92,13 +92,13 @@
                   = f.input :display_students, as: :boolean
               .row
                 .large-12.columns
-                  = f.input :confirmation_required, as: :boolean, hint: "Will we be confirming members' attendance?"
+                  = f.input :confirmation_required, as: :boolean, hint: 'Will we be confirming members\' attendance?'
               .row
                 .large-12.columns
-                  = f.input :surveys_required, as: :boolean, hint: "Do we need to collect extra info?"
+                  = f.input :surveys_required, as: :boolean, hint: 'Do we need to collect extra info?'
 
         .row
           .large-12.columns.text-right
-            = f.submit "Save", class: "button"
+            = f.submit 'Save', class: 'button'
 
 %br
