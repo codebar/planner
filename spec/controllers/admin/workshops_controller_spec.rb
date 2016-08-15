@@ -11,7 +11,7 @@ describe Admin::WorkshopsController, type: :controller do
   describe "DELETE #destroy" do
     context "workshop invitations have been sent" do
 
-      before :each do
+      before do
         Fabricate(:attending_session_invitation, workshop: workshop)
       end
 
