@@ -4,7 +4,7 @@ describe Admin::WorkshopsController, type: :controller do
   let!(:workshop) { Fabricate(:workshop) }
   let(:admin) { Fabricate(:member) }
 
-  before :each do
+  before do
     login_as_organiser(admin, workshop.chapter)
   end
 
