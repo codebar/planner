@@ -167,6 +167,8 @@ en:
   members:
     sign_up: "Sign up"
     sign_in_with_github: "Sign in with Github"
+    sign_up_as_student: "I understand and meet the eligibility criteria. Sign me up as a student"
+    sign_up_as_coach: "Sign up as a coach"
     code_of_conduct: "code of conduct"
     new:
       intro: "We offer a welcoming, inclusive and learning-friendly environment, and have a zero tolerance policy towards any form of harassment or inappropriate behavior. Before you sign up, read our"

@@ -16,7 +16,7 @@ feature "A new student signs up", js: false do
   scenario "A visitor can access signups through the landing page" do
     visit root_path
     click_on "Learn to code!"
-    click_on "Sign in with Github"
+    click_on "I understand and meet the eligibility criteria. Sign me up as a student"
 
     expect(current_path).to eq(step1_member_path)
   end
@@ -39,7 +39,7 @@ feature "A new student signs up", js: false do
 
   scenario "A new member details are succesfuly captured" do
     visit new_member_path
-    click_on "Sign in with Github"
+    click_on "Sign up as a coach"
 
     fill_in "member_pronouns", with: "she"
     fill_in "member_name", with: "Jane"

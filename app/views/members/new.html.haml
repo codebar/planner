@@ -11,8 +11,12 @@
         \.
       %p.lead
         = t('members.new.students.intro')
-        = link_to t('members.new.students.criteria_link'), faq_path(anchor: "attendance-eligibility")
+        = link_to t('members.new.students.criteria_link'), 'http://codebar.io/student-guide#eligibility'
         = t('members.new.students.criteria_brief')
       = link_to registration_path, class: "button round" do
-        = t('members.sign_in_with_github')
+        = t('members.sign_up_as_student')
+        %i.fa.fa-github.fa-fw
+      %br
+      = link_to registration_path, class: "button round" do
+        = t('members.sign_up_as_coach')
         %i.fa.fa-github.fa-fw
