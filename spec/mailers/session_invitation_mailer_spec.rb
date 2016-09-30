@@ -14,7 +14,6 @@ describe SessionInvitationMailer do
     SessionInvitationMailer.invite_student(workshop, member, invitation).deliver_now
 
     expect(email.subject).to eq(email_subject)
-    expect(email.from).to eq([workshop.chapter.email])
     expect(email.body.encoded).to match(workshop.chapter.email)
   end
 

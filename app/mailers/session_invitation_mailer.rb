@@ -12,7 +12,7 @@ class SessionInvitationMailer < ActionMailer::Base
 
     subject = "Workshop Invitation #{humanize_date_with_time(@session.date_and_time, @session.time)}"
 
-    mail(mail_args(member, subject, @session.chapter.email)) do |format|
+    mail(mail_args(member, subject, "no-reply@codebar.io")) do |format|
       format.html
     end
   end
@@ -24,7 +24,7 @@ class SessionInvitationMailer < ActionMailer::Base
 
     subject = "Workshop Coach Invitation #{humanize_date_with_time(@session.date_and_time, @session.time)}"
 
-    mail(mail_args(member, subject, @session.chapter.email)) do |format|
+    mail(mail_args(member, subject, "no-reply@codebar.io")) do |format|
       format.html
     end
   end
