@@ -39,20 +39,20 @@ class MemberMailer < ActionMailer::Base
     end
   end
 
-  def eligibility_check(member)
+  def eligibility_check(member, sender = 'hello@codebar.io')
     @member = member
     subject = "Eligibility confirmation"
 
-    mail(mail_args(member, subject, 'hello@codebar.io', "hello@codebar.io")) do |format|
+    mail(mail_args(member, subject, 'hello@codebar.io', 'hello@codebar.io', sender)) do |format|
       format.html { render 'eligibility_check' }
     end
   end
 
-  def attendance_warning(member)
+  def attendance_warning(member, sender = 'hello@codebar.io')
     @member = member
     subject = "Attendance warning"
 
-    mail(mail_args(member, subject, 'hello@codebar.io', "hello@codebar.io")) do |format|
+    mail(mail_args(member, subject, 'hello@codebar.io', 'hello@codebar.io', sender)) do |format|
       format.html { render 'attendance_warning' }
     end.deliver
   end
