@@ -90,6 +90,10 @@ class Member < ActiveRecord::Base
     session_invitations.exists?(role: "Coach", attended: true)
   end
 
+  def verified_or_organiser?
+    verified? or organised_chapters.present?
+  end
+
   def twitter_url
     "http://twitter.com/#{twitter}"
   end
