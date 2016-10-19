@@ -29,9 +29,27 @@ class Admin::ChaptersController < Admin::ApplicationController
     @subscribers = @chapter.subscriptions.last(20).reverse
   end
 
+  def edit
+    @chapter = Chapter.find(params[:id])
+    authorize @chapter
+  end
+
+  def update
+    @chapter = Chapter.find(params[:id])
+    authorize(@chapter)
+
+    if @chapter.update(chapter_params)
+      flash[:notice] = "Chapter #{@chapter.name} has been successfully updated"
+      redirect_to [:admin, @chapter ]
+    else
+      flash[:notice] = @chapter.errors.full_messages
+      render 'edit'
+    end
+  end
+
   private
 
   def chapter_params
-    params.require(:chapter).permit(:name, :email, :city)
+    params.require(:chapter).permit(:name, :email, :city, :twitter)
   end
 end
