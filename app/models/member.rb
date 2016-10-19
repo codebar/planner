@@ -90,6 +90,10 @@ class Member < ActiveRecord::Base
     session_invitations.exists?(role: "Coach", attended: true)
   end
 
+  def verified_or_organiser?
+    verified? or organised_chapters.present?
+  end
+
   def twitter_url
     "http://twitter.com/#{twitter}"
   end
@@ -100,6 +104,10 @@ class Member < ActiveRecord::Base
 
   def already_attending event
     invitations.where(attending: true).map{|e| e.event.id}.include?(event.id)
+  end
+
+  def is_admin_or_organiser?
+    has_role?(:admin) or organised_chapters.present?
   end
 
   private

@@ -2,6 +2,7 @@
   %label Admin Menu
 %li= link_to 'Admin Dashboard', admin_root_path
 %li= link_to 'View Feedback', coach_feedback_index_path
+%li= link_to 'New Announcement', new_admin_announcement_path
 - if has_permission?
   %li= link_to 'New workshop', new_admin_workshop_path
   %li= link_to 'New sponsor', new_admin_sponsor_path
