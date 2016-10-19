@@ -2,6 +2,9 @@
   .row
     .medium-12.columns
       %h2.subheader
+        %small
+          = link_to edit_admin_chapter_path(@chapter) do
+            %i.fa.fa-edit
         = @chapter.name
         %small= @chapter.email
 
