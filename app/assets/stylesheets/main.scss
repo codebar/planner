@@ -11,19 +11,18 @@
 @import 'partials/organisers';
 @import 'partials/jobs';
 
-#banner, #chapter {
+#banner, 
+#chapter {
   margin-top: 30px;
 }
 
-nav a.menu {
-    margin: 20px;
-    top: 20px;
-  }
+.brand {
+  line-height: 7.14286rem;
+}
 
-.top-bar {
-  .name {
-    display: inline-block;
-  }
+nav a.menu {
+  margin: 20px;
+  top: 20px;
 }
 
 .user {

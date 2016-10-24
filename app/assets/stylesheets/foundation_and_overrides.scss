@@ -1206,7 +1206,7 @@ $topbar-link-hover-lightness: -30%; // Darken by 10%
 $topbar-link-bg-hover: #ffffff;
 $topbar-link-bg-active: #ffffff;
 $topbar-link-bg-active-hover: #ffffff;
- $topbar-link-font-family: $body-font-family;
+$topbar-link-font-family: $body-font-family;
 // $topbar-link-text-transform: none;
 $topbar-link-padding: rem-calc(10) rem-calc(0);
 
@@ -1364,11 +1364,11 @@ blockquote::before{
 }
 
 blockquote::after{
-content: "";
+  content: "";
 }
 
 
-blockquote em{
+blockquote em {
   font-style: italic;
 }
 
@@ -1376,7 +1376,9 @@ a {
   border-bottom: 1px dashed $secondary-color;
 }
 
-.top-bar a, #sponsors a, .icon-bar a {
+.top-bar a, 
+#sponsors a, 
+.icon-bar a {
   border-bottom: none;
 }
 
@@ -1385,7 +1387,7 @@ a {
 }
 
 .top-bar {
-  padding-right: 10px;
+  padding: 0 10px;
 }
 
 .avatar-container {
