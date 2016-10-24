@@ -43,9 +43,23 @@ shared_examples "invitation route" do
 
       visit invitation2_route
       click_on "Attend"
-      
+
       expect(page).to have_content("You have already RSVP'd to another workshop on this date. If you would prefer to attend this workshop, please cancel your other RSVP first.")
       expect(page).to have_selector(:link_or_button, "Attend")
+    end
+  end
+
+  context "waiting list" do
+
+    scenario "is available when there are no spots left" do
+      set_no_available_slots
+      visit invitation_route
+
+      click_on "Join the waiting list"
+      expect(page).to have_content("You have been added to the waiting list")
+
+      click_on "Remove from the waiting list"
+      expect(page).to have_content("You have been removed from the waiting list")
     end
   end
 end

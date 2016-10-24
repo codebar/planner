@@ -12,7 +12,7 @@ class SessionInvitationMailer < ActionMailer::Base
 
     subject = "Workshop Invitation #{humanize_date_with_time(@session.date_and_time, @session.time)}"
 
-    mail(mail_args(member, subject)) do |format|
+    mail(mail_args(member, subject, "no-reply@codebar.io")) do |format|
       format.html
     end
   end
@@ -24,7 +24,7 @@ class SessionInvitationMailer < ActionMailer::Base
 
     subject = "Workshop Coach Invitation #{humanize_date_with_time(@session.date_and_time, @session.time)}"
 
-    mail(mail_args(member, subject)) do |format|
+    mail(mail_args(member, subject, "no-reply@codebar.io")) do |format|
       format.html
     end
   end
@@ -43,7 +43,7 @@ class SessionInvitationMailer < ActionMailer::Base
                                    content: WorkshopCalendar.new(@session).calendar.to_ical }
 
 
-    mail(mail_args(member, subject)) do |format|
+    mail(mail_args(member, subject, @session.chapter.email)) do |format|
       format.html
     end
   end
@@ -57,7 +57,8 @@ class SessionInvitationMailer < ActionMailer::Base
 
     subject = "#{title}: #{@session.title} by codebar - #{humanize_date_with_time(@session.date_and_time, @session.time)}"
 
-    mail(mail_args(member, subject)) do |format|
+    mail(mail_args(member, subject, @session.chapter.email)) do |format|
+      format.html
       format.html { render layout: "email" }
     end
   end
@@ -70,7 +71,7 @@ class SessionInvitationMailer < ActionMailer::Base
     @invitation = invitation
 
     subject = "Workshop Reminder #{humanize_date_with_time(@session.date_and_time, @session.time)}"
-    mail(mail_args(member, subject)) do |format|
+    mail(mail_args(member, subject, @session.chapter.email)) do |format|
       format.html
     end
   end
@@ -83,20 +84,20 @@ class SessionInvitationMailer < ActionMailer::Base
     @invitation = invitation
 
     subject = "Reminder: you're on the codebar waiting list (#{humanize_date_with_time(@session.date_and_time, @session.time)})"
-    mail(mail_args(member, subject)) do |format|
+    mail(mail_args(member, subject, @session.chapter.email)) do |format|
       format.html
     end
   end
 
   def notify_waiting_list(invitation)
-    @session = invitation.sessions
+    @session = invitation.workshop
     @host_address = AddressDecorator.decorate(@session.host.address)
     @member = invitation.member
     @invitation = invitation
 
     subject = "A spot just became available"
 
-    mail(mail_args(@member, subject)) do |format|
+    mail(mail_args(member, subject, @session.chapter.email)) do |format|
       format.html
     end
   end

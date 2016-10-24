@@ -2,12 +2,12 @@ require 'spec_helper'
 
 feature 'a member can' do
 
-  context "#session" do
+  context "#workshop" do
     let(:invitation) { Fabricate(:session_invitation) }
     let(:invitation_route) { invitation_path(invitation) }
 
     let(:member) { Fabricate(:member) }
-    let(:set_no_available_slots) { invitation.sessions.host.update_attribute(:seats, 0) }
+    let(:set_no_available_slots) { invitation.workshop.host.update_attribute(:seats, 0) }
 
     before(:each) do
       login(member)

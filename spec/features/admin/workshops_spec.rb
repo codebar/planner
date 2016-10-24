@@ -23,10 +23,10 @@ feature 'Managing workshops' do
   end
 
   scenario "assigning a host to a workshop" do
-    workshop = Fabricate(:sessions_no_sponsor)
+    workshop = Fabricate(:workshop_no_sponsor)
     visit edit_admin_workshop_path(workshop)
 
-    select sponsor.name, from: "sessions_host"
+    select sponsor.name, from: "workshop_host"
 
     click_on "Save"
 
@@ -36,10 +36,10 @@ feature 'Managing workshops' do
   end
 
   scenario "assigning a sponsor to a workshop" do
-    workshop = Fabricate(:sessions_no_sponsor)
+    workshop = Fabricate(:workshop_no_sponsor)
     visit edit_admin_workshop_path(workshop)
 
-    select sponsor.name, from: "sessions_sponsor_ids"
+    select sponsor.name, from: "workshop_sponsor_ids"
 
     click_on "Save"
 

@@ -14,10 +14,12 @@ class Member < ActiveRecord::Base
   has_many :member_notes
   has_many :chapters, -> { uniq }, through: :groups
   has_many :announcements, -> { uniq }, through: :groups
+  has_many :meeting_invitations
 
   validates :auth_services, presence: true
   validates :name, :surname, :email, :about_you, presence: true, if: :can_log_in?
   validates_uniqueness_of :email
+  validates_length_of :about_you, :maximum => 255
 
   scope :subscribers, -> { joins(:subscriptions).order('created_at desc').uniq }
   acts_as_taggable_on :skills
@@ -29,7 +31,15 @@ class Member < ActiveRecord::Base
   end
 
   def banned?
-    bans.active.present?
+    bans.active.present? or bans.permanent.present?
+  end
+
+  def banned_permanently?
+    bans.permanent.present?
+  end
+
+  def more_than_two_absences?
+    session_invitations.last_six_months.accepted.length - session_invitations.last_six_months.attended.length > 2
   end
 
   def full_name
@@ -56,12 +66,12 @@ class Member < ActiveRecord::Base
   end
 
   def send_eligibility_email(user)
-    MemberMailer.eligibility_check(self).deliver_now
+    MemberMailer.eligibility_check(self, user.email).deliver_now
     self.eligibility_inquiries.create(sent_by_id: user.id)
   end
 
   def send_attendance_email(user)
-    MemberMailer.attendance_warning(self).deliver_now
+    MemberMailer.attendance_warning(self, user.email).deliver_now
     self.attendance_warnings.create(sent_by_id: user.id)
   end
 
@@ -70,7 +80,7 @@ class Member < ActiveRecord::Base
   end
 
   def attended_sessions
-    session_invitations.attended.map(&:sessions)
+    session_invitations.attended.map(&:workshop)
   end
 
   def requires_additional_details?
@@ -81,6 +91,10 @@ class Member < ActiveRecord::Base
     session_invitations.exists?(role: "Coach", attended: true)
   end
 
+  def verified_or_organiser?
+    verified? or organised_chapters.present?
+  end
+
   def twitter_url
     "http://twitter.com/#{twitter}"
   end
@@ -89,10 +103,18 @@ class Member < ActiveRecord::Base
     invitations_on(date).count > 0
   end
 
+  def already_attending event
+    invitations.where(attending: true).map{|e| e.event.id}.include?(event.id)
+  end
+
+  def is_admin_or_organiser?
+    has_role?(:admin) or organised_chapters.present?
+  end
+
   private
 
   def invitations_on date
-    session_invitations.joins(:sessions).where('sessions.date_and_time BETWEEN ? AND ?', date.beginning_of_day, date.end_of_day).where(attending: true)
+    session_invitations.joins(:workshop).where('workshops.date_and_time BETWEEN ? AND ?', date.beginning_of_day, date.end_of_day).where(attending: true)
   end
 
   def md5_email

@@ -3,7 +3,9 @@ class Admin::MeetingInvitationsController < Admin::ApplicationController
 
   def update
     status = params[:attendance_status]
-    @invitation.update_attribute(:attending, status)
+    attended = params[:attended]
+
+    @invitation.update_attributes(:attending => status, :attended => attended)
 
     redirect_to [:admin, @invitation.meeting]
   end

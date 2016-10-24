@@ -1,5 +1,5 @@
 class EventPresenter < SimpleDelegator
-  PRESENTER = { sessions: "WorkshopPresenter",
+  PRESENTER = { workshop: "WorkshopPresenter",
                 course: "CoursePresenter",
                 meeting: "MeetingPresenter",
                 event: "EventPresenter" }
@@ -71,6 +71,14 @@ class EventPresenter < SimpleDelegator
 
   def student_spaces?
     venue.present? and venue.seats > attending_students.length if venue.present?
+  end
+
+  def event_coach_spaces?
+    model.coach_spaces?
+  end
+
+  def event_student_spaces?
+    model.student_spaces?
   end
 
   def attendees_csv

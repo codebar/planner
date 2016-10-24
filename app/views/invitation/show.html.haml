@@ -39,7 +39,7 @@
           - if @invitation.attending.eql?(true)
             - if @invitation.for_student?
               %p
-                You will be working on...
+                %small You will be working on...
                 = form_tag update_note_invitation_path(@invitation) do
                   = select_tag :note, options_for_select(@tutorial_titles, @invitation.note)
                   %br
@@ -49,7 +49,7 @@
               =link_to "I can no longer attend", reject_invitation_url(@invitation), class: "expand button small alert"
             - else
               %p
-                If you can't make it or plan to arrive late please let us know by sending an email to #{@invitation.sessions.chapter.email}
+                If you can't make it or plan to arrive late please let us know by sending an email to #{@invitation.workshop.chapter.email}
           - elsif @invitation.member.banned?
             %p
               %label.label.warning Your account has been suspended.
@@ -57,7 +57,10 @@
 
               %small
                 %strong Why?
-                = @invitation.member.bans.active.first.reason
+                - if @invitation.member.banned_permanently?
+                  = @invitation.member.bans.permanent.first.reason
+                - else
+                  = @invitation.member.bans.active.first.reason
           - else
             - if @invitation.for_coach?
               - if @workshop.coach_spaces?
@@ -67,11 +70,12 @@
             - else
               - if @workshop.student_spaces?
                 = simple_form_for @invitation, url: :accept_with_note_invitation, method: :post do |f|
-                  = f.input :note, label: "I will be working on... ", collection: @tutorial_titles, required: true, include_blank: false
+                  = f.input :note, label: "What do you plan to work on?", collection: @tutorial_titles, required: true, include_blank: true
+                  %br
                   = f.button :submit, "Attend",  class: "button expand round"
-                  %label *Letting us know what you plan to work on will help us pair you up with a coach.
               - else
                 = render partial: 'invitation/waiting_list', locals: { invitation: @invitation }
+          Read our #{link_to "attendance policy", attendance_policy_path}
 
 
 .stripe
@@ -110,9 +114,9 @@
 .stripe
   .row
     .medium-6.columns
-      %h4 Students (#{@invitation.sessions.attending_students.count})
+      %h4 Students (#{@invitation.workshop.attending_students.count})
       %ul.attendances.no-bullet
-        - @invitation.sessions.attending_students.each do |invitation|
+        - @invitation.workshop.attending_students.each do |invitation|
           %li.attendance
             .row
               .small-2.columns
@@ -123,9 +127,9 @@
                 .subheader=invitation.note
             %br
     .medium-6.columns
-      %h4 Coaches (#{@invitation.sessions.attending_coaches.count})
+      %h4 Coaches (#{@invitation.workshop.attending_coaches.count})
       %ul.attendances.no-bullet
-        - @invitation.sessions.attending_coaches.each do |invitation|
+        - @invitation.workshop.attending_coaches.each do |invitation|
           %li.attendance
             .row
               .small-2.columns

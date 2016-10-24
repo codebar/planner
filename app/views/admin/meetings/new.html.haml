@@ -13,7 +13,7 @@
                 = f.input :slug, placeholder: 'for URI, e.g. monthly-feb-2016'
             .row
               .large-6.columns
-                = f.input :date_and_time, as: :datetime, required: true, label: "Date"
+                = f.input :date_and_time, as: :datetime, required: true, label: 'Date'
         .row
           .large-12.columns
             = f.input :description, as: :text
@@ -22,19 +22,21 @@
             = f.input :spaces, as: :integer
         .row
           .large-3.columns
-            = f.association :venue, input_html: { data: { placeholder: "Select venue" }}, required: true
+            = f.association :venue, input_html: { data: { placeholder: 'Select venue' }}, required: true
         .row
           .large-6.columns
             %label Organisers
-            = f.collection_select :organisers, Member.all,
-            :id, :full_name, { selected: @meeting.organisers.map(&:id) }, { multiple: true }
-
+            = f.collection_select :organisers, Member.all, :id, :full_name, { selected: @meeting.organisers.map(&:id) }, { multiple: true }
+        .row
+          .large-6.columns
+            %label Chapters
+            = f.collection_select :chapters, Chapter.all, :id, :name, { selected: @meeting.chapters.map(&:id) }, { multiple: true }
         .row
           .large-6.columns
             %br
-            = f.input :invitable, as: :boolean, hint: "Allow members to RSVP"
+            = f.input :invitable, as: :boolean, hint: 'Allow members to RSVP'
         .row
           .large-12.columns.text-right
-            = f.submit "Save", class: "button"
+            = f.submit 'Save', class: 'button'
 
 %br

@@ -39,4 +39,8 @@ module ApplicationHelper
   def twitter_id
     Planner::Application.config.twitter_id
   end
+
+  def contact_email
+    @contact_email ||= @session.present? ? @session.chapter.email : "hello@codebar.io"
+  end
 end

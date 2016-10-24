@@ -7,24 +7,24 @@ describe WorkshopPresenter do
                        Fabricate(:coach_session_invitation)
                       ] }
   let(:chapter) { Fabricate(:chapter) }
-  let(:sessions) { double(:workshop, attendances: invitations, host: Fabricate(:sponsor), chapter: chapter )}
-  let(:workshop) { WorkshopPresenter.new(sessions) }
+  let(:workshop_double) { double(:workshop, attendances: invitations, host: Fabricate(:sponsor), chapter: chapter )}
+  let(:workshop) { WorkshopPresenter.new(workshop_double) }
 
   it "#venue" do
-    expect(sessions).to receive(:host)
+    expect(workshop_double).to receive(:host)
 
     workshop.venue
   end
 
   it "#organisers" do
-    expect(sessions).to receive(:permissions)
-    expect(sessions).to receive(:chapter).and_return(chapter)
+    expect(workshop_double).to receive(:permissions)
+    expect(workshop_double).to receive(:chapter).and_return(chapter)
 
     workshop.organisers
   end
 
   it "#time" do
-    expect(sessions).to receive(:time).and_return(Time.zone.now)
+    expect(workshop_double).to receive(:time).and_return(Time.zone.now)
 
     workshop.time
   end

@@ -12,23 +12,31 @@
         = simple_form_for :meeting_invitations, url: admin_meeting_invitations_path do |f|
           .medium-6.columns
             = f.select :member, Member.all.map { |u| ["#{u.full_name}", u.id] }, { include_blank: true }, { class: 'chosen-select', required: true, data: { placeholder: 'Select a member to RSVP' } }
+            = f.input :meeting_id, as: :hidden, input_html: { value: @meeting.slug }
 
-            = f.input :meeting_id, :as => :hidden, :input_html => { :value => @meeting.slug }
           .large-3.columns
-            %span{ "data-tooltip" => true, "aria-haspopup" => "true", class: "has-tip", title: t('admin.workshop.manage_rsvps.text') }
+            %span{ 'data-tooltip': true, 'aria-haspopup': 'true', class: 'has-tip', title: t('admin.workshop.manage_rsvps.text') }
               %i.fa.fa-info
-            = f.submit "Add"
+            = f.submit 'Add'
       %br
 
   .row
-    .medium-6.columns
-      %h4
-        Participants
-        - @invitations.each do |invitation|
-          %ul.no-bullet
-            %li
-              .medium-8.columns
-                =link_to admin_member_path(invitation.member) do
-                  =invitation.member.full_name
-              .medium-4.small-12.columns
-                =link_to "Cancel attendance", admin_meeting_invitation_path(invitation, attendance_status: false), class: "button tiny alert", method: :put
+    .medium-12.columns#attendances
+      %h4 Participants
+      - @invitations.each do |invitation|
+        .attendee.medium-5.columns
+          .small-1.columns
+            - if (@meeting.date_and_time - 30.minutes).past?
+              - if invitation.attended?
+                = link_to '', admin_meeting_invitation_path(invitation, attendance_status: true, attended: false), class: 'fa fa-check-square-o', method: :put
+              - else
+                = link_to '', admin_meeting_invitation_path(invitation, attendance_status: true, attended: true),
+                class: 'fa fa-square-o',
+                method: :put
+
+            - else
+              = link_to '', admin_meeting_invitation_path(invitation, attendance_status: false, attended: false), class: 'fa fa-minus-square-o', method: :put
+
+          .small-10.columns
+            = link_to admin_member_path(invitation.member) do
+              = invitation.member.full_name

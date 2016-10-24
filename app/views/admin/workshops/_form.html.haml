@@ -4,13 +4,13 @@
       = f.association :chapter, as: :select, collection: Chapter.available_to_user(current_user)
   .row
     .large-3.columns
-      = f.input :date_and_time, as: :string, required: true, label: "Date", input_html: { data: { value: @workshop.date_and_time } }
+      = f.input :date_and_time, as: :string, required: true, label: 'Date', input_html: { data: { value: @workshop.date_and_time } }
   .row
     .large-3.columns
-      = f.input :time, as: :string, required: true, input_html: { id: "sessions_time"}
+      = f.input :time, as: :string, required: true, input_html: { id: 'sessions_time'}
   .row
     .large-6.columns
-      = f.input :host, as: :select, collection: Sponsor.all, include_blank: true, selected: (@workshop.host.id rescue "")
+      = f.input :host, as: :select, collection: Sponsor.all, include_blank: true, selected: (@workshop.host.id rescue '')
   .row
     .large-6.columns
       = f.association :sponsors
@@ -19,4 +19,4 @@
       = f.input :invitable
   .row
     .large-12.columns.text-right
-      = f.submit "Save", class: "button"
+      = f.submit 'Save', class: 'button'

@@ -18,14 +18,14 @@ class Event < ActiveRecord::Base
 
   validate :invitability, if: :invitable?
 
-  validates :coach_spaces, :student_spaces, :numericality => { :greater_than => 0 }
+  validates_numericality_of :coach_spaces, :student_spaces
   attr_accessor :publish_day, :publish_time
 
   scope :future, ->(n) { order('date_and_time').where('date_and_time > ?', Date.current).take(n) }
 
   before_save do
     begins_at = Time.parse(self.begins_at)
-    self.date_and_time = self.date_and_time.change(hour: begins_at.hour, minute: begins_at.min)
+    self.date_and_time = self.date_and_time.change(hour: begins_at.hour, min: begins_at.min)
   end
 
   def to_s
@@ -92,6 +92,10 @@ class Event < ActiveRecord::Base
 
   def coach_emails
     invitations.coaches.where(attending: true).map {|i| i.member.email}
+  end
+
+  def permitted_audience_values
+    ['Students', 'Coaches']
   end
 
 end

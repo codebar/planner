@@ -3,26 +3,22 @@ require 'spec_helper'
 feature 'Member portal' do
   subject { page }
   let(:member) { Fabricate(:member) }
+  let!(:invitations) { 5.times.map { Fabricate(:attending_session_invitation, member: member) } }
+  let!(:group) { Fabricate(:group) }
 
-  context "signed in" do
-    it "should be able to access the portal menu" do
+  context "A signed in member" do
+    before do
       login(member)
-      visit root_path
-
-      expect(page).to have_selector("#profile")
     end
 
-    it "should not send a welcome email when signing in" do
-      expect_any_instance_of(MemberMailer).not_to receive(:welcome)
-      expect_any_instance_of(MemberMailer).not_to receive(:welcome_student)
-      expect_any_instance_of(MemberMailer).not_to receive(:welcome_coach)
+    it "can access the member dashboard" do
+      visit dashboard_path
 
-      login(member)
-      visit root_path
+      expect(page).to have_content("Dashboard")
+      expect(page).to have_content(member.full_name)
     end
 
-    it "a member can update their details" do
-      login member
+    it "can access and update their profile" do
       visit profile_path
 
       within "#member_profile" do
@@ -36,23 +32,29 @@ feature 'Member portal' do
       expect(page).to have_content("Jane Doe")
     end
 
-    it "a member can subscribe to mailing lists" do
-      group = Fabricate(:group)
-      login member
-
+    it "can subscribe to groups" do
       visit profile_path
       within "#member_profile" do
         click_on "Manage subscriptions"
       end
       click_on "Subscribe"
 
-      expect(group.members.include? member).to be true
+      expect(group.members).to include(member)
+    end
 
+    it "can view the invitations they RSVPed to" do
+      visit invitations_path
+
+      expect(page).to have_content("Invitations")
+      invitations.each do |invitation|
+        expect(page).to have_content(invitation.parent.to_s)
+        expect(page).to have_content(invitation.parent.chapter.name)
+      end
     end
   end
 
-  context "not signed in" do
-    it "not should be able to access the portal menu" do
+  context "A non authenticated visitor to the page" do
+    it "can not access the member portal" do
       visit root_path
 
       expect(page).to_not have_selector("#profile")

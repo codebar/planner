@@ -5,17 +5,17 @@ if Rails.env.development?
                 Fabricate(:chapter_with_groups, name: "Brighton"),
                 Fabricate(:chapter_with_groups, name: "Cambridge")]
 
-    sessions = 10.times.map { |n| Fabricate(:sessions, chapter: chapters.sample, date_and_time: Time.zone.now+14.days-n.weeks) }
+    workshop = 10.times.map { |n| Fabricate(:workshop, chapter: chapters.sample, date_and_time: Time.zone.now+14.days-n.weeks) }
 
     courses = 5.times.map { |n| Fabricate(:course, chapter: chapters.sample, date_and_time: Time.zone.now+14.days-n.weeks) }
     coaches = 20.times.map { |n| Fabricate(:coach, groups: Group.coaches.order("RANDOM()").limit(2)) }
-    tutorials = 10.times.map { |n| Fabricate(:tutorial, sessions: sessions.sample) }
+    tutorials = 10.times.map { |n| Fabricate(:tutorial, workshop: workshop.sample) }
     feedback_requests = 5.times.map { Fabricate(:feedback_request) }
     feedbacks = 5.times.map { Fabricate(:feedback, tutorial: tutorials.sample, coach: coaches.sample) }
 
     40.times do |n|
       coach = coaches.sample
-      Fabricate(:attended_session_invitation, role: "Coach", member: coach, sessions: sessions.sample )  rescue "Coach already attended"
+      Fabricate(:attended_session_invitation, role: "Coach", member: coach, sessions: workshop.sample )  rescue "Coach already attended"
     end
 
     puts "..done!"

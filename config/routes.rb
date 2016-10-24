@@ -70,11 +70,6 @@ Planner::Application.routes.draw do
   resources :workshops, only: [ :show ] do
     member do
       post 'rsvp'
-      post "add"
-      post "remove"
-      get "added"
-      get "removed"
-      get "waitlisted"
     end
   end
   resources :feedback, only: [ :show ] do
@@ -113,7 +108,7 @@ Planner::Application.routes.draw do
     end
     resources :member_notes, only: [:create]
 
-    resources :chapters, only: [ :index, :new, :create, :show] do
+    resources :chapters, only: [ :index, :new, :create, :show, :edit, :update] do
       resources :workshops, only: [ :index ]
     end
 
@@ -126,9 +121,12 @@ Planner::Application.routes.draw do
       end
     end
 
+    resources :invitation, only: [:update]
+
     resources :meetings do
       member do
         get 'attendees_emails'
+        get 'invite'
       end
     end
 

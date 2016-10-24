@@ -65,6 +65,8 @@ group :test do
   gem 'database_cleaner'
   gem 'poltergeist'
   gem 'shoulda-matchers'
+  gem "codeclimate-test-reporter", require: nil
+
 end
 
 group :production do
@@ -72,3 +74,5 @@ group :production do
   gem 'rails_12factor'
   gem 'foreman'
 end
+
+gem 'newrelic_rpm'

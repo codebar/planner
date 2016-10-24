@@ -81,7 +81,12 @@ class ApplicationController < ActionController::Base
     current_user.verified?
   end
 
+  def is_verified_coach_or_organiser?
+    current_user.verified_or_organiser?
+  end
+
   helper_method :is_verified_coach_or_admin?
+  helper_method :is_verified_coach_or_organiser?
 
   def is_logged_in?
     unless logged_in?
@@ -115,7 +120,7 @@ class ApplicationController < ActionController::Base
   helper_method :jobs_pending_approval, :chapters
 
   def upcoming_workshops
-    Sessions.upcoming
+    Workshop.upcoming
   end
 
   helper_method :upcoming_workshops

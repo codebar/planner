@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160228102639) do
+ActiveRecord::Schema.define(version: 20160614203328) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -66,6 +66,8 @@ ActiveRecord::Schema.define(version: 20160228102639) do
     t.integer  "added_by_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "permanent",   default: false
+    t.text     "explanation"
   end
 
   add_index "bans", ["added_by_id"], name: "index_bans_on_added_by_id", using: :btree
@@ -90,6 +92,14 @@ ActiveRecord::Schema.define(version: 20160228102639) do
 
   add_index "chapters_events", ["chapter_id"], name: "index_chapters_events_on_chapter_id", using: :btree
   add_index "chapters_events", ["event_id"], name: "index_chapters_events_on_event_id", using: :btree
+
+  create_table "chapters_meetings", force: :cascade do |t|
+    t.integer "chapter_id"
+    t.integer "meeting_id"
+  end
+
+  add_index "chapters_meetings", ["chapter_id"], name: "index_chapters_meetings_on_chapter_id", using: :btree
+  add_index "chapters_meetings", ["meeting_id"], name: "index_chapters_meetings_on_meeting_id", using: :btree
 
   create_table "contacts", force: :cascade do |t|
     t.integer  "sponsor_id"
@@ -195,13 +205,17 @@ ActiveRecord::Schema.define(version: 20160228102639) do
     t.boolean  "show_faq"
     t.boolean  "display_students"
     t.boolean  "display_coaches"
+    t.string   "external_url"
+    t.boolean  "confirmation_required", default: false
+    t.boolean  "surveys_required",      default: false
+    t.string   "audience"
   end
 
   add_index "events", ["venue_id"], name: "index_events_on_venue_id", using: :btree
 
   create_table "feedback_requests", force: :cascade do |t|
     t.integer  "member_id"
-    t.integer  "sessions_id"
+    t.integer  "workshop_id"
     t.string   "token"
     t.boolean  "submited"
     t.datetime "created_at"
@@ -209,7 +223,7 @@ ActiveRecord::Schema.define(version: 20160228102639) do
   end
 
   add_index "feedback_requests", ["member_id"], name: "index_feedback_requests_on_member_id", using: :btree
-  add_index "feedback_requests", ["sessions_id"], name: "index_feedback_requests_on_sessions_id", using: :btree
+  add_index "feedback_requests", ["workshop_id"], name: "index_feedback_requests_on_workshop_id", using: :btree
 
   create_table "feedbacks", force: :cascade do |t|
     t.integer  "tutorial_id"
@@ -289,6 +303,7 @@ ActiveRecord::Schema.define(version: 20160228102639) do
     t.string   "token"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "attended",   default: false
   end
 
   add_index "meeting_invitations", ["meeting_id"], name: "index_meeting_invitations_on_meeting_id", using: :btree
@@ -318,6 +333,7 @@ ActiveRecord::Schema.define(version: 20160228102639) do
     t.boolean  "invitable"
     t.integer  "spaces"
     t.integer  "sponsor_id"
+    t.boolean  "invites_sent",  default: false
   end
 
   add_index "meetings", ["venue_id"], name: "index_meetings_on_venue_id", using: :btree
@@ -390,7 +406,7 @@ ActiveRecord::Schema.define(version: 20160228102639) do
   end
 
   create_table "session_invitations", force: :cascade do |t|
-    t.integer  "sessions_id"
+    t.integer  "workshop_id"
     t.integer  "member_id"
     t.boolean  "attending"
     t.boolean  "attended"
@@ -400,37 +416,12 @@ ActiveRecord::Schema.define(version: 20160228102639) do
     t.string   "token"
     t.string   "role"
     t.datetime "reminded_at"
+    t.datetime "rsvp_time"
   end
 
   add_index "session_invitations", ["member_id"], name: "index_session_invitations_on_member_id", using: :btree
-  add_index "session_invitations", ["sessions_id"], name: "index_session_invitations_on_sessions_id", using: :btree
   add_index "session_invitations", ["token"], name: "index_session_invitations_on_token", unique: true, using: :btree
-
-  create_table "sessions", force: :cascade do |t|
-    t.string   "title"
-    t.text     "description"
-    t.datetime "date_and_time"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.boolean  "invitable",       default: true
-    t.string   "sign_up_url"
-    t.integer  "chapter_id"
-    t.datetime "time"
-    t.datetime "rsvp_close_time"
-  end
-
-  add_index "sessions", ["chapter_id"], name: "index_sessions_on_chapter_id", using: :btree
-
-  create_table "sponsor_sessions", force: :cascade do |t|
-    t.integer  "sponsor_id"
-    t.integer  "sessions_id"
-    t.boolean  "host",        default: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "sponsor_sessions", ["sessions_id"], name: "index_sponsor_sessions_on_sessions_id", using: :btree
-  add_index "sponsor_sessions", ["sponsor_id"], name: "index_sponsor_sessions_on_sponsor_id", using: :btree
+  add_index "session_invitations", ["workshop_id"], name: "index_session_invitations_on_workshop_id", using: :btree
 
   create_table "sponsors", force: :cascade do |t|
     t.string   "name"
@@ -500,12 +491,12 @@ ActiveRecord::Schema.define(version: 20160228102639) do
     t.string   "title"
     t.text     "description"
     t.string   "url"
-    t.integer  "sessions_id"
+    t.integer  "workshop_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "tutorials", ["sessions_id"], name: "index_tutorials_on_sessions_id", using: :btree
+  add_index "tutorials", ["workshop_id"], name: "index_tutorials_on_workshop_id", using: :btree
 
   create_table "waiting_lists", force: :cascade do |t|
     t.integer  "invitation_id"
@@ -515,5 +506,31 @@ ActiveRecord::Schema.define(version: 20160228102639) do
   end
 
   add_index "waiting_lists", ["invitation_id"], name: "index_waiting_lists_on_invitation_id", using: :btree
+
+  create_table "workshop_sponsors", force: :cascade do |t|
+    t.integer  "sponsor_id"
+    t.integer  "workshop_id"
+    t.boolean  "host",        default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "workshop_sponsors", ["sponsor_id"], name: "index_workshop_sponsors_on_sponsor_id", using: :btree
+  add_index "workshop_sponsors", ["workshop_id"], name: "index_workshop_sponsors_on_workshop_id", using: :btree
+
+  create_table "workshops", force: :cascade do |t|
+    t.string   "title"
+    t.text     "description"
+    t.datetime "date_and_time"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "invitable",       default: true
+    t.string   "sign_up_url"
+    t.integer  "chapter_id"
+    t.datetime "time"
+    t.datetime "rsvp_close_time"
+  end
+
+  add_index "workshops", ["chapter_id"], name: "index_workshops_on_chapter_id", using: :btree
 
 end
