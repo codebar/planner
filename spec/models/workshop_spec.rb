@@ -7,7 +7,9 @@ describe Workshop do
   it { should respond_to(:description) }
   it { should respond_to(:date_and_time) }
   it { should respond_to(:sponsors) }
-  it { should respond_to(:workshop_sponsors)}
+  it { should respond_to(:workshop_sponsors) }
+  it { should respond_to(:rsvp_open_date) }
+  it { should respond_to(:rsvp_open_time) }
 
   context "#before_save" do
     let(:workshop) { Fabricate.build(:workshop, chapter: Fabricate(:chapter)) }
