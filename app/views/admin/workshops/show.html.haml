@@ -39,6 +39,11 @@
             %small=@workshop.chapter.name
         %h3
           %small #{l(@workshop.date_and_time)}
+        - if @workshop.rsvp_open_time_set?
+          RSVPs will open at
+          = @workshop.rsvp_open_time.strftime('%H:%M on %d/%m/%Y.')
+          %br
+          %br
         - if @workshop.venue.present?
           %strong.label.round.primary #{@workshop.venue.seats} student spots, #{@workshop.venue.coach_spots} coach spots
           - unless @workshop.spaces?

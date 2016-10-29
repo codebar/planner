@@ -8,7 +8,7 @@ class WorkshopsController < ApplicationController
   end
 
   def rsvp
-    redirect_to :back, notice: "This workshop is not open for registrations" unless @workshop.invitable
+    redirect_to :back, notice: "This workshop is not open for registrations" unless @workshop.invitable_yet?
 
     if role_params.nil?
       @invitation = SessionInvitation.where(workshop: @workshop, member: current_user, attending: true).first

@@ -27,12 +27,12 @@
 
 $(function(){
   $(document).foundation();
-  $('#sessions_date_and_time, #event_date_and_time').pickadate({
+  $('#sessions_date_and_time, #event_date_and_time, #workshop_rsvp_open_date').pickadate({
     format: 'dd/mm/yyyy'
   });
 
   $('#announcement_expires_at, #ban_expires_at').pickadate();
-  $('#sessions_time, #event_begins_at, #event_ends_at').pickatime({
+  $('#sessions_time, #event_begins_at, #event_ends_at, #workshop_rsvp_open_time').pickatime({
     format: 'HH:i'
   });
 

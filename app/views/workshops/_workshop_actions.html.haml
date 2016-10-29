@@ -1,5 +1,5 @@
 %p
-  - if !@workshop.invitable
+  - if !@workshop.invitable_yet?
     This workshop is not yet open for RSVP.
   - else
     - if @workshop.past?
@@ -14,7 +14,7 @@
         - elsif !@workshop.spaces?
           This workshop is full, but you can still join the waiting list.
 
-- if logged_in? && @workshop.future? && @workshop.invitable
+- if logged_in? && @workshop.future? && (@workshop.invitable || @workshop.open_for_rsvp?)
   - if @workshop.attendee?(current_user)
     = link_to "Manage your invitation", rsvp_workshop_path(@workshop), method: :post, class: 'button round '
   - else

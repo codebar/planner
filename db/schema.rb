@@ -11,21 +11,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160614203328) do
+ActiveRecord::Schema.define(version: 20161028141043) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "addresses", force: :cascade do |t|
-    t.string   "flat"
-    t.string   "street"
-    t.string   "postal_code"
+    t.string   "flat",        limit: 255
+    t.string   "street",      limit: 255
+    t.string   "postal_code", limit: 255
     t.integer  "sponsor_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "city"
-    t.string   "latitude"
-    t.string   "longitude"
+    t.string   "city",        limit: 255
+    t.string   "latitude",    limit: 255
+    t.string   "longitude",   limit: 255
   end
 
   create_table "announcements", force: :cascade do |t|
@@ -50,8 +50,8 @@ ActiveRecord::Schema.define(version: 20160614203328) do
 
   create_table "auth_services", force: :cascade do |t|
     t.integer  "member_id"
-    t.string   "provider"
-    t.string   "uid"
+    t.string   "provider",   limit: 255
+    t.string   "uid",        limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -61,12 +61,12 @@ ActiveRecord::Schema.define(version: 20160614203328) do
   create_table "bans", force: :cascade do |t|
     t.integer  "member_id"
     t.datetime "expires_at"
-    t.string   "reason"
+    t.string   "reason",      limit: 255
     t.text     "note"
     t.integer  "added_by_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "permanent",   default: false
+    t.boolean  "permanent",               default: false
     t.text     "explanation"
   end
 
@@ -74,24 +74,21 @@ ActiveRecord::Schema.define(version: 20160614203328) do
   add_index "bans", ["member_id"], name: "index_bans_on_member_id", using: :btree
 
   create_table "chapters", force: :cascade do |t|
-    t.string   "name"
-    t.string   "city"
+    t.string   "name",       limit: 255
+    t.string   "city",       limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "email"
-    t.string   "twitter"
-    t.string   "twitter_id"
-    t.string   "slug"
-    t.boolean  "active",     default: true
+    t.string   "email",      limit: 255
+    t.string   "twitter",    limit: 255
+    t.string   "twitter_id", limit: 255
+    t.string   "slug",       limit: 255
+    t.boolean  "active",                 default: true
   end
 
   create_table "chapters_events", force: :cascade do |t|
     t.integer "chapter_id"
     t.integer "event_id"
   end
-
-  add_index "chapters_events", ["chapter_id"], name: "index_chapters_events_on_chapter_id", using: :btree
-  add_index "chapters_events", ["event_id"], name: "index_chapters_events_on_event_id", using: :btree
 
   create_table "chapters_meetings", force: :cascade do |t|
     t.integer "chapter_id"
@@ -117,7 +114,7 @@ ActiveRecord::Schema.define(version: 20160614203328) do
     t.boolean  "attending"
     t.boolean  "attended"
     t.text     "note"
-    t.string   "token"
+    t.string   "token",      limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -136,35 +133,34 @@ ActiveRecord::Schema.define(version: 20160614203328) do
   add_index "course_tutors", ["tutor_id"], name: "index_course_tutors_on_tutor_id", using: :btree
 
   create_table "courses", force: :cascade do |t|
-    t.string   "title"
-    t.string   "short_description"
+    t.string   "title",             limit: 255
+    t.string   "short_description", limit: 255
     t.text     "description"
     t.integer  "tutor_id"
     t.datetime "date_and_time"
-    t.integer  "seats",             default: 0
-    t.string   "slug"
-    t.string   "url"
+    t.integer  "seats",                         default: 0
+    t.string   "slug",              limit: 255
+    t.string   "url",               limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "sponsor_id"
-    t.string   "ticket_url"
+    t.string   "ticket_url",        limit: 255
     t.integer  "chapter_id"
   end
 
   add_index "courses", ["chapter_id"], name: "index_courses_on_chapter_id", using: :btree
   add_index "courses", ["sponsor_id"], name: "index_courses_on_sponsor_id", using: :btree
-  add_index "courses", ["tutor_id"], name: "index_courses_on_tutor_id", using: :btree
 
   create_table "delayed_jobs", force: :cascade do |t|
-    t.integer  "priority",   default: 0, null: false
-    t.integer  "attempts",   default: 0, null: false
-    t.text     "handler",                null: false
+    t.integer  "priority",               default: 0, null: false
+    t.integer  "attempts",               default: 0, null: false
+    t.text     "handler",                            null: false
     t.text     "last_error"
     t.datetime "run_at"
     t.datetime "locked_at"
     t.datetime "failed_at"
-    t.string   "locked_by"
-    t.string   "queue"
+    t.string   "locked_by",  limit: 255
+    t.string   "queue",      limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -182,32 +178,32 @@ ActiveRecord::Schema.define(version: 20160614203328) do
   add_index "eligibility_inquiries", ["sent_by_id"], name: "index_eligibility_inquiries_on_sent_by_id", using: :btree
 
   create_table "events", force: :cascade do |t|
-    t.string   "name"
+    t.string   "name",                  limit: 255
     t.text     "description"
     t.datetime "date_and_time"
     t.datetime "ends_at"
     t.integer  "venue_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "slug"
+    t.string   "slug",                  limit: 255
     t.text     "schedule"
     t.integer  "coach_spaces"
     t.integer  "student_spaces"
-    t.string   "coach_questionnaire"
-    t.string   "student_questionnaire"
+    t.string   "coach_questionnaire",   limit: 255
+    t.string   "student_questionnaire", limit: 255
     t.text     "coach_description"
-    t.string   "info"
+    t.string   "info",                  limit: 255
     t.boolean  "announce_only"
-    t.string   "url"
-    t.string   "email"
-    t.boolean  "invitable",             default: false
-    t.string   "tito_url"
+    t.string   "url",                   limit: 255
+    t.string   "email",                 limit: 255
+    t.boolean  "invitable",                         default: false
+    t.string   "tito_url",              limit: 255
     t.boolean  "show_faq"
     t.boolean  "display_students"
     t.boolean  "display_coaches"
     t.string   "external_url"
-    t.boolean  "confirmation_required", default: false
-    t.boolean  "surveys_required",      default: false
+    t.boolean  "confirmation_required",             default: false
+    t.boolean  "surveys_required",                  default: false
     t.string   "audience"
   end
 
@@ -216,7 +212,7 @@ ActiveRecord::Schema.define(version: 20160614203328) do
   create_table "feedback_requests", force: :cascade do |t|
     t.integer  "member_id"
     t.integer  "workshop_id"
-    t.string   "token"
+    t.string   "token",       limit: 255
     t.boolean  "submited"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -250,11 +246,11 @@ ActiveRecord::Schema.define(version: 20160614203328) do
 
   create_table "groups", force: :cascade do |t|
     t.integer  "chapter_id"
-    t.string   "name"
+    t.string   "name",            limit: 255
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "mailing_list_id"
+    t.string   "mailing_list_id", limit: 255
   end
 
   add_index "groups", ["chapter_id"], name: "index_groups_on_chapter_id", using: :btree
@@ -263,11 +259,11 @@ ActiveRecord::Schema.define(version: 20160614203328) do
     t.integer  "event_id"
     t.boolean  "attending"
     t.integer  "member_id"
-    t.string   "role"
+    t.string   "role",           limit: 255
     t.text     "note"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "token"
+    t.string   "token",          limit: 255
     t.boolean  "verified"
     t.integer  "verified_by_id"
   end
@@ -277,18 +273,18 @@ ActiveRecord::Schema.define(version: 20160614203328) do
   add_index "invitations", ["verified_by_id"], name: "index_invitations_on_verified_by_id", using: :btree
 
   create_table "jobs", force: :cascade do |t|
-    t.string   "title"
+    t.string   "title",          limit: 255
     t.text     "description"
-    t.string   "location"
+    t.string   "location",       limit: 255
     t.datetime "expiry_date"
-    t.string   "email"
-    t.string   "link_to_job"
+    t.string   "email",          limit: 255
+    t.string   "link_to_job",    limit: 255
     t.integer  "created_by_id"
-    t.boolean  "approved",       default: false
-    t.boolean  "submitted",      default: false
+    t.boolean  "approved",                   default: false
+    t.boolean  "submitted",                  default: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "company"
+    t.string   "company",        limit: 255
     t.integer  "approved_by_id"
   end
 
@@ -311,8 +307,8 @@ ActiveRecord::Schema.define(version: 20160614203328) do
 
   create_table "meeting_talks", force: :cascade do |t|
     t.integer  "meeting_id"
-    t.string   "title"
-    t.string   "description"
+    t.string   "title",       limit: 255
+    t.string   "description", limit: 255
     t.text     "abstract"
     t.integer  "speaker_id"
     t.datetime "created_at"
@@ -320,23 +316,20 @@ ActiveRecord::Schema.define(version: 20160614203328) do
   end
 
   add_index "meeting_talks", ["meeting_id"], name: "index_meeting_talks_on_meeting_id", using: :btree
-  add_index "meeting_talks", ["speaker_id"], name: "index_meeting_talks_on_speaker_id", using: :btree
 
   create_table "meetings", force: :cascade do |t|
     t.datetime "date_and_time"
     t.integer  "venue_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "name"
+    t.string   "name",          limit: 255
     t.text     "description"
-    t.string   "slug"
+    t.string   "slug",          limit: 255
     t.boolean  "invitable"
     t.integer  "spaces"
     t.integer  "sponsor_id"
-    t.boolean  "invites_sent",  default: false
+    t.boolean  "invites_sent",              default: false
   end
-
-  add_index "meetings", ["venue_id"], name: "index_meetings_on_venue_id", using: :btree
 
   create_table "member_contacts", force: :cascade do |t|
     t.integer  "sponsor_id"
@@ -357,19 +350,19 @@ ActiveRecord::Schema.define(version: 20160614203328) do
   add_index "member_notes", ["member_id"], name: "index_member_notes_on_member_id", using: :btree
 
   create_table "members", force: :cascade do |t|
-    t.string   "name"
-    t.string   "surname"
-    t.string   "email"
-    t.string   "twitter"
-    t.string   "about_you"
+    t.string   "name",                           limit: 255
+    t.string   "surname",                        limit: 255
+    t.string   "email",                          limit: 255
+    t.string   "twitter",                        limit: 255
+    t.string   "about_you",                      limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "unsubscribed"
-    t.boolean  "can_log_in",                     default: false, null: false
-    t.string   "mobile"
-    t.boolean  "received_coach_welcome_email",   default: false
-    t.boolean  "received_student_welcome_email", default: false
-    t.string   "pronouns"
+    t.boolean  "can_log_in",                                 default: false, null: false
+    t.string   "mobile",                         limit: 255
+    t.boolean  "received_coach_welcome_email",               default: false
+    t.boolean  "received_student_welcome_email",             default: false
+    t.string   "pronouns",                       limit: 255
   end
 
   create_table "members_permissions", id: false, force: :cascade do |t|
@@ -388,9 +381,9 @@ ActiveRecord::Schema.define(version: 20160614203328) do
   add_index "members_roles", ["member_id"], name: "index_members_roles_on_member_id", using: :btree
 
   create_table "permissions", force: :cascade do |t|
-    t.string   "name"
+    t.string   "name",          limit: 255
     t.integer  "resource_id"
-    t.string   "resource_type"
+    t.string   "resource_type", limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -399,8 +392,8 @@ ActiveRecord::Schema.define(version: 20160614203328) do
   add_index "permissions", ["name"], name: "index_permissions_on_name", using: :btree
 
   create_table "roles", force: :cascade do |t|
-    t.string   "name"
-    t.string   "description"
+    t.string   "name",        limit: 255
+    t.string   "description", limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -413,8 +406,8 @@ ActiveRecord::Schema.define(version: 20160614203328) do
     t.text     "note"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "token"
-    t.string   "role"
+    t.string   "token",       limit: 255
+    t.string   "role",        limit: 255
     t.datetime "reminded_at"
     t.datetime "rsvp_time"
   end
@@ -424,18 +417,18 @@ ActiveRecord::Schema.define(version: 20160614203328) do
   add_index "session_invitations", ["workshop_id"], name: "index_session_invitations_on_workshop_id", using: :btree
 
   create_table "sponsors", force: :cascade do |t|
-    t.string   "name"
+    t.string   "name",               limit: 255
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "avatar"
-    t.string   "website"
-    t.integer  "seats",              default: 15
-    t.string   "image_cache"
+    t.string   "avatar",             limit: 255
+    t.string   "website",            limit: 255
+    t.integer  "seats",                          default: 15
+    t.string   "image_cache",        limit: 255
     t.integer  "number_of_coaches"
-    t.string   "email"
-    t.string   "contact_first_name"
-    t.string   "contact_surname"
+    t.string   "email",              limit: 255
+    t.string   "contact_first_name", limit: 255
+    t.string   "contact_surname",    limit: 255
   end
 
   create_table "sponsorships", force: :cascade do |t|
@@ -461,9 +454,9 @@ ActiveRecord::Schema.define(version: 20160614203328) do
   create_table "taggings", force: :cascade do |t|
     t.integer  "tag_id"
     t.integer  "taggable_id"
-    t.string   "taggable_type"
+    t.string   "taggable_type", limit: 255
     t.integer  "tagger_id"
-    t.string   "tagger_type"
+    t.string   "tagger_type",   limit: 255
     t.string   "context",       limit: 128
     t.datetime "created_at"
   end
@@ -472,8 +465,8 @@ ActiveRecord::Schema.define(version: 20160614203328) do
   add_index "taggings", ["taggable_id", "taggable_type", "context"], name: "index_taggings_on_taggable_id_and_taggable_type_and_context", using: :btree
 
   create_table "tags", force: :cascade do |t|
-    t.string  "name"
-    t.integer "taggings_count", default: 0
+    t.string  "name",           limit: 255
+    t.integer "taggings_count",             default: 0
   end
 
   add_index "tags", ["name"], name: "index_tags_on_name", unique: true, using: :btree
@@ -488,9 +481,9 @@ ActiveRecord::Schema.define(version: 20160614203328) do
   add_index "testimonials", ["member_id"], name: "index_testimonials_on_member_id", using: :btree
 
   create_table "tutorials", force: :cascade do |t|
-    t.string   "title"
+    t.string   "title",       limit: 255
     t.text     "description"
-    t.string   "url"
+    t.string   "url",         limit: 255
     t.integer  "workshop_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -519,16 +512,19 @@ ActiveRecord::Schema.define(version: 20160614203328) do
   add_index "workshop_sponsors", ["workshop_id"], name: "index_workshop_sponsors_on_workshop_id", using: :btree
 
   create_table "workshops", force: :cascade do |t|
-    t.string   "title"
+    t.string   "title",              limit: 255
     t.text     "description"
     t.datetime "date_and_time"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "invitable",       default: true
-    t.string   "sign_up_url"
+    t.boolean  "invitable",                      default: true
+    t.string   "sign_up_url",        limit: 255
     t.integer  "chapter_id"
     t.datetime "time"
     t.datetime "rsvp_close_time"
+    t.datetime "random_allocate_at"
+    t.datetime "rsvp_open_time"
+    t.datetime "rsvp_open_date"
   end
 
   add_index "workshops", ["chapter_id"], name: "index_workshops_on_chapter_id", using: :btree

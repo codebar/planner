@@ -9,7 +9,6 @@ class Workshop < ActiveRecord::Base
   has_many :sponsors, through: :workshop_sponsors
   has_many :organisers, -> { where("permissions.name" => "organiser") }, through: :permissions, source: :members
 
-
   belongs_to :chapter
 
   default_scope { order('date_and_time DESC') }
@@ -62,6 +61,19 @@ class Workshop < ActiveRecord::Base
 
   def future?
     date_and_time.future?
+  end
+
+  def open_for_rsvp?
+    rsvp_open_time_set? && rsvp_open_time.past?
+  end
+
+  def rsvp_open_time_set?
+    rsvp_open_time.present?
+  end
+
+  def invitable_yet?
+    return true if open_for_rsvp?
+    invitable
   end
 
   # Is this person attending this event?
