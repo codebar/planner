@@ -17,6 +17,8 @@
             .large-2.columns
               - (0...feedback.rating).each do |rating|
                 %i.fa.fa-star
+            .large-1.columns
+              = feedback.tutorial.workshop.chapter.name
           - if feedback.request.present?
             .row
               .large-12.columns
