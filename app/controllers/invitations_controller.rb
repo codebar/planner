@@ -35,7 +35,7 @@ class InvitationsController < ApplicationController
       end
 
       if event.surveys_required
-        notice += " We will verify your attendance after you complete the questionnaire!"
+        notice = "Your spot has not yet been confirmed. We will verify your attendance after you complete the questionnaire."
       end
 
       redirect_to :back, notice: notice
