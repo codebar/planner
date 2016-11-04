@@ -42,14 +42,14 @@ feature 'viewing an event' do
           click_on 'Attend as a coach'
           click_on 'RSVP'
 
-          expect(page).to have_content("Your spot has been confirmed for #{closed_event.name}! We look forward to seeing you there. We will verify your attendance after you complete the questionnaire!")
+          expect(page).to have_content("Your spot has not yet been confirmed. We will verify your attendance after you complete the questionnaire.")
         end
 
         scenario "as a Student" do
           click_on 'Attend as a student'
           click_on 'RSVP'
 
-          expect(page).to have_content("Your spot has been confirmed for #{closed_event.name}! We look forward to seeing you there. We will verify your attendance after you complete the questionnaire!")
+          expect(page).to have_content("Your spot has not yet been confirmed. We will verify your attendance after you complete the questionnaire.")
         end
       end
     end
