@@ -3,6 +3,7 @@ backup_production:
 	curl -o pg-production-latest.dump `heroku pgbackups:url --app=codebar-production`
 	bzip2 pg-production-latest.dump
 deploy_production:
+	git pull -r production master
 	heroku maintenance:on --app=codebar-production
 	git tag production_release_`date +"%Y%m%d-%H%M%S"`
 	git push upstream --tags
@@ -14,6 +15,7 @@ backup_staging:
 	curl -o pg-staging-latest.dump `heroku pgbackups:url --app=codebar-staging`
 	bzip2 pg-staging-latest.dump
 deploy_staging:
+	git pull -r staging master
 	heroku maintenance:on --app=codebar-staging
 	git tag staging_release_`date +"%Y%m%d-%H%M%S"`
 	git push upstream --tags
