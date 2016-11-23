@@ -3,6 +3,17 @@ require 'spec_helper'
 feature 'chapters' do
   let(:member) { Fabricate(:member) }
 
+  context "Authorization smoke test" do
+    scenario "Non-admins should be redirected" do
+      login(member)
+
+      visit new_admin_chapter_path
+
+      expect(current_path).to eq "/"
+      expect(page).to have_content "You can't be here"
+    end
+  end
+
   context "#creating a new chapter" do
     before do
       login_as_admin(member)
@@ -24,7 +35,6 @@ feature 'chapters' do
   context "#editing a chapter" do
     let(:chapter) { Fabricate(:chapter) }
 
-
     context "organiser editing their chapter" do
       before do
         login(chapter.organisers.first)
@@ -44,7 +54,7 @@ feature 'chapters' do
     end
 
     context "organiser editing a chapter they do not organise" do
-  
+
       let(:chapter_organiser) { Fabricate(:chapter_organiser)}
       before do
         login(chapter_organiser)
@@ -58,7 +68,7 @@ feature 'chapters' do
     end
 
     context "admin editing a chapter they do not organise" do
-  
+
       # let(:chapter_organiser) { Fabricate(:chapter_organiser)}
       let(:member) { Fabricate(:member)}
       before do
@@ -74,9 +84,39 @@ feature 'chapters' do
 
         click_on "Update chapter"
 
-
         expect(page).to have_content("Chapter codebar Brighton has been successfully updated")
       end
+    end
+  end
+
+  context "viewing #members emails" do
+    let(:chapter) { Fabricate(:chapter_with_groups) }
+
+    before do
+      login_as_admin(member)
+    end
+
+    scenario "an admin can view emails of all members in a chapter" do
+      visit admin_chapter_members_path(chapter)
+
+      members_emails = chapter.members.map(&:email)
+
+      members_emails.each do |email|
+        expect(page).to have_content(email)
+      end
+    end
+
+    scenario "admin can view emails of only students" do
+      visit admin_chapter_members_path(chapter, type: "students")
+
+      students_emails = chapter.students.map(&:email)
+      coach_email = chapter.coaches.first.email
+
+      students_emails.each do |email|
+        expect(page).to have_content(email)
+      end
+
+      expect(page).not_to have_content(coach_email)
     end
   end
 end
