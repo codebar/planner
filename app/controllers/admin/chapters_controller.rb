@@ -47,6 +47,20 @@ class Admin::ChaptersController < Admin::ApplicationController
     end
   end
 
+  def members
+    chapter = Chapter.find(params[:chapter_id])
+    authorize chapter
+    type = params[:type]
+
+    if ["students", "coaches"].include?(type)
+      @emails = chapter.send(type).map(&:email).join("\n")
+    else
+      @emails = chapter.members.pluck(:email).uniq.join("\n")
+    end
+
+    render plain: @emails
+  end
+
   private
 
   def chapter_params
