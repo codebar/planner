@@ -109,6 +109,7 @@ Planner::Application.routes.draw do
     resources :member_notes, only: [:create]
 
     resources :chapters, only: [ :index, :new, :create, :show, :edit, :update] do
+      get :members
       resources :workshops, only: [ :index ]
     end
 

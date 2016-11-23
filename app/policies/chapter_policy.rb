@@ -20,6 +20,10 @@ class ChapterPolicy < ApplicationPolicy
   	is_admin_or_organiser?
   end
 
+  def members?
+    is_admin_or_organiser?
+  end
+
   private
 
   def is_admin_or_organiser?

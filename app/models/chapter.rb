@@ -25,6 +25,14 @@ class Chapter < ActiveRecord::Base
     @organisers ||= Member.with_role(:organiser, self)
   end
 
+  def students
+    members.select(&:student?)
+  end
+
+  def coaches
+    members.select(&:coach?)
+  end
+
   private
 
   def set_slug
