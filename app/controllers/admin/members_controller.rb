@@ -1,4 +1,7 @@
 class Admin::MembersController < Admin::ApplicationController
+  def index
+    @members = Member.all
+  end
 
   def show
     @member = Member.includes(:member_notes).find(params[:id])
