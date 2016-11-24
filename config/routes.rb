@@ -101,7 +101,7 @@ Planner::Application.routes.draw do
     end
 
     resources :announcements, only: [:new, :index, :create, :edit, :update]
-    resources :members, only: [:show] do
+    resources :members, only: [:show, :index] do
       get :send_eligibility_email
       get :send_attendance_email
       resources :bans, only: [ :index, :new, :create ]
