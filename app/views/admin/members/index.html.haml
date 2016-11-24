@@ -1,0 +1,11 @@
+%section
+  .stripe
+    .row
+      %h1 Members Directory
+      %br
+    .row
+      .column.large-4
+        = select_tag 'member_lookup_id', options_for_select(@members.collect{ |u| [u.full_name, u.id] }), { class: 'chosen-select' }
+        %br
+        %br
+        = link_to 'View Profile', '#', { class: 'button small', id: 'view_profile' }
