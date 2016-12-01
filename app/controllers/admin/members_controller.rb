@@ -11,6 +11,15 @@ class Admin::MembersController < Admin::ApplicationController
     @member_note = MemberNote.new
   end
 
+  def update_subscriptions
+    member = Member.find(params[:member_id])
+    subscription = member.subscriptions.find_by_group_id(params[:group])
+    flash[:notice] = "You have unsubscribed #{member.full_name} from #{subscription.group.chapter.city}'s #{subscription.group.name} group"
+
+    subscription.destroy
+    redirect_to :back
+  end
+
   def send_eligibility_email
     @member = Member.find(params[:member_id])
     @member.send_eligibility_email(current_user)
