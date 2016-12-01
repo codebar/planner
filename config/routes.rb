@@ -104,6 +104,7 @@ Planner::Application.routes.draw do
     resources :members, only: [:show, :index] do
       get :send_eligibility_email
       get :send_attendance_email
+      get :update_subscriptions
       resources :bans, only: [ :index, :new, :create ]
     end
     resources :member_notes, only: [:create]
