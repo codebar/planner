@@ -64,27 +64,27 @@
         - else
           = render partial: 'events/faq'
 
-- unless @event.announce_only
-  .stripe.reverse
-    .row
-      .large-12.columns
-        %a{ name: "sponsors" }
-        %h2{ "data-magellan-destination" => "sponsors"}
-          .text-center= t('events.sponsors')
-        %p.text-center
-          %i= t('events.thx_to_sponsors')
-        %br
-        - if @event.sponsors.any?
-          %ul.no-bullet
-            - @event.sponsors.each do |sponsor|
-              %li
-                .row
-                  .large-2.columns
-                    = image_tag sponsor.avatar, class: 'sponsor'
-                  .large-10.columns
-                    =link_to sponsor.name, sponsor.website
-                    %p
-                      = sponsor.description
+
+.stripe.reverse
+  .row
+    .large-12.columns
+      %a{ name: "sponsors" }
+      %h2{ "data-magellan-destination" => "sponsors"}
+        .text-center= t('events.sponsors')
+      %p.text-center
+        %i= t('events.thx_to_sponsors')
+      %br
+      - if @event.sponsors.any?
+        %ul.no-bullet
+          - @event.sponsors.each do |sponsor|
+            %li
+              .row
+                .large-2.columns
+                  = image_tag sponsor.avatar, class: 'sponsor'
+                .large-10.columns
+                  =link_to sponsor.name, sponsor.website
+                  %p
+                    = sponsor.description
 - if @event.verified_coaches.any?
   .stripe.reverse
     .row
