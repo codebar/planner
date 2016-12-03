@@ -21,7 +21,7 @@
                     - if @invitation.role.eql?("Student")
                       If you haven't already, please remember to let us know what you will be working on through the invitation.
                   See you at our workshop!
-                  
+
                   %p
                     If you can no longer make it, please cancel your invitation <strong>before 15:00</strong> on the day of the event.
                     <a href="https://codebar.io/student-guide#attendance">We have a three-strikes attendance policy for no-shows.</a>
@@ -44,7 +44,7 @@
                   #{@session.host.name}
                   %br
                   #{@host_address.to_html}
-                = link_to "Who else will be there?", full_url_for(invitation_url(@invitation)), class: 'btn'
+                = link_to "Update your attendance", full_url_for(invitation_url(@invitation)), class: 'btn'
 
         .content
           %table
