@@ -9,13 +9,13 @@
   = simple_form_for @member, method: :put, url: {action: :step1}, html: {class: "sign-up-wizard"} do |f|
     .row
       .large-6.large-offset-3.columns
-        = f.input :name, label: "First name", required: true
+        = f.input :name, label: "First name", required: true, placeholder: "ex. Grace"
     .row
       .large-6.large-offset-3.columns
-        = f.input :surname, required: true
+        = f.input :surname, required: true, placeholder: "ex. Hopper"
     .row
       .large-6.large-offset-3.columns
-        = f.input :pronouns, label: "What pronouns do you use?", placeholder: "e.g. she/her"
+        = f.input :pronouns, label: "What pronouns do you use?", placeholder: "ex. she/her"
 
     .row
       .large-6.large-offset-3.columns
@@ -30,5 +30,5 @@
 
     .row
       .large-6.large-offset-3.columns.text-right
-        = hidden_field_tag :next_page, step2_member_path
+        = hidden_field_tag :next_page, step2_member_path(member_type: @type)
         = f.submit "Next", class: 'button round right'
