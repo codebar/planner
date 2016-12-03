@@ -5,14 +5,14 @@
       %p
         To receive invitations to our events you must subscribe to the appropriate groups. Alternatively, you can always RSVP directly from the website. Just be aware that spots to some of our busier chapters go away really fast.
 
-  - if current_user.student?
-
+  - if @type == "student"
     = render partial: 'student_invite_subscriptions', locals: {groups: @student_groups, collapsed: false}
-    = render partial: 'coach_invite_subscriptions', locals: {groups: @coach_groups, collapsed: true}
-  - else
+  - elsif @type == "coach"
     = render partial: 'coach_invite_subscriptions', locals: {groups: @coach_groups, collapsed: false}
-    = render partial: 'student_invite_subscriptions', locals: {groups: @student_groups, collapsed: true}
-
+  - else
+    = render partial: 'student_invite_subscriptions', locals: {groups: @student_groups, collapsed: false}
+    = render partial: 'coach_invite_subscriptions', locals: {groups: @coach_groups, collapsed: false}
+    
   .row
     .large-6.large-offset-3.columns
       %p

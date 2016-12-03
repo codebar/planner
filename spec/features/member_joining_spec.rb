@@ -17,7 +17,6 @@ feature "A new student signs up", js: false do
     visit root_path
     click_on "Learn to code!"
     click_on "I understand and meet the eligibility criteria. Sign me up as a student"
-
     expect(current_path).to eq(step1_member_path)
   end
 
