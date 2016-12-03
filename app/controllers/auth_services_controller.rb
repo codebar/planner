@@ -1,5 +1,6 @@
 class AuthServicesController < ApplicationController
   def create
+    member_type = cookies[:member_type]
     current_service = AuthService.where(provider: omnihash[:provider],
                                         uid: omnihash[:uid]).first
 
@@ -39,7 +40,7 @@ class AuthServicesController < ApplicationController
         session[:oauth_token]        = omnihash[:credentials][:token]
         session[:oauth_token_secret] = omnihash[:credentials][:secret]
 
-        redirect_to step1_member_path, notice: 'Thanks for signing up. Please fill in your details to complete the registration process.'
+        redirect_to step1_member_path(member_type: member_type), notice: 'Thanks for signing up. Please fill in your details to complete the registration process.'
       end
     end
   end
@@ -59,6 +60,7 @@ class AuthServicesController < ApplicationController
   end
 
   private
+
   def omnihash
     request.env['omniauth.auth']
   end

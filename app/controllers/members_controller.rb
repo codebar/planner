@@ -13,7 +13,6 @@ class MembersController < ApplicationController
   def step1
     @suppress_notices = true
     @member = current_user
-
     if request.post? or request.put?
       if @member.update_attributes(member_params)
         redirect_to step2_member_path and return
@@ -22,6 +21,7 @@ class MembersController < ApplicationController
   end
 
   def step2
+    @type = cookies[:member_type]
     @suppress_notices = true
     @member = current_user
     @coach_groups = Group.coaches
@@ -69,5 +69,4 @@ class MembersController < ApplicationController
   def token
     params[:token]
   end
-
 end

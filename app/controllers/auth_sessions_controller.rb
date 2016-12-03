@@ -1,6 +1,7 @@
 class AuthSessionsController < ApplicationController
 
   def create
+    cookies[:member_type] = params[:member_type]
     redirect_to redirect_path
   end
 
