@@ -460,4 +460,4 @@ DEPENDENCIES
   uglifier (>= 1.3.0)
 
 BUNDLED WITH
-   1.11.2
+   1.13.6
