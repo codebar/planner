@@ -5,7 +5,7 @@ class ChapterPolicy < ApplicationPolicy
   end
 
   def create?
-    user.is_admin?
+    is_admin_or_organiser?
   end
 
   def show?
