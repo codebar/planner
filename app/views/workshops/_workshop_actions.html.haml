@@ -18,8 +18,16 @@
   - if @workshop.attendee?(current_user)
     = link_to "Manage your invitation", rsvp_workshop_path(@workshop), method: :post, class: 'button round '
   - else
-    = link_to "Attend as a student", rsvp_workshop_path(@workshop, role: "Student"), method: :post,class: 'button round '
-    = link_to "Attend as a coach", rsvp_workshop_path(@workshop, role: "Coach"), method: :post, class: 'button round '
+    - if current_user.student? && current_user.coach?
+      = link_to "Attend as a student", rsvp_workshop_path(@workshop, role: "Student"), method: :post,class: 'button round '
+      = link_to "Attend as a coach", rsvp_workshop_path(@workshop, role: "Coach"), method: :post,class: 'button round '
+    - elsif current_user.student?
+      = link_to "Attend as a student", rsvp_workshop_path(@workshop, role: "Student"), method: :post,class: 'button round '
+    - elsif current_user.coach?
+      = link_to "Attend as a coach", rsvp_workshop_path(@workshop, role: "Coach"), method: :post,class: 'button round '
+    - else
+      It looks like something went wrong while you were signing up.
+      = link_to "Please tell us whether you're here to learn or to mentor.", subscriptions_path
 
 - elsif not logged_in?
   = link_to "Sign up", new_member_path, class: 'button'
