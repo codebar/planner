@@ -20,19 +20,19 @@ The following steps walk through getting the application running. For contributi
 
 ### Setting up a Ruby Environment
 
-You will need to install Ruby 2.2.4 using RVM or rbenv.
+You will need to install Ruby 2.3.3 using RVM or rbenv.
 
 #### Using [rvm](https://rvm.io/rvm/install)
 
 ```bash
-rvm install 2.2.4
+rvm install 2.3.3
 ```
 
 #### Using [rbenv](https://github.com/sstephenson/rbenv) and [ruby-build](https://github.com/sstephenson/ruby-build)
 
 ```bash
-rbenv install 2.2.4
-rbenv global 2.2.4
+rbenv install 2.3.3
+rbenv global 2.3.3
 ```
 
 ### Install the Gems!
