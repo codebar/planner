@@ -5,7 +5,7 @@ gem 'rails', '4.2.5'
 
 gem 'acts-as-taggable-on', '~> 3.4'
 gem 'haml'
-gem 'compass-rails', github: 'Compass/compass-rails'
+gem 'compass-rails', git: 'https://github.com/Compass/compass-rails'
 gem 'foundation-rails', "5.5.3.2"
 gem 'sass-rails', '~> 5.0.1'
 gem 'uglifier', '>= 1.3.0'
@@ -53,7 +53,7 @@ group :development, :test do
   gem 'faker'
   gem 'coveralls', require: false
   gem 'launchy'
-  gem 'jazz_hands', github: 'nixme/jazz_hands', branch: 'bring-your-own-debugger'
+  gem 'jazz_hands', git: 'https://github.com/nixme/jazz_hands', branch: 'bring-your-own-debugger'
   gem 'pry-byebug'
   gem 'pry-remote'
   gem 'dotenv-rails'
