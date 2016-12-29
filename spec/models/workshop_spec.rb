@@ -64,7 +64,7 @@ describe Workshop do
     let(:most_recent) { Fabricate(:workshop, date_and_time: 1.day.ago) }
 
     before do
-      Fabricate(:workshop, date_and_time: Time.zone.now-1.week)
+      @old_workshop = Fabricate(:workshop, date_and_time: Time.zone.now-1.week)
       set_upcoming
       most_recent
     end
@@ -149,6 +149,13 @@ describe Workshop do
         attendee_invites.each {|a| expect(workshop.waitlisted? a.member).to be false }
       end
     end
+
+    describe ".recent" do
+      it "retrieves some of the most recently held workshops" do
+        expect(Workshop.recent).to eq([most_recent, @old_workshop])
+      end
+    end
+
   end
 
   context "#invitable_yet?" do
