@@ -229,6 +229,7 @@ ActiveRecord::Schema.define(version: 20161028141043) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "rating"
+    t.integer  "workshop_id"
   end
 
   add_index "feedbacks", ["coach_id"], name: "index_feedbacks_on_coach_id", using: :btree
