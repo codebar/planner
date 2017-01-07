@@ -27,7 +27,7 @@ feature 'A new member signs up', js: false do
     expect(page).to have_content("We noticed that you did not finish signing up. Please complete your registration.")
   end
 
-  scenario 'Member completes completes sign up and is no longer redirected' do
+  scenario "Member completes step 1 but doesn't subscribe on step 2"  do
     visit new_member_path
     click_on "Sign up as a coach"
 
@@ -42,6 +42,7 @@ feature 'A new member signs up', js: false do
 
     click_on "Done"
 
-    expect(current_path).to eq(profile_path)
+    expect(current_path).to eq(step2_member_path)
+    expect(page).to have_content("Please subscribe to at least one group before continuing.")
   end
 end
