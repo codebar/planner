@@ -1,5 +1,6 @@
 class MembersController < ApplicationController
   before_action :authenticate_member!, only: [:edit, :show, :step1, :step2]
+  skip_before_action :current_user_complete_sign_up!, only: [:step1, :step2]
   autocomplete :skill, :name, class_name: 'ActsAsTaggableOn::Tag'
 
   def new

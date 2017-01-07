@@ -8,7 +8,15 @@ class ApplicationController < ActionController::Base
   helper_method :current_user
   helper_method :current_service
 
+  before_action :current_user_complete_sign_up!
+
   protected
+
+  def current_user_complete_sign_up!
+    if logged_in? && !current_user.received_coach_welcome_email && !current_user.received_student_welcome_email
+      redirect_to step1_member_path
+    end
+  end
 
   def current_user
     if session.has_key?(:member_id)
