@@ -16,4 +16,4 @@
   .row
     .large-6.large-offset-3.columns
       %p
-        = link_to "Done", ((current_user.received_coach_welcome_email && current_user.received_student_welcome_email) ? profile_path : step2_member_path), class: "button round right"
+        = link_to "Done", redirect_if_complete, class: "button round right"

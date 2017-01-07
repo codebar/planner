@@ -15,7 +15,7 @@ feature 'A new member signs up', js: false do
 
   scenario 'Member visits tutorial page before completing step 1 of registration' do
     member = Fabricate(:member)
-    member.update(can_log_in: :true)
+    member.update(can_log_in: true)
     login member
     visit step1_member_path
 
