@@ -45,7 +45,7 @@ module ApplicationHelper
   end
 
   def redirect_if_complete
-    if current_user.received_coach_welcome_email && current_user.received_student_welcome_email
+    if current_user.received_coach_welcome_email || current_user.received_student_welcome_email
       profile_path
     else
       flash[:error] = 'Please subscribe to at least one group before continuing.'
