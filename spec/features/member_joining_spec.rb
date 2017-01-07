@@ -37,7 +37,11 @@ feature "A new student signs up", js: false do
   end
 
   scenario "A new member details are succesfuly captured" do
+    group = Fabricate(:group)
+    group.update(name: "Coaches")
     visit new_member_path
+    member = Member.last
+    member.groups << group
     click_on "Sign up as a coach"
 
     fill_in "member_pronouns", with: "she"
@@ -48,6 +52,10 @@ feature "A new student signs up", js: false do
     click_on "Next"
 
     expect(current_path).to eq(step2_member_path)
+
+    within first('.group-container') do
+      click_on group.chapter.name
+    end
 
     click_on "Done"
 
