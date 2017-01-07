@@ -12,8 +12,8 @@
   - else
     = render partial: 'student_invite_subscriptions', locals: {groups: @student_groups, collapsed: false}
     = render partial: 'coach_invite_subscriptions', locals: {groups: @coach_groups, collapsed: false}
-    
+
   .row
     .large-6.large-offset-3.columns
       %p
-        = link_to "Done", profile_path, class: "button round right"
+        = link_to "Done", ((current_user.received_coach_welcome_email && current_user.received_student_welcome_email) ? profile_path : step2_member_path), class: "button round right"
