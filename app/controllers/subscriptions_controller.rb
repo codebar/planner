@@ -1,5 +1,6 @@
 class SubscriptionsController < ApplicationController
   before_action :has_access?
+  skip_before_action :current_user_complete_sign_up!, only: [:create]
 
   def index
     @groups = Group.joins(:chapter).order("chapters.city")
