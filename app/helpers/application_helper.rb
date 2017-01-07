@@ -43,4 +43,13 @@ module ApplicationHelper
   def contact_email
     @contact_email ||= @session.present? ? @session.chapter.email : "hello@codebar.io"
   end
+
+  def redirect_if_complete
+    if current_user.received_coach_welcome_email || current_user.received_student_welcome_email
+      profile_path
+    else
+      flash[:error] = 'Please subscribe to at least one group before continuing.'
+      step2_member_path
+    end
+  end
 end

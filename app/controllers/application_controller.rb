@@ -8,7 +8,16 @@ class ApplicationController < ActionController::Base
   helper_method :current_user
   helper_method :current_service
 
+  before_action :current_user_complete_sign_up!
+
   protected
+
+  def current_user_complete_sign_up!
+    if user_registration_not_complete
+      flash[:error] = 'We noticed that you did not finish signing up. Please complete your registration.'
+      redirect_to step1_member_path
+    end
+  end
 
   def current_user
     if session.has_key?(:member_id)
@@ -100,6 +109,11 @@ class ApplicationController < ActionController::Base
   end
 
   private
+  def user_registration_not_complete
+    logged_in? &&
+    !current_user.received_coach_welcome_email &&
+    !current_user.received_student_welcome_email
+  end
 
   def user_not_authorized
     redirect_to(user_path, notice: "You are not authorized to perform this action.")

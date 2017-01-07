@@ -12,8 +12,8 @@
   - else
     = render partial: 'student_invite_subscriptions', locals: {groups: @student_groups, collapsed: false}
     = render partial: 'coach_invite_subscriptions', locals: {groups: @coach_groups, collapsed: false}
-    
+
   .row
     .large-6.large-offset-3.columns
       %p
-        = link_to "Done", profile_path, class: "button round right"
+        = link_to "Done", redirect_if_complete, class: "button round right"

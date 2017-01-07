@@ -1,5 +1,7 @@
 class AuthServicesController < ApplicationController
-  def create
+skip_before_action :current_user_complete_sign_up!
+
+def create
     member_type = cookies[:member_type]
     current_service = AuthService.where(provider: omnihash[:provider],
                                         uid: omnihash[:uid]).first

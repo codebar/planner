@@ -1,4 +1,5 @@
 class AuthSessionsController < ApplicationController
+  skip_before_action :current_user_complete_sign_up!
 
   def create
     cookies[:member_type] = params[:member_type]
