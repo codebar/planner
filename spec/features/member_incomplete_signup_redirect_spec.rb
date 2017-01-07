@@ -24,5 +24,24 @@ feature 'A new member signs up', js: false do
     end
 
     expect(current_path).to eq(step1_member_path)
+    expect(page).to have_content("We noticed that you did not finish signing up. Please complete your registration.")
+  end
+
+  scenario 'Member completes completes sign up and is no longer redirected' do
+    visit new_member_path
+    click_on "Sign up as a coach"
+
+    fill_in "member_pronouns", with: "she"
+    fill_in "member_name", with: "Jane"
+    fill_in "member_surname", with: "Doe"
+    fill_in "member_email", with: "jane@codebar.io"
+    fill_in "member_about_you", with: Faker::Lorem.paragraph
+    click_on "Next"
+
+    expect(current_path).to eq(step2_member_path)
+
+    click_on "Done"
+
+    expect(current_path).to eq(profile_path)
   end
 end
