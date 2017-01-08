@@ -72,6 +72,6 @@ feature "A new student signs up", js: false do
     click_button group.chapter.name
     click_on "Done"
 
-    expect(page).to have_content("#{group.name} (#{group.chapter.name})")
+    expect(page).to have_link("#{group.name} (#{group.chapter.name})", href: "/#{group.chapter.slug}")
   end
 end
