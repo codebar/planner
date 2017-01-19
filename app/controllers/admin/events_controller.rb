@@ -48,6 +48,8 @@ class Admin::EventsController < Admin::ApplicationController
     @event.chapters.each do |chapter|
       InvitationManager.new.send_event_emails(@event, chapter)
     end
+    
+    $twitter_client.update(I18n.t('twitter_updates.event_invitations_sent', event_name: @event.name))
 
     redirect_to admin_event_path(@event), notice: "Invitations will be emailed out soon."
   end

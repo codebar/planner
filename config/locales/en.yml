@@ -135,6 +135,9 @@ en:
         q: "I will be commuting. Can you help with my travel expenses?"
         a: "We will be offering some travel grants. Just make sure you fill in the questionnaire after you RSVP and we will get in touch."
 
+  twitter_updates:
+    event_invitations_sent: Email invitations are being sent out for %{event_name}
+    new_sponsor_added: %{sponsor_name} has joined us as a sponsor to support codebar!
 
   coaches:
     want_to_coach: "Do you want to coach at our workshops?"
