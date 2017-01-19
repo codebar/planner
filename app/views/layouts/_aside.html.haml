@@ -2,6 +2,8 @@
   %ul.off-canvas-list
     - if current_user.is_admin?
       = render 'layouts/admin_menu'
+    - elsif current_user.is_monthlies_organiser?
+      = render 'layouts/monthlies_org_menu'
     - elsif current_user.has_role?(:organiser, :any)
       = render 'layouts/organiser_menu'
     %li
