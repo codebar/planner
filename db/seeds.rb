@@ -19,7 +19,7 @@ if Rails.env.development?
     end
 
     puts "..done!"
-  rescue Exception => e
+  rescue => e
     puts e.inspect
     puts "Something went wrong. Try running `bundle exec rake db:drop db:create db:migrate` first"
   end
