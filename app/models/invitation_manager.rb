@@ -57,7 +57,7 @@ class InvitationManager
     end
   end
 
-  # handle_asynchronously :send_event_emails
+  handle_asynchronously :send_event_emails
 
   def self.send_monthly_attendance_reminder_emails monthly
     monthly.attendances.map(&:member).each do |member|
