@@ -111,6 +111,10 @@ class Member < ActiveRecord::Base
     has_role?(:admin) or organised_chapters.present?
   end
 
+  def is_monthlies_organiser?
+    Meeting.find_roles(:organiser, self)
+  end
+
   private
 
   def invitations_on date
