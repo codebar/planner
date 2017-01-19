@@ -39,7 +39,7 @@
           %ul.no-bullet
             - member.groups.each do |group|
               %li
-                = link_to [:admin, group] do
+                = link_to chapter_path(group.chapter.slug) do
                   #{group.name} (#{group.chapter.name})
         - else
           %label.label.secondary You are not subscribed to any groups
