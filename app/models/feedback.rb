@@ -1,6 +1,7 @@
 class Feedback < ActiveRecord::Base
   belongs_to :tutorial
   belongs_to :coach, class_name: "Member"
+  belongs_to :workshop
 
   validates :rating, inclusion: { in: 1..5, message: "can't be blank" }
   validates :tutorial, presence: true
