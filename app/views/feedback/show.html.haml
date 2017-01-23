@@ -23,6 +23,9 @@
           .large-6.columns
             = f.association :tutorial, label_method: :title, value_method: :id, label: 'What tutorial did you go through?', include_blank: '- Select Tutorial -'
         .row
+          .large-6.columns
+            = f.input :workshop_id, collection: recent_workshop_details, value_method: :first, label_method: :last, label: 'Which workshop did you attend?', include_blank: '- Select Workshop -'
+        .row
           .large-12.columns
             = f.input :request, label: 'How did you find the workshop?'
         .row
