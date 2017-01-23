@@ -35,7 +35,7 @@ class FeedbackController < ApplicationController
   private
 
   def feedback_params
-    params.require(:feedback).permit(:coach_id, :tutorial_id, :request, :rating, :suggestions)
+    params.require(:feedback).permit(:coach_id, :tutorial_id, :request, :rating, :suggestions, :workshop_id)
   end
 
   def set_coaches(workshop)
