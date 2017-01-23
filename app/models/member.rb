@@ -107,8 +107,12 @@ class Member < ActiveRecord::Base
     invitations.where(attending: true).map{|e| e.event.id}.include?(event.id)
   end
 
+  def is_organiser?
+    organised_chapters.present?
+  end
+
   def is_admin_or_organiser?
-    has_role?(:admin) or organised_chapters.present?
+    has_role?(:admin) or is_organiser?
   end
 
   def is_monthlies_organiser?
