@@ -63,6 +63,10 @@ class Admin::WorkshopsController < Admin::ApplicationController
     redirect_to admin_workshop_path(@workshop), notice: "Workshops updated successfully"
   end
 
+  def send_invites
+    @workshop = WorkshopPresenter.new(Workshop.find(params[:workshop_id]))
+  end
+
   def attendees_checklist
     return render text: @workshop.attendees_checklist if request.format.text?
 
@@ -78,8 +82,9 @@ class Admin::WorkshopsController < Admin::ApplicationController
   def invite
     set_workshop
     authorize @workshop
+    audience = params[:for]
 
-    InvitationManager.new.send_session_emails(@workshop)
+    InvitationManager.new.send_session_emails(@workshop, audience)
 
     redirect_to admin_workshop_path(@workshop), notice: "Invitations are being emailed out."
   end

@@ -1,25 +1,20 @@
 class InvitationManager
 
-  def send_session_emails workshop
+  def send_session_emails workshop, audience
     return "The workshop is not invitable" unless workshop.invitable?
 
-    workshop.chapter.groups.students.map(&:members).flatten.uniq.shuffle.each do |student|
-      next if student.banned?
-      so = SessionInvitation.create workshop: workshop, member: student, role: "Student"
-      so.email if so.persisted?
+    if audience == "students"
+      invite_students workshop
+      return
     end
 
-    workshop.chapter.groups.coaches.map(&:members).flatten.uniq.shuffle.each do |coach|
-      next if coach.banned?
-      invitation = SessionInvitation.new workshop: workshop, member: coach, role: "Coach"
-
-      if invitation.save
-        SessionInvitationMailer.invite_coach(workshop, coach, invitation).deliver_now
-        Rails.logger.debug("Invitation to #{coach.email} sent")
-      else
-        Rails.logger.debug("Invitation to #{coach.email} not sent as invitation could not be saved")
-      end
+    if audience == "coaches"
+      invite_coaches workshop
+      return
     end
+
+    invite_students workshop
+    invite_coaches workshop
   end
 
   handle_asynchronously :send_session_emails
@@ -123,6 +118,30 @@ class InvitationManager
           SessionInvitationMailer.notify_waiting_list(waiting_list.invitation).deliver_now
           waiting_list.delete
         end
+      end
+    end
+  end
+
+  private
+
+  def invite_students workshop
+    workshop.chapter.groups.students.map(&:members).flatten.uniq.shuffle.each do |student|
+      next if student.banned?
+      so = SessionInvitation.create workshop: workshop, member: student, role: "Student"
+      so.email if so.persisted?
+    end
+  end
+
+  def invite_coaches workshop
+    workshop.chapter.groups.coaches.map(&:members).flatten.uniq.shuffle.each do |coach|
+      next if coach.banned?
+      invitation = SessionInvitation.new workshop: workshop, member: coach, role: "Coach"
+
+      if invitation.save
+        SessionInvitationMailer.invite_coach(workshop, coach, invitation).deliver_now
+        Rails.logger.debug("Invitation to #{coach.email} sent")
+      else
+        Rails.logger.debug("Invitation to #{coach.email} not sent as invitation could not be saved")
       end
     end
   end
