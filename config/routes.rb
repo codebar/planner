@@ -146,6 +146,7 @@ Planner::Application.routes.draw do
       post :invite
       get 'attendees_checklist'
       get 'attendees_emails'
+      get 'send_invites'
 
       resource :invitations, only: [:update]
       resources :invitations, only: [:update]
