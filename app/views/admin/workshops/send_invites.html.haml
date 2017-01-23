@@ -1,0 +1,29 @@
+%section
+  .stripe.reverse
+    .row
+      .medium-12.columns
+        %h2
+          Workshop
+          = link_to [:admin, @workshop.chapter] do
+            %small=@workshop.chapter.name
+    .row
+      .medium-3.columns
+        %h5
+          = @workshop.venue.name
+      .medium-3.columns
+        %h5
+          #{l(@workshop.date_and_time)}
+%section
+  .stripe
+    .row
+      .medium-12.columns
+        %h4
+          Who should receive the invitations?
+        %p
+          If you click "Students" now, you can come back and send them to the coaches at a separate time, and vice versa.
+        = link_to admin_workshop_invite_path(@workshop, for: "students"), method: :post, class: 'button round' do
+          Students
+        = link_to admin_workshop_invite_path(@workshop, for: "coaches"), method: :post, class: 'button round' do
+          Coaches
+        = link_to admin_workshop_invite_path(@workshop, for: "everyone"), method: :post, class: 'button round' do
+          Everybody
