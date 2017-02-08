@@ -1,6 +1,6 @@
 @import 'partials/colors';
 @import 'partials/layout';
-@import 'partials/title';
+@import 'partials/hero';
 @import 'partials/events';
 @import 'partials/social_media';
 @import 'partials/chapter';
@@ -13,7 +13,7 @@
 @import 'partials/star-rating';
 @import 'partials/event';
 
-#banner, 
+#banner,
 #chapter {
   margin-top: 30px;
 }
