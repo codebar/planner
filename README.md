@@ -18,6 +18,26 @@ If you are considering making a PR, please take a look at the Waffle board to se
 
 The following steps walk through getting the application running. For contributing guidelines see [here](https://github.com/codebar/planner/blob/master/CONTRIBUTING.md).
 
+## Getting Started Through Docker
+
+You will need to have Docker installed, https://docker.com/
+
+The current Dockerfile and docker-compose were closely copied from the guide: https://docs.docker.com/compose/rails/
+
+1. Clone the project
+
+Run this to build a docker environemnt:
+2. docker-compose build
+
+Run to create, migrate and seed the main database
+3. docker-compose run web rake db:create db:migrate db:seed
+
+Run the app
+4. docker-compose up
+
+
+
+
 ### Setting up a Ruby Environment
 
 You will need to install Ruby 2.4.2 using RVM or rbenv.
