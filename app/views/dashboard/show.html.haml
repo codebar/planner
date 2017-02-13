@@ -1,4 +1,4 @@
-%section.title.opaque
+%section.hero.opaque
   .row
     .medium-offset-1.medium-6.columns
       %p.lead
@@ -6,14 +6,14 @@
 
 %section.testimonials
   .stripe
-  .row
-    .large-12.columns
-      %p.lead
-        Our goal is to enable underrepresented groups to learn programming in a safe and collaborative environment and expand their career opportunities. To achieve this, we run free weekly workshops, regular events and try to create opportunities for our students making technology and coding more accessible.
-  - if @testimonials.any?
     .row
-      .large-offset-1.large-11.columns
-        = render partial: 'members/testimonials'
+      .large-12.columns
+        %p.lead
+          Our goal is to enable underrepresented groups to learn programming in a safe and collaborative environment and expand their career opportunities. To achieve this, we run free weekly workshops, regular events and try to create opportunities for our students making technology and coding more accessible.
+    - if @testimonials.any?
+      .row
+        .large-offset-1.large-11.columns
+          = render partial: 'members/testimonials'
 
   .stripe
     .row#showcase
