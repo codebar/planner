@@ -13,7 +13,7 @@ feature 'admin groups' do
     scenario "an admin can create a new chapter" do
       visit new_admin_group_path
 
-      fill_in "Name", with: "Students"
+      select "Students", from: "group[name]"
       select "Brighton", from: "group[chapter_id]"
       click_on "Create group"
 
