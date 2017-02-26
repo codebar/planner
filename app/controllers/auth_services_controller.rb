@@ -16,7 +16,10 @@ class AuthServicesController < ApplicationController
         session[:oauth_token]        = omnihash[:credentials][:token]
         session[:oauth_token_secret] = omnihash[:credentials][:secret]
 
-        finish_registration or redirect_to dashboard_path
+        prior_url = request.env['omniauth.origin']
+        redirect_url = is_viable_redirect_location(prior_url) ? prior_url : dashboard_path
+
+        finish_registration or redirect_to(redirect_url)
       else
         member = Member.find_by_email(omnihash[:info][:email])
         member = Member.new(email: (omnihash[:info][:email])) if member.nil?
@@ -69,5 +72,26 @@ class AuthServicesController < ApplicationController
 
   def redirect_path
     :services
+  end
+
+  def is_viable_redirect_location(url)
+    # When you visit an attendable page (e.g. a Workshop, Eventor  Meeting) you
+    # probably want to sign-up to that thing, which requires signing in. When
+    # you sign in you want to get sent back to the page you were on previously
+    # so you can click the attend button right away rather than being sent to
+    # your dashboard then having to navigate back to the Workshop/Event/Meeting
+    # page.
+    begin
+      route = Planner::Application.routes.recognize_path(url)
+
+      return true if route[:controller] == "workshops" && route[:action] == "show"
+      return true if route[:controller] == "meetings" && route[:action] == "show"
+      return true if route[:controller] == "events" && route[:action] == "show"
+    rescue ActionController::RoutingError
+      # recognize_path might throw this if you give it a url the app does
+      # not know how to turn into a route
+    end
+
+    return false
   end
 end
