@@ -27,7 +27,7 @@
       = link_to "Attend as a coach", rsvp_workshop_path(@workshop, role: "Coach"), method: :post,class: 'button round '
     - else
       It looks like something went wrong while you were signing up.
-      = link_to "Please tell us whether you're here to learn or to mentor.", subscriptions_path
+      = link_to "Please tell us whether you want to attend as a student or coach.", subscriptions_path
 
 - elsif not logged_in?
   = link_to "Sign up", new_member_path, class: 'button'

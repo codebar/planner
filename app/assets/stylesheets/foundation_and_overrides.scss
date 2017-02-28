@@ -1376,8 +1376,8 @@ a {
   border-bottom: 1px dashed $secondary-color;
 }
 
-.top-bar a, 
-#sponsors a, 
+.top-bar a,
+#sponsors a,
 .icon-bar a {
   border-bottom: none;
 }
@@ -1391,7 +1391,7 @@ a {
 }
 
 .avatar-container {
-  margin-bottom: 1.142rem;
+  margin: 1.142rem 0;
   span {
     margin-left: 0.5rem;
   }
