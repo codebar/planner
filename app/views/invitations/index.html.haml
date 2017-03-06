@@ -12,7 +12,7 @@
   .row
     .large-12.columns
       %a{ name: "upcoming" }
-      %h3{ "data-magellan-destination" => "upcoming"} Upcoming
+      %h3{ "data-magellan-destination" => "upcoming"} Upcoming workshops
 
       - if @upcoming_invitations.any?
         .row
@@ -37,7 +37,7 @@
         %em There are no upcoming events.
 
       %a{ name: "attended" }
-      %h3{ "data-magellan-destination" => "attended"} Attended
+      %h3{ "data-magellan-destination" => "attended"} Workshops attended
       - unless @attended_invitations.any?
         You haven't attended any events yet.
       - else

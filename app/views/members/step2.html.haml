@@ -3,7 +3,7 @@
     .medium-12.columns
       %h1 Subscribe
       %p
-        To receive invitations to our events you must subscribe to the appropriate groups. Alternatively, you can always RSVP directly from the website. Just be aware that spots to some of our busier chapters go away really fast.
+        To receive invitations to our events you must subscribe to the appropriate chapters. Alternatively, you can always RSVP directly from the website. Just be aware that spots to some of our busier chapters fill up fast.
 
   - if @type == "student"
     = render partial: 'student_invite_subscriptions', locals: {groups: @student_groups, collapsed: false}
@@ -12,7 +12,7 @@
   - else
     = render partial: 'student_invite_subscriptions', locals: {groups: @student_groups, collapsed: false}
     = render partial: 'coach_invite_subscriptions', locals: {groups: @coach_groups, collapsed: false}
-    
+
   .row
     .large-6.large-offset-3.columns
       %p

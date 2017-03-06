@@ -10,9 +10,9 @@
         - if @workshop.attendee? current_user
           You are attending this event.
         - elsif @workshop.waitlisted? current_user
-          You are on the Waiting List.
+          You are on the waiting List.
         - elsif !@workshop.spaces?
-          This workshop is full, but you can still join the waiting list.
+          Unfortunately this workshop is full, but do join the waiting list as spots open up in the lead up to the workshop.
 
 - if logged_in? && @workshop.future? && (@workshop.invitable || @workshop.open_for_rsvp?)
   - if @workshop.attendee?(current_user)
