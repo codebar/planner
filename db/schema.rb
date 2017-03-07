@@ -363,7 +363,7 @@ ActiveRecord::Schema.define(version: 20161228121833) do
     t.string   "mobile",                         limit: 255
     t.boolean  "received_coach_welcome_email",               default: false
     t.boolean  "received_student_welcome_email",             default: false
-    t.string   "pronouns",                       limit: 255
+    t.string   "pronouns"
   end
 
   create_table "members_permissions", id: false, force: :cascade do |t|
@@ -513,17 +513,16 @@ ActiveRecord::Schema.define(version: 20161228121833) do
   add_index "workshop_sponsors", ["workshop_id"], name: "index_workshop_sponsors_on_workshop_id", using: :btree
 
   create_table "workshops", force: :cascade do |t|
-    t.string   "title",              limit: 255
+    t.string   "title",           limit: 255
     t.text     "description"
     t.datetime "date_and_time"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "invitable",                      default: true
-    t.string   "sign_up_url",        limit: 255
+    t.boolean  "invitable",                   default: true
+    t.string   "sign_up_url",     limit: 255
     t.integer  "chapter_id"
     t.datetime "time"
     t.datetime "rsvp_close_time"
-    t.datetime "random_allocate_at"
     t.datetime "rsvp_open_time"
     t.datetime "rsvp_open_date"
   end
