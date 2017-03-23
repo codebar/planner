@@ -1,4 +1,5 @@
 module Listable
+  NUMBER_OF_PAST_EVENTS_FOR_INDEX = 30
   NUMBER_OF_RECENT_WORKSHOPS_TO_RETRIEVE = 10.freeze
 
   extend ActiveSupport::Concern
@@ -6,7 +7,8 @@ module Listable
   included do
 
     scope :upcoming, -> { where("date_and_time >= ?", Time.zone.now).order(:date_and_time) }
-    scope :past, -> { where("date_and_time < ?", Time.zone.now).order(:date_and_time) }
+    scope :past_display, -> { where("date_and_time < ?", Time.zone.now).order(date_and_time: :desc).includes(:chapter).limit(NUMBER_OF_PAST_EVENTS_FOR_INDEX) }
+    scope :past_count, -> { where("date_and_time < ?", Time.zone.now).count}
     scope :recent, -> { where("date_and_time < ?", Time.zone.now).order(date_and_time: :desc).limit(NUMBER_OF_RECENT_WORKSHOPS_TO_RETRIEVE) }
   end
 
