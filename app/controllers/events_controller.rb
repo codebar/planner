@@ -4,11 +4,12 @@ class EventsController < ApplicationController
   before_action :is_logged_in?, only: [:student, :coach]
 
   def index
-    events = [ Workshop.past_display ]
-    events << Course.past_display
-    events << Meeting.past_display
-    events << Event.past_display
-    events = events.compact.flatten.sort_by(&:date_and_time).reverse[0...Listable::NUMBER_OF_PAST_EVENTS_FOR_INDEX].group_by(&:date)
+    record_limit = 30
+    events = [ Workshop.past_display(record_limit) ]
+    events << Course.past_display(record_limit)
+    events << Meeting.past_display(record_limit)
+    events << Event.past_display(record_limit)
+    events = events.compact.flatten.sort_by(&:date_and_time).reverse[0...record_limit].group_by(&:date)
     @past_events_display = events.map.inject({}) { |hash, (key, value)| hash[key] = EventPresenter.decorate_collection(value); hash}
     @all_past_events_count = Workshop.past_count + Course.past_count + Meeting.past_count + Event.past_count
 
