@@ -1,5 +1,4 @@
 module Listable
-  NUMBER_OF_PAST_EVENTS_FOR_INDEX = 30
   NUMBER_OF_RECENT_WORKSHOPS_TO_RETRIEVE = 10.freeze
 
   extend ActiveSupport::Concern
