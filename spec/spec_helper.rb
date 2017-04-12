@@ -1,6 +1,7 @@
 require 'simplecov'
 require 'coveralls'
 require "codeclimate-test-reporter"
+require 'shoulda/matchers'
 CodeClimate::TestReporter.start
 
 SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new([
@@ -41,5 +42,12 @@ RSpec.configure do |config|
     DatabaseCleaner.cleaning do
       example.run
     end
+  end
+end
+
+Shoulda::Matchers.configure do |config|
+  config.integrate do |with|
+    with.test_framework :rspec
+    with.library :rails
   end
 end
