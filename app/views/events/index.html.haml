@@ -9,6 +9,9 @@
 .stripe
   .row
     .large-12.columns
-      - if @past_events.any?
+      - if @past_events_display.any?
         .past#past
-          = render partial: 'events', locals: { grouped_events: @past_events }
+          = render partial: 'events', locals: { grouped_events: @past_events_display }
+          Codebar has hosted 
+          = @all_past_events_count
+          weekly workshops, Codebar monthlies and all-day special events since 2013.

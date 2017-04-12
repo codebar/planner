@@ -4,9 +4,10 @@ module Listable
   extend ActiveSupport::Concern
 
   included do
-
     scope :upcoming, -> { where("date_and_time >= ?", Time.zone.now).order(:date_and_time) }
     scope :past, -> { where("date_and_time < ?", Time.zone.now).order(:date_and_time) }
+    scope :past_display, ->(record_limit=30) { where("date_and_time < ?", Time.zone.now).order(date_and_time: :desc).limit(record_limit) }
+    scope :past_count, -> { where("date_and_time < ?", Time.zone.now).count}
     scope :recent, -> { where("date_and_time < ?", Time.zone.now).order(date_and_time: :desc).limit(NUMBER_OF_RECENT_WORKSHOPS_TO_RETRIEVE) }
   end
 
