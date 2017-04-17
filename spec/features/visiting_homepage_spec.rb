@@ -5,6 +5,7 @@ feature 'when visiting the homepage' do
   let!(:next_workshop) { Fabricate(:workshop) }
   let!(:next_course) { Fabricate(:course) }
   let!(:event) { Fabricate(:event) }
+  let!(:member) { Fabricate(:member) }
 
   before(:each) do
     visit root_path
@@ -37,6 +38,15 @@ feature 'when visiting the homepage' do
     visit root_path
 
     expect(page).to have_content "Sign in"
+  end
+
+  scenario "i can see the menu button when signed in" do
+    visit root_path
+    authenticate_as member
+    click_on "Sign in"
+
+    expect(page).not_to have_content "Sign in"
+    expect(page).to have_content "Menu"
   end
 
   context "signing up" do
