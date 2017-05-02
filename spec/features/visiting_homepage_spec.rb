@@ -43,13 +43,13 @@ feature 'when visiting the homepage' do
     scenario "i can sign up as a student" do
       visit root_path
 
-      expect(page).to have_content "Learn to code!"
+      expect(page).to have_content "Sign up as a student"
     end
 
     scenario "i can sign up as a coach" do
       visit root_path
 
-      expect(page).to have_content "Help out by becoming a coach"
+      expect(page).to have_content "Sign up as a coach"
     end
   end
 end

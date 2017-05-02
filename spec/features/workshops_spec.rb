@@ -105,9 +105,9 @@ feature 'Viewing a workshop page' do
         end
 
         it "will be prompted to manage their subscriptions" do
-          expect(page).to have_content("Please tell us whether you're here to learn or to mentor")
+          expect(page).to have_content("Please tell us whether you want to attend as a student or coach.")
 
-          click_link "Please tell us whether you're here to learn or to mentor"
+          click_link "Please tell us whether you want to attend as a student or coach."
           expect(current_path).to eq subscriptions_path
         end
 

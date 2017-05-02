@@ -17,7 +17,7 @@
           %dt Email
           %dd= mail_to member.email, member.email
 
-          %dt Twitter
+          %dt Twitter handle
           %dd= link_to "@#{member.twitter}", twitter_url_for(member.twitter)
 
           %dt Phone number
@@ -31,7 +31,7 @@
             %p
               - member.skills.each do |skill|
                 = link_to skill.name, skill_url(skill.name), class: "skill"
-        = link_to "Update details", edit_member_path, class: 'button tiny round'
+        = link_to "Update your details", edit_member_path, class: 'button tiny round'
 
       .medium-4.columns
         - if member.groups.any?
@@ -42,7 +42,7 @@
                 = link_to chapter_path(group.chapter.slug) do
                   #{group.name} (#{group.chapter.name})
         - else
-          %label.label.secondary You are not subscribed to any groups
+          %label.label.secondary You are not subscribed to any chapters
         %br
         %br
 

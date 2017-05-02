@@ -1,19 +1,20 @@
 .stripe.reverse
   .row
     .large-12.columns
+      %h2 Sponsors
       %p.lead
         Without our sponsors running <strong>codebar</strong> would be impossible. They provide us with space, food and drinks, internet, and they also help us cover our running costs.
       %p.lead
         Thank you for sharing our dream of creating a more welcoming, equal and diverse tech industry.
 
       %p
-        If you are interested in becoming a sponsor get in touch at #{mail_to "hello@codebar.io", "hello@codebar.io"}
+        If you are interested in becoming a host please do get in touch with us at #{mail_to "hello@codebar.io", "hello@codebar.io"}
         ='.'
 
 .stripe.reverse
   .row
     .large-12.columns
-      %ul.small-block-grid-2.medium-block-grid-3.large-block-grid-3#sponsors
+      %ul.small-block-grid-2.medium-block-grid-3.large-block-grid-4#sponsors
         - @sponsors.each do |sponsor|
-          %li
+          %li.text-center
             = link_to image_tag(sponsor.avatar, class: "sponsor-logo", alt: sponsor.name), sponsor.website

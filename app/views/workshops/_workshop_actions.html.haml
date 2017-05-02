@@ -10,9 +10,9 @@
         - if @workshop.attendee? current_user
           You are attending this event.
         - elsif @workshop.waitlisted? current_user
-          You are on the Waiting List.
+          You are on the waiting List.
         - elsif !@workshop.spaces?
-          This workshop is full, but you can still join the waiting list.
+          Unfortunately this workshop is full, but do join the waiting list as spots open up in the lead up to the workshop.
 
 - if logged_in? && @workshop.future? && (@workshop.invitable || @workshop.open_for_rsvp?)
   - if @workshop.attendee?(current_user)
@@ -27,7 +27,7 @@
       = link_to "Attend as a coach", rsvp_workshop_path(@workshop, role: "Coach"), method: :post,class: 'button round '
     - else
       It looks like something went wrong while you were signing up.
-      = link_to "Please tell us whether you're here to learn or to mentor.", subscriptions_path
+      = link_to "Please tell us whether you want to attend as a student or coach.", subscriptions_path
 
 - elsif not logged_in?
   = link_to "Sign up", new_member_path, class: 'button'

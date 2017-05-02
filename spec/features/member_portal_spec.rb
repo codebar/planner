@@ -22,7 +22,7 @@ feature 'Member portal' do
       visit profile_path
 
       within "#member_profile" do
-        click_on "Update details"
+        click_on "Update your details"
       end
 
       fill_in "member_name", with: "Jane"
