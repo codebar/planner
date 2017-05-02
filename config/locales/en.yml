@@ -221,7 +221,7 @@ en:
       a: "Unfortunately, that depends entirely on where we are hosting our workshops and if the venue has disabled access. If you would like to attend, send us an email at <a href='mailto:meetings@codebar.io'>meetings[at]codebar.io</a> so we can enquire about it and let you know."
     bring_codebar_to_my_city:
       q: "I would like to bring codebar to my city. Can I do that?"
-      a: "Of course. codebar is about building a community of experienced developers that are able to give up some of their time to help others. If you are keen on running codebar where you live, we would love to speak to you about it and see how we can help make this happen, so send <a href=\"mailto:contact@codebar.io\">us an email</a>.Of course. codebar is about building a community of experienced developers that are able to give up some of their time to help others. If you are keen on running codebar where you live, we would love to speak to you about it and see how we can help make this happen, so send <a href=\"mailto:contact@codebar.io\">us an email</a>."
+      a: "Of course. codebar is about building a community of experienced developers that are able to give up some of their time to help others. If you are keen on running codebar where you live, we would love to speak to you about it and see how we can help make this happen, so send <a href=\"mailto:contact@codebar.io\">us an email</a>."
     our_coaches:
       q: "Our coaches"
       a_p1: "You can see all the coaches have helped out in our workshops on the"

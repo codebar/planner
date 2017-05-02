@@ -5,7 +5,7 @@
       = simple_form_for [:admin, @group] do |f|
         .row
           .large-6.columns
-            = f.input :name, placeholder: 'e.g. Students'
+            = f.input :name, label: "Name", collection: Group::NAMES, prompt: "Select one"
         .row
           .large-6.columns
             = f.input :description
