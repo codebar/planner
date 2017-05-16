@@ -193,7 +193,7 @@ en:
       a: "We have a variety of available tutorials in HTML, CSS, JavaScript and Ruby. If you want to learn something else don't hesitate to <a href=\"mailto:contact@codebar.io\">send us an email</a> as we might still be able to find someone to help you out."
     eligibility:
       q: "I want to attend a workshop. Am I eligible?"
-      a: "Our workshops are available to women, LGBTQ and people who are underrepresented in the tech industry. If you belong to one of these groups, you are more than welcome to attend. If not, there are some other great initiatives like <a href=\"http://www.meetup.com/opentechschool-london\">Open Tech School London</a> where you can learn in a collaborative environment. Please see our <a href=\"http://codebar.io/student-guide\">student guide</a> for more information."
+      a: "Our workshops are available to women, LGBTQ and people who are underrepresented in the tech industry. If you belong to one of these groups, you are more than welcome to attend. If not, there are some other great initiatives like <a href='https://www.meetup.com/opentechschool-london/'>Open Tech School London</a> where you can learn in a collaborative environment. Please see our <a href='http://codebar.io/student-guide'>student guide</a> for more information."
     career:
       q: "Is codebar only aimed at people who want to move into a career as a developer?"
       a: "No! codebar is about getting people excited about programming. We'll help them learn some basic coding skills, as well as how to explore and do things on their own. For those who do want to become developers, we will provide help and guidance to help them achieve their goal."
