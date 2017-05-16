@@ -18,6 +18,18 @@ If you are considering making a PR, please take a look at the Waffle board to se
 
 The following steps walk through getting the application running. For contributing guidelines see [here](https://github.com/codebar/planner/blob/master/CONTRIBUTING.md).
 
+## Getting Started Through Docker
+
+You will need to have Docker installed, https://docker.com/
+
+The current Dockerfile and docker-compose were closely copied from the guide: https://docs.docker.com/compose/rails/
+
+1. Clone the project.
+2. Run `docker-compose build` to build a docker environment.
+3. Run `docker-compose run web rake db:create db:migrate db:seed` to create, migrate and seed the main database
+4. Run `docker-compose up` to start the app.
+
+
 ### Setting up a Ruby Environment
 
 You will need to install Ruby 2.3.3 using RVM or rbenv.
@@ -71,13 +83,13 @@ Create an application at [https://github.com/settings/applications/new](https://
 
 #### Add your application details to your environment
 
-Create a file named `.env` in the root of the application folder (`touch .env`) 
+Create a file named `.env` in the root of the application folder (`touch .env`)
 with the GitHub key and secret like so:
 
     GITHUB_KEY=YOUR_KEY
     GITHUB_SECRET=YOUR_SECRET
 
-*Note:* Windows doesn't like creating a file named `.env` so do the following 
+*Note:* Windows doesn't like creating a file named `.env` so do the following
 from a cmd prompt in your application folder:
 
     echo GITHUB_KEY=YOUR_KEY >> .env
