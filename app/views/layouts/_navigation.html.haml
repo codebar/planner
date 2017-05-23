@@ -42,10 +42,10 @@
           %li
             = link_to sponsors_path do
               %span Sponsors
-        %li
-          = link_to  'http://donate.codebar.io' do
-            %span
-              %highlight Donate
+        -# %li
+        -#   = link_to  'http://donate.codebar.io' do
+        -#     %span
+        -#       %highlight Donate
         - if !logged_in?
           %li
             = link_to '/auth/github' do
