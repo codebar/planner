@@ -3,9 +3,6 @@ development:
   encoding: unicode
   database: planner_development
   pool: 5
-  host: localhost
- # username: codebar
- # password: secret
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -15,8 +12,3 @@ test:
   encoding: unicode
   database: planner_test
   pool: 5
-  host: localhost
-# username: codebar
-# password: secret
-
-
