@@ -4,10 +4,10 @@ class EventsController < ApplicationController
   before_action :is_logged_in?, only: [:student, :coach]
 
   def index
-    events = [ Workshop.past.all ]
-    events << Course.past.all
-    events << Meeting.past.all
-    events << Event.past.all
+    events = [ Workshop.recent.all ]
+    events << Course.recent.all
+    events << Meeting.recent.all
+    events << Event.recent.all
     events = events.compact.flatten.sort_by(&:date_and_time).reverse.group_by(&:date)
     @past_events = events.map.inject({}) { |hash, (key, value)| hash[key] = EventPresenter.decorate_collection(value); hash}
 
@@ -25,7 +25,7 @@ class EventsController < ApplicationController
     @event = EventPresenter.new(event)
     @host_address = AddressDecorator.new(@event.venue.address)
 
-    if logged_in?
+    if logged_in? 
       invitation = Invitation.where(member: current_user, event: event, attending: true).try(:first)
       if invitation
         redirect_to event_invitation_path(@event, invitation) and return
