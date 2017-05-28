@@ -12,7 +12,6 @@ class SessionInvitation < ActiveRecord::Base
   scope :attended, -> { where(attended: true) }
   scope :to_students, -> { where(role: "Student") }
   scope :to_coaches, -> { where(role: "Coach") }
-  scope :by_member, -> { group(:member_id) }
   scope :order_by_latest, -> { joins(:workshop).order('workshops.date_and_time desc') }
   scope :past, -> { joins(:workshop).where('workshops.date_and_time < ?', Date.today) }
   scope :last_six_months, -> { joins(:workshop).where('workshops.date_and_time < ? AND workshops.date_and_time > ?',

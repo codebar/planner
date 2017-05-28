@@ -24,8 +24,6 @@ class Member < ActiveRecord::Base
   scope :subscribers, -> { joins(:subscriptions).order('created_at desc').uniq }
   acts_as_taggable_on :skills
 
-  attr_accessor :attendance
-
   def self.with_skill(skill_name)
     tagged_with(skill_name)
   end

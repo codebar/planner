@@ -1,0 +1,15 @@
+%li.coach
+  .row
+    .small-2.columns
+      =link_to twitter_url_for(coach.twitter) do
+        =image_tag coach.avatar(96), class: 'th radius', title: coach.full_name
+
+    .small-10.columns
+      =link_to twitter_url_for(coach.twitter) do
+        = coach.full_name
+      %p= coach.about_you
+      - if coach.skills.any?
+        %p 
+          skills: 
+          - coach.skills.each do |skill|
+            = link_to skill.name, skill_url(skill.name), class: "skill"
