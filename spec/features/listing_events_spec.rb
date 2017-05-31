@@ -7,9 +7,10 @@ feature 'event listing' do
   let!(:event) { Fabricate(:event) }
   let!(:past_event) { Fabricate(:event, date_and_time: Time.zone.now-2.weeks) }
 
-  before { visit events_path }
-
   scenario 'I can view a list with upcoming and past events' do
+
+    visit events_path
+    
     within(".upcoming") do
       expect(page).to have_content upcoming_workshop.host.name
       expect(page).to have_content upcoming_workshop.to_s
