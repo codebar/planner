@@ -5,21 +5,18 @@ class CoachesController < ApplicationController
   def show
   end
 
+  helper_method :chapters, :chapter, :coaches
+
   private
-  helper_method :chapters
   def chapters
-    @chapters ||= Chapter.by_name
+    @chapters ||= Chapter.order(:name)
   end
 
-  helper_method :chapter
   def chapter
     @chapter ||= chapters.find_by!(slug: params[:chapter_slug])
   end
 
-  helper_method :coaches
   def coaches
-    @coaches ||= chapter.coaches.sort_by do |coach|
-      coach.attended_sessions.count
-    end.reverse
+    @coaches ||= chapter.coaches_by_attended_sessions
   end
 end

@@ -14,7 +14,6 @@ class Chapter < ActiveRecord::Base
   before_save :set_slug
 
   default_scope -> { where(active: true) }
-  scope :by_name, -> { order(:name) }
 
   def self.available_to_user(user)
     return Chapter.all if user.has_role?(:organiser) or user.has_role?(:admin) or user.has_role?(:organiser, Chapter)
@@ -32,6 +31,12 @@ class Chapter < ActiveRecord::Base
 
   def coaches
     members.select(&:coach?)
+  end
+
+  def coaches_by_attended_sessions
+    coaches.sort_by do |coach|
+      coach.attended_sessions.count
+    end.reverse
   end
 
   private
