@@ -33,6 +33,12 @@ class Chapter < ActiveRecord::Base
     members.select(&:coach?)
   end
 
+  def coaches_by_attended_sessions
+    coaches.sort_by do |coach|
+      coach.attended_sessions.count
+    end.reverse
+  end
+
   private
 
   def set_slug

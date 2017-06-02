@@ -1,0 +1,9 @@
+.stripe.reverse
+  .row
+    .large-12.columns
+      %p
+        Select your nearest chapter to see coaches near you:
+      %ul.small-block-grid-1.medium-block-grid-2.large-block-grid-3.chapters-list
+        - chapters.each do |chapter|
+          %li
+            =link_to chapter.name, coach_path(chapter_slug: chapter.slug)

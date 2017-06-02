@@ -3,13 +3,14 @@ Planner::Application.routes.draw do
 
   scope controller: 'dashboard' do
     get 'code-of-conduct', action: 'code'
-    get 'coaches', action: 'wall_of_fame'
     get 'effective-teacher-guide', action: 'effective-teacher-guide', as: :teaching_guide
     get 'faq', action: 'faq'
     get 'attendance-policy', action: 'attendance_policy'
     get 'dashboard', action: 'dashboard'
     get 'student-guide', action: 'participant_guide'
   end
+
+  resources :coaches, only: [:index, :show], param: :chapter_slug
 
   resource :member, only: [:new, :edit, :update, :patch] do
     get 'step1'

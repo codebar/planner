@@ -4,4 +4,6 @@
       %h2 Coaches
       %p.lead
         Would you like to help out by coaching at one of our workshops? Read our #{ link_to "teaching guide", teaching_guide_path } then sign up as a coach.
-= render partial: '/coach/coach', locals: { coaches: @coaches }
+
+= render '/coaches/chapters_list', chapters: chapters
+

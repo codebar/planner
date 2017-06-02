@@ -3,4 +3,4 @@
     .large-12.columns
       %h2
         = "Coaches skilled in '#{@skill}'"
-= render partial: 'coach/coach', locals: { coaches: @coaches }
+= render 'coaches/list', coaches: @coaches
