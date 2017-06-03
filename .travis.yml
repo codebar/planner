@@ -1,9 +1,17 @@
 language: ruby
 bundler_args: --without development
+services: docker
+env:
+  DOCKER_COMPOSE_VERSION: 1.11.2
+before_install:
+  - sudo rm /usr/local/bin/docker-compose
+  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+  - chmod +x docker-compose
+  - sudo mv docker-compose /usr/local/bin
 script:
-  - bundle exec rake db:create
-  - bundle exec rake db:schema:load
-  - bundle exec rspec
+  - docker-compose build
+  - docker-compose run web bundle exec rake db:schema:load
+  - docker-compose run web bundle exec rspec
 addons:
   code_climate:
     repo_token: 9b6a47d42b4a745a38818eac18dba4ca94ea88f8c7751859ec49b8cedbf010fe
