@@ -5,9 +5,18 @@ if Rails.env.development?
                 Fabricate(:chapter_with_groups, name: "Brighton"),
                 Fabricate(:chapter_with_groups, name: "Cambridge")]
 
-    workshop = 10.times.map { |n| Fabricate(:workshop, chapter: chapters.sample, date_and_time: Time.zone.now+14.days-n.weeks) }
+    workshop = 10.times.map { |n| Fabricate(:workshop, title: 'Workshop', chapter: chapters.sample, date_and_time: Time.zone.now+14.days-n.weeks) }
+    workshop.concat 2.times.map { |n| Fabricate(:workshop, title: 'Workshop', chapter: chapters.sample) }
 
-    courses = 5.times.map { |n| Fabricate(:course, chapter: chapters.sample, date_and_time: Time.zone.now+14.days-n.weeks) }
+    event = 10.times.map { |n| Fabricate(:event, name: 'Event', date_and_time: Time.zone.now+14.days-n.weeks) }
+    event.concat 2.times.map { |n| Fabricate(:event, name: 'Event') }
+
+    course = 10.times.map { |n| Fabricate(:course, chapter: chapters.sample, title: 'Course', date_and_time: Time.zone.now+14.days-n.weeks) }
+    course.concat 2.times.map { |n| Fabricate(:course, chapter: chapters.sample, title: 'Course') }
+
+    meeting = 10.times.map { |n| Fabricate(:meeting, name: 'Meeting', date_and_time: Time.zone.now+14.days-n.weeks) }
+    meeting.concat 2.times.map { |n| Fabricate(:meeting, name: 'Meeting') }
+
     coaches = 20.times.map { |n| Fabricate(:coach, groups: Group.coaches.order("RANDOM()").limit(2)) }
     tutorials = 10.times.map { |n| Fabricate(:tutorial, workshop: workshop.sample) }
     feedback_requests = 5.times.map { Fabricate(:feedback_request) }
