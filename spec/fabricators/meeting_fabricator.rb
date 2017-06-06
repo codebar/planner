@@ -2,7 +2,7 @@ Fabricator(:meeting) do
     name        { Faker::Lorem.sentence }
     description { Faker::Lorem.paragraph }
     date_and_time { Time.zone.now+1.week }
-    # sponsor
+    sponsor
     venue { Fabricate(:sponsor) }
     invitable true
     # invites_sent
