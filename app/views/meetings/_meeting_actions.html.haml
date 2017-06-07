@@ -29,4 +29,5 @@
       %h5 This event is not open for RSVP.
 
   - else
-    %strong You must be logged in first.
+    = link_to "Sign up", new_member_path, class: 'button'
+    = link_to "Log in", redirect_path, class: 'button'
