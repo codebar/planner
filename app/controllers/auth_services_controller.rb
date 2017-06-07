@@ -1,4 +1,12 @@
 class AuthServicesController < ApplicationController
+  def new
+    referer_path = URI(request.referer).path
+    if Rails.application.routes.recognize_path(referer_path)[:controller].in?(%w(workshops events courses meetings))
+      session[:referer_path] = referer_path
+    end
+    redirect_to "/auth/github"
+  end
+
   def create
     member_type = cookies[:member_type]
     current_service = AuthService.where(provider: omnihash[:provider],
@@ -17,7 +25,7 @@ class AuthServicesController < ApplicationController
         session[:oauth_token]        = omnihash[:credentials][:token]
         session[:oauth_token_secret] = omnihash[:credentials][:secret]
 
-        finish_registration or redirect_to dashboard_path
+        finish_registration or redirect_to referer_or_dashboard_path
       else
         member = Member.find_by_email(omnihash[:info][:email])
         member = Member.new(email: (omnihash[:info][:email])) if member.nil?
@@ -60,6 +68,10 @@ class AuthServicesController < ApplicationController
   end
 
   private
+
+  def referer_or_dashboard_path
+    session[:referer_path] || dashboard_path
+  end
 
   def omnihash
     request.env['omniauth.auth']
