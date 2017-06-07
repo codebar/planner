@@ -33,13 +33,14 @@ feature 'viewing an event' do
       let(:member) { Fabricate(:member) }
 
       before do
-        login_mock_omniauth(member)
-        visit event_path(closed_event)
+        login_mock_omniauth(member, 'Log in')
       end
 
       context 'can RSVP to an event' do
 
         scenario "as a Coach" do
+          expect(current_path).to eq(event_path(closed_event))
+
           click_on 'Attend as a coach'
           click_on 'RSVP'
 
@@ -47,6 +48,8 @@ feature 'viewing an event' do
         end
 
         scenario "as a Student" do
+          expect(current_path).to eq(event_path(closed_event))
+
           click_on 'Attend as a student'
           click_on 'RSVP'
 
@@ -65,13 +68,14 @@ feature 'viewing an event' do
       let(:member) { Fabricate(:member) }
 
       before do
-        login_mock_omniauth(member)
-        visit event_path(open_event)
+        login_mock_omniauth(member, 'Log in')
       end
 
       context 'can RSVP to an event' do
 
         scenario "as a Coach" do
+          expect(current_path).to eq(event_path(open_event))
+
           click_on 'Attend as a coach'
           click_on 'RSVP'
 
@@ -80,6 +84,8 @@ feature 'viewing an event' do
         end
 
         scenario "as a Student" do
+          expect(current_path).to eq(event_path(open_event))
+
           click_on 'Attend as a student'
           click_on 'RSVP'
 
