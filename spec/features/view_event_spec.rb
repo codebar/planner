@@ -17,15 +17,15 @@ feature 'viewing an event' do
       end
 
       scenario 'a student cannot RSVP if they are not logged in' do
-        click_on 'Attend as a student'
-
-        expect(page).to have_content(I18n.t('notifications.not_logged_in'))
+        expect(page).to have_link('Log in')
+        expect(page).to have_link('Sign up')
+        expect(page).to_not have_link('Attend as a student')
       end
 
-      scenario 'a student cannot RSVP if they are not logged in' do
-        click_on 'Attend as a coach'
-
-        expect(page).to have_content(I18n.t('notifications.not_logged_in'))
+      scenario 'a coach cannot RSVP if they are not logged in' do
+        expect(page).to have_link('Log in')
+        expect(page).to have_link('Sign up')
+        expect(page).to_not have_link('Attend as a coach')
       end
     end
 
@@ -33,7 +33,8 @@ feature 'viewing an event' do
       let(:member) { Fabricate(:member) }
 
       before do
-        login(member)
+        login_mock_omniauth(member)
+        visit event_path(closed_event)
       end
 
       context 'can RSVP to an event' do
@@ -64,7 +65,8 @@ feature 'viewing an event' do
       let(:member) { Fabricate(:member) }
 
       before do
-        login(member)
+        login_mock_omniauth(member)
+        visit event_path(open_event)
       end
 
       context 'can RSVP to an event' do
