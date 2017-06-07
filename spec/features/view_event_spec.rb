@@ -33,7 +33,8 @@ feature 'viewing an event' do
       let(:member) { Fabricate(:member) }
 
       before do
-        login_mock_omniauth(member, 'Log in')
+        login_mock_omniauth(member)
+        visit event_path(closed_event)
       end
 
       context 'can RSVP to an event' do
@@ -68,7 +69,8 @@ feature 'viewing an event' do
       let(:member) { Fabricate(:member) }
 
       before do
-        login_mock_omniauth(member, 'Log in')
+        login_mock_omniauth(member)
+        visit event_path(open_event)
       end
 
       context 'can RSVP to an event' do
