@@ -23,12 +23,12 @@ Planner::Application.routes.draw do
 
   get '/profile' => "members#profile", as: :profile
 
-  resources :subscriptions, only: [ :index, :create ]
+  resources :subscriptions, only: [:index, :create]
   delete '/subscriptions' => 'subscriptions#destroy', as: :destroy_subscriptions
 
   get "unsubscribe/:token" => "members#unsubscribe", as: :unsubscribe
 
-  resources :invitation, only: [ :show ] do
+  resources :invitation, only: [:show] do
     member do
       post "accept_with_note", as: :accept_with_note
       post "update_note"
@@ -39,7 +39,7 @@ Planner::Application.routes.draw do
     resource :waiting_list, only: [:create, :destroy]
   end
 
-  resources :invitations, only: [ :index ]
+  resources :invitations, only: [:index]
 
   resources :meetings, only: [:show] do
     get 'invitation/attend' => 'invitations#rsvp_meeting', as: :invitation
@@ -55,7 +55,7 @@ Planner::Application.routes.draw do
     end
   end
 
-  resources :events, only: [ :index, :show ] do
+  resources :events, only: [:index, :show] do
     post 'rsvp'
     get 'student', as: :student_rsvp
     get 'coach', as: :coach_rsvp
@@ -64,15 +64,15 @@ Planner::Application.routes.draw do
     post 'invitation/:token/reject' => 'invitations#reject', as: :reject
   end
 
-  resources :courses, only: [ :show ] do
+  resources :courses, only: [:show] do
     get "rsvp"
   end
-  resources :workshops, only: [ :show ] do
+  resources :workshops, only: [:show] do
     member do
       post 'rsvp'
     end
   end
-  resources :feedback, only: [ :show ] do
+  resources :feedback, only: [:show] do
     member do
       patch "submit"
       get "success"
@@ -95,7 +95,7 @@ Planner::Application.routes.draw do
     get '/guide' => "portal#guide", as: :guide
 
 
-    resources :jobs, only: [ :index, :show] do
+    resources :jobs, only: [:index, :show] do
       get 'all', on: :collection
       get 'approve'
     end
@@ -105,13 +105,13 @@ Planner::Application.routes.draw do
       get :send_eligibility_email
       get :send_attendance_email
       get :update_subscriptions
-      resources :bans, only: [ :index, :new, :create ]
+      resources :bans, only: [:index, :new, :create]
     end
     resources :member_notes, only: [:create]
 
-    resources :chapters, only: [ :index, :new, :create, :show, :edit, :update] do
+    resources :chapters, only: [:index, :new, :create, :show, :edit, :update] do
       get :members
-      resources :workshops, only: [ :index ]
+      resources :workshops, only: [:index]
     end
 
     resources :events, only: [:new, :create, :show, :edit, :update] do
@@ -134,7 +134,7 @@ Planner::Application.routes.draw do
 
     resources :meeting_invitations, only: [:create, :update]
 
-    resources :groups, only: [ :index, :new, :create, :show]
+    resources :groups, only: [:index, :new, :create, :show]
     resources :sponsors, except: [:destroy]
 
     resources :feedback, only: [:index]
@@ -155,7 +155,7 @@ Planner::Application.routes.draw do
   end
 
   namespace :coach do
-    resources :feedback, only: [ :index ]
+    resources :feedback, only: [:index]
   end
 
   match '/auth/:service/callback' => 'auth_services#create', via: %i(get post)
@@ -164,5 +164,7 @@ Planner::Application.routes.draw do
   match '/register' => 'auth_sessions#create', via: %i(get), as: :registration
 
   resources :sponsors, only: [:index]
+  resources :donations, only: [:new, :create]
+
   get ':id' => 'chapter#show', as: :chapter
 end

@@ -14,38 +14,22 @@
         %li
           = link_to 'https://medium.com/@codebar' do
             %span Blog
-        - if current_page?(events_path)
-          %li.active
-            = link_to events_path do
-              %span Events
-        - else
-          %li
-            = link_to events_path do
-              %span Events
+        %li{class: active_link_class(events_path)}
+          = link_to events_path do
+            %span Events
         %li
           = link_to 'http://tutorials.codebar.io' do
             %span Tutorials
-
-        - if current_page?(coaches_path)
-          %li.active
-            = link_to coaches_path do
-              %span Coaches
-        - else
-          %li
-            = link_to coaches_path do
-              %span Coaches
-        - if current_page?(sponsors_path)
-          %li.active
-            = link_to sponsors_path do
-              %span Sponsors
-        - else
-          %li
-            = link_to sponsors_path do
-              %span Sponsors
-        -# %li
-        -#   = link_to  'http://donate.codebar.io' do
-        -#     %span
-        -#       %highlight Donate
+        %li{class: active_link_class(coaches_path)}
+          = link_to coaches_path do
+            %span Coaches
+        %li{class: active_link_class(sponsors_path)}
+          = link_to sponsors_path do
+            %span Sponsors
+        %li{class: active_link_class(new_donation_path)}
+          = link_to new_donation_path do
+            %span
+              %highlight Donate
         - if !logged_in?
           %li
             = link_to '/auth/github' do
