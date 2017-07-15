@@ -40,10 +40,10 @@
     .large-5.columns
       %h4= t('events.location')
       .row
-        .medium-8.columns
+        .medium-7.columns
           %p
             = @host_address.to_html
-        .medium-4.columns
+        .medium-5.columns
           = image_tag @event.venue.avatar, class: 'sponsor-logo'
       .row
         .large-12.columns
@@ -79,12 +79,10 @@
           - @event.sponsors.each do |sponsor|
             %li
               .row
-                .large-2.columns
-                  = image_tag sponsor.avatar, class: 'sponsor'
-                .large-10.columns
+                .large-3.columns
                   =link_to sponsor.name, sponsor.website
-                  %p
-                    = sponsor.description
+                    = image_tag sponsor.avatar, class: 'sponsor'
+
 - if @event.verified_coaches.any?
   .stripe.reverse
     .row
@@ -117,4 +115,3 @@
                 %br
                 %br
                 = organiser.full_name
-    %br

@@ -2,7 +2,7 @@
   - member.each do |member|
     %li.text-center
       =link_to twitter_url_for(member.twitter) do
-        =image_tag member.avatar(56), class: 'th radius', title: member.full_name
+        =image_tag member.avatar(56), class: 'th radius', alt: member.full_name
       %br
       %br
       = member.full_name
