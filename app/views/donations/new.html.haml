@@ -19,7 +19,7 @@
       %p.lead By donating to codebar you are helping to promote diversity in the tech industry so that more women, LGBTQA and other underrepresented folks will be able to get started with programming and raise their skills to the next level.
     .medium-6.columns
       = simple_form_for :donation, url: donations_path, method: :post do |f|
-        = f.input :name, placeholder: "Name (blank for anonymous donations)", required: false, html: {id: "name"}
+        = f.input :name, placeholder: "Name", required: false, html: {id: "name"}
         = f.input :amount, placeholder: "25.00", required: true, id: "amount"
         = f.submit :Donate, class: 'button', id: "donate"
         .message
