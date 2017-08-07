@@ -32,7 +32,7 @@ feature 'Jobs' do
 
         scenario 'can see a message when there are no available jobs' do
           visit root_path
-          click_on "Jobs"
+          click_link("Jobs", match: :first)
 
           expect(page).to have_content("Jobs")
           expect(page).to have_content("There are no jobs available at the moment")
@@ -44,7 +44,7 @@ feature 'Jobs' do
           expired = 3.times.map {  Fabricate.create(:job, expiry_date: Date.today-2.day) }
 
           visit root_path
-          click_on "Jobs"
+          click_link("Jobs", match: :first)
           jobs.each do |job|
             expect(page).to have_content(job.title)
           end
@@ -55,7 +55,7 @@ feature 'Jobs' do
           job = Fabricate.create(:job)
 
           visit root_path
-          click_on "Jobs"
+          click_link("Jobs", match: :first)
           click_on job.title
 
           expect(page).to have_content(job.description)
