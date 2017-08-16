@@ -116,7 +116,7 @@ class Member < ActiveRecord::Base
   end
 
   def is_monthlies_organiser?
-    Meeting.find_roles(:organiser, self)
+    Meeting.with_role(:organiser, self).present?
   end
 
   private
