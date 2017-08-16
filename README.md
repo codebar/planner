@@ -47,8 +47,8 @@ bundle install --without production
 Adjust `config/database.yml` as needed.
 
 ```bash
-bundle exec rake db:create
-bundle exec rake db:migrate db:test:prepare
+make create-database
+make migrate-database
 ```
 
 *Note:* If you are running OSX Yosemite, you may experience a problem connecting to
@@ -86,19 +86,19 @@ from a cmd prompt in your application folder:
 ### Generate some sample data
 
 ```bash
-bundle exec rake db:seed
+make seed-database
 ```
 
 ### Run the app
 
 ```bash
-bundle exec rails server
+make run
 ```
 
 ### Run the tests
 
 ```bash
-bundle exec rake
+make test
 ```
 
 *Note:* JavaScript acceptance tests are relying on the [Poltergeist](https://github.com/teampoltergeist/poltergeist) driver, which requires
