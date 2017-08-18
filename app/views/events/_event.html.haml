@@ -1,13 +1,11 @@
 .event#minified
-  .row
-    .small-3.medium-2.columns
-      .date
-        .time
-          = event.time
-      .text-center
-        - if event.chapter
-          %label.label.info
-            = event.chapter.name
+  .row.row-spaced
+    .small-9.medium-8.columns
+      %h5
+        =link_to event.to_s, event.path
+        - if event.venue.present?
+          at
+          = link_to event.venue.name, event.venue.website
         - if @user
           - if @user.attending?(event.__getobj__)
             = link_to event.path do
@@ -15,23 +13,21 @@
           - if @user.event_organiser?(event)
             = link_to event.admin_path do
               %label.label Manage
-    .small-9.medium-10.columns
-      .title
-        =link_to event.to_s, event.path
-        - if event.venue.present?
-          at
-          = link_to event.venue.name, event.venue.website
-      .row
-        .medium-6.columns
-          - if event.organisers.any?
-            .organisers
-              - event.organisers.each do |organiser|
-                =link_to twitter_url_for(organiser.twitter) do
-                  =image_tag organiser.avatar(26), class: 'th radius', title: organiser.full_name
-        .medium-6.columns#sponsors
-          - if event.sponsors.any?
-            - event.sponsors.each do |sponsor|
-              = link_to sponsor.website do
-                = image_tag sponsor.avatar, class: 'sponsor'
-
-      %br
+      - if event.chapter
+        = link_to chapter_path(event.chapter.slug) do
+          %i.fa.fa-map-marker
+          = event.chapter.name
+      - if event.organisers.any?
+        .organisers
+          - event.organisers.each do |organiser|
+            =link_to twitter_url_for(organiser.twitter) do
+              =image_tag organiser.avatar(20), class: 'th radius', title: organiser.full_name
+    .small-3.medium-2.columns
+      .date
+        .h5
+          = event.time
+    .medium-2.columns#sponsors
+      - if event.sponsors.any?
+        - event.sponsors.each do |sponsor|
+          = link_to sponsor.website do
+            = image_tag sponsor.avatar, class: 'sponsor'

@@ -154,12 +154,12 @@ u {
 }
 
 .grouped-events:not(:last-child) {
-  border-bottom: 1px dotted $primary-color;
+  border-bottom: 2px solid #f5f6f7;
   margin-bottom: 20px;
 }
 
 
 .stripe:nth-child(even) .grouped-events:not(:last-child) {
-  border-bottom: 1px dotted $white;
+  border-bottom: 2px solid $white;
   margin-bottom: 20px;
 }

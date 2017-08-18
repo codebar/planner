@@ -59,8 +59,8 @@
 
           - if @upcoming_workshops.any?
             - @upcoming_workshops.each do |date, workshops|
+              %h4= date
               .grouped-events
-                %h4= date
                 = render workshops
         .large-4.columns#chapters
           %h3 Chapters
