@@ -1,3 +1,13 @@
+run:
+	bundle exec rails server
+test: 
+	bundle exec rake
+create-database:
+	bundle exec rake db:create
+migrate-database:
+	bundle exec rake db:migrate db:test:prepare
+seed-database:
+	bundle exec rake db:seed
 backup_production:
 	heroku pgbackups:capture --app=codebar-production
 	curl -o pg-production-latest.dump `heroku pgbackups:url --app=codebar-production`
