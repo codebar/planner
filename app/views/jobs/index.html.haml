@@ -9,13 +9,18 @@
         %p
           There are no jobs available at the moment
 
-      %dl
-        - @jobs.each do |job|
-          %dt
-            =link_to job do
-              #{job.title}
-            %small.fa.fa-location-arrow
+      - @jobs.each do |job|
+        .row.row-spaced
+          .medium-8.columns
+            .h4
+              =link_to job do
+                #{job.title}
+              at #{job.company}              
+              - if job.expiry_date.past?
+                %label.label.alert Expired
+            .h5
+              %i.fa.fa-map-marker
               = job.location
-            - if job.expiry_date.past?
-              %label.label.alert Expired
-          %dd submitted #{distance_of_time_in_words(Time.now, job.created_at)} ago
+          .medium-4.columns
+            .right
+              Submitted #{distance_of_time_in_words(Time.now, job.created_at)} ago
