@@ -132,26 +132,16 @@ u {
   padding-bottom: 10px;
 }
 
-.stripe:not(.reverse):first-child {
-  padding: 40px 0;
+.stripe {
+  padding: 20px 0;
 }
 
 .stripe:not(.reverse):nth-child(even) {
   background-color: #f5f6f7;
-  padding: 60px 0;
-}
-
-.stripe.reverse:nth-child(even) {
-  padding: 40px 0;
 }
 
 .stripe.reverse:nth-child(odd) {
   background-color: #f5f6f7;
-  padding: 40px 0;
-}
-
-.stripe.reverse:first-child{
-  padding: 50px 0;
 }
 
 .grouped-events:not(:last-child) {
