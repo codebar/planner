@@ -7,9 +7,10 @@
             #{@job.title}
             - if @job.expiry_date.past?
               %label.label.alert Expired
-          %p.lead
+          %h3
             = link_to(@job.company, @job.link_to_job)
-            %small.fa.fa-location-arrow
+            %small
+              %i.fa.fa-map-marker
               = @job.location
 
 %br
