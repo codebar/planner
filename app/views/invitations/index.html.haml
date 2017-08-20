@@ -1,5 +1,5 @@
 = render partial: 'shared/title', locals: { title: "Invitations", date: nil }
-%section
+%section.stripe
   .inner-nav{ "data-magellan-expedition" => "fixed" }
     %dl.sub-nav
       .row
@@ -8,11 +8,11 @@
         %dd{ "data-magellan-arrival" => "attended" }
           =link_to "Attended", "#attended"
 
-
+.stripe
   .row
     .large-12.columns
       %a{ name: "upcoming" }
-      %h3{ "data-magellan-destination" => "upcoming"} Upcoming workshops
+      %h2{ "data-magellan-destination" => "upcoming"} Upcoming workshops
 
       - if @upcoming_invitations.any?
         .row
@@ -36,8 +36,13 @@
       - else
         %em There are no upcoming events.
 
+      %br
+      %br
+      %br
+      %br
+
       %a{ name: "attended" }
-      %h3{ "data-magellan-destination" => "attended"} Workshops attended
+      %h2{ "data-magellan-destination" => "attended"} Workshops attended
       - unless @attended_invitations.any?
         You haven't attended any events yet.
       - else

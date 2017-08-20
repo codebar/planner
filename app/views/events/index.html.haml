@@ -1,6 +1,12 @@
-%section.stripe
+.stripe.reverse
   .row
     .large-12.columns
+      %h1 Events
+
+.stripe.reverse
+  .row
+    .large-8.columns
+      %h2 Upcoming Events
       - if @events.any?
         .upcoming
           .titlebox
@@ -9,6 +15,7 @@
 .stripe
   .row
     .large-12.columns
+      %h2 Past events
       - if @past_events.any?
         .past#past
           = render partial: 'events', locals: { grouped_events: @past_events }

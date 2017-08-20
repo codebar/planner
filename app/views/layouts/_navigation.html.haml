@@ -11,9 +11,6 @@
 
     %section.top-bar-section
       %ul.right
-        %li
-          = link_to 'https://medium.com/@codebar' do
-            %span Blog
         %li{class: active_link_class(events_path)}
           = link_to events_path do
             %span Events
@@ -29,6 +26,9 @@
         %li{class: active_link_class(jobs_path)}
           = link_to jobs_path do
             %span Jobs
+        %li
+          = link_to 'https://medium.com/@codebar' do
+            %span Blog
         %li{class: active_link_class(new_donation_path)}
           = link_to new_donation_path do
             %span.highlight
@@ -41,5 +41,5 @@
         - else
           %li
             = link_to '#', class: 'left-off-canvas-toggle', id: 'profile' do
-              .fa.fa-navicon
               Menu
+              %i.fa.fa-navicon
