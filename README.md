@@ -105,6 +105,10 @@ bundle exec rake
 [PhantomJS](http://phantomjs.org). For more information about installing PhantomJS, please take a look
 [here](https://github.com/teampoltergeist/poltergeist#installing-phantomjs).
 
+## Front-end framework
+
+We use Foundation at version 5.5.3, you can find the documentation here: http://foundation.zurb.com/sites/docs/v/5.5.3/
+
 ## Finding something to work on
 You can pick one of the open [issues](https://github.com/codebar/planner/issues), fix a bug, improve the interface, refactor the code or improve test coverage!
 

@@ -1,8 +1,9 @@
 avatars = [
-  "https://dl.dropboxusercontent.com/u/108831317/pug1.png",
-  "https://dl.dropboxusercontent.com/u/108831317/pug2.png",
-  "https://dl.dropboxusercontent.com/u/108831317/pug3.png",
-  "https://dl.dropboxusercontent.com/u/108831317/pug4.png" ]
+  "https://placekitten.com/200/101",
+  "https://placekitten.com/200/102",
+  "https://placekitten.com/200/103",
+  "https://placekitten.com/200/104"
+]
 
 Fabricator(:sponsor) do
   name { Faker::Name.name }

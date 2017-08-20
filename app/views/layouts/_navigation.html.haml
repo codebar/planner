@@ -26,10 +26,13 @@
         %li{class: active_link_class(sponsors_path)}
           = link_to sponsors_path do
             %span Sponsors
+        %li{class: active_link_class(jobs_path)}
+          = link_to jobs_path do
+            %span Jobs
         %li{class: active_link_class(new_donation_path)}
           = link_to new_donation_path do
-            %span
-              %highlight Donate
+            %span.highlight
+              Donate
         - if !logged_in?
           %li
             = link_to '/auth/github' do

@@ -12,6 +12,7 @@ if Rails.env.development?
     tutorials = 10.times.map { |n| Fabricate(:tutorial, workshop: workshop.sample) }
     feedback_requests = 5.times.map { Fabricate(:feedback_request) }
     feedbacks = 5.times.map { Fabricate(:feedback, tutorial: tutorials.sample, coach: coaches.sample) }
+    jobs = 5.times.map { Fabricate(:job) }
 
     40.times do |n|
       coach = coaches.sample

@@ -76,7 +76,7 @@ class Member < ActiveRecord::Base
   end
 
   def avatar size=100
-    "https://secure.gravatar.com/avatar/#{md5_email}?s=#{size}"
+    "https://secure.gravatar.com/avatar/#{md5_email}?size=#{size}&default=identicon"
   end
 
   def attended_sessions
@@ -116,7 +116,7 @@ class Member < ActiveRecord::Base
   end
 
   def is_monthlies_organiser?
-    Meeting.find_roles(:organiser, self)
+    Meeting.with_role(:organiser, self).present?
   end
 
   private

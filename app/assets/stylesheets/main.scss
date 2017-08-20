@@ -13,13 +13,17 @@
 @import 'partials/star-rating';
 @import 'partials/event';
 
+.row-spaced {
+  padding-bottom: 20px;
+}
+
 #banner,
 #chapter {
   margin-top: 30px;
 }
 
 .brand {
-  line-height: 7.14286rem;
+  line-height: 5.8rem;
 }
 
 nav a.menu {
