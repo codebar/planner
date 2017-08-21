@@ -1,10 +1,10 @@
-.stripe.reverse#banner
-  .row
-    .large-12.columns
-      %h2=@page_title
 .stripe.reverse
   .row
-    .medium-12.columns
+    .columns
+      %h1=@page_title
+.stripe.reverse
+  .row
+    .columns
       %p.lead
         = t('members.new.intro')
         = link_to t('members.code_of_conduct'), code_of_conduct_path

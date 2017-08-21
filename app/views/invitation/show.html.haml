@@ -1,12 +1,12 @@
 .stripe.reverse
   .row
-    .large-12.columns
-      %h2
+    .columns
+      %h1
         Workshop at #{@workshop.host.name}
-        %br
-        %small #{humanize_date_with_time(@workshop.date_and_time)} #{@workshop.distance_of_time}
-      - if @workshop.date_and_time.past?
-        %label.label.warning This event has already taken place.
+      .h3.subheader
+        #{humanize_date_with_time(@workshop.date_and_time)} #{@workshop.distance_of_time}
+        - if @workshop.date_and_time.past?
+          %label.label.warning This event has already taken place.
 .alert-box.secondary
   .row
     .large-12.columns
@@ -89,7 +89,7 @@
           = @host_address.to_html
         %br
       %iframe{ width: '100%', height: '350', frameborder: '0', scrolling: 'no', marginheight: '0', marginwidth: '0', src: %{https://maps.google.com/maps?f=q&source=s_q&hl=en&amp;geocode=&q=#{@host_address.for_map}&ie=UTF8&t=m&z=15&output=embed} }
-      =link_to "View larger map", %{https://maps.google.com/maps?f=q&source=s_q&hl=en&amp;geocode=&q=#{@host_address.for_map}&ie=UTF8&hq=&t=m&z=15}, style: "color:#0000FF;text-align:left"
+      =link_to "View larger map", %{https://maps.google.com/maps?f=q&source=s_q&hl=en&amp;geocode=&q=#{@host_address.for_map}&ie=UTF8&hq=&t=m&z=15}
     .large-4.columns
       %h4 Sponsors
       %ul.no-bullet

@@ -1,16 +1,16 @@
-%section#banner
+%section.stripe.reverse
   .row
     .large-12.columns
-      %h2 Update your details
-      .subheader Please make sure your details are always up to date.
+      %h1 Update your details
+      %p.lead Please make sure your details are always up to date.
+.stripe.reverse
   .row
     .large-12.columns
       .avatar-container
-        =image_tag current_user.avatar(75)
+        =image_tag current_user.avatar(75), class: 'th radius', title: current_user.full_name
       %span
         You can change your avatar at
         =link_to('gravatar.com.', 'http://en.gravatar.com/')
       %br
       %br
       = render partial: 'members/new', locals: { submit_text: "Save" }
-      %hr
