@@ -47,7 +47,7 @@
             .organiser
               .row
                 .small-12.columns
-                  =link_to twitter_url_for(organiser.twitter) do
+                  =link_to twitter_url_for(organiser.twitter), class: 'user-link' do
                     =image_tag organiser.avatar(65), class: 'th radius', title: organiser.full_name
               .row
                 .small-12.columns
