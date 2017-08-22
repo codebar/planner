@@ -59,7 +59,7 @@ feature 'Jobs' do
           click_on job.title
 
           expect(page).to have_content(job.description)
-          expect(page).to have_content("posted by #{job.created_by.full_name}")
+          expect(page).to have_content("Posted by #{job.created_by.full_name}")
         end
 
         scenario 'can preview and list a new job' do
