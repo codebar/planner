@@ -7,14 +7,14 @@ feature 'Admin Jobs' do
     login_as_admin(member)
   end
 
-  scenario 'An admin can view jobs pending approval' do
-    job = Fabricate(:job, approved: false)
-    approved_job = Fabricate(:job)
-
-    visit admin_jobs_path
-    expect(page).to have_content(job.title)
-    expect(page).to_not have_content(approved_job.title)
-  end
+  # scenario 'An admin can view jobs pending approval' do
+  #   job = Fabricate(:job, approved: false)
+  #   approved_job = Fabricate(:job)
+  #
+  #   visit admin_jobs_path
+  #   expect(page).to have_content(job.title)
+  #   expect(page).to_not have_content(approved_job.title)
+  # end
 
   scenario 'An admin can view jobs pending approval' do
     job = Fabricate(:job, approved: false)
