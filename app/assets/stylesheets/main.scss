@@ -33,19 +33,19 @@ nav a.menu {
 }
 
 .user {
-  color: #E3573E;
+  color: #e3573e;
 }
 
 .sign-up {
   border-radius: 1rem;
   padding: 1rem;
-  border: 1px solid #FFEE2C;
-  background-color: #FFEEA6;
+  border: 1px solid #ffee2c;
+  background-color: #ffeea6;
 }
 
 .sign-up.past {
   border: 1px solid grey;
-  background-color: #CCC;
+  background-color: #ccc;
 }
 
 /* The new user flow. */
@@ -74,10 +74,12 @@ nav a.menu {
 }
 
 /* Show/hide togglable elements are controlled by JavaScript. */
-.sign-up-wizard .collapsed { display: none; }
-.no-js .sign-up-wizard .collapsed { display: block; }
-
-
+.sign-up-wizard .collapsed {
+  display: none;
+}
+.no-js .sign-up-wizard .collapsed {
+  display: block;
+}
 
 .workshop.title {
   color: grey;
