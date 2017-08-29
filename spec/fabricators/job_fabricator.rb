@@ -1,9 +1,4 @@
 titles = [
-  'Junior Software Engineer',
-  'Junior Software Developer',
-  'Junior Front-end Developer',
-  'Junior Back-end Developer',
-  'Junior Full-stack Developer',
   'Software Engineer',
   'Software Developer',
   'Front-end Developer',
