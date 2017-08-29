@@ -19,27 +19,19 @@
   .stripe
     .row#showcase
       .large-12.columns
-        %h2 Get involved
-      .large-4.columns
+        %h2 Sign up for codebar
+      .large-6.columns
         %h3 Students
         %p Our students come from a variety of backgrounds. Some want to become full-time developers, whereas some would like to learn the basics of coding in a supportive environment.
         %p Sign up to join our vibrant community and attend our workshops.
         = link_to "Sign up as a student", new_member_path, class: 'button'
-      .large-4.columns
+      .large-6.columns
         %h3 Coaches
         %p
           We encourage new students to work on our HTML/CSS, JavaScript, Ruby, Python or Git #{link_to "tutorials", "http://tutorials.codebar.io"}. We also help them understand programming concepts.
         %p
           Therefore are always on the lookout for more developers to join our community and help coach at our workshops.
         = link_to "Sign up as a coach", new_member_path, class: 'button'
-      .large-4.columns
-        %h3 Workshops
-        %p
-          We are hosted by some amazing companies who support our cause. Our normal format is 30 minutes of socialising with food and drink, followed by a lightning talk then coding.
-        %p
-          Help our expansion and enable us to provide help and support to our chapters by hosting and sponsoring our workshops.
-        = mail_to "hello@codebar.io", "Host a workshop", class: 'button'
-
 
   %section#chapter.stripe
     .events#container
@@ -63,3 +55,20 @@
             - @chapters.each do |chapter|
               %li
                 = link_to chapter.name, chapter_path(chapter.slug)
+
+  .stripe
+    .row#showcase
+      .large-12.columns
+        %h2 Support codebar
+      .large-6.columns
+        %h3 Host a workshop
+        %p
+          We are hosted by some amazing companies who support our cause. Our normal format is 30 minutes of socialising with food and drink, followed by a lightning talk then coding.
+        %p
+          Help our expansion and enable us to provide help and support to our chapters by hosting and sponsoring our workshops.
+        = mail_to "hello@codebar.io", "Host a workshop", class: 'button'
+      .large-6.columns
+        %h3 Donate to codebar
+        %p
+          By donating to codebar you are helping to promote diversity in the tech industry so that more women, LGBTQA and other underrepresented folks will be able to get started with programming and raise their skills to the next level.
+        = mail_to new_donation_path, "Donate to codebar", class: 'button'
