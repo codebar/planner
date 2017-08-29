@@ -8,7 +8,7 @@
 //
 
 // This is the default html and body font-size for the base rem value.
-$rem-base: 14px;
+$rem-base: 16px;
 
 // Allows the use of rem-calc() or lower-bound() in your settings
 @import "foundation/functions";
@@ -40,9 +40,9 @@ $base-font-size: $rem-base;
 // Global
 
 // We use these to control various global styles
-$body-bg: #FFFFFF;
-$body-font-color: #191919;
-$body-font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Helvetica, Arial, sans-serif;
+$body-bg: $white;
+$body-font-color: #363636;
+$body-font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 $body-font-weight: 400;
 // $body-font-style: normal;
 
@@ -122,15 +122,15 @@ $large-up: "#{$screen} and (min-width:#{lower-bound($large-range)})";
 // $header-font-family: $body-font-family;
 // $header-font-weight: normal;
 // $header-font-style: normal;
-// $header-font-color: #222;
+$header-font-color: #2e2e2e;
 // $header-line-height: 1.4;
 $header-top-margin: 0.2rem;
 $header-bottom-margin: 1.85rem;
 // $header-text-rendering: optimizeLegibility;
 
 // We use these to control header font sizes
-$h1-font-size: rem-calc(38);
-$h2-font-size: rem-calc(30);
+$h1-font-size: rem-calc(44);
+$h2-font-size: rem-calc(37);
 $h3-font-size: rem-calc(27);
 $h4-font-size: rem-calc(23);
 $h5-font-size: rem-calc(18);
