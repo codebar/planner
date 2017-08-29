@@ -1352,33 +1352,19 @@ blockquote::before{
   color: #999;
   position: absolute;
   left: 10px;
-  top:5px;
+  top: 5px;
 }
 
-blockquote::after{
+blockquote::after {
   content: "";
 }
-
 
 blockquote em {
   font-style: italic;
 }
 
-$link-color: #005395;
-
 a {
-  font-weight: 600;
-  color: #005395;
-}
-
-.top-bar-section ul li > a {
-  color: $link-color;
-  font-weight: 600;
-}
-
-.top-bar-section li.active:not(.has-form) a:not(.button),
-.top-bar-section ul li.active > a {
-  color: $black;
+  border-bottom: 1px dashed $secondary-color;
 }
 
 .top-bar a,
