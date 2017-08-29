@@ -124,13 +124,13 @@ $large-up: "#{$screen} and (min-width:#{lower-bound($large-range)})";
 // $header-font-style: normal;
 // $header-font-color: #222;
 // $header-line-height: 1.4;
-// $header-top-margin: .2rem;
-// $header-bottom-margin: .5rem;
+$header-top-margin: 0.2rem;
+$header-bottom-margin: 1.85rem;
 // $header-text-rendering: optimizeLegibility;
 
 // We use these to control header font sizes
-$h1-font-size: rem-calc(37);
-$h2-font-size: rem-calc(34);
+$h1-font-size: rem-calc(38);
+$h2-font-size: rem-calc(30);
 $h3-font-size: rem-calc(27);
 $h4-font-size: rem-calc(23);
 $h5-font-size: rem-calc(18);
@@ -1411,6 +1411,7 @@ a {
   visibility: hidden;
 }
 
-h1 {
+h1,
+h2 {
   font-weight: 600;
 }
