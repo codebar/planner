@@ -1,6 +1,6 @@
 %section.stripe.reverse
   .row
-    .columns
+    .large-12.columns
       %h1= @chapter.name
       %p.lead
         = t('chapters.intro')
@@ -17,7 +17,7 @@
       - if @upcoming_workshops.any?
         - @upcoming_workshops.each do |date, workshops|
           .row.grouped-events
-            .columns
+            .large-12.columns
               %h4= date
             = render workshops
 
@@ -26,7 +26,7 @@
         %br
         - @latest_workshops.each do |date, workshops|
           .row.grouped-events
-            .columns
+            .large-12.columns
               %h4= date
             = render workshops
 

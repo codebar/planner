@@ -1,7 +1,7 @@
 #container
   .stripe
     .row
-      .columns
+      .large-12.columns
         %h1
           Workshop at #{@workshop.host.name}
         .h3.subheader
@@ -13,7 +13,7 @@
 
   %section.stripe
     .row
-      .columns
+      .large-12.columns
         - unless current_user and current_user.banned?
           = render 'workshop_actions'
 
