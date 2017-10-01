@@ -8,8 +8,9 @@ class EventsController < ApplicationController
     events << Course.past.all
     events << Meeting.past.all
     events << Event.past.all
-    events = events.compact.flatten.sort_by(&:date_and_time).reverse.group_by(&:date)
-    @past_events = events.map.inject({}) { |hash, (key, value)| hash[key] = EventPresenter.decorate_collection(value); hash}
+    events = events.compact.flatten.sort_by(&:date_and_time).reverse.first(40)
+    events_hash_grouped_by_date = events.group_by(&:date)
+    @past_events = events_hash_grouped_by_date.map.inject({}) { |hash, (key, value)| hash[key] = EventPresenter.decorate_collection(value); hash}
 
     events = [ Workshop.upcoming.all ]
     events << Course.upcoming.all
