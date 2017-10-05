@@ -1193,12 +1193,12 @@ $thumb-radius: rem-calc(50);
 // $topbar-title-font-size: rem-calc(17);
 
 // Style the top bar dropdown elements
-$topbar-dropdown-bg: #FFFFFF;
+$topbar-dropdown-bg: #eee;
 $topbar-dropdown-link-color: $primary-color;
-$topbar-dropdown-link-bg: #FFFFFF;
+$topbar-dropdown-link-bg: #eee;
 // $topbar-dropdown-link-weight: normal;
 // $topbar-dropdown-toggle-size: 5px;
-$topbar-dropdown-toggle-color: #FFFFFF;
+$topbar-dropdown-toggle-color: #000000;
 // $topbar-dropdown-toggle-alpha: 0.4;
 
 // Set the link colors and styles for top-level nav
@@ -1389,6 +1389,19 @@ a {
 
 .top-bar {
   padding: 0 10px;
+}
+
+.top-bar-section .dropdown li:not(.has-form) a:not(.button) {
+	line-height: 3rem;
+}
+
+.top-bar-section .dropdown li.active:not(.has-form) a:not(.button) {
+	background-color: #ddd;
+}
+
+.top-bar-section .dropdown li:not(.has-form):not(.active) > a:not(.button):hover,
+.top-bar-section .dropdown li:not(.has-form) a:not(.button):hover {
+	background-color: #4bafff;
 }
 
 .avatar-container {

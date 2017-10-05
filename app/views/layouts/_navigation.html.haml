@@ -20,12 +20,19 @@
         %li
           = link_to 'http://tutorials.codebar.io' do
             %span Tutorials
-        %li{class: active_link_class(coaches_path)}
-          = link_to coaches_path do
-            %span Coaches
-        %li{class: active_link_class(sponsors_path)}
-          = link_to sponsors_path do
-            %span Sponsors
+        %li.has-dropdown
+          %a{href: "#"} About
+          %ul.dropdown
+            %li{class: active_link_class(coaches_path)}
+              = link_to coaches_path do
+                %span Coaches
+            %li{class: active_link_class(sponsors_path)}
+              = link_to sponsors_path do
+                %span Sponsors
+            %li{class: active_link_class(faq_path)}
+              = link_to faq_path do
+                %span= t("navigation.faq")
+
         %li{class: active_link_class(jobs_path)}
           = link_to jobs_path do
             %span Jobs
