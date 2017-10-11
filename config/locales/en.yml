@@ -228,7 +228,7 @@ en:
       a_p2: ". They are ordered by number of attendances. This is our way of showing our appreciation to them, as without them, we wouldn't be able to exist."
 
   chapters:
-    intro: "Hi and welcome to codebar! Check out our <a href='http://codebar.io/faq'>FAQ</a> page for any questions you might have, and feel free to email us if you can't find the answer you're looking for. Otherwise, use the button below to start the sign-up process."
+    intro: "Hi and welcome to codebar! Check out our <a href='http://codebar.io/faq'>FAQ</a> page for any questions you might have, and feel free to email us at %{email} if you can't find the answer you're looking for. Otherwise, use the button below to start the sign-up process."
     sign_up: "to be invited to our workshops."
     no_incoming: "There are no workshops coming up."
     contact: "To contact the %{city} team, send an email to %{email}"
