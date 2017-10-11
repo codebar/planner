@@ -12,17 +12,6 @@ feature 'Jobs' do
 
       end
 
-      scenario 'to not be able to access the individual job listing' do
-        job = Fabricate.create(:job)
-        visit jobs_path
-
-        expect(page).to have_content("Jobs")
-        click_on job.title
-
-        expect(page).to have_content("You must be logged in to access this page")
-
-      end
-
       context 'a member' do
         let(:member) { Fabricate(:member) }
 
