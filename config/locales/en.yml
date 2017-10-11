@@ -176,6 +176,7 @@ en:
         intro: "If you would like to attend as a student, make sure you meet our"
         criteria_link: "eligibility criteria"
         criteria_brief: "as our workshops are only available to women, LGBTQ, people from underrepresented minority groups."
+        github: "Lastly, when you click the sign up button, you'll be taken to something called GitHub. After logging in with a GitHub account, you'll be taken back to the codebar website. If you don't have an account yet, you'll need to create one. It doesn't take long and it's something that will come in handy when you get started with coding!"
       invitations: "Invitations are sent out periodically, so don't worry if you don't receive one as soon as you register."
 
   footer:
