@@ -12,7 +12,25 @@ if Rails.env.development?
     tutorials = 10.times.map { |n| Fabricate(:tutorial, workshop: workshop.sample) }
     feedback_requests = 5.times.map { Fabricate(:feedback_request) }
     feedbacks = 5.times.map { Fabricate(:feedback, tutorial: tutorials.sample, coach: coaches.sample) }
-    jobs = 5.times.map { Fabricate(:job) }
+
+    job_titles = [
+      'Software Engineer',
+      'Software Developer',
+      'Front-end Developer',
+      'Back-end Developer',
+      'Full-stack Developer'
+    ]
+
+    job_companies = [
+      'ACME',
+      'Globex',
+      'Soylent',
+      'Initech',
+      'Umbrella',
+      'Wonka'
+    ]
+
+    jobs = 5.times.map { Fabricate(:job, title: job_titles.sample, company: job_companies.sample) }
 
     40.times do |n|
       coach = coaches.sample
