@@ -40,8 +40,8 @@ feature 'Jobs' do
 
 
         scenario 'can see a listing of all non expired job posts' do
-          jobs = 2.times.map {  Fabricate.create(:job) }
-          expired = 3.times.map {  Fabricate.create(:job, expiry_date: Date.today-2.day) }
+          jobs = 2.times.map { |i| Fabricate.create(:job, title: "Current Dev #{i}") }
+          expired = 3.times.map { |i| Fabricate.create(:job, title: "Expired Dev #{i}", expiry_date: Date.today-2.day) }
 
           visit root_path
           click_link("Jobs", match: :first)

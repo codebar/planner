@@ -1,23 +1,7 @@
-titles = [
-  'Software Engineer',
-  'Software Developer',
-  'Front-end Developer',
-  'Back-end Developer',
-  'Full-stack Developer'
-]
-
-companies = [
-  'ACME',
-  'Globex',
-  'Soylent',
-  'Initech',
-  'Umbrella',
-  'Wonka'
-]
 
 Fabricator(:job) do
-  title { titles.sample }
-  company { companies.sample }
+  title 'Software Developer'
+  company 'ACME'
   description { Faker::Lorem.paragraph }
   location { Faker::Address.city }
   email { Faker::Address.city }
