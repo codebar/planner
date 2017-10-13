@@ -1350,10 +1350,9 @@ blockquote {
   font-size: 16px;
   line-height: 1.2;
   color: #666;
-  text-align: justify;
 }
 
-blockquote::before{
+blockquote::before {
   content: "\201C";
   font-family: Georgia, serif;
   font-size: 60px;
