@@ -17,7 +17,7 @@ feature "A new student signs up", js: false do
     visit root_path
     click_on "Sign up as a student"
     click_on "I understand and meet the eligibility criteria. Sign me up as a student"
-    expect(current_path).to eq(step1_member_path)
+    expect(page).to have_current_path(step1_member_path(member_type: 'student'))
   end
 
   scenario "A visitor must fill in all mandatory fields in order to sign up", js: true do
@@ -47,7 +47,7 @@ feature "A new student signs up", js: false do
     fill_in "member_about_you", with: Faker::Lorem.paragraph
     click_on "Next"
 
-    expect(current_path).to eq(step2_member_path)
+    expect(page).to have_current_path(step2_member_path)
 
     click_on "Done"
 
@@ -67,7 +67,7 @@ feature "A new student signs up", js: false do
     member.update(can_log_in: true)
 
     visit step2_member_path
-    expect(current_path).to eq(step2_member_path)
+    expect(page).to have_current_path(step2_member_path)
 
     click_button group.chapter.name
     click_on "Done"

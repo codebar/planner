@@ -9,7 +9,7 @@ feature 'chapters' do
 
       visit new_admin_chapter_path
 
-      expect(current_path).to eq "/"
+      expect(page).to have_current_path("/")
       expect(page).to have_content "You can't be here"
     end
   end
