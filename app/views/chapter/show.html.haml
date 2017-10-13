@@ -3,7 +3,7 @@
     .large-12.columns
       %h4= @chapter.name
       %p.lead
-        = t('chapters.intro')
+        = raw t('chapters.intro', email: @chapter.email)
       - if logged_in?
         = render partial: 'subscriptions'
       - else
