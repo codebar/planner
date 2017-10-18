@@ -108,7 +108,7 @@ feature 'Viewing a workshop page' do
           expect(page).to have_content("Please tell us whether you want to attend as a student or coach.")
 
           click_link "Please tell us whether you want to attend as a student or coach."
-          expect(current_path).to eq subscriptions_path
+          expect(page).to have_current_path(subscriptions_path)
         end
 
         it "cannot access RSVP as a student or coach" do

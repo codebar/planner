@@ -176,6 +176,7 @@ en:
         intro: "If you would like to attend as a student, make sure you meet our"
         criteria_link: "eligibility criteria"
         criteria_brief: "as our workshops are only available to women, LGBTQ, people from underrepresented minority groups."
+        github: "Lastly, when you click the sign up button, you'll be taken to something called GitHub. After logging in with a GitHub account, you'll be taken back to the codebar website. If you don't have an account yet, you'll need to create one. It doesn't take long and it's something that will come in handy when you get started with coding!"
       invitations: "Invitations are sent out periodically, so don't worry if you don't receive one as soon as you register."
 
   footer:
@@ -228,7 +229,7 @@ en:
       a_p2: ". They are ordered by number of attendances. This is our way of showing our appreciation to them, as without them, we wouldn't be able to exist."
 
   chapters:
-    intro: "Places for our workshops are limited so please RSVP if you would like to attend."
+    intro: "Hi and welcome to codebar! Check out our <a href='http://codebar.io/faq'>FAQ</a> page for any questions you might have, and feel free to email us at %{email} if you can't find the answer you're looking for. Otherwise, use the button below to start the sign-up process."
     sign_up: "to be invited to our workshops."
     no_incoming: "There are no workshops coming up."
     contact: "To contact the %{city} team, send an email to %{email}"
