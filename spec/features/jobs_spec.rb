@@ -9,7 +9,6 @@ feature 'Jobs' do
 
         expect(page).to have_content("Jobs")
         expect(page).to have_content("There are no jobs available at the moment")
-
       end
 
       context 'a member' do
@@ -60,7 +59,7 @@ feature 'Jobs' do
           fill_in "Description", with: Faker::Lorem.paragraph
           fill_in "Link to job post", with: Faker::Internet.url
 
-          click_on "Update"
+          click_on "Submit job"
 
           expect(page).to have_content("This is a preview. Submit to verify your post or Edit to amend.")
 
@@ -77,7 +76,7 @@ feature 'Jobs' do
           fill_in "Description", with: Faker::Lorem.paragraph
           fill_in "Link to job post", with: Faker::Internet.url
 
-          click_on "Update"
+          click_on "Submit job"
 
           expect(page).to have_content("This is a preview. Submit to verify your post or Edit to amend.")
           expect(page).to have_content("Internship")
@@ -85,7 +84,7 @@ feature 'Jobs' do
           click_on "Edit"
 
           fill_in "Job title", with: "Junior developer"
-          click_on "Update"
+          click_on "Submit job"
 
           expect(page).to have_content("Junior developer")
 
