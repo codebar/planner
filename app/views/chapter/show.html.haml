@@ -3,7 +3,7 @@
     .large-12.columns
       %h4= @chapter.name
       %p.lead
-        = t('chapters.intro')
+        = raw t('chapters.intro', email: @chapter.email)
       - if logged_in?
         = render partial: 'subscriptions'
       - else
@@ -47,7 +47,7 @@
             .organiser
               .row
                 .small-12.columns
-                  =link_to twitter_url_for(organiser.twitter) do
+                  =link_to twitter_url_for(organiser.twitter), class: 'user-link' do
                     =image_tag organiser.avatar(65), class: 'th radius', title: organiser.full_name
               .row
                 .small-12.columns

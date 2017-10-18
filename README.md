@@ -35,6 +35,17 @@ rbenv install 2.3.3
 rbenv global 2.3.3
 ```
 
+### Install and run PostgreSQL
+[The PostgreSQL Wiki has detailed installation guides](https://wiki.postgresql.org/wiki/Detailed_installation_guides) for various platforms, but probably the simplest and most common method for Mac users is with Homebrew:
+
+#### Using [Homebrew](https://brew.sh/) on a Mac
+Note: You might need to install another build of Xcode Tools (typing `brew update` in the terminal will prompt you to update the Xcode build tools).
+```bash
+brew update
+brew install postgresql
+brew services start postgresql
+```
+
 ### Install the Gems!
 
 ```bash
@@ -104,6 +115,10 @@ bundle exec rake
 *Note:* JavaScript acceptance tests are relying on the [Poltergeist](https://github.com/teampoltergeist/poltergeist) driver, which requires
 [PhantomJS](http://phantomjs.org). For more information about installing PhantomJS, please take a look
 [here](https://github.com/teampoltergeist/poltergeist#installing-phantomjs).
+
+## Front-end framework
+
+We use Foundation at version 5.5.3, you can find the documentation here: http://foundation.zurb.com/sites/docs/v/5.5.3/
 
 ## Finding something to work on
 You can pick one of the open [issues](https://github.com/codebar/planner/issues), fix a bug, improve the interface, refactor the code or improve test coverage!

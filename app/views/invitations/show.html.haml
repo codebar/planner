@@ -128,7 +128,7 @@
           %ul.small-block-grid-2.medium-block-grid-5
             - @event.verified_coaches.each do |coach|
               %li.text-center
-                =link_to twitter_url_for(coach.twitter) do
+                =link_to twitter_url_for(coach.twitter), class: 'user-link' do
                   =image_tag coach.avatar(56), class: 'th radius', title: coach.full_name
                   %br
                   %br
@@ -145,7 +145,7 @@
           %ul.small-block-grid-2.medium-block-grid-5
             - @event.verified_students.each do |student|
               %li.text-center
-                =link_to twitter_url_for(student.twitter) do
+                =link_to twitter_url_for(student.twitter), class: 'user-link' do
                   =image_tag student.avatar(56), class: 'th radius', title: student.full_name
                   %br
                   %br
@@ -163,7 +163,7 @@
           %ul.small-block-grid-1.medium-block-grid-4
             - @event.organisers.each do |organiser|
               %li.text-center
-                =link_to twitter_url_for(organiser.twitter) do
+                =link_to twitter_url_for(organiser.twitter), class: 'user-link' do
                   =image_tag organiser.avatar(56), class: 'th radius', title: organiser.full_name
                   %br
                   %br

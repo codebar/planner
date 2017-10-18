@@ -16,7 +16,7 @@
           - @jobs.each do |job|
             %dt
               = link_to job.title, admin_job_path(job)
-              %small.fa.fa-location-arrow= job.location
+              %small.fa.fa-map-marker= job.location
               - if job.expiry_date.past?
                 %label.label.alert expired
             %dd submitted #{distance_of_time_in_words(Time.now, job.created_at)} ago

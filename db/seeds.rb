@@ -22,6 +22,25 @@ if Rails.env.development?
     feedback_requests = 5.times.map { Fabricate(:feedback_request) }
     feedbacks = 5.times.map { Fabricate(:feedback, tutorial: tutorials.sample, coach: coaches.sample) }
 
+    job_titles = [
+      'Software Engineer',
+      'Software Developer',
+      'Front-end Developer',
+      'Back-end Developer',
+      'Full-stack Developer'
+    ]
+
+    job_companies = [
+      'ACME',
+      'Globex',
+      'Soylent',
+      'Initech',
+      'Umbrella',
+      'Wonka'
+    ]
+
+    jobs = 5.times.map { Fabricate(:job, title: job_titles.sample, company: job_companies.sample) }
+
     40.times do |n|
       coach = coaches.sample
       Fabricate(:attended_session_invitation, role: "Coach", member: coach, sessions: workshop.sample )  rescue "Coach already attended"

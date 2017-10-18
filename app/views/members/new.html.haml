@@ -13,6 +13,8 @@
         = t('members.new.students.intro')
         = link_to t('members.new.students.criteria_link'), 'http://codebar.io/student-guide#eligibility'
         = t('members.new.students.criteria_brief')
+      %p.lead
+        = t('members.new.students.github')
       = link_to registration_path(member_type: "student"), class: "button round" do
         = t('members.sign_up_as_student')
         %i.fa.fa-github.fa-fw

@@ -1,5 +1,7 @@
+
 Fabricator(:job) do
-  title { Faker::Lorem.sentence }
+  title 'Software Developer'
+  company 'ACME'
   description { Faker::Lorem.paragraph }
   location { Faker::Address.city }
   email { Faker::Address.city }
@@ -8,5 +10,4 @@ Fabricator(:job) do
   approved { true }
   submitted { true }
   expiry_date { Date.today+1.week }
-
 end
