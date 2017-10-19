@@ -3,7 +3,12 @@
     .medium-12.columns
       %h1 Subscribe
       %p
-        To receive invitations to our events you must subscribe to the appropriate chapters. Alternatively, you can always RSVP directly from the website. Just be aware that spots to some of our busier chapters fill up fast.
+        You're now signed up to codebar!
+      %p
+        You haven't signed up to any events yet. If you'd like to sign up to the next event at your local codebar chapter, visit its page. A full list of chapter pages can be found on the homepage. 
+      %p
+        We also email out invites to workshops. If you tick any chapters in the list below, you'll be put on their mailing list. Just be aware that spots to some of our busier chapters fill up fast!
+
 
   - if @type == "student"
     = render partial: 'student_invite_subscriptions', locals: {groups: @student_groups, collapsed: false}
