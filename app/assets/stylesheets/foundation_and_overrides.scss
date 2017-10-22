@@ -1376,6 +1376,11 @@ a {
   border-bottom: 1px dashed $secondary-color;
 }
 
+body.dashboard-faq dl dt {
+	font-size: 1.25rem;
+	padding-top: 0.75rem;
+}
+
 .top-bar a,
 #sponsors a,
 .icon-bar a {
