@@ -20,9 +20,9 @@
   .row
     .large-6.columns
       = f.input :link_to_job, label: "Link to job post", required: true
-  .row
+  .row.row-spaced
     .large-6.columns
       = f.input :expiry_date, label: "Application closing date", as: :date, order: [:day, :month, :year], start_year: Date.current.year, start_month: Date.current.month, end_year: (Date.current+2.months).year, default: Date.current+2.weeks, input_html: { class: 'medium-3 columns' }, required: true
   .row
-    .large-12.columns.text-right
-      = f.submit "Update", class: "button round tiny"
+    .large-12.columns
+      = f.submit "Submit job", class: "button"
