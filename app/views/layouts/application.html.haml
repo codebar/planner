@@ -16,7 +16,7 @@
 
     = csrf_meta_tags
 
-  %body.no-js
+  %body.no-js{ 'class': "#{params[:controller]}-#{params[:action]}"}
     .off-canvas-wrap{ 'data-offcanvas': true }
       .inner-wrap
         #top
@@ -26,3 +26,4 @@
         = yield
         = render partial: 'layouts/footer'
         %a.exit-off-canvas
+  }

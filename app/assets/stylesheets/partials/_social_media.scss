@@ -1,3 +1,12 @@
+li.slack a {
+  color: #3eb991;
+  color: rgba(62, 185, 145, 0.8);
+
+  &:hover {
+    color: rgba(62, 185, 145, 1);
+  }
+}
+
 li.facebook a {
   color: #4e69a2;
   color: rgba(78, 105, 162, 0.8);
