@@ -4,7 +4,11 @@
 
 %p
   - if @member.subscriptions.any?
-    You'll automatically receive invitations to our workshops via email.
+    For our London chapter, you will be able to RSVP to workshops via our website. We open RSVPs at 1PM on the Friday before the workshop. You will be able to register through the workshop page. Join the #london-chapters channel
+    = link_to 'on our Slack', 'http://codebar-slack.herokuapp.com/'
+    to receive a notification when we open RSVPs, or follow us on Twitter
+    - link_to '@codebar', 'https://twitter.com/codebar'
+    . For our other chapters, you'll automatically receive invitations to our workshops to your inbox.
   - else
     We send out invitations to our events via email.
     = link_to "Sign up from the subscriptions page", subscriptions_url
