@@ -6,15 +6,15 @@
           = event.time
       .text-center
         - if event.chapter
-          %label.label.info
+          %span.label.info
             = event.chapter.name
         - if @user
           - if @user.attending?(event.__getobj__)
             = link_to event.path do
-              %label.label.success Attending
+              %span.label.success Attending
           - if @user.event_organiser?(event)
             = link_to event.admin_path do
-              %label.label Manage
+              %span.label Manage
     .small-9.medium-10.columns
       .title
         =link_to event.to_s, event.path
