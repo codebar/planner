@@ -5,9 +5,12 @@
       %p
         You're now signed up to codebar!
       %p
-        You haven't signed up to any events yet. If you'd like to sign up to the next event at your local codebar chapter, visit its page. A full list of chapter pages can be found on the homepage. 
+        You haven't signed up to any events yet. If you'd like to sign up to the next event at your local codebar chapter, visit its page. A full list of chapter pages can be found on the 
+        = link_to("homepage", root_path(anchor: "chapters")) + "."
       %p
-        We also email out invites to workshops. If you tick any chapters in the list below, you'll be put on their mailing list. Just be aware that spots to some of our busier chapters fill up fast!
+        We also email out invites to workshops (aside from Central London ones, where you'll need to sign up to on the 
+        = link_to("London chapter page", "https://codebar.io/london") + "."
+        If you tick any chapters in the list below, you'll be put on their mailing list. Just be aware that spots to some of our busier chapters fill up fast!
 
 
   - if @type == "student"
