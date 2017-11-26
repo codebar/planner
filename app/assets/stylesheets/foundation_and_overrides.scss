@@ -1340,10 +1340,9 @@ blockquote {
   font-size: 16px;
   line-height: 1.2;
   color: #666;
-  text-align: justify;
 }
 
-blockquote::before{
+blockquote::before {
   content: "\201C";
   font-family: Georgia, serif;
   font-size: 60px;
@@ -1378,6 +1377,11 @@ a {
 .top-bar-section li.active:not(.has-form) a:not(.button),
 .top-bar-section ul li.active > a {
   color: $black;
+}
+
+body.dashboard-faq dl dt {
+	font-size: 1.25rem;
+	padding-top: 0.75rem;
 }
 
 .top-bar a,
