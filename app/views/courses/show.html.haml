@@ -20,11 +20,7 @@
         %br
   .row
     .large-12.columns
-      - if logged_in?
-        - if @course.date_and_time.future?
-          #{link_to("RSVP", course_rsvp_path(@course), class: 'button')}
-      - else
-        #{link_to("Sign up", new_member_path, class: 'button')}
+      = render 'course_actions'
 
 .stripe.reverse
   .row
@@ -38,7 +34,7 @@
           %li.coach
             .row
               .small-2.columns
-                =link_to twitter_url_for(tutor.twitter) do
+                =link_to twitter_url_for(tutor.twitter), class: 'user-link' do
                   =image_tag tutor.avatar(106), class: 'th radius'
               .small-10.columns
                 =link_to twitter_url_for(tutor.twitter) do

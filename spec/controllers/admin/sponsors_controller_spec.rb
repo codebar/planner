@@ -5,15 +5,15 @@ describe Admin::SponsorsController, type: :controller do
   let(:member1) { Fabricate(:member) }
   let(:address) { Fabricate(:address)}
   let(:admin) { Fabricate(:chapter_organiser) }
-  let(:avatar) { Faker::Avatar.image }
+  let(:avatar) { Rack::Test::UploadedFile.new(Rails.root.join('app', 'assets', 'images', 'logo.png'), 'image/jpeg') }
   let(:sponsor) { Fabricate(:sponsor)}
 
   describe "POST #create" do
     it "Doesn't allow anonymous users to create sponsors" do
       expect {
-        post :create, sponsor: { 
+        post :create, sponsor: {
           name: 'name', email: 'test@test.com', contact_first_name: 'john',
-          contact_surname: 'smith', website: 'https://example.com', seats: 40, 
+          contact_surname: 'smith', website: 'https://example.com', seats: 40,
           address: address, avatar: avatar, members: [1,2]
         }
       }.to change(Sponsor, :count).by(0)
@@ -23,10 +23,10 @@ describe Admin::SponsorsController, type: :controller do
       login member
 
       expect {
-        post :create, sponsor: { 
+        post :create, sponsor: {
           name: 'name', email: 'test@test.com', contact_first_name: 'john',
-          contact_surname: 'smith', website: 'https://example.com', seats: 40, 
-          address: address, avatar: avatar 
+          contact_surname: 'smith', website: 'https://example.com', seats: 40,
+          address: address, avatar: avatar
         }
       }.to change(Sponsor, :count).by(0)
     end
@@ -37,9 +37,9 @@ describe Admin::SponsorsController, type: :controller do
         request.env["HTTP_REFERER"] = "/admin/member/3"
 
         expect {
-          post :create, sponsor: { 
+          post :create, sponsor: {
             name: 'name', email: 'test@test.com', contact_first_name: 'john',
-            contact_surname: 'smith', website: 'https://example.com', seats: 40, 
+            contact_surname: 'smith', website: 'https://example.com', seats: 40,
             address: address, avatar: avatar
           }
         }.to change(Sponsor, :count).by(1)
@@ -50,9 +50,9 @@ describe Admin::SponsorsController, type: :controller do
         request.env["HTTP_REFERER"] = "/admin/member/3"
 
         expect {
-          post :create, sponsor: { 
+          post :create, sponsor: {
             name: 'name', email: 'test@test.com', contact_first_name: 'john',
-            contact_surname: 'smith', website: 'https://example.com', seats: 40, 
+            contact_surname: 'smith', website: 'https://example.com', seats: 40,
             address: address, avatar: avatar, contact_ids: [member.id, member1.id]
           }
         }.to change(Sponsor, :count).by(1)
@@ -63,22 +63,22 @@ describe Admin::SponsorsController, type: :controller do
         request.env["HTTP_REFERER"] = "/admin/member/3"
 
         expect {
-          post :create, sponsor: { 
-            name: 'name', website: 'https://example.com', seats: 40, 
+          post :create, sponsor: {
+            name: 'name', website: 'https://example.com', seats: 40,
             address: address, avatar: avatar, contact_ids: [member.id, member1.id]
           }
         }.to change(Sponsor, :count).by(1)
       end
-      
+
       it "latitude and longitude for its address" do
         login admin
         request.env["HTTP_REFERER"] = "/admin/member/3"
 
         expect {
-          post :create, sponsor: { 
+          post :create, sponsor: {
             name: 'name', email: 'test@test.com', contact_first_name: 'john',
-            contact_surname: 'smith', website: 'https://example.com', seats: 40, 
-            address: Fabricate(:address, latitude: "54.47474", longitude: "-0.12345"), 
+            contact_surname: 'smith', website: 'https://example.com', seats: 40,
+            address: Fabricate(:address, latitude: "54.47474", longitude: "-0.12345"),
             avatar: avatar, members: []
           }
         }.to change(Sponsor, :count).by(1)
@@ -87,9 +87,9 @@ describe Admin::SponsorsController, type: :controller do
 
     it "Doesn't allow blank sponsors to be created" do
       expect {
-        post :create, sponsor: { 
+        post :create, sponsor: {
           name: '', email: '', contact_first_name: '',
-          contact_surname: '', website: '', seats: '', 
+          contact_surname: '', website: '', seats: '',
           address: '', avatar: '', members: []
         }
       }.to change(Sponsor, :count).by(0)
@@ -98,7 +98,7 @@ describe Admin::SponsorsController, type: :controller do
 
   describe "POST #update" do
     it "Doesn't allow anonymous users to update sponsors" do
-      post :update, id: sponsor.id, sponsor: { 
+      post :update, id: sponsor.id, sponsor: {
         contact_first_name: 'new_name',
         contact_surname: 'new_surname'
       }
@@ -108,7 +108,7 @@ describe Admin::SponsorsController, type: :controller do
     it "Doesn't allow regular users to update sponsors" do
       login member
 
-      post :update, id: sponsor.id, sponsor: { 
+      post :update, id: sponsor.id, sponsor: {
         contact_first_name: 'new_name',
         contact_surname: 'new_surname'
       }
@@ -120,7 +120,7 @@ describe Admin::SponsorsController, type: :controller do
         login admin
         request.env["HTTP_REFERER"] = "/admin/member/3"
 
-        post :update, id: sponsor.id, sponsor: { 
+        post :update, id: sponsor.id, sponsor: {
           contact_first_name: 'new_name',
           contact_surname: 'new_surname'
         }
@@ -131,9 +131,9 @@ describe Admin::SponsorsController, type: :controller do
         login admin
         request.env["HTTP_REFERER"] = "/admin/member/3"
 
-        post :update, id: sponsor.id, sponsor: { 
+        post :update, id: sponsor.id, sponsor: {
           name: 'name', email: 'test@test.com', contact_first_name: 'new_first_name',
-          contact_surname: 'smith', website: 'https://example.com', seats: 40, 
+          contact_surname: 'smith', website: 'https://example.com', seats: 40,
           address: address, avatar: avatar, contact_ids: [member.id, member1.id]
         }
         expect(sponsor.reload.contacts.count).to eq 2
@@ -144,7 +144,7 @@ describe Admin::SponsorsController, type: :controller do
         login admin
         request.env["HTTP_REFERER"] = "/admin/member/3"
 
-        post :update, id: sponsor.id, sponsor: { 
+        post :update, id: sponsor.id, sponsor: {
           contact_ids: [member.id, member1.id]
         }
         expect(sponsor.reload.contacts.count).to eq 2

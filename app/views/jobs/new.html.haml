@@ -3,8 +3,6 @@
     .large-12.columns
       %h2 Post a job
       %p
-        A minimum payment of <b>£25</b> is required to list a job (all proceeds go towards running our events and sustaining codebar).
-      %p
         Before posting, make sure that:
         %ul.no-bullet
           %li
@@ -19,10 +17,11 @@
           %li
             %input#short{type: 'checkbox'}
             %label{for: 'short'} It's short and to the point
-
-      =link_to "Make payment", "https://codebar.io/donations/new", class: 'button tiny round'
+      %p
+        A minimum payment of <b>£25</b> would be appreciated to list a job (all donations go towards sustaining codebar and running our events).
+      =link_to "Make payment", "https://codebar.io/donations/new", class: 'button tiny'
       %br
-      %small *Posted jobs will only be visible to our members after they are reviewed and approved by an organiser.
+      %small *Submitted jobs will be visible to our members once they've been reviewed and approved by an organiser.
 
 .stripe.reverse
   .row

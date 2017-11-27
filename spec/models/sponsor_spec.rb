@@ -37,7 +37,7 @@ describe Sponsor do
       end
 
       describe '#avatar' do
-        before { sponsor.avatar = nil }
+        subject(:sponsor) { Fabricate.build(:sponsor, avatar: nil) }
 
         it{ should_not be_valid }
         it{ should have(1).error_on(:avatar) }

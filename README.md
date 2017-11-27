@@ -35,6 +35,17 @@ rbenv install 2.3.3
 rbenv global 2.3.3
 ```
 
+### Install and run PostgreSQL
+[The PostgreSQL Wiki has detailed installation guides](https://wiki.postgresql.org/wiki/Detailed_installation_guides) for various platforms, but probably the simplest and most common method for Mac users is with Homebrew:
+
+#### Using [Homebrew](https://brew.sh/) on a Mac
+Note: You might need to install another build of Xcode Tools (typing `brew update` in the terminal will prompt you to update the Xcode build tools).
+```bash
+brew update
+brew install postgresql
+brew services start postgresql
+```
+
 ### Install the Gems!
 
 ```bash

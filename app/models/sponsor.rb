@@ -12,7 +12,7 @@ class Sponsor < ActiveRecord::Base
   default_scope -> { order('updated_at desc') }
   scope :active, -> { joins(:workshop_sponsors) }
 
-  mount_uploader(:avatar, AvatarUploader) if Rails.env.production?
+  mount_uploader(:avatar, AvatarUploader)
 
   accepts_nested_attributes_for :address, :contacts
 

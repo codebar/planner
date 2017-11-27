@@ -50,7 +50,7 @@
           %li.coach
             .row
               .small-2.columns
-                =link_to twitter_url_for(tutor.twitter) do
+                =link_to twitter_url_for(tutor.twitter), class: 'user-link' do
                   =image_tag tutor.avatar(106), class: 'th radius'
               .small-10.columns
                 =link_to twitter_url_for(tutor.twitter) do
@@ -94,11 +94,10 @@
       %ul.small-block-grid-2.medium-block-grid-4
         - @course.organisers.each do |organiser|
           %li.text-center
-            =link_to twitter_url_for(organiser.twitter) do
+            =link_to twitter_url_for(organiser.twitter), class: 'user-link' do
               =image_tag organiser.avatar(56), class: 'th radius', title: organiser.full_name
             %br
             %br
             = organiser.full_name
             %br= organiser.mobile
             %br
-

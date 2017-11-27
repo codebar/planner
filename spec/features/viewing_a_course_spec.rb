@@ -14,5 +14,6 @@ feature 'viewing a course' do
     expect(page).to have_content course.url
 
     expect(page).to have_content "Sign up"
+    expect(page).to have_content "Sign in"
   end
 end
