@@ -30,10 +30,15 @@
               %h4= date
             = render workshops
 
+
     .large-4.columns
-      %a.twitter-timeline{href: "https://twitter.com/#{@chapter.twitter_handle}", "data-widget-id" => @chapter.twitter_id }="Tweets by #{@chapter.twitter_handle}"
-      :javascript
-        !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+      - if @chapter.twitter_handle
+        %a.twitter-timeline{href: "https://twitter.com/#{@chapter.twitter_handle}", "data-widget-id" => @chapter.twitter_id }="Tweets by #{@chapter.twitter_handle}"
+      - else
+        %a.twitter-timeline{href: "https://twitter.com/codebar", "data-widget-id" => @chapter.twitter_id, "data-height" => "500" }="Tweets by codebar"
+
+      %script(async src="https://platform.twitter.com/widgets.js" charset="utf-8")
+
 
 .stripe.reverse
   .row
