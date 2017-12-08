@@ -98,6 +98,7 @@ Planner::Application.routes.draw do
     resources :jobs, only: [:index, :show] do
       get 'all', on: :collection
       get 'approve'
+      get 'archive'
     end
 
     resources :announcements, only: [:new, :index, :create, :edit, :update]

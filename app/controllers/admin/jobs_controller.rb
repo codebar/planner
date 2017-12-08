@@ -27,4 +27,14 @@ class Admin::JobsController < Admin::ApplicationController
 
     redirect_to admin_jobs_path
   end
+
+  def archive
+    @job = Job.find(params[:job_id])
+    authorize @job
+
+    @job.update_attributes(archived: true, archived_by_id: current_user.id)
+
+    flash[:notice] = "The job has been archived"
+    redirect_to admin_jobs_path
+  end
 end
