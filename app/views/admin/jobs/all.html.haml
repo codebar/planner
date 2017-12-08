@@ -17,6 +17,8 @@
               %small.fa.fa-map-marker= job.location
               - if job.approved?
                 %label.label.success approved
+              - if job.archived?
+                %label.label.alert archived
               - if job.expiry_date.past?
                 %label.label.alert expired
             %dd
