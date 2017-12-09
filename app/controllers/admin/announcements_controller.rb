@@ -1,4 +1,6 @@
 class Admin::AnnouncementsController < Admin::ApplicationController
+  before_action :set_announcement, only: [:update, :edit]
+
   def index
     @announcements = Announcement.all
   end
@@ -13,17 +15,18 @@ class Admin::AnnouncementsController < Admin::ApplicationController
   end
 
   def update
-    @announcement = Announcement.find(params[:id])
-
     @announcement.update_attributes(announcement_params)
     redirect_to dashboard_path
   end
 
   def edit
-    @announcement = Announcement.find(params[:id])
   end
 
   private
+
+  def set_announcement
+    @announcement = Announcement.find(params[:id])
+  end
 
   def announcement_params
     params.require(:announcement).permit(:message, :expires_at, group_ids: [])

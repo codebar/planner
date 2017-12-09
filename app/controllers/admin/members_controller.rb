@@ -1,4 +1,6 @@
 class Admin::MembersController < Admin::ApplicationController
+  before_action :set_member, only: [:update_subscriptions, :send_attendance_email, :send_eligibility_email]
+
   def index
     @members = Member.all
   end
@@ -12,23 +14,26 @@ class Admin::MembersController < Admin::ApplicationController
   end
 
   def update_subscriptions
-    member = Member.find(params[:member_id])
-    subscription = member.subscriptions.find_by_group_id(params[:group])
-    flash[:notice] = "You have unsubscribed #{member.full_name} from #{subscription.group.chapter.city}'s #{subscription.group.name} group"
+    subscription = @member.subscriptions.find_by_group_id(params[:group])
+    flash[:notice] = "You have unsubscribed #{@member.full_name} from #{subscription.group.chapter.city}'s #{subscription.group.name} group"
 
     subscription.destroy
     redirect_to :back
   end
 
   def send_eligibility_email
-    @member = Member.find(params[:member_id])
     @member.send_eligibility_email(current_user)
     redirect_to [:admin, @member], notice: 'You have sent an eligibility confirmation request.'
   end
 
   def send_attendance_email
-    @member = Member.find(params[:member_id])
     @member.send_attendance_email(current_user)
     redirect_to [:admin, @member], notice: 'You have sent an attendance warning.'
+  end
+
+  private
+
+  def set_member
+    @member = Member.find(params[:member_id])
   end
 end

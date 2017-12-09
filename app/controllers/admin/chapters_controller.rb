@@ -1,4 +1,5 @@
 class Admin::ChaptersController < Admin::ApplicationController
+  before_action :set_chapter, only: [:show, :edit, :update]
   after_action :verify_authorized
 
   def new
@@ -20,7 +21,6 @@ class Admin::ChaptersController < Admin::ApplicationController
   end
 
   def show
-    @chapter = Chapter.find(params[:id])
     authorize(@chapter)
 
     @workshops = @chapter.workshops.upcoming
@@ -30,12 +30,10 @@ class Admin::ChaptersController < Admin::ApplicationController
   end
 
   def edit
-    @chapter = Chapter.find(params[:id])
     authorize @chapter
   end
 
   def update
-    @chapter = Chapter.find(params[:id])
     authorize(@chapter)
 
     if @chapter.update(chapter_params)
@@ -65,5 +63,9 @@ class Admin::ChaptersController < Admin::ApplicationController
 
   def chapter_params
     params.require(:chapter).permit(:name, :email, :city, :time_zone, :twitter)
+  end
+
+  def set_chapter
+    @chapter = Chapter.find(params[:id])
   end
 end
