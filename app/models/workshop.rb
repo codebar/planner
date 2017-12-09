@@ -69,8 +69,7 @@ class Workshop < ActiveRecord::Base
   end
 
   def invitable_yet?
-    return true if open_for_rsvp?
-    invitable
+    open_for_rsvp? || invitable
   end
 
   # Is this person attending this event?

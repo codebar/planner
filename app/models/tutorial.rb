@@ -5,6 +5,6 @@ class Tutorial < ActiveRecord::Base
   default_scope -> { order(:created_at) }
 
   def self.all_titles
-    all.map(&:title)
+    pluck(:title)
   end
 end

@@ -8,9 +8,5 @@ class MeetingInvitation < ActiveRecord::Base
   belongs_to :member
 
   scope :accepted, -> { where(attending: true) }
-  scope :attended, -> { where(attended: true) }
-
-  def attended?
-    self.attended
-  end
+  scope :attended, -> { where(attended: true)}
 end
