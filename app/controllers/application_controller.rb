@@ -20,6 +20,8 @@ class ApplicationController < ActionController::Base
   helper_method :current_user
   helper_method :current_service
 
+  before_action :set_locale
+
   def render_not_found
     respond_to do |format|
       format.html { render :template => "errors/not_found", layout: false, :status => 404 }
@@ -116,6 +118,10 @@ class ApplicationController < ActionController::Base
 
   def has_access?
     is_logged_in?
+  end
+
+  def set_locale
+    I18n.locale = params[:locale] || I18n.default_locale
   end
 
   private
