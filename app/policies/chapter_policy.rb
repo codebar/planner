@@ -1,5 +1,4 @@
 class ChapterPolicy < ApplicationPolicy
-
   def index?
     show?
   end
@@ -13,11 +12,11 @@ class ChapterPolicy < ApplicationPolicy
   end
 
   def edit?
-  	is_admin_or_organiser?
+  	 is_admin_or_organiser?
   end
 
   def update?
-  	is_admin_or_organiser?
+  	 is_admin_or_organiser?
   end
 
   def members?
@@ -27,6 +26,6 @@ class ChapterPolicy < ApplicationPolicy
   private
 
   def is_admin_or_organiser?
-  	user.is_admin? or user.has_role?(:organiser, record) or user.has_role?(:organiser)
+  	 user.is_admin? or user.has_role?(:organiser, record) or user.has_role?(:organiser)
   end
 end

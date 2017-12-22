@@ -4,7 +4,6 @@ describe WorkshopSponsor do
   let!(:workshop) { Fabricate(:workshop) }
 
   context '#scopes' do
-
     it '#hosts' do
       expect(WorkshopSponsor.hosts.length).to eq(1)
     end

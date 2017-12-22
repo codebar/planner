@@ -1,5 +1,4 @@
 class MeetingPresenter < EventPresenter
-
   def venue
     model.venue
   end
@@ -9,11 +8,11 @@ class MeetingPresenter < EventPresenter
   end
 
   def organisers
-    @organisers ||= model.permissions.find_by_name("organiser").members rescue []
+    @organisers ||= model.permissions.find_by_name('organiser').members rescue []
   end
 
   def attendees_emails
-    model.invitations.accepted.map {|m| m.member.email if m.member }.compact.join(', ')
+    model.invitations.accepted.map { |m| m.member.email if m.member }.compact.join(', ')
   end
 
   def to_s

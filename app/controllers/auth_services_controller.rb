@@ -4,7 +4,7 @@ class AuthServicesController < ApplicationController
     if Rails.application.routes.recognize_path(referer_path)[:controller].in?(%w(workshops events courses meetings))
       session[:referer_path] = referer_path
     end
-    redirect_to "/auth/github"
+    redirect_to '/auth/github'
   end
 
   def create
@@ -30,14 +30,14 @@ class AuthServicesController < ApplicationController
         member = Member.find_by_email(omnihash[:info][:email])
         member = Member.new(email: (omnihash[:info][:email])) if member.nil?
 
-        member.name    ||= omnihash[:info][:name].split(" ").first rescue("")
-        member.surname ||= omnihash[:info][:name].split(" ").drop(1).join(" ") rescue("")
+        member.name    ||= omnihash[:info][:name].split(' ').first rescue('')
+        member.surname ||= omnihash[:info][:name].split(' ').drop(1).join(' ') rescue('')
         member.twitter ||= omnihash[:info][:nickname]
 
         member_service = member.auth_services.build({
-          provider: omnihash[:provider],
+                                                      provider: omnihash[:provider],
           uid: omnihash[:uid]
-        })
+                                                    })
 
         member.save!
 

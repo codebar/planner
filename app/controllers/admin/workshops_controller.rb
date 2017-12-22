@@ -2,8 +2,8 @@ class Admin::WorkshopsController < Admin::ApplicationController
   include  Admin::SponsorConcerns
   include  Admin::WorkshopConcerns
 
-  before_filter :set_workshop_by_id, only: [:show, :edit, :destroy]
-  before_filter :set_and_decorate_workshop, only: [:attendees_checklist, :attendees_emails]
+  before_filter :set_workshop_by_id, only: %i[show edit destroy]
+  before_filter :set_and_decorate_workshop, only: %i[attendees_checklist attendees_emails]
 
   WORKSHOP_DELETION_TIME_FRAME_SINCE_CREATION = 4.hours
 
@@ -26,7 +26,7 @@ class Admin::WorkshopsController < Admin::ApplicationController
       set_host(host_id)
       update_rsvp_open_time if auto_rsvps_set?
 
-      redirect_to admin_workshop_path(@workshop), notice: "The workshop has been created."
+      redirect_to admin_workshop_path(@workshop), notice: 'The workshop has been created.'
     else
       flash[:notice] = @workshop.errors.full_messages
       render 'new'
@@ -60,7 +60,7 @@ class Admin::WorkshopsController < Admin::ApplicationController
     set_host(host_id)
     update_rsvp_open_time if auto_rsvps_set?
 
-    redirect_to admin_workshop_path(@workshop), notice: "Workshops updated successfully"
+    redirect_to admin_workshop_path(@workshop), notice: 'Workshops updated successfully'
   end
 
   def send_invites
@@ -86,7 +86,7 @@ class Admin::WorkshopsController < Admin::ApplicationController
 
     InvitationManager.new.send_session_emails(@workshop, audience)
 
-    redirect_to admin_workshop_path(@workshop), notice: "Invitations are being emailed out."
+    redirect_to admin_workshop_path(@workshop), notice: 'Invitations are being emailed out.'
   end
 
   def destroy
@@ -158,7 +158,7 @@ class Admin::WorkshopsController < Admin::ApplicationController
     params[:workshop][:organisers]
   end
 
-  def grant_organiser_access(organiser_ids=[])
+  def grant_organiser_access(organiser_ids = [])
     organiser_ids.each { |id| Member.find(id).add_role(:organiser, @workshop) }
   end
 

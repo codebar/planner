@@ -6,10 +6,10 @@ describe Tutorial do
   it { should respond_to(:title) }
   it { should respond_to(:description) }
   it { should respond_to(:url) }
-  it { should respond_to(:workshop)}
+  it { should respond_to(:workshop) }
 
-  context "validations" do
-    it "#title" do
+  context 'validations' do
+    it '#title' do
       tutorial = Fabricate.build(:tutorial, title: nil)
 
       expect(tutorial).to_not be_valid
@@ -17,10 +17,10 @@ describe Tutorial do
     end
   end
 
-  it "gets all titles" do
-    tutorial_1 = Tutorial.create(title: "title1")
-    tutorial_2 = Tutorial.create(title: "title2")
+  it 'gets all titles' do
+    tutorial_1 = Tutorial.create(title: 'title1')
+    tutorial_2 = Tutorial.create(title: 'title2')
 
-    expect(Tutorial.all_titles).to match_array(["title1", "title2"])
+    expect(Tutorial.all_titles).to match_array(['title1', 'title2'])
   end
 end

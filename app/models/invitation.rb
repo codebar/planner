@@ -2,8 +2,8 @@ class Invitation < ActiveRecord::Base
   include InvitationConcerns
 
   validates :event, :member, presence: true
-  validates :member_id, uniqueness: { scope: [:event_id, :role ] }
-  validates_inclusion_of :role, in: [ "Student", "Coach" ]
+  validates :member_id, uniqueness: { scope: %i[event_id role] }
+  validates_inclusion_of :role, in: ['Student', 'Coach']
 
   belongs_to :event
   belongs_to :member

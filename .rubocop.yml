@@ -1,0 +1,6 @@
+#Disabling rubocop on missing top level class documentation comment.
+Style/Documentation:
+  Enabled: false
+#Disabling rubocop for missing frozen string literal comment.
+Style/FrozenStringLiteralComment:
+  Enabled: false

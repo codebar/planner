@@ -1,8 +1,7 @@
 require 'spec_helper'
 
 feature 'a member can' do
-
-  context "#workshop" do
+  context '#workshop' do
     let(:invitation) { Fabricate(:session_invitation) }
     let(:invitation_route) { invitation_path(invitation) }
 
@@ -13,18 +12,17 @@ feature 'a member can' do
       login(member)
     end
 
-    it_behaves_like "invitation route"
-
+    it_behaves_like 'invitation route'
   end
 
-  context "#course" do
+  context '#course' do
     let(:invitation) { Fabricate(:course_invitation) }
     let(:accepting_invitation_path) { accept_course_invitation_path(invitation) }
     let(:rejecting_invitation_path) { reject_course_invitation_path(invitation) }
 
     let(:set_no_available_slots) { invitation.course.update_attribute(:seats, 0) }
 
-    context "accept an invitation" do
+    context 'accept an invitation' do
       scenario 'when there are available spots' do
         visit accepting_invitation_path
 
@@ -37,7 +35,7 @@ feature 'a member can' do
         visit accepting_invitation_path
 
         expect(current_url).to eq(root_url)
-        expect(page).to have_content("You have already confirmed you attendance!")
+        expect(page).to have_content('You have already confirmed you attendance!')
       end
 
       scenario 'when there are no available spots' do
@@ -45,17 +43,17 @@ feature 'a member can' do
         visit accepting_invitation_path
 
         expect(current_url).to eq(root_url)
-        expect(page).to have_content("Unfortunately there are no more spaces left :(.")
+        expect(page).to have_content('Unfortunately there are no more spaces left :(.')
       end
     end
 
-    context "reject an invitation" do
+    context 'reject an invitation' do
       scenario 'when they are successful' do
         invitation.update_attribute(:attending, true)
         visit rejecting_invitation_path
 
         expect(current_url).to eq(root_url)
-        expect(page).to have_content(I18n.t("messages.rejected_invitation", name: invitation.member.name))
+        expect(page).to have_content(I18n.t('messages.rejected_invitation', name: invitation.member.name))
       end
 
       scenario 'when already confirmed' do
@@ -63,14 +61,13 @@ feature 'a member can' do
         visit rejecting_invitation_path
 
         expect(current_url).to eq(root_url)
-        expect(page).to have_content(I18n.t("messages.not_attending_already"))
+        expect(page).to have_content(I18n.t('messages.not_attending_already'))
       end
-
     end
   end
 
-  context "edit invitation" do
+  context 'edit invitation' do
     let(:invitation) { Fabricate(:session_invitation) }
-    scenario "logged in user with invitation can edit the description"
+    scenario 'logged in user with invitation can edit the description'
   end
 end

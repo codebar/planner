@@ -1,18 +1,17 @@
 class CourseInvitation < ActiveRecord::Base
-
   include InvitationConcerns
 
   belongs_to :course
 
   validates :course, :member, presence: true
-  validates :member_id, uniqueness: { scope: [:course ] }
+  validates :member_id, uniqueness: { scope: [:course] }
 
   def parent
     course
   end
 
   def role
-    "Student"
+    'Student'
   end
 
 

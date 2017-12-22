@@ -1,5 +1,4 @@
 class ChapterPresenter < SimpleDelegator
-
   def twitter_id
     model.twitter_id || Planner::Application.config.twitter_id
   end
@@ -13,7 +12,7 @@ class ChapterPresenter < SimpleDelegator
   end
 
   def organisers
-    @organisers ||= model.permissions.find_by_name("organiser").members
+    @organisers ||= model.permissions.find_by_name('organiser').members
   end
 
   private

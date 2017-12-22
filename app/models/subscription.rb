@@ -12,11 +12,11 @@ class Subscription < ActiveRecord::Base
   after_destroy :unsubscribe_from_mailing_list
 
   def student?
-    group.name.downcase == "students"
+    group.name.downcase == 'students'
   end
 
   def coach?
-    group.name.downcase == "coaches"
+    group.name.downcase == 'coaches'
   end
 
   private

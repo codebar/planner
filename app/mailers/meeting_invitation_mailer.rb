@@ -4,7 +4,7 @@ class MeetingInvitationMailer < ActionMailer::Base
 
   helper ApplicationHelper
 
-  def invite meeting, member
+  def invite(meeting, member)
     @member = member
     @meeting = meeting
     @host_address = AddressDecorator.new(@meeting.venue.address)
@@ -16,7 +16,7 @@ class MeetingInvitationMailer < ActionMailer::Base
     end
   end
 
-  def attending meeting, member, invitation
+  def attending(meeting, member, invitation)
     @member = member
     @meeting = meeting
     @host_address = AddressDecorator.new(@meeting.venue.address)
@@ -28,7 +28,7 @@ class MeetingInvitationMailer < ActionMailer::Base
     end
   end
 
-  def approve_from_waitlist meeting, member, invitation
+  def approve_from_waitlist(meeting, member, invitation)
     @member = member
     @meeting = meeting
     @host_address = AddressDecorator.new(@meeting.venue.address)
@@ -40,7 +40,7 @@ class MeetingInvitationMailer < ActionMailer::Base
     end
   end
 
-  def attendance_reminder meeting, member
+  def attendance_reminder(meeting, member)
     @member = member
     @meeting = meeting
     @host_address = AddressDecorator.new(@meeting.venue.address)

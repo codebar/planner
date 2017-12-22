@@ -4,16 +4,16 @@ class Workshop < ActiveRecord::Base
 
   resourcify :permissions, role_cname: 'Permission', role_table_name: :permission
 
-  has_many :invitations, class_name: "SessionInvitation"
+  has_many :invitations, class_name: 'SessionInvitation'
   has_many :workshop_sponsors
   has_many :sponsors, through: :workshop_sponsors
-  has_many :organisers, -> { where("permissions.name" => "organiser") }, through: :permissions, source: :members
+  has_many :organisers, -> { where('permissions.name' => 'organiser') }, through: :permissions, source: :members
 
   belongs_to :chapter
 
   default_scope { order('date_and_time DESC') }
   scope :students, -> { joins(:invitations).where(invitation: { name: 'Student', attended: true }) }
-  scope :coaches, -> { joins(:invitations).where(invitations: { name: 'Coach', attended: true  }) }
+  scope :coaches, -> { joins(:invitations).where(invitations: { name: 'Coach', attended: true }) }
 
   validates :chapter_id, presence: true
 
@@ -86,16 +86,16 @@ class Workshop < ActiveRecord::Base
   # Is this person on the waiting list for this event?
   def waitlisted?(person)
     return false if person.nil?
-    raise ArgumentError, "Person should be a Member" unless person.is_a?(Member)
+    raise ArgumentError, 'Person should be a Member' unless person.is_a?(Member)
     WaitingList.students(self).include?(person) || WaitingList.coaches(self).include?(person)
   end
 
   def to_s
-    "Workshop"
+    'Workshop'
   end
 
   def location
-    host.address.city rescue ""
+    host.address.city rescue ''
   end
 
   def self.policy_class
@@ -115,5 +115,4 @@ class Workshop < ActiveRecord::Base
   def set_rsvp_close_time
     self.rsvp_close_time ||= self.date_and_time
   end
-
 end

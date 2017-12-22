@@ -17,11 +17,11 @@ class Sponsor < ActiveRecord::Base
   accepts_nested_attributes_for :address, :contacts
 
   def coach_spots
-    number_of_coaches || (seats/2.0).round
+    number_of_coaches || (seats / 2.0).round
   end
 
   def self.latest
-    WorkshopSponsor.order("created_at desc").limit(15).map(&:sponsor)
+    WorkshopSponsor.order('created_at desc').limit(15).map(&:sponsor)
   end
 
   private
@@ -33,6 +33,6 @@ class Sponsor < ActiveRecord::Base
     rescue URI::InvalidURIError
       valid = false
     end
-    errors.add(:website, "must be a full, valid URL") unless valid
+    errors.add(:website, 'must be a full, valid URL') unless valid
   end
 end

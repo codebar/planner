@@ -1,12 +1,11 @@
 module ApplicationHelper
-
   def humanize_date(date)
     human_date = "#{I18n.l(date, format: :day_in_words)}, "
     human_date << "#{ActiveSupport::Inflector.ordinalize(date.day)} "
     human_date << I18n.l(date, format: :month)
   end
 
-  def humanize_date_with_time(date, time=date)
+  def humanize_date_with_time(date, time = date)
     human_date = humanize_date(date)
     human_date << " at #{I18n.l(time, format: :time)}"
   end
@@ -15,7 +14,7 @@ module ApplicationHelper
     GitHub::Markdown.render_gfm(text).html_safe
   end
 
-  def belongs_to_group? group
+  def belongs_to_group?(group)
     current_user.groups.include?(group)
   end
 
@@ -41,11 +40,10 @@ module ApplicationHelper
   end
 
   def contact_email
-    @contact_email ||= @session.present? ? @session.chapter.email : "hello@codebar.io"
+    @contact_email ||= @session.present? ? @session.chapter.email : 'hello@codebar.io'
   end
 
   def active_link_class(link_path)
-    current_page?(link_path) ? "active" : ""
+    current_page?(link_path) ? 'active' : ''
   end
-
 end

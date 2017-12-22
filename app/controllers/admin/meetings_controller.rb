@@ -1,5 +1,5 @@
 class Admin::MeetingsController < Admin::ApplicationController
-  before_action :set_meeting, except: [:new, :create]
+  before_action :set_meeting, except: %i[new create]
 
   def new
     @meeting = Meeting.new
@@ -31,9 +31,9 @@ class Admin::MeetingsController < Admin::ApplicationController
     set_chapters(chapter_ids)
 
     if @meeting.update_attributes(meeting_params)
-      redirect_to [:admin, @meeting], notice: "You have successfully updated the details of this meeting"
+      redirect_to [:admin, @meeting], notice: 'You have successfully updated the details of this meeting'
     else
-      render 'edit', notice: "Something went wrong"
+      render 'edit', notice: 'Something went wrong'
     end
   end
 
@@ -45,7 +45,7 @@ class Admin::MeetingsController < Admin::ApplicationController
   end
 
   def invite
-    notice = @meeting.invites_sent ? "Invitations were previously sent; they will not be sent again" : "Invitations are being sent out"
+    notice = @meeting.invites_sent ? 'Invitations were previously sent; they will not be sent again' : 'Invitations are being sent out'
 
     unless @meeting.invites_sent
       @meeting.invitees.each do |invitee|
@@ -76,7 +76,7 @@ class Admin::MeetingsController < Admin::ApplicationController
     params[:meeting][:chapters]
   end
 
-  def grant_organiser_access(organiser_ids=[])
+  def grant_organiser_access(organiser_ids = [])
     organiser_ids.each { |id| Member.find(id).add_role(:organiser, @meeting) }
   end
 
@@ -94,6 +94,6 @@ class Admin::MeetingsController < Admin::ApplicationController
 
   def set_chapters(chapter_ids)
     chapter_ids.reject!(&:empty?)
-    @meeting.chapters = chapter_ids.map{|id| Chapter.find(id) }
+    @meeting.chapters = chapter_ids.map{ |id| Chapter.find(id) }
   end
 end
