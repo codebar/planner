@@ -80,6 +80,8 @@ Using these field values:
 
 Create an application at [https://github.com/settings/applications/new](https://github.com/settings/applications/new).
 
+When signing up for an account, whether in test, development or production, you are now required complete the two-step process in order to access any other pages.  A global before_action handling this fucntionality can be found in the ApplicationController.
+
 #### Add your application details to your environment
 
 Create a file named `.env` in the root of the application folder (`touch .env`) 
