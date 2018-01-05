@@ -29,7 +29,7 @@ class EventsController < ApplicationController
     @host_address = AddressDecorator.new(@event.venue.address)
 
     if logged_in?
-      invitation = Invitation.where(member: current_user, event: event, attending: true).try(:first)
+      invitation = Invitation.find_by(member: current_user, event: event, attending: true)
       if invitation
         redirect_to event_invitation_path(@event, invitation) and return
       end
@@ -59,16 +59,11 @@ class EventsController < ApplicationController
 
   def find_invitation_and_redirect_to_event(role)
     set_event
-    @invitation = Invitation.where(event: @event, member: current_user, role: role).try(:first)
-    if @invitation.nil?
-      @invitation = Invitation.new(event: @event, member: current_user, role: role)
-      @invitation.save
-    end
-
+    @invitation = Invitation.find_or_create_by(event: @event, member: current_user, role: role)
     redirect_to event_invitation_path(@event, @invitation)
   end
 
   def set_event
-    @event = Event.find_by_slug(params[:event_id])
+    @event = Event.find_by(slug: params[:event_id])
   end
 end
