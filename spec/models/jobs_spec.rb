@@ -14,10 +14,12 @@ describe Job do
     it { should respond_to(:created_by)}
     it { should respond_to(:approved)}
     it { should respond_to(:submitted)}
+    it { should respond_to(:archived)}
   end
 
   context "scopes" do
     let!(:approved_jobs) { 2.times.map { Fabricate(:job)} }
+    let!(:archived_jobs) { 2.times.map { Fabricate(:job, archived: true, approved: false)} }
     let!(:unsubmitted) {1.times.map { Fabricate(:job, submitted: false, approved: false)} }
     let!(:pending_approval) {4.times.map { Fabricate(:job, approved: false)} }
     let!(:expired) {2.times.map { Fabricate(:job, expiry_date: Date.today-1.week)} }
@@ -28,6 +30,10 @@ describe Job do
 
     it "#approved returns all approved jobs" do
       expect(Job.approved.all).to eq(approved_jobs)
+    end
+
+    it "#archived returns all archived jobs" do
+      expect(Job.archived.all).to eq(archived_jobs)
     end
 
     it "#not_submitted returns all jobs who have not yet been previed" do

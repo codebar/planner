@@ -2,7 +2,7 @@
   .row
     .large-12.columns
       %h1 Review job
-- unless @job.approved? or @job.expired?
+- unless @job.approved? or @job.expired? or @job.archived?
   .alert-box
     .row
       .large-12.columns
@@ -34,11 +34,18 @@
 .stripe.reverse
   .row
     .large-12.columns.text-right
-      - if @job.approved?
+      - if @job.archived?
+        %label.label.alert
+          Archived
+          - if @job.archived_by_id?
+            by #{@job.archived_by.full_name}
+      - elsif @job.approved?
         %label.label.success
           Approved
           - if @job.approved_by_id?
             by #{@job.approved_by.full_name}
       - else
         - unless @job.expired?
-          = link_to 'Approve', admin_job_approve_path(@job), class: 'button round alert'
+          = link_to 'Archive', admin_job_archive_path(@job), class: 'button round alert'
+          = link_to 'Approve', admin_job_approve_path(@job), class: 'button round success'
+          
