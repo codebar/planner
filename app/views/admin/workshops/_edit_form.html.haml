@@ -4,10 +4,10 @@
       = f.association :chapter, as: :select, collection: Chapter.available_to_user(current_user)
   .row
     .large-3.columns
-      = f.input :date_and_time, as: :string, required: true, label: 'Date', input_html: { id: 'sessions_date_and_time', data: { value: @workshop.date_and_time.strftime('%d/%m/%Y') } }
+      = f.input :local_date, as: :string, required: true, input_html: { data: { value: @workshop.date_and_time.try(:strftime, '%d/%m/%Y') } }
   .row
     .large-3.columns
-      = f.input :time, as: :string, required: true, input_html: { id: 'sessions_time', data: { value: (@workshop.time).strftime('%H:%M') }}
+      = f.input :local_time, as: :string, required: true, input_html: { data: { value: @workshop.time.try(:strftime, '%H:%M') } }
   .row
     .large-6.columns
       = f.input :host, as: :select, collection: Sponsor.all, include_blank: true, selected: (@workshop.host.id rescue '')
@@ -19,8 +19,8 @@
     .large-6.columns
       .panel.callout
         %p Fill out these fields if you want RSVPs to open automatically at a future time. Leave blank if you'll handle it manually later.
-        = f.input :rsvp_open_date, as: :string, input_html: { id: 'workshop_rsvp_open_date', value: @rsvp_open_date }
-        = f.input :rsvp_open_time, as: :string, input_html: { id: 'workshop_rsvp_open_time', value: @rsvp_open_time }
+        = f.input :rsvp_open_local_date, as: :string, input_html: { data: { value: @workshop.rsvp_opens_at.try(:strftime, '%d/%m/%Y') } }
+        = f.input :rsvp_open_local_time, as: :string, input_html: { data: { value: @workshop.rsvp_opens_at.try(:time).try(:strftime, '%H:%M') } }
   .row
     .large-6.columns
       %label Organisers
