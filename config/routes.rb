@@ -2,7 +2,9 @@ Planner::Application.routes.draw do
   root 'dashboard#show'
 
   scope controller: 'dashboard' do
-    get 'code-of-conduct', action: 'code'
+    scope '(:locale)', locale: /#{I18n.available_locales.join("|")}/ do
+      get 'code-of-conduct', action: 'code'
+    end
     get 'coaches', action: 'wall_of_fame'
     get 'effective-teacher-guide', action: 'effective-teacher-guide', as: :teaching_guide
     get 'faq', action: 'faq'
