@@ -23,6 +23,8 @@
         = f.input :rsvp_open_time, as: :string, input_html: { id: 'workshop_rsvp_open_time' }
   .row
     .large-6.columns
+      %label Organisers
+      = f.collection_select :organisers, Member.all, :id, :full_name, { selectd: nil }, { multiple: true }
       = f.input :invitable
   .row
     .large-12.columns.text-right
