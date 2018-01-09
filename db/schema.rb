@@ -11,7 +11,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161228121833) do
+ActiveRecord::Schema.define(version: 20180108210921) do
+
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -518,19 +519,18 @@ ActiveRecord::Schema.define(version: 20161228121833) do
   add_index 'workshop_sponsors', ['sponsor_id'], name: 'index_workshop_sponsors_on_sponsor_id', using: :btree
   add_index 'workshop_sponsors', ['workshop_id'], name: 'index_workshop_sponsors_on_workshop_id', using: :btree
 
-  create_table 'workshops', force: :cascade do |t|
-    t.string   'title'
-    t.text     'description'
-    t.datetime 'date_and_time'
-    t.datetime 'created_at'
-    t.datetime 'updated_at'
-    t.boolean  'invitable', default: true
-    t.string   'sign_up_url'
-    t.integer  'chapter_id'
-    t.datetime 'time'
-    t.datetime 'rsvp_close_time'
-    t.datetime 'rsvp_open_time'
-    t.datetime 'rsvp_open_date'
+  create_table "workshops", force: :cascade do |t|
+    t.string   "title"
+    t.text     "description"
+    t.datetime "date_and_time"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "invitable",       default: true
+    t.string   "sign_up_url"
+    t.integer  "chapter_id"
+    t.datetime "rsvp_close_time"
+    t.datetime "rsvp_open_time"
+    t.datetime "rsvp_open_date"
   end
 
   add_index 'workshops', ['chapter_id'], name: 'index_workshops_on_chapter_id', using: :btree

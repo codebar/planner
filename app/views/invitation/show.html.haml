@@ -4,7 +4,7 @@
       %h2
         Workshop at #{@workshop.host.name}
         %br
-        %small #{humanize_date_with_time(@workshop.date_and_time)} #{@workshop.distance_of_time}
+        %small #{humanize_date(@workshop.date_and_time, with_time: true)} #{@workshop.distance_of_time}
       - if @workshop.date_and_time.past?
         %label.label.warning This event has already taken place.
 .alert-box.secondary

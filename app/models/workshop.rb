@@ -2,6 +2,9 @@ class Workshop < ActiveRecord::Base
   include Invitable
   include Listable
 
+  attr_accessor :local_date
+  attr_accessor :local_time
+
   resourcify :permissions, role_cname: 'Permission', role_table_name: :permission
 
   has_many :invitations, class_name: 'SessionInvitation'
@@ -106,10 +109,17 @@ class Workshop < ActiveRecord::Base
     I18n.l(date_and_time, format: :dashboard)
   end
 
+  def time
+    date_and_time.try(:time)
+  end
+
   private
 
   def combine_date_and_time
-    self.date_and_time = date_and_time.change(hour: time.hour, min: time.min)
+    return unless local_date && local_time
+    date = Date.parse(local_date)
+    time = Time.parse(local_time)
+    self.date_and_time = Time.zone.local(date.year, date.month, date.day, time.hour, time.min)
   end
 
   def set_rsvp_close_time

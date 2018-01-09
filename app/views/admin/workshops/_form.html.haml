@@ -4,10 +4,10 @@
       = f.association :chapter, as: :select, collection: Chapter.available_to_user(current_user)
   .row
     .large-3.columns
-      = f.input :date_and_time, as: :string, required: true, label: 'Date', input_html: { id: 'sessions_date_and_time', data: { value: @workshop.date_and_time } }
+      = f.input :local_date, as: :string, required: true, label: 'Date', input_html: { data: { value: @workshop.date_and_time.try(:strftime, '%d/%m/%Y') } }
   .row
     .large-3.columns
-      = f.input :time, as: :string, required: true, input_html: { id: 'sessions_time'}
+      = f.input :local_time, as: :string, required: true, input_html: { data: { value: @workshop.time.try(:strftime, '%H:%M') }}
   .row
     .large-6.columns
       = f.input :host, as: :select, collection: Sponsor.all, include_blank: true, selected: (@workshop.host.id rescue '')

@@ -30,7 +30,7 @@
               %td
                 %h4
                   Workshop
-                  %small= humanize_date_with_time(@session.date_and_time, @session.time)
+                  %small= humanize_date(@session.date_and_time, with_time: true)
                 %p
                   #{@session.host.name}
                   %br
