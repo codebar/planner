@@ -26,13 +26,13 @@ describe Sponsor do
       describe '#website' do
         before { sponsor.website = nil }
 
-        it { should_not be_valid}
+        it { should_not be_valid }
         it { should have(2).errors_on(:website) }
       end
       describe '#address' do
         before { sponsor.address = nil }
 
-        it { should_not be_valid}
+        it { should_not be_valid }
         it { should have(1).error_on(:address) }
       end
 
@@ -52,33 +52,33 @@ describe Sponsor do
 
     context 'format' do
       describe '#website' do
-        describe "nonsense is not valid." do
-          before { sponsor.website = "lkjdlkfgjj" }
+        describe 'nonsense is not valid.' do
+          before { sponsor.website = 'lkjdlkfgjj' }
           it { should_not be_valid }
           it { should have(1).error_on(:website) }
         end
 
-        describe "websites without a protocol are not valid" do
-          before { sponsor.website = "www.google.com" }
+        describe 'websites without a protocol are not valid' do
+          before { sponsor.website = 'www.google.com' }
 
           it { should_not be_valid }
           it { should have(1).error_on(:website) }
         end
 
-        describe "full URLs are valid" do
-          before { sponsor.website = "http://google.com" }
+        describe 'full URLs are valid' do
+          before { sponsor.website = 'http://google.com' }
           it { should be_valid }
         end
       end
     end
   end
 
-  context "scopes" do
-    let!(:past) { 2.times.map { Fabricate(:workshop)} .map(&:sponsors)  }
-    let!(:latest) { 4.times.map { Fabricate(:workshop)} .map(&:sponsors) }
+  context 'scopes' do
+    let!(:past) { 2.times.map { Fabricate(:workshop) } .map(&:sponsors) }
+    let!(:latest) { 4.times.map { Fabricate(:workshop) } .map(&:sponsors) }
 
-    it "#latest" do
-      expect(Sponsor.latest).to eq((latest.reverse+past.reverse).flatten)
+    it '#latest' do
+      expect(Sponsor.latest).to eq((latest.reverse + past.reverse).flatten)
     end
   end
 end

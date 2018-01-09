@@ -13,7 +13,7 @@ class RolifyCreatePermissions < ActiveRecord::Migration
     end
 
     add_index(:permissions, :name)
-    add_index(:permissions, [ :name, :resource_type, :resource_id ])
-    add_index(:members_permissions, [ :member_id, :permission_id ])
+    add_index(:permissions, %i[name resource_type resource_id])
+    add_index(:members_permissions, %i[member_id permission_id])
   end
 end

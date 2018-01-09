@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 feature 'admin portal' do
-
   scenario 'non admin cannot access the admin portal' do
     member = Fabricate(:member)
     login(member)
@@ -10,7 +9,7 @@ feature 'admin portal' do
     expect(current_url).to eq(root_url)
   end
 
-  context "an admin user" do
+  context 'an admin user' do
     let(:member) { Fabricate(:member) }
 
     before do

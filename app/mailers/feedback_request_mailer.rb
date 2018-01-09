@@ -1,9 +1,9 @@
-class FeedbackRequestMailer  < ActionMailer::Base
+class FeedbackRequestMailer < ActionMailer::Base
   include EmailHeaderHelper
 
   helper ApplicationHelper
 
-  def request_feedback sessions, member, feedback_request
+  def request_feedback(sessions, member, feedback_request)
     @session = sessions
     @host_address = AddressDecorator.decorate(@session.host.address)
     @member = member
@@ -17,7 +17,7 @@ class FeedbackRequestMailer  < ActionMailer::Base
   end
 
   helper do
-    def full_url_for path
+    def full_url_for(path)
       "#{@host}#{path}"
     end
   end

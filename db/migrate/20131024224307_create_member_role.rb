@@ -4,7 +4,7 @@ class CreateMemberRole < ActiveRecord::Migration
       t.references :member
       t.references :role
     end
-    add_index :members_roles, [:member_id, :role_id]
+    add_index :members_roles, %i[member_id role_id]
     add_index :members_roles, :member_id
   end
 end

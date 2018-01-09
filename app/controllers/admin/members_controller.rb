@@ -23,12 +23,12 @@ class Admin::MembersController < Admin::ApplicationController
   def send_eligibility_email
     @member = Member.find(params[:member_id])
     @member.send_eligibility_email(current_user)
-    redirect_to [:admin, @member], notice: "You have sent an eligibility confirmation request."
+    redirect_to [:admin, @member], notice: 'You have sent an eligibility confirmation request.'
   end
 
   def send_attendance_email
     @member = Member.find(params[:member_id])
     @member.send_attendance_email(current_user)
-    redirect_to [:admin, @member], notice: "You have sent an attendance warning."
+    redirect_to [:admin, @member], notice: 'You have sent an attendance warning.'
   end
 end

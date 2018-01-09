@@ -49,4 +49,3 @@ class ApplicationPolicy
     Chapter.find_roles(:organiser, user).any?
   end
 end
-

@@ -3,7 +3,7 @@ class CourseInvitationMailer < ActionMailer::Base
 
   helper ApplicationHelper
 
-  def invite_student course, member, invitation
+  def invite_student(course, member, invitation)
     @course = CoursePresenter.new(course)
     @member = member
     @invitation = invitation
@@ -18,7 +18,7 @@ class CourseInvitationMailer < ActionMailer::Base
   private
 
   helper do
-    def full_url_for path
+    def full_url_for(path)
       "#{@host}#{path}"
     end
   end

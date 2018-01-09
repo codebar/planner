@@ -1,9 +1,8 @@
 class CoursesController < ApplicationController
-
   before_action :set_course
 
   def rsvp
-    invitation = CourseInvitation.where(course: @course, member:  current_user).first_or_create
+    invitation = CourseInvitation.where(course: @course, member: current_user).first_or_create
     redirect_to course_invitation_path(invitation)
   end
 
@@ -19,4 +18,3 @@ class CoursesController < ApplicationController
     @course = Course.find_by_slug(slug)
   end
 end
-

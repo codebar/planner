@@ -1,5 +1,4 @@
 class Group < ActiveRecord::Base
-
   NAMES = %w(Coaches Students)
 
   belongs_to :chapter
@@ -12,7 +11,7 @@ class Group < ActiveRecord::Base
   scope :students, -> { where(name: 'Students') }
   scope :coaches, -> { where(name: 'Coaches') }
 
-  validates :name, presence: true, inclusion: {in: NAMES, message: "Invalid name for Group"}
+  validates :name, presence: true, inclusion: { in: NAMES, message: 'Invalid name for Group' }
 
   alias_attribute :city, :chapter
 
@@ -21,5 +20,4 @@ class Group < ActiveRecord::Base
   def to_s
     "#{name} #{chapter.name}"
   end
-
 end

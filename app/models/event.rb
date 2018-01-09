@@ -8,7 +8,7 @@ class Event < ActiveRecord::Base
   belongs_to :venue, class_name: 'Sponsor'
   has_many :sponsorships
   has_many :sponsors, through: :sponsorships
-  has_many :organisers, -> { where("permissions.name" => "organiser") }, through: :permissions, source: :members
+  has_many :organisers, -> { where('permissions.name' => 'organiser') }, through: :permissions, source: :members
 
   has_and_belongs_to_many :chapters
 
@@ -81,21 +81,20 @@ class Event < ActiveRecord::Base
   end
 
   def invitability
-      errors.add(:coach_spaces, "must be set") unless self.coach_spaces.present?
-      errors.add(:student_space, "must be set") unless self.student_spaces.present?
-      errors.add(:invitable, "Fill in all invitations details to make the event invitable") unless self.coach_spaces.present? and self.student_spaces.present?
+    errors.add(:coach_spaces, 'must be set') unless self.coach_spaces.present?
+      errors.add(:student_space, 'must be set') unless self.student_spaces.present?
+      errors.add(:invitable, 'Fill in all invitations details to make the event invitable') unless self.coach_spaces.present? and self.student_spaces.present?
   end
 
   def student_emails
-    invitations.students.where(attending: true).map {|i| i.member.email}
+    invitations.students.where(attending: true).map { |i| i.member.email }
   end
 
   def coach_emails
-    invitations.coaches.where(attending: true).map {|i| i.member.email}
+    invitations.coaches.where(attending: true).map { |i| i.member.email }
   end
 
   def permitted_audience_values
     ['Students', 'Coaches']
   end
-
 end

@@ -1,8 +1,7 @@
 require 'spec_helper'
 
 feature 'a Coach can' do
-
-  context "#workshop" do
+  context '#workshop' do
     let(:member) { Fabricate(:member) }
     let(:invitation) { Fabricate(:coach_session_invitation) }
     let(:invitation_route) { invitation_path(invitation) }
@@ -13,7 +12,6 @@ feature 'a Coach can' do
       login(member)
     end
 
-    it_behaves_like "invitation route"
-
+    it_behaves_like 'invitation route'
   end
 end

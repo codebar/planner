@@ -2,7 +2,7 @@ class Chapter < ActiveRecord::Base
   resourcify :permissions, role_cname: 'Permission', role_table_name: :permission
 
   validates :name, :email, uniqueness: true, presence: true
-  validates  :city, presence: true
+  validates :city, presence: true
 
   has_many :workshops
   has_and_belongs_to_many :events
