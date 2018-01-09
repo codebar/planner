@@ -12,7 +12,7 @@ class Admin::ChaptersController < Admin::ApplicationController
 
     if @chapter.save
       flash[:notice] = "Chapter #{@chapter.name} has been successfully created"
-      redirect_to [:admin, @chapter ]
+      redirect_to [:admin, @chapter]
     else
       flash[:notice] = @chapter.errors.full_messages
       render 'new'
@@ -40,7 +40,7 @@ class Admin::ChaptersController < Admin::ApplicationController
 
     if @chapter.update(chapter_params)
       flash[:notice] = "Chapter #{@chapter.name} has been successfully updated"
-      redirect_to [:admin, @chapter ]
+      redirect_to [:admin, @chapter]
     else
       flash[:notice] = @chapter.errors.full_messages
       render 'edit'
@@ -52,7 +52,7 @@ class Admin::ChaptersController < Admin::ApplicationController
     authorize chapter
     type = params[:type]
 
-    if ["students", "coaches"].include?(type)
+    if ['students', 'coaches'].include?(type)
       @emails = chapter.send(type).map(&:email).join("\n")
     else
       @emails = chapter.members.pluck(:email).uniq.join("\n")

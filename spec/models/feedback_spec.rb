@@ -11,9 +11,9 @@ describe Feedback do
   it { should respond_to(:rating) }
   it { should respond_to(:suggestions) }
   it { should respond_to(:coach) }
-  it { should respond_to(:tutorial)}
+  it { should respond_to(:tutorial) }
 
-  context "validations" do
+  context 'validations' do
     context '#rating' do
       it 'should not be blank' do
         feedback = Fabricate.build(:feedback, rating: nil)
@@ -52,8 +52,7 @@ describe Feedback do
       end
     end
 
-    context "#coach" do
-
+    context '#coach' do
       it "accepts memeber with 'coach' role" do
         feedback = Fabricate.build(:feedback, coach: Fabricate(:coach))
 
@@ -77,7 +76,7 @@ describe Feedback do
     end
   end
 
-  context "#submit_feedback" do
+  context '#submit_feedback' do
     let(:feedback_request) { Fabricate(:feedback_request) }
 
     let (:params) do

@@ -1,5 +1,4 @@
 class EventCalendar
-
   attr_reader :event
 
   def initialize(event)
@@ -24,7 +23,7 @@ class EventCalendar
       e.dtend = event.ends_at
       e.summary = event.name
       e.location = address.to_s
-      e.ip_class = "PRIVATE"
+      e.ip_class = 'PRIVATE'
     end
   end
 end

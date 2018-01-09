@@ -8,10 +8,9 @@ module InvitationControllerConcerns
   end
 
   module InstanceMethods
-
     def accept
       if @invitation.attending.eql?(true)
-        redirect_to :back, notice: t("messages.already_rsvped")
+        redirect_to :back, notice: t('messages.already_rsvped')
       end
 
       user = current_user || @invitation.member
@@ -23,22 +22,22 @@ module InvitationControllerConcerns
       @workshop = WorkshopPresenter.new(@invitation.workshop)
       if (@invitation.for_student? and @workshop.student_spaces?) or (@invitation.for_coach? and @workshop.coach_spaces?)
         @invitation.update_attributes(attending: true, rsvp_time: DateTime.now)
-        @invitation.waiting_list.delete  if @invitation.waiting_list.present?
+        @invitation.waiting_list.delete if @invitation.waiting_list.present?
         SessionInvitationMailer.attending(@invitation.workshop, @invitation.member, @invitation).deliver_now
 
-        redirect_to :back, notice: t("messages.accepted_invitation",
+        redirect_to :back, notice: t('messages.accepted_invitation',
                                      name: @invitation.member.name)
 
       else
-        redirect_to :back, notice: t("messages.no_available_seats", email: @invitation.workshop.chapter.email)
+        redirect_to :back, notice: t('messages.no_available_seats', email: @invitation.workshop.chapter.email)
       end
     end
 
     def reject
-      if @invitation.parent.date_and_time-3.5.hours >= Time.zone.now
+      if @invitation.parent.date_and_time - 3.5.hours >= Time.zone.now
 
         if @invitation.attending.eql? false
-          redirect_to :back, notice: t("messages.not_attending_already")
+          redirect_to :back, notice: t('messages.not_attending_already')
         else
           @invitation.update_attribute(:attending, false)
 
@@ -51,10 +50,10 @@ module InvitationControllerConcerns
             SessionInvitationMailer.attending(invitation.workshop, invitation.member, invitation, true).deliver_now
           end
 
-          redirect_to :back, notice: t("messages.rejected_invitation", name: @invitation.member.name)
+          redirect_to :back, notice: t('messages.rejected_invitation', name: @invitation.member.name)
         end
       else
-        redirect_to :back, notice: "You can only change your RSVP status up to 3.5 hours before the workshop"
+        redirect_to :back, notice: 'You can only change your RSVP status up to 3.5 hours before the workshop'
       end
     end
   end

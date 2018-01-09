@@ -1,5 +1,5 @@
 Planner::Application.routes.draw do
-  root "dashboard#show"
+  root 'dashboard#show'
 
   scope controller: 'dashboard' do
     get 'code-of-conduct', action: 'code'
@@ -11,7 +11,7 @@ Planner::Application.routes.draw do
     get 'student-guide', action: 'participant_guide'
   end
 
-  resource :member, only: [:new, :edit, :update, :patch] do
+  resource :member, only: %i[new edit update patch] do
     get 'step1'
     put 'step1'
     get 'step2'
@@ -21,22 +21,22 @@ Planner::Application.routes.draw do
     get :autocomplete_skill_name, on: :collection
   end
 
-  get '/profile' => "members#profile", as: :profile
+  get '/profile' => 'members#profile', as: :profile
 
-  resources :subscriptions, only: [:index, :create]
+  resources :subscriptions, only: %i[index create]
   delete '/subscriptions' => 'subscriptions#destroy', as: :destroy_subscriptions
 
-  get "unsubscribe/:token" => "members#unsubscribe", as: :unsubscribe
+  get 'unsubscribe/:token' => 'members#unsubscribe', as: :unsubscribe
 
   resources :invitation, only: [:show] do
     member do
-      post "accept_with_note", as: :accept_with_note
-      post "update_note"
-      get "accept"
-      get "reject"
+      post 'accept_with_note', as: :accept_with_note
+      post 'update_note'
+      get 'accept'
+      get 'reject'
     end
 
-    resource :waiting_list, only: [:create, :destroy]
+    resource :waiting_list, only: %i[create destroy]
   end
 
   resources :invitations, only: [:index]
@@ -49,13 +49,13 @@ Planner::Application.routes.draw do
   namespace :course do
     resources :invitation, only: [:show] do
       member do
-        get "accept"
-        get "reject"
+        get 'accept'
+        get 'reject'
       end
     end
   end
 
-  resources :events, only: [:index, :show] do
+  resources :events, only: %i[index show] do
     post 'rsvp'
     get 'student', as: :student_rsvp
     get 'coach', as: :coach_rsvp
@@ -65,7 +65,7 @@ Planner::Application.routes.draw do
   end
 
   resources :courses, only: [:show] do
-    get "rsvp"
+    get 'rsvp'
   end
   resources :workshops, only: [:show] do
     member do
@@ -74,9 +74,9 @@ Planner::Application.routes.draw do
   end
   resources :feedback, only: [:show] do
     member do
-      patch "submit"
-      get "success"
-      get "not_found"
+      patch 'submit'
+      get 'success'
+      get 'not_found'
     end
   end
 
@@ -90,31 +90,31 @@ Planner::Application.routes.draw do
 
 
   namespace :admin do
-    root "portal#index"
+    root 'portal#index'
 
-    get '/guide' => "portal#guide", as: :guide
+    get '/guide' => 'portal#guide', as: :guide
 
 
-    resources :jobs, only: [:index, :show] do
+    resources :jobs, only: %i[index show] do
       get 'all', on: :collection
       get 'approve'
     end
 
-    resources :announcements, only: [:new, :index, :create, :edit, :update]
-    resources :members, only: [:show, :index] do
+    resources :announcements, only: %i[new index create edit update]
+    resources :members, only: %i[show index] do
       get :send_eligibility_email
       get :send_attendance_email
       get :update_subscriptions
-      resources :bans, only: [:index, :new, :create]
+      resources :bans, only: %i[index new create]
     end
     resources :member_notes, only: [:create]
 
-    resources :chapters, only: [:index, :new, :create, :show, :edit, :update] do
+    resources :chapters, only: %i[index new create show edit update] do
       get :members
       resources :workshops, only: [:index]
     end
 
-    resources :events, only: [:new, :create, :show, :edit, :update] do
+    resources :events, only: %i[new create show edit update] do
       get 'attendees_emails'
       post 'invite'
       resources :invitation do
@@ -132,9 +132,9 @@ Planner::Application.routes.draw do
       end
     end
 
-    resources :meeting_invitations, only: [:create, :update]
+    resources :meeting_invitations, only: %i[create update]
 
-    resources :groups, only: [:index, :new, :create, :show]
+    resources :groups, only: %i[index new create show]
     resources :sponsors, except: [:destroy]
 
     resources :feedback, only: [:index]
@@ -150,7 +150,6 @@ Planner::Application.routes.draw do
 
       resource :invitations, only: [:update]
       resources :invitations, only: [:update]
-
     end
   end
 
@@ -165,7 +164,7 @@ Planner::Application.routes.draw do
   match '/register' => 'auth_sessions#create', via: %i(get), as: :registration
 
   resources :sponsors, only: [:index]
-  resources :donations, only: [:new, :create]
+  resources :donations, only: %i[new create]
 
   get ':id' => 'chapter#show', as: :chapter
 end

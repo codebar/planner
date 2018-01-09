@@ -10,40 +10,40 @@ feature 'Managing workshops' do
     member.add_role(:organiser, Chapter)
   end
 
-  scenario "creating a new workshop" do
+  scenario 'creating a new workshop' do
     visit new_admin_workshop_path
 
     select chapter.name
-    fill_in "Date", with: Date.current
-    fill_in "Time", with: "11:30"
+    fill_in 'Date', with: Date.current
+    fill_in 'Time', with: '11:30'
 
-    click_on "Save"
+    click_on 'Save'
 
-    expect(page).to have_content "Invite"
+    expect(page).to have_content 'Invite'
   end
 
-  scenario "assigning a host to a workshop" do
+  scenario 'assigning a host to a workshop' do
     workshop = Fabricate(:workshop_no_sponsor)
     visit edit_admin_workshop_path(workshop)
 
-    select sponsor.name, from: "workshop_host"
+    select sponsor.name, from: 'workshop_host'
 
-    click_on "Save"
+    click_on 'Save'
 
-    within "#host" do
+    within '#host' do
       expect(page).to have_content sponsor.name
     end
   end
 
-  scenario "assigning a sponsor to a workshop" do
+  scenario 'assigning a sponsor to a workshop' do
     workshop = Fabricate(:workshop_no_sponsor)
     visit edit_admin_workshop_path(workshop)
 
-    select sponsor.name, from: "workshop_sponsor_ids"
+    select sponsor.name, from: 'workshop_sponsor_ids'
 
-    click_on "Save"
+    click_on 'Save'
 
-    within "#sponsors" do
+    within '#sponsors' do
       expect(page).to have_content sponsor.name
     end
   end

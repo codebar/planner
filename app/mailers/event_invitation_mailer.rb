@@ -28,7 +28,7 @@ class EventInvitationMailer < ActionMailer::Base
     end
   end
 
-  def attending event, member, invitation
+  def attending(event, member, invitation)
     @event = EventPresenter.new(event)
     @member = member
     @invitation = invitation
@@ -48,7 +48,7 @@ class EventInvitationMailer < ActionMailer::Base
   private
 
   helper do
-    def full_url_for path
+    def full_url_for(path)
       "#{@host}#{path}"
     end
   end

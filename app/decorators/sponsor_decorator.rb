@@ -2,7 +2,7 @@ class SponsorDecorator < Draper::Decorator
   delegate_all
 
   def contact_info
-    [ member_contact_details, contact_full_name, email ].flatten.compact.delete_if(&:empty?).join("<br/>").html_safe
+    [member_contact_details, contact_full_name, email].flatten.compact.delete_if(&:empty?).join('<br/>').html_safe
   end
 
   def member_contact_details

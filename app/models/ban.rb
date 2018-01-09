@@ -14,7 +14,7 @@ class Ban < ActiveRecord::Base
   end
 
   def expiry_in_words
-    "There is a permanent ban on the user" if permanent
+    'There is a permanent ban on the user' if permanent
     expires_at
   end
 

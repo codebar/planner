@@ -12,16 +12,16 @@ describe MailingList, wip: true do
     expect(client).to receive(:lists).and_return(lists)
   end
 
-  context "#subscribe" do
-    xit "add user to mailing list" do
+  context '#subscribe' do
+    xit 'add user to mailing list' do
       expect(lists).to receive(:subscribe)
 
       mailing_list.subscribe(:email, :first_name, :last_name)
     end
   end
 
-  context "#unsubscribe" do
-    xit "removes a user from the mailing list" do
+  context '#unsubscribe' do
+    xit 'removes a user from the mailing list' do
       expect(lists).to receive(:unsubscribe)
 
       mailing_list.unsubscribe(:email)

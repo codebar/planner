@@ -1,10 +1,10 @@
-require "spec_helper"
+require 'spec_helper'
 
-describe "reminders:workshop" do
-  include_context "rake"
+describe 'reminders:workshop' do
+  include_context 'rake'
 
-  its(:prerequisites) { should include("environment") }
-  let!(:workshop) { Fabricate(:workshop, date_and_time: Time.zone.now+29.hours, time: Time.zone.now+29.hours) }
+  its(:prerequisites) { should include('environment') }
+  let!(:workshop) { Fabricate(:workshop, date_and_time: Time.zone.now + 29.hours, time: Time.zone.now + 29.hours) }
 
   before do
     allow(STDOUT).to receive(:puts)
@@ -14,7 +14,7 @@ describe "reminders:workshop" do
     expect { subject.invoke }.to_not raise_error
   end
 
-  it "sends out reminders" do
+  it 'sends out reminders' do
     expect(InvitationManager).to receive(:send_workshop_attendance_reminders).with(workshop)
 
     subject.invoke

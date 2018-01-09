@@ -1,5 +1,5 @@
 namespace :workshop do
-  desc "Send waiting list emails"
+  desc 'Send waiting list emails'
 
   task reminders: :environment do
     workshops = Workshop.upcoming

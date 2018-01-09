@@ -8,25 +8,25 @@ feature 'Managing subscriptions' do
     login(member)
   end
 
-  context "a member can manage its subscriptions" do
-    scenario "#subscribe" do
+  context 'a member can manage its subscriptions' do
+    scenario '#subscribe' do
       visit subscriptions_path
 
-      click_on "Subscribe"
+      click_on 'Subscribe'
       expect(page).to have_content("You have subscribed to #{group.chapter.city}'s #{group.name} group")
     end
 
-    scenario "#unsubscribe" do
+    scenario '#unsubscribe' do
       subscription = Fabricate.create(:subscription, member: member, group: group)
       visit subscriptions_path
 
-      click_on "Subscribed"
+      click_on 'Subscribed'
       expect(page).to have_content("You have unsubscribed from #{group.chapter.city}'s #{group.name} group")
     end
   end
 
-  context "a member gets a welcome email" do
-    scenario "Subscribing to a coach mailing list for the first time sends a coach email to the user" do
+  context 'a member gets a welcome email' do
+    scenario 'Subscribing to a coach mailing list for the first time sends a coach email to the user' do
       coach_group = Fabricate(:coaches)
       expect_any_instance_of(MemberMailer).to receive(:welcome_coach)
       expect_any_instance_of(MemberMailer).not_to receive(:welcome_students)
@@ -35,7 +35,7 @@ feature 'Managing subscriptions' do
       click_on "#{coach_group.chapter.name}-coaches"
     end
 
-    scenario "Subscribing to a student mailing list for the first time sends a student email to the user" do
+    scenario 'Subscribing to a student mailing list for the first time sends a student email to the user' do
       expect_any_instance_of(MemberMailer).to receive(:welcome_student)
       expect_any_instance_of(MemberMailer).not_to receive(:welcome_coach)
 

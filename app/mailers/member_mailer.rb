@@ -23,7 +23,7 @@ class MemberMailer < ActionMailer::Base
 
   def welcome_student(member)
     @member = member
-    subject = "How codebar works"
+    subject = 'How codebar works'
 
     mail(mail_args(member, subject, 'hello@codebar.io')) do |format|
       format.html { render 'welcome_student' }
@@ -32,7 +32,7 @@ class MemberMailer < ActionMailer::Base
 
   def welcome_coach(member)
     @member = member
-    subject = "How codebar works"
+    subject = 'How codebar works'
 
     mail(mail_args(member, subject, 'hello@codebar.io')) do |format|
       format.html { render 'welcome_coach' }
@@ -41,7 +41,7 @@ class MemberMailer < ActionMailer::Base
 
   def eligibility_check(member, sender = 'hello@codebar.io')
     @member = member
-    subject = "Eligibility confirmation"
+    subject = 'Eligibility confirmation'
 
     mail(mail_args(member, subject, 'hello@codebar.io', 'hello@codebar.io', sender)) do |format|
       format.html { render 'eligibility_check' }
@@ -50,7 +50,7 @@ class MemberMailer < ActionMailer::Base
 
   def attendance_warning(member, sender = 'hello@codebar.io')
     @member = member
-    subject = "Attendance warning"
+    subject = 'Attendance warning'
 
     mail(mail_args(member, subject, 'hello@codebar.io', 'hello@codebar.io', sender)) do |format|
       format.html { render 'attendance_warning' }
@@ -63,7 +63,7 @@ class MemberMailer < ActionMailer::Base
     @expiry_date = I18n.l(ban.expires_at, format: :default)
     @ban = ban
 
-    mail(mail_args(member, @reason, 'hello@codebar.io', "hello@codebar.io")) do |format|
+    mail(mail_args(member, @reason, 'hello@codebar.io', 'hello@codebar.io')) do |format|
       format.html { render 'ban' }
     end.deliver
   end

@@ -5,16 +5,16 @@ class DashboardController < ApplicationController
   def show
     @chapters = Chapter.all.order(:created_at)
     @user = current_user ? MemberPresenter.new(current_user) : nil
-    @upcoming_workshops = upcoming_events.map.inject({}) { |hash, (key, value)| hash[key] = EventPresenter.decorate_collection(value); hash}
+    @upcoming_workshops = upcoming_events.map.inject({}) { |hash, (key, value)| hash[key] = EventPresenter.decorate_collection(value); hash }
 
-    @testimonials = Testimonial.order("RANDOM() ").limit(5).includes(:member)
+    @testimonials = Testimonial.order('RANDOM() ').limit(5).includes(:member)
 
     @sponsors = Sponsor.latest
   end
 
   def dashboard
     @user = MemberPresenter.new(current_user)
-    @ordered_events = upcoming_events_for_user.map.inject({}) { |hash, (key, value)| hash[key] = EventPresenter.decorate_collection(value); hash}
+    @ordered_events = upcoming_events_for_user.map.inject({}) { |hash, (key, value)| hash[key] = EventPresenter.decorate_collection(value); hash }
     @announcements = current_user.announcements.active
   end
 
@@ -45,7 +45,7 @@ class DashboardController < ApplicationController
     SessionInvitation.to_coaches.attended.by_member.count(:member_id)
   end
 
-  def order_by_attendance member_stats
+  def order_by_attendance(member_stats)
     member_stats.sort_by { |member_id, attendance| attendance }.reverse
   end
 
@@ -58,7 +58,7 @@ class DashboardController < ApplicationController
     chapters = current_user.groups.map(&:chapter).uniq!
     workshops = chapters.collect { |c| c.workshops.upcoming } if chapters
     workshops ||= []
-    workshops << current_user.session_invitations.accepted.joins(:workshop).where("workshops.date_and_time > ?", Time.zone.now).map(&:workshop)
+    workshops << current_user.session_invitations.accepted.joins(:workshop).where('workshops.date_and_time > ?', Time.zone.now).map(&:workshop)
     all_events(workshops).sort_by(&:date_and_time).group_by(&:date)
   end
 

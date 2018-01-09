@@ -15,8 +15,8 @@ describe Event do
   it { should respond_to(:organisers) }
   it { should respond_to(:chapters) }
 
-  context "#verified_students" do
-    it "returns all students who have verified their attendance" do
+  context '#verified_students' do
+    it 'returns all students who have verified their attendance' do
       event = Fabricate(:event)
       2.times.map { Fabricate(:invitation, event: event, attending: true) }
       3.times.map { Fabricate(:invitation, event: event, attending: true, verified: true) }

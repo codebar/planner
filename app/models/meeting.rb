@@ -4,9 +4,9 @@ class Meeting < ActiveRecord::Base
 
   resourcify :permissions, role_cname: 'Permission', role_table_name: :permission
 
-  has_many :organisers, -> { where("permissions.name" => "organiser") }, through: :permissions, source: :members
-  belongs_to :venue, class_name: "Sponsor"
-  has_many :invitations, foreign_key: "meeting_id", class_name: "MeetingInvitation"
+  has_many :organisers, -> { where('permissions.name' => 'organiser') }, through: :permissions, source: :members
+  belongs_to :venue, class_name: 'Sponsor'
+  has_many :invitations, foreign_key: 'meeting_id', class_name: 'MeetingInvitation'
   has_and_belongs_to_many :chapters
 
   validates :date_and_time, :venue, presence: true
@@ -14,7 +14,7 @@ class Meeting < ActiveRecord::Base
   before_save :set_slug
 
   def invitees
-    chapters.map{|c| c.members}.flatten.uniq
+    chapters.map{ |c| c.members }.flatten.uniq
   end
 
   def title
@@ -42,7 +42,7 @@ class Meeting < ActiveRecord::Base
   end
 
   def attendees_csv
-    CSV.generate {|csv| attendees_array.each { |a| csv << a } }
+    CSV.generate { |csv| attendees_array.each { |a| csv << a } }
   end
 
   private
@@ -52,6 +52,6 @@ class Meeting < ActiveRecord::Base
   end
 
   def attendees_array
-    invitations.accepted.map {|a| [a.member.full_name]}
+    invitations.accepted.map { |a| [a.member.full_name] }
   end
 end
