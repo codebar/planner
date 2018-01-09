@@ -1,5 +1,4 @@
 class SponsorPolicy < ApplicationPolicy
-
   def create?
     user.has_role?(:admin) or Chapter.find_roles(:organiser, user).any?
   end

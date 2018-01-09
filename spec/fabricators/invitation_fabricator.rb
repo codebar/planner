@@ -3,9 +3,9 @@ Fabricator(:invitation) do
   attending false
   note "I'd love to attend"
   event
-  role "Student"
+  role 'Student'
 end
 
 Fabricator(:coach_invitation, from: :invitation) do
-  role "Coach"
+  role 'Coach'
 end

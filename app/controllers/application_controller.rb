@@ -60,7 +60,7 @@ class ApplicationController < ActionController::Base
 
   helper_method :redirect_path
   def redirect_path
-    "/auth/github"
+    '/auth/github'
   end
 
   def authenticate_admin!
@@ -102,7 +102,7 @@ class ApplicationController < ActionController::Base
   private
 
   def user_not_authorized
-    redirect_to(user_path, notice: "You are not authorized to perform this action.")
+    redirect_to(user_path, notice: 'You are not authorized to perform this action.')
   end
 
   def user_path

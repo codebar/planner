@@ -16,10 +16,10 @@ class InvitationController < ApplicationController
     new_note = params[:note]
 
     if new_note.blank?
-      redirect_to :back, notice: "You must select a note"
+      redirect_to :back, notice: 'You must select a note'
     else
       @invitation.update_attribute(:note, params[:note])
-      redirect_to :back, notice: t("messages.updated_note")
+      redirect_to :back, notice: t('messages.updated_note')
     end
   end
 
@@ -28,16 +28,16 @@ class InvitationController < ApplicationController
     @invitation.update_attributes(note: params[:session_invitation][:note], rsvp_time: DateTime.now)
 
     if @workshop.student_spaces?
-      return redirect_to :back, notice: "You have already RSVPd or joined the waitlist for this workshop." if @workshop.attendee?(current_user) or @workshop.waitlisted?(current_user)
+      return redirect_to :back, notice: 'You have already RSVPd or joined the waitlist for this workshop.' if @workshop.attendee?(current_user) or @workshop.waitlisted?(current_user)
 
       @invitation.update_attribute(:attending, true)
       SessionInvitationMailer.attending(@invitation.workshop, @invitation.member, @invitation).deliver_now
 
-      redirect_to :back, notice: t("messages.accepted_invitation",
+      redirect_to :back, notice: t('messages.accepted_invitation',
                                    name: @invitation.member.name)
 
     else
-      redirect_to :back, notice: t("messages.no_available_seats")
+      redirect_to :back, notice: t('messages.no_available_seats')
     end
   end
 

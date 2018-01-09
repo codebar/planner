@@ -1,5 +1,4 @@
 class JobPolicy < ApplicationPolicy
-
   def index?
     user.has_role?(:admin) or Chapter.find_roles(:organiser, user).any?
   end

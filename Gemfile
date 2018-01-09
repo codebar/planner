@@ -1,12 +1,12 @@
 source 'https://rubygems.org'
-ruby '2.3.3'
+ruby '2.4.2'
 
-gem 'rails', '4.2.5'
+gem 'rails', '4.2.10'
 
 gem 'acts-as-taggable-on', '~> 3.4'
 gem 'haml'
 gem 'compass-rails', git: 'https://github.com/Compass/compass-rails'
-gem 'foundation-rails', "5.5.3.2"
+gem 'foundation-rails', '5.5.3.2'
 gem 'sass-rails', '~> 5.0.1'
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.0'
@@ -22,7 +22,7 @@ gem 'premailer-rails'
 gem 'nokogiri'
 gem 'pickadate-rails'
 gem 'rolify'
-gem "pundit"
+gem 'pundit'
 gem 'carrierwave'
 gem 'carrierwave-ftp', :require => 'carrierwave/storage/sftp'
 gem 'mini_magick'
@@ -67,8 +67,7 @@ group :test do
   gem 'database_cleaner'
   gem 'poltergeist'
   gem 'shoulda-matchers', '~> 3.1'
-  gem "codeclimate-test-reporter", require: nil
-
+  gem 'codeclimate-test-reporter', require: nil
 end
 
 group :production do
@@ -78,3 +77,4 @@ group :production do
 end
 
 gem 'newrelic_rpm'
+gem 'rubocop', '~> 0.52.0'

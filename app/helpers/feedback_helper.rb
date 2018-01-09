@@ -1,5 +1,4 @@
 module FeedbackHelper
-
   def recent_workshop_details
     recent_workshops = Workshop.recent.includes(:chapter)
 

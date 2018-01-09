@@ -1,5 +1,4 @@
 class Admin::BansController < Admin::ApplicationController
-
   def new
     @member = Member.find(member_id)
     @ban = Ban.new

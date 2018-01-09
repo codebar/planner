@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-feature "Managing users" do
+feature 'Managing users' do
   let(:member) { Fabricate(:member) }
   let(:admin) { Fabricate(:chapter_organiser) }
   let!(:invitation) { Fabricate(:attended_session_invitation, attending: true, member: member) }
@@ -10,10 +10,10 @@ feature "Managing users" do
     login admin
   end
 
-  scenario "View a user" do
+  scenario 'View a user' do
     visit admin_member_path member
 
-    expect(page).to have_content("RSVPed to 2 workshops and attended 1.")
+    expect(page).to have_content('RSVPed to 2 workshops and attended 1.')
     expect(page).to have_content member.name
     expect(page).to have_content member.email
     expect(page).to have_content member.about_you
@@ -21,24 +21,23 @@ feature "Managing users" do
     expect(page).to have_content attending_invitation.note
   end
 
-  scenario "Add a note to a user" do
+  scenario 'Add a note to a user' do
     visit admin_member_path member
-    fill_in "member_note_note", with: "Bananas and custard"
-    click_on "Add note"
+    fill_in 'member_note_note', with: 'Bananas and custard'
+    click_on 'Add note'
 
-    expect(page).to have_content "Bananas and custard"
+    expect(page).to have_content 'Bananas and custard'
   end
 
-  scenario "Ban a user" do
+  scenario 'Ban a user' do
     visit admin_member_path member
-    click_on "Ban"
+    click_on 'Ban'
 
-    select "Violated attendance policy", from: "ban_reason"
-    fill_in "ban_note", with: Faker::Lorem.word
-    fill_in "ban_expires_at", with: Date.today+1.month
-    click_on "Ban user"
+    select 'Violated attendance policy', from: 'ban_reason'
+    fill_in 'ban_note', with: Faker::Lorem.word
+    fill_in 'ban_expires_at', with: Date.today + 1.month
+    click_on 'Ban user'
 
-    expect(page).to have_content "The user has been banned"
+    expect(page).to have_content 'The user has been banned'
   end
-
 end

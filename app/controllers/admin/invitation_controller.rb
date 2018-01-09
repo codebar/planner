@@ -1,5 +1,5 @@
 class Admin::InvitationController < Admin::ApplicationController
-  include  Admin::WorkshopConcerns
+  include Admin::WorkshopConcerns
 
   # event invitations
 
@@ -27,5 +27,4 @@ class Admin::InvitationController < Admin::ApplicationController
 
     redirect_to :back, notice: "You have cancelled #{invitation.member.full_name}'s attendance."
   end
-
 end

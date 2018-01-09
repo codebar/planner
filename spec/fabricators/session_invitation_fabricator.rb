@@ -4,7 +4,7 @@ Fabricator(:session_invitation) do
   attended nil
   note { Faker::Lorem.word }
   workshop
-  role "Student"
+  role 'Student'
 end
 
 Fabricator(:attending_session_invitation, from: :session_invitation) do
@@ -16,9 +16,9 @@ Fabricator(:attended_session_invitation, from: :attending_session_invitation) do
 end
 
 Fabricator(:student_session_invitation, from: :session_invitation) do
-  role "Student"
+  role 'Student'
 end
 
 Fabricator(:coach_session_invitation, from: :session_invitation) do
-  role "Coach"
+  role 'Coach'
 end

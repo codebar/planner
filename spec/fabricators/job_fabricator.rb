@@ -9,5 +9,5 @@ Fabricator(:job) do
   created_by { Fabricate(:member) }
   approved { true }
   submitted { true }
-  expiry_date { Date.today+1.week }
+  expiry_date { Date.today + 1.week }
 end

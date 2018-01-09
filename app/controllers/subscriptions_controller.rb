@@ -2,7 +2,7 @@ class SubscriptionsController < ApplicationController
   before_action :has_access?
 
   def index
-    @groups = Group.joins(:chapter).order("chapters.city")
+    @groups = Group.joins(:chapter).order('chapters.city')
   end
 
   def create
@@ -32,5 +32,4 @@ class SubscriptionsController < ApplicationController
   def group_id
     params.require(:subscription).permit(:group_id)[:group_id]
   end
-
 end

@@ -1,5 +1,4 @@
 class Ticket
-
   def initialize(request, params)
     authorise(request)
     @params = params

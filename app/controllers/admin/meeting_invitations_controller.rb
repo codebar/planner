@@ -18,7 +18,7 @@ class Admin::MeetingInvitationsController < Admin::ApplicationController
       return redirect_to [:admin, meeting], notice: "#{member.full_name} is already on the list!"
     end
 
-    invite = meeting.invitations.create(member: member, attending: true, role: "Participant")
+    invite = meeting.invitations.create(member: member, attending: true, role: 'Participant')
 
     if invite.save
       redirect_to [:admin, meeting], notice: "#{member.full_name} has been successfully added and notified via email."

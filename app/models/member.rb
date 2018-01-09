@@ -43,8 +43,8 @@ class Member < ActiveRecord::Base
   end
 
   def full_name
-    pronoun  = self.pronouns.present? ? "(#{self.pronouns})" : nil
-    [name, surname, pronoun].compact.join " "
+    pronoun = self.pronouns.present? ? "(#{self.pronouns})" : nil
+    [name, surname, pronoun].compact.join ' '
   end
 
   def student?
@@ -75,7 +75,7 @@ class Member < ActiveRecord::Base
     self.attendance_warnings.create(sent_by_id: user.id)
   end
 
-  def avatar size=100
+  def avatar(size = 100)
     "https://secure.gravatar.com/avatar/#{md5_email}?size=#{size}&default=identicon"
   end
 
@@ -88,7 +88,7 @@ class Member < ActiveRecord::Base
   end
 
   def verified?
-    session_invitations.exists?(role: "Coach", attended: true)
+    session_invitations.exists?(role: 'Coach', attended: true)
   end
 
   def verified_or_organiser?
@@ -99,12 +99,12 @@ class Member < ActiveRecord::Base
     "http://twitter.com/#{twitter}"
   end
 
-  def has_existing_RSVP_on date
+  def has_existing_RSVP_on(date)
     invitations_on(date).count > 0
   end
 
-  def already_attending event
-    invitations.where(attending: true).map{|e| e.event.id}.include?(event.id)
+  def already_attending(event)
+    invitations.where(attending: true).map{ |e| e.event.id }.include?(event.id)
   end
 
   def is_organiser?
@@ -121,7 +121,7 @@ class Member < ActiveRecord::Base
 
   private
 
-  def invitations_on date
+  def invitations_on(date)
     session_invitations.joins(:workshop).where('workshops.date_and_time BETWEEN ? AND ?', date.beginning_of_day, date.end_of_day).where(attending: true)
   end
 

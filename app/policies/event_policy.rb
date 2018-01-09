@@ -1,5 +1,4 @@
 class EventPolicy < ApplicationPolicy
-
   def invite?
     is_admin_or_organiser?
   end
