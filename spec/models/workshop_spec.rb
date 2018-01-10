@@ -8,8 +8,8 @@ describe Workshop do
   it { should respond_to(:date_and_time) }
   it { should respond_to(:sponsors) }
   it { should respond_to(:workshop_sponsors) }
-  it { should respond_to(:rsvp_open_date) }
-  it { should respond_to(:rsvp_open_time) }
+  it { should respond_to(:rsvp_opens_at) }
+  it { should respond_to(:time_zone) }
 
   context '#before_save' do
     let(:workshop) { Fabricate.build(:workshop, chapter: Fabricate(:chapter)) }
@@ -162,18 +162,18 @@ describe Workshop do
       expect(workshop.invitable_yet?).to be true
     end
 
-    it 'is invitable if RSVP open date/time in past, and invitable set to false' do
-      workshop = Fabricate.build(:workshop, chapter: Fabricate(:chapter), invitable: false, rsvp_open_time: Time.zone.now - 1.days)
+    it "is invitable if RSVP open date/time in past, and invitable set to false" do
+      workshop = Fabricate.build(:workshop, chapter: Fabricate(:chapter), invitable: false, rsvp_opens_at: Time.zone.now-1.days)
       expect(workshop.invitable_yet?).to be true
     end
 
-    it 'is invitable if RSVP open date/time in future, and invitable set to true' do
-      workshop = Fabricate.build(:workshop, chapter: Fabricate(:chapter), invitable: true, rsvp_open_time: Time.zone.now - 1.days)
+    it "is invitable if RSVP open date/time in future, and invitable set to true" do
+      workshop = Fabricate.build(:workshop, chapter: Fabricate(:chapter), invitable: true, rsvp_opens_at: Time.zone.now-1.days)
       expect(workshop.invitable_yet?).to be true
     end
 
-    it 'is NOT invitable if RSVP open date/time in future, and invitable set to false' do
-      workshop = Fabricate.build(:workshop, chapter: Fabricate(:chapter), invitable: false, rsvp_open_time: Time.zone.now + 1.days)
+    it "is NOT invitable if RSVP open date/time in future, and invitable set to false" do
+      workshop = Fabricate.build(:workshop, chapter: Fabricate(:chapter), invitable: false, rsvp_opens_at: Time.zone.now+1.days)
       expect(workshop.invitable_yet?).to be false
     end
   end

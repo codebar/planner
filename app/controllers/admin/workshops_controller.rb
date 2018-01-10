@@ -24,7 +24,6 @@ class Admin::WorkshopsController < Admin::ApplicationController
     if @workshop.save
       grant_organiser_access(@workshop.chapter.organisers.map(&:id))
       set_host(host_id)
-      update_rsvp_open_time if auto_rsvps_set?
 
       redirect_to admin_workshop_path(@workshop), notice: 'The workshop has been created.'
     else
@@ -35,9 +34,6 @@ class Admin::WorkshopsController < Admin::ApplicationController
 
   def edit
     authorize @workshop
-
-    @rsvp_open_time = @workshop.rsvp_open_time.try(:strftime, '%H:%M')
-    @rsvp_open_date = @workshop.rsvp_open_date.try(:strftime, '%d/%m/%Y')
   end
 
   def show
@@ -58,7 +54,6 @@ class Admin::WorkshopsController < Admin::ApplicationController
 
     set_organisers(organiser_ids)
     set_host(host_id)
-    update_rsvp_open_time if auto_rsvps_set?
 
     redirect_to admin_workshop_path(@workshop), notice: 'Workshops updated successfully'
   end
@@ -103,19 +98,10 @@ class Admin::WorkshopsController < Admin::ApplicationController
 
   private
 
-  def auto_rsvps_set?
-    @workshop.rsvp_open_time.present? && @workshop.rsvp_open_date.present?
-  end
-
-  def update_rsvp_open_time
-    updated_time = DateTime.new(@workshop.rsvp_open_date.year, @workshop.rsvp_open_date.month, @workshop.rsvp_open_date.day, @workshop.rsvp_open_time.hour, @workshop.rsvp_open_time.min)
-    @workshop.update_attribute(:rsvp_open_time, updated_time)
-  end
-
   def workshop_params
     params.require(:workshop).permit(:local_date, :local_time, :chapter_id,
-                                     :invitable, :seats, :rsvp_open_time,
-                                     :rsvp_open_date, sponsor_ids: [])
+                                     :invitable, :seats, :rsvp_open_local_date,
+                                     :rsvp_open_local_time, sponsor_ids: [])
   end
 
   def sponsor_id

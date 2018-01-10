@@ -73,16 +73,17 @@ ActiveRecord::Schema.define(version: 20180108210921) do
   add_index 'bans', ['added_by_id'], name: 'index_bans_on_added_by_id', using: :btree
   add_index 'bans', ['member_id'], name: 'index_bans_on_member_id', using: :btree
 
-  create_table 'chapters', force: :cascade do |t|
-    t.string   'name'
-    t.string   'city'
-    t.datetime 'created_at'
-    t.datetime 'updated_at'
-    t.string   'email'
-    t.string   'twitter'
-    t.string   'twitter_id'
-    t.string   'slug'
-    t.boolean  'active', default: true
+  create_table "chapters", force: :cascade do |t|
+    t.string   "name"
+    t.string   "city"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "email"
+    t.string   "twitter"
+    t.string   "twitter_id"
+    t.string   "slug"
+    t.boolean  "active",     default: true
+    t.string   "time_zone",  default: "London", null: false
   end
 
   create_table 'chapters_events', force: :cascade do |t|

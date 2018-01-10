@@ -2,8 +2,7 @@ class Workshop < ActiveRecord::Base
   include Invitable
   include Listable
 
-  attr_accessor :local_date
-  attr_accessor :local_time
+  attr_accessor :local_date, :local_time, :rsvp_open_local_date, :rsvp_open_local_time
 
   resourcify :permissions, role_cname: 'Permission', role_table_name: :permission
 
@@ -19,8 +18,9 @@ class Workshop < ActiveRecord::Base
   scope :coaches, -> { joins(:invitations).where(invitations: { name: 'Coach', attended: true }) }
 
   validates :chapter_id, presence: true
+  validates :date_and_time, presence: true
 
-  before_save :combine_date_and_time, :set_rsvp_close_time
+  before_validation :set_datetime_fields
 
   def host
     WorkshopSponsor.hosts.for_session(self.id).first.sponsor rescue nil
@@ -54,12 +54,9 @@ class Workshop < ActiveRecord::Base
     date_and_time.past?
   end
 
-  def today?
-    date_and_time.today?
-  end
-
   def rsvp_available?
-    future? && rsvp_close_time.future?
+    return rsvp_closes_at.future? if rsvp_closes_at
+    future?
   end
 
   def future?
@@ -67,11 +64,7 @@ class Workshop < ActiveRecord::Base
   end
 
   def open_for_rsvp?
-    rsvp_open_time_set? && rsvp_open_time.past?
-  end
-
-  def rsvp_open_time_set?
-    rsvp_open_time.present?
+    rsvp_opens_at && rsvp_opens_at.past?
   end
 
   def invitable_yet?
@@ -101,8 +94,22 @@ class Workshop < ActiveRecord::Base
     host.address.city rescue ''
   end
 
+  def time_zone
+    chapter.time_zone
+  end
+
   def self.policy_class
     WorkshopPolicy
+  end
+
+  def date_and_time
+    return nil unless super
+    super.in_time_zone(time_zone)
+  end
+
+  def rsvp_opens_at
+    return nil unless super
+    super.in_time_zone(time_zone)
   end
 
   def date
@@ -115,14 +122,17 @@ class Workshop < ActiveRecord::Base
 
   private
 
-  def combine_date_and_time
-    return unless local_date && local_time
-    date = Date.parse(local_date)
-    time = Time.parse(local_time)
-    self.date_and_time = Time.zone.local(date.year, date.month, date.day, time.hour, time.min)
+  def set_datetime_fields
+    new_date_and_time = datetime_from_fields(local_date, local_time)
+    self.date_and_time = new_date_and_time if new_date_and_time
+    new_opens_at = datetime_from_fields(rsvp_open_local_date, rsvp_open_local_time)
+    self.rsvp_opens_at = new_opens_at if new_opens_at
   end
 
-  def set_rsvp_close_time
-    self.rsvp_close_time ||= self.date_and_time
+  def datetime_from_fields(date_string, time_string)
+    return nil if date_string.blank? || time_string.blank? || !time_zone
+    date = Date.parse(date_string)
+    time = Time.parse(time_string)
+    ActiveSupport::TimeZone[time_zone].local(date.year, date.month, date.day, time.hour, time.min)
   end
 end

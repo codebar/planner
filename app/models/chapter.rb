@@ -3,6 +3,8 @@ class Chapter < ActiveRecord::Base
 
   validates :name, :email, uniqueness: true, presence: true
   validates :city, presence: true
+  validates :time_zone, presence: true
+  validate :time_zone_exists
 
   has_many :workshops
   has_and_belongs_to_many :events
@@ -34,6 +36,12 @@ class Chapter < ActiveRecord::Base
   end
 
   private
+
+  def time_zone_exists
+    if time_zone && ActiveSupport::TimeZone[time_zone].nil?
+      errors.add(:time_zone, 'does not exist')
+    end
+  end
 
   def set_slug
     self.slug ||= self.name.parameterize
