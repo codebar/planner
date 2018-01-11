@@ -7,8 +7,8 @@ CarrierWave.configure do |config|
     config.sftp_folder = ENV['UPLOADER_FOLDER']
     config.sftp_url = ENV['UPLOADER_URL']
     config.sftp_options = {
-      :password => ENV['UPLOADER_PASSW'],
-      :port     => 22
+      password: ENV['UPLOADER_PASSW'],
+      port: 22
     }
   end
 end
