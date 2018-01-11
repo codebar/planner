@@ -1,1 +1,1 @@
-Rails.application.config.assets.precompile += %w( donations.js )
+Rails.application.config.assets.precompile += %w(donations.js)
