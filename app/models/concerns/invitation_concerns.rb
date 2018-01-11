@@ -10,10 +10,9 @@ module InvitationConcerns
 
     validates :token, uniqueness: true
 
-    scope :accepted, ->  { where(attending: true) }
-    scope :accepted_or_attended, ->  { where("attending=? or attended=?", true, true) }
-    scope :not_accepted, ->  { where("attending is NULL or attending = false") }
-
+    scope :accepted, -> { where(attending: true) }
+    scope :accepted_or_attended, -> { where('attending=? or attended=?', true, true) }
+    scope :not_accepted, -> { where('attending is NULL or attending = false') }
   end
 
   module InstanceMethods
@@ -22,15 +21,15 @@ module InvitationConcerns
     end
 
     def for_student?
-      role.eql?("Student")
+      role.eql?('Student')
     end
 
     def for_coach?
-      role.eql?("Coach")
+      role.eql?('Coach')
     end
 
     def for_participant?
-      role.eql?("Participant") # meetings do not distinguish
+      role.eql?('Participant') # meetings do not distinguish
     end
 
     private

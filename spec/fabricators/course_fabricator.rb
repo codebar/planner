@@ -4,7 +4,7 @@ Fabricator(:course) do
   title { Faker::Lorem.sentence }
   tutor { Fabricate(:member) }
   chapter
-  date_and_time  { Time.zone.now+1.week }
+  date_and_time { Time.zone.now + 1.week }
   sponsor
 
   seats 1

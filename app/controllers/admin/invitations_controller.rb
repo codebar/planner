@@ -1,5 +1,5 @@
 class Admin::InvitationsController < Admin::ApplicationController
-  include  Admin::WorkshopConcerns
+  include Admin::WorkshopConcerns
 
   def update
     set_workshop
@@ -10,7 +10,7 @@ class Admin::InvitationsController < Admin::ApplicationController
     if params.has_key?(:attending)
       attending = params[:attending]
 
-      if attending.eql?("true")
+      if attending.eql?('true')
         @invitation.update_attribute(:attending, true)
 
         SessionInvitationMailer.attending(@workshop, @invitation.member, @invitation).deliver_now if @workshop.future?

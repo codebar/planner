@@ -1,5 +1,4 @@
 class WorkshopCalendar
-
   attr_reader :workshop
 
   def initialize(workshop)
@@ -23,7 +22,7 @@ class WorkshopCalendar
       e.dtend = e.dtstart + 2.hours + 30.minutes
       e.summary = "codebar @ #{workshop.host.name}"
       e.location = address.to_s
-      e.ip_class = "PRIVATE"
+      e.ip_class = 'PRIVATE'
     end
   end
 end

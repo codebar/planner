@@ -1,5 +1,4 @@
 class WaitingListPresenter < SimpleDelegator
-
   def reminders
     @reminders ||= model.where(auto_rsvp: false)
   end

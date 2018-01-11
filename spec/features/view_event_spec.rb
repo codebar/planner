@@ -9,7 +9,7 @@ feature 'viewing an event' do
       visit event_path(closed_event)
     end
 
-    context "a non authenticated user" do
+    context 'a non authenticated user' do
       scenario 'a user can view an event' do
         expect(page).to have_content(closed_event.name)
         expect(page).to have_content(closed_event.description)
@@ -29,7 +29,7 @@ feature 'viewing an event' do
       end
     end
 
-    context "an authenticated user" do
+    context 'an authenticated user' do
       let(:member) { Fabricate(:member) }
 
       before do
@@ -37,23 +37,22 @@ feature 'viewing an event' do
       end
 
       context 'can RSVP to an event' do
-
-        scenario "as a Coach" do
+        scenario 'as a Coach' do
           expect(current_path).to eq(event_path(closed_event))
 
           click_on 'Attend as a coach'
           click_on 'RSVP'
 
-          expect(page).to have_content("Your spot has not yet been confirmed. We will verify your attendance after you complete the questionnaire.")
+          expect(page).to have_content('Your spot has not yet been confirmed. We will verify your attendance after you complete the questionnaire.')
         end
 
-        scenario "as a Student" do
+        scenario 'as a Student' do
           expect(current_path).to eq(event_path(closed_event))
 
           click_on 'Attend as a student'
           click_on 'RSVP'
 
-          expect(page).to have_content("Your spot has not yet been confirmed. We will verify your attendance after you complete the questionnaire.")
+          expect(page).to have_content('Your spot has not yet been confirmed. We will verify your attendance after you complete the questionnaire.')
         end
       end
     end
@@ -64,7 +63,7 @@ feature 'viewing an event' do
       visit event_path(open_event)
     end
 
-    context "an authenticated user" do
+    context 'an authenticated user' do
       let(:member) { Fabricate(:member) }
 
       before do
@@ -72,25 +71,24 @@ feature 'viewing an event' do
       end
 
       context 'can RSVP to an event' do
-
-        scenario "as a Coach" do
+        scenario 'as a Coach' do
           expect(current_path).to eq(event_path(open_event))
 
           click_on 'Attend as a coach'
           click_on 'RSVP'
 
           expect(page).to have_content("Your spot has been confirmed for #{open_event.name}! We look forward to seeing you there")
-          expect(page).not_to have_content("We will verify your attendance after you complete the questionnaire!")
+          expect(page).not_to have_content('We will verify your attendance after you complete the questionnaire!')
         end
 
-        scenario "as a Student" do
+        scenario 'as a Student' do
           expect(current_path).to eq(event_path(open_event))
 
           click_on 'Attend as a student'
           click_on 'RSVP'
 
           expect(page).to have_content("Your spot has been confirmed for #{open_event.name}! We look forward to seeing you there")
-          expect(page).not_to have_content("We will verify your attendance after you complete the questionnaire!")
+          expect(page).not_to have_content('We will verify your attendance after you complete the questionnaire!')
         end
       end
     end

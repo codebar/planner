@@ -11,13 +11,13 @@ class JobMailer < ActionMailer::Base
 
   private
   def mail_args(member, subject)
-    { :from => "codebar.io <notifications@codebar.io>",
+    { :from => 'codebar.io <notifications@codebar.io>',
       :to => member.email,
       :subject => subject }
   end
 
   helper do
-    def full_url_for path
+    def full_url_for(path)
       "#{@host}#{path}"
     end
   end

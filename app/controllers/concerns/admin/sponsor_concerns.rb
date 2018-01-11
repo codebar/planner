@@ -2,8 +2,8 @@ module Admin::SponsorConcerns
   extend ActiveSupport::Concern
 
   included do
-    before_action :set_workshop, only: [ :sponsor, :destroy_sponsor, :host, :destroy_host ]
-    before_action :set_sponsor, only: [ :sponsor, :host ]
+    before_action :set_workshop, only: %i[sponsor destroy_sponsor host destroy_host]
+    before_action :set_sponsor, only: %i[sponsor host]
 
     include InstanceMethods
   end
@@ -11,7 +11,7 @@ module Admin::SponsorConcerns
   module InstanceMethods
     def sponsor
       if workshop_sponsors.save
-        flash[:notice] = "Sponsor added successfully"
+        flash[:notice] = 'Sponsor added successfully'
       else
         flash[:notice] = workshop_sponsors.errors.full_messages.to_s
       end
@@ -28,7 +28,7 @@ module Admin::SponsorConcerns
       set_sponsor
       @workshop_sponsor = WorkshopSponsor.where(workshop: @workshop, sponsor: @sponsor).first_or_create
       @workshop_sponsor.update_attribute(:host, true)
-      flash[:notice] = "Host set successfully"
+      flash[:notice] = 'Host set successfully'
 
       redirect_to :back
     end
@@ -49,9 +49,8 @@ module Admin::SponsorConcerns
       @sponsor = Sponsor.find(params[:workshop][:sponsor_ids])
     end
 
-    def workshop_sponsor(host=false)
+    def workshop_sponsor(host = false)
       @workshop_sponsor ||= WorkshopSponsor.new(workshop: @workshop, sponsor: @sponsor, host: host)
     end
-
   end
 end

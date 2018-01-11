@@ -8,7 +8,7 @@ describe FeedbackRequest do
   it { should respond_to(:token) }
   it { should respond_to(:submited) }
 
-  context "validations" do
+  context 'validations' do
     context 'presence' do
       it '#workshop should not be blank' do
         feedback_request = Fabricate.build(:feedback_request, workshop: nil)
@@ -26,8 +26,8 @@ describe FeedbackRequest do
     end
   end
 
-  context "after create hook" do
-    it "#email" do
+  context 'after create hook' do
+    it '#email' do
       feedback_request = Fabricate.build(:feedback_request)
       allow(feedback_request).to receive(:email)
       allow(feedback_request).to receive(:member_id).and_return(:member_id)
@@ -35,7 +35,7 @@ describe FeedbackRequest do
       expect(feedback_request).to have_received(:email)
     end
 
-    it "sends request feedback email" do
+    it 'sends request feedback email' do
       allow(FeedbackRequestMailer).to receive(:request_feedback) { double('feedback_request_mailer').as_null_object }
       Fabricate(:feedback_request)
       expect(FeedbackRequestMailer).to have_received(:request_feedback)

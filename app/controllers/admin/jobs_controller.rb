@@ -1,5 +1,4 @@
 class Admin::JobsController < Admin::ApplicationController
-
   def index
     @jobs = Job.submitted.ordered
     authorize @jobs

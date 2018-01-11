@@ -5,18 +5,18 @@ feature 'member feedback' do
   let(:valid_token) { feedback_request.token }
   let(:submited_token) { Fabricate(:feedback_request, submited: true).token }
   let(:invalid_token) { 'feedback_invalid_token' }
-  let(:feedback_submited_message) { I18n.t("messages.feedback_saved") }
+  let(:feedback_submited_message) { I18n.t('messages.feedback_saved') }
   let(:coach) { Fabricate(:coach) }
 
   before do
     Fabricate(:feedback, coach: coach)
 
     @tutorial = Fabricate(:tutorial, title: 'tutorial title')
-    Fabricate(:attended_session_invitation, workshop: feedback_request.workshop, member: coach, role: "Coach")
+    Fabricate(:attended_session_invitation, workshop: feedback_request.workshop, member: coach, role: 'Coach')
   end
 
   context 'Feedback form' do
-    scenario "I can view a feedback form when token is valid" do
+    scenario 'I can view a feedback form when token is valid' do
       visit feedback_path(valid_token)
 
       expect(page).to have_select 'feedback_coach_id'
@@ -40,15 +40,15 @@ feature 'member feedback' do
     end
   end
 
-  context "I get redirected to the main page" do
-    scenario "when invalid token given" do
+  context 'I get redirected to the main page' do
+    scenario 'when invalid token given' do
       visit feedback_path(invalid_token)
 
       expect(current_url).to eq(root_url)
       expect(page).to have_content('You have already submitted feedback for this event.')
     end
 
-    scenario "when feedback has been already submitted" do
+    scenario 'when feedback has been already submitted' do
       visit feedback_path(submited_token)
 
       expect(current_url).to eq(root_url)
@@ -57,11 +57,10 @@ feature 'member feedback' do
   end
 
   context 'Submitting a feedback request' do
-
     scenario 'I can see success page with message and link to homepage when valid data is given' do
       visit feedback_path(valid_token)
 
-      find(:xpath, "//input[@id='feedback_rating']").set "4"
+      find(:xpath, "//input[@id='feedback_rating']").set '4'
       select(coach.full_name, from: 'feedback_coach_id')
       select(@tutorial.title, from: 'feedback_tutorial_id')
 
@@ -72,5 +71,4 @@ feature 'member feedback' do
       expect(page).to have_content(feedback_submited_message)
     end
   end
-
 end

@@ -8,25 +8,25 @@ class WorkshopPresenter < EventPresenter
   end
 
   def organisers
-    @organisers ||= model.permissions.find_by_name("organiser").members rescue chapter_organisers
+    @organisers ||= model.permissions.find_by_name('organiser').members rescue chapter_organisers
   end
 
   # Gets an HTML list of the organisers, with mobile numbers if the event's
   # not past and the user's logged in.
-  def organisers_as_list(logged_in=false)
+  def organisers_as_list(logged_in = false)
     list = organisers.shuffle.map do |o|
       organiser = ActionController::Base.helpers.link_to(o.full_name, o.twitter_url)
       organiser << " - #{o.mobile}" if logged_in && model.future? && o.mobile
       content_tag(:li, organiser)
     end.join.html_safe
     if list.blank?
-      list = content_tag(:li, "Nobody yet")
+      list = content_tag(:li, 'Nobody yet')
     end
     content_tag(:ul, list)
   end
 
   def attendees_csv
-    CSV.generate {|csv| attendee_array.each { |a| csv << a } }
+    CSV.generate { |csv| attendee_array.each { |a| csv << a } }
   end
 
   def attendees_checklist
@@ -34,7 +34,7 @@ class WorkshopPresenter < EventPresenter
   end
 
   def attendees_emails
-    model.attendances.map {|m| m.member.email if m.member }.compact.join(', ')
+    model.attendances.map { |m| m.member.email if m.member }.compact.join(', ')
   end
 
   def time
@@ -71,7 +71,7 @@ class WorkshopPresenter < EventPresenter
   def attendee_array
     model.attendances.map do |i|
       if organisers.include?(i.member)
-        [i.member.full_name, "ORGANISER"]
+        [i.member.full_name, 'ORGANISER']
       else
         [i.member.full_name, i.role.upcase]
       end
@@ -83,7 +83,7 @@ class WorkshopPresenter < EventPresenter
   end
 
   def member_info(member, pos)
-    "#{MemberPresenter.new(member).newbie? ? "I__" : "___"} #{pos+1}.\t #{member.full_name}"
+    "#{MemberPresenter.new(member).newbie? ? "I__" : "___"} #{pos + 1}.\t #{member.full_name}"
   end
 
   def note(invitation)

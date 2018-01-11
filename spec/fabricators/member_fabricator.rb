@@ -1,5 +1,5 @@
 Fabricator(:member) do
-  pronouns "she/her"
+  pronouns 'she/her'
   name { Faker::Name.first_name }
   surname { Faker::Name.last_name }
   email { Faker::Internet.email }

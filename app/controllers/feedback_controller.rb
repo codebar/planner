@@ -1,10 +1,9 @@
 class FeedbackController < ApplicationController
-
   def show
     feedback_request = FeedbackRequest.find_by(token: params[:id], submited: false)
 
     if feedback_request.nil?
-      flash[:notice] = I18n.t("messages.feedback_not_found")
+      flash[:notice] = I18n.t('messages.feedback_not_found')
       redirect_to root_path and return
     end
 
@@ -16,7 +15,7 @@ class FeedbackController < ApplicationController
 
   def submit
     if Feedback.submit_feedback(feedback_params, params[:id])
-      flash[:notice] = I18n.t("messages.feedback_saved")
+      flash[:notice] = I18n.t('messages.feedback_saved')
 
       redirect_to root_path
     else
