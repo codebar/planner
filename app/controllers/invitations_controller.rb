@@ -20,7 +20,7 @@ class InvitationsController < ApplicationController
   def attend
     event = @invitation.event
 
-    if @invitation.attending.eql?(true)
+    if @invitation.attending?
       redirect_to :back, notice: t('messages.already_rsvped')
     end
 
