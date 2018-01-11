@@ -20,7 +20,6 @@ class Chapter < ActiveRecord::Base
   def self.available_to_user(user)
     return Chapter.all if user.has_role?(:organiser) || user.has_role?(:admin) || user.has_role?(:organiser, Chapter)
     return Chapter.find_roles(:organiser, user).map(&:resource)
-    []
   end
 
   def organisers
