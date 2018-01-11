@@ -34,10 +34,10 @@ class AuthServicesController < ApplicationController
         member.surname ||= omnihash[:info][:name].split(' ').drop(1).join(' ') rescue('')
         member.twitter ||= omnihash[:info][:nickname]
 
-        member_service = member.auth_services.build({
+        member_service = member.auth_services.build(
                                                       provider: omnihash[:provider],
           uid: omnihash[:uid]
-                                                    })
+                                                    )
 
         member.save!
 
