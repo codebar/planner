@@ -24,12 +24,12 @@ class InvitationsController < ApplicationController
       redirect_to :back, notice: t('messages.already_rsvped')
     end
 
-    if @invitation.student_spaces? or @invitation.coach_spaces?
+    if @invitation.student_spaces? || @invitation.coach_spaces?
       @invitation.update_attribute(:attending, true)
 
       notice = "Your spot has been confirmed for #{@invitation.event.name}! We look forward to seeing you there."
 
-      unless event.confirmation_required or event.surveys_required
+      unless event.confirmation_required || event.surveys_required
         @invitation.update_attribute(:verified, true)
         EventInvitationMailer.attending(@invitation.event, @invitation.member, @invitation).deliver_now
       end

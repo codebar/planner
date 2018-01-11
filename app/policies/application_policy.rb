@@ -42,7 +42,7 @@ class ApplicationPolicy
 
   def is_admin_or_chapter_organiser?
     return false unless user
-    user.is_admin? or user.has_role?(:organiser) or is_chapter_organiser?
+    user.is_admin? || user.has_role?(:organiser) || is_chapter_organiser?
   end
 
   def is_chapter_organiser?

@@ -31,7 +31,7 @@ class Member < ActiveRecord::Base
   end
 
   def banned?
-    bans.active.present? or bans.permanent.present?
+    bans.active.present? || bans.permanent.present?
   end
 
   def banned_permanently?
@@ -92,7 +92,7 @@ class Member < ActiveRecord::Base
   end
 
   def verified_or_organiser?
-    verified? or organised_chapters.present?
+    verified? || organised_chapters.present?
   end
 
   def twitter_url
@@ -112,7 +112,7 @@ class Member < ActiveRecord::Base
   end
 
   def is_admin_or_organiser?
-    has_role?(:admin) or is_organiser?
+    has_role?(:admin) || is_organiser?
   end
 
   def is_monthlies_organiser?

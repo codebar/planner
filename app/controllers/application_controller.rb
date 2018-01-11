@@ -64,7 +64,7 @@ class ApplicationController < ActionController::Base
   end
 
   def authenticate_admin!
-    redirect_to root_path, notice: "You can't be here" unless logged_in? and current_user.has_role?(:admin)
+    redirect_to root_path, notice: "You can't be here" unless logged_in? && current_user.has_role?(:admin)
   end
 
   def authenticate_admin_or_organiser!
@@ -72,7 +72,7 @@ class ApplicationController < ActionController::Base
   end
 
   def manager?
-    logged_in? and (current_user.is_admin? or current_user.has_role?(:organiser, :any))
+    logged_in? && (current_user.is_admin? || current_user.has_role?(:organiser, :any))
   end
 
   helper_method :manager?
@@ -106,7 +106,7 @@ class ApplicationController < ActionController::Base
   end
 
   def user_path
-    request.referrer or root_path
+    request.referrer || root_path
   end
 
   def jobs_pending_approval
