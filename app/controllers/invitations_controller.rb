@@ -46,12 +46,11 @@ class InvitationsController < ApplicationController
   end
 
   def reject
-    if @invitation.attending.eql?(false)
-      redirect_to :back, notice: t('messages.not_attending_already')
-    else
-      @invitation.update_attribute(:attending, false)
+    unless @invitation.attending?
+      redirect_to :back, notice: t('messages.not_attending_already') and return
     end
 
+    @invitation.update_attribute(:attending, false)
     redirect_to :back, notice: t('messages.rejected_invitation', name: @invitation.member.name)
   end
 
