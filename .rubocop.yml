@@ -7,3 +7,7 @@ Style/FrozenStringLiteralComment:
 #Increase line length from 80 chars
 Metrics/LineLength:
   Max: 100
+
+AllCops:
+  Exclude:
+    - db/schema.rb
