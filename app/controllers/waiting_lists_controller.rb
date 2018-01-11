@@ -8,7 +8,7 @@ class WaitingListsController < ApplicationController
   end
 
   def destroy
-    WaitingList.find_by_invitation_id(invitation.id).delete
+    WaitingList.find_by_invitation_id(invitation.id).destroy
 
     redirect_to invitation_path(invitation), notice: 'You have been removed from the waiting list'
   end

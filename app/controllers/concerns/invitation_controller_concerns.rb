@@ -22,7 +22,7 @@ module InvitationControllerConcerns
       @workshop = WorkshopPresenter.new(@invitation.workshop)
       if (@invitation.for_student? and @workshop.student_spaces?) or (@invitation.for_coach? and @workshop.coach_spaces?)
         @invitation.update_attributes(attending: true, rsvp_time: DateTime.now)
-        @invitation.waiting_list.delete if @invitation.waiting_list.present?
+        @invitation.waiting_list.destroy if @invitation.waiting_list.present?
         SessionInvitationMailer.attending(@invitation.workshop, @invitation.member, @invitation).deliver_now
 
         redirect_to :back, notice: t('messages.accepted_invitation',
@@ -45,7 +45,7 @@ module InvitationControllerConcerns
 
           if next_spot.present?
             invitation = next_spot.invitation
-            next_spot.delete
+            next_spot.destroy
             invitation.update_attribute(:attending, true)
             SessionInvitationMailer.attending(invitation.workshop, invitation.member, invitation, true).deliver_now
           end

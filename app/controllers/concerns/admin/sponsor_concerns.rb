@@ -20,7 +20,7 @@ module Admin::SponsorConcerns
 
     def destroy_sponsor
       @sponsor = Sponsor.find(params[:sponsor_id])
-      @workshop.workshop_sponsors.where(sponsor: @sponsor).first.delete
+      @workshop.workshop_sponsors.where(sponsor: @sponsor).first.destroy
       redirect_to :back
     end
 
