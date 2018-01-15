@@ -20,6 +20,7 @@ This is going to be a long project and is not only going to involve coding but i
 * High quality documentation that is created at every stage of the project
 * Consultant level decisions and attitude
 * Meaningful and high quality tests created
+* Work log for each individual team member
 
 ## Aim
 
