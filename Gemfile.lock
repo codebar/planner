@@ -333,6 +333,10 @@ GEM
       mime-types (>= 1.16, < 3.0)
       netrc (~> 0.7)
     rolify (5.0.0)
+    rspec (3.7.0)
+      rspec-core (~> 3.7.0)
+      rspec-expectations (~> 3.7.0)
+      rspec-mocks (~> 3.7.0)
     rspec-collection_matchers (1.1.2)
       rspec-expectations (>= 2.99.0.beta1)
     rspec-core (3.7.0)
@@ -460,6 +464,7 @@ DEPENDENCIES
   pickadate-rails
   poltergeist
   premailer-rails
+  pry
   pry-byebug
   pry-remote
   puma
@@ -469,6 +474,7 @@ DEPENDENCIES
   rails_12factor
   redcarpet
   rolify
+  rspec
   rspec-collection_matchers
   rspec-its
   rspec-rails
