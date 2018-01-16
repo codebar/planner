@@ -1,6 +1,6 @@
 require 'capybara'
 
-class Footer
+class FooterPartial
   include Capybara::DSL
 
   CODE_OF_CONDUCT_LINK = 'Code of conduct' unless const_defined?(:CODE_OF_CONDUCT_LINK)
