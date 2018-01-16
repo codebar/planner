@@ -1,4 +1,4 @@
-require 'capybara'
+require 'capybara/dsl'
 
 class HomePage
   include Capybara::DSL
@@ -8,7 +8,7 @@ class HomePage
   end
 
   def find_codebar_logo
-    find_element(:class, 'brand')
+    find(:xpath, ".//a[@href='/']")
   end
 
   def click_codebar_logo

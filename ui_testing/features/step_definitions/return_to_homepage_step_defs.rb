@@ -1,11 +1,11 @@
-Given("I am on the homepage") do
-  pending # Write code here that turns the phrase above into concrete actions
+Given("I am on the landing page") do
+  codebar_homepage.visit_home_page
 end
 
 When("I click on the logo") do
-  pending # Write code here that turns the phrase above into concrete actions
+  codebar_homepage.click_codebar_logo
 end
 
 Then("I return to the homepage") do
-  pending # Write code here that turns the phrase above into concrete actions
+  expect(current_url).to eq('https://www.codebar.io/')
 end
