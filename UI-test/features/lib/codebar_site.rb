@@ -1,5 +1,5 @@
-require_relative 'partials/navbar'
-require_relative 'partials/footer'
+require_relative './partials/navbar'
+require_relative './partials/footer'
 
 module CodebarSite
 
