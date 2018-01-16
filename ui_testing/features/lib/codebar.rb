@@ -1,5 +1,5 @@
-require_relative '../lib/pages/soraia_pages/footer'
-# require_relative '../lib/soraia_pages/tutorials_page'
+require_relative '../lib/pages/footer'
+# require_relative '../lib/pages/tutorials_page'
 
 
 module CodeBar
