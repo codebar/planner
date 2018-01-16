@@ -5,17 +5,17 @@ class FooterPartial
 
   CODE_OF_CONDUCT_LINK = 'Code of conduct' unless const_defined?(:CODE_OF_CONDUCT_LINK)
 
-
-
-
-
-  def click_link(name)
-    click_link(name)
+  def visit_homepage
+    visit('/')
   end
 
-  def click_code_of_conduct
-    click_link(CODE_OF_CONDUCT_LINK)
-  end
+  # def click_link(name)
+  #   click_link(name)
+  # end
+  #
+  # def click_code_of_conduct
+  #   click_link(CODE_OF_CONDUCT_LINK)
+  # end
 
 
 

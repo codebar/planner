@@ -1,11 +1,11 @@
 Given("I am on a page") do
-  visit('/')
+  footer.visit_homepage
 end
 
 When("I click link") do
-  footer.click_code_of_conduct
+  pending
 end
 
 Then("It works") do
-  footer.click_code_of_conduct
+  pending
 end
