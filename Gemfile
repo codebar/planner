@@ -80,4 +80,4 @@ gem 'newrelic_rpm'
 gem 'rubocop', '~> 0.52.0'
 gem 'pry'
 gem 'rspec'
-gem 'selenium-webdriver
+gem 'selenium-webdriver'
