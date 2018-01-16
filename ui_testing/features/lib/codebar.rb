@@ -1,4 +1,4 @@
-# require_relative '../lib/soraia_pages/footer'
+require_relative '../lib/pages/soraia_pages/footer'
 # require_relative '../lib/soraia_pages/tutorials_page'
 
 

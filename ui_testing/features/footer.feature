@@ -14,7 +14,7 @@ Feature: Footer links are accessible
   Scenario: As a user I can access Student Guide
     Given I am in the homepage
     When I click in Student Guide in the footer
-    Then I am redirected to the Students guide page
+    Then I am redirected to the Student guide page
 
   Scenario: As a user I can access Donate
     Given I am in the homepage
