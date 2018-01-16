@@ -1,5 +1,5 @@
-require_relative 'partials/navbar'
-require_relative 'partials/footer'
+require_relative './partials/navbar_partial'
+require_relative './partials/footer_partial'
 
 module CodebarSite
 
@@ -8,7 +8,7 @@ module CodebarSite
   end
 
   def footer
-
+    FooterPartial.new
   end
 
 end
