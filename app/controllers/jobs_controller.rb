@@ -33,7 +33,7 @@ class JobsController < ApplicationController
   end
 
   def show
-    redirect_to jobs_path unless @job.approved? and @job.submitted?
+    redirect_to jobs_path unless @job.approved? && @job.submitted?
   end
 
   def submit
@@ -60,6 +60,6 @@ class JobsController < ApplicationController
   end
 
   def has_access?
-    redirect_to root_path unless logged_in? and @job.created_by.eql?(current_user)
+    redirect_to root_path unless logged_in? && @job.created_by.eql?(current_user)
   end
 end

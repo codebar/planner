@@ -26,6 +26,6 @@ class ChapterPolicy < ApplicationPolicy
   private
 
   def is_admin_or_organiser?
-  	 user.is_admin? or user.has_role?(:organiser, record) or user.has_role?(:organiser)
+  	 user.is_admin? || user.has_role?(:organiser, record) || user.has_role?(:organiser)
   end
 end

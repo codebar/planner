@@ -28,7 +28,6 @@ class DashboardController < ApplicationController
   end
 
   def wall_of_fame
-    sessions_count = Workshop.count
     @coaches = order_by_attendance(attendance_stats_by_coach).map do |member_id, attendances|
       member = Member.unscoped.find(member_id)
       member.attendance = attendances
@@ -67,7 +66,6 @@ class DashboardController < ApplicationController
     meeting = Meeting.next
     event = Event.future(DEFAULT_UPCOMING_EVENTS)
 
-    all_events = workshops << course << event << meeting
-    all_events = all_events.compact.flatten
+    (workshops << course << event << meeting).compact.flatten
   end
 end

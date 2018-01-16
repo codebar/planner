@@ -11,7 +11,7 @@ feature 'managing workshop attendances' do
       login_as_admin(member)
     end
 
-    context' #verify_attendance' do
+    context ' #verify_attendance' do
       let(:workshop) { Fabricate(:workshop, chapter: chapter, date_and_time: Time.zone.now - 1.day) }
 
       scenario 'can verify that a member has attended the workshop' do

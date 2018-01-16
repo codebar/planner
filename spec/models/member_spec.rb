@@ -32,18 +32,18 @@ describe Member do
             expect(member).to_not be_valid
             expect(member).to have(1).error_on(:about_you)
           end
-          
+
           it 'can be 255 characters in length' do
             text = 'a' * 255
             member = Fabricate.build(:member, can_log_in: true, about_you: text)
-            
+
             expect(member).to be_valid
           end
-          
+
           it 'cannot be longer than 255 characters' do
             text = 'a' * 256
             member = Fabricate.build(:member, can_log_in: true, about_you: text)
-            
+
             expect(member).to_not be_valid
             expect(member).to have(1).error_on(:about_you)
           end

@@ -4,3 +4,10 @@ Style/Documentation:
 #Disabling rubocop for missing frozen string literal comment.
 Style/FrozenStringLiteralComment:
   Enabled: false
+#Increase line length from 80 chars
+Metrics/LineLength:
+  Max: 100
+
+AllCops:
+  Exclude:
+    - db/schema.rb

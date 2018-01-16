@@ -44,7 +44,7 @@ class Workshop < ActiveRecord::Base
   end
 
   def has_valid_host?
-    has_host? and host.address.present?
+    has_host? && host.address.present?
   end
 
   def past?

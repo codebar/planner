@@ -41,5 +41,5 @@ describe FeedbackRequest do
       expect(FeedbackRequestMailer).to have_received(:request_feedback)
     end
   end
- 
+
 end

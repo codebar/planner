@@ -7,7 +7,7 @@ describe WorkshopPresenter do
                        Fabricate(:coach_session_invitation)
                       ] }
   let(:chapter) { Fabricate(:chapter) }
-  let(:workshop_double) { double(:workshop, attendances: invitations, host: Fabricate(:sponsor), chapter: chapter ) }
+  let(:workshop_double) { double(:workshop, attendances: invitations, host: Fabricate(:sponsor), chapter: chapter) }
   let(:workshop) { WorkshopPresenter.new(workshop_double) }
 
   it '#venue' do
