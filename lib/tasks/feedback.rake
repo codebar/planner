@@ -5,8 +5,7 @@ namespace :feedback do
     workshop = Workshop.most_recent
     STDOUT.puts "Sending feedback requests for Workshop #{I18n.l(workshop.date_and_time, format: :date)}"
 
-    if workshop.date_and_time < Time.zone.now + 12.hours and workshop.date_and_time < Time.zone.now + 36.hours
-
+    if workshop.date_and_time < Time.zone.now + 12.hours
       workshop.invitations.where(role: 'Student').accepted.map do |invitation|
         STDOUT.puts "#{invitation.member.full_name} <#{invitation.member.email}>"
         FeedbackRequest.create(member: invitation.member, workshop: invitation.workshop, submited: false)

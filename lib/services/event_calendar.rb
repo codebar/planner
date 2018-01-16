@@ -13,9 +13,6 @@ class EventCalendar
   private
 
   def setup_event
-    start_date = event.date_and_time.strftime('%Y%m%d')
-    end_time = event.ends_at.strftime('%H%M')
-    end_date = DateTime.parse("#{start_date}#{end_time}")
     address = AddressDecorator.decorate(event.venue.address)
     calendar.event do |e|
       e.organizer = "#{event.email}"

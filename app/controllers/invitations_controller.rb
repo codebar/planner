@@ -20,16 +20,16 @@ class InvitationsController < ApplicationController
   def attend
     event = @invitation.event
 
-    if @invitation.attending.eql?(true)
+    if @invitation.attending?
       redirect_to :back, notice: t('messages.already_rsvped')
     end
 
-    if @invitation.student_spaces? or @invitation.coach_spaces?
+    if @invitation.student_spaces? || @invitation.coach_spaces?
       @invitation.update_attribute(:attending, true)
 
       notice = "Your spot has been confirmed for #{@invitation.event.name}! We look forward to seeing you there."
 
-      unless event.confirmation_required or event.surveys_required
+      unless event.confirmation_required || event.surveys_required
         @invitation.update_attribute(:verified, true)
         EventInvitationMailer.attending(@invitation.event, @invitation.member, @invitation).deliver_now
       end
@@ -46,12 +46,11 @@ class InvitationsController < ApplicationController
   end
 
   def reject
-    if @invitation.attending.eql?(false)
-      redirect_to :back, notice: t('messages.not_attending_already')
-    else
-      @invitation.update_attribute(:attending, false)
+    unless @invitation.attending?
+      redirect_to :back, notice: t('messages.not_attending_already') and return
     end
 
+    @invitation.update_attribute(:attending, false)
     redirect_to :back, notice: t('messages.rejected_invitation', name: @invitation.member.name)
   end
 

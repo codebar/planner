@@ -19,11 +19,11 @@ module ApplicationHelper
   end
 
   def can_access?(resource)
-    current_user.has_role?(:admin) or current_user.has_role?(:organiser) or current_user.has_role?(:organiser, resource)
+    current_user.has_role?(:admin) || current_user.has_role?(:organiser) || current_user.has_role?(:organiser, resource)
   end
 
   def has_permission?
-    current_user.has_role?(:admin) or current_user.has_role?(:organiser) or Chapter.find_roles(:organiser, current_user).any?
+    current_user.has_role?(:admin) || current_user.has_role?(:organiser) || Chapter.find_roles(:organiser, current_user).any?
   end
 
   def member_token(member)

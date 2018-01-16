@@ -2,7 +2,7 @@ class Admin::SponsorsController < Admin::ApplicationController
   before_filter :set_sponsor, only: %i[show edit update]
 
   def index
-    authenticate_admin_or_organiser!
+    authorize Sponsor
     @sponsors = Sponsor.all.order(:name)
   end
 
@@ -40,7 +40,7 @@ class Admin::SponsorsController < Admin::ApplicationController
 
   private
   def sponsor_params
-    params.require(:sponsor).permit(:name, :avatar, :website, :seats, :number_of_coaches, 
+    params.require(:sponsor).permit(:name, :avatar, :website, :seats, :number_of_coaches,
       :email, :contact_first_name, :contact_surname, contact_ids: [],
       address_attributes: %i[flat street postal_code city latitude longitude])
   end

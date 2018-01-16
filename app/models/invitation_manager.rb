@@ -109,13 +109,13 @@ class InvitationManager
     if workshop.host.coach_spots > workshop.attending_coaches.length
       WaitingList.by_workshop(workshop).where_role('Coach').each do |waiting_list|
         SessionInvitationMailer.notify_waiting_list(waiting_list.invitation).deliver_now
-        waiting_list.delete
+        waiting_list.destroy
       end
 
       if workshop.host.seats > workshop.attending_students.length
         WaitingList.by_workshop(workshop).where_role('Student').each do |waiting_list|
           SessionInvitationMailer.notify_waiting_list(waiting_list.invitation).deliver_now
-          waiting_list.delete
+          waiting_list.destroy
         end
       end
     end

@@ -30,13 +30,13 @@ feature 'member feedback' do
     scenario 'I can select form coaches list in feedback form' do
       visit feedback_path(valid_token)
 
-      expect(page).to have_select('feedback_coach_id', :with_options => [coach.full_name])
+      expect(page).to have_select('feedback_coach_id', with_options: [coach.full_name])
     end
 
     scenario 'I can select form tutorials list in feedback form' do
       visit feedback_path(valid_token)
 
-      expect(page).to have_select('feedback_tutorial_id', :with_options => [@tutorial.title])
+      expect(page).to have_select('feedback_tutorial_id', with_options: [@tutorial.title])
     end
   end
 

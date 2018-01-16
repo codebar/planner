@@ -5,7 +5,7 @@ namespace :skills do
     list = %w(html css javascript jQuery rails ruby php python c++ wordpress)
 
     list.each do |tag|
-      ActsAsTaggableOn::Tag.new(:name => tag).save
+      ActsAsTaggableOn::Tag.new(name: tag).save
     end
   end
 end

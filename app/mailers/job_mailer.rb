@@ -11,9 +11,9 @@ class JobMailer < ActionMailer::Base
 
   private
   def mail_args(member, subject)
-    { :from => 'codebar.io <notifications@codebar.io>',
-      :to => member.email,
-      :subject => subject }
+    { from: 'codebar.io <notifications@codebar.io>',
+      to: member.email,
+      subject: subject }
   end
 
   helper do

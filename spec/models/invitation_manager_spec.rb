@@ -127,18 +127,18 @@ describe InvitationManager do
       expect(@workshop.waiting_list.length).to eql 4
 
       (@attending_students + @attending_coaches).each do |member|
-        expect(@workshop.attendee? member).to be true
-        expect(@workshop.waitlisted? member).to be false
+        expect(@workshop.attendee?(member)).to be true
+        expect(@workshop.waitlisted?(member)).to be false
       end
 
       (@waitlisted_students + @waitlisted_coaches).each do |member|
-        expect(@workshop.attendee? member).to be false
-        expect(@workshop.waitlisted? member).to be true
+        expect(@workshop.attendee?(member)).to be false
+        expect(@workshop.waitlisted?(member)).to be true
       end
 
       (@absent_students + @absent_coaches).each do |member|
-        expect(@workshop.attendee? member).to be false
-        expect(@workshop.waitlisted? member).to be false
+        expect(@workshop.attendee?(member)).to be false
+        expect(@workshop.waitlisted?(member)).to be false
       end
     end
 
