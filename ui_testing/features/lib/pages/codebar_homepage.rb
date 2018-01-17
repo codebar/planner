@@ -62,4 +62,12 @@ class HomePage
   def click_jobs_link
     find_jobs_link.click
   end
+
+  def find_donate_link
+    find('span', text: 'Donate')
+  end
+
+  def click_donate_link
+    find_donate_link.click
+  end
 end
