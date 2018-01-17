@@ -1,4 +1,5 @@
 require 'capybara/cucumber'
+require 'capybara/dsl'
 require 'rspec'
 require 'pry'
 require_relative '../lib/codebar'
