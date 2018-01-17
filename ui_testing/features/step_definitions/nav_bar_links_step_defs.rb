@@ -1,5 +1,5 @@
 When("I click on Blog link in the nav bar") do
-  codebar_homepage.click_blog_link
+  navbar.click_blog_link
 end
 
 Then("I go to Medium page") do
@@ -7,7 +7,7 @@ Then("I go to Medium page") do
 end
 
 When("I click on Events link in the nav bar") do
-  codebar_homepage.click_event_link
+  navbar.click_event_link
 end
 
 Then("I go to the events page") do
@@ -15,7 +15,7 @@ Then("I go to the events page") do
 end
 
 When("I click on Tutorials link in the nav bar") do
-  codebar_homepage.click_tutorials_link
+  navbar.click_tutorials_link
 end
 
 Then("I go to the tutorials page") do
@@ -23,7 +23,7 @@ Then("I go to the tutorials page") do
 end
 
 When("I click on Coaches link in the nav bar") do
-  codebar_homepage.click_coaches_link
+  navbar.click_coaches_link
 end
 
 Then("I go to Coaches page") do
@@ -31,7 +31,7 @@ Then("I go to Coaches page") do
 end
 
 When("I click on Sponsors link in the nav bar") do
-  codebar_homepage.click_sponsors_link
+  navbar.click_sponsors_link
 end
 
 Then("I go to Sponsors page") do
@@ -39,7 +39,7 @@ Then("I go to Sponsors page") do
 end
 
 When("I click on Jobs link in the nav bar") do
-  codebar_homepage.click_jobs_link
+  navbar.click_jobs_link
 end
 
 Then("I go to Jobs page") do
@@ -47,7 +47,7 @@ Then("I go to Jobs page") do
 end
 
 When("I click on Donate link in the nav bar") do
-  codebar_homepage.click_donate_link
+  navbar.click_donate_link
 end
 
 Then("I go to Donate page") do
