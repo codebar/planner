@@ -1,9 +1,13 @@
 require_relative '../lib/pages/footer'
 require_relative '../lib/pages/tutorials_page'
 require_relative '../lib/pages/navbar'
+<<<<<<< HEAD
 require_relative '../lib/pages/homepage'
 require_relative '../lib/pages/new_member_page'
 require_relative '../lib/pages/student_details_page'
+=======
+require_relative '../lib/pages/socialmedia'
+>>>>>>> dev
 
 module CodeBar
 
