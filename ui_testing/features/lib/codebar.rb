@@ -21,4 +21,8 @@ module CodeBar
     TutorialsPage.new
   end
 
+  def newmember
+    NewMember.new
+  end
+
 end

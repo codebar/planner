@@ -10,5 +10,4 @@ class NewMember
   def click_sign_up_coach
     click_button('Sign up as a coach')
   end
-
 end
