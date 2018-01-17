@@ -1,6 +1,7 @@
 # require_relative './partials/navbar_partial'
 # require_relative './partials/footer_partial'
-require_relative './logging_in/signin_page'
+require_relative './profile_info/signin_page'
+require_relative './profile_info/update_profile'
 
 module CodebarSite
 
@@ -12,8 +13,12 @@ module CodebarSite
   #   FooterPartial.new
   # end
 
-  def signin
+  def sign_in
     SignInPage.new
+  end
+
+  def update_profile
+    UpdateProfile.new
   end
 
 end
