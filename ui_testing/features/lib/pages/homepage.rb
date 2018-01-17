@@ -8,14 +8,14 @@ class HomePage
   WORKSHOP_TEXT = 'Host a workshop'
 
   def click_sign_up_student
-    click_button(STUDENT_TEXT)
+    click_link(STUDENT_TEXT)
   end
 
   def click_sign_up_coach
-    click_button(COACH_TEXT)
+    click_link(COACH_TEXT)
   end
 
   def click_host_workshop
-    click_button(WORKSHOP_TEXT)
+    click_link(WORKSHOP_TEXT)
   end
 end

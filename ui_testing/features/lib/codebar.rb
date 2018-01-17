@@ -2,6 +2,8 @@ require_relative '../lib/pages/footer'
 require_relative '../lib/pages/tutorials_page'
 require_relative '../lib/pages/navbar'
 require_relative '../lib/pages/homepage'
+require_relative '../lib/pages/new_member_page'
+require_relative '../lib/pages/student_details_page'
 
 module CodeBar
 
@@ -23,6 +25,10 @@ module CodeBar
 
   def newmember
     NewMember.new
+  end
+
+  def student_details
+    Student.new
   end
 
 end
