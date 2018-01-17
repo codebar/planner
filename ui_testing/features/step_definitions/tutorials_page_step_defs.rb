@@ -16,6 +16,6 @@ When(/^I press (.*)$/) do |a_link|
   tutorials_page.tutorials_link(a_link)
 end
 
-Then(/^the (.*) opens $/) do |page_link|
+Then(/^The correspondent page opens (.*)$/) do |page_link|
   expect(current_url).to eq page_link
 end

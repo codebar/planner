@@ -14,7 +14,7 @@ Feature: Access Tutorials
   Scenario Outline: As a user if I click on a given link, the correspondent page will open
     Given I am in the tutorials page
     When I press <link>
-    Then the <page> opens
+    Then The correspondent page opens <page>
 
     Examples:
     | link                                                  | page                                                        |
