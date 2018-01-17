@@ -1,6 +1,6 @@
 require 'capybara/dsl'
 
-class HomePage
+class NavBar
   include Capybara::DSL
 
   def visit_home_page

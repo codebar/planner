@@ -1,13 +1,13 @@
 require_relative '../lib/pages/footer'
 # require_relative '../lib/pages/tutorials_page'
-require_relative '../lib/pages/codebar_homepage'
+require_relative '../lib/pages/navbar'
 
 module CodeBar
 
-  def codebar_homepage
-    HomePage.new
+  def navbar
+    NavBar.new
   end
-  
+
   def footer
     CodeBarFooter.new
   end
