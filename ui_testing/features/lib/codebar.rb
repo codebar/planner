@@ -1,6 +1,7 @@
 require_relative '../lib/pages/footer'
 require_relative '../lib/pages/tutorials_page'
 require_relative '../lib/pages/navbar'
+require_relative '../lib/pages/socialmedia'
 
 module CodeBar
 
