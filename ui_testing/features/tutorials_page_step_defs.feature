@@ -4,7 +4,7 @@ Feature: I can access the tutorials
   Scenario: As a user I can access all the tutorials on Github
     Given I am in the tutorials page
     When I click View our tutorials on Github
-    Then I am redirected to https://codebar-slack.herokuapp.com/
+    Then I am redirected to https://github.com/codebar/tutorials
 
   Scenario: As a user I can join the codebar community on Slack
     Given I am in the tutorials page
@@ -14,42 +14,42 @@ Feature: I can access the tutorials
   Scenario: As a user I can access the Guide for Students
     Given I am in the tutorials page
     When I click Guide for Students
-    Then I am redirected to the right page
+    Then I am redirected to http://tutorials.codebar.io/general/setup/tutorial.html
 
   Scenario: As a user I can access the Guide for coaches
     Given I am in the tutorials page
     When I click Guide for coaches
-    Then I am redirected to the right page
+    Then I am redirected to http://tutorials.codebar.io/coaches/lesson-guide.html
 
   Scenario: As a user I can access Introducing HTML
     Given I am in the tutorials page
     When I click Introducing HTML
-    Then I am redirected to the right page
+    Then I am redirected to http://tutorials.codebar.io/html/lesson1/tutorial.html
 
   Scenario: As a user I can access Introducing CSS
     Given I am in the tutorials page
     When I click Introducing CSS
-    Then I am redirected to the right page
+    Then I am redirected to http://tutorials.codebar.io/html/lesson2/tutorial.html
 
   Scenario: As a user I can access Beyond the basics
     Given I am in the tutorials page
     When I click Beyond the basics
-    Then I am redirected to the right page
+    Then I am redirected to http://tutorials.codebar.io/html/lesson3/tutorial.html
 
   Scenario: As a user I can access CSS, Layouts and formatting
     Given I am in the tutorials page
     When I click CSS, Layouts and formatting
-    Then I am redirected to the right page
+    Then I am redirected to http://tutorials.codebar.io/html/lesson4/tutorial.html
 
   Scenario: As a user I can access Dive into HTML5 and CSS3
     Given I am in the tutorials page
     When I click Dive into HTML5 and CSS3
-    Then I am redirected to the right page
+    Then I am redirected to http://tutorials.codebar.io/html/lesson5/tutorial.html
 
   Scenario: As a user I can access Advanced HTML5
     Given I am in the tutorials page
     When I click Advanced HTML5
-    Then I am redirected to the right page
+    Then I am redirected to http://tutorials.codebar.io/html/lesson6/tutorial.html
 
   Scenario: As a user I can access Media queries and responsive design
     Given I am in the tutorials page
