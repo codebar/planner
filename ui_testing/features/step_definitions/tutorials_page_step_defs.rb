@@ -12,10 +12,10 @@ Then("I am redirected to https://codebar-slack.herokuapp.com/") do
 
 end
 
-When(/^I click (.*)$/) do |a_link|
+When(/^I press (.*)$/) do |a_link|
   tutorials_page.tutorials_link(a_link)
 end
 
-Then(/^I am redirected to (.*)$/) do |page_link|
+Then(/^the (.*) opens $/) do |page_link|
   expect(current_url).to eq page_link
 end

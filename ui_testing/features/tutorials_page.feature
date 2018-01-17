@@ -13,8 +13,8 @@ Feature: Access Tutorials
 
   Scenario Outline: As a user if I click on a given link, the correspondent page will open
     Given I am in the tutorials page
-    When I click <link>
-    Then I am redirected to <page>
+    When I press <link>
+    Then the <page> opens
 
     Examples:
     | link                                                  | page                                                        |
