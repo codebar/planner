@@ -3,7 +3,7 @@ require_relative '../lib/pages/tutorials_page'
 require_relative '../lib/pages/navbar'
 require_relative '../lib/pages/homepage'
 require_relative '../lib/pages/new_member_page'
-require_relative '../lib/pages/student_details_page'
+require_relative '../lib/pages/github'
 require_relative '../lib/pages/socialmedia'
 
 module CodeBar
@@ -28,8 +28,7 @@ module CodeBar
     NewMember.new
   end
 
-  def student_details
-    Student.new
+  def github
+    GitHub.new
   end
-
 end

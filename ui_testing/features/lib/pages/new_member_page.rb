@@ -10,4 +10,8 @@ class NewMember
   def click_sign_up_coach
     click_link('Sign up as a coach')
   end
+
+  def find_dashboard
+    find('h2', text: 'Dashboard')
+  end
 end
