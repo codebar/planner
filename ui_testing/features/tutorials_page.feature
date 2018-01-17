@@ -1,15 +1,15 @@
 Feature: Access Tutorials
   As an User, when I click on a tutorial, the correspondent page opens
 
-  # Scenario Outline: As a user if I click on a given link to be oppened in a new page, the correspondent page will open
-  #   Given I am in the tutorials page
-  #   When I click <ext_link>
-  #   Then I am redirected to <ext_page>
-  #
-  #   Examples:
-  #   | ext_link                                              | ext_page                                                    |
-  #   | Join the codebar community on Slack                   | https://codebar-slack.herokuapp.com/                        |
-  #   | https://codebar.github.io/android-tutorials/          | https://codebar.github.io/android-tutorials/                |
+  Scenario Outline: As a user if I click on a given link to be oppened in a new tab, the correspondent page will open
+    Given I am in the tutorials page
+    When Clicking <ext_link>
+    Then I see the right page in a new tab <ext_page>
+
+    Examples:
+    | ext_link                                              | ext_page                                                    |
+    | Join the codebar community on Slack                   | https://codebar-slack.herokuapp.com/                        |
+    | https://codebar.github.io/android-tutorials/          | https://codebar.github.io/android-tutorials/                |
 
   Scenario Outline: As a user if I click on a given link, the correspondent page will open
     Given I am in the tutorials page
