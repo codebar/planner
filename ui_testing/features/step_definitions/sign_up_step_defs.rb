@@ -13,17 +13,21 @@ And("I login to GitHub") do
 end
 
 Then("I will have signed up") do
+  if github.find_authorization
+    github.click_authorization
+  end
   newmember.find_dashboard
 end
 
 When("I sign up as a coach") do
-  pending # Write code here that turns the phrase above into concrete actions
+  homepage.click_sign_up_coach
+  newmember.click_sign_up_coach
 end
 
 When("I host a workshop") do
-  pending # Write code here that turns the phrase above into concrete actions
+  homepage.click_host_workshop
 end
 
 Then("I get redirected to the email app") do
-  pending # Write code here that turns the phrase above into concrete actions
+  expect(homepage.check_mail_app).to include('Mail')
 end

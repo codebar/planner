@@ -7,6 +7,10 @@ class GitHub
   USERNAME_FORM_ID = 'login_field'
   PASSWORD_FORM_ID = 'password'
   SIGN_IN_TEXT = 'Sign in'
+  AUTHORIZATION_BTN_ID = 'js-oauth-authorize-btn'
+  PROFILE_ICON = 'summary[aria-label="View profile and more"]'
+  SIGN_OUT_TEXT = 'Sign out'
+  DEVELOPER_TEXT = 'Built for developers'
 
   def fill_username(username)
     fill_in(USERNAME_FORM_ID, :with => username)
@@ -21,11 +25,11 @@ class GitHub
   end
 
   def click_profile_icon
-    find('summary[aria-label="View profile and more"]').click
+    find(PROFILE_ICON).click
   end
 
   def click_sign_out
-    click_button('Sign out')
+    click_button(SIGN_OUT_TEXT)
   end
 
   def visit_github
@@ -33,6 +37,14 @@ class GitHub
   end
 
   def find_developer_text
-    find('h1', text: 'Built for developers')
+    find('h1', text: DEVELOPER_TEXT)
+  end
+
+  def find_authorization
+    find_button(AUTHORIZATION_BTN_ID).visible?
+  end
+
+  def click_authorization
+    click_button(AUTHORIZATION_BTN_ID)
   end
 end

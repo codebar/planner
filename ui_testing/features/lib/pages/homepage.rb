@@ -18,4 +18,9 @@ class HomePage
   def click_host_workshop
     click_link(WORKSHOP_TEXT)
   end
+
+  def check_mail_app
+    value = %x(ps aux)
+    value
+  end
 end
