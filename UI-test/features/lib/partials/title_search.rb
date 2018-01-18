@@ -7,7 +7,11 @@ class TitleSearch
 
 
   def title_check(name)
-    page.find('div', text: name)
+    if page.find('h1', text: name) == ''
+      page.find('h2', text: name)
+    else
+      page.find('h1', text: name)      
+    end
   end
 
 end

@@ -5,13 +5,13 @@ require_relative './profile_info/signin_page'
 require_relative './profile_info/update_profile'
 module CodebarSite
 
-  # def navbar
-  #
-  # end
-  #
-  # def footer
-  #   FooterPartial.new
-  # end
+  def navbar
+
+  end
+
+  def footer
+    FooterPartial.new
+  end
 
   def sign_in
     SignInPage.new
