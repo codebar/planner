@@ -4,7 +4,7 @@ class HomePage
   HOMEPAGE_URL = 'http://localhost:3000/' unless const_defined?(:HOMEPAGE_URL)
   SIGN_UP_AS_A_STUDENT = 'Sign up as a student' unless const_defined?(:SIGN_UP_AS_A_STUDENT)
   SIGN_UP_AS_A_COACH = 'Sign up as a coach' unless const_defined?(:SIGN_UP_AS_A_COACH)
-  SHORT_CODEBAR_DESCRIPTION = 'codebar is a non-profit initiative that facilitates the growth of a diverse tech community by running regular programming workshops.'
+  SHORT_CODEBAR_DESCRIPTION = 'codebar is a non-profit initiative that facilitates the growth of a diverse tech community by running regular programming workshops.' unless const_defined?(:SHORT_CODEBAR_DESCRIPTION)
 
   def visit_home_page
     visit(HOMEPAGE_URL)
