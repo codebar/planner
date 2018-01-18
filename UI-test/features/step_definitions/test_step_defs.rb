@@ -1,5 +1,5 @@
 Given("I am on a page") do
-  footer.visit_homepage
+  pending
 end
 
 When("I click link") do
