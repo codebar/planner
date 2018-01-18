@@ -5,6 +5,7 @@ require_relative './pages/code_of_conduct_page'
 require_relative './pages/student_guide_page'
 require_relative './profile_info/signin_page'
 require_relative './profile_info/update_profile'
+require_relative './jobs/post_a_job'
 
 module CodebarSite
 
@@ -38,6 +39,10 @@ module CodebarSite
 
   def student_guide_page
     StudentGuidePage.new
+  end
+
+  def job_post
+    JobPost.new
   end
 
 end
