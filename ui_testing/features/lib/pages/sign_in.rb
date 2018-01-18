@@ -5,6 +5,8 @@ class SignedIn
 
   USERNAME_FIELD_ID = "login_field"
   PASSWORD_FIELD_ID = "password"
+  AUTHORISE_CODEBAR_ID = "js-oauth-authorize-btn"
+  BARCELONA_STUDENT_SUBSCRIPTION_ID = "barcelona-students"
 
   def find_sign_in
     find('a', :text => "Sign in")
@@ -12,6 +14,10 @@ class SignedIn
 
   def click_sign_in
     find_sign_in.click
+  end
+
+  def find_username_field
+    find_field("login")
   end
 
   def fill_in_sign_in_username
@@ -26,12 +32,17 @@ class SignedIn
     click_button("Sign in")
   end
 
-  def find_edit_button_in_dashboard
-    find('a', :text => "Edit")
+  def click_barcelona_student_subscription
+    # click_on("Subscribe")
+    find('#barcelona-students').click
   end
 
   def click_edit_button_in_dashboard
-    find_edit_button_in_dashboard.click
+    click_link("Edit")
+  end
+
+  def get_student_success_subscription_message
+    find('div.alert-box div').text
   end
 
 
