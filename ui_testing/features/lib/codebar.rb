@@ -5,6 +5,7 @@ require_relative '../lib/pages/homepage'
 require_relative '../lib/pages/new_member_page'
 require_relative '../lib/pages/github'
 require_relative '../lib/pages/socialmedia'
+require_relative '../lib/pages/sign_in'
 
 module CodeBar
 
@@ -31,4 +32,9 @@ module CodeBar
   def github
     GitHub.new
   end
+
+  def sign_in_page
+    SignedIn.new
+  end
+
 end
