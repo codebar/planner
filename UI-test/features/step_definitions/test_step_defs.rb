@@ -8,6 +8,6 @@ When("I click link") do
 end
 
 Then("It works") do
-  expect( title_search.title_check ).to eq 'abc'
+  expect( title_search.title_check ).to eq 'Code of conduct'
 
 end
