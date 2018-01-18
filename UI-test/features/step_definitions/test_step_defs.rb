@@ -3,16 +3,10 @@ Given("I am on a page") do
 end
 
 When("I click link") do
-  footer.click_chosen_link('Donate')
-  footer.click_chosen_link('slack')
-  footer.visit_homepage
   footer.click_chosen_link('facebook')
-  footer.visit_homepage
-  footer.click_chosen_link('github')
-  footer.visit_homepage
-  footer.click_chosen_link('twitter')
+
 end
 
 Then("It works") do
-  pending
+  expect(find('h1').text).to eq 'abc'
 end

@@ -26,7 +26,7 @@ class FooterPartial
 
 
   def title_check(name)
-    find(:id, name)
+    page.find('div', text: name)
   end
 
 end
