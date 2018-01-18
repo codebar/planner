@@ -6,11 +6,13 @@ class TitleSearch
 
 
 
-  def title_check(name)
-    if page.find('h1', text: name) == ''
-      page.find('h2', text: name)
+  def title_check
+    if page.has_xpath?('//h1')
+      find('h1').text
+    elsif page.has_xpath?('//h2')
+      find('h2').text
     else
-      page.find('h1', text: name)      
+      'no title'
     end
   end
 
