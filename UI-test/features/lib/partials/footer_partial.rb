@@ -9,13 +9,19 @@ class FooterPartial
     visit('/')
   end
 
-  # def click_link(name)
-  #   click_link(name)
-  # end
-  #
-  # def click_code_of_conduct
-  #   click_link(CODE_OF_CONDUCT_LINK)
-  # end
+  def click_chosen_link(name)
+    if name == 'facebook'
+      find(:css, 'i.fa.fa-facebook.fa-stack-1x.fa-inverse').click
+    elsif name == 'github'
+      find(:css, 'i.fa.fa-slack.fa-stack-1x.fa-inverse').click
+    elsif name == 'twitter'
+      find(:css, 'i.fa.fa-twitter.fa-stack-1x.fa-inverse').click
+    elsif name == 'slack'
+      find(:css, 'i.fa.fa-slack.fa-stack-1x.fa-inverse').click
+    else
+      page.find('footer', text: 'Tutorials').click_link(name)
+    end
+  end
 
 
 
