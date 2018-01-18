@@ -9,6 +9,8 @@ class JobPost
   JOB_COMPANY_ID = 'job_company' unless const_defined?(:JOB_COMPANY_ID)
   JOB_LOCATION_ID = 'job_location' unless const_defined?(:JOB_LOCATION_ID)
   JOB_DESCRIPTION_ID = 'job_description' unless const_defined?(:JOB_DESCRIPTION_ID)
+  JOB_WEBPAGE_ID = 'job_link_to_job' unless const_defined?(:JOB_WEBPAGE_ID)
+  JOB_DATE_DAY_ID = 'job_expiry_date_3i' unless const_defined?(:JOB_DATE_DAY_ID)
 
 
   def visit_homepage
@@ -53,6 +55,17 @@ class JobPost
   def job_description_form_details
     find_field(JOB_DESCRIPTION_ID)
     fill_in(JOB_DESCRIPTION_ID, with: 'This is a job description')
+  end
+
+  def job_webpage_form_details
+    find_field(JOB_WEBPAGE_ID)
+    fill_in(JOB_WEBPAGE_ID, with: 'https://indeed.co.uk')
+  end
+
+  def job_day_sel_form
+    # find_field(JOB_DATE_DAY_ID)
+    find(JOB_DATE_DAY_ID).click
+    select('3', from: JOB_DATE_DAY_ID)
   end
 
 

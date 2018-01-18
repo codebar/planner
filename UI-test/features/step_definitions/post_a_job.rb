@@ -24,6 +24,8 @@ Then("I should be able to input details of the job") do
   job_post.job_company_form_details
   job_post.job_location_form_details
   job_post.job_description_form_details
+  job_post.job_webpage_form_details
+  job_post.job_day_sel_form
   sleep 2
   # pending # Write code here that turns the phrase above into concrete actions
 end
