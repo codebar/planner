@@ -7,6 +7,7 @@ class DashBoardPage
   DASHBOARD_TITLE = 'Dashboard' unless const_defined?(:DASHBOARD_TITLE)
   COURSE_LINK = 'Course' unless const_defined?(:COURSE_LINK)
   MEETING_LINK = 'Meeting' unless const_defined?(:MEETING_LINK)
+  EVENT_LINK = 'Event' unless const_defined?(:EVENT_LINK)
 
   def visit_dashboard_page
     visit(VISIT_DASHBOARD_PAGE)
@@ -31,6 +32,10 @@ class DashBoardPage
 
   def click_meeting
     click_link(MEETING_LINK)
+  end
+
+  def click_event
+    click_link(EVENT_LINK)
   end
 
 
