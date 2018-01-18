@@ -5,7 +5,7 @@ class NavbarPartial
 
   NAVBAR_CSS = 'nav.top-bar' unless const_defined?(:NAVBAR_CSS)
   ASIDE_CSS = 'aside.left-off-canvas-menu' unless const_defined?(:ASIDE_CSS)
-
+  TEXT_IN_NAVBAR = 'Blog' unless const_defined?(:TEXT_IN_NAVBAR)
 
 
   def click_navbar_link(name)
@@ -17,7 +17,7 @@ class NavbarPartial
   end
 
   def click_homepage_image
-    page.find(NAVBAR_CSS, text: 'Blog').find('img').click
+    page.find(NAVBAR_CSS, text: TEXT_IN_NAVBAR).find('img').click
   end
 
 end
