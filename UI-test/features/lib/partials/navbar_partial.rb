@@ -16,4 +16,8 @@ class NavbarPartial
     page.find(ASIDE_CSS, text: name).click_link(name)
   end
 
+  def click_homepage_image
+    page.find(NAVBAR_CSS, text: 'Blog').find('img').click
+  end
+
 end
