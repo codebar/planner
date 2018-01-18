@@ -3,6 +3,8 @@ Given("I am on a page") do
   sleep 5
   coaches_page.find_coaches_title
   sleep 5
+  coaches_page.click_teaching_guide_link
+  sleep 5
 end
 
 When("I click link") do
