@@ -1,12 +1,16 @@
 
 Given("I am on a page") do
-  homepage.visit_homepage
+  homepage.visit_home_page
 end
 
 When("I click link") do
-  footer.click_chosen_link('Code of conduct')
+
+  navbar.click_navbar_link('Tutorials')
+
 end
 
 Then("It works") do
-  expect( title_search.title_check ).to eq 'Code of conduct'
+
+  tutorials.click_tutorial_link('Getting started guide for students')
+  expect(title_search.title_check).to eq('Setting up your computer for codebar')
 end

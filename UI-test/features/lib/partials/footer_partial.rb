@@ -9,7 +9,7 @@ class FooterPartial
   SLACK_LINK_CSS = 'i.fa.fa-slack.fa-stack-1x.fa-inverse' unless const_defined?(:SLACK_LINK_CSS)
 
 
-  def click_chosen_link(name)
+  def click_footer_link(name)
     if name == 'facebook'
       find(:css, FACEBOOK_LINK_CSS).click
     elsif name == 'github'
@@ -19,7 +19,7 @@ class FooterPartial
     elsif name == 'slack'
       find(:css, SLACK_LINK_CSS).click
     else
-      page.find('footer', text: 'Tutorials').click_link(name)
+      page.find('footer', text: name).click_link(name)
     end
   end
 
