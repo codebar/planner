@@ -4,7 +4,7 @@ class NavbarPartial
   include Capybara::DSL
 
   NAVBAR_CSS = 'nav.top-bar' unless const_defined?(:NAVBAR_CSS)
-  ASIDE_CSS = 'nav.top-bar' unless const_defined?(:ASIDE_CSS)
+  ASIDE_CSS = 'aside.left-off-canvas-menu' unless const_defined?(:ASIDE_CSS)
 
 
 
