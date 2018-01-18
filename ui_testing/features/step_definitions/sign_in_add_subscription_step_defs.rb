@@ -3,12 +3,12 @@ Given("I am on the dashboard page") do
   sign_in_page.click_sign_in
   sign_in_page.fill_in_sign_in_username
   sign_in_page.fill_in_sign_in_password
-  sleep 5
   sign_in_page.click_sign_in_button
 end
 
 And("I click on the edit link next to subscriptions.") do
-
+  sign_in_page.click_edit_button_in_dashboard
+  sleep 5
 end
 
 When("I click on any chapter student subscription") do

@@ -26,6 +26,14 @@ class SignedIn
     click_button("Sign in")
   end
 
+  def find_edit_button_in_dashboard
+    find('a', :text => "Edit")
+  end
+
+  def click_edit_button_in_dashboard
+    find_edit_button_in_dashboard.click
+  end
+
 
 
 end
