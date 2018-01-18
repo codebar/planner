@@ -1,22 +1,25 @@
 Given("I am on a page") do
   homepage.visit_home_page
-  # sleep 4
+
   sign_in.sign_in_link
-  # sleep 4
+
   sign_in.enter_github_username
-  # sleep 4
+
   sign_in.enter_github_psswrd
-  # sleep 4
-  # dashboard_page.visit_dashboard_page
-  # sleep 4
+
   sign_in.confirm_github_details
-  # sleep 4
-  # dashboard_page.click_name_link
-  # sleep 4
-  dashboard_page.find_dashboard_title
-  # sleep 4
-  dashboard_page.click_event
+
   sleep 4
+  events_someslug_page.visit_events_slug_page
+  sleep 4
+  events_someslug_page.click_cancel_spot
+  sleep 4
+  # events_someslug_page.click_attend_coach
+  # sleep 4
+  # events_someslug_page.click_rsvp_coach
+  # sleep 4
+  # events_someslug_page.find_alert_box_attending
+  # sleep 4
 end
 
 When("I click link") do

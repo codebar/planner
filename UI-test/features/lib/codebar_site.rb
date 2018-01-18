@@ -7,6 +7,7 @@ require_relative './pages/coaches_page'
 require_relative './pages/sponsors_page'
 require_relative './pages/events_page'
 require_relative './pages/dashboard_page'
+require_relative './pages/events_someslug_page'
 require_relative './profile_info/signin_page'
 require_relative './profile_info/update_profile'
 
@@ -58,6 +59,10 @@ module CodebarSite
 
   def dashboard_page
     DashBoardPage.new
+  end
+
+  def events_someslug_page
+    EventsSomeSlugPage.new
   end
 
 end
