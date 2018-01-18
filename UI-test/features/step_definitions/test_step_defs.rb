@@ -12,8 +12,10 @@ Given("I am on a page") do
   sign_in.confirm_github_details
   # sleep 4
   # dashboard_page.click_name_link
-  sleep 4
+  # sleep 4
   dashboard_page.find_dashboard_title
+  # sleep 4
+  dashboard_page.click_meeting
   sleep 4
 end
 
