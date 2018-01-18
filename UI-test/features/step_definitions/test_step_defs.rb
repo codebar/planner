@@ -9,12 +9,10 @@ Given("I am on a page") do
 
   sign_in.confirm_github_details
 
+  invitations_page.visit_invitations_page
   sleep 4
-  events_someslug_page.visit_events_slug_page
+  invitations_page.click_attended
   sleep 4
-  events_someslug_page.click_cancel_spot
-  sleep 4
-  # events_someslug_page.click_attend_coach
   # sleep 4
   # events_someslug_page.click_rsvp_coach
   # sleep 4

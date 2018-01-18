@@ -7,9 +7,9 @@ class EventsSomeSlugPage
   ATTEND_COACH_LINK = 'Attend as a coach' unless const_defined?(:ATTEND_COACH_LINK)
   RSVP_AS_STUDENT = 'RSVP as a student' unless const_defined?(:RSVP_AS_STUDENT)
   RSVP_AS_COACH = 'RSVP as a coach' unless const_defined?(:RSVP_AS_COACH)
-  ALERT_BOX_ATTENDING = 'Your spot has been confirmed for Event! We look forward to seeing you there.'
-  ALERT_BOX_NOT_ATTENDING = "We are so sad you can't make it, but thanks for letting us know"
-  CANCEL_MY_SPOT = 'Cancel my spot'
+  ALERT_BOX_ATTENDING = 'Your spot has been confirmed for Event! We look forward to seeing you there.' unless const_defined?(:ALERT_BOX_ATTENDING)
+  ALERT_BOX_NOT_ATTENDING = "We are so sad you can't make it, but thanks for letting us know" unless const_defined?(:ALERT_BOX_NOT_ATTENDING)
+  CANCEL_MY_SPOT = 'Cancel my spot' unless const_defined?(:CANCEL_MY_SPOT)
 
   def visit_events_slug_page
     visit(EVENTS_SOME_SLUG_PAGE)
