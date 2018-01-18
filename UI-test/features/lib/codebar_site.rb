@@ -21,4 +21,8 @@ module CodebarSite
     UpdateProfile.new
   end
 
+  def github_controller
+    GitLogout.new
+  end
+
 end
