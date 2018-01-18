@@ -1,10 +1,9 @@
 Given("I am on a page") do
-  coaches_page.visit_coaches_page
-  sleep 5
-  coaches_page.find_coaches_title
-  sleep 5
-  coaches_page.click_teaching_guide_link
-  sleep 5
+  sponsors_page.visit_sponsors_page
+  sleep 4
+  sponsors_page.find_sponsors_title
+  sleep 4
+
 end
 
 When("I click link") do
