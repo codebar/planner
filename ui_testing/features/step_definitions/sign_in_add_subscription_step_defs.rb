@@ -3,7 +3,6 @@ Given("I am on the dashboard page") do
   sign_in_page.click_sign_in
   sign_in_page.fill_in_sign_in_username
   sign_in_page.fill_in_sign_in_password
-  sleep 5
   sign_in_page.click_sign_in_button
 end
 

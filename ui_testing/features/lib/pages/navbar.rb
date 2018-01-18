@@ -3,12 +3,22 @@ require 'capybara/dsl'
 class NavBar
   include Capybara::DSL
 
+  HOMEPAGE_URL = '/'
+  LOGO_XPATH = ".//a[@href='/']"
+  BLOG_XPATH = ".//a[@href='https://medium.com/@codebar']"
+  EVENTS_TEXT = 'Events'
+  TUTORIALS_TEXT = 'Tutorials'
+  COACHES_TEXT = 'Coaches'
+  SPONSORS_TEXT = 'Sponsors'
+  JOBS_TEXT = 'Jobs'
+  DONATE_TEXT = 'Donate'
+
   def visit_home_page
-    visit('/')
+    visit(HOMEPAGE_URL)
   end
 
   def find_codebar_logo
-    find(:xpath, ".//a[@href='/']")
+    find(:xpath, LOGO_XPATH)
   end
 
   def click_codebar_logo
@@ -16,7 +26,7 @@ class NavBar
   end
 
   def find_blog_link
-    find(:xpath, ".//a[@href='https://medium.com/@codebar']")
+    find(:xpath, BLOG_XPATH)
   end
 
   def click_blog_link
@@ -24,7 +34,7 @@ class NavBar
   end
 
   def find_event_link
-    find('span', text: 'Events')
+    find('span', text: EVENTS_TEXT)
   end
 
   def click_event_link
@@ -32,7 +42,7 @@ class NavBar
   end
 
   def find_tutorials_link
-    find('span', text: 'Tutorials')
+    find('span', text: TUTORIALS_TEXT)
   end
 
   def click_tutorials_link
@@ -40,7 +50,7 @@ class NavBar
   end
 
   def find_coaches_link
-    find('span', text: 'Coaches')
+    find('span', text: COACHES_TEXT)
   end
 
   def click_coaches_link
@@ -48,7 +58,7 @@ class NavBar
   end
 
   def find_sponsors_link
-    find('span', text: 'Sponsors')
+    find('span', text: SPONSORS_TEXT)
   end
 
   def click_sponsors_link
@@ -56,7 +66,7 @@ class NavBar
   end
 
   def find_jobs_link
-    find('span', text: 'Jobs')
+    find('span', text: JOBS_TEXT)
   end
 
   def click_jobs_link
@@ -64,7 +74,7 @@ class NavBar
   end
 
   def find_donate_link
-    find('span', text: 'Donate')
+    find('span', text: DONATE_TEXT)
   end
 
   def click_donate_link
