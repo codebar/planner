@@ -41,7 +41,7 @@ class GitHub
   end
 
   def find_authorization
-    find_button(AUTHORIZATION_BTN_ID).visible?
+    has_button?(AUTHORIZATION_BTN_ID)
   end
 
   def click_authorization
