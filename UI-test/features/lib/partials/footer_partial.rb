@@ -3,30 +3,24 @@ require 'capybara'
 class FooterPartial
   include Capybara::DSL
 
-  CODE_OF_CONDUCT_LINK = 'Code of conduct' unless const_defined?(:CODE_OF_CONDUCT_LINK)
+  FACEBOOK_LINK_CSS = 'i.fa.fa-facebook.fa-stack-1x.fa-inverse' unless const_defined?(:FACEBOOK_LINK_CSS)
+  GITHUB_LINK_CSS = 'i.fa.fa-github.fa-stack-1x.fa-inverse' unless const_defined?(:GITHUB_LINK_CSS)
+  TWITTER_LINK_CSS = 'i.fa.fa-twitter.fa-stack-1x.fa-inverse' unless const_defined?(:TWITTER_LINK_CSS)
+  SLACK_LINK_CSS = 'i.fa.fa-slack.fa-stack-1x.fa-inverse' unless const_defined?(:SLACK_LINK_CSS)
 
-  def visit_homepage
-    visit('/')
-  end
 
   def click_chosen_link(name)
     if name == 'facebook'
-      find(:css, 'i.fa.fa-facebook.fa-stack-1x.fa-inverse').click
+      find(:css, FACEBOOK_LINK_CSS).click
     elsif name == 'github'
-      find(:css, 'i.fa.fa-slack.fa-stack-1x.fa-inverse').click
+      find(:css, GITHUB_LINK_CSS).click
     elsif name == 'twitter'
-      find(:css, 'i.fa.fa-twitter.fa-stack-1x.fa-inverse').click
+      find(:css, TWITTER_LINK_CSS).click
     elsif name == 'slack'
-      find(:css, 'i.fa.fa-slack.fa-stack-1x.fa-inverse').click
+      find(:css, SLACK_LINK_CSS).click
     else
       page.find('footer', text: 'Tutorials').click_link(name)
     end
-  end
-
-
-
-  def title_check(name)
-    page.find('div', text: name)
   end
 
 end

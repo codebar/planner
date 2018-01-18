@@ -1,6 +1,6 @@
 
 Given("I am on a page") do
-  footer.visit_homepage
+  homepage.visit_homepage
 end
 
 When("I click link") do
