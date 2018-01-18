@@ -14,4 +14,8 @@ class NewMember
   def find_dashboard
     find('h2', text: 'Dashboard')
   end
+
+  def find_profile
+    find_link('Menu')
+  end
 end

@@ -5,7 +5,7 @@ Feature: Sign out
     When I sign up as a student
     And I accept criterias
     And I login to GitHub
-    Then I will have signed up
+    Then I will have signed up as a student
 
   Scenario: as a user I want to be able to sign out
     Given I am on the Github page

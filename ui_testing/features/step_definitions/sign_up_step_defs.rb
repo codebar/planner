@@ -12,7 +12,7 @@ And("I login to GitHub") do
   github.click_submit
 end
 
-Then("I will have signed up") do
+Then("I will have signed up as a student") do
   if github.find_authorization
     github.click_authorization
   end
@@ -22,6 +22,13 @@ end
 When("I sign up as a coach") do
   homepage.click_sign_up_coach
   newmember.click_sign_up_coach
+end
+
+Then("I will have signed up as a coach") do
+  if github.find_authorization
+    github.click_authorization
+  end
+  newmember.find_profile
 end
 
 When("I host a workshop") do
