@@ -15,11 +15,11 @@ class SignedIn
   end
 
   def fill_in_sign_in_username
-    fill_in(USERNAME_FIELD_ID, :with => "nnoor@spartaglobal.com")
+    fill_in(USERNAME_FIELD_ID, :with => "faker321")
   end
 
   def fill_in_sign_in_password
-    fill_in(PASSWORD_FIELD_ID, :with => "iPhone73")
+    fill_in(PASSWORD_FIELD_ID, :with => "test123")
   end
 
   def click_sign_in_button
