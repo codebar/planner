@@ -7,6 +7,7 @@ class SignedIn
   PASSWORD_FIELD_ID = "password"
   AUTHORISE_CODEBAR_ID = "js-oauth-authorize-btn"
   BARCELONA_STUDENT_SUBSCRIPTION_ID = "barcelona-students"
+  MENU_TAB_ID = "profile"
 
   def find_sign_in
     find('a', :text => "Sign in")
@@ -43,6 +44,14 @@ class SignedIn
 
   def get_student_success_subscription_message
     find('div.alert-box div').text
+  end
+
+  def click_menu_tab
+    click_link(MENU_TAB_ID)
+  end
+
+  def click_sign_out_link
+    find('a', :text => "Sign out").click
   end
 
 
