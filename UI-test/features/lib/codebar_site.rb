@@ -9,6 +9,7 @@ require_relative './pages/events_page'
 require_relative './pages/dashboard_page'
 require_relative './pages/events_someslug_page'
 require_relative './pages/invitations_page'
+require_relative './pages/profile_page'
 require_relative './profile_info/signin_page'
 require_relative './profile_info/update_profile'
 
@@ -68,6 +69,10 @@ module CodebarSite
 
   def invitations_page
     InvitationsPage.new
+  end
+
+  def profile_page
+    ProfilePage.new
   end
 
 end
