@@ -1,3 +1,9 @@
+Given("I start at the dashboard page") do
+  navbar.visit_home_page
+  sign_in_page.click_menu_tab
+  sign_in_page.click_dashboard_in_menu_tab
+end
+
 When("I click on any chapter coach subscription") do
   sign_in_page.click_barcelona_coach_subscription
 end

@@ -58,6 +58,10 @@ class SignedIn
     find('a', :text => "Sign out").click
   end
 
+  def click_dashboard_in_menu_tab
+    find('a', :text => "My Dashboard").click
+  end
+
 
 
 end
