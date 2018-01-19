@@ -1,6 +1,6 @@
 require 'capybara'
 
-class TutorialsPage
+class TutorialsIndexPage
   include Capybara::DSL
 
   def click_tutorial_link(name)

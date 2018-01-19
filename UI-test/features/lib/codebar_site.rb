@@ -46,8 +46,8 @@ module CodebarSite
     StudentGuidePage.new
   end
 
-  def tutorials
-    TutorialsPage.new
+  def tutorials_index
+    TutorialsIndexPage.new
   end
 
 end
