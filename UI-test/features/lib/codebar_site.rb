@@ -11,6 +11,7 @@ require_relative './pages/events_page'
 require_relative './pages/dashboard_page'
 require_relative './pages/events_someslug_page'
 require_relative './pages/invitations_page'
+require_relative './pages/profile_page'
 require_relative './profile_info/signin_page'
 require_relative './profile_info/update_profile'
 require_relative './jobs/post_a_job'
@@ -86,12 +87,18 @@ module CodebarSite
     InvitationsPage.new
   end
 
+
+  def profile_page
+    ProfilePage.new
+  end
+  
   def manage_subs
     ManageSubs.new
   end
 
   def tutorials
     Tutorials.new
+
   end
 
 end
