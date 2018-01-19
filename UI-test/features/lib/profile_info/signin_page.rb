@@ -20,12 +20,12 @@ class SignInPage
 
   def enter_github_username
     find_field(GITHUB_USER_ID)
-    fill_in(GITHUB_USER_ID, with: 'jdonaldson@spartaglobal.com')
+    fill_in(GITHUB_USER_ID, with: 'youngjeezy')
   end
 
   def enter_github_psswrd
     find_field(GITHUB_PSSWRD_ID)
-    fill_in(GITHUB_PSSWRD_ID, with: '93bh64ej')
+    fill_in(GITHUB_PSSWRD_ID, with: 'abc1234')
   end
 
   def confirm_github_details
