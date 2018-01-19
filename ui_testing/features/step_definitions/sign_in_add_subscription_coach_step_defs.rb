@@ -1,6 +1,5 @@
 When("I click on any chapter coach subscription") do
   sign_in_page.click_barcelona_coach_subscription
-  sleep 5
 end
 
 Then("I should see the appropriate success message informing the user has subscribed or unsubscriped as a coach") do
