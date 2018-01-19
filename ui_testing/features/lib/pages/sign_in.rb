@@ -38,11 +38,15 @@ class SignedIn
     find('#barcelona-students').click
   end
 
+  def click_barcelona_coach_subscription
+    find('#barcelona-coaches').click
+  end
+
   def click_edit_button_in_dashboard
     click_link("Edit")
   end
 
-  def get_student_success_subscription_message
+  def get_success_subscription_message
     find('div.alert-box div').text
   end
 

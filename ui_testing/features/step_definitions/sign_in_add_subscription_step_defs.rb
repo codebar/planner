@@ -20,6 +20,6 @@ When("I click on any chapter student subscription") do
 end
 
 Then("I should see the appropriate success message informing the user has subscribed as a student") do
-  expect(sign_in_page.get_student_success_subscription_message).to include("You have subscribed to Barcelona's Students group").or include("You have unsubscribed from Barcelona's Students group")
+  expect(sign_in_page.get_success_subscription_message).to include("You have subscribed to Barcelona's Students group").or include("You have unsubscribed from Barcelona's Students group")
   sleep 7
 end
