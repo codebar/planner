@@ -7,6 +7,7 @@ require_relative './pages/events_someslug_page'
 require_relative './pages/github_logout_page'
 require_relative './pages/homepage'
 require_relative './pages/invitations_page'
+require_relative './pages/profile_page'
 require_relative './pages/new_job_page'
 require_relative './pages/sign_in_page'
 require_relative './pages/sponsors_page'
@@ -22,7 +23,7 @@ require_relative './partials/title_search'
 
 
 module CodebarSite
-  
+
   # pages
   def coaches_page
     CoachesPage.new
@@ -58,6 +59,10 @@ module CodebarSite
 
   def new_job_page
     NewJobPage.new
+  end
+
+  def profile_page
+    ProfilePage.new
   end
 
   def sign_in_page
