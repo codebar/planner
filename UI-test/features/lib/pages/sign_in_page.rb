@@ -25,7 +25,7 @@ class SignInPage
 
   def enter_github_psswrd
     find_field(GITHUB_PSSWRD_ID)
-    fill_in(GITHUB_PSSWRD_ID, with: 'abc4567')
+    fill_in(GITHUB_PSSWRD_ID, with: 'abc1234')
   end
 
   def confirm_github_details
