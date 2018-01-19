@@ -10,8 +10,8 @@ class JobPost
   JOB_LOCATION_ID = 'job_location' unless const_defined?(:JOB_LOCATION_ID)
   JOB_DESCRIPTION_ID = 'job_description' unless const_defined?(:JOB_DESCRIPTION_ID)
   JOB_WEBPAGE_ID = 'job_link_to_job' unless const_defined?(:JOB_WEBPAGE_ID)
-  JOB_DATE_DAY_ID = 'job_expiry_date_3i' unless const_defined?(:JOB_DATE_DAY_ID)
-
+  SUBMIT_JOB_BUTTON = 'Submit' unless const_defined?(:SUBMIT_JOB_BUTTON)
+  JOB_POST_SUCCESS = 'Job submitted.' unless const_defined?(:JOB_POST_SUCCESS)
 
   def visit_homepage
     visit('localhost:3000/')
@@ -63,12 +63,20 @@ class JobPost
   end
 
   def job_day_sel_form
-    # find_field(JOB_DATE_DAY_ID)
-    find(JOB_DATE_DAY_ID).click
-    select('3', from: JOB_DATE_DAY_ID)
+    find_field(JOB_DATE_DAY_ID).click
+    select(5, :from => JOB_DATE_DAY_ID)
   end
 
+  def click_submit_button
+    find_button(SUBMIT_JOB_BUTTON).click
+  end
 
+  def click_submit_link
+    click_link(SUBMIT_JOB_BUTTON)
+  end
 
+  def job_post_success
+    find('div', text: JOB_POST_SUCCESS, exact: true).visible?
+  end
 
 end
