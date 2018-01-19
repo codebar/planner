@@ -8,11 +8,6 @@ class SponsorsPage
 
   SPONSORS_TITLE = 'Sponsors' unless const_defined?(:SPONSORS_TITLE)
 
-
-  def visit_hompage_page
-    visit(HOMEPAGE)
-  end
-
   def visit_sponsors_page
     visit(VISIT_SPONSORS_PAGE)
   end

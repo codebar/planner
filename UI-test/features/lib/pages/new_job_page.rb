@@ -13,10 +13,6 @@ class NewJobPage
   SUBMIT_JOB_BUTTON = 'Submit' unless const_defined?(:SUBMIT_JOB_BUTTON)
   JOB_POST_SUCCESS = 'Job submitted.' unless const_defined?(:JOB_POST_SUCCESS)
 
-  def visit_homepage
-    visit('localhost:3000/')
-  end
-
   def open_sidebar_menu
     click_link(SIDEBAR_MENU)
   end

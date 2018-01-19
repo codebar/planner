@@ -16,4 +16,11 @@ class GithubLogoutPage
   def click_logout
     find_button(SIGN_OUT_LINK).click
   end
+
+  def github_logout_func
+    go_to_github
+    header_github
+    click_logout
+  end
+  
 end

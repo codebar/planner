@@ -10,10 +10,6 @@ class SignInPage
   SIDEBAR_MENU = 'Menu' unless const_defined?(:SIDEBAR_MENU)
   SIGN_OUT_LINK = 'Sign out' unless const_defined?(:SIGN_OUT_LINK)
 
-  def visit_homepage
-    visit('localhost:3000')
-  end
-
   def sign_in_link
     click_link(SIGN_IN_LINK)
   end
@@ -25,7 +21,7 @@ class SignInPage
 
   def enter_github_psswrd
     find_field(GITHUB_PSSWRD_ID)
-    fill_in(GITHUB_PSSWRD_ID, with: 'abc1234')
+    fill_in(GITHUB_PSSWRD_ID, with: 'abc4567')
   end
 
   def confirm_github_details
@@ -42,6 +38,14 @@ class SignInPage
 
   def sign_out
     click_link(SIGN_OUT_LINK)
+  end
+
+  def sign_in_func
+    sign_in_link
+    enter_github_username
+    enter_github_psswrd
+    confirm_github_details
+    confirm_redirection_dashboard
   end
 
 end
