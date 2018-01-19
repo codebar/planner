@@ -1,6 +1,6 @@
 require 'capybara'
 
-class GitLogout
+class GithubLogoutPage
   include Capybara::DSL
 
   SIGN_OUT_LINK = 'Sign out' unless const_defined?(:SIGN_OUT_LINK)

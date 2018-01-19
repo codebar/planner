@@ -5,16 +5,22 @@ require_relative './pages/homepage'
 require_relative './pages/code_of_conduct_page'
 require_relative './pages/student_guide_page'
 require_relative './pages/tutorials_page'
+require_relative './pages/tutorials_index_page'
 require_relative './pages/coaches_page'
 require_relative './pages/sponsors_page'
 require_relative './pages/events_page'
 require_relative './pages/dashboard_page'
 require_relative './pages/events_someslug_page'
 require_relative './pages/invitations_page'
-require_relative './profile_info/signin_page'
-require_relative './profile_info/update_profile'
-require_relative './jobs/post_a_job'
-require_relative './tutorials/tutorials_pages'
+require_relative './pages/subscriptions_page'
+require_relative './pages/new_job_page'
+require_relative './pages/sign_in_page'
+require_relative './pages/github_logout_page'
+
+# require_relative './profile_info/signin_page'
+# require_relative './profile_info/update_profile'
+# require_relative './jobs/post_a_job'
+# require_relative './tutorials/tutorials_pages'
 
 module CodebarSite
 
@@ -30,7 +36,7 @@ module CodebarSite
     TitleSearch.new
   end
 
-  def sign_in
+  def sign_in_page
     SignInPage.new
   end
 
@@ -38,8 +44,8 @@ module CodebarSite
     UpdateProfile.new
   end
 
-  def github_controller
-    GitLogout.new
+  def github_logout_page
+    GithubLogoutPage.new
   end
 
   def homepage
@@ -54,12 +60,12 @@ module CodebarSite
     StudentGuidePage.new
   end
 
-  def tutorials_index
+  def tutorials_index_page
     TutorialsIndexPage.new
   end
 
-  def job_post
-    JobPost.new
+  def new_job_page
+    NewJobPage.new
   end
 
   def coaches_page
@@ -86,12 +92,12 @@ module CodebarSite
     InvitationsPage.new
   end
 
-  def manage_subs
-    ManageSubs.new
+  def subscriptions_page
+    SubscriptionsPage.new
   end
 
-  def tutorials
-    Tutorials.new
+  def tutorials_page
+    TutorialsPage.new
   end
 
 end

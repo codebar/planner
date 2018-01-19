@@ -1,6 +1,6 @@
 require 'capybara'
 
-class ManageSubs
+class SubscriptionsPage
   include Capybara::DSL
 
   SIDEBAR_MENU = 'Menu' unless const_defined?(:SIDEBAR_MENU)
