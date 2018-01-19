@@ -1,6 +1,6 @@
-Feature: Footer Links
+Feature: Test
 
-  Scenario: If I click a link it works
+  Scenario: test
 
     Given I am on a page
     When I click link
