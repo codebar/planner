@@ -1,8 +1,10 @@
 require_relative './partials/navbar_partial'
 require_relative './partials/footer_partial'
+require_relative './partials/title_search'
 require_relative './pages/homepage'
 require_relative './pages/code_of_conduct_page'
 require_relative './pages/student_guide_page'
+require_relative './pages/tutorials_page'
 require_relative './pages/coaches_page'
 require_relative './pages/sponsors_page'
 require_relative './pages/events_page'
@@ -16,13 +18,17 @@ require_relative './tutorials/tutorials_pages'
 
 module CodebarSite
 
-  # def navbar
-  #
-  # end
-  #
-  # def footer
-  #   FooterPartial.new
-  # end
+  def navbar
+    NavbarPartial.new
+  end
+
+  def footer
+    FooterPartial.new
+  end
+
+  def title_search
+    TitleSearch.new
+  end
 
   def sign_in
     SignInPage.new
@@ -46,6 +52,10 @@ module CodebarSite
 
   def student_guide_page
     StudentGuidePage.new
+  end
+
+  def tutorials_index
+    TutorialsIndexPage.new
   end
 
   def job_post
@@ -74,6 +84,8 @@ module CodebarSite
 
   def invitations_page
     InvitationsPage.new
+  end
+
   def manage_subs
     ManageSubs.new
   end
