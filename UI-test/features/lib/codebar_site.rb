@@ -9,6 +9,7 @@ require_relative './pages/events_page'
 require_relative './profile_info/signin_page'
 require_relative './profile_info/update_profile'
 require_relative './jobs/post_a_job'
+require_relative './tutorials/tutorials_pages'
 
 module CodebarSite
 
@@ -47,7 +48,7 @@ module CodebarSite
   def job_post
     JobPost.new
   end
-  
+
   def coaches_page
     CoachesPage.new
   end
@@ -58,6 +59,14 @@ module CodebarSite
 
   def events_page
     EventsPage.new
+  end
+
+  def manage_subs
+    ManageSubs.new
+  end
+
+  def tutorials
+    Tutorials.new
   end
 
 end
