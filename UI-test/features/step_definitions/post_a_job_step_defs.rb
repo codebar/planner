@@ -28,5 +28,4 @@ end
 
 And("I should be notifitief of my submission for a job posting") do
   new_job_page.job_post_success
-  sleep 2
 end
