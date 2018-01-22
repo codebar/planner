@@ -62,6 +62,24 @@ class SignedIn
     find('a', :text => "My Dashboard").click
   end
 
+  def click_random_workshop
+    find('a', :text => 'Android Development Workshop').click
+  end
+
+  def click_attend_workshop_as_student
+    find('a', :text => 'Attend as a student').click
+  end
+
+  def click_rsvp_workshop_as_student
+    find('a', :text => 'RSVP as a student').click
+  end
+
+  def click_cancel_my_spot
+    accept_alert do
+      find('a', :text => 'Cancel my spot').click
+    end
+  end
+
 
 
 end
