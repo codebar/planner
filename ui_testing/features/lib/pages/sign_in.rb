@@ -33,13 +33,13 @@ class SignedIn
     click_button("Sign in")
   end
 
-  def click_barcelona_student_subscription
+  def click_london_student_subscription
     # click_on("Subscribe")
-    find('#barcelona-students').click
+    find('#london-students').click
   end
 
-  def click_barcelona_coach_subscription
-    find('#barcelona-coaches').click
+  def click_london_coach_subscription
+    find('#london-coaches').click
   end
 
   def click_edit_button_in_dashboard
@@ -61,43 +61,6 @@ class SignedIn
   def click_dashboard_in_menu_tab
     find('a', :text => "My Dashboard").click
   end
-
-  def click_workshop_event
-    find('a', :text => 'Android Development Workshop').click
-  end
-
-  def find_attend_as_student_for_workshop
-    find('a', :text => 'Attend as a student')
-  end
-
-  def click_attend_as_student_for_workshop
-    find_attend_as_student_for_workshop.click
-  end
-
-  def find_rsvp_as_student_workshop
-    find('a', :text => 'RSVP as a student')
-  end
-
-  def click_rsvp_as_student_workshop
-    find_rsvp_as_student_workshop.click
-  end
-
-  def find_cancel_my_spot_for_workshop
-    find('a', :text => 'Cancel my spot')
-  end
-
-  def click_cancel_my_spot_for_workshop
-    # find_cancel_my_spot_for_workshop.click
-    accept_alert do
-      find_cancel_my_spot_for_workshop.click
-    end
-  end
-
-  # def find_alert
-  #   accept_alert do
-  #     click_link('link that triggers appearance of system modal')
-  #   end
-  # end
 
 
 
