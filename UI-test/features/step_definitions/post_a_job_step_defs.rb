@@ -28,4 +28,6 @@ end
 
 And("I should be notifitief of my submission for a job posting") do
   new_job_page.job_post_success
+  sign_in_page.sign_out_func
+  github_logout_page.github_logout_func
 end
