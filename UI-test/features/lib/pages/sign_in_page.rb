@@ -48,4 +48,9 @@ class SignInPage
     confirm_redirection_dashboard
   end
 
+  def sign_out_func
+    open_sidebar_menu
+    sign_out
+  end
+
 end
