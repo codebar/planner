@@ -10,13 +10,13 @@ class FooterPartial
 
 
   def click_footer_link(name)
-    if name == 'facebook'
+    if name == 'Facebook'
       find(:css, FACEBOOK_LINK_CSS).click
-    elsif name == 'github'
+    elsif name == 'Github'
       find(:css, GITHUB_LINK_CSS).click
-    elsif name == 'twitter'
+    elsif name == 'Twitter'
       find(:css, TWITTER_LINK_CSS).click
-    elsif name == 'slack'
+    elsif name == 'Slack'
       find(:css, SLACK_LINK_CSS).click
     else
       page.find('footer', text: name).click_link(name)
