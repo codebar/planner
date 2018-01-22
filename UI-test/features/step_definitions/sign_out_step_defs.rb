@@ -19,6 +19,7 @@ end
 
 And("I should be signed out of my account") do
   navbar.click_sign_in
+  sleep 4
   url = URI.parse(current_url)
-  puts url
+  expect(url).to eq URI.parse(sign_in_page.sign_in_page_link)
 end
