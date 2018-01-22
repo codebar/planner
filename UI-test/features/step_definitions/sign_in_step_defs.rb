@@ -14,4 +14,6 @@ end
 
 Then("I am redirected to my profile page which has a button to the menu") do
   sign_in_page.confirm_redirection_dashboard
+  sign_in_page.sign_out_func
+  github_logout_page.github_logout_func
 end

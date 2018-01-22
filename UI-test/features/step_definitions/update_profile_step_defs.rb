@@ -18,4 +18,6 @@ end
 
 Then("the changes are reflected on my profile page") do
   update_profile_page.confirm_details_updated
+  sign_in_page.sign_out_func
+  github_logout_page.github_logout_func
 end
