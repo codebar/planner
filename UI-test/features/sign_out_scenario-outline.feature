@@ -4,5 +4,5 @@ Feature: Signing out of Codebar
 
   Given that I am already signed in
   When I click the sign out button
-  Then I should be signed out of my account
-  And be redirected to the hompage
+  Then be redirected to the hompage
+  And I should be signed out of my account
