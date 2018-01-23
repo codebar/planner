@@ -6,7 +6,7 @@ class SponsorDecorator < Draper::Decorator
   end
 
   def member_contact_details
-    contacts.map do |member| 
+    contacts.map do |member|
       h.link_to(member.full_name, h.admin_member_path(member.id))
     end
   end

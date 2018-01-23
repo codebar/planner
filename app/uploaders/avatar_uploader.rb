@@ -28,7 +28,7 @@ class AvatarUploader < CarrierWave::Uploader::Base
   #
 
   version :thumb do
-    process :resize_to_fit => [178, 65]
+    process resize_to_fit: [178, 65]
   end
 
   def extension_white_list

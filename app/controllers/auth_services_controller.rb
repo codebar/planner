@@ -25,7 +25,7 @@ class AuthServicesController < ApplicationController
         session[:oauth_token]        = omnihash[:credentials][:token]
         session[:oauth_token_secret] = omnihash[:credentials][:secret]
 
-        finish_registration or redirect_to referer_or_dashboard_path
+        finish_registration || redirect_to(referer_or_dashboard_path)
       else
         member = Member.find_by_email(omnihash[:info][:email])
         member = Member.new(email: (omnihash[:info][:email])) if member.nil?
@@ -34,10 +34,10 @@ class AuthServicesController < ApplicationController
         member.surname ||= omnihash[:info][:name].split(' ').drop(1).join(' ') rescue('')
         member.twitter ||= omnihash[:info][:nickname]
 
-        member_service = member.auth_services.build({
+        member_service = member.auth_services.build(
                                                       provider: omnihash[:provider],
           uid: omnihash[:uid]
-                                                    })
+                                                    )
 
         member.save!
 
@@ -55,7 +55,7 @@ class AuthServicesController < ApplicationController
 
   def destroy
     service = current_user.services.find(params[:id])
-    if service.respond_to?(:destroy) and service.destroy
+    if service.respond_to?(:destroy) && service.destroy
       flash[:notice] = I18n.t('notifications.provider_unlinked',
                               provider: service.provider)
       redirect_to redirect_path

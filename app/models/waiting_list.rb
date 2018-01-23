@@ -3,8 +3,8 @@ class WaitingList < ActiveRecord::Base
   has_one :member, through: :invitation
   belongs_to :invitation, class_name: 'SessionInvitation'
 
-  scope :by_workshop, -> (workshop) { joins(:invitation).where('session_invitations.workshop_id = ?', workshop.id) }
-  scope :where_role, -> (role) { where('session_invitations.role = ?', role) }
+  scope :by_workshop, ->(workshop) { joins(:invitation).where('session_invitations.workshop_id = ?', workshop.id) }
+  scope :where_role, ->(role) { where('session_invitations.role = ?', role) }
 
   def self.add(invitation, auto_rsvp = true)
     create(invitation: invitation, auto_rsvp: auto_rsvp)

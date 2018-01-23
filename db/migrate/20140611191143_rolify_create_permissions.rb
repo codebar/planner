@@ -2,12 +2,12 @@ class RolifyCreatePermissions < ActiveRecord::Migration
   def change
     create_table(:permissions) do |t|
       t.string :name
-      t.references :resource, :polymorphic => true
+      t.references :resource, polymorphic: true
 
       t.timestamps
     end
 
-    create_table(:members_permissions, :id => false) do |t|
+    create_table(:members_permissions, id: false) do |t|
       t.references :member
       t.references :permission
     end

@@ -18,7 +18,7 @@ class Meeting < ActiveRecord::Base
   end
 
   def title
-    self.name or "#{I18n.l(date_and_time, format: :month)} Meeting"
+    self.name || "#{I18n.l(date_and_time, format: :month)} Meeting"
   end
 
   def to_param

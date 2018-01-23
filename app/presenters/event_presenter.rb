@@ -66,11 +66,11 @@ class EventPresenter < SimpleDelegator
   end
 
   def coach_spaces?
-    venue.present? and venue.coach_spots > attending_coaches.length
+    venue.present? && (venue.coach_spots > attending_coaches.length)
   end
 
   def student_spaces?
-    venue.present? and venue.seats > attending_students.length if venue.present?
+    venue.present? && (venue.seats > attending_students.length)
   end
 
   def event_coach_spaces?

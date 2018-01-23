@@ -139,7 +139,7 @@ class Admin::WorkshopsController < Admin::ApplicationController
 
     host = @workshop.workshop_sponsors.find_or_initialize_by(sponsor_id: host_id)
     unless @workshop.host.eql?(host.sponsor)
-      @workshop.workshop_sponsors.where(sponsor: @workshop.host).delete_all
+      @workshop.workshop_sponsors.where(sponsor: @workshop.host).destroy_all
       host.update(host: true)
     end
   end
