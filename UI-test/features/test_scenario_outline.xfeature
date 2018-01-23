@@ -1,0 +1,7 @@
+Feature: Test
+
+  Scenario: test
+
+    Given I am on a page
+    When I click link
+    Then It works
