@@ -22,5 +22,5 @@ When("I click upcoming") do
 end
 
 Then("I should see upcoming workshops") do
-  pending # Write code here that turns the phrase above into concrete actions
+  expect(current_url).to eq invitations_page.get_upcoming_workshop_link
 end
