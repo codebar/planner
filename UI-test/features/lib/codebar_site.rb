@@ -1,4 +1,5 @@
 # pages
+require_relative './pages/auth_page'
 require_relative './pages/coaches_page'
 require_relative './pages/code_of_conduct_page'
 require_relative './pages/dashboard_page'
@@ -25,6 +26,11 @@ require_relative './partials/title_search'
 module CodebarSite
 
   # pages
+
+  def auth_page
+      AuthPage.new
+  end
+
   def coaches_page
     CoachesPage.new
   end
