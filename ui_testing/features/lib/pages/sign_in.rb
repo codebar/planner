@@ -34,7 +34,6 @@ class SignedIn
   end
 
   def click_london_student_subscription
-    # click_on("Subscribe")
     find('#london-students').click
   end
 
