@@ -17,8 +17,8 @@ Capybara.configure do |config|
   config.default_max_wait_time= 10 #wait time for asynchronus processes to finsh
   config.match = :prefer_exact #this setting is to ensure Capybara has specific matching rather than fuzzy logic
   config.default_driver = :chrome # ensures chrome is the default driver
-  config.app_host = 'https://www.codebar.io' # provides the app host/core url
-  # config.app_host = 'http://localhost:3000/'
+  # config.app_host = 'https://www.codebar.io' # provides the app host/core url
+  config.app_host = 'http://localhost:3000/'
 end
 
 World(CodeBar)
