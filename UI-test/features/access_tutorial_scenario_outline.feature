@@ -1,4 +1,4 @@
-Feature: Accessing tuorials
+Feature: Accessing tutorials
 
   Scenario Outline: Clicking on a tutorial link from  the homepage takes us to the right page with the correct tutorial title and from there we can return to the index page
 

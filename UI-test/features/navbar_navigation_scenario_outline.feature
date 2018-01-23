@@ -4,37 +4,17 @@ Feature: Navbar links page navigation
 
     Given I am on the homepage
     When I click on a link in the navbar <link>
-    Then I am sent to a page with the correct title <title>
+    Then I am sent to a page with the correct url <page_url>
 
 
     Examples:
-    | link               | title                      |
-    | Blog               | the codelog                |
-    | Events             | no title                   |
-    | Tutorials          | codebar tutorials          |
-    | Coaches            | Coaches                    |
-    | Sponsors           | Sponsors                   |
-    | Jobs               | Jobs                       |
-    | Donate             | Donations                  |
-    | Logo               | Chapters                   |
-    | Sign in            | no title                   |
-
-  Scenario Outline: Clicking on a navbar link from the homepage when signed in takes us to the right page with the correct corresponding title
-
-    Given I am on the homepage
-    And I am logged in
-    When I click on the navbar menu then click a link in the aside <link>
-    Then I am sent to a page with the correct title <title>
-    And I can logout
-
-
-    Examples:
-    | link                 | title               |
-    | Jobs                 | Jobs                |
-    | List a Job           | Post a job          |
-    | My Profile           | My Profile          |
-    | My Dashboard         | Dashboard           |
-    | Invitations          | Invitations         |
-    | Manage subscriptions | Subscriptions       |
-    | Update your details  | Update your details |
-    | Sign out             | ???                 |
+    | link        | page_url                     |
+    | Blog        | medium.com/@codebar          |
+    | Events      | localhost:3000/events        |
+    | Tutorials   | tutorials.codebar.io/        |
+    | Coaches     | localhost:3000/coaches       |
+    | Sponsors    | localhost:3000/sponsors      |
+    | Jobs        | localhost:3000/jobs          |
+    | Donate      | localhost:3000/donations/new |
+    | Logo        | localhost:3000/              |
+    | Sign in     | github.com/login             |
