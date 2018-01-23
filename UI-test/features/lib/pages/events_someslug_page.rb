@@ -43,7 +43,7 @@ class EventsSomeSlugPage
   def find_alert_box_not_attending
     page.find('div', text: ALERT_BOX_NOT_ATTENDING)
   end
-  
+
   def confirm_attending_label
     find('label', text: ATTENDANCE_CONFIRMATION)
   end

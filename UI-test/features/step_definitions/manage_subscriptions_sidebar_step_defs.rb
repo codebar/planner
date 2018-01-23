@@ -18,14 +18,17 @@ And("I have been redirected to the subscriptions page") do
   sleep 4
 end
 
-When("I click to suscribe to a particuar region") do
+When("I click to subscribe to a particuar region") do
   subscriptions_page.select_sub
   sleep 4
 end
 
-Then("I should be notified that I have succesfully suscribed for a particular region") do
+Then("I should be notified that I have succesfully subscribed for a particular region") do
   expect(subscriptions_page.confirm_subs_updated).to eq true
   sleep 4
   subscriptions_page.select_sub
+  sign_in_page.sign_out_func
+  github_logout_page.github_logout_func
+
 
 end

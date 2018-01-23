@@ -7,4 +7,4 @@ Feature: I can post a Job
     Then I should be sent to a page where I can enter the deatils of the job
     And I enter all the required fields for the job and submit
     And I should be taken to a new page to confirm
-    And I should be notifitief of my submission for a job posting
+    And I should be notified of my submission for a job posting
