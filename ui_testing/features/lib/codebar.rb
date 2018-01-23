@@ -8,6 +8,7 @@ require_relative '../lib/pages/socialmedia'
 require_relative '../lib/pages/sign_in'
 require_relative '../lib/pages/donate_page'
 require_relative '../lib/pages/profile'
+require_relative '../lib/pages/jobs'
 
 module CodeBar
 
@@ -45,6 +46,10 @@ module CodeBar
 
   def profile
     Profile.new
+  end
+
+  def jobs
+    Jobs.new
   end
 
 end

@@ -84,6 +84,8 @@ class SignedIn
     find('aside', :text => 'My Profile').click_link('My Profile')
   end
 
-
+  def click_jobs_on_menu
+    find('aside', :text => 'Jobs').click_link('Jobs')
+  end
 
 end
