@@ -16,3 +16,8 @@ Then("I can return to the home page with a link") do
   tutorials_page.go_home
   expect(current_url).to eq('https://codebar.io/')
 end
+
+Then(/^I am sent to a page with the correct title (.*)$/) do |title|
+  expect(title_search.title_check).to eq(title)
+
+end

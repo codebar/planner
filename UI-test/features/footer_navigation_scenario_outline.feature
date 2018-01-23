@@ -4,24 +4,24 @@ Feature: Footer links page navigation
 
     Given I am on the homepage
     When I click on a link in the footer <link>
-    Then I am sent to a page with the correct title <title>
+    Then I am sent to a page with the correct url <page_url>
 
 
     Examples:
-    | link               | title                      |
-    | Code of conduct    | Code of conduct            |
-    | Coach guide        | Coach Guide                |
-    | Student guide      | Student Guide              |
-    | Tutorials          | codebar tutorials          |
-    | Becoming a sponsor | codebar's Manual           |
-    | FAQ                | Frequently Asked Questions |
-    | Blog               | the codelog                |
-    | Coaches            | Coaches                    |
-    | Sponsors           | Sponsors                   |
-    | Events             | no title                   |
-    | Jobs               | Jobs                       |
-    | Donate             | Donations                  |
-    | Slack              | no title                   |
-    | Github             | codebar                    |
-    | Twitter            | codebar                    |
-    | Facebook           | codebar.io                 |
+    | link               | page_url                               |
+    | Code of conduct    | code-of-conduct                           |
+    | Coach guide        | effective-teacher-guide                   |
+    | Student guide      | student-guide                             |
+    | Tutorials          | tutorials.codebar.io/                     |
+    | Becoming a sponsor | manual.codebar.io/becoming-a-sponsor      |
+    | FAQ                | faq                                       |
+    | Blog               | medium.com/the-codelog                    |
+    | Coaches            | coaches                                   |
+    | Sponsors           | sponsors                                  |
+    | Events             | events                                    |
+    | Jobs               | jobs                                      |
+    | Donate             | donations/new                             |
+    | Slack              | codebar-slack.herokuapp.com/              |
+    | Github             | github.com/codebar                        |
+    | Twitter            | twitter.com/codebar                       |
+    | Facebook           | www.facebook.com/codebarHQ                |
