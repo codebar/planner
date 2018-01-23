@@ -1,14 +1,11 @@
 Given("I am in the Update Profile page") do
-
   update_profile.visit_update_profile
   github.fill_username("faker321")
   github.fill_password("test123")
   github.click_submit
-  # github.click_authorization
   sign_in_page.click_menu_tab
   sign_in_page.click_update_profile
   update_profile.visit_update_profile
-
 end
 
 When("I change the about me section") do
