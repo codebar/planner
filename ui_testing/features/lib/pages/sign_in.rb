@@ -80,6 +80,10 @@ class SignedIn
     end
   end
 
+  def click_update_profile
+    find_link('a', 'Update your details').click
+  end
+
 
 
 end
