@@ -52,4 +52,7 @@ module CodeBar
     Jobs.new
   end
 
+  def update_profile
+    UpdateProfile.new
+  end
 end
