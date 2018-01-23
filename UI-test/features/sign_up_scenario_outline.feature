@@ -4,6 +4,6 @@ Feature: Sign up
 
     Given I am on the homepage
     And I have  clicked on the sign up button
-    And i have agreed that I meet the criteria
+    And I have agreed that I understand that I meet the eligibility criteria
     When I click on the create account button
     Then I should be redirected to the github sign up page
