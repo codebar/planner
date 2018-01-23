@@ -92,12 +92,6 @@ When("I choose what I want to work on and press Attend") do
   events_page.work_on_option.click
 end
 
-# And("I sign into Github") do
-#   github.fill_username('Faker321')
-#   github.fill_password('test123')
-#   github.click_submit
-# end
-
 Then("I am redirected to my dashboard page") do
   if github.find_authorization
     github.click_authorization
