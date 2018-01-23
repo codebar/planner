@@ -31,6 +31,13 @@ class NewJobPage
     check('pay')
     check('short')
     uncheck('short')
+    uncheck('pay')
+    uncheck('roles')
+    uncheck('work-details')
+    check('work-details')
+    check('roles')
+    check('pay')
+    check('short')
   end
 
   def job_title_form_details

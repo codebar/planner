@@ -7,7 +7,12 @@ class SubscriptionsPage
   SUBS_LINK = 'Manage subscriptions' unless const_defined?(:SUBS_LINK)
   SUBS_BUTTON_ID = 'cambridge-students' unless const_defined?(:SUBS_BUTTON_ID)
   UPDATED_SUBS_NOTIFICATION = 'You have subscribed' unless const_defined?(:UPDATED_SUBS_NOTIFICATION)
-  UPDATED_UNSUBS_NOTIFICATION = 'You have unsubscribed' unless const_defined?(:UPDATED_SUBS_NOTIFICATION)
+  UPDATED_UNSUBS_NOTIFICATION = 'You have unsubscribed' unless const_defined?(:UPDATED_UNSUBS_NOTIFICATION)
+  SUBSCRIPTIONS_PAGE_LINK = 'http://localhost:3000/subscriptions'
+
+  def subscriptions_page_link
+    SUBSCRIPTIONS_PAGE_LINK
+  end
 
   def open_sidebar_menu
     click_link(SIDEBAR_MENU)
@@ -27,6 +32,10 @@ class SubscriptionsPage
 
   def confirm_subs_updated
     find('div', text: UPDATED_SUBS_NOTIFICATION, exact: true).visible?
+  end
+
+  def confirm_unsubs_updated
+    find('div', text: UPDATED_UNSUBS_NOTIFICATION, exact: true).visible?
   end
 
 end

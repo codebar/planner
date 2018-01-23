@@ -28,7 +28,11 @@ class NavbarPartial
 
   # navbar links
   def click_navbar_link(name)
-    page.find(NAVBAR_CSS, text: name).click_link(name)
+    if name == 'Logo'
+      click_homepage_image
+    else
+      page.find(NAVBAR_CSS, text: name).click_link(name)
+    end
   end
 
   def click_homepage_image
