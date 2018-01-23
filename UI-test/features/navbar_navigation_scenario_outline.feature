@@ -4,17 +4,17 @@ Feature: Navbar links page navigation
 
     Given I am on the homepage
     When I click on a link in the navbar <link>
-    Then I am sent to a page with the correct title <title>
+    Then I am sent to a page with the correct url <page_url>
 
 
     Examples:
-    | link               | title                      |
-    | Blog               | the codelog                |
-    | Events             | no title                   |
-    | Tutorials          | codebar tutorials          |
-    | Coaches            | Coaches                    |
-    | Sponsors           | Sponsors                   |
-    | Jobs               | Jobs                       |
-    | Donate             | Donations                  |
-    | Logo               | Chapters                   |
-    | Sign in            | no title                   |
+    | link        | page_url                     |
+    | Blog        | medium.com/@codebar          |
+    | Events      | localhost:3000/events        |
+    | Tutorials   | tutorials.codebar.io/        |
+    | Coaches     | localhost:3000/coaches       |
+    | Sponsors    | localhost:3000/sponsors      |
+    | Jobs        | localhost:3000/jobs          |
+    | Donate      | localhost:3000/donations/new |
+    | Logo        | localhost:3000/              |
+    | Sign in     | github.com/login             |
