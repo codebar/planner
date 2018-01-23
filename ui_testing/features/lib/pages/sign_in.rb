@@ -89,6 +89,6 @@ class SignedIn
   end
 
   def click_update_profile
-    find_link('a', 'Update your details').click
+    find('aside', :text => 'My Profile').click_link('Update your details')
   end
 end

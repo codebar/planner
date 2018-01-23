@@ -16,9 +16,9 @@ When("I change the about me section") do
 end
 
 And("press Save") do
-  pending # Write code here that turns the phrase above into concrete actions
+  update_profile.click_save
 end
 
 Then("I can see my updated profile with a message Your details have been updated") do
-  pending # Write code here that turns the phrase above into concrete actions
+  expect(update_profile.confirmation_message).to include(' Your details have been updated.')
 end
