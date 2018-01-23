@@ -7,6 +7,7 @@ require_relative '../lib/pages/github'
 require_relative '../lib/pages/socialmedia'
 require_relative '../lib/pages/sign_in'
 require_relative '../lib/pages/donate_page'
+require_relative '../lib/pages/profile'
 
 module CodeBar
 
@@ -40,6 +41,10 @@ module CodeBar
 
   def donation
     DonatePage.new
+  end
+
+  def profile
+    Profile.new
   end
 
 end
