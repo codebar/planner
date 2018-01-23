@@ -12,5 +12,6 @@ end
 Then("I should be notified that I have been unsubscribed") do
   subscriptions_page.confirm_unsubs_updated
   sign_in_page.sign_out_func
-  
+  github_logout_page.github_logout_func
+
 end

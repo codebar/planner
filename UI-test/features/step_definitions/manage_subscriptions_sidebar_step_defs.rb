@@ -4,6 +4,7 @@ Given("that I have the sidebar open") do
   sign_in_page.enter_github_username
   sign_in_page.enter_github_psswrd
   sign_in_page.confirm_github_details
+  auth_page.auth_check
   navbar.click_menu
 end
 
@@ -25,6 +26,4 @@ Then("I should be notified that I have succesfully subscribed for a particular r
   subscriptions_page.select_sub
   sign_in_page.sign_out_func
   github_logout_page.github_logout_func
-
-
 end
