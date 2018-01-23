@@ -33,13 +33,13 @@ class SignedIn
     click_button("Sign in")
   end
 
-  def click_barcelona_student_subscription
+  def click_london_student_subscription
     # click_on("Subscribe")
-    find('#barcelona-students').click
+    find('#london-students').click
   end
 
-  def click_barcelona_coach_subscription
-    find('#barcelona-coaches').click
+  def click_london_coach_subscription
+    find('#london-coaches').click
   end
 
   def click_edit_button_in_dashboard
@@ -60,6 +60,24 @@ class SignedIn
 
   def click_dashboard_in_menu_tab
     find('a', :text => "My Dashboard").click
+  end
+
+  def click_random_workshop
+    find('a', :text => 'Android Development Workshop').click
+  end
+
+  def click_attend_workshop_as_student
+    find('a', :text => 'Attend as a student').click
+  end
+
+  def click_rsvp_workshop_as_student
+    find('a', :text => 'RSVP as a student').click
+  end
+
+  def click_cancel_my_spot
+    accept_alert do
+      find('a', :text => 'Cancel my spot').click
+    end
   end
 
 
