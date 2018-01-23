@@ -1,6 +1,7 @@
 Feature: Access profile
   As an user, I can access my profile
 
+  @sign_out
   Scenario: As a user, I should be able to access my profile
     Given I am on the dashboard page
     When I click on the menu tab
