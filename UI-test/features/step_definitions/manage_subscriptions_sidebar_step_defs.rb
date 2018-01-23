@@ -15,12 +15,17 @@ end
 And("I have been redirected to the subscriptions page") do
   url = URI.parse(current_url)
   expect(url).to eq URI.parse(subscriptions_page.subscriptions_page_link)
+  sleep 4
 end
 
 When("I click to suscribe to a particuar region") do
-  pending # Write code here that turns the phrase above into concrete actions
+  subscriptions_page.select_sub
+  sleep 4
 end
 
 Then("I should be notified that I have succesfully suscribed for a particular region") do
-  pending # Write code here that turns the phrase above into concrete actions
+  expect(subscriptions_page.confirm_subs_updated).to eq true
+  sleep 4
+  subscriptions_page.select_sub
+
 end
