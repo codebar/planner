@@ -8,6 +8,13 @@ class SignedIn
   AUTHORISE_CODEBAR_ID = "js-oauth-authorize-btn"
   BARCELONA_STUDENT_SUBSCRIPTION_ID = "barcelona-students"
   MENU_TAB_ID = "profile"
+  JOB_TITLE_ID = "job_title"
+  COMPANY_ID = 'job_company'
+  LOCATION_ID = 'job_location'
+  DESCRIPTION_ID = 'job_description'
+  JOB_LINK_ID = 'job_link_to_job'
+  SUBMIT_FIELD_POST_JOB = 'Submit job'
+
 
   def find_sign_in
     find('a', :text => "Sign in")
@@ -35,11 +42,11 @@ class SignedIn
 
   def click_london_student_subscription
     # click_on("Subscribe")
-    find('#london-students').click
+    find('#brighton-students').click
   end
 
   def click_london_coach_subscription
-    find('#london-coaches').click
+    find('#brighton-coaches').click
   end
 
   def click_edit_button_in_dashboard
@@ -80,15 +87,47 @@ class SignedIn
     end
   end
 
-  def click_my_profile_on_menu
-    find('aside', :text => 'My Profile').click_link('My Profile')
+  def click_post_a_job
+    find('a', :text => 'List a job').click
   end
 
+  def fill_in_job_title_field
+    fill_in(JOB_TITLE_ID, :with => "Test1")
+  end
+
+  def fill_in_company_field
+    fill_in(COMPANY_ID, :with => "Test2")
+  end
+
+  def fill_in_location_field
+    fill_in(LOCATION_ID, :with => "Test")
+  end
+
+  def fill_in_description_field
+    fill_in(DESCRIPTION_ID, :with => "This is a description of the test")
+  end
+
+  def fill_in_link_to_field
+    fill_in(JOB_LINK_ID, :with => "http://www.google.com")
+  end
+
+  def click_submit_to_post_job
+    click_button(SUBMIT_FIELD_POST_JOB)
+  end
+
+  def check_post_title
+    find('div.large-12 h1').text
+  end
+  
   def click_jobs_on_menu
     find('aside', :text => 'Jobs').click_link('Jobs')
   end
 
   def click_update_profile
     find('aside', :text => 'My Profile').click_link('Update your details')
+  end
+  
+  def click_my_profile_on_menu
+    find('aside', :text => 'My Profile').click_link('My Profile')
   end
 end
