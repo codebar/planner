@@ -126,3 +126,77 @@ You can pick one of the open [issues](https://github.com/codebar/planner/issues)
 If there is something else that you would like to work on, open an issue first so we can discuss it. We are always open to new ideas and ways of improving planner!
 
 [Guidelines on contributing to planner](https://github.com/codebar/planner/blob/master/CONTRIBUTING.md)
+
+## UI Testing
+
+This website has been tested on a localhost:3000. The purpose of these tests was to ensure the user interface of the website functioned as expected.
+
+To write and run these tests, we used Cucumber to maximise readability. The Gherkin syntax allowed us to write tests that made sense as to what was being tested at the time of writing and checking.
+
+Documentation for Cucumber can be found here: https://cucumber.io/
+
+
+### Tests Written
+
+ We have written tests based on the likelihood of a user using the path. We have used some decision tables in the tests, this allowed some links/buttons/areas to be covered faster than individually testing the link.
+ The language used to write the methods for the tests have been written in ruby 2.4.2
+
+
+### Running Tests
+
+To run the tests written:
+  - Go to planner location in your terminal.
+  - Change directory to the UI-test folder.
+  - type in:
+   ```bash
+   cucumber
+   ```
+  - When a window appears on your taskbar, open it to watch the tests run on the website, or watch the terminal to see which tests are being run.
+  - To run an individual test file instead of all the .feature files at once, type in:
+  ```bash
+  cucumber features/sign_in_scenario_outline.feature
+  ```
+  *'sign_in_scenario_outline.feature' is an example*
+
+
+### Writing New Tests
+
+To create a new test, firstly make sure that the new test  has not been written already and is in the feature folder or step_defs folder. The title of each file describes the function of the test.
+
+To write a new test, create a file with and title it with the function of the test. After the description, label it scenario outline and the type is a .feature file.
+*sign_in_scenario_outline.feature as an example*
+
+To write this file, follow the typical structure of a cucumber feature file which can be found in the documentation online, or use any other feature file as a template.
+
+After writing the feature file and saving it, go to the terminal to create a step definitions template.
+
+Simply type:
+```bash
+cucumber features/# example_scenario_outline.feature
+```
+
+This will output the steps for the test in yellow in the terminal. Copy these steps and go back into your IDE.
+
+Add a new step_defs file to the step_definitions folder. Again the file should describe the function of the test, followed by step_defs.rb. Paste the steps in to this file. In the pages folder, create a new file that will be linked to your new step_defs file and (following the existing format of method files) write out your new methods. Don't forget to add your new method file to the codebar_site.rb file.
+
+Go back in to your step_defs file and add in the relevant functions to run the tests. By following some of the existing step_defs files write out your tests step by step.
+
+Once you have completed this, go back to your terminal and run:
+```bash
+cucumber features/# your_new_file_scenario_outline.feature
+```
+Make sure that all the tests pass. If they do, run:
+```bash
+cucumber
+```
+To make sure that the tests pass along side all the other existing tests.
+
+__Reading Tests__
+
+A test that fails will be displayed in <span style=color:red>Red</span> text, with a short description of the failure and its location.
+
+A test that passes will be displayed in <span style=color:green>Green</span> text with no description.
+
+A pending test will appear in <span style=color:yellow>Yellow</span>.
+
+And a skipped test will appear <span style=color:blue>Blue</span>.
