@@ -1,7 +1,7 @@
 Feature: User adding new subscriptions
   As a user, I should be able to add new subscriptions
 
-  @sub_student
+  @sign_out
   Scenario: As a user, I should be able to add new subscriptions as a student
     Given I am on the dashboard page
     And I click on the edit link next to subscriptions.

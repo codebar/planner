@@ -8,7 +8,6 @@ Given("I am on the dashboard page") do
   if github.find_authorization
     github.click_authorization
   end
-  expect(current_url).to eq("http://www.codebar.io/dashboard")
 end
 
 Given("I click on the edit link next to subscriptions.") do
