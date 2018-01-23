@@ -1,5 +1,6 @@
 Feature: Check job listing
   As an user, I can see job listings
+  
   @jobs
   Scenario: As a user, I should be able to view all job listings
     Given I am on the dashboard page
