@@ -8,7 +8,7 @@ And("I have  clicked on the sign up button") do
 end
 
 And("i have agreed that I meet the criteria") do
-  
+  pending
 end
 
 When("I click on the create account button") do
