@@ -10,6 +10,7 @@ class EventsSomeSlugPage
   ALERT_BOX_ATTENDING = 'Your spot has been confirmed for Event! We look forward to seeing you there.' unless const_defined?(:ALERT_BOX_ATTENDING)
   ALERT_BOX_NOT_ATTENDING = "We are so sad you can't make it, but thanks for letting us know" unless const_defined?(:ALERT_BOX_NOT_ATTENDING)
   CANCEL_MY_SPOT = 'Cancel my spot' unless const_defined?(:CANCEL_MY_SPOT)
+  ATTENDANCE_CONFIRMATION = 'Attending' unless const_defined?(:ATTENDANCE_CONFIRMATION)
 
   def visit_events_slug_page
     visit(EVENTS_SOME_SLUG_PAGE)
@@ -41,6 +42,14 @@ class EventsSomeSlugPage
 
   def find_alert_box_not_attending
     page.find('div', text: ALERT_BOX_NOT_ATTENDING)
+  end
+  
+  def confirm_attending_label
+    find('label', text: ATTENDANCE_CONFIRMATION)
+  end
+
+  def confirm_attending_link
+    find('a', text: ATTENDANCE_CONFIRMATION)
   end
 
 end
