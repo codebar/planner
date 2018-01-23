@@ -16,7 +16,7 @@ Feature: Events page
     Given I am in the Events page
     And I click in Workshop or Event and sign up
     When I click Sign up as a coach
-    And I sign into Github
+    # And I sign into Github
     Then I am redirected to my dashboard page
 
   Scenario: As a user previously registered, to subsribe to an event I need to sign up
