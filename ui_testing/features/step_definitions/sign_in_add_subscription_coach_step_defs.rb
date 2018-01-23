@@ -1,7 +1,12 @@
 Given("I start at the dashboard page") do
+  # navbar.visit_home_page
+  # sign_in_page.click_menu_tab
+  # sign_in_page.click_dashboard_in_menu_tab
   navbar.visit_home_page
-  sign_in_page.click_menu_tab
-  sign_in_page.click_dashboard_in_menu_tab
+  sign_in_page.click_sign_in
+  if github.find_authorization? == true
+    github.click_authorization
+  end
 end
 
 When("I click on any chapter coach subscription") do
