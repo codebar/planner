@@ -1,3 +1,4 @@
+@sign_out_after_if_possible
 Feature: Update Profile info
 
   Scenario: I should be able to change/update existing profile information
