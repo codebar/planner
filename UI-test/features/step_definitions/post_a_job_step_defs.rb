@@ -1,6 +1,7 @@
 Given("I am logged in") do
   homepage.visit_home_page
   sign_in_page.sign_in_func
+  auth_page.auth_check
 end
 
 When("I click on the list a job option in the menu") do
