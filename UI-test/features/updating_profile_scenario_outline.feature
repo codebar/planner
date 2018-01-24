@@ -1,3 +1,4 @@
+@sign_out_scenario
 Feature: Update Profile info
 
   Scenario: I should be able to change/update existing profile information

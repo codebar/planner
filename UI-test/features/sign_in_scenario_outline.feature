@@ -1,3 +1,4 @@
+@sign_out_scenario
 Feature: Signing in to Codebar
 
   Scenario: I should be able to sign in to Codebar given I halready have an account

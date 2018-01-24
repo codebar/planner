@@ -1,3 +1,4 @@
+@sign_out_scenario
 Feature: Sign up
 
   Scenario: Register as a student or coach, without a github account

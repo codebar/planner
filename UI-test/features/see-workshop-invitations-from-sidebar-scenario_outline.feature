@@ -1,3 +1,4 @@
+@sign_out_scenario
 Feature: See workshop invitations
 
   Scenario: I should be able to see workshop inviations and workshops I have already attended

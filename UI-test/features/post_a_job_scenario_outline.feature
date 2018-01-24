@@ -1,3 +1,4 @@
+@sign_out_scenario
 Feature: I can post a Job
 
   Scenario: As a coach, I am able to post a job

@@ -1,3 +1,4 @@
+@sign_out_scenario
 Feature: I am able to view and change my subscriptions
 
   Scenario: I am able to add and remove subscriptions when necessary
