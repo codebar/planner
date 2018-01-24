@@ -138,4 +138,8 @@ class SignedIn
   def find_dashboard
     find('a', :text => "My Dashboard")
   end
+
+  def click_monthly_january_workshop
+    find(:css, "a[href='/meetings/monthly-jan-2018']").click
+  end
 end
