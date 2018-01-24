@@ -7,7 +7,7 @@ class InvitationsPage
   ATTENDED_LINK = 'Attended' unless const_defined?(:ATTENDED_LINK)
   WORKSHOPS_ATTENDED_TITLE ='Workshops attended' unless const_defined?(:WORKSHOPS_ATTENDED_TITLE)
   WORKSHOPS_UPCOMING_TITLE ='Upcoming workshops' unless const_defined?(:WORKSHOPS_UPCOMING_TITLE)
-  UPCOMING_WORKSHOPS_LINK = 'http://localhost:3000/invitations#upcoming'
+  UPCOMING_WORKSHOPS_LINK = 'http://localhost:3000/invitations#upcoming' unless const_defined?(:UPCOMING_WORKSHOPS_LINK)
 
   def visit_invitations_page
     visit(VISIT_INVITATIONS_PAGE)
