@@ -8,7 +8,7 @@ When("I have clicked manage subscriptions") do
   subscriptions_page.click_subs_link
 end
 
-And("I have been redirected to the subsriptions page") do
+And("I am redirected to the subscriptions page") do
   subscriptions_page.manage_subs_page
 end
 

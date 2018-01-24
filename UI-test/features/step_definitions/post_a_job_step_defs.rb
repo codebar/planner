@@ -26,7 +26,7 @@ And("I should be taken to a new page to confirm") do
   new_job_page.click_submit_link
 end
 
-And("I should be notifitief of my submission for a job posting") do
+And("I should be notified of my submission for a job posting") do
   new_job_page.job_post_success
   sign_in_page.sign_out_func
   github_logout_page.github_logout_func

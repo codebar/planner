@@ -1,4 +1,4 @@
-Given("I am on the homepage") do
+Given("I am located on the homepage") do
   homepage.visit_home_page
   # sleep 3
 end
