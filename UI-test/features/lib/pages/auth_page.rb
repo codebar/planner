@@ -3,7 +3,7 @@ require 'capybara'
 class AuthPage
   include Capybara::DSL
 
-  AUTH_BUTTON_ID = 'js-oauth-authorize-btn'
+  AUTH_BUTTON_ID = 'js-oauth-authorize-btn' unless const_defined?(:AUTH_BUTTON_ID)
 
   def auth_check
     if page.has_xpath?('//*[@id="js-pjax-container"]/div/div[1]/h2')

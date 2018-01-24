@@ -9,7 +9,7 @@ class SignInPage
   GITHUB_SIGN_IN = 'Sign in' unless const_defined?(:GITHUB_SIGN_IN)
   SIDEBAR_MENU = 'Menu' unless const_defined?(:SIDEBAR_MENU)
   SIGN_OUT_LINK = 'Sign out' unless const_defined?(:SIGN_OUT_LINK)
-  SIGN_IN_PAGE = 'https://github.com/login?client_id=07d1fce8251a1b91a6bc&return_to=%2Flogin%2Foauth%2Fauthorize%3Fclient_id%3D07d1fce8251a1b91a6bc%26redirect_uri%3Dhttp%253A%252F%252Fcodebar.io%252Fauth%252Fgithub%252Fcallback%26response_type%3Dcode%26scope%3Duser%253Aemail%26state%3D03669bb9bfc1971012fdbbc7bd1a34c4b62d24ba4b2d71a1'
+  SIGN_IN_PAGE = 'https://github.com/login?client_id=07d1fce8251a1b91a6bc&return_to=%2Flogin%2Foauth%2Fauthorize%3Fclient_id%3D07d1fce8251a1b91a6bc%26redirect_uri%3Dhttp%253A%252F%252Fcodebar.io%252Fauth%252Fgithub%252Fcallback%26response_type%3Dcode%26scope%3Duser%253Aemail%26state%3D03669bb9bfc1971012fdbbc7bd1a34c4b62d24ba4b2d71a1' unless const_defined?(:SIGN_IN_PAGE)
 
   def sign_in_link
     click_link(SIGN_IN_LINK)
