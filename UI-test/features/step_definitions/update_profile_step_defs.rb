@@ -1,6 +1,7 @@
 Given("I am already signed in") do
   homepage.visit_home_page
   sign_in_page.sign_in_func
+  auth_page.auth_check
 end
 
 And("I have clicked on update your details section") do
