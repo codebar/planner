@@ -1,4 +1,4 @@
-@sign_out_scenario
+@sign_out_after_if_possible
 Feature: Manage subscriptions from the sidebar
 
   Scenario: As a user, I should be able manage subscriptions from the sidebar

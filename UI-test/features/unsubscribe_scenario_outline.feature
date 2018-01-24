@@ -1,4 +1,4 @@
-@sign_out_scenario
+@sign_out_after_if_possible
 Feature: I am able to unsubscribe from a reigon
 
   Scenario: I am able to select which reigon I wish to unsubscribe from
