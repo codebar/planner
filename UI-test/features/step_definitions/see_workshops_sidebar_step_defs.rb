@@ -23,4 +23,6 @@ end
 
 Then("I should see upcoming workshops") do
   expect(current_url).to eq invitations_page.get_upcoming_workshop_link
+  sign_in_page.sign_out_func
+  github_logout_page.github_logout_func
 end
