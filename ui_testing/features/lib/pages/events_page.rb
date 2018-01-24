@@ -105,10 +105,6 @@ class EventsPage
     page.find(:id, 'session_invitation_note_chosen')
   end
 
-  def work_on_option
-    page.find(:css, '.active-result.result-selected')
-  end
-
   def thanks_message
     page.find('div', 'Thanks for getting back to us ')
   end
