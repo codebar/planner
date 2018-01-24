@@ -11,6 +11,7 @@ require_relative './pages/invitations_page'
 require_relative './pages/profile_page'
 require_relative './pages/new_job_page'
 require_relative './pages/sign_in_page'
+require_relative './pages/sign_up_page'
 require_relative './pages/sponsors_page'
 require_relative './pages/student_guide_page'
 require_relative './pages/subscriptions_page'
@@ -73,6 +74,10 @@ module CodebarSite
 
   def sign_in_page
     SignInPage.new
+  end
+
+  def sign_up_page
+    SignUpPage.new
   end
 
   def sponsors_page
