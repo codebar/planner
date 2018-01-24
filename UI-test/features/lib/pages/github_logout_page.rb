@@ -23,4 +23,10 @@ class GithubLogoutPage
     click_logout
   end
   
+  def github_logout_if_possible
+    if page.has_xpath?('//*[@id="user-links"]/li[3]/details/summary/img')
+      github_logout_func
+    end
+  end
+
 end

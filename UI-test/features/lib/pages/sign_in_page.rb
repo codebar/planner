@@ -58,4 +58,10 @@ class SignInPage
     sign_out
   end
 
+  def sign_out_if_possible
+    if page.has_xpath?('//*[@id="profile"]')
+      sign_out_func
+    end
+  end
+
 end

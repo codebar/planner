@@ -1,3 +1,4 @@
+@sign_out_scenario
 Feature: Signing out of Codebar
 
   Scenario: I should be able to successfully sign out
