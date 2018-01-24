@@ -4,6 +4,7 @@ Given("that the sidebar open") do
   sign_in_page.enter_github_username
   sign_in_page.enter_github_psswrd
   sign_in_page.confirm_github_details
+  auth_page.auth_check
   navbar.click_menu
 end
 
