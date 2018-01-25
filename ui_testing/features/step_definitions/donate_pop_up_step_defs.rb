@@ -4,7 +4,7 @@ Given("I am on the Donate page") do
 end
 
 When("I fill the form") do
-  donation.fill_name('Kalok')
+  donation.fill_name('Sam')
   donation.fill_amount('1')
 end
 
