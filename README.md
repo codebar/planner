@@ -94,6 +94,11 @@ from a cmd prompt in your application folder:
     echo GITHUB_KEY=YOUR_KEY >> .env
     echo GITHUB_SECRET=YOUR_SECRET >> .env
 
+Also within this file you will need to add:
+
+    GITHUB_USERNAME=YOUR_USERNAME
+    GITHUB_PASSWORD=YOUR_PASSWORD
+
 ### Generate some sample data
 
 ```bash

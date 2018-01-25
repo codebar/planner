@@ -1,7 +1,7 @@
 Given("I am in the Update Profile page") do
   update_profile.visit_update_profile
-  github.fill_username("faker321")
-  github.fill_password("test123")
+  github.fill_username(ENV['GITHUB_USERNAME'])
+  github.fill_password(ENV['GITHUB_PASSWORD'])
   github.click_submit
   sign_in_page.click_menu_tab
   sign_in_page.click_update_profile

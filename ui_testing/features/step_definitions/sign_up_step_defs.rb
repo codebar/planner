@@ -7,8 +7,8 @@ And("I accept criterias") do
 end
 
 And("I login to GitHub") do
-  github.fill_username('faker321')
-  github.fill_password('test123')
+  github.fill_username(ENV['GITHUB_USERNAME'])
+  github.fill_password(ENV['GITHUB_PASSWORD'])
   github.click_submit
 end
 
