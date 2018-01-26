@@ -13,5 +13,8 @@
           .large-6.columns
             = f.input :city, required: true
         .row
+          .large-6.columns
+            = f.input :time_zone, required: true
+        .row
           .large-12.columns.text-right
             = f.submit 'Create chapter', class: 'button'

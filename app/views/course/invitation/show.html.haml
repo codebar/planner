@@ -1,4 +1,4 @@
-= render partial: 'shared/title', locals: { title: @invitation.course.to_s, date: humanize_date_with_time(@invitation.course.date_and_time) }
+= render partial: 'shared/title', locals: { title: @invitation.course.to_s, date: humanize_date(@invitation.course.date_and_time, with_time: true) }
 
 %section
   .inner-nav{ "data-magellan-expedition" => "fixed" }

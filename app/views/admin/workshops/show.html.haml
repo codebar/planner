@@ -38,9 +38,9 @@
             %small=@workshop.chapter.name
         %h3
           %small #{l(@workshop.date_and_time)}
-        - if @workshop.rsvp_open_time_set?
+        - if @workshop.rsvp_opens_at
           RSVPs will open at
-          = @workshop.rsvp_open_time.strftime('%H:%M on %d/%m/%Y.')
+          = @workshop.rsvp_opens_at.strftime('%H:%M on %d/%m/%Y.')
           %br
           %br
         - if @workshop.venue.present?

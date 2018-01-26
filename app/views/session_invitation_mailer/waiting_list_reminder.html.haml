@@ -14,7 +14,7 @@
               %td
                 %h3 Hi, #{@member.name}
                 %p.lead
-                  This is a quick email to remind you that you're on the waiting list for the workshop on #{humanize_date_with_time(@session.date_and_time, @session.time)}.
+                  This is a quick email to remind you that you're on the waiting list for the workshop on #{humanize_date(@session.date_and_time, with_time: true)}.
                 %p
                   If an attendee drops out, the next person on the waiting list will automatically get their place.
                   We'll email you if this happens.
@@ -34,7 +34,7 @@
               %td
                 %h4
                   Workshop
-                  %small= humanize_date_with_time(@session.date_and_time, @session.time)
+                  %small= humanize_date(@session.date_and_time, with_time: true)
                 %p
                   #{@session.host.name}
                   %br
