@@ -13,7 +13,7 @@
             = link_to admin_workshop_path(workshop) do
               %strong= workshop.chapter.name
               %br
-              = humanize_date_with_time(workshop.date_and_time, workshop.time)
+              = humanize_date(workshop.date_and_time, with_time: true)
     .large-4.columns
       = link_to 'View all sponsors', admin_sponsors_path, class: 'button expand round'
       = link_to 'Admin Guide', admin_guide_path, class: 'button expand round'
