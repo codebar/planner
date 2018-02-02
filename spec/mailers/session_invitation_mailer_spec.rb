@@ -14,14 +14,14 @@ describe SessionInvitationMailer do
     expect(email.body.encoded).to match(workshop.chapter.email)
   end
 
-  it "#attending_reminder" do
+  it '#attending_reminder' do
     email_subject = "Workshop Reminder #{humanize_date(workshop.date_and_time, with_time: true)}"
     SessionInvitationMailer.attending_reminder(workshop, member, invitation).deliver_now
     expect(email.subject).to eq(email_subject)
     expect(email.body.encoded).to match(workshop.chapter.email)
   end
 
-  it "#waitlist_reminder" do
+  it '#waitlist_reminder' do
     email_subject = "Reminder: you're on the codebar waiting list (#{humanize_date(workshop.date_and_time, with_time: true)})"
     SessionInvitationMailer.waiting_list_reminder(workshop, member, invitation).deliver_now
 

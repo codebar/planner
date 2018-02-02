@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180109024411) do
+ActiveRecord::Schema.define(version: 20180110212924) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -83,6 +83,7 @@ ActiveRecord::Schema.define(version: 20180109024411) do
     t.string   "twitter_id"
     t.string   "slug"
     t.boolean  "active",     default: true
+    t.string   "time_zone",  default: "London", null: false
   end
 
   create_table "chapters_events", force: :cascade do |t|

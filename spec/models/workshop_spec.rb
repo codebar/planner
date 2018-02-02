@@ -9,10 +9,12 @@ describe Workshop do
   it { should respond_to(:sponsors) }
   it { should respond_to(:workshop_sponsors) }
   it { should respond_to(:rsvp_opens_at) }
+  it { should respond_to(:time_zone) }
 
-  context 'time fields' do
-    let(:london_time) { ActiveSupport::TimeZone['London'].local(2015, 6, 12, 18, 30) }
-    let(:utc_time) { london_time.in_time_zone('UTC') }
+  context 'time zone fields' do
+    let(:workshop) { Fabricate.build(:workshop, chapter: Fabricate(:chapter, time_zone: 'Pacific Time (US & Canada)')) }
+    let(:pacific_time) { ActiveSupport::TimeZone['Pacific Time (US & Canada)'].local(2015, 6, 12, 18, 30) }
+    let(:utc_time) { pacific_time.in_time_zone('UTC') }
 
     context 'date_and_time' do
       it 'saves the local time in UTC' do
@@ -24,11 +26,11 @@ describe Workshop do
         expect(workshop.read_attribute(:date_and_time)).to eq(utc_time)
       end
 
-      it 'retrieves the local time in London time' do
+      it 'retrieves the local time from the saved UTC value' do
         workshop.update_attribute(:date_and_time, utc_time)
 
-        expect(workshop.date_and_time).to eq(london_time)
-        expect(workshop.date_and_time.zone).to eq('BST')
+        expect(workshop.date_and_time).to eq(pacific_time)
+        expect(workshop.date_and_time.zone).to eq('PDT')
       end
     end
 
@@ -42,11 +44,11 @@ describe Workshop do
         expect(workshop.read_attribute(:rsvp_opens_at)).to eq(utc_time)
       end
 
-      it 'retrieves the local time in London time' do
+      it 'retrieves the local time from the saved UTC value' do
         workshop.update_attribute(:rsvp_opens_at, utc_time)
 
-        expect(workshop.rsvp_opens_at).to eq(london_time)
-        expect(workshop.rsvp_opens_at.zone).to eq('BST')
+        expect(workshop.rsvp_opens_at).to eq(pacific_time)
+        expect(workshop.rsvp_opens_at.zone).to eq('PDT')
       end
     end
   end
@@ -70,6 +72,12 @@ describe Workshop do
 
       it 'when rsvp_closes_at is in the future' do
         workshop.rsvp_closes_at = 2.hours.from_now
+
+        expect(workshop.rsvp_available?).to be(true)
+      end
+
+      it 'when rsvp_closes_at is in another timezone' do
+        workshop.rsvp_closes_at = 2.hours.from_now.in_time_zone('Pacific Time (US & Canada)')
 
         expect(workshop.rsvp_available?).to be(true)
       end

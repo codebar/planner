@@ -95,8 +95,22 @@ class Workshop < ActiveRecord::Base
     host.address.city rescue ''
   end
 
+  def time_zone
+    chapter.time_zone
+  end
+
   def self.policy_class
     WorkshopPolicy
+  end
+
+  def date_and_time
+    return nil unless super
+    super.in_time_zone(time_zone)
+  end
+
+  def rsvp_opens_at
+    return nil unless super
+    super.in_time_zone(time_zone)
   end
 
   def date
@@ -120,9 +134,9 @@ class Workshop < ActiveRecord::Base
   end
 
   def datetime_from_fields(date_string, time_string)
-    return nil if date_string.blank? || time_string.blank?
+    return nil if date_string.blank? || time_string.blank? || !time_zone
     date = Date.parse(date_string)
     time = Time.parse(time_string)
-    Time.zone.local(date.year, date.month, date.day, time.hour, time.min)
+    ActiveSupport::TimeZone[time_zone].local(date.year, date.month, date.day, time.hour, time.min)
   end
 end

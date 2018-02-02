@@ -16,16 +16,27 @@ describe Chapter do
 
         expect(chapter.slug).to eq('new-york')
       end
+    end
 
-      context 'scopes' do
-        context '#default_scope' do
-          it 'only returns active Chapters' do
-            2.times { Fabricate(:chapter) }
-            3.times { Fabricate(:chapter, active: false) }
+    context '#time_zone' do
+      it 'requires a time zone' do
+        chapter = Fabricate(:chapter)
+        expect(chapter).to be_valid
+        chapter.time_zone = nil
+        expect(chapter).not_to be_valid
+        chapter.time_zone = 'Fake time'
+        expect(chapter).not_to be_valid
+      end
+    end
+  end
 
-            expect(Chapter.all.count).to eq(2)
-          end
-        end
+  context 'scopes' do
+    context '#default_scope' do
+      it 'only returns active Chapters' do
+        2.times { Fabricate(:chapter) }
+        3.times { Fabricate(:chapter, active: false) }
+
+        expect(Chapter.all.count).to eq(2)
       end
     end
   end
