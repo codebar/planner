@@ -6,7 +6,7 @@
 %section
   .row
     .large-3.columns#sidebar
-      =image_tag current_user.avatar(33)
+      =image_tag(current_user.avatar(33), alt: current_user.full_name)
       = link_to @user.full_name, profile_path
 
       %br
