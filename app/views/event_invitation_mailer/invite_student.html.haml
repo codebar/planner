@@ -28,7 +28,7 @@
                 %br
                 %br
                 %h5 Venue
-                =image_tag @event.venue.avatar, style: 'max-height: 100px'
+                =image_tag(@event.venue.avatar, style: 'max-height: 100px', alt: @event.venue.name)
                 %p
                   #{@event.venue.name}
               %td{ width: "50%", style: "text-align: center;"}
@@ -38,7 +38,7 @@
                 %h5 Sponsors
                 - @event.sponsors.each do |sponsor|
                   =link_to sponsor.website do
-                    = image_tag sponsor.avatar, style: 'max-height: 100px;'
+                    = image_tag(sponsor.avatar, style: 'max-height: 100px;', alt: sponsor.name)
 
         .content
           = render partial: 'shared_mailers/social'

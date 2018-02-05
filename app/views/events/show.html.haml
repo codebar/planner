@@ -32,7 +32,7 @@
           %p
             = @host_address.to_html
         .medium-4.columns
-          = image_tag @event.venue.avatar, class: 'sponsor-logo-image'
+          = image_tag(@event.venue.avatar, class: 'sponsor-logo-image', alt: @event.venue.name)
       .row
         .large-12.columns
           %iframe{ width: '100%', height: '250', frameborder: '0', scrolling: 'no', marginheight: '0', marginwidth: '0', src: %{https://maps.google.com/maps?f=q&source=s_q&hl=en&amp;geocode=&q=#{@host_address.for_map}&ie=UTF8&t=m&z=15&output=embed} }
@@ -68,7 +68,7 @@
             %li
               .row
                 .large-2.columns
-                  = image_tag sponsor.avatar, class: 'sponsor'
+                  = image_tag(sponsor.avatar, class: 'sponsor', alt: sponsor.name)
                 .large-10.columns
                   =link_to sponsor.name, sponsor.website
                   %p
@@ -84,7 +84,7 @@
             - @event.verified_coaches.each do |coach|
               %li.text-center
                 =link_to twitter_url_for(coach.twitter), class: 'user-link' do
-                  =image_tag coach.avatar(56), class: 'th radius', title: coach.full_name
+                  =image_tag(coach.avatar(56), class: 'th radius', title: coach.full_name, alt: coach.full_name)
                   %br
                   %br
                   = coach.full_name
@@ -101,7 +101,7 @@
           - @event.organisers.each do |organiser|
             %li.text-center
               =link_to twitter_url_for(organiser.twitter), class: 'user-link' do
-                =image_tag organiser.avatar(56), class: 'th radius', title: organiser.full_name
+                =image_tag(organiser.avatar(56), class: 'th radius', title: organiser.full_name, alt: organiser.full_name)
                 %br
                 %br
                 = organiser.full_name

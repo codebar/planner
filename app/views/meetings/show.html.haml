@@ -28,7 +28,7 @@
       %ul.small-block-grid-2.medium-block-grid-4
         - @attendees.each do |a|
           %li.text-center
-            =image_tag a.member.avatar(96), class: 'th radius', title: a.member.full_name
+            =image_tag(a.member.avatar(96), class: 'th radius', title: a.member.full_name, alt: a.member.full_name)
             %br
             %br
             =a.member.full_name
