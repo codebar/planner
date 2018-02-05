@@ -94,6 +94,11 @@ from a cmd prompt in your application folder:
     echo GITHUB_KEY=YOUR_KEY >> .env
     echo GITHUB_SECRET=YOUR_SECRET >> .env
 
+Also within this file you will need to add:
+
+    GITHUB_USERNAME=YOUR_USERNAME
+    GITHUB_PASSWORD=YOUR_PASSWORD
+
 ### Generate some sample data
 
 ```bash
@@ -126,3 +131,49 @@ You can pick one of the open [issues](https://github.com/codebar/planner/issues)
 If there is something else that you would like to work on, open an issue first so we can discuss it. We are always open to new ideas and ways of improving planner!
 
 [Guidelines on contributing to planner](https://github.com/codebar/planner/blob/master/CONTRIBUTING.md)
+
+## UI Testing
+
+At [Sparta Global](https://www.spartaglobal.com/), a final project was proposed to develop a UI testing suite for CodeBar's website.
+For this Sparta consultants from the SDET stream had to write some business requirements that should represent the main actions of a real user on CodeBar website. This involved actions like:
+- Signing In/Up/Out (this has github dependency)
+- Attend Workshops
+- Cancel Workshops
+- Post new jobs
+
+Our goal was to test against those requirements and we used Capybara for it.
+
+### What is Capybara?
+
+Capybara is a software testing framework for behaviour-driven development. It allows you to write your tests and while the script is being executed on your console, you can see the tests being run in real time on the browser using the data that was given in your code. Capybara utilises Cucumber software.
+
+### What is UI Testing?
+After going through all the process of the V-Model, unit testing, integration testing, system testing we've come to acceptance testing. In this phase, testing is performed against the user requirements, checking if it meets the acceptance criteria.
+
+According with ISTQB Glossary, Acceptance Testing is:
+
+> Formal testing with respect to user needs, requirements, and business processes conducted to determine whether or not a system satisfies the acceptance criteria and to enable the user, customers or other authorised entity to determine whether or not to accept the system. http://glossary.istqb.org/search/acceptance%20testing
+
+### What is POM (Page Object Model)?
+Testing using the POM allow us to write a clean and more reusable code. This implies, like the name suggests, to create a different test for each page. On the website fields like :id, :class, or :name are accessed and data can be inserted in order to validate them.
+
+### How To Test
+- Git clone this repository
+- On your console move into the folder where this repository is cloned.
+- Run bundle install to make sure you have all the required gems installed.
+```
+bundle install
+```
+After all the gems are installed, you need to move into the _ui testing_ folder and run cucumber from there.
+```
+cd ui_testing
+cucumber
+```
+While tests are running the browser will open and run the script.
+Results can be seen on your console (either passed, green, or failed, red)
+
+### More Documentation
+- https://github.com/teamcapybara/capybara
+- http://www.rubydoc.info/github/jnicklas/capybara
+- https://cucumber.io/
+- https://github.com/cucumber/cucumber/wiki/Gherkin
