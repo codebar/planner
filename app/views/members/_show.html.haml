@@ -2,7 +2,7 @@
   .stripe.reverse
     .row
       .medium-1.columns
-        =image_tag member.avatar(100), class: 'th radius', title: member.full_name
+        =image_tag(member.avatar(100), class: 'th radius', title: member.full_name, alt: member.full_name)
       .medium-11.columns
         %h2
           = member.full_name
