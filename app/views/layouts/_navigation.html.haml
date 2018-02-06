@@ -5,9 +5,11 @@
         =link_to root_path do
           .brand
             = image_tag("logo.png", alt: "codebar logo", size: "148x40")
-      %li.toggle-topbar.menu-icon
+      %li.toggle-topbar
         = link_to '#' do
-          .fa.fa-stack-2x.fa-list
+          .button
+            %span.fa.fa-bars{"aria-hidden" => "true"}
+            %span Menu
 
     %section.top-bar-section
       %ul.right
