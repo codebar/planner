@@ -26,7 +26,7 @@
           %table{ bgcolor: "#FFFFFF" }
             %tr
               %td.small{ width: "30%", style: "vertical-align: top; padding-right:10px;"}
-                =image_tag(@session.host.avatar)
+                =image_tag(@session.host.avatar, alt: @session.host.name)
               %td
                 %h4
                   Workshop

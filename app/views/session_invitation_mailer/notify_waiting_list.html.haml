@@ -20,7 +20,7 @@
           %table{ bgcolor: "#FFFFFF" }
             %tr
               %td.small{ width: "30%", style: "vertical-align: top; padding-right:10px;"}
-                =image_tag(@workshop.venue.avatar)
+                =image_tag(@workshop.venue.avatar, @workshop.venue.name)
               %td
                 %h4
                   Workshop

@@ -35,7 +35,7 @@
             .row
               .small-2.columns
                 =link_to twitter_url_for(tutor.twitter), class: 'user-link' do
-                  =image_tag tutor.avatar(106), class: 'th radius'
+                  =image_tag(tutor.avatar(106), class: 'th radius', alt: tutor.full_name)
               .small-10.columns
                 =link_to twitter_url_for(tutor.twitter) do
                   = tutor.full_name
@@ -59,7 +59,7 @@
           %li
             .row
               .large-4.columns
-                = image_tag sponsor.avatar, class: 'sponsor'
+                = image_tag(sponsor.avatar, class: 'sponsor', alt: sponsor.name)
               .large-8.columns
                 =link_to sponsor.name, sponsor.website
                 %p

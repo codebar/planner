@@ -11,7 +11,7 @@
                 = feedback.tutorial.title
             - if feedback.coach.present?
               .large-1.columns
-                = image_tag feedback.coach.avatar(50), class: 'th radius', title: feedback.coach.full_name
+                = image_tag(feedback.coach.avatar(50), class: 'th radius', title: feedback.coach.full_name, alt: feedback.coach.full_name)
               .large-2.columns
                 = feedback.coach.full_name
             .large-2.columns

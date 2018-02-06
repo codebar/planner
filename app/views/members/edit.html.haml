@@ -6,7 +6,7 @@
   .row
     .large-12.columns
       .avatar-container
-        =image_tag current_user.avatar(75)
+        =image_tag(current_user.avatar(75), alt: current_user.name)
       %span
         You can change your avatar at
         =link_to('gravatar.com.', 'http://en.gravatar.com/')
