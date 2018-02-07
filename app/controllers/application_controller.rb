@@ -20,8 +20,8 @@ class ApplicationController < ActionController::Base
 
   def current_service
     if session.has_key?(:service_id)
-      @current_service ||= Service.where(member_id: session[:member_id],
-                                         id: session[:service_id]).first
+      @current_service ||= Service.find_by(member_id: session[:member_id],
+                                         id: session[:service_id])
     end
   rescue ActiveRecord::RecordNotFound
     session[:service_id] = nil
