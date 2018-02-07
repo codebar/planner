@@ -7,8 +7,6 @@ describe SessionInvitationMailer do
   let(:invitation) { Fabricate(:session_invitation, workshop: workshop, member: member) }
 
   it '#invite_student' do
-    invitation_token = 'token'
-
     email_subject = "Workshop Invitation #{humanize_date_with_time(workshop.date_and_time, workshop.time)}"
     SessionInvitationMailer.invite_student(workshop, member, invitation).deliver_now
 

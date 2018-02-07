@@ -13,7 +13,7 @@
         - @announcements.each do |announcement|
           %tr
             %td
-              = image_tag announcement.created_by.avatar(24)
+              = image_tag(announcement.created_by.avatar(24), alt: announcement.created_by.full_name)
               = announcement.created_by.full_name
             %td
               = dot_markdown(announcement.message)

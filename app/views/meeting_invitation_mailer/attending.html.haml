@@ -14,7 +14,7 @@
               %td
                 %h3 Hi, #{@member.name}
                 %p.lead
-                  You're confirmed for the next codebar Monthly! 
+                  You're confirmed for the next codebar Monthly!
                 %h4
                   Agenda
                 %p
@@ -28,7 +28,7 @@
           %table{ bgcolor: "#FFFFFF" }
             %tr
               %td.small{ width: "30%", style: "vertical-align: top; padding-right:10px;"}
-                =image_tag(@meeting.venue.avatar)
+                =image_tag(@meeting.venue.avatar, alt: @meeting.venue.name)
               %td
                 %h4
                   Workshop
@@ -53,4 +53,3 @@
         .content
           = render partial: 'shared_mailers/social'
       %td
-

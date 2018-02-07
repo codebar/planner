@@ -5,7 +5,7 @@ Fabricator(:workshop) do
   description Faker::Lorem.sentence
   chapter
   after_build do |workshop|
-    Fabricate(:workshop_sponsor, workshop: workshop, sponsor: Fabricate(:sponsor), host: true )
+    Fabricate(:workshop_sponsor, workshop: workshop, sponsor: Fabricate(:sponsor), host: true)
   end
 end
 
@@ -27,7 +27,7 @@ Fabricator(:workshop_auto_rsvp_in_past, class_name: :workshop) do
   rsvp_open_date Time.zone.now - 1.days
   invitable false
   after_build do |workshop|
-    Fabricate(:workshop_sponsor, workshop: workshop, sponsor: Fabricate(:sponsor), host: true )
+    Fabricate(:workshop_sponsor, workshop: workshop, sponsor: Fabricate(:sponsor), host: true)
   end
 end
 
@@ -41,7 +41,7 @@ Fabricator(:workshop_auto_rsvp_in_future, class_name: :workshop) do
   rsvp_open_date Time.zone.now + 1.days
   invitable false
   after_build do |workshop|
-    Fabricate(:workshop_sponsor, workshop: workshop, sponsor: Fabricate(:sponsor), host: true )
+    Fabricate(:workshop_sponsor, workshop: workshop, sponsor: Fabricate(:sponsor), host: true)
   end
 end
 
@@ -52,6 +52,6 @@ Fabricator(:workshop_no_spots, class_name: :workshop) do
   description Faker::Lorem.sentence
   chapter
   after_build do |workshop|
-    Fabricate(:workshop_sponsor, workshop: workshop, sponsor: Fabricate(:sponsor, seats: 0), host: true )
+    Fabricate(:workshop_sponsor, workshop: workshop, sponsor: Fabricate(:sponsor, seats: 0), host: true)
   end
 end

@@ -2,9 +2,9 @@
   - member.each do |member|
     %li.text-center
       =link_to twitter_url_for(member.twitter), class: 'user-link' do
-        =image_tag member.avatar(56), class: 'th radius', title: member.full_name
+        =image_tag(member.avatar(56), class: 'th radius', title: member.full_name, alt: member.full_name)
       %br
       %br
       = member.full_name
-      - if show_info and show_info.eql?(true)
+      - if show_info
         = member.mobile

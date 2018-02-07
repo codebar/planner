@@ -5,7 +5,7 @@ class FeedbackRequest < ActiveRecord::Base
   validates :member_id, presence: true, uniqueness: { scope: [:workshop] }
   validates :workshop, presence: true
   validates :token, uniqueness: true, presence: true
-  validates_inclusion_of :submited, :in => [true, false]
+  validates_inclusion_of :submited, in: [true, false]
 
   before_validation :set_token
   after_create :email

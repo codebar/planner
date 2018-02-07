@@ -2,7 +2,7 @@ class Admin::SponsorsController < Admin::ApplicationController
   before_filter :set_sponsor, only: %i[show edit update]
 
   def index
-    authenticate_admin_or_organiser!
+    authorize Sponsor
     @sponsors = Sponsor.all.order(:name)
   end
 

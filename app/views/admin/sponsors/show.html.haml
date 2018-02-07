@@ -12,7 +12,7 @@
 
     .large-3.columns
       %h4 Logo
-      = image_tag @sponsor.avatar
+      = image_tag(@sponsor.avatar, alt: @sponsor.name)
     .large-3.columns
       %h4 Contacts
       = SponsorDecorator.new(@sponsor).contact_info

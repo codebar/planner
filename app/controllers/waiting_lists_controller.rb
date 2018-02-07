@@ -2,13 +2,13 @@ class WaitingListsController < ApplicationController
   def create
     invitation.update_attribute(:note, note) if note.present?
     WaitingList.add(invitation, auto_rsvp)
-    message = auto_rsvp.eql?(true) ? 'You have been added to the waiting list' :
+    message = auto_rsvp ? 'You have been added to the waiting list' :
                           'We will send you an email if any spots become available'
     redirect_to invitation_path(invitation), notice: message
   end
 
   def destroy
-    WaitingList.find_by_invitation_id(invitation.id).delete
+    WaitingList.find_by_invitation_id(invitation.id).destroy
 
     redirect_to invitation_path(invitation), notice: 'You have been removed from the waiting list'
   end

@@ -8,6 +8,6 @@ class Coach::ApplicationController < ApplicationController
   private
 
   def can_view_feedback?
-    logged_in? and (is_verified_coach_or_admin? or is_verified_coach_or_organiser?)
+    logged_in? && (is_verified_coach_or_admin? || is_verified_coach_or_organiser?)
   end
 end

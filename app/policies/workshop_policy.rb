@@ -1,10 +1,10 @@
 class WorkshopPolicy < ApplicationPolicy
   def new?
-    user.has_role?(:admin) or Chapter.find_roles(:organiser, user).any?
+    user.has_role?(:admin) || Chapter.find_roles(:organiser, user).any?
   end
 
   def create?
-    user.has_role?(:admin) or Chapter.find_roles(:organiser, user).any?
+    user.has_role?(:admin) || Chapter.find_roles(:organiser, user).any?
   end
 
   def show?
@@ -25,6 +25,6 @@ class WorkshopPolicy < ApplicationPolicy
 
   private
   def is_chapter_organiser?
-    user.has_role?(:organiser, record) or user.has_role?(:organiser, record.chapter) or user.has_role?(:organiser, Chapter)
+    user.has_role?(:organiser, record) || user.has_role?(:organiser, record.chapter) || user.has_role?(:organiser, Chapter)
   end
 end
