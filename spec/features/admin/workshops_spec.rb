@@ -4,6 +4,7 @@ feature 'Managing workshops' do
   let(:member) { Fabricate(:member) }
   let!(:chapter) { Fabricate(:chapter) }
   let!(:sponsor) { Fabricate(:sponsor) }
+  let!(:organiser) { Fabricate(:chapter_organiser) }
 
   before do
     login_as_admin(member)
@@ -16,7 +17,8 @@ feature 'Managing workshops' do
     select chapter.name
     fill_in 'Date', with: Date.current
     fill_in 'Time', with: '11:30'
-
+    select sponsor.name, from: 'Sponsors'
+    select organiser.name, from: 'workshop_organisers'
     click_on 'Save'
 
     expect(page).to have_content 'Invite'

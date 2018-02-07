@@ -22,7 +22,7 @@ class Admin::WorkshopsController < Admin::ApplicationController
     authorize(@workshop)
 
     if @workshop.save
-      grant_organiser_access(@workshop.chapter.organisers.map(&:id))
+      set_organisers(@workshop.chapter.organisers.map(&:id).map(&:to_s) + organiser_ids)
       set_host(host_id)
       update_rsvp_open_time if auto_rsvps_set?
 
