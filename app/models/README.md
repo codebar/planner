@@ -65,7 +65,7 @@ It belongs to a single `chapter`. It has organisers stored
 as permissions.
 
 Workshops work by sending invitations to the people
-substribed to their chapter, and will let those people accept the
+subscribed to their chapter, and will let those people accept the
 invitation up to the limits of the `venue`. If no spaces are left,
 people will instead be invited to join the waiting list, and will be
 accepted from the waiting list as spaces become available.

@@ -64,7 +64,7 @@
         %h4 Team
         - @event.organisers.each do |organiser|
           %span.has-tip{ 'data-tooltip': '', 'aria-haspopup': 'true', title: organiser.full_name }
-            = image_tag(organiser.avatar(40))
+            = image_tag(organiser.avatar(40), alt: organiser.full_name)
 
     %br
     .row

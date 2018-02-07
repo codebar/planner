@@ -27,11 +27,11 @@
             .organisers
               - event.organisers.each do |organiser|
                 =link_to twitter_url_for(organiser.twitter), class: 'user-link' do
-                  =image_tag organiser.avatar(26), class: 'th radius', title: organiser.full_name
+                  =image_tag(organiser.avatar(26), class: 'th radius', title: organiser.full_name, alt: organiser.full_name)
         .medium-6.columns#sponsors
           - if event.sponsors.any?
             - event.sponsors.each do |sponsor|
               = link_to sponsor.website do
-                = image_tag sponsor.avatar.thumb, class: 'sponsor'
+                = image_tag(sponsor.avatar.thumb, class: 'sponsor', alt: sponsor.name)
 
       %br

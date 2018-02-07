@@ -19,7 +19,7 @@
     <a href="https://maps.google.com/maps?q=<%= @host_address.postal_code %>" style="color: a369d5 text-decoration: underline"> view map </a>
     <div style="width:120px; height:41px; margin-top: 33px;">
       <%= link_to full_url_for(@sponsor.website) do %>
-        <%=image_tag(@session.host.avatar, width: "120px") %>
+        <%=image_tag(@session.host.avatar, width: "120px", alt: @session.host.name) %>
       <% end %>
     </div>
   </div>
@@ -34,7 +34,7 @@
       <h2 style="color: #2D183D; font-weight: 400; "><%= @sponsor.name %></h2>
       <div style="width:120px; height:41px; margin-top: 33px;">
         <%= link_to full_url_for(@sponsor.website) do %>
-          <%=image_tag(@sponsor.avatar, width: "120px") %></div>
+          <%=image_tag(@sponsor.avatar, width: "120px", alt: @sponsor.name) %></div>
       <% end %>
     </div>
 
