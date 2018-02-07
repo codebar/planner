@@ -9,4 +9,4 @@
               = testimonial.member.full_name
         .large-1.medium-2.small-2.columns
           %br
-          = image_tag testimonial.member.avatar(40), class: 'th radius'
+          = image_tag(testimonial.member.avatar(40), class: 'th radius', alt: testimonial.member.name)
