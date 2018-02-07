@@ -1,4 +1,4 @@
-= render partial: 'shared/title', locals: { title: "Workshop Feedback" , date:  humanize_date_with_time(@session.date_and_time) }
+= render partial: 'shared/title', locals: { title: "Workshop Feedback" , date:  humanize_date(@session.date_and_time, with_time: true) }
 %section#banner
   .row
     .large-12.columns

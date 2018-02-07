@@ -9,8 +9,8 @@ class AuthServicesController < ApplicationController
 
   def create
     member_type = cookies[:member_type]
-    current_service = AuthService.where(provider: omnihash[:provider],
-                                        uid: omnihash[:uid]).first
+    current_service = AuthService.find_by(provider: omnihash[:provider],
+                                          uid: omnihash[:uid])
 
     if logged_in?
       if current_service

@@ -1,13 +1,10 @@
 module ApplicationHelper
-  def humanize_date(date)
+  def humanize_date(date, with_time: false)
     human_date = "#{I18n.l(date, format: :day_in_words)}, "
     human_date << "#{ActiveSupport::Inflector.ordinalize(date.day)} "
     human_date << I18n.l(date, format: :month)
-  end
-
-  def humanize_date_with_time(date, time = date)
-    human_date = humanize_date(date)
-    human_date << " at #{I18n.l(time, format: :time)}"
+    human_date << " at #{I18n.l(date.time, format: :time)}" if with_time
+    human_date
   end
 
   def dot_markdown(text)
