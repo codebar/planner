@@ -14,7 +14,7 @@
               %td
                 %h3 Hi #{@member.name}
                 %p.lead
-                  Invites for our next workshop are now open and we are looking for coaches. The workshop that will take place on #{humanize_date_with_time(@session.date_and_time, @session.time)}.
+                  Invites for our next workshop are now open and we are looking for coaches. The workshop that will take place on #{humanize_date(@session.date_and_time, with_time: true)}.
 
                 %p At the workshop you will be helping students as they work their way through one of our tutorials or a personal project they need help. Don't worry we'll only match you with someone who you'll be able to help.
 
@@ -34,7 +34,7 @@
               %td
                 %h4
                   Workshop
-                  %small #{humanize_date_with_time(@session.date_and_time, @session.time)}
+                  %small #{humanize_date(@session.date_and_time, with_time: true)}
                 %p
                   %b Venue
                   #{@session.host.name}
