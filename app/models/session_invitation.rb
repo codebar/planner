@@ -14,9 +14,7 @@ class SessionInvitation < ActiveRecord::Base
   scope :to_coaches, -> { where(role: 'Coach') }
   scope :by_member, -> { group(:member_id) }
   scope :order_by_latest, -> { joins(:workshop).order('workshops.date_and_time desc') }
-  scope :past, -> { joins(:workshop).where('workshops.date_and_time < ?', Date.today) }
-  scope :last_six_months, -> { joins(:workshop).where('workshops.date_and_time < ? AND workshops.date_and_time > ?',
-                                                      Date.today, Date.today - 6.months)}
+  scope :last_six_months, -> { joins(:workshop).where(workshops: { date_and_time: 6.months.ago...Time.zone.now}) }
 
   def waiting_list_position
     @waiting_list_position ||= WaitingList.by_workshop(self.workshop).where_role(self.role).where(auto_rsvp: true).order(:created_at).map(&:invitation_id).index(self.id) + 1

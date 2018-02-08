@@ -20,13 +20,13 @@ module Admin::SponsorConcerns
 
     def destroy_sponsor
       @sponsor = Sponsor.find(params[:sponsor_id])
-      @workshop.workshop_sponsors.where(sponsor: @sponsor).first.destroy
+      @workshop.workshop_sponsors.find_by(sponsor: @sponsor).destroy
       redirect_to :back
     end
 
     def host
       set_sponsor
-      @workshop_sponsor = WorkshopSponsor.where(workshop: @workshop, sponsor: @sponsor).first_or_create
+      @workshop_sponsor = WorkshopSponsor.find_or_create_by(workshop: @workshop, sponsor: @sponsor)
       @workshop_sponsor.update_attribute(:host, true)
       flash[:notice] = 'Host set successfully'
 
@@ -34,7 +34,7 @@ module Admin::SponsorConcerns
     end
 
     def destroy_host
-      @workshop.workshop_sponsors.where(host: true).first.update_attribute(:host, false)
+      @workshop.workshop_sponsors.find_by(host: true).update_attribute(:host, false)
 
       redirect_to :back
     end

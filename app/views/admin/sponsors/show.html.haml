@@ -24,7 +24,7 @@
             = link_to admin_workshop_path(workshop) do
               %strong=workshop.chapter.name
               %br
-              = humanize_date_with_time(workshop.date_and_time, workshop.time)
+              = humanize_date(workshop.date_and_time, with_time: true)
   .row
     .large-6.columns
       %h4 Accessibility information

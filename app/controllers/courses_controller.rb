@@ -2,7 +2,7 @@ class CoursesController < ApplicationController
   before_action :set_course
 
   def rsvp
-    invitation = CourseInvitation.where(course: @course, member: current_user).first_or_create
+    invitation = CourseInvitation.find_or_create_by(course: @course, member: current_user)
     redirect_to course_invitation_path(invitation)
   end
 

@@ -59,7 +59,7 @@ class InvitationsController < ApplicationController
 
     meeting = Meeting.find_by_slug(params[:meeting_id])
 
-    invitation = MeetingInvitation.where(meeting: meeting, member: current_user, role: 'Participant').first_or_create
+    invitation = MeetingInvitation.find_or_create_by(meeting: meeting, member: current_user, role: 'Participant')
 
     invitation.update_attribute(:attending, true)
 

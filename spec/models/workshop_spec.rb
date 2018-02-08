@@ -8,19 +8,46 @@ describe Workshop do
   it { should respond_to(:date_and_time) }
   it { should respond_to(:sponsors) }
   it { should respond_to(:workshop_sponsors) }
-  it { should respond_to(:rsvp_open_date) }
-  it { should respond_to(:rsvp_open_time) }
+  it { should respond_to(:rsvp_opens_at) }
 
-  context '#before_save' do
-    let(:workshop) { Fabricate.build(:workshop, chapter: Fabricate(:chapter)) }
+  context 'time fields' do
+    let(:london_time) { ActiveSupport::TimeZone['London'].local(2015, 6, 12, 18, 30) }
+    let(:utc_time) { london_time.in_time_zone('UTC') }
 
-    it 'merges date_and_time and time' do
-      workshop.date_and_time = Time.zone.local(2015, 11, 12, 12, 0)
-      workshop.time = Time.utc(2000, 01, 01, 18, 30)
+    context 'date_and_time' do
+      it 'saves the local time in UTC' do
+        workshop.update_attributes!(
+          local_date: '12/06/2015',
+          local_time: '18:30'
+        )
 
-      workshop.save
+        expect(workshop.read_attribute(:date_and_time)).to eq(utc_time)
+      end
 
-      expect(workshop.date_and_time).to eq(Time.zone.local(2015, 11, 12, 18, 30))
+      it 'retrieves the local time in London time' do
+        workshop.update_attribute(:date_and_time, utc_time)
+
+        expect(workshop.date_and_time).to eq(london_time)
+        expect(workshop.date_and_time.zone).to eq('BST')
+      end
+    end
+
+    context 'rsvp_opens_at' do
+      it 'saves the local time in UTC' do
+        workshop.update_attributes!(
+          rsvp_open_local_date: '12/06/2015',
+          rsvp_open_local_time: '18:30'
+        )
+
+        expect(workshop.read_attribute(:rsvp_opens_at)).to eq(utc_time)
+      end
+
+      it 'retrieves the local time in London time' do
+        workshop.update_attribute(:rsvp_opens_at, utc_time)
+
+        expect(workshop.rsvp_opens_at).to eq(london_time)
+        expect(workshop.rsvp_opens_at.zone).to eq('BST')
+      end
     end
   end
 
@@ -37,21 +64,20 @@ describe Workshop do
     context 'rsvp is available' do
       it 'when the event is in the future' do
         workshop.date_and_time = 1.day.from_now
-        workshop.save
 
         expect(workshop.rsvp_available?).to be(true)
       end
 
-      it 'when rsvp_close_time is in the future' do
-        workshop.rsvp_close_time = 2.hours.from_now
+      it 'when rsvp_closes_at is in the future' do
+        workshop.rsvp_closes_at = 2.hours.from_now
 
         expect(workshop.rsvp_available?).to be(true)
       end
     end
 
     context 'rsvp is not available' do
-      it 'when the rsvp_close_time is in the past' do
-        workshop.rsvp_close_time = 2.hours.ago
+      it 'when rsvp_closes_at is in the past' do
+        workshop.rsvp_closes_at = 2.hours.ago
 
         expect(workshop.rsvp_available?).to be(false)
       end
@@ -158,22 +184,22 @@ describe Workshop do
 
   context '#invitable_yet?' do
     it 'is invitable if invitable set to true, no RSVP open time/date set' do
-      workshop = Fabricate.build(:workshop, chapter: Fabricate(:chapter), invitable: true)
+      workshop = Fabricate.build(:workshop, invitable: true)
       expect(workshop.invitable_yet?).to be true
     end
 
     it 'is invitable if RSVP open date/time in past, and invitable set to false' do
-      workshop = Fabricate.build(:workshop, chapter: Fabricate(:chapter), invitable: false, rsvp_open_time: Time.zone.now - 1.days)
+      workshop = Fabricate.build(:workshop, invitable: false, rsvp_opens_at: Time.zone.now - 1.days)
       expect(workshop.invitable_yet?).to be true
     end
 
     it 'is invitable if RSVP open date/time in future, and invitable set to true' do
-      workshop = Fabricate.build(:workshop, chapter: Fabricate(:chapter), invitable: true, rsvp_open_time: Time.zone.now - 1.days)
+      workshop = Fabricate.build(:workshop, invitable: true, rsvp_opens_at: Time.zone.now - 1.days)
       expect(workshop.invitable_yet?).to be true
     end
 
     it 'is NOT invitable if RSVP open date/time in future, and invitable set to false' do
-      workshop = Fabricate.build(:workshop, chapter: Fabricate(:chapter), invitable: false, rsvp_open_time: Time.zone.now + 1.days)
+      workshop = Fabricate.build(:workshop, invitable: false, rsvp_opens_at: Time.zone.now + 1.days)
       expect(workshop.invitable_yet?).to be false
     end
   end
