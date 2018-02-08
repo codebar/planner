@@ -28,6 +28,10 @@
           %br
             = @host_address.to_html
           %br
+        - if @workshop.host.accessibility_info
+          %p
+            %strong Accessibility information:
+            = @workshop.host.accessibility_info
         %iframe{ width: '100%', height: '350', frameborder: '0', scrolling: 'no', marginheight: '0', marginwidth: '0', src: %{https://maps.google.com/maps?f=q&source=s_q&hl=en&amp;geocode=&q=#{@host_address.for_map}&ie=UTF8&t=m&z=15&output=embed} }
         = link_to "View larger map", %{https://maps.google.com/maps?f=q&source=s_q&hl=en&amp;geocode=&q=#{@host_address.for_map}&ie=UTF8&hq=&t=m&z=15}, style: "color:#0000FF;text-align:left"
       .large-4.columns
@@ -40,7 +44,6 @@
                   =link_to sponsor.website do
                     =image_tag(sponsor.avatar, class: 'sponsor', alt: sponsor.name)
             %br
-
 
   .stripe.reverse
     = render partial: 'members/organisers_grid', locals: { members: @workshop.organisers, show_info: false }

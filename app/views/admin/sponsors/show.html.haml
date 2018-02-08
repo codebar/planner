@@ -1,7 +1,7 @@
 %section#banner
   .row
     .large-9.columns
-      %h2= @sponsor.name
+      %h1= @sponsor.name
     .large-3.columns
       = link_to 'Edit', edit_admin_sponsor_path(@sponsor), class: 'button round'
 
@@ -25,3 +25,7 @@
               %strong=workshop.chapter.name
               %br
               = humanize_date(workshop.date_and_time, with_time: true)
+  .row
+    .large-6.columns
+      %h4 Accessibility information
+      %p= @sponsor.accessibility_info
