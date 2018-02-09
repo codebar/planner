@@ -438,6 +438,7 @@ ActiveRecord::Schema.define(version: 20180110212924) do
     t.string   "email"
     t.string   "contact_first_name"
     t.string   "contact_surname"
+    t.text     "accessibility_info"
   end
 
   create_table "sponsorships", force: :cascade do |t|

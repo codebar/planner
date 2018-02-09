@@ -13,6 +13,7 @@ describe Sponsor do
   it { should respond_to(:email) }
   it { should respond_to(:contact_first_name) }
   it { should respond_to(:contact_surname) }
+  it { should respond_to(:accessibility_info) }
   it { should be_valid }
 
   context 'validations' do
