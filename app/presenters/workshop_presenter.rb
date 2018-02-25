@@ -68,6 +68,12 @@ class WorkshopPresenter < EventPresenter
     end.join("\n\n")
   end
 
+  def attending_organisers
+    organisers.map do |o|
+      [o.full_name, 'ORGANISER']
+    end
+  end
+
   def attendee_array
     model.attendances.map do |i|
       if organisers.include?(i.member)
@@ -75,7 +81,7 @@ class WorkshopPresenter < EventPresenter
       else
         [i.member.full_name, i.role.upcase]
       end
-    end
+    end.concat(attending_organisers).uniq
   end
 
   def model
