@@ -3,6 +3,9 @@
   %strong= @meeting.venue.name
   %p= @host_address
   = image_tag(@meeting.venue.avatar.thumb, class: 'monthly_host_logo', alt: @meeting.venue.name)
+  - if @meeting.venue.accessibility_info.present?
+    %strong Accessibility information
+    %p= @meeting.venue.accessibility_info
 
   %h4 RSVP
 
