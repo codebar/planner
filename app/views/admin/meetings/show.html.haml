@@ -12,7 +12,6 @@
     %i.fa.fa-users
     %label Labels
 
-
 %section
   .stripe.reverse
     .row
@@ -24,16 +23,20 @@
 
     .row
       .medium-2.columns
-        %strong #{@meeting.spaces} spaces
-        %br
-        %br
+        %p
+          %strong #{@meeting.spaces} spaces
 
     .row
       .large-3.small-6.columns#host
         - if @meeting.venue.present?
           %h4 Venue
-          %strong= @meeting.venue.name
-          %br
+          %p
+            %strong= @meeting.venue.name
+          %strong Accessibility info
+          - if @meeting.venue.accessibility_info.present?
+            %p= @meeting.venue.accessibility_info
+          - else
+            %p This venue does not have accessibility information yet. Please update the sponsor entry with accessibility information.
 
       .large-3.small-12.columns
         %h4 Team
@@ -46,6 +49,7 @@
         - @meeting.chapters.each do |chapter|
           %div
             = chapter.name
+
     .row
       .large-8.columns
         %h4 Agenda
