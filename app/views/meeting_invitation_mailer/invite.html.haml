@@ -51,3 +51,4 @@
         .content
           = render partial: 'shared_mailers/social'
       %td
+        = render partial: 'shared_mailers/unsubscribe', locals: { chapter: @meeting.chapters }
