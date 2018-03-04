@@ -2,6 +2,7 @@
   %h4 Venue
   %strong= @meeting.venue.name
   %p= @host_address
+  = image_tag(@meeting.venue.avatar.thumb, class: 'monthly_host_logo', alt: @meeting.venue.name)
 
   %h4 RSVP
 
