@@ -2,16 +2,16 @@
   .row
     .large-12.columns
       .row
-        .large-4.columns
-          = f.input :name
-        .large-4.columns
+        .medium-6.columns
+          = f.input :name, required: true
+        .medium-6.columns
           = f.input :slug
   .row
     .large-12.columns
       = f.input :date_and_time, as: :datetime, required: true, label: 'Date', input_html: { style: 'width: 120px;' }
   .row
-    .large-12.columns
-      = f.input :description, as: :text, input_html: { style: 'height: 300px;' }
+    .large-12.columns.admin_margin
+      = f.input :description, placeholder: 'Supports HTML', as: :text, input_html: { style: 'height: 300px;' }
   .row
     .large-3.columns
       = f.input :spaces, as: :integer
@@ -19,17 +19,15 @@
     .large-3.columns
       = f.association :venue, input_html: { data: { placeholder: 'Select venue' }}, required: true
   .row
-    .large-6.columns
-      %br
+    .large-6.columns.admin_margin
       %label Organisers
       = f.collection_select :organisers, Member.all, :id, :full_name, { selected: @meeting.organisers.map(&:id) }, { multiple: true }
   .row
-    .large-6.columns
+    .large-6.columns.admin_margin
       %label Chapters
       = f.collection_select :chapters, Chapter.all, :id, :name, { selected: @meeting.chapters.map(&:id) }, { multiple: true }
   .row
-    .large-6.columns
-      %br
+    .large-6.columns.admin_margin
       = f.input :invitable, as: :boolean, hint: 'Allow members to RSVP'
   .row
     .large-12.columns.text-right

@@ -158,8 +158,11 @@ u {
   margin-bottom: 20px;
 }
 
-
 .stripe:nth-child(even) .grouped-events:not(:last-child) {
   border-bottom: 1px dotted $white;
   margin-bottom: 20px;
+}
+
+.admin_margin {
+  margin-top: 15px;
 }
