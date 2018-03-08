@@ -29,10 +29,6 @@ class Sponsor < ActiveRecord::Base
     number_of_coaches || (seats / 2.0).round
   end
 
-  def self.latest
-    WorkshopSponsor.order('created_at desc').limit(15).map(&:sponsor)
-  end
-
   private
 
   def website_is_url

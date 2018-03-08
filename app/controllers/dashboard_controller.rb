@@ -8,8 +8,6 @@ class DashboardController < ApplicationController
     @upcoming_workshops = upcoming_events.map.inject({}) { |hash, (key, value)| hash[key] = EventPresenter.decorate_collection(value); hash }
 
     @testimonials = Testimonial.order('RANDOM() ').limit(5).includes(:member)
-
-    @sponsors = Sponsor.latest
   end
 
   def dashboard

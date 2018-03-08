@@ -1,5 +1,5 @@
 class SponsorsController < ApplicationController
   def index
-    @sponsors = Sponsor.active.uniq
+    @sponsor_levels = Sponsor.active.group_by(&:level)
   end
 end
