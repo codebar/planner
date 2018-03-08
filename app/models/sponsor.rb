@@ -1,5 +1,14 @@
 class Sponsor < ActiveRecord::Base
   require 'uri'
+
+  enum level: {
+    hidden: 0, # hidden from the sponsors page but still visible on event pages
+    standard: 1,
+    bronze: 2,
+    silver: 3,
+    gold: 4,
+  }
+
   has_one :address
   has_many :workshop_sponsors
   has_many :workshops, through: :workshop_sponsors
@@ -10,7 +19,7 @@ class Sponsor < ActiveRecord::Base
   validate :website_is_url
 
   default_scope -> { order('updated_at desc') }
-  scope :active, -> { joins(:workshop_sponsors) }
+  scope :active, -> { where.not(level: 'hidden') }
 
   mount_uploader(:avatar, AvatarUploader)
 
