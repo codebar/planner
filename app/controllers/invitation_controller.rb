@@ -11,8 +11,6 @@ class InvitationController < ApplicationController
   end
 
   def update_note
-    @invitation = SessionInvitation.find_by_token(params[:id])
-
     new_note = params[:note]
 
     if new_note.blank?

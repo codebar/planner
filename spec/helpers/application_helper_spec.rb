@@ -11,4 +11,8 @@ RSpec.describe ApplicationHelper, type: :helper do
       expect(helper.contact_email).to eq('hello@codebar.io')
     end
   end
+
+  it '#twitter_url_for' do
+    expect(twitter_url_for('Picard')).to eq('http://twitter.com/Picard')
+  end
 end
