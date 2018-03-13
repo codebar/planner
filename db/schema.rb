@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180307221521) do
+ActiveRecord::Schema.define(version: 20180313165054) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -407,24 +407,6 @@ ActiveRecord::Schema.define(version: 20180307221521) do
     t.datetime "updated_at"
   end
 
-  create_table "session_invitations", force: :cascade do |t|
-    t.integer  "workshop_id"
-    t.integer  "member_id"
-    t.boolean  "attending"
-    t.boolean  "attended"
-    t.text     "note"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "token"
-    t.string   "role"
-    t.datetime "reminded_at"
-    t.datetime "rsvp_time"
-  end
-
-  add_index "session_invitations", ["member_id"], name: "index_session_invitations_on_member_id", using: :btree
-  add_index "session_invitations", ["token"], name: "index_session_invitations_on_token", unique: true, using: :btree
-  add_index "session_invitations", ["workshop_id"], name: "index_session_invitations_on_workshop_id", using: :btree
-
   create_table "sponsors", force: :cascade do |t|
     t.string   "name"
     t.text     "description"
@@ -510,6 +492,24 @@ ActiveRecord::Schema.define(version: 20180307221521) do
   end
 
   add_index "waiting_lists", ["invitation_id"], name: "index_waiting_lists_on_invitation_id", using: :btree
+
+  create_table "workshop_invitations", force: :cascade do |t|
+    t.integer  "workshop_id"
+    t.integer  "member_id"
+    t.boolean  "attending"
+    t.boolean  "attended"
+    t.text     "note"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "token"
+    t.string   "role"
+    t.datetime "reminded_at"
+    t.datetime "rsvp_time"
+  end
+
+  add_index "workshop_invitations", ["member_id"], name: "index_workshop_invitations_on_member_id", using: :btree
+  add_index "workshop_invitations", ["token"], name: "index_workshop_invitations_on_token", unique: true, using: :btree
+  add_index "workshop_invitations", ["workshop_id"], name: "index_workshop_invitations_on_workshop_id", using: :btree
 
   create_table "workshop_sponsors", force: :cascade do |t|
     t.integer  "sponsor_id"

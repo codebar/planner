@@ -1,3 +1,3 @@
 Fabricator(:waiting_list) do
-  invitation { Fabricate(:session_invitation) }
+  invitation { Fabricate(:workshop_invitation) }
 end

@@ -71,7 +71,7 @@
   .stripe.reverse
     .row
       .medium-8.columns
-        - if @member.session_invitations.accepted.any?
+        - if @member.workshop_invitations.accepted.any?
           .panel
             %p
               #{@member.name} RSVPed to

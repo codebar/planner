@@ -39,7 +39,7 @@ class DashboardController < ApplicationController
   private
 
   def attendance_stats_by_coach
-    SessionInvitation.to_coaches.attended.by_member.count(:member_id)
+    WorkshopInvitation.to_coaches.attended.by_member.count(:member_id)
   end
 
   def order_by_attendance(member_stats)
@@ -57,7 +57,7 @@ class DashboardController < ApplicationController
                                 .includes(:chapter, :sponsors)
                                 .to_a
 
-    accepted_workshops = current_user.session_invitations.accepted
+    accepted_workshops = current_user.workshop_invitations.accepted
                              .joins(:workshop)
                              .merge(Workshop.upcoming)
                              .includes(workshop: [:chapter, :sponsors])

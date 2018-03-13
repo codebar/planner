@@ -4,7 +4,7 @@ class Member < ActiveRecord::Base
   has_many :attendance_warnings
   has_many :bans
   has_many :eligibility_inquiries
-  has_many :session_invitations
+  has_many :workshop_invitations
   has_many :invitations
   has_many :auth_services
   has_many :feedbacks, foreign_key: :coach_id
@@ -39,7 +39,7 @@ class Member < ActiveRecord::Base
   end
 
   def more_than_two_absences?
-    session_invitations.last_six_months.accepted.length - session_invitations.last_six_months.attended.length > 2
+    workshop_invitations.last_six_months.accepted.length - workshop_invitations.last_six_months.attended.length > 2
   end
 
   def full_name
@@ -79,8 +79,8 @@ class Member < ActiveRecord::Base
     "https://secure.gravatar.com/avatar/#{md5_email}?size=#{size}&default=identicon"
   end
 
-  def attended_sessions
-    session_invitations.attended.map(&:workshop)
+  def attended_workshops
+    workshop_invitations.attended.map(&:workshop)
   end
 
   def requires_additional_details?
@@ -88,7 +88,7 @@ class Member < ActiveRecord::Base
   end
 
   def verified?
-    session_invitations.exists?(role: 'Coach', attended: true)
+    workshop_invitations.exists?(role: 'Coach', attended: true)
   end
 
   def verified_or_organiser?
@@ -122,7 +122,7 @@ class Member < ActiveRecord::Base
   private
 
   def invitations_on(date)
-    session_invitations.joins(:workshop).where('workshops.date_and_time BETWEEN ? AND ?', date.beginning_of_day, date.end_of_day).where(attending: true)
+    workshop_invitations.joins(:workshop).where('workshops.date_and_time BETWEEN ? AND ?', date.beginning_of_day, date.end_of_day).where(attending: true)
   end
 
   def md5_email

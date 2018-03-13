@@ -11,11 +11,11 @@ class WorkshopsController < ApplicationController
     redirect_to :back, notice: 'This workshop is not open for registrations' unless @workshop.invitable_yet?
 
     if role_params.nil?
-      @invitation = SessionInvitation.find_by(workshop: @workshop, member: current_user, attending: true)
+      @invitation = WorkshopInvitation.find_by(workshop: @workshop, member: current_user, attending: true)
     else
       return redirect_to :back, notice: 'You have already RSVPd or joined the waitlist for this workshop.' if @workshop.attendee?(current_user) || @workshop.waitlisted?(current_user)
 
-      @invitation = SessionInvitation.find_or_create_by(workshop: @workshop, member: current_user, role: role_params)
+      @invitation = WorkshopInvitation.find_or_create_by(workshop: @workshop, member: current_user, role: role_params)
     end
 
     redirect_to invitation_path(@invitation)

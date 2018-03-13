@@ -71,11 +71,11 @@ describe Member do
         expect(member.avatar).to eq("https://secure.gravatar.com/avatar/#{encrypted_email}?size=100&default=identicon")
       end
 
-      it '#attended_sessions' do
-        member.session_invitations = 3.times.map { Fabricate(:attended_session_invitation) }
-        member.session_invitations << Fabricate(:session_invitation)
+      it '#attended_workshops' do
+        member.workshop_invitations = 3.times.map { Fabricate(:attended_workshop_invitation) }
+        member.workshop_invitations << Fabricate(:workshop_invitation)
 
-        expect(member.attended_sessions.count).to eq(3)
+        expect(member.attended_workshops.count).to eq(3)
       end
     end
   end

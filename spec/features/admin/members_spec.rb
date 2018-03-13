@@ -3,8 +3,8 @@ require 'spec_helper'
 feature 'Managing users' do
   let(:member) { Fabricate(:member) }
   let(:admin) { Fabricate(:chapter_organiser) }
-  let!(:invitation) { Fabricate(:attended_session_invitation, attending: true, member: member) }
-  let!(:attending_invitation) { Fabricate(:attending_session_invitation, member: member) }
+  let!(:invitation) { Fabricate(:attended_workshop_invitation, attending: true, member: member) }
+  let!(:attending_invitation) { Fabricate(:attending_workshop_invitation, member: member) }
 
   before do
     login admin

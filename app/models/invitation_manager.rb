@@ -126,7 +126,7 @@ class InvitationManager
   def invite_students(workshop)
     workshop.chapter.groups.students.map(&:members).flatten.uniq.shuffle.each do |student|
       next if student.banned?
-      so = SessionInvitation.create workshop: workshop, member: student, role: 'Student'
+      so = WorkshopInvitation.create workshop: workshop, member: student, role: 'Student'
       so.email if so.persisted?
     end
   end
@@ -134,7 +134,7 @@ class InvitationManager
   def invite_coaches(workshop)
     workshop.chapter.groups.coaches.map(&:members).flatten.uniq.shuffle.each do |coach|
       next if coach.banned?
-      invitation = SessionInvitation.new workshop: workshop, member: coach, role: 'Coach'
+      invitation = WorkshopInvitation.new workshop: workshop, member: coach, role: 'Coach'
 
       if invitation.save
         SessionInvitationMailer.invite_coach(workshop, coach, invitation).deliver_now

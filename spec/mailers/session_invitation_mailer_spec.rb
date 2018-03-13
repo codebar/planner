@@ -4,7 +4,7 @@ describe SessionInvitationMailer do
   let(:email) { ActionMailer::Base.deliveries.last }
   let(:workshop) { Fabricate(:workshop, title: 'HTML & CSS') }
   let(:member) { Fabricate(:member) }
-  let(:invitation) { Fabricate(:session_invitation, workshop: workshop, member: member) }
+  let(:invitation) { Fabricate(:workshop_invitation, workshop: workshop, member: member) }
 
   it '#invite_student' do
     email_subject = "Workshop Invitation #{humanize_date(workshop.date_and_time, with_time: true)}"

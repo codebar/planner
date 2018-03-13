@@ -3,7 +3,7 @@ require 'spec_helper'
 feature 'Member portal' do
   subject { page }
   let(:member) { Fabricate(:member) }
-  let!(:invitations) { 5.times.map { Fabricate(:attending_session_invitation, member: member) } }
+  let!(:invitations) { 5.times.map { Fabricate(:attending_workshop_invitation, member: member) } }
   let!(:group) { Fabricate(:group) }
 
   context 'A signed in member' do

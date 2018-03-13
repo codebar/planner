@@ -17,7 +17,7 @@ describe InvitationManager do
       expect(students.members.count).to be > 0
 
       students.members.each do |student|
-        expect(SessionInvitation).to receive(:create).with(workshop: workshop, member: student, role: 'Student').and_call_original
+        expect(WorkshopInvitation).to receive(:create).with(workshop: workshop, member: student, role: 'Student').and_call_original
       end
 
       manager.send_session_emails(workshop, 'students')
@@ -28,7 +28,7 @@ describe InvitationManager do
 
       manager.send_session_emails(workshop, 'coaches')
 
-      coach_invites = SessionInvitation.where(role: 'Coach')
+      coach_invites = WorkshopInvitation.where(role: 'Coach')
 
       expect(coach_invites.count).to eq 5
     end
@@ -41,14 +41,14 @@ describe InvitationManager do
 
       manager.send_session_emails(workshop, 'everyone')
 
-      coach_invites = SessionInvitation.where(role: 'Coach')
+      coach_invites = WorkshopInvitation.where(role: 'Coach')
 
       expect(coach_invites.count).to eq 4
 
       expect(coach_invites.where(member: banned_coach)).to be_empty
     end
 
-    it 'Sends emails when a SessionInvitation is created' do
+    it 'Sends emails when a WorkshopInvitation is created' do
       expect(chapter.groups).to receive(:students).and_return([students])
       expect(chapter.groups).to receive(:coaches).and_return([coaches])
 
@@ -59,7 +59,7 @@ describe InvitationManager do
 
     it "Doesn't send emails when it's not created" do
       expect(chapter.groups).to receive(:students).and_return([students])
-      expect(SessionInvitation).to receive(:create).at_least(:once).and_return(SessionInvitation.new)
+      expect(WorkshopInvitation).to receive(:create).at_least(:once).and_return(MeetingInvitation.new)
 
       expect {
         InvitationManager.new.send_session_emails(workshop, 'students')
@@ -108,16 +108,16 @@ describe InvitationManager do
       @absent_students = populace.shift(2)
       @absent_coaches = populace.shift(2)
       @workshop = Fabricate(:workshop)
-      @attending_students.each { |as| Fabricate(:student_session_invitation, attending: true, workshop: @workshop, member: as) }
-      @attending_coaches.each { |ac| Fabricate(:coach_session_invitation, attending: true, workshop: @workshop, member: ac) }
-      @absent_students.each { |as| Fabricate(:student_session_invitation, workshop: @workshop, member: as) }
-      @absent_coaches.each { |ac| Fabricate(:coach_session_invitation, workshop: @workshop, member: ac) }
+      @attending_students.each { |as| Fabricate(:student_workshop_invitation, attending: true, workshop: @workshop, member: as) }
+      @attending_coaches.each { |ac| Fabricate(:coach_workshop_invitation, attending: true, workshop: @workshop, member: ac) }
+      @absent_students.each { |as| Fabricate(:student_workshop_invitation, workshop: @workshop, member: as) }
+      @absent_coaches.each { |ac| Fabricate(:coach_workshop_invitation, workshop: @workshop, member: ac) }
       @waitlisted_students.each do |ws|
-        invite = Fabricate(:student_session_invitation, workshop: @workshop, member: ws)
+        invite = Fabricate(:student_workshop_invitation, workshop: @workshop, member: ws)
         WaitingList.add(invite)
       end
       @waitlisted_coaches.each do |wc|
-        invite = Fabricate(:coach_session_invitation, workshop: @workshop, member: wc)
+        invite = Fabricate(:coach_workshop_invitation, workshop: @workshop, member: wc)
         WaitingList.add(invite)
       end
     end

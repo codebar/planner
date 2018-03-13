@@ -10,7 +10,7 @@ RSpec.describe WaitingList, type: :model do
       end
 
       it 'is returns the waiting list entries when there are any' do
-        invitations = 2.times.map { Fabricate(:session_invitation, workshop: workshop) }
+        invitations = 2.times.map { Fabricate(:workshop_invitation, workshop: workshop) }
         invitations.each { |invitation| WaitingList.add(invitation) }
 
         expect(WaitingList.by_workshop(workshop).map(&:invitation)).to match_array(invitations)
@@ -19,7 +19,7 @@ RSpec.describe WaitingList, type: :model do
 
     context '#next_spot' do
       it 'returns the next spot to be allocated' do
-        invitation = Fabricate(:session_invitation, workshop: workshop)
+        invitation = Fabricate(:workshop_invitation, workshop: workshop)
         WaitingList.add(invitation)
 
         expect(WaitingList.next_spot(workshop, 'Student').invitation).to eq(invitation)
@@ -29,7 +29,7 @@ RSpec.describe WaitingList, type: :model do
 
   context '#add' do
     it 'is adds an invitation to the waiting list' do
-      invitation = Fabricate(:session_invitation, workshop: workshop)
+      invitation = Fabricate(:workshop_invitation, workshop: workshop)
       WaitingList.add(invitation)
 
       expect(WaitingList.by_workshop(workshop).map(&:invitation)).to eq([invitation])

@@ -3,9 +3,9 @@ class FeedbackRequestMailer < ActionMailer::Base
 
   helper ApplicationHelper
 
-  def request_feedback(sessions, member, feedback_request)
-    @session = sessions
-    @host_address = AddressPresenter.new(@session.host.address)
+  def request_feedback(workshops, member, feedback_request)
+    @workshop = workshops
+    @host_address = AddressPresenter.new(@workshop.host.address)
     @member = member
     @feedback_request = feedback_request
 

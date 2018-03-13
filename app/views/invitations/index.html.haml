@@ -27,8 +27,8 @@
                       %small.subheader #{invitation.parent.chapter.name} Group: #{invitation.role.pluralize}
                       .date #{humanize_date(invitation.parent.date_and_time, with_time: true)}
                   %br
-                  - if invitation.is_a? SessionInvitation
-                    =link_to invitation.attendance_status, invitation_path(invitation), class: "button round expand"
+                  - if invitation.is_a? WorkshopInvitation
+                    =link_to attendance_status(invitation), invitation_path(invitation), class: "button round expand"
                   - elsif invitation.is_a? CourseInvitation
                     =link_to invitation.attendance_status, course_invitation_path(invitation), class: "button round expand"
       - elsif @upcoming_session

@@ -11,7 +11,7 @@ describe Admin::WorkshopsController, type: :controller do
   describe 'DELETE #destroy' do
     context 'workshop invitations have been sent' do
       before do
-        Fabricate(:attending_session_invitation, workshop: workshop)
+        Fabricate(:attending_workshop_invitation, workshop: workshop)
       end
 
       context "workshop deletion tried within specific time frame since it's creation" do
