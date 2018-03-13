@@ -2,7 +2,7 @@ class SubscriptionsController < ApplicationController
   before_action :has_access?
 
   def index
-    @groups = Group.joins(:chapter).order('chapters.city')
+    @groups = Group.includes(:chapter).references(:chapter).order('chapters.city')
   end
 
   def create
