@@ -59,6 +59,7 @@ group :development, :test do
   gem 'rspec-its'
   gem 'rspec-rails'
   gem 'timecop'
+  gem 'bullet'
 end
 
 group :test do
