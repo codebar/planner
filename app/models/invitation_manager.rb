@@ -1,5 +1,5 @@
 class InvitationManager
-  def send_session_emails(workshop, audience)
+  def send_workshop_emails(workshop, audience)
     return 'The workshop is not invitable' unless workshop.invitable?
 
     if audience == 'students'
@@ -16,7 +16,7 @@ class InvitationManager
     invite_coaches workshop
   end
 
-  handle_asynchronously :send_session_emails
+  handle_asynchronously :send_workshop_emails
 
   def send_event_emails(event, chapter)
     return 'The event is not invitable' unless event.invitable?
@@ -86,7 +86,7 @@ class InvitationManager
 
   def self.send_workshop_attendance_reminders(workshop)
     workshop.attendances.where(reminded_at: nil).each do |invitation|
-      SessionInvitationMailer.attending_reminder(workshop, invitation.member, invitation).deliver_now
+      WorkshopInvitationMailer.attending_reminder(workshop, invitation.member, invitation).deliver_now
       invitation.update_attribute(:reminded_at, Time.zone.now)
     end
   end
@@ -94,27 +94,27 @@ class InvitationManager
   def self.send_workshop_waiting_list_reminders(workshop)
     # Only send out reminders to people where reminded_at is nil, ie. falsey.
     workshop.waiting_list.reject(&:reminded_at).each do |invitation|
-      SessionInvitationMailer.waiting_list_reminder(workshop, invitation.member, invitation).deliver_now
+      WorkshopInvitationMailer.waiting_list_reminder(workshop, invitation.member, invitation).deliver_now
       invitation.update_attribute(:reminded_at, Time.zone.now)
     end
   end
 
   def self.send_change_of_details(workshop, title = 'Change of details', sponsor)
     workshop.invitations.accepted.map do |invitation|
-      SessionInvitationMailer.change_of_details(workshop, sponsor, invitation.member, invitation, title).deliver_now
+      WorkshopInvitationMailer.change_of_details(workshop, sponsor, invitation.member, invitation, title).deliver_now
     end
   end
 
   def self.send_waiting_list_emails(workshop)
     if workshop.host.coach_spots > workshop.attending_coaches.length
       WaitingList.by_workshop(workshop).where_role('Coach').each do |waiting_list|
-        SessionInvitationMailer.notify_waiting_list(waiting_list.invitation).deliver_now
+        WorkshopInvitationMailer.notify_waiting_list(waiting_list.invitation).deliver_now
         waiting_list.destroy
       end
 
       if workshop.host.seats > workshop.attending_students.length
         WaitingList.by_workshop(workshop).where_role('Student').each do |waiting_list|
-          SessionInvitationMailer.notify_waiting_list(waiting_list.invitation).deliver_now
+          WorkshopInvitationMailer.notify_waiting_list(waiting_list.invitation).deliver_now
           waiting_list.destroy
         end
       end
@@ -137,7 +137,7 @@ class InvitationManager
       invitation = WorkshopInvitation.new workshop: workshop, member: coach, role: 'Coach'
 
       if invitation.save
-        SessionInvitationMailer.invite_coach(workshop, coach, invitation).deliver_now
+        WorkshopInvitationMailer.invite_coach(workshop, coach, invitation).deliver_now
         Rails.logger.debug("Invitation to #{coach.email} sent")
       else
         Rails.logger.debug("Invitation to #{coach.email} not sent as invitation could not be saved")

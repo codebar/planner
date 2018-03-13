@@ -8,7 +8,7 @@ describe InvitationManager do
 
   let(:student) { Fabricate(:student, groups: [students]) }
 
-  describe '#send_session_emails' do
+  describe '#send_workshop_emails' do
     subject(:manager) { InvitationManager.new }
 
     it 'creates an invitation for each student' do
@@ -20,13 +20,13 @@ describe InvitationManager do
         expect(WorkshopInvitation).to receive(:create).with(workshop: workshop, member: student, role: 'Student').and_call_original
       end
 
-      manager.send_session_emails(workshop, 'students')
+      manager.send_workshop_emails(workshop, 'students')
     end
 
     it 'creates an invitation for each coach' do
       allow(chapter.groups).to receive_messages(coaches: [coaches])
 
-      manager.send_session_emails(workshop, 'coaches')
+      manager.send_workshop_emails(workshop, 'coaches')
 
       coach_invites = WorkshopInvitation.where(role: 'Coach')
 
@@ -39,7 +39,7 @@ describe InvitationManager do
       allow(banned_coach).to receive_messages(banned?: true)
       allow(chapter.groups).to receive_messages(coaches: [coaches])
 
-      manager.send_session_emails(workshop, 'everyone')
+      manager.send_workshop_emails(workshop, 'everyone')
 
       coach_invites = WorkshopInvitation.where(role: 'Coach')
 
@@ -53,7 +53,7 @@ describe InvitationManager do
       expect(chapter.groups).to receive(:coaches).and_return([coaches])
 
       expect {
-        InvitationManager.new.send_session_emails(workshop, 'everyone')
+        InvitationManager.new.send_workshop_emails(workshop, 'everyone')
       }.to change { ActionMailer::Base.deliveries.count }
     end
 
@@ -62,7 +62,7 @@ describe InvitationManager do
       expect(WorkshopInvitation).to receive(:create).at_least(:once).and_return(MeetingInvitation.new)
 
       expect {
-        InvitationManager.new.send_session_emails(workshop, 'students')
+        InvitationManager.new.send_workshop_emails(workshop, 'students')
       }.not_to change { ActionMailer::Base.deliveries.count }
     end
   end

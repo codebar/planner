@@ -9,7 +9,7 @@ class FeedbackRequestMailer < ActionMailer::Base
     @member = member
     @feedback_request = feedback_request
 
-    subject = "Workshop Feedback for #{l(@session.date_and_time, format: :email_title)}"
+    subject = "Workshop Feedback for #{l(@workshop.date_and_time, format: :email_title)}"
 
     mail(mail_args(member, subject)) do |format|
       format.html

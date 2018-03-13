@@ -13,7 +13,7 @@ class Admin::InvitationsController < Admin::ApplicationController
       if attending.eql?('true')
         @invitation.update_attribute(:attending, true)
 
-        SessionInvitationMailer.attending(@workshop, @invitation.member, @invitation).deliver_now if @workshop.future?
+        WorkshopInvitationMailer.attending(@workshop, @invitation.member, @invitation).deliver_now if @workshop.future?
 
         message = "You have added #{@invitation.member.full_name} to the workshop as a #{@invitation.role}."
       else

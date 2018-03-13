@@ -30,8 +30,8 @@
                   - if invitation.is_a? WorkshopInvitation
                     =link_to attendance_status(invitation), invitation_path(invitation), class: "button round expand"
                   - elsif invitation.is_a? CourseInvitation
-                    =link_to invitation.attendance_status, course_invitation_path(invitation), class: "button round expand"
-      - elsif @upcoming_session
+                    =link_to attendance_status(invitation), course_invitation_path(invitation), class: "button round expand"
+      - elsif @upcoming_workshop
         %em You have no invitations. If you just signed up you should receive one soon.
       - else
         %em There are no upcoming events.

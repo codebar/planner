@@ -30,7 +30,7 @@ class InvitationController < ApplicationController
       return redirect_to :back, notice: 'You have already RSVPd or joined the waitlist for this workshop.' if @workshop.attendee?(current_user) || @workshop.waitlisted?(current_user)
 
       @invitation.update_attribute(:attending, true)
-      SessionInvitationMailer.attending(@invitation.workshop, @invitation.member, @invitation).deliver_now
+      WorkshopInvitationMailer.attending(@invitation.workshop, @invitation.member, @invitation).deliver_now
 
       redirect_to :back, notice: t('messages.accepted_invitation',
                                    name: @invitation.member.name)

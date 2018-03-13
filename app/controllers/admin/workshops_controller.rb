@@ -79,7 +79,7 @@ class Admin::WorkshopsController < Admin::ApplicationController
     authorize @workshop
     audience = params[:for]
 
-    InvitationManager.new.send_session_emails(@workshop, audience)
+    InvitationManager.new.send_workshop_emails(@workshop, audience)
 
     redirect_to admin_workshop_path(@workshop), notice: 'Invitations are being emailed out.'
   end

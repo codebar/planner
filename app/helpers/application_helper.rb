@@ -33,7 +33,7 @@ module ApplicationHelper
   end
 
   def contact_email
-    @contact_email ||= @session.present? ? @session.chapter.email : 'hello@codebar.io'
+    @contact_email ||= @workshop.present? ? @workshop.chapter.email : 'hello@codebar.io'
   end
 
   def active_link_class(link_path)

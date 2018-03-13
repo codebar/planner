@@ -27,14 +27,14 @@
           %table{ bgcolor: "#FFFFFF" }
             %tr
               %td.small{ width: "30%", style: "vertical-align: top; padding-right:10px;"}
-                =image_tag(@session.host.avatar, alt: @session.host.name)
+                =image_tag(@workshop.host.avatar, alt: @workshop.host.name)
               %td
                 %h4
                   Workshop
-                  %small= humanize_date(@session.date_and_time, with_time: true)
+                  %small= humanize_date(@workshop.date_and_time, with_time: true)
                 %p
                   %b Venue
-                  #{@session.host.name}
+                  #{@workshop.host.name}
                 =link_to "RSVP", full_url_for(invitation_url(@invitation)), class: 'btn'
 
         .content

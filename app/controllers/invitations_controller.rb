@@ -3,7 +3,7 @@ class InvitationsController < ApplicationController
   before_action :set_invitation, only: %i[show attend reject]
 
   def index
-    @upcoming_session = Workshop.next
+    @upcoming_workshop = Workshop.next
 
     upcoming_invitations = WorkshopInvitation.where(member: current_user).joins(:workshop).merge(Workshop.upcoming).includes(workshop: :chapter)
     upcoming_invitations += CourseInvitation.where(member: current_user).joins(:course).merge(Course.upcoming).includes(:course)

@@ -17,7 +17,7 @@
         = sponsor.name
         %p= AddressPresenter.new(sponsor.address).to_html
         %p
-          %em Sponsored #{sponsor.workshop_sponsors.count} sessions
+          %em Sponsored #{sponsor.workshop_sponsors.count} workshops
 
       .large-4.columns
         = image_tag(sponsor.avatar, class: 'sponsor', alt: sponsor.name)
