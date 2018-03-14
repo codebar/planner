@@ -15,7 +15,7 @@ class WorkshopCalendar
   def setup_event
     start_date = workshop.date_and_time.strftime('%Y%m%d')
     start_time = workshop.time.strftime('%H%M')
-    address = AddressDecorator.decorate(workshop.host.address)
+    address = AddressPresenter.new(workshop.host.address)
     calendar.event do |e|
       e.organizer = "#{workshop.chapter.email}"
       e.dtstart = DateTime.parse("#{start_date}#{start_time}")

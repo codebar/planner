@@ -42,7 +42,7 @@ class Admin::WorkshopsController < Admin::ApplicationController
     @workshop = WorkshopPresenter.new(@workshop)
     return render text: @workshop.attendees_csv if request.format.csv?
 
-    @address = AddressDecorator.decorate(@workshop.host.address) if @workshop.has_host?
+    @address = AddressPresenter.new(@workshop.host.address) if @workshop.has_host?
     set_admin_workshop_data
   end
 
