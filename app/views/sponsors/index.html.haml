@@ -17,4 +17,4 @@
       %ul.small-block-grid-2.medium-block-grid-3.large-block-grid-4#sponsors
         - @sponsors.each do |sponsor|
           %li.text-center
-            = link_to image_tag(sponsor.avatar.large, class: "sponsor-logo-image", alt: sponsor.name), sponsor.website
+            = link_to image_tag(sponsor.avatar, class: "sponsor-logo-image", alt: sponsor.name), sponsor.website
