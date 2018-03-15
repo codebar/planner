@@ -13,7 +13,7 @@
       = f.input :seats, label: 'Student Spots'
     .large-3.columns
       = f.input :number_of_coaches, label: 'Coaches Spots'
-
+ 
   .row
     .large-6.columns
       = f.input :level, collection: Sponsor.levels.keys, label_method: :humanize, disabled: !current_user.has_role?(:admin)
