@@ -26,11 +26,8 @@ class DashboardController < ApplicationController
   end
 
   def wall_of_fame
-    @coaches = order_by_attendance(attendance_stats_by_coach).map do |member_id, attendances|
-      member = Member.unscoped.find(member_id)
-      member.attendance = attendances
-      member
-    end
+    @top_coaches = Member.where(id: top_coach_query.limit(60))
+    @total_coaches = top_coach_query.length
   end
 
   def participant_guide
@@ -38,12 +35,12 @@ class DashboardController < ApplicationController
 
   private
 
-  def attendance_stats_by_coach
-    WorkshopInvitation.to_coaches.attended.by_member.count(:member_id)
-  end
-
-  def order_by_attendance(member_stats)
-    member_stats.sort_by { |member_id, attendance| attendance }.reverse
+  def top_coach_query
+    WorkshopInvitation.to_coaches
+                     .attended
+                     .group(:member_id)
+                     .order('COUNT(member_id) DESC')
+                     .select(:member_id)
   end
 
   def upcoming_events

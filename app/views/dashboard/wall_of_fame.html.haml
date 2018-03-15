@@ -3,5 +3,8 @@
     .large-12.columns
       %h2 Coaches
       %p.lead
-        Would you like to help out by coaching at one of our workshops? Read our #{ link_to "teaching guide", teaching_guide_path } then sign up as a coach.
-= render partial: '/coach/coach', locals: { coaches: @coaches }
+        The people below are just a handful of our #{ @total_coaches } volunteer coaches.
+
+        If you’d like to start coaching at a workshop near you, read our #{ link_to "teaching guide", teaching_guide_path } and then #{ link_to "sign up", new_member_path } as a coach. It’s easier than you think!
+
+= render partial: '/coach/coach', locals: { coaches: @top_coaches }
