@@ -1,7 +1,5 @@
-#sponsors {
-  .sponsor-logo-image {
-    padding-bottom: 20px;
-  }
+.sponsor-logo-image {
+  padding-bottom: 20px;
 }
 
 .small-image {
@@ -12,4 +10,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.sponsor-header-margin {
+  margin-bottom: 35px;
 }
