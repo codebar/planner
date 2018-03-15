@@ -73,13 +73,4 @@ describe Sponsor do
       end
     end
   end
-
-  context 'scopes' do
-    let!(:past) { 2.times.map { Fabricate(:workshop) } .map(&:sponsors) }
-    let!(:latest) { 4.times.map { Fabricate(:workshop) } .map(&:sponsors) }
-
-    it '#latest' do
-      expect(Sponsor.latest).to eq((latest.reverse + past.reverse).flatten)
-    end
-  end
 end

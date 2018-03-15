@@ -11,10 +11,16 @@
         If you are interested in becoming a host please do get in touch with us at #{mail_to "hello@codebar.io", "hello@codebar.io"}
         ='.'
 
-.stripe.reverse
-  .row
-    .large-12.columns
-      %ul.small-block-grid-2.medium-block-grid-3.large-block-grid-4#sponsors
-        - @sponsors.each do |sponsor|
-          %li.text-center
-            = link_to image_tag(sponsor.avatar, class: "sponsor-logo-image", alt: sponsor.name), sponsor.website
+
+- ['gold', 'silver', 'bronze', 'standard'].each do |level|
+  - if @sponsor_levels[level]
+    .stripe.reverse
+      .row
+        .large-12.columns
+          %h3 #{level == 'standard' ? 'And thanks to our other ' : level.humanize} sponsors
+      .row
+        .large-12.columns
+          %ul.small-block-grid-2.medium-block-grid-3.large-block-grid-4#sponsors
+            - @sponsor_levels[level].each do |sponsor|
+              %li.text-center
+                = link_to image_tag(sponsor.avatar, class: "sponsor-logo-image", alt: sponsor.name), sponsor.website
