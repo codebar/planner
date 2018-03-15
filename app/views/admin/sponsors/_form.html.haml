@@ -10,7 +10,7 @@
   .row
     .large-12.columns
       .large-6.columns
-        = f.input :avatar, as: :file
+        = f.input :avatar, as: :file, required: !@sponsor.avatar?
         = f.hidden_field :image_cache
       .large-3.columns
         = f.input :seats, label: 'Student Spots'
