@@ -42,6 +42,8 @@ gem 'gibbon', '~> 1.1.5'
 
 gem 'stripe'
 
+gem "sentry-raven"
+
 group :development do
   gem 'better_errors'
   gem 'letter_opener'
