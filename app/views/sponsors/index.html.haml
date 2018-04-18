@@ -17,11 +17,10 @@
     .stripe.reverse
       .row
         .large-12.columns
-          %h3.sponsor-header-margin.text-center 
+          %h3.sponsor-header-margin.text-center
             #{level == 'standard' ? 'And thanks to our other ' : level.humanize} sponsors
-      .row
-        .large-12.columns
-          %ul.small-block-grid-2.medium-block-grid-3.large-block-grid-4
-            - @sponsor_levels[level].each do |sponsor|
-              %li.text-center
-                = link_to image_tag(sponsor.avatar, class: "sponsor-logo-image", alt: sponsor.name), sponsor.website
+      - @sponsor_levels[level].in_groups_of(6) do |grouped_sponsors|
+        .row.sponsor-row
+          - grouped_sponsors.compact.each do |sponsor|
+            .medium-2.small-4.columns
+              = link_to image_tag(sponsor.avatar, class: "small-image", alt: sponsor.name), sponsor.website
