@@ -45,6 +45,11 @@ brew update
 brew install postgresql
 brew services start postgresql
 ```
+### Other dependencies
+```
+brew install imagemagick
+brew install phantomjs
+```
 
 ### Install the Gems!
 
