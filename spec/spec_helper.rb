@@ -39,6 +39,15 @@ RSpec.configure do |config|
       example.run
     end
   end
+
+  if Bullet.enable?
+    config.around(:each) do |example|
+      Bullet.start_request
+      example.run
+      Bullet.perform_out_of_channel_notifications if Bullet.notification?
+      Bullet.end_request
+    end
+  end
 end
 
 Shoulda::Matchers.configure do |config|

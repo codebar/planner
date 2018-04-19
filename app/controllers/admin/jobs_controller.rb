@@ -10,7 +10,7 @@ class Admin::JobsController < Admin::ApplicationController
   end
 
   def all
-    @jobs = Job.unscoped.ordered
+    @jobs = Job.unscoped.ordered.includes(:approved_by)
     authorize @jobs
   end
 

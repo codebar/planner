@@ -6,8 +6,8 @@ class Admin::PortalController < Admin::ApplicationController
     @sponsors = Sponsor.last(5)
     @chapters = Chapter.all
     @workshops = Workshop.upcoming
-    @groups = Group.all
-    @subscribers = Subscription.last(20).reverse
+    @groups = Group.includes(:chapter)
+    @subscribers = Subscription.order('created_at DESC').limit(20).includes(:member, :group)
   end
 
   def guide

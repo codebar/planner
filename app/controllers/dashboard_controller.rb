@@ -47,23 +47,32 @@ class DashboardController < ApplicationController
   end
 
   def upcoming_events
-    workshops = Workshop.upcoming || []
+    workshops = Workshop.upcoming.includes(:chapter, :sponsors)
     all_events(workshops).sort_by(&:date_and_time).group_by(&:date)
   end
 
   def upcoming_events_for_user
-    chapters = current_user.groups.map(&:chapter).uniq!
-    workshops = chapters.collect { |c| c.workshops.upcoming } if chapters
-    workshops ||= []
-    workshops << current_user.session_invitations.accepted.joins(:workshop).where('workshops.date_and_time > ?', Time.zone.now).map(&:workshop)
-    all_events(workshops).sort_by(&:date_and_time).group_by(&:date)
+    chapter_workshops = Workshop.upcoming
+                                .where(chapter: current_user.chapters)
+                                .includes(:chapter, :sponsors)
+                                .to_a
+
+    accepted_workshops = current_user.session_invitations.accepted
+                             .joins(:workshop)
+                             .merge(Workshop.upcoming)
+                             .includes(workshop: [:chapter, :sponsors])
+                             .map(&:workshop)
+
+    all_events(chapter_workshops + accepted_workshops)
+      .sort_by(&:date_and_time)
+      .group_by(&:date)
   end
 
   def all_events(workshops)
     course = Course.next
     meeting = Meeting.next
-    event = Event.future(DEFAULT_UPCOMING_EVENTS)
+    events = Event.future(DEFAULT_UPCOMING_EVENTS)
 
-    (workshops << course << event << meeting).compact.flatten
+    [*workshops, course, *events, meeting].compact
   end
 end
