@@ -22,5 +22,5 @@
       - @sponsor_levels[level].in_groups_of(6) do |grouped_sponsors|
         .row.sponsor-row
           - grouped_sponsors.compact.each do |sponsor|
-            .medium-2.small-4.columns
+            .medium-2.small-4.columns.sponsor-image
               = link_to image_tag(sponsor.avatar, class: "small-image", alt: sponsor.name), sponsor.website
