@@ -4,7 +4,7 @@ class WorkshopsController < ApplicationController
 
   def show
     @workshop = WorkshopPresenter.new(@workshop)
-    @host_address = AddressDecorator.decorate(@workshop.host.address) if @workshop.has_host?
+    @host_address = AddressPresenter.new(@workshop.host.address) if @workshop.has_host?
   end
 
   def rsvp

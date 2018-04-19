@@ -32,7 +32,7 @@ class SessionInvitationMailer < ActionMailer::Base
   def attending(sessions, member, invitation, waiting_list = false)
     @session = sessions
     @workshop = WorkshopPresenter.new(sessions)
-    @host_address = AddressDecorator.decorate(@session.host.address)
+    @host_address = AddressPresenter.new(@session.host.address)
     @member = member
     @invitation = invitation
     @waiting_list = waiting_list
@@ -51,7 +51,7 @@ class SessionInvitationMailer < ActionMailer::Base
   def change_of_details(sessions, sponsor, member, invitation, title = 'Change of details')
     @session = sessions
     @sponsor = sponsor
-    @host_address = AddressDecorator.decorate(@session.host.address)
+    @host_address = AddressPresenter.new(@session.host.address)
     @member = member
     @invitation = invitation
 
@@ -66,7 +66,7 @@ class SessionInvitationMailer < ActionMailer::Base
   def attending_reminder(session, member, invitation)
     @session = session
     @workshop = WorkshopPresenter.new(session)
-    @host_address = AddressDecorator.decorate(@session.host.address)
+    @host_address = AddressPresenter.new(@session.host.address)
     @member = member
     @invitation = invitation
 
@@ -79,7 +79,7 @@ class SessionInvitationMailer < ActionMailer::Base
   def waiting_list_reminder(session, member, invitation)
     @session = session
     @workshop = WorkshopPresenter.new(session)
-    @host_address = AddressDecorator.decorate(@session.host.address)
+    @host_address = AddressPresenter.new(@session.host.address)
     @member = member
     @invitation = invitation
 
@@ -91,7 +91,7 @@ class SessionInvitationMailer < ActionMailer::Base
 
   def notify_waiting_list(invitation)
     @session = invitation.workshop
-    @host_address = AddressDecorator.decorate(@session.host.address)
+    @host_address = AddressPresenter.new(@session.host.address)
     @member = invitation.member
     @invitation = invitation
 

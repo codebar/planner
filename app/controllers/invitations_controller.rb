@@ -5,15 +5,16 @@ class InvitationsController < ApplicationController
   def index
     @upcoming_session = Workshop.next
 
-    @upcoming_invitations = SessionInvitation.where(member: current_user).joins(:workshop).where('date_and_time >= ?', Time.zone.now)
-    @upcoming_invitations += CourseInvitation.where(member: current_user).joins(:course).where('date_and_time >= ?', Time.zone.now)
+    workshop_invitations = SessionInvitation.where(member: current_user).joins(:workshop).where('date_and_time >= ?', Time.zone.now)
+    course_invitations = CourseInvitation.where(member: current_user).joins(:course).where('date_and_time >= ?', Time.zone.now)
+    @upcoming_invitations = InvitationPresenter.decorate_collection(workshop_invitations + course_invitations)
 
     @attended_invitations = SessionInvitation.where(member: current_user).attended
   end
 
   def show
     @event = EventPresenter.new(@invitation.event)
-    @host_address = AddressDecorator.new(@event.venue.address)
+    @host_address = AddressPresenter.new(@event.venue.address)
     @member = @invitation.member
   end
 

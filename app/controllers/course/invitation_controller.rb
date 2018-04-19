@@ -3,7 +3,7 @@ class Course::InvitationController < ApplicationController
 
   def show
     @course = CoursePresenter.new(@invitation.course)
-    @host_address = AddressDecorator.decorate(@invitation.course.sponsor.address)
+    @host_address = AddressPresenter.new(@invitation.course.sponsor.address)
   end
 
   def accept

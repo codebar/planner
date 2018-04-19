@@ -4,15 +4,13 @@ class InvitationController < ApplicationController
   def show
     @announcements = @invitation.member.announcements.active
     @tutorial_titles = Tutorial.all_titles
-    @host_address = AddressDecorator.decorate(@invitation.parent.host.address)
+    @host_address = AddressPresenter.new(@invitation.parent.host.address)
     @workshop = WorkshopPresenter.new(@invitation.workshop)
 
     render text: @workshop.attendees_csv if request.format.csv?
   end
 
   def update_note
-    @invitation = SessionInvitation.find_by_token(params[:id])
-
     new_note = params[:note]
 
     if new_note.blank?

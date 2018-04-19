@@ -13,7 +13,7 @@ class EventCalendar
   private
 
   def setup_event
-    address = AddressDecorator.decorate(event.venue.address)
+    address = AddressPresenter.new(event.venue.address)
     calendar.event do |e|
       e.organizer = "#{event.email}"
       e.dtstart = event.date_and_time

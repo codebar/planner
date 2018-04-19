@@ -5,7 +5,7 @@ class FeedbackRequestMailer < ActionMailer::Base
 
   def request_feedback(sessions, member, feedback_request)
     @session = sessions
-    @host_address = AddressDecorator.decorate(@session.host.address)
+    @host_address = AddressPresenter.new(@session.host.address)
     @member = member
     @feedback_request = feedback_request
 

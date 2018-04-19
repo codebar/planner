@@ -5,7 +5,7 @@ class MeetingsController < ApplicationController
     if @meeting.attending?(current_user)
       @invitation = MeetingInvitation.where(meeting: @meeting, member: current_user).last
     end
-    @host_address = AddressDecorator.decorate(@meeting.venue.address)
+    @host_address = AddressPresenter.new(@meeting.venue.address)
     @attendees = @meeting.invitations.where(attending: true)
   end
 
@@ -13,6 +13,6 @@ class MeetingsController < ApplicationController
 
   def set_meeting
     @meeting = Meeting.find_by_slug(params[:id])
-    @map_address = AddressDecorator.new(@meeting.venue.address).for_map
+    @map_address = AddressPresenter.new(@meeting.venue.address).for_map
   end
 end

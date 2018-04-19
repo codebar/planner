@@ -7,6 +7,10 @@ class InvitationPresenter < SimpleDelegator
     @member ||= MemberPresenter.new(model.member)
   end
 
+  def attendance_status
+    model.attending ? 'Attending' : 'RSVP'
+  end
+
   private
 
   def model

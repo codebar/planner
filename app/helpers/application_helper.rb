@@ -39,4 +39,8 @@ module ApplicationHelper
   def active_link_class(link_path)
     current_page?(link_path) ? 'active' : ''
   end
+
+  def twitter_url_for(username)
+    "http://twitter.com/#{username}"
+  end
 end
