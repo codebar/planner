@@ -5,5 +5,5 @@ class WorkshopSponsor < ActiveRecord::Base
   validates :sponsor_id, uniqueness: { scope: :workshop_id, message: 'already a sponsor' }
 
   scope :hosts, -> { where('workshop_sponsors.host = ?', true) }
-  scope :for_session, ->(workshop_id) { where('workshop_sponsors.workshop_id = ?', workshop_id) }
+  scope :for_workshop, ->(workshop_id) { where('workshop_sponsors.workshop_id = ?', workshop_id) }
 end

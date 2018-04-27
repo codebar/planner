@@ -150,7 +150,7 @@ feature 'Viewing a workshop page' do
 
     context 'when invitations have been sent out' do
       let(:member) { Fabricate(:member) }
-      let!(:invitation) { Fabricate(:attending_session_invitation, member: member, workshop: workshop) }
+      let!(:invitation) { Fabricate(:attending_workshop_invitation, member: member, workshop: workshop) }
 
       it 'can manage details if they are already attending' do
         login(member)

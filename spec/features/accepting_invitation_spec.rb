@@ -2,7 +2,7 @@ require 'spec_helper'
 
 feature 'a member can' do
   context '#workshop' do
-    let(:invitation) { Fabricate(:session_invitation) }
+    let(:invitation) { Fabricate(:workshop_invitation) }
     let(:invitation_route) { invitation_path(invitation) }
 
     let(:member) { Fabricate(:member) }
@@ -67,7 +67,7 @@ feature 'a member can' do
   end
 
   context 'edit invitation' do
-    let(:invitation) { Fabricate(:session_invitation) }
+    let(:invitation) { Fabricate(:workshop_invitation) }
     scenario 'logged in user with invitation can edit the description'
   end
 end

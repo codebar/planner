@@ -6,7 +6,7 @@ class Workshop < ActiveRecord::Base
 
   resourcify :permissions, role_cname: 'Permission', role_table_name: :permission
 
-  has_many :invitations, class_name: 'SessionInvitation'
+  has_many :invitations, class_name: 'WorkshopInvitation'
   has_many :workshop_sponsors
   has_many :sponsors, through: :workshop_sponsors
   has_many :organisers, -> { where('permissions.name' => 'organiser') }, through: :permissions, source: :members
@@ -24,7 +24,7 @@ class Workshop < ActiveRecord::Base
   before_validation :set_opens_at
 
   def host
-    WorkshopSponsor.hosts.for_session(self.id).first.sponsor rescue nil
+    WorkshopSponsor.hosts.for_workshop(self.id).first.sponsor rescue nil
   end
 
   def waiting_list

@@ -78,9 +78,9 @@ column is true, and zero or more where the `host` column is false. In
 other parts of the code, the one with `host` set to true will be
 referred to as the `venue`.
 
-### SessionInvitation
+### WorkshopInvitation
 
-A `session_invitation` describes a member's attendance status at a
+A `workshop_invitation` describes a member's attendance status at a
 `workshop`. An invitation relates a single `workshop`, a single
 `member`, and a role that is either `"Student"` or `"Coach"`.
 
@@ -95,7 +95,7 @@ and its existence inhibits sending further emails.
 
 A `waiting_list` describes a member's desire to attend at a `workshop`,
 should a place become available for them. It is associated directly to
-a `session_invitation`, and to a workshop through that object.
+a `workshop_invitation`, and to a workshop through that object.
 
 If this object exists with the `auto_rsvp` field set to true then the
 member is on the waiting list.

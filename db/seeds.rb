@@ -43,7 +43,7 @@ if Rails.env.development?
 
     40.times do |n|
       coach = coaches.sample
-      Fabricate(:attended_session_invitation, role: 'Coach', member: coach, sessions: workshop.sample) rescue 'Coach already attended'
+      Fabricate(:attended_workshop_invitation, role: 'Coach', member: coach, workshops: workshop.sample) rescue 'Coach already attended'
     end
 
     puts '..done!'

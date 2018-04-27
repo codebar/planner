@@ -133,30 +133,30 @@ describe Workshop do
       end
 
       it '#attending_students' do
-        3.times { Fabricate(:session_invitation, workshop: workshop, attending: true) }
-        1.times { Fabricate(:session_invitation, workshop: workshop, attending: false) }
+        3.times { Fabricate(:workshop_invitation, workshop: workshop, attending: true) }
+        1.times { Fabricate(:workshop_invitation, workshop: workshop, attending: false) }
 
         expect(workshop.reload.attending_students.length).to eq(3)
       end
 
       it '#attending_members' do
-        2.times { Fabricate(:coach_session_invitation, workshop: workshop, attending: true) }
-        1.times { Fabricate(:coach_session_invitation, workshop: workshop, attending: false) }
+        2.times { Fabricate(:coach_workshop_invitation, workshop: workshop, attending: true) }
+        1.times { Fabricate(:coach_workshop_invitation, workshop: workshop, attending: false) }
 
         expect(workshop.reload.attending_coaches.length).to eq(2)
       end
 
       it '#attendee? for students' do
-        attendee_invites = 4.times.collect { Fabricate(:session_invitation, workshop: workshop, attending: true) }
-        nonattendee_invites = 2.times.collect { Fabricate(:session_invitation, workshop: workshop, attending: false) }
+        attendee_invites = 4.times.collect { Fabricate(:workshop_invitation, workshop: workshop, attending: true) }
+        nonattendee_invites = 2.times.collect { Fabricate(:workshop_invitation, workshop: workshop, attending: false) }
 
         attendee_invites.each { |a| expect(workshop.attendee?(a.member)).to be true }
         nonattendee_invites.each { |a| expect(workshop.attendee?(a.member)).to be false }
       end
 
       it '#attendee? for coaches' do
-        attendee_invites = 4.times.collect { Fabricate(:coach_session_invitation, workshop: workshop, attending: true) }
-        nonattendee_invites = 2.times.collect { Fabricate(:coach_session_invitation, workshop: workshop, attending: false) }
+        attendee_invites = 4.times.collect { Fabricate(:coach_workshop_invitation, workshop: workshop, attending: true) }
+        nonattendee_invites = 2.times.collect { Fabricate(:coach_workshop_invitation, workshop: workshop, attending: false) }
 
         attendee_invites.each { |a| expect(workshop.attendee?(a.member)).to be true }
         nonattendee_invites.each { |a| expect(workshop.attendee?(a.member)).to be false }
@@ -165,18 +165,18 @@ describe Workshop do
 
     context 'Waitlist attendance' do
       it '#waitlisted? for students' do
-        invitations = 5.times.collect { Fabricate(:session_invitation, workshop: workshop) }
+        invitations = 5.times.collect { Fabricate(:workshop_invitation, workshop: workshop) }
         invitations.each { |invitation| WaitingList.add(invitation) }
-        attendee_invites = 4.times.collect { Fabricate(:session_invitation, workshop: workshop, attending: true) }
+        attendee_invites = 4.times.collect { Fabricate(:workshop_invitation, workshop: workshop, attending: true) }
 
         invitations.each { |a| expect(workshop.waitlisted?(a.member)).to be true }
         attendee_invites.each { |a| expect(workshop.waitlisted?(a.member)).to be false }
       end
 
       it '#waitlisted? for coaches' do
-        invitations = 5.times.collect { Fabricate(:coach_session_invitation, workshop: workshop) }
+        invitations = 5.times.collect { Fabricate(:coach_workshop_invitation, workshop: workshop) }
         invitations.each { |invitation| WaitingList.add(invitation) }
-        attendee_invites = 4.times.collect { Fabricate(:coach_session_invitation, workshop: workshop, attending: true) }
+        attendee_invites = 4.times.collect { Fabricate(:coach_workshop_invitation, workshop: workshop, attending: true) }
 
         invitations.each { |a| expect(workshop.waitlisted?(a.member)).to be true }
         attendee_invites.each { |a| expect(workshop.waitlisted?(a.member)).to be false }

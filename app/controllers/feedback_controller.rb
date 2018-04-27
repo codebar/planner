@@ -9,7 +9,7 @@ class FeedbackController < ApplicationController
 
     set_coaches(feedback_request.workshop)
 
-    @session = feedback_request.workshop
+    @workshop = feedback_request.workshop
     @feedback = Feedback.new
   end
 
@@ -22,7 +22,7 @@ class FeedbackController < ApplicationController
       feedback_request = FeedbackRequest.find_by(token: params[:id], submited: false)
       set_coaches(feedback_request.workshop)
 
-      @session = feedback_request.workshop
+      @workshop = feedback_request.workshop
       @feedback = Feedback.new(feedback_params)
       @feedback.valid?
 

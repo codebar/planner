@@ -1,10 +1,10 @@
 require 'spec_helper'
 
 describe WorkshopPresenter do
-  let(:invitations) { [Fabricate(:student_session_invitation),
-                       Fabricate(:student_session_invitation),
-                       Fabricate(:coach_session_invitation),
-                       Fabricate(:coach_session_invitation)
+  let(:invitations) { [Fabricate(:student_workshop_invitation),
+                       Fabricate(:student_workshop_invitation),
+                       Fabricate(:coach_workshop_invitation),
+                       Fabricate(:coach_workshop_invitation)
                       ] }
   let(:chapter) { Fabricate(:chapter) }
   let(:workshop_double) { double(:workshop, attendances: invitations, host: Fabricate(:sponsor), chapter: chapter) }

@@ -1,14 +1,14 @@
 require 'spec_helper'
 
-describe SessionInvitationMailer do
+describe WorkshopInvitationMailer do
   let(:email) { ActionMailer::Base.deliveries.last }
   let(:workshop) { Fabricate(:workshop, title: 'HTML & CSS') }
   let(:member) { Fabricate(:member) }
-  let(:invitation) { Fabricate(:session_invitation, workshop: workshop, member: member) }
+  let(:invitation) { Fabricate(:workshop_invitation, workshop: workshop, member: member) }
 
   it '#invite_student' do
     email_subject = "Workshop Invitation #{humanize_date(workshop.date_and_time, with_time: true)}"
-    SessionInvitationMailer.invite_student(workshop, member, invitation).deliver_now
+    WorkshopInvitationMailer.invite_student(workshop, member, invitation).deliver_now
 
     expect(email.subject).to eq(email_subject)
     expect(email.body.encoded).to match(workshop.chapter.email)
@@ -16,14 +16,14 @@ describe SessionInvitationMailer do
 
   it '#attending_reminder' do
     email_subject = "Workshop Reminder #{humanize_date(workshop.date_and_time, with_time: true)}"
-    SessionInvitationMailer.attending_reminder(workshop, member, invitation).deliver_now
+    WorkshopInvitationMailer.attending_reminder(workshop, member, invitation).deliver_now
     expect(email.subject).to eq(email_subject)
     expect(email.body.encoded).to match(workshop.chapter.email)
   end
 
   it '#waitlist_reminder' do
     email_subject = "Reminder: you're on the codebar waiting list (#{humanize_date(workshop.date_and_time, with_time: true)})"
-    SessionInvitationMailer.waiting_list_reminder(workshop, member, invitation).deliver_now
+    WorkshopInvitationMailer.waiting_list_reminder(workshop, member, invitation).deliver_now
 
     expect(email.subject).to eq(email_subject)
     expect(email.from).to eq([workshop.chapter.email])

@@ -12,7 +12,7 @@ feature 'member feedback' do
     Fabricate(:feedback, coach: coach)
 
     @tutorial = Fabricate(:tutorial, title: 'tutorial title')
-    Fabricate(:attended_session_invitation, workshop: feedback_request.workshop, member: coach, role: 'Coach')
+    Fabricate(:attended_workshop_invitation, workshop: feedback_request.workshop, member: coach, role: 'Coach')
   end
 
   context 'Feedback form' do

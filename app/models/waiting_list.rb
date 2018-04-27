@@ -1,10 +1,10 @@
 class WaitingList < ActiveRecord::Base
   has_one :workshop, through: :invitation
   has_one :member, through: :invitation
-  belongs_to :invitation, class_name: 'SessionInvitation'
+  belongs_to :invitation, class_name: 'WorkshopInvitation'
 
-  scope :by_workshop, ->(workshop) { joins(:invitation).where('session_invitations.workshop_id = ?', workshop.id) }
-  scope :where_role, ->(role) { where('session_invitations.role = ?', role) }
+  scope :by_workshop, ->(workshop) { joins(:invitation).where('workshop_invitations.workshop_id = ?', workshop.id) }
+  scope :where_role, ->(role) { where('workshop_invitations.role = ?', role) }
 
   def self.add(invitation, auto_rsvp = true)
     create(invitation: invitation, auto_rsvp: auto_rsvp)

@@ -1,4 +1,4 @@
-class SessionInvitation < ActiveRecord::Base
+class WorkshopInvitation < ActiveRecord::Base
   include InvitationConcerns
 
   belongs_to :workshop
@@ -26,7 +26,7 @@ class SessionInvitation < ActiveRecord::Base
 
   def email
     if for_student?
-      SessionInvitationMailer.invite_student(self.workshop, self.member, self).deliver_now
+      WorkshopInvitationMailer.invite_student(self.workshop, self.member, self).deliver_now
     end
   end
 end

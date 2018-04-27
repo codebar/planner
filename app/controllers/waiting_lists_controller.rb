@@ -28,6 +28,6 @@ class WaitingListsController < ApplicationController
   end
 
   def invitation
-    @invitation ||= SessionInvitation.find_by_token(invitation_token)
+    @invitation ||= WorkshopInvitation.find_by_token(invitation_token)
   end
 end

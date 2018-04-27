@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe InvitationPresenter do
-  let(:invitation) { Fabricate(:student_session_invitation) }
+  let(:invitation) { Fabricate(:student_workshop_invitation) }
   let(:invitation_presenter) { InvitationPresenter.new(invitation) }
 
   it '#member' do
