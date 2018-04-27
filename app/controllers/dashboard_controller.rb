@@ -26,14 +26,16 @@ class DashboardController < ApplicationController
   end
 
   def wall_of_fame
-    @top_coaches = Member.where(id: top_coach_query.limit(60))
-    @total_coaches = top_coach_query.length
+    @coaches = Member.where(id: top_coach_query).paginate(page: page, per_page: 60)
   end
 
   def participant_guide
   end
 
   private
+  def page
+    params.permit(:page)[:page]
+  end
 
   def top_coach_query
     WorkshopInvitation.to_coaches
