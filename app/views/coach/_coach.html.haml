@@ -1,27 +1,20 @@
 .stripe.reverse
   .row
     .large-12.columns
-      .text-right
-        = will_paginate(@coaches)
-        %br
-        %br
-      %ul.small-block-grid-2.medium-block-grid-5.large-block-grid-5
+      %ul.small-block-grid-1.medium-block-grid-2.large-block-grid-3
         - coaches.each do |coach|
           %li.coach
             .row
-              .small-12.columns
-                .text-center
-                  =link_to twitter_url_for(coach.twitter), class: 'user-link' do
-                    =image_tag(coach.avatar(50), class: 'th radius', title: coach.full_name, alt: coach.full_name)
+              .small-2.columns
+                =link_to twitter_url_for(coach.twitter), class: 'user-link' do
+                  =image_tag(coach.avatar(96), class: 'th radius', title: coach.full_name, alt: coach.full_name)
 
-                %br
+              .small-10.columns
                 =link_to twitter_url_for(coach.twitter) do
                   = coach.full_name
-                %p.small= coach.about_you
+                %p= coach.about_you
                 - if coach.skills.any?
                   %p
                     skills:
                     - coach.skills.each do |skill|
                       = link_to skill.name, skill_url(skill.name), class: "skill"
-      .text-right
-        = will_paginate(@coaches)

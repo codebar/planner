@@ -412,7 +412,6 @@ GEM
     websocket-driver (0.6.3)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.2)
-    will_paginate (3.1.6)
     xpath (2.0.0)
       nokogiri (~> 1.3)
     yard (0.9.12)
@@ -481,7 +480,6 @@ DEPENDENCIES
   turbolinks
   tzinfo-data
   uglifier (>= 1.3.0)
-  will_paginate
 
 RUBY VERSION
    ruby 2.4.2p198
