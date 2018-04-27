@@ -41,6 +41,8 @@ gem 'gibbon', '~> 1.1.5'
 
 gem 'stripe'
 
+gem 'rails-html-sanitizer', '~> 1.0.4'
+
 group :development do
   gem 'better_errors'
   gem 'letter_opener'
