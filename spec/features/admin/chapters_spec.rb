@@ -63,6 +63,7 @@ feature 'chapters' do
         visit edit_admin_chapter_path(chapter)
 
         expect(page).to have_current_path('/')
+        expect(page).to have_content('You are not authorized to perform this action.')
       end
     end
 
