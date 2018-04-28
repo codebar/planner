@@ -1,0 +1,64 @@
+!!!DOCTYPE html
+%html
+  %head
+    %link{ rel: 'image_src', href: 'http://codebar.io/images/logo-square.png', :alt => "codebar logo" }
+    = favicon_link_tag 'favicon.ico'
+    %title codebar.io - Page not found
+    :css
+      #animated-logo {
+        border-radius: 50%;
+        border: 2px solid #f5f6f7;
+      }
+
+      body {
+        font-family: Helvetica, arial, sans-serif;
+        font-size: 14px;
+        line-height: 1.6;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        background-color: white;
+        padding: 30px;
+      }
+      h1 {
+        color: #652f93;
+        font-size: 2em;
+      }
+      a {
+        color: #652f93;
+      }
+      a:visited,
+      a:link,
+      a:active {
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      h1,h2,h3,h4,h5,h6 {
+        margin: 20px 0 10px;
+        padding: 0;
+        font-weight: bold;
+        -webkit-font-smoothing: antialiased;
+        cursor: text;
+        position: relative;
+      }
+
+      #main {
+        text-align: center;
+        width: 80%;
+        min-width: 680px;
+        margin: 0 auto;
+      }
+
+  %body
+    #main
+      =link_to root_path do
+        =image_tag 'https://github.com/codebar/static_pages/blob/master/assets/img/codebar-girl.gif?raw=true', height: '200px', id: 'animated-logo'
+      #message
+        %h1 Page not found
+        %h2 If you entered a web address please check it was correct.
+        %h3
+          In the meantime why don't you
+          =link_to 'join our community on Slack', 'https://codebar-slack.herokuapp.com/', target: '_blank'
+          ?
+
