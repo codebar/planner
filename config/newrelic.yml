@@ -1,0 +1,20 @@
+common: &default_settings
+  license_key: <%= ENV['NEW_RELIC_LICENSE_KEY'] %>
+  app_name: 'codebar.io'
+  log_level: info
+
+development:
+  <<: *default_settings
+  app_name: 'codebar.io (Development)'
+  log_level: debug
+
+test:
+  <<: *default_settings
+  monitor_mode: false
+
+staging:
+  <<: *default_settings
+  app_name: 'codebar.io (Staging)'
+
+production:
+  <<: *default_settings
