@@ -1,21 +1,25 @@
 %ul.inline-list.right.social-media
   %li.slack
     = link_to 'https://codebar-slack.herokuapp.com' do
-      %span.fa-stack.fa-lg
+      %span.fa-stack.fa-lg{"aria-hidden" => "true"}
         %i.fa.fa-square.fa-stack-2x
         %i.fa.fa-slack.fa-stack-1x.fa-inverse
+      %span.sr-only codebar Slack
   %li.github
     = link_to 'https://github.com/codebar' do
-      %span.fa-stack.fa-lg
+      %span.fa-stack.fa-lg{"aria-hidden" => "true"}
         %i.fa.fa-square.fa-stack-2x
         %i.fa.fa-github.fa-stack-1x.fa-inverse
+      %span.sr-only codebar on Github
   %li.twitter
     = link_to 'https://twitter.com/codebar' do
-      %span.fa-stack.fa-lg
+      %span.fa-stack.fa-lg{"aria-hidden" => "true"}
         %i.fa.fa-square.fa-stack-2x
         %i.fa.fa-twitter.fa-stack-1x.fa-inverse
+      %span.sr-only codebar on Twitter
   %li.facebook
     = link_to 'https://facebook.com/codebarHQ' do
-      %span.fa-stack.fa-lg
+      %span.fa-stack.fa-lg{"aria-hidden" => "true"}
         %i.fa.fa-square.fa-stack-2x
         %i.fa.fa-facebook.fa-stack-1x.fa-inverse
+      %span.sr-only codebar on Facebook
