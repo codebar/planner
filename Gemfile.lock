@@ -330,6 +330,8 @@ GEM
       mime-types (>= 1.16, < 3.0)
       netrc (~> 0.7)
     rolify (5.0.0)
+    rollbar (2.15.6)
+      multi_json
     rspec-collection_matchers (1.1.2)
       rspec-expectations (>= 2.99.0.beta1)
     rspec-core (3.7.0)
@@ -468,6 +470,7 @@ DEPENDENCIES
   rails_12factor
   redcarpet
   rolify
+  rollbar
   rspec-collection_matchers
   rspec-its
   rspec-rails

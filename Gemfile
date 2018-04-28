@@ -80,3 +80,4 @@ end
 
 gem 'newrelic_rpm'
 gem 'rubocop', '~> 0.52.0'
+gem 'rollbar'
