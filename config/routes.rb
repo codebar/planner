@@ -167,4 +167,5 @@ Planner::Application.routes.draw do
   resources :donations, only: %i[new create]
 
   get ':id' => 'chapter#show', as: :chapter
+  match "*path", to: "application#render_404", via: :all
 end

@@ -8,6 +8,17 @@ class ApplicationController < ActionController::Base
   helper_method :current_user
   helper_method :current_service
 
+  rescue_from ActionController::RoutingError, with: :render_404
+  rescue_from ActiveRecord::RecordNotFound , with: :render_404
+
+  def render_404
+    puts "got here"
+    respond_to do |format|
+      format.html { render :template => "errors/404", layout: false, :status => 404 }
+      format.all  { render :nothing => true, :status => 404 }
+    end
+  end
+
   protected
 
   def current_user
@@ -21,7 +32,7 @@ class ApplicationController < ActionController::Base
   def current_service
     if session.has_key?(:service_id)
       @current_service ||= Service.find_by(member_id: session[:member_id],
-                                         id: session[:service_id])
+                                           id: session[:service_id])
     end
   rescue ActiveRecord::RecordNotFound
     session[:service_id] = nil
