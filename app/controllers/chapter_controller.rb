@@ -1,8 +1,6 @@
 class ChapterController < ApplicationController
   def show
-    chapter = Chapter.find_by_slug(slug)
-    redirect_to root_path, notice: "We can't find the chapter you are looking for" and return if chapter.nil?
-
+    chapter = Chapter.find_by!(slug: slug)
     @chapter = ChapterPresenter.new(chapter)
 
     events = @chapter.upcoming_workshops.sort_by(&:date_and_time).group_by(&:date)
