@@ -1,12 +1,11 @@
 class Admin::BansController < Admin::ApplicationController
+  before_action :set_member
+
   def new
-    @member = Member.find(member_id)
     @ban = Ban.new
   end
 
   def create
-    @member = Member.find(member_id)
-
     @ban = @member.bans.build(ban_params)
     @ban.added_by = current_user
 
@@ -24,7 +23,7 @@ class Admin::BansController < Admin::ApplicationController
     params.require(:ban).permit(:note, :reason, :permanent, :expires_at, :explanation)
   end
 
-  def member_id
-    params[:member_id]
+  def set_member
+    @member = Member.find(params[:member_id])
   end
 end

@@ -29,11 +29,11 @@ class Event < ActiveRecord::Base
   end
 
   def to_s
-    self.name
+    name
   end
 
   def to_param
-    self.slug
+    slug
   end
 
   def verified_coaches
@@ -45,11 +45,11 @@ class Event < ActiveRecord::Base
   end
 
   def require_coach_questionnaire?
-    self.coach_questionnaire.present?
+    coach_questionnaire.present?
   end
 
   def require_student_questionnaire?
-    self.student_questionnaire.present?
+    student_questionnaire.present?
   end
 
   def coaches_only?
@@ -66,10 +66,6 @@ class Event < ActiveRecord::Base
 
   def student_spaces?
     !coaches_only? && student_spaces > attending_students.count
-  end
-
-  def show_faq?
-    show_faq
   end
 
   def date
