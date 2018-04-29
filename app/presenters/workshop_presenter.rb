@@ -64,7 +64,7 @@ class WorkshopPresenter < EventPresenter
 
   def coaches_checklist
     model.attending_coaches.each_with_index.map do |a, pos|
-      "#{member_info(a.member, pos)}"
+      member_info(a.member, pos).to_s
     end.join("\n\n")
   end
 

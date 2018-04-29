@@ -22,7 +22,6 @@ class Admin::GroupsController < Admin::ApplicationController
   def show
     @group = Group.find(params[:id])
     authorize @group
-
   end
 
   private

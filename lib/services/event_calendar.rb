@@ -15,7 +15,7 @@ class EventCalendar
   def setup_event
     address = AddressPresenter.new(event.venue.address)
     calendar.event do |e|
-      e.organizer = "#{event.email}"
+      e.organizer = event.email.to_s
       e.dtstart = event.date_and_time
       e.dtend = event.ends_at
       e.summary = event.name

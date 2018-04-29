@@ -36,7 +36,7 @@ class AuthServicesController < ApplicationController
 
         member_service = member.auth_services.build(
                                                       provider: omnihash[:provider],
-          uid: omnihash[:uid]
+                                                      uid: omnihash[:uid]
                                                     )
 
         member.save!

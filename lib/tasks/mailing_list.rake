@@ -28,5 +28,5 @@ namespace :mailing_list do
 end
 
 def args_valid?(args)
-  args.has_key?(:list_id) && args.has_key?(:group_id)
+  args.key?(:list_id) && args.key?(:group_id)
 end

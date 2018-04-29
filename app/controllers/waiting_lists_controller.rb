@@ -24,7 +24,7 @@ class WaitingListsController < ApplicationController
   end
 
   def note
-    params.has_key?(:invitation) ? params[:invitation][:note] : params[:note]
+    params.key?(:invitation) ? params[:invitation][:note] : params[:note]
   end
 
   def invitation

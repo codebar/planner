@@ -1,13 +1,18 @@
-#Disabling rubocop on missing top level class documentation comment.
-Style/Documentation:
-  Enabled: false
-#Disabling rubocop for missing frozen string literal comment.
-Style/FrozenStringLiteralComment:
-  Enabled: false
-#Increase line length from 80 chars
-Metrics/LineLength:
-  Max: 100
+# Find out more about the rubocop cops  https://github.com/bbatsov/rubocop/blob/master/config/enabled.yml
 
 AllCops:
   Exclude:
-    - db/schema.rb
+    - db/**/*
+    - spec/**/*
+
+Metrics/LineLength:
+  Max: 120
+
+Style/Documentation:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Rails/Date:
+  Enabled: true

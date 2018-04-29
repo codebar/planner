@@ -17,7 +17,7 @@ class WorkshopCalendar
     start_time = workshop.time.strftime('%H%M')
     address = AddressPresenter.new(workshop.host.address)
     calendar.event do |e|
-      e.organizer = "#{workshop.chapter.email}"
+      e.organizer = workshop.chapter.email.to_s
       e.dtstart = DateTime.parse("#{start_date}#{start_time}")
       e.dtend = e.dtstart + 2.hours + 30.minutes
       e.summary = "codebar @ #{workshop.host.name}"

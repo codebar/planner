@@ -12,7 +12,6 @@ class ApplicationController < ActionController::Base
   rescue_from ActiveRecord::RecordNotFound , with: :render_404
 
   def render_404
-    puts "got here"
     respond_to do |format|
       format.html { render :template => "errors/404", layout: false, :status => 404 }
       format.all  { render :nothing => true, :status => 404 }
@@ -22,7 +21,7 @@ class ApplicationController < ActionController::Base
   protected
 
   def current_user
-    if session.has_key?(:member_id)
+    if session.key?(:member_id)
       @current_member ||= Member.find(session[:member_id])
     end
   rescue ActiveRecord::RecordNotFound
@@ -30,7 +29,7 @@ class ApplicationController < ActionController::Base
   end
 
   def current_service
-    if session.has_key?(:service_id)
+    if session.key?(:service_id)
       @current_service ||= Service.find_by(member_id: session[:member_id],
                                            id: session[:service_id])
     end
