@@ -35,7 +35,7 @@ feature 'Managing users' do
 
     select 'Violated attendance policy', from: 'ban_reason'
     fill_in 'ban_note', with: Faker::Lorem.word
-    fill_in 'ban_expires_at', with: Date.today + 1.month
+    fill_in 'ban_expires_at', with: Time.zone.today + 1.month
     click_on 'Ban user'
 
     expect(page).to have_content 'The user has been banned'

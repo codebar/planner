@@ -30,7 +30,7 @@ class Meeting < ActiveRecord::Base
   end
 
   def past?
-    date_and_time < Date.today
+    date_and_time < Time.zone.today
   end
 
   def attending?(member)

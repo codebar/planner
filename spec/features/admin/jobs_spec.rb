@@ -43,7 +43,7 @@ feature 'Admin Jobs' do
 
   scenario 'An admin can view all reviewed jobs jobs' do
     job = Fabricate(:job, title: 'Current Developer')
-    expired_job = Fabricate(:job, title: 'Expired developer', expiry_date: Date.today - 1.week)
+    expired_job = Fabricate(:job, title: 'Expired developer', expiry_date: Time.zone.today - 1.week)
 
     visit all_admin_jobs_path
 
