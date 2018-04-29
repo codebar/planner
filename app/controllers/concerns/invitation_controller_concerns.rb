@@ -16,7 +16,7 @@ module InvitationControllerConcerns
       user = current_user || @invitation.member
 
       if user.has_existing_RSVP_on(@invitation.workshop.date_and_time)
-        return redirect_to :back, notice: "You have already RSVP'd to another workshop on this date. If you would prefer to attend this workshop, please cancel your other RSVP first."
+        return redirect_to :back, notice: t('messages.invitations.rsvped_to_other_workshop')
       end
 
       @workshop = WorkshopPresenter.new(@invitation.workshop)

@@ -47,6 +47,11 @@ en:
     feedback_not_found: "You have already submitted feedback for this event."
     updated_note: "Successfully updated note."
 
+    invitations:
+      rsvped_to_other_workshop: "You have already RSVP'd to another workshop on this date. If you would prefer to attend this workshop, please cancel your other RSVP first."
+      spot_confirmed: "Your spot has been confirmed for %{event}! We look forward to seeing you there."
+      spot_not_confirmed: 'Your spot has not yet been confirmed. We will verify your attendance after you complete the questionnaire.'
+
   notifications:
     provider_already_connected: 'You are already signed in!'
     not_logged_in: "You must be logged in to access this page."
@@ -241,3 +246,9 @@ en:
       destroy:
         success: "Workshop deleted successfully"
         failure: "Workshop cannot be deleted. This is because it has invitees and/or workshop information is on the website for a while long enough that it cannot be deleted."
+    messages:
+      meeting:
+        created: 'Meeting succesfully created'
+        updated: 'You have succesfully updated the details of this meeting'
+        invitations_already_sent: 'Invitations were previously sent; they will not be sent again'
+        sending_invitations: 'Invitations are being sent out'

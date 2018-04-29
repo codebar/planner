@@ -22,7 +22,8 @@ class Admin::JobsController < Admin::ApplicationController
 
     JobMailer.job_approved(@job).deliver_now
 
-    flash[:notice] = "The job has been approved and an email has been sent out to #{@job.created_by.full_name} at #{@job.created_by.email}"
+    flash[:notice] = "The job has been approved and an email has been sent out to " \
+                     "#{@job.created_by.full_name} at #{@job.created_by.email}"
 
     redirect_to admin_jobs_path
   end
