@@ -21,7 +21,6 @@ class MailingList
                              send_notify:  false)
   end
 
-
   private
 
   def client

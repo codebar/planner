@@ -23,8 +23,7 @@ class Admin::MeetingsController < Admin::ApplicationController
     return render text: @meeting.attendees_csv if request.format.csv?
   end
 
-  def edit
-  end
+  def edit; end
 
   def update
     set_organisers(organiser_ids)

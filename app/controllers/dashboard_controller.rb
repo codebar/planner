@@ -16,21 +16,17 @@ class DashboardController < ApplicationController
     @announcements = current_user.announcements.active
   end
 
-  def code
-  end
+  def code; end
 
-  def faq
-  end
+  def faq; end
 
-  def about
-  end
+  def about; end
 
   def wall_of_fame
     @coaches = Member.where(id: top_coach_query).paginate(page: page, per_page: 60)
   end
 
-  def participant_guide
-  end
+  def participant_guide; end
 
   private
   def page

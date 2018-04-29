@@ -42,7 +42,6 @@ class SessionInvitationMailer < ActionMailer::Base
     attachments['codebar.ics'] = { mime_type: 'text/calendar',
                                    content: WorkshopCalendar.new(@session).calendar.to_ical }
 
-
     mail(mail_args(member, subject, @session.chapter.email)) do |format|
       format.html
     end

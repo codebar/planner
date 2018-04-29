@@ -30,9 +30,7 @@ class EventsController < ApplicationController
 
     if logged_in?
       invitation = Invitation.find_by(member: current_user, event: event, attending: true)
-      if invitation
-        redirect_to event_invitation_path(@event, invitation) and return
-      end
+      return redirect_to event_invitation_path(@event, invitation) if invitation
     end
   end
 

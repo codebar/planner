@@ -4,7 +4,6 @@ class EventPresenter < SimpleDelegator
                 meeting: 'MeetingPresenter',
                 event: 'EventPresenter' }
 
-
   def self.decorate_collection(collection)
     collection.map { |e| PRESENTER[e.class.to_s.downcase.to_sym].constantize.new(e) }
   end

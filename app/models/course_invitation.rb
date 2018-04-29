@@ -14,7 +14,6 @@ class CourseInvitation < ActiveRecord::Base
     'Student'
   end
 
-
   private
 
   def email

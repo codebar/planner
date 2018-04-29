@@ -19,8 +19,7 @@ class Admin::AnnouncementsController < Admin::ApplicationController
     redirect_to dashboard_path
   end
 
-  def edit
-  end
+  def edit; end
 
   private
 

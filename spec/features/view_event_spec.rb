@@ -91,6 +91,13 @@ feature 'viewing an event' do
           expect(page).not_to have_content('We will verify your attendance after you complete the questionnaire!')
         end
       end
+
+      scenario 'is redirected to the event invitation page if they have RSVPed' do
+        invitation = Fabricate(:attending_event_invitation, event: open_event, member: member)
+        visit event_path(open_event)
+
+        expect(current_path).to eq(event_invitation_path(open_event, invitation.token))
+      end
     end
   end
 end

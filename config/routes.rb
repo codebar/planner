@@ -88,12 +88,10 @@ Planner::Application.routes.draw do
 
   resources :skills, only: [:show]
 
-
   namespace :admin do
     root 'portal#index'
 
     get '/guide' => 'portal#guide', as: :guide
-
 
     resources :jobs, only: %i[index show] do
       get 'all', on: :collection
