@@ -4,6 +4,8 @@ AllCops:
   Exclude:
     - db/**/*
     - spec/**/*
+    - config/**/*
+    - bin/**/*
 
 Metrics/LineLength:
   Max: 120
@@ -14,5 +16,12 @@ Style/Documentation:
 Style/FrozenStringLiteralComment:
   Enabled: false
 
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+Rails:
+  Enabled: true
+
 Rails/Date:
   Enabled: true
+
