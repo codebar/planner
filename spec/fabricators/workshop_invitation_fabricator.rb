@@ -22,3 +22,8 @@ end
 Fabricator(:coach_workshop_invitation, from: :workshop_invitation) do
   role 'Coach'
 end
+
+Fabricator(:attended_coach, from: :workshop_invitation) do
+  role 'Coach'
+  attended true
+end

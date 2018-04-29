@@ -33,5 +33,16 @@ describe WorkshopInvitation do
 
       expect(WorkshopInvitation.to_students.count).to eq(4)
     end
+
+    it '#year' do
+      new_workshop = Fabricate(:workshop, date_and_time: Time.zone.now)
+      old_workshop = Fabricate(:workshop, date_and_time: Time.zone.now - 2.years)
+
+      4.times { Fabricate(:attended_coach, workshop: new_workshop) }
+      5.times { Fabricate(:attended_coach, workshop: old_workshop) }
+
+      expect(WorkshopInvitation.year(Time.zone.now.year).count).to eq(4)
+      expect(WorkshopInvitation.year((Time.zone.now - 2.years).year).count).to eq(5)
+    end
   end
 end
