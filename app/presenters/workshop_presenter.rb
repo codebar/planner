@@ -8,7 +8,7 @@ class WorkshopPresenter < EventPresenter
   end
 
   def organisers
-    @organisers ||= model.permissions.find_by_name('organiser').members rescue chapter_organisers
+    @organisers ||= model.permissions.find_by(name: 'organiser').members rescue chapter_organisers
   end
 
   # Gets an HTML list of the organisers, with mobile numbers if the event's

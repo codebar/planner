@@ -43,7 +43,7 @@ class Admin::InvitationsController < Admin::ApplicationController
   private
 
   def set_invitation
-    @invitation = @workshop.invitations.find_by_token(invitation_id)
+    @invitation = @workshop.invitations.find_by(token: invitation_id)
   end
 
   def invitation_id

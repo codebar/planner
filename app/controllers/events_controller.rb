@@ -23,7 +23,7 @@ class EventsController < ApplicationController
   end
 
   def show
-    event = Event.find_by_slug(params[:id])
+    event = Event.find_by(slug: params[:id])
 
     @event = EventPresenter.new(event)
     @host_address = AddressPresenter.new(@event.venue.address)
@@ -47,7 +47,7 @@ class EventsController < ApplicationController
   def rsvp
     set_event
     ticket = Ticket.new(request, params)
-    member = Member.find_by_email(ticket.email)
+    member = Member.find_by(email: ticket.email)
     invitation = member.invitations.where(event: @event, role: 'Student').try(:first)
     invitation ||= Invitation.create(event: @event, member: member, role: 'Student')
 

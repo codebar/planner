@@ -34,7 +34,7 @@ class EventPresenter < SimpleDelegator
   end
 
   def organisers
-    @organisers ||= model.permissions.find_by_name('organiser').members rescue []
+    @organisers ||= model.permissions.find_by(name: 'organiser').members rescue []
   end
 
   def month
@@ -92,7 +92,7 @@ class EventPresenter < SimpleDelegator
   end
 
   def chapter_organisers
-    model.chapter.permissions.find_by_name('organiser').members rescue []
+    model.chapter.permissions.find_by(name: 'organiser').members rescue []
   end
 
   def model

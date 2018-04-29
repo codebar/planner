@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe ChapterPresenter do
-  let(:chapter) { double(:chapter) }
+  let(:chapter) { Fabricate(:chapter) }
   let(:presenter) { ChapterPresenter.new(chapter) }
 
   it '#twitter_id' do
@@ -24,9 +24,8 @@ describe ChapterPresenter do
   end
 
   it '#organisers' do
-    permissions = double(:permissions, find_by_name: double(members: []))
-    expect(chapter).to receive(:permissions).and_return(permissions)
+    permissions = Fabricate(:permission, resource: chapter, name: 'organiser')
 
-    presenter.organisers
+    expect(presenter.organisers).to eq(permissions.members)
   end
 end

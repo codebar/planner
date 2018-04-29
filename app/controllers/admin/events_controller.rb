@@ -42,7 +42,7 @@ class Admin::EventsController < Admin::ApplicationController
   end
 
   def invite
-    @event = Event.find_by_slug(params[:event_id])
+    @event = Event.find_by(slug: params[:event_id])
     authorize @event
 
     @event.chapters.each do |chapter|
@@ -53,7 +53,7 @@ class Admin::EventsController < Admin::ApplicationController
   end
 
   def attendees_emails
-    event = Event.find_by_slug(params[:event_id])
+    event = Event.find_by(slug: params[:event_id])
 
     students = event.student_emails.join(', ')
     coaches = event.coach_emails.join(', ')
@@ -68,7 +68,7 @@ class Admin::EventsController < Admin::ApplicationController
   private
 
   def set_event
-    @original_event = Event.find_by_slug(params[:id])
+    @original_event = Event.find_by(slug: params[:id])
     @event = EventPresenter.new(@original_event)
   end
 
@@ -102,6 +102,6 @@ class Admin::EventsController < Admin::ApplicationController
   end
 
   def find_event
-    @event = Event.find_by_slug(params[:id])
+    @event = Event.find_by(slug: params[:id])
   end
 end

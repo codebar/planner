@@ -31,7 +31,7 @@ class Course::InvitationController < ApplicationController
 
   private
   def set_invitation
-    @invitation = CourseInvitation.find_by_token(params[:id])
+    @invitation = CourseInvitation.find_by(token: params[:id])
   end
 
   def has_remaining_seats?(invitation)

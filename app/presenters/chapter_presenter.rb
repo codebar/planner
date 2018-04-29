@@ -12,7 +12,7 @@ class ChapterPresenter < SimpleDelegator
   end
 
   def organisers
-    @organisers ||= model.permissions.find_by_name('organiser').members
+    @organisers ||= model.permissions.find_by(name: 'organiser').members
   end
 
   private

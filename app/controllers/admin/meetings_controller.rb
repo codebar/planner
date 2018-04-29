@@ -61,7 +61,7 @@ class Admin::MeetingsController < Admin::ApplicationController
   private
 
   def set_meeting
-    @meeting = Meeting.find_by_slug(params[:id])
+    @meeting = Meeting.find_by(slug: params[:id])
   end
 
   def meeting_params

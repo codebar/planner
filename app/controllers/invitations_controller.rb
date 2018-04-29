@@ -47,9 +47,7 @@ class InvitationsController < ApplicationController
   end
 
   def reject
-    unless @invitation.attending?
-      redirect_to :back, notice: t('messages.not_attending_already') and return
-    end
+    return redirect_to :back, notice: t('messages.not_attending_already') unless @invitation.attending?
 
     @invitation.update_attribute(:attending, false)
     redirect_to :back, notice: t('messages.rejected_invitation', name: @invitation.member.name)
@@ -58,7 +56,7 @@ class InvitationsController < ApplicationController
   def rsvp_meeting
     return redirect_to :back, notice: 'Please login first' unless logged_in?
 
-    meeting = Meeting.find_by_slug(params[:meeting_id])
+    meeting = Meeting.find_by(slug: params[:meeting_id])
 
     invitation = MeetingInvitation.find_or_create_by(meeting: meeting, member: current_user, role: 'Participant')
 
@@ -73,7 +71,7 @@ class InvitationsController < ApplicationController
   end
 
   def cancel_meeting
-    @invitation = MeetingInvitation.find_by_token(params[:token])
+    @invitation = MeetingInvitation.find_by(token: params[:token])
 
     @invitation.update_attribute(:attending, false)
 
@@ -83,6 +81,6 @@ class InvitationsController < ApplicationController
   private
 
   def set_invitation
-    @invitation = Invitation.find_by_token(params[:token])
+    @invitation = Invitation.find_by(token: params[:token])
   end
 end

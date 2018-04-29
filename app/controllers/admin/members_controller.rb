@@ -14,7 +14,7 @@ class Admin::MembersController < Admin::ApplicationController
   end
 
   def update_subscriptions
-    subscription = @member.subscriptions.find_by_group_id(params[:group])
+    subscription = @member.subscriptions.find_by(group_id: params[:group])
     flash[:notice] = "You have unsubscribed #{@member.full_name} from #{subscription.group.chapter.city}'s #{subscription.group.name} group"
 
     subscription.destroy

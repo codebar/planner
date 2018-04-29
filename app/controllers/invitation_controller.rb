@@ -11,7 +11,7 @@ class InvitationController < ApplicationController
   end
 
   def update_note
-    @invitation = WorkshopInvitation.find_by_token(params[:id])
+    @invitation = WorkshopInvitation.find_by(token: params[:id])
     new_note = params[:note]
 
     if new_note.blank?
@@ -43,6 +43,6 @@ class InvitationController < ApplicationController
   private
 
   def set_invitation
-    @invitation = WorkshopInvitation.find_by_token(params[:id])
+    @invitation = WorkshopInvitation.find_by(token: params[:id])
   end
 end

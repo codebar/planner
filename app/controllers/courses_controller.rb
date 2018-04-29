@@ -15,6 +15,6 @@ class CoursesController < ApplicationController
 
   def set_course
     slug = params[:id] || params[:course_id]
-    @course = Course.find_by_slug(slug)
+    @course = Course.find_by(slug: slug)
   end
 end
