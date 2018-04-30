@@ -81,9 +81,9 @@ class DashboardController < ApplicationController
   end
 
   def all_events(workshops)
-    course = Course.next
-    meeting = Meeting.next
-    events = Event.future(DEFAULT_UPCOMING_EVENTS)
+    course = Course.includes(:sponsor).next
+    meeting = Meeting.includes(:venue).next
+    events = Event.includes(:venue, :sponsors).future(DEFAULT_UPCOMING_EVENTS)
 
     [*workshops, course, *events, meeting].compact
   end

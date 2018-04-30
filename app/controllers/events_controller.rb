@@ -6,7 +6,7 @@ class EventsController < ApplicationController
   RECENT_EVENTS_DISPLAY_LIMIT = 40
 
   def index
-    events = [Workshop.past.includes(:chapter, :sponsors).limit(RECENT_EVENTS_DISPLAY_LIMIT)]
+    events = [Workshop.past.includes(:chapter).limit(RECENT_EVENTS_DISPLAY_LIMIT)]
     events << Course.past.limit(RECENT_EVENTS_DISPLAY_LIMIT)
     events << Meeting.past.includes(:venue).limit(RECENT_EVENTS_DISPLAY_LIMIT)
     events << Event.past.includes(:venue, :sponsors).limit(RECENT_EVENTS_DISPLAY_LIMIT)
