@@ -14,7 +14,7 @@ class Verifier
 
   def verify(model)
     id = verifier.verify(token)
-    model.find_by_id(id)
+    model.find_by(id: id)
   end
 
   private

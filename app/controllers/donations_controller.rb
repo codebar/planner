@@ -1,6 +1,5 @@
 class DonationsController < ApplicationController
-  def new
-  end
+  def new; end
 
   def create
     @amount = params[:amount]

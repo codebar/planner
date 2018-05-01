@@ -9,3 +9,7 @@ end
 Fabricator(:coach_invitation, from: :invitation) do
   role 'Coach'
 end
+
+Fabricator(:attending_event_invitation, from: :invitation) do
+  attending true
+end

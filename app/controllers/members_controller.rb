@@ -15,7 +15,7 @@ class MembersController < ApplicationController
     @member = current_user
     if request.post? || request.put?
       if @member.update_attributes(member_params)
-        redirect_to step2_member_path and return
+        return redirect_to step2_member_path
       end
     end
   end
@@ -39,7 +39,7 @@ class MembersController < ApplicationController
 
     if @member.update_attributes(member_params)
       notice = 'Your details have been updated.'
-      redirect_to(profile_path, notice: notice) and return
+      return redirect_to profile_path, notice: notice
     else
       render 'edit'
     end

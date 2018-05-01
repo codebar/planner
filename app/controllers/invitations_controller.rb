@@ -5,11 +5,19 @@ class InvitationsController < ApplicationController
   def index
     @upcoming_workshop = Workshop.next
 
-    upcoming_invitations = WorkshopInvitation.where(member: current_user).joins(:workshop).merge(Workshop.upcoming).includes(workshop: :chapter)
-    upcoming_invitations += CourseInvitation.where(member: current_user).joins(:course).merge(Course.upcoming).includes(:course)
+    upcoming_invitations = WorkshopInvitation.where(member: current_user)
+                                             .joins(:workshop)
+                                             .merge(Workshop.upcoming)
+                                             .includes(workshop: :chapter)
+    upcoming_invitations += CourseInvitation.where(member: current_user)
+                                            .joins(:course)
+                                            .merge(Course.upcoming)
+                                            .includes(:course)
     @upcoming_invitations = InvitationPresenter.decorate_collection(upcoming_invitations)
 
-    @attended_invitations = WorkshopInvitation.where(member: current_user).attended.includes(workshop: :chapter)
+    @attended_invitations = WorkshopInvitation.where(member: current_user)
+                                              .attended
+                                              .includes(workshop: :chapter)
   end
 
   def show
@@ -20,26 +28,19 @@ class InvitationsController < ApplicationController
 
   def attend
     event = @invitation.event
-
-    if @invitation.attending?
-      redirect_to :back, notice: t('messages.already_rsvped')
-    end
+    return redirect_to :back, notice: t('messages.already_rsvped') if @invitation.attending?
 
     if @invitation.student_spaces? || @invitation.coach_spaces?
       @invitation.update_attribute(:attending, true)
 
-      notice = "Your spot has been confirmed for #{@invitation.event.name}! We look forward to seeing you there."
+      notice = t('messages.invitations.spot_confirmed', event: @invitation.event.name)
 
       unless event.confirmation_required || event.surveys_required
         @invitation.update_attribute(:verified, true)
         EventInvitationMailer.attending(@invitation.event, @invitation.member, @invitation).deliver_now
       end
-
-      if event.surveys_required
-        notice = 'Your spot has not yet been confirmed. We will verify your attendance after you complete the questionnaire.'
-      end
-
-      redirect_to :back, notice: notice
+      notice = t('messages.invitations.spot_not_confirmed') if event.surveys_required
+      return redirect_to :back, notice: notice
     else
       email = event.chapters.present? ? event.chapters.first.email : 'hello@codebar.io'
       redirect_to :back, notice: t('messages.no_available_seats', email: email)
@@ -47,9 +48,7 @@ class InvitationsController < ApplicationController
   end
 
   def reject
-    unless @invitation.attending?
-      redirect_to :back, notice: t('messages.not_attending_already') and return
-    end
+    return redirect_to :back, notice: t('messages.not_attending_already') unless @invitation.attending?
 
     @invitation.update_attribute(:attending, false)
     redirect_to :back, notice: t('messages.rejected_invitation', name: @invitation.member.name)
@@ -58,7 +57,7 @@ class InvitationsController < ApplicationController
   def rsvp_meeting
     return redirect_to :back, notice: 'Please login first' unless logged_in?
 
-    meeting = Meeting.find_by_slug(params[:meeting_id])
+    meeting = Meeting.find_by(slug: params[:meeting_id])
 
     invitation = MeetingInvitation.find_or_create_by(meeting: meeting, member: current_user, role: 'Participant')
 
@@ -73,7 +72,7 @@ class InvitationsController < ApplicationController
   end
 
   def cancel_meeting
-    @invitation = MeetingInvitation.find_by_token(params[:token])
+    @invitation = MeetingInvitation.find_by(token: params[:token])
 
     @invitation.update_attribute(:attending, false)
 
@@ -83,6 +82,6 @@ class InvitationsController < ApplicationController
   private
 
   def set_invitation
-    @invitation = Invitation.find_by_token(params[:token])
+    @invitation = Invitation.find_by(token: params[:token])
   end
 end

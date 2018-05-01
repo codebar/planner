@@ -5,32 +5,34 @@ class DashboardController < ApplicationController
   def show
     @chapters = Chapter.all.order(:created_at)
     @user = current_user ? MemberPresenter.new(current_user) : nil
-    @upcoming_workshops = upcoming_events.map.inject({}) { |hash, (key, value)| hash[key] = EventPresenter.decorate_collection(value); hash }
+    @upcoming_workshops = upcoming_events.map.inject({}) do |hash, (key, value)|
+      hash[key] = EventPresenter.decorate_collection(value)
+      hash
+    end
 
     @testimonials = Testimonial.order('RANDOM() ').limit(5).includes(:member)
   end
 
   def dashboard
     @user = MemberPresenter.new(current_user)
-    @ordered_events = upcoming_events_for_user.map.inject({}) { |hash, (key, value)| hash[key] = EventPresenter.decorate_collection(value); hash }
+    @ordered_events = upcoming_events_for_user.map.inject({}) do |hash, (key, value)|
+      hash[key] = EventPresenter.decorate_collection(value)
+      hash
+    end
     @announcements = current_user.announcements.active
   end
 
-  def code
-  end
+  def code; end
 
-  def faq
-  end
+  def faq; end
 
-  def about
-  end
+  def about; end
 
   def wall_of_fame
     @coaches = Member.where(id: top_coach_query).paginate(page: page, per_page: 60)
   end
 
-  def participant_guide
-  end
+  def participant_guide; end
 
   private
   def page

@@ -25,8 +25,7 @@ class JobsController < ApplicationController
     end
   end
 
-  def preview
-  end
+  def preview; end
 
   def edit
     redirect_to root_path, notice: 'As the post has already been approved if you need to make any amendments please get in touch with the organisers at london@codebar.io.' if @job.approved?

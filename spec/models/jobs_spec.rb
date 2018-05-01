@@ -20,7 +20,7 @@ describe Job do
     let!(:approved_jobs) { 2.times.map { Fabricate(:job) } }
     let!(:unsubmitted) { 1.times.map { Fabricate(:job, submitted: false, approved: false) } }
     let!(:pending_approval) { 4.times.map { Fabricate(:job, approved: false) } }
-    let!(:expired) { 2.times.map { Fabricate(:job, expiry_date: Date.today - 1.week) } }
+    let!(:expired) { 2.times.map { Fabricate(:job, expiry_date: Time.zone.today - 1.week) } }
 
     it '#default_scope does not return expired jobs' do
       expect(Job.submitted.all).to eq(pending_approval)
@@ -41,7 +41,7 @@ describe Job do
 
   context '#expired?' do
     it 'checks if the job post has past its expiry_date' do
-      job = Job.new(expiry_date: Date.today - 1.day)
+      job = Job.new(expiry_date: Time.zone.today - 1.day)
 
       expect(job.expired?).to eq(true)
     end

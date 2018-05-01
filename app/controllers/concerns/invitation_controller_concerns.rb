@@ -16,12 +16,12 @@ module InvitationControllerConcerns
       user = current_user || @invitation.member
 
       if user.has_existing_RSVP_on(@invitation.workshop.date_and_time)
-        return redirect_to :back, notice: "You have already RSVP'd to another workshop on this date. If you would prefer to attend this workshop, please cancel your other RSVP first."
+        return redirect_to :back, notice: t('messages.invitations.rsvped_to_other_workshop')
       end
 
       @workshop = WorkshopPresenter.new(@invitation.workshop)
       if (@invitation.for_student? && @workshop.student_spaces?) || (@invitation.for_coach? && @workshop.coach_spaces?)
-        @invitation.update_attributes(attending: true, rsvp_time: DateTime.now)
+        @invitation.update_attributes(attending: true, rsvp_time: Time.zone.now)
         @invitation.waiting_list.destroy if @invitation.waiting_list.present?
         WorkshopInvitationMailer.attending(@invitation.workshop, @invitation.member, @invitation).deliver_now
 

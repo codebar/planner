@@ -27,7 +27,7 @@ class AuthServicesController < ApplicationController
 
         finish_registration || redirect_to(referer_or_dashboard_path)
       else
-        member = Member.find_by_email(omnihash[:info][:email])
+        member = Member.find_by(email: omnihash[:info][:email])
         member = Member.new(email: (omnihash[:info][:email])) if member.nil?
 
         member.name    ||= omnihash[:info][:name].split(' ').first rescue('')
@@ -36,7 +36,7 @@ class AuthServicesController < ApplicationController
 
         member_service = member.auth_services.build(
                                                       provider: omnihash[:provider],
-          uid: omnihash[:uid]
+                                                      uid: omnihash[:uid]
                                                     )
 
         member.save!

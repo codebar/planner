@@ -8,7 +8,7 @@ class MeetingPresenter < EventPresenter
   end
 
   def organisers
-    @organisers ||= model.permissions.find_by_name('organiser').members rescue []
+    @organisers ||= model.permissions.find_by(name: 'organiser').members rescue []
   end
 
   def attendees_emails

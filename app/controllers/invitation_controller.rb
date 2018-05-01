@@ -11,7 +11,7 @@ class InvitationController < ApplicationController
   end
 
   def update_note
-    @invitation = WorkshopInvitation.find_by_token(params[:id])
+    @invitation = WorkshopInvitation.find_by(token: params[:id])
     new_note = params[:note]
 
     if new_note.blank?
@@ -24,7 +24,7 @@ class InvitationController < ApplicationController
 
   def accept_with_note
     @workshop = WorkshopPresenter.new(@invitation.workshop)
-    @invitation.update_attributes(note: params[:workshop_invitation][:note], rsvp_time: DateTime.now)
+    @invitation.update_attributes(note: params[:workshop_invitation][:note], rsvp_time: Time.zone.now)
 
     if @workshop.student_spaces?
       return redirect_to :back, notice: 'You have already RSVPd or joined the waitlist for this workshop.' if @workshop.attendee?(current_user) || @workshop.waitlisted?(current_user)
@@ -43,6 +43,6 @@ class InvitationController < ApplicationController
   private
 
   def set_invitation
-    @invitation = WorkshopInvitation.find_by_token(params[:id])
+    @invitation = WorkshopInvitation.find_by(token: params[:id])
   end
 end

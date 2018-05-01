@@ -20,7 +20,7 @@ class SubscriptionsController < ApplicationController
   end
 
   def destroy
-    @subscription = current_user.subscriptions.find_by_group_id(group_id)
+    @subscription = current_user.subscriptions.find_by(group_id: group_id)
     @subscription.destroy
     flash[:notice] = "You have unsubscribed from #{@subscription.group.chapter.city}'s #{@subscription.group.name} group"
 
