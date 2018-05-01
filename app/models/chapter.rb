@@ -17,6 +17,8 @@ class Chapter < ActiveRecord::Base
 
   default_scope -> { where(active: true) }
 
+  delegate :upcoming, to: :workshops, prefix: true
+
   def self.available_to_user(user)
     return Chapter.all if user.has_role?(:organiser) || user.has_role?(:admin) || user.has_role?(:organiser, Chapter)
     return Chapter.find_roles(:organiser, user).map(&:resource)

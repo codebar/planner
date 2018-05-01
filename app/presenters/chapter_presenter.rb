@@ -8,7 +8,7 @@ class ChapterPresenter < SimpleDelegator
   end
 
   def upcoming_workshops
-    model.workshops.upcoming.sort_by(&:date_and_time)
+    model.workshops_upcoming
   end
 
   def organisers

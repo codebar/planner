@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe ChapterPresenter do
-  let(:chapter) { Fabricate(:chapter) }
+  let(:chapter) { Fabricate(:chapter_without_organisers) }
   let(:presenter) { ChapterPresenter.new(chapter) }
 
   it '#twitter_id' do
@@ -17,10 +17,10 @@ describe ChapterPresenter do
   end
 
   it '#upcoming_workshops' do
-    workshops = double(:workshops, upcoming: [double(:workshop, date_and_time: Time.zone.now)])
-    expect(chapter).to receive(:workshops).and_return(workshops)
+    Fabricate.times(2, :past_workshop, chapter: chapter)
+    workshops = Fabricate.times(3, :workshop, chapter: chapter, date_and_time: Time.zone.now + 1.week)
 
-    presenter.upcoming_workshops
+    expect(presenter.upcoming_workshops).to eq(workshops)
   end
 
   it '#organisers' do

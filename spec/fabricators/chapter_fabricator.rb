@@ -24,3 +24,10 @@ Fabricator(:chapter_with_groups, from: :chapter) do
     Fabricate(:coaches, chapter: chapter)
   end
 end
+
+Fabricator(:chapter_without_organisers, class_name: :chapter) do
+  name { Fabricate.sequence(:name) }
+  city { Faker::Lorem.word }
+  email { Faker::Internet.email }
+  time_zone { 'London' }
+end

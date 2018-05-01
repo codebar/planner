@@ -15,7 +15,7 @@ module Listable
     end
 
     def most_recent
-      past.load.first
+      past.includes(:sponsors).load.first
     end
   end
 end
