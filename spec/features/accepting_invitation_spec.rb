@@ -4,6 +4,7 @@ feature 'a member can' do
   context '#workshop' do
     let(:invitation) { Fabricate(:workshop_invitation) }
     let(:invitation_route) { invitation_path(invitation) }
+    let(:reject_invitation_route) { reject_invitation_path(invitation) }
 
     let(:member) { Fabricate(:member) }
     let(:set_no_available_slots) { invitation.workshop.host.update_attribute(:seats, 0) }

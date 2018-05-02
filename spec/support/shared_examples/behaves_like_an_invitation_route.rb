@@ -7,6 +7,7 @@ shared_examples 'invitation route' do
 
       expect(page).to have_link 'I can no longer attend'
       expect(page).to have_content("Thanks for getting back to us #{invitation.member.name}.")
+      expect(page.current_path).to eq(invitation_route)
     end
 
     scenario 'when there are no available spots' do
@@ -27,12 +28,28 @@ shared_examples 'invitation route' do
       expect(page).to have_content(I18n.t('messages.rejected_invitation', name: invitation.member.name))
     end
 
-    scenario 'when already confirmed' do
+    scenario 'when they are successful by accessing the link directly' do
+      invitation.update_attribute(:attending, true)
+      visit reject_invitation_route
+
+      expect(page).to have_content(I18n.t('messages.rejected_invitation', name: invitation.member.name))
+      expect(page.current_path).to eq(invitation_route)
+    end
+
+    scenario 'when already confirmed they are not attending' do
       invitation.update_attribute(:attending, false)
       visit invitation_route
 
       expect(page).to have_selector(:link_or_button, 'Attend')
       expect(page).to_not have_content 'I can no longer attend'
+    end
+
+    scenario 'when already confirmed they are not attending and reject by accessing the link directly' do
+      invitation.update_attribute(:attending, false)
+      visit reject_invitation_route
+
+      expect(page).to have_content(I18n.t('messages.not_attending_already'))
+      expect(page.current_path).to eq(invitation_route)
     end
 
     scenario 'when already RSVPd to another event on same evening' do
@@ -46,6 +63,22 @@ shared_examples 'invitation route' do
 
       expect(page).to have_content("You have already RSVP'd to another workshop on this date. If you would prefer to attend this workshop, please cancel your other RSVP first.")
       expect(page).to have_selector(:link_or_button, 'Attend')
+    end
+
+    scenario 'when the event is less than 3.5 hours from now' do
+      invitation.workshop.update_attribute(:date_and_time, Time.zone.now + 3.hours)
+      visit reject_invitation_route
+
+      expect(page).to have_content('You can only change your RSVP status up to 3.5 hours before the workshop')
+      expect(page.current_path).to eq(invitation_route)
+    end
+
+    scenario 'when the event is less than 3.5 hours from now and tje reject by accessing the link directly' do
+      invitation.workshop.update_attribute(:date_and_time, Time.zone.now + 3.hours)
+      visit reject_invitation_route
+
+      expect(page).to have_content('You can only change your RSVP status up to 3.5 hours before the workshop')
+      expect(page.current_path).to eq(invitation_route)
     end
   end
 
