@@ -23,4 +23,5 @@
                   %li
                     = group.to_s
             %td
-              =l(announcement.expires_at, format: :date)
+              - if announcement.expires_at.present?
+                =l(announcement.expires_at, format: :date)
