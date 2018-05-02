@@ -23,6 +23,10 @@ class MeetingPresenter < EventPresenter
     Rails.application.routes.url_helpers.admin_meeting_path(model)
   end
 
+  def sponsors
+    []
+  end
+
   private
 
   def model
