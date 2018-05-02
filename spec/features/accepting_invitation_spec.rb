@@ -2,8 +2,10 @@ require 'spec_helper'
 
 feature 'a member can' do
   context '#workshop' do
-    let(:invitation) { Fabricate(:workshop_invitation) }
+    let(:member) { Fabricate(:member) }
+    let(:invitation) { Fabricate(:workshop_invitation, member: member) }
     let(:invitation_route) { invitation_path(invitation) }
+    let(:accept_invitation_route) { accept_invitation_path(invitation) }
     let(:reject_invitation_route) { reject_invitation_path(invitation) }
 
     let(:member) { Fabricate(:member) }
