@@ -1,4 +1,4 @@
-# Planner [![Gittip](http://img.shields.io/gittip/by_codebar.png)](https://www.gittip.com/by_codebar/)
+# Planner
 
 A tool to help manage [codebar.io](http://codebar.io) members and events.
 
