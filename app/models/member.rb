@@ -1,4 +1,5 @@
 class Member < ActiveRecord::Base
+  self.per_page = 80
   rolify role_cname: 'Permission', role_table_name: :permission, role_join_table_name: :members_permissions
 
   has_many :attendance_warnings
@@ -22,6 +23,7 @@ class Member < ActiveRecord::Base
   validates_length_of :about_you, maximum: 255
 
   scope :subscribers, -> { joins(:subscriptions).order('created_at desc').uniq }
+
   acts_as_taggable_on :skills
 
   attr_accessor :attendance

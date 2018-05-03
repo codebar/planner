@@ -1,11 +1,10 @@
 .stripe.reverse
   .row
-    .large-12.columns
+    .medium-12.columns
       .text-right
-        = will_paginate(@coaches)
         %br
         %br
-      %ul.small-block-grid-2.medium-block-grid-5.large-block-grid-5
+      %ul.small-block-grid-2.medium-block-grid-4.large-block-grid-4
         - coaches.each do |coach|
           %li.coach
             .row
@@ -23,5 +22,8 @@
                     skills:
                     - coach.skills.each do |skill|
                       = link_to skill.name, skill_url(skill.name), class: "skill"
-      .text-right
-        = will_paginate(@coaches)
+  .row
+    .medium-6.columns.text-left
+      = page_entries_info(@coaches, model: 'coaches')
+    .medium-6.columns.text-right
+      = will_paginate(@coaches)

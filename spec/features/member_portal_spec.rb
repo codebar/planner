@@ -55,9 +55,15 @@ feature 'Member portal' do
 
   context 'A non authenticated visitor to the page' do
     it 'can not access the member portal' do
-      visit root_path
+      visit dashboard_path
 
       expect(page).to_not have_selector('#profile')
+    end
+
+    it 'is redirected to sign_in page when they attempt not access the profile page' do
+      visit profile_path
+
+      expect(page).to_not have_selector('#member_profile')
     end
   end
 end

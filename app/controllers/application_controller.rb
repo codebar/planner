@@ -1,6 +1,18 @@
 class ApplicationController < ActionController::Base
   include Pundit
 
+  rescue_from Exception do |ex|
+    Rollbar.error(ex)
+    Rails.logger.fatal(ex)
+    respond_to do |format|
+      format.html { render 'errors/error', layout: false, :status => 500 }
+      format.all  { render :nothing => true, :status => 500 }
+    end
+  end
+
+  rescue_from ActionController::RoutingError, with: :render_not_found
+  rescue_from ActiveRecord::RecordNotFound , with: :render_not_found
+
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
   rescue_from Pundit::AuthorizationNotPerformedError, with: :user_not_authorized
 
@@ -8,12 +20,9 @@ class ApplicationController < ActionController::Base
   helper_method :current_user
   helper_method :current_service
 
-  rescue_from ActionController::RoutingError, with: :render_404
-  rescue_from ActiveRecord::RecordNotFound , with: :render_404
-
-  def render_404
+  def render_not_found
     respond_to do |format|
-      format.html { render :template => "errors/404", layout: false, :status => 404 }
+      format.html { render :template => "errors/not_found", layout: false, :status => 404 }
       format.all  { render :nothing => true, :status => 404 }
     end
   end

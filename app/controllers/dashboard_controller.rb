@@ -2,6 +2,8 @@ class DashboardController < ApplicationController
   before_action :is_logged_in?, only: [:dashboard]
   DEFAULT_UPCOMING_EVENTS = 5
 
+  helper_method :year_param
+
   def show
     @chapters = Chapter.all.order(:created_at)
     @user = current_user ? MemberPresenter.new(current_user) : nil
@@ -29,22 +31,31 @@ class DashboardController < ApplicationController
   def about; end
 
   def wall_of_fame
-    @coaches = Member.where(id: top_coach_query).paginate(page: page, per_page: 60)
+    @coaches_count = top_coach_query.length
+    @coaches = Member.where(id: top_coach_query
+                     .year(year_param))
+                     .includes(:skills)
+                     .paginate(page: page)
   end
 
   def participant_guide; end
 
   private
+
   def page
     params.permit(:page)[:page]
   end
 
+  def year_param
+    params.permit(:year)[:year] || Time.zone.today.year
+  end
+
   def top_coach_query
     WorkshopInvitation.to_coaches
-                     .attended
-                     .group(:member_id)
-                     .order('COUNT(member_id) DESC')
-                     .select(:member_id)
+                      .attended
+                      .group(:member_id)
+                      .order('COUNT(member_id) DESC')
+                      .select(:member_id)
   end
 
   def upcoming_events

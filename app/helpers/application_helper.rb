@@ -43,4 +43,9 @@ module ApplicationHelper
   def twitter_url_for(username)
     "http://twitter.com/#{username}"
   end
+
+  def page_year?(year)
+    (!year_param && year.eql?(Time.zone.now.year)) || year_param == year.to_s
+  end
+
 end

@@ -1,5 +1,5 @@
 class MembersController < ApplicationController
-  before_action :authenticate_member!, only: %i[edit show step1 step2]
+  before_action :authenticate_member!, only: %i[edit show step1 step2 profile]
   autocomplete :skill, :name, class_name: 'ActsAsTaggableOn::Tag'
 
   def new

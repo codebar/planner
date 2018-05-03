@@ -8,6 +8,7 @@ class WorkshopInvitation < ActiveRecord::Base
   validates :member_id, uniqueness: { scope: %i[workshop_id role] }
   validates_inclusion_of :role, in: ['Student', 'Coach'], allow_nil: true
 
+  scope :year, -> (year) { joins(:workshop).where('EXTRACT(year FROM workshops.date_and_time) = ?', year) }
   scope :accepted, -> { where(attending: true) }
   scope :attended, -> { where(attended: true) }
   scope :to_students, -> { where(role: 'Student') }
@@ -16,7 +17,12 @@ class WorkshopInvitation < ActiveRecord::Base
   scope :last_six_months, -> { joins(:workshop).where(workshops: { date_and_time: 6.months.ago...Time.zone.now}) }
 
   def waiting_list_position
-    @waiting_list_position ||= WaitingList.by_workshop(self.workshop).where_role(self.role).where(auto_rsvp: true).order(:created_at).map(&:invitation_id).index(self.id) + 1
+    @waiting_list_position ||= WaitingList.by_workshop(self.workshop)
+                                          .where_role(self.role)
+                                          .where(auto_rsvp: true)
+                                          .order(:created_at)
+                                          .map(&:invitation_id)
+                                          .index(self.id) + 1
   end
 
   def parent
