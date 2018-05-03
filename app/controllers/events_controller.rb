@@ -6,9 +6,9 @@ class EventsController < ApplicationController
   RECENT_EVENTS_DISPLAY_LIMIT = 40
 
   def index
-    events = [Workshop.past.limit(RECENT_EVENTS_DISPLAY_LIMIT)]
+    events = [Workshop.past.includes(:chapter).limit(RECENT_EVENTS_DISPLAY_LIMIT)]
     events << Course.past.limit(RECENT_EVENTS_DISPLAY_LIMIT)
-    events << Meeting.past.limit(RECENT_EVENTS_DISPLAY_LIMIT)
+    events << Meeting.past.includes(:venue).limit(RECENT_EVENTS_DISPLAY_LIMIT)
     events << Event.past.includes(:venue, :sponsors).limit(RECENT_EVENTS_DISPLAY_LIMIT)
     events = events.compact.flatten.sort_by(&:date_and_time).reverse.first(RECENT_EVENTS_DISPLAY_LIMIT)
     events_hash_grouped_by_date = events.group_by(&:date)

@@ -10,6 +10,7 @@ class Meeting < ActiveRecord::Base
   has_and_belongs_to_many :chapters
 
   validates :date_and_time, :venue, presence: true
+  validates :slug, uniqueness: true, if: proc { |model| model.slug.present? }
 
   before_save :set_slug
 
@@ -48,7 +49,11 @@ class Meeting < ActiveRecord::Base
   private
 
   def set_slug
-    self.slug = "#{I18n.l(date_and_time, format: :year_month).downcase}-#{title.parameterize}" if self.slug.nil?
+    return if slug.present?
+    self.slug = loop.with_index do |_, index|
+      url = "#{I18n.l(date_and_time, format: :year_month).downcase}-#{title.parameterize}-#{index+1}"
+      break url unless Meeting.where(slug: url).exists?
+    end
   end
 
   def attendees_array
