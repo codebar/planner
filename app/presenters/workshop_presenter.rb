@@ -34,7 +34,7 @@ class WorkshopPresenter < EventPresenter
   end
 
   def attendees_emails
-    model.attendances.map { |m| m.member.email if m.member }.compact.join(', ')
+    model.attendances.includes(:member).map { |m| m.member.email if m.member }.compact.join(', ')
   end
 
   def time
