@@ -5,7 +5,7 @@ development: &default
   pool: 5
   username: postgres
   password:
-  host: db
+  host: <%= (ENV['DB_HOST'] || 'localhost').to_json %>
 
 test:
   <<: *default
