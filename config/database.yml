@@ -3,7 +3,7 @@ development: &default
   encoding: unicode
   database: planner_development
   pool: 5
-  username: postgres
+  username: <%= ENV['DB_USER'] || ''  %>
   password:
   host: <%= (ENV['DB_HOST'] || 'localhost').to_json %>
 
