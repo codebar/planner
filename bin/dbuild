@@ -1,0 +1,5 @@
+#!/bin/sh
+set +e
+docker-compose down -v --remove-orphans
+docker-compose build
+docker-compose run --rm web rake db:create db:migrate db:seed db:test:prepare

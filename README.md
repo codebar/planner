@@ -24,11 +24,11 @@ You will need to have Docker installed, https://docker.com/
 The current Dockerfile and docker-compose were closely copied from the guide: https://docs.docker.com/compose/rails/
 
 1. Clone the project.
-2. Run `docker-compose build` to build a docker environment.
-3. Run `docker-compose run web rake db:create db:migrate db:test:prepare` to create and migrate the development and test databases
-4. Run `docker-compose run web rake db:seed` to seed the development database
-5. Run `docker-compose run web rake` to run all the tests.
-6. Run `docker-compose up` to start the app.
+2. Run `bin/dbuild` to build and setup the docker environment.
+3. Run `bin/drake` to run all the tests and make sure everything works
+4. Run `bin/dstart` to start the app.
+
+You can also use `bin/drails` and `bin/drspec` to run rails and rspec commands via docker.
 
 
 ## Running the app on your local environment

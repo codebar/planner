@@ -1,0 +1,19 @@
+#!/bin/sh
+
+set -e
+
+function cleanup {
+  # capture exit code
+  code=$?
+  echo "cleaning up"
+
+  # ignore errors
+  set +e
+  docker-compose down
+
+  exit $code
+}
+
+trap cleanup EXIT
+
+docker-compose run --rm web rake $@
