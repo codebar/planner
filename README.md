@@ -18,6 +18,23 @@ If you are considering making a PR, please take a look at the Waffle board to se
 
 The following steps walk through getting the application running. For contributing guidelines see [here](https://github.com/codebar/planner/blob/master/CONTRIBUTING.md).
 
+## Getting Started With Docker
+You will need to have Docker installed and running -  https://docker.com/
+
+The current Dockerfile and docker-compose were closely copied from the guide: https://docs.docker.com/compose/rails/
+
+1. Clone the project
+2. Navigate in the project directory `cd planner`
+3. Run `bin/dbuild` to build and setup the docker environment.
+4. Run `bin/drake` to run all the tests and make sure everything works
+5. Run `bin/dstart` to start the app.
+6. View the app at  http://localhost:3000
+
+You can also use `bin/drails` and `bin/drspec` to run rails and rspec commands via docker.
+
+
+## Running the app on your local environment
+
 ### Setting up a Ruby Environment
 
 You will need to install Ruby 2.4.2 using RVM or rbenv.
