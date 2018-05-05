@@ -93,27 +93,6 @@ describe Workshop do
   end
 
   context '#scopes' do
-    let(:set_upcoming) { 2.times.map { |n| Fabricate(:workshop, date_and_time: Time.zone.now + (n + 1).week) } }
-    let(:most_recent) { Fabricate(:workshop, date_and_time: 1.day.ago) }
-
-    before do
-      @old_workshop = Fabricate(:workshop, date_and_time: Time.zone.now - 1.week)
-      set_upcoming
-      most_recent
-    end
-
-    it '#upcoming' do
-      expect(Workshop.upcoming.length).to eq(2)
-    end
-
-    it '#next' do
-      expect(Workshop.next).to eq(set_upcoming.first)
-    end
-
-    it '#most_recent' do
-      expect(Workshop.most_recent).to eq(most_recent)
-    end
-
     describe '#host' do
       let(:sponsor) { Fabricate(:sponsor) }
 
@@ -180,12 +159,6 @@ describe Workshop do
 
         invitations.each { |a| expect(workshop.waitlisted?(a.member)).to be true }
         attendee_invites.each { |a| expect(workshop.waitlisted?(a.member)).to be false }
-      end
-    end
-
-    describe '.recent' do
-      it 'retrieves some of the most recently held workshops' do
-        expect(Workshop.recent).to eq([most_recent, @old_workshop])
       end
     end
   end
