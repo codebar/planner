@@ -112,7 +112,7 @@ class Admin::WorkshopsController < Admin::ApplicationController
   end
 
   def set_and_decorate_workshop
-    workshop = Workshop.includes(:invitations).find(params[:workshop_id])
+    workshop = Workshop.find(params[:workshop_id])
     @workshop = WorkshopPresenter.new(workshop)
   end
 
