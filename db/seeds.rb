@@ -1,26 +1,58 @@
 if Rails.env.development?
   begin
-    puts 'Adding seed data...'
-    chapters = [Fabricate(:chapter_with_groups, name: 'London'),
-                Fabricate(:chapter_with_groups, name: 'Brighton'),
-                Fabricate(:chapter_with_groups, name: 'Cambridge')]
+    Rails.logger.info 'Running migrations...'
+    Planner::Application.config.log_level = :info
+    Rails.logger.info "Creatings chapters..."
+    chapters = [ 'London', 'Brighton', 'Cambridge', 'Barcelona', 'Paris', 'Merlbourne', 'Berlin', 'New York'].map do |name|
+      Fabricate(:chapter_with_groups, name: name)
+    end
 
-    workshop = 10.times.map { |n| Fabricate(:workshop, title: 'Workshop', chapter: chapters.sample, date_and_time: Time.zone.now + 14.days - n.weeks) }
-    workshop.concat 2.times.map { |n| Fabricate(:workshop, title: 'Workshop', chapter: chapters.sample) }
+    Rails.logger.info "Creatings workshops..."
+    workshops = 6.times.map do |n|
+      Fabricate(:workshop, title: 'Workshop',
+                chapter: chapters.sample,
+                date_and_time: Time.zone.now + 1.months - n.weeks)
+    end
 
-    event = 10.times.map { |n| Fabricate(:event, name: 'Event', date_and_time: Time.zone.now + 14.days - n.weeks) }
-    event.concat 2.times.map { |n| Fabricate(:event, name: 'Event') }
+    workshops.concat Fabricate.times(2, :workshop, title: 'Workshop', chapter: chapters.sample)
 
-    course = 10.times.map { |n| Fabricate(:course, chapter: chapters.sample, title: 'Course', date_and_time: Time.zone.now + 14.days - n.weeks) }
-    course.concat 2.times.map { |n| Fabricate(:course, chapter: chapters.sample, title: 'Course') }
+    Rails.logger.info "Creatings a lot of old workshops..."
+    past_workshops = 100.times.map do |n|
+      Fabricate(:workshop, title: 'Workshop',
+                chapter: chapters.sample,
+                date_and_time:  Time.zone.now - 9.year + n.months)
+    end
 
-    meeting = 10.times.map { |n| Fabricate(:meeting, name: 'Meeting', date_and_time: Time.zone.now + 14.days - n.weeks) }
-    meeting.concat 2.times.map { |n| Fabricate(:meeting, name: 'Meeting') }
 
-    coaches = 20.times.map { |n| Fabricate(:coach, groups: Group.coaches.order('RANDOM()').limit(2)) }
-    tutorials = 10.times.map { |n| Fabricate(:tutorial, workshop: workshop.sample) }
-    feedback_requests = 5.times.map { Fabricate(:feedback_request) }
-    feedbacks = 5.times.map { Fabricate(:feedback, tutorial: tutorials.sample, coach: coaches.sample) }
+    Rails.logger.info "Creatings events..."
+    20.times.map do |n|
+      Fabricate(:event, name: 'Event',
+                        chapters: chapters.sample(4),
+                        date_and_time: Time.zone.now + 2.months - n.months)
+    end
+
+    Rails.logger.info "Creatings courses..."
+
+    20.times do |n|
+      Fabricate(:course, chapter: chapters.sample,
+                          title: 'Course',
+                          date_and_time: Time.zone.now + 1.months - n.months)
+    end
+
+
+    Rails.logger.info "Creatings meetings..."
+
+    20.times.map do |n|
+      Fabricate(:meeting, name: 'Meeting',
+                          date_and_time: Time.zone.now + 1.months - n.months)
+    end
+
+    Rails.logger.info "Creatings coaches..."
+    coaches = 200.times.map { Fabricate(:coach, groups: Group.coaches.order('RANDOM()').limit(2)) }
+    tutorials = Fabricate.times(20, :tutorial)
+    30.times { Fabricate(:feedback_request, workshop: past_workshops.sample) }
+    20.times { Fabricate(:feedback, tutorial: tutorials.sample, coach: coaches.sample) }
+    10.times { Fabricate(:testimonial, member: coaches.sample) }
 
     job_titles = [
       'Software Engineer',
@@ -39,16 +71,18 @@ if Rails.env.development?
       'Wonka'
     ]
 
-    jobs = 5.times.map { Fabricate(:job, title: job_titles.sample, company: job_companies.sample) }
-
-    40.times do |n|
-      coach = coaches.sample
-      Fabricate(:attended_workshop_invitation, role: 'Coach', member: coach, workshops: workshop.sample) rescue 'Coach already attended'
+    Rails.logger.info "Creatings jobs..."
+    15.times do |n|
+      Fabricate(:job, title: job_titles.sample, company: job_companies.sample, expiry_date: Time.zone.today + 3.weeks - n.weeks)
     end
 
-    puts '..done!'
+    Rails.logger.info "Creatings invitations..."
+    300.times do |n|
+      Fabricate(:attended_workshop_invitation, role: 'Coach', member: coaches.sample, workshop: workshops.sample) rescue nil
+    end
+    Rails.logger.info '..done!'
   rescue => e
-    puts e.inspect
-    puts 'Something went wrong. Try running `bundle exec rake db:drop db:create db:migrate` first'
+    Rails.logger.error 'Something went wrong. Try running `bundle exec rake db:drop db:create db:migrate` first'
+    Rails.logger.error e.message
   end
 end

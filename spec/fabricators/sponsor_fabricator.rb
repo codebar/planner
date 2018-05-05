@@ -8,9 +8,13 @@
 Fabricator(:sponsor) do
   name { Faker::Name.name }
   website { "http://#{Faker::Internet.domain_name}" }
-  avatar { Rack::Test::UploadedFile.new(Rails.root.join('app', 'assets', 'images', 'logo.png'), 'image/jpeg') }
+  avatar { Rack::Test::UploadedFile.new(Rails.root.join('app', 'assets', 'images', 'sponsors', sponsor_image), 'image/jpeg') }
   address
   email { Faker::Internet.email }
   contact_first_name { Faker::Name.first_name }
   contact_surname { Faker::Name.last_name }
+end
+
+def sponsor_image
+  "#{%w{8th-Light StreetTeam bloomberg gds-logo mozilla pivotal shutl_logo softwire the-guardian ticketmaster ustwo}.sample}.png"
 end
