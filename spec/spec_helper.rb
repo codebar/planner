@@ -56,3 +56,9 @@ Shoulda::Matchers.configure do |config|
     with.library :rails
   end
 end
+
+CarrierWave.configure do |config|
+  config.enable_processing = false
+  config.storage = :file
+  config.root = Rails.root.join('tmp')
+end

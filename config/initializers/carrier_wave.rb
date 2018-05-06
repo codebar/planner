@@ -1,7 +1,9 @@
 CarrierWave.configure do |config|
-  config.cache_dir = "#{Rails.root}/tmp/uploads"
-  config.root = Rails.root.join('tmp')
-  if Rails.env.production?
+  if Rails.env.development?
+    config.storage = :file
+  elsif Rails.env.production?
+    config.cache_dir = "#{Rails.root}/tmp/uploads"
+    config.root = Rails.root.join('tmp')
     config.sftp_host = ENV['UPLOADER_ASSET_HOST']
     config.sftp_user = ENV['UPLOADER_USER']
     config.sftp_folder = ENV['UPLOADER_FOLDER']
