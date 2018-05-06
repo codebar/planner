@@ -24,7 +24,7 @@ class Admin::MeetingInvitationsController < Admin::ApplicationController
     invitation.assign_attributes(attending: true, role: 'Participant')
 
     if invitation.save
-      MeetingInvitationMailer.approve_from_waitlist(meeting, member, invitation).deliver_now
+      MeetingInvitationMailer.approve_from_waitlist(meeting, member).deliver_now
       redirect_to [:admin, meeting], notice: t('admin.messages.invitation.rsvp_member', name: member.full_name)
     else
       redirect_to [:admin, meeting], notice: t('admin.messages.invitation.rsvp_error', name: member.full_name)
