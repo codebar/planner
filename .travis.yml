@@ -1,15 +1,15 @@
-services:
-  - docker
-install: true
+language: ruby
+bundler_args: --without development
+rvm:
+  - 2.4.2
+before_script:
+  - bundle exec rake db:create db:schema:load
+
 script:
-  - docker-compose build
-  - docker-compose run web bundle exec rake db:create db:schema:load
-  - docker-compose run web bundle exec rspec
+  - bundle exec rake
 addons:
   code_climate:
     repo_token: 9b6a47d42b4a745a38818eac18dba4ca94ea88f8c7751859ec49b8cedbf010fe
-rvm:
-  - 2.4.2
 notifications:
   email:
     - social@codebar.io
