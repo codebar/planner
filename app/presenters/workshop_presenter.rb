@@ -34,7 +34,9 @@ class WorkshopPresenter < EventPresenter
   end
 
   def attendees_emails
-    Member.joins(:workshop_invitations).where('workshop_invitations.workshop_id = ? and attending =?', model.id, true).pluck(:email).join(', ')
+    Member.joins(:workshop_invitations)
+          .where('workshop_invitations.workshop_id = ? and attending =?', model.id, true)
+          .pluck(:email).join(', ')
   end
 
   def time

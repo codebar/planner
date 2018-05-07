@@ -1,0 +1,111 @@
+require 'spec_helper'
+
+feature 'Managing meetings' do
+  let(:member) { Fabricate(:member) }
+  let!(:chapter) { Fabricate(:chapter) }
+  let!(:venue) { Fabricate(:sponsor) }
+  let(:today) { Time.zone.now }
+
+  before do
+    login_as_admin(member)
+    member.add_role(:organiser, Meeting)
+  end
+
+  context 'creating a new meeting' do
+    scenario 'successfuly' do
+      visit new_admin_meeting_path
+
+      fill_in 'Name', with: 'August meeting'
+      select venue.name
+      click_on 'Update'
+
+      expect(page).to have_content('Meeting succesfully created')
+      expect(page.current_path)
+        .to eq(admin_meeting_path("#{I18n.l(today, format: :year_month).downcase}-august-meeting-1"))
+      expect(page).to have_content 'Invite'
+    end
+
+    scenario 'renders an error when no chapter has been selected' do
+      visit new_admin_meeting_path
+
+      click_on 'Update'
+
+      expect(page).to have_content('Venue can\'t be blank')
+    end
+  end
+
+  context 'updating an existing meeting' do
+    let(:meeting) { Fabricate(:meeting, name: 'August Meeting') }
+    scenario 'renders an error when no chapter has been selected' do
+      Fabricate(:meeting, name: 'August Meeting')
+      visit edit_admin_meeting_path(meeting)
+      fill_in 'Slug', with: "#{I18n.l(today, format: :year_month).downcase}-august-meeting-1"
+
+      click_on 'Update'
+
+      expect(page).to have_content('Slug has already been taken')
+    end
+
+    scenario 'successfuly' do
+      permissions = Fabricate(:permission, resource: meeting, name: 'organiser')
+
+      visit edit_admin_meeting_path(meeting)
+      fill_in 'Name', with: "March Meeting"
+      unselect permissions.members.first.full_name
+
+      click_on 'Update'
+
+      expect(page).to have_content('You have succesfully updated the details of this meeting')
+      expect(page).to have_css("span[title='#{permissions.members.last.full_name}']")
+      expect(page).to_not have_css("span[title='#{permissions.members.first.full_name}']")
+    end
+  end
+
+  context 'retrieving the attendee emails' do
+    let(:meeting) { Fabricate(:meeting) }
+    scenario 'when format: :text' do
+      invitations = Fabricate.times(4, :attending_meeting_invitation, meeting: meeting)
+      visit attendees_emails_admin_meeting_path(meeting, format: :text)
+
+      invitations.each do |invitation|
+        expect(page).to have_content(invitation.member.email)
+      end
+    end
+
+    scenario 'when no format is used then it redirects to the meeting page' do
+      visit attendees_emails_admin_meeting_path(meeting)
+
+      expect(page.current_path).to eq(admin_meeting_path(meeting))
+    end
+  end
+
+  context 'sending invitations' do
+    scenario 'redirects back to the meeting if the invitations have been sent' do
+      meeting = Fabricate(:meeting, invites_sent: true)
+
+      visit invite_admin_meeting_path(meeting)
+      expect(page).to have_content("Invitations were previously sent; they will not be sent again")
+    end
+
+    scenario 'sends the invitations' do
+      chapter = Fabricate(:chapter_with_groups)
+      meeting = Fabricate(:meeting, chapters: [chapter])
+      #chapter.members.last.update_attribute(banned: true)
+
+      visit invite_admin_meeting_path(meeting)
+      expect(page).to have_content("Invitations are being sent out")
+    end
+
+    scenario 'does not send the invitations to banned members' do
+      chapter = Fabricate(:chapter_with_groups)
+      meeting = Fabricate(:meeting, chapters: [chapter])
+      chapter.members[1..3].each do |member|
+        Fabricate(:ban, member: member)
+      end
+
+      expect {
+        visit invite_admin_meeting_path(meeting)
+      }.to change{ ActionMailer::Base.deliveries.count }.by (chapter.members.count - 3)
+    end
+  end
+end
