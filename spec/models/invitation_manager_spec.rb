@@ -1,65 +1,62 @@
 require 'spec_helper'
 
-describe InvitationManager do
+describe InvitationManager, wip: true do
   let(:chapter)   { Fabricate(:chapter) }
-  let(:students)  { Fabricate(:students, chapter: chapter) }
-  let(:coaches)   { Fabricate(:coaches, chapter: chapter) }
-  let!(:workshop) { Fabricate(:workshop, chapter: chapter) }
-
-  let(:student) { Fabricate(:student, groups: [students]) }
+  let(:workshop) { Fabricate(:workshop, chapter: chapter) }
+  let(:students) { Fabricate.times(3, :member) }
+  let(:coaches) { Fabricate.times(6, :member) }
 
   describe '#send_workshop_emails' do
     subject(:manager) { InvitationManager.new }
 
     it 'creates an invitation for each student' do
-      expect(chapter.groups).to receive(:students).and_return([students])
+      student_group = Fabricate(:students, chapter: chapter, members: students)
 
-      expect(students.members.count).to be > 0
-
-      students.members.each do |student|
+      students.each do |student|
         expect(WorkshopInvitation).to receive(:create).with(workshop: workshop, member: student, role: 'Student').and_call_original
+        expect(WorkshopInvitationMailer).to receive(:invite_student).and_call_original
       end
 
       manager.send_workshop_emails(workshop, 'students')
     end
 
     it 'creates an invitation for each coach' do
-      allow(chapter.groups).to receive_messages(coaches: [coaches])
+      coach_group = Fabricate(:coaches, chapter: chapter, members: coaches)
+
+      coaches.each do |coach|
+        expect(WorkshopInvitation).to receive(:create).with(workshop: workshop, member: coach, role: 'Coach').and_call_original
+        expect(WorkshopInvitationMailer).to receive(:invite_coach).and_call_original
+      end
 
       manager.send_workshop_emails(workshop, 'coaches')
-
-      coach_invites = WorkshopInvitation.where(role: 'Coach')
-
-      expect(coach_invites.count).to eq 5
     end
 
     it 'does not invite banned coaches' do
-      banned_coach = coaches.members.second
-
-      allow(banned_coach).to receive_messages(banned?: true)
-      allow(chapter.groups).to receive_messages(coaches: [coaches])
+      banned_coach = Fabricate(:banned_member)
+      coach_group = Fabricate(:coaches, chapter: chapter, members: coaches + [banned_coach])
 
       manager.send_workshop_emails(workshop, 'everyone')
 
-      coach_invites = WorkshopInvitation.where(role: 'Coach')
-
-      expect(coach_invites.count).to eq 4
-
-      expect(coach_invites.where(member: banned_coach)).to be_empty
+      coaches.each do |coach|
+        expect(WorkshopInvitation).to receive(:create).with(workshop: workshop, member: coach, role: 'Coach').and_call_original
+      end
+      expect(WorkshopInvitation).to_not receive(:create).with(workshop: workshop, member: banned_coach, role: 'Coach')
+      manager.send_workshop_emails(workshop, 'coaches')
     end
 
     it 'Sends emails when a WorkshopInvitation is created' do
-      expect(chapter.groups).to receive(:students).and_return([students])
-      expect(chapter.groups).to receive(:coaches).and_return([coaches])
+      student_group = Fabricate(:students, chapter: chapter, members: students)
+      coach_group = Fabricate(:coaches, chapter: chapter, members: coaches)
 
       expect {
         InvitationManager.new.send_workshop_emails(workshop, 'everyone')
-      }.to change { ActionMailer::Base.deliveries.count }
+      }.to change { ActionMailer::Base.deliveries.count }.by(students.count + coaches.count)
     end
 
-    it "Doesn't send emails when it's not created" do
-      expect(chapter.groups).to receive(:students).and_return([students])
-      expect(WorkshopInvitation).to receive(:create).at_least(:once).and_return(MeetingInvitation.new)
+    it "does not send emails when no invitation is created" do
+      student_group = Fabricate(:students, chapter: chapter, members: students)
+
+      students.count.times { expect(WorkshopInvitation).to receive(:create).and_return(WorkshopInvitation.new) }
 
       expect {
         InvitationManager.new.send_workshop_emails(workshop, 'students')
@@ -68,11 +65,12 @@ describe InvitationManager do
   end
 
   it '#send_course_emails' do
-    course = Fabricate(:course)
+    course = Fabricate(:course, chapter: chapter)
     invitation = Fabricate(:course_invitation)
-    expect(course.chapter.groups).to receive(:students).and_return([students])
+    students = Fabricate.times(2, :member)
+    student_group = Fabricate(:students, chapter: chapter, members: students)
 
-    students.members.each do |student|
+    students.each do |student|
       expect(CourseInvitation).to receive(:new).with(course: course, member: student).and_return(invitation)
     end
 
@@ -80,17 +78,16 @@ describe InvitationManager do
   end
 
   it '#send_event_emails' do
+    chapter = Fabricate(:chapter)
+    student_group = Fabricate(:students, chapter: chapter, members: students)
+    coaches_group = Fabricate(:coaches, chapter: chapter, members: coaches)
     event = Fabricate(:event, chapters: [chapter])
-    event.chapters.each do |chapter|
-      expect(chapter.groups).to receive(:coaches).and_return([coaches])
-      expect(chapter.groups).to receive(:students).and_return([students])
-    end
 
-    students.members.each do |student|
+    students.each do |student|
       expect(Invitation).to receive(:new).with(event: event, member: student, role: 'Student').and_call_original
     end
 
-    coaches.members.each do |student|
+    coaches.each do |student|
       expect(Invitation).to receive(:new).with(event: event, member: student, role: 'Coach').and_call_original
     end
 

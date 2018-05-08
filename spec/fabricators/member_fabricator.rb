@@ -16,6 +16,10 @@ Fabricator(:coach, from: :member) do
   groups(count: 2) { |attrs, i| Fabricate(:coaches) }
 end
 
+Fabricator(:banned_member, from: :member) do
+  bans(count:1) { Fabricate(:ban) }
+end
+
 Fabricator(:chapter_organiser, from: :member) do
   after_save do |member|
     chapter = Fabricate(:chapter)

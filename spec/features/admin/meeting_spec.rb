@@ -90,7 +90,6 @@ feature 'Managing meetings' do
     scenario 'sends the invitations' do
       chapter = Fabricate(:chapter_with_groups)
       meeting = Fabricate(:meeting, chapters: [chapter])
-      #chapter.members.last.update_attribute(banned: true)
 
       visit invite_admin_meeting_path(meeting)
       expect(page).to have_content("Invitations are being sent out")
@@ -99,13 +98,18 @@ feature 'Managing meetings' do
     scenario 'does not send the invitations to banned members' do
       chapter = Fabricate(:chapter_with_groups)
       meeting = Fabricate(:meeting, chapters: [chapter])
-      chapter.members[1..3].each do |member|
+      chapter.members[1..2].each do |member|
         Fabricate(:ban, member: member)
       end
+      permanent_ban = Fabricate.build(:ban, member: chapter.members[3], permanent: true, expires_at: nil)
+      permanent_ban.save(validate: false)
+      Fabricate(:ban, member: chapter.members[4], expires_at: Time.zone.today + 2.months)
+      expired_ban = Fabricate.build(:ban, member: chapter.members[5], expires_at: Time.zone.today - 1.months)
+      expired_ban.save(validate: false)
 
       expect {
         visit invite_admin_meeting_path(meeting)
-      }.to change{ ActionMailer::Base.deliveries.count }.by (chapter.members.count - 3)
+      }.to change{ ActionMailer::Base.deliveries.count }.by (chapter.members.count - 4)
     end
   end
 end

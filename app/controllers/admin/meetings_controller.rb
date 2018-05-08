@@ -51,7 +51,7 @@ class Admin::MeetingsController < Admin::ApplicationController
                          notice: t('admin.messages.meeting.invitations_already_sent')
     end
 
-    @meeting.invitees.reject(&:banned?).each do |invitee|
+    @meeting.invitees.not_banned.each do |invitee|
       MeetingInvitationMailer.invite(@meeting, invitee).deliver_now
     end
     @meeting.update_attribute(:invites_sent, true)
