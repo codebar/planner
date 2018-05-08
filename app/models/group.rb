@@ -15,7 +15,7 @@ class Group < ActiveRecord::Base
 
   alias_attribute :city, :chapter
 
-  default_scope -> { joins(:chapter) }
+  default_scope -> { joins(:chapter).includes(:chapter) }
 
   def to_s
     "#{name} #{chapter.name}"

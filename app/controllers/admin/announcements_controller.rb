@@ -2,7 +2,7 @@ class Admin::AnnouncementsController < Admin::ApplicationController
   before_action :set_announcement, only: [:update, :edit]
 
   def index
-    @announcements = Announcement.all
+    @announcements = Announcement.includes(:created_by).includes(:groups).all
   end
 
   def new
@@ -11,12 +11,14 @@ class Admin::AnnouncementsController < Admin::ApplicationController
 
   def create
     @announcement = Announcement.new(announcement_params.merge!(created_by: current_user))
-    redirect_to dashboard_path, notice: 'Announcement successfully created' if @announcement.save
+    return redirect_to admin_announcements_path, notice: 'Announcement successfully created' if @announcement.save
+    flash['notice'] = 'Please make sure you fill in all mandatory fields'
+    render 'new'
   end
 
   def update
     @announcement.update_attributes(announcement_params)
-    redirect_to dashboard_path
+    redirect_to admin_announcements_path, notice: 'Announcement succcessfully updated'
   end
 
   def edit; end

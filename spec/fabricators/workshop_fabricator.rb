@@ -48,3 +48,7 @@ Fabricator(:workshop_no_spots, class_name: :workshop) do
     Fabricate(:workshop_sponsor, workshop: workshop, sponsor: Fabricate(:sponsor, seats: 0), host: true)
   end
 end
+
+Fabricator(:past_workshop, from: :workshop) do
+  date_and_time 3.months.ago
+end

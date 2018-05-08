@@ -252,3 +252,9 @@ en:
         updated: 'You have succesfully updated the details of this meeting'
         invitations_already_sent: 'Invitations were previously sent; they will not be sent again'
         sending_invitations: 'Invitations are being sent out'
+
+      invitation:
+        rsvp_member: "%{name} has been successfully added and notified via email."
+        already_on_list: "%{name} is already on the list!"
+        rsvp_error: "Something went wrong, %{name} has not been added."
+        update_rsvp: 'Updated attendance of %{name}'

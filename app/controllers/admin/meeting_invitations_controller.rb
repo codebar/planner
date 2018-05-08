@@ -2,35 +2,42 @@ class Admin::MeetingInvitationsController < Admin::ApplicationController
   before_action :set_invitation, only: [:update]
 
   def update
-    status = params[:attendance_status]
-    attended = params[:attended]
+    status = params.permit(:attendance_status)[:attendance_status]
+    attended = params.permit(:attended)[:attended]
 
     @invitation.update_attributes(attending: status, attended: attended)
 
-    redirect_to [:admin, @invitation.meeting]
+    return redirect_to [:admin, @invitation.meeting],
+                       notice: t('admin.messages.invitation.update_rsvp', name: @invitation.member.full_name)
   end
 
   def create
     member = Member.find(params[:meeting_invitations][:member])
     meeting = Meeting.find_by(slug: params[:meeting_invitations][:meeting_id])
 
-    if meeting.invitations.accepted.map(&:member_id).include?(member.id)
-      return redirect_to [:admin, meeting], notice: "#{member.full_name} is already on the list!"
+    if MeetingInvitation.accepted.where(meeting: meeting, member: member).exists?
+      return redirect_to [:admin, meeting],
+                         notice: t('admin.messages.invitation.already_on_list', name: member.full_name)
     end
 
-    invite = meeting.invitations.create(member: member, attending: true, role: 'Participant')
+    invitation = meeting.invitations.find_or_create_by(member: member)
+    invitation.assign_attributes(attending: true, role: 'Participant')
 
-    if invite.save
-      redirect_to [:admin, meeting], notice: "#{member.full_name} has been successfully added and notified via email."
-      MeetingInvitationMailer.approve_from_waitlist(meeting, member, invite).deliver_now
+    if invitation.save
+      MeetingInvitationMailer.approve_from_waitlist(meeting, member).deliver_now
+      redirect_to [:admin, meeting], notice: t('admin.messages.invitation.rsvp_member', name: member.full_name)
     else
-      redirect_to [:admin, meeting], notice: "Something went wrong, #{member.full_name} has not been added."
+      redirect_to [:admin, meeting], notice: t('admin.messages.invitation.rsvp_error', name: member.full_name)
     end
   end
 
   private
 
   def set_invitation
-    @invitation = MeetingInvitation.find_by(token: params[:id])
+    @invitation = MeetingInvitation.find_by(token: id)
+  end
+
+  def id
+    params.permit(:id)[:id]
   end
 end

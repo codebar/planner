@@ -13,7 +13,8 @@ class Admin::EventsController < Admin::ApplicationController
     if @event.save
       redirect_to [:admin, @event], notice: 'Event successfully created.'
     else
-      render 'new', notice: 'Error'
+      flash[:notice] = 'Make sure you fill in all mandatory fields!'
+      render 'new'
     end
   end
 

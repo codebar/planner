@@ -13,12 +13,13 @@ class Admin::MeetingsController < Admin::ApplicationController
     if @meeting.save
       redirect_to [:admin, @meeting], notice: t('admin.messages.meeting.created')
     else
-      render :new, notice: 'Error'
+      flash[:notice] = @meeting.errors.full_messages.join('<br/>')
+      render :new
     end
   end
 
   def show
-    @invitations = @meeting.invitations.accepted.order(:created_at)
+    @invitations = @meeting.invitations.accepted.includes(:member).order(:created_at)
 
     return render text: @meeting.attendees_csv if request.format.csv?
   end
@@ -32,7 +33,8 @@ class Admin::MeetingsController < Admin::ApplicationController
     if @meeting.update_attributes(meeting_params)
       redirect_to [:admin, @meeting], notice: t('admin.messages.meeting.updated')
     else
-      render 'edit', notice: 'Something went wrong'
+      flash[:notice] = @meeting.errors.full_messages.join('<br/>')
+      render 'edit'
     end
   end
 
@@ -44,24 +46,27 @@ class Admin::MeetingsController < Admin::ApplicationController
   end
 
   def invite
-    notice = @meeting.invites_sent ? t('admin.messages.meeting.invitations_already_sent') :
-                                     t('admin.messages.meeting.sending_invitations')
-
-    unless @meeting.invites_sent
-      @meeting.invitees.each do |invitee|
-        next if invitee.banned?
-        MeetingInvitationMailer.invite(@meeting, invitee).deliver_now
-      end
-      @meeting.update_attribute(:invites_sent, true)
+    if @meeting.invites_sent
+      return redirect_to admin_meeting_path(@meeting),
+                         notice: t('admin.messages.meeting.invitations_already_sent')
     end
 
-    redirect_to admin_meeting_path(@meeting), notice: notice
+    @meeting.invitees.reject(&:banned?).each do |invitee|
+      MeetingInvitationMailer.invite(@meeting, invitee).deliver_now
+    end
+    @meeting.update_attribute(:invites_sent, true)
+
+    redirect_to admin_meeting_path(@meeting), notice: t('admin.messages.meeting.sending_invitations')
   end
 
   private
 
   def set_meeting
-    @meeting = Meeting.find_by(slug: params[:id])
+    @meeting = Meeting.find_by(slug: slug)
+  end
+
+  def slug
+    params.permit(:id)[:id]
   end
 
   def meeting_params

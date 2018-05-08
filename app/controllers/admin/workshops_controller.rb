@@ -3,13 +3,14 @@ class Admin::WorkshopsController < Admin::ApplicationController
   include  Admin::WorkshopConcerns
 
   before_filter :set_workshop_by_id, only: %i[show edit destroy]
-  before_filter :set_and_decorate_workshop, only: %i[attendees_checklist attendees_emails]
+  before_filter :set_and_decorate_workshop, only: %i[attendees_checklist attendees_emails send_invites]
 
   WORKSHOP_DELETION_TIME_FRAME_SINCE_CREATION = 4.hours
 
   def index
-    @chapter = Chapter.find(params[:chapter_id])
+    @chapter = Chapter.find(chapter_id)
     authorize @chapter
+    @workshops = @chapter.workshops.includes(:sponsors)
   end
 
   def new
@@ -22,12 +23,12 @@ class Admin::WorkshopsController < Admin::ApplicationController
     authorize(@workshop)
 
     if @workshop.save
-      grant_organiser_access(@workshop.chapter.organisers.map(&:id))
+      grant_organiser_access(@workshop.chapter.organisers.pluck(:id))
       set_host(host_id)
 
       redirect_to admin_workshop_path(@workshop), notice: 'The workshop has been created.'
     else
-      flash[:notice] = @workshop.errors.full_messages
+      flash[:notice] = @workshop.errors.full_messages.join('<br/>')
       render 'new'
     end
   end
@@ -38,7 +39,6 @@ class Admin::WorkshopsController < Admin::ApplicationController
 
   def show
     authorize @workshop
-
     @workshop = WorkshopPresenter.new(@workshop)
     return render text: @workshop.attendees_csv if request.format.csv?
 
@@ -59,7 +59,6 @@ class Admin::WorkshopsController < Admin::ApplicationController
   end
 
   def send_invites
-    @workshop = WorkshopPresenter.new(Workshop.find(params[:workshop_id]))
   end
 
   def attendees_checklist
@@ -81,7 +80,7 @@ class Admin::WorkshopsController < Admin::ApplicationController
 
     InvitationManager.new.send_workshop_emails(@workshop, audience)
 
-    redirect_to admin_workshop_path(@workshop), notice: 'Invitations are being emailed out.'
+    redirect_to admin_workshop_path(@workshop), notice: "Invitations to #{audience} are being emailed out."
   end
 
   def destroy
@@ -104,8 +103,8 @@ class Admin::WorkshopsController < Admin::ApplicationController
                                      :rsvp_open_local_time, sponsor_ids: [])
   end
 
-  def sponsor_id
-    workshop_params[:sponsor_ids][1]
+  def chapter_id
+    params.permit(:chapter_id)[:chapter_id]
   end
 
   def set_workshop_by_id
@@ -113,12 +112,12 @@ class Admin::WorkshopsController < Admin::ApplicationController
   end
 
   def set_and_decorate_workshop
-    workshop = Workshop.includes(:invitations).find(params[:workshop_id])
+    workshop = Workshop.find(params[:workshop_id])
     @workshop = WorkshopPresenter.new(workshop)
   end
 
   def workshop_id
-    params[:workshop_id] || params[:id]
+    params.permit(:workshop_id)[:workshop_id]
   end
 
   def set_host(host_id)
@@ -138,7 +137,7 @@ class Admin::WorkshopsController < Admin::ApplicationController
   end
 
   def host_id
-    params[:workshop][:host]
+    params.require(:workshop).permit(:host)[:host]
   end
 
   def organiser_ids

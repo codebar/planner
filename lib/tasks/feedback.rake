@@ -1,17 +1,14 @@
 namespace :feedback do
-  desc 'Request feedback from students that attended our last workshop'
+  desc 'Request feedback from students that attended our latest workshop'
 
   task request: :environment do
-    workshop = Workshop.most_recent
-    STDOUT.puts "Sending feedback requests for Workshop #{I18n.l(workshop.date_and_time, format: :date)}"
-
-    if workshop.date_and_time < Time.zone.now + 12.hours
-      workshop.invitations.where(role: 'Student').accepted.map do |invitation|
-        STDOUT.puts "#{invitation.member.full_name} <#{invitation.member.email}>"
-        FeedbackRequest.create(member: invitation.member, workshop: invitation.workshop, submited: false)
+    workshops = Workshop.completed_since_yesterday
+    workshops.each do |workshop|
+      Rails.logger.info "Sending emails for feedback requests for workshop at #{workshop.host.name}"
+      WorkshopInvitation.accepted.where(workshop: workshop, role: 'Student').map do |invitation|
+        FeedbackRequest.create(member: invitation.member, workshop: workshop, submited: false)
       end
-      STDOUT.puts "\nTotal requests sent: #{FeedbackRequest.where(workshop: workshop).count}"
-
+      Rails.logger.info "Feedback requests sent: #{FeedbackRequest.where(workshop: workshop).select('count()')}"
     end
   end
 end

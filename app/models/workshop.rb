@@ -18,9 +18,9 @@ class Workshop < ActiveRecord::Base
   scope :coaches, -> { joins(:invitations).where(invitations: { name: 'Coach', attended: true }) }
 
   validates :chapter_id, presence: true
-  validates :date_and_time, presence: true
+  validates :date_and_time, presence: true, if: proc { |model| model.chapter_id.present? }
 
-  before_validation :set_date_and_time
+  before_validation :set_date_and_time, if: proc { |model| model.chapter_id.present? }
   before_validation :set_opens_at
 
   def host
