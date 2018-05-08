@@ -1,12 +1,12 @@
-=render partial: 'shared_mailers/header', locals: { title: "codebar Monthly Invitation" }
-%body{ bgcolor: "#FFFFFF" }
+=render partial: 'shared_mailers/header', locals: { title: 'codebar Monthly Invitation' }
+%body{ bgcolor: '#FFFFFF' }
 
-  =render partial: 'shared_mailers/body_header', locals: { title: "Monthly Talks Night Invitation" }
+  =render partial: 'shared_mailers/body_header', locals: { title: 'Monthly Talks Night Invitation' }
 
-  %table{ class: "body-wrap"}
+  %table{ class: 'body-wrap'}
     %tr
       %td
-      %td{ class: "container", bgcolor: "#FFFFFF" }
+      %td{ class: 'container', bgcolor: '#FFFFFF' }
 
         .content
           %table
@@ -50,5 +50,5 @@
 
         .content
           = render partial: 'shared_mailers/social'
-      %td
-        = render partial: 'shared_mailers/unsubscribe', locals: { chapter: @meeting.chapters }
+
+          = render partial: 'shared_mailers/footer'
