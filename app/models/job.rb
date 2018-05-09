@@ -7,7 +7,7 @@ class Job < ActiveRecord::Base
   scope :not_submitted, -> { where(submitted: false, approved: false) }
 
   scope :ordered, -> { order('created_at desc') }
-  default_scope -> { where('expiry_date > ?', Time.zone.today) }
+  scope :active, -> { where('expiry_date > ?', Time.zone.today) }
 
   def expired?
     self.expiry_date.past?

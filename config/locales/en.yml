@@ -239,6 +239,9 @@ en:
     no_incoming: "There are no workshops coming up."
     contact: "To contact the %{city} team, send an email to %{email}"
 
+  job:
+    expired: 'This job post has expired'
+
   admin:
     workshop:
       manage_rsvps:
@@ -258,3 +261,4 @@ en:
         already_on_list: "%{name} is already on the list!"
         rsvp_error: "Something went wrong, %{name} has not been added."
         update_rsvp: 'Updated attendance of %{name}'
+
