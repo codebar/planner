@@ -15,7 +15,7 @@ class Meeting < ActiveRecord::Base
   before_save :set_slug
 
   def invitees
-    chapters.map{ |c| c.members }.flatten.uniq
+    Member.uniq.joins(:chapters).merge(chapters)
   end
 
   def title

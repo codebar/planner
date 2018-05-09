@@ -32,7 +32,7 @@ feature 'event listing' do
 
   context 'when there are more than 40 past events' do
     before(:each) do
-      41.times.map { Fabricate(:event, date_and_time: Time.zone.now - 2.weeks) }
+      Fabricate.times(41, :event, date_and_time: Time.zone.now - 2.weeks)
       Fabricate(:workshop, date_and_time: Time.zone.now - 3.weeks)
       visit events_path
     end
@@ -40,11 +40,6 @@ feature 'event listing' do
     scenario 'I can only see 40 past events' do
       within('.past') do
         expect(page).to have_selector('.event', count: 40)
-      end
-    end
-
-    scenario 'I can\'t see a past event outside of the most recent 40' do
-      within('.past') do
         expect(page).not_to have_content 'Workshop'
       end
     end

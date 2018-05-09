@@ -41,4 +41,16 @@ describe WorkshopPresenter do
     expect(workshop.attendees_csv).to include('STUDENT')
     expect(workshop.attendees_csv).to include('COACH')
   end
+
+  it '#attendees_emails' do
+    workshop = Fabricate(:workshop)
+    presenter = WorkshopPresenter.new(workshop)
+    members = Fabricate.times(6, :member)
+    members.each_with_index do |member, index|
+      index % 2 == 0 ? Fabricate(:attending_workshop_invitation, member: member,  workshop: workshop) :
+                       Fabricate(:attending_workshop_invitation, member: member,  workshop: workshop, role: 'Coach')
+    end
+
+    expect(presenter.attendees_emails).to eq(members.map(&:email).join(', '))
+  end
 end

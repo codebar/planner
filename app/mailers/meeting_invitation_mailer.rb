@@ -16,7 +16,7 @@ class MeetingInvitationMailer < ActionMailer::Base
     end
   end
 
-  def attending(meeting, member, invitation)
+  def attending(meeting, member)
     @member = member
     @meeting = meeting
     @host_address = AddressPresenter.new(@meeting.venue.address)
@@ -28,7 +28,7 @@ class MeetingInvitationMailer < ActionMailer::Base
     end
   end
 
-  def approve_from_waitlist(meeting, member, invitation)
+  def approve_from_waitlist(meeting, member)
     @member = member
     @meeting = meeting
     @host_address = AddressPresenter.new(@meeting.venue.address)

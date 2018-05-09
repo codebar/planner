@@ -12,7 +12,9 @@ class MeetingPresenter < EventPresenter
   end
 
   def attendees_emails
-    model.invitations.accepted.map { |m| m.member.email if m.member }.compact.join(', ')
+    Member.joins(:meeting_invitations)
+          .where('meeting_invitations.meeting_id = ? and meeting_invitations.attending = ?', model.id, true)
+          .pluck(:email).join(', ')
   end
 
   def to_s
@@ -21,6 +23,10 @@ class MeetingPresenter < EventPresenter
 
   def admin_path
     Rails.application.routes.url_helpers.admin_meeting_path(model)
+  end
+
+  def sponsors
+    []
   end
 
   private

@@ -5,4 +5,6 @@ class Announcement < ActiveRecord::Base
   belongs_to :created_by, class_name: 'Member'
 
   scope :active, -> { where('expires_at > ?', Date.current) }
+
+  validates :message, presence: true
 end

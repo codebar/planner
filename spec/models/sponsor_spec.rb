@@ -73,4 +73,13 @@ describe Sponsor do
       end
     end
   end
+
+  context '#contacts' do
+    it 'returns the members set as contacts for the sponsor' do
+      members = Fabricate.times(2, :member)
+      members.each { |m| Fabricate(:member_contact, sponsor: sponsor, contact: m) }
+
+      expect(sponsor.contacts).to eq(members)
+    end
+  end
 end

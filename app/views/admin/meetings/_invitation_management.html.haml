@@ -31,7 +31,7 @@
                 = link_to '', admin_meeting_invitation_path(invitation, attendance_status: true, attended: false), class: 'fa fa-check-square-o', method: :put
               - else
                 = link_to '', admin_meeting_invitation_path(invitation, attendance_status: true, attended: true),
-                class: 'fa fa-square-o',
+                class: 'fa fa-square-o verify-attendance',
                 method: :put
 
             - else

@@ -70,5 +70,18 @@ feature 'member feedback' do
 
       expect(page).to have_content(feedback_submited_message)
     end
+
+    scenario 'renders an error message when not all mandatory fields have been completed' do
+      visit feedback_path(valid_token)
+
+      select(coach.full_name, from: 'feedback_coach_id')
+      select(@tutorial.title, from: 'feedback_tutorial_id')
+
+      click_button('Submit feedback')
+
+      expect(page.current_path).to eq(submit_feedback_path(valid_token))
+
+      expect(page).to have_content("Rating can't be blank")
+    end
   end
 end
