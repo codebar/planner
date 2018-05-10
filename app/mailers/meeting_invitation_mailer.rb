@@ -51,4 +51,12 @@ class MeetingInvitationMailer < ActionMailer::Base
       format.html
     end
   end
+
+  private
+
+  helper do
+    def full_url_for(path)
+      "#{@host}#{path}"
+    end
+  end
 end
