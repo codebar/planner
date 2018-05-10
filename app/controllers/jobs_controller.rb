@@ -4,7 +4,7 @@ class JobsController < ApplicationController
   before_filter :has_access?, only: %i[edit update submit]
 
   def index
-    @jobs = Job.approved.ordered
+    @jobs = Job.active.approved.ordered
   end
 
   def pending

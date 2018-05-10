@@ -1,10 +1,13 @@
+- if @job.expiry_date.past?
+  .alert-box.alert
+    .row
+      .large-12.columns
+        =t('job.expired')
 .stripe.reverse
   .row
     .large-12.columns
       %h1
         #{@job.title}
-        - if @job.expiry_date.past?
-          %label.label.alert Expired
       %p.lead
         = link_to(@job.company, @job.link_to_job)
         %i.fa.fa-location-arrow
