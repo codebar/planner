@@ -1,5 +1,6 @@
 class JobsController < ApplicationController
-  before_filter :set_job, only: %i[show preview edit update submit]
+  before_filter :set_job, only: %i[show]
+  before_filter :set_current_user_job, only: %i[preview edit update submit]
   before_filter :is_logged_in?, except: %i[index show]
   before_filter :has_access?, only: %i[edit update submit]
 
@@ -51,6 +52,11 @@ class JobsController < ApplicationController
 
   def job_params
     params.require(:job).permit(:title, :description, :location, :expiry_date, :email, :link_to_job, :company)
+  end
+
+  def set_current_user_job
+    job_id = params[:job_id] || params[:id]
+    @job = current_user.jobs.find(job_id)
   end
 
   def set_job

@@ -241,6 +241,17 @@ en:
 
   job:
     expired: 'This job post has expired'
+    published_on: 'Published on'
+    expires_on: 'Closing date'
+  jobs:
+    title: Jobs
+    index:
+      description: There are %{count} jobs listed
+      none: There are no jobs available.
+    pending:
+      title: Your pending job posts
+      description: You have %{count} job posts pending submission.
+      none: You have no pending job posts.
 
   admin:
     workshop:

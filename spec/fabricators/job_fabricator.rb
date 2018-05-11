@@ -1,7 +1,7 @@
 
 Fabricator(:job) do
-  title 'Software Developer'
-  company 'ACME'
+  title { Faker::Job.title }
+  company { Faker::Company.name }
   description { Faker::Lorem.paragraph }
   location { Faker::Address.city }
   email { Faker::Address.city }
