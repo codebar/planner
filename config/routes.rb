@@ -17,6 +17,16 @@ Planner::Application.routes.draw do
     get 'step2'
   end
 
+  resources :jobs, only: [:index, :show]
+
+  namespace :member, path: 'my' do
+    resources :jobs, except: [:destroy] do
+      get 'preview'
+      post 'submit'
+      get 'pending', on: :collection
+    end
+  end
+
   resource :members do
     get :autocomplete_skill_name, on: :collection
   end
@@ -80,11 +90,6 @@ Planner::Application.routes.draw do
     end
   end
 
-  resources :jobs, except: [:destroy] do
-    get 'preview'
-    post 'submit'
-    get 'pending', on: :collection
-  end
 
   resources :skills, only: [:show]
 

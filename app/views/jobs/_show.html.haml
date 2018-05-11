@@ -25,6 +25,11 @@
         %strong Closing date
         %br
         #{I18n.l(@job.expiry_date, format: :date)}
+      -if @job.email?
+        %p
+          %strong Contact email
+          %br
+          =@job.email
       %p
         %strong Posted by
         %br

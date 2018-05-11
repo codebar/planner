@@ -1,0 +1,17 @@
+.alert-box.secondary
+  .row
+    .large-12.columns
+      This is a preview. <b>Submit</b> to verify your post or <b>Edit</b> to amend.
+
+
+= render partial: 'jobs/show', locals: { admin: false }
+
+%br
+.stripe
+  .row
+    .large-12.columns.text-right
+      = link_to "Edit", edit_member_job_path(@job), class: 'button round'
+      - unless @job.submitted?
+        = link_to "Submit", member_job_submit_path(@job), class: 'button round default', method: :post
+      - else
+        = link_to "My jobs", member_jobs_path, class: 'button round default'
