@@ -26,3 +26,7 @@ Fabricator(:chapter_organiser, from: :member) do
     member.add_role :organiser, chapter
   end
 end
+
+Fabricator(:meeting_attendee, from: :member) do
+  meeting_invitations(count: 1)
+end

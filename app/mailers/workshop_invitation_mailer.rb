@@ -56,7 +56,6 @@ class WorkshopInvitationMailer < ActionMailer::Base
 
     mail(mail_args(member, subject, @workshop.chapter.email)) do |format|
       format.html
-      format.html { render layout: 'email' }
     end
   end
 

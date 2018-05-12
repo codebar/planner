@@ -9,6 +9,7 @@ end
 
 Fabricator(:attending_workshop_invitation, from: :workshop_invitation) do
   attending true
+  reminded_at nil
 end
 
 Fabricator(:attended_workshop_invitation, from: :workshop_invitation) do
@@ -26,4 +27,12 @@ end
 Fabricator(:attended_coach, from: :workshop_invitation) do
   role 'Coach'
   attended true
+end
+
+Fabricator(:waitinglist_invitation, from: :workshop_invitation) do
+  waiting_list
+end
+
+Fabricator(:waitinglist_invitation_reminded, from: :workshop_invitation) do
+  waiting_list(reminded_at: 2.days.ago)
 end
