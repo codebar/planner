@@ -87,4 +87,12 @@ describe Member do
       expect(Member.with_skill('ruby')).to eq [ruby_member]
     end
   end
+
+  context 'scopes' do
+    it '#attending_meeting' do
+      invitation = Fabricate(:attending_meeting_invitation)
+
+      expect(Member.attending_meeting(invitation.meeting).first).to eq(invitation.member)
+    end
+  end
 end

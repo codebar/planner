@@ -1,13 +1,14 @@
 require 'spec_helper'
 
-describe InvitationManager, wip: true do
+describe InvitationManager do
+  subject(:manager) { InvitationManager.new }
+
   let(:chapter)   { Fabricate(:chapter) }
   let(:workshop) { Fabricate(:workshop, chapter: chapter) }
   let(:students) { Fabricate.times(3, :member) }
   let(:coaches) { Fabricate.times(6, :member) }
 
   describe '#send_workshop_emails' do
-    subject(:manager) { InvitationManager.new }
 
     it 'creates an invitation for each student' do
       student_group = Fabricate(:students, chapter: chapter, members: students)
@@ -49,7 +50,7 @@ describe InvitationManager, wip: true do
       coach_group = Fabricate(:coaches, chapter: chapter, members: coaches)
 
       expect {
-        InvitationManager.new.send_workshop_emails(workshop, 'everyone')
+        manager.send_workshop_emails(workshop, 'everyone')
       }.to change { ActionMailer::Base.deliveries.count }.by(students.count + coaches.count)
     end
 
@@ -59,7 +60,7 @@ describe InvitationManager, wip: true do
       students.count.times { expect(WorkshopInvitation).to receive(:create).and_return(WorkshopInvitation.new) }
 
       expect {
-        InvitationManager.new.send_workshop_emails(workshop, 'students')
+        manager.send_workshop_emails(workshop, 'students')
       }.not_to change { ActionMailer::Base.deliveries.count }
     end
   end
@@ -73,7 +74,7 @@ describe InvitationManager, wip: true do
       expect(CourseInvitation).to receive(:new).with(course: course, member: student).and_return(invitation)
     end
 
-    InvitationManager.send_course_emails(course)
+    manager.send_course_emails(course)
   end
 
   context '#send_event_emails' do
@@ -90,7 +91,7 @@ describe InvitationManager, wip: true do
         expect(Invitation).to_not receive(:new).with(event: event, member: student, role: 'Coach').and_call_original
       end
 
-      InvitationManager.new.send_event_emails(event, chapter)
+      manager.send_event_emails(event, chapter)
     end
 
     it 'can email only coaches' do
@@ -104,7 +105,7 @@ describe InvitationManager, wip: true do
         expect(Invitation).to receive(:new).with(event: event, member: student, role: 'Coach').and_call_original
       end
 
-      InvitationManager.new.send_event_emails(event, chapter)
+      manager.send_event_emails(event, chapter)
     end
 
     it 'can email both students and coaches' do
@@ -118,11 +119,11 @@ describe InvitationManager, wip: true do
         expect(Invitation).to receive(:new).with(event: event, member: student, role: 'Coach').and_call_original
       end
 
-      InvitationManager.new.send_event_emails(event, chapter)
+      manager.send_event_emails(event, chapter)
     end
   end
 
-  describe '#send_monthly_attendance_reminder_emails' do
+  describe '#send_monthly_attendance_reminder_emails', wip: true do
     it 'emails all attending members' do
       meeting = Fabricate(:meeting)
       attendees = Fabricate.times(4, :attending_meeting_invitation, meeting: meeting).map(&:member)
@@ -131,7 +132,7 @@ describe InvitationManager, wip: true do
         expect(MeetingInvitationMailer).to receive(:attendance_reminder).with(meeting, attendee)
       end
 
-      InvitationManager.send_monthly_attendance_reminder_emails(meeting)
+      manager.send_monthly_attendance_reminder_emails(meeting)
     end
   end
 
@@ -146,12 +147,12 @@ describe InvitationManager, wip: true do
           .and_call_original
       end
 
-      InvitationManager.send_workshop_attendance_reminders(workshop)
+      manager.send_workshop_attendance_reminders(workshop)
       invitations.each { |invitation| expect(invitation.reload.reminded_at).to_not be_nil }
     end
   end
 
-  describe '#send_workshop_waiting_list_reminders' do
+  describe '#send_workshop_waiting_list_reminders', wip: true do
     it 'emails everyone that hasn\'t already been reminded from the workshop\'s waitinglist' do
       workshop = Fabricate(:workshop)
       invitations = Fabricate.times(4, :waitinglist_invitation, workshop: workshop)
@@ -164,12 +165,11 @@ describe InvitationManager, wip: true do
       end
 
       reminded_invitations.each do |invitation|
-        expect(WorkshopInvitationMailer).to receive(:waiting_list_reminder)
+        expect(WorkshopInvitationMailer).to_not receive(:waiting_list_reminder)
           .with(workshop, invitation.member, invitation)
-          .and_call_original
       end
 
-      InvitationManager.send_workshop_waiting_list_reminders(workshop)
+      manager.send_workshop_waiting_list_reminders(workshop)
       invitations.each { |invitation| expect(invitation.reload.reminded_at).to_not be_nil }
     end
   end
@@ -187,7 +187,7 @@ describe InvitationManager, wip: true do
           .and_call_original
       end
 
-      InvitationManager.send_change_of_details(workshop, title, sponsor)
+      manager.send_change_of_details(workshop, title, sponsor)
     end
   end
 end

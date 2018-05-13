@@ -31,8 +31,10 @@ end
 
 Fabricator(:waitinglist_invitation, from: :workshop_invitation) do
   waiting_list
+  reminded_at nil
 end
 
 Fabricator(:waitinglist_invitation_reminded, from: :workshop_invitation) do
-  waiting_list(reminded_at: 2.days.ago)
+  waiting_list
+  reminded_at 2.days.ago
 end
