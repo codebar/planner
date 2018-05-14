@@ -1,26 +1,17 @@
 .stripe.reverse
   .row
     .large-12.columns
-      %h1 Jobs
-.stripe.reverse
-  .row
-    .large-12.columns
-      - if @jobs.none?
-        %p
-          There are no jobs available at the moment
-
-      - @jobs.each do |job|
-        .row.row-spaced
-          .medium-8.columns
-            .h4
-              =link_to job do
-                #{job.title}
-              at #{job.company}              
-              - if job.expiry_date.past?
-                %label.label.alert Expired
-            .h5
-              %i.fa.fa-map-marker
-              = job.location
-          .medium-4.columns
-            .right
-              Submitted #{distance_of_time_in_words(Time.now, job.created_at)} ago
+      %h1=t('jobs.title')
+      %p.lead
+        - if @jobs.any?
+          =t('jobs.index.description', count: @jobs.count)
+        - else
+          =t('jobs.index.none')
+        %br
+        %small #{link_to('Click here', new_member_job_path)} if you would like to post a new job.
+  - if @jobs.any?
+    .row
+      .large-12.columns
+        %ul.jobs
+          - @jobs.each do |job|
+            = render partial: 'job', locals: { job: job }

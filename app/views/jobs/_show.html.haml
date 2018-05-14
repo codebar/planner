@@ -5,35 +5,44 @@
         =t('job.expired')
 .stripe.reverse
   .row
-    .large-12.columns
+    .medium-12.columns
       %h1
         #{@job.title}
-      %p.lead
-        = link_to(@job.company, @job.link_to_job)
-        %i.fa.fa-location-arrow
-        = @job.location
-
-.stripe.reverse
-  .row
-    .large-12.columns
+    .medium-9.columns
       = dot_markdown(@job.description)
 
-.stripe.reverse
-  .row
-    .medium-6.columns
-      %p
-        %b Application deadline: #{I18n.l(@job.expiry_date, format: :default_date)} (in #{distance_of_time_in_words(Time.now, @job.expiry_date)})
-    .medium-6.columns.text-right
-      %p
-        - if admin
-          Posted by <b>#{link_to @job.created_by.full_name, admin_member_path(@job.created_by)}</b> on #{l(@job.created_at, format: :date)}
-        - else
-          Posted by <b>#{link_to @job.created_by.full_name, twitter_url_for(@job.created_by.twitter)}</b> on #{l(@job.created_at, format: :date)}
 
-.row
-  .large-12.columns.text-right
-    - if @job.expiry_date.future?
-      - if @job.email?
-        =mail_to @job.email, "Apply for this job", class: 'button round small'
-      - else
-        =link_to "Apply for this job", @job.link_to_job, class: 'button round small'
+    .medium-3.columns
+      %p
+        %strong Company
+        %br
+        =link_to(@job.company, @job.link_to_job)
+      %p
+        %strong Location
+        %br
+        =@job.location
+      %p
+        %strong Closing date
+        %br
+        #{I18n.l(@job.expiry_date, format: :date)}
+      -if @job.email?
+        %p
+          %strong Contact email
+          %br
+          =@job.email
+      %p
+        %strong Posted by
+        %br
+        - if admin
+          =link_to @job.created_by.full_name, admin_member_path(@job.created_by)
+        - else
+          =link_to @job.created_by.full_name, twitter_url_for(@job.created_by.twitter)
+      %p
+        %strong Posted on
+        %br
+        #{l(@job.created_at, format: :date)}
+      - if @job.expiry_date.future?
+        - if @job.email?
+          =mail_to @job.email, "Apply for this job", class: 'button small'
+        - else
+          =link_to "Apply for this job", @job.link_to_job, class: 'button small'

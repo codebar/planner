@@ -9,6 +9,8 @@ class Job < ActiveRecord::Base
   scope :ordered, -> { order('created_at desc') }
   scope :active, -> { where('expiry_date > ?', Time.zone.today) }
 
+  validates :title, :company, :location, :description, :link_to_job, presence: true
+
   def expired?
     self.expiry_date.past?
   end

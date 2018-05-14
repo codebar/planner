@@ -1,0 +1,12 @@
+%li.job
+  %h4= link_to job.title, member_job_preview_path(job)
+  %dl
+    %dt= t('job.company')
+    %dd= job.company
+    %br
+    %dt= t('job.published_on')
+    %dd= l(job.created_at, format: :date)
+    %dt= t('job.expires_on')
+    %dd= l(job.expiry_date, format: :date)
+    %dt= t('job.location')
+    %dd= job.location

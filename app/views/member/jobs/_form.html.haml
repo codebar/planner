@@ -1,7 +1,7 @@
 - if @pending_jobs
   %p You have #{@pending_jobs.count} job posts pending approval
 
-= simple_form_for @job do |f|
+= simple_form_for [:member, @job] do |f|
   .row
     .large-6.columns
       = f.input :title, label: "Job title", required: true, placeholder: "e.g. Internship"
