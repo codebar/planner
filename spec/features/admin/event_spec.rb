@@ -47,7 +47,6 @@ feature 'Event creation' do
 
     describe 'can not create an event' do
       scenario 'when they don\'t fill in any of the events details' do
-        date = Time.zone.today + 2.days
         visit new_admin_event_path
 
         click_on 'Save'

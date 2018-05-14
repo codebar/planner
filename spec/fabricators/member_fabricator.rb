@@ -30,3 +30,7 @@ end
 Fabricator(:meeting_attendee, from: :member) do
   meeting_invitations(count: 1)
 end
+
+Fabricator(:workshop_coach_attendee, from: :member) do
+  workshop_invitations(count: 1) { Fabricate(:attended_coach) }
+end
