@@ -43,7 +43,15 @@ class Admin::InvitationsController < Admin::ApplicationController
   private
 
   def set_invitation
-    @invitation = @workshop.invitations.find_by(token: invitation_id)
+    if params.key?(:workshop)
+      @invitation = WorkshopInvitation.where(
+        workshop_id: @workshop.id,
+        member_id: params[:workshop][:invitations],
+        role: params[:role]
+      ).first_or_create
+    else
+      @invitation = @workshop.invitations.find_by(token: invitation_id)
+    end
   end
 
   def invitation_id
