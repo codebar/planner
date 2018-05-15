@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'events_controller'
 
 feature 'event listing' do
   describe 'I can see the names and titles of events' do
@@ -30,16 +31,15 @@ feature 'event listing' do
     end
   end
 
-  context 'when there are more than 40 past events' do
-    before(:each) do
-      Fabricate.times(41, :event, date_and_time: Time.zone.now - 2.weeks)
-      Fabricate(:workshop, date_and_time: Time.zone.now - 3.weeks)
-      visit events_path
-    end
+  context 'when there are more than the specified number of past events' do
+    scenario 'I can only as many events allowed by the display limits' do
+      Fabricate.times(10, :event, date_and_time: 2.weeks.ago)
+      stub_const('EventsController::RECENT_EVENTS_DISPLAY_LIMIT', 10)
+      Fabricate(:workshop, date_and_time: 3.weeks.ago)
 
-    scenario 'I can only see 40 past events' do
+      visit events_path
       within('.past') do
-        expect(page).to have_selector('.event', count: 40)
+        expect(page).to have_selector('.event', count: 10)
         expect(page).not_to have_content 'Workshop'
       end
     end

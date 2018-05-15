@@ -4,6 +4,9 @@
     .large-12.columns
     %p Feedback related to your coaching sessions is highlighted.
   .row
+    .medium-6.columns.text-left
+      = page_entries_info(@coaches, model: 'feedback')
+  .row
     .large-12.columns
       - @feedback.each do |feedback|
         .panel{ class: current_user.eql?(feedback.coach) ? 'callout' : "" }
@@ -20,7 +23,7 @@
             .row
               .large-12.columns
                 %p
-                  %span Coach: 
+                  %span Coach:
                   = link_to feedback.coach.full_name, admin_member_path(feedback.coach)
           - if feedback.request.present?
             .row
@@ -32,3 +35,6 @@
               .large-12.columns
                 %h5 Suggestions
                 %p=feedback.suggestions
+  .row
+    .medium-12.columns.text-right
+      = will_paginate(@coaches)

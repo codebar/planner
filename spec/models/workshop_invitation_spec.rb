@@ -44,5 +44,19 @@ describe WorkshopInvitation do
       expect(WorkshopInvitation.year(Time.zone.now.year).count).to eq(4)
       expect(WorkshopInvitation.year((Time.zone.now - 2.years).year).count).to eq(5)
     end
+
+    it '#not_reminded' do
+      not_reminded = Fabricate.times(3, :student_workshop_invitation, reminded_at: nil)
+      Fabricate.times(2, :workshop_invitation, reminded_at: 3.hours.ago)
+
+      expect(WorkshopInvitation.not_reminded).to eq(not_reminded)
+    end
+
+    it '#on_waiting_list' do
+      Fabricate.times(5, :workshop_invitation)
+      waiting_list = Fabricate.times(2, :waitinglist_invitation)
+
+      expect(WorkshopInvitation.on_waiting_list).to eq(waiting_list)
+    end
   end
 end

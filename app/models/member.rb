@@ -23,6 +23,16 @@ class Member < ActiveRecord::Base
   validates_length_of :about_you, maximum: 255
 
   scope :subscribers, -> { joins(:subscriptions).order('created_at desc').uniq }
+  scope :not_banned, lambda {
+                       joins('LEFT OUTER JOIN bans ON members.id = bans.member_id')
+                         .where('bans.id is NULL or bans.expires_at < CURRENT_DATE')
+                     }
+  scope :attending_meeting, lambda { |meeting|
+                              joins(:meeting_invitations)
+                                .where('meeting_invitations.meeting_id = ? and meeting_invitations.attending = ?',
+                                       meeting.id, true)
+                            }
+  scope :in_group, ->(group) { not_banned.joins(:groups).merge(group) }
 
   acts_as_taggable_on :skills
 
