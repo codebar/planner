@@ -32,6 +32,7 @@ class Member < ActiveRecord::Base
                                 .where('meeting_invitations.meeting_id = ? and meeting_invitations.attending = ?',
                                        meeting.id, true)
                             }
+  scope :in_group, ->(group) { not_banned.joins(:groups).merge(group) }
 
   acts_as_taggable_on :skills
 

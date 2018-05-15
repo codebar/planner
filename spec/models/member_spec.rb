@@ -94,5 +94,16 @@ describe Member do
 
       expect(Member.attending_meeting(invitation.meeting).first).to eq(invitation.member)
     end
+
+    it '#in_group' do
+      chapter = Fabricate(:chapter)
+      students = Fabricate(:students, chapter: chapter)
+      coaches = Fabricate(:coaches, chapter: chapter)
+      Fabricate(:coaches)
+      Fabricate(:students)
+
+      expect(Member.in_group(chapter.groups.students)).to eq(students.members)
+      expect(Member.in_group(chapter.groups.coaches)).to eq(coaches.members)
+    end
   end
 end

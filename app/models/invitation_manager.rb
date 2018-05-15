@@ -22,7 +22,7 @@ class InvitationManager
   handle_asynchronously :send_monthly_attendance_reminder_emails
 
   def send_course_emails(course)
-    students = Member.not_banned.joins(:groups).merge(course.chapter.groups.students)
+    students = Member.in_group(course.chapter.groups.students)
     students.each do |student|
       invitation = CourseInvitation.new(course: course, member: student)
       invitation.send(:email) if invitation.save
@@ -31,7 +31,7 @@ class InvitationManager
   handle_asynchronously :send_course_emails
 
   def send_workshop_attendance_reminders(workshop)
-    workshop.attendances.where(reminded_at: nil).each do |invitation|
+    workshop.attendances.not_reminded.each do |invitation|
       WorkshopInvitationMailer.attending_reminder(workshop, invitation.member, invitation).deliver_now
       invitation.update_attribute(:reminded_at, Time.zone.now)
     end
@@ -39,7 +39,7 @@ class InvitationManager
   handle_asynchronously :send_workshop_attendance_reminders
 
   def send_workshop_waiting_list_reminders(workshop)
-    workshop.invitations.where(reminded_at: nil).joins(:waiting_list).each do |invitation|
+    workshop.invitations.on_waiting_list.not_reminded.each do |invitation|
       WorkshopInvitationMailer.waiting_list_reminder(workshop, invitation.member, invitation).deliver_now
       invitation.update_attribute(:reminded_at, Time.zone.now)
     end
@@ -101,10 +101,10 @@ class InvitationManager
   end
 
   def chapter_students(chapter)
-    Member.not_banned.joins(:groups).merge(chapter.groups.students)
+    Member.in_group(chapter.groups.students)
   end
 
   def chapter_coaches(chapter)
-    Member.not_banned.joins(:groups).merge(chapter.groups.coaches)
+    Member.in_group(chapter.groups.coaches)
   end
 end
