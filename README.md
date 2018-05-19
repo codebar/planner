@@ -5,11 +5,8 @@ A tool to help manage [codebar.io](http://codebar.io) members and events.
 [![Build Status](https://travis-ci.org/codebar/planner.png?branch=master)](https://travis-ci.org/codebar/planner)
 [![Coverage Status](https://coveralls.io/repos/codebar/planner/badge.png)](https://coveralls.io/r/codebar/planner)
 [![Code Climate](https://codeclimate.com/github/codebar/planner.png)](https://codeclimate.com/github/codebar/planner)
-[![Dependency Status](https://gemnasium.com/codebar/planner.png)](https://gemnasium.com/codebar/planner)
 
 If you are considering making a PR, please take a look at the Waffle board to see if someone else has already started work on an existing issue.
-
-#### [Waffle board](https://waffle.io/codebar/planner)
 
 #### [We're on Slack!](https://codebar-slack.herokuapp.com)
 
