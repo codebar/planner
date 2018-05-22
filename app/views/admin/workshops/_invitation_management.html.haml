@@ -1,4 +1,4 @@
-- if @workshop.invitations.any?
+- if @workshop.invitable_yet?
   .row
     .large-12.columns
       - if @workshop.invitations.any?
@@ -10,18 +10,21 @@
             - if @student_waiting_list.any? or @coach_waiting_list.any?
               There is also a waiting list of <strong>#{@student_waiting_list.count}</strong> students and <strong>#{@coach_waiting_list.count}</strong> coaches.
   .row
-    .large-9.columns
-      %small
-      .row
-        = simple_form_for :workshop, url: admin_workshop_invitations_path(@workshop, attending: true), remote: true, method: :put do |f|
-          .medium-6.columns
-            = f.select :invitations, @workshop.invitations.not_accepted.all.map { |u| [ "#{u.member.full_name} (#{u.role})", u.token] }, { include_blank: true }, { class: 'chosen-select', required: true, data: { placeholder: 'Select a member to RSVP' } }
-          .large-3.columns
-            %span.has-tip{ 'data-tooltip': true, 'aria-haspopup': 'true', title: t('admin.workshop.manage_rsvps.text') }
-              %i.fa.fa-info
-      %br
+    %h3.medium-3.column RSVP a member
+    %span.has-tip{ 'data-tooltip': true, 'aria-haspopup': 'true', title: t('admin.workshop.manage_rsvps.text') }
+      %i.fa.fa-info
 
   .row
+    = simple_form_for :workshop, url: admin_workshop_invitations_path(@workshop, attending: true, role: 'Student'), remote: true, method: :put, html: { class: 'students-select'} do |f|
+      .medium-6.columns
+        = f.select :invitations, @students.map { |s| [ "#{s.member.full_name}", s.member.id ] }, { include_blank: true }, { class: 'chosen-select', required: true, data: { placeholder: 'Select a student to RSVP' } }
+
+    = simple_form_for :workshop, url: admin_workshop_invitations_path(@workshop, attending: true, role: 'Coach'), remote: true, method: :put do |f|
+      .medium-6.columns
+        = f.select :invitations, @coaches.map { |s| [ "#{s.member.full_name}", s.member.id ] }, { include_blank: true }, { class: 'chosen-select', required: true, data: { placeholder: 'Select a coach to RSVP' } }
+    %br
+
+  .row.admin_margin
     .medium-6.columns
       %h4
         Students
@@ -30,10 +33,9 @@
       = render partial: 'admin/workshop/attendances', locals: { invitations: @attending_students }
       = render partial: 'admin/workshop/waiting_list', locals: { waiting_list: @student_waiting_list }
     .medium-6.columns
-      .row
-        %h4
-          Coaches
-          %label.label.round.secondary #{@workshop.attending_coaches.count}#{(" of " + @workshop.host.coach_spots.to_s) if @workshop.has_host?}
-          %label.label.round.signed-in #{ @workshop.attending_coaches.count(&:attended) }
+      %h4
+        Coaches
+        %label.label.round.secondary #{@workshop.attending_coaches.count}#{(" of " + @workshop.host.coach_spots.to_s) if @workshop.has_host?}
+        %label.label.round.signed-in #{ @workshop.attending_coaches.count(&:attended) }
       = render partial: 'admin/workshop/attendances', locals: { invitations: @attending_coaches }
       = render partial: 'admin/workshop/waiting_list', locals: { waiting_list: @coach_waiting_list }
