@@ -10,7 +10,7 @@ class Admin::WorkshopsController < Admin::ApplicationController
   def index
     @chapter = Chapter.find(chapter_id)
     authorize @chapter
-    @workshops = @chapter.workshops.includes(:sponsors)
+    @workshops = @chapter.workshops.includes(:sponsors).includes(:address)
   end
 
   def new
@@ -40,6 +40,8 @@ class Admin::WorkshopsController < Admin::ApplicationController
   def show
     authorize @workshop
     @workshop = WorkshopPresenter.new(@workshop)
+    @students = @workshop.chapter.subscriptions.includes(:member).where(groups: { name: 'Students' })
+    @coaches = @workshop.chapter.subscriptions.includes(:member).where(groups: { name: 'Coaches' })
     return render text: @workshop.attendees_csv if request.format.csv?
 
     @address = AddressPresenter.new(@workshop.host.address) if @workshop.has_host?
