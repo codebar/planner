@@ -1,3 +1,5 @@
+Fabricate.sequence(:slug) { |i| "#{Faker::Lorem.word}-#{i}" }
+
 Fabricator(:event) do
   date_and_time Time.zone.now + 2.days
   ends_at Time.zone.now + 2.days + 8.hours
@@ -11,7 +13,7 @@ Fabricator(:event) do
   coach_questionnaire { "http://#{Faker::Internet.domain_name}" }
   student_questionnaire { "http://#{Faker::Internet.domain_name}" }
   student_spaces 2
-  slug 'some-slug'
+  slug { Fabricate.sequence(:slug) }
   info Faker::Lorem.sentence
   begins_at '11:00'
   chapters { [Fabricate(:chapter)] }
