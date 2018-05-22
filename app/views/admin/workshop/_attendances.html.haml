@@ -13,7 +13,7 @@
             - else
               = link_to admin_workshop_invitation_path(@workshop, invitation, attending: false), class: 'cancel_attendance', title: 'Cancel RSVP', method: :put, remote: true do
                 %i.fa.fa-minus-square-o
-          %td.small-5.columns
+          %td.small-6.columns
             - if invitation.member.newbie?
               %span.has-tip{ 'data-tooltip': '', 'aria-haspopup': 'true', title: 'New attendee.' }
                 %i.fa.fa-paw
@@ -26,7 +26,7 @@
                 = invitation.member.email
               - else
                 = invitation.member.full_name
-          %td.small-6.columns
+          %td.small-5.columns
             %small=invitation.note
             - if invitation.rsvp_time.present?
               %span.has-tip{ 'data-tooltip': '', 'aria-haspopup': 'true',  title: 'Time of RSVP' }
