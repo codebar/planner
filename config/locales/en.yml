@@ -152,7 +152,7 @@ en:
 
 
   code_of_conduct:
-    title: "Code on conduct"
+    title: "Code of conduct"
     summary:
       title: "The Quick Version"
       intro: "Our events are dedicated to providing a harassment-free experience for everyone, regardless of gender, sexual orientation, disability, physical appearance, body size, race, or religion. We do not tolerate harassment of our members in any form. Sexual language and imagery is not appropriate for any of our events, including talks, workshops, parties, Twitter and any other online media. Members violating these rules may be sanctioned or expelled from the event and any future events at the discretion of the organisers."
@@ -282,4 +282,3 @@ en:
         already_on_list: "%{name} is already on the list!"
         rsvp_error: "Something went wrong, %{name} has not been added."
         update_rsvp: 'Updated attendance of %{name}'
-
