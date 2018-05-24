@@ -22,6 +22,10 @@ class ApplicationController < ActionController::Base
 
   before_action :set_locale
 
+  def default_url_options
+    { locale: I18n.locale }
+  end
+
   def render_not_found
     respond_to do |format|
       format.html { render :template => "errors/not_found", layout: false, :status => 404 }
@@ -120,11 +124,12 @@ class ApplicationController < ActionController::Base
     is_logged_in?
   end
 
-  def set_locale
-    I18n.locale = params[:locale] || I18n.default_locale
-  end
-
   private
+
+  def set_locale
+    locale = params[:locale] if I18n.available_locales.include?(params[:locale])
+    I18n.locale = locale || I18n.default_locale
+  end
 
   def user_not_authorized
     redirect_to(user_path, notice: 'You are not authorized to perform this action.')
