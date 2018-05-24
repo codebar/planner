@@ -1,4 +1,5 @@
 Planner::Application.routes.draw do
+  get '/:locale' => 'dashboard#show'
   root 'dashboard#show'
 
   scope controller: 'dashboard' do
