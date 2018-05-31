@@ -41,8 +41,7 @@
                     - if organiser.mobile.present?
                       %p
                         = organiser.full_name
-                        =organiser.mobile
-                        %br
+                        = organiser.mobile
 
         .content
           = render partial: 'shared_mailers/social'
