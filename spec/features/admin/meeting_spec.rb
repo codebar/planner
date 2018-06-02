@@ -39,7 +39,7 @@ feature 'Managing meetings' do
     scenario 'renders an error when no chapter has been selected' do
       Fabricate(:meeting, name: 'August Meeting')
       visit edit_admin_meeting_path(meeting)
-      fill_in 'Slug', with: "#{I18n.l(today, format: :year_month).downcase}-august-meeting-1"
+      fill_in 'Slug', with: "#{I18n.l(meeting.date_and_time, format: :year_month).downcase}-august-meeting-1"
 
       click_on 'Update'
 
