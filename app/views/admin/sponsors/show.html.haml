@@ -1,22 +1,26 @@
 %section#banner
   .row
-    .large-9.columns
+    .medium-6.large-9.columns
       %h1= @sponsor.name
-    .large-3.columns
-      = link_to 'Edit', edit_admin_sponsor_path(@sponsor), class: 'button round'
+    .medium-6.large-3.columns
+      = link_to 'Edit', edit_admin_sponsor_path(@sponsor), class: 'button small'
 
   .row
-    .large-3.columns
+    .medium-6.large-3.columns
       %h4 Address
-      = AddressPresenter.new(@sponsor.address).to_html
+      %p= AddressPresenter.new(@sponsor.address).to_html
+      %span Directions:
+      %p= @sponsor.address.directions
 
-    .large-3.columns
+    .medium-6.large-3.columns
       %h4 Logo
       = image_tag(@sponsor.avatar, alt: @sponsor.name)
-    .large-3.columns
+
+    .medium-6.large-3.columns
       %h4 Contacts
       = SponsorPresenter.new(@sponsor).contact_info
-    .large-3.columns
+
+    .medium-6.large-3.columns
       %h4 Sponsored
       %ul.no-bullet
         - @sponsor.workshops.each do |workshop|
@@ -25,7 +29,7 @@
               %strong=workshop.chapter.name
               %br
               = humanize_date(workshop.date_and_time, with_time: true)
-  .row
-    .large-6.columns
+
+    .medium-6.large-3.columns
       %h4 Accessibility information
       %p= @sponsor.accessibility_info
