@@ -9,8 +9,10 @@
     .medium-6.large-3.columns
       %h4 Address
       %p= AddressPresenter.new(@sponsor.address).to_html
-      %span Directions:
-      %p= @sponsor.address.directions
+      - if @sponsor.address.directions
+        %p
+          %strong Directions:
+          = @sponsor.address.directions
 
     .medium-6.large-3.columns
       %h4 Logo
@@ -30,6 +32,7 @@
               %br
               = humanize_date(workshop.date_and_time, with_time: true)
 
+  .row
     .medium-6.large-3.columns
       %h4 Accessibility information
       %p= @sponsor.accessibility_info
