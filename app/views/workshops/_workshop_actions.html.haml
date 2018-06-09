@@ -1,18 +1,17 @@
-%p
-  - if !@workshop.invitable_yet?
-    This workshop is not yet open for RSVP.
+- if !@workshop.invitable_yet?
+  %p This workshop is not yet open for RSVP.
+- else
+  - if @workshop.past?
+    - unless logged_in?
+      %p Sign up to be invited to future events.
   - else
-    - if @workshop.past?
-      - unless logged_in?
-        Sign up to be invited to future events.
-    - else
-      - if logged_in?
-        - if @workshop.attendee? current_user
-          You are attending this event.
-        - elsif @workshop.waitlisted? current_user
-          You are on the waiting List.
-        - elsif !@workshop.spaces?
-          Unfortunately this workshop is full, but do join the waiting list as spots open up in the lead up to the workshop.
+    - if logged_in?
+      - if @workshop.attendee? current_user
+        %p You are attending this event.
+      - elsif @workshop.waitlisted? current_user
+        %p You are on the waiting List.
+      - elsif !@workshop.spaces?
+        %p Unfortunately this workshop is full, but do join the waiting list as spots open up in the lead up to the workshop.
 
 - if logged_in? && @workshop.future? && (@workshop.invitable || @workshop.open_for_rsvp?)
   - if @workshop.attendee?(current_user)
