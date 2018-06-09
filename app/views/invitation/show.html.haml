@@ -13,25 +13,24 @@
       This link can be accessed without authentication so please don't share it with others. You can access and share the <strong> #{link_to("public listing", workshop_url(@workshop))}</strong> of the workshop.
 
 
-.stripe
-  .row
-    .large-12.columns
-      %br
-        - if @announcements.present?
+.stripe.reverse
+  - if @announcements.present?
+    .row
+      .large-12.columns
+        %br
           .alert-box.info{ "data-alert" => true }
             =link_to "#", class: 'close' do
               &times;
             %ul.no-bullet
               - @announcements.each do |announcement|
                 %li= dot_markdown(announcement.message)
-  %br
   .row
-    .large-8.columns
+    .medium-7.large-8.columns
       %p
         Hi #{@invitation.member.name},
         = render partial: @invitation.role.downcase
 
-    .large-4.columns
+    .medium-5.large-4.columns
       .panel
         - if @workshop.past?
           %em This workshop has already taken place.
@@ -43,10 +42,9 @@
                 = form_tag update_note_invitation_path(@invitation) do
                   = select_tag :note, options_for_select(@tutorial_titles, @invitation.note)
                   %br
-                  %br
                   = submit_tag 'Update note', class: "expand button small"
             - if @workshop.rsvp_available?
-              =link_to "I can no longer attend", reject_invitation_url(@invitation), class: "expand button small alert"
+              = link_to "I can no longer attend", reject_invitation_url(@invitation), class: "expand button small alert"
             - else
               %p
                 If you can't make it or plan to arrive late please let us know by sending an email to #{@invitation.workshop.chapter.email}
@@ -75,43 +73,26 @@
                   = f.button :submit, "Attend",  class: "button expand round"
               - else
                 = render partial: 'invitation/waiting_list', locals: { invitation: @invitation }
-          Read our #{link_to "attendance policy", attendance_policy_path}
+          Read our #{link_to "attendance policy", attendance_policy_path}.
 
 
-.stripe
+.stripe.reverse
   .row
-    .medium-8.columns
-      %a{ name: "location" }
-      %h4{ "data-magellan-destination" => "location"} Venue
-      %p
-        %strong= @workshop.host.name
-        %br
-          = @host_address.to_html
-        %br
-      %iframe{ width: '100%', height: '350', frameborder: '0', scrolling: 'no', marginheight: '0', marginwidth: '0', src: %{https://maps.google.com/maps?f=q&source=s_q&hl=en&amp;geocode=&q=#{@host_address.for_map}&ie=UTF8&t=m&z=15&output=embed} }
-      =link_to "View larger map", %{https://maps.google.com/maps?f=q&source=s_q&hl=en&amp;geocode=&q=#{@host_address.for_map}&ie=UTF8&hq=&t=m&z=15}, style: "color:#0000FF;text-align:left"
-    .large-4.columns
-      %h4 Sponsors
-      %ul.no-bullet
+    = render partial: 'shared/venue', locals: { venue: @workshop.host, address: @host_address}
+
+    .small-12.column
+      %h3 Sponsors
+      %ul.row.no-bullet
         - @workshop.sponsors.each do |sponsor|
-          %li
-            .row
-              .large-4.columns
-                = image_tag(sponsor.avatar, class: 'sponsor', alt: sponsor.name)
-              .large-8.columns
-                =link_to sponsor.name, sponsor.website
-                %p
-                  = sponsor.description
-          %br
+          %li.small-4.columns
+            = image_tag(sponsor.avatar, class: 'sponsor', alt: sponsor.name)
+            %p
+              = link_to sponsor.name, sponsor.website
 
-.stripe
-  %br
-  %br
+.stripe.reverse
   = render partial: 'members/organisers_grid', locals: { members: @workshop.organisers, show_info: true }
-  %br
-  %br
 
-.stripe
+.stripe.reverse
   .row
     .medium-6.columns
       %h4 Students (#{@invitation.workshop.attending_students.count})
