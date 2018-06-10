@@ -1,12 +1,12 @@
-=render partial: 'shared_mailers/header', locals: { title: "codebar Monthly Attendance Reminder" }
-%body{ bgcolor: "#FFFFFF" }
+= render partial: 'shared_mailers/header', locals: { title: 'codebar Monthly Attendance Reminder' }
+%body{ bgcolor: '#FFFFFF' }
 
-  =render partial: 'shared_mailers/body_header', locals: { title: "codebar Monthly Attendance Reminder" }
+  = render partial: 'shared_mailers/body_header', locals: { title: 'codebar Monthly Attendance Reminder' }
 
-  %table{ class: "body-wrap"}
+  %table{ class: 'body-wrap'}
     %tr
       %td
-      %td{ class: "container", bgcolor: "#FFFFFF" }
+      %td{ class: 'container', bgcolor: '#FFFFFF' }
 
         .content
           %table
@@ -22,15 +22,17 @@
 
         = render partial: 'agenda'
 
+        = render partial: 'cancel_attendance'
+
         .content
           %table
             %tr
               %td
                 %h4 Details
             %tr
-              %td.small{ width: "30%", style: "vertical-align: top; padding-right: 10px;" }
+              %td.small{ width: '30%', style: 'vertical-align: top; padding-right: 10px;' }
                 = image_tag(@meeting.venue.avatar, alt: @meeting.venue.name)
-              %td.small{ style: "vertical-align: top;" }
+              %td.small{ style: 'vertical-align: top;' }
                 %p #{humanize_date(@meeting.date_and_time, with_time: true)}
                 %p
                   #{@meeting.venue.name}
