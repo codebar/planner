@@ -14,33 +14,31 @@
               %td
                 %h3 Hi, #{@member.name}
                 %p.lead
-                  This is a quick email to remind you that you have signed up for tomorrow's Monthly.
+                  This is a quick email to remind you that you have signed up for tomorrow's codebar Monthly.
                 %p
                   Please be advised that repeated no-shows to codebar events, including Monthlies, will result in suspension of your invitations. No +1s are allowed for Monthlies.
                 %p
-                  The talks will begin promptly at 7:00, food and drinks will be served from 6:30.
-                %h4
-                  Agenda
-                %p
-                  = @meeting.description.html_safe
-                %h4
-                  Can't make it anymore?
-                %p
-                  = "Please #{link_to 'cancel your attendance', @cancellation_url} by following the instructions on the event page.".html_safe
+                  The talks will begin promptly at 7:00PM, food and drinks will be served from 6:30PM.
 
         .content
-          %table{ bgcolor: "#FFFFFF" }
+          %table
             %tr
-              %td.small{ width: "30%", style: "vertical-align: top; padding-right:10px;"}
-                =image_tag(@meeting.venue.avatar, alt: @meeting.venue.name)
               %td
-                %h4
-                  Workshop
-                  %small #{humanize_date(@meeting.date_and_time, with_time: true)}
+                %h4 Details
+            %tr
+              %td.small{ width: "30%", style: "vertical-align: top; padding-right: 10px;" }
+                = image_tag(@meeting.venue.avatar, alt: @meeting.venue.name)
+              %td.small{ style: "vertical-align: top;" }
+                %p #{humanize_date(@meeting.date_and_time, with_time: true)}
                 %p
                   #{@meeting.venue.name}
                   %br
                   #{@host_address.to_html}
+                - if @host_address.directions
+                  %p
+                    %strong Directions:
+                    %br
+                    #{@host_address.directions}
 
         .content
           %table
