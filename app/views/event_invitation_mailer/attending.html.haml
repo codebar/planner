@@ -1,59 +1,46 @@
-=render partial: 'shared_mailers/header', locals: { title: "Attendance Confirmation" }
-%body{ bgcolor: "#FFFFFF" }
+= render partial: 'shared_mailers/header', locals: { title: 'Event Attendance Confirmation' }
+%body{ bgcolor: '#FFFFFF' }
 
-  =render partial: 'shared_mailers/body_header', locals: { title: "Attendance Confirmation" }
+  = render partial: 'shared_mailers/body_header', locals: { title: 'Event Attendance Confirmation' }
 
-  %table{ class: "body-wrap"}
+  %table{ class: 'body-wrap'}
     %tr
       %td
-      %td{ class: "container", bgcolor: "#FFFFFF" }
+      %td{ class: 'container', bgcolor: '#FFFFFF' }
 
         .content
           %table
             %tr
               %td
-                %h3 Hi, #{@member.name}
-
+                %h3 Hi #{@member.name},
                 %p
                   Your spot for the <strong>#{@event.name}</strong> event has been confirmed.
-
                 %p
                   If you have any questions send us an email at #{mail_to(@event.email, @event.email)}.
-
                 %p
                   See you at the event!
 
-
         .content
-          %table{ bgcolor: "#FFFFFF" }
+          %table{ bgcolor: '#FFFFFF' }
             %tr
-              %td.small{ width: "50%", style: "vertical-align: top; padding-right:10px;"}
-                %h5 When?
-                #{l(@event.date_and_time)} to #{l(@event.ends_at, format: :time) }
-                %br
-                %br
-                %h5 Venue
-                =link_to @event.venue.website do
-                  = @event.venue.name
-                %p
-                  #{@host_address.to_html}
-              %td{ width: "50%", style: "text-align: center;"}
+              %td
                 %h4
-                = link_to "Can't make it anymore?", full_url_for(event_invitation_url(@event.id, @invitation.token)),
-                class: 'btn'
+                  #{@event.name}
+                  %small #{l(@event.date_and_time)} to #{l(@event.ends_at, format: :time)}
+                = link_to 'Update your attendance', full_url_for(event_invitation_url(@event.id, @invitation.token)), class: 'btn'
 
         .content
           %table
+            = render partial: 'shared_mailers/venue', locals: { host: @event.venue, address: @host_address }
             %tr
               %td
-                %p
-                  If you have any trouble finding the venue, give us a call:
-                  %ul
-                    - @event.organisers.each do |organiser|
-                      - if organiser.mobile.present?
-                        %li
-                          = organiser.full_name
-                          =organiser.mobile
+                %p If you have any trouble finding the venue, give one of the organisers a call:
+                %ul
+                  - @event.organisers.each do |organiser|
+                    - if organiser.mobile.present?
+                      %li
+                        = organiser.full_name
+                        = organiser.mobile
 
         .content
           = render partial: 'shared_mailers/social'

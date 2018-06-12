@@ -1,9 +1,15 @@
 - if @meeting.venue.present?
   %h4 Venue
-  %strong= @meeting.venue.name
+  %p
+    %strong= @meeting.venue.name
+  .monthly-host-logo
+    = image_tag(@meeting.venue.avatar.thumb, alt: @meeting.venue.name)
+  %strong Address
   %p= @host_address
-  = image_tag(@meeting.venue.avatar.thumb, class: 'monthly_host_logo', alt: @meeting.venue.name)
-  - if @meeting.venue.accessibility_info.present?
+  - if @host_address.directions
+    %strong Directions
+    %p= @host_address.directions
+  - if @meeting.venue.accessibility_info
     %strong Accessibility information
     %p= @meeting.venue.accessibility_info
 

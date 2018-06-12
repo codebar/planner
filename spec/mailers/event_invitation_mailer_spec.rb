@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe EventInvitationMailer do
   let(:email) { ActionMailer::Base.deliveries.last }
-  let(:event) { Fabricate(:event, date_and_time: Time.zone.local(2017, 11, 12, 10, 0), name: 'Event of the day') }
+  let(:event) { Fabricate(:event, date_and_time: Time.zone.local(2017, 11, 12, 10, 0), name: 'Test event') }
   let(:member) { Fabricate(:member) }
   let(:invitation) { Fabricate(:invitation, event: event, member: member) }
 
@@ -16,6 +16,13 @@ describe EventInvitationMailer do
   it '#invite_coach' do
     email_subject = "Coach Invitation: #{event.name}"
     EventInvitationMailer.invite_coach(event, member, invitation).deliver_now
+
+    expect(email.subject).to eq(email_subject)
+  end
+
+  it '#attending' do
+    email_subject = "Your spot to #{event.name} has been confirmed."
+    EventInvitationMailer.attending(event, member, invitation).deliver_now
 
     expect(email.subject).to eq(email_subject)
   end

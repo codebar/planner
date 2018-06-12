@@ -1,45 +1,42 @@
-=render partial: 'shared_mailers/header', locals: { title: "Workshop Waiting List Reminder" }
-%body{ bgcolor: "#FFFFFF" }
+= render partial: 'shared_mailers/header', locals: { title: 'Workshop Waiting List Reminder' }
+%body{ bgcolor: '#FFFFFF' }
 
-  =render partial: 'shared_mailers/body_header', locals: { title: "Workshop Waiting List Reminder" }
+  = render partial: 'shared_mailers/body_header', locals: { title: 'Workshop Waiting List Reminder' }
 
-  %table{ class: "body-wrap"}
+  %table{ class: 'body-wrap'}
     %tr
       %td
-      %td{ class: "container", bgcolor: "#FFFFFF" }
+      %td{ class: 'container', bgcolor: '#FFFFFF' }
 
         .content
           %table
             %tr
               %td
-                %h3 Hi, #{@member.name}
+                %h3 Hi #{@member.name},
                 %p.lead
                   This is a quick email to remind you that you're on the waiting list for the workshop on #{humanize_date(@workshop.date_and_time, with_time: true)}.
                 %p
-                  If an attendee drops out, the next person on the waiting list will automatically get their place.
-                  We'll email you if this happens.
+                  If an attendee drops out, the next person on the waiting list will automatically get their place. We'll email you if this happens.
                   %strong Attendees often drop out at short notice,
                   so you should keep your laptop with you and check your email during the afternoon on the day of the workshop.
                 %p
                   Alternatively, if you know you can no longer make it, you should
-                  = link_to "remove yourself from the waiting list", full_url_for(invitation_url(@invitation))
+                  = link_to 'remove yourself from the waiting list', full_url_for(invitation_url(@invitation))
                   so someone else can come to the workshop.
 
-
         .content
-          %table{ bgcolor: "#FFFFFF" }
+          %table{ bgcolor: '#FFFFFF' }
             %tr
-              %td.small{ width: "30%", style: "vertical-align: top; padding-right:10px;"}
-                =image_tag(@workshop.host.avatar, alt: @workshop.host.name)
-              %td
+              %td{ width: '60%', style: 'vertical-align: top; padding-right: 20px;' }
                 %h4
                   Workshop
                   %small= humanize_date(@workshop.date_and_time, with_time: true)
-                %p
-                  #{@workshop.host.name}
-                  %br
-                  #{@host_address.to_html}
-                = link_to "Update your attendance", full_url_for(invitation_url(@invitation)), class: 'btn'
+                = link_to 'Update your attendance', full_url_for(invitation_url(@invitation)), class: 'btn'
+              %td{ width: '40%', style: 'vertical-align: top;'}
+                %h4
+                  Venue
+                  %small= @workshop.host.name
+                = image_tag(@workshop.host.avatar, alt: @workshop.host.name)
 
         .content
           = render partial: 'shared_mailers/social'

@@ -1,47 +1,43 @@
-=render partial: 'shared_mailers/header', locals: { title: "Waiting List" }
-%body{ bgcolor: "#FFFFFF" }
+= render partial: 'shared_mailers/header', locals: { title: 'Waiting List' }
+%body{ bgcolor: '#FFFFFF' }
 
-  =render partial: 'shared_mailers/body_header', locals: { title: "Waiting List spot available" }
+  = render partial: 'shared_mailers/body_header', locals: { title: 'Waiting List spot available' }
 
-  %table{ class: "body-wrap"}
+  %table{ class: 'body-wrap'}
     %tr
       %td
-      %td{ class: "container", bgcolor: "#FFFFFF" }
+      %td{ class: 'container', bgcolor: '#FFFFFF' }
 
         .content
           %table
             %tr
               %td
-                %h3 Hi, #{@member.name}
+                %h3 Hi #{@member.name},
                 %p.lead
                   A spot just opened up for the workshop. If you would like to attend, please RSVP.
 
         .content
-          %table{ bgcolor: "#FFFFFF" }
+          %table{ bgcolor: '#FFFFFF' }
             %tr
-              %td.small{ width: "30%", style: "vertical-align: top; padding-right:10px;"}
-                =image_tag(@workshop.venue.avatar, @workshop.venue.name)
               %td
                 %h4
                   Workshop
                   %small #{humanize_date(@workshop.date_and_time, with_time: true)}
-                %p
-                  #{@workshop.venue.name}
-                  %br
-                  #{@host_address.to_html}
-                = link_to "RSVP", full_url_for(invitation_url(@invitation)), class: 'btn'
+                = link_to 'Update your attendance', full_url_for(invitation_url(@invitation)), class: 'btn'
 
         .content
           %table
+            = render partial: 'shared_mailers/venue', locals: { host: @workshop.host, address: @host_address }
             %tr
               %td
                 %p
-                  If you have any trouble finding the venue call
+                  If you have any trouble finding the venue, give one of the organisers a call:
+                %ul
                   - @workshop.organisers.each do |organiser|
                     - if organiser.mobile.present?
-                      %p
-                        = organiser.full_name
-                        = organiser.mobile
+                    %li
+                      = organiser.full_name
+                      = organiser.mobile
 
         .content
           = render partial: 'shared_mailers/social'

@@ -91,7 +91,7 @@ class WorkshopInvitationMailer < ActionMailer::Base
 
     subject = 'A spot just became available'
 
-    mail(mail_args(member, subject, @workshop.chapter.email)) do |format|
+    mail(mail_args(@member, subject, @workshop.chapter.email)) do |format|
       format.html
     end
   end

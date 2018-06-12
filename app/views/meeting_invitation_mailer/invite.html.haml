@@ -1,7 +1,7 @@
-=render partial: 'shared_mailers/header', locals: { title: 'codebar Monthly Invitation' }
+= render partial: 'shared_mailers/header', locals: { title: 'codebar Monthly Invitation' }
 %body{ bgcolor: '#FFFFFF' }
 
-  =render partial: 'shared_mailers/body_header', locals: { title: 'Monthly Talks Night Invitation' }
+  = render partial: 'shared_mailers/body_header', locals: { title: 'codebar Monthly Invitation' }
 
   %table{ class: 'body-wrap'}
     %tr
@@ -12,41 +12,26 @@
           %table
             %tr
               %td
-                %h3 Hi, #{@member.name}
+                %h3 Hi #{@member.name},
                 %p.lead
                   We're back for another installment of codebar Monthlies on #{humanize_date(@meeting.date_and_time)} at #{@meeting.venue.name}!
                 %p
                   = "#{link_to 'You can RSVP here', @rsvp_url}, after logging into your codebar account.".html_safe
-                %h4
-                  Agenda
-                %p
-                  = @meeting.description.html_safe
 
-        .content
-          %table{ bgcolor: "#FFFFFF" }
-            %tr
-              %td.small{ width: "30%", style: "vertical-align: top; padding-right:10px;"}
-                =image_tag(@meeting.venue.avatar, alt: @meeting.venue.name)
-              %td
-                %h4
-                  Details
-                %small #{humanize_date(@meeting.date_and_time, with_time: true)}
-                %p
-                  #{@meeting.venue.name}
-                  %br
-                  #{@host_address.to_html}
+        = render partial: 'agenda'
 
         .content
           %table
+            = render partial: 'shared_mailers/venue', locals: { host: @meeting.venue, address: @host_address }
             %tr
               %td
                 %p
-                  If you have any trouble finding the venue, give us a call
+                  If you have any trouble finding the venue, give one of the organisers a call:
+                %ul
                   - @meeting.organisers.each do |organiser|
-                    %p
+                    %li
                       = organiser.full_name
                       = organiser.mobile
-                      %br
 
         .content
           = render partial: 'shared_mailers/social'
