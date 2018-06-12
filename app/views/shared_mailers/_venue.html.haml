@@ -4,13 +4,13 @@
 %tr
   %td{ width: '70%', style: 'vertical-align: top; padding-right:20px;' }
     %p
-      %strong #{@workshop.host.name}
+      %strong #{host.name}
       %br
-      #{@host_address.to_html}
-    - if @workshop.host.address.directions
+      #{address.to_html}
+    - if host.address.directions
       %p
         %strong Directions:
         %br
-        #{@workshop.host.address.directions}
+        #{host.address.directions}
   %td{ width: '30%', style: 'vertical-align: top;' }
-    = image_tag(@workshop.host.avatar, alt: @workshop.host.name)
+    = image_tag(host.avatar, alt: host.name)
