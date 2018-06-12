@@ -1,48 +1,47 @@
-=render partial: 'shared_mailers/header', locals: { title: "Event invitation" }
-%body{ bgcolor: "#FFFFFF" }
+= render partial: 'shared_mailers/header', locals: { title: 'Event Invitation' }
+%body{ bgcolor: '#FFFFFF' }
 
-  =render partial: 'shared_mailers/body_header', locals: { title: "Event invitation" }
+  = render partial: 'shared_mailers/body_header', locals: { title: 'Event Invitation' }
 
-  %table{ class: "body-wrap"}
+  %table{ class: 'body-wrap'}
     %tr
       %td
-      %td{ class: "container", bgcolor: "#FFFFFF" }
+      %td{ class: 'container', bgcolor: '#FFFFFF' }
 
         .content
           %table
             %tr
               %td
-                %h3 Hi, #{@member.name}
+                %h3 Hi #{@member.name},
                 %p.lead
                   We'd like to invite you to #{@event.name}. If you can come, please RSVP using the link in this email.
                 %p
                   #{@event.description.html_safe}.
 
+        .content
+          %table{ bgcolor: '#FFFFFF' }
+            %tr
+              %td
+                %h4
+                  #{@event.name}
+                  %small #{l(@event.date_and_time)} to #{l(@event.ends_at, format: :time)}
+                = link_to 'View invitation and RSVP', full_url_for(event_invitation_url(event_id: @event.slug, token: @invitation.token)), class: 'btn'
 
         .content
-          %table{ bgcolor: "#FFFFFF" }
+          %table
+            = render partial: 'shared_mailers/venue', locals: { host: @event.venue, address: @host_address }
+
+        .content
+          %table
             %tr
-              %td.small{ width: "30%", style: "vertical-align: top; padding-right:10px;"}
-                %h5 When?
-                #{l(@event.date_and_time)} to #{l(@event.ends_at, format: :time) }
-                %br
-                %br
-                %h5 Venue
-                =image_tag(@event.venue.avatar, style: 'max-height: 100px', alt: @event.venue.name)
-                %p
-                  #{@event.venue.name}
-              %td{ width: "50%", style: "text-align: center;"}
-                = link_to "RSVP", full_url_for(event_invitation_url(event_id: @event.slug, token: @invitation.token)), class: 'btn'
-            %tr
-              %td{ width: "50%", style: "vertical-align: top; padding-right:10px;"}
-                %h5 Sponsors
+              %td
+                %h4 Sponsors
                 - @event.sponsors.each do |sponsor|
-                  =link_to sponsor.website do
+                  = link_to sponsor.website do
                     = image_tag(sponsor.avatar, style: 'max-height: 100px;', alt: sponsor.name)
 
         .content
           = render partial: 'shared_mailers/social'
-
       %td
 
   = render partial: 'shared_mailers/footer'
