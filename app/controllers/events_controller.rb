@@ -6,6 +6,8 @@ class EventsController < ApplicationController
   RECENT_EVENTS_DISPLAY_LIMIT = 40
 
   def index
+    fresh_when(latest_model_updated, etag: latest_model_updated)
+    
     events = [Workshop.past.includes(:chapter).limit(RECENT_EVENTS_DISPLAY_LIMIT)]
     events << Course.past.limit(RECENT_EVENTS_DISPLAY_LIMIT)
     events << Meeting.past.includes(:venue).limit(RECENT_EVENTS_DISPLAY_LIMIT)
@@ -54,6 +56,16 @@ class EventsController < ApplicationController
   end
 
   private
+  
+  def latest_model_updated
+    [
+      Workshop.maximum(:updated_at),
+      Course.maximum(:updated_at),
+      Meeting.maximum(:updated_at),
+      Event.maximum(:updated_at),
+      Member.maximum(:updated_at)
+    ].compact.max
+  end
 
   def find_invitation_and_redirect_to_event(role)
     set_event
