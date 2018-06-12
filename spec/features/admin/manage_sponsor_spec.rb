@@ -49,6 +49,7 @@ feature 'Managing sponsors' do
         visit edit_admin_sponsor_path(sponsor)
 
         fill_in 'Accessibility information', with: 'This venue is fully accessible to wheelchair users.'
+        fill_in 'Directions', with: 'Office is located on the third floor.'
 
         click_on 'Save changes'
 
