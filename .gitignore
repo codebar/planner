@@ -30,3 +30,6 @@ TAGS
 
 # Local ruby version
 .ruby-version
+
+# Ignore local uploads
+public/uploads/
