@@ -7,7 +7,7 @@ class EventsController < ApplicationController
 
   def index
     fresh_when(latest_model_updated, etag: latest_model_updated)
-    
+
     events = [Workshop.past.includes(:chapter).limit(RECENT_EVENTS_DISPLAY_LIMIT)]
     events << Course.past.limit(RECENT_EVENTS_DISPLAY_LIMIT)
     events << Meeting.past.includes(:venue).limit(RECENT_EVENTS_DISPLAY_LIMIT)
@@ -56,7 +56,7 @@ class EventsController < ApplicationController
   end
 
   private
-  
+
   def latest_model_updated
     [
       Workshop.maximum(:updated_at),
