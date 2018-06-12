@@ -1,48 +1,57 @@
-=render partial: 'shared_mailers/header', locals: { title: "Workshop Attendance Reminder" }
-%body{ bgcolor: "#FFFFFF" }
+= render partial: 'shared_mailers/header', locals: { title: 'Workshop Attendance Reminder' }
+%body{ bgcolor: '#FFFFFF' }
 
-  =render partial: 'shared_mailers/body_header', locals: { title: "Workshop Attendance Reminder" }
+  = render partial: 'shared_mailers/body_header', locals: { title: 'Workshop Attendance Reminder' }
 
-  %table{ class: "body-wrap"}
+  %table{ class: 'body-wrap'}
     %tr
       %td
-      %td{ class: "container", bgcolor: "#FFFFFF" }
+      %td{ class: 'container', bgcolor: '#FFFFFF' }
 
         .content
           %table
             %tr
               %td
-                %h3 Hi, #{@member.name}
+                %h3 Hi #{@member.name},
                 %p.lead
                   This is a quick email to remind you that you have signed up for tomorrow's workshop.
                 %p
                   If you can no longer make it, please cancel your invitation <strong>before 15:00</strong> on the day of the event.
-                  <a href="https://codebar.io/student-guide#attendance">We have a three-strikes attendance policy for no-shows.</a>
+                  <a href='https://codebar.io/student-guide#attendance'>We have a three-strikes attendance policy for no-shows.</a>
                 %p
-                  <strong>Please do not turn up before #{(@workshop.date_and_time).strftime("%H:%M")}.</strong> If you are early, please wait in a nearby cafe.
-
+                  <strong>Please do not turn up before #{(@workshop.date_and_time).strftime('%H:%M')}.</strong> If you are early, please wait in a nearby cafe.
 
         .content
-          %table{ bgcolor: "#FFFFFF" }
+          %table{ bgcolor: '#FFFFFF' }
             %tr
-              %td.small{ width: "30%", style: "vertical-align: top; padding-right:10px;"}
-                =image_tag(@workshop.host.avatar, alt: @workshop.host.name)
               %td
                 %h4
                   Workshop
-                  %small= humanize_date(@workshop.date_and_time, with_time: true)
-                %p
-                  #{@workshop.host.name}
-                  %br
-                  #{@host_address.to_html}
-                = link_to "Update your attendance", full_url_for(invitation_url(@invitation)), class: 'btn'
+                  %small #{humanize_date(@workshop.date_and_time, with_time: true)}
+                = link_to 'Update your attendance', full_url_for(invitation_url(@invitation)), class: 'btn'
 
         .content
           %table
             %tr
               %td
+                %h4 Venue
+            %tr
+              %td{ width: '70%', style: 'vertical-align: top; padding-right:20px;' }
                 %p
-                  If you have any trouble finding the venue call
+                  %strong #{@workshop.host.name}
+                  %br
+                  #{@host_address.to_html}
+                - if @host_address.directions
+                  %p
+                    %strong Directions:
+                    %br
+                    #{@host_address.directions}
+              %td{ width: '30%', style: 'vertical-align: top;' }
+                = image_tag(@workshop.venue.avatar, alt: @workshop.venue.name)
+            %tr
+              %td
+                %p
+                  If you have any trouble finding the venue, give us a call:
                   - @workshop.organisers.each do |organiser|
                     %p
                       = organiser.full_name

@@ -1,44 +1,44 @@
-=render partial: 'shared_mailers/header', locals: { title: "Workshop Coach Invitation" }
-%body{ bgcolor: "#FFFFFF" }
+=render partial: 'shared_mailers/header', locals: { title: 'Workshop Coach Invitation' }
+%body{ bgcolor: '#FFFFFF' }
 
-  =render partial: 'shared_mailers/body_header', locals: { title: "Workshop Coach Invitation" }
+  =render partial: 'shared_mailers/body_header', locals: { title: 'Workshop Coach Invitation' }
 
-  %table{ class: "body-wrap"}
+  %table{ class: 'body-wrap'}
     %tr
       %td
-      %td{ class: "container", bgcolor: "#FFFFFF" }
+      %td{ class: 'container', bgcolor: '#FFFFFF' }
 
         .content
           %table
             %tr
               %td
-                %h3 Hi #{@member.name}
+                %h3 Hi #{@member.name},
                 %p.lead
-                  Invites for our next workshop are now open and we are looking for coaches. The workshop that will take place on #{humanize_date(@workshop.date_and_time, with_time: true)}.
+                  Invites for our next workshop are now open and we are looking for coaches. The workshop will take place on #{humanize_date(@workshop.date_and_time, with_time: true)}.
 
                 %p At the workshop you will be helping students as they work their way through one of our tutorials or a personal project they need help. Don't worry we'll only match you with someone who you'll be able to help.
 
-                %p You can find all of our tutorials at #{link_to "http://tutorials.codebar.io/", "http://tutorials.codebar.io/"}. If you would like to improve any of the existing content, you can issue a pull request to our #{link_to "GitHub repository", "https://github.com/codebar/tutorials"}
+                %p You can find all of our tutorials at #{link_to 'http://tutorials.codebar.io/', 'http://tutorials.codebar.io/'}. If you would like to improve any of the existing content, you can issue a pull request to our #{link_to 'GitHub repository', 'https://github.com/codebar/tutorials'}
 
-                %p Before attending, make sure you have read and understood our #{link_to "Code of Conduct", "http://codebar.io/code-of-conduct"}. We have a zero tolerance policy towards conduct and expect everyone to behave appropriately. You should also go through our #{link_to "How to be an effective teacher", "http://codebar.io/effective-teacher-guide"}.
+                %p Before attending, make sure you have read and understood our #{link_to 'Code of Conduct', 'http://codebar.io/code-of-conduct'}. We have a zero tolerance policy towards conduct and expect everyone to behave appropriately. You should also go through our #{link_to 'How to be an effective teacher', 'http://codebar.io/effective-teacher-guide'}.
 
                 %p Please note: We do not accept any RSVPs over email.
 
-                %p.callout #{link_to "Join us on Slack", "https://codebar-slack.herokuapp.com"} to offer help and guidance outside the workshops.
+                %p.callout #{link_to 'Join us on Slack', 'https://codebar-slack.herokuapp.com'} to offer help and guidance outside the workshops.
 
         .content
-          %table{ bgcolor: "#FFFFFF" }
+          %table{ bgcolor: '#FFFFFF' }
             %tr
-              %td.small{ width: "30%", style: "vertical-align: top; padding-right:10px;"}
-                =image_tag(@workshop.host.avatar, alt: @workshop.host.name)
-              %td
+              %td{ width: '60%', style: 'vertical-align: top; padding-right: 20px;' }
                 %h4
                   Workshop
-                  %small #{humanize_date(@workshop.date_and_time, with_time: true)}
-                %p
-                  %b Venue
-                  #{@workshop.host.name}
-                =link_to "View invitation and RSVP", full_url_for(invitation_url(@invitation)), class: 'btn'
+                  %small= humanize_date(@workshop.date_and_time, with_time: true)
+                = link_to 'View invitation and RSVP', full_url_for(invitation_url(@invitation)), class: 'btn'
+              %td{ width: '40%', style: 'vertical-align: top;'}
+                %h4
+                  Venue
+                  %small= @workshop.host.name
+                = image_tag(@workshop.host.avatar, alt: @workshop.host.name)
 
         .content
           = render partial: 'shared_mailers/social'
