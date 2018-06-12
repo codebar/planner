@@ -37,16 +37,16 @@
 
         .content
           %table
-            = render 'shared_mailers/venue'
+            = render partial: 'shared_mailers/venue', locals: { host: @workshop.host, address: @host_address }
             %tr
               %td
                 %p
-                  If you have any trouble finding the venue, give us a call:
+                  If you have any trouble finding the venue, give one of the organisers a call:
+                %ul
                   - @workshop.organisers.each do |organiser|
-                    %p
+                    %li
                       = organiser.full_name
                       = organiser.mobile
-                      %br
 
         .content
           = render partial: 'shared_mailers/social'

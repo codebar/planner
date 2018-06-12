@@ -12,7 +12,7 @@
           %table
             %tr
               %td
-                %h3 Hi, #{@member.name}
+                %h3 Hi #{@member.name},
                 %p.lead
                   A spot just opened up for the workshop. If you would like to attend, please RSVP.
 
@@ -27,16 +27,17 @@
 
         .content
           %table
-            = render 'shared_mailers/venue'
+            = render partial: 'shared_mailers/venue', locals: { host: @workshop.host, address: @host_address }
             %tr
               %td
                 %p
-                  If you have any trouble finding the venue, give us a call:
+                  If you have any trouble finding the venue, give one of the organisers a call:
+                %ul
                   - @workshop.organisers.each do |organiser|
                     - if organiser.mobile.present?
-                      %p
-                        = organiser.full_name
-                        = organiser.mobile
+                    %li
+                      = organiser.full_name
+                      = organiser.mobile
 
         .content
           = render partial: 'shared_mailers/social'
