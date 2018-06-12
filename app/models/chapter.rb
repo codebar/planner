@@ -15,7 +15,9 @@ class Chapter < ActiveRecord::Base
 
   before_save :set_slug
 
-  default_scope -> { where(active: true) }
+  scope :active, -> { where(active: true) }
+
+  default_scope -> { active }
 
   delegate :upcoming, to: :workshops, prefix: true
 
