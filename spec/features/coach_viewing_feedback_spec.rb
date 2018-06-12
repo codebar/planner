@@ -2,7 +2,7 @@ require 'spec_helper'
 
 feature 'Coach viewing feedback' do
   it 'can access all feedback' do
-    coach = Fabricate(:workshop_coach_attendee)
+    coach = Fabricate(:workshop_coach_attendee, name: 'Le name one')
     Fabricate(:coaches, members: [coach])
     feedbacks = Fabricate.times(3, :feedback, coach: nil)
 
@@ -13,7 +13,7 @@ feature 'Coach viewing feedback' do
   end
 
   it 'views their feedback highlighted but anonymously' do
-    other_coach = Fabricate(:workshop_coach_attendee)
+    other_coach = Fabricate(:workshop_coach_attendee, name: 'Le other name')
     coach = Fabricate(:workshop_coach_attendee)
     Fabricate(:coaches, members: [coach, other_coach])
     other_feedback = Fabricate(:feedback, coach: other_coach)
