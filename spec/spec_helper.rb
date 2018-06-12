@@ -39,6 +39,8 @@ RSpec.configure do |config|
       example.run
     end
   end
+  
+  config.example_status_persistence_file_path = 'tmp/spec_failures'
 
   if Bullet.enable?
     config.around(:each) do |example|
