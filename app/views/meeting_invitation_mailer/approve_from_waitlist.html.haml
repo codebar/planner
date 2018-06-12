@@ -12,7 +12,7 @@
           %table
             %tr
               %td
-                %h3 Hi, #{@member.name}
+                %h3 Hi #{@member.name},
                 %p.lead
                   A spot opened up for the next codebar Monthly!
 
@@ -22,35 +22,16 @@
 
         .content
           %table
-            %tr
-              %td
-                %h4 Details
-            %tr
-              %td.small{ width: '30%', style: 'vertical-align: top; padding-right: 10px;' }
-                = image_tag(@meeting.venue.avatar, alt: @meeting.venue.name)
-              %td.small{ style: 'vertical-align: top;' }
-                %p #{humanize_date(@meeting.date_and_time, with_time: true)}
-                %p
-                  #{@meeting.venue.name}
-                  %br
-                  #{@host_address.to_html}
-                - if @host_address.directions
-                  %p
-                    %strong Directions:
-                    %br
-                    #{@host_address.directions}
-
-        .content
-          %table
+            = render partial: 'shared_mailers/venue', locals: { host: @meeting.venue, address: @host_address }
             %tr
               %td
                 %p
-                  If you have any trouble finding the venue, give us a call
+                  If you have any trouble finding the venue, give one of the organisers a call:
+                %ul
                   - @meeting.organisers.each do |organiser|
-                    %p
+                    %li
                       = organiser.full_name
                       = organiser.mobile
-                      %br
 
         .content
           = render partial: 'shared_mailers/social'
