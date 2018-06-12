@@ -8,6 +8,7 @@ class EventInvitationMailer < ActionMailer::Base
     @event = event
     @member = member
     @invitation = invitation
+    @host_address = AddressPresenter.new(@event.venue.address)
 
     subject = "Invitation: #{@event.name}"
 
@@ -20,6 +21,7 @@ class EventInvitationMailer < ActionMailer::Base
     @event = event
     @member = member
     @invitation = invitation
+    @host_address = AddressPresenter.new(@event.venue.address)
 
     subject = "Coach Invitation: #{@event.name}"
 
