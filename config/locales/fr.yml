@@ -1,4 +1,4 @@
-en:
+fr:
   brand: "codebar.io"
 
   date:
@@ -47,11 +47,6 @@ en:
     feedback_not_found: "You have already submitted feedback for this event."
     updated_note: "Successfully updated note."
 
-    invitations:
-      rsvped_to_other_workshop: "You have already RSVP'd to another workshop on this date. If you would prefer to attend this workshop, please cancel your other RSVP first."
-      spot_confirmed: "Your spot has been confirmed for %{event}! We look forward to seeing you there."
-      spot_not_confirmed: 'Your spot has not yet been confirmed. We will verify your attendance after you complete the questionnaire.'
-
   notifications:
     provider_already_connected: 'You are already signed in!'
     not_logged_in: "You must be logged in to access this page."
@@ -78,7 +73,7 @@ en:
       rule2: "You must sign up and RSVP to attend our workshops."
       rule3: "If you RSVP then later realise you can’t make it, you must cancel. It only takes a few seconds to do through your confirmation email."
       rule4: "Please try to cancel with at least 24 hours notice."
-      rule5: "We know that sometimes things come up last minute, but even if you only cancel an hour before the workshop, get in touch and let us know."
+      rule5: "We know that sometimes things come up last minute, but even if you only cancel an hour before the session, get in touch and let us know."
       what_happens: "What happens if I don’t respect the policy?"
       strikes_system: "We operate a three strikes system. That means if you don’t come in without cancelling an RSVP three times, we will take you off our invite list for four weeks. We’ll get in touch after your first absence to make sure you understand this."
       removing: "If you fail to attend without cancelling another three times, we might have to remove you permanently from our invitation list."
@@ -152,21 +147,21 @@ en:
 
 
   code_of_conduct:
-    title: "Code of conduct"
+    title: "Code de conduite"
     summary:
-      title: "The Quick Version"
-      intro: "Our events are dedicated to providing a harassment-free experience for everyone, regardless of gender, sexual orientation, disability, physical appearance, body size, race, or religion. We do not tolerate harassment of our members in any form. Sexual language and imagery is not appropriate for any of our events, including talks, workshops, parties, Twitter and any other online media. Members violating these rules may be sanctioned or expelled from the event and any future events at the discretion of the organisers."
+      title: "Version courte"
+      intro: "Nous nous engageons à fournir une expérience bienveillante et dépourvue de harcèlement pour tout le monde, indépendamment du genre, de l'orientation sexuelle, du handicap, de l'apparence physique, de la taille, de la race ou de la religion. Nous ne tolérons pas le harcèlement de nos membres sous quelque forme que ce soit. L'imagerie et le langage sexuels ne sont appropriés pour aucun de nos événements, y compris les conférences, les ateliers, les soirées, Twitter et tout autre média en ligne. Les membres qui enfreignent ces règles peuvent être sanctionnés ou expulsés de l'événement et de tout événement futur à la discrétion des organisateurs."
 
     content:
-      title: "The Long Version"
-      harassment: "Harassment includes offensive verbal comments related to gender, sexual orientation, disability, physical appearance, body size, race, religion, sexual images in public spaces, deliberate intimidation, stalking, following, harassing photography or recording, sustained disruption of talks or other events, inappropriate physical contact, and unwelcome sexual attention."
-      comply: "We expect any participants asked to stop any harassing behaviour to comply immediately."
-      sponsors: "Sponsors are also subject to the anti-harassment policy. In particular, sponsors should not use sexualized images, activities, or other material. Staff (including volunteers) should not use sexualized clothing/uniforms/costumes, or otherwise create a sexualized environment."
-      sanctions: "If a participant engages in harassing behaviour the organisers may take any action they deem appropriate. This includes warning the offender or expulsion."
-      concerns: "If you are being harassed, notice that someone else is being harassed, or have any other concerns, please contact one of the organisers immediately."
-      applies_to: "We expect participants to follow these rules at all <b>codebar</b> events."
-      questions: "If you have any questions or concerns about this code please"
-      contact: "contact us"
+      title: "Version longue"
+      harassment: "Sont considérés comme harcèlement : les commentaires offensants liés au genre, à l'orientation sexuelle, au handicap, à l'apparence physique, à la taille, à la race ou à la religion, les images à caractère sexuel dans les espaces publics, les intimidations délibérées, le fait de suivre une personne de manière insistante et sans son accord, la prise de photos ou enregistrements sans consentement préalable des personnes concernées, les interruptions répétées lors de présentations ou autres événements, les contacts physiques inappropriés, ainsi que toute attention sexuelle non désirée."
+      comply: "Nous nous attendons à ce que tous les participants cessent immédiatement tout comportement de harcèlement en cas de signalement."
+      sponsors: "Les sponsors sont également soumis à la politique anti-harcèlement. En particulier, les sponsors ne doivent pas utiliser d'images, d'activités ou d'autres contenus à caractère sexuel. Le personnel (y compris les bénévoles) ne doivent pas porter de vêtements / uniformes / costumes sexualisés, ni créer un environnement sexualisé."
+      sanctions: "Si un participant se livre à un comportement de harcèlement, les organisateurs peuvent prendre toutes les mesures qu'ils jugent appropriées. Cela comprend l'avertissement du contrevenant, ou son expulsion."
+      concerns: "Si vous êtes harcelé·e, remarquez que quelqu'un d'autre est harcelé, ou avez d'autres préoccupations, veuillez contacter immédiatement l'un des organisateurs."
+      applies_to: "Nous attendons des participants qu'ils suivent ces règles lors de tous les événements <strong>codebar</strong>."
+      questions: "Si vous avez des questions ou des préoccupations concernant ce code de conduite,"
+      contact: "contactez-nous"
       email_subject: "Regarding code of conduct"
 
   sponsors:
@@ -242,27 +237,6 @@ en:
     no_incoming: "There are no workshops coming up."
     contact: "To contact the %{city} team, send an email to %{email}"
 
-  job:
-    expired: 'This job post has expired'
-    published_on: 'Published on'
-    expires_on: 'Closing date'
-  jobs:
-    title: Jobs
-    index:
-      description: There are %{count} jobs listed
-      none: There are no jobs available.
-
-  member:
-    jobs:
-      title: Your job posts
-      index:
-        description: You have %{count} jobs listed
-        none: You have not posted any jobs
-      pending:
-        title: Your pending job posts
-        description: You have %{count} job posts pending submission.
-        none: You have no pending job posts.
-
   admin:
     workshop:
       manage_rsvps:
@@ -270,15 +244,3 @@ en:
       destroy:
         success: "Workshop deleted successfully"
         failure: "Workshop cannot be deleted. This is because it has invitees and/or workshop information is on the website for a while long enough that it cannot be deleted."
-    messages:
-      meeting:
-        created: 'Meeting succesfully created'
-        updated: 'You have succesfully updated the details of this meeting'
-        invitations_already_sent: 'Invitations were previously sent; they will not be sent again'
-        sending_invitations: 'Invitations are being sent out'
-
-      invitation:
-        rsvp_member: "%{name} has been successfully added and notified via email."
-        already_on_list: "%{name} is already on the list!"
-        rsvp_error: "Something went wrong, %{name} has not been added."
-        update_rsvp: 'Updated attendance of %{name}'
