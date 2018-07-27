@@ -115,6 +115,7 @@ Planner::Application.routes.draw do
     resources :chapters, only: %i[index new create show edit update] do
       get :members
       resources :workshops, only: [:index]
+      resources :feedback, only: [:index], controller: 'chapters/feedback'
     end
 
     resources :events, only: %i[new create show edit update] do

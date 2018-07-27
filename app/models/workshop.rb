@@ -10,6 +10,7 @@ class Workshop < ActiveRecord::Base
   has_many :workshop_sponsors
   has_many :sponsors, through: :workshop_sponsors
   has_many :organisers, -> { where('permissions.name' => 'organiser') }, through: :permissions, source: :members
+  has_many :feedbacks
 
   belongs_to :chapter
 

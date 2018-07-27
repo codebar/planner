@@ -1,8 +1,13 @@
 %section#admin#banner
-  .row
-    .large-12.columns
-      - @feedback.each do |feedback|
-        .panel
+  - if @feedback.any?
+    .row
+      .medium-6.columns.text-left
+        = page_entries_info(@feedback, model: 'feedback')
+        %br
+        %br
+    .row
+      .large-12.columns
+        - @feedback.each do |feedback|
           .row
             .large-2.columns
               %h5= I18n.l(feedback.created_at, format: :date)
@@ -27,3 +32,10 @@
               .large-12.columns
                 %h5 Suggestions
                 %p= feedback.suggestions
+          %hr
+    .row
+      .medium-12.columns.text-right
+        = will_paginate(@feedback)
+        %br
+  - elsif @chapter.present?
+    No feedback has been submitted for #{@chapter.name}'s workshops yet.
