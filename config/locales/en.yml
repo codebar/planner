@@ -262,6 +262,16 @@ en:
         title: Your pending job posts
         description: You have %{count} job posts pending submission.
         none: You have no pending job posts.
+      new:
+        title: List a job
+        rules_intro: "Before posting make sure that:"
+        details: Your post details the work that will have to be undertaken
+        suitability: "It's suitable for people looking for Internships and Junior roles that will enable them to build up their career"
+        salary: The job pays an appropriate salary
+        short: "It's short and to the point"
+        payment: A minimum payment of £35 that you must pay through a donation
+        approval_info: "*Once submitted, a job will be visible once it has been reviewed and approved."
+        pay: Make a payment
 
   admin:
     workshop:
