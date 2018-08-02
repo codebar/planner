@@ -1,0 +1,28 @@
+%section
+  .row
+    .medium-12.columns
+      %h2
+        Organisers
+        %small.subheader= @chapter.name
+    .medium-6.columns
+      = simple_form_for :organiser, url: admin_chapter_organisers_path(@chapter), html: { class: 'simple_form' } do |f|
+        %fieldset
+          %legend Add new organiser
+          = f.select :organiser, @chapter_members.uniq.map { |member| ["#{member.full_name}", member.id] }, { include_blank: true }, { class: 'chosen-select', required: true, data: { placeholder: 'Select a member to make organiser' } }
+          = f.submit 'Add organiser', class: 'button expand'
+
+    .medium-12.columns
+      %table.organisers
+        %thead
+          %tr
+            %th Name
+            %th Email
+            %th Phone number
+            %th Actions
+        %tbody
+          - @organisers.each do |organiser|
+            %tr
+              %td= organiser.full_name
+              %td= organiser.email
+              %td= organiser.mobile
+              %td= link_to 'Remove', admin_chapter_organiser_path(@chapter, organiser), method: :delete, data: { confirm: 'Are you sure?' }
