@@ -12,6 +12,7 @@ class Chapter < ActiveRecord::Base
   has_many :sponsors, through: :workshops
   has_many :subscriptions, through: :groups
   has_many :members, through: :subscriptions
+  has_many :feedbacks, through: :workshops
 
   before_save :set_slug
 

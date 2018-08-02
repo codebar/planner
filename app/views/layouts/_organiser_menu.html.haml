@@ -15,3 +15,4 @@
     %label My Chapters
   - current_user.organised_chapters.each do |chapter|
     %li= link_to chapter.name, admin_chapter_path(chapter)
+    %li= link_to "#{chapter.name} feedback", admin_chapter_feedback_index_path(chapter)

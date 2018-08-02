@@ -252,6 +252,18 @@ en:
       description: There are %{count} jobs listed
       none: There are no jobs available.
 
+  feedback_form:
+    title: 'Workshop feedback'
+    description: Your submission will be completely anonymous. We read every piece of feedback and use it to help us improve our workshops.
+    note: Please do not mention any names, but instead choose your coach from the dropdown. This enables us to address issues but also to anonymously share feedback with coaches. Member privacy is very important to us!
+    rating: Your overall rating of the workshop
+    coach: 'Who was your coach?'
+    select_coach: '- Select Coach -'
+    tutorial: 'What tutorial did you go through?'
+    select_tutorial: '- Select Tutorial -'
+    request: 'How did you find the workshop?'
+    suggestions: "Was there something you didn't like? What can we do to improve your experience?"
+
   member:
     jobs:
       title: Your job posts
