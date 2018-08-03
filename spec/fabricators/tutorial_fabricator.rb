@@ -1,5 +1,5 @@
 Fabricator(:tutorial) do
-  title { Faker::Name.title }
+  title { Faker::Job.title }
   description { Faker::Lorem.paragraph }
   url { Faker::Internet.url }
 end
