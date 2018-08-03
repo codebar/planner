@@ -394,7 +394,7 @@ GEM
     thor (0.19.4)
     thread_safe (0.3.6)
     tilt (2.0.8)
-    timecop (0.8.0)
+    timecop (0.9.1)
     tins (1.6.0)
     turbolinks (2.5.3)
       coffee-rails
