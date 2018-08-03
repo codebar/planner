@@ -62,7 +62,7 @@ feature 'member feedback' do
     scenario 'I can see success page with message and link to homepage when valid data is given' do
       visit feedback_path(valid_token)
 
-      find(:xpath, "//input[@id='feedback_rating']").set '4'
+      find(:xpath, "//input[@id='feedback_rating']", visible: false).set '4'
       select(coach.full_name, from: 'feedback_coach_id')
       select(@tutorial.title, from: 'feedback_tutorial_id')
 
