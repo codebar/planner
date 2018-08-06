@@ -138,7 +138,7 @@ GEM
     crass (1.0.4)
     css_parser (1.6.0)
       addressable
-    database_cleaner (1.5.1)
+    database_cleaner (1.7.0)
     debug_inspector (0.0.2)
     debugger-linecache (1.2.0)
     delayed_job (4.1.1)
