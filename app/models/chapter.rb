@@ -18,8 +18,6 @@ class Chapter < ActiveRecord::Base
 
   scope :active, -> { where(active: true) }
 
-  default_scope -> { active }
-
   delegate :upcoming, to: :workshops, prefix: true
 
   def self.available_to_user(user)

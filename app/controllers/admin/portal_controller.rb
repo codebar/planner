@@ -3,11 +3,11 @@ class Admin::PortalController < Admin::ApplicationController
     authorize :admin_portal
 
     @jobs_pending_approval = Job.where(approved: false, submitted: true).count
-    @sponsors = Sponsor.last(5)
-    @chapters = Chapter.all
+    @chapters = Chapter.active.all
     @workshops = Workshop.upcoming
-    @groups = Group.includes(:chapter)
-    @subscribers = Subscription.order('created_at DESC').limit(20).includes(:member, :group)
+    @groups = Group.joins(:chapter).merge(@chapters)
+    @subscribers = Subscription.joins(:chapter).merge(@chapters)
+                               .ordered.limit(20).includes(:member, :group)
   end
 
   def guide
