@@ -325,7 +325,7 @@ GEM
     rolify (5.0.0)
     rollbar (2.16.4)
       multi_json
-    rspec-collection_matchers (1.1.2)
+    rspec-collection_matchers (1.1.3)
       rspec-expectations (>= 2.99.0.beta1)
     rspec-core (3.7.0)
       rspec-support (~> 3.7.0)
@@ -346,7 +346,7 @@ GEM
       rspec-expectations (~> 3.7.0)
       rspec-mocks (~> 3.7.0)
       rspec-support (~> 3.7.0)
-    rspec-support (3.7.0)
+    rspec-support (3.7.1)
     rubocop (0.52.0)
       parallel (~> 1.10)
       parser (>= 2.4.0.2, < 3.0)
