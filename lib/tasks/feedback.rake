@@ -1,6 +1,5 @@
 namespace :feedback do
   desc 'Request feedback from students that attended our latest workshop'
-
   task request: :environment do
     workshops = Workshop.completed_since_yesterday
     workshops.each do |workshop|
