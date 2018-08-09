@@ -31,12 +31,12 @@ describe Chapter do
   end
 
   context 'scopes' do
-    context '#default_scope' do
+    context '#active' do
       it 'only returns active Chapters' do
         2.times { Fabricate(:chapter) }
         3.times { Fabricate(:chapter, active: false) }
 
-        expect(Chapter.all.count).to eq(2)
+        expect(Chapter.active.all.count).to eq(2)
       end
     end
   end

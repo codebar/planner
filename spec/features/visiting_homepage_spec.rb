@@ -29,6 +29,21 @@ feature 'when visiting the homepage' do
     expect(page).to have_content 'The Long Version'
   end
 
+  scenario 'I can only view active chapters' do
+    inactive_chapters = Fabricate.times(3, :chapter, active: false)
+    active_chapters = Fabricate.times(4, :chapter)
+
+    visit root_path
+
+    active_chapters.each do |chapter|
+      expect(page).to have_content(chapter.name)
+    end
+
+    inactive_chapters.each do |chapter|
+      expect(page).to_not have_content(chapter.name)
+    end
+  end
+
   scenario 'i can sign in' do
     visit root_path
 
