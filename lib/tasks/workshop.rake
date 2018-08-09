@@ -6,9 +6,7 @@ namespace :workshop do
 
     workshops.each do |workshop|
       waiting_list = WaitingList.by_workshop(workshop)
-      if waiting_list.exists?
-        InvitationManager.new.send_waiting_list_emails(workshop)
-      end
+      InvitationManager.new.send_waiting_list_emails(workshop) if waiting_list.exists?
     end
   end
 end

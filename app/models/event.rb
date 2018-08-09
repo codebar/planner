@@ -79,8 +79,8 @@ class Event < ActiveRecord::Base
 
   def invitability
     errors.add(:coach_spaces, 'must be set') unless self.coach_spaces.present?
-      errors.add(:student_space, 'must be set') unless self.student_spaces.present?
-      errors.add(:invitable, 'Fill in all invitations details to make the event invitable') unless self.coach_spaces.present? && self.student_spaces.present?
+    errors.add(:student_space, 'must be set') unless self.student_spaces.present?
+    errors.add(:invitable, 'Fill in all invitations details to make the event invitable') unless self.coach_spaces.present? && self.student_spaces.present?
   end
 
   def student_emails

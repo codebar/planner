@@ -1,4 +1,6 @@
 class Ticket
+  attr_reader :params
+
   def initialize(request, params)
     authorise(request)
     @params = params
@@ -9,10 +11,6 @@ class Ticket
   end
 
   private
-
-  def params
-    @params
-  end
 
   def authorise(request)
     # TODO

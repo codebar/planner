@@ -1,8 +1,8 @@
 class SkillsController < ApplicationController
   def show
     @coaches = Member.includes(:skills)
-                      .with_skill(skill)
-                      .paginate(page: page)
+                     .with_skill(skill)
+                     .paginate(page: page)
   end
 
   private

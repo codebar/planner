@@ -24,17 +24,15 @@ class ApplicationController < ActionController::Base
 
   def render_not_found
     respond_to do |format|
-      format.html { render :template => "errors/not_found", layout: false, :status => 404 }
-      format.all  { render :nothing => true, :status => 404 }
+      format.html { render template: "errors/not_found", layout: false, status: 404 }
+      format.all  { render nothing: true, status: 404 }
     end
   end
 
   protected
 
   def current_user
-    if session.key?(:member_id)
-      @current_member ||= Member.find(session[:member_id])
-    end
+    @current_member ||= Member.find(session[:member_id]) if session.key?(:member_id)
   rescue ActiveRecord::RecordNotFound
     session[:member_id] = nil
   end

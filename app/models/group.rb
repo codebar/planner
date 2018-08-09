@@ -1,5 +1,5 @@
 class Group < ActiveRecord::Base
-  NAMES = %w(Coaches Students)
+  NAMES = %w(Coaches Students).freeze
 
   belongs_to :chapter
   has_many :subscriptions

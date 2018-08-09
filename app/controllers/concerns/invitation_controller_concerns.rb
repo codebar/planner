@@ -41,8 +41,8 @@ module InvitationControllerConcerns
       if @invitation.parent.date_and_time - 3.5.hours >= Time.zone.now
 
         if @invitation.attending.eql? false
-          return redirect_back(fallback_location: invitation_path(@invitation),
-                               notice: t('messages.not_attending_already'))
+          redirect_back(fallback_location: invitation_path(@invitation),
+                        notice: t('messages.not_attending_already'))
         else
           @invitation.update_attribute(:attending, false)
 
@@ -57,12 +57,12 @@ module InvitationControllerConcerns
                                                invitation, true).deliver_now
           end
 
-          return redirect_back(fallback_location: invitation_path(@invitation),
-                               notice: t('messages.rejected_invitation', name: @invitation.member.name))
+          redirect_back(fallback_location: invitation_path(@invitation),
+                        notice: t('messages.rejected_invitation', name: @invitation.member.name))
         end
       else
-        return redirect_back(fallback_location: invitation_path(@invitation),
-                             notice: 'You can only change your RSVP status up to 3.5 hours before the workshop')
+        redirect_back(fallback_location: invitation_path(@invitation),
+                      notice: 'You can only change your RSVP status up to 3.5 hours before the workshop')
       end
     end
   end
