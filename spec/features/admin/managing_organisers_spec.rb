@@ -42,15 +42,14 @@ feature 'Managing organisers' do
     end
 
     scenario 'can remove an organiser from a chapter' do
-      puts chapter.organisers.first
       visit admin_chapter_organisers_path(chapter)
+      organiser_name = chapter.organisers.first.full_name
 
       click_on 'Remove'
 
       within '.organisers' do
-        expect(page).to_not have_content(chapter.organisers.first.full_name)
+        expect(page).to_not have_content(organiser_name)
       end
     end
   end
-
 end
