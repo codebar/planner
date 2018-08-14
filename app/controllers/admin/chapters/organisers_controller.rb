@@ -1,5 +1,6 @@
-class Admin::OrganisersController < Admin::ApplicationController
+class Admin::Chapters::OrganisersController < Admin::ApplicationController
   before_action :set_chapter, only: %i[index create destroy]
+  after_action :verify_authorized
 
   def index
     authorize :organiser
