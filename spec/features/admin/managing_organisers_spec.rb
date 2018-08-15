@@ -30,7 +30,7 @@ feature 'Managing organisers' do
     scenario 'can add a new organiser to a chapter' do
       chapter_subscriber = Fabricate(:member)
       chapter = Fabricate(:chapter_with_groups)
-      subscription = Fabricate(:subscription, member: chapter_subscriber, group: chapter.groups.first)
+      Fabricate(:subscription, member: chapter_subscriber, group: chapter.groups.first)
       visit admin_chapter_organisers_path(chapter)
 
       select chapter_subscriber.full_name, from: 'organiser[organiser]'
