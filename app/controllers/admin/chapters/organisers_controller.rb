@@ -20,7 +20,7 @@ class Admin::Chapters::OrganisersController < Admin::ApplicationController
 
   def destroy
     authorize :organiser
-    
+
     member = Member.find(params[:id])
 
     member.remove_role(:organiser, @chapter)
