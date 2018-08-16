@@ -156,7 +156,7 @@ GEM
     erubi (1.7.1)
     erubis (2.7.0)
     execjs (2.6.0)
-    fabrication (2.14.1)
+    fabrication (2.20.1)
     faker (1.9.1)
       i18n (>= 0.7)
     faraday (0.9.2)
