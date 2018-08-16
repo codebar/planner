@@ -3,7 +3,7 @@ ruby '2.4.2'
 
 gem 'rails', '4.2.10'
 
-gem 'acts-as-taggable-on', '~> 3.4'
+gem 'acts-as-taggable-on', '~> 5.0'
 gem 'carrierwave'
 gem 'carrierwave-ftp', require: 'carrierwave/storage/sftp'
 gem 'coffee-rails', '~> 4.0'
