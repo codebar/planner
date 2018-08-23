@@ -5,7 +5,7 @@ class Admin::InvitationController < Admin::ApplicationController
 
   def update
     invitation = Invitation.find_by(token: params[:invitation][:id])
-    invitation.update_attributes(attending: true, verified: true, verified_by: current_user)
+    invitation.update(attending: true, verified: true, verified_by: current_user)
 
     EventInvitationMailer.attending(invitation.event, invitation.member, invitation).deliver_now
 
@@ -14,7 +14,7 @@ class Admin::InvitationController < Admin::ApplicationController
 
   def verify
     invitation = Invitation.find_by(token: params[:invitation_id])
-    invitation.update_attributes(verified: true, verified_by: current_user)
+    invitation.update(verified: true, verified_by_id: current_user.id)
 
     EventInvitationMailer.attending(invitation.event, invitation.member, invitation).deliver_now
 
@@ -23,7 +23,7 @@ class Admin::InvitationController < Admin::ApplicationController
 
   def cancel
     invitation = Invitation.find_by(token: params[:invitation_id])
-    invitation.update_attribute(:attending, false)
+    invitation.update(attending: false)
 
     redirect_to :back, notice: "You have cancelled #{invitation.member.full_name}'s attendance."
   end
