@@ -323,7 +323,7 @@ GEM
     rb-inotify (0.9.7)
       ffi (>= 0.5.0)
     redcarpet (3.3.4)
-    rolify (5.0.0)
+    rolify (5.2.0)
     rollbar (2.16.4)
       multi_json
     rspec-collection_matchers (1.1.3)
