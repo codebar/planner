@@ -7,7 +7,7 @@ class CoursesController < ApplicationController
   end
 
   def show
-    @host_address = AddressPresenter.new(@course.sponsor.address)
+    @host_address = AddressPresenter.new(@course.sponsor&.address)
     @course = CoursePresenter.new(@course)
   end
 
