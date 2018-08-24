@@ -6,9 +6,9 @@ A tool to help manage [codebar.io](http://codebar.io) members and events.
 [![Coverage Status](https://coveralls.io/repos/codebar/planner/badge.png)](https://coveralls.io/r/codebar/planner)
 [![Code Climate](https://codeclimate.com/github/codebar/planner.png)](https://codeclimate.com/github/codebar/planner)
 
-If you are considering making a PR, please take a look at the Waffle board to see if someone else has already started work on an existing issue.
+If you are considering making a PR, please take a look at the [GitHub issues](https://github.com/codebar/planner/issues) to see if there are any new feature requirements or bugs that you maybe able to help resolve.
 
-#### [We're on Slack!](https://codebar-slack.herokuapp.com)
+#### [We're on Slack!](httpss://slack.codebar.io)
 
 
 ## Getting Started
