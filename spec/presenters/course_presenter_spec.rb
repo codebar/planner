@@ -15,4 +15,8 @@ describe CoursePresenter do
 
     event.sponsors
   end
+
+  it '#admin_path' do
+    expect(event.admin_path).to eq('#')
+  end
 end
