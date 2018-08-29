@@ -36,24 +36,24 @@ de:
       workshop: "%A, %e %B %Y at %R"
       dashboard: "%A, %b %d"
   messages:
-    accepted_invitation: "Thanks for getting back to us %{name}. See you at the workshop!"
-    rejected_invitation: "We are so sad you can't make it, but thanks for letting us know %{name}."
-    already_rsvped: "You have already confirmed you attendance!"
+    accepted_invitation: "Vielen Dank für die Rückmeldung, %{name}. Wir sehen uns beim Workshop!"
+    rejected_invitation: "Wir bedauern es sehr dass du nicht teilnehmen kannst. Vielen Dank für das Bescheid geben, %{name}."
+    already_rsvped: "Du hast deine Teilnahme schon bestätigt!"
     not_attending_already: "You have already confirmed you can't make it!"
-    no_available_seats: "Unfortunately there are no more spaces left :(. If you would like to join our waiting list send us an email at %{email}"
+    no_available_seats: "Leider sind keine weiteren Kapazitäten verfügbar :(. Falls du auf die Warteliste möchtest sende uns eine Mail an %{email}"
     feedback_saved: "Thank you for taking the time to give us feedback!"
-    feedback_not_found: "You have already submitted feedback for this event."
-    updated_note: "Successfully updated note."
+    feedback_not_found: "Sie haben bereits ein Feedback eingereicht."
+    updated_note: "Aktualisierung erfolgreich."
     invitations:
-      rsvped_to_other_workshop: "You have already RSVP'd to another workshop on this date. If you would prefer to attend this workshop, please cancel your other RSVP first."
-      spot_confirmed: "Your spot has been confirmed for %{event}! We look forward to seeing you there."
-      spot_not_confirmed: 'Your spot has not yet been confirmed. We will verify your attendance after you complete the questionnaire.'
+      rsvped_to_other_workshop: "Du hast dich schon für einen anderen Workshop an diesem Datum angemeldet. Falls du an diesem Workshop teilnehmen möchtest, melde dich bitte zuerst von dem anderen Workshop ab."
+      spot_confirmed: "Deine Teilnahme an %{event} wurde bestätigt! Wir freuen uns bereits dich dort begrüßen zu dürfen."
+      spot_not_confirmed: 'Deine Teilnahme wurde noch nicht bestätigt. Wir werden die Teilnahme bestätigen sobald du das Formular ausgefüllt hast.'
   notifications:
-    provider_already_connected: 'You are already signed in!'
-    not_logged_in: "You must be logged in to access this page."
+    provider_already_connected: 'Sie sind bereits angemeldet!'
+    not_logged_in: "Du musst angemeldet sein, um auf diese Seite zugreifen zu können."
   navigation:
-    dashboard: "Dashboard"
-    code_of_conduct: "Code of conduct"
+    dashboard: "Übersicht"
+    code_of_conduct: "Verhaltensregeln"
     coach_guide: "Coach guide"
     student_guide: "Student guide"
     tutorials: "Tutorials"
