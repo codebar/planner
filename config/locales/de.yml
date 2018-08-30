@@ -97,22 +97,22 @@ de:
       suggestions: "Do you have something to suggest? Make a <a href='https://github.com/codebar/planner'>pull request</a> or <a href='https://github.com/codebar/planner/issues/new'>create an issue</a>"
   events:
     title: "Veranstaltungen"
-    past: "Past"
-    no_upcoming_events: "There are no upcoming events."
-    view_past_events: "View past events"
-    view_all: "View all"
-    hosted_by: "Hosted by"
-    organisers: "Organisers"
-    venue_at: "at"
+    past: "Vergangene"
+    no_upcoming_events: "Es gibt keine bevorstehenden Veranstaltungen."
+    view_past_events: "Vergangene Veranstaltungen anzeigen"
+    view_all: "Alle anzeigen"
+    hosted_by: "Veranstaltet von"
+    organisers: "Organisatoren"
+    venue_at: "bei"
     attend_as_student: "Attend as a student"
     attend_as_coach: "Attend as a coach"
-    location: "Location"
-    sponsors: "Sponsors"
+    location: "Ort"
+    sponsors: "Sponsoren"
     thx_to_sponsors: "A big thanks to all of our sponsors for making the event possible!"
     coaches: "Coaches"
-    schedule: "Schedule"
-    send_us_an_email: "send us an email"
-    not_open_for_rsvp: This event is not open for RSVP yet.
+    schedule: "Zeitplan"
+    send_us_an_email: "Schreibe uns eine E-Mail"
+    not_open_for_rsvp: Die Anmeldung für diese Veranstaltung ist noch nicht geöffnet.
     faq:
       experience:
         q: "How experienced should I be to join the workshop?"
@@ -121,11 +121,11 @@ de:
         q: "What kind of contributions can I make?"
         a: "Your contributions can be tiny, as simple as fixing a typo, to something incredible. You can help with documentation, fix a bug that you found, improve the copy, help with design or even tackle bigger tasks and help introduce new features. Every little helps!"
       laptop:
-        q: "Do I need to bring a laptop?"
-        a_html: "Yes, you should bring a laptop. If you don't have one %{link} as we may be able to help."
+        q: "Soll ich einen Laptop mitbringen?"
+        a_html: "Ja, Du solltest einen Laptop mitbringen. Wenn du keinen besitzt %{link}, da wir möglicherweise in der Lage sind zu helfen."
       keyboard:
-        q: "Do I need to bring a keyboard?"
-        a_html: "A keyboard would help as you will spend the entire day pairing with someone on your laptop. If you don't have a keyboard, %{link} and we'll try to organise something for you."
+        q: "Soll ich eine Tastatur mitbringen?"
+        a_html: "Eine Tastatur könnte nützlich sein, da Du den ganzen Tag mit jemandem zusammen an Deinem Laptop arbeitest. Wenn Du keine Tastatur besitzt, %{link} und wir versuchen, etwas zu organisieren."
       travel_costs:
         q: "I will be commuting. Can you help with my travel expenses?"
         a: "We will be offering some travel grants. Just make sure you fill in the questionnaire after you RSVP and we will get in touch."
