@@ -130,20 +130,20 @@ de:
         q: "I will be commuting. Can you help with my travel expenses?"
         a: "We will be offering some travel grants. Just make sure you fill in the questionnaire after you RSVP and we will get in touch."
   coaches:
-    want_to_coach: "Do you want to coach at our workshops?"
-    read_before: "If you have not attended our workshops before, make sure you read our"
-    code_of_conduct: "code of conduct"
+    want_to_coach: "Möchtest Du in unseren Workshops coachen?"
+    read_before: "Wenn Du unsere Workshops noch nicht besucht hast, lies bitte unseren"
+    code_of_conduct: "Verhaltenskodex"
     policy: "as we have a zero tolerance policy and expect everyone to behave appropriately. You should also  go through our"
     guide: "coaching guide"
     unable_attend: "In case you are unable to attend after you RSVP, please make sure you come back and update your attendance as we rely on coaches showing up in order for our workshops to run smoothly."
     food: "PS: There will also be food at the workshop. We always make an effort to have vegetarian, vegan and gluten-free options available. If you have any other dietary requirements, send us email at"
   code_of_conduct:
-    title: "Code of conduct"
+    title: "Verhaltenskodex"
     summary:
-      title: "The Quick Version"
+      title: "Die kurze Version"
       intro: "Our events are dedicated to providing a harassment-free experience for everyone, regardless of gender, sexual orientation, disability, physical appearance, body size, race, or religion. We do not tolerate harassment of our members in any form. Sexual language and imagery is not appropriate for any of our events, including talks, workshops, parties, Twitter and any other online media. Members violating these rules may be sanctioned or expelled from the event and any future events at the discretion of the organisers."
     content:
-      title: "The Long Version"
+      title: "Die lange Version"
       harassment: "Harassment includes offensive verbal comments related to gender, sexual orientation, disability, physical appearance, body size, race, religion, sexual images in public spaces, deliberate intimidation, stalking, following, harassing photography or recording, sustained disruption of talks or other events, inappropriate physical contact, and unwelcome sexual attention."
       comply: "We expect any participants asked to stop any harassing behaviour to comply immediately."
       sponsors: "Sponsors are also subject to the anti-harassment policy. In particular, sponsors should not use sexualized images, activities, or other material. Staff (including volunteers) should not use sexualized clothing/uniforms/costumes, or otherwise create a sexualized environment."
