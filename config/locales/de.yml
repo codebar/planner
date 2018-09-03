@@ -61,7 +61,7 @@ de:
     faq: "Häufig gestellte Fragen"
     blog: "Blog"
   dashboard:
-    join_workshops_in: "Join our <i>free</i> workshops in"
+    join_workshops_in: "Komm zu unseren <i>kostenlosen</i> Workshops in"
     workshops_goal: "to get to grips with the basics of programming and web development."
     tweets_by: "Tweets von"
     latest_sponsors: "Latest Sponsors"
@@ -133,8 +133,8 @@ de:
     want_to_coach: "Möchtest Du in unseren Workshops coachen?"
     read_before: "Wenn Du unsere Workshops noch nicht besucht hast, lies bitte unseren"
     code_of_conduct: "Verhaltenskodex"
-    policy: "as we have a zero tolerance policy and expect everyone to behave appropriately. You should also  go through our"
-    guide: "coaching guide"
+    policy: "da wir eine Nulltoleranzpolitik haben und von allen ein entsprechendes Verhalten erwarten. Das solltest Du lesen: Unser"
+    guide: "Coaching Guide"
     unable_attend: "In case you are unable to attend after you RSVP, please make sure you come back and update your attendance as we rely on coaches showing up in order for our workshops to run smoothly."
     food: "PS: There will also be food at the workshop. We always make an effort to have vegetarian, vegan and gluten-free options available. If you have any other dietary requirements, send us email at"
   code_of_conduct:
