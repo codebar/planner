@@ -19,7 +19,7 @@ feature 'a member can' do
     context 'edit invitation' do
       scenario 'logged in user with accepted invitation can edit the note' do
         tutorial = Tutorial.create(title: 'Lesson 1 - Introducing HTML')
-        invitation.update_attributes(:attending, true)
+        invitation.update_attribute(:attending, true)
         visit invitation_route
 
         select tutorial.title, from: 'note'
