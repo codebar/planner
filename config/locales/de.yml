@@ -93,7 +93,7 @@ de:
       talk_slow: "Lass dir Zeit. Du bist der/die Lehrer/in, sie sind die Lernenden. Lege kurze Pausen zwischen Fragen ein."
       mild_approach: "Sage nicht rabiat \"Nein\", wenn die Lernenden etwas unrichtig machen. Gehe sanft und behutsam an das Problem heran."
       paper: "Benutze Stift und Papier oder ein Whiteboard! Viele der Lernenden haben keine Vorgeschichte mit der Informatik. Zeichnungen und visuelle Hilfen können sehr nützlich sein."
-      stubling: "Let them stumble. We learn by making mistakes, getting frustrated, and working through problem in our own way. Be supportive, but let them explore."
+      stubling: "Lasse zu, dass die Lernenden auch mal stolpern. Wir lernen aus Fehlern, indem wir unseren eigenen Weg von der Frustration zur Lösung des Problems finden. Stehe den Lernenden unterstützend zur Seite, aber lass sie selbständig erkunden."
       suggestions: "Do you have something to suggest? Make a <a href='https://github.com/codebar/planner'>pull request</a> or <a href='https://github.com/codebar/planner/issues/new'>create an issue</a>"
   events:
     title: "Veranstaltungen"
@@ -157,7 +157,7 @@ de:
     sponsoring: "Sponsoring"
   members:
     sign_up: "Sign up"
-    sign_in_with_github: "Sign in with Github"
+    sign_in_with_github: "Anmelden mit GitHub"
     sign_up_as_student: "I understand and meet the eligibility criteria. Sign me up as a student"
     sign_up_as_coach: "Sign up as a coach"
     code_of_conduct: "code of conduct"
