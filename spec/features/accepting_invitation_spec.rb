@@ -8,7 +8,6 @@ feature 'a member can' do
     let(:accept_invitation_route) { accept_invitation_path(invitation) }
     let(:reject_invitation_route) { reject_invitation_path(invitation) }
 
-    let(:member) { Fabricate(:member) }
     let(:set_no_available_slots) { invitation.workshop.host.update_attribute(:seats, 0) }
 
     before(:each) do
@@ -16,6 +15,19 @@ feature 'a member can' do
     end
 
     it_behaves_like 'invitation route'
+
+    context 'edit invitation' do
+      scenario 'logged in user with accepted invitation can edit the note' do
+        tutorial = Tutorial.create(title: 'Lesson 1 - Introducing HTML')
+        invitation.update_attributes(:attending, true)
+        visit invitation_route
+
+        select tutorial.title, from: 'note'
+        click_on 'Update note'
+
+        expect(page).to have_content('Successfully updated note.')
+      end
+    end
   end
 
   context '#course' do
@@ -67,10 +79,5 @@ feature 'a member can' do
         expect(page).to have_content(I18n.t('messages.not_attending_already'))
       end
     end
-  end
-
-  context 'edit invitation' do
-    let(:invitation) { Fabricate(:workshop_invitation) }
-    scenario 'logged in user with invitation can edit the description'
   end
 end
