@@ -104,18 +104,18 @@ de:
     hosted_by: "Veranstaltet von"
     organisers: "Organisatoren"
     venue_at: "bei"
-    attend_as_student: "Attend as a student"
-    attend_as_coach: "Attend as a coach"
+    attend_as_student: "Als Student teilnehmen"
+    attend_as_coach: "Als Trainer teilnehmen"
     location: "Ort"
     sponsors: "Sponsoren"
-    thx_to_sponsors: "A big thanks to all of our sponsors for making the event possible!"
-    coaches: "Coaches"
+    thx_to_sponsors: "Ein großes Dankeschön an alle unsere Sponsoren, die die Veranstaltung möglich gemacht haben!"
+    coaches: "Trainer"
     schedule: "Zeitplan"
     send_us_an_email: "Schreibe uns eine E-Mail"
     not_open_for_rsvp: Die Anmeldung für diese Veranstaltung ist noch nicht geöffnet.
     faq:
       experience:
-        q: "How experienced should I be to join the workshop?"
+        q: "Wie erfahren sollte ich sein, um am Workshop teilnehmen?"
         a:
       contribution:
         q: "What kind of contributions can I make?"
