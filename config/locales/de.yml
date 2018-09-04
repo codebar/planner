@@ -118,7 +118,7 @@ de:
         q: "Wie erfahren sollte ich sein, um am Workshop teilnehmen?"
         a:
       contribution:
-        q: "What kind of contributions can I make?"
+        q: "Welche Beiträge kann ich leisten?"
         a: "Your contributions can be tiny, as simple as fixing a typo, to something incredible. You can help with documentation, fix a bug that you found, improve the copy, help with design or even tackle bigger tasks and help introduce new features. Every little helps!"
       laptop:
         q: "Soll ich einen Laptop mitbringen?"
@@ -156,11 +156,11 @@ de:
   sponsors:
     sponsoring: "Sponsoring"
   members:
-    sign_up: "Sign up"
+    sign_up: "Anmelden"
     sign_in_with_github: "Anmelden mit GitHub"
     sign_up_as_student: "I understand and meet the eligibility criteria. Sign me up as a student"
     sign_up_as_coach: "Sign up as a coach"
-    code_of_conduct: "code of conduct"
+    code_of_conduct: "Verhaltenskodex"
     new:
       intro: "We offer a welcoming, inclusive and learning-friendly environment, and have a zero tolerance policy towards any form of harassment or inappropriate behavior. Before you sign up, read our"
       students:
