@@ -45,14 +45,6 @@ class Event < ActiveRecord::Base
     invitations.students.accepted.verified.map(&:member)
   end
 
-  def require_coach_questionnaire?
-    coach_questionnaire.present?
-  end
-
-  def require_student_questionnaire?
-    student_questionnaire.present?
-  end
-
   def coaches_only?
     student_spaces == 0
   end
