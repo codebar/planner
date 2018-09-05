@@ -171,7 +171,7 @@ de:
       invitations: "Invitations are sent out periodically, so don't worry if you don't receive one as soon as you register."
   footer:
     email_us: "Send us an email at"
-    contact_info: "Contact Info:"
+    contact_info: "Kontaktinfo:"
   faq:
     payment:
       q: "Do I need to pay to attend codebar?"
