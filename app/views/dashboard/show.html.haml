@@ -9,7 +9,7 @@
     .row
       .large-12.columns
         %p.lead
-          = t('homepage.explaination')
+          = t('homepage.explanation')
     - if @testimonials.any?
       .row
         .large-offset-1.large-11.columns
@@ -22,9 +22,9 @@
         %h4 
           = t('homepage.participate.students_title')
       %p
-        = t('homepage.participate.students_explaination_p1')
+        = t('homepage.participate.students_explanation_p1')
       %p
-        = t('homepage.participate.students_explaination_p2')
+        = t('homepage.participate.students_explanation_p2')
       
       .text-center
         = link_to t("homepage.participate.students_button"), new_member_path, class: 'button'
@@ -33,9 +33,9 @@
         %h4
           = t('homepage.participate.coaches_title')
       %p
-        = raw t('homepage.participate.coaches_explaination_p1')
+        = raw t('homepage.participate.coaches_explanation_p1')
       %p 
-        = t('homepage.participate.coaches_explaination_p2')
+        = t('homepage.participate.coaches_explanation_p2')
       
       .text-center
         = link_to t("homepage.participate.coaches_button"), new_member_path, class: 'button'
@@ -44,9 +44,9 @@
         %h4
           = t('homepage.participate.workshop_title')
       %p
-        = t('homepage.participate.workshop_explaination_p1')
+        = t('homepage.participate.workshop_explanation_p1')
       %p
-        = t('homepage.participate.workshop_explaination_p2')
+        = t('homepage.participate.workshop_explanation_p2')
       .text-center
         = mail_to "hello@codebar.io", t("homepage.participate.workshop_button"), subject: t('homepage.participate.workshop_email_subject'), class: 'button'
 
