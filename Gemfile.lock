@@ -1,8 +1,8 @@
 GIT
   remote: https://github.com/Compass/compass-rails
-  revision: b6ff83d721e05096c1f0ea1a600139f4be36cdbf
+  revision: be1f7516a8e781bedc6bd3cc34d5395c7c72b3f3
   specs:
-    compass-rails (3.0.2)
+    compass-rails (3.1.0)
       compass (~> 1.0.0)
       sass-rails (< 5.1)
       sprockets (< 4.0)
