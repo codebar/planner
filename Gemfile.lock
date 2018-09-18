@@ -68,7 +68,7 @@ GEM
     arel (6.0.4)
     ast (2.4.0)
     awesome_print (1.7.0)
-    better_errors (2.4.0)
+    better_errors (2.5.0)
       coderay (>= 1.0.0)
       erubi (>= 1.0.0)
       rack (>= 0.9.0)
