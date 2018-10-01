@@ -80,5 +80,5 @@ group :production do
 end
 
 gem 'newrelic_rpm'
-gem 'rubocop', '~> 0.58.2'
+gem 'rubocop', '~> 0.59.2'
 gem 'rollbar'
