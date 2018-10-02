@@ -1,42 +1,40 @@
 fr:
   brand: "codebar.io"
-
   date:
-      formats:
-        default: "%d/%m/%Y"
-        email: "%a, %d %B at %H:%M"
-        email_title: "%A, %d %b at %H:%M"
-        short: "%d/%m/%Y %H:%M "
-        date: "%d %b %Y"
-        website_format: "%a, %d %B %Y at %H:%M"
-        day_in_words: "%a"
-        day: "%d"
-        month: "%B"
-        meeting_format: "%a %d %B %H:%M"
-        time: "%H:%M"
-        year_month: "%Y-%B"
-        log: "at %H:%M on the %d/%m/%Y"
-        workshop: "%A, %e %B %Y at %R"
-        dashboard: "%a, %d %b %Y, %H:%M"
+    formats:
+      default: "%d/%m/%Y"
+      email: "%a, %d %B at %H:%M"
+      email_title: "%A, %d %b at %H:%M"
+      short: "%d/%m/%Y %H:%M "
+      date: "%d %b %Y"
+      website_format: "%a, %d %B %Y at %H:%M"
+      day_in_words: "%a"
+      day: "%d"
+      month: "%B"
+      meeting_format: "%a %d %B %H:%M"
+      time: "%H:%M"
+      year_month: "%Y-%B"
+      log: "at %H:%M on the %d/%m/%Y"
+      workshop: "%A, %e %B %Y at %R"
+      dashboard: "%a, %d %b %Y, %H:%M"
   time:
-      formats:
-        default: "%a, %d %b %Y %H:%M"
-        email: "%a, %d %B at %H:%M"
-        email_title: "%A, %d %b at %H:%M"
-        short: "%d/%m/%Y %H:%M "
-        date: "%d %b %Y"
-        default_date: "%d/%m/%Y"
-        website_format: "%a, %d %B %Y at %H:%M"
-        day_in_words: "%a"
-        day: "%d"
-        month: "%B"
-        meeting_format: "%a %d %B %H:%M"
-        time: "%H:%M"
-        year_month: "%Y-%B"
-        log: "at %H:%M on the %d/%m/%Y"
-        workshop: "%A, %e %B %Y at %R"
-        dashboard: "%A, %b %d"
-
+    formats:
+      default: "%a, %d %b %Y %H:%M"
+      email: "%a, %d %B at %H:%M"
+      email_title: "%A, %d %b at %H:%M"
+      short: "%d/%m/%Y %H:%M "
+      date: "%d %b %Y"
+      default_date: "%d/%m/%Y"
+      website_format: "%a, %d %B %Y at %H:%M"
+      day_in_words: "%a"
+      day: "%d"
+      month: "%B"
+      meeting_format: "%a %d %B %H:%M"
+      time: "%H:%M"
+      year_month: "%Y-%B"
+      log: "at %H:%M on the %d/%m/%Y"
+      workshop: "%A, %e %B %Y at %R"
+      dashboard: "%A, %b %d"
   messages:
     accepted_invitation: "Thanks for getting back to us %{name}. See you at the workshop!"
     rejected_invitation: "We are so sad you can't make it, but thanks for letting us know %{name}."
@@ -46,34 +44,34 @@ fr:
     feedback_saved: "Thank you for taking the time to give us feedback!"
     feedback_not_found: "You have already submitted feedback for this event."
     updated_note: "Successfully updated note."
-
+    invitations:
+      rsvped_to_other_workshop: "You have already RSVP'd to another workshop on this date. If you would prefer to attend this workshop, please cancel your other RSVP first."
+      spot_confirmed: "Your spot has been confirmed for %{event}! We look forward to seeing you there."
+      spot_not_confirmed: 'Your spot has not yet been confirmed. We will verify your attendance after you complete the questionnaire.'
   notifications:
     provider_already_connected: 'You are already signed in!'
     not_logged_in: "You must be logged in to access this page."
-
   navigation:
     dashboard: "Dashboard"
-    code_of_conduct: "Code of conduct"
+    code_of_conduct: "Code de conduite"
     coach_guide: "Coach guide"
     student_guide: "Student guide"
-    tutorials: "Tutorials"
+    tutorials: "Tutoriels"
     becoming_sponsor: "Becoming a sponsor"
     faq: "FAQ"
     blog: "Blog"
-
   dashboard:
     join_workshops_in: "Join our <i>free</i> workshops in"
     workshops_goal: "to get to grips with the basics of programming and web development."
     tweets_by: "Tweets by"
     latest_sponsors: "Latest Sponsors"
-
     policy:
       intro: "There’s high demand for our workshops and we have a waiting list on most weeks. To make sure as many people as possible can come, we have a straightforward attendance policy."
       rule1: "Before you RSVP make sure you are eligible to attend. If you’re not sure get in touch for a chat."
       rule2: "You must sign up and RSVP to attend our workshops."
       rule3: "If you RSVP then later realise you can’t make it, you must cancel. It only takes a few seconds to do through your confirmation email."
       rule4: "Please try to cancel with at least 24 hours notice."
-      rule5: "We know that sometimes things come up last minute, but even if you only cancel an hour before the session, get in touch and let us know."
+      rule5: "We know that sometimes things come up last minute, but even if you only cancel an hour before the workshop, get in touch and let us know."
       what_happens: "What happens if I don’t respect the policy?"
       strikes_system: "We operate a three strikes system. That means if you don’t come in without cancelling an RSVP three times, we will take you off our invite list for four weeks. We’ll get in touch after your first absence to make sure you understand this."
       removing: "If you fail to attend without cancelling another three times, we might have to remove you permanently from our invitation list."
@@ -81,7 +79,6 @@ fr:
       eligibility_note: "Another note on eligibility"
       abuse: "We’re a fairly relaxed bunch and we trust you, so we don’t police students as to their eligibility. However if it ever looks like this is being abused we may have to change that – which we really don’t want to do."
       reminder: "So please remember what these workshops are for – to open up tech to people that are underrepresented in the industry."
-
     teacher_guide:
       laptop: "You don't need a laptop for our workshops. You are there to watch and guide the students. If you don't feel comfortable with the tutorial you should spend time on it before coming if you want to help out."
       keyboard: "Do not take over the keyboard! This can be off-putting and scary."
@@ -98,7 +95,6 @@ fr:
       paper: "Use pen and paper or go to a whiteboard! Often students are coming from a non-technical background. Drawing and explaining with visual material is really helpful."
       stubling: "Let them stumble. We learn by making mistakes, getting frustrated, and working through problem in our own way. Be supportive, but let them explore."
       suggestions: "Do you have something to suggest? Make a <a href='https://github.com/codebar/planner'>pull request</a> or <a href='https://github.com/codebar/planner/issues/new'>create an issue</a>"
-
   events:
     title: "Events"
     past: "Past"
@@ -106,7 +102,7 @@ fr:
     view_past_events: "View past events"
     view_all: "View all"
     hosted_by: "Hosted by"
-    organisers: "organisers"
+    organisers: "Organisers"
     venue_at: "at"
     attend_as_student: "Attend as a student"
     attend_as_coach: "Attend as a coach"
@@ -114,7 +110,6 @@ fr:
     sponsors: "Sponsors"
     thx_to_sponsors: "A big thanks to all of our sponsors for making the event possible!"
     coaches: "Coaches"
-    organisers: "Organisers"
     schedule: "Schedule"
     send_us_an_email: "send us an email"
     not_open_for_rsvp: This event is not open for RSVP yet.
@@ -134,8 +129,6 @@ fr:
       travel_costs:
         q: "I will be commuting. Can you help with my travel expenses?"
         a: "We will be offering some travel grants. Just make sure you fill in the questionnaire after you RSVP and we will get in touch."
-
-
   coaches:
     want_to_coach: "Do you want to coach at our workshops?"
     read_before: "If you have not attended our workshops before, make sure you read our"
@@ -144,14 +137,11 @@ fr:
     guide: "coaching guide"
     unable_attend: "In case you are unable to attend after you RSVP, please make sure you come back and update your attendance as we rely on coaches showing up in order for our workshops to run smoothly."
     food: "PS: There will also be food at the workshop. We always make an effort to have vegetarian, vegan and gluten-free options available. If you have any other dietary requirements, send us email at"
-
-
   code_of_conduct:
     title: "Code de conduite"
     summary:
       title: "Version courte"
       intro: "Nous nous engageons à fournir une expérience bienveillante et dépourvue de harcèlement pour tout le monde, indépendamment du genre, de l'orientation sexuelle, du handicap, de l'apparence physique, de la taille, de la race ou de la religion. Nous ne tolérons pas le harcèlement de nos membres sous quelque forme que ce soit. L'imagerie et le langage sexuels ne sont appropriés pour aucun de nos événements, y compris les conférences, les ateliers, les soirées, Twitter et tout autre média en ligne. Les membres qui enfreignent ces règles peuvent être sanctionnés ou expulsés de l'événement et de tout événement futur à la discrétion des organisateurs."
-
     content:
       title: "Version longue"
       harassment: "Sont considérés comme harcèlement : les commentaires offensants liés au genre, à l'orientation sexuelle, au handicap, à l'apparence physique, à la taille, à la race ou à la religion, les images à caractère sexuel dans les espaces publics, les intimidations délibérées, le fait de suivre une personne de manière insistante et sans son accord, la prise de photos ou enregistrements sans consentement préalable des personnes concernées, les interruptions répétées lors de présentations ou autres événements, les contacts physiques inappropriés, ainsi que toute attention sexuelle non désirée."
@@ -159,14 +149,12 @@ fr:
       sponsors: "Les sponsors sont également soumis à la politique anti-harcèlement. En particulier, les sponsors ne doivent pas utiliser d'images, d'activités ou d'autres contenus à caractère sexuel. Le personnel (y compris les bénévoles) ne doivent pas porter de vêtements / uniformes / costumes sexualisés, ni créer un environnement sexualisé."
       sanctions: "Si un participant se livre à un comportement de harcèlement, les organisateurs peuvent prendre toutes les mesures qu'ils jugent appropriées. Cela comprend l'avertissement du contrevenant, ou son expulsion."
       concerns: "Si vous êtes harcelé·e, remarquez que quelqu'un d'autre est harcelé, ou avez d'autres préoccupations, veuillez contacter immédiatement l'un des organisateurs."
-      applies_to: "Nous attendons des participants qu'ils suivent ces règles lors de tous les événements <strong>codebar</strong>."
+      applies_to: "Nous attendons des participants qu'ils suivent ces règles lors de tous les événements <b>codebar</b>."
       questions: "Si vous avez des questions ou des préoccupations concernant ce code de conduite,"
       contact: "contactez-nous"
       email_subject: "Regarding code of conduct"
-
   sponsors:
     sponsoring: "Sponsoring"
-
   members:
     sign_up: "Sign up"
     sign_in_with_github: "Sign in with Github"
@@ -181,11 +169,9 @@ fr:
         criteria_brief: "as our workshops are only available to women, LGBTQ, people from underrepresented minority groups."
         github: "Lastly, when you click the sign up button, you'll be taken to something called GitHub. After logging in with a GitHub account, you'll be taken back to the codebar website. If you don't have an account yet, you'll need to create one. It doesn't take long and it's something that will come in handy when you get started with coding!"
       invitations: "Invitations are sent out periodically, so don't worry if you don't receive one as soon as you register."
-
   footer:
     email_us: "Send us an email at"
     contact_info: "Contact Info:"
-
   faq:
     payment:
       q: "Do I need to pay to attend codebar?"
@@ -230,13 +216,51 @@ fr:
       q: "Our coaches"
       a_p1: "You can see all the coaches have helped out in our workshops on the"
       a_p2: ". They are ordered by number of attendances. This is our way of showing our appreciation to them, as without them, we wouldn't be able to exist."
-
   chapters:
     intro: "Hi and welcome to codebar! Check out our <a href='http://codebar.io/faq'>FAQ</a> page for any questions you might have, and feel free to email us at %{email} if you can't find the answer you're looking for. Otherwise, use the button below to start the sign-up process."
     sign_up: "to be invited to our workshops."
     no_incoming: "There are no workshops coming up."
     contact: "To contact the %{city} team, send an email to %{email}"
-
+  job:
+    expired: 'This job post has expired'
+    published_on: 'Published on'
+    expires_on: 'Closing date'
+  jobs:
+    title: Jobs
+    index:
+      description: There are %{count} jobs listed
+      none: There are no jobs available.
+  feedback_form:
+    title: 'Workshop feedback'
+    description: Your submission will be completely anonymous. We read every piece of feedback and use it to help us improve our workshops.
+    note: Please do not mention any names, but instead choose your coach from the dropdown. This enables us to address issues but also to anonymously share feedback with coaches. Member privacy is very important to us!
+    rating: Your overall rating of the workshop
+    coach: 'Who was your coach?'
+    select_coach: '- Select Coach -'
+    tutorial: 'What tutorial did you go through?'
+    select_tutorial: '- Select Tutorial -'
+    request: 'How did you find the workshop?'
+    suggestions: "Was there something you didn't like? What can we do to improve your experience?"
+  member:
+    jobs:
+      title: Your job posts
+      index:
+        description: You have %{count} jobs listed
+        none: You have not posted any jobs
+      pending:
+        title: Your pending job posts
+        description: You have %{count} job posts pending submission.
+        none: You have no pending job posts.
+      new:
+        title: List a job
+        rules_intro: "Before posting make sure that:"
+        details: Your post details the work that will have to be undertaken
+        suitability: "It's suitable for people looking for Internships and Junior roles that will enable them to build up their career"
+        salary: The job pays an appropriate salary
+        short: "It's short and to the point"
+        payment: A minimum payment of £35 that you must pay through a donation
+        approval_info: "*Once submitted, a job will be visible once it has been reviewed and approved."
+        pay: Make a payment
   admin:
     workshop:
       manage_rsvps:
@@ -244,3 +268,14 @@ fr:
       destroy:
         success: "Workshop deleted successfully"
         failure: "Workshop cannot be deleted. This is because it has invitees and/or workshop information is on the website for a while long enough that it cannot be deleted."
+    messages:
+      meeting:
+        created: 'Meeting succesfully created'
+        updated: 'You have succesfully updated the details of this meeting'
+        invitations_already_sent: 'Invitations were previously sent; they will not be sent again'
+        sending_invitations: 'Invitations are being sent out'
+      invitation:
+        rsvp_member: "%{name} has been successfully added and notified via email."
+        already_on_list: "%{name} is already on the list!"
+        rsvp_error: "Something went wrong, %{name} has not been added."
+        update_rsvp: 'Updated attendance of %{name}'

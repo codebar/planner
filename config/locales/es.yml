@@ -1,4 +1,4 @@
-en:
+es:
   brand: "codebar.io"
   date:
     formats:
@@ -35,27 +35,6 @@ en:
       log: "at %H:%M on the %d/%m/%Y"
       workshop: "%A, %e %B %Y at %R"
       dashboard: "%A, %b %d"
-
-  homepage:
-    intro: "<strong>codebar</strong> is a non-profit initiative that facilitates the growth of a diverse tech community by running regular programming workshops."
-    explanation: "Our goal is to enable underrepresented people to learn programming in a safe and collaborative environment and expand their career opportunities. To achieve this we run free regular workshops, regular one-off events and try to create opportunities for our students making technology and coding more accessible."  
-    participate:
-      students_title: "Students"
-      students_explanation_p1: "Our students come from a variety of backgrounds. Some want to become full-time developers, whereas some would like to learn the basics of coding in a supportive environment."
-      students_explanation_p2: "Sign up to join our vibrant community and attend our workshops."
-      students_button: "Sign up as a student"
-      coaches_title: "Coaches"
-      coaches_explanation_p1: "We encourage new students to work on our HTML/CSS, JavaScript, Ruby, Python or Git <a href='http://tutorials.codebar.io'>tutorials</a>. We also help them understand programming concepts."
-      coaches_explanation_p2: "Therefore  are always on the lookout for more developers to join our community and help coach at our workshops."
-      coaches_button: "Sign up as a coach"
-      workshop_title: "Workshops"
-      workshop_explanation_p1: "We are hosted by some amazing companies who support our cause. Our normal format is 30 minutes of socialising with food and drink, followed by a lightning talk then coding."
-      workshop_explanation_p2: Help our expansion and enable us to provide help and support to our chapters by hosting and sponsoring our workshops.
-      workshop_button: "Host a workshop"
-      workshop_email_subject: "Regarding hosting a workshop"
-    chapters:
-      title: "Chapters"
-
   messages:
     accepted_invitation: "Thanks for getting back to us %{name}. See you at the workshop!"
     rejected_invitation: "We are so sad you can't make it, but thanks for letting us know %{name}."
@@ -77,7 +56,7 @@ en:
     code_of_conduct: "Code of conduct"
     coach_guide: "Coach guide"
     student_guide: "Student guide"
-    tutorials: "Tutorials"
+    tutorials: "Tutoriales"
     becoming_sponsor: "Becoming a sponsor"
     faq: "FAQ"
     blog: "Blog"
@@ -159,7 +138,7 @@ en:
     unable_attend: "In case you are unable to attend after you RSVP, please make sure you come back and update your attendance as we rely on coaches showing up in order for our workshops to run smoothly."
     food: "PS: There will also be food at the workshop. We always make an effort to have vegetarian, vegan and gluten-free options available. If you have any other dietary requirements, send us email at"
   code_of_conduct:
-    title: "Code of conduct"
+    title: "Código de Conducta"
     summary:
       title: "The Quick Version"
       intro: "Our events are dedicated to providing a harassment-free experience for everyone, regardless of gender, sexual orientation, disability, physical appearance, body size, race, or religion. We do not tolerate harassment of our members in any form. Sexual language and imagery is not appropriate for any of our events, including talks, workshops, parties, Twitter and any other online media. Members violating these rules may be sanctioned or expelled from the event and any future events at the discretion of the organisers."
