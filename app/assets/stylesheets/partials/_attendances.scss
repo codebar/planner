@@ -1,20 +1,25 @@
-#attendances {
-  .button {
-    margin-bottom: 0;
-  }
-
-  a .fa {
-    color: black;
-    &:hover {
-      text-shadow: 1px 1px 1px #999;
+.attendances {
+    .button {
+        margin-bottom: 0;
     }
 
-    &:active {
-      text-shadow: -2px 1px 1px #999;
-    }
-  }
+    a .fa {
+        color: black;
+        &:hover {
+            text-shadow: 1px 1px 1px #999;
+        }
 
-  .attendee {
-    padding: 0.5em 0;
-  }
+        &:active {
+            text-shadow: -2px 1px 1px #999;
+        }
+    }
+
+    .attendee {
+        padding: 0.5em 0;
+    }
+}
+
+label.signed-in {
+    color: white;
+    background-color: #16cc1f;
 }
