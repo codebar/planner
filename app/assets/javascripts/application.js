@@ -36,6 +36,10 @@ $(function(){
     format: 'HH:i'
   });
 
+  $('#job_expiry_date').pickadate({
+    format: 'dd/mm/yyyy'
+  });
+
   $('body').removeClass('no-js');
 
   $('select').chosen(function(){

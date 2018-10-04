@@ -35,6 +35,15 @@ en:
       log: "at %H:%M on the %d/%m/%Y"
       workshop: "%A, %e %B %Y at %R"
       dashboard: "%A, %b %d"
+  number:
+   currency:
+    format:
+      unit: '£'
+      delimiter: ','
+      separator: '.'
+      precision: 0
+      format: '%u%n'
+
   homepage:
     intro: "<strong>codebar</strong> is a non-profit initiative that facilitates the growth of a diverse tech community by running regular programming workshops."
     explanation: "Our goal is to enable underrepresented people to learn programming in a safe and collaborative environment and expand their career opportunities. To achieve this we run free regular workshops, regular one-off events and try to create opportunities for our students making technology and coding more accessible."
@@ -266,6 +275,16 @@ en:
     expired: 'This job post has expired'
     published_on: 'Published on'
     expires_on: 'Closing date'
+    apply: 'Apply for this job'
+    company: 'Company'
+    salary: 'Salary'
+    closing_date: Closing date
+    contact_email: Contact email
+    posted_by: Posted by
+    published_on: Published on
+    location:
+      title: Location
+      remote: 'Remote'
   jobs:
     title: Jobs
     index:
@@ -320,3 +339,29 @@ en:
         already_on_list: "%{name} is already on the list!"
         rsvp_error: "Something went wrong, %{name} has not been added."
         update_rsvp: 'Updated attendance of %{name}'
+
+  simple_form:
+    placeholders:
+      job:
+        company: 'e.g. codebar'
+        company_website: 'e.g. https://codebar.io'
+        title: 'e.g. Internship'
+        description: 'Use text or markdown for the job description'
+        location: 'e.g. London or Berlin'
+
+    hints:
+      job:
+        remote: Only check if the role is remote only
+        salary: Annual pay before tax, without commas or decimal points
+ # localise labels of job model
+  activerecord:
+    attributes:
+      job:
+        title: Title
+        company: Name
+        company_address: Address
+        company_postcode: Postcode
+        company_website: Website
+        email: Contact email
+        link_to_job: Link to job post
+        expiry_date: Application closing date

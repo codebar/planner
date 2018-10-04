@@ -50,4 +50,18 @@ describe Job do
       expect(job.expired?).to eq(true)
     end
   end
+
+  context "#approve!" do
+    it 'approves a job' do
+      approver = Fabricate(:member)
+      job = Fabricate(:pending_job)
+      now = Time.zone.now
+
+      job.approve!(approver)
+
+      expect(job.approved_by).to eq(approver)
+      expect(job.approved).to eq(true)
+      expect(job.published_on).to_not be_nil
+    end
+  end
 end

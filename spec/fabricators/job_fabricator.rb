@@ -11,3 +11,11 @@ Fabricator(:job) do
   submitted { true }
   expiry_date { Time.zone.today + 1.week }
 end
+
+Fabricator(:published_job, from: :job) do
+  published_on { Time.zone.yesterday }
+end
+
+Fabricator(:pending_job, from: :job) do
+  approved { false }
+end

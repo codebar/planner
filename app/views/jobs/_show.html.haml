@@ -6,43 +6,49 @@
 .stripe.reverse
   .row
     .medium-12.columns
-      %h1
+      %h2
         #{@job.title}
     .medium-9.columns
       = dot_markdown(@job.description)
+      %br
+      %h4 Company
+      = @job.company
+      -if @job.company_website.present?
+        %br
+        =link_to(@job.company_website)
 
 
     .medium-3.columns
-      %p
-        %strong Company
+      -if @job.salary.present?
+        %p.salary
+          %strong=t('job.salary')
+          %br
+          =number_to_currency(@job.salary)
+      %p.location
+        %strong=t('job.location.title')
         %br
-        =link_to(@job.company, @job.link_to_job)
-      %p
-        %strong Location
-        %br
-        =@job.location
-      %p
-        %strong Closing date
+        -if @job.remote
+          =t('job.location.remote')
+        - else
+          =@job.location
+      %p.closing-date
+        %strong=t('job.closing_date')
         %br
         #{I18n.l(@job.expiry_date, format: :date)}
       -if @job.email?
-        %p
-          %strong Contact email
+        %p.email
+          %strong=t('job.contact_email')
           %br
-          =@job.email
-      %p
-        %strong Posted by
+          =mail_to(@job.email, @job.email, subject:"#{@job.title} job enquiry")
+      %p.posted-by
+        %strong=t('job.posted_by')
         %br
         - if admin
           =link_to @job.created_by.full_name, admin_member_path(@job.created_by)
         - else
           =link_to @job.created_by.full_name, twitter_url_for(@job.created_by.twitter)
-      %p
-        %strong Posted on
+      %p.published_on
+        %strong=t('job.published_on')
         %br
-        #{l(@job.created_at, format: :date)}
-      - if @job.expiry_date.future?
-        - if @job.email?
-          =mail_to @job.email, "Apply for this job", class: 'button small'
-        - else
-          =link_to "Apply for this job", @job.link_to_job, class: 'button small'
+        = @job.published_on.present? ?  l(@job.published_on, format: :date) : '-'
+      =link_to t('job.apply'), @job.link_to_job, class: 'button small expand'

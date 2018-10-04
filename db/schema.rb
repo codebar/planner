@@ -294,6 +294,13 @@ ActiveRecord::Schema.define(version: 20180608010545) do
     t.datetime "updated_at"
     t.string   "company"
     t.integer  "approved_by_id"
+    t.string   "company_region"
+    t.string   "company_website"
+    t.string   "company_address"
+    t.string   "company_postcode"
+    t.datetime "published_on"
+    t.boolean  "remote"
+    t.integer  "salary"
   end
 
   add_index "jobs", ["created_by_id"], name: "index_jobs_on_created_by_id", using: :btree

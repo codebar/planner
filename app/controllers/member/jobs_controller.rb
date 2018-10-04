@@ -3,9 +3,9 @@ class Member::JobsController < ApplicationController
   before_action :is_logged_in?
 
   def index
-    @jobs = current_user.jobs.approved
-    @pending = current_user.jobs.submitted
-    @drafts = current_user.jobs.not_submitted
+    @jobs = current_user.jobs
+                        .owner_order
+                        .paginate(page: page)
   end
 
   def new
@@ -23,9 +23,7 @@ class Member::JobsController < ApplicationController
     end
   end
 
-  def preview
-    redirect_to job_path(@job) if @job.approved?
-  end
+  def show; end
 
   def edit
     redirect_to member_jobs_path, notice: 'You cannot edit a job that has already been approved.' if @job.approved?
@@ -50,7 +48,9 @@ class Member::JobsController < ApplicationController
   private
 
   def job_params
-    params.require(:job).permit(:title, :description, :location, :expiry_date, :email, :link_to_job, :company)
+    params.require(:job).permit(:title, :description, :location, :expiry_date, :email, :link_to_job,
+                                :company, :company_website, :company_address, :company_postcode,
+                                :remote, :salary)
   end
 
   def set_current_user_job

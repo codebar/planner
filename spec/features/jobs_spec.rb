@@ -23,12 +23,43 @@ feature 'Jobs' do
         end
       end
 
-      context 'viewing individual job posts' do
+      context 'can view job posts' do
         it 'when a job post is active' do
           job = Fabricate(:job)
           visit job_path(job)
 
           expect(page).to have_content(job.title)
+        end
+
+        context 'location' do
+          it 'when a job post is remote is set to remote' do
+            job = Fabricate(:published_job, remote: true)
+            visit job_path(job)
+
+            within('.location') do
+              expect(page).to have_content("Remote")
+            end
+          end
+
+          it 'when a job post is not set to remote' do
+            job = Fabricate(:published_job)
+            visit job_path(job)
+
+            within('.location') do
+              expect(page).to have_content(job.location)
+            end
+          end
+        end
+
+        context 'salary' do
+          it 'is formatted correctly when the salary is set' do
+            job = Fabricate(:published_job, salary: 30000)
+            visit job_path(job)
+
+            within('.salary') do
+              expect(page).to have_content('£30,000')
+            end
+          end
         end
 
         it 'when a job post has expired' do

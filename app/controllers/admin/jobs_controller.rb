@@ -18,12 +18,10 @@ class Admin::JobsController < Admin::ApplicationController
     @job = Job.find(params[:job_id])
     authorize @job
 
-    @job.update_attributes(approved: true, approved_by_id: current_user.id)
-
-    JobMailer.job_approved(@job).deliver_now
-
-    flash[:notice] = "The job has been approved and an email has been sent out to " \
-                     "#{@job.created_by.full_name} at #{@job.created_by.email}"
+    @job.approve!(current_user)
+    JobMailer.job_approved(@job).deliver_later
+    flash[:notice] = I18n.t('admin.jobs.messages.approved', name: @job.created_by.full_name,
+                                                            email: @job.created_by.email)
 
     redirect_to admin_jobs_path
   end

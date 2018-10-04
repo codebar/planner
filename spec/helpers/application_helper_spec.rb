@@ -15,4 +15,10 @@ RSpec.describe ApplicationHelper, type: :helper do
   it '#twitter_url_for' do
     expect(twitter_url_for('Picard')).to eq('http://twitter.com/Picard')
   end
+
+  describe '#number_to_currency' do
+    it 'correctly formats a number to British pounds' do
+      expect(helper.number_to_currency(20100)).to eq('£20,100')
+    end
+  end
 end

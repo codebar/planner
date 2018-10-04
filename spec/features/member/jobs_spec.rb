@@ -51,7 +51,7 @@ feature 'Member managing jobs' do
     scenario 'is unsuccessful unless all mandatory fields are submitted' do
       visit new_member_job_path
 
-      fill_in 'Company', with: 'codebar'
+      fill_in 'Name', with: 'codebar'
       click_on 'Submit job'
 
       expect(page).to have_content('Title can\'t be blank')
@@ -60,11 +60,13 @@ feature 'Member managing jobs' do
     scenario 'is succesful when all madantory fields are submitted' do
       visit new_member_job_path
 
-      fill_in 'Job title', with: 'Internship'
-      fill_in 'Company', with: 'codebar'
-      fill_in 'Location', with: 'London'
+      fill_in 'Title', with: 'Internship'
       fill_in 'Description', with: Faker::Lorem.paragraph
+      fill_in 'Name', with: 'codebar'
+      fill_in 'Website', with: 'https://codebar.io'
+      fill_in 'Location', with: 'London'
       fill_in 'Link to job post', with: Faker::Internet.url
+      fill_in 'Application closing date', with: (Time.zone.now + 3.months).strftime('%d/%m/%y')
 
       click_on 'Submit job'
 
@@ -95,7 +97,7 @@ feature 'Member managing jobs' do
       job =  Fabricate(:job, approved: false, created_by: member)
       visit edit_member_job_path(job)
 
-      fill_in 'Job title', with: 'JavaScript Internship'
+      fill_in 'Title', with: 'JavaScript Internship'
       click_on 'Submit'
 
       expect(page).to have_content('The job has been updated')
@@ -105,7 +107,7 @@ feature 'Member managing jobs' do
       job =  Fabricate(:job, approved: false, created_by: member)
       visit edit_member_job_path(job)
 
-      fill_in 'Job title', with: ''
+      fill_in 'Title', with: ''
       click_on 'Submit'
 
       expect(page).to have_content('Title can\'t be blank')

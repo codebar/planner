@@ -2,11 +2,26 @@
   %h4= link_to job.title, job_path(job)
   %dl
     %dt= t('job.company')
-    %dd= job.company
+    %dd
+      -if job.company_website.present?
+        =link_to(job.company, job.company_website)
+      - else
+        = job.company
     %br
+    - if job.salary.present?
+      %dt= t('job.salary')
+      %dd= number_to_currency(job.salary)
+      %br
     %dt= t('job.published_on')
-    %dd= l(job.created_at, format: :date)
+    - if job.published_on.present?
+      %dd= l(job.published_on, format: :date)
+    - else
+      %dd= "-"
     %dt= t('job.expires_on')
     %dd= l(job.expiry_date, format: :date)
-    %dt= t('job.location')
-    %dd= job.location
+    %dt= t('job.location.title')
+    %dd
+      - if job.remote
+        =t('job.location.remote')
+      - else
+        =job.location
