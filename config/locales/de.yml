@@ -127,8 +127,8 @@ de:
         q: "Soll ich eine Tastatur mitbringen?"
         a_html: "Eine Tastatur könnte nützlich sein, da Du den ganzen Tag mit jemandem zusammen an Deinem Laptop arbeitest. Wenn Du keine Tastatur besitzt, %{link} und wir versuchen, etwas zu organisieren."
       travel_costs:
-        q: "I will be commuting. Can you help with my travel expenses?"
-        a: "We will be offering some travel grants. Just make sure you fill in the questionnaire after you RSVP and we will get in touch."
+        q: "Ich werde pendeln. Können Sie mir bei meinen Reisekosten helfen?"
+        a: "Wir werden einige Reisestipendien anbieten. Bitte stellen dich sicher, dass du den Fragebogen ausfüllst, nachdem du dich angemeldet hast und wir werden uns mit dir in Verbindung setzen."
   coaches:
     want_to_coach: "Möchtest Du in unseren Workshops coachen?"
     read_before: "Wenn Du unsere Workshops noch nicht besucht hast, lies bitte unseren"
@@ -151,15 +151,15 @@ de:
       concerns: "If you are being harassed, notice that someone else is being harassed, or have any other concerns, please contact one of the organisers immediately."
       applies_to: "We expect participants to follow these rules at all <b>codebar</b> events."
       questions: "If you have any questions or concerns about this code please"
-      contact: "contact us"
+      contact: "Kontaktiere uns"
       email_subject: "Regarding code of conduct"
   sponsors:
-    sponsoring: "Sponsoring"
+    sponsoring: "Sponsoren"
   members:
     sign_up: "Anmelden"
     sign_in_with_github: "Anmelden mit GitHub"
     sign_up_as_student: "I understand and meet the eligibility criteria. Sign me up as a student"
-    sign_up_as_coach: "Sign up as a coach"
+    sign_up_as_coach: "Melde dich als Trainer an"
     code_of_conduct: "Verhaltenskodex"
     new:
       intro: "We offer a welcoming, inclusive and learning-friendly environment, and have a zero tolerance policy towards any form of harassment or inappropriate behavior. Before you sign up, read our"
@@ -170,19 +170,19 @@ de:
         github: "Lastly, when you click the sign up button, you'll be taken to something called GitHub. After logging in with a GitHub account, you'll be taken back to the codebar website. If you don't have an account yet, you'll need to create one. It doesn't take long and it's something that will come in handy when you get started with coding!"
       invitations: "Invitations are sent out periodically, so don't worry if you don't receive one as soon as you register."
   footer:
-    email_us: "Send us an email at"
+    email_us: "Schreibe uns eine E-Mail an:"
     contact_info: "Kontaktinfo:"
   faq:
     payment:
       q: "Do I need to pay to attend codebar?"
       a_p1: "Absolutely not! We are lucky enough to have some great companies who are able to host the workshops and/or kindly provide food. And our"
-      awesome_coaches: "awesome coaches"
+      awesome_coaches: "fantastische Trainer"
       a_p2: "give their time freely to help the community."
     technologies:
       q: "What technologies do you teach?"
       a: "We have a variety of available tutorials in HTML, CSS, JavaScript and Ruby. If you want to learn something else don't hesitate to <a href=\"mailto:contact@codebar.io\">send us an email</a> as we might still be able to find someone to help you out."
     eligibility:
-      q: "I want to attend a workshop. Am I eligible?"
+      q: "Ich möchte an einem Workshop teilnehmen. Bin ich berechtigt?"
       a: "Our workshops are available to women, LGBTQ and people who are underrepresented in the tech industry. If you belong to one of these groups, you are more than welcome to attend. If not, there are some other great initiatives like <a href='https://www.meetup.com/opentechschool-london/'>Open Tech School London</a> where you can learn in a collaborative environment. Please see our <a href='http://codebar.io/student-guide'>student guide</a> for more information."
     career:
       q: "Is codebar only aimed at people who want to move into a career as a developer?"
@@ -243,7 +243,7 @@ de:
     suggestions: "Was there something you didn't like? What can we do to improve your experience?"
   member:
     jobs:
-      title: Your job posts
+      title: Deine Job-Beiträge
       index:
         description: You have %{count} jobs listed
         none: You have not posted any jobs
@@ -266,11 +266,11 @@ de:
       manage_rsvps:
         text: 'RSVP Students and Coaches to the workshop. The attendance confirmation email will be triggered and they will be removed from the waiting list.'
       destroy:
-        success: "Workshop deleted successfully"
+        success: "Werkstatt erfolgreich gelöscht"
         failure: "Workshop cannot be deleted. This is because it has invitees and/or workshop information is on the website for a while long enough that it cannot be deleted."
     messages:
       meeting:
-        created: 'Meeting succesfully created'
+        created: 'Meeting wurde erfolgreich erstellt'
         updated: 'You have succesfully updated the details of this meeting'
         invitations_already_sent: 'Invitations were previously sent; they will not be sent again'
         sending_invitations: 'Invitations are being sent out'
