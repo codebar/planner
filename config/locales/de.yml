@@ -220,47 +220,47 @@ de:
     intro: "Hallo und willkommen bei codebar! Wenn du Fragen hast kannst du unsere <a href='http://codebar.io/faq'>FAQ</a> lesen, du kannst uns aber auch gerne an %{email} schreiben, wenn du die Antwort die du suchst nicht findest. Ansonsten kannst du den folgenden Button verwenden um den Anmeldeprozess zu starten."
     sign_up: "um zu unseren Workshops eingeladen zu werden."
     no_incoming: "Aktuell sind keine Workshops geplant."
-    contact: "To contact the %{city} team, send an email to %{email}"
+    contact: "Um das %{city}er Team zu kontaktieren kannst du einfach eine E-Mail an %{email} schicken"
   job:
-    expired: 'This job post has expired'
-    published_on: 'Published on'
-    expires_on: 'Closing date'
+    expired: 'Das Jobangebot ist abgelaufen'
+    published_on: 'Erstellt am'
+    expires_on: 'Endet am'
   jobs:
     title: Jobs
     index:
-      description: There are %{count} jobs listed
-      none: There are no jobs available.
+      description: Es gibt %{count} jobs
+      none: Es sind leider keine Jobangebote verfügbar.
   feedback_form:
-    title: 'Workshop feedback'
-    description: Your submission will be completely anonymous. We read every piece of feedback and use it to help us improve our workshops.
-    note: Please do not mention any names, but instead choose your coach from the dropdown. This enables us to address issues but also to anonymously share feedback with coaches. Member privacy is very important to us!
-    rating: Your overall rating of the workshop
-    coach: 'Who was your coach?'
-    select_coach: '- Select Coach -'
-    tutorial: 'What tutorial did you go through?'
-    select_tutorial: '- Select Tutorial -'
-    request: 'How did you find the workshop?'
-    suggestions: "Was there something you didn't like? What can we do to improve your experience?"
+    title: 'Workshop Feedback'
+    description: Deine Einreichung ist komplett anonym. Wir lesen jedes Feedback und verwenden es um unsere Workshops zu verbessern.
+    note: Bitte nenne keine Namen, sondern wähle deinen Trainer aus dem entsprechenden Feld aus. Das hilft uns dabei Probleme zu adressieren, aber gleichzeitig anonym Feedback mit den Trainern zu teilen. Die Privatsphäre unserer Mitglieder ist uns sehr wichtig!
+    rating: Deine Gesamtbewertung des Workshops
+    coach: 'Wer war dein Trainer?'
+    select_coach: '- Trainer wählen -'
+    tutorial: 'Welches Tutorium habt ihr bearbeitet?'
+    select_tutorial: '- Tutorium wählen -'
+    request: 'Wie fandest du den Workshop?'
+    suggestions: "Gab es etwas das dir nicht gefallen hat? Was können wir tun um uns zu verbessern?"
   member:
     jobs:
       title: Deine Job-Beiträge
       index:
-        description: You have %{count} jobs listed
-        none: You have not posted any jobs
+        description: Du hast %{count} Jobs eingestellt
+        none: Du hast noch keine Jobs eingestellt
       pending:
-        title: Your pending job posts
-        description: You have %{count} job posts pending submission.
-        none: You have no pending job posts.
+        title: Deine Jobeinträge in Prüfung
+        description: Du hast %{count} Jobeinträge die geprüft werden.
+        none: Du hast keine Jobeinträge in Prüfung.
       new:
-        title: List a job
-        rules_intro: "Before posting make sure that:"
-        details: Your post details the work that will have to be undertaken
-        suitability: "It's suitable for people looking for Internships and Junior roles that will enable them to build up their career"
-        salary: The job pays an appropriate salary
-        short: "It's short and to the point"
-        payment: A minimum payment of £35 that you must pay through a donation
-        approval_info: "*Once submitted, a job will be visible once it has been reviewed and approved."
-        pay: Make a payment
+        title: Job eintragen
+        rules_intro: "Bitte prüfe vor dem Abschicken, dass:"
+        details: dein Eintrag detailliert die zu erledigende Arbeit darstellt
+        suitability: "der Job passend für Menschen ist, die nach Praktika und Junior-Positionen suchen, die ihnen helfen ihre Karriere aufzubauen"
+        salary: der Job ein angemessenes Gehalt bietet
+        short: "der Eintrag kurz und auf den Punkt ist"
+        payment: eine Minimalzahlung von £35 per Spende geleistet werden muss
+        approval_info: "*Nach dem Abschicken wird der Job sichtbar sobald er geprüft und bestätigt wurde."
+        pay: Jetzt bezahlen
   admin:
     workshop:
       manage_rsvps:
