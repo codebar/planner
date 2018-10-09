@@ -3,7 +3,7 @@
     .large-12.columns
       %strong Waiting List
   .row
-    %table#attendances.large-12.columns
+    %table.attendances.large-12.columns
       %tbody
         - waiting_list.list.each do |list|
           - invitation = list.invitation
