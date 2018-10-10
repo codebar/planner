@@ -45,6 +45,8 @@ feature 'when visiting the coaches page' do
 
     visit skill_path('ruby')
 
+    expect(page).to have_content("Coaches skilled in 'ruby'")
+
     coaches.each do |coach|
       expect(page).to have_content(coach.full_name)
     end
