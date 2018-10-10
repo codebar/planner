@@ -56,6 +56,7 @@ $default-float: left;
 
 // We use these as default colors throughout
 $primary-color: #596677;
+$codebar-blue: #4bafff;
 $secondary-color: #e60060;
 // $alert-color: #f04124;
 // $success-color: #43AC6A;
@@ -300,7 +301,7 @@ $alert-bottom-margin: rem-calc(0);
 // $include-html-nav-classes: $include-html-classes;
 
 // We use this to set the background color for the breadcrumb container.
-// $crumb-bg: scale-color($secondary-color, $lightness: 55%);
+$crumb-bg: scale-color($codebar-blue, $lightness: 75%);
 
 // We use these to set the padding around the breadcrumbs.
 // $crumb-padding: rem-calc(9 14 9);
@@ -333,8 +334,8 @@ $alert-bottom-margin: rem-calc(0);
 
 // We use these to build padding for buttons.
 // $button-tny: rem-calc(10);
-// $button-sml: rem-calc(14);
-// $button-med: rem-calc(16);
+$button-sml: rem-calc(12);
+$button-med: rem-calc(13);
 // $button-lrg: rem-calc(18);
 
 // We use this to control the display property.
@@ -347,7 +348,7 @@ $alert-bottom-margin: rem-calc(0);
 // $button-font-color-alt: #333;
 // $button-font-tny: rem-calc(11);
 // $button-font-sml: rem-calc(13);
-$button-font-med: rem-calc(16);
+$button-font-med: rem-calc(14);
 // $button-font-lrg: rem-calc(20);
 // $button-font-weight: normal;
 // $button-font-align: center;
@@ -1087,12 +1088,12 @@ $price-cta-align: right;
 
 // These control the table cell border style
 $table-border-style: none;
-$table-border-size: rem-calc(0);
+$table-border-size: 0;
 $table-border-color: #333;
 
 // These control the table head styles
 $table-head-bg: transparent;
-$table-even-row-bg: #fff;
+$table-even-row-bg: transparent;
 // $table-head-font-size: rem-calc(14);
 // $table-head-font-color: #222;
 // $table-head-font-weight: bold;
@@ -1107,6 +1108,10 @@ $table-line-height: rem-calc(16);
 // These are for controlling the display and margin of tables
 // $table-display: table-cell;
 $table-margin-bottom: rem-calc(10);
+
+table tr {
+  border-top: 1px solid scale-color($codebar-blue, $lightness: 95%);
+}
 
 //
 // TABS
@@ -1413,4 +1418,11 @@ body.dashboard-faq dl dt {
   margin-top: -105px;
   height: 105px;
   visibility: hidden;
+}
+
+.label.status {
+  @include label(
+    $text-size: 13px,
+    $bg: $codebar-blue
+  );
 }

@@ -272,6 +272,11 @@ en:
     no_incoming: "There are no workshops coming up."
     contact: "To contact the %{city} team, send an email to %{email}"
   job:
+    status:
+      draft: Draft
+      pending: Pending approval
+      published: Published
+      expired: Expired
     expired: 'This job post has expired'
     published_on: 'Published on'
     expires_on: 'Closing date'
@@ -285,6 +290,16 @@ en:
     location:
       title: Location
       remote: 'Remote'
+    messages:
+      draft: 'This is a preview of your job.<b>Edit</b> to amend or <b>Submit</b> for approval.'
+      pending: 'This job is pending approval. <b>Edit</b> to amend your post.'
+      published: 'This job has been published.'
+      expired: 'This job has expired.'
+      updated: 'Your job has been updated.'
+      submitted: "Job submitted for approval. You will receive an email when it's been approved."
+      cannot_edit: You cannot edit a job that has already been approved.
+      public_page: View the %{link} for this job.
+
   jobs:
     title: Jobs
     index:
@@ -303,7 +318,7 @@ en:
     suggestions: "Was there something you didn't like? What can we do to improve your experience?"
   member:
     jobs:
-      title: Your job posts
+      title: Your jobs
       index:
         description: You have %{count} jobs listed
         none: You have not posted any jobs

@@ -26,19 +26,19 @@ class Member::JobsController < ApplicationController
   def show; end
 
   def edit
-    redirect_to member_jobs_path, notice: 'You cannot edit a job that has already been approved.' if @job.approved?
+    redirect_to member_jobs_path, notice: I18n.t('job.messages.cannot_edit') if @job.approved?
   end
 
   def submit
     @job.update_attributes(submitted: true)
 
-    flash[:notice] = 'Job submitted. You will receive an email when the job has ben approved.'
+    flash[:notice] = I18n.t('job.messages.submitted')
     redirect_to member_jobs_path
   end
 
   def update
     if @job.update_attributes(job_params)
-      redirect_to member_job_preview_path(@job), notice: 'The job has been updated'
+      redirect_to member_job_preview_path(@job), notice: I18n.t('job.messages.updated')
     else
       flash['notice'] = @job.errors.full_messages.join('<br>')
       render 'edit'

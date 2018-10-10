@@ -7,6 +7,7 @@ class Job < ActiveRecord::Base
   scope :not_submitted, -> { where(submitted: false, approved: false) }
 
   scope :ordered, -> { order('created_at desc') }
+  scope :owner_order, -> { order(published_on: :desc, expiry_date: :asc,  created_at: :desc) }
   scope :active, -> { where('expiry_date > ?', Time.zone.today) }
 
   validates :title, :company, :location, :description, :link_to_job, :expiry_date, presence: true

@@ -14,18 +14,18 @@ feature 'Member managing jobs' do
       drafts = Fabricate.times(3, :job, submitted: false, approved: false, created_by: member)
       visit member_jobs_path
 
-      expect(page).to have_content('Posted (3)')
-      expect(page).to have_content('Pending (2)')
-      expect(page).to have_content('Drafts (3)')
+      expect(page.all(:xpath, "//td/span[text()='Published']").count).to eq(3)
+      expect(page.all(:xpath, "//td/span[text()='Pending approval']").count).to eq(2)
+      expect(page.all(:xpath, "//td/span[text()='Draft']").count).to eq(3)
     end
 
-    it 'an approved job redirects to the job post' do
+    it 'an approved job renders the post preview page' do
       job = Fabricate(:job, approved: true, created_by: member)
 
       visit member_jobs_path
       click_on job.title
 
-      expect(page.current_path).to eq(job_path(job))
+      expect(page.current_path).to eq(member_job_preview_path(job))
     end
 
     it 'drafts job post take a user to the preview job post' do
@@ -70,7 +70,7 @@ feature 'Member managing jobs' do
 
       click_on 'Submit job'
 
-      expect(page).to have_content('This is a preview. Submit to verify your post or Edit to amend.')
+      expect(page).to have_content('This is a preview of your job.Edit to amend or Submit for approval')
     end
   end
 
@@ -79,7 +79,7 @@ feature 'Member managing jobs' do
 
     visit member_job_preview_path(job)
 
-    expect(page).to have_content('This is a preview. Submit to verify your post or Edit to amend.')
+    expect(page).to have_content('This is a preview of your job.Edit to amend or Submit for approval')
     expect(page).to have_content(job.title)
   end
 
@@ -89,7 +89,7 @@ feature 'Member managing jobs' do
     visit member_job_preview_path(job)
     click_on 'Submit'
 
-    expect(page).to have_content('Job submitted. You will receive an email when the job has ben approved.')
+    expect(page).to have_content("Job submitted for approval. You will receive an email when it's been approved.")
   end
 
   context '#edit' do
@@ -100,7 +100,7 @@ feature 'Member managing jobs' do
       fill_in 'Title', with: 'JavaScript Internship'
       click_on 'Submit'
 
-      expect(page).to have_content('The job has been updated')
+      expect(page).to have_content('Your job has been updated')
     end
 
     scenario 'can not reset  mandatory fields' do
