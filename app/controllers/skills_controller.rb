@@ -1,5 +1,6 @@
 class SkillsController < ApplicationController
   def show
+    @skill = skill
     @coaches = Member.includes(:skills)
                       .with_skill(skill)
                       .paginate(page: page)
