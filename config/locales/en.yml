@@ -235,7 +235,6 @@ en:
       q: "Our coaches"
       a_p1: "You can see all the coaches have helped out in our workshops on the"
       a_p2: ". They are ordered by number of attendances. This is our way of showing our appreciation to them, as without them, we wouldn't be able to exist."
-
   participant_student_guide:
     title: "Student Guide"
     attendance_policy:
@@ -258,7 +257,6 @@ en:
     disability:
       title: "Students with Disability"
       description: "We want to ensure that our workshops are as accessible as possible. If you are disabled and are unsure about whether our venues can cater to your needs, we encourage you to please get in touch with us at <a href='mailto:hello@codebar.io'>hello@codebar.io</a> and we will do what we can to accommodate you."
-
   chapters:
     intro: "Hi and welcome to codebar! Check out our <a href='http://codebar.io/faq'>FAQ</a> page for any questions you might have, and feel free to email us at %{email} if you can't find the answer you're looking for. Otherwise, use the button below to start the sign-up process."
     sign_up: "to be invited to our workshops."
