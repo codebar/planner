@@ -95,9 +95,9 @@ de:
       strikes_system: "Wenn wir feststellen, dass du drei Mal ohne abzusagen nicht zum Workshop gekommen bist, werden wir dich für die nächsten 4 Wochen aus unserem Teilnehmer-Verteiler entfernen. Wir melden uns bei dir nach deinem ersten Fehlen, um sicherzustellen, dass du die Regeln verstehst."
       removing: "Falls du noch drei Mal ohne abzusagen fehlst, werden wir dich endgültig von unserer Teilnehmer-Liste entfernen müssen."
       rsvping: "Wir bestrafen regelmäßiges an- und vorzeitiges abmelden nicht, aber bitte versuche es zu vermeiden. Falls dir eine Teilnahme an einem bestimmten Tag nicht möglich ist dann melde uns das bitte, damit wir das in zukünftige Planungen einbeziehen können."
-      eligibility_note: "Another note on eligibility"
-      abuse: "We’re a fairly relaxed bunch and we trust you, so we don’t police students as to their eligibility. However if it ever looks like this is being abused we may have to change that – which we really don’t want to do."
-      reminder: "So please remember what these workshops are for – to open up tech to people that are underrepresented in the industry."
+      eligibility_note: "Noch ein Hinweis zur Teilnahmeberechtigung"
+      abuse: "Wir sind alle ziemlich entspannt und vertrauen dir, wir prüfen also nicht ob jemand teilnehmen darf. Sollte es allerdings jemals danach aussehen als würde das ausgenutzt werden müssten wir das ändern – was wir wirklich nicht machen wollen."
+      reminder: "Bitte behalte also im Kopf, dass die Workshops dafür da sind die Technikwelt für unterrepräsentierte Gruppen zu öffnen."
     teacher_guide:
       laptop: "Für unsere Workshops brauchst du keinen Laptop. Deine Aufgabe ist es, Lernende zu leiten und zu begleiten. Falls du mit dem Tutorial nicht vertraut bist, sieh es dir vorher genauer an, wenn du mithelfen möchtest."
       keyboard: "Übernimm nicht die Tastatur! Das kann abschreckend und einschüchternd wirken."
