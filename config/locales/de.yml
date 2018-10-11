@@ -170,7 +170,7 @@ de:
       concerns: "Solltest du dich belästigt fühlen oder mitbekommen, dass jemand anders belästigt wird oder sonstige Probleme auftreten, wende dich bitte sofort an ein Mitglied des Veranstaltungspersonals."
       applies_to: "Wir erwarten, dass Teilnehmer diese Regeln bei allen <b>codebar</b> Veranstaltungen einhalten."
       questions: "Wenn du Fragen oder Bedenken bezüglich dieses Kodex hast bitte"
-      contact: "contact us"
+      contact: "Kontaktiere uns"
       email_subject: "Fragen zum Verhaltenskodex"
   sponsors:
     sponsoring: "Sponsoren"
@@ -210,20 +210,20 @@ de:
       q: "Wie ist das Workshopformat?"
       a: "Wir versuchen einen Trainer pro für je zwei Teilnehmer_innen zu haben. Wir bilden aus den Studenten die das gleiche Tutorium bearbeiten wollen Zweiergruppen und weisen ihnen eine_n Trainer_in zu. Der Rest geschieht einfach."
     laptop:
-      q: "Do I need to bring a laptop with me at the workshops?"
-      a: "Yes, we suggest that you bring a laptop as it will be easier for you to carry on working on things after the workshops. It you don't have one, <a href=\"mailto:contact@codebar.io\">send us an email</a> so we can try and help out."
+      q: "Muss ich einen Laptop zu den Workshops mitbringen?"
+      a: "Ja, wir empfehlen, dass du einen Laptop mitbringst, weil es einfacher für dich sein wird nach den Workshops weiterzuarbeiten. Wenn du keinen besitzt, <a href=\"mailto:contact@codebar.io\">schick uns eine E-Mail</a>, dann versuchen wir dir auszuhelfen."
     online_resources:
-      q: "There are so many online resources, why should I come to codebar?"
-      a: "Coding can be intimidating and a lot of people find it hard to get started. By putting you in touch with people who can help and guide you we make the experience and learning process easier and more enjoyable."
+      q: "Es gibt so viele Tutorien online, wieso sollte ich zu codebar gehen?"
+      a: "Programmieren kann furchteinflößend sein und viele finden es schwer einen Einstieg zu finden. Dadurch dass wir dich in Kontakt mit Menschen bringen die dir helfen und dich anweisen können machen wir deine Erfahrung und deinen Lernprozess einfacher und angenehmer."
     preperations:
-      q: "I would like to coach at codebar. Is there anything I should do besides signing up?"
-      a_p1: "Yes. First you should read our"
-      coaching_guide_tutorials: "coaching guide tutorials"
-      a_p2: ". Then spend sometime familiarising yourself with the"
-      a_p3: "<a href='http://tutorials.codebar.io'>tutorials</a>. The tutorials are open source so if there is something that you want to improve open an issue on the GitHub repository or send a pull request."
-      a_p4: "We don't expect the coaches to be familiar with all the technologies and languages we have material on."
+      q: "Ich würde gerne bei codebar coachen. Muss ich noch irgendetwas anderes tun als mich anzumelden?"
+      a_p1: "Ja. Lies bitte zuerst unsere"
+      coaching_guide_tutorials: "Coaching Tutorien"
+      a_p2: ". Arbeite dich anschließend bitte in unsere"
+      a_p3: "<a href='http://tutorials.codebar.io'>Tutorien</a> ein. Die Tutorien sind Open Source, wenn du also etwas verbessern möchtest kannst du gerne ein Ticket im GitHub Repository eröffnen oder einen Pull Request schicken."
+      a_p4: "Wir erwarten nicht, dass die Trainer mit allen Technologien und Sprachen vertraut sind zu denen wir Materialien haben."
     location:
-      q: "Where do the workshops take place?"
+      q: "Wo finden die Workshops statt?"
       a: "Da wir leider keinen dauerhaften Veranstaltungsort haben, finden die Veranstaltungen bei verschiedenen Firmen, die sich als Gastgeber anbieten, statt."
     disabled_access:
       q: "Gibt es einen behindertengerechten Zugang zu den Workshops?"
@@ -260,8 +260,8 @@ de:
   chapters:
     intro: "Hallo und willkommen bei codebar! Wenn du Fragen hast kannst du unsere <a href='http://codebar.io/faq'>FAQ</a> lesen, du kannst uns aber auch gerne an %{email} schreiben, wenn du die Antwort die du suchst nicht findest. Ansonsten kannst du den folgenden Button verwenden um den Anmeldeprozess zu starten."
     sign_up: "um zu unseren Workshops eingeladen zu werden."
-    no_incoming: "There are no workshops coming up."
-    contact: "To contact the %{city} team, send an email to %{email}"
+    no_incoming: "Aktuell sind keine Workshops geplant."
+    contact: "Um das %{city}er Team zu kontaktieren kannst du einfach eine E-Mail an %{email} schicken"
   job:
     expired: 'This job post has expired'
     published_on: 'Published on'
@@ -272,15 +272,15 @@ de:
       description: Es gibt %{count} jobs
       none: Es sind leider keine Jobangebote verfügbar.
   feedback_form:
-    title: 'Workshop feedback'
-    description: Your submission will be completely anonymous. We read every piece of feedback and use it to help us improve our workshops.
-    note: Please do not mention any names, but instead choose your coach from the dropdown. This enables us to address issues but also to anonymously share feedback with coaches. Member privacy is very important to us!
-    rating: Your overall rating of the workshop
-    coach: 'Who was your coach?'
-    select_coach: '- Select Coach -'
-    tutorial: 'What tutorial did you go through?'
-    select_tutorial: '- Select Tutorial -'
-    request: 'How did you find the workshop?'
+    title: 'Workshop Feedback'
+    description: Deine Einreichung ist komplett anonym. Wir lesen jedes Feedback und verwenden es um unsere Workshops zu verbessern.
+    note: Bitte nenne keine Namen, sondern wähle deinen Trainer aus dem entsprechenden Feld aus. Das hilft uns dabei Probleme zu adressieren, aber gleichzeitig anonym Feedback mit den Trainern zu teilen. Die Privatsphäre unserer Mitglieder ist uns sehr wichtig!
+    rating: Deine Gesamtbewertung des Workshops
+    coach: 'Wer war dein Trainer?'
+    select_coach: '- Trainer wählen -'
+    tutorial: 'Welches Tutorium habt ihr bearbeitet?'
+    select_tutorial: '- Tutorium wählen -'
+    request: 'Wie fandest du den Workshop?'
     suggestions: "Gab es etwas das dir nicht gefallen hat? Was können wir tun um uns zu verbessern?"
   member:
     jobs:
@@ -289,8 +289,8 @@ de:
         description: Du hast %{count} Jobs eingestellt
         none: Du hast noch keine Jobs eingestellt
       pending:
-        title: Your pending job posts
-        description: You have %{count} job posts pending submission.
+        title: Deine Jobeinträge in Prüfung
+        description: Du hast %{count} Jobeinträge die geprüft werden.
         none: Du hast keine Jobeinträge in Prüfung.
       new:
         title: Job eintragen
