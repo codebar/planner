@@ -319,4 +319,4 @@ de:
         rsvp_member: "%{name} wurde erfolgreich hinzugefügt und per E-Mail benachrichtigt."
         already_on_list: "%{name} ist bereits auf der Liste!"
         rsvp_error: "Es ist etwas schief gegangen, %{name} wurde nicht hinzugefügt."
-        update_rsvp: 'Updated attendance of %{name}'
+        update_rsvp: 'Teilnahme von %{name} aktualisiert'
