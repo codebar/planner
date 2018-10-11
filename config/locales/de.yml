@@ -22,7 +22,7 @@ de:
       default: "%a, %d %b %Y %H:%M"
       email: "%a, %d %B um %H:%M"
       email_title: "%A, %d %b um %H:%M"
-      short: "%d/%m/%Y %H:%M "
+      short: "%d.%m.%Y %H:%M "
       date: "%d %b %Y"
       default_date: "%d.%m.%Y"
       website_format: "%a, %d %B %Y um %H:%M"
@@ -113,7 +113,7 @@ de:
       mild_approach: "Sage nicht rabiat \"Nein\", wenn die Lernenden etwas unrichtig machen. Gehe sanft und behutsam an das Problem heran."
       paper: "Benutze Stift und Papier oder ein Whiteboard! Viele der Lernenden haben keine Vorgeschichte mit der Informatik. Zeichnungen und visuelle Hilfen können sehr nützlich sein."
       stubling: "Lasse zu, dass die Lernenden auch mal stolpern. Wir lernen aus Fehlern, indem wir unseren eigenen Weg von der Frustration zur Lösung des Problems finden. Stehe den Lernenden unterstützend zur Seite, aber lass sie selbständig erkunden."
-      suggestions: "Do you have something to suggest? Make a <a href='https://github.com/codebar/planner'>pull request</a> or <a href='https://github.com/codebar/planner/issues/new'>create an issue</a>"
+      suggestions: "Hast du noch Vorschläge? Eröffne einen <a href='https://github.com/codebar/planner'>pull request</a> oder <a href='https://github.com/codebar/planner/issues/new'>erstelle eine issue</a>\""
   events:
     title: "Veranstaltungen"
     past: "Vergangene"
@@ -138,7 +138,7 @@ de:
         a:
       contribution:
         q: "Welche Beiträge kann ich leisten?"
-        a: "Your contributions can be tiny, as simple as fixing a typo, to something incredible. You can help with documentation, fix a bug that you found, improve the copy, help with design or even tackle bigger tasks and help introduce new features. Every little helps!"
+        a: "Dein Beitrag kann klein sein, zum Beispiel kannst du einen Rechtschreibfehler korrigieren, aber auch riesig. Du kannst bei der Dokumentation helfen, einen Bug den du gefunden hast beheben, mit dem Design helfen oder sogar größere Aufgaben angehen und dabei helfen neue Funktionen einzubauen. Jedes kleine bisschen hilft!"
       laptop:
         q: "Soll ich einen Laptop mitbringen?"
         a_html: "Ja, Du solltest einen Laptop mitbringen. Wenn du keinen besitzt %{link}, da wir möglicherweise in der Lage sind zu helfen."
@@ -146,63 +146,63 @@ de:
         q: "Soll ich eine Tastatur mitbringen?"
         a_html: "Eine Tastatur könnte nützlich sein, da Du den ganzen Tag mit jemandem zusammen an Deinem Laptop arbeitest. Wenn Du keine Tastatur besitzt, %{link} und wir versuchen, etwas zu organisieren."
       travel_costs:
-        q: "I will be commuting. Can you help with my travel expenses?"
-        a: "We will be offering some travel grants. Just make sure you fill in the questionnaire after you RSVP and we will get in touch."
+        q: "Ich werde pendeln. Können Sie mir bei meinen Reisekosten helfen?"
+        a: "Wir werden einige Reisestipendien anbieten. Bitte stellen dich sicher, dass du den Fragebogen ausfüllst, nachdem du dich angemeldet hast und wir werden uns mit dir in Verbindung setzen."
   coaches:
     want_to_coach: "Möchtest Du in unseren Workshops coachen?"
     read_before: "Wenn Du unsere Workshops noch nicht besucht hast, lies bitte unseren"
     code_of_conduct: "Verhaltenskodex"
     policy: "da wir eine Nulltoleranzpolitik haben und von allen ein entsprechendes Verhalten erwarten. Das solltest Du lesen: Unser"
     guide: "Coaching Guide"
-    unable_attend: "In case you are unable to attend after you RSVP, please make sure you come back and update your attendance as we rely on coaches showing up in order for our workshops to run smoothly."
-    food: "PS: There will also be food at the workshop. We always make an effort to have vegetarian, vegan and gluten-free options available. If you have any other dietary requirements, send us email at"
+    unable_attend: "Bitte aktualisiere deine Teilnahme auf der Webseite falls du, nachdem du dich angemeldet hast, doch nicht kommen kannst. Wir verlassen uns darauf, dass unsere Trainer kommen, dass die Workshops rundlaufen."
+    food: "PS: Es gibt Essen am Workshop. Wir versuchen immer vegetarisches, veganes und Gluten-freies Essen anzubieten. Solltest du andere Dieätanforderungen haben, schicke uns bitte eine E-Mail an"
   code_of_conduct:
     title: "Verhaltenskodex"
     summary:
       title: "Die kurze Version"
-      intro: "Our events are dedicated to providing a harassment-free experience for everyone, regardless of gender, sexual orientation, disability, physical appearance, body size, race, or religion. We do not tolerate harassment of our members in any form. Sexual language and imagery is not appropriate for any of our events, including talks, workshops, parties, Twitter and any other online media. Members violating these rules may be sanctioned or expelled from the event and any future events at the discretion of the organisers."
+      intro: "Wir möchten jedem eine belästigungsfreie Erfahrung bieten, unabhängig von Geschlecht, sexueller Orientierung, Behinderung, Aussehen, Körperbau, Ethnizität oder Religionszugehörigkeit. Wir tolerieren keinerlei Belästigung von Teilnehmer_innen. Sexualisierte Sprache und Darstellungen sind bei all unseren Veranstaltungen, inklusive Vorträgen, Workshops, Feiern, auf Twitter uns allen anderen Onlinemedien unerwünscht. Teilnehmer_innen, die gegen diese Regeln verstoßen, müssen mit Sanktionen durch das Veranstaltungspersonal rechnen, inklusive eines Verweises der Veranstaltung und aller zukünftiger Veranstaltungen."
     content:
       title: "Die lange Version"
-      harassment: "Harassment includes offensive verbal comments related to gender, sexual orientation, disability, physical appearance, body size, race, religion, sexual images in public spaces, deliberate intimidation, stalking, following, harassing photography or recording, sustained disruption of talks or other events, inappropriate physical contact, and unwelcome sexual attention."
-      comply: "We expect any participants asked to stop any harassing behaviour to comply immediately."
-      sponsors: "Sponsors are also subject to the anti-harassment policy. In particular, sponsors should not use sexualized images, activities, or other material. Staff (including volunteers) should not use sexualized clothing/uniforms/costumes, or otherwise create a sexualized environment."
-      sanctions: "If a participant engages in harassing behaviour the organisers may take any action they deem appropriate. This includes warning the offender or expulsion."
-      concerns: "If you are being harassed, notice that someone else is being harassed, or have any other concerns, please contact one of the organisers immediately."
-      applies_to: "We expect participants to follow these rules at all <b>codebar</b> events."
-      questions: "If you have any questions or concerns about this code please"
+      harassment: "Belästigung umfasst unter anderem beleidigende Aussagen über Geschlecht, sexuelle Orientierung, Behinderung, körperliches Aussehen wie Körperbau, Ethnizität oder Religionszugehörigkeit (oder Nichtvorhandensein einer solchen), sexualisierende Darstellungen in öffentlichen Räumen, bewusste Einschüchterung, Stalking, Verfolgung, unerwünschtes Fotografieren oder Aufnehmen, wiederholte Störung von Vorträgen und anderen Veranstaltungen, unerwünschten körperlichen Kontakt und unerwünschte sexuelle Aufmerksamkeit."
+      comply: "Teilnehmer_innen, die wegen solchen Verhaltens ermahnt werden, haben dieses sofort einzustellen."
+      sponsors: "Diese Verhaltensregeln gelten auch für Sponsor_innen. Insbesondere sollten Sponsor_innen darauf achten, dass sie keine sexualisierenden Bilder, Aktivitäten oder andere sexualisierende Werbemittel einsetzen. Personal (auch Freiwillige) sollten darauf achten, keine sexualisierende Kleidung, Uniformen oder Kostüme zu tragen, oder sonstwie ein sexualisiertes Umfeld zu gestalten."
+      sanctions: "Sollten Teilnehmer_innen durch belästigendes Verhalten auffallen, steht es dem Konferenzpersonal frei, entsprechende Maßnahmen zu ergreifen, die es für angemessen hält. Dies schließt Ermahnungen bis hin zum Verweis von der Veranstaltung ein."
+      concerns: "Solltest du dich belästigt fühlen oder mitbekommen, dass jemand anders belästigt wird oder sonstige Probleme auftreten, wende dich bitte sofort an ein Mitglied des Veranstaltungspersonals."
+      applies_to: "Wir erwarten, dass Teilnehmer diese Regeln bei allen <b>codebar</b> Veranstaltungen einhalten."
+      questions: "Wenn du Fragen oder Bedenken bezüglich dieses Kodex hast bitte"
       contact: "contact us"
-      email_subject: "Regarding code of conduct"
+      email_subject: "Fragen zum Verhaltenskodex"
   sponsors:
-    sponsoring: "Sponsoring"
+    sponsoring: "Sponsoren"
   members:
     sign_up: "Anmelden"
     sign_in_with_github: "Anmelden mit GitHub"
-    sign_up_as_student: "I understand and meet the eligibility criteria. Sign me up as a student"
-    sign_up_as_coach: "Sign up as a coach"
+    sign_up_as_student: "Ich verstehe und erfülle die Teilnahmebedingungen. Meldet mich als Student an"
+    sign_up_as_coach: "Melde dich als Trainer an"
     code_of_conduct: "Verhaltenskodex"
     new:
-      intro: "We offer a welcoming, inclusive and learning-friendly environment, and have a zero tolerance policy towards any form of harassment or inappropriate behavior. Before you sign up, read our"
+      intro: "Wir bieten eine einladendes, inklusives und lern-freundliches Umfeld und haben eine Nulltoleranzpolitik bei Belästigung und anderem unangemessenen Verhalten. Bevor du dich anmeldest, lies unseren"
       students:
-        intro: "If you would like to attend as a student, make sure you meet our"
-        criteria_link: "eligibility criteria"
-        criteria_brief: "as our workshops are only available to women, LGBTQ, people from underrepresented minority groups."
-        github: "Lastly, when you click the sign up button, you'll be taken to something called GitHub. After logging in with a GitHub account, you'll be taken back to the codebar website. If you don't have an account yet, you'll need to create one. It doesn't take long and it's something that will come in handy when you get started with coding!"
-      invitations: "Invitations are sent out periodically, so don't worry if you don't receive one as soon as you register."
+        intro: "Wenn du als Student teilnehmen möchtest, musst du unsere"
+        criteria_link: "Teilnahmebedingungen erfüllen"
+        criteria_brief: "weil unsere Workshops nur für Frauen, LGBTQ und Menschen aus unterrepräsentierten Gruppen geöffnet sind."
+        github: "Abschließend, wenn du auf den Anmeldebutton klickst, wirst du auf eine Seite namens GitHub weitergeleitet. Nachdem du dich mit deinem GitHub Zugang angemeldet hast, wirst du wieder auf die codebar Seite zurückgeleitet. Du musst dir einen Zugang erstellen, wenn du noch keinen hast. Das dauert nicht lang und ist etwas was sich als nützlich erweisen wird wenn du anfängst zu programmieren!"
+      invitations: "Wir verschicken Einladungen regelmäßig, sei also bitte nicht besorgt, wenn du sie nicht direkt nach der Anmeldung erhältst."
   footer:
-    email_us: "Send us an email at"
+    email_us: "Schreibe uns eine E-Mail an:"
     contact_info: "Kontaktinfo:"
   faq:
     payment:
-      q: "Do I need to pay to attend codebar?"
-      a_p1: "Absolutely not! We are lucky enough to have some great companies who are able to host the workshops and/or kindly provide food. And our"
-      awesome_coaches: "awesome coaches"
-      a_p2: "give their time freely to help the community."
+      q: "Muss ich bezahlen um an codebar teilzunehmen?"
+      a_p1: "Auf keinem Fall! Wir haben das Glück, dass uns einige tolle Firmen als Gastgeber und/oder mit Essen unterstützen. Und unsere"
+      awesome_coaches: "fantastische Trainer"
+      a_p2: "die uns ihre Zeit kostenlos zur Verfügung stellen um der Gemeinschaft zu helfen."
     technologies:
-      q: "What technologies do you teach?"
-      a: "We have a variety of available tutorials in HTML, CSS, JavaScript and Ruby. If you want to learn something else don't hesitate to <a href=\"mailto:contact@codebar.io\">send us an email</a> as we might still be able to find someone to help you out."
+      q: "Welche Technologien lehrt ihr?"
+      a: "Wir haben eine Vielfalt an Tutorien zu HTML, CSS, JavaScript und Ruby. Wenn du etwas Anderes lernen möchtest zögere nicht <a href=\"mailto:contact@codebar.io\">uns eine E-Mail zu schicken</a>, weil wir möglicherweise noch jemanden finden können der uns dabei hilft."
     eligibility:
-      q: "I want to attend a workshop. Am I eligible?"
-      a: "Our workshops are available to women, LGBTQ and people who are underrepresented in the tech industry. If you belong to one of these groups, you are more than welcome to attend. If not, there are some other great initiatives like <a href='https://www.meetup.com/opentechschool-london/'>Open Tech School London</a> where you can learn in a collaborative environment. Please see our <a href='http://codebar.io/student-guide'>student guide</a> for more information."
+      q: "Ich möchte an einem Workshop teilnehmen. Bin ich berechtigt?"
+      a: "Unsere Workshops sind für Frauen, LGBTQ und Menschen die in der Tech-Branche unterrepräsentiert sind geöffnet. Wenn du zu einer dieser Gruppen gehörst bist du herzlich eingeladen teilzunehmen. Wenn nicht, gibt es andere tolle Initiativen, wie <a href='https://www.meetup.com/opentechschool-london/'>Open Tech School London</a>, bei denen man in einer kollaborativen Umgebung lernen kann. Bitte lies auch unseren <a href='http://codebar.io/student-guide'>Studentenratgeber</a> für weitere Informationen."
     career:
       q: "Is codebar only aimed at people who want to move into a career as a developer?"
       a: "No! codebar is about getting people excited about programming. We'll help them learn some basic coding skills, as well as how to explore and do things on their own. For those who do want to become developers, we will provide help and guidance to help them achieve their goal."
@@ -224,17 +224,17 @@ de:
       a_p4: "We don't expect the coaches to be familiar with all the technologies and languages we have material on."
     location:
       q: "Where do the workshops take place?"
-      a: "As we don't have a permanent venue, our workshops are hosted by different companies in various locations around London. So far we've run workshops in Shoreditch, London Bridge, Holborn and Kings Cross."
+      a: "Da wir leider keinen dauerhaften Veranstaltungsort haben, finden die Veranstaltungen bei verschiedenen Firmen, die sich als Gastgeber anbieten, statt."
     disabled_access:
-      q: "Is there disabled access at the workshops?"
-      a: "Unfortunately, that depends entirely on where we are hosting our workshops and if the venue has disabled access. If you would like to attend, send us an email at <a href='mailto:meetings@codebar.io'>meetings[at]codebar.io</a> so we can enquire about it and let you know."
+      q: "Gibt es einen behindertengerechten Zugang zu den Workshops?"
+      a: "Das hängt leider komplett davon ab wo der Workshop stattfindet und ob das Gebäude einen entsprechenden Zugang hat. Schick uns bitte eine E-Mail an <a href='mailto:meetings@codebar.io'>meetings[at]codebar.io</a>, dass wir uns erkundigen und dir bescheid sagen können."
     bring_codebar_to_my_city:
-      q: "I would like to bring codebar to my city. Can I do that?"
-      a: "Of course. codebar is about building a community of experienced developers that are able to give up some of their time to help others. If you are keen on running codebar where you live, we would love to speak to you about it and see how we can help make this happen, so send <a href=\"mailto:contact@codebar.io\">us an email</a>."
+      q: "Ich würde codebar gerne in meine Stadt holen. Kann ich das machen?"
+      a: "Natürlich. Bei codebar geht es darum eine Gemeinschaft aus erfahrenen Entwickler_innen, die in ihrer Freizeit anderen helfen möchten, aufzubauen. Wenn du codebar dort aufbauen möchtest wo du lebst, würden wir uns gerne mit dir darüber unterhalten und sehen, wie wir dir dabei helfen können - schick uns einfach <a href=\"mailto:contact@codebar.io\">eine E-Mail</a>."
     our_coaches:
-      q: "Our coaches"
-      a_p1: "You can see all the coaches have helped out in our workshops on the"
-      a_p2: ". They are ordered by number of attendances. This is our way of showing our appreciation to them, as without them, we wouldn't be able to exist."
+      q: "Unsere Trainer"
+      a_p1: "Du findest alle Trainer die uns bei unseren Workshops geholfen haben auf der"
+      a_p2: ". Sie sind nach der Anwesenheitshäufigkeit sortiert. Wir zeigen so unsere Wertschätzung - ohne sie könnten wir nicht existieren."
   participant_student_guide:
     title: "Student Guide"
     attendance_policy:
@@ -258,8 +258,8 @@ de:
       title: "Students with Disability"
       description: "We want to ensure that our workshops are as accessible as possible. If you are disabled and are unsure about whether our venues can cater to your needs, we encourage you to please get in touch with us at <a href='mailto:hello@codebar.io'>hello@codebar.io</a> and we will do what we can to accommodate you."
   chapters:
-    intro: "Hi and welcome to codebar! Check out our <a href='http://codebar.io/faq'>FAQ</a> page for any questions you might have, and feel free to email us at %{email} if you can't find the answer you're looking for. Otherwise, use the button below to start the sign-up process."
-    sign_up: "to be invited to our workshops."
+    intro: "Hallo und willkommen bei codebar! Wenn du Fragen hast kannst du unsere <a href='http://codebar.io/faq'>FAQ</a> lesen, du kannst uns aber auch gerne an %{email} schreiben, wenn du die Antwort die du suchst nicht findest. Ansonsten kannst du den folgenden Button verwenden um den Anmeldeprozess zu starten."
+    sign_up: "um zu unseren Workshops eingeladen zu werden."
     no_incoming: "There are no workshops coming up."
     contact: "To contact the %{city} team, send an email to %{email}"
   job:
@@ -281,7 +281,7 @@ de:
     tutorial: 'What tutorial did you go through?'
     select_tutorial: '- Select Tutorial -'
     request: 'How did you find the workshop?'
-    suggestions: "Was there something you didn't like? What can we do to improve your experience?"
+    suggestions: "Gab es etwas das dir nicht gefallen hat? Was können wir tun um uns zu verbessern?"
   member:
     jobs:
       title: Your job posts
@@ -294,14 +294,14 @@ de:
         none: You have no pending job posts.
       new:
         title: List a job
-        rules_intro: "Before posting make sure that:"
+        rules_intro: "Bitte prüfe vor dem Abschicken, dass:"
         details: Your post details the work that will have to be undertaken
         suitability: "It's suitable for people looking for Internships and Junior roles that will enable them to build up their career"
         salary: The job pays an appropriate salary
         short: "It's short and to the point"
-        payment: A minimum payment of £35 that you must pay through a donation
+        payment: eine Minimalzahlung von £35 per Spende geleistet werden muss
         approval_info: "*Once submitted, a job will be visible once it has been reviewed and approved."
-        pay: Make a payment
+        pay: Jetzt bezahlen
   admin:
     workshop:
       manage_rsvps:
