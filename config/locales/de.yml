@@ -35,6 +35,25 @@ de:
       log: "um %H:%M Uhr am %d.%m.%Y"
       workshop: "%A, %e %B %Y um %R"
       dashboard: "%A, %b %d"
+  homepage:
+    intro: "<strong>codebar</strong> is a non-profit initiative that facilitates the growth of a diverse tech community by running regular programming workshops."
+    explanation: "Our goal is to enable underrepresented people to learn programming in a safe and collaborative environment and expand their career opportunities. To achieve this we run free regular workshops, regular one-off events and try to create opportunities for our students making technology and coding more accessible."
+    participate:
+      students_title: "Students"
+      students_explanation_p1: "Our students come from a variety of backgrounds. Some want to become full-time developers, whereas some would like to learn the basics of coding in a supportive environment."
+      students_explanation_p2: "Sign up to join our vibrant community and attend our workshops."
+      students_button: "Sign up as a student"
+      coaches_title: "Coaches"
+      coaches_explanation_p1: "We encourage new students to work on our HTML/CSS, JavaScript, Ruby, Python or Git <a href='http://tutorials.codebar.io'>tutorials</a>. We also help them understand programming concepts."
+      coaches_explanation_p2: "Therefore  are always on the lookout for more developers to join our community and help coach at our workshops."
+      coaches_button: "Sign up as a coach"
+      workshop_title: "Workshops"
+      workshop_explanation_p1: "We are hosted by some amazing companies who support our cause. Our normal format is 30 minutes of socialising with food and drink, followed by a lightning talk then coding."
+      workshop_explanation_p2: Help our expansion and enable us to provide help and support to our chapters by hosting and sponsoring our workshops.
+      workshop_button: "Host a workshop"
+      workshop_email_subject: "Regarding hosting a workshop"
+    chapters:
+      title: "Chapters"
   messages:
     accepted_invitation: "Vielen Dank für die Rückmeldung, %{name}. Wir sehen uns beim Workshop!"
     rejected_invitation: "Wir bedauern es sehr dass du nicht teilnehmen kannst. Vielen Dank für das Bescheid geben, %{name}."
@@ -216,6 +235,28 @@ de:
       q: "Unsere Trainer"
       a_p1: "Du findest alle Trainer die uns bei unseren Workshops geholfen haben auf der"
       a_p2: ". Sie sind nach der Anwesenheitshäufigkeit sortiert. Wir zeigen so unsere Wertschätzung - ohne sie könnten wir nicht existieren."
+  participant_student_guide:
+    title: "Student Guide"
+    attendance_policy:
+      title: "Attendance Policy"
+      intro: "codebar is, and always has been, open to all levels of coding experience. While most of the tutorials on our website are aimed at newcomers to web development, we intend to continue our open-door policy for any student who needs coach support on their own projects. Due to the fact that our workshops are frequently oversubscribed, we ask students to respect the following expectations for participation in our workshops"
+      rule1: "In order to attend a workshop, <u>you must be on the RSVP list.</u> If you have not RSVP’d or were not allocated a spot, you will not be admitted into a workshop."
+      rule2: "If you can no longer attend a workshop, <u>please cancel your RSVP by 12:00 latest </u> on the day of the workshop. We understand that last-minute emergencies occur -- if this is the case, please get in touch with an organizer directly as soon as possible. Repeated no-shows will result in temporary or permanent suspension of your invitations."
+      rule3: "No guests are allowed. Our workshops are already overcrowded and we cannot make any exceptions. If your friend meets our eligibility criteria, get them to sign up and RSVP themselves."
+      rule4: "Please be respectful of our hosts. Do not show up exceedingly early to a workshop (not earlier than 15 minutes before the event begins) and try to leave the workstation clean and as you found it."
+      rule5: "<u>Please do not work on projects that were assigned as part of any bootcamp curriculum.</u> Talk to your bootcamp adviser if you feel like you need additional support with your coursework. If you are currently on a bootcamp, we welcome your attendance, but we encourage you to use your time at codebar to develop skills that are outside the normal scope of your studies there."
+      rule6: "Projects that involve specific frameworks/libraries (Rails, NodeJS, Meteor, Angular, Ember, React, etc) or languages that are not part of the codebar tutorials (anything other than Ruby or Javascript) are welcome but we cannot guarantee that a coach will be available to help you. In these cases we recommend selecting a codebar tutorial or katas (codewars.com or exercism.io) as a back-up option."
+    eligibility_criteria:
+      title: "Eligibility Criteria"
+      p_1: "codebar was started out of recognition that there is a shortage of women, LGBTQ, and people belonging to <a href='http://sciencecampaign.org.uk/CaSEDiversityinSTEMreport2014.pdf'>underrepresented ethnic groups in tech</a>."
+      p_2: "If you belong to one of these groups, you are more than welcome to attend. If not, there are some other great initiatives like <a href='http://www.opentechschool.org/'>Open Tech School</a> or <a href='https://askadev.org/'>Ask a Dev</a> where you can learn in a collaborative environment."
+      p_3: "Bearing that in mind, it is sometimes difficult for us to identify whether attendees meet the eligibility criteria based on their first and last name. We will try our best to verify via social media profiles beforehand, but if we cannot, we will contact you asking for a short confirmation that you have read this document and assert that you meet one or more of the criteria. We will never ask participants to specify which group."
+      p_4: "codebar is first and foremost a resource for students who cannot afford formal training through coding bootcamps or university degrees, for financial reasons or otherwise. Our coaches, organisers and sponsors donate their time and money to help those who have faced unfair barriers to entry into the tech world. We have strived to create an inclusive, welcoming community, and so far, we have not had to implement a formal policy to enforce the eligibility criteria -- we have left this to the honesty and good faith of the students."
+      p_5: "If you are unsure whether you are eligible, please get in touch. If we determine that you have signed up and do not belong to an eligible group, we will permanently suspend your student invitations without warning."
+      p_6: "We take this issue very seriously, and we appreciate your cooperation and understanding."
+    disability:
+      title: "Students with Disability"
+      description: "We want to ensure that our workshops are as accessible as possible. If you are disabled and are unsure about whether our venues can cater to your needs, we encourage you to please get in touch with us at <a href='mailto:hello@codebar.io'>hello@codebar.io</a> and we will do what we can to accommodate you."
   chapters:
     intro: "Hallo und willkommen bei codebar! Wenn du Fragen hast kannst du unsere <a href='http://codebar.io/faq'>FAQ</a> lesen, du kannst uns aber auch gerne an %{email} schreiben, wenn du die Antwort die du suchst nicht findest. Ansonsten kannst du den folgenden Button verwenden um den Anmeldeprozess zu starten."
     sign_up: "um zu unseren Workshops eingeladen zu werden."
