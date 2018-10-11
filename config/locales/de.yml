@@ -207,8 +207,8 @@ de:
       q: "Ist codebar nur für Menschen gedacht die eine Karriere als Entwickler_in anstreben?"
       a: "Nein! codebar soll Menschen den Spaß am Programmieren vermitteln. Wir helfen ihnen sowohl grundlegende Programmierfähigkeiten zu lernen als auch Neues zu entdecken und bei eigenen Projekten. Allen die Entwickler_innen werden möchten bieten wir Hilfe und Anleitung ihr Ziel zu erreichen."
     format:
-      q: "What is the format of the workshops?"
-      a: "We try to have one coach for every two students. We will pair up students who want to work on the same tutorial, and assign them a coach. The rest just happens."
+      q: "Wie ist das Workshopformat?"
+      a: "Wir versuchen einen Trainer pro für je zwei Teilnehmer_innen zu haben. Wir bilden aus den Studenten die das gleiche Tutorium bearbeiten wollen Zweiergruppen und weisen ihnen eine_n Trainer_in zu. Der Rest geschieht einfach."
     laptop:
       q: "Do I need to bring a laptop with me at the workshops?"
       a: "Yes, we suggest that you bring a laptop as it will be easier for you to carry on working on things after the workshops. It you don't have one, <a href=\"mailto:contact@codebar.io\">send us an email</a> so we can try and help out."
@@ -270,7 +270,7 @@ de:
     title: Jobs
     index:
       description: Es gibt %{count} jobs
-      none: There are no jobs available.
+      none: Es sind leider keine Jobangebote verfügbar.
   feedback_form:
     title: 'Workshop feedback'
     description: Your submission will be completely anonymous. We read every piece of feedback and use it to help us improve our workshops.
@@ -284,36 +284,36 @@ de:
     suggestions: "Gab es etwas das dir nicht gefallen hat? Was können wir tun um uns zu verbessern?"
   member:
     jobs:
-      title: Your job posts
+      title: Deine Job-Beiträge
       index:
         description: Du hast %{count} Jobs eingestellt
-        none: You have not posted any jobs
+        none: Du hast noch keine Jobs eingestellt
       pending:
         title: Your pending job posts
         description: You have %{count} job posts pending submission.
-        none: You have no pending job posts.
+        none: Du hast keine Jobeinträge in Prüfung.
       new:
         title: Job eintragen
         rules_intro: "Bitte prüfe vor dem Abschicken, dass:"
-        details: Your post details the work that will have to be undertaken
+        details: dein Eintrag detailliert die zu erledigende Arbeit darstellt
         suitability: "der Job passend für Menschen ist, die nach Praktika und Junior-Positionen suchen, die ihnen helfen ihre Karriere aufzubauen"
         salary: der Job ein angemessenes Gehalt bietet
         short: "der Eintrag kurz und auf den Punkt ist"
         payment: eine Minimalzahlung von £35 per Spende geleistet werden muss
-        approval_info: "*Once submitted, a job will be visible once it has been reviewed and approved."
+        approval_info: "*Nach dem Abschicken wird der Job sichtbar sobald er geprüft und bestätigt wurde."
         pay: Jetzt bezahlen
   admin:
     workshop:
       manage_rsvps:
         text: 'Studenten und Trainer zum Workshop einladen. Die Bestätigungs-E-Mail wird ausgelöst und sie werden von der Warteliste entfernt.'
       destroy:
-        success: "Workshop deleted successfully"
+        success: "Werkstatt erfolgreich gelöscht"
         failure: "Workshop kann nicht gelöscht werden. Dies kann passieren weil der Workshop eingeladene Teilnehmer hat und/oder lang genug auf der Webseite aufgeführt war, dass er nicht gelöscht werden kann."
     messages:
       meeting:
-        created: 'Meeting succesfully created'
-        updated: 'You have succesfully updated the details of this meeting'
-        invitations_already_sent: 'Invitations were previously sent; they will not be sent again'
+        created: 'Meeting wurde erfolgreich erstellt'
+        updated: 'Meetingdetails erfolgreich aktualisiert'
+        invitations_already_sent: 'Einladungen wurden bereits verschickt; sie werden nicht erneut versendet'
         sending_invitations: 'Einladungen werden verschickt'
       invitation:
         rsvp_member: "%{name} wurde erfolgreich hinzugefügt und per E-Mail benachrichtigt."
