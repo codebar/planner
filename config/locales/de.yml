@@ -37,7 +37,7 @@ de:
       dashboard: "%A, %b %d"
   homepage:
     intro: "<strong>codebar</strong> is a non-profit initiative that facilitates the growth of a diverse tech community by running regular programming workshops."
-    explanation: "Our goal is to enable underrepresented people to learn programming in a safe and collaborative environment and expand their career opportunities. To achieve this we run free regular workshops, regular one-off events and try to create opportunities for our students making technology and coding more accessible."
+    explanation: "Unser Ziel ist unterrepräsentierten Menschen zu programmieren in einer sicheren und kollaborative Umgebung lernen und erweitern ihre Karrierechancen zu ermöglichen. Um dies zu erreichen betreiben wir kostenlose regelmäßige Workshops, regelmäßige Einzelveranstaltungen und versuchen, die Möglichkeiten für unsere Schüler die Technologie und Programmierung zugänglicher zu schaffen."
     participate:
       students_title: "Students"
       students_explanation_p1: "Our students come from a variety of backgrounds. Some want to become full-time developers, whereas some would like to learn the basics of coding in a supportive environment."
@@ -204,8 +204,8 @@ de:
       q: "Ich möchte an einem Workshop teilnehmen. Bin ich berechtigt?"
       a: "Unsere Workshops sind für Frauen, LGBTQ und Menschen die in der Tech-Branche unterrepräsentiert sind geöffnet. Wenn du zu einer dieser Gruppen gehörst bist du herzlich eingeladen teilzunehmen. Wenn nicht, gibt es andere tolle Initiativen, wie <a href='https://www.meetup.com/opentechschool-london/'>Open Tech School London</a>, bei denen man in einer kollaborativen Umgebung lernen kann. Bitte lies auch unseren <a href='http://codebar.io/student-guide'>Studentenratgeber</a> für weitere Informationen."
     career:
-      q: "Is codebar only aimed at people who want to move into a career as a developer?"
-      a: "No! codebar is about getting people excited about programming. We'll help them learn some basic coding skills, as well as how to explore and do things on their own. For those who do want to become developers, we will provide help and guidance to help them achieve their goal."
+      q: "Ist codebar nur für Menschen gedacht die eine Karriere als Entwickler_in anstreben?"
+      a: "Nein! codebar soll Menschen den Spaß am Programmieren vermitteln. Wir helfen ihnen sowohl grundlegende Programmierfähigkeiten zu lernen als auch Neues zu entdecken und bei eigenen Projekten. Allen die Entwickler_innen werden möchten bieten wir Hilfe und Anleitung ihr Ziel zu erreichen."
     format:
       q: "What is the format of the workshops?"
       a: "We try to have one coach for every two students. We will pair up students who want to work on the same tutorial, and assign them a coach. The rest just happens."
@@ -248,9 +248,9 @@ de:
       rule6: "Projects that involve specific frameworks/libraries (Rails, NodeJS, Meteor, Angular, Ember, React, etc) or languages that are not part of the codebar tutorials (anything other than Ruby or Javascript) are welcome but we cannot guarantee that a coach will be available to help you. In these cases we recommend selecting a codebar tutorial or katas (codewars.com or exercism.io) as a back-up option."
     eligibility_criteria:
       title: "Eligibility Criteria"
-      p_1: "codebar was started out of recognition that there is a shortage of women, LGBTQ, and people belonging to <a href='http://sciencecampaign.org.uk/CaSEDiversityinSTEMreport2014.pdf'>underrepresented ethnic groups in tech</a>."
+      p_1: "Codebar wurde aus der Erkenntnis, dass es ein Mangel an Frauen, LGBTQ und Angehörige von ethnischen Gruppen <a href='http://sciencecampaign.org.uk/CaSEDiversityinSTEMreport2014.pdf'>unterrepräsentiert in Tech</a> begonnen."
       p_2: "If you belong to one of these groups, you are more than welcome to attend. If not, there are some other great initiatives like <a href='http://www.opentechschool.org/'>Open Tech School</a> or <a href='https://askadev.org/'>Ask a Dev</a> where you can learn in a collaborative environment."
-      p_3: "Bearing that in mind, it is sometimes difficult for us to identify whether attendees meet the eligibility criteria based on their first and last name. We will try our best to verify via social media profiles beforehand, but if we cannot, we will contact you asking for a short confirmation that you have read this document and assert that you meet one or more of the criteria. We will never ask participants to specify which group."
+      p_3: "Bedenkt, dass man, ist es manchmal schwierig für uns, festzustellen, ob die Teilnehmer die basierend auf ihren vor- und Nachnamen Förderkriterien erfüllen. Wir werden unser Bestes versuchen, um über social Media profile vorher überprüfen, aber wenn wir nicht, wir kontaktieren Sie bitten um eine kurze Bestätigung, dass Sie dieses Dokument gelesen haben und behaupten, dass Sie eine oder mehrere Kriterien erfüllen. Wir werden niemals die Teilnehmer angeben, welche Gruppe Fragen."
       p_4: "codebar is first and foremost a resource for students who cannot afford formal training through coding bootcamps or university degrees, for financial reasons or otherwise. Our coaches, organisers and sponsors donate their time and money to help those who have faced unfair barriers to entry into the tech world. We have strived to create an inclusive, welcoming community, and so far, we have not had to implement a formal policy to enforce the eligibility criteria -- we have left this to the honesty and good faith of the students."
       p_5: "If you are unsure whether you are eligible, please get in touch. If we determine that you have signed up and do not belong to an eligible group, we will permanently suspend your student invitations without warning."
       p_6: "We take this issue very seriously, and we appreciate your cooperation and understanding."
@@ -269,7 +269,7 @@ de:
   jobs:
     title: Jobs
     index:
-      description: There are %{count} jobs listed
+      description: Es gibt %{count} jobs
       none: There are no jobs available.
   feedback_form:
     title: 'Workshop feedback'
@@ -286,37 +286,37 @@ de:
     jobs:
       title: Your job posts
       index:
-        description: You have %{count} jobs listed
+        description: Du hast %{count} Jobs eingestellt
         none: You have not posted any jobs
       pending:
         title: Your pending job posts
         description: You have %{count} job posts pending submission.
         none: You have no pending job posts.
       new:
-        title: List a job
+        title: Job eintragen
         rules_intro: "Bitte prüfe vor dem Abschicken, dass:"
         details: Your post details the work that will have to be undertaken
-        suitability: "It's suitable for people looking for Internships and Junior roles that will enable them to build up their career"
-        salary: The job pays an appropriate salary
-        short: "It's short and to the point"
+        suitability: "der Job passend für Menschen ist, die nach Praktika und Junior-Positionen suchen, die ihnen helfen ihre Karriere aufzubauen"
+        salary: der Job ein angemessenes Gehalt bietet
+        short: "der Eintrag kurz und auf den Punkt ist"
         payment: eine Minimalzahlung von £35 per Spende geleistet werden muss
         approval_info: "*Once submitted, a job will be visible once it has been reviewed and approved."
         pay: Jetzt bezahlen
   admin:
     workshop:
       manage_rsvps:
-        text: 'RSVP Students and Coaches to the workshop. The attendance confirmation email will be triggered and they will be removed from the waiting list.'
+        text: 'Studenten und Trainer zum Workshop einladen. Die Bestätigungs-E-Mail wird ausgelöst und sie werden von der Warteliste entfernt.'
       destroy:
         success: "Workshop deleted successfully"
-        failure: "Workshop cannot be deleted. This is because it has invitees and/or workshop information is on the website for a while long enough that it cannot be deleted."
+        failure: "Workshop kann nicht gelöscht werden. Dies kann passieren weil der Workshop eingeladene Teilnehmer hat und/oder lang genug auf der Webseite aufgeführt war, dass er nicht gelöscht werden kann."
     messages:
       meeting:
         created: 'Meeting succesfully created'
         updated: 'You have succesfully updated the details of this meeting'
         invitations_already_sent: 'Invitations were previously sent; they will not be sent again'
-        sending_invitations: 'Invitations are being sent out'
+        sending_invitations: 'Einladungen werden verschickt'
       invitation:
-        rsvp_member: "%{name} has been successfully added and notified via email."
-        already_on_list: "%{name} is already on the list!"
-        rsvp_error: "Something went wrong, %{name} has not been added."
+        rsvp_member: "%{name} wurde erfolgreich hinzugefügt und per E-Mail benachrichtigt."
+        already_on_list: "%{name} ist bereits auf der Liste!"
+        rsvp_error: "Es ist etwas schief gegangen, %{name} wurde nicht hinzugefügt."
         update_rsvp: 'Updated attendance of %{name}'
