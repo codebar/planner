@@ -263,9 +263,9 @@ de:
     no_incoming: "Aktuell sind keine Workshops geplant."
     contact: "Um das %{city}er Team zu kontaktieren kannst du einfach eine E-Mail an %{email} schicken"
   job:
-    expired: 'This job post has expired'
-    published_on: 'Published on'
-    expires_on: 'Closing date'
+    expired: 'Das Jobangebot ist abgelaufen'
+    published_on: 'Erstellt am'
+    expires_on: 'Endet am'
   jobs:
     title: Jobs
     index:
