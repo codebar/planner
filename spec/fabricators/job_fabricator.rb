@@ -1,4 +1,3 @@
-
 Fabricator(:job) do
   title { Faker::Job.title }
   company { Faker::Company.name }

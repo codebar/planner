@@ -72,4 +72,14 @@ feature 'Jobs' do
       end
     end
   end
+
+  context 'JobPosting mark up' do
+    it 'The job page must contain JobPosting schema.org mark up' do
+      job = Fabricate(:published_job)
+      visit job_path(job)
+
+      expect(script_tag_content(wrapper_class: '.jobref'))
+        .to eq(job_json_ld(job).to_json)
+    end
+  end
 end

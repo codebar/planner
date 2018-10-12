@@ -44,6 +44,8 @@ gem 'stripe'
 
 gem 'rails-html-sanitizer', '~> 1.0.4'
 
+gem 'jbuilder'
+
 group :development do
   gem 'better_errors'
   gem 'letter_opener'
