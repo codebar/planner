@@ -6,7 +6,7 @@
           = event.time
       .text-center
         - if event.chapter
-          %span.label.info
+          %span.label.status
             = event.chapter.name
         - if @user
           - if @user.attending?(event.__getobj__)

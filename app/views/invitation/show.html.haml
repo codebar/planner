@@ -7,7 +7,7 @@
         %small #{humanize_date(@workshop.date_and_time, with_time: true)} #{@workshop.distance_of_time}
       - if @workshop.date_and_time.past?
         %label.label.warning This event has already taken place.
-.alert-box.secondary
+.alert-box.info
   .row
     .large-12.columns
       This link can be accessed without authentication so please don't share it with others. You can access and share the <strong> #{link_to("public listing", workshop_url(@workshop))}</strong> of the workshop.

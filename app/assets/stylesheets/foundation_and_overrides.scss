@@ -55,13 +55,10 @@ $body-font-weight: 400;
 $default-float: left;
 
 // We use these as default colors throughout
-$primary-color: #596677;
-$codebar-blue: #4bafff;
-$secondary-color: #e60060;
-// $alert-color: #f04124;
+$alert-color: scale-color($codebar-pink, $lightness: 45%);
 // $success-color: #43AC6A;
 $warning-color: #cb0432;
-// $info-color: #a0d3e8;
+$info-color: scale-color($codebar-blue, $lightness: 40%);
 
 // We use these to make sure border radius matches unless we want it different.
 $global-radius: rem-calc(3);
@@ -172,9 +169,10 @@ $paragraph-font-weight: 300;
 // $code-font-weight: bold;
 
 // We use these to style anchors
-// $anchor-text-decoration: none;
-$anchor-font-color: $primary-color;
-$anchor-font-color-hover: scale-color($primary-color, $lightness: -15%);
+
+$anchor-text-decoration: none;
+$anchor-font-color: darken($secondary-color, 30%);
+$anchor-font-color-hover: darken($secondary-color, 10%);
 
 // We use these to style the <hr> element
 // $hr-border-width: 1px;
@@ -810,13 +808,13 @@ $tabbar-color: #FFFFFF;
 // $include-html-panel-classes: $include-html-classes;
 
 // We use these to control the background and border styles
-$panel-bg: scale-color($white, $lightness: 50%);
+$panel-bg: scale-color($codebar-green, $lightness: 98%);
 // $panel-border-style: solid;
 // $panel-border-size: 1px;
 
 // We use this % to control how much we darken things on hover
-$panel-function-factor: -11%;
-$panel-border-color: scale-color($secondary-color, $lightness: $panel-function-factor);
+$panel-function-factor: 50%;
+$panel-border-color: scale-color($codebar-green, $lightness: $panel-function-factor);
 
 // We use these to set default inner padding and bottom margin
 // $panel-margin-bottom: rem-calc(20);
@@ -1375,10 +1373,6 @@ blockquote::after{
 
 blockquote em {
   font-style: italic;
-}
-
-a {
-  border-bottom: 1px dashed $secondary-color;
 }
 
 body.dashboard-faq dl dt {
