@@ -73,13 +73,21 @@ feature 'Jobs' do
     end
   end
 
-  context 'JobPosting mark up' do
-    it 'The job page must contain JobPosting schema.org mark up' do
+  context 'The job page must contain JobPosting schema.org mark up' do
+    it 'containts all the required data' do
       job = Fabricate(:published_job)
       visit job_path(job)
 
       expect(script_tag_content(wrapper_class: '.jobref'))
         .to eq(job_json_ld(job).to_json)
+    end
+
+    it 'correctly sets an additional property for remote jobs' do
+      job = Fabricate(:published_job, remote: true)
+      visit job_path(job)
+
+      expect(script_tag_content(wrapper_class: '.jobref'))
+        .to eq(remote_job_json_ld(job).to_json)
     end
   end
 end

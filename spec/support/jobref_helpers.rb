@@ -73,7 +73,7 @@ module JobrefHelpers
         },
       },
       'hiringOrganization': {
-        '@type': 'Organisation',
+        '@type': 'Organization',
         'name': job.company,
         'sameAs': job.company_website
       },

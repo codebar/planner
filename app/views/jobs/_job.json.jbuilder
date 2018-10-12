@@ -17,6 +17,13 @@ json.jobLocation do
     json.postalCode job.company_postcode
     json.addressRegion job.location
   end
+
+  if job.remote?
+    json.additionalProperty do
+      json.set! '@type', 'PropertyValue'
+      json.value 'TELECOMMUTE'
+    end
+  end
 end
 
 json.baseSalary do
