@@ -7,20 +7,28 @@ feature 'Admin Jobs' do
     login_as_admin(member)
   end
 
-  scenario 'An admin sees no jobs when there is nothing pending approval' do
-    Fabricate.times(3, :job, title: 'Unapproved Developer', approved: true)
+  context 'admins/jobs' do
+    scenario 'Renders a list of all submitted job' do
+      Fabricate.times(3, :published_job)
+      Fabricate.times(3, :job, approved: false)
+      Fabricate(:job, title: 'Expired developer', expiry_date: Time.zone.today - 1.week)
 
-    visit admin_jobs_path
-    expect(page).to have_content("There are no jobs pending approval")
-  end
+      visit admin_jobs_path
+      expect(page.all(:xpath, "//td/span[text()='Approved']").count).to eq(4)
+      expect(page.all(:xpath, "//td/span[text()='Pending approval']").count).to eq(3)
+    end
 
-  scenario 'An admin can view jobs pending approval' do
-    job = Fabricate(:job, title: 'Unapproved Developer', approved: false)
-    approved_job = Fabricate(:job, title: 'Approved Developer')
+    scenario 'The listing is paginated' do
+      Fabricate.times(3, :published_job)
+      Fabricate.times(10, :job, approved: false)
 
-    visit admin_jobs_path
-    expect(page).to have_content(job.title)
-    expect(page).to_not have_content(approved_job.title)
+      visit admin_jobs_path
+
+      expect(page).to have_content("Displaying jobs 1 - 10 of 13 in total")
+      expect(page.all(:xpath, "//td/span[text()='Pending approval']").count).to eq(10)
+      click_on 'Next'
+      expect(page.all(:xpath, "//td/span[text()='Approved']").count).to eq(3)
+    end
   end
 
   scenario 'An organiser can approve jobs' do
@@ -33,23 +41,8 @@ feature 'Admin Jobs' do
     expect(page).to have_content("The job has been approved and an email has been sent out to #{job.created_by.full_name} at #{job.created_by.email}")
 
     visit admin_jobs_path
-    click_on 'View all jobs'
     click_on job.title
 
     expect(page).to have_content("Approved by #{job.reload.approved_by.full_name}")
-  end
-
-  scenario 'An admin can view all reviewed jobs jobs' do
-    job = Fabricate(:job, title: 'Current Developer')
-    expired_job = Fabricate(:job, title: 'Expired developer', expiry_date: Time.zone.today - 1.week)
-
-    visit all_admin_jobs_path
-
-    expect(page).to have_content(job.title)
-    expect(page).to have_content(expired_job.title)
-
-    click_on expired_job.title
-
-    expect(page).to have_content(expired_job.description)
   end
 end

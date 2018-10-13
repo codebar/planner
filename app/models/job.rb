@@ -1,4 +1,5 @@
 class Job < ActiveRecord::Base
+  self.per_page = 10
   belongs_to :created_by, class_name: 'Member', foreign_key: :created_by_id
   belongs_to :approved_by, class_name: 'Member', foreign_key: :approved_by_id
 
@@ -7,7 +8,7 @@ class Job < ActiveRecord::Base
   scope :not_submitted, -> { where(submitted: false, approved: false) }
 
   scope :ordered, -> { order('created_at desc') }
-  scope :owner_order, -> { order(published_on: :desc, expiry_date: :asc,  created_at: :desc) }
+  scope :owner_order, -> { order(published_on: :desc, created_at: :desc) }
   scope :active, -> { where('expiry_date > ?', Time.zone.today) }
 
   validates :title, :company, :location, :description, :link_to_job, :expiry_date, presence: true

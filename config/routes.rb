@@ -21,7 +21,6 @@ Planner::Application.routes.draw do
 
   namespace :member, path: 'my' do
     resources :jobs, except: [:destroy] do
-      get 'preview'
       post 'submit'
       get 'pending', on: :collection
     end
@@ -100,7 +99,6 @@ Planner::Application.routes.draw do
     get '/guide' => 'portal#guide', as: :guide
 
     resources :jobs, only: %i[index show] do
-      get 'all', on: :collection
       get 'approve'
     end
 

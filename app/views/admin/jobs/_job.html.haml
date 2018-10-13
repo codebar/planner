@@ -1,0 +1,17 @@
+%tr
+  %td
+    =link_to job.title, admin_job_path(job.id)
+  %td
+    = job.company
+  %td
+    - if job.remote
+      =t('job.location.remote')
+    - else
+      =job.location
+  %td
+    = l(job.created_at, format: :date)
+  %td
+    %span.label.admin.status{ class: job.status.to_s }= t("job.admin.status.#{job.status.to_s}")
+  %td
+    - if job.status.eql?(:pending)
+      =link_to 'Review', admin_job_path(job.id)

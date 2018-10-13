@@ -19,31 +19,31 @@ feature 'Member managing jobs' do
       expect(page.all(:xpath, "//td/span[text()='Draft']").count).to eq(3)
     end
 
-    it 'an approved job renders the post preview page' do
+    it 'an approved job renders the member job page' do
       job = Fabricate(:job, approved: true, created_by: member)
 
       visit member_jobs_path
       click_on job.title
 
-      expect(page.current_path).to eq(member_job_preview_path(job))
+      expect(page.current_path).to eq(member_job_path(job.id))
     end
 
-    it 'drafts job post take a user to the preview job post' do
+    it 'drafts job post take a user to the member job page' do
       job = Fabricate(:job, submitted: true, approved: false, created_by: member)
 
       visit member_jobs_path
       click_on job.title
 
-      expect(page.current_path).to eq(member_job_preview_path(job))
+      expect(page.current_path).to eq(member_job_path(job.id))
     end
 
-    it 'pending job post take a user to the preview job post' do
+    it 'pending job post take a user to the member job post' do
       job = Fabricate(:job, submitted: false, approved: false, created_by: member)
 
       visit member_jobs_path
       click_on job.title
 
-      expect(page.current_path).to eq(member_job_preview_path(job))
+      expect(page.current_path).to eq(member_job_path(job.id))
     end
   end
 
@@ -77,7 +77,7 @@ feature 'Member managing jobs' do
   it 'can preview their job post' do
     job = Fabricate(:job, submitted: false, approved: false, created_by: member)
 
-    visit member_job_preview_path(job)
+    visit member_job_path(job.id)
 
     expect(page).to have_content('This is a preview of your job.Edit to amend or Submit for approval')
     expect(page).to have_content(job.title)
@@ -86,7 +86,7 @@ feature 'Member managing jobs' do
   it 'can submit their job post' do
     job = Fabricate(:job, submitted: false, approved: false, created_by: member)
 
-    visit member_job_preview_path(job)
+    visit member_job_path(job.id)
     click_on 'Submit'
 
     expect(page).to have_content("Job submitted for approval. You will receive an email when it's been approved.")
@@ -95,7 +95,7 @@ feature 'Member managing jobs' do
   context '#edit' do
     scenario 'can edit their job' do
       job =  Fabricate(:job, approved: false, created_by: member)
-      visit edit_member_job_path(job)
+      visit edit_member_job_path(job.id)
 
       fill_in 'Title', with: 'JavaScript Internship'
       click_on 'Submit'
@@ -105,7 +105,7 @@ feature 'Member managing jobs' do
 
     scenario 'can not reset  mandatory fields' do
       job =  Fabricate(:job, approved: false, created_by: member)
-      visit edit_member_job_path(job)
+      visit edit_member_job_path(job.id)
 
       fill_in 'Title', with: ''
       click_on 'Submit'
@@ -115,7 +115,7 @@ feature 'Member managing jobs' do
 
     scenario 'can not edit an approved job' do
       approved_job =  Fabricate(:job, created_by: member)
-      visit edit_member_job_path(approved_job)
+      visit edit_member_job_path(approved_job.id)
 
       expect(page).to have_content('You cannot edit a job that has already been approved.')
     end

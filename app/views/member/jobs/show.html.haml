@@ -1,0 +1,32 @@
+.job.mb1
+  .stripe
+    .row
+      .large-12.columns
+        %br
+        %ul.breadcrumbs
+          %li= link_to t('member.jobs.title'), member_jobs_path
+          %li.current
+            %span= @job.title
+    .row
+      .large-12.columns
+        .panel
+          = t("job.messages.#{@job.status.to_s}").html_safe
+
+          - if @job.approved?
+            =t('job.messages.public_page', link: link_to('public page', job_path(@job))).html_safe
+    .row
+      .large-12.columns
+        - if @job.status.eql?(:draft) || @job.status.eql?(:pending)
+          = link_to "Edit", edit_member_job_path(@job.id), class: 'button round'
+        - if @job.submitted?
+          = link_to "Submit", '#', class: 'button disabled round default'
+        - else
+          = link_to "Submit", member_job_submit_path(@job.id), class: 'button round default', method: :post
+          =link_to t('member.jobs.new.button.pay'), new_donation_path, class: 'button info'
+          %br
+          %small= t('member.jobs.new.approval_info')
+
+        %h2 Preview
+        %hr
+
+  = render partial: 'jobs/show', locals: { admin: false }

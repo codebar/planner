@@ -1,29 +1,35 @@
-.stripe.reverse
-  .row
-    .large-12.columns
-      %h2=t('member.jobs.new.title')
-      %p
-        =t('member.jobs.new.rules_intro')
-        %ul.no-bullet
-          %li
-            %input#work-details{type: 'checkbox'}
-            %label{for: 'work-details'}= t('member.jobs.new.details')
-          %li
-            %input#roles{type: 'checkbox'}
-            %label{for: 'roles'}= t('member.jobs.new.suitability')
-          %li
-            %input#pay{type: 'checkbox'}
-            %label{for: 'pay'}= t('member.jobs.new.salary')
-          %li
-            %input#short{type: 'checkbox'}
-            %label{for: 'short'}= t('member.jobs.new.short')
-      %p
-        = t('member.jobs.new.payment')
-      =link_to t('jobs.new.pay'), new_donation_path, class: 'button'
-      %br
-      %small= t('member.jobs.new.approval_info')
+.job
+  .stripe
+    .row
+      .large-12.columns
+        %br
+        %ul.breadcrumbs
+          %li=link_to  t('member.jobs.title'), member_jobs_path
+          %li.current
+            %span=t('member.jobs.new.title')
+    .row
+      .large-12.columns
+        .panel
+          %p=t('member.jobs.new.rules_intro')
+          %ul.no-bullet
+            %li
+              %input#work-details{type: 'checkbox'}
+              %label{for: 'work-details'}= t('member.jobs.new.details')
+            %li
+              %input#roles{type: 'checkbox'}
+              %label{for: 'roles'}= t('member.jobs.new.suitability')
+            %li
+              %input#pay{type: 'checkbox'}
+              %label{for: 'pay'}= t('member.jobs.new.salary')
+            %li
+              %input#short{type: 'checkbox'}
+              %label{for: 'short'}= t('member.jobs.new.short')
+            %li
+              %input#short{type: 'checkbox'}
+              %label{for: 'pay'}= t('member.jobs.new.pay', link: link_to(t('member.jobs.new.donation'), new_donation_path)).html_safe
 
-.stripe.reverse
-  .row
-    .large-12.columns
-      = render partial: 'form'
+    %br
+    .row
+      .large-12.columns
+        = simple_form_for @job, url: member_jobs_path, method: :post do |f|
+          = render partial: 'form', locals: { f: f }

@@ -24,6 +24,7 @@ en:
       email_title: "%A, %d %b at %H:%M"
       short: "%d/%m/%Y %H:%M "
       date: "%d %b %Y"
+      full_date: "%d %B %Y"
       default_date: "%d/%m/%Y"
       website_format: "%a, %d %B %Y at %H:%M"
       day_in_words: "%a"
@@ -277,7 +278,11 @@ en:
       pending: Pending approval
       published: Published
       expired: Expired
-    expired: 'This job post has expired'
+    admin:
+      status:
+        pending: Pending approval
+        published: Approved
+        expired: Approved
     expired: 'This job post has expired.'
     check_out_jobs: 'Check out the rest of our %{link}.'
     published_on: 'Published on'
@@ -320,7 +325,8 @@ en:
     suggestions: "Was there something you didn't like? What can we do to improve your experience?"
   member:
     jobs:
-      title: Your jobs
+      title: My jobs
+      preview: Preview
       index:
         description: You have %{count} jobs listed
         none: You have not posted any jobs
@@ -335,10 +341,26 @@ en:
         suitability: "It's suitable for people looking for Internships and Junior roles that will enable them to build up their career"
         salary: The job pays an appropriate salary
         short: "It's short and to the point"
-        payment: A minimum payment of £35 that you must pay through a donation
         approval_info: "*Once submitted, a job will be visible once it has been reviewed and approved."
-        pay: Make a payment
+        pay: You have made the requirement payment of £35 through %{link}
+        donation: a donation
+        button:
+          pay: Make a payment
+      edit:
+        title: Edit job listing
   admin:
+    dashboard:
+      title: 'Admin'
+    jobs:
+      title: Manage jobs
+      info:
+        request_changes: To request changes email %{name} at %{email}
+        approved_by: Approved by %{name} on %{date}.
+        approved_by_no_date: Approved by %{name}
+      messages:
+        approved: "The job has been approved and an email has been sent out to %{name} at %{email}"
+        cannot_approve: 'You cannot approve expired job listings'
+        confirm_approval: 'Are you sure this job listing meets all requirements and you want to approve it?'
     workshop:
       manage_rsvps:
         text: 'RSVP Students and Coaches to the workshop. The attendance confirmation email will be triggered and they will be removed from the waiting list.'

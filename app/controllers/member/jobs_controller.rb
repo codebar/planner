@@ -1,5 +1,5 @@
 class Member::JobsController < ApplicationController
-  before_action :set_current_user_job, only: %i[preview edit update submit]
+  before_action :set_current_user_job, only: %i[show edit update submit]
   before_action :is_logged_in?
 
   def index
@@ -16,7 +16,7 @@ class Member::JobsController < ApplicationController
     @job = Job.new(job_params)
     @job.created_by_id = current_user.id
     if @job.save
-      redirect_to member_job_preview_path(@job)
+      redirect_to member_job_path(@job.id)
     else
       flash['notice'] = @job.errors.full_messages.join('<br>')
       render 'new'
@@ -38,7 +38,7 @@ class Member::JobsController < ApplicationController
 
   def update
     if @job.update_attributes(job_params)
-      redirect_to member_job_preview_path(@job), notice: I18n.t('job.messages.updated')
+      redirect_to member_job_path(@job.id), notice: I18n.t('job.messages.updated')
     else
       flash['notice'] = @job.errors.full_messages.join('<br>')
       render 'edit'
@@ -56,5 +56,9 @@ class Member::JobsController < ApplicationController
   def set_current_user_job
     job_id = params[:job_id] || params[:id]
     @job = current_user.jobs.find(job_id)
+  end
+
+  def page
+    params.permit(:page)[:page]
   end
 end

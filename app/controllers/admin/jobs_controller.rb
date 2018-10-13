@@ -1,6 +1,8 @@
 class Admin::JobsController < Admin::ApplicationController
   def index
-    @jobs = Job.submitted.ordered
+    @jobs = Job.where(submitted: true)
+               .order(created_at: :desc)
+               .paginate(page: page)
     authorize @jobs
   end
 
@@ -9,13 +11,8 @@ class Admin::JobsController < Admin::ApplicationController
     authorize @job
   end
 
-  def all
-    @jobs = Job.unscoped.ordered.includes(:approved_by)
-    authorize @jobs
-  end
-
   def approve
-    @job = Job.find(params[:job_id])
+    @job = Job.submitted.find(params[:job_id])
     authorize @job
 
     @job.approve!(current_user)
@@ -24,5 +21,9 @@ class Admin::JobsController < Admin::ApplicationController
                                                             email: @job.created_by.email)
 
     redirect_to admin_jobs_path
+  end
+
+  def page
+    params.permit(:page)[:page]
   end
 end

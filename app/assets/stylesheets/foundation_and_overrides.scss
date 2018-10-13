@@ -127,10 +127,10 @@ $large-up: "#{$screen} and (min-width:#{lower-bound($large-range)})";
 // $header-text-rendering: optimizeLegibility;
 
 // We use these to control header font sizes
-$h1-font-size: rem-calc(37);
-$h2-font-size: rem-calc(37);
-$h3-font-size: rem-calc(27);
-$h4-font-size: rem-calc(23);
+$h1-font-size: rem-calc(34);
+$h2-font-size: rem-calc(28);
+$h3-font-size: rem-calc(25);
+$h4-font-size: rem-calc(22);
 $h5-font-size: rem-calc(18);
 $h6-font-size: 1rem;
 
@@ -186,7 +186,7 @@ $anchor-font-color-hover: darken($secondary-color, 10%);
 // $list-ordered-side-margin: 1.4rem;
 // $list-side-margin-no-bullet: 0;
 // $list-nested-margin: rem-calc(20);
-// $definition-list-header-weight: bold;
+$definition-list-header-weight: 100;
 // $definition-list-header-margin-bottom: .3rem;
 // $definition-list-margin-bottom: rem-calc(12);
 
@@ -324,6 +324,10 @@ $crumb-bg: scale-color($codebar-blue, $lightness: 75%);
 // $crumb-slash-color: #aaa;
 // $crumb-slash: "/";
 
+
+.breadcrumbs li span {
+  line-height: 1.75;
+}
 //
 // BUTTONS
 //
@@ -1418,5 +1422,12 @@ body.dashboard-faq dl dt {
   @include label(
     $text-size: 13px,
     $bg: $codebar-blue
+  );
+}
+
+.label.admin.status.pending {
+  @include label(
+    $text-size: 13px,
+    $bg: $alert-color
   );
 }

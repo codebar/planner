@@ -15,10 +15,15 @@ ul.jobs {
       dt {
         color: #6f777b;
         display: inline-block;
+        width: 24%;
       }
       dd {
         display: inline-block;
-        width: 20%;
+        width: 24%;
+        margin-bottom: 0;
+      }
+      dd.double {
+        width: 60%;
       }
     }
   }

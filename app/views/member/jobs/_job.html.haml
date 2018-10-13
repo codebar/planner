@@ -1,6 +1,6 @@
 %tr
   %td
-    = link_to job.title, member_job_preview_path(job)
+    = link_to job.title, member_job_path(job.id)
   %td
     -if job.company_website.present?
       =link_to(job.company, job.company_website)
@@ -22,4 +22,4 @@
     %span.label.status= t("job.status.#{job.status.to_s}")
   %td
     -if job.status.eql?(:pending) || job.status.eql?(:draft)
-      =link_to 'Edit', edit_member_job_path(job)
+      =link_to 'Edit', edit_member_job_path(job.id)
