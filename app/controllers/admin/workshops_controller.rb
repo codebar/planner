@@ -10,7 +10,7 @@ class Admin::WorkshopsController < Admin::ApplicationController
   def index
     @chapter = Chapter.find(chapter_id)
     authorize @chapter
-    @workshops = @chapter.workshops.includes(:sponsors).includes(:address)
+    @workshops = @chapter.workshops.includes(:sponsors)
   end
 
   def new
