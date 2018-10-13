@@ -50,7 +50,7 @@ group :development do
 end
 
 group :development, :test do
-  gem 'coveralls', require: false
+  gem 'coveralls', '~> 0.8.22', require: false
   gem 'dotenv-rails'
   gem 'fabrication'
   gem 'faker'
@@ -67,7 +67,6 @@ end
 
 group :test do
   gem 'capybara'
-  gem 'codeclimate-test-reporter', require: nil
   gem 'database_cleaner'
   gem 'poltergeist'
   gem 'shoulda-matchers', '~> 3.1'
