@@ -11,7 +11,10 @@
   %td
     = l(job.created_at, format: :date)
   %td
-    %span.label.admin.status{ class: job.status.to_s }= t("job.admin.status.#{job.status.to_s}")
+    - if job.approved? && job.expired?
+      %span.label.admin.status.expired= t("job.admin.status.expired")
+    - else
+      %span.label.admin.status{ class: job.status.to_s }= t("job.admin.status.#{job.status.to_s}")
   %td
     - if job.status.eql?(:pending)
       =link_to 'Review', admin_job_path(job.id)

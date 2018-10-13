@@ -1,6 +1,6 @@
 class JobsController < ApplicationController
   def index
-    @jobs = Job.active.approved.ordered
+    @jobs = Job.published.active.ordered
   end
 
   def show

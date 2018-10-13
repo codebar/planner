@@ -19,7 +19,10 @@
   %td
     = l(job.expiry_date, format: :date)
   %td
-    %span.label.status= t("job.status.#{job.status.to_s}")
+    - if job.expired?
+      %span.label.status= t('job.status.expired')
+    - else
+      %span.label.status= t("job.status.#{job.status.to_s}")
   %td
     -if job.status.eql?(:pending) || job.status.eql?(:draft)
       =link_to 'Edit', edit_member_job_path(job.id)

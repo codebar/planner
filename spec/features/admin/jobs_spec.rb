@@ -9,8 +9,8 @@ feature 'Admin Jobs' do
 
   context 'admins/jobs' do
     scenario 'Renders a list of all submitted job' do
-      Fabricate.times(3, :published_job)
-      Fabricate.times(3, :job, approved: false)
+      Fabricate.times(4, :published_job)
+      Fabricate.times(3, :pending_job)
       Fabricate(:job, title: 'Expired developer', expiry_date: Time.zone.today - 1.week)
 
       visit admin_jobs_path
@@ -20,7 +20,7 @@ feature 'Admin Jobs' do
 
     scenario 'The listing is paginated' do
       Fabricate.times(3, :published_job)
-      Fabricate.times(10, :job, approved: false)
+      Fabricate.times(10, :pending_job)
 
       visit admin_jobs_path
 
@@ -32,7 +32,7 @@ feature 'Admin Jobs' do
   end
 
   scenario 'An organiser can approve jobs' do
-    job = Fabricate(:job, approved: false)
+    job = Fabricate(:pending_job)
     visit admin_jobs_path
     click_on job.title
 

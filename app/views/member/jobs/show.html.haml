@@ -12,13 +12,13 @@
         .panel
           = t("job.messages.#{@job.status}_html")
 
-          - if @job.approved?
+          - if @job.published?
             =t('job.messages.public_page_html', link: link_to('public page', job_path(@job)))
     .row
       .large-12.columns
-        - if @job.status.eql?(:draft) || @job.status.eql?(:pending)
+        - if @job.draft? || @job.pending?
           = link_to "Edit", edit_member_job_path(@job.id), class: 'button round'
-        - if @job.submitted?
+        - if @job.pending?
           = link_to "Submit", '#', class: 'button disabled round default'
         - else
           = link_to "Submit", member_job_submit_path(@job.id), class: 'button round default', method: :post

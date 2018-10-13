@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181012015504) do
+ActiveRecord::Schema.define(version: 20181013230006) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -315,6 +315,7 @@ ActiveRecord::Schema.define(version: 20181012015504) do
     t.boolean  "remote"
     t.integer  "salary"
     t.string   "slug"
+    t.integer  "status",           default: 0
   end
 
   add_index "jobs", ["created_by_id"], name: "index_jobs_on_created_by_id", using: :btree

@@ -12,15 +12,14 @@ feature 'Jobs' do
       end
 
       scenario 'can view all active jobs' do
-        jobs = Fabricate.times(3, :job)
+        jobs = Fabricate.times(3, :published_job)
         expired = 3.times.map { |i| Fabricate.create(:job, expiry_date: 2.days.ago) }
         visit jobs_path
 
         expect(page).to have_content('Jobs')
-        jobs.each do |job|
-          expect(page).to have_content(job.title)
-          expired.each { |expired_job| expect(page).to_not have_content(expired_job.title) }
-        end
+
+        jobs.each { |job| expect(page).to have_content(job.title) }
+        expired.each { |expired_job| expect(page).to_not have_content(expired_job.title) }
       end
 
       context 'can view job posts' do

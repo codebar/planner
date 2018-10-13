@@ -17,29 +17,30 @@ describe Job do
   end
 
   context 'scopes' do
-    let!(:approved_jobs) { 2.times.map { Fabricate(:job) } }
-    let!(:unsubmitted) { 1.times.map { Fabricate(:job, submitted: false, approved: false) } }
-    let!(:pending_approval) { 4.times.map { Fabricate(:job, approved: false) } }
-    let!(:expired) { 2.times.map { Fabricate(:job, expiry_date: 1.week.ago) } }
+    let!(:approved) { 2.times.map { Fabricate(:published_job) } }
+    let!(:drafts) { 1.times.map { Fabricate(:job) } }
+    let!(:pending_approval) { 4.times.map { Fabricate(:pending_job) } }
 
-    it '#default_scope does not return expired jobs' do
-      expect(Job.submitted.all).to eq(pending_approval)
+    it '#published returns all published job' do
+      expect(Job.published.all).to eq(approved)
     end
 
-    it '#approved returns all approved jobs' do
-      expect(Job.approved.all).to eq(approved_jobs + expired)
+    it '#draft returns all draft jobs' do
+      expect(Job.draft.all).to eq(drafts)
     end
 
-    it '#not_submitted returns all jobs who have not yet been previed' do
-      expect(Job.not_submitted.all).to eq(unsubmitted)
-    end
-
-    it '#submitted returns all submitted jobs' do
-      expect(Job.submitted.all).to eq(pending_approval)
+    it '#pending returns all jobs pending approval' do
+      expect(Job.pending.all).to eq(pending_approval)
     end
 
     it '#active returns all active jobs' do
-      expect(Job.active.all).to eq(approved_jobs + unsubmitted + pending_approval)
+      2.times.map { Fabricate(:job, expiry_date: 1.week.ago) }
+
+      expect(Job.active.to_a).to eq(approved + drafts + pending_approval)
+    end
+
+    it '#pending_or_published returns all pending or published jobs' do
+      expect(Job.pending_or_published.to_a).to eq(approved + pending_approval)
     end
   end
 
@@ -62,6 +63,7 @@ describe Job do
       expect(job.approved_by).to eq(approver)
       expect(job.approved).to eq(true)
       expect(job.published_on).to_not be_nil
+      expect(job.status).to eq('published')
     end
   end
 end

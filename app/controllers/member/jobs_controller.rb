@@ -31,6 +31,7 @@ class Member::JobsController < ApplicationController
 
   def submit
     @job.update_attributes(submitted: true)
+    @job.pending!
 
     flash[:notice] = I18n.t('job.messages.submitted')
     redirect_to member_jobs_path

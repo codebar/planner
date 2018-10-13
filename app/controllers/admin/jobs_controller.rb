@@ -1,18 +1,18 @@
 class Admin::JobsController < Admin::ApplicationController
   def index
-    @jobs = Job.where(submitted: true)
+    @jobs = Job.pending_or_published
                .order(created_at: :desc)
                .paginate(page: page)
     authorize @jobs
   end
 
   def show
-    @job = Job.unscoped.find(params[:id])
+    @job = Job.find(params[:id])
     authorize @job
   end
 
   def approve
-    @job = Job.submitted.find(params[:job_id])
+    @job = Job.pending.find(params[:job_id])
     authorize @job
 
     @job.approve!(current_user)

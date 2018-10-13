@@ -1,12 +1,12 @@
 class Job < ActiveRecord::Base
   self.per_page = 10
+
+  enum status: %w[draft pending published]
+
   belongs_to :created_by, class_name: 'Member', foreign_key: :created_by_id
   belongs_to :approved_by, class_name: 'Member', foreign_key: :approved_by_id
 
-  scope :approved, -> { where(approved: true) }
-  scope :submitted, -> { where(submitted: true, approved: false) }
-  scope :not_submitted, -> { where(submitted: false, approved: false) }
-
+  scope :pending_or_published, -> { where(status: [statuses[:pending], statuses[:published]]) }
   scope :ordered, -> { order('created_at desc') }
   scope :owner_order, -> { order(published_on: :desc, created_at: :desc) }
   scope :active, -> { where('expiry_date > ?', Time.zone.today) }
@@ -20,17 +20,11 @@ class Job < ActiveRecord::Base
     update(approved: true,
            approved_by_id: approver.id,
            published_on: Time.zone.now)
+    published!
   end
 
   def expired?
     self.expiry_date.past?
-  end
-
-  def status
-    return :draft if submitted.eql?(false) && approved.eql?(false)
-    return :pending if submitted.eql?(true) && approved.eql?(false)
-    return :expired if expiry_date.past?
-    return :published if submitted.eql?(true) && approved.eql?(true)
   end
 
   def slug_candidates
