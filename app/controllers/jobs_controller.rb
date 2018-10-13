@@ -4,8 +4,8 @@ class JobsController < ApplicationController
   end
 
   def show
-    @job = Job.find(job_id)
-    flash['alert'] = I18n.t('job.expired') if @job.expiry_date.past?
+    @job = Job.friendly.find(job_id)
+
     redirect_to jobs_path unless @job.approved? && @job.submitted?
   end
 

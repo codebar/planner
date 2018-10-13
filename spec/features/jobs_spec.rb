@@ -25,7 +25,7 @@ feature 'Jobs' do
 
       context 'can view job posts' do
         it 'when a job post is active' do
-          job = Fabricate(:job)
+          job = Fabricate(:published_job)
           visit job_path(job)
 
           expect(page).to have_content(job.title)
@@ -63,7 +63,7 @@ feature 'Jobs' do
         end
 
         it 'when a job post has expired' do
-          job = Fabricate(:job, expiry_date: 1.week.ago)
+          job = Fabricate(:published_job, expiry_date: 1.week.ago)
           visit job_path(job)
 
           expect(page).to have_content(job.title)

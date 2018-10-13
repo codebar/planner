@@ -1,4 +1,9 @@
 .stripe.reverse
+  - if @job.expired?
+    .row
+      .large-12.columns
+        .panel
+          = "#{t('job.expired')} #{t('job.check_out_jobs', link: link_to('jobs', jobs_url))}".html_safe
   .row
     .medium-12.columns
       %h2
@@ -30,6 +35,9 @@
         %strong=t('job.closing_date')
         %br
         #{I18n.l(@job.expiry_date, format: :date)}
+        - if @job.expired?
+          %br
+          %span.label.warning=t('job.status.expired')
       -if @job.email?
         %p.email
           %strong=t('job.contact_email')
@@ -38,9 +46,6 @@
       %p.posted-by
         %strong=t('job.posted_by')
         %br
-        - if admin
-          =link_to @job.created_by.full_name, admin_member_path(@job.created_by)
-        - else
           =link_to @job.created_by.full_name, twitter_url_for(@job.created_by.twitter)
       %p.published_on
         %strong=t('job.published_on')

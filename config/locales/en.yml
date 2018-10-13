@@ -278,6 +278,8 @@ en:
       published: Published
       expired: Expired
     expired: 'This job post has expired'
+    expired: 'This job post has expired.'
+    check_out_jobs: 'Check out the rest of our %{link}.'
     published_on: 'Published on'
     expires_on: 'Closing date'
     apply: 'Apply for this job'

@@ -12,6 +12,9 @@ class Job < ActiveRecord::Base
 
   validates :title, :company, :location, :description, :link_to_job, :expiry_date, presence: true
 
+  extend FriendlyId
+  friendly_id :slug_candidates, use: :slugged
+
   def approve!(approver)
     update(approved: true,
            approved_by_id: approver.id,
@@ -32,7 +35,7 @@ class Job < ActiveRecord::Base
   def slug_candidates
     [
       :title,
-      %[title company],
+      %w[title company],
       %w[title company location]
     ]
   end
