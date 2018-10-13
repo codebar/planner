@@ -51,6 +51,6 @@ describe WorkshopPresenter do
                        Fabricate(:attending_workshop_invitation, member: member,  workshop: workshop, role: 'Coach')
     end
 
-    expect(presenter.attendees_emails).to eq(members.map(&:email).join(', '))
+    expect(presenter.attendees_emails.split(', ')).to match_array(members.map(&:email))
   end
 end
