@@ -2,7 +2,7 @@ json.set! '@context', 'http://schema.org'
 json.set! '@type', 'JobPosting'
 
 json.title job.title
-json.datePosted job.published_on.to_time.iso8601
+json.datePosted job.published_on_time_iso8601
 json.description job.description
 
 json.employmentType 'FULL_TIME'

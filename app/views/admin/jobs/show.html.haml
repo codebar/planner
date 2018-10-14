@@ -10,12 +10,12 @@
             %span= @job.title
     .row
       .large-12.columns
-        - if !@job.approved? && @job.expired?
+        - if !@job.published? && @job.expired?
           .panel
             .row
               .large-12.columns
                 =t('admin.jobs.messages.cannot_approve')
-        - elsif !@job.approved?
+        - elsif !@job.published?
           .panel
             .row
               .large-12.columns
@@ -40,18 +40,14 @@
 
       .large-12.columns
         %p
-          - if @job.approved?
-            - if @job.published_on.present?
-              = t('admin.jobs.info.approved_by', name: @job&.approved_by&.full_name,
-                                                 date: l(@job.published_on, format: :date))
-
-            - else
-              = t('admin.jobs.info.approved_by_no_date', name: @job&.approved_by&.full_name)
-
-          - elsif @job.expired?
+          - if @job.expired?
             =t('admin.jobs.info.request_changes_html', name: @job&.created_by&.full_name,
                                                   email: mail_to(@job.created_by.email, @job.created_by.email,
                                                   subject: "Regarding job listing #{@job.title}"))
+          - elsif @job.published?
+            = t('admin.jobs.info.approved_by', name: @job&.approved_by&.full_name,
+                                               date: @job.published_on)
+
           - else
             =t('admin.jobs.info.request_changes_html', name: @job&.created_by&.full_name,
                                                        email: mail_to(@job.created_by.email, @job.created_by.email,

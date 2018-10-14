@@ -124,7 +124,7 @@ feature 'Member managing jobs' do
     end
 
     scenario 'can not edit an approved job' do
-      approved_job =  Fabricate(:job, created_by: member)
+      approved_job =  Fabricate(:published_job, created_by: member)
       visit edit_member_job_path(approved_job.id)
 
       expect(page).to have_content('You cannot edit a job that has already been approved.')

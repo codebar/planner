@@ -86,10 +86,6 @@ class WorkshopPresenter < EventPresenter
     end.concat(attending_organisers).uniq
   end
 
-  def model
-    __getobj__
-  end
-
   def member_info(member, pos)
     "#{MemberPresenter.new(member).newbie? ? "I__" : "___"} #{pos + 1}.\t #{member.full_name}"
   end

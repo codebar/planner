@@ -6,15 +6,8 @@
       %dt= t('job.salary')
       %dd.double= number_to_currency(job.salary)
     %dt= t('job.published_on')
-    - if job.published_on.present?
-      %dd= l(job.published_on, format: :full_date)
-    - else
-      %dd= "-"
+    %dd= job.published_on
     %dt= t('job.expires_on')
     %dd= l(job.expiry_date, format: :full_date)
     %dt= t('job.location.title')
-    %dd
-      - if job.remote
-        =t('job.location.remote')
-      - else
-        =job.location
+    %dd= job.location_or_remote

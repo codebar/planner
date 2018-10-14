@@ -1,4 +1,4 @@
-class InvitationPresenter < SimpleDelegator
+class InvitationPresenter < BasePresenter
   def self.decorate_collection(collection)
     collection.map { |e| InvitationPresenter.new(e) }
   end
@@ -9,11 +9,5 @@ class InvitationPresenter < SimpleDelegator
 
   def attendance_status
     model.attending ? 'Attending' : 'RSVP'
-  end
-
-  private
-
-  def model
-    __getobj__
   end
 end

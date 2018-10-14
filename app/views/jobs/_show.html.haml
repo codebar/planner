@@ -27,10 +27,7 @@
       %p.location
         %strong=t('job.location.title')
         %br
-        -if @job.remote
-          =t('job.location.remote')
-        - else
-          =@job.location
+        = @job.location_or_remote
       %p.closing-date
         %strong=t('job.closing_date')
         %br
@@ -50,5 +47,5 @@
       %p.published_on
         %strong=t('job.published_on')
         %br
-        = @job.published_on.present? ?  l(@job.published_on, format: :date) : '-'
-      =link_to t('job.apply'), sanitize(@job.link_to_job), class: 'button small expand'
+        = @job.published_on
+      =link_to t('job.apply'), @job.link_to_job, class: 'button small expand'

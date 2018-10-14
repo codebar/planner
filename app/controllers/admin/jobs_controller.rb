@@ -1,14 +1,16 @@
 class Admin::JobsController < Admin::ApplicationController
   def index
-    @jobs = Job.pending_or_published
-               .order(created_at: :desc)
-               .paginate(page: page)
-    authorize @jobs
+    jobs = Job.pending_or_published
+              .order(created_at: :desc)
+              .paginate(page: page)
+    authorize jobs
+    @jobs = JobsPresenter.new(jobs)
   end
 
   def show
-    @job = Job.find(params[:id])
-    authorize @job
+    job = Job.find(params[:id])
+    authorize job
+    @job = JobPresenter.new(job)
   end
 
   def approve

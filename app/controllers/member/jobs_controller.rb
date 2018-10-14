@@ -23,10 +23,12 @@ class Member::JobsController < ApplicationController
     end
   end
 
-  def show; end
+  def show
+    @job = JobPresenter.new(@job)
+  end
 
   def edit
-    redirect_to member_jobs_path, notice: I18n.t('job.messages.cannot_edit') if @job.approved?
+    redirect_to member_jobs_path, notice: I18n.t('job.messages.cannot_edit') if @job.published?
   end
 
   def submit

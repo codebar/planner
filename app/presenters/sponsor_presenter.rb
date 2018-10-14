@@ -1,4 +1,4 @@
-class SponsorPresenter < SimpleDelegator
+class SponsorPresenter < BasePresenter
   include Rails.application.routes.url_helpers
 
   def contact_info
@@ -18,10 +18,6 @@ class SponsorPresenter < SimpleDelegator
   end
 
   private
-
-  def model
-    __getobj__
-  end
 
   def h
     ActionController::Base.helpers
