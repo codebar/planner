@@ -24,6 +24,7 @@ ActiveRecord::Migration.check_pending! if defined?(ActiveRecord::Migration)
 RSpec.configure do |config|
   config.include ApplicationHelper
   config.include LoginHelpers
+  config.include JobrefHelpers
   config.use_transactional_fixtures = true
   config.infer_base_class_for_anonymous_controllers = false
   config.order = 'random'

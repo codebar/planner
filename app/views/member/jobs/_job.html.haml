@@ -1,0 +1,28 @@
+%tr
+  %td
+    = link_to job.title, member_job_path(job.id)
+  %td
+    -if job.company_website.present?
+      =link_to(job.company, job.company_website)
+    - else
+      = job.company
+  %td
+    - if job.remote
+      =t('job.location.remote')
+    - else
+      =job.location
+  %td
+    - if job.published_on.present?
+      %dd= l(job.published_on, format: :date)
+    - else
+      %dd= "-"
+  %td
+    = l(job.expiry_date, format: :date)
+  %td
+    - if job.expired?
+      %span.label.status= t('job.status.expired')
+    - else
+      %span.label.status= t("job.status.#{job.status.to_s}")
+  %td
+    -if job.status.eql?(:pending) || job.status.eql?(:draft)
+      =link_to 'Edit', edit_member_job_path(job.id)

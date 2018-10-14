@@ -1,4 +1,4 @@
-class AddressPresenter < SimpleDelegator
+class AddressPresenter < BasePresenter
   def to_html
     lat = model.latitude.present? ? "Latitude: #{model.latitude}" : nil
     lng = model.longitude.present? ? "Longitude: #{model.longitude}" : nil
@@ -17,11 +17,5 @@ class AddressPresenter < SimpleDelegator
 
   def to_s
     [model.flat, model.street, model.city, model.postal_code].delete_if(&:empty?).join(', ')
-  end
-
-  private
-
-  def model
-    __getobj__
   end
 end

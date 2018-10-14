@@ -1,4 +1,6 @@
 @import 'partials/colors';
+@import 'partials/links';
+@import 'partials/margins';
 @import 'partials/layout';
 @import 'partials/hero';
 @import 'partials/events';
@@ -75,7 +77,6 @@ nav a.menu {
 /* Show/hide togglable elements are controlled by JavaScript. */
 .sign-up-wizard .collapsed { display: none; }
 .no-js .sign-up-wizard .collapsed { display: block; }
-
 
 
 .workshop.title {
@@ -169,4 +170,12 @@ u {
 
 .admin_margin {
   margin-top: 15px;
+}
+
+form .hint {
+  color: gray;
+}
+
+.breadcrumbs {
+  background-color: none;
 }

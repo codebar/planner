@@ -1,0 +1,9 @@
+a {
+  border-bottom: 1.5px solid darken($secondary-color, 30%);
+  line-height: 1.75;
+  font-weight: 400;
+}
+
+a:hover {
+  color: darken($secondary-color, 10%);
+}

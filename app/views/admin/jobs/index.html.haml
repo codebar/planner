@@ -1,22 +1,29 @@
-.stripe.reverse
-  .row
-    .large-12.columns
-      %h1 Jobs pending approval
-      = link_to 'View all jobs', all_admin_jobs_path
+.job.mb1
+  .stripe
+    .row
+      .large-12.columns
+        %br
+        %ul.breadcrumbs
+          %li=link_to  t('admin.dashboard.title'), admin_root_path
+          %li.current
+            %span= t('admin.jobs.title')
 
-.stripe.reverse
-  .row
-    .large-12.columns
-      - if @jobs.none?
-        %p
-          There are no jobs pending approval.
-
-      - else
-        %dl
-          - @jobs.each do |job|
-            %dt
-              = link_to job.title, admin_job_path(job)
-              %small.fa.fa-map-marker= job.location
-              - if job.expiry_date.past?
-                %label.label.alert expired
-            %dd submitted #{distance_of_time_in_words(Time.now, job.created_at)} ago
+    - if @jobs.any?
+      .row
+        %table.large-12.columns
+          %thead
+            %tr
+              %th Title
+              %th Company
+              %th Location
+              %th Created at
+              %th Status
+              %th
+          %tbody
+            - @jobs.each do |job|
+              = render partial: 'admin/jobs/job', locals: { job: job }
+      .row
+        .medium-6.columns.text-left
+          = page_entries_info(@jobs, model: 'job')
+        .medium-6.columns.text-right
+          = will_paginate(@jobs)

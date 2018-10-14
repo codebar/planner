@@ -10,10 +10,4 @@ class CoursePresenter < EventPresenter
   def admin_path
     '#'
   end
-
-  private
-
-  def model
-    __getobj__
-  end
 end

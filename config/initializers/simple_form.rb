@@ -39,20 +39,35 @@ SimpleForm.setup do |config|
     # Calculates readonly automatically from readonly attributes
     b.optional :readonly
 
-    ## Inputs
-    b.use :label_input
+    b.use :label, class: :strong
+
     b.use :hint,  wrap_with: { tag: :span, class: :hint }
     b.use :error, wrap_with: { tag: :span, class: :error }
+
+    ## Inputs
+    b.use :input
   end
 
   # The default wrapper to be used by the FormBuilder.
   config.default_wrapper = :default
 
+  config.wrappers :checkbox, class: :input,
+                            hint_class: :field_with_hint, error_class: :field_with_errors do |b|
+    b.use :html5
+    b.use :placeholder
+    b.optional :readonly
+
+    b.use :error, wrap_with: { tag: :span, class: :error }
+    ## Inputs
+    b.use :label_input
+    b.use :hint,  wrap_with: { tag: :span, class: :hint }
+  end
+
   # Define the way to render check boxes / radio buttons with labels.
   # Defaults to :nested for bootstrap config.
   #   inline: input + label
   #   nested: label > input
-  config.boolean_style = :inline
+  config.boolean_style = :nested
 
   # Default class for buttons
   config.button_class = 'btn'

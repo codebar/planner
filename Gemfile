@@ -12,6 +12,7 @@ gem 'delayed_job'
 gem 'delayed_job_active_record'
 gem 'font-awesome-rails'
 gem 'foundation-rails', '5.5.3.2'
+gem 'friendly_id'
 gem 'github-markdown'
 gem 'haml'
 gem 'jquery-rails'
@@ -43,6 +44,8 @@ gem 'gibbon', '~> 1.1.5'
 gem 'stripe'
 
 gem 'rails-html-sanitizer', '~> 1.0.4'
+
+gem 'jbuilder'
 
 group :development do
   gem 'better_errors'

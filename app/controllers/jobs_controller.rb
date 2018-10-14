@@ -1,11 +1,12 @@
 class JobsController < ApplicationController
   def index
-    @jobs = Job.active.approved.ordered
+    jobs = Job.published.active.ordered
+    @jobs = JobsPresenter.new(jobs)
   end
 
   def show
-    @job = Job.find(job_id)
-    redirect_to jobs_path unless @job.approved? && @job.submitted?
+    job = Job.friendly.published.find(job_id)
+    @job = JobPresenter.new(job)
   end
 
   private

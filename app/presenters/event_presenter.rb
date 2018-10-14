@@ -1,4 +1,4 @@
-class EventPresenter < SimpleDelegator
+class EventPresenter < BasePresenter
   PRESENTER = { workshop: 'WorkshopPresenter',
                 course: 'CoursePresenter',
                 meeting: 'MeetingPresenter',
@@ -92,9 +92,5 @@ class EventPresenter < SimpleDelegator
 
   def chapter_organisers
     model.chapter.permissions.find_by(name: 'organiser').members rescue []
-  end
-
-  def model
-    __getobj__
   end
 end

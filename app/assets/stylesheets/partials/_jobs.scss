@@ -1,9 +1,3 @@
-.alert-box {
-  label {
-    color: $white;
-  }
-}
-
 ul.jobs {
   margin: 0;
   padding: 0;
@@ -21,11 +15,36 @@ ul.jobs {
       dt {
         color: #6f777b;
         display: inline-block;
+        width: 24%;
       }
       dd {
         display: inline-block;
-        width: 20%;
+        width: 24%;
+        margin-bottom: 0;
+      }
+      dd.double {
+        width: 60%;
       }
     }
+  }
+}
+
+.job {
+  .stripe:not(.reverse):first-child {
+    padding: 40px 0px 20px;
+  }
+
+  .stripe:not(.reverse):nth-child(even) {
+    background-color: #f5f6f7;
+    padding: 20px 0 40px;
+  }
+
+  .stripe.reverse:nth-child(even) {
+    padding: 20px 0;
+  }
+
+  .stripe.reverse:nth-child(odd) {
+    background-color: #f5f6f7;
+    padding: 40px 0;
   }
 }

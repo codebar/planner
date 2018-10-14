@@ -1,1 +1,3 @@
 =render partial: 'jobs/show', locals: { admin: false }
+%script.jobref{type: 'application/ld+json'}
+  = raw(render partial: 'job.json.jbuilder', locals: { job: @job })

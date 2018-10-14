@@ -1,12 +1,13 @@
 %li.job
-  %h4= link_to job.title, job_path(job)
+  %h3.mb0= link_to job.title, job_path(job)
+  %p.lead.mb0="#{job.company}, #{job.location}"
   %dl
-    %dt= t('job.company')
-    %dd= job.company
-    %br
+    - if job.salary.present?
+      %dt= t('job.salary')
+      %dd.double= number_to_currency(job.salary)
     %dt= t('job.published_on')
-    %dd= l(job.created_at, format: :date)
+    %dd= job.published_on
     %dt= t('job.expires_on')
-    %dd= l(job.expiry_date, format: :date)
-    %dt= t('job.location')
-    %dd= job.location
+    %dd= l(job.expiry_date, format: :full_date)
+    %dt= t('job.location.title')
+    %dd= job.location_or_remote

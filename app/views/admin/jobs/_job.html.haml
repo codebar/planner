@@ -1,0 +1,17 @@
+%tr
+  %td
+    =link_to job.title, admin_job_path(job.id)
+  %td
+    = job.company
+  %td
+    = job.location_or_remote
+  %td
+    = l(job.created_at, format: :date)
+  %td
+    - if job.published? && job.expired?
+      %span.label.admin.status.expired= t("job.admin.status.expired")
+    - else
+      %span.label.admin.status{ class: job.status }= t("job.admin.status.#{job.status}")
+  %td
+    - if job.pending?
+      =link_to 'Review', admin_job_path(job.id)
