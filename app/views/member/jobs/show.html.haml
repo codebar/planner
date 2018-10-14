@@ -10,10 +10,10 @@
     .row
       .large-12.columns
         .panel
-          = t("job.messages.#{@job.status.to_s}").html_safe
+          = t("job.messages.#{@job.status}_html")
 
           - if @job.approved?
-            =t('job.messages.public_page', link: link_to('public page', job_path(@job))).html_safe
+            =t('job.messages.public_page_html', link: link_to('public page', job_path(@job)))
     .row
       .large-12.columns
         - if @job.status.eql?(:draft) || @job.status.eql?(:pending)

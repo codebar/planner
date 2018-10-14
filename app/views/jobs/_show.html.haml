@@ -3,7 +3,7 @@
     .row
       .large-12.columns
         .panel
-          = "#{t('job.expired')} #{t('job.check_out_jobs', link: link_to('jobs', jobs_url))}".html_safe
+          = "#{t('job.expired')} #{t('job.check_out_jobs_html', link: link_to('jobs', jobs_url))}"
   .row
     .medium-12.columns
       %h2
@@ -51,4 +51,4 @@
         %strong=t('job.published_on')
         %br
         = @job.published_on.present? ?  l(@job.published_on, format: :date) : '-'
-      =link_to t('job.apply'), @job.link_to_job, class: 'button small expand'
+      =link_to t('job.apply'), sanitize(@job.link_to_job), class: 'button small expand'

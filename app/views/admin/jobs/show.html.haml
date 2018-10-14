@@ -49,13 +49,13 @@
               = t('admin.jobs.info.approved_by_no_date', name: @job&.approved_by&.full_name)
 
           - elsif @job.expired?
-            =t('admin.jobs.info.request_changes', name: @job&.created_by&.full_name,
+            =t('admin.jobs.info.request_changes_html', name: @job&.created_by&.full_name,
                                                   email: mail_to(@job.created_by.email, @job.created_by.email,
-                                                  subject: "Regarding job listing #{@job.title}")).html_safe
+                                                  subject: "Regarding job listing #{@job.title}"))
           - else
-            =t('admin.jobs.info.request_changes', name: @job&.created_by&.full_name,
-                                                  email: mail_to(@job.created_by.email, @job.created_by.email,
-                                                  subject: "Regarding job listing #{@job.title}")).html_safe
+            =t('admin.jobs.info.request_changes_html', name: @job&.created_by&.full_name,
+                                                       email: mail_to(@job.created_by.email, @job.created_by.email,
+                                                       subject: "Regarding job listing #{@job.title}"))
             %br
             %br
             =link_to 'Approve', admin_job_approve_path(@job.id),

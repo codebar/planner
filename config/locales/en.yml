@@ -284,7 +284,7 @@ en:
         published: Approved
         expired: Approved
     expired: 'This job post has expired.'
-    check_out_jobs: 'Check out the rest of our %{link}.'
+    check_out_jobs_html: 'Check out the rest of our %{link}.'
     published_on: 'Published on'
     expires_on: 'Closing date'
     apply: 'Apply for this job'
@@ -298,14 +298,14 @@ en:
       title: Location
       remote: 'Remote'
     messages:
-      draft: 'This is a preview of your job.<b>Edit</b> to amend or <b>Submit</b> for approval.'
-      pending: 'This job is pending approval. <b>Edit</b> to amend your post.'
-      published: 'This job has been published.'
-      expired: 'This job has expired.'
+      draft_html: 'This is a preview of your job.<b>Edit</b> to amend or <b>Submit</b> for approval.'
+      pending_html: 'This job is pending approval. <b>Edit</b> to amend your post.'
+      published_html: 'This job has been published.'
+      expired_html: 'This job has expired.'
       updated: 'Your job has been updated.'
       submitted: "Job submitted for approval. You will receive an email when it's been approved."
       cannot_edit: You cannot edit a job that has already been approved.
-      public_page: View the %{link} for this job.
+      public_page_html: View the %{link} for this job.
 
   jobs:
     title: Jobs
@@ -354,7 +354,7 @@ en:
     jobs:
       title: Manage jobs
       info:
-        request_changes: To request changes email %{name} at %{email}
+        request_changes_html: To request changes email %{name} at %{email}
         approved_by: Approved by %{name} on %{date}.
         approved_by_no_date: Approved by %{name}
       messages:
