@@ -3,7 +3,8 @@
     .row
       .large-12.columns
         .panel
-          = "#{t('job.expired')} #{t('job.check_out_jobs_html', link: link_to('jobs', jobs_url))}"
+          =t('job.expired')
+          =t('job.check_out_jobs_html', link: link_to('jobs', jobs_url))
   .row
     .medium-12.columns
       %h2
