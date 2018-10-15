@@ -24,6 +24,7 @@ de:
       email_title: "%A, %d %b um %H:%M"
       short: "%d.%m.%Y %H:%M "
       date: "%d %b %Y"
+      full_date: "%d %B %Y"
       default_date: "%d.%m.%Y"
       website_format: "%a, %d %B %Y um %H:%M"
       day_in_words: "%a"
@@ -35,6 +36,14 @@ de:
       log: "um %H:%M Uhr am %d.%m.%Y"
       workshop: "%A, %e %B %Y um %R"
       dashboard: "%A, %b %d"
+  number:
+    currency:
+      format:
+        unit: '£'
+        delimiter: ','
+        separator: '.'
+        precision: 0
+        format: '%u%n'
   homepage:
     intro: "<strong>codebar</strong> is a non-profit initiative that facilitates the growth of a diverse tech community by running regular programming workshops."
     explanation: "Unser Ziel ist unterrepräsentierten Menschen zu programmieren in einer sicheren und kollaborative Umgebung lernen und erweitern ihre Karrierechancen zu ermöglichen. Um dies zu erreichen betreiben wir kostenlose regelmäßige Workshops, regelmäßige Einzelveranstaltungen und versuchen, die Möglichkeiten für unsere Schüler die Technologie und Programmierung zugänglicher zu schaffen."
@@ -263,9 +272,38 @@ de:
     no_incoming: "Aktuell sind keine Workshops geplant."
     contact: "Um das %{city}er Team zu kontaktieren kannst du einfach eine E-Mail an %{email} schicken"
   job:
-    expired: 'Das Jobangebot ist abgelaufen'
-    published_on: 'Erstellt am'
+    status:
+      draft: Draft
+      pending: Pending approval
+      published: Published
+      expired: Expired
+    admin:
+      status:
+        pending: Pending approval
+        published: Approved
+        expired: Approved
+    expired: 'This job post has expired.'
+    check_out_jobs_html: 'Check out the rest of our %{link}.'
+    published_on: Erstellt am
     expires_on: 'Endet am'
+    apply: 'Apply for this job'
+    company: 'Company'
+    salary: 'Salary'
+    closing_date: Closing date
+    contact_email: Contact email
+    posted_by: Posted by
+    location:
+      title: Location
+      remote: 'Remote'
+    messages:
+      draft_html: 'This is a preview of your job.<b>Edit</b> to amend or <b>Submit</b> for approval.'
+      pending_html: 'This job is pending approval. <b>Edit</b> to amend your post.'
+      published_html: 'This job has been published.'
+      expired_html: 'This job has expired.'
+      updated: 'Your job has been updated.'
+      submitted: "Job submitted for approval. You will receive an email when it's been approved."
+      cannot_edit: You cannot edit a job that has already been approved.
+      public_page_html: View the %{link} for this job.
   jobs:
     title: Jobs
     index:
@@ -284,7 +322,8 @@ de:
     suggestions: "Gab es etwas das dir nicht gefallen hat? Was können wir tun um uns zu verbessern?"
   member:
     jobs:
-      title: Deine Job-Beiträge
+      title: My jobs
+      preview: Preview
       index:
         description: Du hast %{count} Jobs eingestellt
         none: Du hast noch keine Jobs eingestellt
@@ -299,10 +338,26 @@ de:
         suitability: "der Job passend für Menschen ist, die nach Praktika und Junior-Positionen suchen, die ihnen helfen ihre Karriere aufzubauen"
         salary: der Job ein angemessenes Gehalt bietet
         short: "der Eintrag kurz und auf den Punkt ist"
-        payment: eine Minimalzahlung von £35 per Spende geleistet werden muss
         approval_info: "*Nach dem Abschicken wird der Job sichtbar sobald er geprüft und bestätigt wurde."
-        pay: Jetzt bezahlen
+        pay: You have made the requirement payment of £35 through %{link}
+        donation: a donation
+        button:
+          pay: Make a payment
+      edit:
+        title: Edit job listing
   admin:
+    dashboard:
+      title: 'Admin'
+    jobs:
+      title: Manage jobs
+      info:
+        request_changes_html: To request changes email %{name} at %{email}
+        approved_by: Approved by %{name} on %{date}.
+        approved_by_no_date: Approved by %{name}
+      messages:
+        approved: "The job has been approved and an email has been sent out to %{name} at %{email}"
+        cannot_approve: 'You cannot approve expired job listings'
+        confirm_approval: 'Are you sure this job listing meets all requirements and you want to approve it?'
     workshop:
       manage_rsvps:
         text: 'Studenten und Trainer zum Workshop einladen. Die Bestätigungs-E-Mail wird ausgelöst und sie werden von der Warteliste entfernt.'
@@ -320,3 +375,26 @@ de:
         already_on_list: "%{name} ist bereits auf der Liste!"
         rsvp_error: "Es ist etwas schief gegangen, %{name} wurde nicht hinzugefügt."
         update_rsvp: 'Teilnahme von %{name} aktualisiert'
+  simple_form:
+    placeholders:
+      job:
+        company: 'e.g. codebar'
+        company_website: 'e.g. https://codebar.io'
+        title: 'e.g. Internship'
+        description: 'Use text or markdown for the job description'
+        location: 'e.g. London or Berlin'
+    hints:
+      job:
+        remote: Only check if the role is remote only
+        salary: Annual pay before tax, without commas or decimal points
+  activerecord:
+    attributes:
+      job:
+        title: Title
+        company: Name
+        company_address: Address
+        company_postcode: Postcode
+        company_website: Website
+        email: Contact email
+        link_to_job: Link to job post
+        expiry_date: Application closing date

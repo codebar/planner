@@ -293,7 +293,6 @@ en:
     closing_date: Closing date
     contact_email: Contact email
     posted_by: Posted by
-    published_on: Published on
     location:
       title: Location
       remote: 'Remote'
