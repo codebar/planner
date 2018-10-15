@@ -284,7 +284,7 @@ de:
         expired: Approved
     expired: 'This job post has expired.'
     check_out_jobs_html: 'Check out the rest of our %{link}.'
-    published_on: Erstellt am
+    published_on: 'Erstellt am'
     expires_on: 'Endet am'
     apply: 'Apply for this job'
     company: 'Company'
