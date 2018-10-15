@@ -284,7 +284,7 @@ fi:
         expired: Approved
     expired: 'This job post has expired.'
     check_out_jobs_html: 'Check out the rest of our %{link}.'
-    published_on: Published on
+    published_on: 'Published on'
     expires_on: 'Closing date'
     apply: 'Apply for this job'
     company: 'Company'
