@@ -3,8 +3,14 @@
         margin-bottom: 0;
     }
 
+    .verify_attendance,
+    .cancel_attendance {
+        border: none;
+    }
+
     a .fa {
         color: black;
+
         &:hover {
             text-shadow: 1px 1px 1px #999;
         }
