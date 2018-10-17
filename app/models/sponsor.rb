@@ -10,6 +10,7 @@ class Sponsor < ActiveRecord::Base
   }
 
   has_one :address
+  has_many :chapters, through: :workshops
   has_many :workshop_sponsors
   has_many :workshops, through: :workshop_sponsors
   has_many :member_contacts
@@ -20,6 +21,16 @@ class Sponsor < ActiveRecord::Base
 
   default_scope -> { order('updated_at desc') }
   scope :active, -> { where.not(level: 'hidden') }
+
+  scope :recent_for_chapter, -> (chapter) {
+    distinct
+      .unscope(:order)
+      .includes(:workshops)
+      .joins(:workshops, :chapters)
+      .where(chapters: {id: chapter.id})
+      .order('workshops.date_and_time DESC')
+      .limit(6)
+  }
 
   mount_uploader(:avatar, AvatarUploader)
 
