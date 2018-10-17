@@ -22,12 +22,12 @@ class Sponsor < ActiveRecord::Base
   default_scope -> { order('updated_at desc') }
   scope :active, -> { where.not(level: 'hidden') }
 
-  scope :recent_for_chapter, -> (chapter) {
+  scope :recent_for_chapter, lambda { |chapter|
     distinct
       .unscope(:order)
       .includes(:workshops)
       .joins(:workshops, :chapters)
-      .where(chapters: {id: chapter.id})
+      .where(chapters: { id: chapter.id })
       .order('workshops.date_and_time DESC')
       .limit(6)
   }
