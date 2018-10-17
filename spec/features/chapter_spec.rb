@@ -19,7 +19,7 @@ feature 'viewing a Chapter' do
     end
   end
 
-  context 'actigve chapters' do
+  context 'active chapters' do
     it 'a visitor to the website cannot access non existing chapter pages' do
       visit chapter_path('test')
 
@@ -46,6 +46,18 @@ feature 'viewing a Chapter' do
       visit chapter_path(chapter.slug)
       expect(page).to have_content "Workshop at #{recent_past_workshop.host.name}"
       expect(page).to_not have_content "Workshop at #{past_workshop.host.name}"
+    end
+    
+    it 'renders the 6 most recent sponsors for the chapter' do
+      chapter = Fabricate(:chapter)
+      workshops = 6.times.map do |n|
+        Fabricate(:workshop, chapter:chapter, date_and_time: Time.zone.now - n.weeks)
+      end
+
+      visit chapter_path(chapter.slug)
+      workshops.each do |workshop|
+        expect(page).to have_link(workshop.sponsors.name)
+      end
     end
   end
 end
