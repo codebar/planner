@@ -36,11 +36,11 @@ describe Job do
     it '#active returns all active jobs' do
       2.times.map { Fabricate(:job, expiry_date: 1.week.ago) }
 
-      expect(Job.active.to_a).to eq(approved + drafts + pending_approval)
+      expect(Job.active.to_a).to match_array(approved + drafts + pending_approval)
     end
 
     it '#pending_or_published returns all pending or published jobs' do
-      expect(Job.pending_or_published.to_a).to eq(approved + pending_approval)
+      expect(Job.pending_or_published.to_a).to match_array(approved + pending_approval)
     end
   end
 
