@@ -78,7 +78,6 @@ nav a.menu {
 .sign-up-wizard .collapsed { display: none; }
 .no-js .sign-up-wizard .collapsed { display: block; }
 
-
 .workshop.title {
   color: grey;
   font-style: italic;
@@ -174,8 +173,15 @@ u {
 
 form .hint {
   color: gray;
+  display: inline-block;
+  font-size: 0.875em;
+  margin-bottom: 0.5rem;
 }
 
 .breadcrumbs {
   background-color: none;
+}
+
+.chosen-dropwdown {
+  margin-bottom: 1.14286rem;
 }
