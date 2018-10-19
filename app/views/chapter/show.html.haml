@@ -7,12 +7,11 @@
       - if @chapter.description
         %p.lead= @chapter.description
       - else
-        %p.lead= t('chapters.intro').html_safe
-
+        %p.lead= t('chapters.intro_html')
 .panel
   .row
     .small-12.medium-6.columns
-      = t('chapters.info', email: @chapter.email).html_safe
+      = t('chapters.info', email: h(@chapter.email)).html_safe
     .small-12.medium-6.columns.text-center
       - if logged_in?
         = render partial: 'subscriptions'
