@@ -85,6 +85,6 @@ class DashboardController < ApplicationController
     meeting = Meeting.includes(:venue).next
     events = Event.includes(:venue, :sponsors).future(DEFAULT_UPCOMING_EVENTS)
 
-    [*workshops, course, *events, meeting].compact
+    [*workshops, course, *events, meeting].uniq.compact
   end
 end
