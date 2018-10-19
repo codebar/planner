@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181013230006) do
+ActiveRecord::Schema.define(version: 20181019002645) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -83,8 +83,9 @@ ActiveRecord::Schema.define(version: 20181013230006) do
     t.string   "twitter"
     t.string   "twitter_id"
     t.string   "slug"
-    t.boolean  "active",     default: true
-    t.string   "time_zone",  default: "London", null: false
+    t.boolean  "active",      default: true
+    t.string   "time_zone",   default: "London", null: false
+    t.text     "description"
   end
 
   create_table "chapters_events", force: :cascade do |t|
@@ -301,8 +302,8 @@ ActiveRecord::Schema.define(version: 20181013230006) do
     t.string   "email"
     t.string   "link_to_job"
     t.integer  "created_by_id"
-    t.boolean  "approved",       default: false
-    t.boolean  "submitted",      default: false
+    t.boolean  "approved",         default: false
+    t.boolean  "submitted",        default: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "company"
