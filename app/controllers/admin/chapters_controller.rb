@@ -62,7 +62,7 @@ class Admin::ChaptersController < Admin::ApplicationController
   private
 
   def chapter_params
-    params.require(:chapter).permit(:name, :email, :city, :time_zone, :twitter)
+    params.require(:chapter).permit(:name, :email, :city, :time_zone, :twitter, :description)
   end
 
   def set_chapter
