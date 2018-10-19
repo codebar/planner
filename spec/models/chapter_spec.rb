@@ -1,6 +1,9 @@
 require 'spec_helper'
 
-describe Chapter do
+RSpec.describe Chapter, type: :model do
+  it { should validate_presence_of(:city) }
+  it { should validate_length_of(:description).is_at_most(280) }
+
   context 'validations' do
     context '#slug' do
       it 'a chapter must have a slug set' do
