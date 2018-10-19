@@ -2,14 +2,21 @@
   .row
     .large-12.columns
       %h1= @chapter.name
-      %p.lead
-        = t('chapters.intro', email: @chapter.email).html_safe
+  .row
+    .large-7.columns
+      - if @chapter.description
+        %p.lead= @chapter.description
+      - else
+        %p.lead= t('chapters.intro_html')
+.panel
+  .row
+    .small-12.medium-6.columns
+      = t('chapters.info', email: h(@chapter.email)).html_safe
+    .small-12.medium-6.columns.text-center
       - if logged_in?
         = render partial: 'subscriptions'
       - else
-        %p
-          =link_to 'Sign up', new_member_path, class: 'button tiny'
-
+        =link_to 'Sign up', new_member_path, class: 'button small radius'
 
 %section.stripe.reverse#chapter
   .row
@@ -29,7 +36,6 @@
             .medium-12.columns
               %h4= date
             = render workshops
-
 
     .large-4.columns
       - if @chapter.twitter_handle
