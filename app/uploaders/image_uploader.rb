@@ -1,8 +1,6 @@
-# encoding: utf-8
-
 class ImageUploader < CarrierWave::Uploader::Base
   storage :sftp if Rails.env.production?
-  
+
   # Include RMagick or MiniMagick support:
   include CarrierWave::MiniMagick
 
@@ -32,14 +30,14 @@ class ImageUploader < CarrierWave::Uploader::Base
   # end
 
   # Create different versions of your uploaded files:
-  # version :bg do
-  #   process :resize_to_fit => [50, 50]
-  # end
+  version :bg do
+    process resize_to_fit: [1200, 800]
+  end
 
   # Add a white list of extensions which are allowed to be uploaded.
   # For images you might use something like this:
   def extension_white_list
-    %w(jpg jpeg png)
+    %w[jpg jpeg png]
   end
 
   # Override the filename of the uploaded files:
