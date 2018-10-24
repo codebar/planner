@@ -1,18 +1,20 @@
-%section.stripe.reverse
-  .row
-    .large-12.columns
+%section
+  .row.chapter-header
+    .medium-6.columns.chapter-header-text
       %h1= @chapter.name
-  .row
-    .large-7.columns
       - if @chapter.description
         %p.lead= @chapter.description
       - else
         %p.lead= t('chapters.intro_html')
+    - if @chapter.image.present?
+      .medium-6.columns.chapter-header-image
+        = image_tag @chapter.image.bg, alt: "#{@chapter.name} chapter"
+
 .panel
   .row
-    .small-12.medium-6.columns
+    .medium-6.columns
       = t('chapters.info', email: h(@chapter.email)).html_safe
-    .small-12.medium-6.columns.text-center
+    .medium-6.columns.text-center
       - if logged_in?
         = render partial: 'subscriptions'
       - else
