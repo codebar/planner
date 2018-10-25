@@ -267,7 +267,7 @@ de:
       title: "Students with Disability"
       description: "We want to ensure that our workshops are as accessible as possible. If you are disabled and are unsure about whether our venues can cater to your needs, we encourage you to please get in touch with us at <a href='mailto:hello@codebar.io'>hello@codebar.io</a> and we will do what we can to accommodate you."
   chapters:
-    intro: "Hallo und willkommen bei codebar!"
+    intro_html: "Hallo und willkommen bei codebar!"
     info: "Wenn du Fragen hast kannst du unsere <a href='http://codebar.io/faq'>FAQ</a> lesen, du kannst uns aber auch gerne an <a href='mailto:%{email}'>%{email}</a> schreiben, wenn du die Antwort die du suchst nicht findest. Ansonsten kannst du den folgenden Button verwenden um den Anmeldeprozess zu starten."
     sign_up: "um zu unseren Workshops eingeladen zu werden."
     no_incoming: "Aktuell sind keine Workshops geplant."
