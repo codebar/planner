@@ -49,7 +49,7 @@
   .stripe.reverse
     .row
       .small-12.columns
-        %h3 Sponsors
+        %h2 Sponsors
     .row.sponsor-row
       - @recent_sponsors.each do |sponsor|
         .small-4.medium-2.columns.sponsor-image
@@ -59,20 +59,14 @@
   .row
     .large-12.columns
       %a{ name: 'organisers' }
-      %h3 Team
-      .row
-        - @chapter.organisers.shuffle.each do |organiser|
-          .small-12.medium-6.large-3.columns.end
-            .organiser
-              .row
-                .small-12.columns
-                  =link_to twitter_url_for(organiser.twitter), class: 'user-link' do
-                    =image_tag(organiser.avatar(65), class: 'th radius', title: organiser.full_name, alt: organiser.full_name)
-              .row
-                .small-12.columns
-                  =link_to twitter_url_for(organiser.twitter) do
-                    = organiser.full_name
-
-      %br
+      %h2 Team
+  .row.organisers-grid
+    - @chapter.organisers.shuffle.each do |organiser|
+      .small-12.medium-6.large-3.columns.organiser-item
+        = link_to twitter_url_for(organiser.twitter), title: "#{organiser.full_name} Twitter profile", class: 'organiser-content' do
+          = image_tag(organiser.avatar(65), alt: organiser.full_name, class: 'organiser-image')
+          = organiser.full_name
+  .row  
+    .large-12.columns
       .panel
         = t('chapters.contact', city: @chapter.name, email: @chapter.email)
