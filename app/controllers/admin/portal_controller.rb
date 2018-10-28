@@ -3,7 +3,7 @@ class Admin::PortalController < Admin::ApplicationController
     authorize :admin_portal
 
     @jobs_pending_approval = Job.where(approved: false, submitted: true).count
-    @chapters = Chapter.active.all
+    @chapters = Chapter.active.all.asc(:name)
     @workshops = Workshop.upcoming
     @groups = Group.joins(:chapter).merge(@chapters)
     @subscribers = Subscription.joins(:chapter).merge(@chapters)

@@ -27,6 +27,7 @@ class Admin::EventsController < Admin::ApplicationController
     @attending_students = InvitationPresenter.decorate_collection(@original_event.attending_students)
     @attending_coaches = InvitationPresenter.decorate_collection(@original_event.attending_coaches)
     @host_address = AddressPresenter.new(@event.venue.address)
+    @chapters = @event.chapters.asc(:name)
 
     return render text: @event.attendees_csv if request.format.csv?
   end
