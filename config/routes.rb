@@ -171,5 +171,7 @@ Planner::Application.routes.draw do
   resources :sponsors, only: [:index]
   resources :donations, only: %i[new create]
 
+  get 'cookies' => 'pages#show', id: 'cookies'
+
   get ':id' => 'chapter#show', as: :chapter
 end
