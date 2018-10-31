@@ -2,49 +2,49 @@
   .large-12.columns
     :markdown
 
-      # Cookies
+      ##{t('pages.cookies.title')}
 
-      Cookies are small pieces of text used to store information on web browsers. They are used by websites accross a number of different devices to store and receive identifiers and other information. Our Website and Service use cookies and other similar technologies (collectively in this Policy, "cookies"), in order to provide a better service to you and to generally improve our Website and Service. For example, we may use cookies to help direct you to the appropriate part of our Website, by indicating that you are a repeat visitor. We also may use information to present you with services that are matched to your preferences and to manage and track the effectiveness of our marketing efforts.
+      #{t('pages.cookies.p1')}
 
-      Some portions of the codebar website are functional without cookies, and you may generally choose whether to accept cookies. Most web browsers are set to accept cookies by default, however, you may be able to delete cookies yourself through your browser's cookie manager. To do so, please follow the instructions provided by your web browser. Please note that disabling cookies will reset your session, disable auto-login, and may adversely affect the availability and functionality of our Website and the services we can provide to you.
+      #{t('pages.cookies.p2')}
 
-      Below the cookies used by the codebar website.
+      #{t('pages.cookies.sub.title')}
 
 
-      ## Functional Cookies
+      ## #{t('pages.cookies.functional.title')}
 
-      Stores information about your session.
+       #{t('pages.cookies.functional.description')}
       <br/>
 
       | Cookie name | Purpose | Expires |
       | ---- | ------- |    ----- |
-      | `_planner_session` | Stores session data | Expires after 24 hours |
-
+      | `_planner_session` | #{t('pages.cookies.functional.planner')} | #{t('pages.cookies.functional.planner_expiry ')} |
 
       <div style="height:1px;font-size:1px;">&nbsp;</div>
-      ### Google Analytics
 
-      Google Analytics  collects information about how you use the codebar website. This enables us to identify how busy the website is and possible improvements.
+      ## #{t('pages.cookies.google_analytics.title')}
 
-      **We don’t allow Google to use or share our analytics data.**
+      #{t('pages.cookies.google_analytics.description')}
+
+      **#{t('pages.cookies.google_analytics.info')}**
 
       <div style="height:1px;font-size:1px;">&nbsp;</div>
 
       | Name |	Purpose | 	Expires |
       | ---- | ------- |    ----- |
-      | `_ga`  | Tracks if you have visited codebar.io before | After 2 years
-      | `_gid` | Tracks if you have visited codebar.io before | After 24 hours
+      | `_ga` | #{t('pages.cookies.google_analytics.ga')} | #{t('pages.cookies.google_analytics.ga_expiry ')} |
+      | `_ga` | #{t('pages.cookies.google_analytics.gid')} | #{t('pages.cookies.google_analytics.gid_expiry ')} |
 
       <div style="height:1px;font-size:1px;">&nbsp;</div>
 
-      You can [opt out of Google Analytics](https://tools.google.com/dlpage/gaoptout).
+      #{t('pages.cookies.google_analytics.opt_out')}
 
-      ### Cloudflare
+      ### #{t('pages.cookies.cloudflare.title')}
 
       <div style="height:1px;font-size:1px;">&nbsp;</div>
 
       | Name | Purpose | Expires |
       | ---- | ------- |    ----- |
-      | `__cfduid`  | Used to identify individual clients behind a shared IP address and apply security settings on a per-client basis. | 1 year |
+      | `_cfduid` | #{t('pages.cookies.cloudflare.cfduid')} | #{t('pages.cookies.cloudflare.cfduid_expiry')} |
 
       <div class='mb1' >&nbsp;</div>

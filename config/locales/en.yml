@@ -88,6 +88,8 @@ en:
     becoming_sponsor: "Becoming a sponsor"
     faq: "FAQ"
     blog: "Blog"
+    cookies: 'Cookies'
+    privacy-policy: 'Privacy Policy'
   dashboard:
     join_workshops_in: "Join our <i>free</i> workshops in"
     workshops_goal: "to get to grips with the basics of programming and web development."
@@ -346,6 +348,33 @@ en:
           pay: Make a payment
       edit:
         title: Edit job listing
+  pages:
+    cookies:
+      title: Cookies
+      p1: 'Cookies are small pieces of text used to store information on web browsers. They are used by websites accross a number of different devices to store and receive identifiers and other information. Our Website and Service use cookies and other similar technologies (collectively in this Policy, "cookies"), in order to provide a better service to you and to generally improve our Website and Service. For example, we may use cookies to help direct you to the appropriate part of our Website, by indicating that you are a repeat visitor. We also may use information to present you with services that are matched to your preferences and to manage and track the effectiveness of our marketing efforts.'
+      p2: Some portions of the codebar website are functional without cookies, and you may generally choose whether to accept cookies. Most web browsers are set to accept cookies by default, however, you may be able to delete cookies yourself through your browser's cookie manager. To do so, please follow the instructions provided by your web browser. Please note that disabling cookies will reset your session, disable auto-login, and may adversely affect the availability and functionality of our Website and the services we can provide to you.
+      sub:
+        title: Below the cookies used by the codebar website.
+      functional:
+        title: Functional Cookies
+        description: Stores information about your session.
+        planner: Stores session data
+        planner_expiry: Expires after 24 hours
+
+      google_analytics:
+        title: Google Analytics
+        description: Google Analytics  collects information about how you use the codebar website. This enables us to identify how busy the website is and possible improvements.
+        info: We don’t allow Google to use or share our analytics data.
+        opt_out: You can [opt out of Google Analytics](https://tools.google.com/dlpage/gaoptout).
+        ga: Tracks if you have visited codebar.io before
+        ga_expiry: After 2 years
+        gid: Tracks if you have visited codebar.io before
+        gid_expiry: After 24 hours
+      cloudflare:
+        title: Cloudflare
+        cfduid: Used to identify individual clients behind a shared IP address and apply security settings on a per-client basis.
+        cfduid_expiry: 1 year
+
   admin:
     dashboard:
       title: 'Admin'
