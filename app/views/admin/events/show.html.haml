@@ -41,7 +41,7 @@
           %br
           %strong Chapters
           %ul.inline-list
-            - @chapters.each do |chapter|
+            - @event.chapters.each do |chapter|
               %li= link_to chapter.name, [:admin, chapter]
 
     .row
