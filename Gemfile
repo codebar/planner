@@ -57,7 +57,6 @@ group :development, :test do
   gem 'dotenv-rails'
   gem 'fabrication'
   gem 'faker'
-  gem 'jazz_hands', git: 'https://github.com/nixme/jazz_hands', branch: 'bring-your-own-debugger'
   gem 'launchy'
   gem 'pry-byebug'
   gem 'pry-remote'
