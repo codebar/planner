@@ -157,6 +157,7 @@ GEM
       temple (>= 0.8.0)
       tilt
     hashie (3.5.7)
+    high_voltage (3.1.0)
     htmlentities (4.3.4)
     httparty (0.13.7)
       json (~> 1.8)
@@ -403,6 +404,7 @@ DEPENDENCIES
   gibbon (~> 1.1.5)
   github-markdown
   haml
+  high_voltage
   icalendar
   jbuilder
   jquery-rails
