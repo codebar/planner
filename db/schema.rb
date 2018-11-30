@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181019002645) do
+ActiveRecord::Schema.define(version: 20181021014646) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -86,6 +86,7 @@ ActiveRecord::Schema.define(version: 20181019002645) do
     t.boolean  "active",      default: true
     t.string   "time_zone",   default: "London", null: false
     t.text     "description"
+    t.string   "image"
   end
 
   create_table "chapters_events", force: :cascade do |t|

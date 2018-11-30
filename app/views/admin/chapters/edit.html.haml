@@ -22,5 +22,9 @@
           .large-6.columns.chosen-dropwdown
             = f.input :time_zone, required: true
         .row
+          .large-6.columns
+            = f.input :image, as: :file
+            = f.hidden_field :image_cache
+        .row
           .large-12.columns.text-right
             = f.submit 'Update chapter', class: 'button'

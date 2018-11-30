@@ -3,6 +3,7 @@ require 'spec_helper'
 RSpec.describe Chapter, type: :model do
   it { should validate_presence_of(:city) }
   it { should validate_length_of(:description).is_at_most(280) }
+  it { should respond_to(:image) }
 
   context 'validations' do
     context '#slug' do
