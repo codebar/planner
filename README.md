@@ -1,145 +1,105 @@
-# Planner
-
-A tool to help manage [codebar.io](http://codebar.io) members and events.
+# codebar website & workshop planner
 
 [![Build Status](https://travis-ci.org/codebar/planner.png?branch=master)](https://travis-ci.org/codebar/planner)
 [![Coverage Status](https://coveralls.io/repos/codebar/planner/badge.png)](https://coveralls.io/r/codebar/planner)
 [![Code Climate](https://codeclimate.com/github/codebar/planner.png)](https://codeclimate.com/github/codebar/planner)
 
+A tool to help manage [codebar.io](http://codebar.io) members and events.
+
 If you are considering making a PR, please take a look at the [GitHub issues](https://github.com/codebar/planner/issues) to see if there are any new feature requirements or bugs that you maybe able to help resolve.
 
-#### [We're on Slack!](httpss://slack.codebar.io)
-
+**Need help? [We're on Slack!](httpss://slack.codebar.io)**
 
 ## Getting Started
 
-The following steps walk through getting the application running. For contributing guidelines see [here](https://github.com/codebar/planner/blob/master/CONTRIBUTING.md).
+The following steps walk through getting the application running. Before you start, please check out our [contributing guidelines](https://github.com/codebar/planner/blob/master/CONTRIBUTING.md).
 
-## Getting Started With Docker
-You will need to have Docker installed and running -  https://docker.com/
+1. [Clone the project](#1-clone-the-project)
+2. [Enable GitHub Authentication](#2-enable-github-authentication)
+3. [Install and set up the environment](#3-install-and-set-up-the-environment)
+4. [Run the tests](#4-run-the-tests)
+5. [Start the app](#5-start-the-app)
 
-The current Dockerfile and docker-compose were closely copied from the guide: https://docs.docker.com/compose/rails/
+### 1. Clone the project
 
-1. Clone the project
-2. Navigate in the project directory `cd planner`
-3. Run `bin/dbuild` to build and setup the docker environment.
-4. Run `bin/drake` to run all the tests and make sure everything works
-5. Run `bin/dstart` to start the app.
-6. View the app at  http://localhost:3000
+1. Navigate to your project's chosen parent directory, e.g. `cd ~/Documents/codebar`
+2. [Clone the project](https://help.github.com/articles/cloning-a-repository/), e.g. `git clone git@github.com:codebar/planner.git`
+3. Navigate into the project directory: `cd planner`
 
-You can also use `bin/drails` and `bin/drspec` to run rails and rspec commands via docker.
+### 2. Enable GitHub Authentication
 
+The application uses GitHub OAuth for user authentication. You'll need to create a new OAuth application on your GitHub account, then add the key and secret to your project's environment variables.
 
-## Running the app on your local environment
+#### Create a new Github OAuth application
 
-### Setting up a Ruby Environment
-
-You will need to install Ruby 2.4.2 using RVM or rbenv.
-
-#### Using [rvm](https://rvm.io/rvm/install)
-
-```bash
-rvm install 2.4.2
-```
-
-#### Using [rbenv](https://github.com/sstephenson/rbenv) and [ruby-build](https://github.com/sstephenson/ruby-build)
-
-```bash
-rbenv install 2.4.2
-rbenv global 2.4.2
-```
-
-### Install and run PostgreSQL
-[The PostgreSQL Wiki has detailed installation guides](https://wiki.postgresql.org/wiki/Detailed_installation_guides) for various platforms, but probably the simplest and most common method for Mac users is with Homebrew:
-
-#### Using [Homebrew](https://brew.sh/) on a Mac
-Note: You might need to install another build of Xcode Tools (typing `brew update` in the terminal will prompt you to update the Xcode build tools).
-```bash
-brew update
-brew install postgresql
-brew services start postgresql
-```
-### Other dependencies
-```
-brew install imagemagick
-brew install phantomjs
-```
-
-### Install the Gems!
-
-```bash
-gem install bundler
-bundle install --without production
-```
-
-### Setup the Database
-
-Adjust `config/database.yml` as needed.
-
-```bash
-bundle exec rake db:create
-bundle exec rake db:migrate db:test:prepare
-```
-
-*Note:* If you are running OSX Yosemite, you may experience a problem connecting to
-Postgres. [This stackoverflow answer](http://stackoverflow.com/a/26458194/1510063) might help.
-
-### Enable GitHub Authentication
-
-The application uses GitHub OAuth for user authentication.
-
-#### Create a GitHub application
-
-Using these field values:
+Visit [https://github.com/settings/applications/new](https://github.com/settings/applications/new) and fill out the form to create a new application. Use these field values:
 
 | Field | Value |
 | --- | --- |
+| Application name | Something memorable, like 'codebar planner' |
 | Homepage URL | `http://localhost:3000` |
+| Application description | Something memorable, like 'Local codebar app authentication'. |
 | Authorization Callback URL | `http://localhost:3000/auth/github` |
 
-Create an application at [https://github.com/settings/applications/new](https://github.com/settings/applications/new).
+#### Add your application details to your environment variables
 
-#### Add your application details to your environment
-
-Create a file named `.env` in the root of the application folder (`touch .env`)
-with the GitHub key and secret like so:
-
+##### Mac/Linux:
+1. Run `touch .env` to create a file named `.env` in the root of the application folder.
+2. Open this .env file in a text editor, and add the GitHub key (Client ID) and secret (Client Secret) like so:
+```
     GITHUB_KEY=YOUR_KEY
     GITHUB_SECRET=YOUR_SECRET
+```
 
-*Note:* Windows doesn't like creating a file named `.env` so do the following
-from a cmd prompt in your application folder:
-
+##### Windows:
+Windows doesn't like creating a file named `.env`, so run the following
+from a command prompt in your project folder:
+```
     echo GITHUB_KEY=YOUR_KEY >> .env
     echo GITHUB_SECRET=YOUR_SECRET >> .env
-
-### Generate some sample data
-
-```bash
-bundle exec rake db:seed
 ```
 
-### Run the app
+### 3. Install and set up the environment
 
-```bash
-bundle exec rails server
-```
+We recommend using Docker to install and run the application. However alternatively if you prefer, [you can install directly to your system environment instead](native-install-instructions.md).
 
-### Run the tests
+#### Install using Docker
 
-```bash
-bundle exec rake
-```
+Before you start, you will need to have Docker installed and running. You can [download it from the Docker website](https://docker.com/).
+
+The current Dockerfile and docker-compose were closely copied from [the Docker guide](https://docs.docker.com/compose/rails/).
+
+1. Run `bin/dbuild` to build and setup the docker environment.
+2. Run `bin/drake` to run all the tests and make sure everything works.
+
+### 4. Run the tests
+
+Run `bin/drake` to run all the tests and make sure everything works.
+You can also use `bin/drails` and `bin/dspec` to run specific rails and rspec commands via docker.
 
 *Note:* JavaScript acceptance tests are relying on the [Poltergeist](https://github.com/teampoltergeist/poltergeist) driver, which requires
 [PhantomJS](http://phantomjs.org). For more information about installing PhantomJS, please take a look
 [here](https://github.com/teampoltergeist/poltergeist#installing-phantomjs).
+
+### 5. Start the app
+
+Run `bin/dstart` to start the app.
+
+This should run a process which starts a server in a Docker container on your computer. This process won't finish - you'll know the server is ready when it stops doing anything and displays a message like this:
+```
+Rails 4.2.11 application starting in development on http://0.0.0.0:3000
+```
+
+**You can now view the app at http://localhost:3000**
+
+You can stop the server when you're finished by typing `Ctrl + C`.
 
 ## Front-end framework
 
 We use Foundation at version 5.5.3, you can find the documentation here: http://foundation.zurb.com/sites/docs/v/5.5.3/
 
 ## Finding something to work on
+
 You can pick one of the open [issues](https://github.com/codebar/planner/issues), fix a bug, improve the interface, refactor the code or improve test coverage!
 
 If there is something else that you would like to work on, open an issue first so we can discuss it. We are always open to new ideas and ways of improving planner!
