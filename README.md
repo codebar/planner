@@ -4,11 +4,11 @@
 [![Coverage Status](https://coveralls.io/repos/codebar/planner/badge.png)](https://coveralls.io/r/codebar/planner)
 [![Code Climate](https://codeclimate.com/github/codebar/planner.png)](https://codeclimate.com/github/codebar/planner)
 
-A tool to help manage [codebar.io](http://codebar.io) members and events.
+A tool to help manage [codebar.io](https://codebar.io) members and events.
 
 If you are considering making a PR, please take a look at the [GitHub issues](https://github.com/codebar/planner/issues) to see if there are any new feature requirements or bugs that you maybe able to help resolve.
 
-**Need help? [We're on Slack!](httpss://slack.codebar.io)**
+**Need help? [We're on Slack!](https://slack.codebar.io)**
 
 ## Getting Started
 
