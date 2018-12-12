@@ -38,16 +38,5 @@ feature 'managing workshop attendances' do
 
       expect(page).to have_content('2 are attending as students')
     end
-
-    xscenario 'can rsvp an invited student the the workshop' do
-      other_invitation = Fabricate(:workshop_invitation, workshop: workshop, attending: nil)
-
-      visit admin_workshop_path(workshop)
-      expect(page).to have_content('1 are attending as students')
-
-      select "#{other_invitation.member.full_name} (#{other_invitation.role})", from: 'workshop_invitations'
-
-      expect(page).to have_content('2 are attending as students')
-    end
   end
 end
