@@ -1,3 +1,5 @@
+require_relative 'spreadsheet'
+
 class Admin::InvitationsController < Admin::ApplicationController
   include Admin::WorkshopConcerns
 
@@ -35,6 +37,15 @@ class Admin::InvitationsController < Admin::ApplicationController
       set_admin_workshop_data
 
       render partial: 'admin/workshops/invitation_management'
+
+      if @invitation.role == "Student"
+          @spreadsheet = SpreadsheetSession.new
+      #puts "************************** #{@spreadsheet.inspect} ****************"
+          @spreadsheet.add_student(@invitation.member)
+      end
+
+      #puts "************************** #{@invitation.inspect} ****************"
+
     else
       redirect_to :back, notice: message
     end
