@@ -33,3 +33,9 @@ TAGS
 
 # Ignore local uploads
 public/uploads/
+
+/client_secret.json
+
+/credentials.json
+
+/token.yaml
