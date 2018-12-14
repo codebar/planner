@@ -1,3 +1,6 @@
+require 'bundler'
+Bundler.require
+
 class Admin::WorkshopsController < Admin::ApplicationController
   include  Admin::SponsorConcerns
   include  Admin::WorkshopConcerns
@@ -23,10 +26,25 @@ class Admin::WorkshopsController < Admin::ApplicationController
     authorize(@workshop)
 
     if @workshop.save
+      puts "\n************************** #{@workshop.inspect} ****************\n This is the point where we set up the workshop and it is given a unique id"
+
       grant_organiser_access(@workshop.chapter.organisers.pluck(:id))
       set_host(host_id)
 
       redirect_to admin_workshop_path(@workshop), notice: 'The workshop has been created.'
+
+      session = GoogleDrive::Session.from_config("client_secret.json")
+      @spreadsheet = session.create_spreadsheet(title = "Workshop#{@workshop.id}")
+
+      puts "\n************************** #{@spreadsheet.inspect} ****************\n This is the new spreadsheet for the workshop"
+
+
+      @file_id = @spreadsheet.worksheets_feed_url.split("/")[-3]
+
+      puts "\n********************************************************************************************  #{@spreadsheet.worksheets_feed_url} ******************************************************\n This is worksheets_feed_url"
+
+      puts "\n********************************************************************************************  #{@file_id} ******************************************************\n This is file_id"
+
     else
       flash[:notice] = @workshop.errors.full_messages.join('<br/>')
       render 'new'
