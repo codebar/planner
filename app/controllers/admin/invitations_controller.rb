@@ -39,7 +39,7 @@ class Admin::InvitationsController < Admin::ApplicationController
       render partial: 'admin/workshops/invitation_management'
 
       if @invitation.role == "Student"
-          @spreadsheet = SpreadsheetSession.new
+          @spreadsheet = SpreadsheetSession.new("codebar_spreadsheet_practice")
       #puts "************************** #{@spreadsheet.inspect} ****************"
           @spreadsheet.add_student(@invitation.member)
       end

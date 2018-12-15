@@ -36,6 +36,7 @@ gem 'uglifier', '>= 1.3.0'
 gem 'will_paginate'
 
 gem 'google_drive', '>=3.0.0'
+gem 'google-api-client', '~> 0.11'
 
 gem 'icalendar'
 gem 'tzinfo-data'

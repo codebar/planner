@@ -2,26 +2,36 @@ require 'bundler'
 Bundler.require
 
 class SpreadsheetSession
-    # TODO: change initialise so pass in the spreadsheet_title :) That may change what I've done with spreadsheet_title below
-    def initialize()
+    def initialize(title)
+        @title = title
         # Authenticate a session with your Service Account
         session = GoogleDrive::Session.from_config("client_secret.json")
         # Get the spreadsheet by its title
-        spreadsheet = session.spreadsheet_by_title("codebar_spreadsheet_practice")
+        @spreadsheet = session.create_spreadsheet(@title)
+        #@file_id = @spreadsheet.worksheets_feed_url.split("/")[-3]
         # Get the first worksheet
-        @worksheet = spreadsheet.worksheets[0]
+        #@worksheet = @spreadsheet.worksheets[0]
+        #worksheet.insert_rows(worksheet.num_rows + 1, [["New", "Worksheet"]])
+        #@worksheet.save
+
+        #file_id = ws.worksheet_feed_url.split("/")[-4]
+
+        #drive = settings.google_client_driver
+
+        #  new_permission = drive.permissions.insert.request_schema.new({
+        #      'value' => "codebar-planner@codebar-planner.iam.gserviceaccount.com",
+        #      'type' => "user",
+        #      'role' => "editor"
+        #  })
+
+         # result = client.execute(
+        #    :api_method => drive.permissions.insert,
+        #    :body_object => new_permission,
+        #    :parameters => { 'fileId' => file_id })
     end
 
-    def worksheet
-        @worksheet
-    end
-
-    def spreadsheet_title=(spreadsheet_title)
-        @spreadsheet_title = spreadsheet_title
-    end
-
-    def title
-        @spreadsheet_title
+    def fileid()
+        @file_id = @spreadsheet.worksheets_feed_url.split("/")[-3]
     end
 
     def add_student(student)
