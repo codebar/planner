@@ -1,6 +1,5 @@
 require_relative 'spreadsheet'
-#require 'bundler'
-#Bundler.require
+# require_relative 'read_from_random_sheet'
 
 class Admin::WorkshopsController < Admin::ApplicationController
   include  Admin::SponsorConcerns
@@ -43,9 +42,8 @@ class Admin::WorkshopsController < Admin::ApplicationController
 
       puts "\n********************************************************************************************  #{@file_id} ******************************************************\n This is file_id"
 
-      #@google_client = Google::APIClient.new
-
-      #puts "\n********************************************************************************************  #{@google_client} ******************************************************\n This is google_client"
+      # @read_sheet = ReadSheet.new
+      # @read_sheet.read
 
     else
       flash[:notice] = @workshop.errors.full_messages.join('<br/>')
