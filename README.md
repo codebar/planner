@@ -131,6 +131,11 @@ bundle exec rails server
 bundle exec rake
 ```
 
+If you just want to run a single test file you can pass the path to the file via the `SPEC` variable:
+```bash
+bundle exec rake SPEC=<path to test>
+```
+
 *Note:* JavaScript acceptance tests are relying on the [Poltergeist](https://github.com/teampoltergeist/poltergeist) driver, which requires
 [PhantomJS](http://phantomjs.org). For more information about installing PhantomJS, please take a look
 [here](https://github.com/teampoltergeist/poltergeist#installing-phantomjs).
