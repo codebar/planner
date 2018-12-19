@@ -19,6 +19,59 @@ class SpreadsheetSession
         @file_id = @spreadsheet.worksheets_feed_url.split("/")[-3]
     end
 
+    def capabilities()
+      @capabilities = @spreadsheet.capabilities.can_share
+    end
+
+    # def share_file(real_file_id, real_user, real_domain)
+    def share_file(real_file_id, real_user)
+      ids = []
+      # [START drive_share_file]
+      file_id = '1sTWaJ_j7PkjzaBWtNc3IzovK5hQf21FbOw9yLeeLPNQ'
+      # [START_EXCLUDE silent]
+      file_id = real_file_id
+      # [END_EXCLUDE]
+      callback = lambda do |res, err|
+        if err
+          # Handle error...
+          puts err.body
+        else
+          puts "Permission ID: #{res.id}"
+          # [START_EXCLUDE silent]
+          ids << res.id
+          # [END_EXCLUDE]
+        end
+      end
+      user_permission = {
+          type: 'user',
+          role: 'writer',
+          email_address: 'user@example.com'
+      }
+      # [START_EXCLUDE silent]
+      user_permission[:email_address] = real_user
+      # [END_EXCLUDE]
+      @spreadsheet.create_permission(file_id,
+                                user_permission,
+                                fields: 'id',
+                                &callback)
+      # domain_permission = {
+      #     type: 'domain',
+      #     role: 'reader',
+      #     domain: 'example.com'
+      # }
+      # # [START_EXCLUDE silent]
+      # domain_permission[:domain] = real_domain
+      # # [END_EXCLUDE]
+      # service.create_permission(file_id,
+      #                           domain_permission,
+      #                           fields: 'id',
+      #                           &callback)
+    # end
+    # [END drive_share_file]
+    return ids
+  end
+
+
     def add_student(student)
 
         @worksheet.insert_rows(worksheet.num_rows + 1, [["#{student.full_name}", " ", " ", " " "#{student.about_you}"]])

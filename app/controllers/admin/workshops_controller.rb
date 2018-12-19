@@ -26,12 +26,13 @@ class Admin::WorkshopsController < Admin::ApplicationController
     authorize(@workshop)
 
     if @workshop.save
-      puts "\n************************** #{@workshop.chapter.organisers.pluck(:email)} ****************\n This is the point where we set up the workshop and it is given a unique id and these are the organisers emails"
 
       grant_organiser_access(@workshop.chapter.organisers.pluck(:id))
       set_host(host_id)
 
       redirect_to admin_workshop_path(@workshop), notice: 'The workshop has been created.'
+
+      puts "\n************************** #{@workshop.chapter.organisers.pluck(:email)} ****************\n This is the point where we set up the workshop and it is given a unique id and these are the organisers emails"
 
       @spreadsheet = SpreadsheetSession.new("Workshop_#{@workshop.id}")
 
@@ -42,9 +43,11 @@ class Admin::WorkshopsController < Admin::ApplicationController
 
       puts "\n********************************************************************************************  #{@file_id} ******************************************************\n This is file_id"
 
-      # @read_sheet = ReadSheet.new
-      # @read_sheet.read
+      @capabilities = @spreadsheet.capabilities
+      puts "\n************************** #{@capabilities} ****************\n SpreadSheet_Capabilities!"
 
+      @spreadsheet.share_file(@file_id, 'karadelamarck@gmail')
+      
     else
       flash[:notice] = @workshop.errors.full_messages.join('<br/>')
       render 'new'

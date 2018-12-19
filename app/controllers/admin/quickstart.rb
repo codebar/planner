@@ -19,11 +19,14 @@ SCOPE = Google::Apis::DriveV3::AUTH_DRIVE
 #
 # @return [Google::Auth::UserRefreshCredentials] OAuth2 credentials
 def authorize
-  client_id = Google::Auth::ClientId.from_file(CREDENTIALS_PATH)
+  @client_id = Google::Auth::ClientId.from_file(CREDENTIALS_PATH)
+  puts "\n************************** #{@client_id} ****************\n "
   token_store = Google::Auth::Stores::FileTokenStore.new(file: TOKEN_PATH)
-  authorizer = Google::Auth::UserAuthorizer.new(client_id, SCOPE, token_store)
+  authorizer = Google::Auth::UserAuthorizer.new(@client_id, SCOPE, token_store)
   user_id = 'default'
+  puts "\n************************** #{user_id} ****************\n "
   credentials = authorizer.get_credentials(user_id)
+  puts "\n************************** #{credentials} ****************\n "
   if credentials.nil?
     url = authorizer.get_authorization_url(base_url: OOB_URI)
     puts 'Open the following URL in the browser and enter the ' \
@@ -41,45 +44,45 @@ drive_service = Google::Apis::DriveV3::DriveService.new
 drive_service.client_options.application_name = APPLICATION_NAME
 drive_service.authorization = authorize
 
-file_id = '1ftczLDHv7eZd3em9vUPgHB9rNvkf5APgaK3PYlwOsZ0'
-callback = lambda do |res, err|
-  if err
-    # Handle error...
-    puts err.body
-  else
-    puts "Permission ID: #{res.id}"
-  end
-end
-drive_service.batch do |service|
-  user_permission = {
-      type: 'user',
-      role: 'writer',
-      email_address: 'karadelamarck@gmail.com'
-  }
-  service.create_permission(file_id,
-                            user_permission,
-                            fields: 'id',
-                            &callback)
-  domain_permission = {
-      type: 'domain',
-      role: 'reader',
-      domain: 'example.com'
-  }
-  service.create_permission(file_id,
-                            domain_permission,
-                            fields: 'id',
-                            &callback)
-end
+# file_id = '1ftczLDHv7eZd3em9vUPgHB9rNvkf5APgaK3PYlwOsZ0'
+# callback = lambda do |res, err|
+#   if err
+#     # Handle error...
+#     puts err.body
+#   else
+#     puts "Permission ID: #{res.id}"
+#   end
+# end
+# drive_service.batch do |service|
+#   user_permission = {
+#       type: 'user',
+#       role: 'writer',
+#       email_address: 'karadelamarck@gmail.com'
+#   }
+#   service.create_permission(file_id,
+#                             user_permission,
+#                             fields: 'id',
+#                             &callback)
+#   domain_permission = {
+#       type: 'domain',
+#       role: 'reader',
+#       domain: 'example.com'
+#   }
+#   service.create_permission(file_id,
+#                             domain_permission,
+#                             fields: 'id',
+#                             &callback)
+# end
 
 
 #List the 10 most recently modified files.
-# response = drive_service.list_files(page_size: 10,
-#                               fields: 'nextPageToken, files(id, name)')
-# puts 'Files:'
-# puts 'No files found' if response.files.empty?
-# response.files.each do |file|
-#   puts "#{file.name} (#{file.id})"
-# end
+response = drive_service.list_files(page_size: 10,
+                              fields: 'nextPageToken, files(id, name)')
+puts 'Files:'
+puts 'No files found' if response.files.empty?
+response.files.each do |file|
+  puts "#{file.name} (#{file.id})"
+end
 
 
 
