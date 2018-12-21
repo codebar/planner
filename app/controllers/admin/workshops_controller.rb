@@ -36,18 +36,11 @@ class Admin::WorkshopsController < Admin::ApplicationController
 
       @spreadsheet = SpreadsheetSession.new("Workshop_#{@workshop.id}")
 
-      puts "\n************************** #{@spreadsheet.inspect} ****************\n This is the new spreadsheet for the workshop"
+      @workshop.spreadsheet_id = @spreadsheet.fileid
+      @workshop.save!
 
+      @spreadsheet.share_file('karadelamarck@gmail')
 
-      @file_id = @spreadsheet.fileid
-
-      puts "\n********************************************************************************************  #{@file_id} ******************************************************\n This is file_id"
-
-      @capabilities = @spreadsheet.capabilities
-      puts "\n************************** #{@capabilities} ****************\n SpreadSheet_Capabilities!"
-
-      @spreadsheet.share_file(@file_id, 'karadelamarck@gmail')
-      
     else
       flash[:notice] = @workshop.errors.full_messages.join('<br/>')
       render 'new'

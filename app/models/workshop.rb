@@ -5,6 +5,7 @@ class Workshop < ActiveRecord::Base
 
   attr_accessor :local_date, :local_time, :rsvp_open_local_date, :rsvp_open_local_time
 
+
   resourcify :permissions, role_cname: 'Permission', role_table_name: :permission
 
   has_many :invitations, class_name: 'WorkshopInvitation'

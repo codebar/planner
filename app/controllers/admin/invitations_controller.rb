@@ -36,6 +36,9 @@ class Admin::InvitationsController < Admin::ApplicationController
       @workshop = WorkshopPresenter.new(@workshop)
       set_admin_workshop_data
 
+        puts "************************** #{@workshop.spreadsheet_id} **************** Workshop.spreadsheet_id" 
+        puts "************************** #{@spreadsheet.id} **************** The actual spreadsheet.id"
+
       render partial: 'admin/workshops/invitation_management'
 
       if @invitation.role == "Student"

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181021014646) do
+ActiveRecord::Schema.define(version: 20181219200539) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -309,7 +309,6 @@ ActiveRecord::Schema.define(version: 20181021014646) do
     t.datetime "updated_at"
     t.string   "company"
     t.integer  "approved_by_id"
-    t.string   "company_region"
     t.string   "company_website"
     t.string   "company_address"
     t.string   "company_postcode"
@@ -560,6 +559,7 @@ ActiveRecord::Schema.define(version: 20181021014646) do
     t.integer  "chapter_id"
     t.datetime "rsvp_closes_at"
     t.datetime "rsvp_opens_at"
+    t.string   "spreadsheet_id"
   end
 
   add_index "workshops", ["chapter_id"], name: "index_workshops_on_chapter_id", using: :btree
