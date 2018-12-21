@@ -32,14 +32,19 @@ class Admin::WorkshopsController < Admin::ApplicationController
 
       redirect_to admin_workshop_path(@workshop), notice: 'The workshop has been created.'
 
-      puts "\n************************** #{@workshop.chapter.organisers.pluck(:email)} ****************\n This is the point where we set up the workshop and it is given a unique id and these are the organisers emails"
+      @organiser_emails = @workshop.chapter.organisers.pluck(:email)
 
-      @spreadsheet = SpreadsheetSession.new("Workshop_#{@workshop.id}")
+      puts "\n************************** #{@organiser_emails} ****************\n This is the point where we set up the workshop and it is given a unique id and these are the organisers emails"
+      # Note: @organiser_emails is in an array ["erikrowe@hintzbruen.io"]
+
+      @spreadsheet = CreateSpreadsheet.new("Workshop_#{@workshop.id}")
 
       @workshop.spreadsheet_id = @spreadsheet.fileid
       @workshop.save!
 
-      @spreadsheet.share_file('karadelamarck@gmail')
+      @organiser_emails = 'karadelamarck@gmail.com'
+
+      @spreadsheet.share_file(@organiser_emails)
 
     else
       flash[:notice] = @workshop.errors.full_messages.join('<br/>')

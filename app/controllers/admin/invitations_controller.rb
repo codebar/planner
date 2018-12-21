@@ -36,18 +36,12 @@ class Admin::InvitationsController < Admin::ApplicationController
       @workshop = WorkshopPresenter.new(@workshop)
       set_admin_workshop_data
 
-        puts "************************** #{@workshop.spreadsheet_id} **************** Workshop.spreadsheet_id" 
-        puts "************************** #{@spreadsheet.id} **************** The actual spreadsheet.id"
-
       render partial: 'admin/workshops/invitation_management'
 
       if @invitation.role == "Student"
-          @spreadsheet = SpreadsheetSession.new("codebar_spreadsheet_practice")
-      #puts "************************** #{@spreadsheet.inspect} ****************"
+          @spreadsheet = UpdateSpreadsheet.new(@workshop.spreadsheet_id)
           @spreadsheet.add_student(@invitation.member)
       end
-
-      #puts "************************** #{@invitation.inspect} ****************"
 
     else
       redirect_to :back, notice: message
