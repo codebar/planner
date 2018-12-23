@@ -1,5 +1,4 @@
 require_relative 'spreadsheet'
-# require_relative 'read_from_random_sheet'
 
 class Admin::WorkshopsController < Admin::ApplicationController
   include  Admin::SponsorConcerns
@@ -32,19 +31,18 @@ class Admin::WorkshopsController < Admin::ApplicationController
 
       redirect_to admin_workshop_path(@workshop), notice: 'The workshop has been created.'
 
-      @organiser_emails = @workshop.chapter.organisers.pluck(:email)
-
-      puts "\n************************** #{@organiser_emails} ****************\n This is the point where we set up the workshop and it is given a unique id and these are the organisers emails"
-      # Note: @organiser_emails is in an array ["erikrowe@hintzbruen.io"]
-
-      @spreadsheet = CreateSpreadsheet.new("Workshop_#{@workshop.id}")
+      @spreadsheet = CreateSpreadsheet.new("Workshop_#{@workshop.id}_#{@workshop.host.name}")
 
       @workshop.spreadsheet_id = @spreadsheet.fileid
       @workshop.save!
 
-      @organiser_emails = 'karadelamarck@gmail.com'
+      organiser_emails = @workshop.chapter.organisers.pluck(:email)
 
-      @spreadsheet.share_file(@organiser_emails)
+      organiser_emails = ['karadelamarck@gmail.com', 'kara@codebar.io']
+
+      date_time = "#{@workshop.local_date} at #{@workshop.local_time}"
+
+      @spreadsheet.share(organiser_emails, date_time)
 
     else
       flash[:notice] = @workshop.errors.full_messages.join('<br/>')

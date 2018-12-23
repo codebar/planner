@@ -443,7 +443,6 @@ DEPENDENCIES
   friendly_id
   gibbon (~> 1.1.5)
   github-markdown
-  google-api-client (~> 0.11)
   google_drive (>= 3.0.0)
   haml
   high_voltage
