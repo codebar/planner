@@ -40,9 +40,9 @@ class Admin::WorkshopsController < Admin::ApplicationController
 
       organisers_emails = ['karadelamarck@gmail.com', 'kara@codebar.io']
 
-      date_time = "#{@workshop.local_date}"
+      date = "#{@workshop.local_date}"
 
-      @spreadsheet.share(organisers_emails, date_time)
+      @spreadsheet.share(organisers_emails, date)
 
     else
       flash[:notice] = @workshop.errors.full_messages.join('<br/>')

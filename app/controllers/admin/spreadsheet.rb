@@ -4,7 +4,12 @@ Bundler.require
 class CreateSpreadsheet
     def initialize(title)
       begin
-        session = GoogleDrive::Session.from_config("client_secret.json")
+        begin
+          orig_stdin, $stdin = $stdin, nil
+          session = GoogleDrive::Session.from_config("client_secret.json")
+        ensure
+          $stdin = orig_stdin
+        end
         @spreadsheet = session.create_spreadsheet(title)
         worksheet = @spreadsheet.worksheets[0]
         worksheet[1, 1] = "Intro speech:"
@@ -58,7 +63,12 @@ end
 class UpdateSpreadsheet
     def initialize(spreadsheet_id)
       begin
-        session = GoogleDrive::Session.from_config("client_secret.json")
+        begin
+          orig_stdin, $stdin = $stdin, nil
+          session = GoogleDrive::Session.from_config("client_secret.json")
+        ensure
+          $stdin = orig_stdin
+        end
         @spreadsheet = session.spreadsheet_by_key(spreadsheet_id)
       rescue => e
         puts e.inspect
