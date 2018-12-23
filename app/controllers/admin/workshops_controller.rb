@@ -31,18 +31,18 @@ class Admin::WorkshopsController < Admin::ApplicationController
 
       redirect_to admin_workshop_path(@workshop), notice: 'The workshop has been created.'
 
-      @spreadsheet = CreateSpreadsheet.new("Workshop_#{@workshop.id}_#{@workshop.host.name}")
+      @spreadsheet = CreateSpreadsheet.new("Workshop #{@workshop.id}: #{@workshop.local_date} at #{@workshop.host.name}")
 
       @workshop.spreadsheet_id = @spreadsheet.fileid
       @workshop.save!
 
-      organiser_emails = @workshop.chapter.organisers.pluck(:email)
+      organisers_emails = @workshop.chapter.organisers.pluck(:email)
 
-      organiser_emails = ['karadelamarck@gmail.com', 'kara@codebar.io']
+      organisers_emails = ['karadelamarck@gmail.com', 'kara@codebar.io']
 
-      date_time = "#{@workshop.local_date} at #{@workshop.local_time}"
+      date_time = "#{@workshop.local_date}"
 
-      @spreadsheet.share(organiser_emails, date_time)
+      @spreadsheet.share(organisers_emails, date_time)
 
     else
       flash[:notice] = @workshop.errors.full_messages.join('<br/>')

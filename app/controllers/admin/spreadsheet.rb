@@ -3,6 +3,7 @@ Bundler.require
 
 class CreateSpreadsheet
     def initialize(title)
+      begin
         session = GoogleDrive::Session.from_config("client_secret.json")
         @spreadsheet = session.create_spreadsheet(title)
         worksheet = @spreadsheet.worksheets[0]
@@ -21,10 +22,17 @@ class CreateSpreadsheet
         worksheet.insert_rows(worksheet.num_rows + 11, [["***********"]])
 
         worksheet.save
+      rescue => e
+        puts e.inspect
+      end
     end
 
     def fileid()
-        @file_id = @spreadsheet.worksheets_feed_url.split("/")[-3]
+        begin
+          @file_id = @spreadsheet.worksheets_feed_url.split("/")[-3]
+        rescue => e
+          puts e.inspect
+        end
     end
 
     def share_file_permission(organiser_email, date)
@@ -34,26 +42,38 @@ class CreateSpreadsheet
           email_address: organiser_email
         }
         message = "Hi, Please find below a link to the pairing spreadsheet for codebar workshop on #{date}."
-        @spreadsheet.acl.push(user_permission, {email_message: message})
+        begin
+          @spreadsheet.acl.push(user_permission, {email_message: message})
+        rescue => e
+          puts e.inspect
+        end
     end
 
-    def share(organiser_emails, date)
-      organiser_emails.each { |organiser_email| share_file_permission(organiser_email, date) }
+    def share(organisers_emails, date)
+      organisers_emails.each { |organiser_email| share_file_permission(organiser_email, date) }
     end
 end
 
 
 class UpdateSpreadsheet
     def initialize(spreadsheet_id)
+      begin
         session = GoogleDrive::Session.from_config("client_secret.json")
         @spreadsheet = session.spreadsheet_by_key(spreadsheet_id)
+      rescue => e
+        puts e.inspect
+      end
     end
 
     def add_student(student)
+      begin
         worksheet = @spreadsheet.worksheets[0]
         worksheet[worksheet.num_rows + 1, 1] = "#{student.full_name}"
         worksheet[worksheet.num_rows, 4] = "#{student.about_you}"
         worksheet.save
+      rescue => e
+        puts e.inspect
+      end
     end
 end
 
