@@ -5,7 +5,7 @@ class CreateSpreadsheet
     def initialize(title)
       begin
         begin
-          orig_stdin, $stdin = $stdin, nil
+          orig_stdin, $stdin = $stdin, StringIO.new
           session = GoogleDrive::Session.from_config("client_secret.json")
         ensure
           $stdin = orig_stdin
@@ -64,7 +64,7 @@ class UpdateSpreadsheet
     def initialize(spreadsheet_id)
       begin
         begin
-          orig_stdin, $stdin = $stdin, nil
+          orig_stdin, $stdin = $stdin, StringIO.new
           session = GoogleDrive::Session.from_config("client_secret.json")
         ensure
           $stdin = orig_stdin
@@ -86,10 +86,3 @@ class UpdateSpreadsheet
       end
     end
 end
-
-# Note: the above code works, so this is quite functional! :)
-#However, outstanding issues to bring this to production.
-#All secrets in the client_secret.json belong to my Google account.
-# Also, still hardcoding in my email(s) (but should be able to just remove this for production)
-# How should I test this?
-# I need these wrapped in try/catch!

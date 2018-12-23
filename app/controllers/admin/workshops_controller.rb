@@ -37,9 +37,6 @@ class Admin::WorkshopsController < Admin::ApplicationController
       @workshop.save!
 
       organisers_emails = @workshop.chapter.organisers.pluck(:email)
-
-      organisers_emails = ['karadelamarck@gmail.com', 'kara@codebar.io']
-
       date = "#{@workshop.local_date}"
 
       @spreadsheet.share(organisers_emails, date)
