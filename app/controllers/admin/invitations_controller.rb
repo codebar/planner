@@ -39,8 +39,12 @@ class Admin::InvitationsController < Admin::ApplicationController
       render partial: 'admin/workshops/invitation_management'
 
       if @invitation.role == "Student"
-          @spreadsheet = UpdateSpreadsheet.new(@workshop.spreadsheet_id)
-          @spreadsheet.add_student(@invitation.member)
+          begin
+            @spreadsheet = UpdateSpreadsheet.new(@workshop.spreadsheet_id)
+            @spreadsheet.add_student(@invitation.member)
+          rescue => e
+            puts e.inspect
+          end
       end
 
     else
