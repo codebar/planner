@@ -31,25 +31,20 @@ class Admin::WorkshopsController < Admin::ApplicationController
 
       redirect_to admin_workshop_path(@workshop), notice: 'The workshop has been created.'
 
-      begin
-        @spreadsheet = CreateSpreadsheet.new("Workshop #{@workshop.id}: #{@workshop.local_date} at #{@workshop.host.name}")
-
-        @workshop.spreadsheet_id = @spreadsheet.fileid
-        @workshop.save
-
-        organisers_emails = @workshop.chapter.organisers.pluck(:email)
-        organisers_emails = ['karadelamarck@gmail.com']
-        date = "#{@workshop.local_date}"
-
-        @spreadsheet.share(organisers_emails, date)
-    rescue => e
-      puts e.inspect
-    end
+      create_workshop_spreadsheet
 
     else
       flash[:notice] = @workshop.errors.full_messages.join('<br/>')
       render 'new'
     end
+  end
+
+  def create_workshop_spreadsheet
+    spreadsheet = Spreadsheet.create_for_workshop(@workshop)
+    @workshop.spreadsheet_id = spreadsheet.id
+    @workshop.save
+  rescue StandardError => e
+    Rails.logger.debug e.inspect
   end
 
   def edit
