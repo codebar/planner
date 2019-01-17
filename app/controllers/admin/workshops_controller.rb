@@ -31,7 +31,7 @@ class Admin::WorkshopsController < Admin::ApplicationController
 
       redirect_to admin_workshop_path(@workshop), notice: 'The workshop has been created.'
 
-      create_workshop_spreadsheet
+      create_workshop_spreadsheet!
 
     else
       flash[:notice] = @workshop.errors.full_messages.join('<br/>')
@@ -39,7 +39,7 @@ class Admin::WorkshopsController < Admin::ApplicationController
     end
   end
 
-  def create_workshop_spreadsheet
+  def create_workshop_spreadsheet!
     spreadsheet = Spreadsheet.create_for_workshop(@workshop)
     @workshop.spreadsheet_id = spreadsheet.id
     @workshop.save

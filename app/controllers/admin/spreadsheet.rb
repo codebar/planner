@@ -70,7 +70,8 @@ class Spreadsheet
           role: 'writer',
           email_address: organiser_email
         }
-        message = "Hi, Please find below a link to the pairing spreadsheet for codebar workshop on #{workshop.local_date}."
+        message = 'Hi, Please find below a link to the pairing spreadsheet ' \
+                  'for codebar workshop on #{workshop.local_date}.'
         google_sheet.acl.push(user_permission, email_message: message)
       end
     end
