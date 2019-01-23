@@ -1,4 +1,4 @@
-require_relative 'spreadsheet'
+require_dependency 'spreadsheet/spreadsheet'
 
 class Admin::InvitationsController < Admin::ApplicationController
   include Admin::WorkshopConcerns
