@@ -6,8 +6,8 @@ class Spreadsheet
     @google_sheet = google_sheet
   end
 
-  def self.create_for_workshop(workshop)
-    session = get_session('client_secret.json')
+  def self.create_for_workshop(workshop, google_service_account_path:)
+    session = get_session(google_service_account_path)
     title = "Workshop #{workshop.id}: #{workshop.local_date} at #{workshop.host.name}"
     google_sheet = session.create_spreadsheet(title)
     load_spreadsheet_template(google_sheet)
@@ -15,8 +15,8 @@ class Spreadsheet
     new(google_sheet)
   end
 
-  def self.find_by(id)
-    session = get_session('client_secret.json')
+  def self.find_by(id, google_service_account_path:)
+    session = get_session(google_service_account_path)
     google_sheet = session.spreadsheet_by_key(id)
     new(google_sheet)
   end

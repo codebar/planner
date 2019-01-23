@@ -40,10 +40,11 @@ class Admin::InvitationsController < Admin::ApplicationController
 
       if @invitation.role == 'Student'
         begin
-          @spreadsheet = Spreadsheet.find_by(@workshop.spreadsheet_id)
+          @spreadsheet = Spreadsheet.find_by(@workshop.spreadsheet_id,
+            google_service_account_path: Planner::Application.config.google_service_account_path)
           @spreadsheet.add_student(@invitation.member)
         rescue StandardError => e
-          Rails.logger.debug e.inspect
+          Rails.logger.warn("Failed to update spreadsheet with student info: #{e.inspect}")
         end
       end
 
