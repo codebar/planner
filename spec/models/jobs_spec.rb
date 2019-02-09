@@ -30,7 +30,7 @@ describe Job do
     end
 
     it '#pending returns all jobs pending approval' do
-      expect(Job.pending.all).to eq(pending_approval)
+      expect(Job.pending.all).to match_array(pending_approval)
     end
 
     it '#active returns all active jobs' do
