@@ -242,7 +242,7 @@ GEM
       slop (~> 3.0)
     public_suffix (3.0.3)
     puma (3.12.0)
-    pundit (2.0.0)
+    pundit (2.0.1)
       activesupport (>= 3.0.0)
     rack (1.6.11)
     rack-test (0.6.3)
