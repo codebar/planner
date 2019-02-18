@@ -14,7 +14,7 @@
               %td
                 %h3 Hi #{@member.name},
                 %p.lead
-                  We're back for another installment of codebar Monthlies on #{humanize_date(@meeting.date_and_time)} at #{@meeting.venue.name}!
+                  We're back for another installment of codebar Monthlies on #{humanize_date(@meeting.date_and_time, with_time: true)} at #{@meeting.venue.name}!
                 %p
                   = "#{link_to 'You can RSVP here', @rsvp_url}, after logging into your codebar account.".html_safe
 
@@ -35,5 +35,4 @@
 
         .content
           = render partial: 'shared_mailers/social'
-
           = render partial: 'shared_mailers/footer'
