@@ -15,15 +15,15 @@
 
 - if logged_in? && @workshop.future? && (@workshop.invitable || @workshop.open_for_rsvp?)
   - if @workshop.attendee?(current_user)
-    = link_to "Manage your invitation", rsvp_workshop_path(@workshop), method: :post, class: 'button round '
+    = button_to "Manage your invitation", rsvp_workshop_path(@workshop), method: :post, class: 'button round '
   - else
     - if current_user.student? && current_user.coach?
-      = link_to "Attend as a student", rsvp_workshop_path(@workshop, role: "Student"), method: :post,class: 'button round '
-      = link_to "Attend as a coach", rsvp_workshop_path(@workshop, role: "Coach"), method: :post,class: 'button round '
+      = button_to "Attend as a student", rsvp_workshop_path(@workshop, role: "Student"), method: :post,class: 'button round '
+      = button_to "Attend as a coach", rsvp_workshop_path(@workshop, role: "Coach"), method: :post,class: 'button round '
     - elsif current_user.student?
-      = link_to "Attend as a student", rsvp_workshop_path(@workshop, role: "Student"), method: :post,class: 'button round '
+      = button_to "Attend as a student", rsvp_workshop_path(@workshop, role: "Student"), method: :post,class: 'button round '
     - elsif current_user.coach?
-      = link_to "Attend as a coach", rsvp_workshop_path(@workshop, role: "Coach"), method: :post,class: 'button round '
+      = button_to "Attend as a coach", rsvp_workshop_path(@workshop, role: "Coach"), method: :post,class: 'button round '
     - else
       It looks like something went wrong while you were signing up.
       = link_to "Please tell us whether you want to attend as a student or coach.", subscriptions_path

@@ -71,7 +71,7 @@ feature 'Managing workshops' do
     end
   end
 
-  scenario  'sending invitations to workshop attendees' do
+  scenario 'sending invitations to workshop attendees' do
     workshop = Fabricate(:workshop)
     visit admin_workshop_send_invites_path(workshop)
     click_on 'Students'
@@ -82,17 +82,19 @@ feature 'Managing workshops' do
   scenario 'rendering a text file with all the workshop attendee emails' do
     workshop = Fabricate(:workshop)
     attendees = Fabricate.times(4, :attending_workshop_invitation, workshop: workshop)
-    attendee_emails = attendees.map(&:member).map(&:email).join(', ')
+    attendees_emails = attendees.map(&:member).map(&:email)
     visit admin_workshop_attendees_emails_path(workshop, format: :text)
 
-    expect(page).to have_content(attendee_emails)
+    attendees_emails.each do |email|
+      expect(page).to have_content(email)
+    end
   end
 
   scenario 'rendering a list with the workshop attendee names' do
     workshop = Fabricate(:workshop)
     attendees = Fabricate.times(4, :attending_workshop_invitation, workshop: workshop)
     visit admin_workshop_attendees_checklist_path(workshop, format: :text)
-    attendee_emails = attendees.map(&:member).map(&:full_name).each do |name|
+    attendees.map(&:member).map(&:full_name).each do |name|
       expect(page).to have_content(name)
     end
   end
