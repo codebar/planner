@@ -1,4 +1,4 @@
-# codebar website & workshop planner
+# codebar website & event planner
 
 [![Build Status](https://travis-ci.org/codebar/planner.png?branch=master)](https://travis-ci.org/codebar/planner)
 [![Coverage Status](https://coveralls.io/repos/codebar/planner/badge.png)](https://coveralls.io/r/codebar/planner)
