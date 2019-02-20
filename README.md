@@ -61,7 +61,7 @@ from a command prompt in your project folder:
 
 ### 3. Install and set up the environment
 
-We recommend using Docker to install and run the application. However alternatively if you prefer, [you can install directly to your system environment instead](native-install-instructions.md).
+We recommend using Docker to install and run the application. However alternatively if you prefer, [you can install directly to your system environment instead](https://github.com/codebar/planner/blob/master/native-installation-instructions.md).
 
 #### Install using Docker
 

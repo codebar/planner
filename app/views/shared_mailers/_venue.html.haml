@@ -2,15 +2,21 @@
   %td
     %h4 Venue
 %tr
-  %td{ width: '70%', style: 'vertical-align: top; padding-right:20px;' }
+  %td{ width: '70%', style: 'vertical-align: top; padding-right: 20px;' }
     %p
       %strong #{host.name}
       %br
       #{address.to_html}
-    - if host.address.directions
+    - if host.address.directions.present?
       %p
         %strong Directions:
         %br
         #{host.address.directions}
+    - if host.accessibility_info.present?
+      %p
+        %strong Accessibility information:
+        %br
+        #{host.accessibility_info}
+
   %td{ width: '30%', style: 'vertical-align: top;' }
     = image_tag(host.avatar, alt: host.name)
