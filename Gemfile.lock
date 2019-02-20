@@ -331,8 +331,8 @@ GEM
       sprockets (>= 2.8, < 4.0)
       sprockets-rails (>= 2.0, < 4.0)
       tilt (>= 1.1, < 3)
-    shoulda-matchers (3.1.3)
-      activesupport (>= 4.0.0)
+    shoulda-matchers (4.0.0)
+      activesupport (>= 4.2.0)
     simple_form (4.0.0)
       actionpack (> 4)
       activemodel (> 4)
@@ -437,7 +437,7 @@ DEPENDENCIES
   rspec-rails
   rubocop (~> 0.65.0)
   sass-rails (~> 5.0.1)
-  shoulda-matchers (~> 3.1)
+  shoulda-matchers (~> 4.0)
   simple_form
   stripe
   timecop
