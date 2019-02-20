@@ -1,11 +1,12 @@
 #minified {
   .sponsor {
-    margin-right: 10px;
     max-width: 90px;
     max-height: 60px;
+    &:not(:last-child) {
+      margin-right: 10px;
+    }
   }
 }
-
 
 #sidebar {
   background: #fdfdfd;
@@ -13,5 +14,47 @@
 }
 
 .event {
-  margin-top: 15px;
+  $root: &;
+
+  padding: 20px;
+  margin-top: 10px;
+  border: 1px solid rgba($primary-color, 0.25);
+
+  &__header {
+    .title,
+    .title a {
+      font-size: 1.2rem;
+      line-height: 1.2;
+      margin: 0;
+    }
+  }
+
+  &__header,
+  &__footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+
+  &__details {
+    margin-top: 20px;
+    font-size: 0.9rem;
+    .time {
+      font-weight: 800;
+    }
+  }
+
+  &__footer {
+    margin-top: 20px;
+
+    .organisers {
+      margin: 0 !important;
+    }
+
+    #{$root}__sponsors {
+      a {
+        border: none;
+      }
+    }
+  }
 }
