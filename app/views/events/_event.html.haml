@@ -1,31 +1,38 @@
-.event#minified
-  %header.event__header
-    %h3.title
-      =link_to event.to_s, event.path
-    - if event.chapter
-      %span.label.status
-        = event.chapter.name
-    - if @user
-      - if @user.attending?(event.__getobj__)
-        = link_to event.path do
-          %span.label.success Attending
-      - if @user.event_organiser?(event)
-        = link_to event.admin_path do
-          %span.label Manage
-  .event__details
-    .time
-      = event.date + ' @ ' + event.time
-    .hosted
-      - if event.venue.present?
-        Hosted at:
-        = link_to event.venue.name, event.venue.website
-  .event__footer 
-    .event__organisers
+.event
+  .event__col-1
+    %header.event__header
+      %h3.title
+        = link_to event.to_s, event.path
+        - if event.venue.present?
+          at
+          = link_to event.venue.name, event.venue.website
+    .event__details
+      .time
+        %i.material-icons
+          access_time
+        = event.time
+      .date 
+        %i.material-icons
+          calendar_today
+        = event.date
       - if event.organisers.any?
-        .organisers
-          - event.organisers.each do |organiser|
-            =link_to twitter_url_for(organiser.twitter), class: 'user-link' do
-              =image_tag(organiser.avatar(26), class: 'th radius', title: organiser.full_name, alt: organiser.full_name)
+        .event__organisers
+          .event__organisers-list
+            - event.organisers.each do |organiser|
+              = link_to twitter_url_for(organiser.twitter), class: 'user-link' do
+                = image_tag(organiser.avatar(26), class: 'th radius', title: organiser.full_name, alt: organiser.full_name)
+  .event__col-2
+    .event__labels
+      - if event.chapter
+        %span.label.status
+          = event.chapter.name
+      - if @user
+        - if @user.attending?(event.__getobj__)
+          = link_to event.path do
+            %span.label.success Attending
+        - if @user.event_organiser?(event)
+          = link_to event.admin_path do
+            %span.label Manage
     .event__sponsors
       - if event.sponsors.any?
         - event.sponsors.each do |sponsor|
