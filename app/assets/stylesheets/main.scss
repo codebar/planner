@@ -165,9 +165,9 @@ u {
 
 .grouped-events {
   // border-bottom: 1px solid rgba($primary-color, 0.25);
-  margin: 20px 0;
+  padding-bottom: 20px;
 
-  h4 {
+  h4.date {
     font-size: 0.9rem;
     font-weight: 800;
   }
@@ -176,6 +176,9 @@ u {
   margin-bottom: 30px;
 
   &--past-events {
+    h4.date {
+      opacity: 0.5;
+    }
     .event {
       opacity: 0.5;
     }

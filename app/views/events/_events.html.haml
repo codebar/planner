@@ -1,7 +1,7 @@
 .events#chapter
   %ul.no-bullet
     - grouped_events.each do |date, workshops|
-      .row.grouped_events
+      .row.grouped-events
         .medium-12.columns
-          %h4= date
+          %h4.date= date
         = render workshops
