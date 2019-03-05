@@ -39,6 +39,21 @@ feature 'Managing sponsors' do
         expect(page).to have_content 'Namecan\'t be blank'
       end
     end
+
+    context 'with invalid input' do
+      it 'renders new and shows create button' do
+        visit new_admin_sponsor_path
+
+        fill_in 'sponsor_name', with: ''
+        fill_in 'Website', with: 'https://www.sponsorname.com/'
+        attach_file('Avatar', Rails.root + 'spec/support/codebar-logo.png')
+        fill_in 'Student Spots', with: 20
+
+        click_on 'Create sponsor'
+
+        expect(page).to have_button('Create sponsor')
+      end
+    end
   end
 
   describe 'updating a sponsor' do
