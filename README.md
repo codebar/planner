@@ -77,9 +77,7 @@ The current Dockerfile and docker-compose were closely copied from [the Docker g
 Run `bin/drake` to run all the tests and make sure everything works.
 You can also use `bin/drails` and `bin/dspec` to run specific rails and rspec commands via docker.
 
-*Note:* JavaScript acceptance tests are relying on the [Poltergeist](https://github.com/teampoltergeist/poltergeist) driver, which requires
-[PhantomJS](http://phantomjs.org). For more information about installing PhantomJS, please take a look
-[here](https://github.com/teampoltergeist/poltergeist#installing-phantomjs).
+*Note:* Running feature tests with JavaScript enabled is currently not setup correctly (and currently there are no tests that require this anyway). This is due to the removal of the previous PhantomJS/Poltergeist setup. This will be replaced in due course with headless Chrome.
 
 ### 5. Start the app
 

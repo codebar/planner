@@ -48,7 +48,6 @@ brew services start postgresql
 Install other dependencies:
 ```
 brew install imagemagick
-brew install phantomjs
 ```
 
 Install the Gems:
