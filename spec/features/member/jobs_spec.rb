@@ -57,6 +57,22 @@ feature 'Member managing jobs' do
       expect(page).to have_content('Title can\'t be blank')
     end
 
+    scenario 'is unsuccessful and produces html validation for missing expiry' do
+      visit new_member_job_path
+
+      fill_in 'Title', with: 'Internship'
+      fill_in 'Description', with: Faker::Lorem.paragraph
+      fill_in 'Name', with: 'codebar'
+      fill_in 'Website', with: 'https://codebar.io'
+      fill_in 'Location', with: 'London'
+      fill_in 'Link to job post', with: Faker::Internet.url
+
+      click_on 'Submit job'
+
+      message = find("#job_expiry_date").native.attribute("validationMessage")
+      expect(message).to eq "Please fill out this field."
+    end
+
     scenario 'is succesful when all madantory fields are submitted' do
       visit new_member_job_path
 
