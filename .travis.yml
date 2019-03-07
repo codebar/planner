@@ -10,6 +10,7 @@ script:
 addons:
   code_climate:
     repo_token: 9b6a47d42b4a745a38818eac18dba4ca94ea88f8c7751859ec49b8cedbf010fe
+  chrome: stable
 notifications:
   email:
     - social@codebar.io
