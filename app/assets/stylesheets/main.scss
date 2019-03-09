@@ -164,19 +164,18 @@ u {
 }
 
 .grouped-events {
-  // border-bottom: 1px solid rgba($primary-color, 0.25);
   padding-bottom: 20px;
 
-  h4.date {
-    font-size: 0.9rem;
-    font-weight: 800;
+  h3.date {
+    font-size: 1.15rem;
+    margin-bottom: 15px;
   }
 }
 .events-list {
   margin-bottom: 30px;
 
   &--past-events {
-    h4.date {
+    h3.date {
       opacity: 0.5;
     }
     .event {
@@ -184,11 +183,6 @@ u {
     }
   }
 }
-
-// .stripe:nth-child(even) .grouped-events:not(:last-child) {
-//   border-bottom: 1px dotted $white;
-//   margin-bottom: 20px;
-// }
 
 .sponsor-image a {
   border-bottom: none;
