@@ -45,7 +45,7 @@
 
   .row
     .large-6.columns
-      - if params[:action] == 'new'
+      - if params[:action] == 'new' || params[:action] == 'create'
         = f.submit 'Create sponsor', class: 'button round'
       - elsif params[:action] == 'edit'
         = f.submit 'Save changes', class: 'button round'
