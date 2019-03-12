@@ -103,7 +103,7 @@ actually happening in the browser. To spin up a visible browser, pass
 CHROME_HEADLESS=false bundle exec rspec
 ```
 
-This currently doesn't work with Docker.
+Running JavaScript enabled tests with a visible browser currently doesn't work with Docker.
 
 ### 5. Start the app
 
