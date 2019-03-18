@@ -198,7 +198,7 @@ GEM
     net-sftp (2.1.2)
       net-ssh (>= 2.6.5)
     net-ssh (5.0.2)
-    newrelic_rpm (6.0.0.351)
+    newrelic_rpm (6.1.0.352)
     nokogiri (1.10.1)
       mini_portile2 (~> 2.4.0)
     oauth2 (1.4.1)
