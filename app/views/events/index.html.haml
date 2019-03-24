@@ -2,7 +2,7 @@
   .row
     .large-12.columns
       - if @events.any?
-        .events-list
+        .events-list.events-list--upcoming
           %h3 Upcoming Events
           = render partial: 'events', locals: { grouped_events: @events }
 
@@ -10,6 +10,6 @@
   .row
     .large-12.columns
       - if @past_events.any?
-        .events-list--past-events
+        .events-list.events-list--past
           %h3 Past Events
           = render partial: 'events', locals: { grouped_events: @past_events }
