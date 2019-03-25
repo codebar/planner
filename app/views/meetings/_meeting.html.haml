@@ -1,34 +1,37 @@
-.event#minified
-  .row
-    .small-3.medium-2.columns
-      .date
-        .time
-          = meeting.time
-      .text-center
-        - if @user
-          - if @user.attending?(meeting)
-            %label.label.success Attending
-          - if @user.event_organiser?(meeting)
-            = link_to meeting.admin_path do
-              %label.label Manage
-
-    .small-9.medium-10.columns
-      .title
-        =link_to meeting.name, meeting_path(meeting.slug)
+.event
+  .event__col-1
+    %header.event__header
+      %h3.title
+        = link_to meeting.name, meeting_path(meeting.slug)
         - if meeting.venue.present?
           at
           = link_to meeting.venue.name, meeting.venue.website
-      .row
-        .medium-6.columns
-          - if meeting.organisers.any?
-            .organisers
-              - meeting.organisers.each do |organiser|
-                =link_to twitter_url_for(organiser.twitter), class: 'user-link' do
-                  =image_tag(organiser.avatar(26), class: 'th radius', title: organiser.full_name, alt: organiser.full_name)
-
-        .medium-6.columns#sponsors
-          - if meeting.venue.present?
-            = link_to meeting.venue.website do
-              = image_tag(meeting.venue.avatar, class: 'sponsor', alt: meeting.venue.name)
-
-      %br
+    .event__details
+      .time
+        Time:
+        = meeting.time
+      .date 
+        Date: 
+        = meeting.date
+      - if meeting.organisers.any?
+        .event__organisers
+          .event__organisers-list
+            - meeting.organisers.each do |organiser|
+              = link_to twitter_url_for(organiser.twitter), class: 'user-link' do
+                = image_tag(organiser.avatar(26), class: 'th radius', title: organiser.full_name, alt: organiser.full_name)
+  .event__col-2
+    .event__labels
+      - if meeting.chapter
+        %span.label.status
+          = meeting.chapter.name
+      - if @user
+        - if @user.attending?(meeting)
+          = link_to meeting.path do
+            %span.label.success Attending
+        - if @user.event_organiser?(meeting)
+          = link_to meeting.admin_path do
+            %span.label Manage
+    .event__sponsors
+      - if meeting.venue.present?
+        = link_to meeting.venue.website do
+          = image_tag(meeting.venue.avatar, class: 'sponsor', alt: meeting.venue.name)

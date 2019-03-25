@@ -24,20 +24,18 @@
   .row
     .large-8.columns
       - if @upcoming_workshops.any?
-        - @upcoming_workshops.each do |date, workshops|
-          .row.grouped-events
-            .medium-12.columns
-              %h4= date
-            = render workshops
+        .events-list.events-list--upcoming
+          %h3 Upcoming Events
+          - @upcoming_workshops.each do |date, workshops|
+            .grouped-events
+              = render workshops
 
       - if @latest_workshops.any?
-        %h3 Latest events
-        %br
-        - @latest_workshops.each do |date, workshops|
-          .row.grouped-events
-            .medium-12.columns
-              %h4= date
-            = render workshops
+        .events-list.events-list--past
+          %h3 Past Events
+          - @latest_workshops.each do |date, workshops|
+            .grouped-events
+              = render workshops
 
     .large-4.columns
       - if @chapter.twitter_handle
