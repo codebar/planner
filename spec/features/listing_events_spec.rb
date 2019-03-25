@@ -15,7 +15,7 @@ feature 'event listing' do
     end
 
     scenario 'i can view a list with upcoming events' do
-      within('.upcoming') do
+      within('.events-list--upcoming') do
         expect(page).to have_content upcoming_course.title
         expect(page).to have_content 'Workshop'
         expect(page).to have_content event.name
@@ -23,7 +23,7 @@ feature 'event listing' do
     end
 
     scenario 'i can view a list with past events' do
-      within('.past') do
+      within('.events-list--past') do
         expect(page).to have_content past_course.title
         expect(page).to have_content 'Workshop'
         expect(page).to have_content past_event.name
@@ -38,7 +38,7 @@ feature 'event listing' do
       Fabricate(:workshop, date_and_time: 3.weeks.ago)
 
       visit events_path
-      within('.past') do
+      within('.events-list--past') do
         expect(page).to have_selector('.event', count: 10)
         expect(page).not_to have_content 'Workshop'
       end

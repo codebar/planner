@@ -61,9 +61,10 @@
             =link_to t("events.view_past_events"), events_url(anchor: 'past'), class: "button round expand"
 
         - if @upcoming_workshops.any?
+          %h2.h3 Upcoming Events
           - @upcoming_workshops.each do |date, workshops|
             .grouped-events
-              %h4= date
+              %h3.date= date
               = render workshops
       .large-4.columns#chapters
         %h3
