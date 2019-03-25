@@ -77,7 +77,33 @@ The current Dockerfile and docker-compose were closely copied from [the Docker g
 Run `bin/drake` to run all the tests and make sure everything works.
 You can also use `bin/drails` and `bin/dspec` to run specific rails and rspec commands via docker.
 
-*Note:* Running feature tests with JavaScript enabled is currently not setup correctly (and currently there are no tests that require this anyway). This is due to the removal of the previous PhantomJS/Poltergeist setup. This will be replaced in due course with headless Chrome.
+#### Running single tests/test files
+
+If you just want to run a single test file you can pass the path to the file, either using `rspec` or via the `SPEC` variable with `rake`:
+```bash
+bundle exec rspec <path to test>
+bundle exec rake SPEC=<path to test>
+```
+
+This can also be used with specific line number (running only that one test), for example:
+```bash
+bundle exec rspec spec/features/admin/manage_workshop_attendances_spec.rb:42
+bundle exec rake SPEC=spec/features/admin/manage_workshop_attendances_spec.rb:42
+```
+
+These also work with the corresponding `bin/dspec` and `bin/drake` commands.
+
+#### Running JavaScript enabled feature tests with a visible browser
+There are a small number of feature tests marked with `js: true` which use
+headless Chrome. These can be hard to work with without being able to see what is
+actually happening in the browser. To spin up a visible browser, pass
+`CHROME_HEADLESS=false` as part of the test command, for example:
+
+```bash
+CHROME_HEADLESS=false bundle exec rspec
+```
+
+Running JavaScript enabled tests with a visible browser currently doesn't work with Docker.
 
 ### 5. Start the app
 
