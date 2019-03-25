@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 ruby '2.4.2'
 
-gem 'rails', '4.2.11'
+gem 'rails', '4.2.11.1'
 
 gem 'acts-as-taggable-on', '~> 5.0'
 gem 'carrierwave'
@@ -25,6 +25,7 @@ gem 'omniauth-github'
 gem 'pg', '~>0.20.0'
 gem 'pickadate-rails'
 gem 'premailer-rails'
+gem 'puma'
 gem 'pundit'
 gem 'rails4-autocomplete'
 gem 'rolify'
@@ -70,13 +71,14 @@ end
 
 group :test do
   gem 'capybara'
+  gem 'chromedriver-helper'
   gem 'database_cleaner'
+  gem 'selenium-webdriver'
   gem 'shoulda-matchers', '~> 3.1'
 end
 
 group :production do
   gem 'foreman'
-  gem 'puma'
   gem 'rails_12factor'
 end
 
