@@ -1,14 +1,15 @@
-%section#banner.stripe
+%section#banner
   .row
     .large-12.columns
       - if @events.any?
-        .upcoming
-          .titlebox
+        .events-list.events-list--upcoming
+          %h3 Upcoming Events
           = render partial: 'events', locals: { grouped_events: @events }
 
 .stripe
   .row
     .large-12.columns
       - if @past_events.any?
-        .past#past
+        .events-list.events-list--past
+          %h3 Past Events
           = render partial: 'events', locals: { grouped_events: @past_events }
