@@ -40,8 +40,10 @@ class Admin::WorkshopsController < Admin::ApplicationController
   end
 
   def create_workshop_spreadsheet!
-    spreadsheet = Spreadsheet.create_for_workshop(@workshop,
-      google_service_account_path: Planner::Application.config.google_service_account_path)
+    spreadsheet = Spreadsheet.create_for_workshop(
+      @workshop,
+      google_service_account_path: Planner::Application.config.google_service_account_path
+    )
     @workshop.spreadsheet_id = spreadsheet.id
     @workshop.save
   rescue StandardError => e

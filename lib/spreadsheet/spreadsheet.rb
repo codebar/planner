@@ -23,13 +23,18 @@ class Spreadsheet
 
   def add_student(student)
     worksheet = @google_sheet.worksheets[0]
-    worksheet[worksheet.num_rows + 1, 1] = student.full_name.to_s
-    worksheet[worksheet.num_rows, 4] = student.about_you.to_s
+    last_row = worksheet.num_rows + 1
+    worksheet[last_row, 1] = student.full_name.to_s
+    worksheet[last_row, 4] = student.about_you.to_s
     worksheet.save
   end
 
   def id
     @google_sheet.worksheets_feed_url.split('/')[-3]
+  end
+
+  def delete!
+    @google_sheet.delete(true)
   end
 
   class << self
@@ -63,7 +68,7 @@ class Spreadsheet
     end
 
     def share_file_permission(google_sheet, workshop)
-      organisers_emails = workshop.chapter.organisers.pluck(:email)
+      organisers_emails = workshop.chapter.organisers.map(&:email)
       organisers_emails.each do |organiser_email|
         user_permission = {
           type: 'user',
