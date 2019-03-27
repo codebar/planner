@@ -1,33 +1,38 @@
 .stripe.reverse#code-of-conduct
   .row
     .large-12.columns
-      %h2 Code of conduct
+      %h1
+        = t('code_of_conduct.title')
 .stripe.reverse
   .row
     .large-12.columns
-      %h3= t('code_of_conduct.summary.title')
+      %h2
+        = t('code_of_conduct.summary.title')
+
       %p.lead
         = t('code_of_conduct.summary.intro')
 
-      %h3 The Long Version
-      %p
-        = t('code_of_conduct.harassment')
+      %h2
+        = t('code_of_conduct.content.title')
 
       %p
-        = t('code_of_conduct.comply')
+        = t('code_of_conduct.content.harassment')
 
       %p
-        = t('code_of_conduct.sponsors')
+        = t('code_of_conduct.content.comply')
 
       %p
-        = t('code_of_conduct.sanctions')
+        = t('code_of_conduct.content.sponsors')
 
       %p
-        = t('code_of_conduct.concerns')
+        = t('code_of_conduct.content.sanctions')
 
       %p
-        = raw t('code_of_conduct.applies_to')
+        = t('code_of_conduct.content.concerns')
 
       %p
-        = t('code_of_conduct.questions')
-        =mail_to "hello@codebar.io", "contact us", subject: t('code_of_conduct.email_subject')
+        = raw t('code_of_conduct.content.applies_to')
+
+      %p
+        = t('code_of_conduct.content.questions')
+        =mail_to 'hello@codebar.io', t('code_of_conduct.content.contact'), subject: t('code_of_conduct.content.email_subject')

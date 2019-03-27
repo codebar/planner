@@ -38,4 +38,17 @@ feature 'Managing events' do
     expect(page).to have_content "You have cancelled #{invitation.member.full_name}'s attendance."
     expect(invitation.reload.attending).to eq(false)
   end
+
+  scenario 'accessing a list of attendee emails' do
+    student_invitation = Fabricate(:invitation, event: event, attending: true)
+    coach_invitation = Fabricate(:coach_invitation, event: event, attending: true)
+    visit admin_event_path(event)
+
+    click_on 'Emails'
+
+    expect(page).to have_content('COACHES')
+    expect(page).to have_content(coach_invitation.member.email)
+    expect(page).to have_content('STUDENTS')
+    expect(page).to have_content(student_invitation.member.email)
+  end
 end

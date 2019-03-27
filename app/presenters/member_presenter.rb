@@ -1,4 +1,4 @@
-class MemberPresenter < SimpleDelegator
+class MemberPresenter < BasePresenter
   def organiser?
     has_role? :organiser, :any
   end
@@ -13,11 +13,5 @@ class MemberPresenter < SimpleDelegator
 
   def attending?(event)
     event.invitations.accepted.where(member: model).exists?
-  end
-
-  private
-
-  def model
-    __getobj__
   end
 end

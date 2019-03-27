@@ -16,9 +16,9 @@ namespace :reminders do
     meetings = Meeting.upcoming
 
     meetings.each do |meeting|
-      if Time.zone.now.between?(workshop.date_and_time - 30.hours, workshop.date_and_time - 4.hours)
-        STDOUT.puts "Sending attendance reminders for #{meeting.name}..."
-        InvitationManager.new.send_monthly_attendance_reminder_emails meeting
+      if Time.zone.now.between?(meeting.date_and_time - 30.hours, meeting.date_and_time - 6.hours)
+        Rails.logger.info("Sending attendance reminders for #{meeting.name}...")
+        InvitationManager.new.send_monthly_attendance_reminder_emails(meeting)
       end
     end
   end

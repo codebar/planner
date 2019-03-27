@@ -1,28 +1,45 @@
-- if @pending_jobs
-  %p You have #{@pending_jobs.count} job posts pending approval
-
-= simple_form_for [:member, @job] do |f|
+#new_job
+  %h4 Job details
   .row
     .large-6.columns
-      = f.input :title, label: "Job title", required: true, placeholder: "e.g. Internship"
-  .row
-    .large-6.columns
-      = f.input :company, required: true, placeholder: "e.g. codebar"
-  .row
-    .large-6.columns
-      = f.input :location, required: true, placeholder: "e.g. London or Remote"
+      = f.input :title, required: true
   .row
     .large-12.columns
-      = f.input :description, placeholder: 'Use text or markdown for the job description', input_html: { rows: 10 }, required: true
+      = f.input :description, input_html: { rows: 10 }, required: true
   .row
     .large-6.columns
-      = f.input :email, label: "Job email"
+      = f.input :salary
   .row
     .large-6.columns
-      = f.input :link_to_job, label: "Link to job post", required: true
-  .row.row-spaced
+      = f.input :remote, wrapper: :checkbox
+      %br
+  .row
     .large-6.columns
-      = f.input :expiry_date, label: "Application closing date", as: :date, order: [:day, :month, :year], start_year: Date.current.year, start_month: Date.current.month, end_year: (Date.current+2.months).year, default: Date.current+2.weeks, input_html: { class: 'medium-3 columns' }, required: true
+      = f.input :email
+  .row
+    .large-6.columns
+      = f.input :link_to_job, required: true
+  .row
+    .large-6.columns
+      = f.input :expiry_date, as: :string, required: true, input_html: { data: { value: @job.expiry_date.try(:strftime, '%d/%m/%Y') } }
+
+  %hr
+  %h4 Company details
+  .row
+    .large-6.columns
+      = f.input :company, required: true
+  .row
+    .large-6.columns
+      = f.input :company_website, required: true
+  .row
+    .large-6.columns
+      = f.input :location, required: true
+  .row
+    .large-6.columns
+      = f.input :company_address
+  .row
+    .large-6.columns
+      = f.input :company_postcode
   .row
     .large-12.columns
       = f.submit "Submit job", class: "button"

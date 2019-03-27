@@ -20,7 +20,7 @@ describe ChapterPresenter do
     Fabricate.times(2, :past_workshop, chapter: chapter)
     workshops = Fabricate.times(3, :workshop, chapter: chapter, date_and_time: Time.zone.now + 1.week)
 
-    expect(presenter.upcoming_workshops).to eq(workshops)
+    expect(presenter.upcoming_workshops).to match_array(workshops)
   end
 
   it '#organisers' do

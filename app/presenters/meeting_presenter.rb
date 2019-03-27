@@ -28,10 +28,4 @@ class MeetingPresenter < EventPresenter
   def sponsors
     []
   end
-
-  private
-
-  def model
-    __getobj__
-  end
 end

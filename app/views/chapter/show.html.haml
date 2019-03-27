@@ -1,35 +1,41 @@
-%section.stripe.reverse
+%section
+  .row.chapter-header
+    .medium-6.columns.chapter-header-text
+      %h1= @chapter.name
+      - if @chapter.description
+        %p.lead= @chapter.description
+      - else
+        %p.lead= t('chapters.intro_html')
+    - if @chapter.image.present?
+      .medium-6.columns.chapter-header-image
+        = image_tag @chapter.image.bg, alt: "#{@chapter.name} chapter"
+
+.panel
   .row
-    .large-12.columns
-      %h4= @chapter.name
-      %p.lead
-        = raw t('chapters.intro', email: @chapter.email)
+    .medium-6.columns
+      = t('chapters.info', email: h(@chapter.email)).html_safe
+    .medium-6.columns.text-center
       - if logged_in?
         = render partial: 'subscriptions'
       - else
-        %p
-          =link_to "Sign up", new_member_path, class: 'button tiny'
-
+        =link_to 'Sign up', new_member_path, class: 'button small radius'
 
 %section.stripe.reverse#chapter
   .row
     .large-8.columns
       - if @upcoming_workshops.any?
-        - @upcoming_workshops.each do |date, workshops|
-          .row.grouped-events
-            .medium-12.columns
-              %h4= date
-            = render workshops
+        .events-list.events-list--upcoming
+          %h3 Upcoming Events
+          - @upcoming_workshops.each do |date, workshops|
+            .grouped-events
+              = render workshops
 
       - if @latest_workshops.any?
-        %h3 Latest events
-        %br
-        - @latest_workshops.each do |date, workshops|
-          .row.grouped-events
-            .medium-12.columns
-              %h4= date
-            = render workshops
-
+        .events-list.events-list--past
+          %h3 Past Events
+          - @latest_workshops.each do |date, workshops|
+            .grouped-events
+              = render workshops
 
     .large-4.columns
       - if @chapter.twitter_handle
@@ -39,26 +45,28 @@
 
       %script(async src="https://platform.twitter.com/widgets.js" charset="utf-8")
 
+- if @recent_sponsors.any?
+  .stripe.reverse
+    .row
+      .small-12.columns
+        %h2 Sponsors
+    .row.sponsor-row
+      - @recent_sponsors.each do |sponsor|
+        .small-4.medium-2.columns.sponsor-image
+          = link_to image_tag(sponsor.avatar, class: "small-image", alt: sponsor.name), sponsor.website, title: sponsor.name
 
 .stripe.reverse
   .row
     .large-12.columns
-      %a{ name: "organisers" }
-      %h3 Team
-
-      .row
-        - @chapter.organisers.shuffle.each do |organiser|
-          .small-12.medium-6.large-3.columns.end
-            .organiser
-              .row
-                .small-12.columns
-                  =link_to twitter_url_for(organiser.twitter), class: 'user-link' do
-                    =image_tag(organiser.avatar(65), class: 'th radius', title: organiser.full_name, alt: organiser.full_name)
-              .row
-                .small-12.columns
-                  =link_to twitter_url_for(organiser.twitter) do
-                    = organiser.full_name
-
-      %br
+      %a{ name: 'organisers' }
+      %h2 Team
+  .row.organisers-grid
+    - @chapter.organisers.shuffle.each do |organiser|
+      .small-12.medium-6.large-3.columns.organiser-item
+        = link_to twitter_url_for(organiser.twitter), title: "#{organiser.full_name} Twitter profile", class: 'organiser-content' do
+          = image_tag(organiser.avatar(65), alt: organiser.full_name, class: 'organiser-image')
+          = organiser.full_name
+  .row  
+    .large-12.columns
       .panel
         = t('chapters.contact', city: @chapter.name, email: @chapter.email)

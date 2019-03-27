@@ -27,13 +27,17 @@
 
 $(function(){
   $(document).foundation();
-  $('#workshop_local_date, #event_date_and_time, #workshop_rsvp_open_local_date').pickadate({
+  $('#meeting_local_date, #workshop_local_date, #event_date_and_time, #workshop_rsvp_open_local_date').pickadate({
     format: 'dd/mm/yyyy'
   });
 
   $('#announcement_expires_at, #ban_expires_at').pickadate();
-  $('#workshop_local_time, #event_begins_at, #event_ends_at, #workshop_rsvp_open_local_time').pickatime({
+  $('#meeting_local_time, #workshop_local_time, #event_begins_at, #event_ends_at, #workshop_rsvp_open_local_time').pickatime({
     format: 'HH:i'
+  });
+
+  $('#job_expiry_date').pickadate({
+    format: 'dd/mm/yyyy'
   });
 
   $('body').removeClass('no-js');
@@ -46,7 +50,7 @@ $(function(){
   $('#member_lookup_id').chosen().change(function(e) {
     $('#view_profile').attr('href', '/admin/members/' + $(this).val())
   });
-  
+
   // Prevent tabbing through side menu links when menu is hidden.
   // This somewhat hacky approach is required because Foundation doesn't
   // allow us to modify the functionality directly :(

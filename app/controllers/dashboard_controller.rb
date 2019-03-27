@@ -5,7 +5,7 @@ class DashboardController < ApplicationController
   helper_method :year_param
 
   def show
-    @chapters = Chapter.all.order(:created_at)
+    @chapters = Chapter.active.all.order(:created_at)
     @user = current_user ? MemberPresenter.new(current_user) : nil
     @upcoming_workshops = upcoming_events.map.inject({}) do |hash, (key, value)|
       hash[key] = EventPresenter.decorate_collection(value)
@@ -85,6 +85,6 @@ class DashboardController < ApplicationController
     meeting = Meeting.includes(:venue).next
     events = Event.includes(:venue, :sponsors).future(DEFAULT_UPCOMING_EVENTS)
 
-    [*workshops, course, *events, meeting].compact
+    [*workshops, course, *events, meeting].uniq.compact
   end
 end

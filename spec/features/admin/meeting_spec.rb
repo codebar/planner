@@ -16,6 +16,8 @@ feature 'Managing meetings' do
       visit new_admin_meeting_path
 
       fill_in 'Name', with: 'August meeting'
+      fill_in 'Local date', with: Date.current
+      fill_in 'Local time', with: '11:30'
       select venue.name
       click_on 'Update'
 

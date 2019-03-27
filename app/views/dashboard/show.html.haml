@@ -2,14 +2,14 @@
   .row
     .medium-offset-1.medium-6.columns
       %p.lead
-        <strong>codebar</strong> is a non-profit initiative that facilitates the growth of a diverse tech community by running regular programming workshops.
+        = raw t('homepage.intro')
 
 %section.testimonials
   .stripe
     .row
       .large-12.columns
         %p.lead
-          Our goal is to enable underrepresented people to learn programming in a safe and collaborative environment and expand their career opportunities. To achieve this we run free regular workshops, regular one-off events and try to create opportunities for our students making technology and coding more accessible.
+          = t('homepage.explanation')
     - if @testimonials.any?
       .row
         .large-offset-1.large-11.columns
@@ -19,30 +19,36 @@
   .row#showcase
     .large-4.columns
       .text-center
-        %h4 Students
-      %p Our students come from a variety of backgrounds. Some want to become full-time developers, whereas some would like to learn the basics of coding in a supportive environment.
-      %p Sign up to join our vibrant community and attend our workshops.
-
+        %h4 
+          = t('homepage.participate.students_title')
+      %p
+        = t('homepage.participate.students_explanation_p1')
+      %p
+        = t('homepage.participate.students_explanation_p2')
+      
       .text-center
-        = link_to "Sign up as a student", new_member_path, class: 'button'
+        = link_to t("homepage.participate.students_button"), new_member_path, class: 'button'
     .large-4.columns
       .text-center
-        %h4 Coaches
+        %h4
+          = t('homepage.participate.coaches_title')
       %p
-        We encourage new students to work on our HTML/CSS, JavaScript, Ruby, Python or Git #{link_to "tutorials", "http://tutorials.codebar.io"}. We also help them understand programming concepts.
-      %p Therefore  are always on the lookout for more developers to join our community and help coach at our workshops.
+        = raw t('homepage.participate.coaches_explanation_p1')
+      %p 
+        = t('homepage.participate.coaches_explanation_p2')
+      
       .text-center
-        = link_to "Sign up as a coach", new_member_path, class: 'button'
+        = link_to t("homepage.participate.coaches_button"), new_member_path, class: 'button'
     .large-4.columns
       .text-center
-        %h4 Workshops
+        %h4
+          = t('homepage.participate.workshop_title')
       %p
-        We are hosted by some amazing companies who support our cause. Our normal format is 30 minutes of socialising with food and drink, followed by a lightning talk then coding.
+        = t('homepage.participate.workshop_explanation_p1')
       %p
-        Help our expansion and enable us to provide help and support to our chapters by hosting and sponsoring our workshops.
-
+        = t('homepage.participate.workshop_explanation_p2')
       .text-center
-        = mail_to "hello@codebar.io", "Host a workshop", class: 'button'
+        = mail_to "hello@codebar.io", t("homepage.participate.workshop_button"), subject: t('homepage.participate.workshop_email_subject'), class: 'button'
 
 %section.stripe#chapter
   .events#container
@@ -50,17 +56,19 @@
       .large-8.columns
         - if @upcoming_workshops.empty?
           %p
-            = t("no_upcoming_events")
+            = t("events.no_upcoming_events")
           %p
-            =link_to t("view_past_events"), events_url(anchor: 'past'), class: "button round expand"
+            =link_to t("events.view_past_events"), events_url(anchor: 'past'), class: "button round expand"
 
         - if @upcoming_workshops.any?
+          %h2.h3 Upcoming Events
           - @upcoming_workshops.each do |date, workshops|
             .grouped-events
-              %h4= date
+              %h3.date= date
               = render workshops
       .large-4.columns#chapters
-        %h3 Chapters
+        %h3
+          = t("homepage.chapters.title")
         %ul.no-bullet
           - @chapters.each do |chapter|
             %li

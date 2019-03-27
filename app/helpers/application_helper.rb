@@ -47,5 +47,10 @@ module ApplicationHelper
   def page_year?(year)
     (!year_param && year.eql?(Time.zone.now.year)) || year_param == year.to_s
   end
+  include ActionView::Helpers::NumberHelper
 
+  def number_to_currency(number, options = {})
+    options[:locale] = 'en'
+    super(number, options)
+  end
 end

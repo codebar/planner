@@ -3,6 +3,8 @@
     - if msg.is_a?(String)
       - name = name.eql?('notice') ? 'info' : name
       %div{ 'data-alert': '', class: "alert-box #{name}" }
-        = link_to '#', class: 'close' do
-          &times;
-        = content_tag :div, msg.html_safe
+        .row
+          .large-12
+            = link_to '#', class: 'close' do
+              &times;
+            = content_tag :div, msg.html_safe

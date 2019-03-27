@@ -1,0 +1,472 @@
+de:
+  brand: "codebar.io"
+  date:
+    formats:
+      default: "%d.%m.%Y"
+      email: "%a, %d %B um %H:%M"
+      email_title: "%A, %d %b um %H:%M"
+      short: "%d.%m.%Y %H:%M "
+      date: "%d %b %Y"
+      website_format: "%a, %d %B %Y um %H:%M"
+      day_in_words: "%a"
+      day: "%d"
+      month: "%B"
+      meeting_format: "%a %d %B %H:%M"
+      time: "%H:%M"
+      year_month: "%Y-%B"
+      log: "um %H:%M Uhr am %d.%m.%Y"
+      workshop: "%A, %e %B %Y um %R"
+      dashboard: "%a, %d %b %Y, %H:%M"
+  time:
+    formats:
+      default: "%a, %d %b %Y %H:%M"
+      email: "%a, %d %B um %H:%M"
+      email_title: "%A, %d %b um %H:%M"
+      short: "%d.%m.%Y %H:%M "
+      date: "%d %b %Y"
+      full_date: "%d %B %Y"
+      default_date: "%d.%m.%Y"
+      website_format: "%a, %d %B %Y um %H:%M"
+      day_in_words: "%a"
+      day: "%d"
+      month: "%B"
+      meeting_format: "%a %d %B %H:%M"
+      time: "%H:%M"
+      year_month: "%Y-%B"
+      log: "um %H:%M Uhr am %d.%m.%Y"
+      workshop: "%A, %e %B %Y um %R"
+      dashboard: "%A, %b %d"
+  number:
+    currency:
+      format:
+        unit: '£'
+        delimiter: ','
+        separator: '.'
+        precision: 0
+        format: '%u%n'
+  homepage:
+    intro: "<strong>codebar</strong> is a non-profit initiative that facilitates the growth of a diverse tech community by running regular programming workshops."
+    explanation: "Unser Ziel ist unterrepräsentierten Menschen zu programmieren in einer sicheren und kollaborative Umgebung lernen und erweitern ihre Karrierechancen zu ermöglichen. Um dies zu erreichen betreiben wir kostenlose regelmäßige Workshops, regelmäßige Einzelveranstaltungen und versuchen, die Möglichkeiten für unsere Schüler die Technologie und Programmierung zugänglicher zu schaffen."
+    participate:
+      students_title: "Students"
+      students_explanation_p1: "Our students come from a variety of backgrounds. Some want to become full-time developers, whereas some would like to learn the basics of coding in a supportive environment."
+      students_explanation_p2: "Sign up to join our vibrant community and attend our workshops."
+      students_button: "Sign up as a student"
+      coaches_title: "Coaches"
+      coaches_explanation_p1: "We encourage new students to work on our HTML/CSS, JavaScript, Ruby, Python or Git <a href='http://tutorials.codebar.io'>tutorials</a>. We also help them understand programming concepts."
+      coaches_explanation_p2: "Therefore  are always on the lookout for more developers to join our community and help coach at our workshops."
+      coaches_button: "Sign up as a coach"
+      workshop_title: "Workshops"
+      workshop_explanation_p1: "We are hosted by some amazing companies who support our cause. Our normal format is 30 minutes of socialising with food and drink, followed by a lightning talk then coding."
+      workshop_explanation_p2: Help our expansion and enable us to provide help and support to our chapters by hosting and sponsoring our workshops.
+      workshop_button: "Host a workshop"
+      workshop_email_subject: "Regarding hosting a workshop"
+    chapters:
+      title: "Chapters"
+  messages:
+    accepted_invitation: "Vielen Dank für die Rückmeldung, %{name}. Wir sehen uns beim Workshop!"
+    rejected_invitation: "Wir bedauern es sehr dass du nicht teilnehmen kannst. Vielen Dank für das Bescheid geben, %{name}."
+    already_rsvped: "Du hast deine Teilnahme schon bestätigt!"
+    not_attending_already: "Du hast bereits bestätigt, dass du nicht teilnehmen kannst."
+    no_available_seats: "Leider sind keine weiteren Kapazitäten verfügbar :(. Falls du auf die Warteliste möchtest sende uns eine Mail an %{email}"
+    feedback_saved: "Vielen Dank für dein Feedback!"
+    feedback_not_found: "Sie haben bereits ein Feedback eingereicht."
+    updated_note: "Aktualisierung erfolgreich."
+    invitations:
+      rsvped_to_other_workshop: "Du hast dich schon für einen anderen Workshop an diesem Datum angemeldet. Falls du an diesem Workshop teilnehmen möchtest, melde dich bitte zuerst von dem anderen Workshop ab."
+      spot_confirmed: "Deine Teilnahme an %{event} wurde bestätigt! Wir freuen uns bereits dich dort begrüßen zu dürfen."
+      spot_not_confirmed: 'Deine Teilnahme wurde noch nicht bestätigt. Wir werden die Teilnahme bestätigen sobald du das Formular ausgefüllt hast.'
+  notifications:
+    provider_already_connected: 'Sie sind bereits angemeldet!'
+    not_logged_in: "Du musst angemeldet sein, um auf diese Seite zugreifen zu können."
+  navigation:
+    dashboard: "Übersicht"
+    code_of_conduct: "Verhaltensregeln"
+    coach_guide: "Handbuch für Coaches"
+    student_guide: "Handbuch für Lernende"
+    tutorials: "Tutorials"
+    becoming_sponsor: "Sponsor werden"
+    faq: "Häufig gestellte Fragen"
+    blog: "Blog"
+  dashboard:
+    join_workshops_in: "Komm zu unseren <i>kostenlosen</i> Workshops in"
+    workshops_goal: "um sich mit den Programmier- und Webentwicklungsgrundlagen vertraut zu machen."
+    tweets_by: "Tweets von"
+    latest_sponsors: "Neusten Sponsoren"
+    policy:
+      intro: "Es gibt eine hohe Nachfrage für unsere Workshops und meistens gibt es auch eine Warteliste. Um sicherzustellen, dass so viele Leute wie möglich kommen können, haben wir ein paar einfache Anwesenheitsregeln."
+      rule1: "Bevor du dich dafür entscheidest, an einem Event mitzumachen. Stell bitte sicher, ob du für eine Teilnahme berechtigt bist. Wenn du dir unsicher bist, melde dich einfach bei uns."
+      rule2: "Du musst dich anmelden und deine Teilnahme bestätigen, um an unseren Workshops teilzunehmen."
+      rule3: "Falls du bereits zu einem Workshop zugesagt hast, später aber feststellst, dass du nicht mehr teilnehmen kannst, melde dich bitte wieder beim Workshop ab. Du kannst einfach schnell über deine Bestätigungs-E-Mail absagen."
+      rule4: "Bitte sag uns mindestens 24 Stunden vorher Bescheid, wenn du nicht mehr teilnehmen kannst."
+      rule5: "Wir wissen natürlich, dass manchmal kurzfrisitig etwas dazwischen kommen kann, aber selbst du nur eine Stunde vor dem Workshop absagen musst, sag uns bitte Bescheid."
+      what_happens: "Was passiert, wenn ich die Teilnahmeregeln nicht beachte?"
+      strikes_system: "Wenn wir feststellen, dass du drei Mal ohne abzusagen nicht zum Workshop gekommen bist, werden wir dich für die nächsten 4 Wochen aus unserem Teilnehmer-Verteiler entfernen. Wir melden uns bei dir nach deinem ersten Fehlen, um sicherzustellen, dass du die Regeln verstehst."
+      removing: "Falls du noch drei Mal ohne abzusagen fehlst, werden wir dich endgültig von unserer Teilnehmer-Liste entfernen müssen."
+      rsvping: "Wir bestrafen regelmäßiges an- und vorzeitiges abmelden nicht, aber bitte versuche es zu vermeiden. Falls dir eine Teilnahme an einem bestimmten Tag nicht möglich ist dann melde uns das bitte, damit wir das in zukünftige Planungen einbeziehen können."
+      eligibility_note: "Noch ein Hinweis zur Teilnahmeberechtigung"
+      abuse: "Wir sind alle ziemlich entspannt und vertrauen dir, wir prüfen also nicht ob jemand teilnehmen darf. Sollte es allerdings jemals danach aussehen als würde das ausgenutzt werden müssten wir das ändern – was wir wirklich nicht machen wollen."
+      reminder: "Bitte behalte also im Kopf, dass die Workshops dafür da sind die Technikwelt für unterrepräsentierte Gruppen zu öffnen."
+    teacher_guide:
+      laptop: "Für unsere Workshops brauchst du keinen Laptop. Deine Aufgabe ist es, Lernende zu leiten und zu begleiten. Falls du mit dem Tutorial nicht vertraut bist, sieh es dir vorher genauer an, wenn du mithelfen möchtest."
+      keyboard: "Übernimm nicht die Tastatur! Das kann abschreckend und einschüchternd wirken."
+      typing: "Ermutige die Lernenden, selbst zu tippen, anstatt zu kopieren."
+      questions: "Erkläre, dass es keine dummen Fragen gibt."
+      mistakes: "Sag den Lernenden, dass es OK ist, Fehler zu machen."
+      introduction: "Stelle dich immer vor. Erzähle, was dich zum ehrenamtlichen Helfen in deiner Freizeit motiviert und warum du das Programmieren magst."
+      backgrounds: "Gib Deinen Lernenden die Gelegenheit, einander kennen zu lernen. Frage sie nach ihren Namen, warum sie gekommen sind, was sie beruflich machen. Rege zu Beginn eine kurze Diskussion an."
+      limits: "Setze bei den Lernenden kein Wissen voraus, gehe aber davon aus, dass ihre Intelligenz und Fähigkeiten unbeschränkt sind."
+      colaboration: "Arbeite mit den Lernenden zusammen. Wenn du zwei Leute betreust, solltest du mit beiden arbeiten. Widme nicht deine ganze Aufmerksamkeit einer Einzelperson."
+      discussion: "Erlaube den Lernenden zunächst, Fragen eigenständig zu beantworten. Hilf ihnen mit erkenntnisleitenden Fragen. Rege eine Diskussion an."
+      talk_slow: "Lass dir Zeit. Du bist der/die Lehrer/in, sie sind die Lernenden. Lege kurze Pausen zwischen Fragen ein."
+      mild_approach: "Sage nicht rabiat \"Nein\", wenn die Lernenden etwas unrichtig machen. Gehe sanft und behutsam an das Problem heran."
+      paper: "Benutze Stift und Papier oder ein Whiteboard! Viele der Lernenden haben keine Vorgeschichte mit der Informatik. Zeichnungen und visuelle Hilfen können sehr nützlich sein."
+      stubling: "Lasse zu, dass die Lernenden auch mal stolpern. Wir lernen aus Fehlern, indem wir unseren eigenen Weg von der Frustration zur Lösung des Problems finden. Stehe den Lernenden unterstützend zur Seite, aber lass sie selbständig erkunden."
+      suggestions: "Hast du noch Vorschläge? Eröffne einen <a href='https://github.com/codebar/planner'>pull request</a> oder <a href='https://github.com/codebar/planner/issues/new'>erstelle eine issue</a>\""
+  events:
+    title: "Veranstaltungen"
+    past: "Vergangene"
+    no_upcoming_events: "Es gibt keine bevorstehenden Veranstaltungen."
+    view_past_events: "Vergangene Veranstaltungen anzeigen"
+    view_all: "Alle anzeigen"
+    hosted_by: "Veranstaltet von"
+    organisers: "Organisatoren"
+    venue_at: "bei"
+    attend_as_student: "Als Student teilnehmen"
+    attend_as_coach: "Als Trainer teilnehmen"
+    location: "Ort"
+    sponsors: "Sponsoren"
+    thx_to_sponsors: "Ein großes Dankeschön an alle unsere Sponsoren, die die Veranstaltung möglich gemacht haben!"
+    coaches: "Trainer"
+    schedule: "Zeitplan"
+    send_us_an_email: "Schreibe uns eine E-Mail"
+    not_open_for_rsvp: Die Anmeldung für diese Veranstaltung ist noch nicht geöffnet.
+    faq:
+      experience:
+        q: "Wie erfahren sollte ich sein, um am Workshop teilnehmen?"
+        a:
+      contribution:
+        q: "Welche Beiträge kann ich leisten?"
+        a: "Dein Beitrag kann klein sein, zum Beispiel kannst du einen Rechtschreibfehler korrigieren, aber auch riesig. Du kannst bei der Dokumentation helfen, einen Bug den du gefunden hast beheben, mit dem Design helfen oder sogar größere Aufgaben angehen und dabei helfen neue Funktionen einzubauen. Jedes kleine bisschen hilft!"
+      laptop:
+        q: "Soll ich einen Laptop mitbringen?"
+        a_html: "Ja, Du solltest einen Laptop mitbringen. Wenn du keinen besitzt %{link}, da wir möglicherweise in der Lage sind zu helfen."
+      keyboard:
+        q: "Soll ich eine Tastatur mitbringen?"
+        a_html: "Eine Tastatur könnte nützlich sein, da Du den ganzen Tag mit jemandem zusammen an Deinem Laptop arbeitest. Wenn Du keine Tastatur besitzt, %{link} und wir versuchen, etwas zu organisieren."
+      travel_costs:
+        q: "Ich werde pendeln. Können Sie mir bei meinen Reisekosten helfen?"
+        a: "Wir werden einige Reisestipendien anbieten. Bitte stellen dich sicher, dass du den Fragebogen ausfüllst, nachdem du dich angemeldet hast und wir werden uns mit dir in Verbindung setzen."
+  coaches:
+    want_to_coach: "Möchtest Du in unseren Workshops coachen?"
+    read_before: "Wenn Du unsere Workshops noch nicht besucht hast, lies bitte unseren"
+    code_of_conduct: "Verhaltenskodex"
+    policy: "da wir eine Nulltoleranzpolitik haben und von allen ein entsprechendes Verhalten erwarten. Das solltest Du lesen: Unser"
+    guide: "Coaching Guide"
+    unable_attend: "Bitte aktualisiere deine Teilnahme auf der Webseite falls du, nachdem du dich angemeldet hast, doch nicht kommen kannst. Wir verlassen uns darauf, dass unsere Trainer kommen, dass die Workshops rundlaufen."
+    food: "PS: Es gibt Essen am Workshop. Wir versuchen immer vegetarisches, veganes und Gluten-freies Essen anzubieten. Solltest du andere Dieätanforderungen haben, schicke uns bitte eine E-Mail an"
+  code_of_conduct:
+    title: "Verhaltenskodex"
+    summary:
+      title: "Die kurze Version"
+      intro: "Wir möchten jedem eine belästigungsfreie Erfahrung bieten, unabhängig von Geschlecht, sexueller Orientierung, Behinderung, Aussehen, Körperbau, Ethnizität oder Religionszugehörigkeit. Wir tolerieren keinerlei Belästigung von Teilnehmer_innen. Sexualisierte Sprache und Darstellungen sind bei all unseren Veranstaltungen, inklusive Vorträgen, Workshops, Feiern, auf Twitter uns allen anderen Onlinemedien unerwünscht. Teilnehmer_innen, die gegen diese Regeln verstoßen, müssen mit Sanktionen durch das Veranstaltungspersonal rechnen, inklusive eines Verweises der Veranstaltung und aller zukünftiger Veranstaltungen."
+    content:
+      title: "Die lange Version"
+      harassment: "Belästigung umfasst unter anderem beleidigende Aussagen über Geschlecht, sexuelle Orientierung, Behinderung, körperliches Aussehen wie Körperbau, Ethnizität oder Religionszugehörigkeit (oder Nichtvorhandensein einer solchen), sexualisierende Darstellungen in öffentlichen Räumen, bewusste Einschüchterung, Stalking, Verfolgung, unerwünschtes Fotografieren oder Aufnehmen, wiederholte Störung von Vorträgen und anderen Veranstaltungen, unerwünschten körperlichen Kontakt und unerwünschte sexuelle Aufmerksamkeit."
+      comply: "Teilnehmer_innen, die wegen solchen Verhaltens ermahnt werden, haben dieses sofort einzustellen."
+      sponsors: "Diese Verhaltensregeln gelten auch für Sponsor_innen. Insbesondere sollten Sponsor_innen darauf achten, dass sie keine sexualisierenden Bilder, Aktivitäten oder andere sexualisierende Werbemittel einsetzen. Personal (auch Freiwillige) sollten darauf achten, keine sexualisierende Kleidung, Uniformen oder Kostüme zu tragen, oder sonstwie ein sexualisiertes Umfeld zu gestalten."
+      sanctions: "Sollten Teilnehmer_innen durch belästigendes Verhalten auffallen, steht es dem Konferenzpersonal frei, entsprechende Maßnahmen zu ergreifen, die es für angemessen hält. Dies schließt Ermahnungen bis hin zum Verweis von der Veranstaltung ein."
+      concerns: "Solltest du dich belästigt fühlen oder mitbekommen, dass jemand anders belästigt wird oder sonstige Probleme auftreten, wende dich bitte sofort an ein Mitglied des Veranstaltungspersonals."
+      applies_to: "Wir erwarten, dass Teilnehmer diese Regeln bei allen <b>codebar</b> Veranstaltungen einhalten."
+      questions: "Wenn du Fragen oder Bedenken bezüglich dieses Kodex hast bitte"
+      contact: "Kontaktiere uns"
+      email_subject: "Fragen zum Verhaltenskodex"
+  sponsors:
+    sponsoring: "Sponsoren"
+  members:
+    sign_up: "Anmelden"
+    sign_in_with_github: "Anmelden mit GitHub"
+    sign_up_as_student: "Ich verstehe und erfülle die Teilnahmebedingungen. Meldet mich als Student an"
+    sign_up_as_coach: "Melde dich als Trainer an"
+    code_of_conduct: "Verhaltenskodex"
+    new:
+      intro: "Wir bieten eine einladendes, inklusives und lern-freundliches Umfeld und haben eine Nulltoleranzpolitik bei Belästigung und anderem unangemessenen Verhalten. Bevor du dich anmeldest, lies unseren"
+      students:
+        intro: "Wenn du als Student teilnehmen möchtest, musst du unsere"
+        criteria_link: "Teilnahmebedingungen erfüllen"
+        criteria_brief: "weil unsere Workshops nur für Frauen, LGBTQ und Menschen aus unterrepräsentierten Gruppen geöffnet sind."
+        github: "Abschließend, wenn du auf den Anmeldebutton klickst, wirst du auf eine Seite namens GitHub weitergeleitet. Nachdem du dich mit deinem GitHub Zugang angemeldet hast, wirst du wieder auf die codebar Seite zurückgeleitet. Du musst dir einen Zugang erstellen, wenn du noch keinen hast. Das dauert nicht lang und ist etwas was sich als nützlich erweisen wird wenn du anfängst zu programmieren!"
+      invitations: "Wir verschicken Einladungen regelmäßig, sei also bitte nicht besorgt, wenn du sie nicht direkt nach der Anmeldung erhältst."
+  footer:
+    email_us: "Schreibe uns eine E-Mail an:"
+    contact_info: "Kontaktinfo:"
+  faq:
+    payment:
+      q: "Muss ich bezahlen um an codebar teilzunehmen?"
+      a_p1: "Auf keinem Fall! Wir haben das Glück, dass uns einige tolle Firmen als Gastgeber und/oder mit Essen unterstützen. Und unsere"
+      awesome_coaches: "fantastische Trainer"
+      a_p2: "die uns ihre Zeit kostenlos zur Verfügung stellen um der Gemeinschaft zu helfen."
+    technologies:
+      q: "Welche Technologien lehrt ihr?"
+      a: "Wir haben eine Vielfalt an Tutorien zu HTML, CSS, JavaScript und Ruby. Wenn du etwas Anderes lernen möchtest zögere nicht <a href=\"mailto:contact@codebar.io\">uns eine E-Mail zu schicken</a>, weil wir möglicherweise noch jemanden finden können der uns dabei hilft."
+    eligibility:
+      q: "Ich möchte an einem Workshop teilnehmen. Bin ich berechtigt?"
+      a: "Unsere Workshops sind für Frauen, LGBTQ und Menschen die in der Tech-Branche unterrepräsentiert sind geöffnet. Wenn du zu einer dieser Gruppen gehörst bist du herzlich eingeladen teilzunehmen. Wenn nicht, gibt es andere tolle Initiativen, wie <a href='https://www.meetup.com/opentechschool-london/'>Open Tech School London</a>, bei denen man in einer kollaborativen Umgebung lernen kann. Bitte lies auch unseren <a href='http://codebar.io/student-guide'>Studentenratgeber</a> für weitere Informationen."
+    career:
+      q: "Ist codebar nur für Menschen gedacht die eine Karriere als Entwickler_in anstreben?"
+      a: "Nein! codebar soll Menschen den Spaß am Programmieren vermitteln. Wir helfen ihnen sowohl grundlegende Programmierfähigkeiten zu lernen als auch Neues zu entdecken und bei eigenen Projekten. Allen die Entwickler_innen werden möchten bieten wir Hilfe und Anleitung ihr Ziel zu erreichen."
+    format:
+      q: "Wie ist das Workshopformat?"
+      a: "Wir versuchen einen Trainer pro für je zwei Teilnehmer_innen zu haben. Wir bilden aus den Studenten die das gleiche Tutorium bearbeiten wollen Zweiergruppen und weisen ihnen eine_n Trainer_in zu. Der Rest geschieht einfach."
+    laptop:
+      q: "Muss ich einen Laptop zu den Workshops mitbringen?"
+      a: "Ja, wir empfehlen, dass du einen Laptop mitbringst, weil es einfacher für dich sein wird nach den Workshops weiterzuarbeiten. Wenn du keinen besitzt, <a href=\"mailto:contact@codebar.io\">schick uns eine E-Mail</a>, dann versuchen wir dir auszuhelfen."
+    online_resources:
+      q: "Es gibt so viele Tutorien online, wieso sollte ich zu codebar gehen?"
+      a: "Programmieren kann furchteinflößend sein und viele finden es schwer einen Einstieg zu finden. Dadurch dass wir dich in Kontakt mit Menschen bringen die dir helfen und dich anweisen können machen wir deine Erfahrung und deinen Lernprozess einfacher und angenehmer."
+    preperations:
+      q: "Ich würde gerne bei codebar coachen. Muss ich noch irgendetwas anderes tun als mich anzumelden?"
+      a_p1: "Ja. Lies bitte zuerst unsere"
+      coaching_guide_tutorials: "Coaching Tutorien"
+      a_p2: ". Arbeite dich anschließend bitte in unsere"
+      a_p3: "<a href='http://tutorials.codebar.io'>Tutorien</a> ein. Die Tutorien sind Open Source, wenn du also etwas verbessern möchtest kannst du gerne ein Ticket im GitHub Repository eröffnen oder einen Pull Request schicken."
+      a_p4: "Wir erwarten nicht, dass die Trainer mit allen Technologien und Sprachen vertraut sind zu denen wir Materialien haben."
+    location:
+      q: "Wo finden die Workshops statt?"
+      a: "Da wir leider keinen dauerhaften Veranstaltungsort haben, finden die Veranstaltungen bei verschiedenen Firmen, die sich als Gastgeber anbieten, statt."
+    disabled_access:
+      q: "Gibt es einen behindertengerechten Zugang zu den Workshops?"
+      a: "Das hängt leider komplett davon ab wo der Workshop stattfindet und ob das Gebäude einen entsprechenden Zugang hat. Schick uns bitte eine E-Mail an <a href='mailto:meetings@codebar.io'>meetings[at]codebar.io</a>, dass wir uns erkundigen und dir bescheid sagen können."
+    bring_codebar_to_my_city:
+      q: "Ich würde codebar gerne in meine Stadt holen. Kann ich das machen?"
+      a: "Natürlich. Bei codebar geht es darum eine Gemeinschaft aus erfahrenen Entwickler_innen, die in ihrer Freizeit anderen helfen möchten, aufzubauen. Wenn du codebar dort aufbauen möchtest wo du lebst, würden wir uns gerne mit dir darüber unterhalten und sehen, wie wir dir dabei helfen können - schick uns einfach <a href=\"mailto:contact@codebar.io\">eine E-Mail</a>."
+    our_coaches:
+      q: "Unsere Trainer"
+      a_p1: "Du findest alle Trainer die uns bei unseren Workshops geholfen haben auf der"
+      a_p2: ". Sie sind nach der Anwesenheitshäufigkeit sortiert. Wir zeigen so unsere Wertschätzung - ohne sie könnten wir nicht existieren."
+  participant_student_guide:
+    title: "Student Guide"
+    attendance_policy:
+      title: "Attendance Policy"
+      intro: "codebar is, and always has been, open to all levels of coding experience. While most of the tutorials on our website are aimed at newcomers to web development, we intend to continue our open-door policy for any student who needs coach support on their own projects. Due to the fact that our workshops are frequently oversubscribed, we ask students to respect the following expectations for participation in our workshops"
+      rule1: "In order to attend a workshop, <u>you must be on the RSVP list.</u> If you have not RSVP’d or were not allocated a spot, you will not be admitted into a workshop."
+      rule2: "If you can no longer attend a workshop, <u>please cancel your RSVP by 12:00 latest </u> on the day of the workshop. We understand that last-minute emergencies occur -- if this is the case, please get in touch with an organizer directly as soon as possible. Repeated no-shows will result in temporary or permanent suspension of your invitations."
+      rule3: "No guests are allowed. Our workshops are already overcrowded and we cannot make any exceptions. If your friend meets our eligibility criteria, get them to sign up and RSVP themselves."
+      rule4: "Please be respectful of our hosts. Do not show up exceedingly early to a workshop (not earlier than 15 minutes before the event begins) and try to leave the workstation clean and as you found it."
+      rule5: "<u>Please do not work on projects that were assigned as part of any bootcamp curriculum.</u> Talk to your bootcamp adviser if you feel like you need additional support with your coursework. If you are currently on a bootcamp, we welcome your attendance, but we encourage you to use your time at codebar to develop skills that are outside the normal scope of your studies there."
+      rule6: "Projects that involve specific frameworks/libraries (Rails, NodeJS, Meteor, Angular, Ember, React, etc) or languages that are not part of the codebar tutorials (anything other than Ruby or Javascript) are welcome but we cannot guarantee that a coach will be available to help you. In these cases we recommend selecting a codebar tutorial or katas (codewars.com or exercism.io) as a back-up option."
+    eligibility_criteria:
+      title: "Eligibility Criteria"
+      p_1: "Codebar wurde aus der Erkenntnis, dass es ein Mangel an Frauen, LGBTQ und Angehörige von ethnischen Gruppen <a href='http://sciencecampaign.org.uk/CaSEDiversityinSTEMreport2014.pdf'>unterrepräsentiert in Tech</a> begonnen."
+      p_2: "If you belong to one of these groups, you are more than welcome to attend. If not, there are some other great initiatives like <a href='http://www.opentechschool.org/'>Open Tech School</a> or <a href='https://askadev.org/'>Ask a Dev</a> where you can learn in a collaborative environment."
+      p_3: "Bedenkt, dass man, ist es manchmal schwierig für uns, festzustellen, ob die Teilnehmer die basierend auf ihren vor- und Nachnamen Förderkriterien erfüllen. Wir werden unser Bestes versuchen, um über social Media profile vorher überprüfen, aber wenn wir nicht, wir kontaktieren Sie bitten um eine kurze Bestätigung, dass Sie dieses Dokument gelesen haben und behaupten, dass Sie eine oder mehrere Kriterien erfüllen. Wir werden niemals die Teilnehmer angeben, welche Gruppe Fragen."
+      p_4: "codebar is first and foremost a resource for students who cannot afford formal training through coding bootcamps or university degrees, for financial reasons or otherwise. Our coaches, organisers and sponsors donate their time and money to help those who have faced unfair barriers to entry into the tech world. We have strived to create an inclusive, welcoming community, and so far, we have not had to implement a formal policy to enforce the eligibility criteria -- we have left this to the honesty and good faith of the students."
+      p_5: "If you are unsure whether you are eligible, please get in touch. If we determine that you have signed up and do not belong to an eligible group, we will permanently suspend your student invitations without warning."
+      p_6: "We take this issue very seriously, and we appreciate your cooperation and understanding."
+    disability:
+      title: "Students with Disability"
+      description: "We want to ensure that our workshops are as accessible as possible. If you are disabled and are unsure about whether our venues can cater to your needs, we encourage you to please get in touch with us at <a href='mailto:hello@codebar.io'>hello@codebar.io</a> and we will do what we can to accommodate you."
+  chapters:
+    intro_html: "Hallo und willkommen bei codebar!"
+    info: "Wenn du Fragen hast kannst du unsere <a href='http://codebar.io/faq'>FAQ</a> lesen, du kannst uns aber auch gerne an <a href='mailto:%{email}'>%{email}</a> schreiben, wenn du die Antwort die du suchst nicht findest. Ansonsten kannst du den folgenden Button verwenden um den Anmeldeprozess zu starten."
+    sign_up: "um zu unseren Workshops eingeladen zu werden."
+    no_incoming: "Aktuell sind keine Workshops geplant."
+    contact: "Um das %{city}er Team zu kontaktieren kannst du einfach eine E-Mail an %{email} schicken"
+  job:
+    status:
+      draft: Draft
+      pending: Pending approval
+      published: Published
+      expired: Expired
+    admin:
+      status:
+        pending: Pending approval
+        published: Approved
+        expired: Approved
+    expired: 'This job post has expired.'
+    check_out_jobs_html: 'Check out the rest of our %{link}.'
+    published_on: 'Erstellt am'
+    expires_on: 'Endet am'
+    apply: 'Apply for this job'
+    company: 'Company'
+    salary: 'Salary'
+    closing_date: Closing date
+    contact_email: Contact email
+    posted_by: Posted by
+    location:
+      title: Location
+      remote: 'Remote'
+    messages:
+      draft_html: 'This is a preview of your job.<b>Edit</b> to amend or <b>Submit</b> for approval.'
+      pending_html: 'This job is pending approval. <b>Edit</b> to amend your post.'
+      published_html: 'This job has been published.'
+      expired_html: 'This job has expired.'
+      updated: 'Your job has been updated.'
+      submitted: "Job submitted for approval. You will receive an email when it's been approved."
+      cannot_edit: You cannot edit a job that has already been approved.
+      public_page_html: View the %{link} for this job.
+  jobs:
+    title: Jobs
+    index:
+      description: Es gibt %{count} jobs
+      none: Es sind leider keine Jobangebote verfügbar.
+  feedback_form:
+    title: 'Workshop Feedback'
+    description: Deine Einreichung ist komplett anonym. Wir lesen jedes Feedback und verwenden es um unsere Workshops zu verbessern.
+    note: Bitte nenne keine Namen, sondern wähle deinen Trainer aus dem entsprechenden Feld aus. Das hilft uns dabei Probleme zu adressieren, aber gleichzeitig anonym Feedback mit den Trainern zu teilen. Die Privatsphäre unserer Mitglieder ist uns sehr wichtig!
+    rating: Deine Gesamtbewertung des Workshops
+    coach: 'Wer war dein Trainer?'
+    select_coach: '- Trainer wählen -'
+    tutorial: 'Welches Tutorium habt ihr bearbeitet?'
+    select_tutorial: '- Tutorium wählen -'
+    request: 'Wie fandest du den Workshop?'
+    suggestions: "Gab es etwas das dir nicht gefallen hat? Was können wir tun um uns zu verbessern?"
+  member:
+    jobs:
+      title: My jobs
+      preview: Preview
+      index:
+        description: Du hast %{count} Jobs eingestellt
+        none: Du hast noch keine Jobs eingestellt
+      pending:
+        title: Deine Jobeinträge in Prüfung
+        description: Du hast %{count} Jobeinträge die geprüft werden.
+        none: Du hast keine Jobeinträge in Prüfung.
+      new:
+        title: Job eintragen
+        rules_intro: "Bitte prüfe vor dem Abschicken, dass:"
+        details: dein Eintrag detailliert die zu erledigende Arbeit darstellt
+        suitability: "der Job passend für Menschen ist, die nach Praktika und Junior-Positionen suchen, die ihnen helfen ihre Karriere aufzubauen"
+        salary: der Job ein angemessenes Gehalt bietet
+        short: "der Eintrag kurz und auf den Punkt ist"
+        approval_info: "*Nach dem Abschicken wird der Job sichtbar sobald er geprüft und bestätigt wurde."
+        pay: You have made the requirement payment of £35 through %{link}
+        donation: a donation
+        button:
+          pay: Make a payment
+      edit:
+        title: Edit job listing
+  pages:
+    cookies:
+      title: Cookies
+      p1: 'Cookies are small pieces of text used to store information on web browsers. They are used by websites accross a number of different devices to store and receive identifiers and other information. Our Website and Service use cookies and other similar technologies (collectively in this Policy, "cookies"), in order to provide a better service to you and to generally improve our Website and Service. For example, we may use cookies to help direct you to the appropriate part of our Website, by indicating that you are a repeat visitor. We also may use information to present you with services that are matched to your preferences and to manage and track the effectiveness of our marketing efforts.'
+      p2: Some portions of the codebar website are functional without cookies, and you may generally choose whether to accept cookies. Most web browsers are set to accept cookies by default, however, you may be able to delete cookies yourself through your browser's cookie manager. To do so, please follow the instructions provided by your web browser. Please note that disabling cookies will reset your session, disable auto-login, and may adversely affect the availability and functionality of our Website and the services we can provide to you.
+      sub:
+        title: Below the cookies used by the codebar website.
+      functional:
+        title: Functional Cookies
+        description: Stores information about your session.
+        planner: Stores session data
+        planner_expiry: Expires after 24 hours
+      google_analytics:
+        title: Google Analytics
+        description: Google Analytics  collects information about how you use the codebar website. This enables us to identify how busy the website is and possible improvements.
+        info: We don’t allow Google to use or share our analytics data.
+        opt_out: You can [opt out of Google Analytics](https://tools.google.com/dlpage/gaoptout).
+        ga: Tracks if you have visited codebar.io before
+        ga_expiry: After 2 years
+        gid: Tracks if you have visited codebar.io before
+        gid_expiry: After 24 hours
+      cloudflare:
+        title: Cloudflare
+        cfduid: Used to identify individual clients behind a shared IP address and apply security settings on a per-client basis.
+        cfduid_expiry: '1 year'
+    privacy_policy:
+      title: Privacy Policy
+      subtitle: Your privacy matters to us
+      p1: 'Your privacy means a lot to us, and we take it very seriously. We aim to be transparent with you about the data we collect about you and how it is used and shared. By signing up to our workshops you consent to our use of your data under this Privacy Policy. The document below has been created by codebar whose companies house registered name and address is as follows:'
+      address_html: '
+        codebar Ltd,<br/>
+        International House,<br/>
+        24 Holborn Viaduct,<br/>
+        London,<br/>
+        England,<br/>
+        EC1A 2BN<br/>
+        Company No. 10791813<br/>'
+      information:
+        title: 1. Information we collect
+        description: We do not share any of your information with any third parties without your consent. We also do not sell your contact information or use it for marketing purposes.
+        subscribing_html: '**1.1 Subscribing to an event**<br/>
+        We share your name with our host companies as we are required to provide a list with all attendee names when you subscribe to any of our events. We **do not share** your email address or any other personal information.'
+        cookies_html: '**1.2 Cookie Policy**<br/>
+        We use cookies to recognize you and your location. You can control cookies through your browser settings and other tools. For more information read our [cookie policy](/cookie-policy).'
+        usage_html:  '**1.3 How we use information we collect**<br/>
+        The legal basis on which we collect and process your data is “legitimate interest”. This is because we collect and store your data in order to process event information.'
+      your_rights:
+        title: 2. Your rights, choices and obligations
+        rights_html: '
+          **2.1 Your rights**<br/>
+          Data protection law provides you with rights in respect of personal data that we hold about you, including the right to request a copy of the personal data and request that we rectify, restrict or delete your data.
+          If you would like to exercise any of these rights please email us at company@codebar.io.
+          If you have a complaint about how we handle your data, please get in touch with us at company@codebar.io. If you are not happy about the way a complaint has been handled, you have the right to refer your complaint to the Information Commissioner’s Office.'
+        data_retention_html: '
+          **2.2 Data retention**<br/>
+          We will retain your data for as long as necessary to provide our services to you and fulfil transactions you have requested. If at any point you wish us to delete your data please email company@codebar.io.'
+        personal_data_access_html: '
+          **2.3 Right to Access and Control Your Personal Data**<br/>
+          You can request a copy of the data we hold about you, or request that we delete any data we hold on you. You can also ask us to correct, update or delete any inaccurate personal data that we hold about you. Just email us at company@codebar.io at any time.  We aim to process requests for data records or deletion within two weeks of receipt.'
+        access_and_portability_html: '
+          **2.4 Data Access and Portability**<br/>
+          You have the right to request a copy of the personal information we hold about you in a structured, electronic format. If you wish to receive a copy of the information we hold about you, please email company@codebar.io.'
+      security:
+        title: 3. Security
+        text: From time to time we implement and update administrative, technical, and physical security measures to help protect your information against unauthorised access, loss, destruction, or alteration. However, the Internet is not a 100% secure environment so we can’t guarantee the security of the transmission or storage of your information.
+      changes:
+        title: 4. Changes to this privacy policy
+        text: We reserve the right to modify this Privacy Policy at any time in accordance with this provision. If we make changes to this Privacy Policy, we will post the revised Privacy Policy on the codebar website. If you disagree with the revised Privacy Policy, you may ask us to remove your information from our systems pleas email company@codebar.io.
+      contact:
+        title: 5. Contact
+        text: If you have any questions or complaints about this Privacy Policy or our information handling practices, you may email us company@codebar.io stating 'Data inquiry' in the subject title.
+  admin:
+    dashboard:
+      title: 'Admin'
+    jobs:
+      title: Manage jobs
+      info:
+        request_changes_html: To request changes email %{name} at %{email}
+        approved_by: Approved by %{name} on %{date}.
+        approved_by_no_date: Approved by %{name}
+      messages:
+        approved: "The job has been approved and an email has been sent out to %{name} at %{email}"
+        cannot_approve: 'You cannot approve expired job listings'
+        confirm_approval: 'Are you sure this job listing meets all requirements and you want to approve it?'
+    workshop:
+      manage_rsvps:
+        text: 'Studenten und Trainer zum Workshop einladen. Die Bestätigungs-E-Mail wird ausgelöst und sie werden von der Warteliste entfernt.'
+      destroy:
+        success: "Werkstatt erfolgreich gelöscht"
+        failure: "Workshop kann nicht gelöscht werden. Dies kann passieren weil der Workshop eingeladene Teilnehmer hat und/oder lang genug auf der Webseite aufgeführt war, dass er nicht gelöscht werden kann."
+    messages:
+      meeting:
+        created: 'Meeting wurde erfolgreich erstellt'
+        updated: 'Meetingdetails erfolgreich aktualisiert'
+        invitations_already_sent: 'Einladungen wurden bereits verschickt; sie werden nicht erneut versendet'
+        sending_invitations: 'Einladungen werden verschickt'
+      invitation:
+        rsvp_member: "%{name} wurde erfolgreich hinzugefügt und per E-Mail benachrichtigt."
+        already_on_list: "%{name} ist bereits auf der Liste!"
+        rsvp_error: "Es ist etwas schief gegangen, %{name} wurde nicht hinzugefügt."
+        update_rsvp: 'Teilnahme von %{name} aktualisiert'
+  simple_form:
+    placeholders:
+      job:
+        company: 'e.g. codebar'
+        company_website: 'e.g. https://codebar.io'
+        title: 'e.g. Internship'
+        description: 'Use text or markdown for the job description'
+        location: 'e.g. London or Berlin'
+    hints:
+      job:
+        remote: Only check if the role is remote only
+        salary: Annual pay before tax, without commas or decimal points
+  activerecord:
+    attributes:
+      job:
+        title: Title
+        company: Name
+        company_address: Address
+        company_postcode: Postcode
+        company_website: Website
+        email: Contact email
+        link_to_job: Link to job post
+        expiry_date: Application closing date

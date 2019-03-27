@@ -1,6 +1,10 @@
 require 'spec_helper'
 
-describe Chapter do
+RSpec.describe Chapter, type: :model do
+  it { should validate_presence_of(:city) }
+  it { should validate_length_of(:description).is_at_most(280) }
+  it { should respond_to(:image) }
+
   context 'validations' do
     context '#slug' do
       it 'a chapter must have a slug set' do
@@ -31,12 +35,12 @@ describe Chapter do
   end
 
   context 'scopes' do
-    context '#default_scope' do
+    context '#active' do
       it 'only returns active Chapters' do
         2.times { Fabricate(:chapter) }
         3.times { Fabricate(:chapter, active: false) }
 
-        expect(Chapter.all.count).to eq(2)
+        expect(Chapter.active.all.count).to eq(2)
       end
     end
   end

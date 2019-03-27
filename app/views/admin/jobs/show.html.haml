@@ -1,39 +1,63 @@
-.stripe.reverse
-  .row
-    .large-12.columns
-      %h1 Review job
-- unless @job.approved? or @job.expired?
-  .alert-box
+.job.mb1
+  .stripe
     .row
       .large-12.columns
-        %p
-          Before approving this job make sure
-        %ul.no-bullet
-          %li
-            %input#work_details{ type: 'checkbox' }
-            %label{ for: 'work_details' } The post details the work that will have to be undertaken
-          %li
-            %input#roles{ type: 'checkbox' }
-            %label{ for: 'roles' } It's suitable for people looking for Internships and Junior roles that will enable them to build up their career
-          %li
-            %input#reliable_source{ type: 'checkbox' }
-            %label{ for: 'reliable_source' } It was posted by someone you know or a reliable source
-          %li
-            %input#payment{ type: 'checkbox' }
-            %label{ for: 'payment' } Payment confirmation was posted in the London organisers Slack channel
-          %li
-            %input#to-the-point{ type: 'checkbox' }
-            %label{ for: 'to-the-point' } The post is short and to the point
+        %br
+        %ul.breadcrumbs
+          %li=link_to  t('admin.dashboard.title'), admin_root_path
+          %li=link_to  t('admin.jobs.title'), admin_jobs_path
+          %li.current
+            %span= @job.title
+    .row
+      .large-12.columns
+        - if !@job.published? && @job.expired?
+          .panel
+            .row
+              .large-12.columns
+                =t('admin.jobs.messages.cannot_approve')
+        - elsif !@job.published?
+          .panel
+            .row
+              .large-12.columns
+                %h4
+                  %strong Before approving this job make sure
+                %ul.no-bullet
+                  %li
+                    %input#work_details{ type: 'checkbox' }
+                    %label{ for: 'work_details' } The post details the work that will have to be undertaken
+                  %li
+                    %input#roles{ type: 'checkbox' }
+                    %label{ for: 'roles' } It's suitable for people looking for Internships and Junior roles that will enable them to build up their career
+                  %li
+                    %input#reliable_source{ type: 'checkbox' }
+                    %label{ for: 'reliable_source' } It was posted by someone you know or a reliable source
+                  %li
+                    %input#payment{ type: 'checkbox' }
+                    %label{ for: 'payment' } Payment confirmation was posted in Slack
+                  %li
+                    %input#to-the-point{ type: 'checkbox' }
+                    %label{ for: 'to-the-point' } The post is short and to the point
 
-=render partial: 'jobs/show', locals: { admin: true }
-.stripe.reverse
-  .row
-    .large-12.columns.text-right
-      - if @job.approved?
-        %label.label.success
-          Approved
-          - if @job.approved_by_id?
-            by #{@job.approved_by.full_name}
-      - else
-        - unless @job.expired?
-          = link_to 'Approve', admin_job_approve_path(@job), class: 'button round alert'
+      .large-12.columns
+        %p
+          - if @job.expired?
+            =t('admin.jobs.info.request_changes_html', name: @job&.created_by&.full_name,
+                                                  email: mail_to(@job.created_by.email, @job.created_by.email,
+                                                  subject: "Regarding job listing #{@job.title}"))
+          - elsif @job.published?
+            = t('admin.jobs.info.approved_by', name: @job&.approved_by&.full_name,
+                                               date: @job.published_on)
+
+          - else
+            =t('admin.jobs.info.request_changes_html', name: @job&.created_by&.full_name,
+                                                       email: mail_to(@job.created_by.email, @job.created_by.email,
+                                                       subject: "Regarding job listing #{@job.title}"))
+            %br
+            %br
+            =link_to 'Approve', admin_job_approve_path(@job.id),
+                                class: 'button',
+                                'data-confirm': t('admin.jobs.messages.confirm_approval')
+        %h2 Preview
+        %hr
+
+  =render partial: 'jobs/show', locals: { admin: true }

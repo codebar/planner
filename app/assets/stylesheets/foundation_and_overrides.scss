@@ -55,12 +55,10 @@ $body-font-weight: 400;
 $default-float: left;
 
 // We use these as default colors throughout
-$primary-color: #596677;
-$secondary-color: #e60060;
-// $alert-color: #f04124;
+$alert-color: scale-color($codebar-pink, $lightness: 45%);
 // $success-color: #43AC6A;
 $warning-color: #cb0432;
-// $info-color: #a0d3e8;
+$info-color: scale-color($codebar-blue, $lightness: 40%);
 
 // We use these to make sure border radius matches unless we want it different.
 $global-radius: rem-calc(3);
@@ -129,10 +127,10 @@ $large-up: "#{$screen} and (min-width:#{lower-bound($large-range)})";
 // $header-text-rendering: optimizeLegibility;
 
 // We use these to control header font sizes
-$h1-font-size: rem-calc(37);
-$h2-font-size: rem-calc(37);
-$h3-font-size: rem-calc(27);
-$h4-font-size: rem-calc(23);
+$h1-font-size: rem-calc(34);
+$h2-font-size: rem-calc(28);
+$h3-font-size: rem-calc(25);
+$h4-font-size: rem-calc(22);
 $h5-font-size: rem-calc(18);
 $h6-font-size: 1rem;
 
@@ -171,9 +169,10 @@ $paragraph-font-weight: 300;
 // $code-font-weight: bold;
 
 // We use these to style anchors
-// $anchor-text-decoration: none;
-$anchor-font-color: $primary-color;
-$anchor-font-color-hover: scale-color($primary-color, $lightness: -15%);
+
+$anchor-text-decoration: none;
+$anchor-font-color: darken($secondary-color, 30%);
+$anchor-font-color-hover: darken($secondary-color, 10%);
 
 // We use these to style the <hr> element
 // $hr-border-width: 1px;
@@ -187,7 +186,7 @@ $anchor-font-color-hover: scale-color($primary-color, $lightness: -15%);
 // $list-ordered-side-margin: 1.4rem;
 // $list-side-margin-no-bullet: 0;
 // $list-nested-margin: rem-calc(20);
-// $definition-list-header-weight: bold;
+$definition-list-header-weight: 100;
 // $definition-list-header-margin-bottom: .3rem;
 // $definition-list-margin-bottom: rem-calc(12);
 
@@ -300,7 +299,7 @@ $alert-bottom-margin: rem-calc(0);
 // $include-html-nav-classes: $include-html-classes;
 
 // We use this to set the background color for the breadcrumb container.
-// $crumb-bg: scale-color($secondary-color, $lightness: 55%);
+$crumb-bg: scale-color($codebar-blue, $lightness: 75%);
 
 // We use these to set the padding around the breadcrumbs.
 // $crumb-padding: rem-calc(9 14 9);
@@ -325,6 +324,10 @@ $alert-bottom-margin: rem-calc(0);
 // $crumb-slash-color: #aaa;
 // $crumb-slash: "/";
 
+
+.breadcrumbs li span {
+  line-height: 1.75;
+}
 //
 // BUTTONS
 //
@@ -333,8 +336,8 @@ $alert-bottom-margin: rem-calc(0);
 
 // We use these to build padding for buttons.
 // $button-tny: rem-calc(10);
-// $button-sml: rem-calc(14);
-// $button-med: rem-calc(16);
+$button-sml: rem-calc(12);
+$button-med: rem-calc(13);
 // $button-lrg: rem-calc(18);
 
 // We use this to control the display property.
@@ -347,7 +350,7 @@ $alert-bottom-margin: rem-calc(0);
 // $button-font-color-alt: #333;
 // $button-font-tny: rem-calc(11);
 // $button-font-sml: rem-calc(13);
-$button-font-med: rem-calc(16);
+$button-font-med: rem-calc(14);
 // $button-font-lrg: rem-calc(20);
 // $button-font-weight: normal;
 // $button-font-align: center;
@@ -809,13 +812,13 @@ $tabbar-color: #FFFFFF;
 // $include-html-panel-classes: $include-html-classes;
 
 // We use these to control the background and border styles
-$panel-bg: scale-color($white, $lightness: 50%);
+$panel-bg: scale-color($codebar-green, $lightness: 98%);
 // $panel-border-style: solid;
 // $panel-border-size: 1px;
 
 // We use this % to control how much we darken things on hover
-$panel-function-factor: -11%;
-$panel-border-color: scale-color($secondary-color, $lightness: $panel-function-factor);
+$panel-function-factor: 50%;
+$panel-border-color: scale-color($codebar-green, $lightness: $panel-function-factor);
 
 // We use these to set default inner padding and bottom margin
 // $panel-margin-bottom: rem-calc(20);
@@ -1087,12 +1090,12 @@ $price-cta-align: right;
 
 // These control the table cell border style
 $table-border-style: none;
-$table-border-size: rem-calc(0);
+$table-border-size: 0;
 $table-border-color: #333;
 
 // These control the table head styles
 $table-head-bg: transparent;
-$table-even-row-bg: #fff;
+$table-even-row-bg: transparent;
 // $table-head-font-size: rem-calc(14);
 // $table-head-font-color: #222;
 // $table-head-font-weight: bold;
@@ -1107,6 +1110,10 @@ $table-line-height: rem-calc(16);
 // These are for controlling the display and margin of tables
 // $table-display: table-cell;
 $table-margin-bottom: rem-calc(10);
+
+table tr {
+  border-top: 1px solid scale-color($codebar-blue, $lightness: 95%);
+}
 
 //
 // TABS
@@ -1372,10 +1379,6 @@ blockquote em {
   font-style: italic;
 }
 
-a {
-  border-bottom: 1px dashed $secondary-color;
-}
-
 body.dashboard-faq dl dt {
 	font-size: 1.25rem;
 	padding-top: 0.75rem;
@@ -1413,4 +1416,18 @@ body.dashboard-faq dl dt {
   margin-top: -105px;
   height: 105px;
   visibility: hidden;
+}
+
+.label.status {
+  @include label(
+    $text-size: 13px,
+    $bg: $codebar-blue
+  );
+}
+
+.label.admin.status.pending {
+  @include label(
+    $text-size: 13px,
+    $bg: $alert-color
+  );
 }

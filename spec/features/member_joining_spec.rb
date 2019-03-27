@@ -1,16 +1,16 @@
 require 'spec_helper'
 
-feature 'A new student signs up', js: false do
+feature 'A new student signs up' do
   before do
     OmniAuth.config.mock_auth[:github] = OmniAuth::AuthHash.new(
-                                                                  provider: 'github',
-                                                                  uid: '42',
-                                                                  credentials: { token: 'Fake token' },
-                                                                  info: {
-                                                                    email: Faker::Internet.email,
-                                                                    name: Faker::Name.name
-                                                                  }
-                                                                )
+      provider: 'github',
+      uid: '42',
+      credentials: { token: 'Fake token' },
+      info: {
+        email: Faker::Internet.email,
+        name: Faker::Name.name
+      }
+    )
   end
 
   scenario 'A visitor can access signups through the landing page' do
@@ -20,7 +20,7 @@ feature 'A new student signs up', js: false do
     expect(page).to have_current_path(step1_member_path(member_type: 'student'))
   end
 
-  scenario 'A visitor must fill in all mandatory fields in order to sign up', js: true do
+  scenario 'A visitor must fill in all mandatory fields in order to sign up' do
     member = Fabricate(:member, name: nil, surname: nil, email: nil, about_you: nil)
     member.update(can_log_in: true)
     login member

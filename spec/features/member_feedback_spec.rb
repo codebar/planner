@@ -16,9 +16,11 @@ feature 'member feedback' do
   end
 
   context 'Feedback form' do
-    scenario 'I can view a feedback form when token is valid' do
+    scenario 'I can access the feedback form when the token is valid' do
       visit feedback_path(valid_token)
 
+      expect(page).to have_content('Your submission will be completely anonymous')
+      expect(page).to have_content('Please do not mention any names')
       expect(page).to have_select 'feedback_coach_id'
       expect(page).to have_select 'feedback_tutorial_id'
       expect(page).to have_field 'feedback_request'
@@ -27,13 +29,13 @@ feature 'member feedback' do
       expect(page).to have_selector '//input[type=submit]'
     end
 
-    scenario 'I can select form coaches list in feedback form' do
+    scenario 'I can select an entry from the coaches list' do
       visit feedback_path(valid_token)
 
       expect(page).to have_select('feedback_coach_id', with_options: [coach.full_name])
     end
 
-    scenario 'I can select form tutorials list in feedback form' do
+    scenario 'I can select an entry from tutorials list' do
       visit feedback_path(valid_token)
 
       expect(page).to have_select('feedback_tutorial_id', with_options: [@tutorial.title])
@@ -60,7 +62,7 @@ feature 'member feedback' do
     scenario 'I can see success page with message and link to homepage when valid data is given' do
       visit feedback_path(valid_token)
 
-      find(:xpath, "//input[@id='feedback_rating']").set '4'
+      find(:xpath, "//input[@id='feedback_rating']", visible: false).set '4'
       select(coach.full_name, from: 'feedback_coach_id')
       select(@tutorial.title, from: 'feedback_tutorial_id')
 
@@ -80,7 +82,6 @@ feature 'member feedback' do
       click_button('Submit feedback')
 
       expect(page.current_path).to eq(submit_feedback_path(valid_token))
-
       expect(page).to have_content("Rating can't be blank")
     end
   end

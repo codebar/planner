@@ -4,7 +4,8 @@ class Chapter < ActiveRecord::Base
   validates :name, :email, uniqueness: true, presence: true
   validates :city, presence: true
   validates :time_zone, presence: true
-  validate :time_zone_exists
+  validate  :time_zone_exists
+  validates :description, length: { maximum: 280 }
 
   has_many :workshops
   has_and_belongs_to_many :events
@@ -12,14 +13,15 @@ class Chapter < ActiveRecord::Base
   has_many :sponsors, through: :workshops
   has_many :subscriptions, through: :groups
   has_many :members, through: :subscriptions
+  has_many :feedbacks, through: :workshops
 
   before_save :set_slug
 
   scope :active, -> { where(active: true) }
 
-  default_scope -> { active }
-
   delegate :upcoming, to: :workshops, prefix: true
+
+  mount_uploader(:image, ImageUploader)
 
   def self.available_to_user(user)
     return Chapter.all if user.has_role?(:organiser) || user.has_role?(:admin) || user.has_role?(:organiser, Chapter)

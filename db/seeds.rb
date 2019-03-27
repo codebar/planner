@@ -76,12 +76,16 @@ if Rails.env.development?
       Fabricate(:job, title: job_titles.sample, company: job_companies.sample, expiry_date: Time.zone.today + 3.weeks - n.weeks)
     end
 
+    Rails.logger.info "Creatings students..."
+    students = 200.times.map { Fabricate(:student, groups: Group.students.order('RANDOM()').limit(2)) }
+
     Rails.logger.info "Creatings invitations..."
     300.times do |n|
-      Fabricate(:attended_workshop_invitation, role: 'Coach', member: coaches.sample, workshop: workshops.sample) rescue nil
+      Fabricate(:coach_workshop_invitation, member: coaches.sample, workshop: workshops.sample) rescue nil
+      Fabricate(:student_workshop_invitation, member: students.sample, workshop: workshops.sample) rescue nil
     end
     Rails.logger.info '..done!'
-  rescue => e
+  rescue Exception => e
     Rails.logger.error 'Something went wrong. Try running `bundle exec rake db:drop db:create db:migrate` first'
     Rails.logger.error e.message
   end

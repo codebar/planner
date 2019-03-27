@@ -17,11 +17,10 @@ Planner::Application.routes.draw do
     get 'step2'
   end
 
-  resources :jobs, only: [:index, :show]
+  resources :jobs, only: %i[index show]
 
   namespace :member, path: 'my' do
     resources :jobs, except: [:destroy] do
-      get 'preview'
       post 'submit'
       get 'pending', on: :collection
     end
@@ -77,11 +76,13 @@ Planner::Application.routes.draw do
   resources :courses, only: [:show] do
     get 'rsvp'
   end
+
   resources :workshops, only: [:show] do
     member do
       post 'rsvp'
     end
   end
+
   resources :feedback, only: [:show] do
     member do
       patch 'submit'
@@ -89,7 +90,6 @@ Planner::Application.routes.draw do
       get 'not_found'
     end
   end
-
 
   resources :skills, only: [:show]
 
@@ -99,22 +99,25 @@ Planner::Application.routes.draw do
     get '/guide' => 'portal#guide', as: :guide
 
     resources :jobs, only: %i[index show] do
-      get 'all', on: :collection
       get 'approve'
     end
 
     resources :announcements, only: %i[new index create edit update]
+
     resources :members, only: %i[show index] do
       get :send_eligibility_email
       get :send_attendance_email
       get :update_subscriptions
       resources :bans, only: %i[index new create]
     end
+
     resources :member_notes, only: [:create]
 
     resources :chapters, only: %i[index new create show edit update] do
       get :members
       resources :workshops, only: [:index]
+      resources :feedback, only: [:index], controller: 'chapters/feedback'
+      resources :organisers, only: %i[index create destroy], controller: 'chapters/organisers'
     end
 
     resources :events, only: %i[new create show edit update] do
@@ -136,11 +139,10 @@ Planner::Application.routes.draw do
     end
 
     resources :meeting_invitations, only: %i[create update]
-
     resources :groups, only: %i[index new create show]
     resources :sponsors, except: [:destroy]
-
     resources :feedback, only: [:index]
+
     resources :workshops, except: [:index] do
       post :host
       delete 'host', action: 'destroy_host', as: :destroy_host
@@ -161,13 +163,16 @@ Planner::Application.routes.draw do
   end
 
   get   '/login', to: 'auth_services#new'
-  match '/auth/:service/callback' => 'auth_services#create', via: %i(get post)
-  match '/auth/failure' => 'auth_services#failure', via: %i(get post)
-  match '/logout' => 'auth_sessions#destroy', via: %i(get delete), as: :logout
-  match '/register' => 'auth_sessions#create', via: %i(get), as: :registration
+  match '/auth/:service/callback' => 'auth_services#create', via: %i[get post]
+  match '/auth/failure' => 'auth_services#failure', via: %i[get post]
+  match '/logout' => 'auth_sessions#destroy', via: %i[get delete], as: :logout
+  match '/register' => 'auth_sessions#create', via: %i[get], as: :registration
 
   resources :sponsors, only: [:index]
   resources :donations, only: %i[new create]
+
+  get 'cookie-policy' => 'pages#show', id: 'cookie-policy'
+  get 'privacy-policy' => 'pages#show', id: 'privacy-policy'
 
   get ':id' => 'chapter#show', as: :chapter
 end

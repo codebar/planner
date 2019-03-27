@@ -1,29 +1,35 @@
-.stripe.reverse
-  .row
-    .large-12.columns
-      %h2 List a job
-      %p
-        Before posting, please make sure that:
-        %ul.no-bullet
-          %li
-            %input#work-details{type: 'checkbox'}
-            %label{for: 'work-details'} Your post details the work that will have to be undertaken
-          %li
-            %input#roles{type: 'checkbox'}
-            %label{for: 'roles'} It's suitable for people looking for Internships and Junior roles that will enable them to build up their career
-          %li
-            %input#pay{type: 'checkbox'}
-            %label{for: 'pay'} The job pays an appropriate salary
-          %li
-            %input#short{type: 'checkbox'}
-            %label{for: 'short'} It's short and to the point
-      %p
-        A minimum payment of <b>£25</b> would be appreciated to list a job (all donations go towards sustaining codebar and running our events).
-      =link_to "Make a payment", "https://codebar.io/donations/new", class: 'button'
-      %br
-      %small *Submitted jobs will be visible once they've been reviewed and approved by an organiser.
+.job
+  .stripe
+    .row
+      .large-12.columns
+        %br
+        %ul.breadcrumbs
+          %li=link_to  t('member.jobs.title'), member_jobs_path
+          %li.current
+            %span=t('member.jobs.new.title')
+    .row
+      .large-12.columns
+        .panel
+          %p=t('member.jobs.new.rules_intro')
+          %ul.no-bullet
+            %li
+              %input#work-details{type: 'checkbox'}
+              %label{for: 'work-details'}= t('member.jobs.new.details')
+            %li
+              %input#roles{type: 'checkbox'}
+              %label{for: 'roles'}= t('member.jobs.new.suitability')
+            %li
+              %input#pay{type: 'checkbox'}
+              %label{for: 'pay'}= t('member.jobs.new.salary')
+            %li
+              %input#short{type: 'checkbox'}
+              %label{for: 'short'}= t('member.jobs.new.short')
+            %li
+              %input#short{type: 'checkbox'}
+              %label{for: 'pay'}= t('member.jobs.new.pay', link: link_to(t('member.jobs.new.donation'), new_donation_path)).html_safe
 
-.stripe.reverse
-  .row
-    .large-12.columns
-      = render partial: 'form'
+    %br
+    .row
+      .large-12.columns
+        = simple_form_for @job, url: member_jobs_path, method: :post do |f|
+          = render partial: 'form', locals: { f: f }

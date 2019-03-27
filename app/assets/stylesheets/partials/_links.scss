@@ -1,0 +1,7 @@
+a {
+  border-bottom: 1px solid darken($secondary-color, 30%);
+}
+
+a:hover {
+  color: darken($secondary-color, 10%);
+}

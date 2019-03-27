@@ -1,30 +1,32 @@
-.stripe.reverse
-  .row
-    .large-12.columns
-      %h1=t('member.jobs.title')
-      %p.lead
-        %small #{link_to('Click here', new_member_job_path)} if you would like to post a new job.
-
-  - if @jobs.any?
+.job
+  .stripe
     .row
       .large-12.columns
-        %h4 Posted (#{@jobs.count})
-        %ul.jobs
-          - @jobs.each do |job|
-            = render partial: 'jobs/job', locals: { job: job }
+        %br
+        %ul.breadcrumbs
+          %li.current=link_to  t('member.jobs.title'), "#"
 
-  - if @pending.any?
-    .row
-      .large-12.columns
-        %h4 Pending (#{@pending.count})
-        %ul.jobs
-          - @pending.each do |job|
-            = render partial: 'job_preview', locals: { job: job }
+    - if @jobs.any?
+      .row
+        %table.large-12.columns
+          %thead
+            %tr
+              %th Job title
+              %th Company
+              %th Location
+              %th Published on
+              %th Expires on
+              %th Status
+              %th
+          %tbody
+            - @jobs.each do |job|
+              = render partial: 'member/jobs/job', locals: { job: job }
+      .row
+        .medium-6.columns.text-left
+          = page_entries_info(@jobs, model: 'job')
+        .medium-6.columns.text-right
+          = will_paginate(@jobs)
 
-  - if @drafts.any?
-    .row
+    .row.mt1
       .large-12.columns
-        %h4 Drafts (#{@drafts.count})
-        %ul.jobs
-          - @drafts.each do |job|
-            = render partial: 'job_preview', locals: { job: job }
+        =link_to('New job', new_member_job_path, class: 'button medium ')

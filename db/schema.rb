@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180608010545) do
+ActiveRecord::Schema.define(version: 20181021014646) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -83,8 +83,10 @@ ActiveRecord::Schema.define(version: 20180608010545) do
     t.string   "twitter"
     t.string   "twitter_id"
     t.string   "slug"
-    t.boolean  "active",     default: true
-    t.string   "time_zone",  default: "London", null: false
+    t.boolean  "active",      default: true
+    t.string   "time_zone",   default: "London", null: false
+    t.text     "description"
+    t.string   "image"
   end
 
   create_table "chapters_events", force: :cascade do |t|
@@ -242,6 +244,19 @@ ActiveRecord::Schema.define(version: 20180608010545) do
   add_index "feedbacks", ["coach_id"], name: "index_feedbacks_on_coach_id", using: :btree
   add_index "feedbacks", ["tutorial_id"], name: "index_feedbacks_on_tutorial_id", using: :btree
 
+  create_table "friendly_id_slugs", force: :cascade do |t|
+    t.string   "slug",                      null: false
+    t.integer  "sluggable_id",              null: false
+    t.string   "sluggable_type", limit: 50
+    t.string   "scope"
+    t.datetime "created_at"
+  end
+
+  add_index "friendly_id_slugs", ["slug", "sluggable_type", "scope"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope", unique: true, using: :btree
+  add_index "friendly_id_slugs", ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type", using: :btree
+  add_index "friendly_id_slugs", ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id", using: :btree
+  add_index "friendly_id_slugs", ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type", using: :btree
+
   create_table "group_announcements", force: :cascade do |t|
     t.integer  "announcement_id"
     t.integer  "group_id"
@@ -288,12 +303,21 @@ ActiveRecord::Schema.define(version: 20180608010545) do
     t.string   "email"
     t.string   "link_to_job"
     t.integer  "created_by_id"
-    t.boolean  "approved",       default: false
-    t.boolean  "submitted",      default: false
+    t.boolean  "approved",         default: false
+    t.boolean  "submitted",        default: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "company"
     t.integer  "approved_by_id"
+    t.string   "company_region"
+    t.string   "company_website"
+    t.string   "company_address"
+    t.string   "company_postcode"
+    t.datetime "published_on"
+    t.boolean  "remote"
+    t.integer  "salary"
+    t.string   "slug"
+    t.integer  "status",           default: 0
   end
 
   add_index "jobs", ["created_by_id"], name: "index_jobs_on_created_by_id", using: :btree

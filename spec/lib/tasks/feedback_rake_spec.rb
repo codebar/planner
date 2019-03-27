@@ -1,18 +1,16 @@
 require 'spec_helper'
 
-describe 'feedback:request' do
-  include_context 'rake'
-
-  its(:prerequisites) { should include('environment') }
-
+RSpec.describe 'rake feedback:request', type: :task do
   context 'when most recent workshop has attendances' do
-    let(:group) { Fabricate(:students) }
-    let(:workshop) { Fabricate(:workshop, date_and_time: 23.hours.ago, chapter: group.chapter) }
+    let(:workshop) { Fabricate(:workshop, date_and_time: 23.hours.ago) }
     let(:student) { Fabricate(:member) }
-    let!(:subscription) { Fabricate(:subscription, group: group, member: student) }
+
+    it "preloads the Rails environment" do
+      expect(task.prerequisites).to include "environment"
+    end
 
     it 'should gracefully run' do
-      expect { subject.invoke }.to_not raise_error
+      expect { task.invoke }.to_not raise_error
     end
 
     it 'generates a FeedbackRequest' do
@@ -21,7 +19,7 @@ describe 'feedback:request' do
       expect(Workshop).to receive(:completed_since_yesterday).and_return([workshop])
       expect(FeedbackRequest).to receive(:create).with(member: student, workshop: workshop, submited: false)
 
-      subject.invoke
+      task.execute
     end
 
     it 'only generates a FeedbackRequest for workshops that took place in the last 24 hours' do
@@ -35,7 +33,7 @@ describe 'feedback:request' do
       past_workshops.each { |w| Fabricate(:attending_workshop_invitation, member: student, workshop: w) }
       yesterdays_workshops.each { |w| Fabricate(:attending_workshop_invitation, member: student, workshop: w) }
 
-      subject.invoke
+      task.execute
 
       past_workshops.each do |workshop|
         expect(FeedbackRequest.where(member: student, workshop: workshop, submited: false).exists?).to eq(false)

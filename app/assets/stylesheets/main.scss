@@ -1,4 +1,6 @@
 @import 'partials/colors';
+@import 'partials/links';
+@import 'partials/margins';
 @import 'partials/layout';
 @import 'partials/hero';
 @import 'partials/events';
@@ -32,19 +34,19 @@ nav a.menu {
 }
 
 .user {
-  color: #E3573E;
+  color: #e3573e;
 }
 
 .sign-up {
   border-radius: 1rem;
   padding: 1rem;
-  border: 1px solid #FFEE2C;
-  background-color: #FFEEA6;
+  border: 1px solid #ffee2c;
+  background-color: #ffeea6;
 }
 
 .sign-up.past {
   border: 1px solid grey;
-  background-color: #CCC;
+  background-color: #ccc;
 }
 
 /* The new user flow. */
@@ -73,10 +75,12 @@ nav a.menu {
 }
 
 /* Show/hide togglable elements are controlled by JavaScript. */
-.sign-up-wizard .collapsed { display: none; }
-.no-js .sign-up-wizard .collapsed { display: block; }
-
-
+.sign-up-wizard .collapsed {
+  display: none;
+}
+.no-js .sign-up-wizard .collapsed {
+  display: block;
+}
 
 .workshop.title {
   color: grey;
@@ -153,14 +157,31 @@ u {
   padding: 50px 0;
 }
 
-.grouped-events:not(:last-child) {
-  border-bottom: 1px dotted $primary-color;
-  margin-bottom: 20px;
+.stripe.reverse#chapter {
+  h3 {
+    font-weight: 300;
+  }
 }
 
-.stripe:nth-child(even) .grouped-events:not(:last-child) {
-  border-bottom: 1px dotted $white;
-  margin-bottom: 20px;
+.grouped-events {
+  padding-bottom: 20px;
+
+  h3.date {
+    font-size: 1.15rem;
+    margin-bottom: 15px;
+  }
+}
+.events-list {
+  margin-bottom: 30px;
+
+  &--past-events {
+    h3.date {
+      opacity: 0.5;
+    }
+    .event {
+      opacity: 0.5;
+    }
+  }
 }
 
 .sponsor-image a {
@@ -169,4 +190,19 @@ u {
 
 .admin_margin {
   margin-top: 15px;
+}
+
+form .hint {
+  color: gray;
+  display: inline-block;
+  font-size: 0.875em;
+  margin-bottom: 0.5rem;
+}
+
+.breadcrumbs {
+  background-color: none;
+}
+
+.chosen-dropwdown {
+  margin-bottom: 1.14286rem;
 }

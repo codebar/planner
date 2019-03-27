@@ -1,17 +1,13 @@
 require 'spec_helper'
 
-describe 'reminders:workshop' do
-  include_context 'rake'
-
-  its(:prerequisites) { should include('environment') }
+RSpec.describe 'rake reminders:workshop', type: :task do
   let!(:workshop) { Fabricate(:workshop, date_and_time: Time.zone.now + 29.hours) }
 
-  before do
-    allow(STDOUT).to receive(:puts)
+  it "preloads the Rails environment" do
+    expect(task.prerequisites).to include "environment"
   end
-
   it 'should gracefully run' do
-    expect { subject.invoke }.to_not raise_error
+    expect { task.invoke }.to_not raise_error
   end
 
   it 'sends out reminders' do
@@ -22,6 +18,6 @@ describe 'reminders:workshop' do
     expect(InvitationManager).to receive(:new).and_return(invitation_manager)
     expect(invitation_manager).to receive(:send_workshop_waiting_list_reminders).with(workshop)
 
-    subject.invoke
+    task.execute
   end
 end

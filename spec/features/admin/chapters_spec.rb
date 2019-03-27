@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-feature 'chapters' do
+feature 'Chapters' do
   let(:member) { Fabricate(:member) }
 
   context 'Authorization smoke test' do
@@ -46,6 +46,9 @@ feature 'chapters' do
         fill_in 'Name', with: 'codebar Brighton'
         fill_in 'Email', with: 'brighton@codebar.io'
         fill_in 'City', with: 'Brighton'
+        fill_in 'Twitter', with: '@codebarBrighton'
+        fill_in 'Description', with: 'Description for Brighton chapter'
+        attach_file('Image', Rails.root + 'spec/support/chapter-image.png')
 
         click_on 'Update chapter'
 
@@ -55,6 +58,7 @@ feature 'chapters' do
 
     context 'organiser editing a chapter they do not organise' do
       let(:chapter_organiser) { Fabricate(:chapter_organiser) }
+
       before do
         login(chapter_organiser)
       end
@@ -68,13 +72,13 @@ feature 'chapters' do
     end
 
     context 'admin editing a chapter they do not organise' do
-      # let(:chapter_organiser) { Fabricate(:chapter_organiser)}
       let(:member) { Fabricate(:member) }
+
       before do
         login_as_admin(member)
       end
 
-      scenario 'an organiser cannot update a chapter they do not organise' do
+      scenario 'an admin can update a chapter they do not organise' do
         visit edit_admin_chapter_path(chapter)
 
         fill_in 'Name', with: 'codebar Brighton'

@@ -1,9 +1,10 @@
-= render partial: 'shared/title', locals: { title: "Workshop Feedback" , date:  humanize_date(@workshop.date_and_time, with_time: true) }
+= render partial: 'shared/title', locals: { title: t('feedback_form.title'), date:  humanize_date(@workshop.date_and_time, with_time: true) }
 %section#banner
   .row
     .large-12.columns
       %p
-        Your submission will be completely anonymous. We read every piece of feedback and use it to help us improve our workshops
+        = t('feedback_form.description')
+      %small= t('feedback_form.note')
 
   .row
     .large-12.columns
@@ -14,23 +15,20 @@
           .large-6.columns
             %label.required
               %abbr(title='required') *
-              Your overall rating of the workshop
+              =t('feedback_form.rating')
             .rating{:data => {:rating_max => 5 }}
         .row
           .large-6.columns
-            = f.association :coach, collection: @coaches, label_method: :full_name, value_method: :id, label: 'Who was your coach?', include_blank: '- Select Coach -'
+            = f.association :coach, collection: @coaches, label_method: :full_name, value_method: :id, label: t('feedback.coach')
         .row
           .large-6.columns
-            = f.association :tutorial, label_method: :title, value_method: :id, label: 'What tutorial did you go through?', include_blank: '- Select Tutorial -'
-        .row
-          .large-6.columns
-            = f.input :workshop_id, collection: recent_workshop_details, value_method: :first, label_method: :last, label: 'Which workshop did you attend?', include_blank: '- Select Workshop -'
+            = f.association :tutorial, label_method: :title, value_method: :id, label: t('feedback_form.tutorial'), include_blank: t('feedback_form.select_tutorial')
         .row
           .large-12.columns
-            = f.input :request, label: 'How did you find the workshop?'
+            = f.input :request, label: t('feedback_form.request')
         .row
           .large-12.columns
-            = f.input :suggestions, label: "Was there something you didn't like? What can we do to improve your experience?"
+            = f.input :suggestions, label: t('feedback_form.suggestions')
         .row
           .large-12.columns.text-right
             = f.submit 'Submit feedback', class: 'button round right'

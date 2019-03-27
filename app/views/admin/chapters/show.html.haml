@@ -10,15 +10,18 @@
 
   .row
     .large-4.columns.panel
-      %h4 Organisers
+      %h3 Organisers
       %ul.no-bullet
         - @chapter.organisers.each do |organiser|
           %li
             = organiser.full_name
             - if organiser.mobile.present?
-              =organiser.mobile
+              = organiser.mobile
             - else
               .label.alert Phone number not set
+      - if current_user.is_admin?
+        = link_to 'Edit organisers', admin_chapter_organisers_path(@chapter), class: 'button tiny right'
+
     .large-4.columns
       %ul.side-nav
         - @groups.each do |group|
@@ -33,7 +36,7 @@
 
   .row
     .large-4.columns
-      %h4 Upcoming Workshops
+      %h3 Upcoming Workshops
       %ul.side-nav
         - @workshops.each do |workshop|
           %li
@@ -42,5 +45,5 @@
               - if workshop.invitable?
                 (#{workshop.invitations.accepted.count})
     .large-8.columns
-      %h4 Latest subscribers
+      %h3 Latest subscribers
       = render partial: 'admin/subscriptions/index', locals: { subscribers: @subscribers }

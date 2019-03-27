@@ -13,11 +13,6 @@ class Ban < ActiveRecord::Base
     expires_at.future?
   end
 
-  def expiry_in_words
-    'There is a permanent ban on the user' if permanent
-    expires_at
-  end
-
   private
 
   def valid_expiry_date?

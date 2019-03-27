@@ -1,8 +1,15 @@
-.stripe.reverse
-  .row
-    .large-12.columns
-      %h1 Edit job post
-.stripe.reverse
-  .row
-    .large-12.columns
-      = render partial: 'form'
+.job
+  .stripe
+    .row
+      .large-12.columns
+        %br
+        %ul.breadcrumbs
+          %li=link_to  t('member.jobs.title'), member_jobs_path
+          %li=link_to @job.title, member_job_path(@job.id)
+          %li.current
+            %span Edit
+
+    .row
+      .large-12.columns
+        = simple_form_for @job, url: member_job_path, method: :put do |f|
+          = render partial: 'form', locals: { f: f }
