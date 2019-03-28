@@ -1,8 +1,10 @@
 source 'https://rubygems.org'
 ruby '2.5.5'
 
-gem 'rails', '4.2.11.1'
+gem 'rails', '5.0.0.1'
 
+gem 'actionmailer'
+gem 'actionpack'
 gem 'acts-as-taggable-on', '~> 5.0'
 gem 'carrierwave'
 gem 'carrierwave-ftp', require: 'carrierwave/storage/sftp'
@@ -27,7 +29,8 @@ gem 'pickadate-rails'
 gem 'premailer-rails'
 gem 'puma'
 gem 'pundit'
-gem 'rails4-autocomplete'
+gem 'rails-jquery-autocomplete'
+gem 'railties'
 gem 'rolify'
 gem 'sass-rails', '~> 5.0.1'
 gem 'simple_form'
@@ -55,6 +58,7 @@ group :development do
 end
 
 group :development, :test do
+  gem 'bullet'
   gem 'coveralls', '~> 0.8.22', require: false
   gem 'dotenv-rails'
   gem 'fabrication'
@@ -66,7 +70,6 @@ group :development, :test do
   gem 'rspec-its'
   gem 'rspec-rails'
   gem 'timecop'
-  gem 'bullet'
 end
 
 group :test do
@@ -83,5 +86,5 @@ group :production do
 end
 
 gem 'newrelic_rpm'
-gem 'rubocop', '~> 0.65.0'
 gem 'rollbar'
+gem 'rubocop', '~> 0.65.0'
