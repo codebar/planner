@@ -21,7 +21,6 @@ module Planner
     # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
     config.time_zone = 'London'
     config.active_record.default_timezone = :local
-    config.active_record.raise_in_transactional_callbacks = true
   end
 end
 
