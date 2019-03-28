@@ -32,10 +32,10 @@ feature 'when visiting the coaches page' do
     visit coaches_path
     expect(page).to have_css(".coach", count:  10)
 
-    click_on latest_workshop.date_and_time.year
+    click_on latest_workshop.date_and_time.year.to_s
     expect(page).to have_css(".coach", count:  7)
 
-    click_on old_workshop.date_and_time.year
+    click_on old_workshop.date_and_time.year.to_s
     expect(page).to have_css(".coach", count:  12)
   end
 
