@@ -41,6 +41,6 @@ Planner::Application.configure do
   config.after_initialize do
     Bullet.enable = true
     Bullet.bullet_logger = true
-    Bullet.raise = true # raise an error if n+1 query occurs
+    Bullet.raise = false # raise an error if n+1 query occurs
   end
 end
