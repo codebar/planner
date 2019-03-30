@@ -14,10 +14,10 @@ feature 'when visiting the coaches page' do
     invitations = 5.times { Fabricate(:attended_coach, workshop: latest_workshop) }
     older_invitations = 15.times { Fabricate(:attended_coach, workshop: old_workshop) }
 
-    visit coaches_path(year: latest_workshop.date_and_time.year)
+    visit coaches_path(year: latest_workshop.date_and_time.year.to_s)
     expect(page).to have_css(".coach", count:  5)
 
-    visit coaches_path(year: old_workshop.date_and_time.year)
+    visit coaches_path(year: old_workshop.date_and_time.year.to_s)
     expect(page).to have_css(".coach", count:  15)
   end
 
