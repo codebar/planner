@@ -16,13 +16,13 @@ describe Admin::WorkshopsController, type: :controller do
 
       context "workshop deletion tried within specific time frame since it's creation" do
         it 'should not delete the workshop' do
-          expect {
-            delete :destroy, id: workshop.id
-          }.not_to change { Workshop.count }
+          expect do
+            delete :destroy, params: { id: workshop.id }
+          end.not_to change { Workshop.count }
         end
 
         it "should display workshop can't be deleted related flash message" do
-          delete :destroy, id: workshop.id
+          delete :destroy, params: { id: workshop.id }
 
           expect(flash[:notice]).to eq(I18n.t('admin.workshop.destroy.failure'))
         end
@@ -34,9 +34,9 @@ describe Admin::WorkshopsController, type: :controller do
                                      WORKSHOP_DELETION_TIME_FRAME_SINCE_CREATION
 
           Timecop.travel(new_current_time)
-          expect {
-            delete :destroy, id: workshop.id
-          }.not_to change { Workshop.count }
+          expect do
+            delete :destroy, params: { id: workshop.id }
+          end.not_to change { Workshop.count }
           Timecop.return
         end
 
@@ -45,7 +45,7 @@ describe Admin::WorkshopsController, type: :controller do
                                      WORKSHOP_DELETION_TIME_FRAME_SINCE_CREATION
 
           Timecop.travel(new_current_time)
-          delete :destroy, id: workshop.id
+          delete :destroy, params: { id: workshop.id }
           Timecop.return
 
           expect(flash[:notice]).to eq(I18n.t('admin.workshop.destroy.failure'))
@@ -56,13 +56,13 @@ describe Admin::WorkshopsController, type: :controller do
     context "workshop invitations haven't been sent" do
       context "workshop deletion tried within specific time frame since it's creation" do
         it 'should successfully delete the workshop' do
-          expect {
-            delete :destroy, id: workshop.id
-          }.to change{ Workshop.count }.by -1
+          expect do
+            delete :destroy, params: { id: workshop.id }
+          end.to change { Workshop.count }.by -1
         end
 
         it 'should display workshop deleted successfully related flash message' do
-          delete :destroy, id: workshop.id
+          delete :destroy, params: { id: workshop.id }
 
           expect(flash[:notice]).to eq(I18n.t('admin.workshop.destroy.success'))
         end
@@ -74,9 +74,9 @@ describe Admin::WorkshopsController, type: :controller do
                                      WORKSHOP_DELETION_TIME_FRAME_SINCE_CREATION
 
           Timecop.travel(new_current_time)
-          expect {
-            delete :destroy, id: workshop.id
-          }.not_to change { Workshop.count }
+          expect do
+            delete :destroy, params: { id: workshop.id }
+          end.not_to change { Workshop.count }
           Timecop.return
         end
 
@@ -85,7 +85,7 @@ describe Admin::WorkshopsController, type: :controller do
                                      WORKSHOP_DELETION_TIME_FRAME_SINCE_CREATION
 
           Timecop.travel(new_current_time)
-          delete :destroy, id: workshop.id
+          delete :destroy, params: { id: workshop.id }
           Timecop.return
 
           expect(flash[:notice]).to eq(I18n.t('admin.workshop.destroy.failure'))
