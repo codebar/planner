@@ -1,5 +1,5 @@
 class Admin::SponsorsController < Admin::ApplicationController
-  before_filter :set_sponsor, only: %i[show edit update]
+  before_action :set_sponsor, only: %i[show edit update]
 
   def index
     authorize Sponsor
