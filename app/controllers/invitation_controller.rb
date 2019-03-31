@@ -7,7 +7,7 @@ class InvitationController < ApplicationController
     @host_address = AddressPresenter.new(@invitation.parent.host.address)
     @workshop = WorkshopPresenter.new(@invitation.workshop)
 
-    render text: @workshop.attendees_csv if request.format.csv?
+    render plain: @workshop.attendees_csv if request.format.csv?
   end
 
   def update_note

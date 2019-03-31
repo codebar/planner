@@ -40,7 +40,7 @@ class Admin::WorkshopsController < Admin::ApplicationController
   def show
     authorize @workshop
     @workshop = WorkshopPresenter.new(@workshop)
-    return render text: @workshop.attendees_csv if request.format.csv?
+    return render plain: @workshop.attendees_csv if request.format.csv?
 
     @address = AddressPresenter.new(@workshop.host.address) if @workshop.has_host?
     set_admin_workshop_data
@@ -62,13 +62,13 @@ class Admin::WorkshopsController < Admin::ApplicationController
   end
 
   def attendees_checklist
-    return render text: @workshop.attendees_checklist if request.format.text?
+    return render plain: @workshop.attendees_checklist if request.format.text?
 
     redirect_to admin_workshop_path(@workshop)
   end
 
   def attendees_emails
-    return render text: @workshop.attendees_emails if request.format.text?
+    return render plain: @workshop.attendees_emails if request.format.text?
 
     redirect_to admin_workshop_path(@workshop)
   end

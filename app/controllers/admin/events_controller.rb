@@ -28,7 +28,7 @@ class Admin::EventsController < Admin::ApplicationController
     @attending_coaches = InvitationPresenter.decorate_collection(@original_event.attending_coaches)
     @host_address = AddressPresenter.new(@event.venue.address)
 
-    return render text: @event.attendees_csv if request.format.csv?
+    return render plain: @event.attendees_csv if request.format.csv?
   end
 
   def update
@@ -60,7 +60,7 @@ class Admin::EventsController < Admin::ApplicationController
 
     @list = "STUDENTS\n\n" + students + "\n\nCOACHES\n\n" + coaches
 
-    return render text: @list if request.format.text?
+    return render plain: @list if request.format.text?
 
     redirect_to admin_event_path(event)
   end
