@@ -16,12 +16,11 @@ class InvitationController < ApplicationController
 
     if new_note.blank?
       flash[:notice] = 'You must select a note'
-      redirect_back(fallback_location: root_path)
     else
       @invitation.update_attribute(:note, params[:note])
       flash[:notice] = t('messages.updated_note')
-      redirect_back(fallback_location: root_path)
     end
+    redirect_back(fallback_location: root_path)
   end
 
   def accept_with_note
@@ -38,11 +37,10 @@ class InvitationController < ApplicationController
       WorkshopInvitationMailer.attending(@invitation.workshop, @invitation.member, @invitation).deliver_now
 
       flash[:notice] = t('messages.accepted_invitation', name: @invitation.member.name)
-      redirect_back(fallback_location: root_path)
     else
       flash[:notice] = t('messages.no_available_seats')
-      redirect_back(fallback_location: root_path)
     end
+    redirect_back(fallback_location: root_path)
   end
 
   private
