@@ -1,5 +1,5 @@
 class Admin::MembersController < Admin::ApplicationController
-  before_action :set_member, only: [:update_subscriptions, :send_attendance_email, :send_eligibility_email]
+  before_action :set_member, only: %i[update_subscriptions send_attendance_email send_eligibility_email]
 
   def index
     @members = Member.all
@@ -18,7 +18,7 @@ class Admin::MembersController < Admin::ApplicationController
     flash[:notice] = "You have unsubscribed #{@member.full_name} from #{subscription.group.chapter.city}'s #{subscription.group.name} group"
 
     subscription.destroy
-    redirect_to :back
+    redirect_back(fallback_location: root_path)
   end
 
   def send_eligibility_email

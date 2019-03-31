@@ -28,34 +28,45 @@ class InvitationsController < ApplicationController
 
   def attend
     event = @invitation.event
-    return redirect_to :back, notice: t('messages.already_rsvped') if @invitation.attending?
+    if @invitation.attending?
+      flash[:notice] = t('messages.already_rsvped')
+      return redirect_back(fallback_location: root_path)
+    end
 
     if @invitation.student_spaces? || @invitation.coach_spaces?
       @invitation.update_attribute(:attending, true)
 
-      notice = t('messages.invitations.spot_confirmed', event: @invitation.event.name)
+      flash[:notice] = t('messages.invitations.spot_confirmed', event: @invitation.event.name)
 
       unless event.confirmation_required || event.surveys_required
         @invitation.update_attribute(:verified, true)
         EventInvitationMailer.attending(@invitation.event, @invitation.member, @invitation).deliver_now
       end
-      notice = t('messages.invitations.spot_not_confirmed') if event.surveys_required
-      return redirect_to :back, notice: notice
+      flash[:notice] = t('messages.invitations.spot_not_confirmed') if event.surveys_required
+      return redirect_back(fallback_location: root_path)
     else
       email = event.chapters.present? ? event.chapters.first.email : 'hello@codebar.io'
-      redirect_to :back, notice: t('messages.no_available_seats', email: email)
+      flash[:notice] = t('messages.no_available_seats', email: email)
+      redirect_back(fallback_location: root_path)
     end
   end
 
   def reject
-    return redirect_to :back, notice: t('messages.not_attending_already') unless @invitation.attending?
+    unless @invitation.attending?
+      flash[:notice] = t('messages.not_attending_already')
+      return redirect_back(fallback_location: root_path)
+    end
 
     @invitation.update_attribute(:attending, false)
-    redirect_to :back, notice: t('messages.rejected_invitation', name: @invitation.member.name)
+    flash[:notice] = t('messages.rejected_invitation', name: @invitation.member.name)
+    redirect_back(fallback_location: root_path)
   end
 
   def rsvp_meeting
-    return redirect_to :back, notice: 'Please login first' unless logged_in?
+    unless logged_in?
+      flash[:notice] = 'Please login first'
+      return redirect_back(fallback_location: root_path)
+    end
 
     meeting = Meeting.find_by(slug: params[:meeting_id])
 
@@ -67,7 +78,8 @@ class InvitationsController < ApplicationController
       MeetingInvitationMailer.attending(meeting, current_user).deliver_now
       redirect_to meeting_path(meeting), notice: 'Your RSVP was successful. We look forward to seeing you at the Monthly!'
     else
-      redirect_to :back, notice: 'Sorry, something went wrong'
+      flash[:notice] = 'Sorry, something went wrong'
+      redirect_back(fallback_location: root_path)
     end
   end
 
@@ -76,7 +88,8 @@ class InvitationsController < ApplicationController
 
     @invitation.update_attribute(:attending, false)
 
-    redirect_to :back, notice: "Thanks for letting us know you can't make it."
+    flash[:notice] = "Thanks for letting us know you can't make it."
+    redirect_back(fallback_location: root_path)
   end
 
   private

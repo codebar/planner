@@ -16,7 +16,7 @@ class SubscriptionsController < ApplicationController
     else
       flash[:notice] = @subscription.errors.inspect
     end
-    redirect_to :back
+    redirect_back(fallback_location: root_path)
   end
 
   def destroy
@@ -24,7 +24,7 @@ class SubscriptionsController < ApplicationController
     @subscription.destroy
     flash[:notice] = "You have unsubscribed from #{@subscription.group.chapter.city}'s #{@subscription.group.name} group"
 
-    redirect_to :back
+    redirect_back(fallback_location: root_path)
   end
 
   private

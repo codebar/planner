@@ -15,28 +15,33 @@ class InvitationController < ApplicationController
     new_note = params[:note]
 
     if new_note.blank?
-      redirect_to :back, notice: 'You must select a note'
+      flash[:notice] = 'You must select a note'
+      redirect_back(fallback_location: root_path)
     else
       @invitation.update_attribute(:note, params[:note])
-      redirect_to :back, notice: t('messages.updated_note')
+      flash[:notice] = t('messages.updated_note')
+      redirect_back(fallback_location: root_path)
     end
   end
 
   def accept_with_note
     @workshop = WorkshopPresenter.new(@invitation.workshop)
-    @invitation.update_attributes(note: params[:workshop_invitation][:note], rsvp_time: Time.zone.now)
+    @invitation.update(note: params[:workshop_invitation][:note], rsvp_time: Time.zone.now)
 
     if @workshop.student_spaces?
-      return redirect_to :back, notice: 'You have already RSVPd or joined the waitlist for this workshop.' if @workshop.attendee?(current_user) || @workshop.waitlisted?(current_user)
+      if @workshop.attendee?(current_user) || @workshop.waitlisted?(current_user)
+        flash[:notice] = 'You have already RSVPd or joined the waitlist for this workshop.'
+        return redirect_back(fallback_location: root_path)
+      end
 
       @invitation.update_attribute(:attending, true)
       WorkshopInvitationMailer.attending(@invitation.workshop, @invitation.member, @invitation).deliver_now
 
-      redirect_to :back, notice: t('messages.accepted_invitation',
-                                   name: @invitation.member.name)
-
+      flash[:notice] = t('messages.accepted_invitation', name: @invitation.member.name)
+      redirect_back(fallback_location: root_path)
     else
-      redirect_to :back, notice: t('messages.no_available_seats')
+      flash[:notice] = t('messages.no_available_seats')
+      redirect_back(fallback_location: root_path)
     end
   end
 

@@ -36,7 +36,8 @@ class Admin::InvitationsController < Admin::ApplicationController
 
       render partial: 'admin/workshops/invitation_management'
     else
-      redirect_to :back, notice: message
+      flash[:notice] = message
+      redirect_back(fallback_location: root_path)
     end
   end
 

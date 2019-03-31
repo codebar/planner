@@ -5,7 +5,7 @@ class Admin::MemberNotesController < Admin::ApplicationController
 
     @note.author = current_user
     flash[:error] = @note.errors.full_messages unless @note.save
-    redirect_to :back
+    redirect_back(fallback_location: root_path)
   end
 
   def member_note_params
