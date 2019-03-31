@@ -7,7 +7,7 @@ class WorkshopsController < ApplicationController
     @host_address = AddressPresenter.new(@workshop.host.address) if @workshop.has_host?
   end
 
-  def rsvp
+  def rsvp # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
     unless @workshop.invitable_yet?
       flash[:notice] = 'This workshop is not open for registrations'
       redirect_back(fallback_location: root_path)
