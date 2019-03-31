@@ -15,12 +15,10 @@ class WorkshopsController < ApplicationController
 
     if role_params.nil?
       @invitation = WorkshopInvitation.find_by(workshop: @workshop, member: current_user, attending: true)
+    else if @workshop.attendee?(current_user) || @workshop.waitlisted?(current_user)
+      flash[:notice] = 'You have already RSVPd or joined the waitlist for this workshop.'
+      return redirect_back(fallback_location: root_path)
     else
-      if @workshop.attendee?(current_user) || @workshop.waitlisted?(current_user)
-        flash[:notice] = 'You have already RSVPd or joined the waitlist for this workshop.'
-        return redirect_back(fallback_location: root_path)
-      end
-
       @invitation = WorkshopInvitation.find_or_create_by(workshop: @workshop, member: current_user, role: role_params)
     end
 
