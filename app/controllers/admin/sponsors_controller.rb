@@ -13,6 +13,8 @@ class Admin::SponsorsController < Admin::ApplicationController
     authorize @sponsor
   end
 
+  def show; end
+
   def create
     @sponsor = Sponsor.new(sponsor_params)
     @sponsor.build_address unless @sponsor.address.present?
