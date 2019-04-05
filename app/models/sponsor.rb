@@ -10,9 +10,9 @@ class Sponsor < ActiveRecord::Base
   }
 
   has_one :address
-  has_many :chapters, through: :workshops
   has_many :workshop_sponsors
   has_many :workshops, through: :workshop_sponsors
+  has_many :chapters, through: :workshops
   has_many :member_contacts
   has_many :contacts, through: :member_contacts, class_name: 'Member', foreign_key: 'member_id'
 

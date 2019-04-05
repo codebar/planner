@@ -1,7 +1,7 @@
 class WaitingList < ActiveRecord::Base
+  belongs_to :invitation, class_name: 'WorkshopInvitation'
   has_one :workshop, through: :invitation
   has_one :member, through: :invitation
-  belongs_to :invitation, class_name: 'WorkshopInvitation'
 
   scope :by_workshop, ->(workshop) { joins(:invitation).where('workshop_invitations.workshop_id = ?', workshop.id) }
   scope :where_role, ->(role) { where('workshop_invitations.role = ?', role) }
