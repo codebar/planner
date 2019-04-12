@@ -36,9 +36,14 @@ $(function(){
     format: 'HH:i'
   });
 
-  $('#job_expiry_date').pickadate({
-    format: 'dd/mm/yyyy'
+  let pickr = $('#job_expiry_date').pickadate({
+    format: 'dd/mm/yyyy',
+    editable: true
   });
+
+  $('#job_expiry_date').click(function() {
+    pickr.pickadate('open');
+  })
 
   $('body').removeClass('no-js');
 
