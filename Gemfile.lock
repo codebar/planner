@@ -225,7 +225,7 @@ GEM
       oauth2 (~> 1.1)
       omniauth (~> 1.9)
     parallel (1.17.0)
-    parser (2.6.2.1)
+    parser (2.6.3.0)
       ast (~> 2.4.0)
     pg (0.20.0)
     pickadate-rails (3.5.6.0)
@@ -246,7 +246,6 @@ GEM
     pry-remote (0.1.8)
       pry (~> 0.9)
       slop (~> 3.0)
-    psych (3.1.0)
     public_suffix (3.0.3)
     puma (3.12.1)
     pundit (2.0.1)
@@ -317,11 +316,10 @@ GEM
       rspec-mocks (~> 3.8.0)
       rspec-support (~> 3.8.0)
     rspec-support (3.8.0)
-    rubocop (0.67.2)
+    rubocop (0.68.1)
       jaro_winkler (~> 1.5.1)
       parallel (~> 1.10)
       parser (>= 2.5, != 2.5.1.1)
-      psych (>= 3.1.0)
       rainbow (>= 2.2.2, < 4.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (>= 1.4.0, < 1.6)
@@ -438,7 +436,7 @@ DEPENDENCIES
   rspec-collection_matchers
   rspec-its
   rspec-rails
-  rubocop (~> 0.67.2)
+  rubocop (~> 0.68.1)
   sass-rails (~> 5.0.1)
   selenium-webdriver
   shoulda-matchers (~> 3.1)
