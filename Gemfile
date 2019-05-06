@@ -55,7 +55,7 @@ group :development do
 end
 
 group :development, :test do
-  gem 'coveralls', '~> 0.8.22', require: false
+  gem 'coveralls', '~> 0.8.23', require: false
   gem 'dotenv-rails'
   gem 'fabrication'
   gem 'faker'
