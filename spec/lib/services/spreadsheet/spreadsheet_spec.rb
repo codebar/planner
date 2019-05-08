@@ -1,17 +1,8 @@
 require 'spreadsheet/spreadsheet'
+require 'spreadsheet/google_sheet'
 require 'ostruct'
-require 'dotenv'
-require 'google_drive'
 
 describe Spreadsheet do
-  before(:each) do
-    Dotenv.load
-  end
-
-  after(:each) do
-    spreadsheet.delete!
-  end
-
   let(:workshop) do
     OpenStruct.new(
       id: 123,
@@ -20,49 +11,29 @@ describe Spreadsheet do
       chapter: OpenStruct.new(organisers: [])
     )
   end
-  let(:google_service_account_path) { get_service_account() }
 
-  subject(:spreadsheet) do
-    Spreadsheet.create_for_workshop(
-      workshop,
-      google_service_account_path: google_service_account_path
-    )
-  end
+  let(:google_sheet) { spy(GoogleSheet) }
+  subject(:spreadsheet) { Spreadsheet.new(google_sheet) }
 
-  it 'creates spreadsheet and adds student' do
-    session = get_session(google_service_account_path)
-    google_sheet = session.spreadsheet_by_key(spreadsheet.id)
-    worksheet = google_sheet.worksheets[0]
-
-    expect(google_sheet.title).to(eq("Workshop 123: 2019-03-27 at Shutl"))
+  it 'adds a student' do
+    allow(google_sheet).to(receive(:num_rows)).and_return(5)
 
     spreadsheet.add_student(OpenStruct.new(full_name: "Ada Lovelace", about_you: "Programming"))
 
-    expect(worksheet[worksheet.num_rows, 1]).to(eq("Ada Lovelace"))
-    expect(worksheet[worksheet.num_rows, 4]).to(eq("Programming"))
-
-    found_spreadsheet = Spreadsheet.find_by(
-      spreadsheet.id,
-      google_service_account_path: google_service_account_path
-    )
-
-    expect(found_spreadsheet.id).to(eq(spreadsheet.id))
+    expect(google_sheet).to(have_received(:[]=).with(6, 1, "Ada Lovelace"))
+    expect(google_sheet).to(have_received(:[]=).with(6, 4, "Programming"))
+    expect(google_sheet).to(have_received(:save))
   end
-end
 
-def get_service_account()
-  google_service_account_file = Tempfile.create('google_service_account')
-  google_service_account_file.write(ENV['GOOGLE_SERVICE_ACCOUNT'])
-  google_service_account_file.close
-  google_service_account_file.path
-end
+  it 'returns the sheet id' do
+    allow(google_sheet).to(receive(:id)).and_return(123)
 
-def get_session(config)
-  begin
-    orig_stdin, $stdin = $stdin, StringIO.new
-    session = GoogleDrive::Session.from_config(config)
-  ensure
-    $stdin = orig_stdin
+    expect(spreadsheet.id).to(eq(123))
   end
-  session
+
+  it 'deletes the sheet' do
+    spreadsheet.delete!
+
+    expect(google_sheet).to(have_received(:delete!))
+  end
 end
