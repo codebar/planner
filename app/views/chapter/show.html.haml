@@ -3,7 +3,7 @@
     .medium-6.columns.chapter-header-text
       %h1= @chapter.name
       - if @chapter.description
-        %p.lead= @chapter.description
+        %p.lead= raw @chapter.description
       - else
         %p.lead= t('chapters.intro_html')
     - if @chapter.image.present?
@@ -66,7 +66,7 @@
         = link_to twitter_url_for(organiser.twitter), title: "#{organiser.full_name} Twitter profile", class: 'organiser-content' do
           = image_tag(organiser.avatar(65), alt: organiser.full_name, class: 'organiser-image')
           = organiser.full_name
-  .row  
+  .row
     .large-12.columns
       .panel
         = t('chapters.contact', city: @chapter.name, email: @chapter.email)

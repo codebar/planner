@@ -5,7 +5,7 @@ class Chapter < ActiveRecord::Base
   validates :city, presence: true
   validates :time_zone, presence: true
   validate  :time_zone_exists
-  validates :description, length: { maximum: 280 }
+  validates :description, length: { maximum: 5000 }
 
   has_many :workshops
   has_and_belongs_to_many :events
