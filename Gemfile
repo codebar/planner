@@ -74,7 +74,7 @@ group :test do
   gem 'chromedriver-helper'
   gem 'database_cleaner'
   gem 'selenium-webdriver'
-  gem 'shoulda-matchers', '~> 3.1'
+  gem 'shoulda-matchers', '~> 4.0'
 end
 
 group :production do
