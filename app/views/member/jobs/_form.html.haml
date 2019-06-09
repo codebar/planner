@@ -34,6 +34,10 @@
   .row
     .large-6.columns
       = f.input :location, required: true
+
+  %small
+    = t('member.jobs.new.optional_details_message')
+
   .row
     .large-6.columns
       = f.input :company_address
