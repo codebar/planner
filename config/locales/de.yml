@@ -342,6 +342,7 @@ de:
         salary: der Job ein angemessenes Gehalt bietet
         short: "der Eintrag kurz und auf den Punkt ist"
         approval_info: "*Nach dem Abschicken wird der Job sichtbar sobald er geprüft und bestätigt wurde."
+        optional_details_message: "The information below is only required if you want this job post to be shared with Google Search UK."
         pay: You have made the requirement payment of £35 through %{link}
         donation: a donation
         button:
