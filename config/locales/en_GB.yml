@@ -342,6 +342,7 @@ en-GB:
         salary: The job pays an appropriate salary
         short: "It's short and to the point"
         approval_info: "*Once submitted, a job will be visible once it has been reviewed and approved."
+        optional_details_message: "The information below is only required if you want this job post to be shared with Google Search UK."
         pay: You have made the requirement payment of £35 through %{link}
         donation: a donation
         button:
