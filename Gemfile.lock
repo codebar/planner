@@ -159,7 +159,7 @@ GEM
       temple (>= 0.8.0)
       tilt
     hashie (3.6.0)
-    high_voltage (3.1.0)
+    high_voltage (3.1.2)
     htmlentities (4.3.4)
     httparty (0.13.7)
       json (~> 1.8)
