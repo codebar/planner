@@ -72,10 +72,9 @@ end
 
 group :test do
   gem 'capybara'
-  gem 'chromedriver-helper'
   gem 'database_cleaner'
-  gem 'selenium-webdriver'
   gem 'shoulda-matchers', '~> 4.1'
+  gem 'webdrivers'
 end
 
 group :production do
