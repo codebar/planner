@@ -72,6 +72,12 @@ feature 'Member managing jobs' do
 
       expect(page).to have_content('This is a preview of your job.Edit to amend or Submit for approval')
     end
+
+    scenario 'can view text that address and postcode fields are optional' do
+      visit new_member_job_path
+
+      expect(page).to have_content('The information below is only required if you want this job post to be shared with Google Search UK.')
+    end
   end
 
   context 'viewing a job' do
