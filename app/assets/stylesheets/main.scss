@@ -14,6 +14,8 @@
 @import 'partials/jobs';
 @import 'partials/star-rating';
 @import 'partials/event';
+// import scss variables so we can reuse them here
+@import 'foundation_and_overrides';
 
 .row-spaced {
   padding-bottom: 20px;
@@ -206,3 +208,38 @@ form .hint {
 .chosen-dropwdown {
   margin-bottom: 1.14286rem;
 }
+
+// STICKY OFF-CANVAS SIDEBAR STYLING
+
+@keyframes shrink-to-fit-sidebar {
+  0% {
+    width: 100%;
+  }
+  100% {
+    width: calc(100% - #{$off-canvas-width});
+  }
+}
+
+.off-canvas-list {
+  position: sticky;
+  top: 0;
+}
+
+.move-right > .inner-wrap {
+  animation: 0.5s 1 forwards shrink-to-fit-sidebar ease;
+}
+
+.left-off-canvas-menu {
+  overflow: unset;
+}
+
+.off-canvas-wrap {
+  overflow: unset;
+  &.move-right .top-bar-section .right {
+    // hide the topnav links while the menu is open
+    // (they can't be clicked while the offcanvas menu is open anyway)
+    display: none;
+  }
+}
+
+// END OF STICKY OFF CANVAS STYLING
