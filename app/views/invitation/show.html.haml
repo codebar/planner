@@ -95,7 +95,7 @@
 .stripe.reverse
   .row
     .medium-6.columns
-      %h4 Students (#{@invitation.workshop.attending_students.count})
+      %h4 Students (#{@invitation.workshop.attending_students.count}/#{@invitation.workshop.host.seats})
       %ul.attendances.no-bullet
         - @invitation.workshop.attending_students.each do |invitation|
           %li.attendance
@@ -108,7 +108,7 @@
                 .subheader=invitation.note
             %br
     .medium-6.columns
-      %h4 Coaches (#{@invitation.workshop.attending_coaches.count})
+      %h4 Coaches (#{@invitation.workshop.attending_coaches.count}/#{@invitation.workshop.host.coach_spots})
       %ul.attendances.no-bullet
         - @invitation.workshop.attending_coaches.each do |invitation|
           %li.attendance
