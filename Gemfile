@@ -41,7 +41,7 @@ gem 'tzinfo-data'
 gem 'chosen-rails'
 gem 'redcarpet'
 
-gem 'gibbon', '~> 1.1.5'
+gem 'gibbon', '~> 3.2.0'
 
 gem 'stripe'
 
