@@ -269,7 +269,7 @@ GEM
       activesupport (>= 4.2.0, < 5.0)
       nokogiri (~> 1.6)
       rails-deprecated_sanitizer (>= 1.0.1)
-    rails-html-sanitizer (1.0.4)
+    rails-html-sanitizer (1.2.0)
       loofah (~> 2.2, >= 2.2.2)
     rails4-autocomplete (1.1.1)
       rails (>= 3.0)
@@ -425,7 +425,7 @@ DEPENDENCIES
   puma
   pundit
   rails (= 4.2.11.1)
-  rails-html-sanitizer (~> 1.0.4)
+  rails-html-sanitizer (~> 1.2.0)
   rails4-autocomplete
   rails_12factor
   redcarpet
