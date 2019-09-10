@@ -58,8 +58,8 @@ feature 'Managing meetings' do
       click_on 'Update'
 
       expect(page).to have_content('You have succesfully updated the details of this meeting')
-      expect(page).to have_css("span[title='#{permissions.members.last.full_name}']")
-      expect(page).to_not have_css("span[title='#{permissions.members.first.full_name}']")
+      expect(page).to have_css(%(span[title="#{permissions.members.last.full_name}"]))
+      expect(page).to_not have_css(%(span[title="#{permissions.members.first.full_name}"]))
     end
   end
 
