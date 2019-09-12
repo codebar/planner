@@ -18,7 +18,7 @@ class Admin::AnnouncementsController < Admin::ApplicationController
 
   def update
     @announcement.update_attributes(announcement_params)
-    redirect_to admin_announcements_path, notice: 'Announcement succcessfully updated'
+    redirect_to admin_announcements_path, notice: 'Announcement successfully updated'
   end
 
   def edit; end

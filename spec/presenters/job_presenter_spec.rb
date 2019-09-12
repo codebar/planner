@@ -37,7 +37,7 @@ describe JobPresenter do
     end
   end
 
-  context '#location_or_remot' do
+  context '#location_or_remote' do
     let(:job) { Fabricate(:job, remote: false, location: 'London') }
     it 'returns the location if the job is not remote' do
 
