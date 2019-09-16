@@ -1,4 +1,4 @@
-dist: trusty
+dist: xenial
 language: ruby
 bundler_args: --without development
 rvm:
