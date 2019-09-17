@@ -421,8 +421,8 @@ de:
         failure: "Workshop kann nicht gelöscht werden. Dies kann passieren weil der Workshop eingeladene Teilnehmer hat und/oder lang genug auf der Webseite aufgeführt war, dass er nicht gelöscht werden kann."
     messages:
       meeting:
-        created: 'Meeting wurde erfolgreich erstellt'
-        updated: 'Meetingdetails erfolgreich aktualisiert'
+        created: 'Meeting successfully created'
+        updated: 'You have successfully updated the details of this meeting'
         invitations_already_sent: 'Einladungen wurden bereits verschickt; sie werden nicht erneut versendet'
         sending_invitations: 'Einladungen werden verschickt'
       invitation:
