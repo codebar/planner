@@ -10,7 +10,7 @@ feature 'Announcements' do
   end
 
   describe 'an authorised member' do
-    describe 'can successfuly create a new announcement' do
+    describe 'can successfully create a new announcement' do
       scenario 'when they fill in all details' do
         visit new_admin_announcement_path
         fill_in 'Message', with: 'An announcement'
@@ -30,14 +30,14 @@ feature 'Announcements' do
       end
     end
 
-    describe 'can successfuly edit a new announcement' do
+    describe 'can successfully edit a new announcement' do
       scenario 'by updating the fields they want to change' do
         announcement = Fabricate(:announcement)
         visit edit_admin_announcement_path(announcement)
         fill_in 'Message', with: 'New event coming up soon! Stay tuned.'
         click_on 'update'
 
-        expect(page).to have_content('Announcement succcessfully updated')
+        expect(page).to have_content('Announcement successfully updated')
         expect(page).to have_content('New event coming up soon! Stay tuned.')
         expect(page.current_path).to eq(admin_announcements_path)
       end

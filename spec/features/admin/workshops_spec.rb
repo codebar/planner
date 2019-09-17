@@ -19,8 +19,8 @@ feature 'Managing workshops' do
     end
   end
 
-  context 'creating a new worksbop' do
-    scenario 'successfuly' do
+  context 'creating a new workshop' do
+    scenario 'successfully' do
       visit new_admin_workshop_path
 
       select chapter.name

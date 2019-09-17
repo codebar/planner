@@ -10,7 +10,7 @@ feature 'Event creation' do
       login_as_admin(member)
     end
 
-    describe 'can succesfuly create an event' do
+    describe 'can successfully create an event' do
       scenario 'when they fill in all mandatory fields' do
         sponsor = Fabricate(:sponsor)
         date = Time.zone.today + 2.days

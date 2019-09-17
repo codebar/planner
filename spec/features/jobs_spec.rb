@@ -73,7 +73,7 @@ feature 'Jobs' do
   end
 
   context 'The job page must contain JobPosting schema.org mark up' do
-    it 'containts all the required data' do
+    it 'contains all the required data' do
       job = Fabricate(:published_job)
       visit job_path(job)
 
