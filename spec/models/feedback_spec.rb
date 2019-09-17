@@ -53,13 +53,13 @@ describe Feedback do
     end
 
     context '#coach' do
-      it "accepts memeber with 'coach' role" do
+      it "accepts member with 'coach' role" do
         feedback = Fabricate.build(:feedback, coach: Fabricate(:coach))
 
         expect(feedback).to be_valid
       end
 
-      it "is invalid with memeber with 'student' role" do
+      it "is invalid with member with 'student' role" do
         feedback = Fabricate.build(:feedback, coach: Fabricate(:student))
 
         expect(feedback).to_not be_valid

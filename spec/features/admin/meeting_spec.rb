@@ -12,7 +12,7 @@ feature 'Managing meetings' do
   end
 
   context 'creating a new meeting' do
-    scenario 'successfuly' do
+    scenario 'successfully' do
       visit new_admin_meeting_path
 
       fill_in 'Name', with: 'August meeting'
@@ -21,7 +21,7 @@ feature 'Managing meetings' do
       select venue.name
       click_on 'Update'
 
-      expect(page).to have_content('Meeting succesfully created')
+      expect(page).to have_content('Meeting successfully created')
       expect(page.current_path)
         .to eq(admin_meeting_path("#{I18n.l(today, format: :year_month).downcase}-august-meeting-1"))
       expect(page).to have_content 'Invite'
@@ -48,7 +48,7 @@ feature 'Managing meetings' do
       expect(page).to have_content('Slug has already been taken')
     end
 
-    scenario 'successfuly' do
+    scenario 'successfully' do
       permissions = Fabricate(:permission, resource: meeting, name: 'organiser')
 
       visit edit_admin_meeting_path(meeting)
@@ -57,7 +57,7 @@ feature 'Managing meetings' do
 
       click_on 'Update'
 
-      expect(page).to have_content('You have succesfully updated the details of this meeting')
+      expect(page).to have_content('You have successfully updated the details of this meeting')
       expect(page).to have_css(%(span[title="#{permissions.members.last.full_name}"]))
       expect(page).to_not have_css(%(span[title="#{permissions.members.first.full_name}"]))
     end
