@@ -45,7 +45,7 @@ gem 'gibbon', '~> 1.1.5'
 
 gem 'stripe'
 
-gem 'rails-html-sanitizer', '~> 1.0.4'
+gem 'rails-html-sanitizer', '~> 1.2.0'
 
 gem 'jbuilder'
 
@@ -74,7 +74,7 @@ group :test do
   gem 'chromedriver-helper'
   gem 'database_cleaner'
   gem 'selenium-webdriver'
-  gem 'shoulda-matchers', '~> 3.1'
+  gem 'shoulda-matchers', '~> 4.1'
 end
 
 group :production do
@@ -83,5 +83,5 @@ group :production do
 end
 
 gem 'newrelic_rpm'
-gem 'rubocop', '~> 0.73.0'
+gem 'rubocop', '~> 0.74.0'
 gem 'rollbar'

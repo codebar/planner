@@ -438,8 +438,8 @@ fr:
         failure: "Workshop cannot be deleted. This is because it has invitees and/or workshop information is on the website for a while long enough that it cannot be deleted."
     messages:
       meeting:
-        created: 'Meeting succesfully created'
-        updated: 'You have succesfully updated the details of this meeting'
+        created: 'Meeting successfully created'
+        updated: 'You have successfully updated the details of this meeting'
         invitations_already_sent: 'Invitations were previously sent; they will not be sent again'
         sending_invitations: 'Invitations are being sent out'
       invitation:

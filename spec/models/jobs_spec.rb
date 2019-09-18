@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Job do
+describe Job, type: :model do
   context '#fields' do
     subject(:job) { Fabricate.build(:job) }
 
@@ -14,24 +14,13 @@ describe Job do
     it { should respond_to(:created_by) }
     it { should respond_to(:approved) }
     it { should respond_to(:submitted) }
+    it { should define_enum_for(:status).with_values(draft: 0, pending: 1, published: 2) }
   end
 
   context 'scopes' do
     let!(:approved) { 2.times.map { Fabricate(:published_job) } }
     let!(:drafts) { 1.times.map { Fabricate(:job) } }
     let!(:pending_approval) { 4.times.map { Fabricate(:pending_job) } }
-
-    it '#published returns all published job' do
-      expect(Job.published.all).to eq(approved)
-    end
-
-    it '#draft returns all draft jobs' do
-      expect(Job.draft.all).to eq(drafts)
-    end
-
-    it '#pending returns all jobs pending approval' do
-      expect(Job.pending.all).to match_array(pending_approval)
-    end
 
     it '#active returns all active jobs' do
       2.times.map { Fabricate(:job, expiry_date: 1.week.ago) }
