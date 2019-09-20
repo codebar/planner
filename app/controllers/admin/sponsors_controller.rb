@@ -6,6 +6,8 @@ class Admin::SponsorsController < Admin::ApplicationController
     @sponsors = Sponsor.all.order(:name)
   end
 
+  def show; end
+
   def new
     @sponsor = Sponsor.new
     @sponsor.build_address
