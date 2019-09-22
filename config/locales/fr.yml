@@ -3,30 +3,30 @@ fr:
   date:
     formats:
       default: "%d/%m/%Y"
-      email: "%a, %d %B at %H:%M"
-      email_title: "%A, %d %b at %H:%M"
+      email: "%a, %d %B à %H:%M"
+      email_title: "%A, %d %b à %H:%M"
       short: "%d/%m/%Y %H:%M "
       date: "%d %b %Y"
-      website_format: "%a, %d %B %Y at %H:%M"
+      website_format: "%a, %d %B %Y à %H:%M"
       day_in_words: "%a"
       day: "%d"
       month: "%B"
       meeting_format: "%a %d %B %H:%M"
       time: "%H:%M"
       year_month: "%Y-%B"
-      log: "at %H:%M on the %d/%m/%Y"
-      workshop: "%A, %e %B %Y at %R"
+      log: "à %H:%M le %d/%m/%Y"
+      workshop: "%A, %e %B %Y à %R"
       dashboard: "%a, %d %b %Y, %H:%M"
   time:
     formats:
       default: "%a, %d %b %Y %H:%M"
-      email: "%a, %d %B at %H:%M"
-      email_title: "%A, %d %b at %H:%M"
+      email: "%a, %d %B à %H:%M"
+      email_title: "%A, %d %b à %H:%M"
       short: "%d/%m/%Y %H:%M "
       date: "%d %b %Y"
       full_date: "%d %B %Y"
       default_date: "%d/%m/%Y"
-      website_format: "%a, %d %B %Y at %H:%M"
+      website_format: "%a, %d %B %Y à %H:%M"
       day_in_words: "%a"
       day: "%d"
       month: "%B"
@@ -34,12 +34,12 @@ fr:
       time: "%H:%M"
       year_month: "%Y-%B"
       log: "at %H:%M on the %d/%m/%Y"
-      workshop: "%A, %e %B %Y at %R"
+      workshop: "%A, %e %B %Y à %R"
       dashboard: "%A, %b %d"
   number:
     currency:
       format:
-        unit: '£'
+        unit: '€'
         delimiter: ','
         separator: '.'
         precision: 0
@@ -64,49 +64,49 @@ fr:
     chapters:
       title: "Chapters"
   messages:
-    accepted_invitation: "Thanks for getting back to us %{name}. See you at the workshop!"
-    rejected_invitation: "We are so sad you can't make it, but thanks for letting us know %{name}."
-    already_rsvped: "You have already confirmed you attendance!"
-    not_attending_already: "You have already confirmed you can't make it!"
-    no_available_seats: "Unfortunately there are no more spaces left :(. If you would like to join our waiting list send us an email at %{email}"
-    feedback_saved: "Thank you for taking the time to give us feedback!"
-    feedback_not_found: "You have already submitted feedback for this event."
-    updated_note: "Successfully updated note."
+    accepted_invitation: "Merci d'avoir confimer %{name}. À bientot à l'atelier!"
+    rejected_invitation: "Désolé que vous ne puissiez pas venir, mais merci %{name} de nous avoir tenu au courant."
+    already_rsvped: "Vous avez déjà réserver votre place!"
+    not_attending_already: "Vous avez déjà confimer que vous ne pouvez pas venir!"
+    no_available_seats: "Il n'y a malheuresement plus de places disponible :(. Si vous souhaitez joindre la liste d'attente merci de nous envoyer un email à %{email}"
+    feedback_saved: "Merci d'avoir pris le temps de nous laisser un commentaire!"
+    feedback_not_found: "Vous avez déjà laisser un commentaire à propos de cet évènement."
+    updated_note: "Votre commentaire à bien été mis à jour."
     invitations:
       rsvped_to_other_workshop: "You have already RSVP'd to another workshop on this date. If you would prefer to attend this workshop, please cancel your other RSVP first."
       spot_confirmed: "Your spot has been confirmed for %{event}! We look forward to seeing you there."
       spot_not_confirmed: 'Your spot has not yet been confirmed. We will verify your attendance after you complete the questionnaire.'
   notifications:
-    provider_already_connected: 'You are already signed in!'
-    not_logged_in: "You must be logged in to access this page."
+    provider_already_connected: 'Vous êtes déjà connecter!'
+    not_logged_in: "Vous devez être connecter pour accéder à cette page."
   navigation:
-    dashboard: "Dashboard"
+    dashboard: "Tableau de board"
     code_of_conduct: "Code de conduite"
-    coach_guide: "Coach guide"
-    student_guide: "Student guide"
+    coach_guide: "Guide enseignant"
+    student_guide: "Guide étudiant"
     tutorials: "Tutoriels"
-    becoming_sponsor: "Becoming a sponsor"
+    becoming_sponsor: "Devenir un sponsor"
     faq: "FAQ"
     blog: "Blog"
   dashboard:
-    join_workshops_in: "Join our <i>free</i> workshops in"
-    workshops_goal: "to get to grips with the basics of programming and web development."
-    tweets_by: "Tweets by"
-    latest_sponsors: "Latest Sponsors"
+    join_workshops_in: "Rejoignez nos ateliers <i>gratuit</i>"
+    workshops_goal: "pour apprendre les bases de la programmation et du développement web."
+    tweets_by: "Tweets par"
+    latest_sponsors: "Les derniers Sponsors"
     policy:
-      intro: "There’s high demand for our workshops and we have a waiting list on most weeks. To make sure as many people as possible can come, we have a straightforward attendance policy."
-      rule1: "Before you RSVP make sure you are eligible to attend. If you’re not sure get in touch for a chat."
-      rule2: "You must sign up and RSVP to attend our workshops."
-      rule3: "If you RSVP then later realise you can’t make it, you must cancel. It only takes a few seconds to do through your confirmation email."
-      rule4: "Please try to cancel with at least 24 hours notice."
-      rule5: "We know that sometimes things come up last minute, but even if you only cancel an hour before the workshop, get in touch and let us know."
-      what_happens: "What happens if I don’t respect the policy?"
-      strikes_system: "We operate a three strikes system. That means if you don’t come in without cancelling an RSVP three times, we will take you off our invite list for four weeks. We’ll get in touch after your first absence to make sure you understand this."
-      removing: "If you fail to attend without cancelling another three times, we might have to remove you permanently from our invitation list."
-      rsvping: "There is no penalty for RSVP-ing and then cancelling on a regular basis, but please avoid it. If you always struggle to make it in on a certain day then let us know – that kind of feedback is really important to us."
-      eligibility_note: "Another note on eligibility"
-      abuse: "We’re a fairly relaxed bunch and we trust you, so we don’t police students as to their eligibility. However if it ever looks like this is being abused we may have to change that – which we really don’t want to do."
-      reminder: "So please remember what these workshops are for – to open up tech to people that are underrepresented in the industry."
+      intro: "Il y a une forte demande pour nos ateliers et il y a une liste d'attente pratiquement toutes les semaines. Pour être certain qu'un maximum de personnes puissent venir, nous avons une politique d'assiduité stricte."
+      rule1: "Avant de vous enregistrer merci de vous assurer que vous êtes éligible. Si vous n'êtes pas sure n'hésitez pas à nous contacter."
+      rule2: "Vous devez vous enregistrer pour venir à nos ateliers."
+      rule3: "Si vous vous êtes enregister et que vous réaliser que vous ne pouvez plus venir, vous devez laisser votre place à quelqu'un d'autre. Cela ne prend que quelques secondes à faire depuis l'email de confirmation."
+      rule4: "Essayez d'annuler si possible avec un délai de 24 heures."
+      rule5: "Il est possible que certaines choses arrivent à la dernière minute, si cela arrive même une heure avant l'atelier, envoyez nous un petit message."
+      what_happens: "Que se passe t-il si je ne respecte pas les conditions?"
+      strikes_system: "Nous avons un système avec trois avertissements. Cela veux dire que si vous n'êtes pas présent trois fois, nous vous retirerons de notre listes de participants pour un mois. Nous vous enverrons un message après votre première absence pour s'assurer que vous ayez connaissance de cette règle."
+      removing: "Si vous êtes absent trois fois de plus, nous devrons vous retirer de facon permanente de nos invitations."
+      rsvping: "Il n'y a pas de sanctions pour s'enregisrer et annuler par la suite, mais essayer d'éviter dans la mesure du possible. Si il vous est difficile de vous rendre disponible un certain jour, dites le nous, ce genre de retour nous est important pour nous."
+      eligibility_note: "Un autre commentaire sur nos critères d'èligibilité"
+      abuse: "Nous sommes plutot souple et nous vous faisons confiance, nous ne vous demanderons rien à propos de votre éligibilité. Mais si nous semble que vous abusez le système nous devrons peut-être changer les régles (ce que nous ne voulons vraiment pas faire)."
+      reminder: "Donc, merci de vous rappeler pourquoi nous faisons ces ateliers – pour ouvrir la tech à ceux qui sont sous représentés dans le secteur."
     teacher_guide:
       laptop: "You don't need a laptop for our workshops. You are there to watch and guide the students. If you don't feel comfortable with the tutorial you should spend time on it before coming if you want to help out."
       keyboard: "Do not take over the keyboard! This can be off-putting and scary."
@@ -124,47 +124,48 @@ fr:
       stubling: "Let them stumble. We learn by making mistakes, getting frustrated, and working through problem in our own way. Be supportive, but let them explore."
       suggestions: "Do you have something to suggest? Make a <a href='https://github.com/codebar/planner'>pull request</a> or <a href='https://github.com/codebar/planner/issues/new'>create an issue</a>"
   events:
-    title: "Events"
-    past: "Past"
-    no_upcoming_events: "There are no upcoming events."
-    view_past_events: "View past events"
-    view_all: "View all"
-    hosted_by: "Hosted by"
-    organisers: "Organisers"
-    venue_at: "at"
-    attend_as_student: "Attend as a student"
-    attend_as_coach: "Attend as a coach"
-    location: "Location"
+    title: "Évènements"
+    past: "Passé"
+    no_upcoming_events: "Il n'y a pas d'èvènements futur."
+    view_past_events: "Voir les èvèment passé"
+    view_all: "Voir tout"
+    hosted_by: "Hébergé par"
+    organisers: "organisateurs"
+    venue_at: "à"
+    attend_as_student: "S'inscrire étudiant"
+    attend_as_coach: "Inscription enseignant"
+    location: "Emplacemnet"
     sponsors: "Sponsors"
-    thx_to_sponsors: "A big thanks to all of our sponsors for making the event possible!"
-    coaches: "Coaches"
-    schedule: "Schedule"
-    send_us_an_email: "send us an email"
-    not_open_for_rsvp: This event is not open for RSVP yet.
+    thx_to_sponsors: "Un grand merci à tous nos sponsors qui ont fait de cet évènement une réalité!"
+    coaches: "Enseignants"
+    organisers: "Organisateurs"
+    schedule: "Programme"
+    send_us_an_email: "envoyez nous un email"
+    not_open_for_rsvp: Il n'est pas encore possible de s'inscrire pour cet évènement.
     faq:
       experience:
-        q: "How experienced should I be to join the workshop?"
+        q: "Me faut-il beaucoup d'expérience pour m'inscrire à un atelier?"
         a:
       contribution:
-        q: "What kind of contributions can I make?"
-        a: "Your contributions can be tiny, as simple as fixing a typo, to something incredible. You can help with documentation, fix a bug that you found, improve the copy, help with design or even tackle bigger tasks and help introduce new features. Every little helps!"
+        q: "Quel type de contributions puis-je faire?"
+        a: "Vos contributions peuvent-être, aussi simple que de corriger un faute, ou quelque chose d'incroyable. Vous pouvez aider à rédiger la documentation, corriger un bug que vous avez trouver, améliorer notre design ou même commencer des tâches encore plus grandes et ajouter de nouvelles fonctionallités. Toutes contributions compte!"
       laptop:
-        q: "Do I need to bring a laptop?"
-        a_html: "Yes, you should bring a laptop. If you don't have one %{link} as we may be able to help."
+        q: "Dois-je amener un ordinateur portable?"
+        a_html: "Oui, vous devriez amener un ordinateur. Si vous n'en avez pas %{link} pourra peut-être aider."
       keyboard:
-        q: "Do I need to bring a keyboard?"
-        a_html: "A keyboard would help as you will spend the entire day pairing with someone on your laptop. If you don't have a keyboard, %{link} and we'll try to organise something for you."
+        q: "Dois-je apporter un clavier?"
+        a_html: "Un clavier pourrais vous aider vu que vous allez passer toute la journée avec quelqu'un sur votre ordinateur. Si vous n'avez pas de clavier, %{link} et nous essaierons de vous trouver quelque chose."
       travel_costs:
-        q: "I will be commuting. Can you help with my travel expenses?"
-        a: "We will be offering some travel grants. Just make sure you fill in the questionnaire after you RSVP and we will get in touch."
+        q: "Je voyage de loin. Pouvez-vous m'aider avec mes frais de déplacements?"
+        a: "Nous offrons des bourses de voyage. Vous devez vous assurer de remplir le questionnaire après vous être enregistrer et nous vous contacterons."
   coaches:
-    want_to_coach: "Do you want to coach at our workshops?"
-    read_before: "If you have not attended our workshops before, make sure you read our"
-    code_of_conduct: "code of conduct"
-    policy: "as we have a zero tolerance policy and expect everyone to behave appropriately. You should also  go through our"
-    guide: "coaching guide"
-    unable_attend: "In case you are unable to attend after you RSVP, please make sure you come back and update your attendance as we rely on coaches showing up in order for our workshops to run smoothly."
-    food: "PS: There will also be food at the workshop. We always make an effort to have vegetarian, vegan and gluten-free options available. If you have any other dietary requirements, send us email at"
+    want_to_coach: "Voulez vous enseigner à nos ateliers?"
+    read_before: "Si vous n'êtes jamais venu a nos ateliers, merci de lire notre"
+    code_of_conduct: "code de conduite"
+    policy: "vu que nous attendons que chacun se comporte correctement. Vous devriez aussi lire notre"
+    guide: "guide pour les enseignants"
+    unable_attend: "Si vous n'êtes plus disponibles après vous être inscris, merci de revenir et mettre à jour vos informations vu que nous avons besoin des enseignants pour que nos ateliers fonctionnent."
+    food: "PS: Il y aura de la nourriture à nos ateliers. Nous faisons toujours un effort pour avoir des choix végétariens, vegan and sans gluten. Si vous avez des allergies alimentaires envoyez nous un email à"
   code_of_conduct:
     title: "Code de conduite"
     summary:
@@ -177,73 +178,73 @@ fr:
       sponsors: "Les sponsors sont également soumis à la politique anti-harcèlement. En particulier, les sponsors ne doivent pas utiliser d'images, d'activités ou d'autres contenus à caractère sexuel. Le personnel (y compris les bénévoles) ne doivent pas porter de vêtements / uniformes / costumes sexualisés, ni créer un environnement sexualisé."
       sanctions: "Si un participant se livre à un comportement de harcèlement, les organisateurs peuvent prendre toutes les mesures qu'ils jugent appropriées. Cela comprend l'avertissement du contrevenant, ou son expulsion."
       concerns: "Si vous êtes harcelé·e, remarquez que quelqu'un d'autre est harcelé, ou avez d'autres préoccupations, veuillez contacter immédiatement l'un des organisateurs."
-      applies_to: "Nous attendons des participants qu'ils suivent ces règles lors de tous les événements <b>codebar</b>."
+      applies_to: "Nous attendons des participants qu'ils suivent ces règles lors de tous les événements <strong>codebar</strong>."
       questions: "Si vous avez des questions ou des préoccupations concernant ce code de conduite,"
       contact: "contactez-nous"
       email_subject: "Regarding code of conduct"
   sponsors:
-    sponsoring: "Sponsoring"
+    sponsoring: "Sponsoriser"
   members:
-    sign_up: "Sign up"
-    sign_in_with_github: "Sign in with GitHub"
-    sign_up_as_student: "I understand and meet the eligibility criteria. Sign me up as a student"
-    sign_up_as_coach: "Sign up as a coach"
-    code_of_conduct: "code of conduct"
+    sign_up: "S'inscrire"
+    sign_in_with_github: "Se connecter via GitHub"
+    sign_up_as_student: "Je comprends et j'accept les critères d'éligibilité. Je souhaite m'inscrire en tant qu'étudiant"
+    sign_up_as_coach: "S'inscrire en tant qu'enseignant"
+    code_of_conduct: "code de conduite"
     new:
       intro: "We offer a welcoming, inclusive and learning-friendly environment, and have a zero tolerance policy towards any form of harassment or inappropriate behavior. Before you sign up, read our"
       students:
-        intro: "If you would like to attend as a student, make sure you meet our"
-        criteria_link: "eligibility criteria"
-        criteria_brief: "as our workshops are only available to women, LGBTQ, people from underrepresented minority groups."
-        github: "Lastly, when you click the sign up button, you'll be taken to something called GitHub. After logging in with a GitHub account, you'll be taken back to the codebar website. If you don't have an account yet, you'll need to create one. It doesn't take long and it's something that will come in handy when you get started with coding!"
-      invitations: "Invitations are sent out periodically, so don't worry if you don't receive one as soon as you register."
+        intro: "Si vous souhaiter vous inscrire en tant qu'étudiant, assurez vous que vous"
+        criteria_link: "soyez éligible"
+        criteria_brief: "puisque nos ateliers ne sont ouvert qu'aux femmes, LGBTQ, et personnes issus de minorités."
+        github: "Enfin, quand vous cliquez sur le boutton pour s'inscrire, vous allez être rediriger vers GitHub. Après vous être connecter avec votre compte GitHub, vous serez redirigé vers le site de codebar. Si vous n'avez pas de compte, vous devrez en créer un. Cela ne prend que quelques minutes et cela vous sera utile quand vous commencerez à coder!"
+      invitations: "Les invitations sont envoyer régulierement, ne vous inquiétez pas si vous n'en recevez pas une quand vous venez de vous inscrire."
   footer:
-    email_us: "Send us an email at"
-    contact_info: "Contact Info:"
+    email_us: "Envoyez nous un email à"
+    contact_info: "Contact:"
   faq:
     payment:
-      q: "Do I need to pay to attend codebar?"
-      a_p1: "Absolutely not! We are lucky enough to have some great companies who are able to host the workshops and/or kindly provide food. And our"
-      awesome_coaches: "awesome coaches"
-      a_p2: "give their time freely to help the community."
+      q: "Dois-je payer pour venir à codebar?"
+      a_p1: "Pas du tout! Nous avons la chance que de formidables entreprises accueillent nos ateliers et proposent un repas. Et nos"
+      awesome_coaches: "superbe enseignants"
+      a_p2: "donne de leur temps pour aider la communauté."
     technologies:
-      q: "What technologies do you teach?"
-      a: "We have a variety of available tutorials in HTML, CSS, JavaScript and Ruby. If you want to learn something else don't hesitate to <a href=\"mailto:contact@codebar.io\">send us an email</a> as we might still be able to find someone to help you out."
+      q: "Quelles technologies enseignez vous?"
+      a: "Nous avons plusieurs tutoriels couvrant HTML, CSS, JavaScript et Ruby. Si vous souhaiter apprendre autre chose, <a href=\"mailto:contact@codebar.io\">envoyez nous un email</a>, nous pourrons peut-être trouver quelqu'un pour vous aider."
     eligibility:
-      q: "I want to attend a workshop. Am I eligible?"
-      a: "Our workshops are available to women, LGBTQ and people who are underrepresented in the tech industry. If you belong to one of these groups, you are more than welcome to attend. If not, there are some other great initiatives like <a href='https://www.meetup.com/opentechschool-london/'>Open Tech School London</a> where you can learn in a collaborative environment. Please see our <a href='http://codebar.io/student-guide'>student guide</a> for more information."
+      q: "Je veux venir à un atelier. Suis-je éligible?"
+      a: "Nos ateliers sont ouvert aux femmes, LGBTQ et aux communautés sous représentés dans la tech. Si vous faites d'un de ces groupes, vous êtes les bienvenus. Il existe autrement beaucoup d'autres alternatives pour apprendre dans un environnement collaboratif. Référez vous a notre <a href='http://codebar.io/student-guide'>guide pour les étudiants</a> pour plus d'informations."
     career:
-      q: "Is codebar only aimed at people who want to move into a career as a developer?"
-      a: "No! codebar is about getting people excited about programming. We'll help them learn some basic coding skills, as well as how to explore and do things on their own. For those who do want to become developers, we will provide help and guidance to help them achieve their goal."
+      q: "Est-ce que codebar s'addresse uniquement aux personnes qui souhaitent se diriger vers une carrière de développeur?"
+      a: "Non! codebar veux faire aimer/découvrir la programmation. Nous les aiderons à apprendre les bases du code, mais aussi à les aider pour se débrouiller seul. Nous pouvons aider et guider ceux qui ont pour but de devenir développeurs."
     format:
-      q: "What is the format of the workshops?"
-      a: "We try to have one coach for every two students. We will pair up students who want to work on the same tutorial, and assign them a coach. The rest just happens."
+      q: "Quel est le format des ateliers?"
+      a: "Nous essayons d'avoir un enseignant pour deux étudiants. Nous allons mettre deux étudiants travaillant sur la même chose ensemble si possible, et leur assigner un mentor."
     laptop:
-      q: "Do I need to bring a laptop with me at the workshops?"
-      a: "Yes, we suggest that you bring a laptop as it will be easier for you to carry on working on things after the workshops. It you don't have one, <a href=\"mailto:contact@codebar.io\">send us an email</a> so we can try and help out."
+      q: "Dois-je venir avec un ordinateur aux ateliers?"
+      a: "Oui, il est plus simple si vous voulez continuer à travailler sur le projet après l'atelier. Si vous n'en avez pas un, <a href=\"mailto:contact@codebar.io\">envoyez nous un email</a> et nous ferons notre possible pour vous aider."
     online_resources:
-      q: "There are so many online resources, why should I come to codebar?"
-      a: "Coding can be intimidating and a lot of people find it hard to get started. By putting you in touch with people who can help and guide you we make the experience and learning process easier and more enjoyable."
+      q: "Il y a beaucoup de resources en ligne, pourquoi je devrais venir à codebar?"
+      a: "Il peut-être intimidant de coder par soi même et beaucoup de gens ont des problèmes pour se lancer. En vous mettant en relation avec des gens qui peuvent vous aider et vous aider, nous rendons votre apprentissage un peu plus simple et sympathique."
     preperations:
-      q: "I would like to coach at codebar. Is there anything I should do besides signing up?"
-      a_p1: "Yes. First you should read our"
-      coaching_guide_tutorials: "coaching guide tutorials"
-      a_p2: ". Then spend sometime familiarising yourself with the"
-      a_p3: "<a href='http://tutorials.codebar.io'>tutorials</a>. The tutorials are open source so if there is something that you want to improve open an issue on the GitHub repository or send a pull request."
-      a_p4: "We don't expect the coaches to be familiar with all the technologies and languages we have material on."
+      q: "Si je veux enseigner à codebar. Dois-je faire autre chose outre le fait de m'inscrire?"
+      a_p1: "Oui. Tout d'abord vous devriez lire notre"
+      coaching_guide_tutorials: "tutoriel pour les enseignants"
+      a_p2: ". Et ensuite essayer de vous familiariser avec les"
+      a_p3: "<a href='http://tutorials.codebar.io'>tutoriels</a>. Les tutoriels sont open source donc n'hésitez pas a ouvrir une issue ou une pull request sur GitHub."
+      a_p4: "Nous n'attendons pas que les enseignants connaissent toutes les technologies ou les languages de tous les tutoriels."
     location:
-      q: "Where do the workshops take place?"
-      a: "As we don't have a permanent venue, our workshops are hosted by different companies in various locations around London. So far we've run workshops in Shoreditch, London Bridge, Holborn and Kings Cross."
+      q: "Ou se passent les ateliers?"
+      a: "Nous n'avons pas de locaux fixe, nos ateliers sont hébergés par différentes entreprises."
     disabled_access:
-      q: "Is there disabled access at the workshops?"
-      a: "Unfortunately, that depends entirely on where we are hosting our workshops and if the venue has disabled access. If you would like to attend, send us an email at <a href='mailto:meetings@codebar.io'>meetings[at]codebar.io</a> so we can enquire about it and let you know."
+      q: "Y-a-t-il un accès handicapé aux ateliers?"
+      a: "Malheuresement, cela dépend de l'entreprise qui héberge l'atelier. Si vous souhaitez vous inscrire à un atelier, envoyez nous un email à <a href='mailto:meetings@codebar.io'>meetings[at]codebar.io</a> pour que nous faissions la demande pour vous."
     bring_codebar_to_my_city:
-      q: "I would like to bring codebar to my city. Can I do that?"
-      a: "Of course. codebar is about building a community of experienced developers that are able to give up some of their time to help others. If you are keen on running codebar where you live, we would love to speak to you about it and see how we can help make this happen, so send <a href=\"mailto:contact@codebar.io\">us an email</a>."
+      q: "Je voudrais commencer codebar dans ma ville. Est ce que cela est possible?"
+      a: "Bien sur. codebar a pour but de créer une communauté de développeurs qui veulent aider les autres. Si vous êtes exciter a l'idée de lancer codebar ou vous habitez, nous adererions parler avec vous afin de voir comment nous pourrions nous organiser, alors <a href=\"mailto:contact@codebar.io\">envoyez nous un email</a>."
     our_coaches:
-      q: "Our coaches"
-      a_p1: "You can see all the coaches have helped out in our workshops on the"
-      a_p2: ". They are ordered by number of attendances. This is our way of showing our appreciation to them, as without them, we wouldn't be able to exist."
+      q: "Nos enseignants"
+      a_p1: "Vous pouvez voir tous les enseignants qui ont aider dans nos ateliers sur"
+      a_p2: ". Ils ont commandé suivant le nombre de participants. C'est notre manière de leur montrer notre gratitude, vu que sans eux, nous ne pourrions exister."
   participant_student_guide:
     title: "Student Guide"
     attendance_policy:
@@ -267,11 +268,10 @@ fr:
       title: "Students with Disability"
       description: "We want to ensure that our workshops are as accessible as possible. If you are disabled and are unsure about whether our venues can cater to your needs, we encourage you to please get in touch with us at <a href='mailto:hello@codebar.io'>hello@codebar.io</a> and we will do what we can to accommodate you."
   chapters:
-    intro_html: "Hi and welcome to codebar!"
-    info: "Check out our <a href='http://codebar.io/faq'>FAQ</a> page for any questions you might have, or email us at <a href='mailto:%{email}'>%{email}</a> if you can't find the answer you're looking for. Otherwise, click the Sign up button to get started."
-    sign_up: "to be invited to our workshops."
-    no_incoming: "There are no workshops coming up."
-    contact: "To contact the %{city} team, send an email to %{email}"
+    intro: "Bonjour et bienvenue à codebar! Si vous avez des questions, allez lire notre <a href='http://codebar.io/faq'>FAQ</a>, et n'hésitez pas à nous envoyer un email à %{email} si vous ne trouvez pas réponse à votre question. Sinon, vous pouvez utiliser le boutton ci-dessous pour vous inscrire."
+    sign_up: "pour être inviter à nos ateliers."
+    no_incoming: "Il n'y a pas d'ateliers prévu."
+    contact: "Pour contacter l'équipe de %{city}, envoyez un email à %{email}"
   job:
     status:
       draft: Draft
@@ -432,10 +432,10 @@ fr:
         confirm_approval: 'Are you sure this job listing meets all requirements and you want to approve it?'
     workshop:
       manage_rsvps:
-        text: 'RSVP Students and Coaches to the workshop. The attendance confirmation email will be triggered and they will be removed from the waiting list.'
+        text: "Inscrire les étudiants et les enseignants à l'atelier. Leur email de confirmation va être envoyer et ils seront retirer de la liste d'attente."
       destroy:
-        success: "Workshop deleted successfully"
-        failure: "Workshop cannot be deleted. This is because it has invitees and/or workshop information is on the website for a while long enough that it cannot be deleted."
+        success: "Atelier supprimé"
+        failure: "L'atelier ne peut être supprimé. Parce qu'il y a déjà des inscrits ou parce que l'atelier a été en ligne pour trop longtemps."
     messages:
       meeting:
         created: 'Meeting successfully created'
