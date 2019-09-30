@@ -1,0 +1,32 @@
+%section#banner
+  .row
+    %h1 Chapter
+    = link_to 'View All Chapters', admin_chapters_path
+    = link_to 'View Active Chapters', admin_chapters_path(active: true)
+    = link_to 'View Inactive Chapters', admin_chapters_path(active: false)
+    .row
+      %hr
+      .large-3.columns
+        Name / City / Slug
+      .large-3.columns
+        Email / Twitter
+      .large-3.columns
+        Active?
+      .large-3.columns
+        Actions
+
+  - @chapters.each do |chapter|
+    .row
+      %hr
+      .large-3.columns
+        %p= chapter.name
+        %p= chapter.city
+        %p= chapter.slug
+      .large-3.columns
+        %p= chapter.email
+        %p= chapter.twitter
+      .large-3.columns
+        = chapter.active? ? t('.yes') : t('.no')
+      .large-3.columns
+        = link_to t('.toggle_link'), toggle_active_admin_chapter_path(chapter), method: :post
+

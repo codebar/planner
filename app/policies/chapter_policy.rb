@@ -3,6 +3,10 @@ class ChapterPolicy < ApplicationPolicy
     show?
   end
 
+  def toggle_active?
+    is_admin_or_organiser?
+  end
+
   def create?
     is_admin_or_organiser?
   end

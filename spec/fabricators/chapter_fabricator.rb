@@ -2,8 +2,10 @@ Fabricate.sequence(:name) { |i| "#{Faker::Lorem.word}#{i}" }
 
 Fabricator(:chapter) do
   name { Fabricate.sequence(:name) }
-  city { Faker::Lorem.word }
+  city { Faker::Address.city }
   email { Faker::Internet.email }
+  slug { Faker::Internet.slug }
+  twitter { Faker::Internet.url }
   time_zone { 'London' }
 
   after_save do |chapter|
@@ -29,4 +31,12 @@ Fabricator(:chapter_without_organisers, class_name: :chapter) do
   city { Faker::Lorem.word }
   email { Faker::Internet.email }
   time_zone { 'London' }
+end
+
+Fabricator(:active_chapter, from: :chapter) do
+  active true
+end
+
+Fabricator(:inactive_chapter, from: :chapter) do
+  active false
 end

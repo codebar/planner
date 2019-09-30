@@ -549,6 +549,13 @@ en:
   admin:
     dashboard:
       title: 'Admin'
+    chapters:
+      index:
+        'yes': 'Yes'
+        'no': 'No'
+        toggle_link: 'Toggle Active Status'
+      toggle_active:
+        message: 'Successfully toggled active status for %{name}'
     jobs:
       title: Manage jobs
       info:

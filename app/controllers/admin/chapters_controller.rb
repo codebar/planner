@@ -1,6 +1,15 @@
 class Admin::ChaptersController < Admin::ApplicationController
-  before_action :set_chapter, only: [:show, :edit, :update]
+  before_action :set_chapter, only: [:show, :edit, :update, :toggle_active]
   after_action :verify_authorized
+
+  def index
+    authorize Chapter
+    @chapters = Chapter.all.order(:name)
+
+    if chapter_index_params.present?
+      @chapters = @chapters.where(chapter_index_params)
+    end
+  end
 
   def new
     @chapter = Chapter.new
@@ -59,7 +68,20 @@ class Admin::ChaptersController < Admin::ApplicationController
     render plain: @emails
   end
 
+  def toggle_active
+    authorize @chapter
+
+    @chapter.toggle!(:active)
+    flash[:notice] = t('.message', name: @chapter.name)
+
+    return redirect_to admin_chapters_path
+  end
+
   private
+
+  def chapter_index_params
+    @_chapter_index_params ||= params.permit(:active)
+  end
 
   def chapter_params
     params.require(:chapter).permit(:name, :email, :city, :time_zone, :twitter, :description, :image)
