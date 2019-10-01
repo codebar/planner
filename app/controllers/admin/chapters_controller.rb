@@ -1,14 +1,12 @@
 class Admin::ChaptersController < Admin::ApplicationController
-  before_action :set_chapter, only: [:show, :edit, :update, :toggle_active]
+  before_action :set_chapter, only: %i[show edit update toggle_active]
   after_action :verify_authorized
 
   def index
     authorize Chapter
     @chapters = Chapter.all.order(:name)
 
-    if chapter_index_params.present?
-      @chapters = @chapters.where(chapter_index_params)
-    end
+    @chapters = @chapters.where(chapter_index_params) if chapter_index_params.present?
   end
 
   def new
@@ -71,10 +69,11 @@ class Admin::ChaptersController < Admin::ApplicationController
   def toggle_active
     authorize @chapter
 
-    @chapter.toggle!(:active)
+    @chapter.update(active: !@chapter.active)
+
     flash[:notice] = t('.message', name: @chapter.name)
 
-    return redirect_to admin_chapters_path
+    redirect_to admin_chapters_path
   end
 
   private
