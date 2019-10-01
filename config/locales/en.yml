@@ -554,6 +554,9 @@ en:
         'yes': 'Yes'
         'no': 'No'
         toggle_link: 'Toggle Active Status'
+        view_all_chapters: 'View All Chapters'
+        view_active_chapters: 'View Active Chapters'
+        view_inactive_chapters: 'View Inactive Chapters'
       toggle_active:
         message: 'Successfully toggled active status for %{name}'
     jobs:

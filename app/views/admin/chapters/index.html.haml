@@ -1,9 +1,9 @@
 %section#banner
   .row
     %h1 Chapters
-    = link_to 'View All Chapters', admin_chapters_path
-    = link_to 'View Active Chapters', admin_chapters_path(active: true)
-    = link_to 'View Inactive Chapters', admin_chapters_path(active: false)
+    = link_to t('.view_all_chapters'), admin_chapters_path
+    = link_to t('.view_active_chapters'), admin_chapters_path(active: true)
+    = link_to t('.view_inactive_chapters'), admin_chapters_path(active: false)
     .row
       %hr
       .large-3.columns
