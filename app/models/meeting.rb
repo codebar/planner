@@ -20,7 +20,7 @@ class Meeting < ActiveRecord::Base
   before_save :set_slug
 
   def invitees
-    Member.uniq.joins(:chapters).merge(chapters)
+    Member.distinct.joins(:chapters).merge(chapters)
   end
 
   def title
