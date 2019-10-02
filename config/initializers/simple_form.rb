@@ -60,7 +60,7 @@ SimpleForm.setup do |config|
     b.use :error, wrap_with: { tag: :span, class: :error }
     ## Inputs
     b.use :label_input
-    b.use :hint,  wrap_with: { tag: :span, class: :hint }
+    b.use :hint, wrap_with: { tag: :span, class: :hint }
   end
 
   # Define the way to render check boxes / radio buttons with labels.

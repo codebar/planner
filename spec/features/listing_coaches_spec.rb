@@ -15,10 +15,10 @@ feature 'when visiting the coaches page' do
     older_invitations = 15.times { Fabricate(:attended_coach, workshop: old_workshop) }
 
     visit coaches_path(year: latest_workshop.date_and_time.year)
-    expect(page).to have_css(".coach", count:  5)
+    expect(page).to have_css(".coach", count: 5)
 
     visit coaches_path(year: old_workshop.date_and_time.year)
-    expect(page).to have_css(".coach", count:  15)
+    expect(page).to have_css(".coach", count: 15)
   end
 
   scenario 'I can navigate the top coaches by year' do
@@ -30,13 +30,13 @@ feature 'when visiting the coaches page' do
     older_invitations = 12.times { Fabricate(:attended_coach, workshop: old_workshop) }
 
     visit coaches_path
-    expect(page).to have_css(".coach", count:  10)
+    expect(page).to have_css(".coach", count: 10)
 
     click_on latest_workshop.date_and_time.year.to_s
-    expect(page).to have_css(".coach", count:  7)
+    expect(page).to have_css(".coach", count: 7)
 
     click_on old_workshop.date_and_time.year.to_s
-    expect(page).to have_css(".coach", count:  12)
+    expect(page).to have_css(".coach", count: 12)
   end
 
   scenario 'I can view coaches listed by skills' do
