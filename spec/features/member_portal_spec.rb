@@ -61,7 +61,7 @@ feature 'Member portal' do
     end
 
     it 'can subscribe to groups' do
-      group  = Fabricate(:group) 
+      group = Fabricate(:group) 
       visit profile_path
       within '#member_profile' do
         click_on 'Manage subscriptions'
