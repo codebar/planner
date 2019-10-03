@@ -2,8 +2,8 @@ class Admin::WorkshopsController < Admin::ApplicationController
   include  Admin::SponsorConcerns
   include  Admin::WorkshopConcerns
 
-  before_filter :set_workshop_by_id, only: %i[show edit destroy]
-  before_filter :set_and_decorate_workshop, only: %i[attendees_checklist attendees_emails send_invites]
+  before_action :set_workshop_by_id, only: %i[show edit destroy]
+  before_action :set_and_decorate_workshop, only: %i[attendees_checklist attendees_emails send_invites]
 
   WORKSHOP_DELETION_TIME_FRAME_SINCE_CREATION = 4.hours
 

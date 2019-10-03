@@ -116,7 +116,7 @@ en-GB:
       introduction: "Always introduce yourself. Say why you want to help out and are spending your own time on this, and why you like programming."
       backgrounds: "Give your students the opportunity to get to know each other. Ask their names, why they are here, what they do in their day jobs. Encourage a brief discussion before starting."
       limits: "Assume that anyone you're teaching has no knowledge but infinite intelligence."
-      colaboration: "Work collaboratively with your student. If you have two students, you should work with both. Don't focus all of your attention on one."
+      collaboration: "Work collaboratively with your student. If you have two students, you should work with both. Don't focus all of your attention on one."
       discussion: "Let students have a go at answering the questions first. Help with open and leading questions. Encourage a discussion."
       talk_slow: "Take it slow, you are the teacher, they are the student. Allow for time between questions."
       mild_approach: "Don't say no when the students are not doing something right. Be gentle, take a mild approach."
@@ -438,8 +438,8 @@ en-GB:
         failure: "Workshop cannot be deleted. This is because it has invitees and/or workshop information is on the website for a while long enough that it cannot be deleted."
     messages:
       meeting:
-        created: 'Meeting succesfully created'
-        updated: 'You have succesfully updated the details of this meeting'
+        created: 'Meeting successfully created'
+        updated: 'You have successfully updated the details of this meeting'
         invitations_already_sent: 'Invitations were previously sent; they will not be sent again'
         sending_invitations: 'Invitations are being sent out'
       invitation:

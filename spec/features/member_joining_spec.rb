@@ -35,7 +35,7 @@ feature 'A new student signs up' do
     expect(page).to have_selector('.member_about_you .error')
   end
 
-  scenario 'A new member details are succesfuly captured' do
+  scenario 'A new member details are successfully captured' do
     visit new_member_path
     click_on 'Sign up as a coach'
 

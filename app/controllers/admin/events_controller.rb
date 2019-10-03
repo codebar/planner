@@ -1,6 +1,6 @@
 class Admin::EventsController < Admin::ApplicationController
-  before_filter :set_event, only: [:show]
-  before_filter :find_event, only: %i[edit update]
+  before_action :set_event, only: [:show]
+  before_action :find_event, only: %i[edit update]
 
   def new
     @event = Event.new

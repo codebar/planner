@@ -13,8 +13,8 @@ class Member < ActiveRecord::Base
   has_many :subscriptions
   has_many :groups, through: :subscriptions
   has_many :member_notes
-  has_many :chapters, -> { uniq }, through: :groups
-  has_many :announcements, -> { uniq }, through: :groups
+  has_many :chapters, -> { distinct }, through: :groups
+  has_many :announcements, -> { distinct }, through: :groups
   has_many :meeting_invitations
 
   validates :auth_services, presence: true

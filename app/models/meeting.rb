@@ -20,7 +20,7 @@ class Meeting < ActiveRecord::Base
   before_save :set_slug
 
   def invitees
-    Member.uniq.joins(:chapters).merge(chapters)
+    Member.distinct.joins(:chapters).merge(chapters)
   end
 
   def title
@@ -56,7 +56,7 @@ class Meeting < ActiveRecord::Base
   def set_slug
     return if slug.present?
     self.slug = loop.with_index do |_, index|
-      url = "#{I18n.l(date_and_time, format: :year_month).downcase}-#{title.parameterize}-#{index+1}"
+      url = "#{I18n.l(date_and_time, format: :year_month).downcase}-#{title.parameterize}-#{index + 1}"
       break url unless Meeting.where(slug: url).exists?
     end
   end
