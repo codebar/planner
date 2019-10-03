@@ -3,7 +3,7 @@ require 'spec_helper'
 describe InvitationManager do
   subject(:manager) { InvitationManager.new }
 
-  let(:chapter)   { Fabricate(:chapter) }
+  let(:chapter) { Fabricate(:chapter) }
   let(:workshop) { Fabricate(:workshop, chapter: chapter) }
   let(:students) { Fabricate.times(3, :member) }
   let(:coaches) { Fabricate.times(6, :member) }
