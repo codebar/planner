@@ -15,7 +15,7 @@ RSpec.feature 'Managing workshops', type: :feature do
     visit admin_chapter_workshops_path(chapter)
 
     workshops.each do |workshop|
-      expect(page).to have_content(humanize_date(workshop.date_and_time, with_time: true))
+      expect(page).to have_content(humanize_date(workshop.date_and_time, with_time: true, with_year: true))
     end
   end
 
