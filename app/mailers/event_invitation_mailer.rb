@@ -12,9 +12,7 @@ class EventInvitationMailer < ActionMailer::Base
 
     subject = "Invitation: #{@event.name}"
 
-    mail(mail_args(member, subject)) do |format|
-      format.html
-    end
+    mail(mail_args(member, subject), &:html)
   end
 
   def invite_coach(event, member, invitation)
@@ -25,9 +23,7 @@ class EventInvitationMailer < ActionMailer::Base
 
     subject = "Coach Invitation: #{@event.name}"
 
-    mail(mail_args(member, subject)) do |format|
-      format.html
-    end
+    mail(mail_args(member, subject), &:html)
   end
 
   def attending(event, member, invitation)
@@ -42,9 +38,7 @@ class EventInvitationMailer < ActionMailer::Base
 
     subject = "Your spot to #{@event.name} has been confirmed."
 
-    mail(mail_args(member, subject)) do |format|
-      format.html
-    end
+    mail(mail_args(member, subject), &:html)
   end
 
   private
