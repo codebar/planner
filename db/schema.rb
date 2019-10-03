@@ -309,7 +309,6 @@ ActiveRecord::Schema.define(version: 20181021014646) do
     t.datetime "updated_at"
     t.string   "company"
     t.integer  "approved_by_id"
-    t.string   "company_region"
     t.string   "company_website"
     t.string   "company_address"
     t.string   "company_postcode"
