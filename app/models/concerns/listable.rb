@@ -7,7 +7,7 @@ module Listable
     scope :upcoming, -> { where('date_and_time >= ?', Time.zone.now).order(date_and_time: :asc) }
     scope :past, -> { where('date_and_time < ?', Time.zone.now).order(:date_and_time) }
     scope :recent, -> { where('date_and_time < ?', Time.zone.now).order(date_and_time: :desc).limit(NUMBER_OF_RECENT_WORKSHOPS_TO_RETRIEVE) }
-    scope :completed_since_yesterday, -> { where('date_and_time < ? and date_and_time > ?', Time.zone.now, Time.zone.now-24.hours).order(:date_and_time) }
+    scope :completed_since_yesterday, -> { where('date_and_time < ? and date_and_time > ?', Time.zone.now, Time.zone.now - 24.hours).order(:date_and_time) }
   end
 
   module ClassMethods
