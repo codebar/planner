@@ -1,10 +1,17 @@
 dist: xenial
 language: ruby
 bundler_args: --without development
-rvm:
-  - 2.4.2
+matrix:
+  include:
+  - rvm: 2.4.2
+  - rvm: 2.4.3
+  - rvm: 2.4.4
+  - rvm: 2.4.9
 services:
   - postgresql
+before_install:
+  - gem install bundler --version '= 1.17.3' --no-document
+  - bundle _1.17.3_ install
 before_script:
   - bundle exec rake db:create db:schema:load
 
