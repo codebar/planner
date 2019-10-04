@@ -55,6 +55,7 @@ class Workshop < ActiveRecord::Base
 
   def rsvp_available?
     return rsvp_closes_at.future? if rsvp_closes_at
+
     future?
   end
 
@@ -70,6 +71,7 @@ class Workshop < ActiveRecord::Base
   def attendee?(person)
     return false if person.nil?
     raise ArgumentError, "Person should be a Member, not a #{person.class}" unless person.is_a? Member
+
     attending_students.map(&:member).include?(person) || attending_coaches.map(&:member).include?(person)
   end
 
@@ -77,6 +79,7 @@ class Workshop < ActiveRecord::Base
   def waitlisted?(person)
     return false if person.nil?
     raise ArgumentError, 'Person should be a Member' unless person.is_a?(Member)
+
     WaitingList.students(self).include?(person) || WaitingList.coaches(self).include?(person)
   end
 
@@ -98,6 +101,7 @@ class Workshop < ActiveRecord::Base
 
   def rsvp_opens_at
     return nil unless super
+
     super.in_time_zone(time_zone)
   end
 
