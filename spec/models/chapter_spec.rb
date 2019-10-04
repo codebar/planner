@@ -1,46 +1,70 @@
 require 'spec_helper'
 
 RSpec.describe Chapter, type: :model do
-  it { should validate_presence_of(:city) }
-  it { should validate_length_of(:description).is_at_most(280) }
-  it { should respond_to(:image) }
+  subject(:chapter) { described_class.new }
 
   context 'validations' do
-    context '#slug' do
-      it 'a chapter must have a slug set' do
-        chapter = Chapter.new(name: 'London', city: 'London', email: 'london@codebar.io')
-        chapter.save
+    it { is_expected.to validate_presence_of(:name) }
+    it { is_expected.to validate_presence_of(:email) }
+    it { is_expected.to validate_presence_of(:city) }
+    it { is_expected.to validate_presence_of(:time_zone) }
 
-        expect(chapter.slug).to eq('london')
-      end
-
-      it 'the slug is parameterized' do
-        chapter = Chapter.new(name: 'New York', city: 'New York', email: 'newyork@codebar.io')
-        chapter.save
-
-        expect(chapter.slug).to eq('new-york')
-      end
+    it do
+      Fabricate(:chapter) 
+      is_expected.to validate_uniqueness_of(:email)
     end
 
-    context '#time_zone' do
-      it 'requires a time zone' do
-        chapter = Fabricate(:chapter)
-        expect(chapter).to be_valid
-        chapter.time_zone = nil
-        expect(chapter).not_to be_valid
+    it { is_expected.to validate_length_of(:description).is_at_most(280) }
+
+    describe '#time_zone' do
+      it 'denys an invalid time zone' do
         chapter.time_zone = 'Fake time'
+
         expect(chapter).not_to be_valid
+
+        expect(chapter.errors[:time_zone]).to include('does not exist')
+      end
+
+      it 'allows a valid time zone' do
+        chapter.time_zone = 'Eastern Time (US & Canada)'
+
+        chapter.valid?
+
+        expect(chapter.errors[:time_zone]).to_not include('does not exist')
       end
     end
   end
 
-  context 'scopes' do
-    context '#active' do
-      it 'only returns active Chapters' do
-        2.times { Fabricate(:chapter) }
-        3.times { Fabricate(:chapter, active: false) }
+  describe '#slug' do
+    it 'is defaulted to the name on save' do
+      chapter = Fabricate.build(:chapter, name: 'London', slug: nil)
 
-        expect(Chapter.active.all.count).to eq(2)
+      chapter.save!
+
+      expect(chapter.reload.slug).to eq('london')
+    end
+
+    it 'can be used as a URL' do
+      chapter = Fabricate.build(:chapter, name: 'New York', slug: nil)
+
+      chapter.save!
+
+      expect(chapter.reload.slug).to eq('new-york')
+    end
+  end
+
+  context 'scopes' do
+    describe '#active' do
+      it 'includes chapters with active flag' do
+        active_chapter = Fabricate(:chapter, active: true)
+
+        expect(Chapter.active).to include(active_chapter)
+      end
+
+      it 'excludes chapters without active flag' do
+        inactive_chapter = Fabricate(:chapter, active: false)
+
+        expect(Chapter.active).not_to include(inactive_chapter)
       end
     end
   end
