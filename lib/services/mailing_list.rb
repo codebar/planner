@@ -7,6 +7,7 @@ class MailingList
 
   def subscribe(email, first_name, last_name)
     return true unless Rails.env.production?
+
     client.lists.subscribe(id: list_id,
                            email: { email: email },
                            merge_vars: { FNAME: first_name, LNAME: last_name },
@@ -16,6 +17,7 @@ class MailingList
 
   def unsubscribe(email)
     return true unless Rails.env.production?
+
     client.lists.unsubscribe(id: list_id,
                              email: { email: email },
                              send_notify:  false)

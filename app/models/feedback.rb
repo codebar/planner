@@ -19,6 +19,7 @@ class Feedback < ActiveRecord::Base
 
   def self.submit_feedback(params, token)
     return false unless feedback_request = FeedbackRequest.find_by(token: token)
+
     feedback = Feedback.new(params)
     feedback.workshop = feedback_request.workshop
 

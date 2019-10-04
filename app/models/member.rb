@@ -74,6 +74,7 @@ class Member < ActiveRecord::Base
   def received_welcome_for?(subscription)
     return received_student_welcome_email if subscription.student?
     return received_coach_welcome_email if subscription.coach?
+
     true
   end
 
