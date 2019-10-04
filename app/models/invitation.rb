@@ -3,7 +3,7 @@ class Invitation < ActiveRecord::Base
 
   validates :event, :member, presence: true
   validates :member_id, uniqueness: { scope: %i[event_id role] }
-  validates_inclusion_of :role, in: ['Student', 'Coach']
+  validates_inclusion_of :role, in: %w[Student Coach]
 
   belongs_to :event
   belongs_to :member

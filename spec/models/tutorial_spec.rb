@@ -21,6 +21,6 @@ describe Tutorial do
     tutorial_1 = Tutorial.create(title: 'title1')
     tutorial_2 = Tutorial.create(title: 'title2')
 
-    expect(Tutorial.all_titles).to match_array(['title1', 'title2'])
+    expect(Tutorial.all_titles).to match_array(%w[title1 title2])
   end
 end

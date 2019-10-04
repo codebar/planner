@@ -84,6 +84,6 @@ class Event < ActiveRecord::Base
   end
 
   def permitted_audience_values
-    ['Students', 'Coaches']
+    %w[Students Coaches]
   end
 end

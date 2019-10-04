@@ -50,7 +50,7 @@ class Admin::ChaptersController < Admin::ApplicationController
     authorize chapter
     type = params[:type]
 
-    if ['students', 'coaches'].include?(type)
+    if %w[students coaches].include?(type)
       @emails = chapter.send(type).map(&:email).join("\n")
     else
       @emails = chapter.members.pluck(:email).uniq.join("\n")
