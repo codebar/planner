@@ -42,7 +42,6 @@ RSpec.describe 'rake feedback:request', type: :task do
       yesterdays_workshops.each do |workshop|
         expect(FeedbackRequest.where(member: student, workshop: workshop, submited: false).exists?).to eq(true)
       end
-
     end
   end
 end

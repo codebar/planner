@@ -9,7 +9,6 @@ describe InvitationManager do
   let(:coaches) { Fabricate.times(6, :member) }
 
   describe '#send_workshop_emails' do
-
     it 'creates an invitation for each student' do
       student_group = Fabricate(:students, chapter: chapter, members: students)
 
