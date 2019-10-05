@@ -2,6 +2,7 @@ require 'spec_helper'
 
 feature 'Member portal' do
   subject { page }
+
   let(:member) { Fabricate(:member) }
 
   context 'A signed in member' do

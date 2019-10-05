@@ -24,12 +24,14 @@ describe Sponsor do
         it { should_not be_valid }
         it { should have(1).error_on(:name) }
       end
+
       describe '#website' do
         before { sponsor.website = nil }
 
         it { should_not be_valid }
         it { should have(2).errors_on(:website) }
       end
+
       describe '#address' do
         before { sponsor.address = nil }
 
@@ -55,6 +57,7 @@ describe Sponsor do
       describe '#website' do
         describe 'nonsense is not valid.' do
           before { sponsor.website = 'lkjdlkfgjj' }
+
           it { should_not be_valid }
           it { should have(1).error_on(:website) }
         end
@@ -68,6 +71,7 @@ describe Sponsor do
 
         describe 'full URLs are valid' do
           before { sponsor.website = 'http://google.com' }
+
           it { should be_valid }
         end
       end
