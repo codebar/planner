@@ -19,6 +19,7 @@
         = f.input :name, placeholder: 'Name', required: false, html: { id: 'name' }
         = f.input :amount, placeholder: '25.00', required: true, id: 'amount'
         = f.submit :Donate, class: 'button', id: 'donate'
+        = render partial: 'recaptcha_tags'
         .message
 
 .stripe.reverse.text-center
