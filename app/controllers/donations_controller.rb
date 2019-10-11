@@ -3,6 +3,9 @@ class DonationsController < ApplicationController
 
   def create
     @amount = params[:amount]
+    recaptcha_valid = verify_recaptcha(action: 'donate', minimum_score: 0.5)
+
+    head :bad_request unless recaptcha_valid
 
     customer = Stripe::Customer.create(
       email: params[:data][:email],
