@@ -7,6 +7,14 @@ module ApplicationHelper
     human_date
   end
 
+  def title(*page_title)
+    if Array(page_title).size.zero?
+      return content_for?(:title) ? content_for(:title) : t(:brand)
+    else
+      return content_for :title, (Array(page_title) << t(:brand)).join(' | ')
+    end
+  end
+
   def dot_markdown(text)
     GitHub::Markdown.render_gfm(text).html_safe
   end
