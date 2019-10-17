@@ -38,6 +38,7 @@ feature 'Managing meetings' do
 
   context 'updating an existing meeting' do
     let(:meeting) { Fabricate(:meeting, name: 'August Meeting') }
+
     scenario 'renders an error when no chapter has been selected' do
       Fabricate(:meeting, name: 'August Meeting')
       visit edit_admin_meeting_path(meeting)
@@ -65,6 +66,7 @@ feature 'Managing meetings' do
 
   context 'retrieving the attendee emails' do
     let(:meeting) { Fabricate(:meeting) }
+
     scenario 'when format: :text' do
       invitations = Fabricate.times(4, :attending_meeting_invitation, meeting: meeting)
       visit attendees_emails_admin_meeting_path(meeting, format: :text)

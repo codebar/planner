@@ -31,6 +31,7 @@ describe JobPresenter do
 
   context '#link_to_job' do
     let(:job) { Fabricate(:pending_job, link_to_job: "<script>test;</script>http://link.test") }
+
     it 'sanitizes the user supplied job link' do
 
       expect(presenter.link_to_job).to eq('test;http://link.test')
@@ -39,6 +40,7 @@ describe JobPresenter do
 
   context '#location_or_remote' do
     let(:job) { Fabricate(:job, remote: false, location: 'London') }
+
     it 'returns the location if the job is not remote' do
 
       expect(presenter.location_or_remote).to eq('London')

@@ -53,15 +53,6 @@ describe Workshop do
     end
   end
 
-  context '#coach_spaces?' do
-    let(:sponsor) { Fabricate(:sponsor) }
-    let(:workshop) { Fabricate(:workshop_no_sponsor) }
-
-    before do
-      Fabricate(:workshop_sponsor, sponsor: sponsor, workshop: workshop, host: true)
-    end
-  end
-
   context '#rsvp_available?' do
     context 'rsvp is available' do
       it 'when the event is in the future' do

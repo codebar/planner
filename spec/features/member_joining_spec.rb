@@ -56,7 +56,6 @@ feature 'A new student signs up' do
     expect(page).to have_link('jane@codebar.io')
   end
 
-
   scenario 'Picking a mailing list on step 2 subscribes you to that list' do
     member = Fabricate(:member)
     group = Fabricate(:group)

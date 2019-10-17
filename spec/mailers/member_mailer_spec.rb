@@ -103,7 +103,6 @@ RSpec.describe MemberMailer, type: :mailer do
       MemberMailer.ban(member, ban).deliver_now
     end
 
-
     it 'actually sends a coach email' do
       member = Fabricate(:coach)
       expect {
