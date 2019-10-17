@@ -19,8 +19,8 @@ class Member < ActiveRecord::Base
 
   validates :auth_services, presence: true
   validates :name, :surname, :email, :about_you, presence: true, if: :can_log_in?
-  validates_uniqueness_of :email
-  validates_length_of :about_you, maximum: 255
+  validates :email, uniqueness: true
+  validates :about_you, length: { maximum: 255 }
 
   scope :subscribers, -> { joins(:subscriptions).order('created_at desc').uniq }
   scope :not_banned, lambda {
