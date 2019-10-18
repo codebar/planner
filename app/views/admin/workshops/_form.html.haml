@@ -4,10 +4,12 @@
       = f.association :chapter, as: :select, collection: Chapter.available_to_user(current_user)
   .row
     .medium-6.columns.admin_margin
-      = f.input :local_date, as: :string, required: true, input_html: { data: { value: @workshop.date_and_time.try(:strftime, '%d/%m/%Y') } }
+      = f.input :local_date, label: "Date", as: :string, required: true, input_html: { data: { value: @workshop.date_and_time.try(:strftime, '%d/%m/%Y') } }
   .row
-    .medium-6.columns
-      = f.input :local_time, as: :string, required: true, input_html: { data: { value: @workshop.time.try(:strftime, '%H:%M') } }
+    .large-3.columns
+      = f.input :local_time, label: "Begins at", as: :string, required: true, input_html: { data: { value: @workshop.time.try(:strftime, '%H:%M') } }
+    .large-3.columns
+      = f.input :ends_at, as: :string, required: true, input_html: { data: { value: @workshop.ends_at.try(:strftime, '%H:%M') } }
   .row
     .medium-6.columns
       = f.input :host, as: :select, required: true, collection: Sponsor.all, include_blank: true, selected: (@workshop.host.id rescue '')

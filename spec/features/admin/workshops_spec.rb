@@ -24,8 +24,8 @@ feature 'Managing workshops' do
       visit new_admin_workshop_path
 
       select chapter.name
-      fill_in 'Local date', with: Date.current
-      fill_in 'Local time', with: '11:30'
+      fill_in 'Date', with: Date.current
+      fill_in 'Begins at', with: '11:30'
 
       click_on 'Save'
 
@@ -33,11 +33,25 @@ feature 'Managing workshops' do
       expect(page).to have_content 'Invite'
     end
 
+    scenario 'with ends_at' do
+      visit new_admin_workshop_path
+
+      select chapter.name
+      fill_in 'Date', with: Date.current
+      fill_in 'Begins at', with: '11:30'
+      fill_in 'Ends at', with: '12:45'
+
+      click_on 'Save'
+
+      expect(page).to have_content('The workshop has been created')
+      expect(page).to have_content '11:30 - 12:45'
+    end
+
     scenario 'renders an error when no chapter has been selected' do
       visit new_admin_workshop_path
 
-      fill_in 'Local date', with: Date.current
-      fill_in 'Local time', with: '11:30'
+      fill_in 'Date', with: Date.current
+      fill_in 'Begins at', with: '11:30'
 
       click_on 'Save'
 
