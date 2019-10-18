@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe FeedbackRequestMailer do
+RSpec.describe FeedbackRequestMailer, type: :mailer  do
   let(:email) { ActionMailer::Base.deliveries.last }
   let(:workshop) { Fabricate(:workshop, title: 'HTML & CSS') }
   let(:member) { Fabricate(:member) }
