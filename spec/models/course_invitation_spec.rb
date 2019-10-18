@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe CourseInvitation do
+RSpec.describe CourseInvitation, type: :model  do
   let(:invitation) { Fabricate(:course_invitation) }
   let!(:accepted_invitation) { 2.times { Fabricate(:course_invitation, attending: true) } }
 

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe FeedbackRequest do
+RSpec.describe FeedbackRequest, type: :model  do
   subject { Fabricate(:feedback_request) }
 
   it { should respond_to(:member) }

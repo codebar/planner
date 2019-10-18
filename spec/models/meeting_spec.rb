@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Meeting do
+RSpec.describe Meeting, type: :model  do
   context 'validations' do
     subject { Meeting.new }
 

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Member do
+RSpec.describe Member, type: :model  do
   context 'mandatory attributes' do
     context 'validations for a logginable member' do
       context 'presence' do

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe InvitationManager do
+RSpec.describe InvitationManager, type: :model  do
   subject(:manager) { InvitationManager.new }
 
   let(:chapter) { Fabricate(:chapter) }

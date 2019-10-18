@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Tutorial do
+RSpec.describe Tutorial, type: :model  do
   subject(:tutorial) { Fabricate.build(:tutorial) }
 
   it { should respond_to(:title) }
