@@ -35,9 +35,9 @@
                 %ul
                   - @workshop.organisers.each do |organiser|
                     - if organiser.mobile.present?
-                    %li
-                      = organiser.full_name
-                      = organiser.mobile
+                      %li
+                        = organiser.full_name
+                        = organiser.mobile
 
         .content
           = render partial: 'shared_mailers/social'
