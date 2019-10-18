@@ -7,6 +7,13 @@ class DonationsController < ApplicationController
 
     head :bad_request unless recaptcha_valid
 
+    create_stripe_customer_and_charge
+    render layout: false
+  end
+
+  private
+
+  def create_stripe_customer_and_charge
     customer = Stripe::Customer.create(
       email: params[:data][:email],
       description: params[:name],
@@ -19,7 +26,6 @@ class DonationsController < ApplicationController
       currency: 'gbp',
       customer: customer.id,
     )
-
-    render layout: false
   end
+
 end
