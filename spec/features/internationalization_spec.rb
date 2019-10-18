@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-feature 'Internationalization' do
+RSpec.feature 'Internationalization', type: :feature do
   context 'a visitor to the website' do
     context 'views the website in English' do
       scenario 'by default' do

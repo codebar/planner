@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-feature 'Managing workshops' do
+RSpec.feature 'Managing workshops', type: :feature do
   let(:member) { Fabricate(:member) }
   let!(:chapter) { Fabricate(:chapter) }
   let!(:sponsor) { Fabricate(:sponsor) }

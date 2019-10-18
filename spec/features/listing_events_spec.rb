@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'events_controller'
 
-feature 'event listing' do
+RSpec.feature 'event listing', type: :feature do
   describe 'I can see the names and titles of events' do
     let!(:upcoming_course) { Fabricate(:course) }
     let!(:upcoming_workshop) { Fabricate(:workshop) }

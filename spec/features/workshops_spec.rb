@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-feature 'Viewing a workshop page' do
+RSpec.feature 'Viewing a workshop page', type: :feature do
   let(:workshop) { Fabricate(:workshop) }
   let(:workshop_auto_rsvp_in_past) { Fabricate(:workshop_auto_rsvp_in_past) }
   let(:workshop_auto_rsvp_in_future) { Fabricate(:workshop_auto_rsvp_in_future) }

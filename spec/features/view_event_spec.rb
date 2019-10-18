@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-feature 'viewing an event' do
+RSpec.feature 'viewing an event', type: :feature do
   let(:closed_event) { Fabricate(:event, confirmation_required: true, surveys_required: true) }
   let(:open_event) { Fabricate(:event, confirmation_required: false, surveys_required: false) }
 

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-feature 'Managing subscriptions' do
+RSpec.feature 'Managing subscriptions', type: :feature do
   let(:member) { Fabricate(:member) }
   let!(:group) { Fabricate(:group) }
 

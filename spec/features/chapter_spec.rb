@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-feature 'viewing a Chapter' do
+RSpec.feature 'viewing a Chapter', type: :feature do
   context 'non active chapters' do
     let(:inactive_chapter) { Fabricate(:chapter, active: false) }
 

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-feature 'Admin Jobs' do
+RSpec.feature 'Admin Jobs', type: :feature do
   let(:member) { Fabricate(:member) }
 
   before do

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-feature 'managing workshop attendances' do
+RSpec.feature 'managing workshop attendances', type: :feature do
   context 'an admin' do
     let(:member) { Fabricate(:member) }
     let(:chapter) { Fabricate(:chapter) }

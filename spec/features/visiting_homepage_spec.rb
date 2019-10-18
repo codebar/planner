@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-feature 'when visiting the homepage' do
+RSpec.feature 'when visiting the homepage', type: :feature do
   let!(:next_workshop) { Fabricate(:workshop) }
   let!(:next_course) { Fabricate(:course) }
   let!(:event) { Fabricate(:event) }

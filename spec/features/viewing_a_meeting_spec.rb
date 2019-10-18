@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-feature 'viewing a meeting' do
+RSpec.feature 'viewing a meeting', type: :feature do
   let!(:meeting) { Fabricate(:meeting) }
 
   scenario "i can view a meeting's information" do

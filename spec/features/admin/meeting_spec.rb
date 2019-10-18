@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-feature 'Managing meetings' do
+RSpec.feature 'Managing meetings', type: :feature do
   let(:member) { Fabricate(:member) }
   let!(:chapter) { Fabricate(:chapter) }
   let!(:venue) { Fabricate(:sponsor) }

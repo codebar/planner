@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-feature 'a member can' do
+RSpec.feature 'a member can', type: :feature do
   context '#workshop' do
     let(:member) { Fabricate(:member) }
     let(:invitation) { Fabricate(:workshop_invitation, member: member) }
