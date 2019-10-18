@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe ChapterPresenter do
+RSpec.describe ChapterPresenter do
   let(:chapter) { Fabricate(:chapter_without_organisers) }
   let(:presenter) { ChapterPresenter.new(chapter) }
 

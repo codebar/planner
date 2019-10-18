@@ -1,4 +1,4 @@
-shared_examples InvitationConcerns do
+RSpec.shared_examples InvitationConcerns do
   it 'has a token set on creation' do
     expect(invitation.token).to_not be(nil)
   end

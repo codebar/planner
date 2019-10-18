@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'verifier'
 
-describe Verifier do
+RSpec.describe Verifier do
   before do
     Planner::Application.config.secret_token = '123'
   end

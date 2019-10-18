@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe EventPresenter do
+RSpec.describe EventPresenter do
   let(:workshop) { Fabricate(:workshop) }
   let(:event) { EventPresenter.new(workshop) }
 

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe MembersController, type: :controller do
+RSpec.describe MembersController, type: :controller do
   describe "GET unsubscribe/#token" do
     it "redirects to the subscription path when token is valid" do
       member = Fabricate(:member)

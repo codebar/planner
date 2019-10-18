@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe JobsPresenter do
+RSpec.describe JobsPresenter do
   let(:presenter) { JobsPresenter.new(jobs) }
   let(:jobs) { Fabricate.times(4, :job) }
 

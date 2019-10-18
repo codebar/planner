@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe JobPresenter do
+RSpec.describe JobPresenter do
   let(:presenter) { JobPresenter.new(job) }
 
   context '#published_on' do
