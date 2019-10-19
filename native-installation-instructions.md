@@ -12,6 +12,7 @@ These are the original instructions for natively installing the app to your mach
     - Generate sample data
 4. [Run the app](#run-the-app)
 5. [Run the tests](#run-the-tests)
+6. (Optional) Note that to be able to use the page as an admin, you must first give yourself admin privileges. Make sure you have started your app and signed up as an user on your locally running app. Then run this on command line: `rails runner "Member.find_by(email: '<your email>').add_role(:admin)"`.
 
 ## Set up a Ruby Environment
 
