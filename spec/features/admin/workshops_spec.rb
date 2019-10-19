@@ -119,4 +119,13 @@ feature 'Managing workshops' do
 
     expect(page.current_path).to eq(admin_workshop_path(workshop))
   end
+
+  scenario 'cancelling a workshop' do
+    workshop = Fabricate(:workshop)
+    visit edit_admin_workshop_path(workshop)
+    page.check('workshop_cancelled')
+    click_on 'Save'
+
+    expect(page).to have_content('This event has been cancelled')
+   end   
 end

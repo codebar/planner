@@ -38,6 +38,10 @@
             %small=@workshop.chapter.name
         %h3
           %small #{l(@workshop.date_and_time)}#{@workshop.ends_at.present? ? " - " + @workshop.ends_at.strftime('%H:%M') : "" }
+        - if @workshop.cancelled?
+          %label.label.warning This event has been cancelled
+          %br
+          %br
         - if @workshop.rsvp_opens_at
           RSVPs will open at
           = @workshop.rsvp_opens_at.strftime('%H:%M on %d/%m/%Y.')

@@ -99,7 +99,7 @@ class Admin::WorkshopsController < Admin::ApplicationController
 
   def workshop_params
     params.require(:workshop).permit(:local_date, :local_time, :chapter_id,
-                                     :invitable, :seats, :rsvp_open_local_date,
+                                     :invitable, :cancelled, :seats, :rsvp_open_local_date,
                                      :rsvp_open_local_time, :ends_at, sponsor_ids: [])
   end
 

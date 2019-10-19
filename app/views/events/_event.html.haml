@@ -7,6 +7,10 @@
           at
           = link_to event.venue.name, event.venue.website
     .event__details
+      - if defined?(event.cancelled) && event.cancelled?
+        %label.label.warning Cancelled
+        %br
+        %br
       .time
         %i.material-icons
           access_time

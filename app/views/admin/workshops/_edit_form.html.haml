@@ -28,6 +28,7 @@
       %label Organisers
       = f.collection_select :organisers, Member.all, :id, :full_name, { selected: @workshop.organisers.map(&:id) }, { multiple: true }
       = f.input :invitable
+      = f.input :cancelled
   .row
     .large-12.columns.text-right
       = f.submit 'Save', class: 'button'

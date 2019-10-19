@@ -12,7 +12,9 @@
             access_time
           = @workshop.time
           = @workshop.ends_at.present? ? "- " +  l(@workshop.ends_at, format: :time) : ""
-      - if @workshop.date_and_time.past?
+      - if @workshop.cancelled?
+        %label.label.warning This event has been cancelled
+      - if @workshop.date_and_time.past? && !@workshop.cancelled?
         %label.label.warning This event has already taken place.
   %section#banner
     .row
