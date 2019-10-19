@@ -77,13 +77,26 @@ class WorkshopPresenter < EventPresenter
   end
 
   def attendee_array
-    model.attendances.map do |i|
-      if organisers.include?(i.member)
-        [i.member.full_name, 'ORGANISER']
-      else
-        [i.member.full_name, i.role.upcase]
-      end
-    end.concat(attending_organisers).uniq
+    model.attending_coaches.map do |i|
+        [i.member.full_name, i.role.upcase, member_newbie(i.member), member_skills(i.member)]
+    end.concat(
+    model.attending_students.map do |i|
+        [i.member.full_name, i.role.upcase, member_newbie(i.member), member_learning_goals(i)]
+    end.concat(attending_organisers)).uniq
+  end
+
+  def member_newbie(member)
+    "#{MemberPresenter.new(member).newbie? ? "Newbie" : "Not newbie"}"
+  end
+
+  def member_skills(member)
+    "#{MemberPresenter.new(member).skills.any? ? MemberPresenter.new(member).skills.map do |i| 
+      i.name
+    end : ""}"
+  end
+
+  def member_learning_goals(invitation)
+    "#{note(invitation)}"
   end
 
   def member_info(member, pos)
