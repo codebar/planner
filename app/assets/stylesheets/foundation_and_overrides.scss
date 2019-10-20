@@ -1390,6 +1390,31 @@ body.dashboard-faq dl dt {
   border-bottom: none;
 }
 
+a:focus {
+  outline: 5px auto $codebar-blue;
+  color: darken($codebar-blue, 30%);
+}
+
+a.button:focus {
+  background: darken($codebar-blue, 50%);
+  border-color: darken($codebar-blue, 50%);
+  color: $white;
+  outline: none;
+}
+
+.top-bar-section li:not(.has-form) a:not(.button):focus,
+.title > a:focus {
+  background: darken($codebar-blue, 50%);
+  color: $white;
+  outline: none;
+}
+
+.main-footer a:focus {
+  background: $white;
+  color: $black;
+  outline: none;
+}
+
 .warning, .icon-bar .warning {
   color: $warning-color;
 }
