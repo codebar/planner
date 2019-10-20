@@ -18,7 +18,9 @@
     .row
       .medium-12.columns
         %p.lead
-          Attend our workshops to learn programming in a safe and supportive environment at your own pace, or to share your knowledge and coach our students.
+          = t("workshops.lead")
+        %p.description
+          = sanitize(@workshop.description)
 
         - unless current_user and current_user.banned?
           = render 'workshop_actions'

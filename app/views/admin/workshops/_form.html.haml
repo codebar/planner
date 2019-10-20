@@ -19,6 +19,16 @@
   %br
   .row
     .large-6.columns
+      %h6 Default description text:
+      %p
+        %small= t("workshops.lead")
+  .row
+    .large-6.columns
+      = f.input :description, as: :text, label: 'Additional description (supports HTML)',
+      placeholder: 'Use this space to write a description of the workshop.'
+  %br
+  .row
+    .large-6.columns
       .panel.callout
         %p Fill out these fields if you want RSVPs to open automatically at a future time. Leave blank if you'll handle it manually later.
         = f.input :rsvp_open_local_date, as: :string, input_html: { data: { value: @workshop.rsvp_opens_at.try(:strftime, '%d/%m/%Y') } }

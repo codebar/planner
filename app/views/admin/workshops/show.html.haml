@@ -47,6 +47,9 @@
           %strong.label.round.primary #{@workshop.venue.seats} student spots, #{@workshop.venue.coach_spots} coach spots
           - unless @workshop.spaces?
             %label.label.round.warning Full
+          %p.description
+            %br
+            = sanitize(@workshop.description)
     %br
     .row
       .large-3.small-6.columns#host
