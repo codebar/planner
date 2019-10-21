@@ -34,7 +34,7 @@ class Admin::EventsController < Admin::ApplicationController
   def update
     set_organisers(organiser_ids)
 
-    if @event.update_attributes(event_params)
+    if @event.update(event_params)
       redirect_to [:admin, @event], notice: 'You have just updated the event'
     else
       render 'edit', notice: 'Error'

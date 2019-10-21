@@ -14,7 +14,7 @@ class MembersController < ApplicationController
     @suppress_notices = true
     @member = current_user
     if request.post? || request.put?
-      if @member.update_attributes(member_params)
+      if @member.update(member_params)
         return redirect_to step2_member_path
       end
     end
@@ -37,7 +37,7 @@ class MembersController < ApplicationController
   def update
     @member = current_user
 
-    if @member.update_attributes(member_params)
+    if @member.update(member_params)
       notice = 'Your details have been updated.'
       return redirect_to profile_path, notice: notice
     else

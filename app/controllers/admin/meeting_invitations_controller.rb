@@ -5,7 +5,7 @@ class Admin::MeetingInvitationsController < Admin::ApplicationController
     status = params.permit(:attendance_status)[:attendance_status]
     attended = params.permit(:attended)[:attended]
 
-    @invitation.update_attributes(attending: status, attended: attended)
+    @invitation.update(attending: status, attended: attended)
 
     return redirect_to [:admin, @invitation.meeting],
                        notice: t('admin.messages.invitation.update_rsvp', name: @invitation.member.full_name)

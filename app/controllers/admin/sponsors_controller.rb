@@ -36,7 +36,7 @@ class Admin::SponsorsController < Admin::ApplicationController
   end
 
   def update
-    @sponsor.update_attributes(sponsor_params)
+    @sponsor.update(sponsor_params)
     redirect_to admin_sponsor_path(@sponsor), notice: 'Updated!'
   end
 

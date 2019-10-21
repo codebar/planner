@@ -50,7 +50,7 @@ class Admin::WorkshopsController < Admin::ApplicationController
     @workshop = Workshop.find(params[:id])
     authorize @workshop
 
-    @workshop.update_attributes(workshop_params)
+    @workshop.update(workshop_params)
 
     set_organisers(organiser_ids)
     set_host(host_id)
