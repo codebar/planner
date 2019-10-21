@@ -4,16 +4,6 @@ describe Job, type: :model do
   context '#fields' do
     subject(:job) { Fabricate.build(:job) }
 
-    it { should respond_to(:title) }
-    it { should respond_to(:description) }
-    it { should respond_to(:location) }
-    it { should respond_to(:expiry_date) }
-    it { should respond_to(:email) }
-    it { should respond_to(:link_to_job) }
-    it { should respond_to(:expiry_date) }
-    it { should respond_to(:created_by) }
-    it { should respond_to(:approved) }
-    it { should respond_to(:submitted) }
     it { should define_enum_for(:status).with_values(draft: 0, pending: 1, published: 2) }
   end
 
