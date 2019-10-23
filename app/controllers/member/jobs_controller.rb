@@ -32,7 +32,7 @@ class Member::JobsController < ApplicationController
   end
 
   def submit
-    @job.update_attributes(submitted: true)
+    @job.update(submitted: true)
     @job.pending!
 
     flash[:notice] = I18n.t('job.messages.submitted')
@@ -40,7 +40,7 @@ class Member::JobsController < ApplicationController
   end
 
   def update
-    if @job.update_attributes(job_params)
+    if @job.update(job_params)
       redirect_to member_job_path(@job.id), notice: I18n.t('job.messages.updated')
     else
       flash['notice'] = @job.errors.full_messages.join('<br>')
