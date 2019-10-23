@@ -2,11 +2,13 @@
 %html{ lang: 'en' }
   %head
     = render partial: 'layouts/meta'
+    = content_for :meta_tags
+
     %link{ rel: 'image_src', href: 'http://codebar.io/images/logo-square.png', :alt => "codebar logo" }
 
     %title codebar.io
     = favicon_link_tag 'favicon.ico'
-    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': true
+    = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': true
     = javascript_include_tag 'vendor/modernizr'
     = javascript_include_tag 'application', 'data-turbolinks-track': true
     %link{ href: 'https://fonts.googleapis.com/css?family=Open+Sans:400,300', rel:'stylesheet', type:'text/css' }

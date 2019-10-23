@@ -51,7 +51,7 @@ class EventsController < ApplicationController
     invitation = member.invitations.where(event: @event, role: 'Student').try(:first)
     invitation ||= Invitation.create(event: @event, member: member, role: 'Student')
 
-    invitation.update_attributes attending: true
+    invitation.update(attending: true)
     head :ok
   end
 

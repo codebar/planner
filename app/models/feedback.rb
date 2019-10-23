@@ -24,7 +24,7 @@ class Feedback < ActiveRecord::Base
     feedback.workshop = feedback_request.workshop
 
     if feedback.valid? && !feedback_request.submited
-      feedback_request.update_attributes(submited: true)
+      feedback_request.update(submited: true)
       feedback.save
     else
       false
