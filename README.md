@@ -59,6 +59,8 @@ from a command prompt in your project folder:
     echo GITHUB_SECRET=YOUR_SECRET >> .env
 ```
 
+**Note:** If when starting the application with Docker you get the error `UnicodeDecodeError: 'utf-8' codec can't decode byte 0xff in position 0: invalid start byte` this may be because you created the `.env`-file using PowerShell. This can be solved by deleting that file and creating a new one using a bash shell (for example Git Bash).
+
 ### 3. Install and set up the environment
 
 We recommend using Docker to install and run the application. However alternatively if you prefer, [you can install directly to your system environment instead](https://github.com/codebar/planner/blob/master/native-installation-instructions.md).
@@ -71,6 +73,8 @@ The current Dockerfile and docker-compose were closely copied from [the Docker g
 
 1. Run `bin/dbuild` to build and setup the docker environment.
 2. Run `bin/drake` to run all the tests and make sure everything works.
+
+**Note:** If you are using Windows, you can run `bin/dbuild` using Git Bash.
 
 ### 4. Run the tests
 
