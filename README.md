@@ -118,6 +118,8 @@ This should run a process which starts a server in a Docker container on your co
 Rails 4.2.11 application starting in development on http://0.0.0.0:3000
 ```
 
+(Optional) Note that to be able to use the page as an admin, you must first give yourself admin privileges. Make sure you have started your app and signed up as an user on your locally running app. Then run a script `bin/dadmin <your email>`.
+
 **You can now view the app at http://localhost:3000**
 
 You can stop the server when you're finished by typing `Ctrl + C`.
