@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181021014646) do
+ActiveRecord::Schema.define(version: 20191018175052) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -559,6 +559,7 @@ ActiveRecord::Schema.define(version: 20181021014646) do
     t.integer  "chapter_id"
     t.datetime "rsvp_closes_at"
     t.datetime "rsvp_opens_at"
+    t.datetime "ends_at"
   end
 
   add_index "workshops", ["chapter_id"], name: "index_workshops_on_chapter_id", using: :btree

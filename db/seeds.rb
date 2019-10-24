@@ -9,9 +9,12 @@ if Rails.env.development?
 
     Rails.logger.info "Creatings workshops..."
     workshops = 6.times.map do |n|
+      start = Time.zone.now + 1.months - n.weeks
+      ends_at = start + 3.hours
       Fabricate(:workshop, title: 'Workshop',
                 chapter: chapters.sample,
-                date_and_time: Time.zone.now + 1.months - n.weeks)
+                date_and_time: start,
+                ends_at: ends_at)
     end
 
     workshops.concat Fabricate.times(2, :workshop, title: 'Workshop', chapter: chapters.sample)
