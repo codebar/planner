@@ -14,7 +14,7 @@ class WorkshopInvitation < ActiveRecord::Base
   scope :to_students, -> { where(role: 'Student') }
   scope :to_coaches, -> { where(role: 'Coach') }
   scope :order_by_latest, -> { joins(:workshop).order('workshops.date_and_time desc') }
-  scope :last_six_months, -> { joins(:workshop).where(workshops: { date_and_time: 6.months.ago...Time.zone.now}) }
+  scope :last_six_months, -> { joins(:workshop).where(workshops: { date_and_time: 6.months.ago...Time.zone.now }) }
   scope :not_reminded, -> { where(reminded_at: nil) }
   scope :on_waiting_list, -> { joins(:waiting_list) }
 
