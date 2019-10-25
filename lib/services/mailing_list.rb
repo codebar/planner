@@ -20,7 +20,7 @@ class MailingList
 
     client.lists.unsubscribe(id: list_id,
                              email: { email: email },
-                             send_notify:  false)
+                             send_notify: false)
   end
 
   private

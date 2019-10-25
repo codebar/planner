@@ -58,7 +58,7 @@ describe Admin::WorkshopsController, type: :controller do
         it 'should successfully delete the workshop' do
           expect {
             delete :destroy, id: workshop.id
-          }.to change{ Workshop.count }.by -1
+          }.to change { Workshop.count }.by -1
         end
 
         it 'should display workshop deleted successfully related flash message' do
