@@ -11,9 +11,7 @@ class WorkshopInvitationMailer < ActionMailer::Base
 
     subject = "Workshop Invitation #{humanize_date(@workshop.date_and_time, with_time: true)}"
 
-    mail(mail_args(member, subject, 'no-reply@codebar.io')) do |format|
-      format.html
-    end
+    mail(mail_args(member, subject, 'no-reply@codebar.io'), &:html)
   end
 
   def invite_coach(workshops, member, invitation)
@@ -23,9 +21,7 @@ class WorkshopInvitationMailer < ActionMailer::Base
 
     subject = "Workshop Coach Invitation #{humanize_date(@workshop.date_and_time, with_time: true)}"
 
-    mail(mail_args(member, subject, 'no-reply@codebar.io')) do |format|
-      format.html
-    end
+    mail(mail_args(member, subject, 'no-reply@codebar.io'), &:html)
   end
 
   def attending(workshops, member, invitation, waiting_list = false)
@@ -40,9 +36,7 @@ class WorkshopInvitationMailer < ActionMailer::Base
     attachments['codebar.ics'] = { mime_type: 'text/calendar',
                                    content: WorkshopCalendar.new(workshops).calendar.to_ical }
 
-    mail(mail_args(member, subject, @workshop.chapter.email)) do |format|
-      format.html
-    end
+    mail(mail_args(member, subject, @workshop.chapter.email), &:html)
   end
 
   def change_of_details(workshops, sponsor, member, invitation, title = 'Change of details')
@@ -54,9 +48,7 @@ class WorkshopInvitationMailer < ActionMailer::Base
 
     subject = "#{title}: #{@workshop.title} by codebar - #{humanize_date(@workshop.date_and_time, with_time: true)}"
 
-    mail(mail_args(member, subject, @workshop.chapter.email)) do |format|
-      format.html
-    end
+    mail(mail_args(member, subject, @workshop.chapter.email), &:html)
   end
 
   def attending_reminder(workshop, member, invitation)
@@ -66,9 +58,7 @@ class WorkshopInvitationMailer < ActionMailer::Base
     @invitation = invitation
 
     subject = "Workshop Reminder #{humanize_date(@workshop.date_and_time, with_time: true)}"
-    mail(mail_args(member, subject, @workshop.chapter.email)) do |format|
-      format.html
-    end
+    mail(mail_args(member, subject, @workshop.chapter.email), &:html)
   end
 
   def waiting_list_reminder(workshop, member, invitation)
@@ -78,9 +68,7 @@ class WorkshopInvitationMailer < ActionMailer::Base
     @invitation = invitation
 
     subject = "Reminder: you're on the codebar waiting list (#{humanize_date(@workshop.date_and_time, with_time: true)})"
-    mail(mail_args(member, subject, @workshop.chapter.email)) do |format|
-      format.html
-    end
+    mail(mail_args(member, subject, @workshop.chapter.email), &:html)
   end
 
   def notify_waiting_list(invitation)
@@ -91,9 +79,7 @@ class WorkshopInvitationMailer < ActionMailer::Base
 
     subject = 'A spot just became available'
 
-    mail(mail_args(@member, subject, @workshop.chapter.email)) do |format|
-      format.html
-    end
+    mail(mail_args(@member, subject, @workshop.chapter.email), &:html)
   end
 
   private
