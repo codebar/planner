@@ -10,6 +10,7 @@ class JobMailer < ActionMailer::Base
   end
 
   private
+
   def mail_args(member, subject)
     { from: 'codebar.io <notifications@codebar.io>',
       to: member.email,
