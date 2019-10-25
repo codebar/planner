@@ -113,7 +113,7 @@ feature 'Managing meetings' do
 
       expect {
         visit invite_admin_meeting_path(meeting)
-      }.to change{ ActionMailer::Base.deliveries.count }.by (chapter.members.count - 4)
+      }.to change { ActionMailer::Base.deliveries.count }.by (chapter.members.count - 4)
     end
   end
 end

@@ -117,7 +117,7 @@ class Member < ActiveRecord::Base
   end
 
   def already_attending(event)
-    invitations.where(attending: true).map{ |e| e.event.id }.include?(event.id)
+    invitations.where(attending: true).map { |e| e.event.id }.include?(event.id)
   end
 
   def is_organiser?
