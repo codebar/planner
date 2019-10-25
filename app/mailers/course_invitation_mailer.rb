@@ -10,9 +10,7 @@ class CourseInvitationMailer < ActionMailer::Base
 
     subject = "Course :: #{@course.title} by codebar - #{l(@course.date_and_time, format: :email_title)}"
 
-    mail(mail_args(member, subject)) do |format|
-      format.html
-    end
+    mail(mail_args(member, subject), &:html)
   end
 
   private
