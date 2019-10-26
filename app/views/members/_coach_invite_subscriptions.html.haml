@@ -9,14 +9,8 @@
     .group-container{class: collapsed ? "collapsed" : ""}
       %p.lead #{link_to("Read our effective teacher guide", "http://codebar.io/effective-teacher-guide")}
       - groups.each do |group|
-        - if belongs_to_group?(group)
-          = simple_form_for :subscription, url: :destroy_subscriptions, method: :delete do |f|
-            = f.input :subscription_id, as: :hidden, input_html: { value: nil }
-            = f.input :group_id, as: :hidden, input_html: { value: group.id }
-            = button_tag type: :submit, class: 'button expand success round' do
-              %i.fa.fa-check.fa-lg
-              =group.chapter.name
-        - else
-          = simple_form_for :subscription, url: :subscriptions do |f|
-            = f.input :group_id, as: :hidden, input_html: { value: group.id }
-            = f.submit group.chapter.name, class: 'button expand warn round'
+        %div{id: "group_#{group.id}"}
+          - if belongs_to_group?(group)
+            = render partial: 'invite_belong_to_group', locals: {group: group}
+          - else
+            = render partial: 'invite_doesnt_belong_to_group', locals: {group: group}
