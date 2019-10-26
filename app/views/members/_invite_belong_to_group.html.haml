@@ -1,4 +1,4 @@
-= simple_form_for :subscription, url: :destroy_subscriptions, method: :delete do |f|
+= simple_form_for :subscription, url: :destroy_subscriptions, method: :delete, remote: true do |f|
   = f.input :subscription_id, as: :hidden, input_html: { value: nil }
   = f.input :group_id, as: :hidden, input_html: { value: group.id }
   = button_tag type: :submit, class: 'button expand success round' do

@@ -8,23 +8,35 @@ class SubscriptionsController < ApplicationController
   def create
     @subscription = Subscription.new(group_id: group_id, member: current_user)
 
-    if @subscription.save
-      unless current_user.received_welcome_for?(@subscription)
-        MemberMailer.welcome_for_subscription(@subscription).deliver_now
+    respond_to do |format|
+      if @subscription.save
+        unless current_user.received_welcome_for?(@subscription)
+          MemberMailer.welcome_for_subscription(@subscription).deliver_now
+        end
+        format.html do
+          flash[:notice] = "You have subscribed to #{@subscription.group.chapter.city}'s #{@subscription.group.name} group"
+          redirect_to :back
+        end
+        format.js { render 'create_success' }
+      else
+        flash[:notice] = @subscription.errors.full_messages.join('<br/>')
+        format.html { redirect_to :back }
+        format.js { render 'create_error' }
       end
-      flash[:notice] = "You have subscribed to #{@subscription.group.chapter.city}'s #{@subscription.group.name} group"
-    else
-      flash[:notice] = @subscription.errors.inspect
     end
-    redirect_to :back
   end
 
   def destroy
     @subscription = current_user.subscriptions.find_by(group_id: group_id)
     @subscription.destroy
-    flash[:notice] = "You have unsubscribed from #{@subscription.group.chapter.city}'s #{@subscription.group.name} group"
 
-    redirect_to :back
+    respond_to do |format|
+      format.html do
+        flash[:notice] = "You have unsubscribed from #{@subscription.group.chapter.city}'s #{@subscription.group.name} group"
+        redirect_to :back
+      end
+      format.js
+    end
   end
 
   private

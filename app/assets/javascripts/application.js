@@ -65,4 +65,9 @@ $(function(){
   };
   toggleMenuLinkTabindex();
   $(document).on('click', toggleMenuLinkTabindex);
+
+  $("body").on('ajax:before ajaxStart page:fetch',"form.simple_form.subscription", function(e) {
+    $(e.target).children("button").children('i.fa').remove();
+    $(e.target).children("button").prepend('<i class="fa fa-spinner fa-spin fa-lg"></i> ');
+  });
 });

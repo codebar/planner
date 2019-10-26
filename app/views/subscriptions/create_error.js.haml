@@ -1,0 +1,6 @@
+:plain
+  var newForm = $("#{escape_javascript(render(partial: "layouts/messages", locals: {flash: flash } ))}");
+  $("#group_#{@subscription.group_id}").find(".fa").remove()
+  $("#group_#{@subscription.group_id}").find("button").prepend('<i class="fa fa-plus fa-lg"></i>')
+  $("#top").prepend(newForm);
+  $(document).foundation('alert', 'reflow');

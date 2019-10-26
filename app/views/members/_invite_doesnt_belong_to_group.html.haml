@@ -1,4 +1,4 @@
-= simple_form_for :subscription, url: :subscriptions do |f|
+= simple_form_for :subscription, url: :subscriptions, remote: true do |f|
   = f.input :group_id, as: :hidden, input_html: { value: group.id }
   = button_tag type: :submit, class: 'button expand warn round' do
     %i.fa.fa-plus.fa-lg
