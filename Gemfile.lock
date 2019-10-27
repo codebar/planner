@@ -314,6 +314,8 @@ GEM
       rspec-mocks (~> 3.9.0)
       rspec-support (~> 3.9.0)
     rspec-support (3.9.0)
+    rspec_junit_formatter (0.4.1)
+      rspec-core (>= 2, < 4, != 2.12.0)
     rubocop (0.75.1)
       jaro_winkler (~> 1.5.1)
       parallel (~> 1.10)
@@ -434,6 +436,7 @@ DEPENDENCIES
   rspec-collection_matchers
   rspec-its
   rspec-rails
+  rspec_junit_formatter
   rubocop (~> 0.75.1)
   sass-rails (~> 5.0.1)
   selenium-webdriver
@@ -450,4 +453,4 @@ RUBY VERSION
    ruby 2.4.2p198
 
 BUNDLED WITH
-   1.17.1
+   1.17.3
