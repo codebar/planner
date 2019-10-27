@@ -21,4 +21,18 @@ RSpec.describe ApplicationHelper, type: :helper do
       expect(helper.number_to_currency(20100)).to eq('£20,100')
     end
   end
+
+  describe '#title and #get_title' do
+    it 'sets page title with the given title name' do
+      helper.title("Homapage")
+
+      expect(helper.retrieve_title).to eq('Homapage | codebar.io')
+    end
+
+    it 'sets page title to codebar.io if no title is set' do
+      helper.title
+
+      expect(helper.retrieve_title).to eq('codebar.io')
+    end
+  end
 end
