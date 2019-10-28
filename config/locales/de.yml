@@ -123,6 +123,8 @@ de:
       paper: "Benutze Stift und Papier oder ein Whiteboard! Viele der Lernenden haben keine Vorgeschichte mit der Informatik. Zeichnungen und visuelle Hilfen können sehr nützlich sein."
       stubling: "Lasse zu, dass die Lernenden auch mal stolpern. Wir lernen aus Fehlern, indem wir unseren eigenen Weg von der Frustration zur Lösung des Problems finden. Stehe den Lernenden unterstützend zur Seite, aber lass sie selbständig erkunden."
       suggestions: "Hast du noch Vorschläge? Eröffne einen <a href='https://github.com/codebar/planner'>pull request</a> oder <a href='https://github.com/codebar/planner/issues/new'>erstelle eine issue</a>\""
+  workshops:
+    lead: "Attend our workshops to learn programming in a safe and supportive environment at your own pace, or to share your knowledge and coach our students."
   events:
     title: "Veranstaltungen"
     past: "Vergangene"
