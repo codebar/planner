@@ -65,13 +65,13 @@ if Rails.env.development?
       'Full-stack Developer'
     ]
 
-    job_companies = [
-      'ACME',
-      'Globex',
-      'Soylent',
-      'Initech',
-      'Umbrella',
-      'Wonka'
+    job_companies = %w[
+      ACME
+      Globex
+      Soylent
+      Initech
+      Umbrella
+      Wonka
     ]
 
     Rails.logger.info "Creating jobs..."
