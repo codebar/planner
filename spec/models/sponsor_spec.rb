@@ -42,8 +42,8 @@ describe Sponsor do
       describe '#avatar' do
         subject(:sponsor) { Fabricate.build(:sponsor, avatar: nil) }
 
-        it{ should_not be_valid }
-        it{ should have(1).error_on(:avatar) }
+        it { should_not be_valid }
+        it { should have(1).error_on(:avatar) }
       end
 
       describe '#seats' do

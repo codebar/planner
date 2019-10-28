@@ -102,6 +102,6 @@ class Admin::MeetingsController < Admin::ApplicationController
 
   def set_chapters(chapter_ids)
     chapter_ids.reject!(&:empty?)
-    @meeting.chapters = chapter_ids.map{ |id| Chapter.find(id) }
+    @meeting.chapters = chapter_ids.map { |id| Chapter.find(id) }
   end
 end

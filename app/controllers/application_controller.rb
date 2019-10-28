@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
   end
 
   rescue_from ActionController::RoutingError, with: :render_not_found
-  rescue_from ActiveRecord::RecordNotFound , with: :render_not_found
+  rescue_from ActiveRecord::RecordNotFound, with: :render_not_found
 
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
   rescue_from Pundit::AuthorizationNotPerformedError, with: :user_not_authorized
