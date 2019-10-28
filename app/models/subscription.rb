@@ -5,7 +5,7 @@ class Subscription < ActiveRecord::Base
   belongs_to :member
   has_one :chapter, through: :group
 
-  validates_uniqueness_of :group, scope: :member_id
+  validates :group, uniqueness: { scope: :member_id }
   scope :ordered, -> { order(created_at: :desc) }
 
   after_create :subscribe_to_mailing_list
