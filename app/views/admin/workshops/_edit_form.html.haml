@@ -13,9 +13,19 @@
   .row
     .large-6.columns
       = f.input :host, as: :select, collection: Sponsor.all, include_blank: true, selected: (@workshop.host.id rescue '')
+  %br
   .row
     .large-6.columns
       = f.association :sponsors
+  %br
+  .row
+    .large-6.columns
+      %h6 Default description text:
+      %small= t("workshops.lead")
+  .row
+    .large-6.columns
+      = f.input :description, as: :text, label: 'Additional description (supports HTML)',
+      placeholder: 'Use this space to write a description of the workshop.'
   %br
   .row
     .large-6.columns
