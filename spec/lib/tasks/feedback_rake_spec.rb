@@ -23,12 +23,12 @@ RSpec.describe 'rake feedback:request', type: :task do
     end
 
     it 'only generates a FeedbackRequest for workshops that took place in the last 24 hours' do
-      past_workshops = [ Fabricate(:workshop, date_and_time: 3.days.ago),
-                         Fabricate(:workshop, date_and_time: 24.hours.ago)]
+      past_workshops = [Fabricate(:workshop, date_and_time: 3.days.ago),
+                        Fabricate(:workshop, date_and_time: 24.hours.ago)]
 
-      yesterdays_workshops = [ Fabricate(:workshop, date_and_time: 1.hours.ago),
-                               Fabricate(:workshop, date_and_time: 20.hours.ago),
-                               Fabricate(:workshop, date_and_time: (23.hours + 59.minutes).ago)]
+      yesterdays_workshops = [Fabricate(:workshop, date_and_time: 1.hours.ago),
+                              Fabricate(:workshop, date_and_time: 20.hours.ago),
+                              Fabricate(:workshop, date_and_time: (23.hours + 59.minutes).ago)]
 
       past_workshops.each { |w| Fabricate(:attending_workshop_invitation, member: student, workshop: w) }
       yesterdays_workshops.each { |w| Fabricate(:attending_workshop_invitation, member: student, workshop: w) }

@@ -3,7 +3,7 @@ if Rails.env.development?
     Rails.logger.info 'Running migrations...'
     Planner::Application.config.log_level = :info
     Rails.logger.info "Creating chapters..."
-    chapters = [ 'London', 'Brighton', 'Cambridge', 'Barcelona', 'Paris', 'Merlbourne', 'Berlin', 'New York'].map do |name|
+    chapters = ['London', 'Brighton', 'Cambridge', 'Barcelona', 'Paris', 'Merlbourne', 'Berlin', 'New York'].map do |name|
       Fabricate(:chapter_with_groups, name: name)
     end
 
@@ -12,9 +12,9 @@ if Rails.env.development?
       start = Time.zone.now + 1.months - n.weeks
       ends_at = start + 3.hours
       Fabricate(:workshop, title: 'Workshop',
-                chapter: chapters.sample,
-                date_and_time: start,
-                ends_at: ends_at)
+                           chapter: chapters.sample,
+                           date_and_time: start,
+                           ends_at: ends_at)
     end
 
     workshops.concat Fabricate.times(2, :workshop, title: 'Workshop', chapter: chapters.sample)
@@ -22,10 +22,9 @@ if Rails.env.development?
     Rails.logger.info "Creating a lot of old workshops..."
     past_workshops = 100.times.map do |n|
       Fabricate(:workshop, title: 'Workshop',
-                chapter: chapters.sample,
-                date_and_time:  Time.zone.now - 9.year + n.months)
+                           chapter: chapters.sample,
+                           date_and_time: Time.zone.now - 9.year + n.months)
     end
-
 
     Rails.logger.info "Creating events..."
     events = 20.times.map do |n|
@@ -38,10 +37,9 @@ if Rails.env.development?
 
     20.times do |n|
       Fabricate(:course, chapter: chapters.sample,
-                          title: 'Course',
-                          date_and_time: Time.zone.now + 1.months - n.months)
+                         title: 'Course',
+                         date_and_time: Time.zone.now + 1.months - n.months)
     end
-
 
     Rails.logger.info "Creating meetings..."
 

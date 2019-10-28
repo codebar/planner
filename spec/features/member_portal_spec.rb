@@ -62,7 +62,7 @@ feature 'Member portal' do
     end
 
     it 'can subscribe to groups' do
-      group = Fabricate(:group) 
+      group = Fabricate(:group)
       visit profile_path
       within '#member_profile' do
         click_on 'Manage subscriptions'
@@ -73,7 +73,7 @@ feature 'Member portal' do
     end
 
     it 'can view the invitations they RSVPed to' do
-      invitations = 5.times.map { Fabricate(:attending_workshop_invitation, member: member) } 
+      invitations = 5.times.map { Fabricate(:attending_workshop_invitation, member: member) }
       visit invitations_path
 
       expect(page).to have_content('Invitations')
