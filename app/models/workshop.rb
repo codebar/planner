@@ -60,7 +60,7 @@ class Workshop < ActiveRecord::Base
   end
 
   def open_for_rsvp?
-    rsvp_opens_at && rsvp_opens_at.past?
+    rsvp_opens_at&.past?
   end
 
   def invitable_yet?
