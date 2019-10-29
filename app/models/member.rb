@@ -59,6 +59,7 @@ class Member < ActiveRecord::Base
     [name, surname, pronoun].compact.join ' '
   end
 
+
   def student?
     groups.students.count > 0
   end
