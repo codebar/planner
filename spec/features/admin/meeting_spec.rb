@@ -108,7 +108,7 @@ feature 'Managing meetings' do
       permanent_ban = Fabricate.build(:ban, member: chapter.members[3], permanent: true, expires_at: nil)
       permanent_ban.save(validate: false)
       Fabricate(:ban, member: chapter.members[4], expires_at: Time.zone.today + 2.months)
-      expired_ban = Fabricate.build(:ban, member: chapter.members[5], expires_at: Time.zone.today - 1.months)
+      expired_ban = Fabricate.build(:ban, member: chapter.members[5], expires_at: Time.zone.today - 1.month)
       expired_ban.save(validate: false)
 
       expect {
