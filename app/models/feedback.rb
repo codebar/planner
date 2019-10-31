@@ -11,10 +11,9 @@ class Feedback < ActiveRecord::Base
 
   def coach_field_has_a_coach_role?
     return false unless coach_id
+    return if Member.find(coach_id).groups.coaches.any?
 
-    unless Member.find(coach_id).groups.coaches.any?
-      errors.add(:coach, "Coach member doesn't have 'coach' role.")
-    end
+    errors.add(:coach, "Coach member doesn't have 'coach' role.")
   end
 
   def self.submit_feedback(params, token)
