@@ -9,7 +9,7 @@ if Rails.env.development?
 
     Rails.logger.info "Creating workshops..."
     workshops = 6.times.map do |n|
-      start = Time.zone.now + 1.months - n.weeks
+      start = Time.zone.now + 1.month - n.weeks
       ends_at = start + 3.hours
       Fabricate(:workshop, title: 'Workshop',
                            chapter: chapters.sample,
@@ -23,7 +23,7 @@ if Rails.env.development?
     past_workshops = 100.times.map do |n|
       Fabricate(:workshop, title: 'Workshop',
                            chapter: chapters.sample,
-                           date_and_time: Time.zone.now - 9.year + n.months)
+                           date_and_time:  Time.zone.now - 9.years + n.months)
     end
 
     Rails.logger.info "Creating events..."
@@ -38,14 +38,14 @@ if Rails.env.development?
     20.times do |n|
       Fabricate(:course, chapter: chapters.sample,
                          title: 'Course',
-                         date_and_time: Time.zone.now + 1.months - n.months)
+                         date_and_time: Time.zone.now + 1.month - n.months)
     end
 
     Rails.logger.info "Creating meetings..."
 
     20.times.map do |n|
       Fabricate(:meeting, name: 'Meeting',
-                          date_and_time: Time.zone.now + 1.months - n.months)
+                          date_and_time: Time.zone.now + 1.month - n.months)
     end
 
     Rails.logger.info "Creating coaches..."

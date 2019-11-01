@@ -23,7 +23,7 @@ Fabricator(:workshop_auto_rsvp_in_past, class_name: :workshop) do
   title Faker::Lorem.sentence
   description Faker::Lorem.sentence
   chapter
-  rsvp_opens_at Time.zone.now - 1.days
+  rsvp_opens_at Time.zone.now - 1.day
   invitable false
   after_build do |workshop|
     Fabricate(:workshop_sponsor, workshop: workshop, sponsor: Fabricate(:sponsor), host: true)
@@ -36,7 +36,7 @@ Fabricator(:workshop_auto_rsvp_in_future, class_name: :workshop) do
   title Faker::Lorem.sentence
   description Faker::Lorem.sentence
   chapter
-  rsvp_opens_at Time.zone.now + 1.days
+  rsvp_opens_at Time.zone.now + 1.day
   invitable false
   after_build do |workshop|
     Fabricate(:workshop_sponsor, workshop: workshop, sponsor: Fabricate(:sponsor), host: true)
