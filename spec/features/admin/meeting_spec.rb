@@ -111,9 +111,9 @@ feature 'Managing meetings' do
       expired_ban = Fabricate.build(:ban, member: chapter.members[5], expires_at: Time.zone.today - 1.month)
       expired_ban.save(validate: false)
 
-      expect {
+      expect do
         visit invite_admin_meeting_path(meeting)
-      }.to change { ActionMailer::Base.deliveries.count }.by (chapter.members.count - 4)
+      end.to change { ActionMailer::Base.deliveries.count }.by (chapter.members.count - 4)
     end
   end
 end
