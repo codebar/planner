@@ -10,7 +10,7 @@ describe Workshop do
 
     context 'date_and_time' do
       it 'saves the local time in UTC' do
-        workshop.update_attributes!(
+        workshop.update!(
           local_date: '12/06/2015',
           local_time: '18:30'
         )
@@ -28,7 +28,7 @@ describe Workshop do
 
     context 'rsvp_opens_at' do
       it 'saves the local time in UTC' do
-        workshop.update_attributes!(
+        workshop.update!(
           rsvp_open_local_date: '12/06/2015',
           rsvp_open_local_time: '18:30'
         )
