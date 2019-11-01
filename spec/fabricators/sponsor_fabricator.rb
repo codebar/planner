@@ -16,5 +16,5 @@ Fabricator(:sponsor) do
 end
 
 def sponsor_image
-  "#{%w{8th-Light StreetTeam bloomberg gds-logo mozilla pivotal shutl_logo softwire the-guardian ticketmaster ustwo}.sample}.png"
+  "#{%w[8th-Light StreetTeam bloomberg gds-logo mozilla pivotal shutl_logo softwire the-guardian ticketmaster ustwo].sample}.png"
 end
