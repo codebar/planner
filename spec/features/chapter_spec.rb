@@ -47,7 +47,7 @@ feature 'viewing a Chapter' do
       expect(page).to have_content "Workshop at #{recent_past_workshop.host.name}"
       expect(page).to_not have_content "Workshop at #{past_workshop.host.name}"
     end
-    
+
     it 'renders the 6 most recent sponsors for the chapter' do
       chapter = Fabricate(:chapter)
       workshops = 6.times.map do |n|
