@@ -34,7 +34,7 @@ Planner::Application.configure do
   config.assets.debug = true
 
   config.logger = Logger.new(STDOUT)
-  config.log_level = :debug
+  config.log_level = :info
 
   config.after_initialize do
     Bullet.enable = true
