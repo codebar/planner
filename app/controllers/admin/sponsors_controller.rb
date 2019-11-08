@@ -17,7 +17,7 @@ class Admin::SponsorsController < Admin::ApplicationController
 
   def create
     @sponsor = Sponsor.new(sponsor_params)
-    @sponsor.build_address unless @sponsor.address.present?
+    @sponsor.build_address if @sponsor.address.blank?
     authorize @sponsor
     if @sponsor.save
       flash[:notice] = "Sponsor #{@sponsor.name} created"
@@ -31,7 +31,7 @@ class Admin::SponsorsController < Admin::ApplicationController
   def edit
     @sponsor = Sponsor.find(params[:id])
     authorize @sponsor
-    @sponsor.build_address unless @sponsor.address.present?
+    @sponsor.build_address if @sponsor.address.blank?
     @sponsor.contacts.build
   end
 
