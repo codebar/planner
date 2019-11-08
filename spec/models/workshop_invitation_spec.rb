@@ -45,11 +45,18 @@ describe WorkshopInvitation do
       expect(WorkshopInvitation.year((Time.zone.now - 2.years).year).count).to eq(5)
     end
 
-    it '#not_reminded' do
-      not_reminded = Fabricate.times(3, :student_workshop_invitation, reminded_at: nil)
-      Fabricate.times(2, :workshop_invitation, reminded_at: 3.hours.ago)
+    context '#not_reminded' do
+      it 'includes invitations without reminders' do
+        not_reminded = Fabricate(:student_workshop_invitation, reminded_at: nil)
 
-      expect(WorkshopInvitation.not_reminded).to eq(not_reminded)
+        expect(WorkshopInvitation.not_reminded).to include(not_reminded)
+      end
+
+      it 'excludes invitations with reminders' do
+        reminded = Fabricate(:workshop_invitation, reminded_at: 3.hours.ago)
+
+        expect(WorkshopInvitation.not_reminded).not_to include(reminded)
+      end
     end
 
     it '#on_waiting_list' do
