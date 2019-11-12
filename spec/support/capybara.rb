@@ -1,4 +1,4 @@
-require 'selenium-webdriver'
+require 'webdrivers'
 
 Capybara.register_driver :chrome do |app|
   options = Selenium::WebDriver::Chrome::Options.new
