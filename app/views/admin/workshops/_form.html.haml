@@ -35,6 +35,8 @@
         = f.input :rsvp_open_local_time, as: :string, input_html: { data: { value: @workshop.rsvp_opens_at.try(:time).try(:strftime, '%H:%M') } }
   .row
     .large-6.columns
+      %label Organisers
+      = f.collection_select :organisers, Member.all, :id, :full_name, { selected: @workshop.organisers.map(&:id) }, { multiple: true }
       = f.input :invitable
   .row
     .large-12.columns.text-right
