@@ -14,7 +14,7 @@ class SubscriptionsController < ApplicationController
           MemberMailer.welcome_for_subscription(@subscription).deliver_now
         end
         format.html do
-          flash[:notice] = "You have subscribed to #{@subscription.group.chapter.city}'s #{@subscription.group.name} group"
+          flash[:notice] = t('messages.subscriptions.create.success', subscription_city_and_name)
           redirect_to :back
         end
         format.js { render 'create_success' }
@@ -32,7 +32,7 @@ class SubscriptionsController < ApplicationController
 
     respond_to do |format|
       format.html do
-        flash[:notice] = "You have unsubscribed from #{@subscription.group.chapter.city}'s #{@subscription.group.name} group"
+        flash[:notice] = t('messages.subscriptions.destroy.success', subscription_city_and_name)
         redirect_to :back
       end
       format.js
@@ -40,6 +40,13 @@ class SubscriptionsController < ApplicationController
   end
 
   private
+
+  def subscription_city_and_name
+    {
+      city: @subscription.group.chapter.city,
+      name: @subscription.group.name
+    }
+  end
 
   def group_id
     params.require(:subscription).permit(:group_id)[:group_id]

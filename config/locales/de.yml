@@ -76,6 +76,11 @@ de:
       rsvped_to_other_workshop: "Du hast dich schon für einen anderen Workshop an diesem Datum angemeldet. Falls du an diesem Workshop teilnehmen möchtest, melde dich bitte zuerst von dem anderen Workshop ab."
       spot_confirmed: "Deine Teilnahme an %{event} wurde bestätigt! Wir freuen uns bereits dich dort begrüßen zu dürfen."
       spot_not_confirmed: 'Deine Teilnahme wurde noch nicht bestätigt. Wir werden die Teilnahme bestätigen sobald du das Formular ausgefüllt hast.'
+    subscriptions:
+      create:
+        success: "You have subscribed to %{city}'s %{name} group"
+      destroy:
+        success: "You have unsubscribed from %{city}'s %{name} group"
   notifications:
     provider_already_connected: 'Sie sind bereits angemeldet!'
     not_logged_in: "Du musst angemeldet sein, um auf diese Seite zugreifen zu können."

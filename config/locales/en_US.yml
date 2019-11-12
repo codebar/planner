@@ -76,6 +76,11 @@ en-US:
       rsvped_to_other_workshop: "You have already RSVP'd to another workshop on this date. If you would prefer to attend this workshop, please cancel your other RSVP first."
       spot_confirmed: "Your spot has been confirmed for %{event}! We look forward to seeing you there."
       spot_not_confirmed: 'Your spot has not yet been confirmed. We will verify your attendance after you complete the questionnaire.'
+    subscriptions:
+      create:
+        success: "You have subscribed to %{city}'s %{name} group"
+      destroy:
+        success: "You have unsubscribed from %{city}'s %{name} group"
   notifications:
     provider_already_connected: 'You are already signed in!'
     not_logged_in: "You must be logged in to access this page."
