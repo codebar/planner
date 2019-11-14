@@ -122,12 +122,11 @@ class Admin::WorkshopsController < Admin::ApplicationController
 
   def set_host(host_id)
     return unless host_id
-
     host = @workshop.workshop_sponsors.find_or_initialize_by(sponsor_id: host_id)
-    unless @workshop.host.eql?(host.sponsor)
-      @workshop.workshop_sponsors.where(sponsor: @workshop.host).destroy_all
-      host.update(host: true)
-    end
+    return if @workshop.host.eql?(host.sponsor)
+
+    @workshop.workshop_sponsors.where(sponsor: @workshop.host).destroy_all
+    host.update(host: true)
   end
 
   def set_organisers(organiser_ids)
