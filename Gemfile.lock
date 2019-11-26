@@ -371,7 +371,7 @@ GEM
       nokogiri (~> 1.6)
       rubyzip (~> 1.0)
       selenium-webdriver (>= 3.0, < 4.0)
-    will_paginate (3.2.0)
+    will_paginate (3.2.1)
     xpath (3.2.0)
       nokogiri (~> 1.8)
 
