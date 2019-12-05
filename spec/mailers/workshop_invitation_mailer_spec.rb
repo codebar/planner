@@ -27,8 +27,7 @@ describe WorkshopInvitationMailer do
 
     expect(email.subject).to eq(email_subject)
     expect(email.from).to eq([workshop.chapter.email])
-    expect(email.body.encoded).to match('you should keep your laptop with you and check your email during the afternoon on the day of the workshop.')
-    expect(email.body.encoded).to match("This is a quick email to remind you that you're on the waiting list for the workshop on #{humanize_date(workshop.date_and_time, with_time: true)}")
+    expect(email.body.encoded).to match("the workshop on #{humanize_date(workshop.date_and_time, with_time: true)}")
     expect(email.body.encoded).to match(workshop.chapter.email)
   end
 end
