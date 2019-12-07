@@ -45,24 +45,24 @@ de:
         precision: 0
         format: '%u%n'
   homepage:
-    intro: "<strong>codebar</strong> is a non-profit initiative that facilitates the growth of a diverse tech community by running regular programming workshops."
+    intro: "<strong>codebar</strong> ist eine non-profit Initiative, die durch regelmäßige Programmier-Workshops das Wachstum einer vielfältigen Tech-Community fördert."
     explanation: "Unser Ziel ist unterrepräsentierten Menschen zu programmieren in einer sicheren und kollaborative Umgebung lernen und erweitern ihre Karrierechancen zu ermöglichen. Um dies zu erreichen betreiben wir kostenlose regelmäßige Workshops, regelmäßige Einzelveranstaltungen und versuchen, die Möglichkeiten für unsere Schüler die Technologie und Programmierung zugänglicher zu schaffen."
     participate:
       students_title: "Studenten"
-      students_explanation_p1: "Our students come from a variety of backgrounds. Some want to become full-time developers, whereas some would like to learn the basics of coding in a supportive environment."
+      students_explanation_p1: "Unser Ziel ist es unterrepräsentierten Menschen in einer sicheren und kollaborativen Umgebung zu helfen programmieren zu lernen und ihre Karrierechancen zu erweitern. Um dies zu erreichen veranstalten wir kostenlose regelmäßige Workshops, regelmäßige Einzelveranstaltungen und versuchen Technologie und Programmierung für unsere Schüler zugänglicher zu machen."
       students_explanation_p2: "Sign up to join our vibrant community and attend our workshops."
       students_button: "Sign up as a student"
       coaches_title: "Coaches"
       coaches_explanation_p1: "We encourage new students to work on our HTML/CSS, JavaScript, Ruby, Python or Git <a href='http://tutorials.codebar.io'>tutorials</a>. We also help them understand programming concepts."
       coaches_explanation_p2: "Therefore  are always on the lookout for more developers to join our community and help coach at our workshops."
-      coaches_button: "Sign up as a coach"
+      coaches_button: "Anmeldung als Coach"
       workshop_title: "Workshops"
       workshop_explanation_p1: "We are hosted by some amazing companies who support our cause. Our normal format is 30 minutes of socialising with food and drink, followed by a lightning talk then coding."
       workshop_explanation_p2: Help our expansion and enable us to provide help and support to our chapters by hosting and sponsoring our workshops.
-      workshop_button: "Host a workshop"
+      workshop_button: "Veranstalte einen Workshop"
       workshop_email_subject: "Regarding hosting a workshop"
     chapters:
-      title: "Chapters"
+      title: "Kapitel"
   messages:
     accepted_invitation: "Vielen Dank für die Rückmeldung, %{name}. Wir sehen uns beim Workshop!"
     rejected_invitation: "Wir bedauern es sehr dass du nicht teilnehmen kannst. Vielen Dank für das Bescheid geben, %{name}."
@@ -126,7 +126,7 @@ de:
       stubling: "Lasse zu, dass die Lernenden auch mal stolpern. Wir lernen aus Fehlern, indem wir unseren eigenen Weg von der Frustration zur Lösung des Problems finden. Stehe den Lernenden unterstützend zur Seite, aber lass sie selbständig erkunden."
       suggestions: "Hast du noch Vorschläge? Eröffne einen <a href='https://github.com/codebar/planner'>pull request</a> oder <a href='https://github.com/codebar/planner/issues/new'>erstelle eine issue</a>\""
   workshops:
-    lead: "Attend our workshops to learn programming in a safe and supportive environment at your own pace, or to share your knowledge and coach our students."
+    lead: "Besuche unsere Workshops und lerne Programmieren in einer sicheren und unterstützenden Umgebung in deinem eigenen Tempo, oder teile dein Wissen und hilf unseren Schülern."
   events:
     title: "Veranstaltungen"
     past: "Vergangene"
@@ -189,7 +189,7 @@ de:
     sponsoring: "Sponsoren"
   members:
     sign_up: "Anmelden"
-    sign_in_with_github: "Sign in with GitHub"
+    sign_in_with_github: "Mit GitHub anmelden"
     sign_up_as_student: "Ich verstehe und erfülle die Teilnahmebedingungen. Meldet mich als Student an"
     sign_up_as_coach: "Melde dich als Trainer an"
     code_of_conduct: "Verhaltenskodex"
