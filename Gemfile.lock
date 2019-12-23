@@ -308,7 +308,7 @@ GEM
       rspec-mocks (~> 3.9.0)
       rspec-support (~> 3.9.0)
     rspec-support (3.9.0)
-    rubocop (0.77.0)
+    rubocop (0.78.0)
       jaro_winkler (~> 1.5.1)
       parallel (~> 1.10)
       parser (>= 2.6)
@@ -439,7 +439,7 @@ DEPENDENCIES
   rspec-collection_matchers
   rspec-its
   rspec-rails
-  rubocop (~> 0.77.0)
+  rubocop (~> 0.78.0)
   sass-rails (~> 5.0.1)
   shoulda-matchers (~> 4.1)
   simple_form
