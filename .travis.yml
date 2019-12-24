@@ -2,7 +2,7 @@ dist: xenial
 language: ruby
 bundler_args: --without development
 rvm:
-  - 2.4.2
+  - 2.4.9
 services:
   - postgresql
 before_script:

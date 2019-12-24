@@ -16,19 +16,19 @@ These are the original instructions for natively installing the app to your mach
 
 ## Set up a Ruby Environment
 
-You will need to install Ruby 2.4.2 using RVM or rbenv.
+You will need to install Ruby 2.4.9 using RVM or rbenv.
 
 ### Option 1: Using [rvm](https://rvm.io/rvm/install)
 
 ```bash
-rvm install 2.4.2
+rvm install 2.4.9
 ```
 
 ### Option 2: Using [rbenv](https://github.com/sstephenson/rbenv) and [ruby-build](https://github.com/sstephenson/ruby-build)
 
 ```bash
-rbenv install 2.4.2
-rbenv global 2.4.2
+rbenv install 2.4.9
+rbenv shell 2.4.9
 ```
 
 ## Install and run PostgreSQL

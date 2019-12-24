@@ -1,4 +1,4 @@
-FROM ruby:2.4.2
+FROM ruby:2.4.9
 
 # Default node version on apt is old. This makes sure a recent version is installed
 # This step also runs apt-get update
