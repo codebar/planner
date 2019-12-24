@@ -60,7 +60,7 @@ RSpec.describe MeetingInvitationMailer, type: :mailer do
     end
 
     it 'renders the body' do
-      expect(mail.body.encoded).to match('This is a quick email to remind you that you have signed up for tomorrow\'s codebar Monthly')
+      expect(mail.body.encoded).to match("This is a quick email to remind you that you have signed up for tomorrow's codebar Monthly")
     end
   end
 end
