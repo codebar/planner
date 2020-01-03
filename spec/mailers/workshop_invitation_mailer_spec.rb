@@ -30,4 +30,12 @@ describe WorkshopInvitationMailer do
     expect(email.body.encoded).to match("the workshop on #{humanize_date(workshop.date_and_time, with_time: true)}")
     expect(email.body.encoded).to match(workshop.chapter.email)
   end
+
+  it '#notify_waiting_list' do
+    WorkshopInvitationMailer.notify_waiting_list(invitation).deliver_now
+
+    expect(email.subject).to eq('A spot just became available')
+    expect(email.from).to eq([workshop.chapter.email])
+    expect(email.body.encoded).to match('A spot just opened up for the workshop')
+  end
 end
