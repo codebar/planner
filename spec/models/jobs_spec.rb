@@ -8,18 +8,38 @@ describe Job, type: :model do
   end
 
   context 'scopes' do
-    let!(:approved) { 2.times.map { Fabricate(:published_job) } }
-    let!(:drafts) { 1.times.map { Fabricate(:job) } }
-    let!(:pending_approval) { 4.times.map { Fabricate(:pending_job) } }
+    context '#active' do
+      it 'excludes expired jobs' do
+        expired_job = Fabricate(:job, expiry_date: 1.week.ago)
 
-    it '#active returns all active jobs' do
-      2.times.map { Fabricate(:job, expiry_date: 1.week.ago) }
+        expect(Job.active).not_to include(expired_job)
+      end
 
-      expect(Job.active.to_a).to match_array(approved + drafts + pending_approval)
+      it 'includes active job' do
+        active_job = Fabricate(:job, expiry_date: 1.week.since)
+
+        expect(Job.active).to include(active_job)
+      end
     end
 
-    it '#pending_or_published returns all pending or published jobs' do
-      expect(Job.pending_or_published.to_a).to match_array(approved + pending_approval)
+    context '#pending_or_published' do
+      it 'excludes draft jobs' do
+        draft_job = Fabricate(:job, status: :draft)
+
+        expect(Job.pending_or_published).not_to include(draft_job)
+      end
+
+      it 'includes pending jobs' do
+        pending = Fabricate(:pending_job)
+
+        expect(Job.pending_or_published).to include(pending)
+      end
+
+      it 'includes published jobs' do
+        published = Fabricate(:published_job)
+
+        expect(Job.pending_or_published).to include(published)
+      end
     end
   end
 
