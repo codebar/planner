@@ -32,8 +32,8 @@ class WorkshopInvitation < ActiveRecord::Base
   end
 
   def email
-    if for_student?
-      WorkshopInvitationMailer.invite_student(self.workshop, self.member, self).deliver_now
-    end
+    return unless for_student?
+
+    WorkshopInvitationMailer.invite_student(self.workshop, self.member, self).deliver_now
   end
 end

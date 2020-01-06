@@ -2,7 +2,7 @@ class EventPresenter < BasePresenter
   PRESENTER = { workshop: 'WorkshopPresenter',
                 course: 'CoursePresenter',
                 meeting: 'MeetingPresenter',
-                event: 'EventPresenter' }
+                event: 'EventPresenter' }.freeze
 
   def self.decorate_collection(collection)
     collection.map { |e| PRESENTER[e.class.to_s.downcase.to_sym].constantize.new(e) }

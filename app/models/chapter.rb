@@ -44,9 +44,9 @@ class Chapter < ActiveRecord::Base
   private
 
   def time_zone_exists
-    if time_zone && ActiveSupport::TimeZone[time_zone].nil?
-      errors.add(:time_zone, 'does not exist')
-    end
+    return unless time_zone && ActiveSupport::TimeZone[time_zone].nil?
+
+    errors.add(:time_zone, 'does not exist')
   end
 
   def set_slug

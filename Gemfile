@@ -65,17 +65,16 @@ group :development, :test do
   gem 'rspec-collection_matchers'
   gem 'rspec-its'
   gem 'rspec-rails'
-  gem 'rubocop', '~> 0.75.1', require: false
+  gem 'rubocop', '~> 0.77.0', require: false
   gem 'timecop'
   gem 'bullet'
 end
 
 group :test do
   gem 'capybara'
-  gem 'chromedriver-helper'
   gem 'database_cleaner'
-  gem 'selenium-webdriver'
   gem 'shoulda-matchers', '~> 4.1'
+  gem 'webdrivers'
 end
 
 group :production do
