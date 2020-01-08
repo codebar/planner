@@ -3,13 +3,12 @@ require 'spec_helper'
 describe InvitationManager do
   subject(:manager) { InvitationManager.new }
 
-  let(:chapter)   { Fabricate(:chapter) }
+  let(:chapter) { Fabricate(:chapter) }
   let(:workshop) { Fabricate(:workshop, chapter: chapter) }
   let(:students) { Fabricate.times(3, :member) }
   let(:coaches) { Fabricate.times(6, :member) }
 
   describe '#send_workshop_emails' do
-
     it 'creates an invitation for each student' do
       student_group = Fabricate(:students, chapter: chapter, members: students)
 
@@ -49,9 +48,9 @@ describe InvitationManager do
       student_group = Fabricate(:students, chapter: chapter, members: students)
       coach_group = Fabricate(:coaches, chapter: chapter, members: coaches)
 
-      expect {
+      expect do
         manager.send_workshop_emails(workshop, 'everyone')
-      }.to change { ActionMailer::Base.deliveries.count }.by(students.count + coaches.count)
+      end.to change { ActionMailer::Base.deliveries.count }.by(students.count + coaches.count)
     end
 
     it "does not send emails when no invitation is created" do
@@ -59,9 +58,9 @@ describe InvitationManager do
 
       students.count.times { expect(WorkshopInvitation).to receive(:create).and_return(WorkshopInvitation.new) }
 
-      expect {
+      expect do
         manager.send_workshop_emails(workshop, 'students')
-      }.not_to change { ActionMailer::Base.deliveries.count }
+      end.not_to change { ActionMailer::Base.deliveries.count }
     end
   end
 

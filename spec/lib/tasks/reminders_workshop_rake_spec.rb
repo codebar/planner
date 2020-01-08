@@ -6,6 +6,7 @@ RSpec.describe 'rake reminders:workshop', type: :task do
   it "preloads the Rails environment" do
     expect(task.prerequisites).to include "environment"
   end
+
   it 'should gracefully run' do
     expect { task.invoke }.to_not raise_error
   end

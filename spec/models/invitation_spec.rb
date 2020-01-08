@@ -4,13 +4,13 @@ describe Invitation do
   context 'validations' do
     subject { Invitation.new }
 
-  it '#event' do
-    should have(1).error_on(:event)
-  end
+    it '#event' do
+      should have(1).error_on(:event)
+    end
 
-  it '#role' do
-    should have(1).error_on(:role)
-  end
+    it '#role' do
+      should have(1).error_on(:role)
+    end
   end
 
   context '#student_spaces?' do

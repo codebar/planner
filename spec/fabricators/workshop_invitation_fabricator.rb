@@ -22,11 +22,13 @@ end
 
 Fabricator(:coach_workshop_invitation, from: :workshop_invitation) do
   role 'Coach'
+  note nil
 end
 
 Fabricator(:attended_coach, from: :workshop_invitation) do
   role 'Coach'
   attended true
+  note nil
 end
 
 Fabricator(:waitinglist_invitation, from: :workshop_invitation) do

@@ -22,7 +22,7 @@ class Admin::InvitationsController < Admin::ApplicationController
         message = "You have removed #{@invitation.member.full_name} from the workshop."
       end
       waiting_listed = WaitingList.find_by(invitation: @invitation)
-      waiting_listed.destroy if waiting_listed
+      waiting_listed&.destroy
 
     elsif params.key?(:attended)
       @invitation.update_attribute(:attended, true)

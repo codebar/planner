@@ -1,17 +1,26 @@
+= render partial: 'meta_tags', locals: { workshop: @workshop }
+
 .stripe.reverse
   .row
     .large-12.columns
       %h2
         Workshop at #{@workshop.host.name}
         %br
-        %small #{humanize_date(@workshop.date_and_time, with_time: true)} #{@workshop.distance_of_time}
+        %small #{humanize_date(@workshop.date_and_time)} #{@workshop.distance_of_time}
+        #workshop-time.time
+          %i.material-icons
+            access_time
+          = @workshop.time
+          = @workshop.ends_at.present? ? "- " +  l(@workshop.ends_at, format: :time) : ""
       - if @workshop.date_and_time.past?
         %label.label.warning This event has already taken place.
   %section#banner
     .row
       .medium-12.columns
         %p.lead
-          Attend our workshops to learn programming in a safe and supportive environment at your own pace, or to share your knowledge and coach our students.
+          = t("workshops.lead")
+        %p.description
+          = sanitize(@workshop.description)
 
         - unless current_user and current_user.banned?
           = render 'workshop_actions'

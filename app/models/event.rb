@@ -19,7 +19,7 @@ class Event < ActiveRecord::Base
 
   validate :invitability, if: :invitable?
 
-  validates_numericality_of :coach_spaces, :student_spaces
+  validates :coach_spaces, :student_spaces, numericality: true
   attr_accessor :publish_day, :publish_time
 
   scope :future, ->(n) { order('date_and_time').where('date_and_time > ?', Date.current).take(n) }
@@ -70,9 +70,10 @@ class Event < ActiveRecord::Base
   end
 
   def invitability
-    errors.add(:coach_spaces, 'must be set') unless self.coach_spaces.present?
-      errors.add(:student_space, 'must be set') unless self.student_spaces.present?
-      errors.add(:invitable, 'Fill in all invitations details to make the event invitable') unless self.coach_spaces.present? && self.student_spaces.present?
+    errors.add(:coach_spaces, 'must be set') if self.coach_spaces.blank?
+    errors.add(:student_space, 'must be set') if self.student_spaces.blank?
+    errors.add(:invitable, 'Fill in all invitations details to make the event invitable') \
+      unless self.coach_spaces.present? && self.student_spaces.present?
   end
 
   def student_emails
@@ -84,6 +85,6 @@ class Event < ActiveRecord::Base
   end
 
   def permitted_audience_values
-    ['Students', 'Coaches']
+    %w[Students Coaches]
   end
 end

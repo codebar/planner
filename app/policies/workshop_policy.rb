@@ -24,6 +24,7 @@ class WorkshopPolicy < ApplicationPolicy
   end
 
   private
+
   def is_chapter_organiser?
     user.has_role?(:organiser, record) || user.has_role?(:organiser, record.chapter) || user.has_role?(:organiser, Chapter)
   end

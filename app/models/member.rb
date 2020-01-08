@@ -13,14 +13,14 @@ class Member < ActiveRecord::Base
   has_many :subscriptions
   has_many :groups, through: :subscriptions
   has_many :member_notes
-  has_many :chapters, -> { uniq }, through: :groups
-  has_many :announcements, -> { uniq }, through: :groups
+  has_many :chapters, -> { distinct }, through: :groups
+  has_many :announcements, -> { distinct }, through: :groups
   has_many :meeting_invitations
 
   validates :auth_services, presence: true
   validates :name, :surname, :email, :about_you, presence: true, if: :can_log_in?
-  validates_uniqueness_of :email
-  validates_length_of :about_you, maximum: 255
+  validates :email, uniqueness: true
+  validates :about_you, length: { maximum: 255 }
 
   scope :subscribers, -> { joins(:subscriptions).order('created_at desc').uniq }
   scope :not_banned, lambda {
@@ -74,6 +74,7 @@ class Member < ActiveRecord::Base
   def received_welcome_for?(subscription)
     return received_student_welcome_email if subscription.student?
     return received_coach_welcome_email if subscription.coach?
+
     true
   end
 
@@ -116,7 +117,7 @@ class Member < ActiveRecord::Base
   end
 
   def already_attending(event)
-    invitations.where(attending: true).map{ |e| e.event.id }.include?(event.id)
+    invitations.where(attending: true).map { |e| e.event.id }.include?(event.id)
   end
 
   def is_organiser?

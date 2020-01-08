@@ -116,13 +116,15 @@
       introduction: "Always introduce yourself. Say why you want to help out and are spending your own time on this, why you like programming."
       backgrounds: "Give your students the opportunity to get to know each other. Ask their names, why they are here, what they do in their day jobs. Encourage a brief discussion before starting."
       limits: "Assume that anyone you're teaching has no knowledge but infinite intelligence."
-      colaboration: "Work collaboratively with your student. If you have two students, you should work with both. Don't focus all your attention on one of them."
+      collaboration: "Work collaboratively with your student. If you have two students, you should work with both. Don't focus all your attention on one of them."
       discussion: "Let students have a go at answering the questions first. Help with open and leading questions. Encourage a discussion."
       talk_slow: "Take it slow, you are the teacher, they are the student. Allow for time between questions."
       mild_approach: "Don't say no when the students are not doing something right. Be gentle, approach it in a mild way."
       paper: "Use pen and paper or go to a whiteboard! Often students are coming from a non-technical background. Drawing and explaining with visual material is really helpful."
       stubling: "Let them stumble. We learn by making mistakes, getting frustrated, and working through problem in our own way. Be supportive, but let them explore."
       suggestions: "Do you have something to suggest? Make a <a href='https://github.com/codebar/planner'>pull request</a> or <a href='https://github.com/codebar/planner/issues/new'>create an issue</a>"
+  workshops:
+    lead: "Attend our workshops to learn programming in a safe and supportive environment at your own pace, or to share your knowledge and coach our students."
   events:
     title: "Events"
     past: "Past"
@@ -185,7 +187,7 @@
     sponsoring: "Sponsoring"
   members:
     sign_up: "Sign up"
-    sign_in_with_github: "Sign in with Github"
+    sign_in_with_github: "Sign in with GitHub"
     sign_up_as_student: "I understand and meet the eligibility criteria. Sign me up as a student"
     sign_up_as_coach: "Sign up as a coach"
     code_of_conduct: "code of conduct"
@@ -253,13 +255,13 @@
       rule2: "If you can no longer attend a workshop, <u>please cancel your RSVP by 12:00 latest </u> on the day of the workshop. We understand that last-minute emergencies occur -- if this is the case, please get in touch with an organizer directly as soon as possible. Repeated no-shows will result in temporary or permanent suspension of your invitations."
       rule3: "No guests are allowed. Our workshops are already overcrowded and we cannot make any exceptions. If your friend meets our eligibility criteria, get them to sign up and RSVP themselves."
       rule4: "Please be respectful of our hosts. Do not show up exceedingly early to a workshop (not earlier than 15 minutes before the event begins) and try to leave the workstation clean and as you found it."
-      rule5: "<u>Please do not work on projects that were assigned as part of any bootcamp curriculum.</u> Talk to your bootcamp adviser if you feel like you need additional support with your coursework. If you are currently on a bootcamp, we welcome your attendance, but we encourage you to use your time at codebar to develop skills that are outside the normal scope of your studies there."
+      rule5: "<u>Please do not work on projects that were assigned as part of any bootcamp or university curriculum.</u> Talk to your course adviser if you feel like you need additional support with your coursework. We welcome your attendance, but we encourage you to use your time at codebar to develop skills that are outside the normal scope of your studies."
       rule6: "Projects that involve specific frameworks/libraries (Rails, NodeJS, Meteor, Angular, Ember, React, etc) or languages that are not part of the codebar tutorials (anything other than Ruby or Javascript) are welcome but we cannot guarantee that a coach will be available to help you. In these cases we recommend selecting a codebar tutorial or katas (codewars.com or exercism.io) as a back-up option."
     eligibility_criteria:
       title: "Eligibility Criteria"
       p_1: "codebar was started out of recognition that there is a shortage of women, LGBTQ, and people belonging to <a href='http://sciencecampaign.org.uk/CaSEDiversityinSTEMreport2014.pdf'>underrepresented ethnic groups in tech</a>."
       p_2: "If you belong to one of these groups, you are more than welcome to attend. If not, there are some other great initiatives like <a href='http://www.opentechschool.org/'>Open Tech School</a> or <a href='https://askadev.org/'>Ask a Dev</a> where you can learn in a collaborative environment."
-      p_3: "Bearing that in mind, it is sometimes difficult for us to identify whether attendees meet the eligibility criteria based on their first and last name. We will try our best to verify via social media profiles beforehand, but if we cannot, we will contact you asking for a short confirmation that you have read this document and assert that you meet one or more of the criteria. We will never ask participants to specify which group."
+      p_3: "Bearing that in mind, it is sometimes difficult for us to identify whether attendees meet the eligibility criteria based on their first and last names. If we cannot determine your eligibility, we will contact you asking for a short confirmation that you have read this document and assert that you meet one or more of the criteria. We will never ask participants to specify which group."
       p_4: "codebar is first and foremost a resource for students who cannot afford formal training through coding bootcamps or university degrees, for financial reasons or otherwise. Our coaches, organisers and sponsors donate their time and money to help those who have faced unfair barriers to entry into the tech world. We have strived to create an inclusive, welcoming community, and so far, we have not had to implement a formal policy to enforce the eligibility criteria -- we have left this to the honesty and good faith of the students."
       p_5: "If you are unsure whether you are eligible, please get in touch. If we determine that you have signed up and do not belong to an eligible group, we will permanently suspend your student invitations without warning."
       p_6: "We take this issue very seriously, and we appreciate your cooperation and understanding."
@@ -267,7 +269,8 @@
       title: "Students with Disability"
       description: "We want to ensure that our workshops are as accessible as possible. If you are disabled and are unsure about whether our venues can cater to your needs, we encourage you to please get in touch with us at <a href='mailto:hello@codebar.io'>hello@codebar.io</a> and we will do what we can to accommodate you."
   chapters:
-    intro: "Hi and welcome to codebar! Check out our <a href='http://codebar.io/faq'>FAQ</a> page for any questions you might have, and feel free to email us at %{email} if you can't find the answer you're looking for. Otherwise, use the button below to start the sign-up process."
+    intro_html: "Hi and welcome to codebar!"
+    info: "Check out our <a href='http://codebar.io/faq'>FAQ</a> page for any questions you might have, or email us at <a href='mailto:%{email}'>%{email}</a> if you can't find the answer you're looking for. Otherwise, click the Sign up button to get started."
     sign_up: "to be invited to our workshops."
     no_incoming: "There are no workshops coming up."
     contact: "To contact the %{city} team, send an email to %{email}"
@@ -345,6 +348,77 @@
           pay: Make a payment
       edit:
         title: Edit job listing
+  pages:
+    cookies:
+      title: Cookies
+      p1: 'Cookies are small pieces of text used to store information on web browsers. They are used by websites accross a number of different devices to store and receive identifiers and other information. Our Website and Service use cookies and other similar technologies (collectively in this Policy, "cookies"), in order to provide a better service to you and to generally improve our Website and Service. For example, we may use cookies to help direct you to the appropriate part of our Website, by indicating that you are a repeat visitor. We also may use information to present you with services that are matched to your preferences and to manage and track the effectiveness of our marketing efforts.'
+      p2: Some portions of the codebar website are functional without cookies, and you may generally choose whether to accept cookies. Most web browsers are set to accept cookies by default, however, you may be able to delete cookies yourself through your browser's cookie manager. To do so, please follow the instructions provided by your web browser. Please note that disabling cookies will reset your session, disable auto-login, and may adversely affect the availability and functionality of our Website and the services we can provide to you.
+      sub:
+        title: Below the cookies used by the codebar website.
+      functional:
+        title: Functional Cookies
+        description: Stores information about your session.
+        planner: Stores session data
+        planner_expiry: Expires after 24 hours
+      google_analytics:
+        title: Google Analytics
+        description: Google Analytics  collects information about how you use the codebar website. This enables us to identify how busy the website is and possible improvements.
+        info: We don’t allow Google to use or share our analytics data.
+        opt_out: You can [opt out of Google Analytics](https://tools.google.com/dlpage/gaoptout).
+        ga: Tracks if you have visited codebar.io before
+        ga_expiry: After 2 years
+        gid: Tracks if you have visited codebar.io before
+        gid_expiry: After 24 hours
+      cloudflare:
+        title: Cloudflare
+        cfduid: Used to identify individual clients behind a shared IP address and apply security settings on a per-client basis.
+        cfduid_expiry: '1 year'
+    privacy_policy:
+      title: Privacy Policy
+      subtitle: Your privacy matters to us
+      p1: 'Your privacy means a lot to us, and we take it very seriously. We aim to be transparent with you about the data we collect about you and how it is used and shared. By signing up to our workshops you consent to our use of your data under this Privacy Policy. The document below has been created by codebar whose companies house registered name and address is as follows:'
+      address_html: '
+        codebar Ltd,<br/>
+        International House,<br/>
+        24 Holborn Viaduct,<br/>
+        London,<br/>
+        England,<br/>
+        EC1A 2BN<br/>
+        Company No. 10791813<br/>'
+      information:
+        title: 1. Information we collect
+        description: We do not share any of your information with any third parties without your consent. We also do not sell your contact information or use it for marketing purposes.
+        subscribing_html: '**1.1 Subscribing to an event**<br/>
+        We share your name with our host companies as we are required to provide a list with all attendee names when you subscribe to any of our events. We **do not share** your email address or any other personal information.'
+        cookies_html: '**1.2 Cookie Policy**<br/>
+        We use cookies to recognize you and your location. You can control cookies through your browser settings and other tools. For more information read our [cookie policy](/cookie-policy).'
+        usage_html:  '**1.3 How we use information we collect**<br/>
+        The legal basis on which we collect and process your data is “legitimate interest”. This is because we collect and store your data in order to process event information.'
+      your_rights:
+        title: 2. Your rights, choices and obligations
+        rights_html: '
+          **2.1 Your rights**<br/>
+          Data protection law provides you with rights in respect of personal data that we hold about you, including the right to request a copy of the personal data and request that we rectify, restrict or delete your data.
+          If you would like to exercise any of these rights please email us at company@codebar.io.
+          If you have a complaint about how we handle your data, please get in touch with us at company@codebar.io. If you are not happy about the way a complaint has been handled, you have the right to refer your complaint to the Information Commissioner’s Office.'
+        data_retention_html: '
+          **2.2 Data retention**<br/>
+          We will retain your data for as long as necessary to provide our services to you and fulfil transactions you have requested. If at any point you wish us to delete your data please email company@codebar.io.'
+        personal_data_access_html: '
+          **2.3 Right to Access and Control Your Personal Data**<br/>
+          You can request a copy of the data we hold about you, or request that we delete any data we hold on you. You can also ask us to correct, update or delete any inaccurate personal data that we hold about you. Just email us at company@codebar.io at any time.  We aim to process requests for data records or deletion within two weeks of receipt.'
+        access_and_portability_html: '
+          **2.4 Data Access and Portability**<br/>
+          You have the right to request a copy of the personal information we hold about you in a structured, electronic format. If you wish to receive a copy of the information we hold about you, please email company@codebar.io.'
+      security:
+        title: 3. Security
+        text: From time to time we implement and update administrative, technical, and physical security measures to help protect your information against unauthorised access, loss, destruction, or alteration. However, the Internet is not a 100% secure environment so we can’t guarantee the security of the transmission or storage of your information.
+      changes:
+        title: 4. Changes to this privacy policy
+        text: We reserve the right to modify this Privacy Policy at any time in accordance with this provision. If we make changes to this Privacy Policy, we will post the revised Privacy Policy on the codebar website. If you disagree with the revised Privacy Policy, you may ask us to remove your information from our systems pleas email company@codebar.io.
+      contact:
+        title: 5. Contact
+        text: If you have any questions or complaints about this Privacy Policy or our information handling practices, you may email us company@codebar.io stating 'Data inquiry' in the subject title.
   admin:
     dashboard:
       title: 'Admin'
@@ -366,8 +440,8 @@
         failure: "Workshop cannot be deleted. This is because it has invitees and/or workshop information is on the website for a while long enough that it cannot be deleted."
     messages:
       meeting:
-        created: 'Meeting succesfully created'
-        updated: 'You have succesfully updated the details of this meeting'
+        created: 'Meeting successfully created'
+        updated: 'You have successfully updated the details of this meeting'
         invitations_already_sent: 'Invitations were previously sent; they will not be sent again'
         sending_invitations: 'Invitations are being sent out'
       invitation:

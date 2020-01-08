@@ -2,8 +2,8 @@ class Admin::WorkshopsController < Admin::ApplicationController
   include  Admin::SponsorConcerns
   include  Admin::WorkshopConcerns
 
-  before_filter :set_workshop_by_id, only: %i[show edit destroy]
-  before_filter :set_and_decorate_workshop, only: %i[attendees_checklist attendees_emails send_invites]
+  before_action :set_workshop_by_id, only: %i[show edit destroy]
+  before_action :set_and_decorate_workshop, only: %i[attendees_checklist attendees_emails send_invites]
 
   WORKSHOP_DELETION_TIME_FRAME_SINCE_CREATION = 4.hours
 
@@ -50,7 +50,7 @@ class Admin::WorkshopsController < Admin::ApplicationController
     @workshop = Workshop.find(params[:id])
     authorize @workshop
 
-    @workshop.update_attributes(workshop_params)
+    @workshop.update(workshop_params)
 
     set_organisers(organiser_ids)
     set_host(host_id)
@@ -100,7 +100,7 @@ class Admin::WorkshopsController < Admin::ApplicationController
   def workshop_params
     params.require(:workshop).permit(:local_date, :local_time, :chapter_id,
                                      :invitable, :seats, :rsvp_open_local_date,
-                                     :rsvp_open_local_time, sponsor_ids: [])
+                                     :rsvp_open_local_time, :ends_at, :description, sponsor_ids: [])
   end
 
   def chapter_id
@@ -122,12 +122,11 @@ class Admin::WorkshopsController < Admin::ApplicationController
 
   def set_host(host_id)
     return unless host_id
-
     host = @workshop.workshop_sponsors.find_or_initialize_by(sponsor_id: host_id)
-    unless @workshop.host.eql?(host.sponsor)
-      @workshop.workshop_sponsors.where(sponsor: @workshop.host).destroy_all
-      host.update(host: true)
-    end
+    return if @workshop.host.eql?(host.sponsor)
+
+    @workshop.workshop_sponsors.where(sponsor: @workshop.host).destroy_all
+    host.update(host: true)
   end
 
   def set_organisers(organiser_ids)

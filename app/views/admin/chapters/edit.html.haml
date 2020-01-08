@@ -1,7 +1,7 @@
 %section#banner
   .row
     .medium-12.columns
-      %h2 Edit Chapter #{@chapter.name}
+      %h2 Edit #{@chapter.name} chapter
       = simple_form_for [:admin, @chapter] do |f|
         .row
           .large-6.columns
@@ -14,10 +14,17 @@
             = f.input :city, required: true
         .row
           .large-6.columns
+            = f.input :description, required: false, hint: 'Optionally, specify a custom welcome message for the chapter, to be displayed on the chapter page. Max. 280 characters.'
+        .row
+          .large-6.columns
+            = f.input :twitter, placeholder: '@codebarCam', required: false
+        .row
+          .large-6.columns.chosen-dropwdown
             = f.input :time_zone, required: true
         .row
           .large-6.columns
-            = f.input :twitter, required: false
+            = f.input :image, as: :file
+            = f.hidden_field :image_cache
         .row
           .large-12.columns.text-right
             = f.submit 'Update chapter', class: 'button'

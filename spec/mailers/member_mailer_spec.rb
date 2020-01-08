@@ -103,19 +103,18 @@ RSpec.describe MemberMailer, type: :mailer do
       MemberMailer.ban(member, ban).deliver_now
     end
 
-
     it 'actually sends a coach email' do
       member = Fabricate(:coach)
-      expect {
+      expect do
         MemberMailer.welcome(member).deliver_now
-      }.to change { ActionMailer::Base.deliveries.count }.by 1
+      end.to change { ActionMailer::Base.deliveries.count }.by 1
     end
 
     it 'actually sends a student email' do
       member = Fabricate(:student)
-      expect {
+      expect do
         MemberMailer.welcome(member).deliver_now
-      }.to change { ActionMailer::Base.deliveries.count }.by 1
+      end.to change { ActionMailer::Base.deliveries.count }.by 1
     end
   end
 end

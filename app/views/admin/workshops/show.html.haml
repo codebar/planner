@@ -37,7 +37,7 @@
           = link_to [:admin, @workshop.chapter] do
             %small=@workshop.chapter.name
         %h3
-          %small #{l(@workshop.date_and_time)}
+          %small #{l(@workshop.date_and_time)}#{@workshop.ends_at.present? ? " - " + @workshop.ends_at.strftime('%H:%M') : "" }
         - if @workshop.rsvp_opens_at
           RSVPs will open at
           = @workshop.rsvp_opens_at.strftime('%H:%M on %d/%m/%Y.')
@@ -47,6 +47,9 @@
           %strong.label.round.primary #{@workshop.venue.seats} student spots, #{@workshop.venue.coach_spots} coach spots
           - unless @workshop.spaces?
             %label.label.round.warning Full
+          %p.description
+            %br
+            = sanitize(@workshop.description)
     %br
     .row
       .large-3.small-6.columns#host

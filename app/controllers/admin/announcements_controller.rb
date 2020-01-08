@@ -12,13 +12,14 @@ class Admin::AnnouncementsController < Admin::ApplicationController
   def create
     @announcement = Announcement.new(announcement_params.merge!(created_by: current_user))
     return redirect_to admin_announcements_path, notice: 'Announcement successfully created' if @announcement.save
+
     flash['notice'] = 'Please make sure you fill in all mandatory fields'
     render 'new'
   end
 
   def update
-    @announcement.update_attributes(announcement_params)
-    redirect_to admin_announcements_path, notice: 'Announcement succcessfully updated'
+    @announcement.update(announcement_params)
+    redirect_to admin_announcements_path, notice: 'Announcement successfully updated'
   end
 
   def edit; end

@@ -10,7 +10,7 @@ feature 'viewing a course' do
     expect(page).to have_content course.title
     expect(page).to have_content course.description
     expect(page).to have_content course.short_description
-    expect(page).to have_content course.url
+    expect(page).to have_link "Read more", href: course.url
 
     expect(page).to have_content 'Sign up'
     expect(page).to have_content 'Sign in'

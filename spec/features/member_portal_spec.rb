@@ -2,20 +2,49 @@ require 'spec_helper'
 
 feature 'Member portal' do
   subject { page }
+
   let(:member) { Fabricate(:member) }
-  let!(:invitations) { 5.times.map { Fabricate(:attending_workshop_invitation, member: member) } }
-  let!(:group) { Fabricate(:group) }
 
   context 'A signed in member' do
     before do
       login(member)
     end
 
-    it 'can access the member dashboard' do
-      visit dashboard_path
+    context '#dashboard' do
+      it 'can access the member dashboard' do
+        visit dashboard_path
 
-      expect(page).to have_content('Dashboard')
-      expect(page).to have_content(member.full_name)
+        expect(page).to have_content('Dashboard')
+        expect(page).to have_content(member.full_name)
+      end
+
+      it 'can view attending workshops' do
+        workshop = Fabricate(:workshop, chapter: Fabricate(:chapter_with_groups))
+        subscription = Fabricate(:subscription, member: member, group: workshop.chapter.groups.first)
+        invitation = Fabricate(:attending_workshop_invitation, member: member,
+                                                               workshop: workshop)
+        presenter = WorkshopPresenter.new(workshop)
+        visit dashboard_path
+
+        expect(page).to have_content("#{presenter.to_s} at #{presenter.venue.name}", count: 1)
+      end
+
+      it 'can view upcoming workshops for their chapters' do
+        c1_workshop = Fabricate(:workshop, chapter: Fabricate(:chapter_with_groups))
+        Fabricate(:subscription, member: member, group: c1_workshop.chapter.groups.first)
+
+        c2_workshop = Fabricate(:workshop, chapter: Fabricate(:chapter_with_groups))
+        Fabricate(:subscription, member: member, group: c2_workshop.chapter.groups.first)
+        c1_workshop_presenter = WorkshopPresenter.new(c1_workshop)
+        c2_workshop_presenter = WorkshopPresenter.new(c2_workshop)
+
+        visit dashboard_path
+
+        expect(page).to have_content("#{c1_workshop_presenter.to_s} at #{c1_workshop_presenter.venue.name}",
+                                     count: 1)
+        expect(page).to have_content("#{c2_workshop_presenter.to_s} at #{c2_workshop_presenter.venue.name}",
+                                     count: 1)
+      end
     end
 
     it 'can access and update their profile' do
@@ -33,6 +62,7 @@ feature 'Member portal' do
     end
 
     it 'can subscribe to groups' do
+      group = Fabricate(:group)
       visit profile_path
       within '#member_profile' do
         click_on 'Manage subscriptions'
@@ -43,6 +73,7 @@ feature 'Member portal' do
     end
 
     it 'can view the invitations they RSVPed to' do
+      invitations = 5.times.map { Fabricate(:attending_workshop_invitation, member: member) }
       visit invitations_path
 
       expect(page).to have_content('Invitations')

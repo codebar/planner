@@ -78,7 +78,7 @@ shared_examples 'invitation route' do
     end
 
     scenario 'when already RSVPd to another event on same evening' do
-      invitation.update_attributes(attending: true, member_id: member.id)
+      invitation.update(attending: true, member_id: member.id)
 
       invitation2 = Fabricate(:coach_workshop_invitation)
       invitation2_route = invitation_path(invitation2)
@@ -91,7 +91,7 @@ shared_examples 'invitation route' do
     end
 
     scenario 'when already RSVPd to another event on same evening and attempting to RSVP directly through the link' do
-      invitation.update_attributes(attending: true, member_id: member.id)
+      invitation.update(attending: true, member_id: member.id)
 
       invitation2 = Fabricate(:coach_workshop_invitation)
       invitation2_route = invitation_path(invitation2)

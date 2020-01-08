@@ -1,46 +1,45 @@
 require 'spec_helper'
 
-describe Job do
+describe Job, type: :model do
   context '#fields' do
     subject(:job) { Fabricate.build(:job) }
 
-    it { should respond_to(:title) }
-    it { should respond_to(:description) }
-    it { should respond_to(:location) }
-    it { should respond_to(:expiry_date) }
-    it { should respond_to(:email) }
-    it { should respond_to(:link_to_job) }
-    it { should respond_to(:expiry_date) }
-    it { should respond_to(:created_by) }
-    it { should respond_to(:approved) }
-    it { should respond_to(:submitted) }
+    it { should define_enum_for(:status).with_values(draft: 0, pending: 1, published: 2) }
   end
 
   context 'scopes' do
-    let!(:approved) { 2.times.map { Fabricate(:published_job) } }
-    let!(:drafts) { 1.times.map { Fabricate(:job) } }
-    let!(:pending_approval) { 4.times.map { Fabricate(:pending_job) } }
+    context '#active' do
+      it 'excludes expired jobs' do
+        expired_job = Fabricate(:job, expiry_date: 1.week.ago)
 
-    it '#published returns all published job' do
-      expect(Job.published.all).to eq(approved)
+        expect(Job.active).not_to include(expired_job)
+      end
+
+      it 'includes active job' do
+        active_job = Fabricate(:job, expiry_date: 1.week.since)
+
+        expect(Job.active).to include(active_job)
+      end
     end
 
-    it '#draft returns all draft jobs' do
-      expect(Job.draft.all).to eq(drafts)
-    end
+    context '#pending_or_published' do
+      it 'excludes draft jobs' do
+        draft_job = Fabricate(:job, status: :draft)
 
-    it '#pending returns all jobs pending approval' do
-      expect(Job.pending.all).to eq(pending_approval)
-    end
+        expect(Job.pending_or_published).not_to include(draft_job)
+      end
 
-    it '#active returns all active jobs' do
-      2.times.map { Fabricate(:job, expiry_date: 1.week.ago) }
+      it 'includes pending jobs' do
+        pending = Fabricate(:pending_job)
 
-      expect(Job.active.to_a).to eq(approved + drafts + pending_approval)
-    end
+        expect(Job.pending_or_published).to include(pending)
+      end
 
-    it '#pending_or_published returns all pending or published jobs' do
-      expect(Job.pending_or_published.to_a).to eq(approved + pending_approval)
+      it 'includes published jobs' do
+        published = Fabricate(:published_job)
+
+        expect(Job.pending_or_published).to include(published)
+      end
     end
   end
 

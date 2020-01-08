@@ -1,6 +1,6 @@
 class Admin::EventsController < Admin::ApplicationController
-  before_filter :set_event, only: [:show]
-  before_filter :find_event, only: %i[edit update]
+  before_action :set_event, only: [:show]
+  before_action :find_event, only: %i[edit update]
 
   def new
     @event = Event.new
@@ -34,7 +34,7 @@ class Admin::EventsController < Admin::ApplicationController
   def update
     set_organisers(organiser_ids)
 
-    if @event.update_attributes(event_params)
+    if @event.update(event_params)
       redirect_to [:admin, @event], notice: 'You have just updated the event'
     else
       render 'edit', notice: 'Error'
@@ -75,9 +75,9 @@ class Admin::EventsController < Admin::ApplicationController
   def event_params
     params.require(:event).permit(
       :name, :slug, :date_and_time, :begins_at, :ends_at, :description, :info, :schedule, :venue_id, :external_url,
-        :coach_spaces, :student_spaces, :email, :announce_only, :tito_url, :invitable, :student_questionnaire,
-        :confirmation_required, :surveys_required, :audience,
-        :coach_questionnaire, :show_faq, :display_coaches, :display_students, sponsor_ids: [], chapter_ids: []
+      :coach_spaces, :student_spaces, :email, :announce_only, :tito_url, :invitable, :student_questionnaire,
+      :confirmation_required, :surveys_required, :audience,
+      :coach_questionnaire, :show_faq, :display_coaches, :display_students, sponsor_ids: [], chapter_ids: []
     )
   end
 

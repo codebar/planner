@@ -30,6 +30,7 @@ class Course::InvitationController < ApplicationController
   end
 
   private
+
   def set_invitation
     @invitation = CourseInvitation.find_by(token: params[:id])
   end

@@ -1,6 +1,7 @@
 class InvitationManager
   def send_workshop_emails(workshop, audience)
     return 'The workshop is not invitable' unless workshop.invitable?
+
     invite_students_to_workshop(workshop) unless audience.eql?('coaches')
     invite_coaches_to_workshop(workshop) unless audience.eql?('students')
   end
@@ -8,6 +9,7 @@ class InvitationManager
 
   def send_event_emails(event, chapter)
     return 'The event is not invitable' unless event.invitable?
+
     invite_coaches_to_event(event, chapter) unless event.audience.eql?('Students')
     invite_students_to_event(event, chapter) unless event.audience.eql?('Coaches')
   end

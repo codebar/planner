@@ -19,13 +19,13 @@ feature 'Managing workshops' do
     end
   end
 
-  context 'creating a new worksbop' do
-    scenario 'successfuly' do
+  context 'creating a new workshop' do
+    scenario 'successfully' do
       visit new_admin_workshop_path
 
       select chapter.name
-      fill_in 'Local date', with: Date.current
-      fill_in 'Local time', with: '11:30'
+      fill_in 'Date', with: Date.current
+      fill_in 'Begins at', with: '11:30'
 
       click_on 'Save'
 
@@ -33,11 +33,25 @@ feature 'Managing workshops' do
       expect(page).to have_content 'Invite'
     end
 
+    scenario 'with ends_at' do
+      visit new_admin_workshop_path
+
+      select chapter.name
+      fill_in 'Date', with: Date.current
+      fill_in 'Begins at', with: '11:30'
+      fill_in 'Ends at', with: '12:45'
+
+      click_on 'Save'
+
+      expect(page).to have_content('The workshop has been created')
+      expect(page).to have_content '11:30 - 12:45'
+    end
+
     scenario 'renders an error when no chapter has been selected' do
       visit new_admin_workshop_path
 
-      fill_in 'Local date', with: Date.current
-      fill_in 'Local time', with: '11:30'
+      fill_in 'Date', with: Date.current
+      fill_in 'Begins at', with: '11:30'
 
       click_on 'Save'
 
@@ -71,7 +85,7 @@ feature 'Managing workshops' do
     end
   end
 
-  scenario  'sending invitations to workshop attendees' do
+  scenario 'sending invitations to workshop attendees' do
     workshop = Fabricate(:workshop)
     visit admin_workshop_send_invites_path(workshop)
     click_on 'Students'
@@ -82,17 +96,19 @@ feature 'Managing workshops' do
   scenario 'rendering a text file with all the workshop attendee emails' do
     workshop = Fabricate(:workshop)
     attendees = Fabricate.times(4, :attending_workshop_invitation, workshop: workshop)
-    attendee_emails = attendees.map(&:member).map(&:email).join(', ')
+    attendees_emails = attendees.map(&:member).map(&:email)
     visit admin_workshop_attendees_emails_path(workshop, format: :text)
 
-    expect(page).to have_content(attendee_emails)
+    attendees_emails.each do |email|
+      expect(page).to have_content(email)
+    end
   end
 
   scenario 'rendering a list with the workshop attendee names' do
     workshop = Fabricate(:workshop)
     attendees = Fabricate.times(4, :attending_workshop_invitation, workshop: workshop)
     visit admin_workshop_attendees_checklist_path(workshop, format: :text)
-    attendee_emails = attendees.map(&:member).map(&:full_name).each do |name|
+    attendees.map(&:member).map(&:full_name).each do |name|
       expect(page).to have_content(name)
     end
   end

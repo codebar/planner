@@ -70,10 +70,10 @@ class DashboardController < ApplicationController
                                 .to_a
 
     accepted_workshops = current_user.workshop_invitations.accepted
-                             .joins(:workshop)
-                             .merge(Workshop.upcoming)
-                             .includes(workshop: [:chapter, :sponsors])
-                             .map(&:workshop)
+                                     .joins(:workshop)
+                                     .merge(Workshop.upcoming)
+                                     .includes(workshop: [:chapter, :sponsors])
+                                     .map(&:workshop)
 
     all_events(chapter_workshops + accepted_workshops)
       .sort_by(&:date_and_time)
@@ -85,6 +85,6 @@ class DashboardController < ApplicationController
     meeting = Meeting.includes(:venue).next
     events = Event.includes(:venue, :sponsors).future(DEFAULT_UPCOMING_EVENTS)
 
-    [*workshops, course, *events, meeting].compact
+    [*workshops, course, *events, meeting].uniq.compact
   end
 end

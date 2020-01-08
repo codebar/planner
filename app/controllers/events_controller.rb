@@ -29,11 +29,10 @@ class EventsController < ApplicationController
 
     @event = EventPresenter.new(event)
     @host_address = AddressPresenter.new(@event.venue.address)
+    return unless logged_in?
 
-    if logged_in?
-      invitation = Invitation.find_by(member: current_user, event: event, attending: true)
-      return redirect_to event_invitation_path(@event, invitation) if invitation
-    end
+    invitation = Invitation.find_by(member: current_user, event: event, attending: true)
+    return redirect_to event_invitation_path(@event, invitation) if invitation
   end
 
   def student
@@ -51,7 +50,7 @@ class EventsController < ApplicationController
     invitation = member.invitations.where(event: @event, role: 'Student').try(:first)
     invitation ||= Invitation.create(event: @event, member: member, role: 'Student')
 
-    invitation.update_attributes attending: true
+    invitation.update(attending: true)
     head :ok
   end
 

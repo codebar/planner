@@ -1,7 +1,7 @@
 class AuthServicesController < ApplicationController
   def new
     referer_path = URI(request.referer).path
-    if Rails.application.routes.recognize_path(referer_path)[:controller].in?(%w(workshops events courses meetings))
+    if Rails.application.routes.recognize_path(referer_path)[:controller].in?(%w[workshops events courses meetings])
       session[:referer_path] = referer_path
     end
     redirect_to '/auth/github'
@@ -78,7 +78,7 @@ class AuthServicesController < ApplicationController
   end
 
   def omniauth_providers
-    (OmniAuth::Strategies.local_constants.map(&:downcase) - %i(developer oauth oauth2)).map(&:to_s)
+    (OmniAuth::Strategies.local_constants.map(&:downcase) - %i[developer oauth oauth2]).map(&:to_s)
   end
 
   def redirect_path

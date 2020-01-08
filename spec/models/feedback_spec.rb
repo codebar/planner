@@ -53,13 +53,13 @@ describe Feedback do
     end
 
     context '#coach' do
-      it "accepts memeber with 'coach' role" do
+      it "accepts member with 'coach' role" do
         feedback = Fabricate.build(:feedback, coach: Fabricate(:coach))
 
         expect(feedback).to be_valid
       end
 
-      it "is invalid with memeber with 'student' role" do
+      it "is invalid with member with 'student' role" do
         feedback = Fabricate.build(:feedback, coach: Fabricate(:student))
 
         expect(feedback).to_not be_valid
@@ -85,22 +85,22 @@ describe Feedback do
 
     context 'with valid token' do
       it 'is submited valid params' do
-        expect {
+        expect do
           Feedback.submit_feedback(params, feedback_request.token)
-        }.to change { Feedback.count }.by(1)
+        end.to change { Feedback.count }.by(1)
       end
 
       it 'is not submited invalid params' do
-        expect {
+        expect do
           Feedback.submit_feedback(params.except(:rating), feedback_request.token)
-        }.to_not change { Feedback.count }
+        end.to_not change { Feedback.count }
       end
     end
 
     it 'is not submited with invalid token' do
-      expect {
+      expect do
         Feedback.submit_feedback(params, 'invalid_token')
-      }.to_not change { Feedback.count }
+      end.to_not change { Feedback.count }
     end
   end
 end

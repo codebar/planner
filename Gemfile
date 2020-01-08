@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 ruby '2.4.2'
 
-gem 'rails', '4.2.10'
+gem 'rails', '4.2.11.1'
 
 gem 'acts-as-taggable-on', '~> 5.0'
 gem 'carrierwave'
@@ -15,8 +15,9 @@ gem 'foundation-rails', '5.5.3.2'
 gem 'friendly_id'
 gem 'github-markdown'
 gem 'haml'
+gem 'high_voltage'
 gem 'jquery-rails'
-gem 'jquery-ui-rails', '~> 5.0.0'
+gem 'jquery-ui-rails', '~> 6.0.1'
 gem 'mini_magick'
 gem 'nokogiri'
 gem 'omniauth'
@@ -24,6 +25,7 @@ gem 'omniauth-github'
 gem 'pg', '~>0.20.0'
 gem 'pickadate-rails'
 gem 'premailer-rails'
+gem 'puma'
 gem 'pundit'
 gem 'rails4-autocomplete'
 gem 'rolify'
@@ -43,7 +45,7 @@ gem 'gibbon', '~> 1.1.5'
 
 gem 'stripe'
 
-gem 'rails-html-sanitizer', '~> 1.0.4'
+gem 'rails-html-sanitizer', '~> 1.3.0'
 
 gem 'jbuilder'
 
@@ -53,17 +55,17 @@ group :development do
 end
 
 group :development, :test do
-  gem 'coveralls', '~> 0.8.22', require: false
+  gem 'coveralls', '~> 0.8.23', require: false
   gem 'dotenv-rails'
   gem 'fabrication'
   gem 'faker'
-  gem 'jazz_hands', git: 'https://github.com/nixme/jazz_hands', branch: 'bring-your-own-debugger'
   gem 'launchy'
   gem 'pry-byebug'
   gem 'pry-remote'
   gem 'rspec-collection_matchers'
   gem 'rspec-its'
   gem 'rspec-rails'
+  gem 'rubocop', '~> 0.77.0', require: false
   gem 'timecop'
   gem 'bullet'
 end
@@ -71,16 +73,14 @@ end
 group :test do
   gem 'capybara'
   gem 'database_cleaner'
-  gem 'poltergeist'
-  gem 'shoulda-matchers', '~> 3.1'
+  gem 'shoulda-matchers', '~> 4.1'
+  gem 'webdrivers'
 end
 
 group :production do
   gem 'foreman'
-  gem 'puma'
   gem 'rails_12factor'
 end
 
 gem 'newrelic_rpm'
-gem 'rubocop', '~> 0.59.2'
 gem 'rollbar'

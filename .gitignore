@@ -20,6 +20,8 @@ TAGS
 .env
 .DS_Store
 
+.byebug_history
+
 # Emacs
 *~
 \#*\#

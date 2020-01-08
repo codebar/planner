@@ -32,11 +32,13 @@
               %td{ width: '60%', style: 'vertical-align: top; padding-right: 20px;' }
                 %h4
                   Workshop
-                  %small= humanize_date(@workshop.date_and_time, with_time: true)
+                  %br
+                  %small #{humanize_date(@workshop.date_and_time, with_time: true)}#{@workshop.ends_at.present? ? " - " + @workshop.ends_at.strftime('%H:%M') : ""}
                 = link_to 'View invitation and RSVP', full_url_for(invitation_url(@invitation)), class: 'btn'
               %td{ width: '40%', style: 'vertical-align: top;'}
                 %h4
                   Venue
+                  %br
                   %small= @workshop.host.name
                 = image_tag(@workshop.host.avatar, alt: @workshop.host.name)
 

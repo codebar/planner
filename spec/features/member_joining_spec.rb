@@ -35,7 +35,7 @@ feature 'A new student signs up' do
     expect(page).to have_selector('.member_about_you .error')
   end
 
-  scenario 'A new member details are succesfuly captured' do
+  scenario 'A new member details are successfully captured' do
     visit new_member_path
     click_on 'Sign up as a coach'
 
@@ -55,7 +55,6 @@ feature 'A new student signs up' do
     expect(page).to have_content('Jane Doe')
     expect(page).to have_link('jane@codebar.io')
   end
-
 
   scenario 'Picking a mailing list on step 2 subscribes you to that list' do
     member = Fabricate(:member)

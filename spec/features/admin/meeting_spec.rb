@@ -12,14 +12,16 @@ feature 'Managing meetings' do
   end
 
   context 'creating a new meeting' do
-    scenario 'successfuly' do
+    scenario 'successfully' do
       visit new_admin_meeting_path
 
       fill_in 'Name', with: 'August meeting'
+      fill_in 'Local date', with: Date.current
+      fill_in 'Local time', with: '11:30'
       select venue.name
       click_on 'Update'
 
-      expect(page).to have_content('Meeting succesfully created')
+      expect(page).to have_content('Meeting successfully created')
       expect(page.current_path)
         .to eq(admin_meeting_path("#{I18n.l(today, format: :year_month).downcase}-august-meeting-1"))
       expect(page).to have_content 'Invite'
@@ -36,6 +38,7 @@ feature 'Managing meetings' do
 
   context 'updating an existing meeting' do
     let(:meeting) { Fabricate(:meeting, name: 'August Meeting') }
+
     scenario 'renders an error when no chapter has been selected' do
       Fabricate(:meeting, name: 'August Meeting')
       visit edit_admin_meeting_path(meeting)
@@ -46,7 +49,7 @@ feature 'Managing meetings' do
       expect(page).to have_content('Slug has already been taken')
     end
 
-    scenario 'successfuly' do
+    scenario 'successfully' do
       permissions = Fabricate(:permission, resource: meeting, name: 'organiser')
 
       visit edit_admin_meeting_path(meeting)
@@ -55,14 +58,15 @@ feature 'Managing meetings' do
 
       click_on 'Update'
 
-      expect(page).to have_content('You have succesfully updated the details of this meeting')
-      expect(page).to have_css("span[title='#{permissions.members.last.full_name}']")
-      expect(page).to_not have_css("span[title='#{permissions.members.first.full_name}']")
+      expect(page).to have_content('You have successfully updated the details of this meeting')
+      expect(page).to have_css(%(span[title="#{permissions.members.last.full_name}"]))
+      expect(page).to_not have_css(%(span[title="#{permissions.members.first.full_name}"]))
     end
   end
 
   context 'retrieving the attendee emails' do
     let(:meeting) { Fabricate(:meeting) }
+
     scenario 'when format: :text' do
       invitations = Fabricate.times(4, :attending_meeting_invitation, meeting: meeting)
       visit attendees_emails_admin_meeting_path(meeting, format: :text)
@@ -104,12 +108,12 @@ feature 'Managing meetings' do
       permanent_ban = Fabricate.build(:ban, member: chapter.members[3], permanent: true, expires_at: nil)
       permanent_ban.save(validate: false)
       Fabricate(:ban, member: chapter.members[4], expires_at: Time.zone.today + 2.months)
-      expired_ban = Fabricate.build(:ban, member: chapter.members[5], expires_at: Time.zone.today - 1.months)
+      expired_ban = Fabricate.build(:ban, member: chapter.members[5], expires_at: Time.zone.today - 1.month)
       expired_ban.save(validate: false)
 
-      expect {
+      expect do
         visit invite_admin_meeting_path(meeting)
-      }.to change{ ActionMailer::Base.deliveries.count }.by (chapter.members.count - 4)
+      end.to change { ActionMailer::Base.deliveries.count }.by (chapter.members.count - 4)
     end
   end
 end

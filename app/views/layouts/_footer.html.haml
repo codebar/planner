@@ -4,6 +4,7 @@
       %p.copyright
         &#169; #{Date.today.year} codebar
 
+
       %p.contact
         =t("footer.email_us")
         -# encoded email address
@@ -29,7 +30,12 @@
 
     .large-3.columns
       = render partial: 'shared/social_media'
+
   .row
     .large-12.columns
-      %p.registration
-        Registered UK company number: 10791813
+
+      %ul.inline-list.registration
+        %li
+          Registered UK company number: 10791813
+        %li= link_to t("navigation.cookie-policy"), cookie_policy_path
+        %li= link_to t("navigation.privacy-policy"), privacy_policy_path

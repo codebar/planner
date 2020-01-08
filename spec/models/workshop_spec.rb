@@ -3,14 +3,6 @@ require 'spec_helper'
 describe Workshop do
   subject(:workshop) { Fabricate(:workshop) }
 
-  it { should respond_to(:title) }
-  it { should respond_to(:description) }
-  it { should respond_to(:date_and_time) }
-  it { should respond_to(:sponsors) }
-  it { should respond_to(:workshop_sponsors) }
-  it { should respond_to(:rsvp_opens_at) }
-  it { should respond_to(:time_zone) }
-
   context 'time zone fields' do
     let(:workshop) { Fabricate.build(:workshop, chapter: Fabricate(:chapter, time_zone: 'Pacific Time (US & Canada)')) }
     let(:pacific_time) { ActiveSupport::TimeZone['Pacific Time (US & Canada)'].local(2015, 6, 12, 18, 30) }
@@ -18,7 +10,7 @@ describe Workshop do
 
     context 'date_and_time' do
       it 'saves the local time in UTC' do
-        workshop.update_attributes!(
+        workshop.update!(
           local_date: '12/06/2015',
           local_time: '18:30'
         )
@@ -36,7 +28,7 @@ describe Workshop do
 
     context 'rsvp_opens_at' do
       it 'saves the local time in UTC' do
-        workshop.update_attributes!(
+        workshop.update!(
           rsvp_open_local_date: '12/06/2015',
           rsvp_open_local_time: '18:30'
         )
@@ -50,15 +42,6 @@ describe Workshop do
         expect(workshop.rsvp_opens_at).to eq(pacific_time)
         expect(workshop.rsvp_opens_at.zone).to eq('PDT')
       end
-    end
-  end
-
-  context '#coach_spaces?' do
-    let(:sponsor) { Fabricate(:sponsor) }
-    let(:workshop) { Fabricate(:workshop_no_sponsor) }
-
-    before do
-      Fabricate(:workshop_sponsor, sponsor: sponsor, workshop: workshop, host: true)
     end
   end
 
@@ -170,17 +153,17 @@ describe Workshop do
     end
 
     it 'is invitable if RSVP open date/time in past, and invitable set to false' do
-      workshop = Fabricate.build(:workshop, invitable: false, rsvp_opens_at: Time.zone.now - 1.days)
+      workshop = Fabricate.build(:workshop, invitable: false, rsvp_opens_at: Time.zone.now - 1.day)
       expect(workshop.invitable_yet?).to be true
     end
 
     it 'is invitable if RSVP open date/time in future, and invitable set to true' do
-      workshop = Fabricate.build(:workshop, invitable: true, rsvp_opens_at: Time.zone.now - 1.days)
+      workshop = Fabricate.build(:workshop, invitable: true, rsvp_opens_at: Time.zone.now - 1.day)
       expect(workshop.invitable_yet?).to be true
     end
 
     it 'is NOT invitable if RSVP open date/time in future, and invitable set to false' do
-      workshop = Fabricate.build(:workshop, invitable: false, rsvp_opens_at: Time.zone.now + 1.days)
+      workshop = Fabricate.build(:workshop, invitable: false, rsvp_opens_at: Time.zone.now + 1.day)
       expect(workshop.invitable_yet?).to be false
     end
   end

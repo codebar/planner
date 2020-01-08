@@ -13,13 +13,12 @@ feature 'Jobs' do
 
       scenario 'can view all active jobs' do
         jobs = Fabricate.times(3, :published_job)
-        expired = 3.times.map { |i| Fabricate.create(:job, expiry_date: 2.days.ago) }
         visit jobs_path
 
         expect(page).to have_content('Jobs')
+        expect(page).to have_content('There are 3 jobs listed')
 
         jobs.each { |job| expect(page).to have_content(job.title) }
-        expired.each { |expired_job| expect(page).to_not have_content(expired_job.title) }
       end
 
       context 'can view job posts' do
@@ -73,7 +72,7 @@ feature 'Jobs' do
   end
 
   context 'The job page must contain JobPosting schema.org mark up' do
-    it 'containts all the required data' do
+    it 'contains all the required data' do
       job = Fabricate(:published_job)
       visit job_path(job)
 

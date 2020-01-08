@@ -10,9 +10,7 @@ class Ticket
 
   private
 
-  def params
-    @params
-  end
+  attr_reader :params
 
   def authorise(request)
     # TODO
