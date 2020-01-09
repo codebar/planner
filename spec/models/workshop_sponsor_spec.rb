@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe WorkshopSponsor do
+RSpec.describe WorkshopSponsor, type: :model  do
   let!(:workshop) { Fabricate(:workshop) }
 
   context '#scopes' do

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-feature 'Coach viewing feedback' do
+RSpec.feature 'Coach viewing feedback', type: :feature do
   it 'can access all feedback' do
     coach = Fabricate(:workshop_coach_attendee, name: 'Le name one')
     Fabricate(:coaches, members: [coach])

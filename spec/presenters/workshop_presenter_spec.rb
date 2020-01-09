@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe WorkshopPresenter do
+RSpec.describe WorkshopPresenter do
   let(:invitations) do
     [Fabricate(:student_workshop_invitation),
      Fabricate(:student_workshop_invitation),

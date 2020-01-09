@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe WorkshopInvitation do
+RSpec.describe WorkshopInvitation, type: :model  do
   context 'methods' do
     let(:invitation) { Fabricate(:student_workshop_invitation) }
     let!(:accepted_invitation) { 2.times { Fabricate(:workshop_invitation, attending: true) } }

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Admin::WorkshopsController, type: :controller do
+RSpec.describe Admin::WorkshopsController, type: :controller do
   let!(:workshop) { Fabricate(:workshop) }
   let(:admin) { Fabricate(:member) }
 

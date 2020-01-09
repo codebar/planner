@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Workshop do
+RSpec.describe Workshop, type: :model  do
   subject(:workshop) { Fabricate(:workshop) }
 
   context 'time zone fields' do

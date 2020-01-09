@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Feedback do
+RSpec.describe Feedback, type: :model  do
   subject(:feedback) { Fabricate.build(:feedback) }
 
   let(:valid_feedback_token) { 'valid_feedback_token' }

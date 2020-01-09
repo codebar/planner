@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-feature 'Announcements' do
+RSpec.feature 'Announcements', type: :feature do
   let(:member) { Fabricate(:member) }
   let(:chapter) { Fabricate(:chapter_with_groups) }
 

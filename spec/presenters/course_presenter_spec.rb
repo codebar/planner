@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe CoursePresenter do
+RSpec.describe CoursePresenter do
   let(:course) { double(:course) }
   let(:event) { CoursePresenter.new(course) }
 

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-feature 'Managing sponsors' do
+RSpec.feature 'Managing sponsors', type: :feature do
   let(:member) { Fabricate(:member) }
   let!(:chapter) { Fabricate(:chapter) }
 

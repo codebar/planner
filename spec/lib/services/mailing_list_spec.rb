@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'services/mailing_list'
 
-describe MailingList, wip: true do
+RSpec.describe MailingList, wip: true do
   let(:client) { double(:gibbon) }
   let(:mailing_list) { MailingList.new(:list_id) }
   let(:lists) { double(:lists) }

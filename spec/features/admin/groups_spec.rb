@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-feature 'admin groups' do
+RSpec.feature 'admin groups', type: :feature do
   context '#creating a new group' do
     let(:member) { Fabricate(:member) }
     let!(:chapter) { Fabricate(:chapter, name: 'Brighton') }

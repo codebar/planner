@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Job, type: :model do
+RSpec.describe Job, type: :model do
   context '#fields' do
     subject(:job) { Fabricate.build(:job) }
 

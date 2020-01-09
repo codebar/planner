@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-feature 'Managing users' do
+RSpec.feature 'Managing users', type: :feature do
   let(:member) { Fabricate(:member) }
   let(:admin) { Fabricate(:chapter_organiser) }
   let!(:invitation) { Fabricate(:attended_workshop_invitation, attending: true, member: member) }

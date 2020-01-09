@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-feature 'Event creation' do
+RSpec.feature 'Event creation', type: :feature do
   let(:member) { Fabricate(:member) }
   let(:chapter) { Fabricate(:chapter_with_groups) }
 

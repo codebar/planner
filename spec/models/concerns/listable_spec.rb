@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Listable do
+RSpec.describe Listable, type: :model do
   subject(:workshop) { Fabricate(:workshop) }
 
   context 'scopes' do

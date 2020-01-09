@@ -1,4 +1,4 @@
-shared_examples 'invitation route' do
+RSpec.shared_examples 'invitation route' do
   context 'accept an invitation' do
     scenario 'when there are available spots' do
       Tutorial.create(title: 'title')

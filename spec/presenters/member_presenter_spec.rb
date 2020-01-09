@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe MemberPresenter do
+RSpec.describe MemberPresenter do
   let(:member) { Fabricate(:member) }
   let(:member_presenter) { MemberPresenter.new(member) }
 

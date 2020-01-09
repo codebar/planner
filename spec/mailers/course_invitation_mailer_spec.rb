@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe CourseInvitationMailer do
+RSpec.describe CourseInvitationMailer, type: :mailer  do
   let(:email) { ActionMailer::Base.deliveries.last }
 
   it '#invite_student' do

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe EventInvitationMailer do
+RSpec.describe EventInvitationMailer, type: :mailer  do
   let(:email) { ActionMailer::Base.deliveries.last }
   let(:event) { Fabricate(:event, date_and_time: Time.zone.local(2017, 11, 12, 10, 0), name: 'Test event') }
   let(:member) { Fabricate(:member) }

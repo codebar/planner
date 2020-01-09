@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-feature 'A new student signs up' do
+RSpec.feature 'A new student signs up', type: :feature do
   before do
     OmniAuth.config.mock_auth[:github] = OmniAuth::AuthHash.new(
       provider: 'github',

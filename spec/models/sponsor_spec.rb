@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Sponsor do
+RSpec.describe Sponsor, type: :model  do
   subject(:sponsor) { Fabricate.build(:sponsor) }
 
   it { should respond_to(:name) }

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-feature 'viewing a course' do
+RSpec.feature 'viewing a course', type: :feature do
   let(:date_and_time) { Time.zone.now + 1.week }
   let!(:course) { Fabricate(:course) }
 

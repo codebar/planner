@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Group, type: :model do
+RSpec.describe Group, type: :model do
   subject(:group) { Fabricate.build(:group) }
 
   context 'validations' do
