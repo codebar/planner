@@ -9,11 +9,14 @@ RSpec.feature 'A new student signs up', type: :feature do
     visit root_path
     click_on 'Sign up as a student'
     click_on 'I understand and meet the eligibility criteria. Sign me up as a student'
+
+    accept_toc
+
     expect(page).to have_current_path(step1_member_path(member_type: 'student'))
   end
 
   scenario 'A visitor must fill in all mandatory fields in order to sign up' do
-    member = Fabricate(:member, name: nil, surname: nil, email: nil, about_you: nil)
+    member = Fabricate(:member_with_toc, name: nil, surname: nil, email: nil, about_you: nil)
     member.update(can_log_in: true)
     login member
 
@@ -30,6 +33,8 @@ RSpec.feature 'A new student signs up', type: :feature do
   scenario 'A new member details are successfully captured' do
     visit new_member_path
     click_on 'Sign up as a coach'
+
+    accept_toc
 
     fill_in 'member_pronouns', with: 'she'
     fill_in 'member_name', with: 'Jane'

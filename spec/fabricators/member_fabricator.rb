@@ -8,6 +8,10 @@ Fabricator(:member) do
   auth_services(count: 1) { Fabricate(:auth_service) }
 end
 
+Fabricator(:member_with_toc, from: :member) do
+  accepted_toc_at { Time.zone.now }
+end
+
 Fabricator(:student, from: :member) do
   groups(count: 2) { |attrs, i| Fabricate(:students) }
 end

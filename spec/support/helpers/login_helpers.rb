@@ -37,6 +37,11 @@ module LoginHelpers
     )
 
   end
+
+  def accept_toc
+    check I18n.t('members.terms_and_conditions.agree')
+    click_on 'Accept'
+  end
 end
 
 RSpec.configure do |config|
