@@ -17,6 +17,8 @@ Planner::Application.routes.draw do
     get 'step2'
   end
 
+  resource :terms_and_conditions, only: %i[show update patch]
+
   resources :jobs, only: %i[index show]
 
   namespace :member, path: 'my' do

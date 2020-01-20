@@ -64,6 +64,14 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def store_path
+    session[:previous_request_url] = request.url
+  end
+
+  def previous_path
+    session[:previous_request_url]
+  end
+
   def finish_registration
     if current_user.requires_additional_details?
       redirect_to step1_member_path unless providing_additional_details?

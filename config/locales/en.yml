@@ -193,6 +193,14 @@ en:
     sign_up_as_student: "I understand and meet the eligibility criteria. Sign me up as a student"
     sign_up_as_coach: "Sign up as a coach"
     code_of_conduct: "code of conduct"
+    terms_and_conditions:
+      title: 'Terms and Conditions'
+      body: 'Before you can proceed you must first read our Code of Conduct and agree to abide by it.'
+      link_text: 'Read codebar''s Code of Conduct'
+      agree: 'I have read codebar''s Code of Conduct and agree with all of its terms.'
+      accept: 'Accept'
+      messages:
+        notice: 'You have to accept the Terms and Conditions before you are able to proceed.'
     new:
       intro: "We offer a welcoming, inclusive and learning-friendly environment, and have a zero tolerance policy towards any form of harassment or inappropriate behavior. Before you sign up, read our"
       students:

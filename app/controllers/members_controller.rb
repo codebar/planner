@@ -11,8 +11,11 @@ class MembersController < ApplicationController
   end
 
   def step1
-    @suppress_notices = true
+    store_path and return redirect_to(terms_and_conditions_path) if current_user.accepted_toc_at.blank?
+
     @member = current_user
+    @suppress_notices = true
+    flash[notice] = 'Thanks for signing up. Please fill in your details to complete the registration process.'
     return unless request.post? || request.put?
 
     if @member.update(member_params)
