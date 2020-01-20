@@ -24,6 +24,19 @@ module LoginHelpers
     member.add_role(:organiser, chapter)
     login(member)
   end
+
+  def mock_github_auth
+    OmniAuth.config.mock_auth[:github] = OmniAuth::AuthHash.new(
+      provider: 'github',
+      uid: '42',
+      credentials: { token: 'Fake token' },
+      info: {
+        email: Faker::Internet.email,
+        name: Faker::Name.name
+      }
+    )
+
+  end
 end
 
 RSpec.configure do |config|
