@@ -6,10 +6,11 @@ Fabricator(:member) do
   about_you { Faker::Lorem.sentence }
   twitter { Faker::Name.first_name }
   auth_services(count: 1) { Fabricate(:auth_service) }
+  accepted_toc_at { Time.zone.now }
 end
 
-Fabricator(:member_with_toc, from: :member) do
-  accepted_toc_at { Time.zone.now }
+Fabricator(:member_without_toc, from: :member) do
+  accepted_toc_at { nil }
 end
 
 Fabricator(:student, from: :member) do

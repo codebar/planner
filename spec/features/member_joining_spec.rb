@@ -16,7 +16,7 @@ RSpec.feature 'A new student signs up', type: :feature do
   end
 
   scenario 'A visitor must fill in all mandatory fields in order to sign up' do
-    member = Fabricate(:member_with_toc, name: nil, surname: nil, email: nil, about_you: nil)
+    member = Fabricate(:member, name: nil, surname: nil, email: nil, about_you: nil)
     member.update(can_log_in: true)
     login member
 

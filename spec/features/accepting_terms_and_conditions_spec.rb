@@ -1,11 +1,12 @@
 require 'spec_helper'
 
-RSpec.feature 'Accepting Terms and Conditions', type: :feature, wip: true do
-  before do
-    mock_github_auth
-  end
+RSpec.feature 'Accepting Terms and Conditions', type: :feature do
 
   context 'When a user signs up to codebar' do
+    before do
+      mock_github_auth
+    end
+
     scenario 'they can''t proceed unless they accept the ToCs' do
       visit root_path
       click_on 'Sign up as a student'
@@ -33,15 +34,26 @@ RSpec.feature 'Accepting Terms and Conditions', type: :feature, wip: true do
   end
 
   context 'When an existing member logs in' do
+
     context 'and they have not yet accepted codebar''s ToCs' do
-      scenario 'they have to accept before proceeding' do
-        pending
+      scenario 'they have to accept before continuing to the page they want to get' do
+        member = Fabricate(:member_without_toc)
+        login(member)
+        visit root_path
+        expect(page).to have_current_path(terms_and_conditions_path)
+
+        accept_toc
+        expect(page).to have_current_path(root_path)
       end
     end
 
     context 'and they have already accepted codebar''s ToCs' do
       scenario 'they will be redirected to the link they were trying to access' do
-        pending
+        member = Fabricate(:member)
+        login(member)
+
+        visit dashboard_path
+        expect(page).to have_current_path(dashboard_path)
       end
     end
   end

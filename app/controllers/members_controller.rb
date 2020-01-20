@@ -11,7 +11,7 @@ class MembersController < ApplicationController
   end
 
   def step1
-    store_path and return redirect_to(terms_and_conditions_path) if current_user.accepted_toc_at.blank?
+    accept_terms
 
     @member = current_user
     @suppress_notices = true
