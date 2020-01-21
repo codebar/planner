@@ -1,16 +1,16 @@
 %section#banner
   .row
     .medium-12.columns
-      %h1= t('members.terms_and_conditions.title')
+      %h1= t('terms_and_conditions.title')
       %p
-        = t('members.terms_and_conditions.body')
+        = t('terms_and_conditions.body')
         %br
-          = link_to t('members.terms_and_conditions.link_text'), code_of_conduct_path, target: '_blank'
+          = link_to t('terms_and_conditions.link_text'), code_of_conduct_path, target: '_blank'
 
   = simple_form_for @terms_and_conditions_form, url: terms_and_conditions_path, method: :patch do |f|
     .row
       .large-12.columns
-        = f.input :terms, as: :boolean, label: t('members.terms_and_conditions.agree'), wrapper: :checkbox
+        = f.input :terms, as: :boolean, wrapper: :checkbox
     .row
       .large-12.columns
-        = f.submit t('members.terms_and_conditions.accept'), class: 'button round right'
+        = f.submit t('terms_and_conditions.accept'), class: 'button round right'

@@ -26,7 +26,7 @@ RSpec.feature 'Accepting Terms and Conditions', type: :feature do
 
       expect(page).to have_current_path(terms_and_conditions_path)
 
-      click_on I18n.t('members.terms_and_conditions.link_text')
+      click_on I18n.t('terms_and_conditions.link_text')
       page.driver.browser.switch_to.window(page.driver.browser.window_handles.last)
 
       expect(page).to have_content(I18n.t('code_of_conduct.title'))
@@ -41,7 +41,7 @@ RSpec.feature 'Accepting Terms and Conditions', type: :feature do
 
       expect(page).to have_current_path(terms_and_conditions_path)
 
-      check I18n.t('members.terms_and_conditions.agree')
+      check :terms
       click_on 'Accept'
 
       expect(page).to have_current_path(step1_member_path(member_type: 'student'))

@@ -193,14 +193,6 @@ en:
     sign_up_as_student: "I understand and meet the eligibility criteria. Sign me up as a student"
     sign_up_as_coach: "Sign up as a coach"
     code_of_conduct: "code of conduct"
-    terms_and_conditions:
-      title: 'Terms and Conditions'
-      body: 'Before you can proceed you must first read our Code of Conduct and agree to abide by it.'
-      link_text: 'Read codebar''s Code of Conduct'
-      agree: 'I have read codebar''s Code of Conduct and agree with all of its terms.'
-      accept: 'Accept'
-      messages:
-        notice: 'You have to accept the Terms and Conditions before you are able to proceed.'
     new:
       intro: "We offer a welcoming, inclusive and learning-friendly environment, and have a zero tolerance policy towards any form of harassment or inappropriate behavior. Before you sign up, read our"
       students:
@@ -209,6 +201,13 @@ en:
         criteria_brief: "as our workshops are only available to women, LGBTQ, people from underrepresented minority groups."
         github: "Lastly, when you click the sign up button, you'll be taken to something called GitHub. After logging in with a GitHub account, you'll be taken back to the codebar website. If you don't have an account yet, you'll need to create one. It doesn't take long and it's something that will come in handy when you get started with coding!"
       invitations: "Invitations are sent out periodically, so don't worry if you don't receive one as soon as you register."
+  terms_and_conditions:
+    title: 'Terms and Conditions'
+    body: 'Before you can proceed you must first read our Code of Conduct and agree to abide by it.'
+    link_text: 'Read codebar''s Code of Conduct'
+    accept: 'Accept'
+    messages:
+      notice: 'You have to accept the Terms and Conditions before you are able to proceed.'
   footer:
     email_us: "Send us an email at"
     contact_info: "Contact Info:"
@@ -473,6 +472,9 @@ en:
       job:
         remote: Only check if the role is remote only
         salary: Annual pay before tax, without commas or decimal points
+    labels:
+      terms_and_conditions_form:
+        terms: 'I have read codebar''s Code of Conduct and agree with all of its terms.'
   activerecord:
     attributes:
       job:

@@ -13,7 +13,7 @@ class TermsAndConditionsController < ApplicationController
       member.update_attribute(:accepted_toc_at, Time.zone.now)
       redirect_to previous_path
     else
-      flash[notice] = I18n.t('members.terms_and_conditions.messages.notice')
+      flash[notice] = I18n.t('terms_and_conditions.messages.notice')
       render :show
     end
   end

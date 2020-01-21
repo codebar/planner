@@ -39,7 +39,7 @@ module LoginHelpers
   end
 
   def accept_toc
-    check I18n.t('members.terms_and_conditions.agree')
+    check :terms
     click_on 'Accept'
   end
 end
