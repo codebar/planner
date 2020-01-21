@@ -19,6 +19,21 @@ RSpec.feature 'Accepting Terms and Conditions', type: :feature do
       expect(page).to have_content('You have to accept the Terms and Conditions before you are able to proceed.')
     end
 
+    scenario 'they can read the Code of Conduct before accepting the ToCs', js: true do
+      visit root_path
+      click_on 'Sign up as a student'
+      click_on 'I understand and meet the eligibility criteria. Sign me up as a student'
+
+      expect(page).to have_current_path(terms_and_conditions_path)
+
+      click_on I18n.t('members.terms_and_conditions.link_text')
+      page.driver.browser.switch_to.window(page.driver.browser.window_handles.last)
+
+      expect(page).to have_content(I18n.t('code_of_conduct.title'))
+      expect(page).to have_content(I18n.t('code_of_conduct.summary.title'))
+      expect(page).to have_content(I18n.t('code_of_conduct.content.title'))
+    end
+
     scenario 'they can fill in their details after they accept the ToCs' do
       visit root_path
       click_on 'Sign up as a student'

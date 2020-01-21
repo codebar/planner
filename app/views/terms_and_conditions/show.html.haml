@@ -4,13 +4,13 @@
       %h1= t('members.terms_and_conditions.title')
       %p
         = t('members.terms_and_conditions.body')
-        = link_to t('members.terms_and_conditions.link_text'), code_of_conduct_path
+        %br
+          = link_to t('members.terms_and_conditions.link_text'), code_of_conduct_path, target: '_blank'
 
   = simple_form_for @terms_and_conditions_form, url: terms_and_conditions_path, method: :patch do |f|
     .row
-      .large-6.large-offset-3.columns
-        = f.check_box :terms
-        = f.label :terms, t('members.terms_and_conditions.agree')
+      .large-12.columns
+        = f.input :terms, as: :boolean, label: t('members.terms_and_conditions.agree'), wrapper: :checkbox
     .row
-      .large-6.large-offset-3.columns
+      .large-12.columns
         = f.submit t('members.terms_and_conditions.accept'), class: 'button round right'
