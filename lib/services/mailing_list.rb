@@ -1,4 +1,7 @@
 class MailingList
+  SUBSCRIBED = 'subscribed'.freeze
+  MEMBER_EXISTS = 'Member Exists'.freeze
+
   attr_reader :list_id
 
   def initialize(list_id)
@@ -6,26 +9,55 @@ class MailingList
   end
 
   def subscribe(email, first_name, last_name)
-    return true unless Rails.env.production?
+    return if disabled?
 
-    client.lists.subscribe(id: list_id,
-                           email: { email: email },
-                           merge_vars: { FNAME: first_name, LNAME: last_name },
-                           double_optin: false,
-                           update_existing: true)
+    begin
+      client.lists(list_id).members
+            .create(body: { email_address: email,
+                            status: 'subscribed',
+                            merge_fields: { FNAME: first_name, LNAME: last_name } })
+    rescue Gibbon::MailChimpError => e
+      reactivate_subscription(email, first_name, last_name) if e.title.eql?(MEMBER_EXISTS)
+    end
   end
 
   def unsubscribe(email)
-    return true unless Rails.env.production?
+    return if disabled?
 
-    client.lists.unsubscribe(id: list_id,
-                             email: { email: email },
-                             send_notify: false)
+    client.lists(list_id).members(md5_hashed_email_address(email))
+          .update(body: { status: 'unsubscribed' })
+  end
+
+  def reactivate_subscription(email, first_name, last_name)
+    return if disabled?
+
+    client.lists(list_id).members(md5_hashed_email_address(email))
+          .upsert(body: { email_address: email,
+                          status: 'subscribed',
+                          merge_fields: { FNAME: first_name, LNAME: last_name } })
+  end
+
+  def subscribed?(email)
+    return if disabled?
+
+    info = client.lists(list_id).members(md5_hashed_email_address(email)).retrieve
+    info.body[:status].eql?(SUBSCRIBED)
+  rescue Gibbon::MailChimpError
+    false
   end
 
   private
 
   def client
-    @client ||= Gibbon::API.new
+    @client ||= Gibbon::Request.new
+  end
+
+  def md5_hashed_email_address(email)
+    require 'digest'
+    Digest::MD5.hexdigest(email.downcase)
+  end
+
+  def disabled?
+    !ENV['MAILCHIMP_KEY']
   end
 end
