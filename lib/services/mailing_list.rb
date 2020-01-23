@@ -20,6 +20,7 @@ class MailingList
       reactivate_subscription(email, first_name, last_name) if e.title.eql?(MEMBER_EXISTS)
     end
   end
+  handle_asynchronously :subscribe
 
   def unsubscribe(email)
     return if disabled?
@@ -27,6 +28,7 @@ class MailingList
     client.lists(list_id).members(md5_hashed_email_address(email))
           .update(body: { status: 'unsubscribed' })
   end
+  handle_asynchronously :unsubscribe
 
   def reactivate_subscription(email, first_name, last_name)
     return if disabled?
@@ -36,6 +38,7 @@ class MailingList
                           status: 'subscribed',
                           merge_fields: { FNAME: first_name, LNAME: last_name } })
   end
+  handle_asynchronously :reactivate_subscription
 
   def subscribed?(email)
     return if disabled?
