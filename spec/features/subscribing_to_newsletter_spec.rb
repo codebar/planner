@@ -68,7 +68,7 @@ RSpec.feature 'Subscribing to the newsletter', type: :feature do
       visit subscriptions_path
       click_on 'Subscribe to newsletter'
 
-      expect(page).to have_content('You have subscribed to codebar''s newsletter')
+      expect(page).to have_content('You have subscribed to codebar\'s newsletter')
     end
 
     scenario 'can unsubscribe if they are subscribed' do
@@ -83,7 +83,7 @@ RSpec.feature 'Subscribing to the newsletter', type: :feature do
       visit subscriptions_path
       click_on 'Unsubscribe from newsletter'
 
-      expect(page).to have_content('You have unsubscribed from codebar''s newsletter')
+      expect(page).to have_content('You have unsubscribed from codebar\'s newsletter')
     end
 
     scenario 'can subscribe and then unsubscribe' do
@@ -98,14 +98,14 @@ RSpec.feature 'Subscribing to the newsletter', type: :feature do
       visit subscriptions_path
       click_on 'Subscribe to newsletter'
 
-      expect(page).to have_content('You have subscribed to codebar''s newsletter')
+      expect(page).to have_content('You have subscribed to codebar\'s newsletter')
 
       expect(MailingList).to receive(:new).and_return(mailing_list)
       expect(mailing_list).to receive(:unsubscribe)
 
       click_on 'Unsubscribe from newsletter'
 
-      expect(page).to have_content('You have unsubscribed from codebar''s newsletter')
+      expect(page).to have_content('You have unsubscribed from codebar\'s newsletter')
     end
   end
 end

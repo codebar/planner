@@ -2,21 +2,21 @@
 %section#banner
 .row
   .large-12.columns
-    %h3 codebar newsletter
-    %p.lead Stay up to date with codebar's news and opportunities by subscribing to the newsletter.
+    %h3= t('subscriptions.mailing_list.title')
+    %p.lead= t('subscriptions.mailing_list.summary')
     .row
       .medium-3.columns
         - if @member.subscribed_to_newsletter?
           = simple_form_for @mailing_list, url: mailing_lists_path, method: :delete do |f|
-            = f.submit "Unsubscribe from newsletter", class: 'button tiny expand success'
+            = f.submit t('subscriptions.mailing_list.unsubscribe'), class: 'button tiny expand success'
         - else
           = simple_form_for @mailing_list, url: mailing_lists_path do |f|
-            = f.submit "Subscribe to newsletter", class: 'button tiny expand success'
+            = f.submit t('subscriptions.mailing_list.subscribe'), class: 'button tiny expand success'
 %hr
 
 .row
   .large-12.columns
-    %p.lead Subscriptions control the invitation emails you receive. For example if you would like to receive student invitations for the Brighton and West London workshops then subscribe to the Brighton (Students) and West London (Students) options.
+    %p.lead= t('subscriptions.summary')
     %br
     - @groups.group_by(&:chapter).each do |chapter, groups|
       %h4= chapter.name

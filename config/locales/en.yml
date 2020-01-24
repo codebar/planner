@@ -359,6 +359,21 @@ en:
           pay: Make a payment
       edit:
         title: Edit job listing
+  subscriptions:
+    summary: Subscriptions control the invitation emails you receive. For example, if you would like to receive student invitations for the Brighton and West London workshops then subscribe to the Brighton (Students) and West London (Students) options.
+    mailing_list:
+      title: codebar newsletter
+      summary: Stay up to date with codebar''s news and opportunities by subscribing to the newsletter.
+      subscribe: Subscribe to newsletter
+      unsubscribe: Unsubscribe from newsletter
+    messages:
+      mailing_list:
+        subscribe: 'You have subscribed to codebar''s newsletter'
+        unsubscribe: 'You have unsubscribed from codebar''s newsletter'
+      group:
+        subscribe: 'You have subscribed to %{chapter}''s %{role} group'
+        unsubscribe: 'You have unsubscribed from %{chapter}''s %{role} group'
+
   pages:
     cookies:
       title: Cookies

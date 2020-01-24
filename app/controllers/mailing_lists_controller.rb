@@ -5,14 +5,14 @@ class MailingListsController < ApplicationController
 
   def create
     subscribe_to_newsletter(current_user)
-    flash[:notice] = 'You have subscribed to codebar''s newsletter'
+    flash[:notice] = I18n.t('subscriptions.messages.mailing_list.subscribe')
 
     redirect_to :back
   end
 
   def destroy
     unsubscribe_from_newsletter(current_user)
-    flash[:notice] = 'You have unsubscribed from codebar''s newsletter'
+    flash[:notice] = I18n.t('subscriptions.messages.mailing_list.unsubscribe')
 
     redirect_to :back
   end

@@ -14,7 +14,9 @@ class SubscriptionsController < ApplicationController
       unless current_user.received_welcome_for?(@subscription)
         MemberMailer.welcome_for_subscription(@subscription).deliver_now
       end
-      flash[:notice] = "You have subscribed to #{@subscription.group.chapter.city}'s #{@subscription.group.name} group"
+      flash[:notice] = I18n.t('subscriptions.messages.group.subscribe',
+                              chapter: @subscription.group.chapter.city,
+                              role: @subscription.group.name)
     else
       flash[:notice] = @subscription.errors.inspect
     end
@@ -24,7 +26,10 @@ class SubscriptionsController < ApplicationController
   def destroy
     @subscription = current_user.subscriptions.find_by(group_id: group_id)
     @subscription.destroy
-    flash[:notice] = "You have unsubscribed from #{@subscription.group.chapter.city}'s #{@subscription.group.name} group"
+
+    flash[:notice] = I18n.t('subscriptions.messages.group.unsubscribe',
+                            chapter: @subscription.group.chapter.city,
+                            role: @subscription.group.name)
 
     redirect_to :back
   end
