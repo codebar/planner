@@ -54,4 +54,58 @@ RSpec.feature 'Subscribing to the newsletter', type: :feature do
       click_on 'Next'
     end
   end
+
+  context 'An existing member can manage its newsletter subscription from the subscriptions page' do
+    scenario 'can subscribe' do
+      member = Fabricate(:member)
+
+      login member
+
+      mailing_list = double(:mailing_list)
+      expect(MailingList).to receive(:new).and_return(mailing_list)
+      expect(mailing_list).to receive(:subscribe)
+
+      visit subscriptions_path
+      click_on 'Subscribe to newsletter'
+
+      expect(page).to have_content('You have subscribed to codebar''s newsletter')
+    end
+
+    scenario 'can unsubscribe if they are subscribed' do
+      member = Fabricate(:member, opt_in_newsletter_at: Time.zone.now)
+
+      login member
+
+      mailing_list = double(:mailing_list)
+      expect(MailingList).to receive(:new).and_return(mailing_list)
+      expect(mailing_list).to receive(:unsubscribe)
+
+      visit subscriptions_path
+      click_on 'Unsubscribe from newsletter'
+
+      expect(page).to have_content('You have unsubscribed from codebar''s newsletter')
+    end
+
+    scenario 'can subscribe and then unsubscribe' do
+      member = Fabricate(:member)
+
+      login member
+
+      mailing_list = double(:mailing_list)
+      expect(MailingList).to receive(:new).and_return(mailing_list)
+      expect(mailing_list).to receive(:subscribe)
+
+      visit subscriptions_path
+      click_on 'Subscribe to newsletter'
+
+      expect(page).to have_content('You have subscribed to codebar''s newsletter')
+
+      expect(MailingList).to receive(:new).and_return(mailing_list)
+      expect(mailing_list).to receive(:unsubscribe)
+
+      click_on 'Unsubscribe from newsletter'
+
+      expect(page).to have_content('You have unsubscribed from codebar''s newsletter')
+    end
+  end
 end

@@ -2,7 +2,9 @@ class SubscriptionsController < ApplicationController
   before_action :has_access?
 
   def index
+    @mailing_list = MailingListForm.new
     @groups = Group.includes(:chapter).references(:chapter).order('chapters.city')
+    @member = MemberPresenter.new(current_user)
   end
 
   def create

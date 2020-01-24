@@ -25,7 +25,7 @@ RSpec.feature 'Managing subscriptions', type: :feature do
     end
   end
 
-  context 'a member gets a welcome email' do
+  context 'a member receives a welcome email' do
     scenario 'Subscribing to a coach mailing list for the first time sends a coach email to the user' do
       coach_group = Fabricate(:coaches)
       expect_any_instance_of(MemberMailer).to receive(:welcome_coach)
