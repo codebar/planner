@@ -8,17 +8,17 @@
   = simple_form_for @member, method: :put, url: {action: :step1}, html: {class: "sign-up-wizard"} do |f|
     .row
       .large-6.large-offset-3.columns
-        = f.input :name, label: "First name", required: true, placeholder: "Grace"
+        = f.input :name, required: true
     .row
       .large-6.large-offset-3.columns
-        = f.input :surname, required: true, placeholder: "Hopper"
+        = f.input :surname, required: true
     .row
       .large-6.large-offset-3.columns
-        = f.input :pronouns, label: "What pronouns do you use?", placeholder: "she/her/they"
+        = f.input :pronouns
 
     .row
       .large-6.large-offset-3.columns
-        = f.input :email, label: "Email address", hint: "We send you invitations to our events via email.", required: true
+        = f.input :email, required: true
 
     .row
       .large-6.large-offset-3.columns
@@ -29,7 +29,7 @@
 
     .row
       .large-6.large-offset-3.columns
-        = f.input :newsletter, as: :boolean, boolean_style: :inline, checked_value: true, unchecked_value: false, label: "If you do not want to receive the codebar newsletter uncheck this box"
+        = f.input :newsletter, as: :boolean, boolean_style: :inline, checked_value: true, unchecked_value: false
 
     .row
       .large-6.large-offset-3.columns.text-right

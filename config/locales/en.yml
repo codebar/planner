@@ -463,6 +463,10 @@ en:
         update_rsvp: 'Updated attendance of %{name}'
   simple_form:
     placeholders:
+      member:
+        name: 'Grace'
+        surname: 'Hopper'
+        pronouns: 'e.g she/her/they'
       job:
         company: 'e.g. codebar'
         company_website: 'e.g. https://codebar.io'
@@ -470,6 +474,8 @@ en:
         description: 'Use text or markdown for the job description'
         location: 'e.g. London or Berlin'
     hints:
+      member:
+        email: 'This is needed so we can email you invitations to our events'
       job:
         remote: Only check if the role is remote only
         salary: Annual pay before tax, without commas or decimal points
@@ -487,3 +493,8 @@ en:
         email: Contact email
         link_to_job: Link to job post
         expiry_date: Application closing date
+      member:
+        email: 'Email address'
+        name: 'First name'
+        newsletter: 'If you do not want to receive the codebar newsletter uncheck this box'
+        pronouns: 'What pronouns do you use?'
