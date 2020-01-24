@@ -1,5 +1,8 @@
 class MembersController < ApplicationController
+  include MailingListConcerns
+
   before_action :authenticate_member!, only: %i[edit show step1 step2 profile]
+  before_action :suppress_notices, only: %i[step1 step2]
   autocomplete :skill, :name, class_name: 'ActsAsTaggableOn::Tag'
 
   def new
@@ -16,16 +19,18 @@ class MembersController < ApplicationController
     @member = current_user
     @suppress_notices = true
     flash[notice] = I18n.t('notifications.signing_up')
+    @member.newsletter ||= true
+
     return unless request.post? || request.put?
 
     if @member.update(member_params)
+      member_params[:newsletter] ? subscribe_to_newsletter(@member) : unsubscribe_from_newsletter(@member)
       return redirect_to step2_member_path
     end
   end
 
   def step2
     @type = cookies[:member_type]
-    @suppress_notices = true
     @member = current_user
     @coach_groups = Group.coaches
     @student_groups = Group.students
@@ -65,11 +70,15 @@ class MembersController < ApplicationController
 
   def member_params
     params.require(:member).permit(
-      :pronouns, :name, :surname, :email, :mobile, :twitter, :about_you, :skill_list
+      :pronouns, :name, :surname, :email, :mobile, :twitter, :about_you, :skill_list, :newsletter
     )
   end
 
   def token
     params[:token]
+  end
+
+  def suppress_notices
+    @suppress_notices = true
   end
 end

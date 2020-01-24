@@ -36,7 +36,7 @@ class Member < ActiveRecord::Base
 
   acts_as_taggable_on :skills
 
-  attr_accessor :attendance
+  attr_accessor :attendance, :newsletter
 
   def self.with_skill(skill_name)
     tagged_with(skill_name)
