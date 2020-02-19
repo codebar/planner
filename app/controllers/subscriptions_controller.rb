@@ -10,13 +10,9 @@ class SubscriptionsController < ApplicationController
 
     respond_to do |format|
       if @subscription.save
-        unless current_user.received_welcome_for?(@subscription)
-          MemberMailer.welcome_for_subscription(@subscription).deliver_now
-        end
-        format.html do
-          flash[:notice] = t('messages.subscriptions.create.success', subscription_city_and_name)
-          redirect_to :back
-        end
+        send_welcome_unless_already_sent
+        flash[:notice] = t('messages.subscriptions.create.success', subscription_city_and_name)
+        format.html { redirect_to :back }
         format.js { render 'create_success' }
       else
         flash[:notice] = @subscription.errors.full_messages.join('<br/>')
@@ -40,6 +36,12 @@ class SubscriptionsController < ApplicationController
   end
 
   private
+
+  def send_welcome_unless_already_sent
+    return if current_user.received_welcome_for?(@subscription)
+
+    MemberMailer.welcome_for_subscription(@subscription).deliver_now
+  end
 
   def subscription_city_and_name
     {

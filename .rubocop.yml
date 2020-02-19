@@ -1,5 +1,7 @@
 # Find out more about the rubocop cops  https://github.com/bbatsov/rubocop/blob/master/config/enabled.yml
 
+# inherit_from: .rubocop_todo.yml
+
 AllCops:
   Exclude:
     - db/**/*
