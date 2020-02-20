@@ -1,4 +1,4 @@
-class Admin::JobsController < Admin::ApplicationController
+class Admin::JobsController < SuperAdmin::ApplicationController
   def index
     jobs = Job.pending_or_published
               .order(created_at: :desc)

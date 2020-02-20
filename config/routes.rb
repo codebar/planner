@@ -160,10 +160,6 @@ Planner::Application.routes.draw do
     end
   end
 
-  namespace :coach do
-    resources :feedback, only: [:index]
-  end
-
   get   '/login', to: 'auth_services#new'
   match '/auth/:service/callback' => 'auth_services#create', via: %i[get post]
   match '/auth/failure' => 'auth_services#failure', via: %i[get post]
