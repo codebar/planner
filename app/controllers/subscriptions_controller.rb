@@ -11,12 +11,9 @@ class SubscriptionsController < ApplicationController
     @subscription = Subscription.new(group_id: group_id, member: current_user)
 
     if @subscription.save
-      unless current_user.received_welcome_for?(@subscription)
-        MemberMailer.welcome_for_subscription(@subscription).deliver_now
-      end
-      flash[:notice] = I18n.t('subscriptions.messages.group.subscribe',
-                              chapter: @subscription.group.chapter.city,
-                              role: @subscription.group.name)
+      send_welcome_email(current_user, @subscription)
+      flash[:notice] = I18n.t('subscriptions.messages.group.subscribe', chapter: @subscription.group.chapter.city,
+                                                                        role: @subscription.group.name)
     else
       flash[:notice] = @subscription.errors.inspect
     end
@@ -38,5 +35,10 @@ class SubscriptionsController < ApplicationController
 
   def group_id
     params.require(:subscription).permit(:group_id)[:group_id]
+  end
+
+  def send_welcome_email(member, subscription)
+    return if member.received_welcome_for?(subscription)
+    MemberMailer.welcome_for_subscription(subscription).deliver_now
   end
 end
