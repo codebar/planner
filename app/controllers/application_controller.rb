@@ -80,12 +80,12 @@ class ApplicationController < ActionController::Base
 
   def finish_registration
     if current_user.requires_additional_details?
-      redirect_to step1_member_path unless providing_additional_details?
+      redirect_to edit_member_details_path unless providing_additional_details?
     end
   end
 
   def providing_additional_details?
-    [edit_member_path, step1_member_path].include? request.path
+    [edit_member_path, edit_member_details_path].include? request.path
   end
 
   def logout!

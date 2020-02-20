@@ -48,7 +48,7 @@ class AuthServicesController < ApplicationController
         session[:oauth_token]        = omnihash[:credentials][:token]
         session[:oauth_token_secret] = omnihash[:credentials][:secret]
 
-        redirect_to step1_member_path(member_type: member_type)
+        redirect_to edit_member_details_path(member_type: member_type)
       end
     end
   end

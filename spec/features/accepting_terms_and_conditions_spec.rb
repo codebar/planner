@@ -44,7 +44,7 @@ RSpec.feature 'Accepting Terms and Conditions', type: :feature do
       check :terms
       click_on 'Accept'
 
-      expect(page).to have_current_path(step1_member_path(member_type: 'student'))
+      expect(page).to have_current_path(edit_member_details_path(member_type: 'student'))
     end
   end
 

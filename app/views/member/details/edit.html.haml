@@ -1,0 +1,37 @@
+%section#banner
+  .row
+    .medium-12.columns
+      %h1 Almost there...
+      %p
+        We need some more details from you to finish creating your account. We use these to help run our events.
+
+  = simple_form_for @member, url: member_details_path, method: :put,  html: {class: "sign-up-wizard"} do |f|
+    .row
+      .large-6.large-offset-3.columns
+        = f.input :name, required: true
+    .row
+      .large-6.large-offset-3.columns
+        = f.input :surname, required: true
+    .row
+      .large-6.large-offset-3.columns
+        = f.input :pronouns
+
+    .row
+      .large-6.large-offset-3.columns
+        = f.input :email, required: true
+
+    .row
+      .large-6.large-offset-3.columns
+        - if @member.coach?
+          = f.input :about_you, as: :text, label: "What experience do you have? What languages do you like to use? Tell us a little about yourself!", required: true
+        - else
+          = f.input :about_you, as: :text, label: "What do you want to work on at codebar? What have you done in the past? Tell us a little about yourself!", required: true
+
+    .row
+      .large-6.large-offset-3.columns
+        = f.input :newsletter, as: :boolean, boolean_style: :inline, checked_value: true, unchecked_value: false
+
+    .row
+      .large-6.large-offset-3.columns.text-right
+        = hidden_field_tag :next_page, step2_member_path(member_type: @type)
+        = f.submit "Next", class: 'button round right'
