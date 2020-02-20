@@ -2,21 +2,17 @@ require 'spec_helper'
 
 RSpec.feature 'A new student signs up', type: :feature do
   before do
-    OmniAuth.config.mock_auth[:github] = OmniAuth::AuthHash.new(
-      provider: 'github',
-      uid: '42',
-      credentials: { token: 'Fake token' },
-      info: {
-        email: Faker::Internet.email,
-        name: Faker::Name.name
-      }
-    )
+    mock_github_auth
   end
 
   scenario 'A visitor can access signups through the landing page' do
     visit root_path
     click_on 'Sign up as a student'
     click_on 'I understand and meet the eligibility criteria. Sign me up as a student'
+
+    accept_toc
+
+    expect(page).to have_content('Thanks for signing up. Please fill in your details to complete the registration process.')
     expect(page).to have_current_path(step1_member_path(member_type: 'student'))
   end
 
@@ -38,6 +34,8 @@ RSpec.feature 'A new student signs up', type: :feature do
   scenario 'A new member details are successfully captured' do
     visit new_member_path
     click_on 'Sign up as a coach'
+
+    accept_toc
 
     fill_in 'member_pronouns', with: 'she'
     fill_in 'member_name', with: 'Jane'

@@ -11,8 +11,11 @@ class MembersController < ApplicationController
   end
 
   def step1
-    @suppress_notices = true
+    accept_terms
+
     @member = current_user
+    @suppress_notices = true
+    flash[notice] = I18n.t('notifications.signing_up')
     return unless request.post? || request.put?
 
     if @member.update(member_params)

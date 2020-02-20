@@ -21,6 +21,7 @@ class ApplicationController < ActionController::Base
   helper_method :current_service
 
   before_action :set_locale
+  before_action :accept_terms, if: :logged_in?
 
   def render_not_found
     respond_to do |format|
@@ -56,12 +57,25 @@ class ApplicationController < ActionController::Base
     current_user?
   end
 
+  def accept_terms
+    store_path
+    redirect_to terms_and_conditions_path if current_user.accepted_toc_at.blank?
+  end
+
   def authenticate_member!
     if current_user
       finish_registration
     else
       redirect_to redirect_path
     end
+  end
+
+  def store_path
+    session[:previous_request_url] = request.url
+  end
+
+  def previous_path
+    session[:previous_request_url]
   end
 
   def finish_registration

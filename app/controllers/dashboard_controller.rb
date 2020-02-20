@@ -1,5 +1,7 @@
 class DashboardController < ApplicationController
-  before_action :is_logged_in?, only: [:dashboard]
+  before_action :is_logged_in?, only: %i[dashboard]
+  skip_before_action :accept_terms, except: %i[dashboard show]
+
   DEFAULT_UPCOMING_EVENTS = 5
 
   helper_method :year_param
