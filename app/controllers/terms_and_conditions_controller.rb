@@ -10,7 +10,8 @@ class TermsAndConditionsController < ApplicationController
     @terms_and_conditions_form = TermsAndConditionsForm.new(terms_params)
     if @terms_and_conditions_form.valid?
       member = current_user
-      member.update_attribute(:accepted_toc_at, Time.zone.now)
+      member.accepted_toc_at = Time.zone.now
+      member.save(validate: false)
       redirect_to previous_path
     else
       flash[notice] = I18n.t('terms_and_conditions.messages.notice')
