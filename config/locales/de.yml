@@ -79,6 +79,7 @@ de:
   notifications:
     provider_already_connected: 'Sie sind bereits angemeldet!'
     not_logged_in: "Du musst angemeldet sein, um auf diese Seite zugreifen zu können."
+    signing_up: 'Thanks for signing up. Please fill in your details to complete the registration process.'
   navigation:
     dashboard: "Übersicht"
     code_of_conduct: "Verhaltensregeln"
@@ -201,6 +202,13 @@ de:
         criteria_brief: "weil unsere Workshops nur für Frauen, LGBTQ und Menschen aus unterrepräsentierten Gruppen geöffnet sind."
         github: "Abschließend, wenn du auf den Anmeldebutton klickst, wirst du auf eine Seite namens GitHub weitergeleitet. Nachdem du dich mit deinem GitHub Zugang angemeldet hast, wirst du wieder auf die codebar Seite zurückgeleitet. Du musst dir einen Zugang erstellen, wenn du noch keinen hast. Das dauert nicht lang und ist etwas was sich als nützlich erweisen wird wenn du anfängst zu programmieren!"
       invitations: "Wir verschicken Einladungen regelmäßig, sei also bitte nicht besorgt, wenn du sie nicht direkt nach der Anmeldung erhältst."
+  terms_and_conditions:
+    title: 'Terms and Conditions'
+    body: 'Before you can proceed you must first read our Code of Conduct and agree to abide by it.'
+    link_text: 'Read codebar''s Code of Conduct'
+    accept: 'Accept'
+    messages:
+      notice: 'You have to accept the Terms and Conditions before you are able to proceed.'
   footer:
     email_us: "Schreibe uns eine E-Mail an:"
     contact_info: "Kontaktinfo:"
@@ -444,6 +452,9 @@ de:
       job:
         remote: Only check if the role is remote only
         salary: Annual pay before tax, without commas or decimal points
+    labels:
+      terms_and_conditions_form:
+        terms: 'I have read codebar''s Code of Conduct and agree with all of its terms.'
   activerecord:
     attributes:
       job:
