@@ -15,7 +15,7 @@ class MembersController < ApplicationController
 
     @member = current_user
     @suppress_notices = true
-    flash[notice] = 'Thanks for signing up. Please fill in your details to complete the registration process.'
+    flash[notice] = I18n.t('notifications.signing_up')
     return unless request.post? || request.put?
 
     if @member.update(member_params)

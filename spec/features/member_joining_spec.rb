@@ -12,6 +12,7 @@ RSpec.feature 'A new student signs up', type: :feature do
 
     accept_toc
 
+    expect(page).to have_content('Thanks for signing up. Please fill in your details to complete the registration process.')
     expect(page).to have_current_path(step1_member_path(member_type: 'student'))
   end
 

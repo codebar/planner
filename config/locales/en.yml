@@ -79,6 +79,7 @@ en:
   notifications:
     provider_already_connected: 'You are already signed in!'
     not_logged_in: "You must be logged in to access this page."
+    signing_up: 'Thanks for signing up. Please fill in your details to complete the registration process.'
   navigation:
     dashboard: "Dashboard"
     code_of_conduct: "Code of conduct"
