@@ -334,6 +334,15 @@ en:
     request: 'How did you find the workshop?'
     suggestions: "Was there something you didn't like? What can we do to improve your experience?"
   member:
+    details:
+      edit:
+        title: Almost there...
+        summary: We need some more details from you to finish creating your account. We use these to help run our events.
+        coach:
+          about_you: What experience do you have? What languages do you like to use? Tell us a little about yourself!
+        student:
+          about_you: What do you want to work on at codebar? What have you done in the past? Tell us a little about yourself!
+        submit: Next
     jobs:
       title: My jobs
       preview: Preview
