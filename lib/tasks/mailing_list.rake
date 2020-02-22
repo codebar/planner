@@ -9,6 +9,7 @@ namespace :mailing_list do
     newsletter = MailingList.new(newsletter_id)
 
     members.each do |member|
+      member.update_attributes(opt_in_newsletter_at: Time.zone.now)
       newsletter.subscribe(member.email, member.name, member.surname)
     end
   end
