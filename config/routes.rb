@@ -12,14 +12,17 @@ Planner::Application.routes.draw do
   end
 
   resource :member, only: %i[new edit update patch] do
-    get 'step1'
-    put 'step1'
     get 'step2'
   end
 
   resource :terms_and_conditions, only: %i[show update patch]
+  resource :mailing_lists, only: %i[create destroy]
 
   resources :jobs, only: %i[index show]
+
+  namespace :member do
+    resource :details, only: %i[edit update]
+  end
 
   namespace :member, path: 'my' do
     resources :jobs, except: [:destroy] do

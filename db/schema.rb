@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200120111440) do
+ActiveRecord::Schema.define(version: 20200124124311) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -399,6 +399,7 @@ ActiveRecord::Schema.define(version: 20200120111440) do
     t.boolean  "received_student_welcome_email", default: false
     t.string   "pronouns"
     t.datetime "accepted_toc_at"
+    t.datetime "opt_in_newsletter_at"
   end
 
   create_table "members_permissions", id: false, force: :cascade do |t|

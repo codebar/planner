@@ -13,7 +13,7 @@ RSpec.feature 'A new student signs up', type: :feature do
     accept_toc
 
     expect(page).to have_content('Thanks for signing up. Please fill in your details to complete the registration process.')
-    expect(page).to have_current_path(step1_member_path(member_type: 'student'))
+    expect(page).to have_current_path(edit_member_details_path(member_type: 'student'))
   end
 
   scenario 'A visitor must fill in all mandatory fields in order to sign up' do
@@ -21,7 +21,7 @@ RSpec.feature 'A new student signs up', type: :feature do
     member.update(can_log_in: true)
     login member
 
-    visit step1_member_path
+    visit edit_member_details_path
 
     click_on 'Next'
 

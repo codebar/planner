@@ -14,4 +14,8 @@ class MemberPresenter < BasePresenter
   def attending?(event)
     event.invitations.accepted.where(member: model).exists?
   end
+
+  def subscribed_to_newsletter?
+    opt_in_newsletter_at.present?
+  end
 end
