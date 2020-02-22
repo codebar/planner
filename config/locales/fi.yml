@@ -334,6 +334,15 @@ fi:
     request: 'How did you find the workshop?'
     suggestions: "Was there something you didn't like? What can we do to improve your experience?"
   member:
+    details:
+      edit:
+        title: Almost there...
+        summary: We need some more details from you to finish creating your account. We use these to help run our events.
+        coach:
+          about_you: What experience do you have? What languages do you like to use? Tell us a little about yourself!
+        student:
+          about_you: What do you want to work on at codebar? What have you done in the past? Tell us a little about yourself!
+        submit: Next
     jobs:
       title: My jobs
       preview: Preview
@@ -359,6 +368,20 @@ fi:
           pay: Make a payment
       edit:
         title: Edit job listing
+  subscriptions:
+    summary: Subscriptions control the invitation emails you receive. For example, if you would like to receive student invitations for the Brighton and West London workshops then subscribe to the Brighton (Students) and West London (Students) options.
+    mailing_list:
+      title: codebar newsletter
+      summary: Stay up to date with codebar''s news and opportunities by subscribing to the newsletter.
+      subscribe: Subscribe to newsletter
+      unsubscribe: Unsubscribe from newsletter
+    messages:
+      mailing_list:
+        subscribe: 'You have subscribed to codebar''s newsletter'
+        unsubscribe: 'You have unsubscribed from codebar''s newsletter'
+      group:
+        subscribe: 'You have subscribed to %{chapter}''s %{role} group'
+        unsubscribe: 'You have unsubscribed from %{chapter}''s %{role} group'
   pages:
     cookies:
       title: Cookies
@@ -442,6 +465,10 @@ fi:
         update_rsvp: 'Updated attendance of %{name}'
   simple_form:
     placeholders:
+      member:
+        name: 'Grace'
+        surname: 'Hopper'
+        pronouns: 'e.g she/her/they'
       job:
         company: 'e.g. codebar'
         company_website: 'e.g. https://codebar.io'
@@ -449,6 +476,8 @@ fi:
         description: 'Use text or markdown for the job description'
         location: 'e.g. London or Berlin'
     hints:
+      member:
+        email: 'This is needed so we can email you invitations to our events'
       job:
         remote: Only check if the role is remote only
         salary: Annual pay before tax, without commas or decimal points
@@ -466,3 +495,8 @@ fi:
         email: Contact email
         link_to_job: Link to job post
         expiry_date: Application closing date
+      member:
+        email: 'Email address'
+        name: 'First name'
+        newsletter: 'If you do not want to receive the codebar newsletter uncheck this box'
+        pronouns: 'What pronouns do you use?'
