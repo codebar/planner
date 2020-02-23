@@ -38,7 +38,6 @@ class MailingList
                           status: 'subscribed',
                           merge_fields: { FNAME: first_name, LNAME: last_name } })
   end
-  handle_asynchronously :reactivate_subscription
 
   def subscribed?(email)
     return if disabled?
