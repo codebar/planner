@@ -45,6 +45,7 @@ de:
         precision: 0
         format: '%u%n'
   homepage:
+    title: Homepage
     intro: "<strong>codebar</strong> ist eine non-profit Initiative, die durch regelmäßige Programmier-Workshops das Wachstum einer vielfältigen Tech-Community fördert."
     explanation: "Unser Ziel ist unterrepräsentierten Menschen zu programmieren in einer sicheren und kollaborative Umgebung lernen und erweitern ihre Karrierechancen zu ermöglichen. Um dies zu erreichen betreiben wir kostenlose regelmäßige Workshops, regelmäßige Einzelveranstaltungen und versuchen, die Möglichkeiten für unsere Schüler die Technologie und Programmierung zugänglicher zu schaffen."
     participate:
