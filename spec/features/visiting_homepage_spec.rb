@@ -9,6 +9,10 @@ RSpec.feature 'when visiting the homepage', type: :feature do
     visit root_path
   end
 
+  scenario 'the correct page title is rendered' do
+    expect(page).to have_title('Homepage | codebar.io')
+  end
+
   scenario 'i can view the next workshop' do
     expect(page).to have_content "Workshop at #{next_workshop.host.name}"
   end

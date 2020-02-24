@@ -7,6 +7,16 @@ module ApplicationHelper
     human_date
   end
 
+  def title(title = nil)
+    return unless title
+    title = title + ' | ' + t(:brand)
+    content_for :title, title
+  end
+
+  def retrieve_title
+    content_for?(:title) ? content_for(:title) : t(:brand)
+  end
+
   def dot_markdown(text)
     GitHub::Markdown.render_gfm(text).html_safe
   end
