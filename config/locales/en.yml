@@ -68,6 +68,8 @@ en:
     title: Workshop at %{host} - %{date}
     invitation:
       title: Workshop invitation - %{date}
+  meeting:
+    title: "%{name} - %{date}"
   messages:
     accepted_invitation: "Thanks for getting back to us %{name}. See you at the workshop!"
     rejected_invitation: "We are so sad you can't make it, but thanks for letting us know %{name}."
