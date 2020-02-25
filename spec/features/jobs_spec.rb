@@ -3,6 +3,12 @@ require 'spec_helper'
 RSpec.feature 'Jobs', type: :feature do
   context 'Listing' do
     context 'a visitor to the website' do
+      scenario 'can see the correct page title' do
+        visit jobs_path
+
+        expect(page).to have_title('Jobs | codebar.io')
+      end
+
       scenario 'can see a message when there are no available jobs' do
         visit root_path
         click_link('Jobs', match: :first)
@@ -22,6 +28,13 @@ RSpec.feature 'Jobs', type: :feature do
       end
 
       context 'can view job posts' do
+        it 'can see the correct page title' do
+          job = Fabricate(:published_job)
+          visit job_path(job)
+
+          expect(page).to have_title("#{job.title} | Jobs | codebar.io")
+        end
+
         it 'when a job post is active' do
           job = Fabricate(:published_job)
           visit job_path(job)
