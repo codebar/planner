@@ -35,9 +35,9 @@ class AuthServicesController < ApplicationController
         member.twitter ||= omnihash[:info][:nickname]
 
         member_service = member.auth_services.build(
-                                                      provider: omnihash[:provider],
-                                                      uid: omnihash[:uid]
-                                                    )
+          provider: omnihash[:provider],
+          uid: omnihash[:uid]
+        )
 
         member.save!
 
