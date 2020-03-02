@@ -14,7 +14,10 @@ class EventsController < ApplicationController
     events << Event.past.includes(:venue, :sponsors).limit(RECENT_EVENTS_DISPLAY_LIMIT)
     events = events.compact.flatten.sort_by(&:date_and_time).reverse.first(RECENT_EVENTS_DISPLAY_LIMIT)
     events_hash_grouped_by_date = events.group_by(&:date)
-    @past_events = events_hash_grouped_by_date.map.inject({}) { |hash, (key, value)| hash[key] = EventPresenter.decorate_collection(value); hash }
+    @past_events = events_hash_grouped_by_date.map.inject({}) do |hash, (key, value)|
+      hash[key] = EventPresenter.decorate_collection(value)
+      hash
+    end
 
     events = [Workshop.includes(:chapter).upcoming.joins(:chapter).merge(Chapter.active)]
     events << Course.upcoming.all
