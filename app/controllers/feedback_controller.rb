@@ -17,7 +17,7 @@ class FeedbackController < ApplicationController
     if Feedback.submit_feedback(feedback_params, params[:id])
       flash[:notice] = I18n.t('messages.feedback_saved')
 
-      return redirect_to root_path
+      redirect_to root_path
     else
       feedback_request = FeedbackRequest.find_by(token: params[:id], submited: false)
       set_coaches(feedback_request.workshop)
