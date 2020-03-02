@@ -6,7 +6,7 @@ class Sponsor < ActiveRecord::Base
     standard: 1,
     bronze: 2,
     silver: 3,
-    gold: 4,
+    gold: 4
   }
 
   has_one :address
