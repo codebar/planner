@@ -2,6 +2,7 @@ require 'spec_helper'
 
 RSpec.feature 'Managing users', type: :feature do
   let(:member) { Fabricate(:member) }
+  let(:student) { Fabricate(:student) }
   let(:admin) { Fabricate(:chapter_organiser) }
   let!(:invitation) { Fabricate(:attended_workshop_invitation, attending: true, member: member) }
   let!(:attending_invitation) { Fabricate(:attending_workshop_invitation, member: member) }
@@ -39,5 +40,30 @@ RSpec.feature 'Managing users', type: :feature do
     click_on 'Ban user'
 
     expect(page).to have_content 'The user has been banned'
+  end
+
+  scenario 'unsubscribe a user from group', js: true do
+    visit admin_member_path student
+    within '#subscriptions > li:first-child' do
+      expect do
+        accept_confirm { find('.fa-times').click }
+      end.to change { student.subscriptions.count }.by(0)
+    end
+
+    expect(page).to have_content "You have unsubscribed #{student.full_name}"
+  end
+
+  scenario 'Send eligibility email to user' do
+    visit admin_member_path student
+    click_on 'Eligibility'
+
+    expect(page).to have_content 'You have sent an eligibility confirmation request.'
+  end
+
+  scenario 'Warn a user' do
+    visit admin_member_path member
+    click_on 'Attendance'
+
+    expect(page).to have_content 'You have sent an attendance warning.'
   end
 end
