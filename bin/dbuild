@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 set +e
 docker-compose down -v --remove-orphans
 docker-compose build
