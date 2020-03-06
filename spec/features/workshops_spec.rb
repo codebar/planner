@@ -8,15 +8,19 @@ RSpec.feature 'Viewing a workshop page', type: :feature do
   let(:student) { Fabricate(:student) }
 
   context 'visitor' do
-    scenario 'can view a workshop' do
+    before(:each) do
       visit workshop_path(workshop)
+    end
 
+    scenario 'can view a workshop' do
       expect(page).to be
     end
 
-    scenario 'can sign up or sign in' do
-      visit workshop_path workshop
+    scenario 'can view the page title' do
+      expect(page).to have_title("Workshop at #{workshop.host.name} - #{humanize_date(workshop.date_and_time)}")
+    end
 
+    scenario 'can sign up or sign in' do
       expect(page).to have_content('Sign up')
       expect(page).to have_content('Log in')
     end

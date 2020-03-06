@@ -1,3 +1,5 @@
+- title t('workshop.title', host: @workshop.host.name, date: humanize_date(@workshop.date_and_time))
+
 = render partial: 'meta_tags', locals: { workshop: @workshop }
 
 .stripe.reverse

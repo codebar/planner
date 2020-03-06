@@ -1,4 +1,12 @@
 RSpec.shared_examples 'invitation route' do
+  context 'viewing an invitation' do
+    scenario 'renders a descriptive page title' do
+      visit invitation_route
+
+      expect(page).to have_title("Workshop invitation - #{humanize_date(invitation.workshop.date_and_time)} | codebar.io")
+    end
+  end
+
   context 'accept an invitation' do
     scenario 'when there are available spots' do
       Tutorial.create(title: 'title')
