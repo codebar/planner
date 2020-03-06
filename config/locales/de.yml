@@ -64,6 +64,12 @@ de:
       workshop_email_subject: "Regarding hosting a workshop"
     chapters:
       title: "Kapitel"
+  workshop:
+    title: Workshop at %{host} - %{date}
+    invitation:
+      title: Workshop invitation - %{date}
+  meeting:
+    title: "%{name} - %{date}"
   messages:
     accepted_invitation: "Vielen Dank für die Rückmeldung, %{name}. Wir sehen uns beim Workshop!"
     rejected_invitation: "Wir bedauern es sehr dass du nicht teilnehmen kannst. Vielen Dank für das Bescheid geben, %{name}."
