@@ -1,8 +1,9 @@
 module ApplicationHelper
-  def humanize_date(date, with_time: false)
+  def humanize_date(date, with_time: false, with_year: false)
     human_date = "#{I18n.l(date, format: :day_in_words)}, "
     human_date << "#{ActiveSupport::Inflector.ordinalize(date.day)} "
     human_date << I18n.l(date, format: :month)
+    human_date << " #{I18n.l(date, format: :year)}" if with_year
     human_date << " at #{I18n.l(date.time, format: :time)}" if with_time
     human_date
   end
@@ -23,10 +24,6 @@ module ApplicationHelper
 
   def belongs_to_group?(group)
     current_user.groups.include?(group)
-  end
-
-  def has_permission?
-    current_user.has_role?(:admin) || current_user.has_role?(:organiser) || Chapter.find_roles(:organiser, current_user).any?
   end
 
   def member_token(member)

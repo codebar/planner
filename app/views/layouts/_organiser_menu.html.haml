@@ -1,7 +1,6 @@
 %li
   %label Admin Menu
-- if current_user.is_organiser?
-  - if has_permission?
+  - if current_user.is_admin_or_organiser?
     %li= link_to "New workshop", new_admin_workshop_path
     %li= link_to "New sponsor", new_admin_sponsor_path
 
