@@ -47,7 +47,7 @@
           %label.label.warning Banned
         - if @member.groups.any?
           %h3 Subscriptions
-          %ul.no-bullet
+          %ul.no-bullet#subscriptions
             - @member.groups.each do |group|
               %li
                 = link_to [:admin, group] do
