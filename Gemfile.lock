@@ -214,7 +214,7 @@ GEM
       oauth2 (~> 1.1)
       omniauth (~> 1.9)
     parallel (1.19.1)
-    parser (2.7.0.2)
+    parser (2.7.0.4)
       ast (~> 2.4.0)
     pg (0.20.0)
     pickadate-rails (3.5.6.0)
@@ -281,6 +281,7 @@ GEM
       ffi (~> 1.0)
     redcarpet (3.5.0)
     regexp_parser (1.6.0)
+    rexml (3.2.4)
     rolify (5.2.0)
     rollbar (2.24.0)
     rspec-collection_matchers (1.2.0)
@@ -305,11 +306,12 @@ GEM
       rspec-mocks (~> 3.9.0)
       rspec-support (~> 3.9.0)
     rspec-support (3.9.0)
-    rubocop (0.79.0)
+    rubocop (0.80.1)
       jaro_winkler (~> 1.5.1)
       parallel (~> 1.10)
       parser (>= 2.7.0.1)
       rainbow (>= 2.2.2, < 4.0)
+      rexml
       ruby-progressbar (~> 1.7)
       unicode-display_width (>= 1.4.0, < 1.7)
     ruby-progressbar (1.10.1)
@@ -436,7 +438,7 @@ DEPENDENCIES
   rspec-collection_matchers
   rspec-its
   rspec-rails
-  rubocop (~> 0.79.0)
+  rubocop (~> 0.80.1)
   sass-rails (~> 5.0.1)
   shoulda-matchers (~> 4.1)
   simple_form
