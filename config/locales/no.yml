@@ -67,6 +67,7 @@
       title: "Chapters"
   messages:
     accepted_invitation: "Thanks for getting back to us %{name}. See you at the workshop!"
+    error_blank_note: 'You must select a note'
     rejected_invitation: "We are so sad you can't make it, but thanks for letting us know %{name}."
     already_rsvped: "You have already confirmed you attendance!"
     not_attending_already: "You have already confirmed you can't make it!"

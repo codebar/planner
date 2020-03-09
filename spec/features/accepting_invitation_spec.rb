@@ -27,6 +27,15 @@ RSpec.feature 'a member can', type: :feature do
 
         expect(page).to have_content('Successfully updated note.')
       end
+
+      scenario 'logged in user with accepted invitation errors without note' do
+        invitation.update_attribute(:attending, true)
+        visit invitation_route
+
+        click_on 'Update note'
+
+        expect(page).to have_content('You must select a note')
+      end
     end
   end
 

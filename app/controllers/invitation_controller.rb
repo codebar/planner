@@ -15,7 +15,7 @@ class InvitationController < ApplicationController
     new_note = params[:note]
 
     if new_note.blank?
-      redirect_to :back, notice: 'You must select a note'
+      redirect_to :back, notice: t('messages.error_blank_note')
     else
       @invitation.update_attribute(:note, params[:note])
       redirect_to :back, notice: t('messages.updated_note')
