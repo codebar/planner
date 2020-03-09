@@ -65,7 +65,7 @@ class InvitationsController < ApplicationController
 
     if invitation.save
       MeetingInvitationMailer.attending(meeting, current_user).deliver_now
-      redirect_to meeting_path(meeting), notice: 'Your RSVP was successful. We look forward to seeing you at the Monthly!'
+      redirect_to meeting_path(meeting), notice: t('messages.invitations.meeting.rsvp')
     else
       redirect_to :back, notice: 'Sorry, something went wrong'
     end
@@ -76,7 +76,7 @@ class InvitationsController < ApplicationController
 
     @invitation.update_attribute(:attending, false)
 
-    redirect_to :back, notice: "Thanks for letting us know you can't make it."
+    redirect_to :back, notice: t('messages.invitations.meeting.cancel')
   end
 
   private
