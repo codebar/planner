@@ -27,7 +27,9 @@ class InvitationController < ApplicationController
     @invitation.update(note: params[:workshop_invitation][:note], rsvp_time: Time.zone.now)
 
     if @workshop.student_spaces?
-      return redirect_to :back, notice: 'You have already RSVPd or joined the waitlist for this workshop.' if @workshop.attendee?(current_user) || @workshop.waitlisted?(current_user)
+      if @workshop.attendee?(current_user) || @workshop.waitlisted?(current_user)
+        return redirect_to :back, notice: t('messages.already_invited')
+      end
 
       @invitation.update_attribute(:attending, true)
       WorkshopInvitationMailer.attending(@invitation.workshop, @invitation.member, @invitation).deliver_now
