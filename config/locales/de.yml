@@ -74,6 +74,7 @@ de:
     title: "%{name} - %{date}"
   messages:
     accepted_invitation: "Vielen Dank für die Rückmeldung, %{name}. Wir sehen uns beim Workshop!"
+    already_invited: 'You have already RSVPd or joined the waitlist for this workshop.'
     error_blank_note: 'You must select a note'
     rejected_invitation: "Wir bedauern es sehr dass du nicht teilnehmen kannst. Vielen Dank für das Bescheid geben, %{name}."
     already_rsvped: "Du hast deine Teilnahme schon bestätigt!"
