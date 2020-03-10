@@ -131,7 +131,9 @@ de:
       stubling: "Lasse zu, dass die Lernenden auch mal stolpern. Wir lernen aus Fehlern, indem wir unseren eigenen Weg von der Frustration zur Lösung des Problems finden. Stehe den Lernenden unterstützend zur Seite, aber lass sie selbständig erkunden."
       suggestions: "Hast du noch Vorschläge? Eröffne einen <a href='https://github.com/codebar/planner'>pull request</a> oder <a href='https://github.com/codebar/planner/issues/new'>erstelle eine issue</a>\""
   workshops:
+    already_wish_to_attend: 'You have already RSVPd or joined the waitlist for this workshop.'
     lead: "Attend our workshops to learn programming in a safe and supportive environment at your own pace, or to share your knowledge and coach our students."
+    registration_not_open: 'This workshop is not open for registrations'
   events:
     title: "Veranstaltungen"
     past: "Vergangene"
