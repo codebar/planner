@@ -74,6 +74,7 @@
     title: "%{name} - %{date}"
   messages:
     accepted_invitation: "Thanks for getting back to us %{name}. See you at the workshop!"
+    already_invited: 'You have already RSVPd or joined the waitlist for this workshop.'
     error_blank_note: 'You must select a note'
     rejected_invitation: "We are so sad you can't make it, but thanks for letting us know %{name}."
     already_rsvped: "You have already confirmed you attendance!"
