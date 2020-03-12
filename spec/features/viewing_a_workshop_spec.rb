@@ -25,30 +25,11 @@ RSpec.feature 'Viewing a workshop page', type: :feature do
           end
         end
 
-        scenario 'sponsors' do
-          within '#sponsors' do
-            workshop.sponsors.each do |sponsor|
-              expect(page).to have_content(sponsor.name)
-            end
-          end
-        end
-
-        scenario 'organisers' do
-          within '#organisers' do
-            expect(page).to have_content('Organisers')
-
-            workshop.organisers.each do |organiser|
-              expect(page).to have_content(organiser.full_name)
-            end
-          end
-        end
+        include_examples "viewing workshop details"
       end
 
       describe '#actions' do
-        scenario 'signing up or signing in' do
-          expect(page).to have_content('Sign up')
-          expect(page).to have_content('Log in')
-        end
+        include_examples "viewing workshop actions"
       end
     end
 
@@ -73,30 +54,11 @@ RSpec.feature 'Viewing a workshop page', type: :feature do
           end
         end
 
-        scenario 'sponsors' do
-          within '#sponsors' do
-            workshop.sponsors.each do |sponsor|
-              expect(page).to have_content(sponsor.name)
-            end
-          end
-        end
-
-        scenario 'organisers' do
-          within '#organisers' do
-            expect(page).to have_content('Organisers')
-
-            workshop.organisers.each do |organiser|
-              expect(page).to have_content(organiser.full_name)
-            end
-          end
-        end
+        include_examples "viewing workshop details"
       end
 
       describe '#actions' do
-        scenario 'signing up or signing in' do
-          expect(page).to have_content('Sign up')
-          expect(page).to have_content('Log in')
-        end
+        include_examples "viewing workshop actions"
       end
     end
   end
