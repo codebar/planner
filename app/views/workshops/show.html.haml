@@ -24,7 +24,7 @@
           = sanitize(@workshop.description)
 
         - unless current_user and current_user.banned?
-          = render 'workshop_actions'
+          = render 'actions'
 
 .stripe.reverse
   .row

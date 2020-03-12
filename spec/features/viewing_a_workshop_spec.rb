@@ -25,9 +25,21 @@ RSpec.feature 'Viewing a workshop page', type: :feature do
           end
         end
 
-        scenario 'sponsor name' do
+        scenario 'sponsors' do
           within '#sponsors' do
-            expect(page).to have_content(workshop.host.name)
+            workshop.sponsors.each do |sponsor|
+              expect(page).to have_content(sponsor.name)
+            end
+          end
+        end
+
+        scenario 'organisers' do
+          within '#organisers' do
+            expect(page).to have_content('Organisers')
+
+            workshop.organisers.each do |organiser|
+              expect(page).to have_content(organiser.full_name)
+            end
           end
         end
       end

@@ -161,6 +161,11 @@ en:
     lead: "Attend our workshops to learn programming in a safe and supportive environment at your own pace, or to share your knowledge and coach our students."
     not_open_for_rsvp: 'This workshop is not yet open for RSVP.'
     registration_not_open: 'This workshop is not open for registrations'
+    sign_up_to_be_invited: 'Sign up to be invited to future events.'
+    no_spaces_available: 'There are no available spots left for this workshop but you can always join the waiting list.'
+    already_attending: 'You are attending this event'
+    on_waiting_list: You are on the waiting list.
+    already_taken_place: This event has already taken place.
   events:
     title: "Events"
     past: "Past"
