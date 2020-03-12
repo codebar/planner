@@ -5,6 +5,8 @@ class WorkshopsController < ApplicationController
   def show
     @workshop = WorkshopPresenter.new(@workshop)
     @host_address = AddressPresenter.new(@workshop.host.address) if @workshop.has_host?
+
+    render 'virtual_workshops/show' if @workshop.virtual?
   end
 
   def rsvp
