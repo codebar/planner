@@ -65,6 +65,22 @@ en-GB:
       workshop_email_subject: "Regarding hosting a workshop"
     chapters:
       title: "Chapters"
+  mailer:
+    workshop_invitation:
+      attending:
+        subject: "Attendance Confirmation for %{date_time}"
+      attending_reminder:
+        subject: "Workshop Reminder %{date_time}"
+      change_of_details:
+        subject: "%{title}: %{workshop_title} by codebar - %{date_time}"
+      invite_coach:
+        subject: "Workshop Coach Invitation %{date_time}"
+      invite_student:
+        subject: "Workshop Invitation %{date_time}"
+      notify_waiting_list:
+        subject: "A spot just became available"
+      waiting_list_reminder:
+        subject: "Reminder: you're on the codebar waiting list (%{date_time})"
   messages:
     accepted_invitation: "Thanks for getting back to us %{name}. See you at the workshop!"
     already_invited: 'You have already RSVPd or joined the waitlist for this workshop.'
