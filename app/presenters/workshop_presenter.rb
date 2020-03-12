@@ -66,7 +66,16 @@ class WorkshopPresenter < EventPresenter
             "(in #{distance_of_time_in_words_to_now(date_and_time)})"
   end
 
+  def spaces?
+    return super unless model.virtual?
+    virtual_workshop_spaces?
+  end
+
   private
+
+  def virtual_workshop_spaces?
+    model.coach_spaces > model.attending_coaches.length || model.student_spaces > model.attending_students.length
+  end
 
   def students_checklist
     model.attending_students.order('note asc').each_with_index.map do |a, pos|

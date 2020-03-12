@@ -39,7 +39,7 @@ RSpec.describe WorkshopPresenter do
         expect(presenter.start_and_end_time).to eq(I18n.l(workshop.time, format: :time))
       end
 
-      it 'when a start and end_time are set it returns a formatted start and end_time' do
+      it 'when a start and an end_time are set it returns a formatted start and end_time' do
         workshop =  double(:workshop, time: Time.zone.now, ends_at: 1.hour.from_now)
         presenter = WorkshopPresenter.new(workshop)
 
@@ -79,5 +79,53 @@ RSpec.describe WorkshopPresenter do
     end
 
     expect(presenter.attendees_emails.split(', ')).to match_array(members.map(&:email))
+  end
+
+  context '#spaces?' do
+    let(:sponsor) { double(:sponsor, coach_spots: 3, seats: 5, chapter: chapter) }
+
+    def double_workshop(attending_coaches:, attending_students:, virtual:)
+      double(:workshop, coach_spaces: 3, student_spaces: 5, host: sponsor,
+                        attending_coaches: double(:attending_coaches, length: attending_coaches),
+                        attending_students: double(:attending_students, length: attending_students),
+                        virtual?: virtual)
+    end
+
+
+    context 'for a physical workshop' do
+      context 'when the host has more available spots' do
+        let(:workshop) { double_workshop(attending_coaches: 2, attending_students: 3, virtual: false) }
+
+        it 'it returns true' do
+          expect(presenter.spaces?).to eq(true)
+        end
+      end
+
+      context 'when the host has no more available spots' do
+        let(:workshop) { double_workshop(attending_coaches: 3, attending_students: 5, virtual: false) }
+
+        it 'it returns false' do
+          expect(presenter.spaces?).to eq(false)
+        end
+      end
+    end
+
+    context 'for a virtual workshop' do
+      context 'when there are more available spots' do
+        let(:workshop) { double_workshop(attending_coaches: 2, attending_students: 5, virtual: true) }
+
+        it 'it returns true' do
+          expect(presenter.spaces?).to eq(true)
+        end
+      end
+
+      context 'when there are no more available spots' do
+        let(:workshop) { double_workshop(attending_coaches: 3, attending_students: 5, virtual: true) }
+
+        it 'it returns true' do
+          expect(presenter.spaces?).to eq(false)
+        end
+      end
+    end
   end
 end
