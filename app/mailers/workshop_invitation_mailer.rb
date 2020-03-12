@@ -21,14 +21,9 @@ class WorkshopInvitationMailer < ActionMailer::Base
   end
 
   def attending_reminder(workshop, member, invitation)
-    @workshop = WorkshopPresenter.new(workshop)
-    @host_address = AddressPresenter.new(@workshop.host.address)
-    @member = member
-    @invitation = invitation
-
     subject = t('mailer.workshop_invitation.attending_reminder.subject',
-                date_time: humanize_date(@workshop.date_and_time, with_time: true))
-    mail(mail_args(member, subject, @workshop.chapter.email), &:html)
+                date_time: humanize_date(workshop.date_and_time, with_time: true))
+    reminder_setup(workshop, member, invitation, subject)
   end
 
   def change_of_details(workshop, sponsor, member, invitation, title = 'Change of details')
@@ -80,14 +75,9 @@ class WorkshopInvitationMailer < ActionMailer::Base
   end
 
   def waiting_list_reminder(workshop, member, invitation)
-    @workshop = WorkshopPresenter.new(workshop)
-    @host_address = AddressPresenter.new(@workshop.host.address)
-    @member = member
-    @invitation = invitation
-
     subject = t('mailer.workshop_invitation.waiting_list_reminder.subject',
-                date_time: humanize_date(@workshop.date_and_time, with_time: true))
-    mail(mail_args(member, subject, @workshop.chapter.email), &:html)
+                date_time: humanize_date(workshop.date_and_time, with_time: true))
+    reminder_setup(workshop, member, invitation, subject)
   end
 
   private
@@ -96,5 +86,14 @@ class WorkshopInvitationMailer < ActionMailer::Base
     def full_url_for(path)
       "#{@host}#{path}"
     end
+  end
+
+  def reminder_setup(workshop, member, invitation, subject)
+    @workshop = WorkshopPresenter.new(workshop)
+    @host_address = AddressPresenter.new(@workshop.host.address)
+    @member = member
+    @invitation = invitation
+
+    mail(mail_args(member, subject, @workshop.chapter.email), &:html)
   end
 end
