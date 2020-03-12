@@ -12,8 +12,7 @@
         #workshop-time.time
           %i.material-icons
             access_time
-          = @workshop.time
-          = @workshop.ends_at.present? ? "- " +  l(@workshop.ends_at, format: :time) : ""
+          = @workshop.start_and_end_time
       - if @workshop.date_and_time.past?
         %label.label.warning This event has already taken place.
   %section#banner

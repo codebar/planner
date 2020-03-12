@@ -8,7 +8,10 @@ RSpec.describe WorkshopPresenter do
      Fabricate(:coach_workshop_invitation)]
   end
   let(:chapter) { Fabricate(:chapter) }
-  let(:workshop_double) { double(:workshop, attendances: invitations, host: Fabricate(:sponsor), chapter: chapter) }
+  let(:workshop_double) do
+    double(:workshop, time: Time.zone.now, ends_at: 1.hour.from_now,
+           attendances: invitations, host: Fabricate(:sponsor), chapter: chapter)
+  end
   let(:workshop) { WorkshopPresenter.new(workshop_double) }
 
   it '#venue' do
@@ -25,9 +28,29 @@ RSpec.describe WorkshopPresenter do
   end
 
   it '#time' do
-    expect(workshop_double).to receive(:time).and_return(Time.zone.now)
+    start_time = workshop_double.time
+    expect(workshop.time).to eq(I18n.l(start_time, format: :time))
+  end
 
-    workshop.time
+  it '#end_time' do
+    expect(workshop.end_time).to eq(I18n.l(workshop_double.ends_at, format: :time))
+  end
+
+  context 'start_and_end_time' do
+    it 'when no end_time is set it only returns the start_time' do
+      workshop_double =  double(:workshop, time: Time.zone.now, ends_at: nil)
+      workshop = WorkshopPresenter.new(workshop_double)
+
+      expect(workshop.start_and_end_time).to eq(I18n.l(workshop_double.time, format: :time))
+    end
+
+    it 'when a start and end_time are set it returns a formatted start and end_time' do
+      workshop_double =  double(:workshop, time: Time.zone.now, ends_at: 1.hour.from_now)
+      workshop = WorkshopPresenter.new(workshop_double)
+
+      expect(workshop.start_and_end_time)
+        .to eq("#{I18n.l(workshop_double.time, format: :time)} - #{I18n.l(workshop_double.ends_at, format: :time)}")
+    end
   end
 
   it '#attendees_csv' do
