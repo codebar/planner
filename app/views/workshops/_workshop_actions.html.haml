@@ -1,5 +1,6 @@
 - if !@workshop.invitable_yet?
-  %p This workshop is not yet open for RSVP.
+  %p
+    %label.label.info= t('workshops.not_open_for_rsvp')
 - else
   - if @workshop.past?
     - unless logged_in?

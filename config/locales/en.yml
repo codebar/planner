@@ -159,6 +159,7 @@ en:
   workshops:
     already_wish_to_attend: 'You have already RSVPd or joined the waitlist for this workshop.'
     lead: "Attend our workshops to learn programming in a safe and supportive environment at your own pace, or to share your knowledge and coach our students."
+    not_open_for_rsvp: 'This workshop is not yet open for RSVP.'
     registration_not_open: 'This workshop is not open for registrations'
   events:
     title: "Events"

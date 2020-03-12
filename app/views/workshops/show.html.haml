@@ -30,14 +30,15 @@
   .row
     = render partial: 'shared/venue', locals: { venue: @workshop.host, address: @host_address}
 
-    .small-12.column
-      %h3 Sponsors
-      %ul.row.no-bullet
-        - @workshop.sponsors.each do |sponsor|
-          %li.small-4.columns
-            = image_tag(sponsor.avatar, class: 'sponsor', alt: sponsor.name)
-            %p
-              = link_to sponsor.name, sponsor.website
+    #sponsors
+      .small-12.column
+        %h3 Sponsors
+        %ul.row.no-bullet
+          - @workshop.sponsors.each do |sponsor|
+            %li.small-4.columns
+              = image_tag(sponsor.avatar, class: 'sponsor', alt: sponsor.name)
+              %p
+                = link_to sponsor.name, sponsor.website
 
 .stripe.reverse
   = render partial: 'members/organisers_grid', locals: { members: @workshop.organisers, show_info: false }
