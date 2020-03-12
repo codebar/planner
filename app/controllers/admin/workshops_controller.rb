@@ -22,11 +22,13 @@ class Admin::WorkshopsController < Admin::ApplicationController
     @workshop = Workshop.new(workshop_params)
     authorize(@workshop)
 
+    return no_host_error if physical_workshop_and_no_host?(@workshop)
+
     if @workshop.save
       grant_organiser_access(@workshop.chapter.organisers.pluck(:id))
       set_host(host_id)
 
-      redirect_to admin_workshop_path(@workshop), notice: 'The workshop has been created.'
+      redirect_to admin_workshop_path(@workshop), notice: I18n.t('admin.messages.workshop.created')
     else
       flash[:notice] = @workshop.errors.full_messages.join('<br/>')
       render 'new'
@@ -64,7 +66,7 @@ class Admin::WorkshopsController < Admin::ApplicationController
   def attendees_checklist
     return render text: @workshop.attendees_checklist if request.format.text?
 
-    redirect_to admin_workshop_path(@workshop)
+    redirect_to admin_workshop_path(@workshop), notice: "The requested format is invalid: #{request.format}"
   end
 
   def attendees_emails
@@ -99,7 +101,7 @@ class Admin::WorkshopsController < Admin::ApplicationController
 
   def workshop_params
     params.require(:workshop).permit(:local_date, :local_time, :chapter_id,
-                                     :invitable, :seats, :rsvp_open_local_date,
+                                     :invitable, :seats, :virtual, :rsvp_open_local_date,
                                      :rsvp_open_local_time, :ends_at, :description, sponsor_ids: [])
   end
 
@@ -161,5 +163,14 @@ class Admin::WorkshopsController < Admin::ApplicationController
   def workshop_created_within_specific_time_frame?
     Time.zone.now.between?(@workshop.created_at,
                            @workshop.created_at + WORKSHOP_DELETION_TIME_FRAME_SINCE_CREATION)
+  end
+
+  def physical_workshop_and_no_host?(workshop)
+    !workshop.virtual && host_id.empty?
+  end
+
+  def no_host_error
+    flash[:notice] = I18n.t('admin.messages.workshop.no_host')
+    render 'new'
   end
 end

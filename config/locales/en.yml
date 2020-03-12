@@ -521,6 +521,9 @@ en:
         already_on_list: "%{name} is already on the list!"
         rsvp_error: "Something went wrong, %{name} has not been added."
         update_rsvp: 'Updated attendance of %{name}'
+      workshop:
+        created: 'Workshop successfully created'
+        no_host: 'Before you can proceed you must select a host'
   simple_form:
     placeholders:
       member:
