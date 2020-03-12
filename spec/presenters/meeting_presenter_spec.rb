@@ -19,7 +19,7 @@ RSpec.describe MeetingPresenter do
   it '#organisers' do
     permissions = Fabricate(:permission, resource: meeting, name: 'organiser')
 
-    expect(event.organisers).to eq(permissions.members)
+    expect(event.organisers).to match_array(permissions.members)
   end
 
   it '#attendees_emails' do
