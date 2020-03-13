@@ -3,6 +3,23 @@ class WorkshopPresenter < EventPresenter
   include ActionView::Context
   include ActionView::Helpers::DateHelper
 
+  def self.decorate(workshop)
+    return VirtualWorkshopPresenter.new(workshop) if workshop.virtual?
+    WorkshopPresenter.new(workshop)
+  end
+
+  def title
+    I18n.t('workshops.title', host: venue.name)
+  end
+
+  def attending_and_available_student_spots
+    "#{attending_students.count}/#{venue.seats})"
+  end
+
+  def attending_and_available_coach_spots
+    "#{attending_coaches.count}/#{venue.coach_spots})"
+  end
+
   def venue
     model.host
   end
@@ -62,20 +79,11 @@ class WorkshopPresenter < EventPresenter
   end
 
   def distance_of_time
-    past? ? "(#{distance_of_time_in_words_to_now(date_and_time)} ago)" :
-            "(in #{distance_of_time_in_words_to_now(date_and_time)})"
-  end
-
-  def spaces?
-    return super unless model.virtual?
-    virtual_workshop_spaces?
+    return "(#{distance_of_time_in_words_to_now(date_and_time)} ago)" if past?
+    "(in #{distance_of_time_in_words_to_now(date_and_time)})"
   end
 
   private
-
-  def virtual_workshop_spaces?
-    model.coach_spaces > model.attending_coaches.length || model.student_spaces > model.attending_students.length
-  end
 
   def students_checklist
     model.attending_students.order('note asc').each_with_index.map do |a, pos|

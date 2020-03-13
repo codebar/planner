@@ -2,8 +2,29 @@ require 'spec_helper'
 
 RSpec.describe WorkshopPresenter do
   let(:chapter) { Fabricate(:chapter) }
-  let(:workshop) { double(:workshop, host: Fabricate(:sponsor), chapter: chapter) }
+  let(:host) { Fabricate(:sponsor) }
+  let(:workshop) { double(:workshop, host: host, chapter: chapter) }
   let(:presenter) { WorkshopPresenter.new(workshop) }
+
+  context '#decorate' do
+    it 'returns a workshop decorated with the WorkshopPresenter' do
+      workshop = double(:workshop, virtual?: false)
+      presenter = WorkshopPresenter.decorate(workshop)
+      expect(presenter).to be_a(WorkshopPresenter)
+    end
+
+    it 'returns a virtual workshop decorated with the VirtualWorkshopPresenter' do
+      workshop = double(:workshop, virtual?: true)
+      presenter = WorkshopPresenter.decorate(workshop)
+      expect(presenter).to be_a(VirtualWorkshopPresenter)
+    end
+  end
+
+  context '#title' do
+    it 'returns the title of a workshop' do
+      expect(presenter.title).to eq("Workshop at #{host.name}")
+    end
+  end
 
   it '#venue' do
     expect(workshop).to receive(:host)
@@ -84,47 +105,26 @@ RSpec.describe WorkshopPresenter do
   context '#spaces?' do
     let(:sponsor) { double(:sponsor, coach_spots: 3, seats: 5, chapter: chapter) }
 
-    def double_workshop(attending_coaches:, attending_students:, virtual:)
-      double(:workshop, coach_spaces: 3, student_spaces: 5, host: sponsor,
+    def double_workshop(attending_coaches:, attending_students:)
+      double(:workshop, coach_spaces: 0, student_spaces: 0, host: sponsor,
                         attending_coaches: double(:attending_coaches, length: attending_coaches),
-                        attending_students: double(:attending_students, length: attending_students),
-                        virtual?: virtual)
+                        attending_students: double(:attending_students, length: attending_students))
     end
 
 
-    context 'for a physical workshop' do
-      context 'when the host has more available spots' do
-        let(:workshop) { double_workshop(attending_coaches: 2, attending_students: 3, virtual: false) }
+    context 'when the host has more available spots' do
+      let(:workshop) { double_workshop(attending_coaches: 2, attending_students: 3) }
 
-        it 'it returns true' do
-          expect(presenter.spaces?).to eq(true)
-        end
-      end
-
-      context 'when the host has no more available spots' do
-        let(:workshop) { double_workshop(attending_coaches: 3, attending_students: 5, virtual: false) }
-
-        it 'it returns false' do
-          expect(presenter.spaces?).to eq(false)
-        end
+      it 'it returns true' do
+        expect(presenter.spaces?).to eq(true)
       end
     end
 
-    context 'for a virtual workshop' do
-      context 'when there are more available spots' do
-        let(:workshop) { double_workshop(attending_coaches: 2, attending_students: 5, virtual: true) }
+    context 'when the host has no more available spots' do
+      let(:workshop) { double_workshop(attending_coaches: 3, attending_students: 5) }
 
-        it 'it returns true' do
-          expect(presenter.spaces?).to eq(true)
-        end
-      end
-
-      context 'when there are no more available spots' do
-        let(:workshop) { double_workshop(attending_coaches: 3, attending_students: 5, virtual: true) }
-
-        it 'it returns true' do
-          expect(presenter.spaces?).to eq(false)
-        end
+      it 'it returns false' do
+        expect(presenter.spaces?).to eq(false)
       end
     end
   end
