@@ -16,16 +16,8 @@
 
 
 .stripe.reverse
-  - if @announcements.present?
-    .row
-      .large-12.columns
-        %br
-          .alert-box.info{ "data-alert" => true }
-            =link_to "#", class: 'close' do
-              &times;
-            %ul.no-bullet
-              - @announcements.each do |announcement|
-                %li= dot_markdown(announcement.message)
+  = render partial: 'shared/announcements', locals: { announcements: @announcements }
+
   .row
     .medium-7.large-8.columns
       %p
