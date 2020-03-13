@@ -7,8 +7,8 @@ class Admin::MeetingInvitationsController < Admin::ApplicationController
 
     @invitation.update(attending: status, attended: attended)
 
-    return redirect_to [:admin, @invitation.meeting],
-                       notice: t('admin.messages.invitation.update_rsvp', name: @invitation.member.full_name)
+    redirect_to [:admin, @invitation.meeting],
+                notice: t('admin.messages.invitation.update_rsvp', name: @invitation.member.full_name)
   end
 
   def create

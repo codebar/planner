@@ -135,7 +135,10 @@ class Member < ActiveRecord::Base
   private
 
   def invitations_on(date)
-    workshop_invitations.joins(:workshop).where('workshops.date_and_time BETWEEN ? AND ?', date.beginning_of_day, date.end_of_day).where(attending: true)
+    workshop_invitations
+      .joins(:workshop)
+      .where('workshops.date_and_time BETWEEN ? AND ?', date.beginning_of_day, date.end_of_day)
+      .where(attending: true)
   end
 
   def md5_email

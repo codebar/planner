@@ -10,6 +10,7 @@ module ApplicationHelper
 
   def title(title = nil)
     return unless title
+
     title = title + ' | ' + t(:brand)
     content_for :title, title
   end

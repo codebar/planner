@@ -39,6 +39,7 @@ class SubscriptionsController < ApplicationController
 
   def send_welcome_email(member, subscription)
     return if member.received_welcome_for?(subscription)
+
     MemberMailer.welcome_for_subscription(subscription).deliver_now
   end
 end
