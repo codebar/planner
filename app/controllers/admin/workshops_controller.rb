@@ -22,15 +22,13 @@ class Admin::WorkshopsController < Admin::ApplicationController
     @workshop = Workshop.new(workshop_params)
     authorize(@workshop)
 
-    return no_host_error if physical_workshop_and_no_host?(@workshop)
-
-    if @workshop.save
+    if workshop_type_valid? && @workshop.save
       grant_organiser_access(@workshop.chapter.organisers.pluck(:id))
       set_host(host_id)
 
       redirect_to admin_workshop_path(@workshop), notice: I18n.t('admin.messages.workshop.created')
     else
-      flash[:notice] = @workshop.errors.full_messages.join('<br/>')
+      flash[:warning] = @workshop.errors.full_messages
       render 'new'
     end
   end
@@ -56,6 +54,9 @@ class Admin::WorkshopsController < Admin::ApplicationController
 
     set_organisers(organiser_ids)
     set_host(host_id)
+
+    if workshop_type_valid? && @workshop.valid?
+      @workshop.save
 
     redirect_to admin_workshop_path(@workshop), notice: 'Workshops updated successfully'
   end
@@ -101,8 +102,9 @@ class Admin::WorkshopsController < Admin::ApplicationController
 
   def workshop_params
     params.require(:workshop).permit(:local_date, :local_time, :chapter_id,
-                                     :invitable, :seats, :virtual, :rsvp_open_local_date,
-                                     :rsvp_open_local_time, :ends_at, :description, sponsor_ids: [])
+                                     :invitable, :seats, :virtual, :slack_channel, :slack_channel_link,
+                                     :rsvp_open_local_date, :rsvp_open_local_time, :ends_at, :description,
+                                     sponsor_ids: [])
   end
 
   def chapter_id
@@ -169,8 +171,10 @@ class Admin::WorkshopsController < Admin::ApplicationController
     !workshop.virtual && host_id.empty?
   end
 
-  def no_host_error
-    flash[:notice] = I18n.t('admin.messages.workshop.no_host')
-    render 'new'
+  def workshop_type_valid?
+    return true unless physical_workshop_and_no_host?(@workshop)
+
+    @workshop.errors.add(:host, "can't be blank")
+    false
   end
 end

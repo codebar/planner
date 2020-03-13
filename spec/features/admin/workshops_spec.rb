@@ -66,7 +66,7 @@ RSpec.feature 'An admin managing workshops', type: :feature do
 
         click_on 'Save'
 
-        expect(page).to have_content('Before you can proceed you must select a host')
+        expect(page).to have_content("Host can't be blank")
       end
 
       scenario 'can have sponsors assigned' do
@@ -84,10 +84,27 @@ RSpec.feature 'An admin managing workshops', type: :feature do
     end
 
     context 'creating a virtual workshop' do
+      scenario 'must have a slack channel and slack channel link set' do
+        visit new_admin_workshop_path
+
+        check 'Virtual'
+
+        select chapter.name
+        fill_in 'Date', with: Date.current
+        fill_in 'Begins at', with: '11:30'
+
+        click_on 'Save'
+
+        expect(page).to have_content("Slack channel can't be blank")
+        expect(page).to have_content("Slack channel link can't be blank")
+      end
+
       scenario 'does not require a host to be set' do
         visit new_admin_workshop_path
 
         check 'Virtual'
+        fill_in 'Slack channel', with: '#channel'
+        fill_in 'Slack channel link', with: 'https://channel-link'
 
         select chapter.name
         fill_in 'Date', with: Date.current

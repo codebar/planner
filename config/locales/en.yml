@@ -535,6 +535,8 @@ en:
       destroy:
         success: "Workshop deleted successfully"
         failure: "Workshop cannot be deleted. This is because it has invitees and/or workshop information is on the website for a while long enough that it cannot be deleted."
+      form:
+        virtual_info: To create a virtual workshop you must check the box and fill in the below fields. The slack channel will be available on the invitation page for anyone who successfuly RSVPs.
     messages:
       meeting:
         created: 'Meeting successfully created'
@@ -548,7 +550,6 @@ en:
         update_rsvp: 'Updated attendance of %{name}'
       workshop:
         created: 'Workshop successfully created'
-        no_host: 'Before you can proceed you must select a host'
   simple_form:
     placeholders:
       member:
@@ -561,15 +562,26 @@ en:
         title: 'e.g. Internship'
         description: 'Use text or markdown for the job description'
         location: 'e.g. London or Berlin'
+      workshop:
+        slack_channel: 'e.g. virtual-london-2022-12-03'
+        slack_channel_link: 'e.g. https://codebar.slack.com/archives/CGLQD917T'
+        description: 'Any details you would like to add about the workshop. This will be visible on both the public workshop and invitation pages'
     hints:
       member:
         email: 'This is needed so we can email you invitations to our events'
       job:
         remote: Only check if the role is remote only
         salary: Annual pay before tax, without commas or decimal points
+      workshop:
+        slack_channel: 'Create a workshop specific channel in the codebar Slack. This is the place you will use for socialising and sharing details about the workshop.'
+        slack_channel_link: 'Right click the Slack channel to get the link'
+        host: 'Required by physical workshops but not supported for virtual workshops'
+        description: 'Supports HTML'
     labels:
       terms_and_conditions_form:
         terms: 'I have read codebar''s Code of Conduct and agree with all of its terms.'
+      workshop:
+        description: Additional description
   activerecord:
     attributes:
       job:

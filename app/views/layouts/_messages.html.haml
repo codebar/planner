@@ -1,10 +1,18 @@
 - flash.each do |name, msg|
   - unless (name.eql?('notice') && @suppress_notices) || (name.eql?('warning') && @suppress_warnings)
+    - name = name.eql?('notice') ? 'info' : name
     - if msg.is_a?(String)
-      - name = name.eql?('notice') ? 'info' : name
       %div{ 'data-alert': '', class: "alert-box #{name}" }
         .row
           .large-12
             = link_to '#', class: 'close' do
               &times;
             = content_tag :div, msg.html_safe
+    - elsif msg.is_a?(Array)
+      - msg.each do |message|
+        %div{ 'data-alert': '', class: "alert-box #{name}" }
+          .row
+            .large-12
+              = link_to '#', class: 'close' do
+                &times;
+              = content_tag :span, message.html_safe
