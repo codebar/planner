@@ -20,7 +20,7 @@
 
   .row
     .medium-7.large-8.columns
-      %p
+      %p#introduction
         Hi #{@invitation.member.name},
         = render partial: @invitation.role.downcase
 
@@ -72,16 +72,32 @@
 
 .stripe.reverse#info
   .row
-    = render partial: 'shared/venue', locals: { venue: @workshop.host, address: @workshop.address}
-
     .small-12.column
-      %h3 Sponsors
-      %ul.row.no-bullet
-        - @workshop.sponsors.each do |sponsor|
-          %li.small-4.columns
-            = image_tag(sponsor.avatar, class: 'sponsor', alt: sponsor.name)
-            %p
-              = link_to sponsor.name, sponsor.website
+      %h4= t('workshop.invitation.info')
+      - if @workshop.description?
+        %p.lead
+          = @workshop.description
+      - if @workshop.virtual? &&  @invitation.attending.eql?(true)
+        %h4= t('workshop.virtual.invitation.info.title')
+        %ol
+          %li= t('workshop.virtual.invitation.info.line_1_html', slack_link: link_to(t('social_media_links.slack_html')))
+          %li= t('workshop.virtual.invitation.info.line_2_html', channel: link_to('workshop channel', 'link' ))
+
+  - unless @workshop.virtual?
+    .row
+      = render partial: 'shared/venue', locals: { venue: @workshop.host, address: @workshop.address}
+
+- if @workshop.sponsors.any?
+  .stripe.reverse#sponsors
+    .row
+      .small-12.column
+        %h3 Sponsors
+        %ul.row.no-bullet
+          - @workshop.sponsors.each do |sponsor|
+            %li.small-4.columns
+              = image_tag(sponsor.avatar, class: 'sponsor', alt: sponsor.name)
+              %p
+                = link_to sponsor.name, sponsor.website
 
 .stripe.reverse
   = render partial: 'members/organisers_grid', locals: { members: @workshop.organisers, show_info: true }

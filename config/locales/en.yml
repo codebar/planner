@@ -88,12 +88,18 @@ en:
       title: Virtual workshop for %{chapter} - %{date}
       invitation:
         shared_intro_3_html: 'PS: If you have any questions about the workshop or will not be able to attend on short notice please send us an email at %{email_link} as that will make pairing everyone up easier for us.'
+        info:
+          title: How to join
+          line_1_html: 'Sign up to the codebar Slack %{slack_link}'
+          line_2_html: 'Join the %{channel} on Slack'
     invitation:
       title: Workshop invitation - %{date}
+      info: Information about the workshop
+      cant_make_it_note: "If you can't make it or plan to arrive late please let us know by sending an email to %{email}"
       student_intro_1: 'In our workshops, you will get to go through any of our available tutorials, ask for programming advice or get help on your own projects.'
       student_intro_2: 'In case you are unable to attend after you RSVP, please make sure you come back and update your attendance. We have limited space and do a coaches request depending on the number of attending students.'
       student_intro_3_html: 'Please make sure you <b>bring your laptop</b> with you.'
-      student_intro_4_html: 'PS: There will also be food at the workshop. We always make an effort to have vegetarian, vegan and gluten-free options available. If you have any other dietary requirements, send us an email at %{email_link}.'
+      shared_intro_4_html: 'PS: There will also be food at the workshop. We always make an effort to have vegetarian, vegan and gluten-free options available. If you have any other dietary requirements, send us an email at %{email_link}.'
   meeting:
     title: "%{name} - %{date}"
   messages:
@@ -580,3 +586,5 @@ en:
         name: 'First name'
         newsletter: 'If you do not want to receive the codebar newsletter uncheck this box'
         pronouns: 'What pronouns do you use?'
+  social_media_links:
+    slack_html: https://slack.codebar.io

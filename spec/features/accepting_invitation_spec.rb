@@ -16,7 +16,7 @@ RSpec.feature 'Accepting a workshop invitation', type: :feature do
 
     it_behaves_like 'invitation route'
 
-    context 'edit invitation' do
+    context 'amend invitation details' do
       scenario 'logged in user with accepted invitation can edit the note' do
         tutorial = Tutorial.create(title: 'Lesson 1 - Introducing HTML')
         invitation.update_attribute(:attending, true)
