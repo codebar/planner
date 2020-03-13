@@ -1,0 +1,52 @@
+= render partial: 'shared_mailers/header', locals: { title: 'Workshop Attendance Confirmation' }
+%body{ bgcolor: '#FFFFFF' }
+
+  = render partial: 'shared_mailers/body_header', locals: { title: 'Workshop Attendance Confirmation' }
+
+  %table{ class: 'body-wrap'}
+    %tr
+      %td
+      %td{ class: 'container', bgcolor: '#FFFFFF' }
+
+        .content
+          %table
+            %tr
+              %td
+                %h3 Hi #{@member.name},
+                %p.lead
+                  - if @waiting_list
+                    A spot became available and your attendance has now been confirmed.
+                  - else
+                    Your spot has been confirmed.
+                    - if @invitation.role.eql?('Student')
+                      %p If you haven't already, please remember to let us know what you will be working on through the invitation. Projects that involve specific frameworks, libraries, or languages that are not part of the codebar tutorials (anything other than Ruby or Javascript) are welcome, but we cannot guarantee that a coach will be available to help you. We recommend having a backup option to work on, such as codebar tutorials or katas (codewars.com or exercism.io). See you at our workshop!
+                  %p
+                    If you can no longer make it, please cancel your invitation <strong>before 15:00</strong> on the day of the workshop.
+                    <a href='https://codebar.io/student-guide#attendance'>We have a three-strikes attendance policy for no-shows.</a>
+                  %p
+                    Please remember that removing the calendar entry will not cancel your invitation RSVP.
+
+        .content
+          %table{ bgcolor: '#FFFFFF' }
+            %tr
+              %td
+                %h4
+                  Workshop
+                  %small #{humanize_date(@workshop.date_and_time, with_time: true)}#{@workshop.ends_at.present? ? " - " + @workshop.ends_at.strftime('%H:%M') : ""}
+                = link_to 'Update your attendance', full_url_for(invitation_url(@invitation)), class: 'btn'
+
+        .content
+          %table
+            %tr
+              %td
+                %h3 Organisers
+                %ul
+                  - @workshop.organisers.each do |organiser|
+                    %li
+                      = organiser.full_name
+
+        .content
+          = render partial: 'shared_mailers/social'
+      %td
+
+  = render partial: 'shared_mailers/footer'

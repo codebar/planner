@@ -26,6 +26,19 @@ class WorkshopInvitationMailer < ActionMailer::Base
     reminder_setup(workshop, member, invitation, subject)
   end
 
+  def attending_virtual(workshops, member, invitation, waiting_list = false)
+    @workshop = VirtualWorkshopPresenter.new(workshops)
+    @member = member
+    @invitation = invitation
+    @waiting_list = waiting_list
+
+    subject = "Attendance Confirmation: #{I18n.t('workshop.virtual.title',
+                                                 chapter: @workshop.chapter.name,
+                                                 date: humanize_date(@workshop.date_and_time))}"
+
+    mail(mail_args(member, subject, @workshop.chapter.email), &:html)
+  end
+
   def change_of_details(workshop, sponsor, member, invitation, title = 'Change of details')
     @workshop = workshop
     @sponsor = sponsor
