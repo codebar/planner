@@ -4,11 +4,11 @@
   .row
     .large-12.columns
       %h2
-        Workshop at #{@workshop.host.name}
+        = @workshop.title
         %br
         %small #{humanize_date(@workshop.date_and_time, with_time: true)} #{@workshop.distance_of_time}
       - if @workshop.date_and_time.past?
-        %label.label.warning This event has already taken place.
+        %label.label.warning= t('workshops.already_taken_place')
 .alert-box.info
   .row
     .large-12.columns
@@ -27,7 +27,7 @@
     .medium-5.large-4.columns
       .panel
         - if @workshop.past?
-          %em This workshop has already taken place.
+          %em= t('workshops.already_taken_place')
         - else
           - if @invitation.attending.eql?(true)
             - if @invitation.for_student?
@@ -41,7 +41,7 @@
               = link_to "I can no longer attend", reject_invitation_url(@invitation), class: "expand button small alert"
             - else
               %p
-                If you can't make it or plan to arrive late please let us know by sending an email to #{@invitation.workshop.chapter.email}
+                = t('workshop.invitation.cant_make_it_note', email: @workshop.chapter.email)
           - elsif @invitation.member.banned?
             %p
               %label.label.warning Your account has been suspended.
@@ -70,7 +70,7 @@
           Read our #{link_to "attendance policy", attendance_policy_path}.
 
 
-.stripe.reverse
+.stripe.reverse#info
   .row
     = render partial: 'shared/venue', locals: { venue: @workshop.host, address: @workshop.address}
 
@@ -89,9 +89,9 @@
 .stripe.reverse
   .row
     .medium-6.columns
-      %h4 Students (#{@invitation.workshop.attending_students.count}/#{@invitation.workshop.host.seats})
+      %h4 Students (#{@workshop.attending_and_available_student_spots})
       %ul.attendances.no-bullet
-        - @invitation.workshop.attending_students.each do |invitation|
+        - @workshop.attending_students.each do |invitation|
           %li.attendance
             .row
               .small-2.columns
@@ -102,9 +102,9 @@
                 .subheader=invitation.note
             %br
     .medium-6.columns
-      %h4 Coaches (#{@invitation.workshop.attending_coaches.count}/#{@invitation.workshop.host.coach_spots})
+      %h4 Coaches (#{@workshop.attending_and_available_coach_spots})
       %ul.attendances.no-bullet
-        - @invitation.workshop.attending_coaches.each do |invitation|
+        - @workshop.attending_coaches.each do |invitation|
           %li.attendance
             .row
               .small-2.columns

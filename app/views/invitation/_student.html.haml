@@ -1,7 +1,7 @@
-%p In our workshops, you will get to go through any of our available tutorials, ask for programming advice or get help on your own projects.
-
-%p In case you are unable to attend after you RSVP, please make sure you come back and update your attendance. We have limited space and do a coaches request depending on the number of attending students.
-
-%p Please make sure you <b>bring your laptop</b> with you.
-
-%p PS: There will also be food at the workshop. We always make an effort to have vegetarian, vegan and gluten-free options available. If you have any other dietary requirements, send us email at #{mail_to @invitation.workshop.chapter.email, @invitation.workshop.chapter.email}.
+%p= t('workshop.invitation.student_intro_1')
+%p= t('workshop.invitation.student_intro_2')
+- if @workshop.virtual?
+  %p= t('workshop.virtual.invitation.shared_intro_3_html', email_link: mail_to(@workshop.chapter.email, @workshop.chapter.email))
+- else
+  %p= t('workshop.invitation.student_intro_3_html')
+  %p= t('workshop.invitation.student_intro_4_html', email_link: mail_to(@workshop.chapter.email, @workshop.chapter.email).html_safe)
