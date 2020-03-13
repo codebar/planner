@@ -84,7 +84,7 @@ class Workshop < ActiveRecord::Base
   end
 
   def to_s
-    'Workshop'
+    virtual? ? 'Virtual Workshop' : 'Workshop'
   end
 
   def location

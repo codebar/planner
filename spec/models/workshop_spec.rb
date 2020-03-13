@@ -75,6 +75,17 @@ RSpec.describe Workshop, type: :model  do
     end
   end
 
+  context '#to_s' do
+    it 'when physical workshop' do
+      expect(workshop.to_s).to eq('Workshop')
+    end
+
+    it 'when virtual workshop' do
+      workshop = Workshop.new(virtual: true)
+      expect(workshop.to_s).to eq('Virtual Workshop')
+    end
+  end
+
   context '#scopes' do
     describe '#host' do
       let(:sponsor) { Fabricate(:sponsor) }
