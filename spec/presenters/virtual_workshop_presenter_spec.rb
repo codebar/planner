@@ -3,8 +3,8 @@ require 'spec_helper'
 RSpec.describe VirtualWorkshopPresenter do
   def double_workshop(attending_coaches:, attending_students:)
     double(:workshop, coach_spaces: 3, student_spaces: 5, chapter: chapter,
-           attending_coaches: double(:attending_coaches, length: attending_coaches),
-           attending_students: double(:attending_students, length: attending_students))
+                      attending_coaches: double(:attending_coaches, length: attending_coaches),
+                      attending_students: double(:attending_students, length: attending_students))
   end
 
   let(:chapter) { Fabricate(:chapter) }
@@ -56,6 +56,19 @@ RSpec.describe VirtualWorkshopPresenter do
       it 'it returns false' do
         expect(presenter.spaces?).to eq(false)
       end
+    end
+  end
+
+  context '#send_attending_email' do
+    it 'send an attending email to the invitation user' do
+      workshop_invitation_mailer = double(:workshop_invitation_mailed, deliver_now: true)
+      invitation = double(:invitation, member: double(:member))
+      expect(WorkshopInvitationMailer)
+        .to receive(:attending_virtual)
+        .with(workshop, invitation.member, invitation)
+        .and_return(workshop_invitation_mailer)
+
+      presenter.send_attending_email(invitation)
     end
   end
 end

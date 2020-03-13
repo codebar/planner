@@ -159,6 +159,7 @@ en:
       stubling: "Let them stumble. We learn by making mistakes, getting frustrated, and working through problem in our own way. Be supportive, but let them explore."
       suggestions: "Do you have something to suggest? Make a <a href='https://github.com/codebar/planner'>pull request</a> or <a href='https://github.com/codebar/planner/issues/new'>create an issue</a>"
   workshops:
+    title: Workshop at %{host}
     already_wish_to_attend: 'You have already RSVPd or joined the waitlist for this workshop.'
     lead: "Attend our workshops to learn programming in a safe and supportive environment at your own pace, or to share your knowledge and coach our students."
     not_open_for_rsvp: 'This workshop is not yet open for RSVP.'

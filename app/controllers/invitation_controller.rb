@@ -4,8 +4,8 @@ class InvitationController < ApplicationController
   def show
     @announcements = @invitation.member.announcements.active
     @tutorial_titles = Tutorial.all_titles
-    @host_address = AddressPresenter.new(@invitation.parent.host.address)
-    @workshop = WorkshopPresenter.new(@invitation.workshop)
+
+    @workshop = WorkshopPresenter.decorate(@invitation.workshop)
 
     render text: @workshop.attendees_csv if request.format.csv?
   end
@@ -23,8 +23,8 @@ class InvitationController < ApplicationController
   end
 
   def accept_with_note
-    @workshop = WorkshopPresenter.new(@invitation.workshop)
     @invitation.update(note: params[:workshop_invitation][:note], rsvp_time: Time.zone.now)
+    @workshop = WorkshopPresenter.decorate(@invitation.workshop)
 
     if @workshop.student_spaces?
       if @workshop.attendee?(current_user) || @workshop.waitlisted?(current_user)
@@ -32,7 +32,7 @@ class InvitationController < ApplicationController
       end
 
       @invitation.update_attribute(:attending, true)
-      WorkshopInvitationMailer.attending(@invitation.workshop, @invitation.member, @invitation).deliver_now
+      @workshop.send_attending_email(@invitation)
 
       redirect_to :back, notice: t('messages.accepted_invitation',
                                    name: @invitation.member.name)

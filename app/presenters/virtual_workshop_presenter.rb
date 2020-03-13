@@ -23,6 +23,10 @@ class VirtualWorkshopPresenter < WorkshopPresenter
     virtual_workshop_spaces?
   end
 
+  def send_attending_email(invitation)
+    WorkshopInvitationMailer.attending_virtual(model, invitation.member, invitation).deliver_now
+  end
+
   private
 
   def virtual_workshop_spaces?

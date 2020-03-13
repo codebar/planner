@@ -12,6 +12,10 @@ class WorkshopPresenter < EventPresenter
     I18n.t('workshops.title', host: venue.name)
   end
 
+  def address
+    AddressPresenter.new(venue.address)
+  end
+
   def attending_and_available_student_spots
     "#{attending_students.count}/#{venue.seats})"
   end
@@ -81,6 +85,10 @@ class WorkshopPresenter < EventPresenter
   def distance_of_time
     return "(#{distance_of_time_in_words_to_now(date_and_time)} ago)" if past?
     "(in #{distance_of_time_in_words_to_now(date_and_time)})"
+  end
+
+  def send_attending_email(invitation)
+    WorkshopInvitationMailer.attending(model, invitation.member, invitation).deliver_now
   end
 
   private

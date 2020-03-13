@@ -20,6 +20,12 @@ RSpec.describe WorkshopPresenter do
     end
   end
 
+  context '#address' do
+    it 'returns the decorated address of the workshop\'s venue' do
+      expect(presenter.address.to_html).to eq(AddressPresenter.new(host.address).to_html)
+    end
+  end
+
   context '#title' do
     it 'returns the title of a workshop' do
       expect(presenter.title).to eq("Workshop at #{host.name}")
@@ -126,6 +132,19 @@ RSpec.describe WorkshopPresenter do
       it 'it returns false' do
         expect(presenter.spaces?).to eq(false)
       end
+    end
+  end
+
+  context '#send_attending_email' do
+    it 'send an attending email to the invitation user' do
+      workshop_invitation_mailer = double(:workshop_invitation_mailed, deliver_now: true)
+      invitation = double(:invitation, member: double(:member))
+      expect(WorkshopInvitationMailer)
+        .to receive(:attending)
+        .with(workshop, invitation.member, invitation)
+        .and_return(workshop_invitation_mailer)
+
+      presenter.send_attending_email(invitation)
     end
   end
 end

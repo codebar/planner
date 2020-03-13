@@ -21,13 +21,12 @@ module InvitationControllerConcerns
                              notice: t('messages.invitations.rsvped_to_other_workshop'))
       end
 
-      @workshop = WorkshopPresenter.new(@invitation.workshop)
+      @workshop = WorkshopPresenter.decorate(@invitation.workshop)
+
       if (@invitation.for_student? && @workshop.student_spaces?) || (@invitation.for_coach? && @workshop.coach_spaces?)
         @invitation.update(attending: true, rsvp_time: Time.zone.now)
         @invitation.waiting_list.destroy if @invitation.waiting_list.present?
-        WorkshopInvitationMailer.attending(@invitation.workshop,
-                                           @invitation.member,
-                                           @invitation).deliver_now
+        @workshop.send_attending_email(@invitation)
 
         redirect_back(fallback_location: invitation_path(@invitation),
                       notice: t('messages.accepted_invitation', name: @invitation.member.name))

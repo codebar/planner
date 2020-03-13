@@ -6,7 +6,7 @@
   .row
     .large-12.columns
       %h2
-        Workshop at #{@workshop.host.name}
+        = t('workshops.title', host: @workshop.host.name)
         %br
         %small #{humanize_date(@workshop.date_and_time)} #{@workshop.distance_of_time}
         #workshop-time.time
@@ -28,7 +28,7 @@
 
 .stripe.reverse
   .row
-    = render partial: 'shared/venue', locals: { venue: @workshop.host, address: @host_address}
+    = render partial: 'shared/venue', locals: { venue: @workshop.host, address: @workshop.address}
 
     #sponsors
       .small-12.column

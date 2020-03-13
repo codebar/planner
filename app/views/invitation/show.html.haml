@@ -72,7 +72,7 @@
 
 .stripe.reverse
   .row
-    = render partial: 'shared/venue', locals: { venue: @workshop.host, address: @host_address}
+    = render partial: 'shared/venue', locals: { venue: @workshop.host, address: @workshop.address}
 
     .small-12.column
       %h3 Sponsors
