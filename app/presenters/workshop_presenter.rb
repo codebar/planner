@@ -17,11 +17,11 @@ class WorkshopPresenter < EventPresenter
   end
 
   def attending_and_available_student_spots
-    "#{attending_students.count}/#{venue.seats})"
+    "#{attending_students.count}/#{student_spaces}"
   end
 
   def attending_and_available_coach_spots
-    "#{attending_coaches.count}/#{venue.coach_spots})"
+    "#{attending_coaches.count}/#{coach_spaces}"
   end
 
   def venue
@@ -89,6 +89,14 @@ class WorkshopPresenter < EventPresenter
 
   def send_attending_email(invitation)
     WorkshopInvitationMailer.attending(model, invitation.member, invitation).deliver_now
+  end
+
+  def coach_spaces
+    venue.coach_spots
+  end
+
+  def student_spaces
+    venue.seats
   end
 
   private

@@ -24,6 +24,8 @@ class Workshop < ActiveRecord::Base
 
   validates :slack_channel, presence: true, if: :virtual?
   validates :slack_channel_link, presence: true, if: :virtual?
+  validates :student_spaces, numericality: { greater_than: 0 }, if: :virtual
+  validates :coach_spaces, numericality: { greater_than: 0 }, if: :virtual
 
   before_validation :set_date_and_time, if: proc { |model| model.chapter_id.present? }
   before_validation :set_opens_at

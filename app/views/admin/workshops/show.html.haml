@@ -6,7 +6,7 @@
     = link_to '#', class: 'item disabled', title: 'The event has already taken place' do
       %i.fa.fa-send-o
       %label Invite
-  - elsif @workshop.has_valid_host? and @workshop.invitable?
+  - elsif (@workshop.has_valid_host? || @workshop.virtual?) and @workshop.invitable?
     = link_to admin_workshop_send_invites_path(@workshop), class: 'item' do
       %i.fa.fa-send-o
       %label Invite
@@ -33,23 +33,27 @@
     .row
       .medium-12.columns
         %h2
-          Workshop
+          = @workshop.to_s
           = link_to [:admin, @workshop.chapter] do
             %small=@workshop.chapter.name
         %h3
-          %small #{l(@workshop.date_and_time)}#{@workshop.ends_at.present? ? " - " + @workshop.ends_at.strftime('%H:%M') : "" }
+          %small #{l(@workshop.date_and_time, format: :dashboard)} #{@workshop.start_and_end_time}
         - if @workshop.rsvp_opens_at
           RSVPs will open at
           = @workshop.rsvp_opens_at.strftime('%H:%M on %d/%m/%Y.')
           %br
           %br
-        - if @workshop.venue.present?
-          %strong.label.round.primary #{@workshop.venue.seats} student spots, #{@workshop.venue.coach_spots} coach spots
+        - if @workshop.venue.present? || @workshop.virtual?
+          %strong.label.round.primary #{@workshop.student_spaces} student spots, #{@workshop.coach_spaces} coach spots
           - unless @workshop.spaces?
             %label.label.round.warning Full
-          %p.description
-            %br
-            = sanitize(@workshop.description)
+        - if !@workshop.invitable?
+          %br
+          %p
+            %label.label.info The workshop is not invitable
+        %p.description
+          %br
+          = sanitize(@workshop.description)
     %br
     .row
       .large-3.small-6.columns#host
@@ -57,7 +61,7 @@
           %h4 Venue
           %strong= @workshop.venue.name
           %br
-          %small= @address.to_html
+          %small= @workshop.address.to_html
       .large-3.small-6.columns#sponsors
         - if (@workshop.sponsors - [@workshop.host]).any?
           %h4 Sponsors

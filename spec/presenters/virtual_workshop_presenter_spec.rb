@@ -17,15 +17,19 @@ RSpec.describe VirtualWorkshopPresenter do
     end
   end
 
-  context '#attending_and_available_student_spots' do
-    it 'returns the attending students count over the available workshop spots' do
-      expect(presenter.attending_and_available_student_spots).to eq('4/5')
+  context '#coach_spaces' do
+    it 'returns the workshop\'s coach_spaces' do
+      expect(workshop).to receive(:coach_spaces)
+
+      presenter.coach_spaces
     end
   end
 
-  context '#attending_and_available_coach_spots' do
-    it 'returns the attending coaches count over the available workshop spots' do
-      expect(presenter.attending_and_available_coach_spots).to eq('3/3')
+  context '#student_spaces' do
+    it 'returns the workshop\'s student spaces' do
+      expect(workshop).to receive(:student_spaces)
+
+      presenter.student_spaces
     end
   end
 

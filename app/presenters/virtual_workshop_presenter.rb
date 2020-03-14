@@ -3,13 +3,7 @@ class VirtualWorkshopPresenter < WorkshopPresenter
     I18n.t('workshops.virtual.title', chapter: chapter.name)
   end
 
-  def attending_and_available_student_spots
-    "#{attending_students.length}/#{student_spaces}"
-  end
-
-  def attending_and_available_coach_spots
-    "#{attending_coaches.length}/#{coach_spaces}"
-  end
+  delegate :coach_spaces, :student_spaces, to: :model
 
   def student_spaces?
     student_spaces > attending_students.length

@@ -2,7 +2,7 @@ class Admin::InvitationsController < Admin::ApplicationController
   include Admin::WorkshopConcerns
 
   def update
-    set_workshop
+    set_and_decorate_workshop
     authorize @workshop
 
     set_invitation
@@ -12,8 +12,7 @@ class Admin::InvitationsController < Admin::ApplicationController
 
       if attending.eql?('true')
         @invitation.update_attribute(:attending, true)
-
-        WorkshopInvitationMailer.attending(@workshop, @invitation.member, @invitation).deliver_now if @workshop.future?
+        @workshop.send_attending_email(@invitation) if @workshop.future?
 
         message = "You have added #{@invitation.member.full_name} to the workshop as a #{@invitation.role}."
       else
@@ -31,7 +30,6 @@ class Admin::InvitationsController < Admin::ApplicationController
     end
 
     if request.xhr?
-      @workshop = WorkshopPresenter.new(@workshop)
       set_admin_workshop_data
 
       render partial: 'admin/workshops/invitation_management'

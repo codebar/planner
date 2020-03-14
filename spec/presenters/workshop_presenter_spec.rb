@@ -2,9 +2,16 @@ require 'spec_helper'
 
 RSpec.describe WorkshopPresenter do
   let(:chapter) { Fabricate(:chapter) }
-  let(:host) { Fabricate(:sponsor) }
+  let(:host) { Fabricate(:sponsor, seats: 5, number_of_coaches: 15) }
   let(:workshop) { double(:workshop, host: host, chapter: chapter) }
   let(:presenter) { WorkshopPresenter.new(workshop) }
+
+  def double_workshop(attending_coaches:, attending_students:)
+    double(:workshop, host: host, chapter: chapter,
+                      attending_coaches: double(:attending_coaches, count: attending_coaches),
+                      attending_students: double(:attending_students, count: attending_students))
+  end
+
 
   context '#decorate' do
     it 'returns a workshop decorated with the WorkshopPresenter' do
@@ -25,6 +32,23 @@ RSpec.describe WorkshopPresenter do
       expect(presenter.address.to_html).to eq(AddressPresenter.new(host.address).to_html)
     end
   end
+
+  context '#attending_and_available_student_spots' do
+  let(:workshop) { double_workshop(attending_coaches: 3, attending_students: 4) }
+
+    it 'returns the attending students count over the available workshop spots' do
+      expect(presenter.attending_and_available_student_spots).to eq('4/5')
+    end
+  end
+
+  context '#attending_and_available_coach_spots' do
+  let(:workshop) { double_workshop(attending_coaches: 3, attending_students: 4) }
+
+    it 'returns the attending coaches count over the available workshop spots' do
+      expect(presenter.attending_and_available_coach_spots).to eq('3/15')
+    end
+  end
+
 
   context '#title' do
     it 'returns the title of a workshop' do
@@ -106,6 +130,22 @@ RSpec.describe WorkshopPresenter do
     end
 
     expect(presenter.attendees_emails.split(', ')).to match_array(members.map(&:email))
+  end
+
+  context '#coach_spaces' do
+    it 'returns the available coach_spots' do
+      expect(host).to receive(:coach_spots)
+
+      presenter.coach_spaces
+    end
+  end
+
+  context '#student_spaces' do
+    it 'returns the available coach_spots' do
+      expect(host).to receive(:seats)
+
+      presenter.student_spaces
+    end
   end
 
   context '#spaces?' do

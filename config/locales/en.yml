@@ -578,6 +578,8 @@ en:
         slack_channel_link: 'Right click the Slack channel to get the link'
         host: 'Required by physical workshops but not supported for virtual workshops'
         description: 'Supports HTML'
+        coach_spaces: Available coach spaces
+        student_spaces: Available student spaces
     labels:
       terms_and_conditions_form:
         terms: 'I have read codebar''s Code of Conduct and agree with all of its terms.'

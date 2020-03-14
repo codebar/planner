@@ -39,10 +39,9 @@ class Admin::WorkshopsController < Admin::ApplicationController
 
   def show
     authorize @workshop
-    @workshop = WorkshopPresenter.new(@workshop)
+    @workshop = WorkshopPresenter.decorate(@workshop)
     return render text: @workshop.attendees_csv if request.format.csv?
 
-    @address = AddressPresenter.new(@workshop.host.address) if @workshop.has_host?
     set_admin_workshop_data
   end
 
@@ -106,7 +105,7 @@ class Admin::WorkshopsController < Admin::ApplicationController
     params.require(:workshop).permit(:local_date, :local_time, :chapter_id,
                                      :invitable, :seats, :virtual, :slack_channel, :slack_channel_link,
                                      :rsvp_open_local_date, :rsvp_open_local_time, :ends_at, :description,
-                                     sponsor_ids: [])
+                                     :coach_spaces, :student_spaces, sponsor_ids: [])
   end
 
   def chapter_id
@@ -119,7 +118,7 @@ class Admin::WorkshopsController < Admin::ApplicationController
 
   def set_and_decorate_workshop
     workshop = Workshop.find(params[:workshop_id])
-    @workshop = WorkshopPresenter.new(workshop)
+    @workshop = WorkshopPresenter.decorate(workshop)
   end
 
   def workshop_id

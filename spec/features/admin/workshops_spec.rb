@@ -84,7 +84,7 @@ RSpec.feature 'An admin managing workshops', type: :feature do
     end
 
     context 'creating a virtual workshop' do
-      scenario 'must have a slack channel and slack channel link set' do
+      scenario 'must have all the required details set' do
         visit new_admin_workshop_path
 
         check 'Virtual'
@@ -97,6 +97,8 @@ RSpec.feature 'An admin managing workshops', type: :feature do
 
         expect(page).to have_content("Slack channel can't be blank")
         expect(page).to have_content("Slack channel link can't be blank")
+        expect(page).to have_content('Student spaces must be greater than 0')
+        expect(page).to have_content('Coach spaces must be greater than 0')
       end
 
       scenario 'does not require a host to be set' do
@@ -105,6 +107,8 @@ RSpec.feature 'An admin managing workshops', type: :feature do
         check 'Virtual'
         fill_in 'Slack channel', with: '#channel'
         fill_in 'Slack channel link', with: 'https://channel-link'
+        fill_in 'Student spaces', with: '10'
+        fill_in 'Coach spaces', with: '5'
 
         select chapter.name
         fill_in 'Date', with: Date.current
