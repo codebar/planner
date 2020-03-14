@@ -87,6 +87,10 @@ en:
           subject: "Virtual Workshop Coach Invitation %{date_time}"
         invite_student:
           subject: "Virtual Workshop Invitation %{date_time}"
+        attending_reminder:
+          subject: "Virtual Workshop Reminder %{date_time}"
+        waiting_list_reminder:
+          subject: "Reminder: you're on the codebar waiting list (%{date_time})"
   workshop:
     title: Workshop at %{host} - %{date}
     virtual:

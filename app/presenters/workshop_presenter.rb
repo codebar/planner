@@ -87,8 +87,8 @@ class WorkshopPresenter < EventPresenter
     "(in #{distance_of_time_in_words_to_now(date_and_time)})"
   end
 
-  def send_attending_email(invitation)
-    WorkshopInvitationMailer.attending(model, invitation.member, invitation).deliver_now
+  def send_attending_email(invitation, waitinglist = false)
+    WorkshopInvitationMailer.attending(model, invitation.member, invitation, waitinglist).deliver_now
   end
 
   def coach_spaces

@@ -181,10 +181,21 @@ RSpec.describe WorkshopPresenter do
       invitation = double(:invitation, member: double(:member))
       expect(WorkshopInvitationMailer)
         .to receive(:attending)
-        .with(workshop, invitation.member, invitation)
+        .with(workshop, invitation.member, invitation, false)
         .and_return(workshop_invitation_mailer)
 
       presenter.send_attending_email(invitation)
+    end
+
+    it 'send a waiting list email to the invitation user' do
+      workshop_invitation_mailer = double(:workshop_invitation_mailed, deliver_now: true)
+      invitation = double(:invitation, member: double(:member))
+      expect(WorkshopInvitationMailer)
+        .to receive(:attending)
+        .with(workshop, invitation.member, invitation, true)
+        .and_return(workshop_invitation_mailer)
+
+      presenter.send_attending_email(invitation, true)
     end
   end
 end

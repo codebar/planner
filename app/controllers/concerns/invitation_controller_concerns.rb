@@ -37,7 +37,8 @@ module InvitationControllerConcerns
     end
 
     def reject
-      if @invitation.parent.date_and_time - 3.5.hours >= Time.zone.now
+      @workshop = WorkshopPresenter.decorate(@invitation.workshop)
+      if @invitation.workshop.date_and_time - 3.5.hours >= Time.zone.now
 
         if @invitation.attending.eql? false
           redirect_back(fallback_location: invitation_path(@invitation),
@@ -51,9 +52,8 @@ module InvitationControllerConcerns
             invitation = next_spot.invitation
             next_spot.destroy
             invitation.update_attribute(:attending, true)
-            WorkshopInvitationMailer.attending(invitation.workshop,
-                                               invitation.member,
-                                               invitation, true).deliver_now
+
+            @workshop.send_attending_email(@invitation, true)
           end
 
           redirect_back(fallback_location: invitation_path(@invitation),

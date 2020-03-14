@@ -34,7 +34,12 @@ class InvitationManager
 
   def send_workshop_attendance_reminders(workshop)
     workshop.attendances.not_reminded.each do |invitation|
-      WorkshopInvitationMailer.attending_reminder(workshop, invitation.member, invitation).deliver_now
+      if workshop.virtual?
+        VirtualWorkshopInvitationMailer.attending_reminder(workshop, invitation.member, invitation).deliver_now
+      else
+        WorkshopInvitationMailer.attending_reminder(workshop, invitation.member, invitation).deliver_now
+      end
+
       invitation.update_attribute(:reminded_at, Time.zone.now)
     end
   end
@@ -42,7 +47,11 @@ class InvitationManager
 
   def send_workshop_waiting_list_reminders(workshop)
     workshop.invitations.on_waiting_list.not_reminded.each do |invitation|
-      WorkshopInvitationMailer.waiting_list_reminder(workshop, invitation.member, invitation).deliver_now
+      if workshop.virtual?
+        VirtualWorkshopInvitationMailer.waiting_list_reminder(workshop, invitation.member, invitation).deliver_now
+      else
+        WorkshopInvitationMailer.waiting_list_reminder(workshop, invitation.member, invitation).deliver_now
+      end
       invitation.update_attribute(:reminded_at, Time.zone.now)
     end
   end

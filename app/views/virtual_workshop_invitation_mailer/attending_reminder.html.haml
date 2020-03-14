@@ -1,0 +1,47 @@
+= render partial: 'shared_mailers/header', locals: { title: 'Workshop Attendance Reminder' }
+%body{ bgcolor: '#FFFFFF' }
+
+  = render partial: 'shared_mailers/body_header', locals: { title: 'Workshop Attendance Reminder' }
+
+  %table{ class: 'body-wrap'}
+    %tr
+      %td
+      %td{ class: 'container', bgcolor: '#FFFFFF' }
+
+        .content
+          %table
+            %tr
+              %td
+                %h3 Hi #{@member.name},
+                %p.lead
+                  This is a quick email to remind you that you have signed up for tomorrow's workshop.
+                %p
+                  If you can no longer make it, please cancel your invitation <strong>before 15:00</strong> on the day of the event.
+                  <a href='https://codebar.io/student-guide#attendance'>We have a three-strikes attendance policy for no-shows.</a>
+                %p
+                  = link_to 'How to join the virtual workshop', full_url_for(invitation_url(@invitation, anchor: 'info')), class: 'btn soc-btn'
+
+        .content
+          %table{ bgcolor: '#FFFFFF' }
+            %tr
+              %td
+                %h4
+                  Workshop
+                  %small #{humanize_date(@workshop.date_and_time, with_time: true)}#{@workshop.ends_at.present? ? " - " + @workshop.ends_at.strftime('%H:%M') : ""}
+                = link_to 'Update or cancel your attendance', full_url_for(invitation_url(@invitation)), class: 'btn'
+
+        .content
+          %table
+            %tr
+              %td
+                %h3 Organisers
+                %ul
+                  - @workshop.organisers.each do |organiser|
+                    %li
+                      = organiser.full_name
+
+        .content
+          = render partial: 'shared_mailers/social'
+      %td
+
+  = render partial: 'shared_mailers/footer'

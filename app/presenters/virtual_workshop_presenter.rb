@@ -17,8 +17,8 @@ class VirtualWorkshopPresenter < WorkshopPresenter
     virtual_workshop_spaces?
   end
 
-  def send_attending_email(invitation)
-    VirtualWorkshopInvitationMailer.attending(model, invitation.member, invitation).deliver_now
+  def send_attending_email(invitation, waitinglist = false)
+    VirtualWorkshopInvitationMailer.attending(model, invitation.member, invitation, waitinglist).deliver_now
   end
 
   private
