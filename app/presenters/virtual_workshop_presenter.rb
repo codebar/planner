@@ -18,7 +18,7 @@ class VirtualWorkshopPresenter < WorkshopPresenter
   end
 
   def send_attending_email(invitation)
-    WorkshopInvitationMailer.attending_virtual(model, invitation.member, invitation).deliver_now
+    VirtualWorkshopInvitationMailer.attending(model, invitation.member, invitation).deliver_now
   end
 
   private

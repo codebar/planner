@@ -25,17 +25,6 @@ RSpec.describe WorkshopInvitationMailer, type: :mailer do
     expect(email.body.encoded).to match(workshop.chapter.email)
   end
 
-  it '#attending_virtual' do
-    email_subject = "Attendance Confirmation: Virtual workshop for #{workshop.chapter.name} " \
-                    "- #{humanize_date(workshop.date_and_time)}"
-
-    WorkshopInvitationMailer.attending_virtual(workshop, member, invitation).deliver_now
-
-    expect(email.subject).to eq(email_subject)
-    expect(email.body.encoded).to match(workshop.chapter.email)
-    expect(email.body.encoded).to match('How to join the virtual workshop')
-  end
-
   it '#change_of_details' do
     title = 'Change of details'
     email_subject = "#{title}: #{workshop.title} by codebar - " \

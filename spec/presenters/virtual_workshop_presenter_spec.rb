@@ -67,8 +67,8 @@ RSpec.describe VirtualWorkshopPresenter do
     it 'send an attending email to the invitation user' do
       workshop_invitation_mailer = double(:workshop_invitation_mailed, deliver_now: true)
       invitation = double(:invitation, member: double(:member))
-      expect(WorkshopInvitationMailer)
-        .to receive(:attending_virtual)
+      expect(VirtualWorkshopInvitationMailer)
+        .to receive(:attending)
         .with(workshop, invitation.member, invitation)
         .and_return(workshop_invitation_mailer)
 
