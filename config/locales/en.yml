@@ -90,8 +90,12 @@ en:
         shared_intro_3_html: 'PS: If you have any questions about the workshop or will not be able to attend on short notice please send us an email at %{email_link} as that will make pairing everyone up easier for us.'
         info:
           title: How to join
+          begins_title: When the workshop begins
           line_1_html: 'Sign up to the codebar Slack %{slack_link}'
-          line_2_html: 'Join the %{channel} on Slack'
+          line_2_html: 'Join %{channel}'
+          line_3_html: 'Accept the invitation and join our %{discord} server'
+          line_4: 'Check in with the organisers in the Slack channel'
+          line_5: 'Follow the instructions posted in the channel'
     invitation:
       title: Workshop invitation - %{date}
       info: Information about the workshop
@@ -537,6 +541,12 @@ en:
         failure: "Workshop cannot be deleted. This is because it has invitees and/or workshop information is on the website for a while long enough that it cannot be deleted."
       form:
         virtual_info: To create a virtual workshop you must check the box and fill in the below fields. The slack channel will be available on the invitation page for anyone who successfuly RSVPs.
+      virtual:
+        details:
+          title: Virtual workshop details
+          slack: Slack channel
+          discord: codebar Discord
+          more_html: "Have a look at the <em>Running a virtual codebar workshop</em> guide for information on how to run a virtual workshop. If you don't know where to find that, ask in the %{slack_channel} Slack channel."
     messages:
       meeting:
         created: 'Meeting successfully created'
@@ -604,3 +614,4 @@ en:
         pronouns: 'What pronouns do you use?'
   social_media_links:
     slack_html: https://slack.codebar.io
+    discord_invitation: https://discord.gg/Eru89Rk

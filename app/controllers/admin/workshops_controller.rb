@@ -2,7 +2,7 @@ class Admin::WorkshopsController < Admin::ApplicationController
   include  Admin::SponsorConcerns
   include  Admin::WorkshopConcerns
 
-  before_action :set_workshop_by_id, only: %i[show edit destroy]
+  before_action :set_workshop_by_id, only: %i[show edit destroy update]
   before_action :set_and_decorate_workshop, only: %i[attendees_checklist attendees_emails send_invites]
 
   WORKSHOP_DELETION_TIME_FRAME_SINCE_CREATION = 4.hours
@@ -46,15 +46,14 @@ class Admin::WorkshopsController < Admin::ApplicationController
   end
 
   def update
-    @workshop = Workshop.find(params[:id])
     authorize @workshop
 
-    @workshop.update(workshop_params)
+    @workshop.assign_attributes(workshop_params)
 
     if workshop_type_valid? && @workshop.valid?
-      @workshop.update(workshop_params)
-      set_organisers(organiser_ids)
-      set_host(host_id)
+      @workshop.save
+      update_workshop_details
+
       redirect_to admin_workshop_path(@workshop), notice: I18n.t('admin.messages.workshop.updated')
     else
       flash[:warning] = @workshop.errors.full_messages
@@ -62,8 +61,7 @@ class Admin::WorkshopsController < Admin::ApplicationController
     end
   end
 
-  def send_invites
-  end
+  def send_invites; end
 
   def attendees_checklist
     return render text: @workshop.attendees_checklist if request.format.text?
@@ -177,5 +175,10 @@ class Admin::WorkshopsController < Admin::ApplicationController
 
     @workshop.errors.add(:host, "can't be blank")
     false
+  end
+
+  def update_workshop_details
+    set_organisers(organiser_ids)
+    set_host(host_id)
   end
 end

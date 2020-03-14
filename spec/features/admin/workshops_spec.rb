@@ -19,6 +19,24 @@ RSpec.feature 'An admin managing workshops', type: :feature do
         expect(page).to have_content(humanize_date(workshop.date_and_time, with_time: true, with_year: true))
       end
     end
+
+    context 'virtual workshop' do
+      let(:workshop) { Fabricate(:virtual_workshop) }
+
+      before do
+        visit admin_workshop_path(workshop)
+      end
+
+      scenario 'displays details specific to a virtual workshop' do
+        expect(page).to have_content('Virtual workshop details')
+        expect(page).to have_content("Slack channel: ##{workshop.slack_channel}")
+        expect(page).to have_content('codebar Discord')
+      end
+
+      scenario 'displays the available student coach workshop spots' do
+        expect(page).to have_content("#{workshop.student_spaces} student spots, #{workshop.coach_spaces} coach spots")
+      end
+    end
   end
 
   context '#creation' do

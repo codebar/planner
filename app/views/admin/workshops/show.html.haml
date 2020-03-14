@@ -54,6 +54,21 @@
         %p.description
           %br
           = sanitize(@workshop.description)
+    - if @workshop.virtual?
+      .row
+        .large-12.small-6.columns#slack-details
+          .panel.callout
+            %h5= t('admin.workshop.virtual.details.title')
+            %p
+              %strong="#{t('admin.workshop.virtual.details.slack')}:"
+              #{link_to("##{@workshop.slack_channel}", @workshop.slack_channel_link)}
+              %br
+              %strong="#{t('admin.workshop.virtual.details.discord')}:"
+              #{link_to(t('social_media_links.discord_invitation'), t('social_media_links.discord_invitation'))}
+              %br
+              %br
+              #{t('admin.workshop.virtual.details.more_html', slack_channel: link_to('#organisers', 'https://codebar.slack.com/archives/G08CQ5KFD'))}
+
     %br
     .row
       .large-3.small-6.columns#host

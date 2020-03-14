@@ -1,7 +1,7 @@
-= render partial: 'shared_mailers/header', locals: { title: 'Workshop Attendance Confirmation' }
+= render partial: 'shared_mailers/header', locals: { title: 'Virtual Workshop Attendance Confirmation' }
 %body{ bgcolor: '#FFFFFF' }
 
-  = render partial: 'shared_mailers/body_header', locals: { title: 'Workshop Attendance Confirmation' }
+  = render partial: 'shared_mailers/body_header', locals: { title: 'Virtual Workshop Attendance Confirmation' }
 
   %table{ class: 'body-wrap'}
     %tr
@@ -24,7 +24,7 @@
                     If you can no longer make it, please cancel your invitation <strong>before 15:00</strong> on the day of the workshop.
                     <a href='https://codebar.io/student-guide#attendance'>We have a three-strikes attendance policy for no-shows.</a>
                   %p
-                    Please remember that removing the calendar entry will not cancel your invitation RSVP.
+                    = link_to 'How to join the virtual workshop', full_url_for(invitation_url(@invitation, anchor: 'info')), class: 'btn soc-btn'
 
         .content
           %table{ bgcolor: '#FFFFFF' }
@@ -33,7 +33,7 @@
                 %h4
                   Workshop
                   %small #{humanize_date(@workshop.date_and_time, with_time: true)}#{@workshop.ends_at.present? ? " - " + @workshop.ends_at.strftime('%H:%M') : ""}
-                = link_to 'Update your attendance', full_url_for(invitation_url(@invitation)), class: 'btn'
+                = link_to 'Update or cancel your attendance', full_url_for(invitation_url(@invitation)), class: 'btn'
 
         .content
           %table

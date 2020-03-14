@@ -85,6 +85,9 @@ RSpec.feature 'Viewing a workshop invitation', type: :feature, wip: true do
 
         it 'contains details about how to join the workshop' do
           expect(page).to have_content('How to join')
+          within '#join-info' do
+            expect(page).to have_content("Join ##{workshop.slack_channel}")
+          end
         end
       end
     end

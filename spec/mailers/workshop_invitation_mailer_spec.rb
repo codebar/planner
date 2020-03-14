@@ -33,6 +33,7 @@ RSpec.describe WorkshopInvitationMailer, type: :mailer do
 
     expect(email.subject).to eq(email_subject)
     expect(email.body.encoded).to match(workshop.chapter.email)
+    expect(email.body.encoded).to match('How to join the virtual workshop')
   end
 
   it '#change_of_details' do
