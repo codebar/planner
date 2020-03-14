@@ -550,6 +550,7 @@ en:
         update_rsvp: 'Updated attendance of %{name}'
       workshop:
         created: 'Workshop successfully created'
+        updated: 'Workshop successfully updated'
   simple_form:
     placeholders:
       member:

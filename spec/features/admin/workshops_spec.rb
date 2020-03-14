@@ -70,7 +70,7 @@ RSpec.feature 'An admin managing workshops', type: :feature do
       end
 
       scenario 'can have sponsors assigned' do
-        workshop = Fabricate(:workshop_no_sponsor)
+        workshop = Fabricate(:workshop)
         visit edit_admin_workshop_path(workshop)
 
         select sponsor.name, from: 'workshop_sponsor_ids'

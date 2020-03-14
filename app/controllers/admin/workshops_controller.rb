@@ -52,13 +52,15 @@ class Admin::WorkshopsController < Admin::ApplicationController
 
     @workshop.update(workshop_params)
 
-    set_organisers(organiser_ids)
-    set_host(host_id)
-
     if workshop_type_valid? && @workshop.valid?
-      @workshop.save
-
-    redirect_to admin_workshop_path(@workshop), notice: 'Workshops updated successfully'
+      @workshop.update(workshop_params)
+      set_organisers(organiser_ids)
+      set_host(host_id)
+      redirect_to admin_workshop_path(@workshop), notice: I18n.t('admin.messages.workshop.updated')
+    else
+      flash[:warning] = @workshop.errors.full_messages
+      render 'edit'
+    end
   end
 
   def send_invites
