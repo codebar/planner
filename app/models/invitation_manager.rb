@@ -77,14 +77,26 @@ class InvitationManager
   def invite_students_to_workshop(workshop)
     chapter_students(workshop.chapter).shuffle.each do |student|
       invitation = WorkshopInvitation.create(workshop: workshop, member: student, role: 'Student')
-      invitation.email if invitation.persisted?
+      next unless invitation.persisted?
+
+      if workshop.virtual?
+        VirtualWorkshopInvitationMailer.invite_student(workshop, student, invitation).deliver_now
+      else
+        WorkshopInvitationMailer.invite_student(workshop, student, invitation).deliver_now
+      end
     end
   end
 
   def invite_coaches_to_workshop(workshop)
     chapter_coaches(workshop.chapter).shuffle.each do |coach|
       invitation = WorkshopInvitation.create(workshop: workshop, member: coach, role: 'Coach')
-      WorkshopInvitationMailer.invite_coach(workshop, coach, invitation).deliver_now if invitation.persisted?
+      next unless invitation.persisted?
+
+      if workshop.virtual?
+        VirtualWorkshopInvitationMailer.invite_coach(workshop, coach, invitation).deliver_now
+      else
+        WorkshopInvitationMailer.invite_coach(workshop, coach, invitation).deliver_now
+      end
     end
   end
 

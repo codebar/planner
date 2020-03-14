@@ -16,4 +16,22 @@ RSpec.describe VirtualWorkshopInvitationMailer, type: :mailer do
     expect(email.body.encoded).to match(workshop.chapter.email)
     expect(email.body.encoded).to match('How to join the virtual workshop')
   end
+
+  it '#invite_coach' do
+    email_subject = "Virtual Workshop Coach Invitation #{humanize_date(workshop.date_and_time, with_time: true)}"
+
+    VirtualWorkshopInvitationMailer.invite_coach(workshop, member, invitation).deliver_now
+
+    expect(email.subject).to eq(email_subject)
+    expect(email.body.encoded).to match(workshop.chapter.email)
+  end
+
+  it '#invite_student' do
+    email_subject = "Virtual Workshop Invitation #{humanize_date(workshop.date_and_time, with_time: true)}"
+
+    VirtualWorkshopInvitationMailer.invite_student(workshop, member, invitation).deliver_now
+
+    expect(email.subject).to eq(email_subject)
+    expect(email.body.encoded).to match(workshop.chapter.email)
+  end
 end

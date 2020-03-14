@@ -35,8 +35,6 @@ RSpec.describe InvitationManager, type: :model  do
       banned_coach = Fabricate(:banned_member)
       coach_group = Fabricate(:coaches, chapter: chapter, members: coaches + [banned_coach])
 
-      manager.send_workshop_emails(workshop, 'everyone')
-
       coaches.each do |coach|
         expect(WorkshopInvitation).to receive(:create).with(workshop: workshop, member: coach, role: 'Coach').and_call_original
       end
@@ -56,11 +54,37 @@ RSpec.describe InvitationManager, type: :model  do
     it "does not send emails when no invitation is created" do
       student_group = Fabricate(:students, chapter: chapter, members: students)
 
-      students.count.times { expect(WorkshopInvitation).to receive(:create).and_return(WorkshopInvitation.new) }
+      expect(WorkshopInvitation).to receive(:create).and_return(WorkshopInvitation.new).exactly(students.count)
 
       expect do
         manager.send_workshop_emails(workshop, 'students')
       end.not_to change { ActionMailer::Base.deliveries.count }
+    end
+
+    context 'for a virtual workshop' do
+      let(:workshop) { Fabricate(:virtual_workshop, chapter: chapter) }
+
+      it 'creates an invitation for each student' do
+        student_group = Fabricate(:students, chapter: chapter, members: students)
+
+        students.each do |student|
+          expect(WorkshopInvitation).to receive(:create).with(workshop: workshop, member: student, role: 'Student').and_call_original
+          expect(VirtualWorkshopInvitationMailer).to receive(:invite_student).and_call_original
+        end
+
+        manager.send_workshop_emails(workshop, 'students')
+      end
+
+      it 'creates an invitation for each coach' do
+        coach_group = Fabricate(:coaches, chapter: chapter, members: coaches)
+
+        coaches.each do |coach|
+          expect(WorkshopInvitation).to receive(:create).with(workshop: workshop, member: coach, role: 'Coach').and_call_original
+          expect(VirtualWorkshopInvitationMailer).to receive(:invite_coach).and_call_original
+        end
+
+        manager.send_workshop_emails(workshop, 'coaches')
+      end
     end
   end
 
