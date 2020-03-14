@@ -582,6 +582,7 @@ en:
         terms: 'I have read codebar''s Code of Conduct and agree with all of its terms.'
       workshop:
         description: Additional description
+        virtual: Virtual workshop
   activerecord:
     attributes:
       job:

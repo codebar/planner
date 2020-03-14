@@ -1,42 +1,15 @@
 = simple_form_for [:admin, @workshop], url: :admin_workshop, method: :put do |f|
   .row
-    .large-3.columns
-      = f.association :chapter, as: :select, collection: Chapter.available_to_user(current_user)
+    .medium-6.columns
+      =render partial: 'shared_form', locals: { f: f }
+    .medium-6.columns
+      =render partial: 'virtual_workshop_fields', locals: { f: f }
+      .row
+        .large-6.columns
+          %label Organisers
+          = f.collection_select :organisers, Member.all, :id, :full_name, { selected: @workshop.organisers.map(&:id) }, { multiple: true }
   .row
-    .large-3.columns
-      = f.input :local_date, label: "Date", as: :string, required: true, input_html: { data: { value: @workshop.date_and_time.try(:strftime, '%d/%m/%Y') } }
-  .row
-    .large-3.columns
-      = f.input :local_time, label: "Begins at", as: :string, required: true, input_html: { data: { value: @workshop.time.try(:strftime, '%H:%M') } }
-    .large-3.columns
-      = f.input :ends_at, as: :string, required: true, input_html: { data: { value: @workshop.ends_at.try(:strftime, '%H:%M') } }
-  .row
-    .large-6.columns
-      = f.input :host, as: :select, collection: Sponsor.all, include_blank: true, selected: (@workshop.host.id rescue '')
-  %br
-  .row
-    .large-6.columns
-      = f.association :sponsors
-  %br
-  .row
-    .large-6.columns
-      %h6 Default description text:
-      %small= t("workshops.lead")
-  .row
-    .large-6.columns
-      = f.input :description, as: :text, label: 'Additional description (supports HTML)',
-      placeholder: 'Use this space to write a description of the workshop.'
-  %br
-  .row
-    .large-6.columns
-      .panel.callout
-        %p Fill out these fields if you want RSVPs to open automatically at a future time. Leave blank if you'll handle it manually later.
-        = f.input :rsvp_open_local_date, as: :string, input_html: { data: { value: @workshop.rsvp_opens_at.try(:strftime, '%d/%m/%Y') } }
-        = f.input :rsvp_open_local_time, as: :string, input_html: { data: { value: @workshop.rsvp_opens_at.try(:time).try(:strftime, '%H:%M') } }
-  .row
-    .large-6.columns
-      %label Organisers
-      = f.collection_select :organisers, Member.all, :id, :full_name, { selected: @workshop.organisers.map(&:id) }, { multiple: true }
+    .large-12.columns
       = f.input :invitable
   .row
     .large-12.columns.text-right
