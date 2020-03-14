@@ -12,5 +12,6 @@ RSpec.describe FeedbackRequestMailer, type: :mailer  do
     FeedbackRequestMailer.request_feedback(workshop, member, feedback_request).deliver_now
 
     expect(email.subject).to eq(email_subject)
+    expect(email.from).to eq(['meetings@codebar.io'])
   end
 end

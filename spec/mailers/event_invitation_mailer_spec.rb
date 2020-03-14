@@ -11,6 +11,7 @@ RSpec.describe EventInvitationMailer, type: :mailer  do
     EventInvitationMailer.invite_student(event, member, invitation).deliver_now
 
     expect(email.subject).to eq(email_subject)
+    expect(email.body.encoded).to match('hello@codebar.io')
   end
 
   it '#invite_coach' do
@@ -18,6 +19,7 @@ RSpec.describe EventInvitationMailer, type: :mailer  do
     EventInvitationMailer.invite_coach(event, member, invitation).deliver_now
 
     expect(email.subject).to eq(email_subject)
+    expect(email.body.encoded).to match('hello@codebar.io')
   end
 
   it '#attending' do
@@ -25,5 +27,6 @@ RSpec.describe EventInvitationMailer, type: :mailer  do
     EventInvitationMailer.attending(event, member, invitation).deliver_now
 
     expect(email.subject).to eq(email_subject)
+    expect(email.body.encoded).to match('hello@codebar.io')
   end
 end

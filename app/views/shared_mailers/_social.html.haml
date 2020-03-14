@@ -1,3 +1,4 @@
+- workshop ||= local_assigns[:workshop] = local_assigns.fetch(:workshop, nil)
 %table.social{ width: "100%" }
   %tr
     %td
@@ -20,6 +21,6 @@
             %p
               Email:
               %strong
-                =mail_to contact_email, contact_email
+                =mail_to contact_email(workshop: workshop), contact_email(workshop: workshop)
 
       %span.clear

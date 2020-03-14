@@ -44,7 +44,7 @@
                     %br
 
         .content
-          = render partial: 'shared_mailers/social'
+          = render partial: 'shared_mailers/social', locals: { workshop: @workshop }
       %td
 
   = render partial: 'shared_mailers/footer'
