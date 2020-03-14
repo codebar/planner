@@ -7,9 +7,7 @@ class VirtualWorkshopInvitationMailer < ActionMailer::Base
   helper EmailHelper
 
   def attending(workshop, member, invitation, waiting_list = false)
-    @workshop = VirtualWorkshopPresenter.new(workshop)
-    @member = member
-    @invitation = invitation
+    setup(workshop, invitation, member)
     @waiting_list = waiting_list
 
     subject = "Attendance Confirmation: #{I18n.t('workshop.virtual.title',
@@ -20,21 +18,15 @@ class VirtualWorkshopInvitationMailer < ActionMailer::Base
   end
 
   def attending_reminder(workshop, member, invitation)
+    setup(workshop, invitation, member)
     subject = t('mailer.workshop_invitation.virtual.attending_reminder.subject',
                 date_time: humanize_date(workshop.date_and_time, with_time: true))
-
-    @workshop = workshop
-    @member = member
-    @invitation = invitation
 
     mail(mail_args(member, subject, @workshop.chapter.email), &:html)
   end
 
   def invite_coach(workshop, member, invitation)
-    @workshop = workshop
-    @member = member
-    @invitation = invitation
-
+    setup(workshop, invitation, member)
     subject = t('mailer.workshop_invitation.virtual.invite_coach.subject',
                 date_time: humanize_date(@workshop.date_and_time, with_time: true))
 
@@ -42,10 +34,7 @@ class VirtualWorkshopInvitationMailer < ActionMailer::Base
   end
 
   def invite_student(workshop, member, invitation)
-    @workshop = VirtualWorkshopPresenter.new(workshop)
-    @member = member
-    @invitation = invitation
-
+    setup(workshop, invitation, member)
     subject = t('mailer.workshop_invitation.virtual.invite_student.subject',
                 date_time: humanize_date(@workshop.date_and_time, with_time: true))
 
@@ -53,12 +42,18 @@ class VirtualWorkshopInvitationMailer < ActionMailer::Base
   end
 
   def waiting_list_reminder(workshop, member, invitation)
+    setup(workshop, invitation, member)
     subject = t('mailer.workshop_invitation.waiting_list_reminder.subject',
                 date_time: humanize_date(workshop.date_and_time, with_time: true))
+
+    mail(mail_args(member, subject, @workshop.chapter.email), &:html)
+  end
+
+  private
+
+  def setup(workshop, invitation, member)
     @workshop = workshop
     @member = member
     @invitation = invitation
-
-    mail(mail_args(member, subject, @workshop.chapter.email), &:html)
   end
 end
