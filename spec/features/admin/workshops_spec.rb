@@ -142,12 +142,26 @@ RSpec.feature 'An admin managing workshops', type: :feature do
 
 
   context '#actions' do
-    scenario 'sending invitations to attendees' do
-      workshop = Fabricate(:workshop)
-      visit admin_workshop_send_invites_path(workshop)
-      click_on 'Students'
+    context 'sending invitations to attendees' do
+      scenario 'for a workshop' do
+        workshop = Fabricate(:workshop)
+        expect(InvitationManager).to receive_message_chain(:new, :send_workshop_emails)
 
-      expect(page).to have_content('Invitations to students are being emailed out')
+        visit admin_workshop_send_invites_path(workshop)
+        click_on 'Students'
+
+        expect(page).to have_content('Invitations to students are being emailed out')
+      end
+
+      scenario 'for a virtual workshop' do
+        workshop = Fabricate(:virtual_workshop)
+        expect(InvitationManager).to receive_message_chain(:new, :send_virtual_workshop_emails)
+
+        visit admin_workshop_send_invites_path(workshop)
+        click_on 'Students'
+
+        expect(page).to have_content('Invitations to students are being emailed out')
+      end
     end
 
     scenario 'viewing a text file with all attendee emails' do

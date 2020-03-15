@@ -2,10 +2,18 @@ class InvitationManager
   def send_workshop_emails(workshop, audience)
     return 'The workshop is not invitable' unless workshop.invitable?
 
-    invite_students_to_workshop(workshop) unless audience.eql?('coaches')
-    invite_coaches_to_workshop(workshop) unless audience.eql?('students')
+    invite_students_to_workshop(workshop) if audience.in?(%w[students everyone])
+    invite_coaches_to_workshop(workshop) if audience.in?(%w[coaches everyone])
   end
   handle_asynchronously :send_workshop_emails
+
+  def send_virtual_workshop_emails(workshop, audience)
+    return 'The workshop is not invitable' unless workshop.invitable?
+
+    invite_students_to_virtual_workshop(workshop) if audience.in?(%w[students everyone])
+    invite_coaches_to_virtual_workshop(workshop) if audience.in?(%w[coaches everyone])
+  end
+  handle_asynchronously :send_virtual_workshop_emails
 
   def send_event_emails(event, chapter)
     return 'The event is not invitable' unless event.invitable?
@@ -85,27 +93,29 @@ class InvitationManager
 
   def invite_students_to_workshop(workshop)
     chapter_students(workshop.chapter).shuffle.each do |student|
-      invitation = WorkshopInvitation.create(workshop: workshop, member: student, role: 'Student')
-      next unless invitation.persisted?
-
-      if workshop.virtual?
-        VirtualWorkshopInvitationMailer.invite_student(workshop, student, invitation).deliver_now
-      else
-        WorkshopInvitationMailer.invite_student(workshop, student, invitation).deliver_now
-      end
+      invitation = create_invitation(workshop, student, 'Student') || next
+      WorkshopInvitationMailer.invite_student(workshop, student, invitation).deliver_now
     end
   end
 
   def invite_coaches_to_workshop(workshop)
     chapter_coaches(workshop.chapter).shuffle.each do |coach|
-      invitation = WorkshopInvitation.create(workshop: workshop, member: coach, role: 'Coach')
-      next unless invitation.persisted?
+      invitation = create_invitation(workshop, coach, 'Coach') || next
+      WorkshopInvitationMailer.invite_coach(workshop, coach, invitation).deliver_now
+    end
+  end
 
-      if workshop.virtual?
-        VirtualWorkshopInvitationMailer.invite_coach(workshop, coach, invitation).deliver_now
-      else
-        WorkshopInvitationMailer.invite_coach(workshop, coach, invitation).deliver_now
-      end
+  def invite_students_to_virtual_workshop(workshop)
+    chapter_students(workshop.chapter).shuffle.each do |student|
+      invitation = create_invitation(workshop, student, 'Student') || next
+      VirtualWorkshopInvitationMailer.invite_student(workshop, student, invitation).deliver_now
+    end
+  end
+
+  def invite_coaches_to_virtual_workshop(workshop)
+    chapter_coaches(workshop.chapter).shuffle.each do |coach|
+      invitation = create_invitation(workshop, coach, 'Coach') || next
+      VirtualWorkshopInvitationMailer.invite_coach(workshop, coach, invitation).deliver_now
     end
   end
 
@@ -129,5 +139,10 @@ class InvitationManager
 
   def chapter_coaches(chapter)
     Member.in_group(chapter.groups.coaches)
+  end
+
+  def create_invitation(workshop, member, role)
+    invitation = WorkshopInvitation.create(workshop: workshop, member: member, role: role)
+    invitation.persisted? ? invitation : nil
   end
 end

@@ -80,7 +80,11 @@ class Admin::WorkshopsController < Admin::ApplicationController
     authorize @workshop
     audience = params[:for]
 
-    InvitationManager.new.send_workshop_emails(@workshop, audience)
+    if @workshop.virtual?
+      InvitationManager.new.send_virtual_workshop_emails(@workshop, audience)
+    else
+      InvitationManager.new.send_workshop_emails(@workshop, audience)
+    end
 
     redirect_to admin_workshop_path(@workshop), notice: "Invitations to #{audience} are being emailed out."
   end
