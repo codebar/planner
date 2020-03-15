@@ -11,7 +11,7 @@
       %i.fa.fa-send-o
       %label Invite
   - else
-    = link_to '#', class: 'item disabled', title: 'The workshop is not invitable.' do
+    = link_to '#', class: 'item disabled', title: t('admin.workshop.not_invitable.') do
       %i.fa.fa-send-o
       %label Invite
   = link_to admin_workshop_path(format: 'csv'), class: 'item', title: 'CSV for labels' do
@@ -50,7 +50,7 @@
         - if !@workshop.invitable?
           %br
           %p
-            %label.label.info The workshop is not invitable
+            %label.label.info= t('admin.workshop.not_invitable')
         %p.description
           %br
           = sanitize(@workshop.description)

@@ -66,7 +66,8 @@ class Admin::WorkshopsController < Admin::ApplicationController
   def attendees_checklist
     return render text: @workshop.attendees_checklist if request.format.text?
 
-    redirect_to admin_workshop_path(@workshop), notice: "The requested format is invalid: #{request.format}"
+    redirect_to admin_workshop_path(@workshop),
+                notice: I18n.t('messages.invalid_format', invalid_format: request.format)
   end
 
   def attendees_emails

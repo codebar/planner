@@ -29,6 +29,6 @@
 .row
   .large-12.columns
     .panel.callout
-      %p Fill out these fields if you want RSVPs to open automatically at a future time. Leave blank if you'll handle it manually later.
+      %p= t('admin.workshop.form.rsvp_details')
       = f.input :rsvp_open_local_date, as: :string, input_html: { data: { value: @workshop.rsvp_opens_at.try(:strftime, '%d/%m/%Y') } }
       = f.input :rsvp_open_local_time, as: :string, input_html: { data: { value: @workshop.rsvp_opens_at.try(:time).try(:strftime, '%H:%M') } }

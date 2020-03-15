@@ -133,6 +133,7 @@ en:
       rsvped_to_other_workshop: "You have already RSVP'd to another workshop on this date. If you would prefer to attend this workshop, please cancel your other RSVP first."
       spot_confirmed: "Your spot has been confirmed for %{event}! We look forward to seeing you there."
       spot_not_confirmed: 'Your spot has not yet been confirmed. We will verify your attendance after you complete the questionnaire.'
+    invalid_format: "The requested format is invalid: %{invalid_format}"
   notifications:
     provider_already_connected: 'You are already signed in!'
     not_logged_in: "You must be logged in to access this page."
@@ -550,6 +551,8 @@ en:
         failure: "Workshop cannot be deleted. This is because it has invitees and/or workshop information is on the website for a while long enough that it cannot be deleted."
       form:
         virtual_info: To create a virtual workshop you must check the box and fill in the below fields. The slack channel will be available on the invitation page for anyone who successfuly RSVPs.
+        rsvp_details: Fill out these fields if you want RSVPs to open automatically at a future time. Leave blank if you'll handle it manually later.
+      not_invitable: "The workshop is not invitable"
       virtual:
         details:
           title: Virtual workshop details

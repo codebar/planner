@@ -1,5 +1,5 @@
 - content_for :meta_tags do
-  - title = "Virtual Workshop for #{workshop.chapter.name}"
+  - title = t('workshops.virtual.title', chapter: workshop.chapter.name)
   - twitter_description = "codebar #{workshop.chapter.name} virtual  workshop on #{humanize_date(workshop.date_and_time, with_time: true)}"
   - slack_description = "codebar #{workshop.chapter.name} virtual workshop"
   %meta{ property: 'twitter:card', content: 'summary' }
