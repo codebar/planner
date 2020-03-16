@@ -1,4 +1,4 @@
-.icon-bar.six-up
+.icon-bar.seven-up
   = link_to edit_admin_workshop_path(@workshop), class: 'item' do
     %i.fa.fa-pencil
     %label Edit
@@ -14,7 +14,10 @@
     = link_to '#', class: 'item disabled', title: t('admin.workshop.not_invitable.') do
       %i.fa.fa-send-o
       %label Invite
-  = link_to admin_workshop_path(format: 'csv'), class: 'item', title: 'CSV for labels' do
+  = link_to admin_workshop_path(format: 'csv'), class: 'item', title: 'CSV for pairing' do
+    %i.fa.fa-users
+    %label Pairing CSV
+  = link_to admin_workshop_path(type: 'labels', format: 'csv'), class: 'item', title: 'CSV for labels' do
     %i.fa.fa-users
     %label Labels
   = link_to admin_workshop_attendees_checklist_path(@workshop, format: 'text'), title: 'Attendee checklist', class: 'item' do
