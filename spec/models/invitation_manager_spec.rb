@@ -144,7 +144,7 @@ RSpec.describe InvitationManager, type: :model  do
           .and_call_original
       end
 
-      manager.send_change_of_details(workshop, title, sponsor)
+      manager.send_change_of_details(workshop, sponsor, title)
     end
   end
 end
