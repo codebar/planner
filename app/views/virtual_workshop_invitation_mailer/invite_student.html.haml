@@ -1,0 +1,44 @@
+= render partial: 'shared_mailers/header', locals: { title: 'Workshop Student Invitation' }
+%body{ bgcolor: '#FFFFFF' }
+
+  = render partial: 'shared_mailers/body_header', locals: { title: 'Workshop Student Invitation' }
+
+  %table{ class: 'body-wrap'}
+    %tr
+      %td
+      %td{ class: 'container', bgcolor: '#FFFFFF' }
+        .content
+          %table
+            %tr
+              %td
+                %h3 Hi #{@member.name},
+                %p.lead
+                  If you would like to take part in our virtual workshop please RSVP.
+                %p
+                  In our workshops, you can work through any of our #{link_to 'tutorials', 'http://codebar.github.io/tutorials' } or get help and guidance on another technology for your personal project. We believe that everyone should be entitled to free learning and our community has #{ link_to 'a lot of devoted developers', full_url_for(coaches_url)} who help out by coaching.
+                %p You will also get the opportunity to interact with other people interested in coding and collaborate with them.
+                %p Please note: We do not accept any RSVPs over email.
+
+                %p.callout If you are working through the tutorials outside our workshop, or need any other help or advice #{ link_to 'join the codebar Slack', 'https://slack.codebar.io'}.
+
+        .content
+          %table{ bgcolor: '#FFFFFF' }
+            %tr
+              %td{ width: '60%', style: 'vertical-align: top; padding-right: 20px;' }
+                %h4
+                  = @workshop.to_s
+                  %br
+                  %small #{humanize_date(@workshop.date_and_time, with_time: true)}#{@workshop.ends_at.present? ? " - " + @workshop.ends_at.strftime('%H:%M') : ""}
+                = link_to 'View invitation and RSVP', full_url_for(invitation_url(@invitation)), class: 'btn'
+              %td{ width: '40%', style: 'vertical-align: top;'}
+                - if @workshop.sponsors.any?
+                  %h4 Sponsored by
+                  - @workshop.sponsors.each do |sponsor|
+                    = image_tag(sponsor.avatar, alt: sponsor.name)
+                    %br
+
+        .content
+          = render partial: 'shared_mailers/social'
+      %td
+
+  = render partial: 'shared_mailers/footer'

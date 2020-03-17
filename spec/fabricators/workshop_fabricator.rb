@@ -9,6 +9,22 @@ Fabricator(:workshop) do
   end
 end
 
+Fabricator(:virtual_workshop, class_name: :workshop) do
+  date_and_time Time.zone.now + 2.days
+  ends_at Time.zone.now + 2.days + 2.hours
+  title Faker::Lorem.sentence
+  description Faker::Lorem.sentence
+  chapter
+  virtual true
+  student_spaces 10
+  coach_spaces 10
+  slack_channel 'a-channel'
+  slack_channel_link 'https://codebar.slack.link'
+  after_build do |workshop|
+    Fabricate(:workshop_sponsor, workshop: workshop, sponsor: Fabricate(:sponsor), host: false)
+  end
+end
+
 Fabricator(:workshop_no_sponsor, class_name: :workshop) do
   date_and_time Time.zone.now + 2.days
   ends_at Time.zone.now + 2.days + 2.hours

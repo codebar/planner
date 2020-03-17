@@ -2,7 +2,7 @@ class Admin::WorkshopsController < Admin::ApplicationController
   include  Admin::SponsorConcerns
   include  Admin::WorkshopConcerns
 
-  before_action :set_workshop_by_id, only: %i[show edit destroy]
+  before_action :set_workshop_by_id, only: %i[show edit destroy update]
   before_action :set_and_decorate_workshop, only: %i[attendees_checklist attendees_emails send_invites]
 
   WORKSHOP_DELETION_TIME_FRAME_SINCE_CREATION = 4.hours
@@ -22,13 +22,13 @@ class Admin::WorkshopsController < Admin::ApplicationController
     @workshop = Workshop.new(workshop_params)
     authorize(@workshop)
 
-    if @workshop.save
+    if workshop_type_valid? && @workshop.save
       grant_organiser_access(@workshop.chapter.organisers.pluck(:id))
       set_host(host_id)
 
-      redirect_to admin_workshop_path(@workshop), notice: 'The workshop has been created.'
+      redirect_to admin_workshop_path(@workshop), notice: I18n.t('admin.messages.workshop.created')
     else
-      flash[:notice] = @workshop.errors.full_messages.join('<br/>')
+      flash[:warning] = @workshop.errors.full_messages
       render 'new'
     end
   end
@@ -39,32 +39,35 @@ class Admin::WorkshopsController < Admin::ApplicationController
 
   def show
     authorize @workshop
-    @workshop = WorkshopPresenter.new(@workshop)
+    @workshop = WorkshopPresenter.decorate(@workshop)
     return render text: @workshop.attendees_csv if request.format.csv?
 
-    @address = AddressPresenter.new(@workshop.host.address) if @workshop.has_host?
     set_admin_workshop_data
   end
 
   def update
-    @workshop = Workshop.find(params[:id])
     authorize @workshop
 
-    @workshop.update(workshop_params)
+    @workshop.assign_attributes(workshop_params)
 
-    set_organisers(organiser_ids)
-    set_host(host_id)
+    if workshop_type_valid? && @workshop.valid?
+      @workshop.save
+      update_workshop_details
 
-    redirect_to admin_workshop_path(@workshop), notice: 'Workshops updated successfully'
+      redirect_to admin_workshop_path(@workshop), notice: I18n.t('admin.messages.workshop.updated')
+    else
+      flash[:warning] = @workshop.errors.full_messages
+      render 'edit'
+    end
   end
 
-  def send_invites
-  end
+  def send_invites; end
 
   def attendees_checklist
     return render text: @workshop.attendees_checklist if request.format.text?
 
-    redirect_to admin_workshop_path(@workshop)
+    redirect_to admin_workshop_path(@workshop),
+                notice: I18n.t('messages.invalid_format', invalid_format: request.format)
   end
 
   def attendees_emails
@@ -78,7 +81,11 @@ class Admin::WorkshopsController < Admin::ApplicationController
     authorize @workshop
     audience = params[:for]
 
-    InvitationManager.new.send_workshop_emails(@workshop, audience)
+    if @workshop.virtual?
+      InvitationManager.new.send_virtual_workshop_emails(@workshop, audience)
+    else
+      InvitationManager.new.send_workshop_emails(@workshop, audience)
+    end
 
     redirect_to admin_workshop_path(@workshop), notice: "Invitations to #{audience} are being emailed out."
   end
@@ -99,8 +106,9 @@ class Admin::WorkshopsController < Admin::ApplicationController
 
   def workshop_params
     params.require(:workshop).permit(:local_date, :local_time, :chapter_id,
-                                     :invitable, :seats, :rsvp_open_local_date,
-                                     :rsvp_open_local_time, :ends_at, :description, sponsor_ids: [])
+                                     :invitable, :seats, :virtual, :slack_channel, :slack_channel_link,
+                                     :rsvp_open_local_date, :rsvp_open_local_time, :ends_at, :description,
+                                     :coach_spaces, :student_spaces, sponsor_ids: [])
   end
 
   def chapter_id
@@ -113,7 +121,7 @@ class Admin::WorkshopsController < Admin::ApplicationController
 
   def set_and_decorate_workshop
     workshop = Workshop.find(params[:workshop_id])
-    @workshop = WorkshopPresenter.new(workshop)
+    @workshop = WorkshopPresenter.decorate(workshop)
   end
 
   def workshop_id
@@ -161,5 +169,21 @@ class Admin::WorkshopsController < Admin::ApplicationController
   def workshop_created_within_specific_time_frame?
     Time.zone.now.between?(@workshop.created_at,
                            @workshop.created_at + WORKSHOP_DELETION_TIME_FRAME_SINCE_CREATION)
+  end
+
+  def physical_workshop_and_no_host?(workshop)
+    !workshop.virtual && host_id.empty?
+  end
+
+  def workshop_type_valid?
+    return true unless physical_workshop_and_no_host?(@workshop)
+
+    @workshop.errors.add(:host, "can't be blank")
+    false
+  end
+
+  def update_workshop_details
+    set_organisers(organiser_ids)
+    set_host(host_id)
   end
 end

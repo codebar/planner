@@ -22,5 +22,10 @@ module Admin::WorkshopConcerns
     def set_workshop
       @workshop = Workshop.find(params[:workshop_id])
     end
+
+    def set_and_decorate_workshop
+      workshop = Workshop.find(params[:workshop_id])
+      @workshop = WorkshopPresenter.decorate(workshop)
+    end
   end
 end

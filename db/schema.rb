@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200124124311) do
+ActiveRecord::Schema.define(version: 20200313211614) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -562,6 +562,11 @@ ActiveRecord::Schema.define(version: 20200124124311) do
     t.datetime "rsvp_closes_at"
     t.datetime "rsvp_opens_at"
     t.datetime "ends_at"
+    t.boolean  "virtual",        default: false
+    t.integer  "student_spaces", default: 0
+    t.integer  "coach_spaces",   default: 0
+    t.string   "slack_channel"
+    t.string   "slack_channel_link"
   end
 
   add_index "workshops", ["chapter_id"], name: "index_workshops_on_chapter_id", using: :btree

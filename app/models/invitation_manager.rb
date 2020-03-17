@@ -1,11 +1,5 @@
 class InvitationManager
-  def send_workshop_emails(workshop, audience)
-    return 'The workshop is not invitable' unless workshop.invitable?
-
-    invite_students_to_workshop(workshop) unless audience.eql?('coaches')
-    invite_coaches_to_workshop(workshop) unless audience.eql?('students')
-  end
-  handle_asynchronously :send_workshop_emails
+  include WorkshopInvitationManagerConcerns
 
   def send_event_emails(event, chapter)
     return 'The event is not invitable' unless event.invitable?
@@ -32,61 +26,7 @@ class InvitationManager
   end
   handle_asynchronously :send_course_emails
 
-  def send_workshop_attendance_reminders(workshop)
-    workshop.attendances.not_reminded.each do |invitation|
-      WorkshopInvitationMailer.attending_reminder(workshop, invitation.member, invitation).deliver_now
-      invitation.update_attribute(:reminded_at, Time.zone.now)
-    end
-  end
-  handle_asynchronously :send_workshop_attendance_reminders
-
-  def send_workshop_waiting_list_reminders(workshop)
-    workshop.invitations.on_waiting_list.not_reminded.each do |invitation|
-      WorkshopInvitationMailer.waiting_list_reminder(workshop, invitation.member, invitation).deliver_now
-      invitation.update_attribute(:reminded_at, Time.zone.now)
-    end
-  end
-  handle_asynchronously :send_workshop_waiting_list_reminders
-
-  def send_change_of_details(workshop, title = 'Change of details', sponsor)
-    workshop.invitations.accepted.map do |invitation|
-      WorkshopInvitationMailer.change_of_details(workshop, sponsor, invitation.member, invitation, title).deliver_now
-    end
-  end
-  handle_asynchronously :send_change_of_details
-
-  def send_waiting_list_emails(workshop)
-    if workshop.host.coach_spots > workshop.attending_coaches.length
-      WaitingList.by_workshop(workshop).where_role('Coach').each do |waiting_list|
-        WorkshopInvitationMailer.notify_waiting_list(waiting_list.invitation).deliver_now
-        waiting_list.destroy
-      end
-
-      if workshop.host.seats > workshop.attending_students.length
-        WaitingList.by_workshop(workshop).where_role('Student').each do |waiting_list|
-          WorkshopInvitationMailer.notify_waiting_list(waiting_list.invitation).deliver_now
-          waiting_list.destroy
-        end
-      end
-    end
-  end
-  handle_asynchronously :send_waiting_list_emails
-
   private
-
-  def invite_students_to_workshop(workshop)
-    chapter_students(workshop.chapter).shuffle.each do |student|
-      invitation = WorkshopInvitation.create(workshop: workshop, member: student, role: 'Student')
-      invitation.email if invitation.persisted?
-    end
-  end
-
-  def invite_coaches_to_workshop(workshop)
-    chapter_coaches(workshop.chapter).shuffle.each do |coach|
-      invitation = WorkshopInvitation.create(workshop: workshop, member: coach, role: 'Coach')
-      WorkshopInvitationMailer.invite_coach(workshop, coach, invitation).deliver_now if invitation.persisted?
-    end
-  end
 
   def invite_students_to_event(event, chapter)
     chapter_students(chapter).each do |student|

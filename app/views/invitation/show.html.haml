@@ -4,11 +4,11 @@
   .row
     .large-12.columns
       %h2
-        Workshop at #{@workshop.host.name}
+        = @workshop.title
         %br
         %small #{humanize_date(@workshop.date_and_time, with_time: true)} #{@workshop.distance_of_time}
       - if @workshop.date_and_time.past?
-        %label.label.warning This event has already taken place.
+        %label.label.warning= t('workshops.already_taken_place')
 .alert-box.info
   .row
     .large-12.columns
@@ -16,26 +16,18 @@
 
 
 .stripe.reverse
-  - if @announcements.present?
-    .row
-      .large-12.columns
-        %br
-          .alert-box.info{ "data-alert" => true }
-            =link_to "#", class: 'close' do
-              &times;
-            %ul.no-bullet
-              - @announcements.each do |announcement|
-                %li= dot_markdown(announcement.message)
+  = render partial: 'shared/announcements', locals: { announcements: @announcements }
+
   .row
     .medium-7.large-8.columns
-      %p
+      %p#introduction
         Hi #{@invitation.member.name},
         = render partial: @invitation.role.downcase
 
     .medium-5.large-4.columns
       .panel
         - if @workshop.past?
-          %em This workshop has already taken place.
+          %em= t('workshops.already_taken_place')
         - else
           - if @invitation.attending.eql?(true)
             - if @invitation.for_student?
@@ -49,7 +41,7 @@
               = link_to "I can no longer attend", reject_invitation_url(@invitation), class: "expand button small alert"
             - else
               %p
-                If you can't make it or plan to arrive late please let us know by sending an email to #{@invitation.workshop.chapter.email}
+                = t('workshop.invitation.cant_make_it_note', email: @workshop.chapter.email)
           - elsif @invitation.member.banned?
             %p
               %label.label.warning Your account has been suspended.
@@ -78,18 +70,41 @@
           Read our #{link_to "attendance policy", attendance_policy_path}.
 
 
-.stripe.reverse
+.stripe.reverse#info
   .row
-    = render partial: 'shared/venue', locals: { venue: @workshop.host, address: @host_address}
-
     .small-12.column
-      %h3 Sponsors
-      %ul.row.no-bullet
-        - @workshop.sponsors.each do |sponsor|
-          %li.small-4.columns
-            = image_tag(sponsor.avatar, class: 'sponsor', alt: sponsor.name)
-            %p
-              = link_to sponsor.name, sponsor.website
+      %h4= t('workshop.invitation.info')
+      - if @workshop.description?
+        %p.lead
+          = @workshop.description
+      - if @workshop.virtual? &&  @invitation.attending.eql?(true)
+        %h4= t('workshop.virtual.invitation.info.title')
+        #join-info
+          %ol
+            %li= t('workshop.virtual.invitation.info.line_1_html', slack_link: link_to(t('social_media_links.slack_html')))
+            %li= t('workshop.virtual.invitation.info.line_2_html', channel: link_to("##{@workshop.slack_channel}", @workshop.slack_channel_link))
+            %li= t('workshop.virtual.invitation.info.line_3_html', discord: link_to("discord", t('social_media_links.discord_invitation')))
+
+          %h5= t('workshop.virtual.invitation.info.begins_title')
+          %ol
+            %li= t('workshop.virtual.invitation.info.line_4')
+            %li= t('workshop.virtual.invitation.info.line_5')
+
+  - unless @workshop.virtual?
+    .row
+      = render partial: 'shared/venue', locals: { venue: @workshop.host, address: @workshop.address}
+
+- if @workshop.sponsors.any?
+  .stripe.reverse#sponsors
+    .row
+      .small-12.column
+        %h3 Sponsors
+        %ul.row.no-bullet
+          - @workshop.sponsors.each do |sponsor|
+            %li.small-4.columns
+              = image_tag(sponsor.avatar, class: 'sponsor', alt: sponsor.name)
+              %p
+                = link_to sponsor.name, sponsor.website
 
 .stripe.reverse
   = render partial: 'members/organisers_grid', locals: { members: @workshop.organisers, show_info: true }
@@ -97,9 +112,9 @@
 .stripe.reverse
   .row
     .medium-6.columns
-      %h4 Students (#{@invitation.workshop.attending_students.count}/#{@invitation.workshop.host.seats})
+      %h4 Students (#{@workshop.attending_and_available_student_spots})
       %ul.attendances.no-bullet
-        - @invitation.workshop.attending_students.each do |invitation|
+        - @workshop.attending_students.each do |invitation|
           %li.attendance
             .row
               .small-2.columns
@@ -110,9 +125,9 @@
                 .subheader=invitation.note
             %br
     .medium-6.columns
-      %h4 Coaches (#{@invitation.workshop.attending_coaches.count}/#{@invitation.workshop.host.coach_spots})
+      %h4 Coaches (#{@workshop.attending_and_available_coach_spots})
       %ul.attendances.no-bullet
-        - @invitation.workshop.attending_coaches.each do |invitation|
+        - @workshop.attending_coaches.each do |invitation|
           %li.attendance
             .row
               .small-2.columns

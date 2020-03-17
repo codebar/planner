@@ -1,8 +1,10 @@
 class WorkshopInvitationMailer < ActionMailer::Base
+  include EmailHelper
   include EmailHeaderHelper
   include ApplicationHelper
 
   helper ApplicationHelper
+  helper EmailHelper
 
   def attending(workshop, member, invitation, waiting_list = false)
     @workshop = WorkshopPresenter.new(workshop)
@@ -81,12 +83,6 @@ class WorkshopInvitationMailer < ActionMailer::Base
   end
 
   private
-
-  helper do
-    def full_url_for(path)
-      "#{@host}#{path}"
-    end
-  end
 
   def reminder_setup(workshop, member, invitation, subject)
     @workshop = WorkshopPresenter.new(workshop)

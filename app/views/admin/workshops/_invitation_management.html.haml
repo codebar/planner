@@ -25,7 +25,7 @@
     .medium-6.columns
       %h4
         Students
-        %label.label.round.secondary #{@attending_students.count}#{(" of " + @workshop.host.seats.to_s) if @workshop.has_host?}
+        %label.label.round.secondary #{@attending_students.count} of #{@workshop.student_spaces}
         %label.label.round.signed-in #{ @attending_students.count(&:attended) }
       = render partial: 'admin/workshop/attendances', locals: { invitations: @attending_students }
       = render partial: 'admin/workshop/waiting_list', locals: { waiting_list: @student_waiting_list }
@@ -33,7 +33,7 @@
       .row
         %h4
           Coaches
-          %label.label.round.secondary #{@attending_coaches.count}#{(" of " + @workshop.host.coach_spots.to_s) if @workshop.has_host?}
+          %label.label.round.secondary #{@attending_coaches.count} of #{@workshop.coach_spaces}
           %label.label.round.signed-in #{ @attending_coaches.count(&:attended) }
       = render partial: 'admin/workshop/attendances', locals: { invitations: @attending_coaches }
       = render partial: 'admin/workshop/waiting_list', locals: { waiting_list: @coach_waiting_list }

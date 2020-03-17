@@ -30,10 +30,4 @@ class WorkshopInvitation < ActiveRecord::Base
   def parent
     workshop
   end
-
-  def email
-    return unless for_student?
-
-    WorkshopInvitationMailer.invite_student(self.workshop, self.member, self).deliver_now
-  end
 end

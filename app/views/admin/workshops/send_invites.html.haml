@@ -7,9 +7,10 @@
           = link_to [:admin, @workshop.chapter] do
             %small=@workshop.chapter.name
     .row
-      .medium-3.columns
-        %h5
-          = @workshop.venue.name
+      - unless @workshop.virtual?
+        .medium-3.columns
+          %h5
+            = @workshop.venue.name
       .medium-3.columns
         %h5
           #{l(@workshop.date_and_time)}

@@ -22,6 +22,11 @@ class Workshop < ActiveRecord::Base
   validates :chapter_id, presence: true
   validates :date_and_time, presence: true, if: proc { |model| model.chapter_id.present? }
 
+  validates :slack_channel, presence: true, if: :virtual?
+  validates :slack_channel_link, presence: true, if: :virtual?
+  validates :student_spaces, numericality: { greater_than: 0 }, if: :virtual
+  validates :coach_spaces, numericality: { greater_than: 0 }, if: :virtual
+
   before_validation :set_date_and_time, if: proc { |model| model.chapter_id.present? }
   before_validation :set_opens_at
 
@@ -84,7 +89,7 @@ class Workshop < ActiveRecord::Base
   end
 
   def to_s
-    'Workshop'
+    virtual? ? 'Virtual Workshop' : 'Workshop'
   end
 
   def location
