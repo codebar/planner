@@ -40,7 +40,10 @@ class Admin::WorkshopsController < Admin::ApplicationController
   def show
     authorize @workshop
     @workshop = WorkshopPresenter.decorate(@workshop)
-    return render text: @workshop.attendees_csv if request.format.csv?
+    if request.format.csv?
+      csv_to_render = params[:type].eql?('labels') ? @workshop.attendees_csv : @workshop.pairing_csv
+      return render text: csv_to_render
+    end
 
     set_admin_workshop_data
   end

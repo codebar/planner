@@ -193,5 +193,29 @@ RSpec.feature 'An admin managing workshops', type: :feature do
         expect(page).to have_content('The requested format is invalid: text/html')
       end
     end
+
+    context 'attendee CSV' do
+      it 'returns a CSV with all workshop attendees' do
+        workshop = Fabricate(:workshop)
+        visit admin_workshop_path(workshop)
+        click_on 'Pairing CSV'
+
+        expect(page.current_path).to eq(admin_workshop_path(workshop, format: 'csv'))
+        expect(page).to have_content(WorkshopPresenter::PAIRING_HEADINGS.join(','))
+        expect(page).not_to have_content('ORGANISER')
+      end
+    end
+
+    context 'Labels' do
+      it 'returns a CSV with all workshop participants that can be used to generate the labels' do
+        workshop = Fabricate(:workshop)
+        visit admin_workshop_path(workshop)
+        click_on 'Labels'
+
+        expect(page.current_path).to eq(admin_workshop_path(workshop, format: 'csv'))
+        expect(page).to have_content('ORGANISER')
+        expect(page).not_to have_content(WorkshopPresenter::PAIRING_HEADINGS.join(','))
+      end
+    end
   end
 end

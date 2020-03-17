@@ -12,20 +12,14 @@ class EventPresenter < BasePresenter
     model.try(:chapter)
   end
 
-  def venue
-    model.venue
-  end
-
-  def sponsors
-    model.sponsors
-  end
+  delegate :venue, :sponsors, to: :model
 
   def invitable
     model.invitable || false
   end
 
   def description
-    model.description rescue nil
+    model&.description
   end
 
   def short_description
@@ -81,10 +75,14 @@ class EventPresenter < BasePresenter
   end
 
   def attendees_csv
-    CSV.generate { |csv| attendee_array.each { |a| csv << a } }
+    generate_csv_from_array(attendee_array)
   end
 
   private
+
+  def generate_csv_from_array(attendees)
+    CSV.generate { |csv| attendees.each { |a| csv << a } }
+  end
 
   def attendee_array
     model.attendances.map { |i| [i.member.full_name, i.role.upcase] }
