@@ -76,7 +76,7 @@
       %h4= t('workshop.invitation.info')
       - if @workshop.description?
         %p.lead
-          = @workshop.description
+          = sanitize(@workshop.description)
       - if @workshop.virtual? &&  @invitation.attending.eql?(true)
         %h4= t('workshop.virtual.invitation.info.title')
         #join-info
