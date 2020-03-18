@@ -40,9 +40,12 @@ RSpec.feature 'Viewing a workshop invitation', type: :feature, wip: true do
     end
 
     context '#description' do
-      it 'contains details about the workshop' do
+      let(:workshop) { Fabricate(:workshop, description: "<a href='http://a.link.com'> Follow link </a>") }
+
+      it 'contains details about the workshop and renders user defined HTML' do
         within '#info' do
           expect(page).to have_content('Information about the workshop')
+          expect(page).to have_link('Follow link', href: 'http://a.link.com')
           expect(page).to_not have_content('How to join')
         end
       end
