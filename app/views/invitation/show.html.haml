@@ -1,4 +1,4 @@
-- title t('workshop.invitation.title', date: humanize_date(@workshop.date_and_time))
+- title t('workshop.invitation.title', date: l(@workshop.date_and_time, format: :_humanize_date))
 
 .stripe.reverse
   .row
