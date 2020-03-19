@@ -1,6 +1,39 @@
 require 'spec_helper'
 
 RSpec.describe ApplicationHelper, type: :helper do
+  describe '#humanize_date' do
+    before do
+      travel_to Time.local(2020, 1, 15, 12, 30)
+    end
+
+    # humainize_week_day_with_date
+    it "humanizes date without time or year" do
+      expect(humanize_date(Time.zone.now, with_time: false, with_year: false))
+        .to eq "Wed, 15th January"
+    end
+
+    # humainize_week_day_with_date
+    it "humanizes date without time but with year" do
+      expect(humanize_date(Time.zone.now, with_time: false, with_year: true))
+        .to eq "Wed, 15th January 2020"
+    end
+
+
+    it "humanizes date with time but not year" do
+      expect(humanize_date(Time.zone.now, with_time: true, with_year: false))
+        .to eq "Wed, 15th January at 12:30"
+    end
+
+    it "humanizes date with time and year" do
+      expect(humanize_date(Time.zone.now, with_time: true, with_year: true))
+        .to eq "Wed, 15th January 2020 at 12:30"
+    end
+
+    after do
+      travel_back
+    end
+  end
+
   describe '#contact_email' do
     it "returns the workshop chapter's email" do
       @workshop = Fabricate(:workshop)
