@@ -4,7 +4,7 @@
       %h2
         = @course.title
         %br
-        %small #{humanize_date(@course.date_and_time, with_time: true)}
+        %small #{l(@course.date_and_time, format: :_humanize_date_with_time)}
       - if @course.date_and_time.past?
         %label.label.warning This event has already taken place.
 
