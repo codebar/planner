@@ -6,7 +6,7 @@
       %h2
         = @workshop.title
         %br
-        %small #{humanize_date(@workshop.date_and_time, with_time: true)} #{@workshop.distance_of_time}
+        %small #{l(@workshop.date_and_time, format: :_humanize_date_with_time)} #{@workshop.distance_of_time}
       - if @workshop.date_and_time.past?
         %label.label.warning= t('workshops.already_taken_place')
 .alert-box.info
