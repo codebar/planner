@@ -98,6 +98,26 @@ RSpec.describe WorkshopPresenter do
           .to eq("#{I18n.l(workshop.time, format: :time)} - #{I18n.l(workshop.ends_at, format: :time)}")
       end
     end
+
+    context '#humanize_date_with_time_range' do
+      before { travel_to Time.local(2020, 1, 1, 18, 30) }
+
+      it 'displays range when available' do
+        presenter = WorkshopPresenter.new(Fabricate(:workshop, date_and_time: Time.zone.now,
+                                                              ends_at: Time.zone.now + 2.hours))
+
+        expect(presenter.humanize_date_with_time_range) .to eq 'Wed, 1st January at 18:30 - 20:30'
+      end
+
+      it 'displays start time only if end unavailable' do
+        presenter = WorkshopPresenter.new(Fabricate(:workshop, date_and_time: Time.zone.now,
+                                                              ends_at: nil))
+
+        expect(presenter.humanize_date_with_time_range) .to eq 'Wed, 1st January at 18:30'
+      end
+
+      after { travel_back }
+    end
   end
 
   context '#attendees_csv' do

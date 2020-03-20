@@ -44,7 +44,7 @@ class WorkshopInvitationMailer < ActionMailer::Base
   end
 
   def invite_coach(workshop, member, invitation)
-    @workshop = workshop
+    @workshop = WorkshopPresenter.new(workshop)
     @member = member
     @invitation = invitation
 
@@ -66,7 +66,7 @@ class WorkshopInvitationMailer < ActionMailer::Base
   end
 
   def notify_waiting_list(invitation)
-    @workshop = invitation.workshop
+    @workshop = WorkshopPresenter.new(invitation.workshop)
     @host_address = AddressPresenter.new(@workshop.host.address)
     @member = invitation.member
     @invitation = invitation

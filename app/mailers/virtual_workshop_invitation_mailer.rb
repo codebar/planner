@@ -52,7 +52,7 @@ class VirtualWorkshopInvitationMailer < ActionMailer::Base
   private
 
   def setup(workshop, invitation, member)
-    @workshop = workshop
+    @workshop = WorkshopPresenter.new(workshop)
     @member = member
     @invitation = invitation
   end

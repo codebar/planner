@@ -59,6 +59,10 @@ class WorkshopPresenter < EventPresenter
     start_and_end_time
   end
 
+  def humanize_date_with_time_range
+    I18n.l(model.date_and_time, format: :humanize_date_with_time) + (model.ends_at.blank? ? nil : ' - ' + end_time).to_s
+  end
+
   def path
     Rails.application.routes.url_helpers.workshop_path(model)
   end

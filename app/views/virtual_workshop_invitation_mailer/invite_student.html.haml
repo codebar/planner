@@ -28,7 +28,7 @@
                 %h4
                   = @workshop.to_s
                   %br
-                  %small #{humanize_date(@workshop.date_and_time, with_time: true)}#{@workshop.ends_at.present? ? " - " + @workshop.ends_at.strftime('%H:%M') : ""}
+                  %small #{@workshop.humanize_date_with_time_range}
                 = link_to 'View invitation and RSVP', full_url_for(invitation_url(@invitation)), class: 'btn'
               %td{ width: '40%', style: 'vertical-align: top;'}
                 - if @workshop.sponsors.any?
