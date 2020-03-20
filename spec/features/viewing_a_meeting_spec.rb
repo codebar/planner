@@ -16,6 +16,7 @@ RSpec.feature 'viewing a meeting', type: :feature do
     scenario "can view a meeting's information" do
 
       expect(page).to have_content meeting.name
+      expect(page).to have_content I18n.l(meeting.date_and_time, format: :_humanize_date)
       expect(page).to have_content meeting.venue.name
     end
   end
