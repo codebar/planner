@@ -30,7 +30,7 @@
             = link_to admin_workshop_path(workshop) do
               %strong=workshop.chapter.name
               %br
-              = humanize_date(workshop.date_and_time, with_time: true)
+              = l(workshop.date_and_time, format: :_humanize_date_with_time)
 
   .row
     .medium-6.large-3.columns
