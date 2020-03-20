@@ -14,7 +14,7 @@ class WorkshopInvitationMailer < ActionMailer::Base
     @waiting_list = waiting_list
 
     subject = t('mailer.workshop_invitation.attending.subject',
-                date_time: humanize_date(@workshop.date_and_time, with_time: true))
+                date_time: l(@workshop.date_and_time, format: :_humanize_date_with_time))
 
     attachments['codebar.ics'] = { mime_type: 'text/calendar',
                                    content: WorkshopCalendar.new(workshop).calendar.to_ical }
@@ -24,7 +24,7 @@ class WorkshopInvitationMailer < ActionMailer::Base
 
   def attending_reminder(workshop, member, invitation)
     subject = t('mailer.workshop_invitation.attending_reminder.subject',
-                date_time: humanize_date(workshop.date_and_time, with_time: true))
+                date_time: l(workshop.date_and_time, format: :_humanize_date_with_time))
     reminder_setup(workshop, member, invitation, subject)
   end
 
@@ -38,7 +38,7 @@ class WorkshopInvitationMailer < ActionMailer::Base
     subject = t('mailer.workshop_invitation.change_of_details.subject',
                 title: title,
                 workshop_title: @workshop.title,
-                date_time: humanize_date(@workshop.date_and_time, with_time: true))
+                date_time: l(@workshop.date_and_time, format: :_humanize_date_with_time))
 
     mail(mail_args(member, subject, @workshop.chapter.email), &:html)
   end
@@ -49,7 +49,7 @@ class WorkshopInvitationMailer < ActionMailer::Base
     @invitation = invitation
 
     subject = t('mailer.workshop_invitation.invite_coach.subject',
-                date_time: humanize_date(@workshop.date_and_time, with_time: true))
+                date_time: l(@workshop.date_and_time, format: :_humanize_date_with_time))
 
     mail(mail_args(member, subject, 'no-reply@codebar.io'), &:html)
   end
@@ -60,7 +60,7 @@ class WorkshopInvitationMailer < ActionMailer::Base
     @invitation = invitation
 
     subject = t('mailer.workshop_invitation.invite_student.subject',
-                date_time: humanize_date(@workshop.date_and_time, with_time: true))
+                date_time: l(@workshop.date_and_time, format: :_humanize_date_with_time))
 
     mail(mail_args(member, subject, 'no-reply@codebar.io'), &:html)
   end
@@ -78,7 +78,7 @@ class WorkshopInvitationMailer < ActionMailer::Base
 
   def waiting_list_reminder(workshop, member, invitation)
     subject = t('mailer.workshop_invitation.waiting_list_reminder.subject',
-                date_time: humanize_date(workshop.date_and_time, with_time: true))
+                date_time: l(workshop.date_and_time, format: :_humanize_date_with_time))
     reminder_setup(workshop, member, invitation, subject)
   end
 
