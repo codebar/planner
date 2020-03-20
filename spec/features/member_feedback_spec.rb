@@ -15,6 +15,13 @@ RSpec.feature 'member feedback', type: :feature do
     Fabricate(:attended_workshop_invitation, workshop: feedback_request.workshop, member: coach, role: 'Coach')
   end
 
+  scenario 'I can display member feedbacks' do
+    visit feedback_path(valid_token)
+
+    expect(page).to have_content("Workshop feedback")
+    expect(page).to have_content("#{I18n.l(feedback_request.workshop.date_and_time, format: :_humanize_date_with_time)}")
+  end
+
   context 'Feedback form' do
     scenario 'I can access the feedback form when the token is valid' do
       visit feedback_path(valid_token)
