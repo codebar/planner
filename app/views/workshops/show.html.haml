@@ -1,4 +1,5 @@
-- title t('workshop.title', host: @workshop.host.name, date: humanize_date(@workshop.date_and_time))
+- title t('workshop.title', host: @workshop.host.name,
+                            date: l(@workshop.date_and_time, format: :_humanize_date))
 
 = render partial: 'meta_tags', locals: { workshop: @workshop }
 
@@ -8,7 +9,7 @@
       %h2
         = t('workshops.title', host: @workshop.host.name)
         %br
-        %small #{humanize_date(@workshop.date_and_time)} #{@workshop.distance_of_time}
+        %small #{l(@workshop.date_and_time, format: :_humanize_date)} #{@workshop.distance_of_time}
         #workshop-time.time
           %i.material-icons
             access_time
