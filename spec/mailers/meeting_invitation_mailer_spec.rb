@@ -16,6 +16,7 @@ RSpec.describe MeetingInvitationMailer, type: :mailer do
 
     it 'renders the body' do
       expect(mail.body.encoded).to match('We\'re back for another installment of codebar Monthlies')
+      expect(mail.body.encoded).to match(I18n.l(meeting.date_and_time, format: :_humanize_date_with_time))
     end
   end
 
@@ -31,6 +32,7 @@ RSpec.describe MeetingInvitationMailer, type: :mailer do
 
     it 'renders the body' do
       expect(mail.body.encoded).to match('You\'re confirmed for the next codebar Monthly')
+      expect(mail.body.encoded).to match(I18n.l(meeting.date_and_time, format: :_humanize_date_with_time))
     end
   end
 
@@ -46,6 +48,7 @@ RSpec.describe MeetingInvitationMailer, type: :mailer do
 
     it 'renders the body' do
       expect(mail.body.encoded).to match('A spot opened up for the next codebar Monthly')
+      expect(mail.body.encoded).to match(I18n.l(meeting.date_and_time, format: :_humanize_date_with_time))
     end
   end
 

@@ -14,7 +14,7 @@
               %td
                 %h3 Hi #{@member.name},
                 %p.lead
-                  You're confirmed for the next codebar Monthly on #{humanize_date(@meeting.date_and_time, with_time: true)} at #{@meeting.venue.name}!
+                  You're confirmed for the next codebar Monthly on #{l(@meeting.date_and_time, format: :_humanize_date_with_time)} at #{@meeting.venue.name}!
 
         = render partial: 'agenda'
 
