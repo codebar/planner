@@ -12,7 +12,7 @@ class VirtualWorkshopInvitationMailer < ActionMailer::Base
 
     subject = "Attendance Confirmation: #{I18n.t('workshop.virtual.title',
                                                  chapter: @workshop.chapter.name,
-                                                 date: humanize_date(@workshop.date_and_time))}"
+                                                 date: l(@workshop.date_and_time, format: :_humanize_date_with_time))}"
 
     mail(mail_args(member, subject, @workshop.chapter.email), &:html)
   end

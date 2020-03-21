@@ -8,7 +8,7 @@ RSpec.describe VirtualWorkshopInvitationMailer, type: :mailer do
 
   it '#attending' do
     email_subject = "Attendance Confirmation: Virtual workshop for #{workshop.chapter.name} " \
-                    "- #{humanize_date(workshop.date_and_time)}"
+                    "- #{I18n.l(workshop.date_and_time, format: :_humanize_date_with_time)}"
 
     VirtualWorkshopInvitationMailer.attending(workshop, member, invitation).deliver_now
 
