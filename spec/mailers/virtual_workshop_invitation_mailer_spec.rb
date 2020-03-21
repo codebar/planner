@@ -18,7 +18,7 @@ RSpec.describe VirtualWorkshopInvitationMailer, type: :mailer do
   end
 
   it '#attending_reminder' do
-    email_subject = "Virtual Workshop Reminder #{humanize_date(workshop.date_and_time, with_time: true)}"
+    email_subject = "Virtual Workshop Reminder #{I18n.l(workshop.date_and_time, format: :_humanize_date_with_time)}"
 
     VirtualWorkshopInvitationMailer.attending_reminder(workshop, member, invitation).deliver_now
 
@@ -28,7 +28,8 @@ RSpec.describe VirtualWorkshopInvitationMailer, type: :mailer do
   end
 
   it '#invite_coach' do
-    email_subject = "Virtual Workshop Coach Invitation #{humanize_date(workshop.date_and_time, with_time: true)}"
+    email_subject = "Virtual Workshop Coach Invitation " \
+                    "#{I18n.l(workshop.date_and_time, format: :_humanize_date_with_time)}"
 
     VirtualWorkshopInvitationMailer.invite_coach(workshop, member, invitation).deliver_now
 
@@ -37,7 +38,7 @@ RSpec.describe VirtualWorkshopInvitationMailer, type: :mailer do
   end
 
   it '#invite_student' do
-    email_subject = "Virtual Workshop Invitation #{humanize_date(workshop.date_and_time, with_time: true)}"
+    email_subject = "Virtual Workshop Invitation #{I18n.l(workshop.date_and_time, format: :_humanize_date_with_time)}"
 
     VirtualWorkshopInvitationMailer.invite_student(workshop, member, invitation).deliver_now
 
@@ -47,13 +48,14 @@ RSpec.describe VirtualWorkshopInvitationMailer, type: :mailer do
 
   it '#waitlist_reminder' do
     email_subject = "Reminder: you're on the codebar waiting list " \
-                    "(#{humanize_date(workshop.date_and_time, with_time: true)})"
+                    "(#{I18n.l(workshop.date_and_time, format: :_humanize_date_with_time)})"
 
     VirtualWorkshopInvitationMailer.waiting_list_reminder(workshop, member, invitation).deliver_now
 
     expect(email.subject).to eq(email_subject)
     expect(email.from).to eq([workshop.chapter.email])
-    expect(email.body.encoded).to match("the virtual workshop on #{humanize_date(workshop.date_and_time, with_time: true)}")
+    expect(email.body.encoded)
+      .to match("the virtual workshop on #{I18n.l(workshop.date_and_time, format: :_humanize_date_with_time)}")
     expect(email.body.encoded).to match(workshop.chapter.email)
   end
 end
