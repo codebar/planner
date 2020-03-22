@@ -14,7 +14,7 @@
               %td
                 %h3 Hi #{@member.name},
                 %p.lead
-                  We're back for another installment of codebar Monthlies on #{l(@meeting.date_and_time, format: :_humanize_date_with_time)} at #{@meeting.venue.name}!
+                  We're back for another installment of codebar Monthlies on #{l(@meeting.date_and_time, format: :humanize_date_with_time)} at #{@meeting.venue.name}!
                 %p
                   = "#{link_to 'You can RSVP here', @rsvp_url}, after logging into your codebar account.".html_safe
 

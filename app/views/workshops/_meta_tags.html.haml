@@ -1,6 +1,6 @@
 - content_for :meta_tags do
   - title = "Workshop at #{workshop.host.name}"
-  - twitter_description = "codebar #{workshop.chapter.name} workshop at #{workshop.host.name} on #{l(workshop.date_and_time, format: :_humanize_date_with_time)}"
+  - twitter_description = "codebar #{workshop.chapter.name} workshop at #{workshop.host.name} on #{l(workshop.date_and_time, format: :humanize_date_with_time)}"
   - slack_description = "codebar #{workshop.chapter.name}"
   %meta{ property: 'twitter:card', content: 'summary' }
   %meta{ property: 'twitter:image', content: 'https://codebar.io/images/twitter-summary-card-image.png' }
@@ -14,4 +14,4 @@
   %meta{ name: 'twitter:label1', value: "Where"}
   %meta{ name: 'twitter:data1', value: "#{workshop.host.name}, #{@host_address}" }
   %meta{ name: 'twitter:label2', value: "When"}
-  %meta{ name: 'twitter:data2', value: "#{l(workshop.date_and_time, format: :_humanize_date_with_time)}" }
+  %meta{ name: 'twitter:data2', value: "#{l(workshop.date_and_time, format: :humanize_date_with_time)}" }

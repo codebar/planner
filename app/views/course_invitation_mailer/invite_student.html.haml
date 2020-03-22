@@ -39,7 +39,7 @@
               %td
                 %h4
                   Workshop
-                  %small #{l(@course.date_and_time, format: :_humanize_date_with_time)}
+                  %small #{l(@course.date_and_time, format: :humanize_date_with_time)}
                 %p
                   %b Venue
                   #{@course.venue.name}

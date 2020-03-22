@@ -10,7 +10,7 @@ class MeetingInvitationMailer < ActionMailer::Base
     @host_address = AddressPresenter.new(@meeting.venue.address)
     @rsvp_url = meeting_url(@meeting)
 
-    subject = "You are invited to codebar's #{@meeting.name} on #{l(@meeting.date_and_time, format: :_humanize_date)}"
+    subject = "You are invited to codebar's #{@meeting.name} on #{l(@meeting.date_and_time, format: :humanize_date)}"
     mail(mail_args(@member, subject), &:html)
   end
 
@@ -20,7 +20,7 @@ class MeetingInvitationMailer < ActionMailer::Base
     @host_address = AddressPresenter.new(@meeting.venue.address)
     @cancellation_url = meeting_url(@meeting)
 
-    subject = "See you at #{@meeting.name} on #{l(@meeting.date_and_time, format: :_humanize_date)}"
+    subject = "See you at #{@meeting.name} on #{l(@meeting.date_and_time, format: :humanize_date)}"
     mail(mail_args(@member, subject), &:html)
   end
 
@@ -30,7 +30,7 @@ class MeetingInvitationMailer < ActionMailer::Base
     @host_address = AddressPresenter.new(@meeting.venue.address)
     @cancellation_url = meeting_url(@meeting)
 
-    subject = "A spot opened up for #{@meeting.name} on #{l(@meeting.date_and_time, format: :_humanize_date)}"
+    subject = "A spot opened up for #{@meeting.name} on #{l(@meeting.date_and_time, format: :humanize_date)}"
     mail(mail_args(@member, subject), &:html)
   end
 
@@ -40,7 +40,7 @@ class MeetingInvitationMailer < ActionMailer::Base
     @host_address = AddressPresenter.new(@meeting.venue.address)
     @cancellation_url = meeting_url(@meeting)
 
-    subject = "Reminder: You have a spot for #{@meeting.name} on #{l(@meeting.date_and_time, format: :_humanize_date)}"
+    subject = "Reminder: You have a spot for #{@meeting.name} on #{l(@meeting.date_and_time, format: :humanize_date)}"
     mail(mail_args(@member, subject), &:html)
   end
 

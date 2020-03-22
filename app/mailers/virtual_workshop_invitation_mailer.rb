@@ -12,7 +12,7 @@ class VirtualWorkshopInvitationMailer < ActionMailer::Base
 
     subject = "Attendance Confirmation: #{I18n.t('workshop.virtual.title',
                                                  chapter: @workshop.chapter.name,
-                                                 date: l(@workshop.date_and_time, format: :_humanize_date_with_time))}"
+                                                 date: l(@workshop.date_and_time, format: :humanize_date_with_time))}"
 
     mail(mail_args(member, subject, @workshop.chapter.email), &:html)
   end
@@ -20,7 +20,7 @@ class VirtualWorkshopInvitationMailer < ActionMailer::Base
   def attending_reminder(workshop, member, invitation)
     setup(workshop, invitation, member)
     subject = t('mailer.workshop_invitation.virtual.attending_reminder.subject',
-                date_time: l(workshop.date_and_time, format: :_humanize_date_with_time))
+                date_time: l(workshop.date_and_time, format: :humanize_date_with_time))
 
     mail(mail_args(member, subject, @workshop.chapter.email), &:html)
   end
@@ -28,7 +28,7 @@ class VirtualWorkshopInvitationMailer < ActionMailer::Base
   def invite_coach(workshop, member, invitation)
     setup(workshop, invitation, member)
     subject = t('mailer.workshop_invitation.virtual.invite_coach.subject',
-                date_time: l(@workshop.date_and_time, format: :_humanize_date_with_time))
+                date_time: l(@workshop.date_and_time, format: :humanize_date_with_time))
 
     mail(mail_args(member, subject, 'no-reply@codebar.io'), &:html)
   end
@@ -36,7 +36,7 @@ class VirtualWorkshopInvitationMailer < ActionMailer::Base
   def invite_student(workshop, member, invitation)
     setup(workshop, invitation, member)
     subject = t('mailer.workshop_invitation.virtual.invite_student.subject',
-                date_time: l(@workshop.date_and_time, format: :_humanize_date_with_time))
+                date_time: l(@workshop.date_and_time, format: :humanize_date_with_time))
 
     mail(mail_args(member, subject, 'no-reply@codebar.io'), &:html)
   end
@@ -44,7 +44,7 @@ class VirtualWorkshopInvitationMailer < ActionMailer::Base
   def waiting_list_reminder(workshop, member, invitation)
     setup(workshop, invitation, member)
     subject = t('mailer.workshop_invitation.waiting_list_reminder.subject',
-                date_time: l(workshop.date_and_time, format: :_humanize_date_with_time))
+                date_time: l(workshop.date_and_time, format: :humanize_date_with_time))
 
     mail(mail_args(member, subject, @workshop.chapter.email), &:html)
   end

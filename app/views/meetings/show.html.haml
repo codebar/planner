@@ -1,4 +1,4 @@
-- title t('meeting.title', name: @meeting.name, date: l(@meeting.date_and_time, format: :_humanize_date))
+- title t('meeting.title', name: @meeting.name, date: l(@meeting.date_and_time, format: :humanize_date))
 
 %section.stripe.reverse
   .row
@@ -6,7 +6,7 @@
       %h2
         =@meeting.name
       %h3
-        %small=l(@meeting.date_and_time, format: :_humanize_date_with_time)
+        %small=l(@meeting.date_and_time, format: :humanize_date_with_time)
 
   .row
     .medium-4.columns

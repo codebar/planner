@@ -18,7 +18,7 @@
           %tr
             %td
               = link_to admin_workshop_path(workshop) do
-                = l(workshop.date_and_time, format: :_humanize_date_with_year_with_time)
+                = l(workshop.date_and_time, format: :humanize_date_with_year_with_time)
             %td
               = workshop.invitations.accepted.count
             %td

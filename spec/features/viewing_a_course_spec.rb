@@ -8,7 +8,7 @@ RSpec.feature 'viewing a course', type: :feature do
     visit course_path(course)
 
     expect(page).to have_content course.title
-    expect(page).to have_content I18n.l(course.date_and_time, format: :_humanize_date_with_time)
+    expect(page).to have_content I18n.l(course.date_and_time, format: :humanize_date_with_time)
     expect(page).to have_content course.description
     expect(page).to have_content course.short_description
     expect(page).to have_link "Read more", href: course.url

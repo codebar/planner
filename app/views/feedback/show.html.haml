@@ -1,4 +1,4 @@
-= render partial: 'shared/title', locals: { title: t('feedback_form.title'), date:  l(@workshop.date_and_time, format: :_humanize_date_with_time) }
+= render partial: 'shared/title', locals: { title: t('feedback_form.title'), date:  l(@workshop.date_and_time, format: :humanize_date_with_time) }
 %section#banner
   .row
     .large-12.columns

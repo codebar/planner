@@ -4,7 +4,7 @@ RSpec.shared_examples 'invitation route' do
       visit invitation_route
 
       expect(page).to have_title("Workshop invitation - " \
-                                 "#{I18n.l(invitation.workshop.date_and_time, format: :_humanize_date)} " \
+                                 "#{I18n.l(invitation.workshop.date_and_time, format: :humanize_date)} " \
                                  "| codebar.io")
 
     end

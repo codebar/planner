@@ -19,7 +19,7 @@ RSpec.feature 'member feedback', type: :feature do
     visit feedback_path(valid_token)
 
     expect(page).to have_content("Workshop feedback")
-    expect(page).to have_content("#{I18n.l(feedback_request.workshop.date_and_time, format: :_humanize_date_with_time)}")
+    expect(page).to have_content("#{I18n.l(feedback_request.workshop.date_and_time, format: :humanize_date_with_time)}")
   end
 
   context 'Feedback form' do

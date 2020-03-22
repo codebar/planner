@@ -10,7 +10,7 @@ RSpec.feature 'Viewing a workshop invitation', type: :feature, wip: true do
     let(:workshop) { Fabricate(:workshop) }
 
     scenario 'workshop and page title' do
-      expect(page).to have_title("Workshop invitation - #{I18n.l(workshop.date_and_time, format: :_humanize_date)}")
+      expect(page).to have_title("Workshop invitation - #{I18n.l(workshop.date_and_time, format: :humanize_date)}")
       expect(page).to have_content("Workshop at #{workshop.host.name}")
     end
 
@@ -58,7 +58,7 @@ RSpec.feature 'Viewing a workshop invitation', type: :feature, wip: true do
     let(:workshop) { Fabricate(:virtual_workshop) }
 
     scenario 'workshop and page title' do
-      expect(page).to have_title("Workshop invitation - #{I18n.l(workshop.date_and_time, format: :_humanize_date)}")
+      expect(page).to have_title("Workshop invitation - #{I18n.l(workshop.date_and_time, format: :humanize_date)}")
       expect(page).to have_content("Virtual workshop for #{workshop.chapter.name}")
     end
 

@@ -6,22 +6,22 @@ RSpec.describe 'Humanize' do
   end
 
   it "humanizes date without time or year" do
-    expect(I18n.l(Time.zone.now, format: :_humanize_date))
+    expect(I18n.l(Time.zone.now, format: :humanize_date))
       .to eq "Wed, 15th January"
   end
 
   it "humanizes date without time but with year" do
-    expect(I18n.l(Time.zone.now, format: :_humanize_date_with_year))
+    expect(I18n.l(Time.zone.now, format: :humanize_date_with_year))
       .to eq "Wed, 15th January 2020"
   end
 
   it "humanizes date with time but not year" do
-    expect(I18n.l(Time.zone.now, format: :_humanize_date_with_time))
+    expect(I18n.l(Time.zone.now, format: :humanize_date_with_time))
       .to eq "Wed, 15th January at 12:30"
   end
 
   it "humanizes date with time and year" do
-    expect(I18n.l(Time.zone.now, format: :_humanize_date_with_year_with_time))
+    expect(I18n.l(Time.zone.now, format: :humanize_date_with_year_with_time))
       .to eq "Wed, 15th January 2020 at 12:30"
   end
 

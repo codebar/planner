@@ -9,7 +9,7 @@ RSpec.describe WorkshopInvitationMailer, type: :mailer do
 
   it "#attending" do
     email_subject = "Attendance Confirmation for " \
-                    "#{I18n.l(workshop.date_and_time, format: :_humanize_date_with_time)}"
+                    "#{I18n.l(workshop.date_and_time, format: :humanize_date_with_time)}"
 
     WorkshopInvitationMailer.attending(workshop, member, invitation).deliver_now
 
@@ -18,7 +18,7 @@ RSpec.describe WorkshopInvitationMailer, type: :mailer do
   end
 
   it '#attending_reminder' do
-    email_subject = "Workshop Reminder #{I18n.l(workshop.date_and_time, format: :_humanize_date_with_time)}"
+    email_subject = "Workshop Reminder #{I18n.l(workshop.date_and_time, format: :humanize_date_with_time)}"
 
     WorkshopInvitationMailer.attending_reminder(workshop, member, invitation).deliver_now
 
@@ -29,7 +29,7 @@ RSpec.describe WorkshopInvitationMailer, type: :mailer do
   it '#change_of_details' do
     title = 'Change of details'
     email_subject = "#{title}: #{workshop.title} by codebar - " \
-                    "#{I18n.l(workshop.date_and_time, format: :_humanize_date_with_time)}"
+                    "#{I18n.l(workshop.date_and_time, format: :humanize_date_with_time)}"
 
     WorkshopInvitationMailer.change_of_details(workshop, sponsor, member, invitation).deliver_now
 
@@ -39,7 +39,7 @@ RSpec.describe WorkshopInvitationMailer, type: :mailer do
 
   it '#invite_coach' do
     email_subject = "Workshop Coach Invitation " \
-                    "#{I18n.l(workshop.date_and_time, format: :_humanize_date_with_time)}"
+                    "#{I18n.l(workshop.date_and_time, format: :humanize_date_with_time)}"
 
     WorkshopInvitationMailer.invite_coach(workshop, member, invitation).deliver_now
 
@@ -48,7 +48,7 @@ RSpec.describe WorkshopInvitationMailer, type: :mailer do
   end
 
   it '#invite_student' do
-    email_subject = "Workshop Invitation #{I18n.l(workshop.date_and_time, format: :_humanize_date_with_time)}"
+    email_subject = "Workshop Invitation #{I18n.l(workshop.date_and_time, format: :humanize_date_with_time)}"
 
     WorkshopInvitationMailer.invite_student(workshop, member, invitation).deliver_now
 
@@ -66,13 +66,13 @@ RSpec.describe WorkshopInvitationMailer, type: :mailer do
 
   it '#waitlist_reminder' do
     email_subject = "Reminder: you're on the codebar waiting list " \
-                    "(#{I18n.l(workshop.date_and_time, format: :_humanize_date_with_time)})"
+                    "(#{I18n.l(workshop.date_and_time, format: :humanize_date_with_time)})"
 
     WorkshopInvitationMailer.waiting_list_reminder(workshop, member, invitation).deliver_now
 
     expect(email.subject).to eq(email_subject)
     expect(email.from).to eq([workshop.chapter.email])
-    expect(email.body.encoded).to match("the workshop on #{I18n.l(workshop.date_and_time, format: :_humanize_date_with_time)}")
+    expect(email.body.encoded).to match("the workshop on #{I18n.l(workshop.date_and_time, format: :humanize_date_with_time)}")
     expect(email.body.encoded).to match(workshop.chapter.email)
   end
 end

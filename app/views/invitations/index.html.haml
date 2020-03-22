@@ -25,7 +25,7 @@
                     %br
                     - if invitation.parent.present?
                       %small.subheader #{invitation.parent.chapter.name} Group: #{invitation.role.pluralize}
-                      .date #{l(invitation.parent.date_and_time, format: :_humanize_date_with_time)}
+                      .date #{l(invitation.parent.date_and_time, format: :humanize_date_with_time)}
                   %br
                   - if invitation.is_a? WorkshopInvitation
                     =link_to attendance_status(invitation), invitation_path(invitation), class: "button round expand"
@@ -51,6 +51,6 @@
                     %br
                     - if invitation.parent.present?
                       %small.subheader #{invitation.parent.chapter.name} Group: #{invitation.role.pluralize}
-                      .date #{l(invitation.parent.date_and_time, format: :_humanize_date_with_time)}
+                      .date #{l(invitation.parent.date_and_time, format: :humanize_date_with_time)}
                   %br
                   =link_to "View", invitation_path(invitation), class: "button round expand"

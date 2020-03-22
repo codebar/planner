@@ -14,7 +14,7 @@
               %td
                 %h3 Hi #{@member.name},
                 %p.lead
-                  This is a quick email to remind you that you're on the waiting list for the workshop on #{l(@workshop.date_and_time, format: :_humanize_date_with_time)}.
+                  This is a quick email to remind you that you're on the waiting list for the workshop on #{l(@workshop.date_and_time, format: :humanize_date_with_time)}.
                 %p
                   If an attendee drops out, the next person on the waiting list will automatically get their place. We'll email you if this happens.
                   %strong Attendees often drop out at short notice,

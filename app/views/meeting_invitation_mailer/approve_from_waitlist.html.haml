@@ -14,7 +14,7 @@
               %td
                 %h3 Hi #{@member.name},
                 %p.lead
-                  A spot opened up for the next codebar Monthly on #{l(@meeting.date_and_time, format: :_humanize_date_with_time)} at #{@meeting.venue.name}!
+                  A spot opened up for the next codebar Monthly on #{l(@meeting.date_and_time, format: :humanize_date_with_time)} at #{@meeting.venue.name}!
 
         = render partial: 'agenda'
 
