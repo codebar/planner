@@ -44,10 +44,7 @@ class WorkshopInvitationMailer < ActionMailer::Base
   end
 
   def invite_coach(workshop, member, invitation)
-    @workshop = WorkshopPresenter.new(workshop)
-    @member = member
-    @invitation = invitation
-
+    invite_setup(workshop, member, invitation)
     subject = t('mailer.workshop_invitation.invite_coach.subject',
                 date_time: l(@workshop.date_and_time, format: :humanize_date_with_time))
 
@@ -55,10 +52,7 @@ class WorkshopInvitationMailer < ActionMailer::Base
   end
 
   def invite_student(workshop, member, invitation)
-    @workshop = WorkshopPresenter.new(workshop)
-    @member = member
-    @invitation = invitation
-
+    invite_setup(workshop, member, invitation)
     subject = t('mailer.workshop_invitation.invite_student.subject',
                 date_time: l(@workshop.date_and_time, format: :humanize_date_with_time))
 
@@ -83,6 +77,12 @@ class WorkshopInvitationMailer < ActionMailer::Base
   end
 
   private
+
+  def invite_setup(workshop, member, invitation)
+    @workshop = WorkshopPresenter.new(workshop)
+    @member = member
+    @invitation = invitation
+  end
 
   def reminder_setup(workshop, member, invitation, subject)
     @workshop = WorkshopPresenter.new(workshop)
