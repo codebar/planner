@@ -12,7 +12,6 @@ RSpec.describe WorkshopPresenter do
                       attending_students: double(:attending_students, count: attending_students))
   end
 
-
   context '#decorate' do
     it 'returns a workshop decorated with the WorkshopPresenter' do
       workshop = double(:workshop, virtual?: false)
@@ -48,7 +47,6 @@ RSpec.describe WorkshopPresenter do
       expect(presenter.attending_and_available_coach_spots).to eq('3/15')
     end
   end
-
 
   context '#title' do
     it 'returns the title of a workshop' do
@@ -117,6 +115,26 @@ RSpec.describe WorkshopPresenter do
       end
 
       after { travel_back }
+    end
+
+    context '#distance_of_time' do
+      it 'displays if the workshop is in the past' do
+        travel_to Time.local(2020, 1, 1, 18, 30)
+
+        presenter = WorkshopPresenter.new(Fabricate(:workshop, date_and_time: Time.zone.now - 1.day))
+        expect(presenter.distance_of_time).to eq '(1 day ago)'
+
+        travel_back
+      end
+
+      it 'displays if the workshop is the future' do
+        travel_to Time.local(2020, 1, 1, 18, 30)
+
+        presenter = WorkshopPresenter.new(Fabricate(:workshop, date_and_time: Time.zone.now + 1.day))
+        expect(presenter.distance_of_time).to eq '(in 1 day)'
+
+        travel_back
+      end
     end
   end
 

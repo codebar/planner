@@ -15,6 +15,28 @@ class WorkshopPresenter < EventPresenter
     I18n.t('workshops.title', host: venue.name)
   end
 
+  def time
+    I18n.l(model.time, format: :time)
+  end
+
+  def end_time
+    I18n.l(model.ends_at, format: :time)
+  end
+
+  def start_and_end_time
+    [model.time, model.ends_at].compact.map { |t| I18n.l(t, format: :time) }.join(' - ')
+  end
+
+  def humanize_date_with_time_range
+    I18n.l(model.date_and_time, format: :humanize_date_with_time) + (model.ends_at.blank? ? nil : ' - ' + end_time).to_s
+  end
+
+  def distance_of_time
+    return "(#{distance_of_time_in_words_to_now(date_and_time)} ago)" if past?
+
+    "(in #{distance_of_time_in_words_to_now(date_and_time)})"
+  end
+
   def address
     AddressPresenter.new(venue.address)
   end
@@ -45,36 +67,12 @@ class WorkshopPresenter < EventPresenter
           .pluck(:email).join(', ')
   end
 
-  def time
-    I18n.l(model.time, format: :time)
-  end
-
-  def end_time
-    I18n.l(model.ends_at, format: :time)
-  end
-
-  def start_and_end_time
-    start_and_end_time = time
-    start_and_end_time << " - #{end_time}" if model.ends_at.present?
-    start_and_end_time
-  end
-
-  def humanize_date_with_time_range
-    I18n.l(model.date_and_time, format: :humanize_date_with_time) + (model.ends_at.blank? ? nil : ' - ' + end_time).to_s
-  end
-
   def path
     Rails.application.routes.url_helpers.workshop_path(model)
   end
 
   def admin_path
     Rails.application.routes.url_helpers.admin_workshop_path(model)
-  end
-
-  def distance_of_time
-    return "(#{distance_of_time_in_words_to_now(date_and_time)} ago)" if past?
-
-    "(in #{distance_of_time_in_words_to_now(date_and_time)})"
   end
 
   def send_attending_email(invitation, waitinglist = false)
