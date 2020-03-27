@@ -3,12 +3,12 @@
     .large-4.columns
       %h3 Chapters
       %ul.side-nav
-        - @chapters.each do |chapter|
+        - @portal.active_chapters.each do |chapter|
           %li= link_to chapter.name, [ :admin, chapter ]
     .large-4.columns
       %h3 Upcoming Workshops
       %ul.side-nav
-        - @workshops.each do |workshop|
+        - @portal.upcoming_workshops.each do |workshop|
           %li
             = link_to admin_workshop_path(workshop) do
               %strong= workshop.chapter.name
@@ -24,11 +24,11 @@
     .large-3.columns
       %h3 Groups
       %ul.side-nav
-        - @groups.each do |group|
+        - @portal.active_chapter_groups.each do |group|
           %li
             = link_to [:admin, group] do
               #{group.name} (#{group.chapter.name})
 
     .large-9.columns
       %h3 Latest Subscribers
-      = render partial: 'admin/subscriptions/index', locals: { subscribers: @subscribers }
+      = render partial: 'admin/subscriptions/index', locals: { subscribers: @portal.subscribers }
