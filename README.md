@@ -115,7 +115,7 @@ Run `bin/dstart` to start the app.
 
 This should run a process which starts a server in a Docker container on your computer. This process won't finish - you'll know the server is ready when it stops doing anything and displays a message like this:
 ```
-Rails 4.2.11 application starting in development on http://0.0.0.0:3000
+Rails 4.2.11 application starting in development on http://localhost:3000
 ```
 
 (Optional) Note that to be able to use the page as an admin, you must first give yourself admin privileges. Make sure you have started your app and signed up as an user on your locally running app. Then run a script `bin/dadmin <your email>`.
