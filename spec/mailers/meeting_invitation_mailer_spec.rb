@@ -16,6 +16,7 @@ RSpec.describe MeetingInvitationMailer, type: :mailer do
 
     it 'renders the body' do
       expect(mail.body.encoded).to match('We\'re back for another installment of codebar Monthlies')
+      expect(mail.body.encoded).to match('hello@codebar.io')
     end
   end
 
@@ -31,6 +32,7 @@ RSpec.describe MeetingInvitationMailer, type: :mailer do
 
     it 'renders the body' do
       expect(mail.body.encoded).to match('You\'re confirmed for the next codebar Monthly')
+      expect(mail.body.encoded).to match('hello@codebar.io')
     end
   end
 
@@ -46,6 +48,7 @@ RSpec.describe MeetingInvitationMailer, type: :mailer do
 
     it 'renders the body' do
       expect(mail.body.encoded).to match('A spot opened up for the next codebar Monthly')
+      expect(mail.body.encoded).to match('hello@codebar.io')
     end
   end
 
@@ -61,6 +64,7 @@ RSpec.describe MeetingInvitationMailer, type: :mailer do
 
     it 'renders the body' do
       expect(mail.body.encoded).to match('This is a quick email to remind you that you have signed up for tomorrow\'s codebar Monthly')
+      expect(mail.body.encoded).to match('hello@codebar.io')
     end
   end
 end

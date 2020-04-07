@@ -40,8 +40,8 @@ module ApplicationHelper
     Planner::Application.config.twitter_id
   end
 
-  def contact_email
-    @contact_email ||= @workshop.present? ? @workshop.chapter.email : 'hello@codebar.io'
+  def contact_email(workshop: nil)
+    @contact_email ||= workshop.present? ? workshop.chapter.email : 'hello@codebar.io'
   end
 
   def active_link_class(link_path)

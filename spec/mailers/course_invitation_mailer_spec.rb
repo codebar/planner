@@ -12,5 +12,6 @@ RSpec.describe CourseInvitationMailer, type: :mailer  do
     CourseInvitationMailer.invite_student(course, member, invitation_token).deliver_now
 
     expect(email.subject).to eq(email_subject)
+    expect(email.body.encoded).to match('hello@codebar.io')
   end
 end
