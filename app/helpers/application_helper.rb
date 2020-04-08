@@ -41,7 +41,7 @@ module ApplicationHelper
   end
 
   def contact_email(workshop: nil)
-    @contact_email ||= workshop.present? ? workshop.chapter.email : 'hello@codebar.io'
+    workshop.present? ? workshop.chapter.email : 'hello@codebar.io'
   end
 
   def active_link_class(link_path)
