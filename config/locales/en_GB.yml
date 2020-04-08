@@ -336,7 +336,7 @@ en-GB:
     title: Jobs
     index:
       description: There are %{count} jobs listed
-      none: There are no jobs available.
+      none: There are no jobs listed at this time. Please check back soon as positions get added regularly. 
   feedback_form:
     title: 'Workshop feedback'
     description: Your submission will be completely anonymous. We read every piece of feedback and use it to help us improve our workshops.
