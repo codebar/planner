@@ -392,7 +392,7 @@ de:
     title: Jobs
     index:
       description: Es gibt %{count} jobs
-      none: Es sind leider keine Jobangebote verfügbar.
+      none: There are no jobs listed at this time. Please check back soon as positions get added regularly.
   feedback_form:
     title: 'Workshop Feedback'
     description: Deine Einreichung ist komplett anonym. Wir lesen jedes Feedback und verwenden es um unsere Workshops zu verbessern.
@@ -410,22 +410,23 @@ de:
         title: Almost there...
         summary: We need some more details from you to finish creating your account. We use these to help run our events.
         coach:
-          about_you: What experience do you have? What languages do you like to use? Tell us a little about yourself!
+          about_you: What experience do you have? What languages do you like to use? Tell us a little bit about yourself!
         student:
-          about_you: What do you want to work on at codebar? What have you done in the past? Tell us a little about yourself!
+          about_you: What do you want to work on at codebar? What have you done in the past? Tell us a little bit about yourself!
         submit: Next
     jobs:
       title: My jobs
       preview: Preview
       index:
         description: Du hast %{count} Jobs eingestellt
-        none: Du hast noch keine Jobs eingestellt
+        none: You have not listed any jobs yet. Please consider submitting a paid internship, apprenticeship or junior developer role job to our community.
       pending:
         title: Deine Jobeinträge in Prüfung
         description: Du hast %{count} Jobeinträge die geprüft werden.
         none: Du hast keine Jobeinträge in Prüfung.
       new:
         title: Job eintragen
+        description: "Our aim is to be the one stop shop for junior developer roles! All jobs featured on our jobs board will fall under the following three categories; paid internships, apprenticeships or junior developer roles. We will not share jobs that are looking for senior, mid-weight, or developers with 2 years of experience. Each job that is submitted will be approved by the codebar team before appearing on the job board."
         rules_intro: "Bitte prüfe vor dem Abschicken, dass:"
         details: dein Eintrag detailliert die zu erledigende Arbeit darstellt
         suitability: "der Job passend für Menschen ist, die nach Praktika und Junior-Positionen suchen, die ihnen helfen ihre Karriere aufzubauen"
@@ -433,7 +434,7 @@ de:
         short: "der Eintrag kurz und auf den Punkt ist"
         approval_info: "*Nach dem Abschicken wird der Job sichtbar sobald er geprüft und bestätigt wurde."
         optional_details_message: "The information below is only required if you want this job post to be shared with Google Search UK."
-        pay: You have made the requirement payment of £35 through %{link}
+        pay: You have made the required payment of £50 through %{link}
         donation: a donation
         button:
           pay: Make a payment
@@ -571,7 +572,7 @@ de:
       member:
         email: 'This is needed so we can email you invitations to our events'
       job:
-        remote: Only check if the role is remote only
+        remote: Only check if the role is fully remote only
         salary: Annual pay before tax, without commas or decimal points
       workshop:
         slack_channel: 'Create a workshop specific channel in the codebar Slack. This is the place you will use for socialising and sharing details about the workshop.'
