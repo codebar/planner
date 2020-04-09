@@ -14,7 +14,7 @@ RSpec.feature 'Jobs', type: :feature do
         click_link('Jobs', match: :first)
 
         expect(page).to have_content('Jobs')
-        expect(page).to have_content('There are no jobs available')
+        expect(page).to have_content('There are no jobs listed at this time. Please check back soon as positions get added regularly.')
       end
 
       scenario 'can view all active jobs' do

@@ -336,7 +336,7 @@
     title: Jobs
     index:
       description: There are %{count} jobs listed
-      none: There are no jobs available.
+      none: There are no jobs listed at this time. Please check back soon as positions get added regularly.
   feedback_form:
     title: 'Workshop feedback'
     description: Your submission will be completely anonymous. We read every piece of feedback and use it to help us improve our workshops.
@@ -354,20 +354,21 @@
       preview: Preview
       index:
         description: You have %{count} jobs listed
-        none: You have not posted any jobs
+        none: You have not listed any jobs yet. Please consider submitting a paid internship, apprenticeship or junior developer role job to our community.
       pending:
         title: Your pending job posts
         description: You have %{count} job posts pending submission.
         none: You have no pending job posts.
       new:
         title: List a job
+        description: "Our aim is to be the one stop shop for junior developer roles! All jobs featured on our jobs board will fall under the following three categories; paid internships, apprenticeships or junior developer roles. We will not share jobs that are looking for senior, mid-weight, or developers with 2 years of experience. Each job that is submitted will be approved by the codebar team before appearing on the job board."
         rules_intro: "Before posting make sure that:"
         details: Your post details the work that will have to be undertaken
         suitability: "It's suitable for people looking for Internships and Junior roles that will enable them to build up their career"
         salary: The job pays an appropriate salary
         short: "It's short and to the point"
         approval_info: "*Once submitted, a job will be visible once it has been reviewed and approved."
-        pay: You have made the requirement payment of £35 through %{link}
+        pay: You have made the required payment of £50 through %{link}
         donation: a donation
         button:
           pay: Make a payment
@@ -488,7 +489,7 @@
         location: 'e.g. London or Berlin'
     hints:
       job:
-        remote: Only check if the role is remote only
+        remote: Only check if the role is fully remote only
         salary: Annual pay before tax, without commas or decimal points
   activerecord:
     attributes:
