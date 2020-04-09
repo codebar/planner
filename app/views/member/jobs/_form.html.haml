@@ -1,5 +1,5 @@
 #new_job
-  %h4 Job details
+  %h4 Job post details
   .row
     .large-6.columns
       = f.input :title, required: true
@@ -35,8 +35,9 @@
     .large-6.columns
       = f.input :location, required: true
 
-  %small
-    = t('member.jobs.new.optional_details_message')
+  .row
+    %small
+      = t('member.jobs.new.optional_details_message')
 
   .row
     .large-6.columns
@@ -46,4 +47,4 @@
       = f.input :company_postcode
   .row
     .large-12.columns
-      = f.submit "Submit job", class: "button"
+      = f.submit "Submit job for approval", class: "button"
