@@ -603,6 +603,7 @@ en:
         description: 'Supports HTML'
         coach_spaces: Available coach spaces
         student_spaces: Available student spaces
+        invitable: When checked, it overrides the RSVP open local date and time and makes RSVPs available right away.
     labels:
       terms_and_conditions_form:
         terms: 'I have read codebar''s Code of Conduct and agree with all of its terms.'
