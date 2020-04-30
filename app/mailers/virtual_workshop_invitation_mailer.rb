@@ -14,6 +14,8 @@ class VirtualWorkshopInvitationMailer < ActionMailer::Base
                                                  chapter: @workshop.chapter.name,
                                                  date: humanize_date(@workshop.date_and_time))}"
 
+    attachments['codebar.ics'] = { mime_type: 'text/calendar',
+                                   content: WorkshopCalendar.new(workshop, invitation_url(invitation)).calendar.to_ical }
     mail(mail_args(member, subject, @workshop.chapter.email), &:html)
   end
 
