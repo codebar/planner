@@ -28,7 +28,8 @@ RSpec.describe 'rake feedback:request', type: :task do
 
       yesterdays_workshops = [Fabricate(:workshop, date_and_time: 1.hour.ago),
                               Fabricate(:workshop, date_and_time: 20.hours.ago),
-                              Fabricate(:workshop, date_and_time: (23.hours + 59.minutes).ago)]
+                              Fabricate(:workshop, date_and_time: (23.hours + 59.minutes).ago),
+                              Fabricate(:virtual_workshop, date_and_time: 23.hours.ago)]
 
       past_workshops.each { |w| Fabricate(:attending_workshop_invitation, member: student, workshop: w) }
       yesterdays_workshops.each { |w| Fabricate(:attending_workshop_invitation, member: student, workshop: w) }
