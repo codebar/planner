@@ -7,6 +7,10 @@ class WorkshopCalendar
     @workshop.virtual? ? setup_virtual_event : setup_event
   end
 
+  def ical
+    calendar.to_ical
+  end
+
   def calendar
     @calendar ||= Icalendar::Calendar.new
   end
@@ -15,9 +19,8 @@ class WorkshopCalendar
 
   def setup_event
     calendar.event do |e|
-      configure(e)
+      configure(e, host_name: workshop.host.name)
 
-      e.summary = I18n.t('workshop.calendar.summary', host_name: workshop.host.name)
       e.location = address(workshop)
       e.description = I18n.t('workshop.calendar.description', invitation_link: invitation_url)
     end
@@ -25,9 +28,8 @@ class WorkshopCalendar
 
   def setup_virtual_event
     calendar.event do |e|
-      configure(e)
+      configure(e, host_name: 'Slack')
 
-      e.summary = I18n.t('workshop.calendar.summary', host_name: 'Slack')
       e.location = I18n.t('workshop.virtual.calendar.location')
       e.description = I18n.t('workshop.virtual.calendar.description',
                              slack_channel: workshop.slack_channel,
@@ -37,16 +39,22 @@ class WorkshopCalendar
     end
   end
 
-  def configure(event)
+  def configure(event, host_name:)
+    start_and_end_time(event)
+
     event.url = invitation_url
     event.organizer = workshop.chapter.email.to_s
-    event.dtstart = Time.zone.parse(start_datetime(workshop))
-    event.dtend =  Time.zone.parse(end_datetime(workshop))
+    event.summary = I18n.t('workshop.calendar.summary', host_name: host_name)
     event.ip_class = 'PRIVATE'
   end
 
   def address(workshop)
     AddressPresenter.new(workshop.host.address).to_s
+  end
+
+  def start_and_end_time(event)
+    event.dtstart = Time.zone.parse(start_datetime(workshop))
+    event.dtend = Time.zone.parse(end_datetime(workshop))
   end
 
   def start_datetime(workshop)
