@@ -122,8 +122,9 @@ en:
           line_1_html: 'Sign up to the codebar Slack %{slack_link}'
           line_2_html: 'Join %{channel}'
           line_3_html: 'Accept the invitation and join our %{discord} server'
-          line_4: 'Check in with the organisers in the Slack channel'
-          line_5: 'Follow the instructions posted in the channel'
+          line_4_html: 'Install the discord Desktop app: %{discord_app}'
+          line_5: 'Check in with the organisers in the Slack channel'
+          line_6: 'Follow the instructions posted'
     invitation:
       title: Workshop invitation - %{date}
       info: Information about the workshop

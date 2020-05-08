@@ -14,7 +14,9 @@ RSpec.describe VirtualWorkshopInvitationMailer, type: :mailer do
 
     expect(email.subject).to eq(email_subject)
     expect(email.body.encoded).to match(workshop.chapter.email)
-    expect(email.body.encoded).to match('How to join the virtual workshop')
+    expect(email.body.encoded).to match('How to join')
+    expect(email.body.encoded).to match('Sign up to the codebar Slack')
+    expect(email.body.encoded).to match('Accept the invitation')
   end
 
   it '#attending_reminder' do
