@@ -16,6 +16,15 @@ RSpec.shared_examples 'invitation route' do
       expect(page).to have_link 'I can no longer attend'
       expect(page).to have_content("Thanks for getting back to us #{invitation.member.name}.")
       expect(page.current_path).to eq(invitation_route)
+
+      # admin view
+      login_as_admin(member)
+      visit admin_workshop_path(invitation.workshop)
+      within 'tr.row.attendee' do
+        expect(page).to have_content(member.full_name)
+        expect(page).to have_selector('i.fa-history')
+        expect(page).to_not have_selector('i.fa-magic')
+      end
     end
 
     scenario 'they can RSVP directly through the invitation' do
@@ -59,6 +68,21 @@ RSpec.shared_examples 'invitation route' do
 
       click_on 'I can no longer attend'
       expect(page).to have_content(I18n.t('messages.rejected_invitation', name: invitation.member.name))
+    end
+
+    scenario 'when they are successful and there is someone else on the waiting list' do
+      waitinglisted = Fabricate(:workshop_invitation, workshop: invitation.workshop, role: invitation.role)
+      WaitingList.add(waitinglisted)
+      invitation.update_attribute(:attending, true)
+      visit invitation_route
+      expect(WaitingList.next_spot(invitation.workshop, invitation.role).present?).to eq(true)
+
+      click_on 'I can no longer attend'
+
+      expect(page).to have_content(I18n.t('messages.rejected_invitation', name: invitation.member.name))
+      expect(waitinglisted.reload.automated_rsvp).to eq(true)
+      expect(waitinglisted.reload.rsvp_time).to_not be_nil
+      expect(WaitingList.next_spot(invitation.workshop, invitation.role).present?).to eq(false)
     end
 
     scenario 'when they are successful by accessing the link directly' do

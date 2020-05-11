@@ -51,8 +51,7 @@ module InvitationControllerConcerns
           if next_spot.present?
             invitation = next_spot.invitation
             next_spot.destroy
-            invitation.update_attribute(:attending, true)
-
+            invitation.update(attending: true, rsvp_time: Time.zone.now, automated_rsvp: true)
             @workshop.send_attending_email(@invitation, true)
           end
 
