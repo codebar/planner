@@ -37,6 +37,8 @@ RSpec.feature 'managing workshop attendances', type: :feature do
       find('.waiting_list').click
 
       expect(page).to have_content('2 are attending as students')
+      expect(page).to have_content(I18n.l(other_invitation.reload.rsvp_time))
+      expect(page).to have_selector('i.fa-magic')
     end
 
     scenario 'can rsvp an invited student to the workshop', js: true do
