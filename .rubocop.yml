@@ -7,11 +7,18 @@ AllCops:
     - config/**/*
     - bin/**/*
 
+require:
+  - rubocop-rails
+
 Layout/LineLength:
   Max: 120
 
 Layout/EndOfLine:
   EnforcedStyle: lf
+
+Naming/MethodParameterName:
+  Exclude:
+    - app/helpers/email_header_helper.rb
 
 Style/Documentation:
   Enabled: false
@@ -22,9 +29,5 @@ Style/FrozenStringLiteralComment:
 Style/ClassAndModuleChildren:
   Enabled: false
 
-Rails:
-  Enabled: true
-
 Rails/Date:
   Enabled: true
-
