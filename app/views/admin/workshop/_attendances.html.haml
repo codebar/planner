@@ -27,7 +27,9 @@
               - else
                 = invitation.member.full_name
           %td.small-6.columns
-            %small=invitation.note
+            -if invitation.note?
+              %small=invitation.note
+              %br
             - if invitation.rsvp_time.present?
               %span.has-tip{ 'data-tooltip': '', 'aria-haspopup': 'true',  title: 'Time of RSVP' }
                 %small
