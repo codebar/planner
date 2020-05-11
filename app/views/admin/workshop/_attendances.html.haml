@@ -31,5 +31,15 @@
             - if invitation.rsvp_time.present?
               %span.has-tip{ 'data-tooltip': '', 'aria-haspopup': 'true',  title: 'Time of RSVP' }
                 %small
-                  %i.fa.fa-clock-o
+                  %i.fa.fa-history
                   =l(invitation.rsvp_time)
+              - if invitation.automated_rsvp?
+                %span.has-tip{ 'data-tooltip': '', 'aria-haspopup': 'true',  title: 'Waiting list or admin addition' }
+                  %small
+                    %i.fa.fa-magic
+              %br
+            - if invitation.reminded_at.present?
+              %span.has-tip{ 'data-tooltip': '', 'aria-haspopup': 'true',  title: 'Reminder emailed at' }
+                %small
+                  %i.fa.fa-clock-o
+                  =l(invitation.reminded_at)

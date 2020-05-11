@@ -14,6 +14,7 @@ class Admin::InvitationsController < Admin::ApplicationController
         @invitation.update_attribute(:attending, true)
         @workshop.send_attending_email(@invitation) if @workshop.future?
 
+        @invitation.update(rsvp_time: Time.zone.now, automated_rsvp: true)
         message = "You have added #{@invitation.member.full_name} to the workshop as a #{@invitation.role}."
       else
         @invitation.update_attribute(:attending, false)

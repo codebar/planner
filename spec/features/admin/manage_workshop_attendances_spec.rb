@@ -46,15 +46,17 @@ RSpec.feature 'managing workshop attendances', type: :feature do
 
       visit admin_workshop_path(workshop)
       expect(page).to have_content('1 are attending as students')
+      expect(page).to_not have_selector('i.fa-magic')
 
       # Unclear why this has to be done twice, when tested manually it works
       # the first time.
-      find('span', text: 'Select a member to RSVP').click
-      find('span', text: 'Select a member to RSVP').click
-
+      2.times { find('span', text: 'Select a member to RSVP').click }
       find("li", text: "#{other_invitation.member.full_name} (#{other_invitation.role})").click
 
       expect(page).to have_content('2 are attending as students')
+
+      expect(page).to have_content(I18n.l(other_invitation.reload.rsvp_time))
+      expect(page).to have_selector('i.fa-magic')
     end
   end
 end
