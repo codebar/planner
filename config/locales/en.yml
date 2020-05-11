@@ -93,8 +93,27 @@ en:
           subject: "Reminder: you're on the codebar waiting list (%{date_time})"
   workshop:
     title: Workshop at %{host} - %{date}
+    calendar:
+      summary: codebar @ %{host_name}
+      description:  "Declining or removing this event from your calendar does not update your invitation. If you are unable to attend please follow the link found on this calendar entry and update your attendance status. Missing codebar events repeatedly will result in a ban.\n
+
+                     Invitation link: %{invitation_link}"
     virtual:
       title: Virtual workshop for %{chapter} - %{date}
+      calendar:
+        location: codebar Slack (https://slack.codebar.io)
+        description: "How to join\n
+                      ---------------\n
+                      1. Join the workshop's Slack channel: #%{slack_channel} (%{slack_channel_link})\n
+                      Not in codebar's Slack? Request an invitation: https://slack.codebar.io\n
+                      \n
+                      2. Accept the invitation to our discord %{discord_invitation} - this software will enable you to collaborate with a student/coach by screen sharing.\n
+                      \n
+                      Requirements\n
+                      ---------------\n
+                      Download the discord Desktop app: https://discord.com/download\n
+                      \n
+                      ---------------\n"
       invitation:
         shared_intro_3_html: 'PS: If you have any questions about the workshop or will not be able to attend on short notice please send us an email at %{email_link} as that will make pairing everyone up easier for us.'
         info:
