@@ -16,6 +16,15 @@ RSpec.shared_examples 'invitation route' do
       expect(page).to have_link 'I can no longer attend'
       expect(page).to have_content("Thanks for getting back to us #{invitation.member.name}.")
       expect(page.current_path).to eq(invitation_route)
+
+      # admin view
+      login_as_admin(member)
+      visit admin_workshop_path(invitation.workshop)
+      within 'tr.row.attendee' do
+        expect(page).to have_content(member.full_name)
+        expect(page).to have_selector('i.fa-history')
+        expect(page).to_not have_selector('i.fa-magic')
+      end
     end
 
     scenario 'they can RSVP directly through the invitation' do
