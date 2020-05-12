@@ -95,15 +95,28 @@ RSpec.describe Member, type: :model  do
       expect(Member.attending_meeting(invitation.meeting).first).to eq(invitation.member)
     end
 
-    it '#in_group' do
-      chapter = Fabricate(:chapter)
-      students = Fabricate(:students, chapter: chapter)
-      coaches = Fabricate(:coaches, chapter: chapter)
-      Fabricate(:coaches)
-      Fabricate(:students)
+    context '#in_group' do
+      it 'includes members in group' do
+        chapter = Fabricate(:chapter)
+        group = Fabricate(:group, chapter: chapter, members: [Fabricate(:member)])
 
-      expect(Member.in_group(chapter.groups.students)).to eq(students.members)
-      expect(Member.in_group(chapter.groups.coaches)).to eq(coaches.members)
+        expect(Member.in_group(chapter.groups)).to eq(group.members)
+      end
+
+      it 'excludes members outside group' do
+        chapter = Fabricate(:chapter)
+        other_chapter = Fabricate(:chapter)
+        group = Fabricate(:group, chapter: other_chapter, members: [Fabricate(:member)])
+
+        expect(Member.in_group(chapter.groups)).to_not eq(group.members)
+      end
+
+      it 'excludes banned members in group' do
+        chapter = Fabricate(:chapter)
+        group = Fabricate(:group, chapter: chapter, members: [Fabricate(:banned_member)])
+
+        expect(Member.in_group(chapter.groups)).not_to eq(group.members)
+      end
     end
   end
 end
