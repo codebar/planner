@@ -89,10 +89,18 @@ RSpec.describe Member, type: :model  do
   end
 
   context 'scopes' do
-    it '#attending_meeting' do
-      invitation = Fabricate(:attending_meeting_invitation)
+    context '#attending_meeting' do
+      it 'includes attending members' do
+        invitation = Fabricate(:attending_meeting_invitation)
 
-      expect(Member.attending_meeting(invitation.meeting).first).to eq(invitation.member)
+        expect(Member.attending_meeting(invitation.meeting)).to include(invitation.member)
+      end
+
+      it 'excludes banned attending members' do
+        invitation = Fabricate(:banned_attending_meeting_invitation)
+
+        expect(Member.attending_meeting(invitation.meeting)).to_not include(invitation.member)
+      end
     end
 
     context '#in_group' do
