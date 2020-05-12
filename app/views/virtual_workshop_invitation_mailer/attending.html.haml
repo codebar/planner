@@ -23,19 +23,7 @@
                   %p
                     If you can no longer make it, please cancel your invitation <strong>before 15:00</strong> on the day of the workshop.
                     <a href='https://codebar.io/student-guide#attendance'>We have a three-strikes attendance policy for no-shows</a> but due to high demand for student spots you might receive a notification if you miss any Virtual workshops.
-                %h4= I18n.t('workshop.virtual.invitation.info.title')
-                #join-info
-                  %ul
-                    %li= I18n.t('workshop.virtual.invitation.info.line_1_html', slack_link: link_to(t('social_media_links.slack_html'), t('social_media_links.slack_html'))).html_safe
-                    %li= I18n.t('workshop.virtual.invitation.info.line_2_html', channel: "<a href='#{@workshop.slack_channel_link}'>##{@workshop.slack_channel}</a>").html_safe
-                    %li= I18n.t('workshop.virtual.invitation.info.line_3_html', discord: link_to('discord', I18n.t('social_media_links.discord_invitation'))).html_safe
-                    %li= I18n.t('workshop.virtual.invitation.info.line_4_html', discord_app: link_to('https://discord.com/download', 'https://discord.com/download')).html_safe
-                  %br
-
-                %h5= I18n.t('workshop.virtual.invitation.info.begins_title')
-                %ul
-                  %li= I18n.t('workshop.virtual.invitation.info.line_5')
-                  %li= I18n.t('workshop.virtual.invitation.info.line_6')
+                = render partial: 'how_to_join_info'
 
         .content
           %table{ bgcolor: '#FFFFFF' }
