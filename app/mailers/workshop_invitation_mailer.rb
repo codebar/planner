@@ -8,7 +8,6 @@ class WorkshopInvitationMailer < ActionMailer::Base
 
   def attending(workshop, member, invitation, waiting_list = false)
     @workshop = WorkshopPresenter.new(workshop)
-    @host_address = AddressPresenter.new(@workshop.host.address)
     @member = member
     @invitation = invitation
     @waiting_list = waiting_list
@@ -66,8 +65,7 @@ class WorkshopInvitationMailer < ActionMailer::Base
   end
 
   def notify_waiting_list(invitation)
-    @workshop = invitation.workshop
-    @host_address = AddressPresenter.new(@workshop.host.address)
+    @workshop = WorkshopPresenter.new(invitation.workshop)
     @member = invitation.member
     @invitation = invitation
 
@@ -86,7 +84,6 @@ class WorkshopInvitationMailer < ActionMailer::Base
 
   def reminder_setup(workshop, member, invitation, subject)
     @workshop = WorkshopPresenter.new(workshop)
-    @host_address = AddressPresenter.new(@workshop.host.address)
     @member = member
     @invitation = invitation
 
