@@ -130,21 +130,4 @@ RSpec.describe InvitationManager, type: :model  do
       invitations.each { |invitation| expect(invitation.reload.reminded_at).to_not be_nil }
     end
   end
-
-  describe '#send_change_of_details' do
-    it 'emails all attending members about workshop details changes' do
-      workshop = Fabricate(:workshop)
-      sponsor = Fabricate(:sponsor)
-      title = 'The workshop venue has changed'
-      invitations = Fabricate.times(4, :attending_workshop_invitation, workshop: workshop)
-
-      invitations.each do |invitation|
-        expect(WorkshopInvitationMailer).to receive(:change_of_details)
-          .with(workshop, sponsor, invitation.member, invitation, title)
-          .and_call_original
-      end
-
-      manager.send_change_of_details(workshop, sponsor, title)
-    end
-  end
 end

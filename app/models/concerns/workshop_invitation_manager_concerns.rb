@@ -6,13 +6,6 @@ module WorkshopInvitationManagerConcerns
   end
 
   module InstanceMethods
-    def send_change_of_details(workshop, sponsor, title = 'Change of details')
-      workshop.invitations.accepted.map do |invitation|
-        WorkshopInvitationMailer.change_of_details(workshop, sponsor, invitation.member, invitation, title).deliver_now
-      end
-    end
-    handle_asynchronously :send_change_of_details
-
     def send_workshop_attendance_reminders(workshop)
       workshop_mailer = workshop.virtual? ? VirtualWorkshopInvitationMailer : WorkshopInvitationMailer
       workshop.attendances.not_reminded.each do |invitation|

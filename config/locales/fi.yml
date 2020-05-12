@@ -71,8 +71,6 @@ fi:
         subject: "Attendance Confirmation for %{date_time}"
       attending_reminder:
         subject: "Workshop Reminder %{date_time}"
-      change_of_details:
-        subject: "%{title}: %{workshop_title} by codebar - %{date_time}"
       invite_coach:
         subject: "Workshop Coach Invitation %{date_time}"
       invite_student:

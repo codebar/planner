@@ -27,21 +27,6 @@ class WorkshopInvitationMailer < ActionMailer::Base
     reminder_setup(workshop, member, invitation, subject)
   end
 
-  def change_of_details(workshop, sponsor, member, invitation, title = 'Change of details')
-    @workshop = workshop
-    @sponsor = sponsor
-    @host_address = AddressPresenter.new(@workshop.host.address)
-    @member = member
-    @invitation = invitation
-
-    subject = t('mailer.workshop_invitation.change_of_details.subject',
-                title: title,
-                workshop_title: @workshop.title,
-                date_time: humanize_date(@workshop.date_and_time, with_time: true))
-
-    mail(mail_args(member, subject, @workshop.chapter.email), &:html)
-  end
-
   def invite_coach(workshop, member, invitation)
     @workshop = workshop
     @member = member
