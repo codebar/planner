@@ -1,11 +1,16 @@
 .stripe.reverse
   .row
     .large-12.columns
-      %h2= @event.name
-      %h3
-        %small #{l(@event.date_and_time)} to #{l(@event.ends_at, format: :time) }
-      %p.lead= @event.description.html_safe
+      %h2
+        = @event.name
+        %br
+        %small #{humanize_date(@event.date_and_time, @event.ends_at, with_time: true)}
 
+  %section#banner
+    .row
+      .medium-12.columns
+        %p.lead
+          = @event.description.html_safe
   .row
     .large-10.columns
       = render partial: 'event_actions'

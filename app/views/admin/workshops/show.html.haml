@@ -40,7 +40,7 @@
           = link_to [:admin, @workshop.chapter] do
             %small=@workshop.chapter.name
         %h3
-          %small #{l(@workshop.date_and_time, format: :dashboard)} #{@workshop.start_and_end_time}
+          %small #{humanize_date(@workshop.date_and_time, @workshop.ends_at, with_time: true)}
         - if @workshop.rsvp_opens_at
           RSVPs will open at
           = @workshop.rsvp_opens_at.strftime('%H:%M on %d/%m/%Y.')

@@ -31,7 +31,7 @@
       .medium-12.columns
         %h2= @event.to_s
         %h3
-          %small #{l(@event.date_and_time)} to #{l(@event.ends_at, format: :time) }
+          %small #{humanize_date(@event.date_and_time, @event.ends_at, with_time: true)}
 
     .row
       - if @event.venue.present?

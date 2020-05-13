@@ -19,7 +19,7 @@
         %h2
           =@meeting.name
         %h3
-          %small #{l(@meeting.date_and_time)}
+          %small #{humanize_date(@meeting.date_and_time, nil, with_time: true)}
 
     .row
       .medium-2.columns
