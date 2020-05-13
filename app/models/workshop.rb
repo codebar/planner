@@ -110,6 +110,12 @@ class Workshop < ActiveRecord::Base
     super.in_time_zone(time_zone)
   end
 
+  def ends_at
+    return nil unless super
+
+    super.in_time_zone(time_zone)
+  end
+
   private
 
   def set_opens_at
