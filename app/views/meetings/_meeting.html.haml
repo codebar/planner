@@ -7,12 +7,14 @@
           at
           = link_to meeting.venue.name, meeting.venue.website
     .event__details
-      .time
-        Time:
-        = meeting.time
-      .date 
-        Date: 
+      .date
+        %i.material-icons
+          calendar_today
         = meeting.date
+      .time
+        %i.material-icons
+          access_time
+        = meeting.time
       - if meeting.organisers.any?
         .event__organisers
           .event__organisers-list

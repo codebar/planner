@@ -7,14 +7,15 @@
           at
           = link_to event.venue.name, event.venue.website
     .event__details
+      .date
+        %i.material-icons
+          calendar_today
+        = event.date
       .time
         %i.material-icons
           access_time
         = event.time
-      .date 
-        %i.material-icons
-          calendar_today
-        = event.date
+
       - if event.organisers.any?
         .event__organisers
           .event__organisers-list
