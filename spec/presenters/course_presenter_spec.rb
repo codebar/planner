@@ -19,4 +19,10 @@ RSpec.describe CoursePresenter do
   it '#admin_path' do
     expect(event.admin_path).to eq('#')
   end
+
+  it '#time' do
+    expect(course).to receive(:date_and_time).and_return(Time.zone.now)
+
+    event.time
+  end
 end

@@ -45,20 +45,6 @@ class WorkshopPresenter < EventPresenter
           .pluck(:email).join(', ')
   end
 
-  def time
-    I18n.l(model.time, format: :time)
-  end
-
-  def end_time
-    I18n.l(model.ends_at, format: :time)
-  end
-
-  def start_and_end_time
-    start_and_end_time = time
-    start_and_end_time << " - #{end_time}" if model.ends_at.present?
-    start_and_end_time
-  end
-
   def path
     Rails.application.routes.url_helpers.workshop_path(model)
   end
