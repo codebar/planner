@@ -17,6 +17,15 @@ RSpec.shared_examples 'Invitable' do |invitation_type, invitable_type|
 
       expect(invitable.reload.attendances).to_not include(invitation)
     end
+
+    it 'rejects banned accepted' do
+      invitation = Fabricate(invitation_type,
+                             member: Fabricate(:banned_member),
+                             invitable_type => invitable,
+                             attending: true)
+
+      expect(invitable.reload.attendances).to_not include(invitation)
+    end
   end
 
   context '#attending_students' do
@@ -37,6 +46,17 @@ RSpec.shared_examples 'Invitable' do |invitation_type, invitable_type|
 
       expect(invitable.reload.attending_students).to_not include(invitation_to_student)
     end
+
+    it 'rejects banned attending students' do
+      invitation_to_banned_student = Fabricate(invitation_type,
+                                        member: Fabricate(:banned_member),
+                                        role: 'Student',
+                                        invitable_type => invitable,
+                                        attending: true)
+
+                                        # byebug
+      expect(invitable.reload.attending_students).to_not include(invitation_to_banned_student)
+    end
   end
 
   context '#attending_coaches' do
@@ -56,6 +76,16 @@ RSpec.shared_examples 'Invitable' do |invitation_type, invitable_type|
                                       attending: false)
 
       expect(invitable.reload.attending_coaches).to_not include(invitation_to_coach)
+    end
+
+    it 'rejects banned attending coaches' do
+      invitation_to_banned_student = Fabricate(invitation_type,
+                                        member: Fabricate(:banned_member),
+                                        role: 'Student',
+                                        invitable_type => invitable,
+                                        attending: true)
+
+      expect(invitable.reload.attending_students).to_not include(invitation_to_banned_student)
     end
   end
 end
