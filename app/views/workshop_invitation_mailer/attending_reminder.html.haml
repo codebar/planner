@@ -32,7 +32,7 @@
 
         .content
           %table
-            = render partial: 'shared_mailers/venue', locals: { host: @workshop.host, address: @host_address }
+            = render partial: 'shared_mailers/venue', locals: { host: @workshop.host, address: @workshop.address }
             %tr
               %td
                 %p

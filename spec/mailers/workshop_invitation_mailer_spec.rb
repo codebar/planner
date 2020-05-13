@@ -25,17 +25,6 @@ RSpec.describe WorkshopInvitationMailer, type: :mailer do
     expect(email.body.encoded).to match(workshop.chapter.email)
   end
 
-  it '#change_of_details' do
-    title = 'Change of details'
-    email_subject = "#{title}: #{workshop.title} by codebar - " \
-                    "#{humanize_date(workshop.date_and_time, with_time: true)}"
-
-    WorkshopInvitationMailer.change_of_details(workshop, sponsor, member, invitation).deliver_now
-
-    expect(email.subject).to eq(email_subject)
-    expect(email.from).to eq([workshop.chapter.email])
-  end
-
   it '#invite_coach' do
     email_subject = "Workshop Coach Invitation #{humanize_date(workshop.date_and_time, with_time: true)}"
 

@@ -18,8 +18,8 @@
                 %p
                   If you can no longer make it, please cancel your invitation <strong>before 15:00</strong> on the day of the event.
                   <a href='https://codebar.io/student-guide#attendance'>We have a three-strikes attendance policy for no-shows.</a>
-                %p
-                  = link_to 'How to join the virtual workshop', full_url_for(invitation_url(@invitation, anchor: 'info')), class: 'btn soc-btn'
+
+                = render partial: 'how_to_join_info'
 
         .content
           %table{ bgcolor: '#FFFFFF' }

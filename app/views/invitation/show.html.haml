@@ -84,11 +84,12 @@
             %li= t('workshop.virtual.invitation.info.line_1_html', slack_link: link_to(t('social_media_links.slack_html')))
             %li= t('workshop.virtual.invitation.info.line_2_html', channel: link_to("##{@workshop.slack_channel}", @workshop.slack_channel_link))
             %li= t('workshop.virtual.invitation.info.line_3_html', discord: link_to("discord", t('social_media_links.discord_invitation')))
+            %li= t('workshop.virtual.invitation.info.line_4_html', discord_app: link_to('https://discord.com/download', 'https://discord.com/download'))
 
           %h5= t('workshop.virtual.invitation.info.begins_title')
           %ol
-            %li= t('workshop.virtual.invitation.info.line_4')
             %li= t('workshop.virtual.invitation.info.line_5')
+            %li= t('workshop.virtual.invitation.info.line_6')
 
   - unless @workshop.virtual?
     .row
