@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 RSpec.describe Meeting, type: :model  do
+  include_examples "Invitable", :meeting_invitation, :meeting
+
   context 'validations' do
     subject { Meeting.new }
 
