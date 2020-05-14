@@ -34,8 +34,8 @@ module WorkshopInvitationManagerConcerns
     def send_waiting_list_emails(workshop)
       workshop = WorkshopPresenter.decorate(workshop)
 
-      retrieve_and_notify_waitlisted(role: 'Coach') if workshop.coach_spaces?
-      retrieve_and_notify_waitlisted(role: 'Student') if workshop.student_spaces?
+      retrieve_and_notify_waitlisted(workshop, role: 'Coach') if workshop.coach_spaces?
+      retrieve_and_notify_waitlisted(workshop, role: 'Student') if workshop.student_spaces?
     end
     handle_asynchronously :send_waiting_list_emails
 
@@ -83,7 +83,7 @@ module WorkshopInvitationManagerConcerns
       end
     end
 
-    def retrieve_and_notify_waitlisted(role:)
+    def retrieve_and_notify_waitlisted(workshop, role:)
       WaitingList.by_workshop(workshop).where_role(role).each do |waiting_list|
         WorkshopInvitationMailer.notify_waiting_list(waiting_list.invitation).deliver_now
         waiting_list.destroy
