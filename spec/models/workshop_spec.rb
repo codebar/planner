@@ -2,6 +2,7 @@ require 'spec_helper'
 
 RSpec.describe Workshop, type: :model  do
   subject(:workshop) { Fabricate(:workshop) }
+  include_examples "Invitable", :workshop_invitation, :workshop
 
   context 'time zone fields' do
     let(:workshop) { Fabricate.build(:workshop, chapter: Fabricate(:chapter, time_zone: 'Pacific Time (US & Canada)')) }
@@ -99,26 +100,6 @@ RSpec.describe Workshop, type: :model  do
     end
 
     context 'attendances' do
-      let(:sponsor) { Fabricate(:sponsor) }
-
-      before do
-        Fabricate(:workshop_sponsor, sponsor: sponsor, workshop: workshop, host: true)
-      end
-
-      it '#attending_students' do
-        3.times { Fabricate(:workshop_invitation, workshop: workshop, attending: true) }
-        1.times { Fabricate(:workshop_invitation, workshop: workshop, attending: false) }
-
-        expect(workshop.reload.attending_students.length).to eq(3)
-      end
-
-      it '#attending_members' do
-        2.times { Fabricate(:coach_workshop_invitation, workshop: workshop, attending: true) }
-        1.times { Fabricate(:coach_workshop_invitation, workshop: workshop, attending: false) }
-
-        expect(workshop.reload.attending_coaches.length).to eq(2)
-      end
-
       it '#attendee? for students' do
         attendee_invites = 4.times.collect { Fabricate(:workshop_invitation, workshop: workshop, attending: true) }
         nonattendee_invites = 2.times.collect { Fabricate(:workshop_invitation, workshop: workshop, attending: false) }

@@ -2,6 +2,7 @@ require 'spec_helper'
 
 RSpec.describe Event, type: :model  do
   subject(:event) { Fabricate(:event) }
+  include_examples "Invitable", :invitation, :event
 
   it { should be_valid }
 

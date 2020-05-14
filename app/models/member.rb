@@ -28,7 +28,8 @@ class Member < ActiveRecord::Base
                          .where('bans.id is NULL or bans.expires_at < CURRENT_DATE')
                      }
   scope :attending_meeting, lambda { |meeting|
-                              joins(:meeting_invitations)
+                              not_banned
+                                .joins(:meeting_invitations)
                                 .where('meeting_invitations.meeting_id = ? and meeting_invitations.attending = ?',
                                        meeting.id, true)
                             }
@@ -55,7 +56,7 @@ class Member < ActiveRecord::Base
   end
 
   def full_name
-    pronoun = self.pronouns.present? ? "(#{self.pronouns})" : nil
+    pronoun = pronouns.present? ? "(#{pronouns})" : nil
     [name, surname, pronoun].compact.join ' '
   end
 
@@ -80,12 +81,12 @@ class Member < ActiveRecord::Base
 
   def send_eligibility_email(user)
     MemberMailer.eligibility_check(self, user.email).deliver_now
-    self.eligibility_inquiries.create(sent_by_id: user.id)
+    eligibility_inquiries.create(sent_by_id: user.id)
   end
 
   def send_attendance_email(user)
     MemberMailer.attendance_warning(self, user.email).deliver_now
-    self.attendance_warnings.create(sent_by_id: user.id)
+    attendance_warnings.create(sent_by_id: user.id)
   end
 
   def avatar(size = 100)
