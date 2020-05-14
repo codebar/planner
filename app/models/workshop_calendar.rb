@@ -1,9 +1,15 @@
+require 'icalendar/tzinfo'
 class WorkshopCalendar
   attr_reader :workshop, :invitation_url
 
   def initialize(workshop, invitation_url)
     @workshop = workshop
     @invitation_url = invitation_url
+    setup
+  end
+
+  def setup
+    calendar.add_timezone(timezone)
     @workshop.virtual? ? setup_virtual_event : setup_event
   end
 
@@ -53,8 +59,8 @@ class WorkshopCalendar
   end
 
   def start_and_end_time(event)
-    event.dtstart = Time.zone.parse(start_datetime(workshop))
-    event.dtend = Time.zone.parse(end_datetime(workshop))
+    event.dtstart = Icalendar::Values::DateTime.new(Time.zone.parse(start_datetime(workshop)), 'tzid': tzinfo.name)
+    event.dtend = Icalendar::Values::DateTime.new(Time.zone.parse(end_datetime(workshop)), 'tzid': tzinfo.name)
   end
 
   def start_datetime(workshop)
@@ -67,5 +73,13 @@ class WorkshopCalendar
     date = workshop.date_and_time.strftime('%Y%m%d')
     end_time = workshop.ends_at.strftime('%H%M')
     "#{date}#{end_time}"
+  end
+
+  def timezone
+    @timezone ||= tzinfo.ical_timezone start_datetime(workshop)
+  end
+
+  def tzinfo
+    @tzinfo ||= ActiveSupport::TimeZone[workshop.time_zone].tzinfo
   end
 end
