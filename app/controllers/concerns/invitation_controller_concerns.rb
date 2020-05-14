@@ -52,7 +52,7 @@ module InvitationControllerConcerns
             invitation = next_spot.invitation
             next_spot.destroy
             invitation.update(attending: true, rsvp_time: Time.zone.now, automated_rsvp: true)
-            @workshop.send_attending_email(@invitation, true)
+            @workshop.send_attending_email(invitation, true)
           end
 
           redirect_back(fallback_location: invitation_path(@invitation),
