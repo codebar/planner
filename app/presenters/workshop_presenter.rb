@@ -96,7 +96,7 @@ class WorkshopPresenter < EventPresenter
   private
 
   def students_checklist
-    model.attending_students.order('note asc').each_with_index.map do |a, pos|
+    model.attending_students.each_with_index.map do |a, pos|
       "#{member_info(a.member, pos)}\t\t\t#{note(a)}"
     end.join("\n\n")
   end
