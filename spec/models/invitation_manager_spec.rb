@@ -130,4 +130,48 @@ RSpec.describe InvitationManager, type: :model  do
       invitations.each { |invitation| expect(invitation.reload.reminded_at).to_not be_nil }
     end
   end
+
+  describe '#send_waiting_list_emails' do
+    it 'emails coaches when there are free coach spots' do
+      waitinglist_invitation = Fabricate(:waitinglist_invitation, workshop: workshop, role: 'Coach')
+
+      expect(WorkshopInvitationMailer).to receive(:notify_waiting_list).once
+        .with(waitinglist_invitation)
+        .and_call_original
+
+      manager.send_waiting_list_emails(workshop)
+    end
+
+    it 'does not email coaches when no coach spots are available' do
+      workshop = Fabricate(:workshop_no_coaches)
+      waitinglist_invitation = Fabricate(:waitinglist_invitation, workshop: workshop, role: 'Coach')
+
+      expect(WorkshopInvitationMailer).not_to receive(:notify_waiting_list)
+        .with(waitinglist_invitation)
+        .and_call_original
+
+      manager.send_waiting_list_emails(workshop)
+    end
+
+    it 'emails students when there are free student spots' do
+      waitinglist_invitation = Fabricate(:waitinglist_invitation, workshop: workshop, role: 'Student')
+
+      expect(WorkshopInvitationMailer).to receive(:notify_waiting_list).once
+        .with(waitinglist_invitation)
+        .and_call_original
+
+      manager.send_waiting_list_emails(workshop)
+    end
+
+    it 'does not email students when no student spots are available' do
+      workshop = Fabricate(:workshop_no_spots)
+      waitinglist_invitation = Fabricate(:waitinglist_invitation, workshop: workshop, role: 'Student')
+
+      expect(WorkshopInvitationMailer).not_to receive(:notify_waiting_list)
+        .with(waitinglist_invitation)
+        .and_call_original
+
+      manager.send_waiting_list_emails(workshop)
+    end
+  end
 end

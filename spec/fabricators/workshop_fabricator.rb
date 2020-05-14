@@ -70,6 +70,16 @@ Fabricator(:workshop_no_spots, class_name: :workshop) do
   end
 end
 
+Fabricator(:workshop_no_coaches, class_name: :workshop) do
+  date_and_time Time.zone.now + 2.days
+  title Faker::Lorem.sentence
+  description Faker::Lorem.sentence
+  chapter
+  after_build do |workshop|
+    Fabricate(:workshop_sponsor, workshop: workshop, sponsor: Fabricate(:sponsor, number_of_coaches: 0), host: true)
+  end
+end
+
 Fabricator(:past_workshop, from: :workshop) do
   date_and_time 3.months.ago
   ends_at 3.months.ago + 2.hours
