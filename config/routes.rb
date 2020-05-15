@@ -160,6 +160,7 @@ Planner::Application.routes.draw do
 
       resource :invitations, only: [:update]
       resources :invitations, only: [:update]
+      resource :cancelling, module: :workshops, only: [:create]
     end
   end
 

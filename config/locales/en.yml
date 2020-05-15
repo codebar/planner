@@ -140,6 +140,7 @@ en:
     already_invited: 'You have already RSVPd or joined the waitlist for this workshop.'
     already_taken_place: 'This event has already taken place'
     error_blank_note: 'You must select a note'
+    event_cancelled: 'This event has been cancelled'
     rejected_invitation: "We are so sad you can't make it, but thanks for letting us know %{name}."
     already_rsvped: "You have already confirmed you attendance!"
     not_attending_already: "You have already confirmed you can't make it!"

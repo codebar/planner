@@ -12,5 +12,6 @@
     .large-12.columns
       = f.input :invitable
   .row
-    .large-12.columns.text-right
-      = f.submit 'Save', class: 'button'
+    .large-12.columns
+      = link_to ' Cancel workshop', admin_workshop_cancelling_path(@workshop), class: 'fa fa-exclamation-triangle alert warning small', method: 'post'
+      = f.submit 'Save', class: 'button right'

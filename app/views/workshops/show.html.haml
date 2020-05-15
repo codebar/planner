@@ -9,8 +9,11 @@
         = t('workshops.title', host: @workshop.host.name)
         %br
         %small #{humanize_date(@workshop.date_and_time, @workshop.ends_at, with_time: true)} #{@workshop.distance_of_time}
-      - if @workshop.date_and_time.past?
+      - if @workshop.cancelled?
+        %label.label.warning= t('messages.event_cancelled')
+      - elsif @workshop.date_and_time.past?
         %label.label.warning= t('messages.already_taken_place')
+
   %section#banner
     .row
       .medium-12.columns
