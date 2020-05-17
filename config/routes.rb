@@ -119,10 +119,6 @@ Planner::Application.routes.draw do
     resources :member_notes, only: [:create]
 
     resources :chapters, only: %i[index new create show edit update] do
-      member do
-        post :update_active
-      end
-
       get :members
       resources :workshops, only: [:index]
       resources :feedback, only: [:index], controller: 'chapters/feedback'

@@ -20,7 +20,7 @@ RSpec.feature 'Chapters', type: :feature do
 
     background { login_as_admin(member) }
 
-    scenario "an admin can view all chapters and it's information" do
+    scenario "an admin can view all chapters and their information" do
       visit admin_chapters_path
 
       assert_chapters_exist_on_page(active_chapters)
@@ -59,6 +59,8 @@ RSpec.feature 'Chapters', type: :feature do
         set_chapter_active_checkbox(first_active_chapter.id, false)
       end
 
+      page.accept_alert
+
       wait_for_ajax
 
       expect(first_active_chapter.reload).not_to be_active
@@ -71,6 +73,8 @@ RSpec.feature 'Chapters', type: :feature do
       within(all('.row', text: first_inactive_chapter.email)[0]) do
         set_chapter_active_checkbox(first_inactive_chapter.id, true)
       end
+
+      page.accept_alert
 
       wait_for_ajax
 

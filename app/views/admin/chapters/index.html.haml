@@ -1,13 +1,15 @@
 %section#banner
   .row
-    %h1 Chapters
-    = link_to t('.view_all_chapters'), admin_chapters_path
-    &nbsp;
-    = link_to t('.view_active_chapters'), admin_chapters_path(active: true)
-    &nbsp;
-    = link_to t('.view_inactive_chapters'), admin_chapters_path(active: false)
+    .large-12.columns
+      %h1 Chapters
+      = link_to t('.view_all_chapters'), admin_chapters_path
+      &nbsp;
+      = link_to t('.view_active_chapters'), admin_chapters_path(active: true)
+      &nbsp;
+      = link_to t('.view_inactive_chapters'), admin_chapters_path(active: false)
     .row
-      %hr
+      .large-12.columns
+        %hr
       .large-4.columns
         Name / City / Slug
       .large-4.columns
@@ -31,15 +33,28 @@
 
 - content_for :page_footer do
   :javascript
+    $('input.chapter_active').on('click', function() {
+      let active = $(this).is(':checked');
+      let message = "#{t('.change_chapter_to_inactive_confirmation')}";
+
+      if (active) {
+        message = "#{t('.change_chapter_to_active_confirmation')}";
+      }
+
+      if (!confirm(message)) {
+        return false;
+      }
+    });
+
     $('input.chapter_active').on('change', function() {
       let element = $(this);
+      let chapterId = element.data('chapter-id');
       let active = element.is(':checked');
-      let chapterId = $(this).data('chapter-id');
-      let url = '/admin/chapters/' + chapterId + '/update_active';
+      let url = '/admin/chapters/' + chapterId;
 
       $.ajax({
-        type: "POST",
+        type: "PUT",
         url: url,
-        data: { active: active }
+        data: { chapter: { active: active } }
       })
     });

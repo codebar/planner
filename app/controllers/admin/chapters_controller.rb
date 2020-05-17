@@ -43,12 +43,21 @@ class Admin::ChaptersController < Admin::ApplicationController
   def update
     authorize(@chapter)
 
-    if @chapter.update(chapter_params)
-      flash[:notice] = "Chapter #{@chapter.name} has been successfully updated"
-      redirect_to [:admin, @chapter]
-    else
-      flash[:notice] = @chapter.errors.full_messages
-      render 'edit'
+    respond_to do |format|
+      format.json do
+        @chapter.update(chapter_params)
+
+        head :ok
+      end
+      format.html do
+        if @chapter.update(chapter_params)
+          flash[:notice] = "Chapter #{@chapter.name} has been successfully updated"
+          return redirect_to [:admin, @chapter]
+        end
+
+        flash[:notice] = @chapter.errors.full_messages
+        render 'edit'
+      end
     end
   end
 
@@ -66,14 +75,6 @@ class Admin::ChaptersController < Admin::ApplicationController
     render plain: @emails
   end
 
-  def update_active
-    authorize @chapter
-
-    @chapter.update(update_active_params)
-
-    head :ok
-  end
-
   private
 
   def chapter_index_params
@@ -86,9 +87,5 @@ class Admin::ChaptersController < Admin::ApplicationController
 
   def set_chapter
     @chapter = Chapter.find(params[:id])
-  end
-
-  def update_active_params
-    params.permit(:active)
   end
 end

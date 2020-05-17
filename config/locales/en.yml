@@ -553,6 +553,8 @@ en:
       index:
         'yes': 'Yes'
         'no': 'No'
+        change_chapter_to_active_confirmation: 'Are you sure you want to make this chapter active?'
+        change_chapter_to_inactive_confirmation: 'Are you sure you want to make this chapter inactive?'
         toggle_link: 'Toggle Active Status'
         view_all_chapters: 'View All Chapters'
         view_active_chapters: 'View Active Chapters'
