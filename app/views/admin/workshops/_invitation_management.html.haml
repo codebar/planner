@@ -17,7 +17,9 @@
           .medium-6.columns
             = f.select :invitations,
                        @workshop.invitations.includes(:member).not_accepted.all.map { |u| [ "#{u.member.full_name} (#{u.role})", u.token] },
-                       { include_blank: true }, { class: 'chosen-select', required: true, data: { placeholder: 'Select a member to RSVP' } }
+                       { include_blank: true },
+                       { class: 'chosen-select', required: true,
+                       data: { placeholder: t('messages.invitations.select_a_member_to_rsvp') } }
           .large-3.columns
             %span.has-tip{ 'data-tooltip': true, 'aria-haspopup': 'true', title: t('admin.workshop.manage_rsvps.text') }
               %i.fa.fa-info
