@@ -137,6 +137,7 @@ en-GB:
         cancel: "Thanks for letting us know you can't make it."
         rsvp: "Your RSVP was successful. We look forward to seeing you at the Monthly!"
       rsvped_to_other_workshop: "You have already RSVP'd to another workshop on this date. If you would prefer to attend this workshop, please cancel your other RSVP first."
+      select_a_member_to_rsvp: "Select a member to RSVP"
       spot_confirmed: "Your spot has been confirmed for %{event}! We look forward to seeing you there."
       spot_not_confirmed: 'Your spot has not yet been confirmed. We will verify your attendance after you complete the questionnaire.'
     invalid_format: "The requested format is invalid: %{invalid_format}"
