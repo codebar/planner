@@ -14,7 +14,7 @@ class DashboardController < ApplicationController
       hash
     end
 
-    @testimonials = Testimonial.order('RANDOM() ').limit(5).includes(:member)
+    @testimonials = Testimonial.order(Arel.sql('RANDOM()')).limit(5).includes(:member)
   end
 
   def dashboard
@@ -56,7 +56,7 @@ class DashboardController < ApplicationController
     WorkshopInvitation.to_coaches
                       .attended
                       .group(:member_id)
-                      .order('COUNT(member_id) DESC')
+                      .order(Arel.sql('COUNT(member_id) DESC'))
                       .select(:member_id)
   end
 
