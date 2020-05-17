@@ -14,7 +14,7 @@
             access_time
           = @workshop.start_and_end_time
       - if @workshop.date_and_time.past?
-        %label.label.warning This event has already taken place.
+        %label.label.warning= t('messages.already_taken_place')
   %section#banner
     .row
       .medium-12.columns
