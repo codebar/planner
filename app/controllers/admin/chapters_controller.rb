@@ -79,7 +79,7 @@ class Admin::ChaptersController < Admin::ApplicationController
   private
 
   def chapter_index_params
-    @_chapter_index_params ||= params.permit(:active)
+    @chapter_index_params ||= params.permit(:active)
   end
 
   def chapter_params
