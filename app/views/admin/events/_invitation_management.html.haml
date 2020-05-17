@@ -3,7 +3,11 @@
     .large-12.columns
       = simple_form_for :invitation, url: admin_invitation_path, method: :put do |f|
         .medium-6.columns
-          = f.select :id, @event.invitations.not_accepted.all.map { |u| [ "#{u.member.full_name} (#{u.role})", u.token] }, { include_blank: true }, { class: 'chosen-select', required: true, data: { placeholder: 'Select a member to RSVP' } }
+          = f.select :id,
+                     @event.invitations.not_accepted.all.map { |u| [ "#{u.member.full_name} (#{u.role})", u.token] },
+                     { include_blank: true },
+                     { class: 'chosen-select', required: true,
+                     data: { placeholder: t('messages.invitations.select_a_member_to_rsvp') } }
           = f.input :event_id, :as => :hidden, :input_html => { :value => @event.id }
         .medium-3.columns
           = f.submit "Add"
