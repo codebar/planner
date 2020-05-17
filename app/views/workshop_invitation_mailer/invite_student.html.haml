@@ -35,7 +35,7 @@
                   Venue
                   %br
                   %small= @workshop.host.name
-                = image_tag(@workshop.host.avatar, alt: @workshop.host.name)
+                = image_tag(@workshop.host.avatar.url, alt: @workshop.host.name)
 
         .content
           = render partial: 'shared_mailers/social', locals: { workshop: @workshop }

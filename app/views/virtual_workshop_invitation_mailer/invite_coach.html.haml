@@ -40,7 +40,7 @@
                 - if @workshop.sponsors.any?
                   %h4 Sponsored by
                   - @workshop.sponsors.each do |sponsor|
-                    = image_tag(sponsor.avatar, alt: sponsor.name)
+                    = image_tag(sponsor.avatar.url, alt: sponsor.name)
                     %br
 
         .content
