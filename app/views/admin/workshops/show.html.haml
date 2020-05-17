@@ -1,4 +1,10 @@
-.icon-bar.seven-up
+.icon-bar.eight-up
+  = link_to workshop_path(@workshop), class: 'item' do
+    %i.fa.fa-eye
+    %label View
+  = link_to admin_chapter_workshops_path(@workshop.chapter), class: 'item' do
+    %i.fa.fa-address-book
+    %label Index
   = link_to edit_admin_workshop_path(@workshop), class: 'item' do
     %i.fa.fa-pencil
     %label Edit
