@@ -27,7 +27,7 @@ RSpec.feature 'Chapters', type: :feature do
       assert_chapters_exist_on_page(inactive_chapters)
     end
 
-    scenario 'an admin can filter and view only active chapters' do
+    scenario 'an admin can filter to view only active chapters' do
       visit admin_chapters_path
       click_link 'View Active Chapters'
 
@@ -35,7 +35,7 @@ RSpec.feature 'Chapters', type: :feature do
       assert_chapters_not_exist_on_page(inactive_chapters)
     end
 
-    scenario 'an admin can filter and view only inactive chapters' do
+    scenario 'an admin can filter to view only inactive chapters' do
       visit admin_chapters_path
       click_link 'View Inactive Chapters'
 
@@ -43,7 +43,7 @@ RSpec.feature 'Chapters', type: :feature do
       assert_chapters_not_exist_on_page(active_chapters)
     end
 
-    scenario 'an admin can filter and view all chapters' do
+    scenario 'an admin can filter to view all chapters' do
       visit admin_chapters_path
       click_link 'View All Chapters'
 
