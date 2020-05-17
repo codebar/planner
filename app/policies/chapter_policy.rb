@@ -3,7 +3,7 @@ class ChapterPolicy < ApplicationPolicy
     show?
   end
 
-  def toggle_active?
+  def update_active?
     is_admin_or_organiser?
   end
 

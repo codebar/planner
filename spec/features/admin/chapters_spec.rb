@@ -51,31 +51,29 @@ RSpec.feature 'Chapters', type: :feature do
       assert_chapters_exist_on_page(active_chapters)
     end
 
-    scenario 'an admin can toggle the status of the active chapter' do
+    scenario 'an admin can update the status of the active chapter', js: true do
       visit admin_chapters_path
       first_active_chapter = active_chapters.first
 
       within(all('.row', text: first_active_chapter.email)[0]) do
-        click_link 'Toggle Active Status'
+        set_chapter_active_checkbox(first_active_chapter.id, false)
       end
 
-      expect(page).to have_content(
-        "Successfully toggled active status for #{first_active_chapter.name}"
-      )
+      wait_for_ajax
+
       expect(first_active_chapter.reload).not_to be_active
     end
 
-    scenario 'an admin can toggle the status of the inactive chapter' do
+    scenario 'an admin can update the status of the inactive chapter', js: true do
       visit admin_chapters_path
       first_inactive_chapter = inactive_chapters.first
 
       within(all('.row', text: first_inactive_chapter.email)[0]) do
-        click_link 'Toggle Active Status'
+        set_chapter_active_checkbox(first_inactive_chapter.id, true)
       end
 
-      expect(page).to have_content(
-        "Successfully toggled active status for #{first_inactive_chapter.name}"
-      )
+      wait_for_ajax
+
       expect(first_inactive_chapter.reload).to be_active
     end
   end
@@ -193,7 +191,7 @@ RSpec.feature 'Chapters', type: :feature do
 
   def assert_chapters_exist_on_page(chapters)
     chapters.each do |chapter|
-      expect(page).to have_content(chapter.name)
+      expect(page).to have_link(chapter.name)
       expect(page).to have_content(chapter.city)
       expect(page).to have_content(chapter.slug)
       expect(page).to have_content(chapter.email)
@@ -203,11 +201,15 @@ RSpec.feature 'Chapters', type: :feature do
 
   def assert_chapters_not_exist_on_page(chapters)
     chapters.each do |chapter|
-      expect(page).not_to have_content(chapter.name)
+      expect(page).not_to have_link(chapter.name)
       expect(page).not_to have_content(chapter.city)
       expect(page).not_to have_content(chapter.slug)
       expect(page).not_to have_content(chapter.email)
       expect(page).not_to have_content(chapter.twitter)
     end
+  end
+
+  def set_chapter_active_checkbox(id, value)
+    find("input[data-chapter-id='#{id}']").set(value)
   end
 end

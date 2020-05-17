@@ -1,5 +1,5 @@
 class Admin::ChaptersController < Admin::ApplicationController
-  before_action :set_chapter, only: %i[show edit update toggle_active]
+  before_action :set_chapter, only: %i[show edit update update_active]
   after_action :verify_authorized
 
   def index
@@ -66,14 +66,12 @@ class Admin::ChaptersController < Admin::ApplicationController
     render plain: @emails
   end
 
-  def toggle_active
+  def update_active
     authorize @chapter
 
-    @chapter.update(active: !@chapter.active)
+    @chapter.update(update_active_params)
 
-    flash[:notice] = t('.message', name: @chapter.name)
-
-    redirect_to admin_chapters_path
+    head :ok
   end
 
   private
@@ -88,5 +86,9 @@ class Admin::ChaptersController < Admin::ApplicationController
 
   def set_chapter
     @chapter = Chapter.find(params[:id])
+  end
+
+  def update_active_params
+    params.permit(:active)
   end
 end

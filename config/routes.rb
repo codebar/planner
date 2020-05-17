@@ -120,7 +120,7 @@ Planner::Application.routes.draw do
 
     resources :chapters, only: %i[index new create show edit update] do
       member do
-        post :toggle_active
+        post :update_active
       end
 
       get :members
