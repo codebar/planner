@@ -3,7 +3,7 @@
     %i.fa.fa-pencil
     %label Edit
   - if !@workshop.date_and_time.future?
-    = link_to '#', class: 'item disabled', title: 'The event has already taken place' do
+    = link_to '#', class: 'item disabled', title: t('messages.already_taken_place') do
       %i.fa.fa-send-o
       %label Invite
   - elsif (@workshop.has_valid_host? || @workshop.virtual?) and @workshop.invitable?

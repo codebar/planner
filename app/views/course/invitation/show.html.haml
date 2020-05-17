@@ -33,7 +33,7 @@
     .large-4.columns
       .panel
         - if @course.date_and_time < Time.zone.now
-          %em This workshop has already taken place!
+          %em= t('messages.already_taken_place')
         - else
           = link_to "Get your ticket", @invitation.course.ticket_url, class: "expand button round center"
       - if !@next_workshop.nil? or !@meeting.nil?

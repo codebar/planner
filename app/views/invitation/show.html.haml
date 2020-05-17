@@ -8,7 +8,7 @@
         %br
         %small #{humanize_date(@workshop.date_and_time, with_time: true)} #{@workshop.distance_of_time}
       - if @workshop.date_and_time.past?
-        %label.label.warning= t('workshops.already_taken_place')
+        %label.label.warning= t('messages.already_taken_place')
 .alert-box.info
   .row
     .large-12.columns

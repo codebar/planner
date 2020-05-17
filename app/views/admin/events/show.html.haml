@@ -4,7 +4,7 @@
     %label Edit
 
   - if !@event.date_and_time.future?
-    = link_to '#', class: 'item disabled', title: 'The event has already taken place' do
+    = link_to '#', class: 'item disabled', title: t('messages.already_taken_place') do
       %i.fa.fa-send-o
       %label Invite
   - elsif @event.venue and @event.invitable?
