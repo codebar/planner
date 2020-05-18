@@ -1,6 +1,6 @@
 Fabricator(:workshop) do
   date_and_time Time.zone.now + 2.days
-  ends_at Time.zone.now + 2.days + 2.hours
+  # ends_at Time.zone.now + 2.days + 2.hours
   title Faker::Lorem.sentence
   description Faker::Lorem.sentence
   chapter
