@@ -63,7 +63,6 @@ group :development, :test do
   gem 'pry-byebug'
   gem 'pry-remote'
   gem 'rspec-collection_matchers'
-  gem 'rspec-its'
   gem 'rspec-rails'
   gem 'rubocop', '~> 0.80.1', require: false
   gem 'rubocop-rails', require: false
