@@ -83,7 +83,7 @@ RSpec.describe Sponsor, type: :model  do
       members = Fabricate.times(2, :member)
       members.each { |m| Fabricate(:member_contact, sponsor: sponsor, contact: m) }
 
-      expect(sponsor.contacts).to eq(members)
+      expect(sponsor.contacts).to include(*members)
     end
   end
 end
