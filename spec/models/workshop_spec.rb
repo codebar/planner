@@ -1,8 +1,36 @@
 require 'spec_helper'
 
-RSpec.describe Workshop, type: :model  do
+RSpec.describe Workshop, type: :model do
   subject(:workshop) { Fabricate(:workshop) }
   include_examples "Invitable", :workshop_invitation, :workshop
+
+  context 'validates' do
+    it { is_expected.to validate_presence_of(:chapter_id) }
+
+    context "date_and_time" do
+      it 'does not validate if chapter_id blank' do
+        workshop.chapter_id = nil
+        workshop.date_and_time = nil
+        workshop.valid?
+        expect(workshop.errors[:date_and_time]).to be_empty
+      end
+
+      it 'validate if chapter_id present' do
+        workshop.chapter_id = 1
+        workshop.date_and_time = nil
+        workshop.valid?
+        expect(workshop.errors[:date_and_time]).to include("can't be blank")
+      end
+    end
+
+    context 'if virtual' do
+      before { allow(subject).to receive(:virtual?).and_return(true) }
+      it { is_expected.to validate_presence_of(:slack_channel)}
+      it { is_expected.to validate_presence_of(:slack_channel_link)}
+      it { is_expected.to validate_numericality_of(:student_spaces).is_greater_than(0) }
+      it { is_expected.to validate_numericality_of(:coach_spaces).is_greater_than(0) }
+    end
+  end
 
   context 'time zone fields' do
     let(:workshop) { Fabricate.build(:workshop, chapter: Fabricate(:chapter, time_zone: 'Pacific Time (US & Canada)')) }
