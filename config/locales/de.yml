@@ -55,9 +55,9 @@ de:
     participate:
       students_title: "Studenten"
       students_explanation_p1: "Unser Ziel ist es unterrepräsentierten Menschen in einer sicheren und kollaborativen Umgebung zu helfen programmieren zu lernen und ihre Karrierechancen zu erweitern. Um dies zu erreichen veranstalten wir kostenlose regelmäßige Workshops, regelmäßige Einzelveranstaltungen und versuchen Technologie und Programmierung für unsere Schüler zugänglicher zu machen."
-      students_explanation_p2: "Sign up to join our vibrant community and attend our workshops."
-      students_button: "Sign up as a student"
-      coaches_title: "Coaches"
+      students_explanation_p2: "Melden Sie sich für unsere lebendige Community an und besuchen Sie unsere Workshops."
+      students_button: "Als Student anmelden"
+      coaches_title: "Trainer"
       coaches_explanation_p1: "We encourage new students to work on our HTML/CSS, JavaScript, Ruby, Python or Git <a href='http://tutorials.codebar.io'>tutorials</a>. We also help them understand programming concepts."
       coaches_explanation_p2: "Therefore  are always on the lookout for more developers to join our community and help coach at our workshops."
       coaches_button: "Anmeldung als Coach"
@@ -73,7 +73,7 @@ de:
       attending:
         subject: "Attendance Confirmation for %{date_time}"
       attending_reminder:
-        subject: "Workshop Reminder %{date_time}"
+        subject: "Workshop-Erinnerung %{date_time}"
       invite_coach:
         subject: "Workshop Coach Invitation %{date_time}"
       invite_student:
@@ -81,7 +81,7 @@ de:
       notify_waiting_list:
         subject: "A spot just became available"
       waiting_list_reminder:
-        subject: "Reminder: you're on the codebar waiting list (%{date_time})"
+        subject: "Erinnerung: Du bist auf der Codebar Warteliste (%{date_time})"
       virtual:
         invite_coach:
           subject: "Virtual Workshop Coach Invitation %{date_time}"
