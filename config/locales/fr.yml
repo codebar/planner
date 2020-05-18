@@ -34,6 +34,8 @@ fr:
       year: "%Y"
       meeting_format: "%a %d %B %H:%M"
       time: "%H:%M"
+      time_with_zone: "%H:%M %Z (GMT%:z)"
+      time_zone: "%Z (GMT%:z)"
       year_month: "%Y-%B"
       log: "at %H:%M on the %d/%m/%Y"
       workshop: "%A, %e %B %Y at %R"
