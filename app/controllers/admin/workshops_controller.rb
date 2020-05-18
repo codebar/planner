@@ -108,9 +108,9 @@ class Admin::WorkshopsController < Admin::ApplicationController
   private
 
   def workshop_params
-    params.require(:workshop).permit(:local_date, :local_time, :chapter_id,
+    params.require(:workshop).permit(:local_date, :local_time, :local_end_time, :chapter_id,
                                      :invitable, :seats, :virtual, :slack_channel, :slack_channel_link,
-                                     :rsvp_open_local_date, :rsvp_open_local_time, :ends_at, :description,
+                                     :rsvp_open_local_date, :rsvp_open_local_time, :description,
                                      :coach_spaces, :student_spaces, sponsor_ids: [])
   end
 

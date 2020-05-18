@@ -7,9 +7,9 @@
     = f.input :local_date, label: "Date", as: :string, required: true, input_html: { data: { value: @workshop.date_and_time.try(:strftime, '%d/%m/%Y') } }
 .row
   .large-6.columns
-    = f.input :local_time, label: "Begins at", as: :string, required: true, input_html: { data: { value: @workshop.time.try(:strftime, '%H:%M') } }
+    = f.input :local_time, label: 'Begins at', as: :string, required: true, input_html: { data: { value: @workshop.time.try(:strftime, '%H:%M') } }
   .large-6.columns
-    = f.input :ends_at, as: :string, required: true, input_html: { data: { value: @workshop.ends_at.try(:strftime, '%H:%M') } }
+    = f.input :local_end_time, label: 'Ends at', as: :string, required: true, input_html: { data: { value: @workshop.ends_at.try(:strftime, '%H:%M') } }
 .row
   .medium-12.columns#host
     = f.input :host, as: :select, collection: Sponsor.all, include_blank: true, selected: (@workshop.host.id rescue '')

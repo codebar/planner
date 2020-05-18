@@ -56,7 +56,7 @@ RSpec.feature 'An admin managing workshops', type: :feature do
         click_on 'Save'
 
         expect(page).to have_content('Workshop successfully created')
-        expect(page).to have_content '11:30 - 12:45'
+        expect(page).to have_content '11:30 - 12:45 BST (GMT+01:00)'
         expect(page).to have_content 'Invite'
       end
 
@@ -98,6 +98,25 @@ RSpec.feature 'An admin managing workshops', type: :feature do
         within '#sponsors' do
           expect(page).to have_content sponsor.name
         end
+      end
+
+      scenario 'displays the correc timezone for the workshop' do
+        chapter = Fabricate(:chapter, time_zone: 'Berlin')
+        visit new_admin_workshop_path
+
+        select chapter.name
+        fill_in 'Date', with: Date.current
+        fill_in 'Begins at', with: '18:30'
+        fill_in 'Ends at', with: '20:45'
+
+        within '#host' do
+          select sponsor.name
+        end
+
+        click_on 'Save'
+
+        expect(page).to have_content('Workshop successfully created')
+        expect(page).to have_content '18:30 - 20:45 CEST (GMT+02:00)'
       end
     end
 
