@@ -13,6 +13,11 @@ module DateTimeConcerns
       self.date_and_time = new_date_and_time if new_date_and_time
     end
 
+    def set_end_date_and_time
+      new_end_date_and_time = datetime_from_fields(local_date, local_end_time)
+      self.ends_at = new_end_date_and_time if new_end_date_and_time
+    end
+
     def date
       I18n.l(date_and_time, format: :dashboard)
     end
@@ -22,6 +27,12 @@ module DateTimeConcerns
     end
 
     def date_and_time
+      return nil unless super
+
+      super.in_time_zone(time_zone)
+    end
+
+    def ends_at
       return nil unless super
 
       super.in_time_zone(time_zone)

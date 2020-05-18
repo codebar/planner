@@ -3,7 +3,7 @@ class Workshop < ActiveRecord::Base
   include Invitable
   include Listable
 
-  attr_accessor :local_date, :local_time, :rsvp_open_local_date, :rsvp_open_local_time
+  attr_accessor :local_date, :local_time, :local_end_time, :rsvp_open_local_date, :rsvp_open_local_time
 
   resourcify :permissions, role_cname: 'Permission', role_table_name: :permission
 
@@ -27,7 +27,7 @@ class Workshop < ActiveRecord::Base
   validates :student_spaces, numericality: { greater_than: 0 }, if: :virtual?
   validates :coach_spaces, numericality: { greater_than: 0 }, if: :virtual?
 
-  before_validation :set_date_and_time, if: proc { |model| model.chapter_id.present? }
+  before_validation :set_date_and_time, :set_end_date_and_time, if: proc { |model| model.chapter_id.present? }
   before_validation :set_opens_at
 
   def host
@@ -105,12 +105,6 @@ class Workshop < ActiveRecord::Base
   end
 
   def rsvp_opens_at
-    return nil unless super
-
-    super.in_time_zone(time_zone)
-  end
-
-  def ends_at
     return nil unless super
 
     super.in_time_zone(time_zone)
