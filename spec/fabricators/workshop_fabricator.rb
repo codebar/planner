@@ -1,8 +1,6 @@
 Fabricator(:workshop) do
   date_and_time Time.zone.now + 2.days
   ends_at Time.zone.now + 2.days + 2.hours
-  title Faker::Lorem.sentence
-  description Faker::Lorem.sentence
   chapter
   after_build do |workshop|
     Fabricate(:workshop_sponsor, workshop: workshop, sponsor: Fabricate(:sponsor), host: true)
@@ -12,8 +10,6 @@ end
 Fabricator(:virtual_workshop, class_name: :workshop) do
   date_and_time Time.zone.now + 2.days
   ends_at Time.zone.now + 2.days + 2.hours
-  title Faker::Lorem.sentence
-  description Faker::Lorem.sentence
   chapter
   virtual true
   student_spaces 10
@@ -28,16 +24,12 @@ end
 Fabricator(:workshop_no_sponsor, class_name: :workshop) do
   date_and_time Time.zone.now + 2.days
   ends_at Time.zone.now + 2.days + 2.hours
-  title Faker::Lorem.sentence
-  description Faker::Lorem.sentence
   chapter
 end
 
 Fabricator(:workshop_auto_rsvp_in_past, class_name: :workshop) do
   date_and_time Time.zone.now + 2.days
   ends_at Time.zone.now + 2.days + 2.hours
-  title Faker::Lorem.sentence
-  description Faker::Lorem.sentence
   chapter
   rsvp_opens_at Time.zone.now - 1.day
   invitable false
@@ -49,8 +41,6 @@ end
 Fabricator(:workshop_auto_rsvp_in_future, class_name: :workshop) do
   date_and_time Time.zone.now + 2.days
   ends_at Time.zone.now + 2.days + 2.hours
-  title Faker::Lorem.sentence
-  description Faker::Lorem.sentence
   chapter
   rsvp_opens_at Time.zone.now + 1.day
   invitable false
@@ -62,8 +52,6 @@ end
 Fabricator(:workshop_no_spots, class_name: :workshop) do
   date_and_time Time.zone.now + 2.days
   ends_at Time.zone.now + 2.days + 2.hours
-  title Faker::Lorem.sentence
-  description Faker::Lorem.sentence
   chapter
   after_build do |workshop|
     Fabricate(:workshop_sponsor, workshop: workshop, sponsor: Fabricate(:sponsor, seats: 0), host: true)
@@ -73,8 +61,6 @@ end
 Fabricator(:workshop_no_coaches, class_name: :workshop) do
   date_and_time Time.zone.now + 2.days
   ends_at Time.zone.now + 2.days + 2.hours
-  title Faker::Lorem.sentence
-  description Faker::Lorem.sentence
   chapter
   after_build do |workshop|
     Fabricate(:workshop_sponsor, workshop: workshop, sponsor: Fabricate(:sponsor, number_of_coaches: 0), host: true)
