@@ -30,8 +30,7 @@
             %tr
               %td
                 %h4
-                  Workshop
-                  %small #{humanize_date(@workshop.date_and_time, with_time: true)}#{@workshop.ends_at.present? ? " - " + @workshop.ends_at.strftime('%H:%M') : ""}
+                  %small #{humanize_date(@workshop.date_and_time, @workshop.ends_at, with_time: true)}
                 = link_to 'Update or cancel your attendance', full_url_for(invitation_url(@invitation)), class: 'btn'
 
         .content

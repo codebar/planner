@@ -28,4 +28,8 @@ class MeetingPresenter < EventPresenter
   def sponsors
     []
   end
+
+  def time
+    I18n.l(model.date_and_time, format: :time_with_zone)
+  end
 end

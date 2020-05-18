@@ -70,34 +70,16 @@ RSpec.describe WorkshopPresenter do
   end
 
   context 'time formatting' do
-    let(:workshop) { double(:workshop, time: Time.zone.now, ends_at: 1.hour.from_now) }
+    let(:workshop) { double(:workshop, date_and_time: Time.zone.now, ends_at: 1.hour.from_now) }
 
-    it '#time' do
-      start_time = workshop.time
-
-      expect(presenter.time).to eq(I18n.l(start_time, format: :time))
+    it '#start_time' do
+      expect(presenter.start_time).to eq(I18n.l(workshop.date_and_time, format: :time))
     end
 
     it '#end_time' do
       expect(presenter.end_time).to eq(I18n.l(workshop.ends_at, format: :time))
     end
 
-    context '#start_and_end_time' do
-      it 'when no end_time is set it only returns the start_time' do
-        workshop =  double(:workshop, time: Time.zone.now, ends_at: nil)
-        presenter = WorkshopPresenter.new(workshop)
-
-        expect(presenter.start_and_end_time).to eq(I18n.l(workshop.time, format: :time))
-      end
-
-      it 'when a start and an end_time are set it returns a formatted start and end_time' do
-        workshop =  double(:workshop, time: Time.zone.now, ends_at: 1.hour.from_now)
-        presenter = WorkshopPresenter.new(workshop)
-
-        expect(presenter.start_and_end_time)
-          .to eq("#{I18n.l(workshop.time, format: :time)} - #{I18n.l(workshop.ends_at, format: :time)}")
-      end
-    end
   end
 
   context '#attendees_csv' do

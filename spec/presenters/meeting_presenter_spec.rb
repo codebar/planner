@@ -28,6 +28,12 @@ RSpec.describe MeetingPresenter do
     expect(event.attendees_emails).to eq(attendees.map(&:member).map(&:email).join(', '))
   end
 
+  it '#time' do
+    expect(meeting).to receive(:date_and_time).and_return(Time.zone.now)
+
+    event.time
+  end
+
   it '#to_s' do
     expect(event.to_s).to eq(meeting.name)
   end

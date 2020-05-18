@@ -35,7 +35,17 @@ class EventPresenter < BasePresenter
   end
 
   def time
+    formatted_time = start_time
+    formatted_time << " - #{end_time}" if model.ends_at
+    formatted_time << " #{I18n.l(model.date_and_time, format: :time_zone)}"
+  end
+
+  def start_time
     I18n.l(model.date_and_time, format: :time)
+  end
+
+  def end_time
+    I18n.l(model.ends_at, format: :time)
   end
 
   def path

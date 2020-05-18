@@ -14,7 +14,7 @@
               %td
                 %h3 Hi #{@member.name},
                 %p.lead
-                  Invites for our next virtual workshop are now open and we are looking for coaches. The workshop will take place on #{humanize_date(@workshop.date_and_time, with_time: true)}.
+                  Invites for our next virtual workshop are now open and we are looking for coaches.
 
                 %p At the workshop you will be helping students remotely as they work their way through one of our tutorials or a personal project they need help on. Don't worry we'll only match you with someone who you'll be able to help.
 
@@ -34,7 +34,7 @@
                   =@workshop.to_s
                   %br
                   %br
-                  %small #{humanize_date(@workshop.date_and_time, with_time: true)}#{@workshop.ends_at.present? ? " - " + @workshop.ends_at.strftime('%H:%M') : ""}
+                  %small #{humanize_date(@workshop.date_and_time, @workshop.ends_at, with_time: true)}
                 = link_to 'View invitation and RSVP', full_url_for(invitation_url(@invitation)), class: 'btn'
               %td{ width: '40%', style: 'vertical-align: top;'}
                 - if @workshop.sponsors.any?

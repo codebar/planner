@@ -1,11 +1,9 @@
 module ApplicationHelper
-  def humanize_date(date, with_time: false, with_year: false)
-    human_date = "#{I18n.l(date, format: :day_in_words)}, "
-    human_date << "#{ActiveSupport::Inflector.ordinalize(date.day)} "
-    human_date << I18n.l(date, format: :month)
-    human_date << " #{I18n.l(date, format: :year)}" if with_year
-    human_date << " at #{I18n.l(date.time, format: :time)}" if with_time
-    human_date
+  def humanize_date(datetime, end_time = nil, with_time: false, with_year: false)
+    return I18n.l(datetime, format: :humanised_with_year) if with_year
+    return humanize_date_with_time(datetime, end_time) if with_time
+
+    I18n.l(datetime, format: :humanised)
   end
 
   def title(title = nil)
@@ -60,5 +58,14 @@ module ApplicationHelper
   def number_to_currency(number, options = {})
     options[:locale] = 'en'
     super(number, options)
+  end
+
+  private
+
+  def humanize_date_with_time(datetime, end_time)
+    formatted_datetime = I18n.l(datetime, format: :humanised_with_time)
+    formatted_datetime << " - #{I18n.l(end_time, format: :time)}" if end_time
+    formatted_datetime << " #{I18n.l(datetime, format: :time_zone)}"
+    formatted_datetime
   end
 end
