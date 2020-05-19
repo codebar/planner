@@ -143,7 +143,7 @@ RSpec.describe InvitationManager, type: :model  do
     end
 
     it 'does not email coaches when no coach spots are available' do
-      workshop = Fabricate(:workshop_no_coaches)
+      workshop = Fabricate(:workshop, coach_count: 0)
       waitinglist_invitation = Fabricate(:waitinglist_invitation, workshop: workshop, role: 'Coach')
 
       expect(WorkshopInvitationMailer).not_to receive(:notify_waiting_list)
@@ -164,7 +164,7 @@ RSpec.describe InvitationManager, type: :model  do
     end
 
     it 'does not email students when no student spots are available' do
-      workshop = Fabricate(:workshop_no_spots)
+      workshop = Fabricate(:workshop, student_count: 0)
       waitinglist_invitation = Fabricate(:waitinglist_invitation, workshop: workshop, role: 'Student')
 
       expect(WorkshopInvitationMailer).not_to receive(:notify_waiting_list)

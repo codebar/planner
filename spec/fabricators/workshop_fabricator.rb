@@ -1,87 +1,54 @@
 Fabricator(:workshop) do
   date_and_time Time.zone.now + 2.days
   ends_at Time.zone.now + 2.days + 2.hours
-  title Faker::Lorem.sentence
-  description Faker::Lorem.sentence
   chapter
-  after_build do |workshop|
-    Fabricate(:workshop_sponsor, workshop: workshop, sponsor: Fabricate(:sponsor), host: true)
+  after_build do |workshop, transients|
+    Fabricate(:workshop_sponsor,
+              workshop: workshop,
+              sponsor: Fabricate(:sponsor,
+                                 seats: transients[:student_count] || 10,
+                                 number_of_coaches: transients[:coach_count || 10]),
+              host: true)
   end
+
+  transient :student_count
+  transient :coach_count
+end
+
+Fabricator(:workshop_no_sponsor, class_name: :workshop) do
+  date_and_time Time.zone.now + 2.days
+  ends_at Time.zone.now + 2.days + 2.hours
+  chapter
+end
+
+Fabricator(:workshop_auto_rsvp_in_past, from: :workshop) do
+  rsvp_opens_at Time.zone.now - 1.day
+  invitable false
+end
+
+Fabricator(:workshop_auto_rsvp_in_future, from: :workshop) do
+  rsvp_opens_at Time.zone.now + 1.day
+  invitable false
+end
+
+Fabricator(:past_workshop, from: :workshop) do
+  date_and_time 3.months.ago
+  ends_at 3.months.ago + 2.hours
 end
 
 Fabricator(:virtual_workshop, class_name: :workshop) do
   date_and_time Time.zone.now + 2.days
   ends_at Time.zone.now + 2.days + 2.hours
-  title Faker::Lorem.sentence
-  description Faker::Lorem.sentence
   chapter
   virtual true
   student_spaces 10
   coach_spaces 10
   slack_channel 'a-channel'
   slack_channel_link 'https://codebar.slack.link'
+end
+
+Fabricator(:virtual_workshop_sponsored, from: :virtual_workshop) do
   after_build do |workshop|
     Fabricate(:workshop_sponsor, workshop: workshop, sponsor: Fabricate(:sponsor), host: false)
   end
-end
-
-Fabricator(:workshop_no_sponsor, class_name: :workshop) do
-  date_and_time Time.zone.now + 2.days
-  ends_at Time.zone.now + 2.days + 2.hours
-  title Faker::Lorem.sentence
-  description Faker::Lorem.sentence
-  chapter
-end
-
-Fabricator(:workshop_auto_rsvp_in_past, class_name: :workshop) do
-  date_and_time Time.zone.now + 2.days
-  ends_at Time.zone.now + 2.days + 2.hours
-  title Faker::Lorem.sentence
-  description Faker::Lorem.sentence
-  chapter
-  rsvp_opens_at Time.zone.now - 1.day
-  invitable false
-  after_build do |workshop|
-    Fabricate(:workshop_sponsor, workshop: workshop, sponsor: Fabricate(:sponsor), host: true)
-  end
-end
-
-Fabricator(:workshop_auto_rsvp_in_future, class_name: :workshop) do
-  date_and_time Time.zone.now + 2.days
-  ends_at Time.zone.now + 2.days + 2.hours
-  title Faker::Lorem.sentence
-  description Faker::Lorem.sentence
-  chapter
-  rsvp_opens_at Time.zone.now + 1.day
-  invitable false
-  after_build do |workshop|
-    Fabricate(:workshop_sponsor, workshop: workshop, sponsor: Fabricate(:sponsor), host: true)
-  end
-end
-
-Fabricator(:workshop_no_spots, class_name: :workshop) do
-  date_and_time Time.zone.now + 2.days
-  ends_at Time.zone.now + 2.days + 2.hours
-  title Faker::Lorem.sentence
-  description Faker::Lorem.sentence
-  chapter
-  after_build do |workshop|
-    Fabricate(:workshop_sponsor, workshop: workshop, sponsor: Fabricate(:sponsor, seats: 0), host: true)
-  end
-end
-
-Fabricator(:workshop_no_coaches, class_name: :workshop) do
-  date_and_time Time.zone.now + 2.days
-  ends_at Time.zone.now + 2.days + 2.hours
-  title Faker::Lorem.sentence
-  description Faker::Lorem.sentence
-  chapter
-  after_build do |workshop|
-    Fabricate(:workshop_sponsor, workshop: workshop, sponsor: Fabricate(:sponsor, number_of_coaches: 0), host: true)
-  end
-end
-
-Fabricator(:past_workshop, from: :workshop) do
-  date_and_time 3.months.ago
-  ends_at 3.months.ago + 2.hours
 end

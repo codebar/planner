@@ -55,7 +55,7 @@ RSpec.feature 'Viewing a workshop invitation', type: :feature, wip: true do
   end
 
   context 'virtual workshop' do
-    let(:workshop) { Fabricate(:virtual_workshop) }
+    let(:workshop) { Fabricate(:virtual_workshop_sponsored) }
 
     scenario 'workshop and page title' do
       expect(page).to have_title("Workshop invitation - #{humanize_date(workshop.date_and_time)}")
