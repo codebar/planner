@@ -47,6 +47,15 @@ Fabricator(:virtual_workshop, class_name: :workshop) do
   slack_channel_link 'https://codebar.slack.link'
 end
 
+Fabricator(:virtual_workshop_auto_rsvp_in_past, from: :virtual_workshop) do
+  rsvp_opens_at Time.zone.now - 1.day
+end
+
+Fabricator(:virtual_workshop_auto_rsvp_in_future, from: :virtual_workshop) do
+  rsvp_opens_at Time.zone.now + 1.day
+  invitable false
+end
+
 Fabricator(:virtual_workshop_sponsored, from: :virtual_workshop) do
   after_build do |workshop|
     Fabricate(:workshop_sponsor, workshop: workshop, sponsor: Fabricate(:sponsor), host: false)
