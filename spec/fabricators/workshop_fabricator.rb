@@ -2,9 +2,17 @@ Fabricator(:workshop) do
   date_and_time Time.zone.now + 2.days
   ends_at Time.zone.now + 2.days + 2.hours
   chapter
-  after_build do |workshop|
-    Fabricate(:workshop_sponsor, workshop: workshop, sponsor: Fabricate(:sponsor), host: true)
+  after_build do |workshop, transients|
+    Fabricate(:workshop_sponsor,
+              workshop: workshop,
+              sponsor: Fabricate(:sponsor,
+                                 seats: transients[:student_count] || 10,
+                                 number_of_coaches: transients[:coach_count || 10]),
+              host: true)
   end
+
+  transient :student_count
+  transient :coach_count
 end
 
 Fabricator(:virtual_workshop, class_name: :workshop) do
@@ -35,24 +43,6 @@ end
 Fabricator(:workshop_auto_rsvp_in_future, from: :workshop) do
   rsvp_opens_at Time.zone.now + 1.day
   invitable false
-end
-
-Fabricator(:workshop_no_spots, class_name: :workshop) do
-  date_and_time Time.zone.now + 2.days
-  ends_at Time.zone.now + 2.days + 2.hours
-  chapter
-  after_build do |workshop|
-    Fabricate(:workshop_sponsor, workshop: workshop, sponsor: Fabricate(:sponsor, seats: 0), host: true)
-  end
-end
-
-Fabricator(:workshop_no_coaches, class_name: :workshop) do
-  date_and_time Time.zone.now + 2.days
-  ends_at Time.zone.now + 2.days + 2.hours
-  chapter
-  after_build do |workshop|
-    Fabricate(:workshop_sponsor, workshop: workshop, sponsor: Fabricate(:sponsor, number_of_coaches: 0), host: true)
-  end
 end
 
 Fabricator(:past_workshop, from: :workshop) do
