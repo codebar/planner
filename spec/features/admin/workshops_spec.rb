@@ -150,6 +150,7 @@ RSpec.feature 'An admin managing workshops', type: :feature do
         select chapter.name
         fill_in 'Date', with: Date.current
         fill_in 'Begins at', with: '11:30'
+        fill_in 'Ends at', with: '14:30'
 
         click_on 'Save'
 
