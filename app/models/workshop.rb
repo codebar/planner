@@ -20,7 +20,7 @@ class Workshop < ActiveRecord::Base
   scope :coaches, -> { joins(:invitations).where(invitations: { name: 'Coach', attended: true }) }
 
   validates :chapter_id, presence: true
-  validates :date_and_time, presence: true, if: proc { |model| model.chapter_id.present? }
+  validates :date_and_time, :ends_at, presence: true, if: proc { |model| model.chapter_id.present? }
 
   validates :slack_channel, presence: true, if: :virtual?
   validates :slack_channel_link, presence: true, if: :virtual?

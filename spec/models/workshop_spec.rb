@@ -7,7 +7,7 @@ RSpec.describe Workshop, type: :model do
   context 'validates' do
     it { is_expected.to validate_presence_of(:chapter_id) }
 
-    context "date_and_time" do
+    context "#date_and_time" do
       it 'does not validate if chapter_id blank' do
         workshop.chapter_id = nil
         workshop.date_and_time = nil
@@ -16,10 +16,26 @@ RSpec.describe Workshop, type: :model do
       end
 
       it 'validate if chapter_id present' do
-        workshop.chapter_id = 1
+        workshop.chapter = Fabricate(:chapter)
         workshop.date_and_time = nil
         workshop.valid?
         expect(workshop.errors[:date_and_time]).to include("can't be blank")
+      end
+    end
+
+    context '#end_at' do
+      it 'does not validate if chapter_id blank' do
+        workshop.chapter_id = nil
+        workshop.ends_at = nil
+        workshop.valid?
+        expect(workshop.errors[:ends_at]).to be_empty
+      end
+
+      it 'validate if chapter_id present' do
+        workshop.chapter = Fabricate(:chapter)
+        workshop.ends_at = nil
+        workshop.valid?
+        expect(workshop.errors[:ends_at]).to include("can't be blank")
       end
     end
 
