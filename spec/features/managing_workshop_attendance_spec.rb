@@ -13,8 +13,8 @@ RSpec.feature 'Managing workshop attendance', type: :feature do
 
   context '#virtual workshop' do
     let(:workshop) { Fabricate(:virtual_workshop) }
-    let(:workshop_auto_rsvp_in_past) { Fabricate(:workshop_auto_rsvp_in_past) }
-    let(:workshop_auto_rsvp_in_future) { Fabricate(:workshop_auto_rsvp_in_future) }
+    let(:workshop_auto_rsvp_in_past) { Fabricate(:virtual_workshop_auto_rsvp_in_past) }
+    let(:workshop_auto_rsvp_in_future) { Fabricate(:virtual_workshop_auto_rsvp_in_future) }
 
     include_examples 'managing workshop attendance'
   end
