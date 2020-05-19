@@ -34,7 +34,7 @@ RSpec.feature 'Viewing a workshop page', type: :feature do
     end
 
     context 'virtual workshop' do
-      let(:workshop) { Fabricate(:virtual_workshop) }
+      let(:workshop) { Fabricate(:virtual_workshop_sponsored) }
 
       describe '#details' do
         scenario 'workshop and page title' do
