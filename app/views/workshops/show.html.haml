@@ -19,8 +19,7 @@
         %p.description
           = sanitize(@workshop.description)
 
-        - unless current_user and current_user.banned?
-          = render 'actions'
+        = render 'actions' unless current_user&.banned?
 
 .stripe.reverse
   .row
