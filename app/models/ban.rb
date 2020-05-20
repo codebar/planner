@@ -16,6 +16,6 @@ class Ban < ActiveRecord::Base
   private
 
   def valid_expiry_date?
-    errors.add(:expires_at, 'must be in the future') unless expires_at.try(:future?)
+    errors.add(:expires_at, 'must be in the future') unless expires_at&.future?
   end
 end
