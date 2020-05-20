@@ -33,20 +33,20 @@ RSpec.describe Admin::WorkshopsController, type: :controller do
           new_current_time = 1.day + Admin::WorkshopsController::
                                      WORKSHOP_DELETION_TIME_FRAME_SINCE_CREATION
 
-          Timecop.travel(new_current_time)
-          expect do
-            delete :destroy, id: workshop.id
-          end.not_to change { Workshop.count }
-          Timecop.return
+          travel new_current_time do
+            expect do
+              delete :destroy, id: workshop.id
+            end.not_to change { Workshop.count }
+          end
         end
 
         it "should display workshop can't be deleted related flash message" do
           new_current_time = 1.day + Admin::WorkshopsController::
                                      WORKSHOP_DELETION_TIME_FRAME_SINCE_CREATION
 
-          Timecop.travel(new_current_time)
-          delete :destroy, id: workshop.id
-          Timecop.return
+          travel new_current_time do
+            delete :destroy, id: workshop.id
+          end
 
           expect(flash[:notice]).to eq(I18n.t('admin.workshop.destroy.failure'))
         end
@@ -73,20 +73,20 @@ RSpec.describe Admin::WorkshopsController, type: :controller do
           new_current_time = 1.day + Admin::WorkshopsController::
                                      WORKSHOP_DELETION_TIME_FRAME_SINCE_CREATION
 
-          Timecop.travel(new_current_time)
-          expect do
-            delete :destroy, id: workshop.id
-          end.not_to change { Workshop.count }
-          Timecop.return
+          travel new_current_time do
+            expect do
+              delete :destroy, id: workshop.id
+            end.not_to change { Workshop.count }
+          end
         end
 
         it "should display workshop can't be deleted related flash message" do
           new_current_time = 1.day + Admin::WorkshopsController::
                                      WORKSHOP_DELETION_TIME_FRAME_SINCE_CREATION
 
-          Timecop.travel(new_current_time)
-          delete :destroy, id: workshop.id
-          Timecop.return
+          travel new_current_time do
+            delete :destroy, id: workshop.id
+          end
 
           expect(flash[:notice]).to eq(I18n.t('admin.workshop.destroy.failure'))
         end
