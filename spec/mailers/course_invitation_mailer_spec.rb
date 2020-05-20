@@ -8,7 +8,7 @@ RSpec.describe CourseInvitationMailer, type: :mailer  do
     course = Fabricate(:course, title: 'HTTP Fundamentals', date_and_time: Time.zone.local(2013, 10, 30, 18, 30))
     invitation_token = 'token'
 
-    email_subject = "Course :: #{course.title} by codebar - Wednesday, 30 Oct at 18:30"
+    email_subject = "Course :: #{course.title} by codebar - Wednesday, 30 Oct at 18:30 GMT"
     CourseInvitationMailer.invite_student(course, member, invitation_token).deliver_now
 
     expect(email.subject).to eq(email_subject)
