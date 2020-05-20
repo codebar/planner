@@ -2,7 +2,7 @@ class Ban < ActiveRecord::Base
   belongs_to :member
   belongs_to :added_by, class_name: 'Member'
 
-  validates :reason, :note, :added_by, presence: true
+  validates :expires_at, :reason, :note, :added_by, presence: true
 
   validate :valid_expiry_date?
 

@@ -2,6 +2,7 @@ require 'spec_helper'
 
 RSpec.describe Ban, type: :model do
   context 'validates' do
+    it { is_expected.to validate_presence_of(:expires_at) }
     it { is_expected.to validate_presence_of(:reason) }
     it { is_expected.to validate_presence_of(:note) }
     it { is_expected.to validate_presence_of(:added_by) }
