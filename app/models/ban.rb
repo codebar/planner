@@ -6,7 +6,7 @@ class Ban < ActiveRecord::Base
 
   validate :valid_expiry_date?
 
-  scope :active, -> { where('expires_at > ?', Date.current) }
+  scope :active, -> { where('expires_at > ?', Time.zone.now) }
   scope :permanent, -> { where(permanent: true) }
 
   def active?
