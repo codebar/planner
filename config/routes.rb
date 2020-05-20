@@ -42,10 +42,9 @@ Planner::Application.routes.draw do
 
   get 'unsubscribe/:token' => 'members#unsubscribe', as: :unsubscribe
 
-  resources :invitation, only: [:show] do
+  resources :invitation, only: [:show, :update] do
     member do
-      post 'accept_with_note', as: :accept_with_note
-      post 'update_note'
+      post 'accept'
       get 'accept'
       get 'reject'
     end

@@ -15,24 +15,28 @@ module InvitationControllerConcerns
       end
 
       user = current_user || @invitation.member
+      @workshop = WorkshopPresenter.decorate(@invitation.workshop)
 
       if user.has_existing_RSVP_on(@invitation.workshop.date_and_time)
         return redirect_back(fallback_location: invitation_path(@invitation),
                              notice: t('messages.invitations.rsvped_to_other_workshop'))
       end
 
-      @workshop = WorkshopPresenter.decorate(@invitation.workshop)
+      if available_spaces?(@workshop, @invitation)
+        if @workshop.attendee?(user) || @workshop.waitlisted?(user)
+          return redirect_back(fallback_location: invitation_path(@invitation),
+                               notice: t('messages.already_invited'))
+        end
 
-      if (@invitation.for_student? && @workshop.student_spaces?) || (@invitation.for_coach? && @workshop.coach_spaces?)
-        @invitation.update(attending: true, rsvp_time: Time.zone.now)
-        @invitation.waiting_list.destroy if @invitation.waiting_list.present?
+        @invitation.update(attending: true, note: invitation_note, rsvp_time: Time.zone.now)
         @workshop.send_attending_email(@invitation)
 
-        redirect_back(fallback_location: invitation_path(@invitation),
-                      notice: t('messages.accepted_invitation', name: @invitation.member.name))
+        return redirect_back(fallback_location: invitation_path(@invitation),
+                             notice: t('messages.accepted_invitation', name: @invitation.member.name))
+
       else
-        redirect_back(fallback_location: invitation_path(@invitation),
-                      notice: t('messages.no_available_seats', email: @invitation.workshop.chapter.email))
+        return redirect_back(fallback_location: invitation_path(@invitation),
+                             notice: t('messages.no_available_seats'))
       end
     end
 
@@ -62,6 +66,13 @@ module InvitationControllerConcerns
         redirect_back(fallback_location: invitation_path(@invitation),
                       notice: 'You can only change your RSVP status up to 3.5 hours before the workshop')
       end
+    end
+
+
+    private
+
+    def invitation_note
+      params[:workshop_invitation] ? params[:workshop_invitation][:note] : ''
     end
   end
 end

@@ -133,6 +133,8 @@ en:
       student_intro_2: 'In case you are unable to attend after you RSVP, please make sure you come back and update your attendance. We have limited space and do a coaches request depending on the number of attending students.'
       student_intro_3_html: 'Please make sure you <b>bring your laptop</b> with you.'
       shared_intro_4_html: 'PS: There will also be food at the workshop. We always make an effort to have vegetarian, vegan and gluten-free options available. If you have any other dietary requirements, send us an email at %{email_link}.'
+  workshop_invitation:
+    coach_skills_tooltip: 'Keeping your skills up-to-date enables Organisers to plan ahead and makes running workshops easier.'
   meeting:
     title: "%{name} - %{date}"
   messages:
@@ -611,9 +613,13 @@ en:
         slack_channel: 'e.g. virtual-london-2022-12-03'
         slack_channel_link: 'e.g. https://codebar.slack.com/archives/CGLQD917T'
         description: 'Any details you would like to add about the workshop. This will be visible on both the public workshop and invitation pages'
+      workshop_invitation:
+        note: 'e.g. I am a Junior and would prefer to not be paired on advanced projects'
     hints:
       member:
         email: 'This is needed so we can email you invitations to our events'
+      workshop_invitation:
+        note: 'Pairing preferences or anything else you think we should know.'
       job:
         remote: Only check if the role is fully remote only
         salary: Annual pay before tax, without commas or decimal points
@@ -631,6 +637,8 @@ en:
       workshop:
         description: Additional description
         virtual: Virtual workshop
+      workshop_invitation:
+        note: 'Note'
   activerecord:
     attributes:
       job:
