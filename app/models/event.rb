@@ -22,8 +22,6 @@ class Event < ActiveRecord::Base
   validates :coach_spaces, :student_spaces, numericality: true
   attr_accessor :publish_day, :publish_time
 
-  scope :future, ->(n) { order('date_and_time').where('date_and_time > ?', Date.current).take(n) }
-
   before_save do
     begins_at = Time.parse(self.begins_at)
     self.date_and_time = self.date_and_time.change(hour: begins_at.hour, min: begins_at.min)
