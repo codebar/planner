@@ -88,6 +88,10 @@ class EventPresenter < BasePresenter
     generate_csv_from_array(attendee_array)
   end
 
+  def day_temporal_pronoun
+    model.date_and_time.today? ? 'today' : 'tomorrow'
+  end
+
   private
 
   def generate_csv_from_array(attendees)
