@@ -68,4 +68,12 @@ RSpec.describe EventPresenter do
       expect(event.day_temporal_pronoun). to eq('tomorrow')
     end
   end
+
+  context 'rsvp_closing_date_and_time' do
+    it 'returns the calculated RSVP closing time for an event' do
+      workshop.date_and_time = Time.zone.local(2040, 10, 10, 16, 30)
+
+      expect(event.rsvp_closing_date_and_time). to eq(Time.zone.local(2040, 10, 10, 13, 00))
+    end
+  end
 end

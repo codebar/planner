@@ -92,6 +92,10 @@ class EventPresenter < BasePresenter
     model.date_and_time.today? ? 'today' : 'tomorrow'
   end
 
+  def rsvp_closing_date_and_time
+    model.date_and_time - 3.5.hours
+  end
+
   private
 
   def generate_csv_from_array(attendees)
