@@ -22,8 +22,7 @@
         %p.lead.description
           = sanitize(@workshop.description)
 
-        - unless current_user and current_user.banned?
-          = render 'workshops/actions'
+        = render 'workshops/actions' unless current_user&.banned?
 
 - if @workshop.sponsors.any?
   .stripe.reverse

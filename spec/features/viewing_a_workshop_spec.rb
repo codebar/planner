@@ -62,4 +62,9 @@ RSpec.feature 'Viewing a workshop page', type: :feature do
       end
     end
   end
+
+  context 'member' do
+    include_examples 'member viewing workshop', :workshop, :student, :banned_student
+    include_examples 'member viewing workshop', :virtual_workshop, :student, :banned_student
+  end
 end
