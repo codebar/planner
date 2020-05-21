@@ -11,8 +11,10 @@ module InvitationControllerConcerns
     def accept
       user = current_user || @invitation.member
       workshop = @invitation.workshop
-
       return back_with_message(t('messages.already_rsvped')) if @invitation.attending?
+
+      @invitation.assign_attributes(invitation_params.merge!(attending: true, rsvp_time: Time.zone.now))
+      return back_with_message(@invitation.errors.full_messages) unless @invitation.valid?
 
       if user.has_existing_RSVP_on(workshop.date_and_time)
         return back_with_message(t('messages.invitations.rsvped_to_other_workshop'))
@@ -22,7 +24,7 @@ module InvitationControllerConcerns
 
       @workshop = WorkshopPresenter.decorate(@invitation.workshop)
       if available_spaces?(@workshop, @invitation)
-        @invitation.update(attending: true, note: invitation_note, rsvp_time: Time.zone.now)
+        @invitation.update(invitation_params.merge!(attending: true, rsvp_time: Time.zone.now))
         @workshop.send_attending_email(@invitation)
 
         back_with_message(t('messages.accepted_invitation', name: @invitation.member.name))
@@ -60,10 +62,6 @@ module InvitationControllerConcerns
     end
 
     private
-
-    def invitation_note
-      params[:workshop_invitation] ? params[:workshop_invitation][:note] : ''
-    end
 
     def back_with_message(message)
       redirect_back(fallback_location: invitation_path(@invitation), notice: message)

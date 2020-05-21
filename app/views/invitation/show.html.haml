@@ -31,12 +31,10 @@
         - else
           - if @invitation.attending.eql?(true)
             - if @invitation.for_student?
-              %p
-                %small You will be working on...
-                = form_tag invitation_path(@invitation), method: :put do
-                  = select_tag :note, options_for_select(@tutorial_titles, @invitation.note)
-                  %br
-                  = submit_tag 'Update note', class: "expand button small"
+              = simple_form_for @invitation, url: :invitation, method: :put do |f|
+                = f.input :tutorial, collection: @tutorial_titles, include_blank: true
+                = f.input :note, required: false, input_html: { rows: 3, maxlength: 100 }, hint: 'Anything else we should know?', placeholder: 'e.g. I need help understanding selectors'
+                = f.button :submit, "Update",  class: "button expand round"
             - if @invitation.for_coach?
               %span.has-tip{ 'data-tooltip': '', 'aria-haspopup': 'true', title: I18n.t('workshop_invitation.coach_skills_tooltip') }
                 %i.fa.fa-info
@@ -77,8 +75,8 @@
             - else
               - if @workshop.student_spaces?
                 = simple_form_for @invitation, url: :accept_invitation, method: :post do |f|
-                  = f.input :note, label: "What do you plan to work on?", collection: @tutorial_titles, required: true, include_blank: true
-                  %br
+                  = f.input :tutorial, collection: @tutorial_titles, include_blank: true
+                  = f.input :note, required: false, input_html: { rows: 3, maxlength: 100 }, hint: 'Anything else we should know?', placeholder: 'e.g. I need help understanding selectors'
                   = f.button :submit, "Attend",  class: "button expand round"
               - else
                 = render partial: 'invitation/waiting_list', locals: { invitation: @invitation }

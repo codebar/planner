@@ -7,6 +7,7 @@ class WorkshopInvitation < ActiveRecord::Base
   validates :workshop, :member, presence: true
   validates :member_id, uniqueness: { scope: %i[workshop_id role] }
   validates :role, inclusion: { in: %w[Student Coach], allow_nil: true }
+  validates :tutorial, presence: true, if: :student_rsvp?
 
   scope :year, ->(year) { joins(:workshop).where('EXTRACT(year FROM workshops.date_and_time) = ?', year) }
   scope :accepted, -> { where(attending: true) }
@@ -30,5 +31,9 @@ class WorkshopInvitation < ActiveRecord::Base
 
   def parent
     workshop
+  end
+
+  def student_rsvp?
+    for_student? && rsvp_time.present?
   end
 end

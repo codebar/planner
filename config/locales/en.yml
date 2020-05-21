@@ -141,14 +141,12 @@ en:
     accepted_invitation: "Thanks for getting back to us %{name}. See you at the workshop!"
     already_invited: 'You have already RSVPd or joined the waitlist for this workshop.'
     already_taken_place: 'This event has already taken place'
-    error_blank_note: 'You must select a note'
     rejected_invitation: "We are so sad you can't make it, but thanks for letting us know %{name}."
     already_rsvped: "You have already confirmed you attendance!"
     not_attending_already: "You have already confirmed you can't make it!"
     no_available_seats: "There are no more spots left for this event, but you can join the waiting list."
     feedback_saved: "Thank you for taking the time to give us feedback!"
     feedback_not_found: "You have already submitted feedback for this event."
-    updated_note: "Successfully updated note."
     invitations:
       meeting:
         cancel: "Thanks for letting us know you can't make it."
@@ -159,6 +157,7 @@ en:
       select_a_member_to_rsvp: "Select a member to RSVP"
       spot_confirmed: "Your spot has been confirmed for %{event}! We look forward to seeing you there."
       spot_not_confirmed: 'Your spot has not yet been confirmed. We will verify your attendance after you complete the questionnaire.'
+      updated_details: "Invitation details successfully updated."
     invalid_format: "The requested format is invalid: %{invalid_format}"
   notifications:
     provider_already_connected: 'You are already signed in!'
@@ -658,6 +657,11 @@ en:
         newsletter: 'If you do not want to receive the codebar newsletter uncheck this box'
         pronouns: 'What pronouns do you use?'
     errors:
+      models:
+        workshop_invitation:
+          attributes:
+            tutorial:
+              blank: 'must be selected'
       messages:
         all_invitation_details_required: 'Fill in all invitations details to make the event invitable'
         already_sponsoring: 'already a sponsor'

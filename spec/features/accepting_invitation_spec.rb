@@ -18,24 +18,24 @@ RSpec.feature 'Accepting a workshop invitation', type: :feature do
 
     context 'amend invitation details' do
       context 'a student' do
-        scenario 'logged in user with accepted invitation can edit the note' do
+        scenario 'logged in user with accepted invitation can edit the tutorial' do
           tutorial = Tutorial.create(title: 'Lesson 1 - Introducing HTML')
           invitation.update_attribute(:attending, true)
           visit invitation_route
 
-          select tutorial.title, from: 'note'
-          click_on 'Update note'
+          select tutorial.title, from: :workshop_invitation_tutorial
+          click_on 'Update'
 
-          expect(page).to have_content('Successfully updated note.')
+          expect(page).to have_content('Invitation details successfully updated.')
         end
 
-        scenario 'logged in user with accepted invitation errors without note' do
-          invitation.update_attribute(:attending, true)
+        scenario 'logged in user with accepted invitation errors without a tutorial' do
+          invitation.update(attending: true, tutorial: nil)
           visit invitation_route
 
-          click_on 'Update note'
+          click_on 'Update'
 
-          expect(page).to have_content('You must select a note')
+          expect(page).to have_content('Tutorial must be selected')
         end
       end
 
@@ -73,7 +73,7 @@ RSpec.feature 'Accepting a workshop invitation', type: :feature do
           click_on 'Update note'
 
           expect(page).to have_field('workshop_invitation_note', with: note)
-          expect(page).to have_content("Successfully updated note.")
+          expect(page).to have_content("Invitation details successfully updated.")
         end
       end
     end

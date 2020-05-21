@@ -11,20 +11,17 @@ class InvitationController < ApplicationController
   end
 
   def update
-    @invitation = WorkshopInvitation.find_by(token: params[:id])
+    @invitation.assign_attributes(invitation_params.merge!(attending: true, rsvp_time: Time.zone.now))
+    return back_with_message(@invitation.errors.full_messages) unless @invitation.valid?
 
-    if @invitation.role.eql?('Student') && new_note.blank?
-      redirect_to :back, notice: t('messages.error_blank_note')
-    else
-      @invitation.update(note: new_note)
-      redirect_to :back, notice: t('messages.updated_note')
-    end
+    @invitation.update(invitation_params)
+    back_with_message(t('messages.invitations.updated_details'))
   end
 
   private
 
-  def new_note
-    @invitation.role.eql?('Student') ? params[:note] : params[:workshop_invitation][:note]
+  def invitation_params
+    params[:workshop_invitation].present? ?  params.require(:workshop_invitation).permit(:tutorial, :note) : {}
   end
 
   def available_spaces?(workshop, invitation)

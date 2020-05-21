@@ -536,6 +536,7 @@ ActiveRecord::Schema.define(version: 20200522142646) do
     t.datetime "reminded_at"
     t.datetime "rsvp_time"
     t.boolean  "automated_rsvp"
+    t.text     "tutorial"
   end
 
   add_index "workshop_invitations", ["member_id"], name: "index_workshop_invitations_on_member_id", using: :btree

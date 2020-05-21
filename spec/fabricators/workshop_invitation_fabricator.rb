@@ -2,7 +2,7 @@ Fabricator(:workshop_invitation) do
   member
   attending nil
   attended nil
-  note { Faker::Lorem.word }
+  tutorial { Faker::Lorem.word }
   workshop
   role 'Student'
 end
