@@ -145,7 +145,7 @@ en:
     rejected_invitation: "We are so sad you can't make it, but thanks for letting us know %{name}."
     already_rsvped: "You have already confirmed you attendance!"
     not_attending_already: "You have already confirmed you can't make it!"
-    no_available_seats: "Unfortunately there are no more spaces left :(. If you would like to join our waiting list send us an email at %{email}"
+    no_available_seats: "There are no more spots left for this event, but you can join the waiting list."
     feedback_saved: "Thank you for taking the time to give us feedback!"
     feedback_not_found: "You have already submitted feedback for this event."
     updated_note: "Successfully updated note."
@@ -153,6 +153,8 @@ en:
       meeting:
         cancel: "Thanks for letting us know you can't make it."
         rsvp: "Your RSVP was successful. We look forward to seeing you at the Monthly!"
+      event:
+        no_available_seats: "No spaces left. If you would like to join our waiting list send us an email at %{email}"
       rsvped_to_other_workshop: "You have already RSVP'd to another workshop on this date. If you would prefer to attend this workshop, please cancel your other RSVP first."
       select_a_member_to_rsvp: "Select a member to RSVP"
       spot_confirmed: "Your spot has been confirmed for %{event}! We look forward to seeing you there."

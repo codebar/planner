@@ -28,7 +28,7 @@ RSpec.feature 'Managing a course invitation', type: :feature do
       visit accepting_invitation_path
 
       expect(current_url).to eq(root_url)
-      expect(page).to have_content('Unfortunately there are no more spaces left :(.')
+      expect(page).to have_content('There are no more spots left for this event, but you can join the waiting list')
     end
   end
 

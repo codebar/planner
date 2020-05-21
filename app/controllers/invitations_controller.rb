@@ -43,7 +43,7 @@ class InvitationsController < ApplicationController
       redirect_to :back, notice: notice
     else
       email = event.chapters.present? ? event.chapters.first.email : 'hello@codebar.io'
-      redirect_to :back, notice: t('messages.no_available_seats', email: email)
+      redirect_to :back, notice: t('messages.invitations.event.no_available_seats', email: email)
     end
   end
 
