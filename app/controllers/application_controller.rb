@@ -159,12 +159,6 @@ class ApplicationController < ActionController::Base
 
   helper_method :jobs_pending_approval, :chapters
 
-  def upcoming_workshops
-    Workshop.upcoming
-  end
-
-  helper_method :upcoming_workshops
-
   def redirect_back(fallback_location:, **args)
     if referer = request.headers["Referer"]
       redirect_to referer, **args
