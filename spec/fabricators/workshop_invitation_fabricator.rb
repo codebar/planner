@@ -9,10 +9,11 @@ end
 
 Fabricator(:attending_workshop_invitation, from: :workshop_invitation) do
   attending true
+  note { Faker::Lorem.word }
   reminded_at nil
 end
 
-Fabricator(:attended_workshop_invitation, from: :workshop_invitation) do
+Fabricator(:attended_workshop_invitation, from: :attending_workshop_invitation) do
   attended true
 end
 

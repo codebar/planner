@@ -4,7 +4,7 @@ RSpec.feature 'Managing users', type: :feature do
   let(:member) { Fabricate(:member) }
   let(:student) { Fabricate(:student) }
   let(:admin) { Fabricate(:chapter_organiser) }
-  let!(:invitation) { Fabricate(:attended_workshop_invitation, attending: true, member: member) }
+  let!(:invitation) { Fabricate(:attended_workshop_invitation, member: member) }
   let!(:attending_invitation) { Fabricate(:attending_workshop_invitation, member: member) }
 
   before do
