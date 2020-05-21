@@ -2,61 +2,19 @@ require 'spec_helper'
 
 RSpec.describe Member, type: :model  do
   context 'mandatory attributes' do
-    context 'validations for a logginable member' do
-      context 'presence' do
-        it '#name' do
-          member = Fabricate.build(:member, can_log_in: true, name: nil)
+    context 'validation' do
+      it { is_expected.to validate_presence_of(:auth_services) }
 
-          expect(member).to_not be_valid
-          expect(member).to have(1).error_on(:name)
-        end
-
-        it '#surname' do
-          member = Fabricate.build(:member, can_log_in: true, surname: nil)
-
-          expect(member).to_not be_valid
-          expect(member).to have(1).error_on(:surname)
-        end
-
-        it '#email' do
-          member = Fabricate.build(:member, can_log_in: true, email: nil)
-
-          expect(member).to_not be_valid
-          expect(member).to have(1).error_on(:email)
-        end
-
-        context '#about_you' do
-          it 'must be present' do
-            member = Fabricate.build(:member, can_log_in: true, about_you: nil)
-
-            expect(member).to_not be_valid
-            expect(member).to have(1).error_on(:about_you)
-          end
-
-          it 'can be 255 characters in length' do
-            text = 'a' * 255
-            member = Fabricate.build(:member, can_log_in: true, about_you: text)
-
-            expect(member).to be_valid
-          end
-
-          it 'cannot be longer than 255 characters' do
-            text = 'a' * 256
-            member = Fabricate.build(:member, can_log_in: true, about_you: text)
-
-            expect(member).to_not be_valid
-            expect(member).to have(1).error_on(:about_you)
-          end
-        end
+      context 'logginable member' do
+        let(:loginnable_member) { Fabricate.build(:member, can_log_in: true) }
+        it { expect(loginnable_member).to validate_presence_of(:name) }
+        it { expect(loginnable_member).to validate_presence_of(:surname) }
+        it { expect(loginnable_member).to validate_presence_of(:email) }
+        it { expect(loginnable_member).to validate_presence_of(:about_you) }
       end
-    end
 
-    context 'uniqueness' do
-      it '#email' do
-        Fabricate(:member, email: 'sample@email.com')
-
-        expect { Fabricate(:member, email: 'sample@email.com') }.to raise_error ActiveRecord::RecordInvalid
-      end
+      it { is_expected.to validate_length_of(:about_you).is_at_most(255) }
+      it { is_expected.to validate_uniqueness_of(:email)}
     end
 
     context 'properties' do
