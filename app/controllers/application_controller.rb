@@ -112,17 +112,6 @@ class ApplicationController < ActionController::Base
 
   helper_method :manager?
 
-  def is_verified_coach_or_admin?
-    current_user.verified?
-  end
-
-  def is_verified_coach_or_organiser?
-    current_user.verified_or_organiser?
-  end
-
-  helper_method :is_verified_coach_or_admin?
-  helper_method :is_verified_coach_or_organiser?
-
   def is_logged_in?
     unless logged_in?
       flash[:notice] = t('notifications.not_logged_in')
