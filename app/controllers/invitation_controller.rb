@@ -21,7 +21,7 @@ class InvitationController < ApplicationController
   private
 
   def invitation_params
-    params[:workshop_invitation].present? ?  params.require(:workshop_invitation).permit(:tutorial, :note) : {}
+    params[:workshop_invitation].present? ? params.require(:workshop_invitation).permit(:tutorial, :note) : {}
   end
 
   def available_spaces?(workshop, invitation)
