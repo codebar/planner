@@ -16,6 +16,7 @@ class Sponsor < ActiveRecord::Base
   has_many :member_contacts
   has_many :contacts, through: :member_contacts, class_name: 'Member', foreign_key: 'member_id'
 
+  validates :level, inclusion: { in: Sponsor.levels.keys }
   validates :name, :address, :avatar, :website, :seats, presence: true
   validate :website_is_url
 
@@ -49,7 +50,7 @@ class Sponsor < ActiveRecord::Base
   def website_is_url
     begin
       uri = URI.parse(website)
-      valid = uri.kind_of?(URI::HTTP) || uri.kind_of?(URI::HTTPS)
+      valid = uri.is_a?(URI::HTTP) || uri.is_a?(URI::HTTPS)
     rescue URI::InvalidURIError
       valid = false
     end
