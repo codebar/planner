@@ -1,80 +1,45 @@
 require 'spec_helper'
 
-RSpec.describe Sponsor, type: :model  do
+RSpec.describe Sponsor, type: :model do
   subject(:sponsor) { Fabricate.build(:sponsor) }
 
-  it { should respond_to(:name) }
-  it { should respond_to(:website) }
-  it { should respond_to(:address) }
-  it { should respond_to(:workshops) }
-  it { should respond_to(:workshop_sponsors) }
-  it { should respond_to(:avatar) }
-  it { should respond_to(:seats) }
-  it { should respond_to(:email) }
-  it { should respond_to(:contact_first_name) }
-  it { should respond_to(:contact_surname) }
-  it { should respond_to(:accessibility_info) }
-  it { should be_valid }
-
   context 'validations' do
-    context 'presence' do
-      describe '#name' do
-        before { sponsor.name = nil }
+    it { is_expected.to validate_presence_of(:name) }
+    it { is_expected.to validate_presence_of(:address) }
+    it { is_expected.to validate_presence_of(:avatar) }
+    it { is_expected.to validate_presence_of(:website) }
+    it { is_expected.to validate_presence_of(:seats) }
+    it { is_expected.to validate_presence_of(:level) }
 
-        it { should_not be_valid }
-        it { should have(1).error_on(:name) }
+    context '#website_is_url format' do
+      it 'allows full URLs' do
+        sponsor.website = 'http://google.com'
+
+        sponsor.valid?
+
+        expect(sponsor.errors[:website]).to_not include('must be a full, valid URL')
       end
 
-      describe '#website' do
-        before { sponsor.website = nil }
+      it 'does not allow nonsense' do
+        sponsor.website = 'lkjdlkfgjj'
 
-        it { should_not be_valid }
-        it { should have(2).errors_on(:website) }
+        sponsor.valid?
+
+        expect(sponsor.errors[:website]).to include('must be a full, valid URL')
       end
 
-      describe '#address' do
-        before { sponsor.address = nil }
+      it 'must have a protocol' do
+        sponsor.website = 'www.google.com'
 
-        it { should_not be_valid }
-        it { should have(1).error_on(:address) }
-      end
+        sponsor.valid?
 
-      describe '#avatar' do
-        subject(:sponsor) { Fabricate.build(:sponsor, avatar: nil) }
-
-        it { should_not be_valid }
-        it { should have(1).error_on(:avatar) }
-      end
-
-      describe '#seats' do
-        before { sponsor.seats = nil }
-
-        it { should have(1).error_on(:seats) }
+        expect(sponsor.errors[:website]).to include('must be a full, valid URL')
       end
     end
 
-    context 'format' do
-      describe '#website' do
-        describe 'nonsense is not valid.' do
-          before { sponsor.website = 'lkjdlkfgjj' }
-
-          it { should_not be_valid }
-          it { should have(1).error_on(:website) }
-        end
-
-        describe 'websites without a protocol are not valid' do
-          before { sponsor.website = 'www.google.com' }
-
-          it { should_not be_valid }
-          it { should have(1).error_on(:website) }
-        end
-
-        describe 'full URLs are valid' do
-          before { sponsor.website = 'http://google.com' }
-
-          it { should be_valid }
-        end
-      end
+    it 'defines enum level' do
+      is_expected.to define_enum_for(:level)
+        .with_values(%i[hidden standard bronze silver gold])
     end
   end
 

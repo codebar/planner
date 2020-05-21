@@ -18,6 +18,7 @@ RSpec.feature 'Managing sponsors', type: :feature do
         fill_in 'Website', with: 'https://www.sponsorname.com/'
         attach_file('Avatar', Rails.root + 'spec/support/codebar-logo.png')
         fill_in 'Student Spots', with: 20
+        select "Bronze", from: "Level"
 
         click_on 'Create sponsor'
 
