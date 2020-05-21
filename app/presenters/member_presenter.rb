@@ -19,17 +19,17 @@ class MemberPresenter < BasePresenter
     opt_in_newsletter_at.present?
   end
 
-  def pairing_details_array(role, note)
-    role.eql?('Coach') ? coach_pairing_details : student_pairing_details(note)
+  def pairing_details_array(role, tutorial, note)
+    role.eql?('Coach') ? coach_pairing_details(note) : student_pairing_details(tutorial, note)
   end
 
   private
 
-  def coach_pairing_details
-    [newbie?, full_name, 'Coach', 'N/A', skill_list.to_s]
+  def coach_pairing_details(note)
+    [newbie?, full_name, 'Coach', 'N/A', note, skill_list.to_s]
   end
 
-  def student_pairing_details(note)
-    [newbie?, full_name, 'Student', note, 'N/A']
+  def student_pairing_details(tutorial, note)
+    [newbie?, full_name, 'Student', tutorial, note, 'N/A']
   end
 end

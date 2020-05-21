@@ -105,10 +105,10 @@ RSpec.describe WorkshopPresenter do
   context '#pairing_csv' do
     let(:workshop) { double(:workshop, attendances: [invitation]) }
     let(:student) { Fabricate(:student) }
-    let(:invitation) { Fabricate(:workshop_invitation, member: student) }
+    let(:invitation) { Fabricate(:workshop_invitation, member: student, note: 'Note') }
 
     it 'returns a csv with all the details required to enable organisers to pair the participants' do
-      student_pairing_array = [true, student.full_name, 'Student', invitation.note, 'N/A']
+      student_pairing_array = [true, student.full_name, 'Student', invitation.tutorial, invitation.note, 'N/A']
       student_presenter = MemberPresenter.new(student)
 
       expect(presenter.pairing_csv)
