@@ -7,14 +7,6 @@ class Feedback < ActiveRecord::Base
 
   validates :rating, inclusion: { in: 1..5, message: "can't be blank" }
   validates :tutorial, presence: true
-  validate :coach_field_has_a_coach_role?
-
-  def coach_field_has_a_coach_role?
-    return false unless coach_id
-    return if Member.find(coach_id).groups.coaches.any?
-
-    errors.add(:coach, "Coach member doesn't have 'coach' role.")
-  end
 
   def self.submit_feedback(params, token)
     return false unless feedback_request = FeedbackRequest.find_by(token: token)
