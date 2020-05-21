@@ -17,7 +17,7 @@ class Sponsor < ActiveRecord::Base
   has_many :contacts, through: :member_contacts, class_name: 'Member', foreign_key: 'member_id'
 
   validates :level, inclusion: { in: Sponsor.levels.keys }
-  validates :name, :address, :avatar, :website, :seats, presence: true
+  validates :name, :address, :avatar, :website, :seats, :level, presence: true
   validate :website_is_url
 
   default_scope -> { order('updated_at desc') }

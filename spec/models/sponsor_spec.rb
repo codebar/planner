@@ -9,6 +9,7 @@ RSpec.describe Sponsor, type: :model do
     it { is_expected.to validate_presence_of(:avatar) }
     it { is_expected.to validate_presence_of(:website) }
     it { is_expected.to validate_presence_of(:seats) }
+    it { is_expected.to validate_presence_of(:level) }
 
     context '#website_is_url format' do
       it 'allows full URLs' do
