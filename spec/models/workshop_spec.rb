@@ -133,14 +133,22 @@ RSpec.describe Workshop, type: :model do
 
   context '#scopes' do
     describe '#host' do
-      let(:sponsor) { Fabricate(:sponsor) }
-
-      before do
-        workshop.workshop_sponsors.delete_all
-        Fabricate(:workshop_sponsor, sponsor: sponsor, workshop: workshop, host: true)
+      it 'includes workshops with sponsored hosts' do
+        workshop_sponsor = Fabricate(:workshop_sponsor, host: true)
+        workshop = workshop_sponsor.workshop
+        expect(workshop.host).to eq workshop_sponsor.sponsor
       end
 
-      it { expect(workshop.host).to eq(sponsor) }
+      it 'excludes workshops without hosts' do
+        workshop_sponsor = Fabricate(:workshop_sponsor, host: false)
+        workshop = workshop_sponsor.workshop
+        expect(workshop.host).to be_nil
+      end
+
+      it 'excludes workshops without sponsor' do
+        workshop = Fabricate(:workshop_no_sponsor)
+        expect(workshop.host).to be_nil
+      end
     end
 
     context 'attendances' do
