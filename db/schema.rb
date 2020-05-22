@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200511151348) do
+ActiveRecord::Schema.define(version: 20200522142646) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -392,7 +392,6 @@ ActiveRecord::Schema.define(version: 20200511151348) do
     t.string   "about_you"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "unsubscribed"
     t.boolean  "can_log_in",                     default: false, null: false
     t.string   "mobile"
     t.boolean  "received_coach_welcome_email",   default: false
@@ -400,7 +399,10 @@ ActiveRecord::Schema.define(version: 20200511151348) do
     t.string   "pronouns"
     t.datetime "accepted_toc_at"
     t.datetime "opt_in_newsletter_at"
+    t.boolean  "unsubscribed"
   end
+
+  add_index "members", ["email"], name: "index_members_on_email", unique: true, using: :btree
 
   create_table "members_permissions", id: false, force: :cascade do |t|
     t.integer "member_id"
