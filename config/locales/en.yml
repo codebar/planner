@@ -647,6 +647,9 @@ en:
         name: 'First name'
         newsletter: 'If you do not want to receive the codebar newsletter uncheck this box'
         pronouns: 'What pronouns do you use?'
+    errors:
+      messages:
+        already_sponsoring: 'already a sponsor'
   social_media_links:
     slack_html: https://slack.codebar.io
     discord_invitation: https://discord.gg/Eru89Rk
