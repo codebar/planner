@@ -393,7 +393,6 @@ DEPENDENCIES
   carrierwave
   carrierwave-ftp
   chosen-rails
-  coffee-rails (~> 4.2)
   compass-rails!
   coveralls (~> 0.8.23)
   database_cleaner
