@@ -24,7 +24,7 @@ class Event < ActiveRecord::Base
 
   before_save do
     begins_at = Time.parse(self.begins_at)
-    self.date_and_time = self.date_and_time.change(hour: begins_at.hour, min: begins_at.min)
+    self.date_and_time = date_and_time.change(hour: begins_at.hour, min: begins_at.min)
   end
 
   def to_s
@@ -68,10 +68,10 @@ class Event < ActiveRecord::Base
   end
 
   def invitability
-    errors.add(:coach_spaces, 'must be set') if self.coach_spaces.blank?
-    errors.add(:student_space, 'must be set') if self.student_spaces.blank?
+    errors.add(:coach_spaces, 'must be set') if coach_spaces.blank?
+    errors.add(:student_space, 'must be set') if student_spaces.blank?
     errors.add(:invitable, 'Fill in all invitations details to make the event invitable') \
-      unless self.coach_spaces.present? && self.student_spaces.present?
+      unless coach_spaces.present? && student_spaces.present?
   end
 
   def student_emails

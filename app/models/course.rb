@@ -38,6 +38,6 @@ class Course < ActiveRecord::Base
   private
 
   def set_slug
-    self.slug = title.parameterize if self.slug.nil?
+    self.slug = title.parameterize if slug.nil?
   end
 end

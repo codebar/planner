@@ -50,6 +50,6 @@ class Chapter < ActiveRecord::Base
   end
 
   def set_slug
-    self.slug ||= self.name.parameterize
+    self.slug ||= name.parameterize
   end
 end
