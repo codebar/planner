@@ -31,7 +31,7 @@ class Workshop < ActiveRecord::Base
   before_validation :set_opens_at
 
   def host
-    WorkshopSponsor.hosts.for_workshop(self.id).first.sponsor rescue nil
+    WorkshopSponsor.hosts.for_workshop(id).first.sponsor rescue nil
   end
 
   def waiting_list

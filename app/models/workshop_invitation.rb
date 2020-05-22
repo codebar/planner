@@ -19,12 +19,12 @@ class WorkshopInvitation < ActiveRecord::Base
   scope :on_waiting_list, -> { joins(:waiting_list) }
 
   def waiting_list_position
-    @waiting_list_position ||= WaitingList.by_workshop(self.workshop)
-                                          .where_role(self.role)
+    @waiting_list_position ||= WaitingList.by_workshop(workshop)
+                                          .where_role(role)
                                           .where(auto_rsvp: true)
                                           .order(:created_at)
                                           .map(&:invitation_id)
-                                          .index(self.id) + 1
+                                          .index(id) + 1
   end
 
   def parent

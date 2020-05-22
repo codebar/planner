@@ -24,7 +24,7 @@ class Job < ActiveRecord::Base
   end
 
   def expired?
-    self.expiry_date.past?
+    expiry_date.past?
   end
 
   def slug_candidates
