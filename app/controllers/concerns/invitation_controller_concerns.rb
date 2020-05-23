@@ -2,8 +2,7 @@ module InvitationControllerConcerns
   extend ActiveSupport::Concern
 
   included do
-    before_action :set_invitation
-
+    include WorkshopInvitationConcerns
     include InstanceMethods
   end
 
@@ -62,10 +61,6 @@ module InvitationControllerConcerns
     end
 
     private
-
-    def back_with_message(message)
-      redirect_back(fallback_location: invitation_path(@invitation), notice: message)
-    end
 
     def attending_or_waitlisted?(workshop, user)
       workshop.attendee?(user) || workshop.waitlisted?(user)

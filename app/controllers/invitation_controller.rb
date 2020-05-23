@@ -29,7 +29,7 @@ class InvitationController < ApplicationController
       (invitation.role.eql?('Coach') && workshop.coach_spaces?)
   end
 
-  def set_invitation
-    @invitation = WorkshopInvitation.find_by(token: params[:id])
+  def token
+    params[:id]
   end
 end

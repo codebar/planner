@@ -7,19 +7,23 @@ RSpec.feature 'Accepting a workshop invitation', type: :feature do
     let(:invitation_route) { invitation_path(invitation) }
     let(:accept_invitation_route) { accept_invitation_path(invitation) }
     let(:reject_invitation_route) { reject_invitation_path(invitation) }
-
     let(:set_no_available_slots) { invitation.workshop.host.update_attribute(:seats, 0) }
-
-    before(:each) do
-      login(member)
-    end
+    let!(:tutorial) { Fabricate(:tutorial) }
 
     it_behaves_like 'invitation route'
 
     context 'amend invitation details' do
       context 'a student' do
-        scenario 'logged in user with accepted invitation can edit the tutorial' do
-          tutorial = Tutorial.create(title: 'Lesson 1 - Introducing HTML')
+        scenario 'cannot accept an invitation  without a tutorial' do
+          invitation.update_attributes(attending: nil, tutorial: nil)
+          visit invitation_route
+
+          click_on 'Attend'
+
+          expect(page).to have_content('Tutorial must be selected')
+        end
+
+        scenario 'with an accepted invitation can edit the tutorial' do
           invitation.update_attribute(:attending, true)
           visit invitation_route
 
@@ -27,15 +31,6 @@ RSpec.feature 'Accepting a workshop invitation', type: :feature do
           click_on 'Update'
 
           expect(page).to have_content('Invitation details successfully updated.')
-        end
-
-        scenario 'logged in user with accepted invitation errors without a tutorial' do
-          invitation.update(attending: true, tutorial: nil)
-          visit invitation_route
-
-          click_on 'Update'
-
-          expect(page).to have_content('Tutorial must be selected')
         end
       end
 
