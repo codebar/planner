@@ -1,37 +1,70 @@
 require 'spec_helper'
 
 RSpec.describe WorkshopInvitation, type: :model  do
-  context 'methods' do
-    let(:invitation) { Fabricate(:student_workshop_invitation) }
-    let!(:accepted_invitation) { 2.times { Fabricate(:workshop_invitation, attending: true) } }
+  it_behaves_like InvitationConcerns, :workshop_invitation
 
-    it_behaves_like InvitationConcerns
+  context 'defaults' do
+    it { is_expected.to have_attributes(attending: nil) }
+    it { is_expected.to have_attributes(attended: nil) }
+  end
+
+  context 'validates' do
+    it { is_expected.to validate_presence_of(:workshop) }
+    it { is_expected.to validate_uniqueness_of(:member_id).scoped_to(:workshop_id, :role) }
+    it { is_expected.to validate_inclusion_of(:role).in_array(['Student', 'Coach']) }
   end
 
   context 'scopes' do
-    it '#attended' do
-      4.times { Fabricate(:attended_workshop_invitation) }
+    context '#attended' do
+      it 'ignores when attended nil' do
+        Fabricate(:workshop_invitation, attended: nil)
 
-      expect(WorkshopInvitation.attended.count).to eq(4)
+        expect(WorkshopInvitation.attended).to eq []
+      end
+
+      it 'ignores when attended false' do
+        Fabricate(:workshop_invitation, attended: false)
+
+        expect(WorkshopInvitation.attended).to eq []
+      end
+
+      it 'selects when attended true' do
+        invitation = Fabricate(:workshop_invitation, attended: true)
+
+        expect(WorkshopInvitation.attended).to include(invitation)
+      end
     end
 
-    it '#not_accepted' do
-      4.times { Fabricate(:workshop_invitation, attending: nil) }
-      4.times { Fabricate(:workshop_invitation, attending: false) }
+    context '#accepted_or_attended' do
+      it 'ignores when attending nil and attended nil' do
+        Fabricate(:workshop_invitation, attending: nil, attended: nil)
 
-      expect(WorkshopInvitation.not_accepted.count).to eq(8)
-    end
+        expect(WorkshopInvitation.accepted_or_attended).to eq []
+      end
 
-    it '#to_coaches' do
-      6.times { Fabricate(:coach_workshop_invitation) }
+      it 'ignores when attending false and attended false' do
+        Fabricate(:workshop_invitation, attending: false, attended: false)
 
-      expect(WorkshopInvitation.to_coaches.count).to eq(6)
-    end
+        expect(WorkshopInvitation.accepted_or_attended).to eq []
+      end
 
-    it '#to_student' do
-      4.times { Fabricate(:student_workshop_invitation) }
+      it 'selects when attending false and attended true' do
+        invitation = Fabricate(:workshop_invitation, attending: false, attended: true)
 
-      expect(WorkshopInvitation.to_students.count).to eq(4)
+        expect(WorkshopInvitation.accepted_or_attended).to include(invitation)
+      end
+
+      it 'selects when attending true and attended false' do
+        invitation = Fabricate(:workshop_invitation, attending: true, attended: false)
+
+        expect(WorkshopInvitation.accepted_or_attended).to include(invitation)
+      end
+
+      it 'selects when attending true and attended true' do
+        invitation = Fabricate(:workshop_invitation, attending: true, attended: true)
+
+        expect(WorkshopInvitation.accepted_or_attended).to include(invitation)
+      end
     end
 
     it '#year' do

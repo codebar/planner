@@ -11,6 +11,7 @@ class WorkshopInvitation < ActiveRecord::Base
   scope :year, ->(year) { joins(:workshop).where('EXTRACT(year FROM workshops.date_and_time) = ?', year) }
   scope :accepted, -> { where(attending: true) }
   scope :attended, -> { where(attended: true) }
+  scope :accepted_or_attended, -> { where('attending=? or attended=?', true, true) }
   scope :to_students, -> { where(role: 'Student') }
   scope :to_coaches, -> { where(role: 'Coach') }
   scope :order_by_latest, -> { joins(:workshop).order('workshops.date_and_time desc') }
