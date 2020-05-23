@@ -3,6 +3,10 @@ require 'spec_helper'
 RSpec.describe Invitation, type: :model  do
   it_behaves_like InvitationConcerns, :invitation
 
+  context 'defaults' do
+    it { is_expected.to have_attributes(attending: nil) }
+  end
+
   context 'validations' do
     it { is_expected.to validate_presence_of(:event) }
     it { is_expected.to validate_presence_of(:member) }

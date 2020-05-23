@@ -3,6 +3,11 @@ require 'spec_helper'
 RSpec.describe WorkshopInvitation, type: :model  do
   it_behaves_like InvitationConcerns, :workshop_invitation
 
+  context 'defaults' do
+    it { is_expected.to have_attributes(attending: nil) }
+    it { is_expected.to have_attributes(attended: nil) }
+  end
+
   context 'validates' do
     it { is_expected.to validate_presence_of(:workshop) }
     it { is_expected.to validate_uniqueness_of(:member_id).scoped_to(:workshop_id, :role) }
