@@ -4,15 +4,10 @@ RSpec.describe Invitation, type: :model  do
   it_behaves_like InvitationConcerns, :invitation
 
   context 'validations' do
-    subject { Invitation.new }
-
-    it '#event' do
-      should have(1).error_on(:event)
-    end
-
-    it '#role' do
-      should have(1).error_on(:role)
-    end
+    it { is_expected.to validate_presence_of(:event) }
+    it { is_expected.to validate_presence_of(:member) }
+    it { is_expected.to validate_uniqueness_of(:member_id).scoped_to(:event_id, :role) }
+    it { is_expected.to validate_inclusion_of(:role).in_array(['Student', 'Coach']) }
   end
 
   context '#student_spaces?' do
