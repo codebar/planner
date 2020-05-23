@@ -2,10 +2,7 @@ require 'spec_helper'
 
 RSpec.describe WorkshopInvitation, type: :model  do
   context 'methods' do
-    let(:invitation) { Fabricate(:student_workshop_invitation) }
-    let!(:accepted_invitation) { 2.times { Fabricate(:workshop_invitation, attending: true) } }
-
-    it_behaves_like InvitationConcerns
+    it_behaves_like InvitationConcerns, :workshop_invitation
   end
 
   context 'scopes' do

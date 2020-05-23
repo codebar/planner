@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 RSpec.describe Invitation, type: :model  do
+  it_behaves_like InvitationConcerns, :invitation
+
   context 'validations' do
     subject { Invitation.new }
 

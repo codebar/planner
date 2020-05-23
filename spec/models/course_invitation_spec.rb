@@ -2,9 +2,7 @@ require 'spec_helper'
 
 RSpec.describe CourseInvitation, type: :model  do
   let(:invitation) { Fabricate(:course_invitation) }
-  let!(:accepted_invitation) { 2.times { Fabricate(:course_invitation, attending: true) } }
-
-  it_behaves_like InvitationConcerns
+  it_behaves_like InvitationConcerns, :course_invitation
 
   context '#role' do
     it 'sets the role to Student' do
