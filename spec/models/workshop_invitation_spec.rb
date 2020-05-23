@@ -12,6 +12,38 @@ RSpec.describe WorkshopInvitation, type: :model  do
       expect(WorkshopInvitation.attended.count).to eq(4)
     end
 
+    context '#accepted_or_attended' do
+      it 'ignores when attending nil and attended nil' do
+        Fabricate(:workshop_invitation, attending: nil, attended: nil)
+
+        expect(WorkshopInvitation.accepted_or_attended).to eq []
+      end
+
+      it 'ignores when attending false and attended false' do
+        Fabricate(:workshop_invitation, attending: false, attended: false)
+
+        expect(WorkshopInvitation.accepted_or_attended).to eq []
+      end
+
+      it 'selects when attending false and attended true' do
+        invitation = Fabricate(:workshop_invitation, attending: false, attended: true)
+
+        expect(WorkshopInvitation.accepted_or_attended).to include(invitation)
+      end
+
+      it 'selects when attending true and attended false' do
+        invitation = Fabricate(:workshop_invitation, attending: true, attended: false)
+
+        expect(WorkshopInvitation.accepted_or_attended).to include(invitation)
+      end
+
+      it 'selects when attending true and attended true' do
+        invitation = Fabricate(:workshop_invitation, attending: true, attended: true)
+
+        expect(WorkshopInvitation.accepted_or_attended).to include(invitation)
+      end
+    end
+
     it '#not_accepted' do
       4.times { Fabricate(:workshop_invitation, attending: nil) }
       4.times { Fabricate(:workshop_invitation, attending: false) }

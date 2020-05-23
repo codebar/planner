@@ -9,7 +9,6 @@ module InvitationConcerns
     validates :token, uniqueness: true
 
     scope :accepted, -> { where(attending: true) }
-    scope :accepted_or_attended, -> { where('attending=? or attended=?', true, true) }
     scope :not_accepted, -> { where('attending is NULL or attending = false') }
 
     before_create :set_token
