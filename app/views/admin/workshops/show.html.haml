@@ -42,7 +42,10 @@
         %h3
           %small #{humanize_date(@workshop.date_and_time, @workshop.ends_at, with_time: true)}
         - if @workshop.rsvp_opens_at
-          RSVPs will open at
+          - if @workshop.open_for_rsvp?
+            RSVPs opened at
+          - else
+            RSVPs will open at
           = @workshop.rsvp_opens_at.strftime('%H:%M on %d/%m/%Y.')
           %br
           %br
