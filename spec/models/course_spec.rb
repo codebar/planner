@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 RSpec.describe Course, type: :model  do
+  include_examples Listable, :course
+
   let(:course) { Fabricate(:course) }
 
   context 'validations' do
