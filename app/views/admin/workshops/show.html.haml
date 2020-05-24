@@ -42,13 +42,12 @@
         %h3
           %small #{humanize_date(@workshop.date_and_time, @workshop.ends_at, with_time: true)}
         - if @workshop.rsvp_opens_at
-          - if @workshop.open_for_rsvp?
-            RSVPs opened at
-          - else
-            RSVPs will open at
-          = @workshop.rsvp_opens_at.strftime('%H:%M on %d/%m/%Y.')
-          %br
-          %br
+          %div{style: "margin-bottom: 2em"}
+            - if @workshop.open_for_rsvp?
+              RSVPs opened at
+            - else
+              RSVPs will open at
+            = @workshop.rsvp_opens_at.strftime('%H:%M on %d/%m/%Y.')
         - if @workshop.venue.present? || @workshop.virtual?
           %strong.label.round.primary #{@workshop.student_spaces} student spots, #{@workshop.coach_spaces} coach spots
           - unless @workshop.spaces?
