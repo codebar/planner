@@ -22,18 +22,6 @@ RSpec.describe Listable, type: :model do
       end
     end
 
-    context '#recent' do
-      it 'returns a list of the last 10 workshops' do
-        Fabricate.times(9, :past_workshop)
-        Fabricate.times(3, :workshop)
-        recent_workshops = 10.times.map do |n|
-          Fabricate(:workshop, date_and_time: n.days.ago)
-        end
-
-        expect(Workshop.recent).to eq(recent_workshops)
-      end
-    end
-
     context '#completed_since_yesterday' do
       it 'returns a list of yesterday\'s events' do
         Fabricate(:workshop, date_and_time: 24.hours.ago)
