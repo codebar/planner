@@ -63,10 +63,6 @@ class Event < ActiveRecord::Base
     I18n.l(date_and_time, format: :dashboard)
   end
 
-  def update_date_and_time
-    self.date_and_time = date_and_time.change(hour: time.hour, min: time.min)
-  end
-
   def invitability
     errors.add(:coach_spaces, 'must be set') if coach_spaces.blank?
     errors.add(:student_space, 'must be set') if student_spaces.blank?
