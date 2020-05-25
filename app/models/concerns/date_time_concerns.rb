@@ -38,7 +38,7 @@ module DateTimeConcerns
       super.in_time_zone(time_zone)
     end
 
-    def past?
+    def before_today?
       date_and_time < Time.zone.today
     end
 

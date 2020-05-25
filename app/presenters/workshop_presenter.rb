@@ -54,7 +54,7 @@ class WorkshopPresenter < EventPresenter
   end
 
   def distance_of_time
-    return "(#{distance_of_time_in_words_to_now(date_and_time)} ago)" if past?
+    return "(#{distance_of_time_in_words_to_now(date_and_time)} ago)" if before_today?
 
     "(in #{distance_of_time_in_words_to_now(date_and_time)})"
   end

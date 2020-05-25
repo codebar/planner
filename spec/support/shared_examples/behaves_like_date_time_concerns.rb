@@ -39,12 +39,12 @@ RSpec.shared_examples DateTimeConcerns do |date_time_type|
     end
   end
 
-  context '#past?' do
+  context '#before_today?' do
     it 'returns true for object with datetime before today' do
       travel_to Time.zone.local(2010, 12, 31, 23, 59, 42) do
         date_time_able = Fabricate(date_time_type,
                                    date_and_time: Time.zone.local(2010, 12, 30, 23, 59, 59))
-        expect(date_time_able.past?).to be true
+        expect(date_time_able.before_today?).to be true
       end
     end
 
@@ -52,7 +52,7 @@ RSpec.shared_examples DateTimeConcerns do |date_time_type|
       travel_to Time.zone.local(2010, 12, 31, 23, 59, 42) do
         date_time_able = Fabricate(date_time_type,
                                    date_and_time: Time.zone.local(2010, 12, 31, 0, 0, 0))
-        expect(date_time_able.past?).to be false
+        expect(date_time_able.before_today?).to be false
       end
     end
   end

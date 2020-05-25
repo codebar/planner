@@ -2,7 +2,7 @@
   %p
     %label.label.info= t('workshops.not_open_for_rsvp')
 - else
-  - if @workshop.past? and !logged_in?
+  - if @workshop.before_today? and !logged_in?
     %p= t('workshops.sign_up_to_be_invited')
   - else
     - if logged_in?

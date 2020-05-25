@@ -65,6 +65,14 @@ RSpec.describe Meeting, type: :model  do
     end
   end
 
+  context '#before_today?' do
+    it 'checks whether the meeting already happened' do
+      meeting = Fabricate(:meeting, date_and_time: Time.zone.local(2018, 8, 20, 18, 30))
+
+      expect(meeting.before_today?).to eq(true)
+    end
+  end
+
   context '#attendees_csv' do
     it 'generates a csv of attendees' do
       meeting = Fabricate(:meeting)
