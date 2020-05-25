@@ -9,3 +9,22 @@
 .mt1 {
   margin-top: 50px;
 }
+
+/* Margin utility classes */
+@for $i from 0 through 5 {
+  .margin-top-#{$i} {
+    margin-top: #{$i}em;
+  }
+
+  .margin-bottom-#{$i} {
+    margin-bottom: #{$i}em;
+  }
+
+  .margin-right-#{$i} {
+    margin-right: #{$i}em;
+  }
+
+  .margin-left-#{$i} {
+    margin-left: #{$i}em;
+  }
+}
