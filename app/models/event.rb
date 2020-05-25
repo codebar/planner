@@ -9,18 +9,13 @@ class Event < ActiveRecord::Base
   has_many :sponsorships
   has_many :sponsors, through: :sponsorships
   has_many :organisers, -> { where('permissions.name' => 'organiser') }, through: :permissions, source: :members
-
   has_and_belongs_to_many :chapters
-
   has_many :invitations
 
   validates :name, :slug, :info, :schedule, :description, presence: true
   validates :slug, uniqueness: true
-
   validate :invitability, if: :invitable?
-
   validates :coach_spaces, :student_spaces, numericality: true
-  attr_accessor :publish_day, :publish_time
 
   before_save do
     begins_at = Time.parse(self.begins_at)
@@ -44,11 +39,11 @@ class Event < ActiveRecord::Base
   end
 
   def coaches_only?
-    student_spaces == 0
+    student_spaces.zero?
   end
 
   def students_only?
-    coach_spaces == 0
+    coach_spaces.zero?
   end
 
   def coach_spaces?
@@ -63,15 +58,11 @@ class Event < ActiveRecord::Base
     I18n.l(date_and_time, format: :dashboard)
   end
 
-  def update_date_and_time
-    self.date_and_time = date_and_time.change(hour: time.hour, min: time.min)
-  end
-
   def invitability
-    errors.add(:coach_spaces, 'must be set') if coach_spaces.blank?
-    errors.add(:student_space, 'must be set') if student_spaces.blank?
-    errors.add(:invitable, 'Fill in all invitations details to make the event invitable') \
-      unless coach_spaces.present? && student_spaces.present?
+    errors.add(:coach_spaces, :required) if coach_spaces.blank?
+    errors.add(:student_spaces, :required) if student_spaces.blank?
+    errors.add(:invitable, :all_invitation_details_required) \
+      if coach_spaces.blank? || student_spaces.blank?
   end
 
   def student_emails
