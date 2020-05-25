@@ -90,14 +90,4 @@ RSpec.describe Event, type: :model  do
       expect(event.verified_students.count).to eq(3)
     end
   end
-
-  context 'validations' do
-    it '#slug' do
-      event = Fabricate(:event, slug: 'event-slug')
-      new_event = Fabricate.build(:event, slug: 'event-slug')
-      new_event.valid?
-
-      expect(new_event.errors.messages[:slug].first).to eq("has already been taken")
-    end
-  end
 end
