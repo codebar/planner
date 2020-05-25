@@ -9,7 +9,7 @@
         = t('workshops.virtual.title', chapter: @workshop.chapter.name)
         %br
         %small #{humanize_date(@workshop.date_and_time, @workshop.ends_at, with_time: true)} #{@workshop.distance_of_time}
-      - if @workshop.date_and_time.past?
+      - if @workshop.past?
         %label.label.warning= t('messages.already_taken_place')
 
   %section#banner

@@ -25,5 +25,5 @@
               - workshop.sponsors.each do |sponsor|
                 = link_to sponsor.name, sponsor.website
             %td
-              - if workshop.date_and_time.future?
+              - if workshop.future?
                 %label.label upcoming
