@@ -1,11 +1,22 @@
-.mb0 {
-  margin-bottom: 0px;
-}
+/* Margin utility classes */
+@for $i from 0 through 5 {
+  .m#{$i} {
+    margin: #{$i}em;
+  }
 
-.mb1 {
-  margin-bottom: 100px;
-}
+  .mt#{$i} {
+    margin-top: #{$i}em;
+  }
 
-.mt1 {
-  margin-top: 50px;
+  .mb#{$i} {
+    margin-bottom: #{$i}em;
+  }
+
+  .mr#{$i} {
+    margin-right: #{$i}em;
+  }
+
+  .ml#{$i} {
+    margin-left: #{$i}em;
+  }
 }
