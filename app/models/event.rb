@@ -9,16 +9,12 @@ class Event < ActiveRecord::Base
   has_many :sponsorships
   has_many :sponsors, through: :sponsorships
   has_many :organisers, -> { where('permissions.name' => 'organiser') }, through: :permissions, source: :members
-
   has_and_belongs_to_many :chapters
-
   has_many :invitations
 
   validates :name, :slug, :info, :schedule, :description, presence: true
   validates :slug, uniqueness: true
-
   validate :invitability, if: :invitable?
-
   validates :coach_spaces, :student_spaces, numericality: true
 
   before_save do
