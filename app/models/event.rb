@@ -62,7 +62,7 @@ class Event < ActiveRecord::Base
     errors.add(:coach_spaces, :required) if coach_spaces.blank?
     errors.add(:student_spaces, :required) if student_spaces.blank?
     errors.add(:invitable, :all_invitation_details_required) \
-      unless coach_spaces.present? && student_spaces.present?
+      if coach_spaces.blank? || student_spaces.blank?
   end
 
   def student_emails
