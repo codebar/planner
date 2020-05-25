@@ -649,7 +649,9 @@ en:
         pronouns: 'What pronouns do you use?'
     errors:
       messages:
+        all_invitation_details_required: 'Fill in all invitations details to make the event invitable'
         already_sponsoring: 'already a sponsor'
+        required: 'must be set'
   social_media_links:
     slack_html: https://slack.codebar.io
     discord_invitation: https://discord.gg/Eru89Rk
