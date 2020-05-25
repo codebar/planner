@@ -23,7 +23,7 @@ module DateTimeConcerns
     end
 
     def time
-      date_and_time.try(:time)
+      date_and_time&.time
     end
 
     def date_and_time
