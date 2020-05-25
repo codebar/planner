@@ -20,7 +20,6 @@ class Event < ActiveRecord::Base
   validate :invitability, if: :invitable?
 
   validates :coach_spaces, :student_spaces, numericality: true
-  attr_accessor :publish_day, :publish_time
 
   before_save do
     begins_at = Time.parse(self.begins_at)
