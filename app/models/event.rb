@@ -39,11 +39,11 @@ class Event < ActiveRecord::Base
   end
 
   def coaches_only?
-    student_spaces == 0
+    student_spaces.zero?
   end
 
   def students_only?
-    coach_spaces == 0
+    coach_spaces.zero?
   end
 
   def coach_spaces?
