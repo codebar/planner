@@ -4,6 +4,8 @@ class ApplicationController < ActionController::Base
   rescue_from Exception do |ex|
     Rollbar.error(ex)
     Rails.logger.fatal(ex)
+    raise unless Rails.env.production?
+
     respond_to do |format|
       format.html { render 'errors/error', layout: false, status: :internal_server_error }
       format.all  { render nothing: true, status: :internal_server_error }
