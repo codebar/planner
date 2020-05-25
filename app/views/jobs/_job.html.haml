@@ -1,6 +1,6 @@
 %li.job
-  %h3.mb0= link_to job.title, job_path(job)
-  %p.lead.mb0="#{job.company}, #{job.location}"
+  %h3.margin-bottom-0= link_to job.title, job_path(job)
+  %p.lead.margin-bottom-0="#{job.company}, #{job.location}"
   %dl
     - if job.salary.present?
       %dt= t('job.salary')
