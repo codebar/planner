@@ -1,5 +1,9 @@
 /* Margin utility classes */
 @for $i from 0 through 5 {
+  .m#{$i} {
+    margin: #{$i}em;
+  }
+
   .mt#{$i} {
     margin-top: #{$i}em;
   }
