@@ -4,7 +4,8 @@
       .large-12.columns
         %br
         %ul.breadcrumbs
-          %li=link_to  t('member.jobs.title'), member_jobs_path
+          %li
+            %span=link_to t('member.jobs.title'), member_jobs_path
           %li.current
             %span=t('member.jobs.new.title')
 
