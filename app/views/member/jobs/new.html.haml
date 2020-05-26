@@ -30,8 +30,8 @@
               %input#short{type: 'checkbox'}
               %label{for: 'short'}= t('member.jobs.new.short')
             %li
-              %input#short{type: 'checkbox'}
-              %label{for: 'pay'}= t('member.jobs.new.pay', link: link_to(t('member.jobs.new.donation'), new_donation_path)).html_safe
+              %input#donation{type: 'checkbox'}
+              %label{for: 'donation'}= t('member.jobs.new.pay', link: link_to(t('member.jobs.new.donation'), new_donation_path)).html_safe
 
     %br
     .row
