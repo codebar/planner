@@ -42,7 +42,7 @@
         %h3
           %small #{humanize_date(@workshop.date_and_time, @workshop.ends_at, with_time: true)}
         - if @workshop.rsvp_opens_at
-          %div{style: "margin-bottom: 2em"}
+          %div.mb2
             - if @workshop.open_for_rsvp?
               RSVPs opened at
             - else
