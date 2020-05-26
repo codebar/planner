@@ -5,23 +5,6 @@ RSpec.describe Meeting, type: :model  do
   include_examples DateTimeConcerns, :meeting
 
   context 'validations' do
-    subject { Meeting.new }
-
-    it '#date_and_time' do
-      should have(1).error_on(:date_and_time)
-    end
-
-    it '#venue' do
-      should have(1).error_on(:venue)
-    end
-  end
-
-  it '#slug' do
-    meeting = Fabricate(:meeting, slug: 'meeting')
-    new_meeting = Fabricate.build(:meeting, slug: 'meeting')
-    new_meeting.valid?
-
-    expect(new_meeting.errors.messages[:slug].first).to eq('has already been taken')
   end
 
   context '#title' do
