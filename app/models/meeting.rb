@@ -42,11 +42,11 @@ class Meeting < ActiveRecord::Base
     CSV.generate { |csv| attendees_array.each { |a| csv << a } }
   end
 
+  private
+
   def time_zone
     'London'
   end
-
-  private
 
   def attendees_array
     invitations.accepted.map { |a| [a.member.full_name] }
