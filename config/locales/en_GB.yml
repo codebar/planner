@@ -366,8 +366,8 @@ en-GB:
         salary: The job pays an appropriate salary
         short: "It's short and to the point"
         approval_info: "*Once submitted, a job will be visible once it has been reviewed and approved."
-        pay: You have made the required payment of £50 through %{link}
-        donation: a donation
+        pay: 
+          html: You have made the required payment of £50 through <a href="%{link}">a donation</a>.
         button:
           pay: Make a payment
       edit:
