@@ -56,19 +56,16 @@ RSpec.describe Workshop, type: :model do
 
     context 'date_and_time' do
       it 'saves the local time in UTC' do
-        workshop.update!(
-          local_date: '12/06/2015',
-          local_time: '18:30'
-        )
+        workshop.update!(local_date: '12/06/2015', local_time: '18:30')
 
-        expect(workshop.read_attribute(:date_and_time)).to eq(utc_time)
+        expect(workshop.date_and_time).to eq utc_time
       end
 
       it 'retrieves the local time from the saved UTC value' do
-        workshop.update_attribute(:date_and_time, utc_time)
+        workshop.update!(date_and_time: utc_time)
 
-        expect(workshop.date_and_time).to eq(pacific_time)
-        expect(workshop.date_and_time.zone).to eq('PDT')
+        expect(workshop.date_and_time).to eq pacific_time
+        expect(workshop.date_and_time.zone).to eq 'PDT'
       end
     end
 
@@ -79,14 +76,14 @@ RSpec.describe Workshop, type: :model do
           rsvp_open_local_time: '18:30'
         )
 
-        expect(workshop.read_attribute(:rsvp_opens_at)).to eq(utc_time)
+        expect(workshop.rsvp_opens_at).to eq(utc_time)
       end
 
       it 'retrieves the local time from the saved UTC value' do
-        workshop.update_attribute(:rsvp_opens_at, utc_time)
+        workshop.update!(rsvp_opens_at: utc_time)
 
-        expect(workshop.rsvp_opens_at).to eq(pacific_time)
-        expect(workshop.rsvp_opens_at.zone).to eq('PDT')
+        expect(workshop.rsvp_opens_at).to eq pacific_time
+        expect(workshop.rsvp_opens_at.zone).to eq 'PDT'
       end
     end
   end
@@ -96,19 +93,19 @@ RSpec.describe Workshop, type: :model do
       it 'when the event is in the future' do
         workshop.date_and_time = 1.day.from_now
 
-        expect(workshop.rsvp_available?).to be(true)
+        expect(workshop.rsvp_available?).to be true
       end
 
       it 'when rsvp_closes_at is in the future' do
         workshop.rsvp_closes_at = 2.hours.from_now
 
-        expect(workshop.rsvp_available?).to be(true)
+        expect(workshop.rsvp_available?).to be true
       end
 
       it 'when rsvp_closes_at is in another timezone' do
         workshop.rsvp_closes_at = 2.hours.from_now.in_time_zone('Pacific Time (US & Canada)')
 
-        expect(workshop.rsvp_available?).to be(true)
+        expect(workshop.rsvp_available?).to be true
       end
     end
 
@@ -116,7 +113,7 @@ RSpec.describe Workshop, type: :model do
       it 'when rsvp_closes_at is in the past' do
         workshop.rsvp_closes_at = 2.hours.ago
 
-        expect(workshop.rsvp_available?).to be(false)
+        expect(workshop.rsvp_available?).to be false
       end
     end
   end
