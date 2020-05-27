@@ -1,6 +1,12 @@
 class Admin::MeetingsController < Admin::ApplicationController
   before_action :set_meeting, except: %i[new create]
 
+  def show
+    @invitations = @meeting.invitations.accepted.includes(:member).order(:created_at)
+
+    return render text: @meeting.attendees_csv if request.format.csv?
+  end
+
   def new
     @meeting = Meeting.new
   end
@@ -16,12 +22,6 @@ class Admin::MeetingsController < Admin::ApplicationController
       flash[:notice] = @meeting.errors.full_messages.join('<br/>')
       render :new
     end
-  end
-
-  def show
-    @invitations = @meeting.invitations.accepted.includes(:member).order(:created_at)
-
-    return render text: @meeting.attendees_csv if request.format.csv?
   end
 
   def edit; end

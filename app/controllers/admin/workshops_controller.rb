@@ -13,6 +13,17 @@ class Admin::WorkshopsController < Admin::ApplicationController
     @workshops = @chapter.workshops.includes(:sponsors)
   end
 
+  def show
+    authorize @workshop
+    @workshop = WorkshopPresenter.decorate(@workshop)
+    if request.format.csv?
+      csv_to_render = params[:type].eql?('labels') ? @workshop.attendees_csv : @workshop.pairing_csv
+      return render text: csv_to_render
+    end
+
+    set_admin_workshop_data
+  end
+
   def new
     @workshop = Workshop.new
     authorize @workshop
@@ -37,17 +48,6 @@ class Admin::WorkshopsController < Admin::ApplicationController
     authorize @workshop
   end
 
-  def show
-    authorize @workshop
-    @workshop = WorkshopPresenter.decorate(@workshop)
-    if request.format.csv?
-      csv_to_render = params[:type].eql?('labels') ? @workshop.attendees_csv : @workshop.pairing_csv
-      return render text: csv_to_render
-    end
-
-    set_admin_workshop_data
-  end
-
   def update
     authorize @workshop
 
@@ -61,6 +61,18 @@ class Admin::WorkshopsController < Admin::ApplicationController
     else
       flash[:warning] = @workshop.errors.full_messages
       render 'edit'
+    end
+  end
+
+  def destroy
+    authorize(@workshop)
+
+    if workshop_has_no_invitees? && workshop_created_within_specific_time_frame?
+      @workshop.destroy
+
+      redirect_to admin_root_path, notice: t('admin.workshop.destroy.success')
+    else
+      redirect_to admin_workshop_path(@workshop), notice: t('admin.workshop.destroy.failure')
     end
   end
 
@@ -91,18 +103,6 @@ class Admin::WorkshopsController < Admin::ApplicationController
     end
 
     redirect_to admin_workshop_path(@workshop), notice: "Invitations to #{audience} are being emailed out."
-  end
-
-  def destroy
-    authorize(@workshop)
-
-    if workshop_has_no_invitees? && workshop_created_within_specific_time_frame?
-      @workshop.destroy
-
-      redirect_to admin_root_path, notice: t('admin.workshop.destroy.success')
-    else
-      redirect_to admin_workshop_path(@workshop), notice: t('admin.workshop.destroy.failure')
-    end
   end
 
   private

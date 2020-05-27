@@ -2,6 +2,17 @@ class Admin::EventsController < Admin::ApplicationController
   before_action :set_event, only: [:show]
   before_action :find_event, only: %i[edit update]
 
+  def show
+    authorize @original_event
+
+    @address = AddressPresenter.new(@event.venue.address) if @event.venue.present?
+    @attending_students = InvitationPresenter.decorate_collection(@original_event.attending_students)
+    @attending_coaches = InvitationPresenter.decorate_collection(@original_event.attending_coaches)
+    @host_address = AddressPresenter.new(@event.venue.address)
+
+    return render text: @event.attendees_csv if request.format.csv?
+  end
+
   def new
     @event = Event.new
   end
@@ -19,17 +30,6 @@ class Admin::EventsController < Admin::ApplicationController
   end
 
   def edit; end
-
-  def show
-    authorize @original_event
-
-    @address = AddressPresenter.new(@event.venue.address) if @event.venue.present?
-    @attending_students = InvitationPresenter.decorate_collection(@original_event.attending_students)
-    @attending_coaches = InvitationPresenter.decorate_collection(@original_event.attending_coaches)
-    @host_address = AddressPresenter.new(@event.venue.address)
-
-    return render text: @event.attendees_csv if request.format.csv?
-  end
 
   def update
     set_organisers(organiser_ids)
