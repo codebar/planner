@@ -4,15 +4,15 @@
 
 .row
   .large-12.columns.admin_margin
-    = f.input :local_date, label: "Date", as: :string, required: true, input_html: { data: { value: @workshop.date_and_time.try(:strftime, '%d/%m/%Y') } }
+    = f.input :local_date, label: "Date", as: :string, required: true, input_html: { data: { value: @workshop.date_and_time&.strftime('%d/%m/%Y') } }
 .row
   .large-6.columns
-    = f.input :local_time, label: 'Begins at', as: :string, required: true, input_html: { data: { value: @workshop.time.try(:strftime, '%H:%M') } }
+    = f.input :local_time, label: 'Begins at', as: :string, required: true, input_html: { data: { value: @workshop.time&.strftime('%H:%M') } }
   .large-6.columns
-    = f.input :local_end_time, label: 'Ends at', as: :string, required: true, input_html: { data: { value: @workshop.ends_at.try(:strftime, '%H:%M') } }
+    = f.input :local_end_time, label: 'Ends at', as: :string, required: true, input_html: { data: { value: @workshop.ends_at&.strftime('%H:%M') } }
 .row
   .medium-12.columns#host
-    = f.input :host, as: :select, collection: Sponsor.all, include_blank: true, selected: (@workshop.host.id rescue '')
+    = f.input :host, as: :select, collection: Sponsor.all, include_blank: true, selected: (@workshop.host&.id)
 .row
   .medium-12.columns.admin_margin
     = f.association :sponsors
@@ -30,5 +30,5 @@
   .large-12.columns
     .panel.callout
       %p= t('admin.workshop.form.rsvp_details')
-      = f.input :rsvp_open_local_date, as: :string, input_html: { data: { value: @workshop.rsvp_opens_at.try(:strftime, '%d/%m/%Y') } }
-      = f.input :rsvp_open_local_time, as: :string, input_html: { data: { value: @workshop.rsvp_opens_at.try(:time).try(:strftime, '%H:%M') } }
+      = f.input :rsvp_open_local_date, as: :string, input_html: { data: { value: @workshop.rsvp_opens_at&.strftime('%d/%m/%Y') } }
+      = f.input :rsvp_open_local_time, as: :string, input_html: { data: { value: @workshop.rsvp_opens_at&.time&.strftime('%H:%M') } }
