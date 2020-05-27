@@ -366,8 +366,8 @@ de:
         salary: der Job ein angemessenes Gehalt bietet
         short: "der Eintrag kurz und auf den Punkt ist"
         approval_info: "*Nach dem Abschicken wird der Job sichtbar sobald er geprüft und bestätigt wurde."
-        pay: You have made the required payment of £50 through %{link}
-        donation: a donation
+        pay: 
+          html: You have made the required payment of £50 through <a href="%{link}">a donation</a>.
         button:
           pay: Make a payment
       edit:
