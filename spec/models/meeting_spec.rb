@@ -2,6 +2,7 @@ require 'spec_helper'
 
 RSpec.describe Meeting, type: :model  do
   include_examples "Invitable", :meeting_invitation, :meeting
+  include_examples DateTimeConcerns, :meeting
 
   context 'validations' do
     subject { Meeting.new }
@@ -40,14 +41,6 @@ RSpec.describe Meeting, type: :model  do
     end
   end
 
-  context '#date' do
-    it 'returns the date of the meeting in :dashboard format' do
-      meeting = Fabricate(:meeting, date_and_time: Time.zone.local(2018, 8, 22, 18, 30))
-
-      expect(meeting.date).to eq('Wednesday, Aug 22')
-    end
-  end
-
   context '#not_full' do
     it 'returns true if meeting is not full' do
       meeting = Fabricate(:meeting)
@@ -61,14 +54,6 @@ RSpec.describe Meeting, type: :model  do
       Fabricate.times(21, :attending_meeting_invitation, meeting: meeting)
 
       expect(meeting.not_full).to eq(false)
-    end
-  end
-
-  context '#past?' do
-    it 'checks whether the meeting already happened' do
-      meeting = Fabricate(:meeting, date_and_time: Time.zone.local(2018, 8, 20, 18, 30))
-
-      expect(meeting.past?).to eq(true)
     end
   end
 

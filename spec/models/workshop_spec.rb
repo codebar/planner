@@ -3,6 +3,7 @@ require 'spec_helper'
 RSpec.describe Workshop, type: :model do
   subject(:workshop) { Fabricate(:workshop) }
   include_examples "Invitable", :workshop_invitation, :workshop
+  include_examples DateTimeConcerns, :workshop
 
   context 'validates' do
     it { is_expected.to validate_presence_of(:chapter_id) }

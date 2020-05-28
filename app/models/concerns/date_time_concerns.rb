@@ -23,7 +23,7 @@ module DateTimeConcerns
     end
 
     def time
-      date_and_time.try(:time)
+      date_and_time&.time
     end
 
     def date_and_time
@@ -38,16 +38,18 @@ module DateTimeConcerns
       super.in_time_zone(time_zone)
     end
 
+    def past?
+      date_and_time < Time.zone.today
+    end
+
+    private
+
     def datetime_from_fields(date_string, time_string)
       return nil if date_string.blank? || time_string.blank? || !time_zone
 
       date = Date.parse(date_string)
       time = Time.zone.parse(time_string)
       ActiveSupport::TimeZone[time_zone].local(date.year, date.month, date.day, time.hour, time.min)
-    end
-
-    def past?
-      date_and_time < Time.zone.today
     end
   end
 end
