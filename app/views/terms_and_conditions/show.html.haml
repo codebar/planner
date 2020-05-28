@@ -10,7 +10,8 @@
   = simple_form_for @terms_and_conditions_form, url: terms_and_conditions_path, method: :patch do |f|
     .row
       .large-12.columns
-        = f.input :terms, as: :boolean, wrapper: :checkbox
+        = f.check_box :terms
+        = f.label :terms
     .row
       .large-12.columns
         = f.submit t('terms_and_conditions.accept'), class: 'button round right'
