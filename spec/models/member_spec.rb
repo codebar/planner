@@ -28,13 +28,6 @@ RSpec.describe Member, type: :model  do
         encrypted_email = Digest::MD5.hexdigest(member.email.strip.downcase)
         expect(member.avatar).to eq("https://secure.gravatar.com/avatar/#{encrypted_email}?size=100&default=identicon")
       end
-
-      it '#attended_workshops' do
-        member.workshop_invitations = 3.times.map { Fabricate(:attended_workshop_invitation) }
-        member.workshop_invitations << Fabricate(:workshop_invitation)
-
-        expect(member.attended_workshops.count).to eq(3)
-      end
     end
   end
 

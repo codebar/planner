@@ -93,24 +93,8 @@ class Member < ActiveRecord::Base
     "https://secure.gravatar.com/avatar/#{md5_email}?size=#{size}&default=identicon"
   end
 
-  def attended_workshops
-    workshop_invitations.attended.map(&:workshop)
-  end
-
   def requires_additional_details?
     can_log_in? && !valid?
-  end
-
-  def verified?
-    workshop_invitations.exists?(role: 'Coach', attended: true)
-  end
-
-  def verified_or_organiser?
-    verified? || organised_chapters.present?
-  end
-
-  def twitter_url
-    "http://twitter.com/#{twitter}"
   end
 
   def has_existing_RSVP_on(date)
