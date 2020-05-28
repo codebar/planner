@@ -5,23 +5,31 @@ RSpec.describe Meeting, type: :model  do
   include_examples DateTimeConcerns, :meeting
 
   context 'validations' do
-    subject { Meeting.new }
+    subject(:meeting) { Fabricate(:meeting) }
+    it {is_expected.to validate_presence_of(:date_and_time) }
+    it {is_expected.to validate_presence_of(:venue) }
 
-    it '#date_and_time' do
-      should have(1).error_on(:date_and_time)
+    context '#slug' do
+      it 'fails when slug not present' do
+        meeting = Fabricate(:meeting, slug: 'meeting')
+        new_meeting = Fabricate.build(:meeting, slug: 'meeting')
+        new_meeting.slug = ''
+        new_meeting.valid?
+
+        expect(new_meeting.errors[:slug]).to be_empty
+      end
+
+      it 'passes if slug present' do
+        meeting = Fabricate(:meeting, slug: 'meeting')
+        new_meeting = Fabricate.build(:meeting, slug: 'meeting')
+        new_meeting.date_and_time = nil
+        new_meeting.slug = 'meeting'
+
+        new_meeting.valid?
+
+        expect(new_meeting.errors[:slug]).to include('has already been taken')
+      end
     end
-
-    it '#venue' do
-      should have(1).error_on(:venue)
-    end
-  end
-
-  it '#slug' do
-    meeting = Fabricate(:meeting, slug: 'meeting')
-    new_meeting = Fabricate.build(:meeting, slug: 'meeting')
-    new_meeting.valid?
-
-    expect(new_meeting.errors.messages[:slug].first).to eq('has already been taken')
   end
 
   context '#title' do
