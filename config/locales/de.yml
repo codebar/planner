@@ -4,7 +4,7 @@ de:
     formats:
       default: "%d.%m.%Y"
       email: "%a, %d %B um %H:%M"
-      email_title: "%A, %d %b um %H:%M"
+      email_title: "%A, %d %b um %H:%M %Z"
       short: "%d.%m.%Y %H:%M "
       date: "%d %b %Y"
       website_format: "%a, %d %B %Y um %H:%M"
@@ -22,7 +22,7 @@ de:
     formats:
       default: "%a, %d %b %Y %H:%M"
       email: "%a, %d %B um %H:%M"
-      email_title: "%A, %d %b um %H:%M"
+      email_title: "%A, %d %b um %H:%M %Z"
       short: "%d.%m.%Y %H:%M "
       date: "%d %b %Y"
       full_date: "%d %B %Y"

@@ -1,6 +1,10 @@
 require 'spec_helper'
 
 RSpec.feature 'Internationalization', type: :feature do
+  after(:each) do
+    I18n.locale = :en
+  end
+
   context 'a visitor to the website' do
     context 'views the website in English' do
       scenario 'by default' do
