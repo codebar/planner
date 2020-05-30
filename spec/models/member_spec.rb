@@ -18,7 +18,7 @@ RSpec.describe Member, type: :model do
     end
 
     context 'properties' do
-      let (:member) { Fabricate(:member) }
+      let(:member) { Fabricate(:member) }
 
       it '#full_name' do
         expect(member.full_name).to eq("#{member.name} #{member.surname} (#{member.pronouns})")

@@ -113,7 +113,7 @@ RSpec.feature 'Managing meetings', type: :feature do
 
       expect do
         visit invite_admin_meeting_path(meeting)
-      end.to change { ActionMailer::Base.deliveries.count }.by (chapter.members.count - 4)
+      end.to change { ActionMailer::Base.deliveries.count }.by(chapter.members.count - 4)
     end
   end
 end
