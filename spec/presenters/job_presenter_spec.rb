@@ -6,13 +6,13 @@ RSpec.describe JobPresenter do
   context '#published_on' do
     let(:job) { Fabricate(:published_job) }
 
-    it'returns the localised published on date if set' do
+    it 'returns the localised published on date if set' do
       published_on = I18n.l(job.published_on, format: :date)
 
       expect(presenter.published_on).to eq(published_on)
     end
 
-    it'returns the localised published on date if set' do
+    it 'returns the localised published on date if set' do
       job.update_attribute(:published_on, nil)
 
       expect(presenter.published_on).to eq('-')
@@ -23,7 +23,7 @@ RSpec.describe JobPresenter do
     let(:published_on) { Time.zone.now }
     let(:job) { Fabricate(:published_job, published_on: published_on) }
 
-    it'returns the published_on datetime converted to ixo8601 format ' do
+    it 'returns the published_on datetime converted to ixo8601 format ' do
       expect(presenter.published_on_time_iso8601).to eq(published_on.to_time.iso8601)
     end
   end

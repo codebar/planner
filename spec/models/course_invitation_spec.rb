@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-RSpec.describe CourseInvitation, type: :model  do
+RSpec.describe CourseInvitation, type: :model do
   let(:invitation) { Fabricate(:course_invitation) }
   it_behaves_like InvitationConcerns, :course_invitation
 

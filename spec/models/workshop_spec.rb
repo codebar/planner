@@ -42,8 +42,8 @@ RSpec.describe Workshop, type: :model do
 
     context 'if virtual' do
       before { allow(subject).to receive(:virtual?).and_return(true) }
-      it { is_expected.to validate_presence_of(:slack_channel)}
-      it { is_expected.to validate_presence_of(:slack_channel_link)}
+      it { is_expected.to validate_presence_of(:slack_channel) }
+      it { is_expected.to validate_presence_of(:slack_channel_link) }
       it { is_expected.to validate_numericality_of(:student_spaces).is_greater_than(0) }
       it { is_expected.to validate_numericality_of(:coach_spaces).is_greater_than(0) }
     end

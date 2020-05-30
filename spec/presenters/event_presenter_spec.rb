@@ -32,7 +32,7 @@ RSpec.describe EventPresenter do
 
   context '#time' do
     it 'when no end_time is set it only returns the start_time' do
-      event =  double(:event, date_and_time: Time.zone.now, start_time: Time.zone.now, ends_at: nil)
+      event = double(:event, date_and_time: Time.zone.now, start_time: Time.zone.now, ends_at: nil)
       presenter = EventPresenter.new(event)
 
       expect(presenter.time).to eq(I18n.l(event.date_and_time, format: :time_with_zone))
@@ -63,7 +63,7 @@ RSpec.describe EventPresenter do
     end
 
     it 'returns yesteday if the date_and_time is not set to today' do
-      workshop.date_and_time = Time.zone.now+1.day
+      workshop.date_and_time = Time.zone.now + 1.day
 
       expect(event.day_temporal_pronoun). to eq('tomorrow')
     end

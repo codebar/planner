@@ -12,7 +12,6 @@ RSpec.describe WorkshopPresenter do
                       attending_students: double(:attending_students, count: attending_students))
   end
 
-
   context '#decorate' do
     it 'returns a workshop decorated with the WorkshopPresenter' do
       workshop = double(:workshop, virtual?: false)
@@ -34,7 +33,7 @@ RSpec.describe WorkshopPresenter do
   end
 
   context '#attending_and_available_student_spots' do
-  let(:workshop) { double_workshop(attending_coaches: 3, attending_students: 4) }
+    let(:workshop) { double_workshop(attending_coaches: 3, attending_students: 4) }
 
     it 'returns the attending students count over the available workshop spots' do
       expect(presenter.attending_and_available_student_spots).to eq('4/5')
@@ -42,13 +41,12 @@ RSpec.describe WorkshopPresenter do
   end
 
   context '#attending_and_available_coach_spots' do
-  let(:workshop) { double_workshop(attending_coaches: 3, attending_students: 4) }
+    let(:workshop) { double_workshop(attending_coaches: 3, attending_students: 4) }
 
     it 'returns the attending coaches count over the available workshop spots' do
       expect(presenter.attending_and_available_coach_spots).to eq('3/15')
     end
   end
-
 
   context '#title' do
     it 'returns the title of a workshop' do
@@ -79,7 +77,6 @@ RSpec.describe WorkshopPresenter do
     it '#end_time' do
       expect(presenter.end_time).to eq(I18n.l(workshop.ends_at, format: :time))
     end
-
   end
 
   context '#attendees_csv' do
@@ -153,7 +150,6 @@ RSpec.describe WorkshopPresenter do
                         attending_coaches: double(:attending_coaches, length: attending_coaches),
                         attending_students: double(:attending_students, length: attending_students))
     end
-
 
     context 'when the host has more available spots' do
       let(:workshop) { double_workshop(attending_coaches: 2, attending_students: 3) }

@@ -1,13 +1,13 @@
 require 'spec_helper'
 
-RSpec.describe Meeting, type: :model  do
+RSpec.describe Meeting, type: :model do
   include_examples "Invitable", :meeting_invitation, :meeting
   include_examples DateTimeConcerns, :meeting
 
   context 'validations' do
     subject(:meeting) { Fabricate(:meeting) }
-    it {is_expected.to validate_presence_of(:date_and_time) }
-    it {is_expected.to validate_presence_of(:venue) }
+    it { is_expected.to validate_presence_of(:date_and_time) }
+    it { is_expected.to validate_presence_of(:venue) }
 
     context '#slug' do
       it 'fails when slug not present' do

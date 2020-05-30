@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-RSpec.describe InvitationManager, type: :model  do
+RSpec.describe InvitationManager, type: :model do
   subject(:manager) { InvitationManager.new }
 
   let(:chapter) { Fabricate(:chapter) }
@@ -136,8 +136,8 @@ RSpec.describe InvitationManager, type: :model  do
       waitinglist_invitation = Fabricate(:waitinglist_invitation, workshop: workshop, role: 'Coach')
 
       expect(WorkshopInvitationMailer).to receive(:notify_waiting_list).once
-        .with(waitinglist_invitation)
-        .and_call_original
+                                                                       .with(waitinglist_invitation)
+                                                                       .and_call_original
 
       manager.send_waiting_list_emails(workshop)
     end
@@ -157,8 +157,8 @@ RSpec.describe InvitationManager, type: :model  do
       waitinglist_invitation = Fabricate(:waitinglist_invitation, workshop: workshop, role: 'Student')
 
       expect(WorkshopInvitationMailer).to receive(:notify_waiting_list).once
-        .with(waitinglist_invitation)
-        .and_call_original
+                                                                       .with(waitinglist_invitation)
+                                                                       .and_call_original
 
       manager.send_waiting_list_emails(workshop)
     end

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-RSpec.describe Member, type: :model  do
+RSpec.describe Member, type: :model do
   context 'mandatory attributes' do
     context 'validation' do
       it { is_expected.to validate_presence_of(:auth_services) }
@@ -14,7 +14,7 @@ RSpec.describe Member, type: :model  do
       end
 
       it { is_expected.to validate_length_of(:about_you).is_at_most(255) }
-      it { is_expected.to validate_uniqueness_of(:email)}
+      it { is_expected.to validate_uniqueness_of(:email) }
     end
 
     context 'properties' do

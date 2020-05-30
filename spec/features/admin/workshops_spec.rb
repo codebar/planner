@@ -160,7 +160,6 @@ RSpec.feature 'An admin managing workshops', type: :feature do
     end
   end
 
-
   context '#actions' do
     context 'sending invitations to attendees' do
       scenario 'for a workshop' do

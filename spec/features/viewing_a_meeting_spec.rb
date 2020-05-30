@@ -13,7 +13,6 @@ RSpec.feature 'viewing a meeting', type: :feature do
     end
 
     scenario "can view a meeting's information" do
-
       expect(page).to have_content meeting.name
       expect(page).to have_content meeting.venue.name
     end

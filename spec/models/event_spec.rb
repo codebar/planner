@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-RSpec.describe Event, type: :model  do
+RSpec.describe Event, type: :model do
   subject(:event) { Fabricate(:event) }
   include_examples "Invitable", :invitation, :event
 
@@ -53,7 +53,7 @@ RSpec.describe Event, type: :model  do
           event.valid?
 
           expect(event.errors[:invitable])
-                      .to_not include('Fill in all invitations details to make the event invitable')
+            .to_not include('Fill in all invitations details to make the event invitable')
         end
 
         it 'it validates invitable if student spaces or coach spaces missing' do
@@ -64,7 +64,7 @@ RSpec.describe Event, type: :model  do
           event.valid?
 
           expect(event.errors[:invitable])
-                      .to include('Fill in all invitations details to make the event invitable')
+            .to include('Fill in all invitations details to make the event invitable')
         end
 
         it 'validates invitable if both student spaces and coach spaces missing' do
@@ -75,7 +75,7 @@ RSpec.describe Event, type: :model  do
           event.valid?
 
           expect(event.errors[:invitable])
-                      .to include('Fill in all invitations details to make the event invitable')
+            .to include('Fill in all invitations details to make the event invitable')
         end
       end
     end

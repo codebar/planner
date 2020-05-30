@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-RSpec.describe WorkshopInvitation, type: :model  do
+RSpec.describe WorkshopInvitation, type: :model do
   it_behaves_like InvitationConcerns, :workshop_invitation
 
   context 'defaults' do
