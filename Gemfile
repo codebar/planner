@@ -40,7 +40,7 @@ gem 'tzinfo-data'
 gem 'chosen-rails'
 gem 'redcarpet'
 
-gem 'gibbon', '~> 3.3.3'
+gem 'gibbon', '~> 3.3.4'
 
 gem 'stripe'
 
