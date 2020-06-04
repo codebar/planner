@@ -2,7 +2,7 @@ Fabricate.sequence(:slug) { |i| "#{Faker::Lorem.word}-#{i}" }
 
 Fabricator(:event) do
   date_and_time Time.zone.now + 2.days
-  ends_at Time.zone.now + 2.days + 8.hours
+  ends_at { |attrs| attrs[:date_and_time] + 8.hours }
   name Faker::Lorem.sentence
   description Faker::Lorem.sentence
   coach_description Faker::Lorem.sentence

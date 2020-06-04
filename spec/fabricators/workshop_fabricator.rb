@@ -1,6 +1,6 @@
 Fabricator(:workshop) do
   date_and_time Time.zone.now + 2.days
-  ends_at Time.zone.now + 2.days + 2.hours
+  ends_at { |attrs| attrs[:date_and_time] + 2.hours }
   chapter
   after_build do |workshop, transients|
     Fabricate(:workshop_sponsor,
@@ -17,7 +17,7 @@ end
 
 Fabricator(:workshop_no_sponsor, class_name: :workshop) do
   date_and_time Time.zone.now + 2.days
-  ends_at Time.zone.now + 2.days + 2.hours
+  ends_at { |attrs| attrs[:date_and_time] + 2.hours }
   chapter
 end
 
@@ -33,12 +33,11 @@ end
 
 Fabricator(:past_workshop, from: :workshop) do
   date_and_time 3.months.ago
-  ends_at 3.months.ago + 2.hours
 end
 
 Fabricator(:virtual_workshop, class_name: :workshop) do
   date_and_time Time.zone.now + 2.days
-  ends_at Time.zone.now + 2.days + 2.hours
+  ends_at { |attrs| attrs[:date_and_time] + 2.hours }
   chapter
   virtual true
   student_spaces 10
