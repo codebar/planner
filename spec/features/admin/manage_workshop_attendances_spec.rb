@@ -60,5 +60,14 @@ RSpec.feature 'managing workshop attendances', type: :feature do
       expect(page).to have_content(I18n.l(other_invitation.reload.rsvp_time))
       expect(page).to have_selector('i.fa-magic')
     end
+
+    scenario 'can view the tutorial and note set by an attendee' do
+      invitation = Fabricate(:attending_workshop_invitation, workshop: workshop)
+      login_as_admin(member)
+
+      visit admin_workshop_path(workshop)
+      expect(page).to have_content(invitation.note)
+      expect(page).to have_content(invitation.tutorial)
+    end
   end
 end

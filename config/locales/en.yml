@@ -133,28 +133,31 @@ en:
       student_intro_2: 'In case you are unable to attend after you RSVP, please make sure you come back and update your attendance. We have limited space and do a coaches request depending on the number of attending students.'
       student_intro_3_html: 'Please make sure you <b>bring your laptop</b> with you.'
       shared_intro_4_html: 'PS: There will also be food at the workshop. We always make an effort to have vegetarian, vegan and gluten-free options available. If you have any other dietary requirements, send us an email at %{email_link}.'
+  workshop_invitation:
+    coach_skills_tooltip: 'Keeping your skills up-to-date enables Organisers to plan ahead and makes running workshops easier.'
   meeting:
     title: "%{name} - %{date}"
   messages:
     accepted_invitation: "Thanks for getting back to us %{name}. See you at the workshop!"
     already_invited: 'You have already RSVPd or joined the waitlist for this workshop.'
     already_taken_place: 'This event has already taken place'
-    error_blank_note: 'You must select a note'
     rejected_invitation: "We are so sad you can't make it, but thanks for letting us know %{name}."
     already_rsvped: "You have already confirmed you attendance!"
     not_attending_already: "You have already confirmed you can't make it!"
-    no_available_seats: "Unfortunately there are no more spaces left :(. If you would like to join our waiting list send us an email at %{email}"
+    no_available_seats: "There are no more spots left for this event, but you can join the waiting list."
     feedback_saved: "Thank you for taking the time to give us feedback!"
     feedback_not_found: "You have already submitted feedback for this event."
-    updated_note: "Successfully updated note."
     invitations:
       meeting:
         cancel: "Thanks for letting us know you can't make it."
         rsvp: "Your RSVP was successful. We look forward to seeing you at the Monthly!"
+      event:
+        no_available_seats: "No spaces left. If you would like to join our waiting list send us an email at %{email}"
       rsvped_to_other_workshop: "You have already RSVP'd to another workshop on this date. If you would prefer to attend this workshop, please cancel your other RSVP first."
       select_a_member_to_rsvp: "Select a member to RSVP"
       spot_confirmed: "Your spot has been confirmed for %{event}! We look forward to seeing you there."
       spot_not_confirmed: 'Your spot has not yet been confirmed. We will verify your attendance after you complete the questionnaire.'
+      updated_details: "Invitation details successfully updated."
     invalid_format: "The requested format is invalid: %{invalid_format}"
   notifications:
     provider_already_connected: 'You are already signed in!'
@@ -611,9 +614,13 @@ en:
         slack_channel: 'e.g. virtual-london-2022-12-03'
         slack_channel_link: 'e.g. https://codebar.slack.com/archives/CGLQD917T'
         description: 'Any details you would like to add about the workshop. This will be visible on both the public workshop and invitation pages'
+      workshop_invitation:
+        note: 'e.g. I am a Junior and would prefer to not be paired on advanced projects'
     hints:
       member:
         email: 'This is needed so we can email you invitations to our events'
+      workshop_invitation:
+        note: 'Pairing preferences or anything else you think we should know.'
       job:
         remote: Only check if the role is fully remote only
         salary: Annual pay before tax, without commas or decimal points
@@ -631,6 +638,8 @@ en:
       workshop:
         description: Additional description
         virtual: Virtual workshop
+      workshop_invitation:
+        note: 'Note'
   activerecord:
     attributes:
       job:
@@ -648,6 +657,11 @@ en:
         newsletter: 'If you do not want to receive the codebar newsletter uncheck this box'
         pronouns: 'What pronouns do you use?'
     errors:
+      models:
+        workshop_invitation:
+          attributes:
+            tutorial:
+              blank: 'must be selected'
       messages:
         all_invitation_details_required: 'Fill in all invitations details to make the event invitable'
         already_sponsoring: 'already a sponsor'

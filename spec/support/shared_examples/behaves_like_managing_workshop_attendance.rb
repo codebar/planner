@@ -2,6 +2,8 @@ RSpec.shared_examples 'managing workshop attendance' do
   context 'a logged in member' do
     context '#upcoming workshop' do
       context 'via the workshop page' do
+        let!(:tutorial) { Fabricate(:tutorial) }
+
         context 'with only student subscriptions' do
           before do
             login(student)
@@ -10,6 +12,8 @@ RSpec.shared_examples 'managing workshop attendance' do
 
           it 'can only RSVP as a student' do
             click_on 'Attend as a student'
+
+            select tutorial.title, from: :workshop_invitation_tutorial
             click_on 'Attend'
 
             expect(page).to have_content('See you at the workshop')
@@ -55,6 +59,8 @@ RSpec.shared_examples 'managing workshop attendance' do
 
           it 'can get to the RSVP as a student page' do
             click_on 'Attend as a student'
+
+            select tutorial.title, from: :workshop_invitation_tutorial
             click_on 'Attend'
 
             expect(page).to have_content('See you at the workshop')

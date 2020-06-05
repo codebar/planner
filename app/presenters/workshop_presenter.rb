@@ -3,7 +3,7 @@ class WorkshopPresenter < EventPresenter
   include ActionView::Context
   include ActionView::Helpers::DateHelper
 
-  PAIRING_HEADINGS = ['New attendee', 'Name', 'Role', 'Study note', 'Skills'].freeze
+  PAIRING_HEADINGS = ['New attendee', 'Name', 'Role', 'Tutorial', 'Note', 'Skills'].freeze
 
   def self.decorate(workshop)
     return VirtualWorkshopPresenter.new(workshop) if workshop.virtual?
@@ -74,7 +74,7 @@ class WorkshopPresenter < EventPresenter
   def pairing_csv
     pairing_details = model.attendances.inject([PAIRING_HEADINGS]) do |content, invitation|
       member = MemberPresenter.new(invitation.member)
-      content << member.pairing_details_array(invitation.role, invitation.note)
+      content << member.pairing_details_array(invitation.role, invitation.tutorial, invitation.note)
     end
     generate_csv_from_array(pairing_details)
   end

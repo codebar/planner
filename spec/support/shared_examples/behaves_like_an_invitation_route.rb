@@ -9,8 +9,10 @@ RSpec.shared_examples 'invitation route' do
 
   context 'accept an invitation' do
     scenario 'when there are available spots' do
-      Tutorial.create(title: 'title')
       visit invitation_route
+
+      select tutorial.title, from: :workshop_invitation_tutorial if invitation.for_student?
+
       click_on 'Attend'
 
       expect(page).to have_link 'I can no longer attend'
@@ -27,13 +29,24 @@ RSpec.shared_examples 'invitation route' do
       end
     end
 
-    scenario 'they can RSVP directly through the invitation' do
-      Tutorial.create(title: 'title')
-      visit accept_invitation_route
+    context 'RSVPing directly through the invitation' do
+      scenario 'a Student must first select a tutorial' do
+        puts invitation.inspect
+        invitation.update_attributes(role: 'Student', attending: nil, tutorial: nil)
+        visit accept_invitation_route
 
-      expect(page).to have_link 'I can no longer attend'
-      expect(page.current_path).to eq(invitation_route)
-      expect(page).to have_content(I18n.t('messages.accepted_invitation', name: member.name))
+        expect(page).to_not have_link 'I can no longer attend'
+        expect(page).to have_content('Tutorial must be selected')
+      end
+
+      scenario 'a Coach must can RSVP diredctly' do
+        invitation.update_attributes(role: 'Coach', attending: nil, tutorial: nil)
+        visit accept_invitation_route
+
+        expect(page).to have_link 'I can no longer attend'
+        expect(page.current_path).to eq(invitation_route)
+        expect(page).to have_content(I18n.t('messages.accepted_invitation', name: member.name))
+      end
     end
 
     scenario 'when they have already RSVPed and are attempting to re-accept through the invitation link' do
@@ -110,9 +123,9 @@ RSpec.shared_examples 'invitation route' do
     end
 
     scenario 'when already RSVPd to another event on same evening' do
-      invitation.update(attending: true, member_id: member.id)
+      invitation.update(attending: true, member: member)
 
-      invitation2 = Fabricate(:coach_workshop_invitation)
+      invitation2 = Fabricate(:coach_workshop_invitation, member: member)
       invitation2_route = invitation_path(invitation2)
 
       visit invitation2_route
@@ -123,9 +136,9 @@ RSpec.shared_examples 'invitation route' do
     end
 
     scenario 'when already RSVPd to another event on same evening and attempting to RSVP directly through the link' do
-      invitation.update(attending: true, member_id: member.id)
+      invitation.update(attending: true, member: member)
 
-      invitation2 = Fabricate(:coach_workshop_invitation)
+      invitation2 = Fabricate(:coach_workshop_invitation, member: member)
       invitation2_route = invitation_path(invitation2)
 
       visit accept_invitation_path(invitation2)

@@ -100,7 +100,7 @@ RSpec.feature 'An admin managing workshops', type: :feature do
         end
       end
 
-      scenario 'displays the correc timezone for the workshop' do
+      scenario 'displays the correct timezone for the workshop' do
         chapter = Fabricate(:chapter, time_zone: 'Berlin')
         visit new_admin_workshop_path
 

@@ -2,37 +2,33 @@ module InvitationControllerConcerns
   extend ActiveSupport::Concern
 
   included do
-    before_action :set_invitation
-
+    include WorkshopInvitationConcerns
     include InstanceMethods
   end
 
   module InstanceMethods
     def accept
-      if @invitation.attending?
-        return redirect_back(fallback_location: invitation_path(@invitation),
-                             notice: t('messages.already_rsvped'))
-      end
-
       user = current_user || @invitation.member
+      workshop = @invitation.workshop
+      return back_with_message(t('messages.already_rsvped')) if @invitation.attending?
 
-      if user.has_existing_RSVP_on(@invitation.workshop.date_and_time)
-        return redirect_back(fallback_location: invitation_path(@invitation),
-                             notice: t('messages.invitations.rsvped_to_other_workshop'))
+      @invitation.assign_attributes(invitation_params.merge!(attending: true, rsvp_time: Time.zone.now))
+      return back_with_message(@invitation.errors.full_messages) unless @invitation.valid?
+
+      if user.has_existing_RSVP_on(workshop.date_and_time)
+        return back_with_message(t('messages.invitations.rsvped_to_other_workshop'))
       end
+
+      return back_with_message(t('messages.already_invited')) if attending_or_waitlisted?(workshop, user)
 
       @workshop = WorkshopPresenter.decorate(@invitation.workshop)
-
-      if (@invitation.for_student? && @workshop.student_spaces?) || (@invitation.for_coach? && @workshop.coach_spaces?)
-        @invitation.update(attending: true, rsvp_time: Time.zone.now)
-        @invitation.waiting_list.destroy if @invitation.waiting_list.present?
+      if available_spaces?(@workshop, @invitation)
+        @invitation.update(invitation_params.merge!(attending: true, rsvp_time: Time.zone.now))
         @workshop.send_attending_email(@invitation)
 
-        redirect_back(fallback_location: invitation_path(@invitation),
-                      notice: t('messages.accepted_invitation', name: @invitation.member.name))
+        back_with_message(t('messages.accepted_invitation', name: @invitation.member.name))
       else
-        redirect_back(fallback_location: invitation_path(@invitation),
-                      notice: t('messages.no_available_seats', email: @invitation.workshop.chapter.email))
+        back_with_message(t('messages.no_available_seats'))
       end
     end
 
@@ -62,6 +58,12 @@ module InvitationControllerConcerns
         redirect_back(fallback_location: invitation_path(@invitation),
                       notice: 'You can only change your RSVP status up to 3.5 hours before the workshop')
       end
+    end
+
+    private
+
+    def attending_or_waitlisted?(workshop, user)
+      workshop.attendee?(user) || workshop.waitlisted?(user)
     end
   end
 end
