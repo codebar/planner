@@ -13,18 +13,17 @@ class Meeting < ActiveRecord::Base
   has_and_belongs_to_many :chapters
 
   validates :date_and_time, :venue, presence: true
-  validates :date_and_time, presence: true, if: proc { |model| model.venue_id.present? }
   validates :slug, uniqueness: true, if: proc { |model| model.slug.present? }
 
   before_validation :set_date_and_time
   before_save :set_slug
 
   def invitees
-    Member.uniq.joins(:chapters).merge(chapters)
+    Member.distinct.joins(:chapters).merge(chapters)
   end
 
   def title
-    self.name || "#{I18n.l(date_and_time, format: :month)} Meeting"
+    name || "#{I18n.l(date_and_time, format: :month)} Meeting"
   end
 
   def to_param
@@ -43,11 +42,11 @@ class Meeting < ActiveRecord::Base
     CSV.generate { |csv| attendees_array.each { |a| csv << a } }
   end
 
+  private
+
   def time_zone
     'London'
   end
-
-  private
 
   def attendees_array
     invitations.accepted.map { |a| [a.member.full_name] }
@@ -55,8 +54,9 @@ class Meeting < ActiveRecord::Base
 
   def set_slug
     return if slug.present?
+
     self.slug = loop.with_index do |_, index|
-      url = "#{I18n.l(date_and_time, format: :year_month).downcase}-#{title.parameterize}-#{index+1}"
+      url = "#{I18n.l(date_and_time, format: :year_month).downcase}-#{title.parameterize}-#{index + 1}"
       break url unless Meeting.where(slug: url).exists?
     end
   end

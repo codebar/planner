@@ -5,7 +5,7 @@ class FeedbackRequest < ActiveRecord::Base
   validates :member_id, presence: true, uniqueness: { scope: [:workshop] }
   validates :workshop, presence: true
   validates :token, uniqueness: true, presence: true
-  validates_inclusion_of :submited, in: [true, false]
+  validates :submited, inclusion: { in: [true, false] }
 
   before_validation :set_token
   after_create :email
@@ -20,6 +20,6 @@ class FeedbackRequest < ActiveRecord::Base
   end
 
   def email
-    FeedbackRequestMailer.request_feedback(self.workshop, self.member, self).deliver_now
+    FeedbackRequestMailer.request_feedback(workshop, member, self).deliver_now
   end
 end

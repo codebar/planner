@@ -1,14 +1,14 @@
 require 'spec_helper'
 
-feature 'Admin Jobs' do
+RSpec.feature 'Admin Jobs', type: :feature do
   let(:member) { Fabricate(:member) }
 
-  before do
-    login_as_admin(member)
-  end
+  context 'an admin' do
+    before do
+      login_as_admin(member)
+    end
 
-  context 'admins/jobs' do
-    scenario 'Renders a list of all submitted job' do
+    scenario 'can view a list of all submitted job' do
       Fabricate.times(4, :published_job)
       Fabricate.times(3, :pending_job)
       Fabricate(:job, title: 'Expired developer', expiry_date: Time.zone.today - 1.week)
@@ -18,7 +18,7 @@ feature 'Admin Jobs' do
       expect(page.all(:xpath, "//td/span[text()='Pending approval']").count).to eq(3)
     end
 
-    scenario 'The listing is paginated' do
+    scenario 'can view a paginated listing' do
       Fabricate.times(3, :published_job)
       Fabricate.times(10, :pending_job)
 
@@ -29,20 +29,32 @@ feature 'Admin Jobs' do
       click_on 'Next'
       expect(page.all(:xpath, "//td/span[text()='Approved']").count).to eq(3)
     end
+
+    scenario 'can approve jobs' do
+      job = Fabricate(:pending_job)
+      visit admin_jobs_path
+      click_on job.title
+
+      click_on 'Approve'
+
+      expect(page).to have_content("The job has been approved and an email has been sent out to #{job.created_by.full_name} at #{job.created_by.email}")
+
+      visit admin_jobs_path
+      click_on job.title
+
+      expect(page).to have_content("Approved by #{job.reload.approved_by.full_name}")
+    end
   end
 
-  scenario 'An organiser can approve jobs' do
-    job = Fabricate(:pending_job)
-    visit admin_jobs_path
-    click_on job.title
+  context 'an organiser' do
+    before do
+      login_as_organiser(member, Fabricate(:chapter))
+    end
 
-    click_on 'Approve'
+    scenario 'cannot access the jobs admin area' do
+      visit admin_jobs_path
 
-    expect(page).to have_content("The job has been approved and an email has been sent out to #{job.created_by.full_name} at #{job.created_by.email}")
-
-    visit admin_jobs_path
-    click_on job.title
-
-    expect(page).to have_content("Approved by #{job.reload.approved_by.full_name}")
+      expect(page).to have_content('You can\'t be here')
+    end
   end
 end

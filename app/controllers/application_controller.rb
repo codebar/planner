@@ -5,13 +5,13 @@ class ApplicationController < ActionController::Base
     Rollbar.error(ex)
     Rails.logger.fatal(ex)
     respond_to do |format|
-      format.html { render 'errors/error', layout: false, :status => 500 }
-      format.all  { render :nothing => true, :status => 500 }
+      format.html { render 'errors/error', layout: false, status: :internal_server_error }
+      format.all  { render nothing: true, status: :internal_server_error }
     end
   end
 
   rescue_from ActionController::RoutingError, with: :render_not_found
-  rescue_from ActiveRecord::RecordNotFound , with: :render_not_found
+  rescue_from ActiveRecord::RecordNotFound, with: :render_not_found
 
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
   rescue_from Pundit::AuthorizationNotPerformedError, with: :user_not_authorized
@@ -21,11 +21,12 @@ class ApplicationController < ActionController::Base
   helper_method :current_service
 
   before_action :set_locale
+  before_action :accept_terms, if: :logged_in?
 
   def render_not_found
     respond_to do |format|
-      format.html { render :template => "errors/not_found", layout: false, :status => 404 }
-      format.all  { render :nothing => true, :status => 404 }
+      format.html { render template: "errors/not_found", layout: false, status: :not_found }
+      format.all  { render nothing: true, status: :not_found }
     end
   end
 
@@ -56,6 +57,11 @@ class ApplicationController < ActionController::Base
     current_user?
   end
 
+  def accept_terms
+    store_path
+    redirect_to terms_and_conditions_path if current_user.accepted_toc_at.blank?
+  end
+
   def authenticate_member!
     if current_user
       finish_registration
@@ -64,14 +70,22 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def store_path
+    session[:previous_request_url] = request.url
+  end
+
+  def previous_path
+    session[:previous_request_url]
+  end
+
   def finish_registration
     if current_user.requires_additional_details?
-      redirect_to step1_member_path unless providing_additional_details?
+      redirect_to edit_member_details_path unless providing_additional_details?
     end
   end
 
   def providing_additional_details?
-    [edit_member_path, step1_member_path].include? request.path
+    [edit_member_path, edit_member_details_path].include? request.path
   end
 
   def logout!
@@ -97,17 +111,6 @@ class ApplicationController < ActionController::Base
   end
 
   helper_method :manager?
-
-  def is_verified_coach_or_admin?
-    current_user.verified?
-  end
-
-  def is_verified_coach_or_organiser?
-    current_user.verified_or_organiser?
-  end
-
-  helper_method :is_verified_coach_or_admin?
-  helper_method :is_verified_coach_or_organiser?
 
   def is_logged_in?
     unless logged_in?
@@ -144,12 +147,6 @@ class ApplicationController < ActionController::Base
   end
 
   helper_method :jobs_pending_approval, :chapters
-
-  def upcoming_workshops
-    Workshop.upcoming
-  end
-
-  helper_method :upcoming_workshops
 
   def redirect_back(fallback_location:, **args)
     if referer = request.headers["Referer"]

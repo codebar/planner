@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+set -e
+
+if [ $# -gt 0 ]
+then
+  docker-compose run --rm web rails runner "Member.find_by(email: '$@').add_role(:admin)"
+else
+  docker-compose run --rm web rails runner "Member.last.add_role(:admin)"
+fi

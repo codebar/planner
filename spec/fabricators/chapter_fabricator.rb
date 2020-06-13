@@ -12,7 +12,6 @@ Fabricator(:chapter) do
   end
 end
 
-
 Fabricator(:chapter_with_groups, from: :chapter) do
   name { Fabricate.sequence(:name) }
   city { Faker::Lorem.word }

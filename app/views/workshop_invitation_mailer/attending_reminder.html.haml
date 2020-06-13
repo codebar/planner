@@ -14,12 +14,12 @@
               %td
                 %h3 Hi #{@member.name},
                 %p.lead
-                  This is a quick email to remind you that you have signed up for tomorrow's workshop.
+                  This is a quick email to remind you that you have signed up for #{@workshop.day_temporal_pronoun}'s workshop.
                 %p
-                  If you can no longer make it, please cancel your invitation <strong>before 15:00</strong> on the day of the event.
-                  <a href='https://codebar.io/student-guide#attendance'>We have a three-strikes attendance policy for no-shows.</a>
+                  If you can no longer make it make sure you cancel your invitation before #{@workshop.day_temporal_pronoun} <strong>#{I18n.l(@workshop.rsvp_closing_date_and_time, format: :email_title)}</strong> so we can reallocate your spot to someone else.
+                  Remember that we have a <a href='https://codebar.io/student-guide#attendance'>three-strikes attendance policy</a> for no-shows.
                 %p
-                  <strong>Please do not turn up before #{(@workshop.date_and_time).strftime('%H:%M')}.</strong> If you are early, please wait in a nearby cafe.
+                  As most of our hosts are busy before the workshops begin, do not turn up before #{(@workshop.date_and_time).strftime('%H:%M')} as you may not be allowed in. If you are early, we suggest waiting at a nearby cafe.
 
         .content
           %table{ bgcolor: '#FFFFFF' }
@@ -27,12 +27,12 @@
               %td
                 %h4
                   Workshop
-                  %small #{humanize_date(@workshop.date_and_time, with_time: true)}
+                  %small #{humanize_date(@workshop.date_and_time, @workshop.ends_at, with_time: true)}
                 = link_to 'Update your attendance', full_url_for(invitation_url(@invitation)), class: 'btn'
 
         .content
           %table
-            = render partial: 'shared_mailers/venue', locals: { host: @workshop.host, address: @host_address }
+            = render partial: 'shared_mailers/venue', locals: { host: @workshop.host, address: @workshop.address }
             %tr
               %td
                 %p
@@ -44,7 +44,7 @@
                       = organiser.mobile
 
         .content
-          = render partial: 'shared_mailers/social'
+          = render partial: 'shared_mailers/social', locals: { workshop: @workshop }
       %td
 
   = render partial: 'shared_mailers/footer'

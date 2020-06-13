@@ -5,15 +5,12 @@ class FeedbackRequestMailer < ActionMailer::Base
 
   def request_feedback(workshops, member, feedback_request)
     @workshop = workshops
-    @host_address = AddressPresenter.new(@workshop.host.address)
     @member = member
     @feedback_request = feedback_request
 
-    subject = "Workshop Feedback for #{l(@workshop.date_and_time, format: :email_title)}"
+    subject = "#{@workshop} Feedback for #{l(@workshop.date_and_time, format: :email_title)}"
 
-    mail(mail_args(member, subject)) do |format|
-      format.html
-    end
+    mail(mail_args(member, subject), &:html)
   end
 
   helper do

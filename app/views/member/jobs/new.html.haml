@@ -4,9 +4,15 @@
       .large-12.columns
         %br
         %ul.breadcrumbs
-          %li=link_to  t('member.jobs.title'), member_jobs_path
+          %li
+            %span=link_to t('member.jobs.title'), member_jobs_path
           %li.current
             %span=t('member.jobs.new.title')
+
+    .row
+      .large-12.columns
+        %p=t('member.jobs.new.description')
+
     .row
       .large-12.columns
         .panel
@@ -25,8 +31,8 @@
               %input#short{type: 'checkbox'}
               %label{for: 'short'}= t('member.jobs.new.short')
             %li
-              %input#short{type: 'checkbox'}
-              %label{for: 'pay'}= t('member.jobs.new.pay', link: link_to(t('member.jobs.new.donation'), new_donation_path)).html_safe
+              %input#donation{type: 'checkbox'}
+              %label{for: 'donation'}= t('member.jobs.new.pay.html', link: new_donation_path)
 
     %br
     .row

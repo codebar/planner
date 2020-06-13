@@ -1,28 +1,40 @@
 require 'spec_helper'
 
-feature 'Jobs' do
+RSpec.feature 'Jobs', type: :feature do
   context 'Listing' do
     context 'a visitor to the website' do
+      scenario 'can see the correct page title' do
+        visit jobs_path
+
+        expect(page).to have_title('Jobs | codebar.io')
+      end
+
       scenario 'can see a message when there are no available jobs' do
         visit root_path
         click_link('Jobs', match: :first)
 
         expect(page).to have_content('Jobs')
-        expect(page).to have_content('There are no jobs available')
+        expect(page).to have_content('There are no jobs listed at this time. Please check back soon as positions get added regularly.')
       end
 
       scenario 'can view all active jobs' do
         jobs = Fabricate.times(3, :published_job)
-        expired = 3.times.map { |i| Fabricate.create(:job, expiry_date: 2.days.ago) }
         visit jobs_path
 
         expect(page).to have_content('Jobs')
+        expect(page).to have_content('There are 3 jobs listed')
 
         jobs.each { |job| expect(page).to have_content(job.title) }
-        expired.each { |expired_job| expect(page).to_not have_content(expired_job.title) }
       end
 
       context 'can view job posts' do
+        it 'can see the correct page title' do
+          job = Fabricate(:published_job)
+          visit job_path(job)
+
+          expect(page).to have_title("#{job.title} | Jobs | codebar.io")
+        end
+
         it 'when a job post is active' do
           job = Fabricate(:published_job)
           visit job_path(job)

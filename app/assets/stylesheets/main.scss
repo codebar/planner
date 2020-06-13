@@ -14,6 +14,7 @@
 @import 'partials/jobs';
 @import 'partials/star-rating';
 @import 'partials/event';
+@import 'partials/workshop';
 // import scss variables so we can reuse them here
 @import 'foundation_and_overrides';
 
@@ -199,10 +200,6 @@ form .hint {
   display: inline-block;
   font-size: 0.875em;
   margin-bottom: 0.5rem;
-}
-
-.breadcrumbs {
-  background-color: none;
 }
 
 .chosen-dropwdown {

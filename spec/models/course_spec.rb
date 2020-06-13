@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Course do
+RSpec.describe Course, type: :model  do
   let(:course) { Fabricate(:course) }
 
   context 'validations' do

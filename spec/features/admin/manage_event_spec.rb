@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-feature 'Managing events' do
+RSpec.feature 'Managing events', type: :feature do
   let(:member) { Fabricate(:member) }
   let!(:chapter) { Fabricate(:chapter_with_groups) }
   let!(:event) { Fabricate(:event, confirmation_required: true) }

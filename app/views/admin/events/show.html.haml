@@ -4,7 +4,7 @@
     %label Edit
 
   - if !@event.date_and_time.future?
-    = link_to '#', class: 'item disabled', title: 'The event has already taken place' do
+    = link_to '#', class: 'item disabled', title: t('messages.already_taken_place') do
       %i.fa.fa-send-o
       %label Invite
   - elsif @event.venue and @event.invitable?
@@ -31,7 +31,7 @@
       .medium-12.columns
         %h2= @event.to_s
         %h3
-          %small #{l(@event.date_and_time)} to #{l(@event.ends_at, format: :time) }
+          %small #{humanize_date(@event.date_and_time, @event.ends_at, with_time: true)}
 
     .row
       - if @event.venue.present?

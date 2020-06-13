@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-feature 'Managing meeting invitations' do
+RSpec.feature 'Managing meeting invitations', type: :feature do
   let(:admin) { Fabricate(:member) }
   let(:meeting) { Fabricate(:meeting) }
 

@@ -1,3 +1,4 @@
+- title t('homepage.title')
 %section.hero.opaque
   .row
     .medium-offset-1.medium-6.columns
@@ -19,13 +20,13 @@
   .row#showcase
     .large-4.columns
       .text-center
-        %h4 
+        %h4
           = t('homepage.participate.students_title')
       %p
         = t('homepage.participate.students_explanation_p1')
       %p
         = t('homepage.participate.students_explanation_p2')
-      
+
       .text-center
         = link_to t("homepage.participate.students_button"), new_member_path, class: 'button'
     .large-4.columns
@@ -34,9 +35,9 @@
           = t('homepage.participate.coaches_title')
       %p
         = raw t('homepage.participate.coaches_explanation_p1')
-      %p 
+      %p
         = t('homepage.participate.coaches_explanation_p2')
-      
+
       .text-center
         = link_to t("homepage.participate.coaches_button"), new_member_path, class: 'button'
     .large-4.columns

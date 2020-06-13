@@ -1,0 +1,17 @@
+%section#banner
+  .row
+    .medium-12.columns
+      %h1= t('terms_and_conditions.title')
+      %p
+        = t('terms_and_conditions.body')
+        %br
+          = link_to t('terms_and_conditions.link_text'), code_of_conduct_path, target: '_blank'
+
+  = simple_form_for @terms_and_conditions_form, url: terms_and_conditions_path, method: :patch do |f|
+    .row
+      .large-12.columns
+        = f.check_box :terms
+        = f.label :terms
+    .row
+      .large-12.columns
+        = f.submit t('terms_and_conditions.accept'), class: 'button round right'

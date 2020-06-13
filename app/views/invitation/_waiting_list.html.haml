@@ -2,20 +2,22 @@
   %p
     %label.warning.label The workshop is full.
   - if @invitation.for_student?
-    = simple_form_for :invitation, url: invitation_waiting_list_path(@invitation), method: :post do |f|
-      = f.input :note, label: "What do you plan to work on?", collection: @tutorial_titles, required: true, include_blank: true
-      %br
+    = simple_form_for @invitation, url: invitation_waiting_list_path(@invitation), method: :post do |f|
+      = f.input :tutorial, collection: @tutorial_titles, include_blank: true
+      = f.input :note, required: false, input_html: { rows: 3, maxlength: 100 }, hint: 'Anything else we should know?', placeholder: 'e.g. I need help understanding selectors'
       = f.button :submit, "Join the waiting list",  class: "button expand round"
   - else
-    =link_to "Join the waiting list", invitation_waiting_list_path(invitation), method: :post, class: 'button round expand', "data-confirm" => "If any spots become available you will automatically be allocated one."
-
+    = simple_form_for @invitation, url: invitation_waiting_list_path(@invitation), method: :post do |f|
+      = f.input :note, required: false, input_html: { rows: 3, maxlength: 100 }
+      = f.button :submit, "Join the waiting list",  class: "button expand round"
 - else
   .text-center Waiting List position: <strong>#{invitation.waiting_list_position}</strong>/#{@workshop.waiting_list_count_for(invitation.role)}
   %br
   - if @invitation.for_student?
-    - if @invitation.note.present?
-      %small You will be working on...
-      %p #{@invitation.note}
+    %small You will be working on...
+    %p #{@invitation.tutorial}
+  %p
+    #{@invitation.note}
 
   = link_to "Remove from the waiting list", invitation_waiting_list_path(invitation), method: :delete, class: 'button expand round alert', "data-confirm" => "Are you sure you want to let go of your spot? You cannot undo this."
 

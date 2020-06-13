@@ -1,7 +1,7 @@
 class AuthServicesController < ApplicationController
   def new
     referer_path = URI(request.referer).path
-    if Rails.application.routes.recognize_path(referer_path)[:controller].in?(%w(workshops events courses meetings))
+    if Rails.application.routes.recognize_path(referer_path)[:controller].in?(%w[workshops events courses meetings])
       session[:referer_path] = referer_path
     end
     redirect_to '/auth/github'
@@ -35,9 +35,9 @@ class AuthServicesController < ApplicationController
         member.twitter ||= omnihash[:info][:nickname]
 
         member_service = member.auth_services.build(
-                                                      provider: omnihash[:provider],
-                                                      uid: omnihash[:uid]
-                                                    )
+          provider: omnihash[:provider],
+          uid: omnihash[:uid]
+        )
 
         member.save!
 
@@ -48,7 +48,7 @@ class AuthServicesController < ApplicationController
         session[:oauth_token]        = omnihash[:credentials][:token]
         session[:oauth_token_secret] = omnihash[:credentials][:secret]
 
-        redirect_to step1_member_path(member_type: member_type), notice: 'Thanks for signing up. Please fill in your details to complete the registration process.'
+        redirect_to edit_member_details_path(member_type: member_type)
       end
     end
   end
@@ -78,7 +78,7 @@ class AuthServicesController < ApplicationController
   end
 
   def omniauth_providers
-    (OmniAuth::Strategies.local_constants.map(&:downcase) - %i(developer oauth oauth2)).map(&:to_s)
+    (OmniAuth::Strategies.local_constants.map(&:downcase) - %i[developer oauth oauth2]).map(&:to_s)
   end
 
   def redirect_path

@@ -6,7 +6,7 @@
         %br
         %small #{humanize_date(@course.date_and_time, with_time: true)}
       - if @course.date_and_time.past?
-        %label.label.warning This event has already taken place.
+        %label.label.warning= t('messages.already_taken_place')
 
 .stripe.reverse
   .row

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe EventInvitationMailer do
+RSpec.describe EventInvitationMailer, type: :mailer  do
   let(:email) { ActionMailer::Base.deliveries.last }
   let(:event) { Fabricate(:event, date_and_time: Time.zone.local(2017, 11, 12, 10, 0), name: 'Test event') }
   let(:member) { Fabricate(:member) }
@@ -11,6 +11,7 @@ describe EventInvitationMailer do
     EventInvitationMailer.invite_student(event, member, invitation).deliver_now
 
     expect(email.subject).to eq(email_subject)
+    expect(email.body.encoded).to match('hello@codebar.io')
   end
 
   it '#invite_coach' do
@@ -18,6 +19,7 @@ describe EventInvitationMailer do
     EventInvitationMailer.invite_coach(event, member, invitation).deliver_now
 
     expect(email.subject).to eq(email_subject)
+    expect(email.body.encoded).to match('hello@codebar.io')
   end
 
   it '#attending' do
@@ -25,5 +27,6 @@ describe EventInvitationMailer do
     EventInvitationMailer.attending(event, member, invitation).deliver_now
 
     expect(email.subject).to eq(email_subject)
+    expect(email.body.encoded).to match('hello@codebar.io')
   end
 end

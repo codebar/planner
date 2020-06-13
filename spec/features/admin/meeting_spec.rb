@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-feature 'Managing meetings' do
+RSpec.feature 'Managing meetings', type: :feature do
   let(:member) { Fabricate(:member) }
   let!(:chapter) { Fabricate(:chapter) }
   let!(:venue) { Fabricate(:sponsor) }
@@ -38,6 +38,7 @@ feature 'Managing meetings' do
 
   context 'updating an existing meeting' do
     let(:meeting) { Fabricate(:meeting, name: 'August Meeting') }
+
     scenario 'renders an error when no chapter has been selected' do
       Fabricate(:meeting, name: 'August Meeting')
       visit edit_admin_meeting_path(meeting)
@@ -65,6 +66,7 @@ feature 'Managing meetings' do
 
   context 'retrieving the attendee emails' do
     let(:meeting) { Fabricate(:meeting) }
+
     scenario 'when format: :text' do
       invitations = Fabricate.times(4, :attending_meeting_invitation, meeting: meeting)
       visit attendees_emails_admin_meeting_path(meeting, format: :text)
@@ -106,12 +108,12 @@ feature 'Managing meetings' do
       permanent_ban = Fabricate.build(:ban, member: chapter.members[3], permanent: true, expires_at: nil)
       permanent_ban.save(validate: false)
       Fabricate(:ban, member: chapter.members[4], expires_at: Time.zone.today + 2.months)
-      expired_ban = Fabricate.build(:ban, member: chapter.members[5], expires_at: Time.zone.today - 1.months)
+      expired_ban = Fabricate.build(:ban, member: chapter.members[5], expires_at: Time.zone.today - 1.month)
       expired_ban.save(validate: false)
 
-      expect {
+      expect do
         visit invite_admin_meeting_path(meeting)
-      }.to change{ ActionMailer::Base.deliveries.count }.by (chapter.members.count - 4)
+      end.to change { ActionMailer::Base.deliveries.count }.by (chapter.members.count - 4)
     end
   end
 end

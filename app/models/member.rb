@@ -13,14 +13,14 @@ class Member < ActiveRecord::Base
   has_many :subscriptions
   has_many :groups, through: :subscriptions
   has_many :member_notes
-  has_many :chapters, -> { uniq }, through: :groups
-  has_many :announcements, -> { uniq }, through: :groups
+  has_many :chapters, -> { distinct }, through: :groups
+  has_many :announcements, -> { distinct }, through: :groups
   has_many :meeting_invitations
 
   validates :auth_services, presence: true
   validates :name, :surname, :email, :about_you, presence: true, if: :can_log_in?
-  validates_uniqueness_of :email
-  validates_length_of :about_you, maximum: 255
+  validates :email, uniqueness: true
+  validates :about_you, length: { maximum: 255 }
 
   scope :subscribers, -> { joins(:subscriptions).order('created_at desc').uniq }
   scope :not_banned, lambda {
@@ -28,7 +28,8 @@ class Member < ActiveRecord::Base
                          .where('bans.id is NULL or bans.expires_at < CURRENT_DATE')
                      }
   scope :attending_meeting, lambda { |meeting|
-                              joins(:meeting_invitations)
+                              not_banned
+                                .joins(:meeting_invitations)
                                 .where('meeting_invitations.meeting_id = ? and meeting_invitations.attending = ?',
                                        meeting.id, true)
                             }
@@ -36,7 +37,7 @@ class Member < ActiveRecord::Base
 
   acts_as_taggable_on :skills
 
-  attr_accessor :attendance
+  attr_accessor :attendance, :newsletter
 
   def self.with_skill(skill_name)
     tagged_with(skill_name)
@@ -55,7 +56,7 @@ class Member < ActiveRecord::Base
   end
 
   def full_name
-    pronoun = self.pronouns.present? ? "(#{self.pronouns})" : nil
+    pronoun = pronouns.present? ? "(#{pronouns})" : nil
     [name, surname, pronoun].compact.join ' '
   end
 
@@ -74,41 +75,26 @@ class Member < ActiveRecord::Base
   def received_welcome_for?(subscription)
     return received_student_welcome_email if subscription.student?
     return received_coach_welcome_email if subscription.coach?
+
     true
   end
 
   def send_eligibility_email(user)
     MemberMailer.eligibility_check(self, user.email).deliver_now
-    self.eligibility_inquiries.create(sent_by_id: user.id)
+    eligibility_inquiries.create(sent_by_id: user.id)
   end
 
   def send_attendance_email(user)
     MemberMailer.attendance_warning(self, user.email).deliver_now
-    self.attendance_warnings.create(sent_by_id: user.id)
+    attendance_warnings.create(sent_by_id: user.id)
   end
 
   def avatar(size = 100)
     "https://secure.gravatar.com/avatar/#{md5_email}?size=#{size}&default=identicon"
   end
 
-  def attended_workshops
-    workshop_invitations.attended.map(&:workshop)
-  end
-
   def requires_additional_details?
     can_log_in? && !valid?
-  end
-
-  def verified?
-    workshop_invitations.exists?(role: 'Coach', attended: true)
-  end
-
-  def verified_or_organiser?
-    verified? || organised_chapters.present?
-  end
-
-  def twitter_url
-    "http://twitter.com/#{twitter}"
   end
 
   def has_existing_RSVP_on(date)
@@ -116,7 +102,7 @@ class Member < ActiveRecord::Base
   end
 
   def already_attending(event)
-    invitations.where(attending: true).map{ |e| e.event.id }.include?(event.id)
+    invitations.where(attending: true).map { |e| e.event.id }.include?(event.id)
   end
 
   def is_organiser?
@@ -134,7 +120,10 @@ class Member < ActiveRecord::Base
   private
 
   def invitations_on(date)
-    workshop_invitations.joins(:workshop).where('workshops.date_and_time BETWEEN ? AND ?', date.beginning_of_day, date.end_of_day).where(attending: true)
+    workshop_invitations
+      .joins(:workshop)
+      .where('workshops.date_and_time BETWEEN ? AND ?', date.beginning_of_day, date.end_of_day)
+      .where(attending: true)
   end
 
   def md5_email

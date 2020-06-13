@@ -11,6 +11,7 @@ de:
       day_in_words: "%a"
       day: "%d"
       month: "%B"
+      year: "%Y"
       meeting_format: "%a %d %B %H:%M"
       time: "%H:%M"
       year_month: "%Y-%B"
@@ -30,6 +31,7 @@ de:
       day_in_words: "%a"
       day: "%d"
       month: "%B"
+      year: "%Y"
       meeting_format: "%a %d %B %H:%M"
       time: "%H:%M"
       year_month: "%Y-%B"
@@ -63,8 +65,24 @@ de:
       workshop_email_subject: "Regarding hosting a workshop"
     chapters:
       title: "Chapters"
+  mailer:
+    workshop_invitation:
+      attending:
+        subject: "Attendance Confirmation for %{date_time}"
+      attending_reminder:
+        subject: "Workshop Reminder %{date_time}"
+      invite_coach:
+        subject: "Workshop Coach Invitation %{date_time}"
+      invite_student:
+        subject: "Workshop Invitation %{date_time}"
+      notify_waiting_list:
+        subject: "A spot just became available"
+      waiting_list_reminder:
+        subject: "Reminder: you're on the codebar waiting list (%{date_time})"
   messages:
     accepted_invitation: "Vielen Dank für die Rückmeldung, %{name}. Wir sehen uns beim Workshop!"
+    already_invited: 'You have already RSVPd or joined the waitlist for this workshop.'
+    error_blank_note: 'You must select a note'
     rejected_invitation: "Wir bedauern es sehr dass du nicht teilnehmen kannst. Vielen Dank für das Bescheid geben, %{name}."
     already_rsvped: "Du hast deine Teilnahme schon bestätigt!"
     not_attending_already: "Du hast bereits bestätigt, dass du nicht teilnehmen kannst."
@@ -73,6 +91,9 @@ de:
     feedback_not_found: "Sie haben bereits ein Feedback eingereicht."
     updated_note: "Aktualisierung erfolgreich."
     invitations:
+      meeting:
+        cancel: "Thanks for letting us know you can't make it."
+        rsvp: "Your RSVP was successful. We look forward to seeing you at the Monthly!"
       rsvped_to_other_workshop: "Du hast dich schon für einen anderen Workshop an diesem Datum angemeldet. Falls du an diesem Workshop teilnehmen möchtest, melde dich bitte zuerst von dem anderen Workshop ab."
       spot_confirmed: "Deine Teilnahme an %{event} wurde bestätigt! Wir freuen uns bereits dich dort begrüßen zu dürfen."
       spot_not_confirmed: 'Deine Teilnahme wurde noch nicht bestätigt. Wir werden die Teilnahme bestätigen sobald du das Formular ausgefüllt hast.'
@@ -116,13 +137,17 @@ de:
       introduction: "Stelle dich immer vor. Erzähle, was dich zum ehrenamtlichen Helfen in deiner Freizeit motiviert und warum du das Programmieren magst."
       backgrounds: "Gib Deinen Lernenden die Gelegenheit, einander kennen zu lernen. Frage sie nach ihren Namen, warum sie gekommen sind, was sie beruflich machen. Rege zu Beginn eine kurze Diskussion an."
       limits: "Setze bei den Lernenden kein Wissen voraus, gehe aber davon aus, dass ihre Intelligenz und Fähigkeiten unbeschränkt sind."
-      colaboration: "Arbeite mit den Lernenden zusammen. Wenn du zwei Leute betreust, solltest du mit beiden arbeiten. Widme nicht deine ganze Aufmerksamkeit einer Einzelperson."
+      collaboration: "Arbeite mit den Lernenden zusammen. Wenn du zwei Leute betreust, solltest du mit beiden arbeiten. Widme nicht deine ganze Aufmerksamkeit einer Einzelperson."
       discussion: "Erlaube den Lernenden zunächst, Fragen eigenständig zu beantworten. Hilf ihnen mit erkenntnisleitenden Fragen. Rege eine Diskussion an."
       talk_slow: "Lass dir Zeit. Du bist der/die Lehrer/in, sie sind die Lernenden. Lege kurze Pausen zwischen Fragen ein."
       mild_approach: "Sage nicht rabiat \"Nein\", wenn die Lernenden etwas unrichtig machen. Gehe sanft und behutsam an das Problem heran."
       paper: "Benutze Stift und Papier oder ein Whiteboard! Viele der Lernenden haben keine Vorgeschichte mit der Informatik. Zeichnungen und visuelle Hilfen können sehr nützlich sein."
       stubling: "Lasse zu, dass die Lernenden auch mal stolpern. Wir lernen aus Fehlern, indem wir unseren eigenen Weg von der Frustration zur Lösung des Problems finden. Stehe den Lernenden unterstützend zur Seite, aber lass sie selbständig erkunden."
       suggestions: "Hast du noch Vorschläge? Eröffne einen <a href='https://github.com/codebar/planner'>pull request</a> oder <a href='https://github.com/codebar/planner/issues/new'>erstelle eine issue</a>\""
+  workshops:
+    already_wish_to_attend: 'You have already RSVPd or joined the waitlist for this workshop.'
+    lead: "Attend our workshops to learn programming in a safe and supportive environment at your own pace, or to share your knowledge and coach our students."
+    registration_not_open: 'This workshop is not open for registrations'
   events:
     title: "Veranstaltungen"
     past: "Vergangene"
@@ -334,14 +359,15 @@ de:
         none: Du hast keine Jobeinträge in Prüfung.
       new:
         title: Job eintragen
+        description: "Our aim is to be the one stop shop for junior developer roles! All jobs featured on our jobs board will fall under the following three categories; paid internships, apprenticeships or junior developer roles. We will not share jobs that are looking for senior, mid-weight, or developers with 2 years of experience. Each job that is submitted will be approved by the codebar team before appearing on the job board."
         rules_intro: "Bitte prüfe vor dem Abschicken, dass:"
         details: dein Eintrag detailliert die zu erledigende Arbeit darstellt
         suitability: "der Job passend für Menschen ist, die nach Praktika und Junior-Positionen suchen, die ihnen helfen ihre Karriere aufzubauen"
         salary: der Job ein angemessenes Gehalt bietet
         short: "der Eintrag kurz und auf den Punkt ist"
         approval_info: "*Nach dem Abschicken wird der Job sichtbar sobald er geprüft und bestätigt wurde."
-        pay: You have made the requirement payment of £35 through %{link}
-        donation: a donation
+        pay: 
+          html: You have made the required payment of £50 through <a href="%{link}">a donation</a>.
         button:
           pay: Make a payment
       edit:
@@ -430,6 +456,10 @@ de:
         approved: "The job has been approved and an email has been sent out to %{name} at %{email}"
         cannot_approve: 'You cannot approve expired job listings'
         confirm_approval: 'Are you sure this job listing meets all requirements and you want to approve it?'
+    members:
+      unsubscribed: "You have unsubscribed %{member} from %{city}'s %{group} group"
+      eligibility_confirmation_request: 'You have sent an eligibility confirmation request.'
+      attendance_warning: 'You have sent an attendance warning.'
     workshop:
       manage_rsvps:
         text: 'Studenten und Trainer zum Workshop einladen. Die Bestätigungs-E-Mail wird ausgelöst und sie werden von der Warteliste entfernt.'
@@ -457,7 +487,7 @@ de:
         location: 'e.g. London or Berlin'
     hints:
       job:
-        remote: Only check if the role is remote only
+        remote: Only check if the role is fully remote only
         salary: Annual pay before tax, without commas or decimal points
   activerecord:
     attributes:

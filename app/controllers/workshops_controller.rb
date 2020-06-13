@@ -3,19 +3,22 @@ class WorkshopsController < ApplicationController
   before_action :set_workshop, only: %i[show rsvp]
 
   def show
-    @workshop = WorkshopPresenter.new(@workshop)
-    @host_address = AddressPresenter.new(@workshop.host.address) if @workshop.has_host?
+    @workshop = WorkshopPresenter.decorate(@workshop)
+
+    render 'virtual_workshops/show' if @workshop.virtual?
   end
 
   def rsvp
-    redirect_to :back, notice: 'This workshop is not open for registrations' unless @workshop.invitable_yet?
+    redirect_to :back, notice: t('workshops.registration_not_open') unless @workshop.invitable_yet?
 
     if role_params.nil?
-      @invitation = WorkshopInvitation.find_by(workshop: @workshop, member: current_user, attending: true)
+      @invitation = find_attending_invitation(@workshop, current_user)
     else
-      return redirect_to :back, notice: 'You have already RSVPd or joined the waitlist for this workshop.' if @workshop.attendee?(current_user) || @workshop.waitlisted?(current_user)
+      if user_attending_or_waitlisted?(@workshop, current_user)
+        return redirect_to :back, notice: t('workshops.already_wish_to_attend')
+      end
 
-      @invitation = WorkshopInvitation.find_or_create_by(workshop: @workshop, member: current_user, role: role_params)
+      @invitation = find_or_create_invitation(@workshop, current_user, role_params)
     end
 
     redirect_to invitation_path(@invitation)
@@ -29,5 +32,19 @@ class WorkshopsController < ApplicationController
 
   def role_params
     params[:role]
+  end
+
+  def find_attending_invitation(workshop, user)
+    WorkshopInvitation.find_by(workshop: workshop, member: user, attending: true)
+  end
+
+  def find_or_create_invitation(workshop, user, role)
+    WorkshopInvitation.find_or_create_by(workshop: workshop,
+                                         member: user,
+                                         role: role)
+  end
+
+  def user_attending_or_waitlisted?(workshop, user)
+    workshop.attendee?(user) || workshop.waitlisted?(user)
   end
 end

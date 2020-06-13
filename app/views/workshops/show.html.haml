@@ -1,33 +1,39 @@
+- title t('workshop.title', host: @workshop.host.name, date: humanize_date(@workshop.date_and_time))
+
+= render partial: 'meta_tags', locals: { workshop: @workshop }
+
 .stripe.reverse
   .row
     .large-12.columns
       %h2
-        Workshop at #{@workshop.host.name}
+        = t('workshops.title', host: @workshop.host.name)
         %br
-        %small #{humanize_date(@workshop.date_and_time, with_time: true)} #{@workshop.distance_of_time}
+        %small #{humanize_date(@workshop.date_and_time, @workshop.ends_at, with_time: true)} #{@workshop.distance_of_time}
       - if @workshop.date_and_time.past?
-        %label.label.warning This event has already taken place.
+        %label.label.warning= t('messages.already_taken_place')
   %section#banner
     .row
       .medium-12.columns
         %p.lead
-          Attend our workshops to learn programming in a safe and supportive environment at your own pace, or to share your knowledge and coach our students.
+          = t("workshops.lead")
+        %p.description
+          = sanitize(@workshop.description)
 
-        - unless current_user and current_user.banned?
-          = render 'workshop_actions'
+        = render 'actions' unless current_user&.banned?
 
 .stripe.reverse
   .row
-    = render partial: 'shared/venue', locals: { venue: @workshop.host, address: @host_address}
+    = render partial: 'shared/venue', locals: { venue: @workshop.host, address: @workshop.address}
 
-    .small-12.column
-      %h3 Sponsors
-      %ul.row.no-bullet
-        - @workshop.sponsors.each do |sponsor|
-          %li.small-4.columns
-            = image_tag(sponsor.avatar, class: 'sponsor', alt: sponsor.name)
-            %p
-              = link_to sponsor.name, sponsor.website
+    #sponsors
+      .small-12.column
+        %h3 Sponsors
+        %ul.row.no-bullet
+          - @workshop.sponsors.each do |sponsor|
+            %li.small-4.columns
+              = image_tag(sponsor.avatar.url, class: 'sponsor', alt: sponsor.name)
+              %p
+                = link_to sponsor.name, sponsor.website
 
 .stripe.reverse
   = render partial: 'members/organisers_grid', locals: { members: @workshop.organisers, show_info: false }

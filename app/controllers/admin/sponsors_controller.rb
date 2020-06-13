@@ -1,10 +1,12 @@
 class Admin::SponsorsController < Admin::ApplicationController
-  before_filter :set_sponsor, only: %i[show edit update]
+  before_action :set_sponsor, only: %i[show edit update]
 
   def index
     authorize Sponsor
     @sponsors = Sponsor.all.order(:name)
   end
+
+  def show; end
 
   def new
     @sponsor = Sponsor.new
@@ -15,7 +17,7 @@ class Admin::SponsorsController < Admin::ApplicationController
 
   def create
     @sponsor = Sponsor.new(sponsor_params)
-    @sponsor.build_address unless @sponsor.address.present?
+    @sponsor.build_address if @sponsor.address.blank?
     authorize @sponsor
     if @sponsor.save
       flash[:notice] = "Sponsor #{@sponsor.name} created"
@@ -29,12 +31,12 @@ class Admin::SponsorsController < Admin::ApplicationController
   def edit
     @sponsor = Sponsor.find(params[:id])
     authorize @sponsor
-    @sponsor.build_address unless @sponsor.address.present?
+    @sponsor.build_address if @sponsor.address.blank?
     @sponsor.contacts.build
   end
 
   def update
-    @sponsor.update_attributes(sponsor_params)
+    @sponsor.update(sponsor_params)
     redirect_to admin_sponsor_path(@sponsor), notice: 'Updated!'
   end
 

@@ -25,7 +25,8 @@ class Chapter < ActiveRecord::Base
 
   def self.available_to_user(user)
     return Chapter.all if user.has_role?(:organiser) || user.has_role?(:admin) || user.has_role?(:organiser, Chapter)
-    return Chapter.find_roles(:organiser, user).map(&:resource)
+
+    Chapter.find_roles(:organiser, user).map(&:resource)
   end
 
   def organisers
@@ -43,12 +44,12 @@ class Chapter < ActiveRecord::Base
   private
 
   def time_zone_exists
-    if time_zone && ActiveSupport::TimeZone[time_zone].nil?
-      errors.add(:time_zone, 'does not exist')
-    end
+    return unless time_zone && ActiveSupport::TimeZone[time_zone].nil?
+
+    errors.add(:time_zone, 'does not exist')
   end
 
   def set_slug
-    self.slug ||= self.name.parameterize
+    self.slug ||= name.parameterize
   end
 end

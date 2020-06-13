@@ -4,13 +4,14 @@ en:
     formats:
       default: "%d/%m/%Y"
       email: "%a, %d %B at %H:%M"
-      email_title: "%A, %d %b at %H:%M"
+      email_title: "%A, %d %b at %H:%M %Z"
       short: "%d/%m/%Y %H:%M "
       date: "%d %b %Y"
       website_format: "%a, %d %B %Y at %H:%M"
       day_in_words: "%a"
       day: "%d"
       month: "%B"
+      year: "%Y"
       meeting_format: "%a %d %B %H:%M"
       time: "%H:%M"
       year_month: "%Y-%B"
@@ -21,7 +22,7 @@ en:
     formats:
       default: "%a, %d %b %Y %H:%M"
       email: "%a, %d %B at %H:%M"
-      email_title: "%A, %d %b at %H:%M"
+      email_title: "%A, %d %b at %H:%M %Z"
       short: "%d/%m/%Y %H:%M "
       date: "%d %b %Y"
       full_date: "%d %B %Y"
@@ -30,8 +31,11 @@ en:
       day_in_words: "%a"
       day: "%d"
       month: "%B"
+      year: "%Y"
       meeting_format: "%a %d %B %H:%M"
       time: "%H:%M"
+      time_with_zone: "%H:%M %Z (GMT%:z)"
+      time_zone: "%Z (GMT%:z)"
       year_month: "%Y-%B"
       log: "at %H:%M on the %d/%m/%Y"
       workshop: "%A, %e %B %Y at %R"
@@ -45,6 +49,7 @@ en:
         precision: 0
         format: '%u%n'
   homepage:
+    title: Homepage
     intro: "<strong>codebar</strong> is a non-profit initiative that facilitates the growth of a diverse tech community by running regular programming workshops."
     explanation: "Our goal is to enable underrepresented people to learn programming in a safe and collaborative environment and expand their career opportunities. To achieve this we run free regular workshops, regular one-off events and try to create opportunities for our students making technology and coding more accessible."
     participate:
@@ -63,22 +68,101 @@ en:
       workshop_email_subject: "Regarding hosting a workshop"
     chapters:
       title: "Chapters"
+  mailer:
+    workshop_invitation:
+      attending:
+        subject: "Attendance Confirmation for %{date_time}"
+      attending_reminder:
+        subject: "Workshop Reminder %{date_time}"
+      invite_coach:
+        subject: "Workshop Coach Invitation %{date_time}"
+      invite_student:
+        subject: "Workshop Invitation %{date_time}"
+      notify_waiting_list:
+        subject: "A spot just became available"
+      waiting_list_reminder:
+        subject: "Reminder: you're on the codebar waiting list (%{date_time})"
+      virtual:
+        invite_coach:
+          subject: "Virtual Workshop Coach Invitation %{date_time}"
+        invite_student:
+          subject: "Virtual Workshop Invitation %{date_time}"
+        attending_reminder:
+          subject: "Virtual Workshop Reminder %{date_time}"
+        waiting_list_reminder:
+          subject: "Reminder: you're on the codebar waiting list (%{date_time})"
+  workshop:
+    title: Workshop at %{host} - %{date}
+    calendar:
+      summary: codebar @ %{host_name}
+      description:  "Declining or removing this event from your calendar does not update your invitation. If you are unable to attend please follow the link found on this calendar entry and update your attendance status. Missing codebar events repeatedly will result in a ban.\n
+
+                     Invitation link: %{invitation_link}"
+    virtual:
+      title: Virtual workshop for %{chapter} - %{date}
+      calendar:
+        location: codebar Slack (https://slack.codebar.io)
+        description: "How to join\n
+                      ---------------\n
+                      1. Join the workshop's Slack channel: #%{slack_channel} (%{slack_channel_link})\n
+                      Not in codebar's Slack? Request an invitation: https://slack.codebar.io\n
+                      \n
+                      2. Accept the invitation to our discord %{discord_invitation} - this software will enable you to collaborate with a student/coach by screen sharing.\n
+                      \n
+                      Requirements\n
+                      ---------------\n
+                      Download the discord Desktop app: https://discord.com/download\n
+                      \n
+                      ---------------\n"
+      invitation:
+        shared_intro_3_html: 'PS: If you have any questions about the workshop or will not be able to attend on short notice please send us an email at %{email_link} as that will make pairing everyone up easier for us.'
+        info:
+          title: How to join
+          begins_title: When the workshop begins
+          line_1_html: 'Sign up to the codebar Slack %{slack_link}'
+          line_2_html: 'Join %{channel}'
+          line_3_html: 'Accept the invitation and join our %{discord} server'
+          line_4_html: 'Install the discord Desktop app: %{discord_app}'
+          line_5: 'Check in with the organisers in the Slack channel and'
+          line_6: 'Follow the posted instructions'
+    invitation:
+      title: Workshop invitation - %{date}
+      info: Information about the workshop
+      cant_make_it_note: "If you can't make it or plan to arrive late please let us know by sending an email to %{email}"
+      student_intro_1: 'In our workshops, you will get to go through any of our available tutorials, ask for programming advice or get help on your own projects.'
+      student_intro_2: 'In case you are unable to attend after you RSVP, please make sure you come back and update your attendance. We have limited space and do a coaches request depending on the number of attending students.'
+      student_intro_3_html: 'Please make sure you <b>bring your laptop</b> with you.'
+      shared_intro_4_html: 'PS: There will also be food at the workshop. We always make an effort to have vegetarian, vegan and gluten-free options available. If you have any other dietary requirements, send us an email at %{email_link}.'
+  workshop_invitation:
+    coach_skills_tooltip: 'Keeping your skills up-to-date enables Organisers to plan ahead and makes running workshops easier.'
+  meeting:
+    title: "%{name} - %{date}"
   messages:
     accepted_invitation: "Thanks for getting back to us %{name}. See you at the workshop!"
+    already_invited: 'You have already RSVPd or joined the waitlist for this workshop.'
+    already_taken_place: 'This event has already taken place'
     rejected_invitation: "We are so sad you can't make it, but thanks for letting us know %{name}."
     already_rsvped: "You have already confirmed you attendance!"
     not_attending_already: "You have already confirmed you can't make it!"
-    no_available_seats: "Unfortunately there are no more spaces left :(. If you would like to join our waiting list send us an email at %{email}"
+    no_available_seats: "There are no more spots left for this event, but you can join the waiting list."
     feedback_saved: "Thank you for taking the time to give us feedback!"
     feedback_not_found: "You have already submitted feedback for this event."
-    updated_note: "Successfully updated note."
     invitations:
+      meeting:
+        cancel: "Thanks for letting us know you can't make it."
+        rsvp: "Your RSVP was successful. We look forward to seeing you at the Monthly!"
+      event:
+        no_available_seats: "No spaces left. If you would like to join our waiting list send us an email at %{email}"
       rsvped_to_other_workshop: "You have already RSVP'd to another workshop on this date. If you would prefer to attend this workshop, please cancel your other RSVP first."
+      select_a_member_to_rsvp: "Select a member to RSVP"
       spot_confirmed: "Your spot has been confirmed for %{event}! We look forward to seeing you there."
       spot_not_confirmed: 'Your spot has not yet been confirmed. We will verify your attendance after you complete the questionnaire.'
+      updated_details: "Invitation details successfully updated."
+    invalid_format: "The requested format is invalid: %{invalid_format}"
   notifications:
     provider_already_connected: 'You are already signed in!'
     not_logged_in: "You must be logged in to access this page."
+    signing_up: 'Thanks for signing up. Please fill in your details to complete the registration process.'
   navigation:
     dashboard: "Dashboard"
     code_of_conduct: "Code of conduct"
@@ -113,18 +197,32 @@ en:
       laptop: "You don't need a laptop for our workshops. You are there to watch and guide the students. If you don't feel comfortable with the tutorial you should spend time on it before coming if you want to help out."
       keyboard: "Do not take over the keyboard! This can be off-putting and scary."
       typing: "Encourage the students to type and not copy paste."
-      questions: "Explain that there are no dumb questions."
+      questions: "Explain that there are no bad questions."
       mistakes: "Explain to students that it's OK to make mistakes."
       introduction: "Always introduce yourself. Say why you want to help out and are spending your own time on this, why you like programming."
       backgrounds: "Give your students the opportunity to get to know each other. Ask their names, why they are here, what they do in their day jobs. Encourage a brief discussion before starting."
       limits: "Assume that anyone you're teaching has no knowledge but infinite intelligence."
-      colaboration: "Work collaboratively with your student. If you have two students, you should work with both. Don't focus all your attention on one of them."
+      collaboration: "Work collaboratively with your student. If you have two students, you should work with both. Don't focus all your attention on one of them."
       discussion: "Let students have a go at answering the questions first. Help with open and leading questions. Encourage a discussion."
       talk_slow: "Take it slow, you are the teacher, they are the student. Allow for time between questions."
       mild_approach: "Don't say no when the students are not doing something right. Be gentle, approach it in a mild way."
       paper: "Use pen and paper or go to a whiteboard! Often students are coming from a non-technical background. Drawing and explaining with visual material is really helpful."
       stubling: "Let them stumble. We learn by making mistakes, getting frustrated, and working through problem in our own way. Be supportive, but let them explore."
       suggestions: "Do you have something to suggest? Make a <a href='https://github.com/codebar/planner'>pull request</a> or <a href='https://github.com/codebar/planner/issues/new'>create an issue</a>"
+  workshops:
+    title: Workshop at %{host}
+    already_wish_to_attend: 'You have already RSVPd or joined the waitlist for this workshop.'
+    lead: "Attend our workshops to learn programming in a safe and supportive environment at your own pace, or to share your knowledge and coach our students."
+    not_open_for_rsvp: 'This workshop is not yet open for RSVP.'
+    registration_not_open: 'This workshop is not open for registrations'
+    sign_up_to_be_invited: 'Sign up to be invited to future events.'
+    no_spaces_available: 'There are no available spots left for this workshop but you can always join the waiting list.'
+    already_attending: 'You are attending this event'
+    on_waiting_list: You are on the waiting list.
+    virtual:
+      title: 'Virtual workshop for %{chapter}'
+      lead: 'Participate in our workshops to learn programming in a supportive and collaborative online environment at your own pace, or share your knowledge and coach our students.'
+      intro: 'Our virtual workshops take place online. Our aim is to help you get started with programming by pairing you with a coach that will be able to remotely assist and guide you through what you want to learn. Once you sign up we will email you more details about how to join the workshop and tools that we reccomend to make the process easier for you. In the meantime if you have any questions, do not hesitate to send an email to %{chapter_email}.'
   events:
     title: "Events"
     past: "Past"
@@ -199,6 +297,13 @@ en:
         criteria_brief: "as our workshops are only available to women, LGBTQ, people from underrepresented minority groups."
         github: "Lastly, when you click the sign up button, you'll be taken to something called GitHub. After logging in with a GitHub account, you'll be taken back to the codebar website. If you don't have an account yet, you'll need to create one. It doesn't take long and it's something that will come in handy when you get started with coding!"
       invitations: "Invitations are sent out periodically, so don't worry if you don't receive one as soon as you register."
+  terms_and_conditions:
+    title: 'Terms and Conditions'
+    body: 'Before you can proceed you must first read our Code of Conduct and agree to abide by it.'
+    link_text: 'Read codebar''s Code of Conduct'
+    accept: 'Accept'
+    messages:
+      notice: 'You have to accept the Terms and Conditions before you are able to proceed.'
   footer:
     email_us: "Send us an email at"
     contact_info: "Contact Info:"
@@ -311,7 +416,7 @@ en:
     title: Jobs
     index:
       description: There are %{count} jobs listed
-      none: There are no jobs available.
+      none: There are no jobs listed at this time. Please check back soon as positions get added regularly.
   feedback_form:
     title: 'Workshop feedback'
     description: Your submission will be completely anonymous. We read every piece of feedback and use it to help us improve our workshops.
@@ -324,18 +429,28 @@ en:
     request: 'How did you find the workshop?'
     suggestions: "Was there something you didn't like? What can we do to improve your experience?"
   member:
+    details:
+      edit:
+        title: Almost there...
+        summary: We need some more details from you to finish creating your account. We use these to help run our events.
+        coach:
+          about_you: What experience do you have? What languages do you like to use? Tell us a little bit about yourself!
+        student:
+          about_you: What do you want to work on at codebar? What have you done in the past? Tell us a little bit about yourself!
+        submit: Next
     jobs:
       title: My jobs
       preview: Preview
       index:
         description: You have %{count} jobs listed
-        none: You have not posted any jobs
+        none: You have not listed any jobs yet. Please consider submitting a paid internship, apprenticeship or junior developer role job to our community.
       pending:
         title: Your pending job posts
         description: You have %{count} job posts pending submission.
         none: You have no pending job posts.
       new:
         title: List a job
+        description: "Our aim is to be the one stop shop for junior developer roles! All jobs featured on our jobs board will fall under the following three categories; paid internships, apprenticeships or junior developer roles. We will not share jobs that are looking for senior, mid-weight, or developers with 2 years of experience. Each job that is submitted will be approved by the codebar team before appearing on the job board."
         rules_intro: "Before posting make sure that:"
         details: Your post details the work that will have to be undertaken
         suitability: "It's suitable for people looking for Internships and Junior roles that will enable them to build up their career"
@@ -343,12 +458,27 @@ en:
         short: "It's short and to the point"
         approval_info: "*Once submitted, a job will be visible once it has been reviewed and approved."
         optional_details_message: "The information below is only required if you want this job post to be shared with Google Search UK."
-        pay: You have made the requirement payment of £35 through %{link}
-        donation: a donation
+        pay: 
+          html: You have made the required payment of £50 through <a href="%{link}">a donation</a>.
         button:
           pay: Make a payment
       edit:
         title: Edit job listing
+  subscriptions:
+    summary: Subscriptions control the invitation emails you receive. For example, if you would like to receive student invitations for the Brighton and West London workshops then subscribe to the Brighton (Students) and West London (Students) options.
+    mailing_list:
+      title: codebar newsletter
+      summary: Stay up to date with codebar''s news and opportunities by subscribing to the newsletter.
+      subscribe: Subscribe to newsletter
+      unsubscribe: Unsubscribe from newsletter
+    messages:
+      mailing_list:
+        subscribe: 'You have subscribed to codebar''s newsletter'
+        unsubscribe: 'You have unsubscribed from codebar''s newsletter'
+      group:
+        subscribe: 'You have subscribed to %{chapter}''s %{role} group'
+        unsubscribe: 'You have unsubscribed from %{chapter}''s %{role} group'
+
   pages:
     cookies:
       title: Cookies
@@ -434,12 +564,26 @@ en:
         approved: "The job has been approved and an email has been sent out to %{name} at %{email}"
         cannot_approve: 'You cannot approve expired job listings'
         confirm_approval: 'Are you sure this job listing meets all requirements and you want to approve it?'
+    members:
+      unsubscribed: "You have unsubscribed %{member} from %{city}'s %{group} group"
+      eligibility_confirmation_request: 'You have sent an eligibility confirmation request.'
+      attendance_warning: 'You have sent an attendance warning.'
     workshop:
       manage_rsvps:
         text: 'RSVP Students and Coaches to the workshop. The attendance confirmation email will be triggered and they will be removed from the waiting list.'
       destroy:
         success: "Workshop deleted successfully"
         failure: "Workshop cannot be deleted. This is because it has invitees and/or workshop information is on the website for a while long enough that it cannot be deleted."
+      form:
+        virtual_info: To create a virtual workshop you must check the box and fill in the below fields. The slack channel will be available on the invitation page for anyone who successfuly RSVPs.
+        rsvp_details: Fill out these fields if you want RSVPs to open automatically at a future time. Leave blank if you'll handle it manually later.
+      not_invitable: "The workshop is not invitable"
+      virtual:
+        details:
+          title: Virtual workshop details
+          slack: Slack channel
+          discord: codebar Discord
+          more_html: "Have a look at the <em>Running a virtual codebar workshop</em> guide for information on how to run a virtual workshop. If you don't know where to find that, ask in the %{slack_channel} Slack channel."
     messages:
       meeting:
         created: 'Meeting successfully created'
@@ -451,18 +595,51 @@ en:
         already_on_list: "%{name} is already on the list!"
         rsvp_error: "Something went wrong, %{name} has not been added."
         update_rsvp: 'Updated attendance of %{name}'
+      workshop:
+        created: 'Workshop successfully created'
+        updated: 'Workshop successfully updated'
   simple_form:
     placeholders:
+      member:
+        name: 'Grace'
+        surname: 'Hopper'
+        pronouns: 'e.g she/her/they'
       job:
         company: 'e.g. codebar'
         company_website: 'e.g. https://codebar.io'
         title: 'e.g. Internship'
         description: 'Use text or markdown for the job description'
         location: 'e.g. London or Berlin'
+      workshop:
+        slack_channel: 'e.g. virtual-london-2022-12-03'
+        slack_channel_link: 'e.g. https://codebar.slack.com/archives/CGLQD917T'
+        description: 'Any details you would like to add about the workshop. This will be visible on both the public workshop and invitation pages'
+      workshop_invitation:
+        note: 'e.g. I am a Junior and would prefer to not be paired on advanced projects'
     hints:
+      member:
+        email: 'This is needed so we can email you invitations to our events'
+      workshop_invitation:
+        note: 'Pairing preferences or anything else you think we should know.'
       job:
-        remote: Only check if the role is remote only
+        remote: Only check if the role is fully remote only
         salary: Annual pay before tax, without commas or decimal points
+      workshop:
+        slack_channel: 'Create a workshop specific channel in the codebar Slack. This is the place you will use for socialising and sharing details about the workshop.'
+        slack_channel_link: 'Right click the Slack channel to get the link'
+        host: 'Required by physical workshops but not supported for virtual workshops'
+        description: 'Supports HTML'
+        coach_spaces: Available coach spaces
+        student_spaces: Available student spaces
+        invitable: When checked, it overrides the RSVP open local date and time and makes RSVPs available right away.
+    labels:
+      terms_and_conditions_form:
+        terms: 'I have read codebar''s Code of Conduct and agree with all of its terms.'
+      workshop:
+        description: Additional description
+        virtual: Virtual workshop
+      workshop_invitation:
+        note: 'Note'
   activerecord:
     attributes:
       job:
@@ -474,3 +651,21 @@ en:
         email: Contact email
         link_to_job: Link to job post
         expiry_date: Application closing date
+      member:
+        email: 'Email address'
+        name: 'First name'
+        newsletter: 'If you do not want to receive the codebar newsletter uncheck this box'
+        pronouns: 'What pronouns do you use?'
+    errors:
+      models:
+        workshop_invitation:
+          attributes:
+            tutorial:
+              blank: 'must be selected'
+      messages:
+        all_invitation_details_required: 'Fill in all invitations details to make the event invitable'
+        already_sponsoring: 'already a sponsor'
+        required: 'must be set'
+  social_media_links:
+    slack_html: https://slack.codebar.io
+    discord_invitation: https://discord.gg/Eru89Rk

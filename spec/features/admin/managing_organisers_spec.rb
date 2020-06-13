@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-feature 'Managing organisers' do
+RSpec.feature 'Managing organisers', type: :feature do
   let(:member) { Fabricate(:member) }
   let(:chapter) { Fabricate(:chapter) }
 

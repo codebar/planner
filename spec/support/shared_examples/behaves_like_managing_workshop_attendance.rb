@@ -1,30 +1,9 @@
-require 'spec_helper'
-
-feature 'Viewing a workshop page' do
-  let(:workshop) { Fabricate(:workshop) }
-  let(:workshop_auto_rsvp_in_past) { Fabricate(:workshop_auto_rsvp_in_past) }
-  let(:workshop_auto_rsvp_in_future) { Fabricate(:workshop_auto_rsvp_in_future) }
-  let(:coach) { Fabricate(:coach) }
-  let(:student) { Fabricate(:student) }
-
-  context 'visitor' do
-    scenario 'can view a workshop' do
-      visit workshop_path(workshop)
-
-      expect(page).to be
-    end
-
-    scenario 'can sign up or sign in' do
-      visit workshop_path workshop
-
-      expect(page).to have_content('Sign up')
-      expect(page).to have_content('Log in')
-    end
-  end
-
-  context 'logged in member' do
+RSpec.shared_examples 'managing workshop attendance' do
+  context 'a logged in member' do
     context '#upcoming workshop' do
       context 'via the workshop page' do
+        let!(:tutorial) { Fabricate(:tutorial) }
+
         context 'with only student subscriptions' do
           before do
             login(student)
@@ -33,6 +12,8 @@ feature 'Viewing a workshop page' do
 
           it 'can only RSVP as a student' do
             click_on 'Attend as a student'
+
+            select tutorial.title, from: :workshop_invitation_tutorial
             click_on 'Attend'
 
             expect(page).to have_content('See you at the workshop')
@@ -78,6 +59,8 @@ feature 'Viewing a workshop page' do
 
           it 'can get to the RSVP as a student page' do
             click_on 'Attend as a student'
+
+            select tutorial.title, from: :workshop_invitation_tutorial
             click_on 'Attend'
 
             expect(page).to have_content('See you at the workshop')
@@ -140,58 +123,59 @@ feature 'Viewing a workshop page' do
           end
         end
       end
+
+      context 'managing invitations' do
+        before do
+          login(coach)
+          visit workshop_path(workshop)
+        end
+
+        context 'when auto RSVP open time is past, invitable turned off' do
+          it 'can access RSVP as a coach' do
+            visit workshop_path(workshop_auto_rsvp_in_past)
+
+            click_on 'Attend as a coach'
+            click_on 'Attend'
+
+            expect(page).to have_content('See you at the workshop')
+          end
+
+          after do
+            visit workshop_path(workshop_auto_rsvp_in_past)
+            expect(page).to have_button('Manage your invitation')
+          end
+        end
+
+        context 'when auto RSVP open time is future, invitable turned off' do
+          it 'cannot access RSVP as a student or coach' do
+            visit workshop_path(workshop_auto_rsvp_in_future)
+
+            expect(page).to have_content('This workshop is not yet open for RSVP.')
+          end
+        end
+
+        context 'when invitations have been sent out' do
+          let(:member) { Fabricate(:member) }
+          let!(:invitation) { Fabricate(:attending_workshop_invitation, member: member, workshop: workshop) }
+
+          it 'can manage details if they are already attending' do
+            login(member)
+            visit workshop_path(workshop)
+
+            expect(page).to have_button('Manage your invitation')
+            expect(page).not_to have_link('Attend as a student')
+            expect(page).not_to have_link('Attend as a coach')
+          end
+        end
+      end
     end
 
-    context 'managing invitations' do
-      before do
-        login(coach)
+    context '#past workshop' do
+      let(:workshop) { Fabricate(:workshop, date_and_time: 2.weeks.ago) }
+
+      scenario 'cannot interact with a past event' do
         visit workshop_path(workshop)
-      end
-
-      context 'when auto RSVP open time is past, invitable turned off' do
-        it 'can access RSVP as a coach' do
-          visit workshop_path(workshop_auto_rsvp_in_past)
-
-          click_on 'Attend as a coach'
-          click_on 'Attend'
-
-          expect(page).to have_content('See you at the workshop')
-        end
-
-        after do
-          visit workshop_path(workshop_auto_rsvp_in_past)
-          expect(page).to have_button('Manage your invitation')
-        end
-      end
-
-      context 'when auto RSVP open time is future, invitable turned off' do
-        it 'cannot access RSVP as a student or coach' do
-          visit workshop_path(workshop_auto_rsvp_in_future)
-
-          expect(page).to have_content('This workshop is not yet open for RSVP.')
-        end
-      end
-
-      context 'when invitations have been sent out' do
-        let(:member) { Fabricate(:member) }
-        let!(:invitation) { Fabricate(:attending_workshop_invitation, member: member, workshop: workshop) }
-
-        it 'can manage details if they are already attending' do
-          login(member)
-          visit workshop_path(workshop)
-
-          expect(page).to have_button('Manage your invitation')
-          expect(page).not_to have_link('Attend as a student')
-          expect(page).not_to have_link('Attend as a coach')
-        end
-      end
-
-      context '#past events' do
-        let!(:workshop) { Fabricate(:workshop, date_and_time: 2.weeks.ago) }
-
-        scenario 'cannot interact with a past event' do
-          expect(page).to have_content('has already taken place')
-        end
+        expect(page).to have_content('has already taken place')
       end
     end
   end

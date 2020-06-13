@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-feature 'managing workshop attendances' do
+RSpec.feature 'managing workshop attendances', type: :feature do
   context 'an admin' do
     let(:member) { Fabricate(:member) }
     let(:chapter) { Fabricate(:chapter) }
@@ -37,6 +37,8 @@ feature 'managing workshop attendances' do
       find('.waiting_list').click
 
       expect(page).to have_content('2 are attending as students')
+      expect(page).to have_content(I18n.l(other_invitation.reload.rsvp_time))
+      expect(page).to have_selector('i.fa-magic')
     end
 
     scenario 'can rsvp an invited student to the workshop', js: true do
@@ -46,15 +48,26 @@ feature 'managing workshop attendances' do
 
       visit admin_workshop_path(workshop)
       expect(page).to have_content('1 are attending as students')
+      expect(page).to_not have_selector('i.fa-magic')
 
       # Unclear why this has to be done twice, when tested manually it works
       # the first time.
-      find('span', text: 'Select a member to RSVP').click
-      find('span', text: 'Select a member to RSVP').click
-
+      2.times { find('span', text: 'Select a member to RSVP').click }
       find("li", text: "#{other_invitation.member.full_name} (#{other_invitation.role})").click
 
       expect(page).to have_content('2 are attending as students')
+
+      expect(page).to have_content(I18n.l(other_invitation.reload.rsvp_time))
+      expect(page).to have_selector('i.fa-magic')
+    end
+
+    scenario 'can view the tutorial and note set by an attendee' do
+      invitation = Fabricate(:attending_workshop_invitation, workshop: workshop)
+      login_as_admin(member)
+
+      visit admin_workshop_path(workshop)
+      expect(page).to have_content(invitation.note)
+      expect(page).to have_content(invitation.tutorial)
     end
   end
 end

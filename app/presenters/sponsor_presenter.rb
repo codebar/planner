@@ -12,9 +12,9 @@ class SponsorPresenter < BasePresenter
   end
 
   def contact_full_name
-    if model.contact_first_name && model.contact_surname
-      "#{model.contact_first_name.capitalize} #{model.contact_surname.capitalize}"
-    end
+    return unless model.contact_first_name && model.contact_surname
+
+    "#{model.contact_first_name.camelize} #{model.contact_surname.camelize}"
   end
 
   private

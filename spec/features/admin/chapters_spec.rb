@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-feature 'Chapters' do
+RSpec.feature 'Chapters', type: :feature do
   let(:member) { Fabricate(:member) }
 
   context 'Authorization smoke test' do

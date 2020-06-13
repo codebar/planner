@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-feature 'viewing a Chapter' do
+RSpec.feature 'viewing a Chapter', type: :feature do
   context 'non active chapters' do
     let(:inactive_chapter) { Fabricate(:chapter, active: false) }
 
@@ -11,7 +11,7 @@ feature 'viewing a Chapter' do
     end
 
     it 'a visitor to the website can access inactive chapter events' do
-      past_workshop = Fabricate(:workshop, chapter: inactive_chapter, date_and_time: Time.zone.today-2.week)
+      past_workshop = Fabricate(:workshop, chapter: inactive_chapter, date_and_time: Time.zone.today - 2.weeks)
 
       visit workshop_path(past_workshop)
 
@@ -40,18 +40,18 @@ feature 'viewing a Chapter' do
 
     it 'renders the most recent past workshop for the chapter' do
       chapter = Fabricate(:chapter)
-      past_workshop = Fabricate(:workshop, chapter: chapter, date_and_time: Time.zone.today-2.week)
-      recent_past_workshop = Fabricate(:workshop, chapter: chapter, date_and_time: Time.zone.today-1.week)
+      past_workshop = Fabricate(:workshop, chapter: chapter, date_and_time: Time.zone.today - 2.weeks)
+      recent_past_workshop = Fabricate(:workshop, chapter: chapter, date_and_time: Time.zone.today - 1.week)
 
       visit chapter_path(chapter.slug)
       expect(page).to have_content "Workshop at #{recent_past_workshop.host.name}"
       expect(page).to_not have_content "Workshop at #{past_workshop.host.name}"
     end
-    
+
     it 'renders the 6 most recent sponsors for the chapter' do
       chapter = Fabricate(:chapter)
       workshops = 6.times.map do |n|
-        Fabricate(:workshop, chapter:chapter, date_and_time: Time.zone.now - n.weeks)
+        Fabricate(:workshop, chapter: chapter, date_and_time: Time.zone.now - n.weeks)
       end
 
       visit chapter_path(chapter.slug)

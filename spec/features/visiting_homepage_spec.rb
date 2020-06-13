@@ -1,12 +1,16 @@
 require 'spec_helper'
 
-feature 'when visiting the homepage' do
+RSpec.feature 'when visiting the homepage', type: :feature do
   let!(:next_workshop) { Fabricate(:workshop) }
   let!(:next_course) { Fabricate(:course) }
-  let!(:event) { Fabricate(:event) }
+  let!(:events) { Fabricate.times(8, :event) }
 
   before(:each) do
     visit root_path
+  end
+
+  scenario 'the correct page title is rendered' do
+    expect(page).to have_title('Homepage | codebar.io')
   end
 
   scenario 'i can view the next workshop' do
@@ -17,8 +21,8 @@ feature 'when visiting the homepage' do
     expect(page).to have_content next_course.title
   end
 
-  scenario 'i can view upcoming events' do
-    expect(page).to have_content event.name
+  scenario 'i can view the next 5 upcoming events' do
+    events.take(5).each { |event| expect(page).to have_content "#{event.name} at #{event.venue.name}" }
   end
 
   scenario 'i can access the code of conduct' do

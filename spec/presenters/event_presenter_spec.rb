@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe EventPresenter do
+RSpec.describe EventPresenter do
   let(:workshop) { Fabricate(:workshop) }
   let(:event) { EventPresenter.new(workshop) }
 
@@ -30,10 +30,21 @@ describe EventPresenter do
     expect(event.month).to eq('SEPTEMBER')
   end
 
-  it '#time' do
-    expect(workshop).to receive(:date_and_time).and_return(Time.zone.now)
+  context '#time' do
+    it 'when no end_time is set it only returns the start_time' do
+      event =  double(:event, date_and_time: Time.zone.now, start_time: Time.zone.now, ends_at: nil)
+      presenter = EventPresenter.new(event)
 
-    event.time
+      expect(presenter.time).to eq(I18n.l(event.date_and_time, format: :time_with_zone))
+    end
+
+    it 'when a start and an end_time are set it returns a formatted start and end_time' do
+      event =  double(:event, date_and_time: Time.zone.now, start_time: Time.zone.now, ends_at: 1.hour.from_now)
+      presenter = EventPresenter.new(event)
+
+      expect(presenter.time)
+        .to eq("#{presenter.start_time} - #{presenter.end_time} #{I18n.l(event.date_and_time, format: :time_zone)}")
+    end
   end
 
   it '#path' do
@@ -42,5 +53,27 @@ describe EventPresenter do
 
   it '#class_string' do
     expect(event.class_string).to eq('workshop')
+  end
+
+  context '#day_temporal_pronoun' do
+    it 'returns today if the date_and_time set set to today' do
+      workshop.date_and_time = Time.zone.now
+
+      expect(event.day_temporal_pronoun). to eq('today')
+    end
+
+    it 'returns yesteday if the date_and_time is not set to today' do
+      workshop.date_and_time = Time.zone.now+1.day
+
+      expect(event.day_temporal_pronoun). to eq('tomorrow')
+    end
+  end
+
+  context 'rsvp_closing_date_and_time' do
+    it 'returns the calculated RSVP closing time for an event' do
+      workshop.date_and_time = Time.zone.local(2040, 10, 10, 16, 30)
+
+      expect(event.rsvp_closing_date_and_time). to eq(Time.zone.local(2040, 10, 10, 13, 00))
+    end
   end
 end

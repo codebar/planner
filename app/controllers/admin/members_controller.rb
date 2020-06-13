@@ -15,20 +15,21 @@ class Admin::MembersController < Admin::ApplicationController
 
   def update_subscriptions
     subscription = @member.subscriptions.find_by(group_id: params[:group])
-    flash[:notice] = "You have unsubscribed #{@member.full_name} from #{subscription.group.chapter.city}'s #{subscription.group.name} group"
-
+    flash[:notice] = t('admin.members.unsubscribed', member: @member.full_name,
+                                                     city: subscription.group.chapter.city,
+                                                     group: subscription.group.name)
     subscription.destroy
     redirect_to :back
   end
 
   def send_eligibility_email
     @member.send_eligibility_email(current_user)
-    redirect_to [:admin, @member], notice: 'You have sent an eligibility confirmation request.'
+    redirect_to [:admin, @member], notice: t('admin.members.eligibility_confirmation_request')
   end
 
   def send_attendance_email
     @member.send_attendance_email(current_user)
-    redirect_to [:admin, @member], notice: 'You have sent an attendance warning.'
+    redirect_to [:admin, @member], notice: t('admin.members.attendance_warning')
   end
 
   private

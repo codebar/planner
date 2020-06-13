@@ -13,28 +13,43 @@ module DateTimeConcerns
       self.date_and_time = new_date_and_time if new_date_and_time
     end
 
+    def set_end_date_and_time
+      new_end_date_and_time = datetime_from_fields(local_date, local_end_time)
+      self.ends_at = new_end_date_and_time if new_end_date_and_time
+    end
+
     def date
       I18n.l(date_and_time, format: :dashboard)
     end
 
     def time
-      date_and_time.try(:time)
+      date_and_time&.time
     end
 
     def date_and_time
       return nil unless super
+
       super.in_time_zone(time_zone)
     end
 
-    def datetime_from_fields(date_string, time_string)
-      return nil if date_string.blank? || time_string.blank? || !time_zone
-      date = Date.parse(date_string)
-      time = Time.zone.parse(time_string)
-      ActiveSupport::TimeZone[time_zone].local(date.year, date.month, date.day, time.hour, time.min)
+    def ends_at
+      return nil unless super
+
+      super.in_time_zone(time_zone)
     end
 
     def past?
       date_and_time < Time.zone.today
+    end
+
+    private
+
+    def datetime_from_fields(date_string, time_string)
+      return nil if date_string.blank? || time_string.blank? || !time_zone
+
+      date = Date.parse(date_string)
+      time = Time.zone.parse(time_string)
+      ActiveSupport::TimeZone[time_zone].local(date.year, date.month, date.day, time.hour, time.min)
     end
   end
 end

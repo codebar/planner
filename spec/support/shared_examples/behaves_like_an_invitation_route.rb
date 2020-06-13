@@ -1,22 +1,52 @@
-shared_examples 'invitation route' do
+RSpec.shared_examples 'invitation route' do
+  context 'viewing an invitation' do
+    scenario 'renders a descriptive page title' do
+      visit invitation_route
+
+      expect(page).to have_title("Workshop invitation - #{humanize_date(invitation.workshop.date_and_time)} | codebar.io")
+    end
+  end
+
   context 'accept an invitation' do
     scenario 'when there are available spots' do
-      Tutorial.create(title: 'title')
       visit invitation_route
+
+      select tutorial.title, from: :workshop_invitation_tutorial if invitation.for_student?
+
       click_on 'Attend'
 
       expect(page).to have_link 'I can no longer attend'
       expect(page).to have_content("Thanks for getting back to us #{invitation.member.name}.")
       expect(page.current_path).to eq(invitation_route)
+
+      # admin view
+      login_as_admin(member)
+      visit admin_workshop_path(invitation.workshop)
+      within 'tr.row.attendee' do
+        expect(page).to have_content(member.full_name)
+        expect(page).to have_selector('i.fa-history')
+        expect(page).to_not have_selector('i.fa-magic')
+      end
     end
 
-    scenario 'they can RSVP directly through the invitation' do
-      Tutorial.create(title: 'title')
-      visit accept_invitation_route
+    context 'RSVPing directly through the invitation' do
+      scenario 'a Student must first select a tutorial' do
+        puts invitation.inspect
+        invitation.update_attributes(role: 'Student', attending: nil, tutorial: nil)
+        visit accept_invitation_route
 
-      expect(page).to have_link 'I can no longer attend'
-      expect(page.current_path).to eq(invitation_route)
-      expect(page).to have_content(I18n.t('messages.accepted_invitation', name: member.name))
+        expect(page).to_not have_link 'I can no longer attend'
+        expect(page).to have_content('Tutorial must be selected')
+      end
+
+      scenario 'a Coach must can RSVP diredctly' do
+        invitation.update_attributes(role: 'Coach', attending: nil, tutorial: nil)
+        visit accept_invitation_route
+
+        expect(page).to have_link 'I can no longer attend'
+        expect(page.current_path).to eq(invitation_route)
+        expect(page).to have_content(I18n.t('messages.accepted_invitation', name: member.name))
+      end
     end
 
     scenario 'when they have already RSVPed and are attempting to re-accept through the invitation link' do
@@ -53,6 +83,21 @@ shared_examples 'invitation route' do
       expect(page).to have_content(I18n.t('messages.rejected_invitation', name: invitation.member.name))
     end
 
+    scenario 'when they are successful and there is someone else on the waiting list' do
+      waitinglisted = Fabricate(:workshop_invitation, workshop: invitation.workshop, role: invitation.role)
+      WaitingList.add(waitinglisted)
+      invitation.update_attribute(:attending, true)
+      visit invitation_route
+      expect(WaitingList.next_spot(invitation.workshop, invitation.role).present?).to eq(true)
+
+      click_on 'I can no longer attend'
+
+      expect(page).to have_content(I18n.t('messages.rejected_invitation', name: invitation.member.name))
+      expect(waitinglisted.reload.automated_rsvp).to eq(true)
+      expect(waitinglisted.reload.rsvp_time).to_not be_nil
+      expect(WaitingList.next_spot(invitation.workshop, invitation.role).present?).to eq(false)
+    end
+
     scenario 'when they are successful by accessing the link directly' do
       invitation.update_attribute(:attending, true)
       visit reject_invitation_route
@@ -78,9 +123,9 @@ shared_examples 'invitation route' do
     end
 
     scenario 'when already RSVPd to another event on same evening' do
-      invitation.update_attributes(attending: true, member_id: member.id)
+      invitation.update(attending: true, member: member)
 
-      invitation2 = Fabricate(:coach_workshop_invitation)
+      invitation2 = Fabricate(:coach_workshop_invitation, member: member)
       invitation2_route = invitation_path(invitation2)
 
       visit invitation2_route
@@ -91,9 +136,9 @@ shared_examples 'invitation route' do
     end
 
     scenario 'when already RSVPd to another event on same evening and attempting to RSVP directly through the link' do
-      invitation.update_attributes(attending: true, member_id: member.id)
+      invitation.update(attending: true, member: member)
 
-      invitation2 = Fabricate(:coach_workshop_invitation)
+      invitation2 = Fabricate(:coach_workshop_invitation, member: member)
       invitation2_route = invitation_path(invitation2)
 
       visit accept_invitation_path(invitation2)

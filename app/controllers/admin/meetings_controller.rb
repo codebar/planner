@@ -30,7 +30,7 @@ class Admin::MeetingsController < Admin::ApplicationController
     set_organisers(organiser_ids)
     set_chapters(chapter_ids)
 
-    if @meeting.update_attributes(meeting_params)
+    if @meeting.update(meeting_params)
       redirect_to [:admin, @meeting], notice: t('admin.messages.meeting.updated')
     else
       flash[:notice] = @meeting.errors.full_messages.join('<br/>')
@@ -102,6 +102,6 @@ class Admin::MeetingsController < Admin::ApplicationController
 
   def set_chapters(chapter_ids)
     chapter_ids.reject!(&:empty?)
-    @meeting.chapters = chapter_ids.map{ |id| Chapter.find(id) }
+    @meeting.chapters = chapter_ids.map { |id| Chapter.find(id) }
   end
 end

@@ -3,7 +3,7 @@ class Workshop < ActiveRecord::Base
   include Invitable
   include Listable
 
-  attr_accessor :local_date, :local_time, :rsvp_open_local_date, :rsvp_open_local_time
+  attr_accessor :local_date, :local_time, :local_end_time, :rsvp_open_local_date, :rsvp_open_local_time
 
   resourcify :permissions, role_cname: 'Permission', role_table_name: :permission
 
@@ -20,13 +20,18 @@ class Workshop < ActiveRecord::Base
   scope :coaches, -> { joins(:invitations).where(invitations: { name: 'Coach', attended: true }) }
 
   validates :chapter_id, presence: true
-  validates :date_and_time, presence: true, if: proc { |model| model.chapter_id.present? }
+  validates :date_and_time, :ends_at, presence: true, if: proc { |model| model.chapter_id.present? }
 
-  before_validation :set_date_and_time, if: proc { |model| model.chapter_id.present? }
+  validates :slack_channel, presence: true, if: :virtual?
+  validates :slack_channel_link, presence: true, if: :virtual?
+  validates :student_spaces, numericality: { greater_than: 0 }, if: :virtual?
+  validates :coach_spaces, numericality: { greater_than: 0 }, if: :virtual?
+
+  before_validation :set_date_and_time, :set_end_date_and_time, if: proc { |model| model.chapter_id.present? }
   before_validation :set_opens_at
 
   def host
-    WorkshopSponsor.hosts.for_workshop(self.id).first.sponsor rescue nil
+    WorkshopSponsor.hosts.for_workshop(id).first&.sponsor
   end
 
   def waiting_list
@@ -55,11 +60,12 @@ class Workshop < ActiveRecord::Base
 
   def rsvp_available?
     return rsvp_closes_at.future? if rsvp_closes_at
+
     future?
   end
 
   def open_for_rsvp?
-    rsvp_opens_at && rsvp_opens_at.past?
+    rsvp_opens_at&.past?
   end
 
   def invitable_yet?
@@ -70,6 +76,7 @@ class Workshop < ActiveRecord::Base
   def attendee?(person)
     return false if person.nil?
     raise ArgumentError, "Person should be a Member, not a #{person.class}" unless person.is_a? Member
+
     attending_students.map(&:member).include?(person) || attending_coaches.map(&:member).include?(person)
   end
 
@@ -77,11 +84,12 @@ class Workshop < ActiveRecord::Base
   def waitlisted?(person)
     return false if person.nil?
     raise ArgumentError, 'Person should be a Member' unless person.is_a?(Member)
+
     WaitingList.students(self).include?(person) || WaitingList.coaches(self).include?(person)
   end
 
   def to_s
-    'Workshop'
+    virtual? ? 'Virtual Workshop' : 'Workshop'
   end
 
   def location
@@ -98,6 +106,7 @@ class Workshop < ActiveRecord::Base
 
   def rsvp_opens_at
     return nil unless super
+
     super.in_time_zone(time_zone)
   end
 

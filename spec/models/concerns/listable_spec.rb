@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Listable do
+RSpec.describe Listable, type: :model do
   subject(:workshop) { Fabricate(:workshop) }
 
   context 'scopes' do
@@ -9,7 +9,7 @@ describe Listable do
         Fabricate.times(5, :past_workshop)
         future_workshops = Fabricate.times(3, :workshop)
 
-        expect(Workshop.upcoming).to eq(future_workshops)
+        expect(Workshop.upcoming).to match_array(future_workshops)
       end
     end
 
@@ -18,7 +18,7 @@ describe Listable do
         past_workshops = Fabricate.times(5, :past_workshop)
         Fabricate.times(3, :workshop)
 
-        expect(Workshop.past).to eq(past_workshops)
+        expect(Workshop.past).to match_array(past_workshops)
       end
     end
 

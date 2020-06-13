@@ -1,5 +1,7 @@
 class DashboardController < ApplicationController
-  before_action :is_logged_in?, only: [:dashboard]
+  before_action :is_logged_in?, only: %i[dashboard]
+  skip_before_action :accept_terms, except: %i[dashboard show]
+
   DEFAULT_UPCOMING_EVENTS = 5
 
   helper_method :year_param
@@ -12,7 +14,7 @@ class DashboardController < ApplicationController
       hash
     end
 
-    @testimonials = Testimonial.order('RANDOM() ').limit(5).includes(:member)
+    @testimonials = Testimonial.order(Arel.sql('RANDOM()')).limit(5).includes(:member)
   end
 
   def dashboard
@@ -54,7 +56,7 @@ class DashboardController < ApplicationController
     WorkshopInvitation.to_coaches
                       .attended
                       .group(:member_id)
-                      .order('COUNT(member_id) DESC')
+                      .order(Arel.sql('COUNT(member_id) DESC'))
                       .select(:member_id)
   end
 
@@ -70,10 +72,10 @@ class DashboardController < ApplicationController
                                 .to_a
 
     accepted_workshops = current_user.workshop_invitations.accepted
-                             .joins(:workshop)
-                             .merge(Workshop.upcoming)
-                             .includes(workshop: [:chapter, :sponsors])
-                             .map(&:workshop)
+                                     .joins(:workshop)
+                                     .merge(Workshop.upcoming)
+                                     .includes(workshop: [:chapter, :sponsors])
+                                     .map(&:workshop)
 
     all_events(chapter_workshops + accepted_workshops)
       .sort_by(&:date_and_time)
@@ -83,7 +85,7 @@ class DashboardController < ApplicationController
   def all_events(workshops)
     course = Course.includes(:sponsor).next
     meeting = Meeting.includes(:venue).next
-    events = Event.includes(:venue, :sponsors).future(DEFAULT_UPCOMING_EVENTS)
+    events = Event.includes(:venue, :sponsors).upcoming.take(DEFAULT_UPCOMING_EVENTS)
 
     [*workshops, course, *events, meeting].uniq.compact
   end

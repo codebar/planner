@@ -1,5 +1,6 @@
 key = Rails.env.test? ? 'test' : ENV['MAILCHIMP_KEY']
 
-Gibbon::API.api_key = key
-Gibbon::API.timeout = 15
-Gibbon::API.throws_exceptions = false
+Gibbon::Request.api_key = key
+Gibbon::Request.timeout = 15
+Gibbon::Request.throws_exceptions = false
+Gibbon::Request.symbolize_keys = true

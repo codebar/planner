@@ -12,12 +12,17 @@ Planner::Application.routes.draw do
   end
 
   resource :member, only: %i[new edit update patch] do
-    get 'step1'
-    put 'step1'
     get 'step2'
   end
 
+  resource :terms_and_conditions, only: %i[show update patch]
+  resource :mailing_lists, only: %i[create destroy]
+
   resources :jobs, only: %i[index show]
+
+  namespace :member do
+    resource :details, only: %i[edit update]
+  end
 
   namespace :member, path: 'my' do
     resources :jobs, except: [:destroy] do
@@ -37,10 +42,9 @@ Planner::Application.routes.draw do
 
   get 'unsubscribe/:token' => 'members#unsubscribe', as: :unsubscribe
 
-  resources :invitation, only: [:show] do
+  resources :invitation, only: [:show, :update] do
     member do
-      post 'accept_with_note', as: :accept_with_note
-      post 'update_note'
+      post 'accept'
       get 'accept'
       get 'reject'
     end
@@ -156,10 +160,6 @@ Planner::Application.routes.draw do
       resource :invitations, only: [:update]
       resources :invitations, only: [:update]
     end
-  end
-
-  namespace :coach do
-    resources :feedback, only: [:index]
   end
 
   get   '/login', to: 'auth_services#new'

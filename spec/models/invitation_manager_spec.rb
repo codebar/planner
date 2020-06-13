@@ -1,68 +1,25 @@
 require 'spec_helper'
 
-describe InvitationManager do
+RSpec.describe InvitationManager, type: :model  do
   subject(:manager) { InvitationManager.new }
 
-  let(:chapter)   { Fabricate(:chapter) }
+  let(:chapter) { Fabricate(:chapter) }
   let(:workshop) { Fabricate(:workshop, chapter: chapter) }
   let(:students) { Fabricate.times(3, :member) }
   let(:coaches) { Fabricate.times(6, :member) }
 
   describe '#send_workshop_emails' do
+    let(:mailer) { WorkshopInvitationMailer }
+    let(:send_email) { 'send_workshop_emails' }
 
-    it 'creates an invitation for each student' do
-      student_group = Fabricate(:students, chapter: chapter, members: students)
+    include_examples 'sending workshop emails'
+  end
 
-      students.each do |student|
-        expect(WorkshopInvitation).to receive(:create).with(workshop: workshop, member: student, role: 'Student').and_call_original
-        expect(WorkshopInvitationMailer).to receive(:invite_student).and_call_original
-      end
+  describe '#send_virtual_workshop_emails' do
+    let(:mailer) { VirtualWorkshopInvitationMailer }
+    let(:send_email) { 'send_virtual_workshop_emails' }
 
-      manager.send_workshop_emails(workshop, 'students')
-    end
-
-    it 'creates an invitation for each coach' do
-      coach_group = Fabricate(:coaches, chapter: chapter, members: coaches)
-
-      coaches.each do |coach|
-        expect(WorkshopInvitation).to receive(:create).with(workshop: workshop, member: coach, role: 'Coach').and_call_original
-        expect(WorkshopInvitationMailer).to receive(:invite_coach).and_call_original
-      end
-
-      manager.send_workshop_emails(workshop, 'coaches')
-    end
-
-    it 'does not invite banned coaches' do
-      banned_coach = Fabricate(:banned_member)
-      coach_group = Fabricate(:coaches, chapter: chapter, members: coaches + [banned_coach])
-
-      manager.send_workshop_emails(workshop, 'everyone')
-
-      coaches.each do |coach|
-        expect(WorkshopInvitation).to receive(:create).with(workshop: workshop, member: coach, role: 'Coach').and_call_original
-      end
-      expect(WorkshopInvitation).to_not receive(:create).with(workshop: workshop, member: banned_coach, role: 'Coach')
-      manager.send_workshop_emails(workshop, 'coaches')
-    end
-
-    it 'sends emails when a WorkshopInvitation is created' do
-      student_group = Fabricate(:students, chapter: chapter, members: students)
-      coach_group = Fabricate(:coaches, chapter: chapter, members: coaches)
-
-      expect {
-        manager.send_workshop_emails(workshop, 'everyone')
-      }.to change { ActionMailer::Base.deliveries.count }.by(students.count + coaches.count)
-    end
-
-    it "does not send emails when no invitation is created" do
-      student_group = Fabricate(:students, chapter: chapter, members: students)
-
-      students.count.times { expect(WorkshopInvitation).to receive(:create).and_return(WorkshopInvitation.new) }
-
-      expect {
-        manager.send_workshop_emails(workshop, 'students')
-      }.not_to change { ActionMailer::Base.deliveries.count }
-    end
+    include_examples 'sending workshop emails'
   end
 
   it '#send_course_emails' do
@@ -174,20 +131,47 @@ describe InvitationManager do
     end
   end
 
-  describe '#send_change_of_details' do
-    it 'emails all attending members about workshop details changes' do
-      workshop = Fabricate(:workshop)
-      sponsor = Fabricate(:sponsor)
-      title = 'The workshop venue has changed'
-      invitations = Fabricate.times(4, :attending_workshop_invitation, workshop: workshop)
+  describe '#send_waiting_list_emails' do
+    it 'emails coaches when there are free coach spots' do
+      waitinglist_invitation = Fabricate(:waitinglist_invitation, workshop: workshop, role: 'Coach')
 
-      invitations.each do |invitation|
-        expect(WorkshopInvitationMailer).to receive(:change_of_details)
-          .with(workshop, sponsor, invitation.member, invitation, title)
-          .and_call_original
-      end
+      expect(WorkshopInvitationMailer).to receive(:notify_waiting_list).once
+        .with(waitinglist_invitation)
+        .and_call_original
 
-      manager.send_change_of_details(workshop, title, sponsor)
+      manager.send_waiting_list_emails(workshop)
+    end
+
+    it 'does not email coaches when no coach spots are available' do
+      workshop = Fabricate(:workshop, coach_count: 0)
+      waitinglist_invitation = Fabricate(:waitinglist_invitation, workshop: workshop, role: 'Coach')
+
+      expect(WorkshopInvitationMailer).not_to receive(:notify_waiting_list)
+        .with(waitinglist_invitation)
+        .and_call_original
+
+      manager.send_waiting_list_emails(workshop)
+    end
+
+    it 'emails students when there are free student spots' do
+      waitinglist_invitation = Fabricate(:waitinglist_invitation, workshop: workshop, role: 'Student')
+
+      expect(WorkshopInvitationMailer).to receive(:notify_waiting_list).once
+        .with(waitinglist_invitation)
+        .and_call_original
+
+      manager.send_waiting_list_emails(workshop)
+    end
+
+    it 'does not email students when no student spots are available' do
+      workshop = Fabricate(:workshop, student_count: 0)
+      waitinglist_invitation = Fabricate(:waitinglist_invitation, workshop: workshop, role: 'Student')
+
+      expect(WorkshopInvitationMailer).not_to receive(:notify_waiting_list)
+        .with(waitinglist_invitation)
+        .and_call_original
+
+      manager.send_waiting_list_emails(workshop)
     end
   end
 end

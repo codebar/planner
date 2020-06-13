@@ -14,7 +14,10 @@ class EventsController < ApplicationController
     events << Event.past.includes(:venue, :sponsors).limit(RECENT_EVENTS_DISPLAY_LIMIT)
     events = events.compact.flatten.sort_by(&:date_and_time).reverse.first(RECENT_EVENTS_DISPLAY_LIMIT)
     events_hash_grouped_by_date = events.group_by(&:date)
-    @past_events = events_hash_grouped_by_date.map.inject({}) { |hash, (key, value)| hash[key] = EventPresenter.decorate_collection(value); hash }
+    @past_events = events_hash_grouped_by_date.map.inject({}) do |hash, (key, value)|
+      hash[key] = EventPresenter.decorate_collection(value)
+      hash
+    end
 
     events = [Workshop.includes(:chapter).upcoming.joins(:chapter).merge(Chapter.active)]
     events << Course.upcoming.all
@@ -29,11 +32,10 @@ class EventsController < ApplicationController
 
     @event = EventPresenter.new(event)
     @host_address = AddressPresenter.new(@event.venue.address)
+    return unless logged_in?
 
-    if logged_in?
-      invitation = Invitation.find_by(member: current_user, event: event, attending: true)
-      return redirect_to event_invitation_path(@event, invitation) if invitation
-    end
+    invitation = Invitation.find_by(member: current_user, event: event, attending: true)
+    return redirect_to event_invitation_path(@event, invitation) if invitation
   end
 
   def student
@@ -51,7 +53,7 @@ class EventsController < ApplicationController
     invitation = member.invitations.where(event: @event, role: 'Student').try(:first)
     invitation ||= Invitation.create(event: @event, member: member, role: 'Student')
 
-    invitation.update_attributes attending: true
+    invitation.update(attending: true)
     head :ok
   end
 

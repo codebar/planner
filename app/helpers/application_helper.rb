@@ -1,10 +1,20 @@
 module ApplicationHelper
-  def humanize_date(date, with_time: false)
-    human_date = "#{I18n.l(date, format: :day_in_words)}, "
-    human_date << "#{ActiveSupport::Inflector.ordinalize(date.day)} "
-    human_date << I18n.l(date, format: :month)
-    human_date << " at #{I18n.l(date.time, format: :time)}" if with_time
-    human_date
+  def humanize_date(datetime, end_time = nil, with_time: false, with_year: false)
+    return I18n.l(datetime, format: :humanised_with_year) if with_year
+    return humanize_date_with_time(datetime, end_time) if with_time
+
+    I18n.l(datetime, format: :humanised)
+  end
+
+  def title(title = nil)
+    return unless title
+
+    title = title + ' | ' + t(:brand)
+    content_for :title, title
+  end
+
+  def retrieve_title
+    content_for?(:title) ? content_for(:title) : t(:brand)
   end
 
   def dot_markdown(text)
@@ -13,10 +23,6 @@ module ApplicationHelper
 
   def belongs_to_group?(group)
     current_user.groups.include?(group)
-  end
-
-  def has_permission?
-    current_user.has_role?(:admin) || current_user.has_role?(:organiser) || Chapter.find_roles(:organiser, current_user).any?
   end
 
   def member_token(member)
@@ -32,8 +38,8 @@ module ApplicationHelper
     Planner::Application.config.twitter_id
   end
 
-  def contact_email
-    @contact_email ||= @workshop.present? ? @workshop.chapter.email : 'hello@codebar.io'
+  def contact_email(workshop: nil)
+    @contact_email ||= workshop.present? ? workshop.chapter.email : 'hello@codebar.io'
   end
 
   def active_link_class(link_path)
@@ -52,5 +58,14 @@ module ApplicationHelper
   def number_to_currency(number, options = {})
     options[:locale] = 'en'
     super(number, options)
+  end
+
+  private
+
+  def humanize_date_with_time(datetime, end_time)
+    formatted_datetime = I18n.l(datetime, format: :humanised_with_time)
+    formatted_datetime << " - #{I18n.l(end_time, format: :time)}" if end_time
+    formatted_datetime << " #{I18n.l(datetime, format: :time_zone)}"
+    formatted_datetime
   end
 end

@@ -9,5 +9,7 @@
   = t('coaches.unable_attend')
 
 %p
-  = t('coaches.food')
-  #{mail_to @invitation.workshop.chapter.email, @invitation.workshop.chapter.email}.
+  - if @workshop.virtual?
+    = t('workshop.virtual.invitation.shared_intro_3_html', email_link: mail_to(@workshop.chapter.email, @workshop.chapter.email))
+  - else
+    %p= t('workshop.invitation.shared_intro_4_html', email_link: mail_to(@workshop.chapter.email, @workshop.chapter.email).html_safe)

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe MeetingPresenter do
+RSpec.describe MeetingPresenter do
   let(:meeting) { Fabricate(:meeting) }
   let(:event) { MeetingPresenter.new(meeting) }
 
@@ -19,13 +19,19 @@ describe MeetingPresenter do
   it '#organisers' do
     permissions = Fabricate(:permission, resource: meeting, name: 'organiser')
 
-    expect(event.organisers).to eq(permissions.members)
+    expect(event.organisers).to match_array(permissions.members)
   end
 
   it '#attendees_emails' do
     attendees = Fabricate.times(4, :attending_meeting_invitation, meeting: meeting)
 
     expect(event.attendees_emails).to eq(attendees.map(&:member).map(&:email).join(', '))
+  end
+
+  it '#time' do
+    expect(meeting).to receive(:date_and_time).and_return(Time.zone.now)
+
+    event.time
   end
 
   it '#to_s' do

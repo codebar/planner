@@ -1,15 +1,53 @@
 require 'spec_helper'
 
-describe Workshop do
+RSpec.describe Workshop, type: :model do
   subject(:workshop) { Fabricate(:workshop) }
+  include_examples "Invitable", :workshop_invitation, :workshop
+  include_examples DateTimeConcerns, :workshop
 
-  it { should respond_to(:title) }
-  it { should respond_to(:description) }
-  it { should respond_to(:date_and_time) }
-  it { should respond_to(:sponsors) }
-  it { should respond_to(:workshop_sponsors) }
-  it { should respond_to(:rsvp_opens_at) }
-  it { should respond_to(:time_zone) }
+  context 'validates' do
+    it { is_expected.to validate_presence_of(:chapter_id) }
+
+    context "#date_and_time" do
+      it 'does not validate if chapter_id blank' do
+        workshop.chapter_id = nil
+        workshop.date_and_time = nil
+        workshop.valid?
+        expect(workshop.errors[:date_and_time]).to be_empty
+      end
+
+      it 'validate if chapter_id present' do
+        workshop.chapter = Fabricate(:chapter)
+        workshop.date_and_time = nil
+        workshop.valid?
+        expect(workshop.errors[:date_and_time]).to include("can't be blank")
+      end
+    end
+
+    context '#end_at' do
+      it 'does not validate if chapter_id blank' do
+        workshop.chapter_id = nil
+        workshop.ends_at = nil
+        workshop.valid?
+        expect(workshop.errors[:ends_at]).to be_empty
+      end
+
+      it 'validate if chapter_id present' do
+        workshop.chapter = Fabricate(:chapter)
+        workshop.ends_at = nil
+        workshop.valid?
+        expect(workshop.errors[:ends_at]).to include("can't be blank")
+      end
+    end
+
+    context 'if virtual' do
+      before { allow(subject).to receive(:virtual?).and_return(true) }
+      it { is_expected.to validate_presence_of(:slack_channel)}
+      it { is_expected.to validate_presence_of(:slack_channel_link)}
+      it { is_expected.to validate_numericality_of(:student_spaces).is_greater_than(0) }
+      it { is_expected.to validate_numericality_of(:coach_spaces).is_greater_than(0) }
+    end
+  end
 
   context 'time zone fields' do
     let(:workshop) { Fabricate.build(:workshop, chapter: Fabricate(:chapter, time_zone: 'Pacific Time (US & Canada)')) }
@@ -18,7 +56,7 @@ describe Workshop do
 
     context 'date_and_time' do
       it 'saves the local time in UTC' do
-        workshop.update_attributes!(
+        workshop.update!(
           local_date: '12/06/2015',
           local_time: '18:30'
         )
@@ -36,7 +74,7 @@ describe Workshop do
 
     context 'rsvp_opens_at' do
       it 'saves the local time in UTC' do
-        workshop.update_attributes!(
+        workshop.update!(
           rsvp_open_local_date: '12/06/2015',
           rsvp_open_local_time: '18:30'
         )
@@ -50,15 +88,6 @@ describe Workshop do
         expect(workshop.rsvp_opens_at).to eq(pacific_time)
         expect(workshop.rsvp_opens_at.zone).to eq('PDT')
       end
-    end
-  end
-
-  context '#coach_spaces?' do
-    let(:sponsor) { Fabricate(:sponsor) }
-    let(:workshop) { Fabricate(:workshop_no_sponsor) }
-
-    before do
-      Fabricate(:workshop_sponsor, sponsor: sponsor, workshop: workshop, host: true)
     end
   end
 
@@ -92,39 +121,38 @@ describe Workshop do
     end
   end
 
+  context '#to_s' do
+    it 'when physical workshop' do
+      expect(workshop.to_s).to eq('Workshop')
+    end
+
+    it 'when virtual workshop' do
+      workshop = Workshop.new(virtual: true)
+      expect(workshop.to_s).to eq('Virtual Workshop')
+    end
+  end
+
   context '#scopes' do
     describe '#host' do
-      let(:sponsor) { Fabricate(:sponsor) }
-
-      before do
-        workshop.workshop_sponsors.delete_all
-        Fabricate(:workshop_sponsor, sponsor: sponsor, workshop: workshop, host: true)
+      it 'includes workshops with sponsored hosts' do
+        workshop_sponsor = Fabricate(:workshop_sponsor, host: true)
+        workshop = workshop_sponsor.workshop
+        expect(workshop.host).to eq workshop_sponsor.sponsor
       end
 
-      it { expect(workshop.host).to eq(sponsor) }
+      it 'excludes workshops without hosts' do
+        workshop_sponsor = Fabricate(:workshop_sponsor, host: false)
+        workshop = workshop_sponsor.workshop
+        expect(workshop.host).to be_nil
+      end
+
+      it 'excludes workshops without sponsor' do
+        workshop = Fabricate(:workshop_no_sponsor)
+        expect(workshop.host).to be_nil
+      end
     end
 
     context 'attendances' do
-      let(:sponsor) { Fabricate(:sponsor) }
-
-      before do
-        Fabricate(:workshop_sponsor, sponsor: sponsor, workshop: workshop, host: true)
-      end
-
-      it '#attending_students' do
-        3.times { Fabricate(:workshop_invitation, workshop: workshop, attending: true) }
-        1.times { Fabricate(:workshop_invitation, workshop: workshop, attending: false) }
-
-        expect(workshop.reload.attending_students.length).to eq(3)
-      end
-
-      it '#attending_members' do
-        2.times { Fabricate(:coach_workshop_invitation, workshop: workshop, attending: true) }
-        1.times { Fabricate(:coach_workshop_invitation, workshop: workshop, attending: false) }
-
-        expect(workshop.reload.attending_coaches.length).to eq(2)
-      end
-
       it '#attendee? for students' do
         attendee_invites = 4.times.collect { Fabricate(:workshop_invitation, workshop: workshop, attending: true) }
         nonattendee_invites = 2.times.collect { Fabricate(:workshop_invitation, workshop: workshop, attending: false) }
@@ -170,17 +198,17 @@ describe Workshop do
     end
 
     it 'is invitable if RSVP open date/time in past, and invitable set to false' do
-      workshop = Fabricate.build(:workshop, invitable: false, rsvp_opens_at: Time.zone.now - 1.days)
+      workshop = Fabricate.build(:workshop, invitable: false, rsvp_opens_at: Time.zone.now - 1.day)
       expect(workshop.invitable_yet?).to be true
     end
 
     it 'is invitable if RSVP open date/time in future, and invitable set to true' do
-      workshop = Fabricate.build(:workshop, invitable: true, rsvp_opens_at: Time.zone.now - 1.days)
+      workshop = Fabricate.build(:workshop, invitable: true, rsvp_opens_at: Time.zone.now - 1.day)
       expect(workshop.invitable_yet?).to be true
     end
 
     it 'is NOT invitable if RSVP open date/time in future, and invitable set to false' do
-      workshop = Fabricate.build(:workshop, invitable: false, rsvp_opens_at: Time.zone.now + 1.days)
+      workshop = Fabricate.build(:workshop, invitable: false, rsvp_opens_at: Time.zone.now + 1.day)
       expect(workshop.invitable_yet?).to be false
     end
   end

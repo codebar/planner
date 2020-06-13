@@ -6,34 +6,34 @@ class WorkshopInvitation < ActiveRecord::Base
 
   validates :workshop, :member, presence: true
   validates :member_id, uniqueness: { scope: %i[workshop_id role] }
-  validates_inclusion_of :role, in: ['Student', 'Coach'], allow_nil: true
+  validates :role, inclusion: { in: %w[Student Coach], allow_nil: true }
+  validates :tutorial, presence: true, if: :student_attending?
 
-  scope :year, -> (year) { joins(:workshop).where('EXTRACT(year FROM workshops.date_and_time) = ?', year) }
+  scope :year, ->(year) { joins(:workshop).where('EXTRACT(year FROM workshops.date_and_time) = ?', year) }
   scope :accepted, -> { where(attending: true) }
   scope :attended, -> { where(attended: true) }
+  scope :accepted_or_attended, -> { where('attending=? or attended=?', true, true) }
   scope :to_students, -> { where(role: 'Student') }
   scope :to_coaches, -> { where(role: 'Coach') }
   scope :order_by_latest, -> { joins(:workshop).order('workshops.date_and_time desc') }
-  scope :last_six_months, -> { joins(:workshop).where(workshops: { date_and_time: 6.months.ago...Time.zone.now}) }
+  scope :last_six_months, -> { joins(:workshop).where(workshops: { date_and_time: 6.months.ago...Time.zone.now }) }
   scope :not_reminded, -> { where(reminded_at: nil) }
   scope :on_waiting_list, -> { joins(:waiting_list) }
 
   def waiting_list_position
-    @waiting_list_position ||= WaitingList.by_workshop(self.workshop)
-                                          .where_role(self.role)
+    @waiting_list_position ||= WaitingList.by_workshop(workshop)
+                                          .where_role(role)
                                           .where(auto_rsvp: true)
                                           .order(:created_at)
                                           .map(&:invitation_id)
-                                          .index(self.id) + 1
+                                          .index(id) + 1
   end
 
   def parent
     workshop
   end
 
-  def email
-    if for_student?
-      WorkshopInvitationMailer.invite_student(self.workshop, self.member, self).deliver_now
-    end
+  def student_attending?
+    for_student? && attending.present?
   end
 end

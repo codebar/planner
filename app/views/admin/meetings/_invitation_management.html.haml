@@ -11,7 +11,10 @@
       .row
         = simple_form_for :meeting_invitations, url: admin_meeting_invitations_path do |f|
           .medium-6.columns
-            = f.select :member, Member.all.map { |u| ["#{u.full_name}", u.id] }, { include_blank: true }, { class: 'chosen-select', required: true, data: { placeholder: 'Select a member to RSVP' } }
+            = f.select :member,
+                       Member.all.map { |u| ["#{u.full_name}", u.id] },
+                       { include_blank: true }, { class: 'chosen-select', required: true,
+                       data: { placeholder: t('messages.invitations.select_a_member_to_rsvp') } }
             = f.input :meeting_id, as: :hidden, input_html: { value: @meeting.slug }
 
           .large-3.columns

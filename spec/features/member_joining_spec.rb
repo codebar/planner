@@ -1,23 +1,19 @@
 require 'spec_helper'
 
-feature 'A new student signs up' do
+RSpec.feature 'A new student signs up', type: :feature do
   before do
-    OmniAuth.config.mock_auth[:github] = OmniAuth::AuthHash.new(
-      provider: 'github',
-      uid: '42',
-      credentials: { token: 'Fake token' },
-      info: {
-        email: Faker::Internet.email,
-        name: Faker::Name.name
-      }
-    )
+    mock_github_auth
   end
 
   scenario 'A visitor can access signups through the landing page' do
     visit root_path
     click_on 'Sign up as a student'
     click_on 'I understand and meet the eligibility criteria. Sign me up as a student'
-    expect(page).to have_current_path(step1_member_path(member_type: 'student'))
+
+    accept_toc
+
+    expect(page).to have_content('Thanks for signing up. Please fill in your details to complete the registration process.')
+    expect(page).to have_current_path(edit_member_details_path(member_type: 'student'))
   end
 
   scenario 'A visitor must fill in all mandatory fields in order to sign up' do
@@ -25,7 +21,7 @@ feature 'A new student signs up' do
     member.update(can_log_in: true)
     login member
 
-    visit step1_member_path
+    visit edit_member_details_path
 
     click_on 'Next'
 
@@ -38,6 +34,8 @@ feature 'A new student signs up' do
   scenario 'A new member details are successfully captured' do
     visit new_member_path
     click_on 'Sign up as a coach'
+
+    accept_toc
 
     fill_in 'member_pronouns', with: 'she'
     fill_in 'member_name', with: 'Jane'
@@ -55,7 +53,6 @@ feature 'A new student signs up' do
     expect(page).to have_content('Jane Doe')
     expect(page).to have_link('jane@codebar.io')
   end
-
 
   scenario 'Picking a mailing list on step 2 subscribes you to that list' do
     member = Fabricate(:member)

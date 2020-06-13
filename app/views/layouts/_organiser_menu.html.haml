@@ -1,11 +1,8 @@
 %li
   %label Admin Menu
-- if current_user.is_organiser?
-  %li= link_to "View feedback", coach_feedback_index_path
-  - if has_permission?
+  - if current_user.is_admin_or_organiser?
     %li= link_to "New workshop", new_admin_workshop_path
     %li= link_to "New sponsor", new_admin_sponsor_path
-  %li= link_to "Review jobs (#{jobs_pending_approval})", admin_jobs_path
 
 - if current_user.is_monthlies_organiser?
   %li= link_to "New monthly", new_admin_meeting_path

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-feature 'Sponsors' do
+RSpec.feature 'Sponsors', type: :feature do
   context 'Listing' do
     scenario 'can see a listing of all non expired job posts' do
       gold_sponsor = Fabricate.create(:sponsor, level: :gold)

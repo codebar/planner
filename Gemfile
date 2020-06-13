@@ -1,12 +1,11 @@
 source 'https://rubygems.org'
 ruby '2.4.2'
 
-gem 'rails', '4.2.11.1'
+gem 'rails', '4.2.11.3'
 
 gem 'acts-as-taggable-on', '~> 5.0'
 gem 'carrierwave'
 gem 'carrierwave-ftp', require: 'carrierwave/storage/sftp'
-gem 'coffee-rails', '~> 4.2'
 gem 'compass-rails', git: 'https://github.com/Compass/compass-rails'
 gem 'delayed_job'
 gem 'delayed_job_active_record'
@@ -17,7 +16,7 @@ gem 'github-markdown'
 gem 'haml'
 gem 'high_voltage'
 gem 'jquery-rails'
-gem 'jquery-ui-rails', '~> 5.0.0'
+gem 'jquery-ui-rails', '~> 6.0.1'
 gem 'mini_magick'
 gem 'nokogiri'
 gem 'omniauth'
@@ -41,11 +40,11 @@ gem 'tzinfo-data'
 gem 'chosen-rails'
 gem 'redcarpet'
 
-gem 'gibbon', '~> 1.1.5'
+gem 'gibbon', '~> 3.3.4'
 
 gem 'stripe'
 
-gem 'rails-html-sanitizer', '~> 1.2.0'
+gem 'rails-html-sanitizer', '~> 1.3.0'
 
 gem 'jbuilder'
 
@@ -63,18 +62,17 @@ group :development, :test do
   gem 'pry-byebug'
   gem 'pry-remote'
   gem 'rspec-collection_matchers'
-  gem 'rspec-its'
   gem 'rspec-rails'
-  gem 'timecop'
+  gem 'rubocop', '~> 0.80.1', require: false
+  gem 'rubocop-rails', require: false
   gem 'bullet'
 end
 
 group :test do
   gem 'capybara'
-  gem 'chromedriver-helper'
   gem 'database_cleaner'
-  gem 'selenium-webdriver'
-  gem 'shoulda-matchers', '~> 4.1'
+  gem 'shoulda-matchers', '~> 4.3'
+  gem 'webdrivers'
 end
 
 group :production do
@@ -83,5 +81,4 @@ group :production do
 end
 
 gem 'newrelic_rpm'
-gem 'rubocop', '~> 0.74.0'
 gem 'rollbar'

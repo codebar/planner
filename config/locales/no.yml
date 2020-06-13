@@ -11,6 +11,7 @@
       day_in_words: "%a"
       day: "%d"
       month: "%B"
+      year: "%Y"
       meeting_format: "%a %d %B %H:%M"
       time: "%H:%M"
       year_month: "%Y-%B"
@@ -30,6 +31,7 @@
       day_in_words: "%a"
       day: "%d"
       month: "%B"
+      year: "%Y"
       meeting_format: "%a %d %B %H:%M"
       time: "%H:%M"
       year_month: "%Y-%B"
@@ -63,8 +65,24 @@
       workshop_email_subject: "Regarding hosting a workshop"
     chapters:
       title: "Chapters"
+  mailer:
+    workshop_invitation:
+      attending:
+        subject: "Attendance Confirmation for %{date_time}"
+      attending_reminder:
+        subject: "Workshop Reminder %{date_time}"
+      invite_coach:
+        subject: "Workshop Coach Invitation %{date_time}"
+      invite_student:
+        subject: "Workshop Invitation %{date_time}"
+      notify_waiting_list:
+        subject: "A spot just became available"
+      waiting_list_reminder:
+        subject: "Reminder: you're on the codebar waiting list (%{date_time})"
   messages:
     accepted_invitation: "Thanks for getting back to us %{name}. See you at the workshop!"
+    already_invited: 'You have already RSVPd or joined the waitlist for this workshop.'
+    error_blank_note: 'You must select a note'
     rejected_invitation: "We are so sad you can't make it, but thanks for letting us know %{name}."
     already_rsvped: "You have already confirmed you attendance!"
     not_attending_already: "You have already confirmed you can't make it!"
@@ -73,6 +91,9 @@
     feedback_not_found: "You have already submitted feedback for this event."
     updated_note: "Successfully updated note."
     invitations:
+      meeting:
+        cancel: "Thanks for letting us know you can't make it."
+        rsvp: "Your RSVP was successful. We look forward to seeing you at the Monthly!"
       rsvped_to_other_workshop: "You have already RSVP'd to another workshop on this date. If you would prefer to attend this workshop, please cancel your other RSVP first."
       spot_confirmed: "Your spot has been confirmed for %{event}! We look forward to seeing you there."
       spot_not_confirmed: 'Your spot has not yet been confirmed. We will verify your attendance after you complete the questionnaire.'
@@ -111,18 +132,22 @@
       laptop: "You don't need a laptop for our workshops. You are there to watch and guide the students. If you don't feel comfortable with the tutorial you should spend time on it before coming if you want to help out."
       keyboard: "Do not take over the keyboard! This can be off-putting and scary."
       typing: "Encourage the students to type and not copy paste."
-      questions: "Explain that there are no dumb questions."
+      questions: "Explain that there are no bad questions."
       mistakes: "Explain to students that it's OK to make mistakes."
       introduction: "Always introduce yourself. Say why you want to help out and are spending your own time on this, why you like programming."
       backgrounds: "Give your students the opportunity to get to know each other. Ask their names, why they are here, what they do in their day jobs. Encourage a brief discussion before starting."
       limits: "Assume that anyone you're teaching has no knowledge but infinite intelligence."
-      colaboration: "Work collaboratively with your student. If you have two students, you should work with both. Don't focus all your attention on one of them."
+      collaboration: "Work collaboratively with your student. If you have two students, you should work with both. Don't focus all your attention on one of them."
       discussion: "Let students have a go at answering the questions first. Help with open and leading questions. Encourage a discussion."
       talk_slow: "Take it slow, you are the teacher, they are the student. Allow for time between questions."
       mild_approach: "Don't say no when the students are not doing something right. Be gentle, approach it in a mild way."
       paper: "Use pen and paper or go to a whiteboard! Often students are coming from a non-technical background. Drawing and explaining with visual material is really helpful."
       stubling: "Let them stumble. We learn by making mistakes, getting frustrated, and working through problem in our own way. Be supportive, but let them explore."
       suggestions: "Do you have something to suggest? Make a <a href='https://github.com/codebar/planner'>pull request</a> or <a href='https://github.com/codebar/planner/issues/new'>create an issue</a>"
+  workshops:
+    already_wish_to_attend: 'You have already RSVPd or joined the waitlist for this workshop.'
+    lead: "Attend our workshops to learn programming in a safe and supportive environment at your own pace, or to share your knowledge and coach our students."
+    registration_not_open: 'This workshop is not open for registrations'
   events:
     title: "Events"
     past: "Past"
@@ -309,7 +334,7 @@
     title: Jobs
     index:
       description: There are %{count} jobs listed
-      none: There are no jobs available.
+      none: There are no jobs listed at this time. Please check back soon as positions get added regularly.
   feedback_form:
     title: 'Workshop feedback'
     description: Your submission will be completely anonymous. We read every piece of feedback and use it to help us improve our workshops.
@@ -327,21 +352,22 @@
       preview: Preview
       index:
         description: You have %{count} jobs listed
-        none: You have not posted any jobs
+        none: You have not listed any jobs yet. Please consider submitting a paid internship, apprenticeship or junior developer role job to our community.
       pending:
         title: Your pending job posts
         description: You have %{count} job posts pending submission.
         none: You have no pending job posts.
       new:
         title: List a job
+        description: "Our aim is to be the one stop shop for junior developer roles! All jobs featured on our jobs board will fall under the following three categories; paid internships, apprenticeships or junior developer roles. We will not share jobs that are looking for senior, mid-weight, or developers with 2 years of experience. Each job that is submitted will be approved by the codebar team before appearing on the job board."
         rules_intro: "Before posting make sure that:"
         details: Your post details the work that will have to be undertaken
         suitability: "It's suitable for people looking for Internships and Junior roles that will enable them to build up their career"
         salary: The job pays an appropriate salary
         short: "It's short and to the point"
         approval_info: "*Once submitted, a job will be visible once it has been reviewed and approved."
-        pay: You have made the requirement payment of £35 through %{link}
-        donation: a donation
+        pay: 
+          html: You have made the required payment of £50 through <a href="%{link}">a donation</a>.
         button:
           pay: Make a payment
       edit:
@@ -430,6 +456,10 @@
         approved: "The job has been approved and an email has been sent out to %{name} at %{email}"
         cannot_approve: 'You cannot approve expired job listings'
         confirm_approval: 'Are you sure this job listing meets all requirements and you want to approve it?'
+    members:
+      unsubscribed: "You have unsubscribed %{member} from %{city}'s %{group} group"
+      eligibility_confirmation_request: 'You have sent an eligibility confirmation request.'
+      attendance_warning: 'You have sent an attendance warning.'
     workshop:
       manage_rsvps:
         text: 'RSVP Students and Coaches to the workshop. The attendance confirmation email will be triggered and they will be removed from the waiting list.'
@@ -457,7 +487,7 @@
         location: 'e.g. London or Berlin'
     hints:
       job:
-        remote: Only check if the role is remote only
+        remote: Only check if the role is fully remote only
         salary: Annual pay before tax, without commas or decimal points
   activerecord:
     attributes:

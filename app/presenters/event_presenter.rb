@@ -2,7 +2,7 @@ class EventPresenter < BasePresenter
   PRESENTER = { workshop: 'WorkshopPresenter',
                 course: 'CoursePresenter',
                 meeting: 'MeetingPresenter',
-                event: 'EventPresenter' }
+                event: 'EventPresenter' }.freeze
 
   def self.decorate_collection(collection)
     collection.map { |e| PRESENTER[e.class.to_s.downcase.to_sym].constantize.new(e) }
@@ -12,20 +12,14 @@ class EventPresenter < BasePresenter
     model.try(:chapter)
   end
 
-  def venue
-    model.venue
-  end
-
-  def sponsors
-    model.sponsors
-  end
+  delegate :venue, :sponsors, to: :model
 
   def invitable
     model.invitable || false
   end
 
   def description
-    model.description rescue nil
+    model&.description
   end
 
   def short_description
@@ -41,7 +35,17 @@ class EventPresenter < BasePresenter
   end
 
   def time
+    formatted_time = start_time
+    formatted_time << " - #{end_time}" if model.ends_at
+    formatted_time << " #{I18n.l(model.date_and_time, format: :time_zone)}"
+  end
+
+  def start_time
     I18n.l(model.date_and_time, format: :time)
+  end
+
+  def end_time
+    I18n.l(model.ends_at, format: :time)
   end
 
   def path
@@ -81,10 +85,22 @@ class EventPresenter < BasePresenter
   end
 
   def attendees_csv
-    CSV.generate { |csv| attendee_array.each { |a| csv << a } }
+    generate_csv_from_array(attendee_array)
+  end
+
+  def day_temporal_pronoun
+    model.date_and_time.today? ? 'today' : 'tomorrow'
+  end
+
+  def rsvp_closing_date_and_time
+    model.date_and_time - 3.5.hours
   end
 
   private
+
+  def generate_csv_from_array(attendees)
+    CSV.generate { |csv| attendees.each { |a| csv << a } }
+  end
 
   def attendee_array
     model.attendances.map { |i| [i.member.full_name, i.role.upcase] }

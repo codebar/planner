@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181021014646) do
+ActiveRecord::Schema.define(version: 20200522142646) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -309,7 +309,6 @@ ActiveRecord::Schema.define(version: 20181021014646) do
     t.datetime "updated_at"
     t.string   "company"
     t.integer  "approved_by_id"
-    t.string   "company_region"
     t.string   "company_website"
     t.string   "company_address"
     t.string   "company_postcode"
@@ -393,13 +392,17 @@ ActiveRecord::Schema.define(version: 20181021014646) do
     t.string   "about_you"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "unsubscribed"
     t.boolean  "can_log_in",                     default: false, null: false
     t.string   "mobile"
     t.boolean  "received_coach_welcome_email",   default: false
     t.boolean  "received_student_welcome_email", default: false
     t.string   "pronouns"
+    t.datetime "accepted_toc_at"
+    t.datetime "opt_in_newsletter_at"
+    t.boolean  "unsubscribed"
   end
+
+  add_index "members", ["email"], name: "index_members_on_email", unique: true, using: :btree
 
   create_table "members_permissions", id: false, force: :cascade do |t|
     t.integer "member_id"
@@ -532,6 +535,8 @@ ActiveRecord::Schema.define(version: 20181021014646) do
     t.string   "role"
     t.datetime "reminded_at"
     t.datetime "rsvp_time"
+    t.boolean  "automated_rsvp"
+    t.text     "tutorial"
   end
 
   add_index "workshop_invitations", ["member_id"], name: "index_workshop_invitations_on_member_id", using: :btree
@@ -555,11 +560,17 @@ ActiveRecord::Schema.define(version: 20181021014646) do
     t.datetime "date_and_time"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "invitable",      default: true
+    t.boolean  "invitable",          default: true
     t.string   "sign_up_url"
     t.integer  "chapter_id"
     t.datetime "rsvp_closes_at"
     t.datetime "rsvp_opens_at"
+    t.datetime "ends_at"
+    t.boolean  "virtual",            default: false
+    t.integer  "student_spaces",     default: 0
+    t.integer  "coach_spaces",       default: 0
+    t.string   "slack_channel"
+    t.string   "slack_channel_link"
   end
 
   add_index "workshops", ["chapter_id"], name: "index_workshops_on_chapter_id", using: :btree

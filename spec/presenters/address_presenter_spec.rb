@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe AddressPresenter do
+RSpec.describe AddressPresenter do
   let(:address) { Fabricate.build(:address) }
   let(:presenter) { AddressPresenter.new(address) }
 

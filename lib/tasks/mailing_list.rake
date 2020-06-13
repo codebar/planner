@@ -1,32 +1,16 @@
 namespace :mailing_list do
   require 'services/mailing_list'
 
-  desc 'Subscribe all group members to relevant mailing list'
-  task update_all_subscribers: :environment do
-    groups = Group.all
+  desc 'Subscribe all active members to newsletter mailing list'
+  task subscribe_active_members: :environment do
+    newsletter_id = ENV['NEWSLETTER_ID'] || Rails.logger.info('NEWSLETTER_ID not set. Aborting task') && abort
 
-    groups.each do |group|
-      mailing_list = MailingList.new(group.mailing_list_id)
+    members = Member.includes(:subscriptions).where.not('subscriptions.member_id' => nil).uniq
+    newsletter = MailingList.new(newsletter_id)
 
-      group.members.each do |member|
-        puts mailing_list.subscribe(member.email, member.name, member.surname)
-      end
+    members.each do |member|
+      member.update(opt_in_newsletter_at: Time.zone.now)
+      newsletter.subscribe(member.email, member.name, member.surname)
     end
   end
-
-  desc 'Subscribe group members to specified mailing lists'
-  task :subscribe_group, %i[list_id group_id] => :environment do |t, args|
-    raise 'You must specify both a list_id and a group_id' unless args_valid?(args)
-
-    mailing_list = MailingList.new(args[:list_id])
-    group = Group.find(args[:group_id])
-
-    group.members.each do |member|
-      mailing_list.subscribe(member.email, member.name, member.surname)
-    end
-  end
-end
-
-def args_valid?(args)
-  args.key?(:list_id) && args.key?(:group_id)
 end
