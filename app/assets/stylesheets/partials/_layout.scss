@@ -1,3 +1,12 @@
+.flex-grid {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.flex-item {
+  display: flex;
+}
+
 .main-footer {
   background-color: $primary-color;
   padding: 50px 0;

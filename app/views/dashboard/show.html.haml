@@ -5,18 +5,17 @@
       %p.lead
         = raw t('homepage.intro')
 
-%section.testimonials
-  .stripe
+%section.testimonials.stripe.reverse
+  .row
+    .large-12.columns
+      %p.lead
+        = t('homepage.explanation')
+  - if @testimonials.any?
     .row
-      .large-12.columns
-        %p.lead
-          = t('homepage.explanation')
-    - if @testimonials.any?
-      .row
-        .large-offset-1.large-11.columns
-          = render partial: 'members/testimonials'
+      .large-offset-1.large-11.columns
+        = render partial: 'members/testimonials'
 
-%section.stripe
+%section.stripe.reverse
   .row#showcase
     .large-4.columns
       .text-center
@@ -28,7 +27,7 @@
         = t('homepage.participate.students_explanation_p2')
 
       .text-center
-        = link_to t("homepage.participate.students_button"), new_member_path, class: 'button'
+        = link_to t('homepage.participate.students_button'), new_member_path, class: 'button'
     .large-4.columns
       .text-center
         %h4
@@ -39,7 +38,7 @@
         = t('homepage.participate.coaches_explanation_p2')
 
       .text-center
-        = link_to t("homepage.participate.coaches_button"), new_member_path, class: 'button'
+        = link_to t('homepage.participate.coaches_button'), new_member_path, class: 'button'
     .large-4.columns
       .text-center
         %h4
@@ -49,28 +48,30 @@
       %p
         = t('homepage.participate.workshop_explanation_p2')
       .text-center
-        = mail_to "hello@codebar.io", t("homepage.participate.workshop_button"), subject: t('homepage.participate.workshop_email_subject'), class: 'button'
+        = mail_to "hello@codebar.io", t('homepage.participate.workshop_button'), subject: t('homepage.participate.workshop_email_subject'), class: 'button'
 
-%section.stripe#chapter
-  .events#container
-    .row
-      .large-8.columns
-        - if @upcoming_workshops.empty?
-          %p
-            = t("events.no_upcoming_events")
-          %p
-            =link_to t("events.view_past_events"), events_url(anchor: 'past'), class: "button round expand"
+%section.stripe.reverse
+  = render partial: 'shared/donation_platforms'
 
-        - if @upcoming_workshops.any?
-          %h2.h3 Upcoming Events
-          - @upcoming_workshops.each do |date, workshops|
-            .grouped-events
-              %h3.date= date
-              = render workshops
-      .large-4.columns#chapters
-        %h3
-          = t("homepage.chapters.title")
-        %ul.no-bullet
-          - @chapters.each do |chapter|
-            %li
-              = link_to chapter.name, chapter_path(chapter.slug)
+%section.stripe.reverse
+  .row
+    .large-8.columns
+      - if @upcoming_workshops.empty?
+        %p
+          = t('events.no_upcoming_events')
+        %p
+          =link_to t('events.view_past_events'), events_url(anchor: 'past'), class: 'button round expand'
+
+      - if @upcoming_workshops.any?
+        %h2.h3 Upcoming Events
+        - @upcoming_workshops.each do |date, workshops|
+          .grouped-events
+            %h3.date= date
+            = render workshops
+    .large-4.columns
+      %h3
+        = t('homepage.chapters.title')
+      %ul.no-bullet
+        - @chapters.each do |chapter|
+          %li
+            = link_to chapter.name, chapter_path(chapter.slug)
