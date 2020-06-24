@@ -35,7 +35,6 @@ module LoginHelpers
         name: Faker::Name.name
       }
     )
-
   end
 
   def accept_toc

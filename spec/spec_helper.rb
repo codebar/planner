@@ -3,9 +3,9 @@ require 'coveralls'
 require 'shoulda/matchers'
 
 SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new([
-  SimpleCov::Formatter::HTMLFormatter,
-  Coveralls::SimpleCov::Formatter
-])
+                                                                 SimpleCov::Formatter::HTMLFormatter,
+                                                                 Coveralls::SimpleCov::Formatter
+                                                               ])
 
 SimpleCov.start 'rails' do
   add_group 'Presenters', 'app/presenters'
@@ -46,6 +46,7 @@ RSpec.configure do |config|
         uncommitted transaction data setup over the spec's database connection.
       MSG
     end
+
     DatabaseCleaner.clean_with(:truncation)
     DatabaseCleaner.strategy = :deletion
   end

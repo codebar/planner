@@ -26,7 +26,7 @@ RSpec.feature 'Member portal', type: :feature do
         presenter = WorkshopPresenter.new(workshop)
         visit dashboard_path
 
-        expect(page).to have_content("#{presenter.to_s} at #{presenter.venue.name}", count: 1)
+        expect(page).to have_content("#{presenter} at #{presenter.venue.name}", count: 1)
       end
 
       it 'can view upcoming workshops for their chapters' do
@@ -40,9 +40,9 @@ RSpec.feature 'Member portal', type: :feature do
 
         visit dashboard_path
 
-        expect(page).to have_content("#{c1_workshop_presenter.to_s} at #{c1_workshop_presenter.venue.name}",
+        expect(page).to have_content("#{c1_workshop_presenter} at #{c1_workshop_presenter.venue.name}",
                                      count: 1)
-        expect(page).to have_content("#{c2_workshop_presenter.to_s} at #{c2_workshop_presenter.venue.name}",
+        expect(page).to have_content("#{c2_workshop_presenter} at #{c2_workshop_presenter.venue.name}",
                                      count: 1)
       end
     end

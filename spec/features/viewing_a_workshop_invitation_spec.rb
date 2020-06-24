@@ -96,6 +96,5 @@ RSpec.feature 'Viewing a workshop invitation', type: :feature, wip: true do
     end
 
     include_examples "viewing workshop details"
-
   end
 end

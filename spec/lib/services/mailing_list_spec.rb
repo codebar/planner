@@ -16,9 +16,9 @@ RSpec.describe MailingList do
   context '#subscribe' do
     it 'adds a user to the mailing list' do
       expect(members).to receive(:create)
-                     .with(body: { email_address: :email,
-                                   status: "subscribed",
-                                   merge_fields: { FNAME: :first_name, LNAME: :last_name}})
+        .with(body: { email_address: :email,
+                      status: "subscribed",
+                      merge_fields: { FNAME: :first_name, LNAME: :last_name } })
 
       mailing_list.subscribe(:email, :first_name, :last_name)
     end
@@ -33,9 +33,9 @@ RSpec.describe MailingList do
 
       expect(Digest::MD5).to receive(:hexdigest).with(email)
       expect(members).to receive(:upsert)
-                    .with(body: { email_address: email,
-                                  status: "subscribed",
-                                  merge_fields: { FNAME: :first_name, LNAME: :last_name}})
+        .with(body: { email_address: email,
+                      status: "subscribed",
+                      merge_fields: { FNAME: :first_name, LNAME: :last_name } })
 
       mailing_list.subscribe(email, :first_name, :last_name)
     end
@@ -47,9 +47,9 @@ RSpec.describe MailingList do
 
       expect(Digest::MD5).to receive(:hexdigest).with(email)
       expect(members).to receive(:upsert)
-                    .with(body: { email_address: email,
-                                  status: "subscribed",
-                                  merge_fields: { FNAME: :first_name, LNAME: :last_name}})
+        .with(body: { email_address: email,
+                      status: "subscribed",
+                      merge_fields: { FNAME: :first_name, LNAME: :last_name } })
 
       mailing_list.reactivate_subscription(email, :first_name, :last_name)
     end
@@ -61,7 +61,7 @@ RSpec.describe MailingList do
 
       expect(Digest::MD5).to receive(:hexdigest).with(email)
       expect(members).to receive(:update)
-                     .with(body: { status: "unsubscribed" })
+        .with(body: { status: "unsubscribed" })
 
       mailing_list.unsubscribe(email)
     end

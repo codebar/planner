@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 RSpec.describe SponsorPresenter do
-  let(:sponsor_presenter) { SponsorPresenter.new(sponsor)}
+  let(:sponsor_presenter) { SponsorPresenter.new(sponsor) }
 
   context '#contact_full_name' do
     let(:sponsor) { double(:sponsor, contact_first_name: 'leonardo', contact_surname: 'da Vinci') }

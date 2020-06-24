@@ -49,12 +49,11 @@ RSpec.shared_examples 'Invitable' do |invitation_type, invitable_type|
 
     it 'rejects banned attending students' do
       invitation_to_banned_student = Fabricate(invitation_type,
-                                        member: Fabricate(:banned_member),
-                                        role: 'Student',
-                                        invitable_type => invitable,
-                                        attending: true)
+                                               member: Fabricate(:banned_member),
+                                               role: 'Student',
+                                               invitable_type => invitable,
+                                               attending: true)
 
-                                        # byebug
       expect(invitable.reload.attending_students).to_not include(invitation_to_banned_student)
     end
   end
@@ -80,10 +79,10 @@ RSpec.shared_examples 'Invitable' do |invitation_type, invitable_type|
 
     it 'rejects banned attending coaches' do
       invitation_to_banned_student = Fabricate(invitation_type,
-                                        member: Fabricate(:banned_member),
-                                        role: 'Student',
-                                        invitable_type => invitable,
-                                        attending: true)
+                                               member: Fabricate(:banned_member),
+                                               role: 'Student',
+                                               invitable_type => invitable,
+                                               attending: true)
 
       expect(invitable.reload.attending_students).to_not include(invitation_to_banned_student)
     end
