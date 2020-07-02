@@ -31,8 +31,8 @@
         %li{class: active_link_class(jobs_path)}
           = link_to jobs_path do
             %span Jobs
-        %li{class: active_link_class(new_donation_path)}
-          = link_to new_donation_path do
+        %li
+          = link_to 'https://codebar.enthuse.com/donate/' do
             %span.highlight
               Donate
         - if !logged_in?
