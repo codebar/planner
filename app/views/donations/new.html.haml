@@ -7,17 +7,16 @@
 .stripe.reverse
   .row
     .large-12.columns
-      %h2 Donations
+      %h2 Job board donation
 
 .stripe.reverse.donation-container
   .row
     .medium-6.columns
-      %p.lead Firstly thank you for considering a donation to codebar, without your support we would not be able to continue.
-      %p.lead By donating to codebar you are helping to promote diversity in the tech industry so that more women, LGBTQA and other underrepresented folks will be able to get started with programming and raise their skills to the next level.
+      %p.lead By submitting a job to the codebar job board you are helping to promote diversity in the tech industry so that more women, non-binary, LGBTQA and other minority groups will be able to get started with their tech career.
     .medium-6.columns
       = simple_form_for :donation, url: donations_path, method: :post do |f|
         = f.input :name, placeholder: 'Name', required: false, html: { id: 'name' }
-        = f.input :amount, placeholder: '25.00', required: true, id: 'amount'
+        = f.input :amount, placeholder: '50.00', required: true, id: 'amount'
         = f.submit :Donate, class: 'button', id: 'donate'
         .message
 
