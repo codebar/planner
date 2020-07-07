@@ -501,6 +501,7 @@ es:
         link_to_job: Link to job post
         expiry_date: Application closing date
   donation_platforms:
+    title: "How to support us"
     donation_form:
       title: "Use the donation page"
       text: "Support us with a one-time donation through the donation form on our website."
