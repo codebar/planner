@@ -60,9 +60,9 @@
     .large-12.columns
       %a{ name: 'organisers' }
       %h2 Team
-  .row.organisers-grid
+  .row.flex-grid
     - @chapter.organisers.shuffle.each do |organiser|
-      .small-12.medium-6.large-3.columns.organiser-item
+      .small-12.medium-6.large-3.columns.flex-item.mb2
         = link_to twitter_url_for(organiser.twitter), title: "#{organiser.full_name} Twitter profile", class: 'organiser-content' do
           = image_tag(organiser.avatar(65), alt: organiser.full_name, class: 'organiser-image')
           = organiser.full_name

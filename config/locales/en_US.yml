@@ -498,3 +498,17 @@ en-US:
         email: Contact email
         link_to_job: Link to job post
         expiry_date: Application closing date
+  donation_platforms:
+    title: "How to support us"
+    donation_form:
+      title: "Use the donation page"
+      text: "Support us with a one-time donation through the donation form on our website."
+    amazon_smile:
+      title: "Amazon Smile"
+      text: "Pick us as your charitable organisation while shopping on Amazon. This allows us to receive 0.5% of the net purchase price of eligible purchases as a donation."
+    open_collective:
+      title: "Open Collective"
+      text: "Setup a recurring contribution or make a one-time donation through Open Collective."
+    benevity:
+      title: "Benevity"
+      text: "Benevity is a platform enabling corporate social responsibility and employee engagement. We receive a donation from your employer with every hour you volunteer with us."

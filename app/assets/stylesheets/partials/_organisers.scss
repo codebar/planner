@@ -2,28 +2,10 @@
   border-bottom: none;
 }
 
-.organisers-grid {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.organiser-item {
-  display: flex;
-  margin-bottom: 2rem;
-}
-
 .organiser-content {
-  display: flex;
-  flex-direction: column;
+  @extend .card;
   align-items: center;
   justify-content: center;
-  width: 100%;
-  padding: 1rem;
-  text-align: center;
-  border: 1px solid $main-stroke;
-  &:hover {
-    box-shadow: 0 0 5px 0 $main-stroke;
-  }
 }
 
 .organiser-image {
