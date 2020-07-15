@@ -7,7 +7,7 @@
 .stripe.reverse
   .row
     .large-12.columns
-      %h2 Job board donation
+      %h2 Job board payment
 
 .stripe.reverse.donation-container
   .row
@@ -17,7 +17,7 @@
       = simple_form_for :donation, url: donations_path, method: :post do |f|
         = f.input :name, placeholder: 'Name', required: false, html: { id: 'name' }
         = f.input :amount, placeholder: '50.00', required: true, id: 'amount'
-        = f.submit :Donate, class: 'button', id: 'donate'
+        = f.submit :Confirm, class: 'button', id: 'donate'
         .message
 
 .stripe.reverse.text-center
