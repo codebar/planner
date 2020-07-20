@@ -181,7 +181,7 @@ $anchor-font-color-hover: darken($secondary-color, 10%);
 // $hr-margin: rem-calc(20);
 
 // We use these to style lists
- $list-style-position: outside;
+$list-style-position: outside;
 // $list-side-margin: 1.1rem;
 // $list-ordered-side-margin: 1.4rem;
 // $list-side-margin-no-bullet: 0;
@@ -191,11 +191,11 @@ $definition-list-header-weight: 100;
 // $definition-list-margin-bottom: rem-calc(12);
 
 // We use these to style blockquotes
-// $blockquote-font-color: scale-color($header-font-color, $lightness: 35%);
-// $blockquote-padding: rem-calc(9 20 0 19);
+$blockquote-font-color: #666;
+$blockquote-padding: rem-calc(15 20 15 45);
 $blockquote-border: none;
-$blockquote-cite-font-size: rem-calc(13);
-// $blockquote-cite-font-color: scale-color($header-font-color, $lightness: 23%);
+$blockquote-cite-font-size: rem-calc(12);
+$blockquote-cite-font-color: #666;
 // $blockquote-cite-link-color: $blockquote-cite-font-color;
 
 // Acronym styles
@@ -1347,15 +1347,16 @@ table thead tr td {
 
 
 blockquote {
-  display:block;
-  padding: 15px 20px 15px 45px;
-  margin: 0 0 20px;
+  background: $white;
+  border-radius: 5px;
+  display: block;
+  margin-bottom: 0;
   position: relative;
+}
 
-  /*Font*/
-  font-size: 16px;
-  line-height: 1.2;
-  color: #666;
+blockquote cite {
+  line-height: 2.2;
+  margin-left: 5px;
 }
 
 blockquote::before {
@@ -1365,8 +1366,9 @@ blockquote::before {
   font-weight: bold;
   color: #999;
   position: absolute;
+  line-height: 1.4;
   left: 10px;
-  top:5px;
+  top: 5px;
 }
 
 blockquote::after{

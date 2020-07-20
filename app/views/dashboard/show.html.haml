@@ -1,22 +1,19 @@
 - title t('homepage.title')
+
 %section.hero.opaque
   .row
     .medium-offset-1.medium-6.columns
       %p.lead
         = raw t('homepage.intro')
 
-%section.testimonials.stripe.reverse
+%section.stripe.reverse
   .row
-    .large-12.columns
+    .medium-offset-1.medium-10.columns
       %p.lead
         = t('homepage.explanation')
-  - if @testimonials.any?
-    .row
-      .large-offset-1.large-11.columns
-        = render partial: 'members/testimonials'
 
 %section.stripe.reverse
-  .row#showcase
+  .row
     .large-4.columns
       .text-center
         %h4
@@ -25,9 +22,9 @@
         = t('homepage.participate.students_explanation_p1')
       %p
         = t('homepage.participate.students_explanation_p2')
-
       .text-center
         = link_to t('homepage.participate.students_button'), new_member_path, class: 'button'
+
     .large-4.columns
       .text-center
         %h4
@@ -36,9 +33,9 @@
         = raw t('homepage.participate.coaches_explanation_p1')
       %p
         = t('homepage.participate.coaches_explanation_p2')
-
       .text-center
         = link_to t('homepage.participate.coaches_button'), new_member_path, class: 'button'
+
     .large-4.columns
       .text-center
         %h4
@@ -68,6 +65,7 @@
           .grouped-events
             %h3.date= date
             = render workshops
+
     .large-4.columns
       %h3
         = t('homepage.chapters.title')
@@ -75,3 +73,9 @@
         - @chapters.each do |chapter|
           %li
             = link_to chapter.name, chapter_path(chapter.slug)
+
+- if @testimonials.any?
+  %section.stripe.reverse
+    .row
+      .medium-offset-1.medium-10.columns
+        = render partial: 'members/testimonials'
