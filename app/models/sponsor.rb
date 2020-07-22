@@ -17,8 +17,8 @@ class Sponsor < ActiveRecord::Base
   has_many :members, through: :member_contacts
 
   validates :level, inclusion: { in: Sponsor.levels.keys }
-  validates :name, :address, :avatar, :website, :seats, :level, presence: true
-  validate :website_is_url
+  validates :name, :address, :avatar, :website, :level, presence: true
+  validate :website_is_url, if: :website?
 
   default_scope -> { order('updated_at desc') }
   scope :active, -> { where.not(level: 'hidden') }

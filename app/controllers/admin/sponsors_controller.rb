@@ -19,11 +19,12 @@ class Admin::SponsorsController < Admin::ApplicationController
     @sponsor = Sponsor.new(sponsor_params)
     @sponsor.build_address if @sponsor.address.blank?
     authorize @sponsor
-    if @sponsor.save
+
+    if @sponsor.valid? && @sponsor.save
       flash[:notice] = "Sponsor #{@sponsor.name} created"
       redirect_to [:admin, @sponsor]
     else
-      flash[:notice] = @sponsor.errors.full_messages.to_s
+      flash[:warning] = @sponsor.errors.full_messages
       render 'new'
     end
   end
