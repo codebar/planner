@@ -8,7 +8,6 @@ RSpec.describe Sponsor, type: :model do
     it { is_expected.to validate_presence_of(:address) }
     it { is_expected.to validate_presence_of(:avatar) }
     it { is_expected.to validate_presence_of(:website) }
-    it { is_expected.to validate_presence_of(:seats) }
     it { is_expected.to validate_presence_of(:level) }
 
     context '#website_is_url format' do
@@ -43,12 +42,12 @@ RSpec.describe Sponsor, type: :model do
     end
   end
 
-  context '#contacts' do
+  context '#members' do
     it 'returns the members set as contacts for the sponsor' do
       members = Fabricate.times(2, :member)
-      members.each { |m| Fabricate(:member_contact, sponsor: sponsor, contact: m) }
+      members.each { |m| Fabricate(:member_contact, sponsor: sponsor, member: m) }
 
-      expect(sponsor.contacts).to include(*members)
+      expect(sponsor.members).to include(*members)
     end
   end
 end

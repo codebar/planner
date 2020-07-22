@@ -635,6 +635,9 @@ en:
       job:
         remote: Only check if the role is fully remote only
         salary: Annual pay before tax, without commas or decimal points
+      sponsor:
+        avatar: The avatar is displayed in sponsors and on the event pages.
+        accessibility_info: Is the office on the second floor? Is there a lift? How can someone with a handicap get there.
       workshop:
         slack_channel: 'Create a workshop specific channel in the codebar Slack. This is the place you will use for socialising and sharing details about the workshop.'
         slack_channel_link: 'Right click the Slack channel to get the link'
@@ -651,6 +654,10 @@ en:
         virtual: Virtual workshop
       workshop_invitation:
         note: 'Note'
+      sponsor:
+        accessibility_info: Accessibility information
+        number_of_coaches: Coach spots
+        seats: Student spots
   activerecord:
     attributes:
       job:

@@ -16,6 +16,9 @@ class Sponsor < ActiveRecord::Base
   has_many :member_contacts
   has_many :members, through: :member_contacts
 
+  has_many :contacts
+  accepts_nested_attributes_for :contacts
+
   validates :level, inclusion: { in: Sponsor.levels.keys }
   validates :name, :address, :avatar, :website, :level, presence: true
   validate :website_is_url, if: :website?

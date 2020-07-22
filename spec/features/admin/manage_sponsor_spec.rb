@@ -17,7 +17,7 @@ RSpec.feature 'Managing sponsors', type: :feature do
         fill_in 'sponsor_name', with: 'Sponsor name'
         fill_in 'Website', with: 'https://www.sponsorname.com/'
         attach_file('Avatar', Rails.root + 'spec/support/codebar-logo.png')
-        fill_in 'Student Spots', with: 20
+        fill_in 'Student spots', with: 20
         select "Bronze", from: "Level"
 
         click_on 'Create sponsor'
@@ -33,7 +33,7 @@ RSpec.feature 'Managing sponsors', type: :feature do
         fill_in 'sponsor_name', with: ''
         fill_in 'Website', with: 'https://www.sponsorname.com/'
         attach_file('Avatar', Rails.root + 'spec/support/codebar-logo.png')
-        fill_in 'Student Spots', with: 20
+        fill_in 'Student spots', with: 20
 
         click_on 'Create sponsor'
 
@@ -48,7 +48,7 @@ RSpec.feature 'Managing sponsors', type: :feature do
         fill_in 'sponsor_name', with: ''
         fill_in 'Website', with: 'https://www.sponsorname.com/'
         attach_file('Avatar', Rails.root + 'spec/support/codebar-logo.png')
-        fill_in 'Student Spots', with: 20
+        fill_in 'Student spots', with: 20
 
         click_on 'Create sponsor'
 
@@ -82,7 +82,7 @@ RSpec.feature 'Managing sponsors', type: :feature do
 
         visit edit_admin_sponsor_path(sponsor)
 
-        select member.name, from: 'sponsor_contact_ids'
+        select member.name, from: 'sponsor_member_ids'
 
         click_on 'Save changes'
 
