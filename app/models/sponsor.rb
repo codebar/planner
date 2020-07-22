@@ -14,7 +14,7 @@ class Sponsor < ActiveRecord::Base
   has_many :workshop_sponsors
   has_many :workshops, through: :workshop_sponsors
   has_many :member_contacts
-  has_many :contacts, through: :member_contacts, class_name: 'Member', foreign_key: 'member_id'
+  has_many :members, through: :member_contacts
 
   validates :level, inclusion: { in: Sponsor.levels.keys }
   validates :name, :address, :avatar, :website, :seats, :level, presence: true
