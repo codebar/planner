@@ -20,7 +20,8 @@
 
     .medium-6.large-3.columns
       %h4 Contacts
-      = SponsorPresenter.new(@sponsor).contact_info
+      %ul.no-bullet
+        = @sponsor.contact_info
 
     .medium-6.large-3.columns
       %h4 Sponsored

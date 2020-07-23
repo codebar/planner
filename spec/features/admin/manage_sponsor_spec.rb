@@ -74,35 +74,35 @@ RSpec.feature 'Managing sponsors', type: :feature do
     end
   end
 
-  describe 'assigning a contact to a sponsor' do
-    context 'assigning an existing member' do
+  describe 'adding contact information to a sponsor' do
+    let(:sponsor) { Fabricate(:sponsor) }
+
+    context 'assigning a member' do
       it 'updates the sponsor' do
-        sponsor = Fabricate(:sponsor)
         member = Fabricate(:member)
 
         visit edit_admin_sponsor_path(sponsor)
 
         select member.name, from: 'sponsor_member_ids'
-
         click_on 'Save changes'
 
         expect(page).to have_content member.name
       end
     end
 
-    context 'assigning not a member' do
-      it 'updates the sponsor' do
-        sponsor = Fabricate(:sponsor)
-
+    context 'adding contact details' do
+      it 'adds a new contact entry' do
         visit edit_admin_sponsor_path(sponsor)
 
-        fill_in 'Email', with: 'test@email.com'
-        fill_in 'Contact First Name', with: 'First name'
-        fill_in 'Contact Surname', with: 'Surname'
+        within '#contacts' do
+          fill_in 'Name', with: 'Jane'
+          fill_in 'Surname', with: 'Doe'
+          fill_in 'Email', with: 'jane@codebar.io'
+        end
 
         click_on 'Save changes'
 
-        expect(page).to have_content 'First name Surname'
+        expect(page).to have_content 'Jane Doe (jane@codebar.io)'
       end
     end
   end

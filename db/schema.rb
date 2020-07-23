@@ -107,12 +107,15 @@ ActiveRecord::Schema.define(version: 20200805104520) do
 
   create_table "contacts", force: :cascade do |t|
     t.integer  "sponsor_id"
-    t.integer  "member_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "name"
+    t.string   "surname"
+    t.string   "email"
+    t.boolean  "mailing_list_consent",        default: false
   end
 
-  add_index "contacts", ["member_id"], name: "index_contacts_on_member_id", using: :btree
+  add_index "contacts", ["email", "sponsor_id"], name: "index_contacts_on_email_and_sponsor_id", unique: true, using: :btree
   add_index "contacts", ["sponsor_id"], name: "index_contacts_on_sponsor_id", using: :btree
 
   create_table "course_invitations", force: :cascade do |t|

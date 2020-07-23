@@ -6,7 +6,9 @@ class Admin::SponsorsController < Admin::ApplicationController
     @sponsors = Sponsor.all.order(:name)
   end
 
-  def show; end
+  def show
+    @sponsor = SponsorPresenter.new(@sponsor)
+  end
 
   def new
     @sponsor = Sponsor.new
@@ -22,32 +24,39 @@ class Admin::SponsorsController < Admin::ApplicationController
 
     if @sponsor.valid? && @sponsor.save
       flash[:notice] = "Sponsor #{@sponsor.name} created"
-      redirect_to [:admin, @sponsor]
-    else
-      flash[:warning] = @sponsor.errors.full_messages
-      render 'new'
+      return redirect_to [:admin, @sponsor]
     end
+
+    flash[:warning] = @sponsor.errors.full_messages
+    render 'new'
   end
 
   def edit
     @sponsor = Sponsor.find(params[:id])
     authorize @sponsor
     @sponsor.build_address if @sponsor.address.blank?
-    @sponsor.contacts.build
+    @sponsor.contacts.build unless @sponsor.contacts.any?
   end
 
   def update
-    @sponsor.update(sponsor_params)
-    redirect_to admin_sponsor_path(@sponsor), notice: 'Updated!'
+    @sponsor.assign_attributes(sponsor_params)
+
+    if @sponsor.valid? && @sponsor.save
+      flash[:notice] = 'Updated!'
+      return redirect_to admin_sponsor_path(@sponsor)
+    end
+
+    flash[:warning] = @sponsor.errors.full_messages
+    render 'edit'
   end
 
   private
 
   def sponsor_params
     params.require(:sponsor).permit(:name, :avatar, :website, :seats, :accessibility_info,
-                                    :number_of_coaches, :level, :email, :contact_first_name,
-                                    :contact_surname, member_ids: [], address_attributes:
-                                    %i[flat street postal_code city latitude longitude directions])
+                                    :number_of_coaches, :level, member_ids: [], address_attributes:
+                                    %i[flat street postal_code city latitude longitude directions],
+                                    contacts_attributes: %i[id name surname email mailing_list_consent])
   end
 
   def set_sponsor

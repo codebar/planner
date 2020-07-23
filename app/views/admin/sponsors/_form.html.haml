@@ -14,14 +14,15 @@
 
       .row
         .large-12.columns
-          .panel.callout
+          .panel.callout#contacts
             %strong Contact Details
-            %p Complete the fields below and/or select a member(s)
+            %p Required so that all organisers can get in touch with sponsor when required. Please do not use your personal or chapter details.
+            = f.simple_fields_for :contacts do |c|
+              = render 'contact_fields', form: c
+
+            %p Members associated with sponsor
             = f.collection_select :member_ids, Member.all, :id, :full_name,
-              { selected: @sponsor.members.map(&:id) }, { multiple: true }
-            = f.input :email
-            = f.input :contact_first_name, label: 'Contact First Name'
-            = f.input :contact_surname, label: 'Contact Surname'
+              { selected: @sponsor.members.map(&:id), prompt: 'Select a member' }, { multiple: true }
 
     .large-6.columns
       .row
@@ -58,5 +59,5 @@
     .large-12.columns.text-right
       - if params[:action] == 'new' || params[:action] == 'create'
         = f.submit 'Create sponsor', class: 'button round'
-      - elsif params[:action] == 'edit'
+      - else
         = f.submit 'Save changes', class: 'button round'

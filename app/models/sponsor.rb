@@ -17,7 +17,8 @@ class Sponsor < ActiveRecord::Base
   has_many :members, through: :member_contacts
 
   has_many :contacts
-  accepts_nested_attributes_for :contacts
+  accepts_nested_attributes_for :contacts, reject_if: :invalid_contact?
+  accepts_nested_attributes_for :address
 
   validates :level, inclusion: { in: Sponsor.levels.keys }
   validates :name, :address, :avatar, :website, :level, presence: true
@@ -38,8 +39,6 @@ class Sponsor < ActiveRecord::Base
 
   mount_uploader(:avatar, AvatarUploader)
 
-  accepts_nested_attributes_for :address, :contacts
-
   def coach_spots
     number_of_coaches || (seats / 2.0).round
   end
@@ -58,5 +57,9 @@ class Sponsor < ActiveRecord::Base
       valid = false
     end
     errors.add(:website, 'must be a full, valid URL') unless valid
+  end
+
+  def invalid_contact?(attrs)
+    attrs['name'].blank? && attrs['surname'].blank? && attrs['email'].blank?
   end
 end

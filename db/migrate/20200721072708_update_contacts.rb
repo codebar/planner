@@ -5,5 +5,7 @@ class UpdateContacts < ActiveRecord::Migration
     add_column :contacts, :email, :string
     add_column :contacts, :mailing_list_consent, :boolean, default: false
     remove_column :contacts, :member_id, :integer
+
+    add_index :contacts, [:email, :sponsor_id], unique: true
   end
 end
