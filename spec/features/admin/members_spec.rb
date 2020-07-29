@@ -62,8 +62,10 @@ RSpec.feature 'Managing users', type: :feature do
 
   scenario 'Warn a user' do
     visit admin_member_path member
+    expect(page).to have_selector("a[data-confirm='Clicking OK will send an automated email to this user now to warn them about missing too many workshops. This cannot be undone. Are you sure?']")
     click_on 'Attendance'
-
+    expect(page).to have_selector("a[data-confirm='#{member.name} has already received a warning about missing too many workshops on #{member.attendance_warnings.last.created_at.strftime("%Y-%m-%d at %H:%M")}. Are you sure you want to proceed with sending another one?']")
     expect(page).to have_content 'You have sent an attendance warning.'
   end
+
 end
