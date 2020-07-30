@@ -16,7 +16,7 @@
       = render partial: 'event_actions'
 
 .stripe.reverse
-  - if event.venue.present?
+  - if @event.venue.present?
     .row
       = render partial: 'shared/venue', locals: { venue: @event.venue, address: @host_address}
 
