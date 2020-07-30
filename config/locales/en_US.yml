@@ -47,8 +47,8 @@ en-US:
         precision: 0
         format: '%u%n'
   homepage:
-    intro: "<strong>codebar</strong> is a non-profit initiative that facilitates the growth of a diverse tech community by running regular programming workshops."
-    explanation: "Our goal is to enable underrepresented people to learn programming in a safe and collaborative environment and expand their career opportunities. To achieve this we run free regular workshops, regular one-off events and try to create opportunities for our students making technology and coding more accessible."
+    intro: "<strong>codebar</strong> is a charity that facilitates the growth of a diverse tech community by running free regular programming workshops for minority groups in tech."
+    explanation: "Our goal is to enable minority group members to learn programming in a safe and collaborative environment and expand their career opportunities. To achieve this we run free regular workshops, regular one-off events and try to create opportunities for our students making technology and coding more accessible."
     participate:
       students_title: "Students"
       students_explanation_p1: "Our students come from a variety of backgrounds. Some want to become full-time developers, whereas some would like to learn the basics of coding in a supportive environment."
@@ -56,7 +56,7 @@ en-US:
       students_button: "Sign up as a student"
       coaches_title: "Coaches"
       coaches_explanation_p1: "We encourage new students to work on our HTML/CSS, JavaScript, Ruby, Python or Git <a href='http://tutorials.codebar.io'>tutorials</a>. We also help them understand programming concepts."
-      coaches_explanation_p2: "Therefore  are always on the lookout for more developers to join our community and help coach at our workshops."
+      coaches_explanation_p2: "Therefore we are always on the lookout for more developers to join our community and help coach at our workshops."
       coaches_button: "Sign up as a coach"
       workshop_title: "Workshops"
       workshop_explanation_p1: "We are hosted by some amazing companies who support our cause. Our normal format is 30 minutes of socialising with food and drink, followed by a lightning talk then coding."
@@ -502,7 +502,7 @@ en-US:
     title: "How to support us"
     donation_form:
       title: "Use the donation page"
-      text: "Support us with a one-time donation through the donation form on our website."
+      text: "Support us with a one-time or recurring donation through the donation form on our website."
     amazon_smile:
       title: "Amazon Smile"
       text: "Pick us as your charitable organisation while shopping on Amazon. This allows us to receive 0.5% of the net purchase price of eligible purchases as a donation."
