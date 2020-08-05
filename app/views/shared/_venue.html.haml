@@ -1,19 +1,21 @@
+- formatted_address = address.to_html
+- section_title = formatted_address.empty? ? "Host" : "Venue"
+
 #venue
-  .small-12.column
-    %h3 Venue
   .medium-6.columns
+    %h3= section_title
     %p
       %strong= venue.name
-      %br
-        #address
-          = address.to_html
+    - unless formatted_address.empty?
+      #address
+        = address.to_html
 
-    - if address.directions
+    - if address.directions.present?
       %p
         %strong Directions:
         = address.directions
 
-    - if venue.accessibility_info
+    - if venue.accessibility_info.present?
       %p
         %strong Accessibility information:
         = venue.accessibility_info
