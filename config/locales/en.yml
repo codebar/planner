@@ -658,6 +658,16 @@ en:
         pronouns: 'What pronouns do you use?'
     errors:
       models:
+        event:
+          attributes:
+            bronze_sponsors:
+              duplicated_sponsor: "Bronze level contains a duplicated sponsor"
+            sponsors:
+              duplicated_sponsor: "Standard level contains a duplicated sponsor"
+            silver_sponsors:
+              duplicated_sponsor: "Silver level contains a duplicated sponsor"
+            gold_sponsors:
+              duplicated_sponsor: "Gold level contains a duplicated sponsor"
         workshop_invitation:
           attributes:
             tutorial:
