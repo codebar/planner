@@ -53,30 +53,30 @@
           %small
             = @address.to_html
       .large-3.small-6.columns#sponsors
-        - if @event.has_sponsors?
+        - if @event.sponsors?
           %h4 Sponsors
-          - if @event.has_sponsors?(:standard)
+          - if @event.sponsors?(:standard)
             %h5 Standard
             %ul.no-bullet
               - @event.sponsors.each do |sponsor|
                 %li
                   %span
                     = link_to sponsor.name, [:admin, sponsor]
-          - if @event.has_sponsors?(:bronze)
+          - if @event.sponsors?(:bronze)
             %h5 Bronze
             %ul.no-bullet
               - @event.bronze_sponsors.each do |sponsor|
                 %li
                   %span
                     = link_to sponsor.name, [:admin, sponsor]
-          - if @event.has_sponsors?(:silver)
+          - if @event.sponsors?(:silver)
             %h5 Silver
             %ul.no-bullet
               - @event.silver_sponsors.each do |sponsor|
                 %li
                   %span
                     = link_to sponsor.name, [:admin, sponsor]
-          - if @event.has_sponsors?(:gold)
+          - if @event.sponsors?(:gold)
             %h5 Gold
             %ul.no-bullet
               - @event.gold_sponsors.each do |sponsor|

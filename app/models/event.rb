@@ -7,10 +7,10 @@ class Event < ActiveRecord::Base
 
   belongs_to :venue, class_name: 'Sponsor'
   has_many :sponsorships
-  has_many :sponsors, -> { where('sponsorships.level'=> nil) }, through: :sponsorships, source: :sponsor
-  has_many :bronze_sponsors, -> { where('sponsorships.level'=> 'bronze') }, through: :sponsorships, source: :sponsor
-  has_many :silver_sponsors, -> { where('sponsorships.level'=> 'silver') }, through: :sponsorships, source: :sponsor
-  has_many :gold_sponsors, -> { where('sponsorships.level'=> 'gold') }, through: :sponsorships, source: :sponsor
+  has_many :sponsors, -> { where('sponsorships.level' => nil) }, through: :sponsorships, source: :sponsor
+  has_many :bronze_sponsors, -> { where('sponsorships.level' => 'bronze') }, through: :sponsorships, source: :sponsor
+  has_many :silver_sponsors, -> { where('sponsorships.level' => 'silver') }, through: :sponsorships, source: :sponsor
+  has_many :gold_sponsors, -> { where('sponsorships.level' => 'gold') }, through: :sponsorships, source: :sponsor
   has_many :organisers, -> { where('permissions.name' => 'organiser') }, through: :permissions, source: :members
   has_and_belongs_to_many :chapters
   has_many :invitations
@@ -22,21 +22,17 @@ class Event < ActiveRecord::Base
   validate :sponsors_uniqueness
 
   before_save do
-    begins_at = Time.parse(self.begins_at)
+    begins_at = Time.zone.parse(self.begins_at)
     self.date_and_time = date_and_time.change(hour: begins_at.hour, min: begins_at.min)
   end
 
   def sponsors_uniqueness
     ids = sponsorships.reject(&:marked_for_destruction?).map(&:sponsor_id)
     duplicated = ids.select { |e| ids.count(e) > 1 }
-    standards_ids = sponsors.map(&:id)
-    bronze_ids = bronze_sponsors.map(&:id)
-    silver_ids = silver_sponsors.map(&:id)
-    gold_ids = gold_sponsors.map(&:id)
-    errors.add(:sponsors, :duplicated_sponsor) unless (standards_ids & duplicated).empty?
-    errors.add(:bronze_sponsors, :duplicated_sponsor) unless (bronze_ids & duplicated).empty?
-    errors.add(:silver_sponsors, :duplicated_sponsor) unless (silver_ids & duplicated).empty?
-    errors.add(:gold_sponsors, :duplicated_sponsor) unless (gold_ids & duplicated).empty?
+    errors.add(:sponsors, :duplicated_sponsor) unless (sponsors.map(&:id) & duplicated).empty?
+    errors.add(:bronze_sponsors, :duplicated_sponsor) unless (bronze_sponsors.map(&:id) & duplicated).empty?
+    errors.add(:silver_sponsors, :duplicated_sponsor) unless (silver_sponsors.map(&:id) & duplicated).empty?
+    errors.add(:gold_sponsors, :duplicated_sponsor) unless (gold_sponsors.map(&:id) & duplicated).empty?
   end
 
   def to_s
@@ -94,18 +90,13 @@ class Event < ActiveRecord::Base
     %w[Students Coaches]
   end
 
-  def has_sponsors?(level=nil)
+  def sponsors?(level = nil)
     case level
-    when :gold
-      gold_sponsors.any?
-    when :silver
-      silver_sponsors.any?
-    when :bronze
-      bronze_sponsors.any?
-    when :standard
-      sponsors.any?
-    else
-      sponsorships.any?
+    when :gold then gold_sponsors.any?
+    when :silver then silver_sponsors.any?
+    when :bronze then bronze_sponsors.any?
+    when :standard then sponsors.any?
+    else sponsorships.any?
     end
   end
 end
