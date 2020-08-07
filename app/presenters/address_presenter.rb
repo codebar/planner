@@ -1,11 +1,12 @@
 class AddressPresenter < BasePresenter
   def to_html
-    lat = model.latitude.present? ? "Latitude: #{model.latitude}" : nil
-    lng = model.longitude.present? ? "Longitude: #{model.longitude}" : nil
-    postal_code = model.postal_code.present? ? ", #{model.postal_code}" : nil
+    lat = model.latitude.present? ? "Latitude: #{model.latitude}" : ''
+    lng = model.longitude.present? ? "Longitude: #{model.longitude}" : ''
+    city_and_postal_code = [model.city, model.postal_code].delete_if(&:empty?)
+                                                          .join(', ')
 
-    [model.flat, model.street, "#{model.city}#{postal_code}", lat, lng]
-      .compact.delete_if(&:empty?).join('<br/>').html_safe
+    [model.flat, model.street, city_and_postal_code, lat, lng]
+      .delete_if(&:empty?).join('<br/>').html_safe
   end
 
   def for_map
