@@ -20,19 +20,13 @@ class Event < ActiveRecord::Base
   validate :invitability, if: :invitable?
   validates :coach_spaces, :student_spaces, numericality: true
   validate :sponsors_uniqueness
+  validate :bronze_sponsors_uniqueness
+  validate :silver_sponsors_uniqueness
+  validate :gold_sponsors_uniqueness
 
   before_save do
     begins_at = Time.zone.parse(self.begins_at)
     self.date_and_time = date_and_time.change(hour: begins_at.hour, min: begins_at.min)
-  end
-
-  def sponsors_uniqueness
-    ids = sponsorships.reject(&:marked_for_destruction?).map(&:sponsor_id)
-    duplicated = ids.select { |e| ids.count(e) > 1 }
-    errors.add(:sponsors, :duplicated_sponsor) unless (sponsors.map(&:id) & duplicated).empty?
-    errors.add(:bronze_sponsors, :duplicated_sponsor) unless (bronze_sponsors.map(&:id) & duplicated).empty?
-    errors.add(:silver_sponsors, :duplicated_sponsor) unless (silver_sponsors.map(&:id) & duplicated).empty?
-    errors.add(:gold_sponsors, :duplicated_sponsor) unless (gold_sponsors.map(&:id) & duplicated).empty?
   end
 
   def to_s
@@ -98,5 +92,32 @@ class Event < ActiveRecord::Base
     when :standard then sponsors.any?
     else sponsorships.any?
     end
+  end
+
+  private
+
+  def duplicated_sponsors
+    @duplicated_sponsors ||= fetch_duplicated_sponsors
+  end
+
+  def fetch_duplicated_sponsors
+    ids = sponsorships.reject(&:marked_for_destruction?).map(&:sponsor_id)
+    ids.select { |e| ids.count(e) > 1 }
+  end
+
+  def sponsors_uniqueness
+    errors.add(:sponsors, :duplicated_sponsor) unless (sponsors.map(&:id) & duplicated_sponsors).empty?
+  end
+
+  def bronze_sponsors_uniqueness
+    errors.add(:bronze_sponsors, :duplicated_sponsor) unless (bronze_sponsors.map(&:id) & duplicated_sponsors).empty?
+  end
+
+  def silver_sponsors_uniqueness
+    errors.add(:silver_sponsors, :duplicated_sponsor) unless (silver_sponsors.map(&:id) & duplicated_sponsors).empty?
+  end
+
+  def gold_sponsors_uniqueness
+    errors.add(:gold_sponsors, :duplicated_sponsor) unless (gold_sponsors.map(&:id) & duplicated_sponsors).empty?
   end
 end
