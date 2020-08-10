@@ -25,7 +25,7 @@ class Event < ActiveRecord::Base
   validate :gold_sponsors_uniqueness
 
   before_save do
-    begins_at = Time.zone.parse(self.begins_at)
+    begins_at = Time.parse(self.begins_at)
     self.date_and_time = date_and_time.change(hour: begins_at.hour, min: begins_at.min)
   end
 
