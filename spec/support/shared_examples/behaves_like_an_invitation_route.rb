@@ -31,7 +31,6 @@ RSpec.shared_examples 'invitation route' do
 
     context 'RSVPing directly through the invitation' do
       scenario 'a Student must first select a tutorial' do
-        puts invitation.inspect
         invitation.update_attributes(role: 'Student', attending: nil, tutorial: nil)
         visit accept_invitation_route
 
