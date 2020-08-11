@@ -31,9 +31,14 @@
     .large-3.columns
       = f.association :venue, input_html: { data: { placeholder: 'Select sponsors' }}, required: true
   .row
+    .large-12.columns
+      %h3
+        Please add sponsors only to either Standard level OR Gold/Silver/Bronze levels.
+  .row
     .large-3.medium-6.small-12.columns
       %br
       = f.association :sponsors, input_html: { data: { placeholder: 'Select standard sponsors' }}, collection: Sponsor.all
+  .row
     .large-3.medium-6.small-12.columns
       %br
       = f.association :bronze_sponsors, input_html: { data: { placeholder: 'Select bronze sponsors' }}, collection: Sponsor.all
