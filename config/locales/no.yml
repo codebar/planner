@@ -366,6 +366,7 @@
         salary: The job pays an appropriate salary
         short: "It's short and to the point"
         approval_info: "*Once submitted, a job will be visible once it has been reviewed and approved."
+        newsletter: "For an additional <strong>£250</strong> you can have your job listing featured in our newsletter and made available to an audience of over 10000 students and coaches. To find out more details and when our next newsletter is due send us an email at <a href='mailto:hello@codebar.io'>hello@codebar.io</a>."
         pay:
           html: You have made the required payment of £50 through <a href="%{link}">a donation</a>.
         button:

@@ -2,7 +2,6 @@
   .stripe
     .row
       .large-12.columns
-        %br
         %ul.breadcrumbs
           %li
             %span=link_to t('member.jobs.title'), member_jobs_path
@@ -33,6 +32,10 @@
             %li
               %input#donation{type: 'checkbox'}
               %label{for: 'donation'}= t('member.jobs.new.pay.html', link: new_donation_path)
+
+    .row
+      .large-12.columns
+        %p= raw t('member.jobs.new.newsletter')
 
     %br
     .row
