@@ -7,7 +7,10 @@ class Event < ActiveRecord::Base
 
   belongs_to :venue, class_name: 'Sponsor'
   has_many :sponsorships
-  has_many :sponsors, through: :sponsorships
+  has_many :sponsors, -> { where('sponsorships.level' => nil) }, through: :sponsorships, source: :sponsor
+  has_many :bronze_sponsors, -> { where('sponsorships.level' => 'bronze') }, through: :sponsorships, source: :sponsor
+  has_many :silver_sponsors, -> { where('sponsorships.level' => 'silver') }, through: :sponsorships, source: :sponsor
+  has_many :gold_sponsors, -> { where('sponsorships.level' => 'gold') }, through: :sponsorships, source: :sponsor
   has_many :organisers, -> { where('permissions.name' => 'organiser') }, through: :permissions, source: :members
   has_and_belongs_to_many :chapters
   has_many :invitations
@@ -16,6 +19,10 @@ class Event < ActiveRecord::Base
   validates :slug, uniqueness: true
   validate :invitability, if: :invitable?
   validates :coach_spaces, :student_spaces, numericality: true
+  validate :sponsors_uniqueness
+  validate :bronze_sponsors_uniqueness
+  validate :silver_sponsors_uniqueness
+  validate :gold_sponsors_uniqueness
 
   before_save do
     begins_at = Time.parse(self.begins_at)
@@ -75,5 +82,42 @@ class Event < ActiveRecord::Base
 
   def permitted_audience_values
     %w[Students Coaches]
+  end
+
+  def sponsors?(level = nil)
+    case level
+    when :gold then gold_sponsors.any?
+    when :silver then silver_sponsors.any?
+    when :bronze then bronze_sponsors.any?
+    when :standard then sponsors.any?
+    else sponsorships.any?
+    end
+  end
+
+  private
+
+  def duplicated_sponsors
+    @duplicated_sponsors ||= fetch_duplicated_sponsors
+  end
+
+  def fetch_duplicated_sponsors
+    ids = sponsorships.reject(&:marked_for_destruction?).map(&:sponsor_id)
+    ids.select { |e| ids.count(e) > 1 }
+  end
+
+  def sponsors_uniqueness
+    errors.add(:sponsors, :duplicated_sponsor) unless (sponsors.map(&:id) & duplicated_sponsors).empty?
+  end
+
+  def bronze_sponsors_uniqueness
+    errors.add(:bronze_sponsors, :duplicated_sponsor) unless (bronze_sponsors.map(&:id) & duplicated_sponsors).empty?
+  end
+
+  def silver_sponsors_uniqueness
+    errors.add(:silver_sponsors, :duplicated_sponsor) unless (silver_sponsors.map(&:id) & duplicated_sponsors).empty?
+  end
+
+  def gold_sponsors_uniqueness
+    errors.add(:gold_sponsors, :duplicated_sponsor) unless (gold_sponsors.map(&:id) & duplicated_sponsors).empty?
   end
 end

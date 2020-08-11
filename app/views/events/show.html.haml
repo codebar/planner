@@ -53,18 +53,19 @@
       %p.text-center
         %i= t('events.thx_to_sponsors')
       %br
-      - if @event.sponsors.any?
+      - if @event.sponsors?
         %ul.no-bullet
-          - @event.sponsors.each do |sponsor|
-            %li
-              .row
-                .large-2.columns
-                  = image_tag(sponsor.avatar.url, class: 'sponsor', alt: sponsor.name)
-                .large-10.columns
-                  =link_to sponsor.name, sponsor.website
-                  %p
-                    = sponsor.description
-
+          - if @event.sponsors?(:gold)
+            %h3.text-center Gold 
+            = render partial: "sponsors", object: @event.gold_sponsors
+          - if @event.sponsors?(:silver)
+            %h3.text-center Silver
+            = render partial: "sponsors", object: @event.silver_sponsors
+          - if @event.sponsors?(:bronze)
+            %h3.text-center Bronze
+            = render partial: "sponsors", object: @event.bronze_sponsors
+          - if @event.sponsors?(:standard)
+            = render partial: "sponsors", object: @event.sponsors
 - if @event.verified_coaches.any?
   .stripe.reverse
     .row
