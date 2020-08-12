@@ -1,6 +1,10 @@
 class SponsorPresenter < BasePresenter
   include Rails.application.routes.url_helpers
 
+  def address
+    @address ||= model.address.present? ? AddressPresenter.new(model.address) : nil
+  end
+
   def contact_info
     [member_contacts_details, contacts_details].flatten.compact.join.html_safe
   end

@@ -1,39 +1,113 @@
-%section#banner
-  .row
-    .medium-6.large-9.columns
-      %h1= @sponsor.name
-    .medium-6.large-3.columns
-      = link_to 'Edit', edit_admin_sponsor_path(@sponsor), class: 'button small'
+.icon-bar.one-up
+  = link_to edit_admin_sponsor_path(@sponsor), class: 'item' do
+    %i.fa.fa-pencil
+    %label Edit
 
-  .row
-    .medium-6.large-3.columns
-      %h4 Address
-      %p= AddressPresenter.new(@sponsor.address).to_html
-      - if @sponsor.address.directions
-        %p
-          %strong Directions:
-          = @sponsor.address.directions
+  = link_to '#address', class: 'item' do
+    %i.fa.fa-map
+    %label Map preview
 
-    .medium-6.large-3.columns
-      %h4 Logo
-      = image_tag(@sponsor.avatar.url, alt: @sponsor.name)
+  = link_to '#sponsorships', class: 'item' do
+    %i.fa.fa-list
+    %label Sponsorships
 
-    .medium-6.large-3.columns
-      %h4 Contacts
-      %ul.no-bullet
-        = @sponsor.contact_info
+%section
+  .stripe.reverse
+    .row
+      .medium-6.columns
+        %dl
+          %dt Name
+          %dd= @sponsor.name
 
-    .medium-6.large-3.columns
-      %h4 Sponsored
-      %ul.no-bullet
-        - @sponsor.workshops.each do |workshop|
-          %li
-            = link_to admin_workshop_path(workshop) do
-              %strong=workshop.chapter.name
-              %br
-              = humanize_date(workshop.date_and_time, with_time: true)
+          %dt Website
+          %dd= link_to @sponsor.website
 
-  .row
-    .medium-6.large-3.columns
-      %h4 Accessibility information
-      %p= @sponsor.accessibility_info
+          %dt Description
+          %dd= @sponsor.description
+
+          %dt
+            Level
+            %i.fa.fa-trophy
+          %dd= @sponsor.level
+
+          %dt Contact details
+          %dd
+            %ul.no-bullet
+              = @sponsor.contact_info
+
+      .medium-6.columns
+        %dl
+          %dt Logo
+          %dd.large-6= image_tag(@sponsor.avatar.url, alt: @sponsor.name)
+
+        .row
+          .large-6.columns
+            %dl
+              %dt Student spots
+              %dd= @sponsor.seats
+          .large-6.columns
+            %dl
+              %dt Coach spots
+              %dd= @sponsor.coach_spots
+
+        %dl
+          %dt Accessibility information
+          %dd= @sponsor.accessibility_info
+
+          %dt Address
+          - if @sponsor.address.present?
+            %dd= @sponsor.address.to_html
+
+          %dt Directions
+          - if @sponsor.address.present?
+            %dd= @sponsor.address.directions
+
+    .row#map
+      .medium-12.columns
+        %dl
+          %dt Map preview
+          %dd.panel.medium-12.columns
+            - if @sponsor.address.present?
+              = render partial: 'shared/venue', locals: { venue: @sponsor, address: @sponsor.address}
+            - else
+              An address must be specified for the map preview to be generated
+
+
+    .row#sponsorships
+      .medium-12.columns
+        %dl
+          %dt Sponsorships
+          %dd
+            - if @sponsor.workshops.none? && @sponsor.sponsorships.none? && @sponsor.meetings.none?
+              No sponsorships
+            - else
+              .row
+              - if @sponsor.workshops.any?
+                .large-4.columns
+                  %strong Workshops
+                  %ul.no-bullet
+                    - @sponsor.workshop_sponsors.each do |ws|
+                      %li
+                        = link_to admin_workshop_path(ws.workshop) do
+                          = I18n.l(ws.workshop.date_and_time, format: :default_date)
+                          #{ws.workshop.chapter.name} #{ws.workshop.host ? '(host)' : ''}
+              - if @sponsor.sponsorships.any?
+                .large-4.columns
+                  %strong Events
+                  %ul.no-bullet
+                    - @sponsor.sponsorships.each do |sponsorship|
+                      %li
+                        = link_to admin_event_path(sponsorship.event) do
+                          = I18n.l(sponsorship.event.date_and_time, format: :default_date)
+                          = sponsorship.event.to_s
+                          \- #{sponsorship.level.upcase}
+
+              - if @sponsor.meetings.any?
+                .large-4.columns
+                  %strong Meetings
+                  %ul.no-bullet
+                    - @sponsor.meetings.each do |meeting|
+                      %li
+                        = link_to admin_meeting_path(meeting) do
+                          #{I18n.l(meeting.date_and_time, format: :default_date)}
+                          = meeting.title

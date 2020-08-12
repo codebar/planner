@@ -15,6 +15,11 @@ Fabricator(:sponsor) do
   contact_surname { Faker::Name.last_name }
 end
 
+Fabricator(:sponsor_full, from: :sponsor) do
+  description { Faker::Lorem.word }
+  level { 'gold' }
+end
+
 def sponsor_image
   "#{%w[8th-Light StreetTeam bloomberg gds-logo mozilla pivotal shutl_logo softwire the-guardian ticketmaster ustwo].sample}.png"
 end

@@ -11,12 +11,20 @@ class Sponsor < ActiveRecord::Base
 
   has_one :address
   has_many :chapters, through: :workshops
-  has_many :workshop_sponsors
-  has_many :workshops, through: :workshop_sponsors
+  has_many :contacts
+  has_many :meetings, -> { order(date_and_time: :desc) }, foreign_key: 'venue_id', inverse_of: :venue
   has_many :member_contacts
   has_many :members, through: :member_contacts
+  has_many :sponsorships, -> { includes([:event]).joins(:event).order('events.date_and_time desc') },
+           inverse_of: :sponsor
+  has_many :workshop_sponsors, lambda {
+    includes([workshop: :chapter])
+      .joins(:workshop)
+      .order('workshops.date_and_time desc')
+  },
+           inverse_of: :sponsor
+  has_many :workshops, through: :workshop_sponsors
 
-  has_many :contacts
   accepts_nested_attributes_for :contacts, reject_if: :invalid_contact?
   accepts_nested_attributes_for :address
 
