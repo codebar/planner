@@ -7,14 +7,14 @@ RSpec.feature 'Admin::Sponsors', type: :feature do
     login_as_admin(manager)
   end
 
-  context 'View' do
+  context 'Sponsor page' do
     let(:sponsor) { Fabricate(:sponsor_full) }
 
     before(:each) do
       visit admin_sponsor_path(sponsor)
     end
 
-    scenario 'displays all the sponsor details' do
+    scenario 'displays all sponsor details' do
       expect(page).to have_content(sponsor.name)
       expect(page).to have_content(sponsor.description)
       expect(page).to have_link(sponsor.website)
@@ -72,6 +72,19 @@ RSpec.feature 'Admin::Sponsors', type: :feature do
           expect(page).to have_content(meeting.title)
         end
       end
+    end
+  end
+
+  context 'Sponsor contacts page' do
+    let!(:sponsor) { Fabricate(:sponsor_with_contacts) }
+    let!(:sponsor_no_contacts) { Fabricate(:sponsor) }
+
+    scenario 'displays all sponsor contacts' do
+      visit admin_contacts_path
+
+      expect(page).to have_content(sponsor.name)
+      expect(page).to have_content(sponsor.contacts.first.name)
+      expect(page).to_not have_content(sponsor_no_contacts.name)
     end
   end
 end

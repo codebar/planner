@@ -16,10 +16,11 @@ class SponsorPresenter < BasePresenter
   end
 
   def contacts_details
-    return unless model.contacts.any?
+    return [] unless model.contacts.any?
 
     contacts.map do |c|
-      h.content_tag(:li, "#{c.name} #{c.surname} (#{h.mail_to(c.email)})".html_safe)
+      details = "#{c.name} #{c.surname} (#{h.mail_to(c.email)}) #{mailing_list_status(c)}"
+      h.content_tag(:li, h.raw(details))
     end
   end
 
@@ -27,5 +28,10 @@ class SponsorPresenter < BasePresenter
 
   def h
     ActionController::Base.helpers
+  end
+
+  def mailing_list_status(contact)
+    status_image = contact.mailing_list_consent? ? 'fa-bell' : 'fa-bell-slash'
+    h.content_tag(:i, '', class: "fa #{status_image}")
   end
 end

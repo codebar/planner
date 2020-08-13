@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200805104520) do
+ActiveRecord::Schema.define(version: 20200815141515) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -113,6 +113,7 @@ ActiveRecord::Schema.define(version: 20200805104520) do
     t.string   "surname"
     t.string   "email"
     t.boolean  "mailing_list_consent",        default: false
+    t.string   "token",                                       null: false
   end
 
   add_index "contacts", ["email", "sponsor_id"], name: "index_contacts_on_email_and_sponsor_id", unique: true, using: :btree

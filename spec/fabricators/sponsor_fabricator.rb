@@ -20,6 +20,13 @@ Fabricator(:sponsor_full, from: :sponsor) do
   level { 'gold' }
 end
 
+Fabricator(:sponsor_with_contacts, from: :sponsor) do
+  after_build do |sponsor, transients|
+    Fabricate(:contact,
+              sponsor: sponsor)
+  end
+end
+
 def sponsor_image
   "#{%w[8th-Light StreetTeam bloomberg gds-logo mozilla pivotal shutl_logo softwire the-guardian ticketmaster ustwo].sample}.png"
 end

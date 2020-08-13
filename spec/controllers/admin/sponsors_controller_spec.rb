@@ -127,19 +127,6 @@ RSpec.describe Admin::SponsorsController, type: :controller do
         expect(sponsor.reload.contact_first_name).to eq sponsor.contact_first_name
       end
 
-      it 'members as contacts and contact info' do
-        login admin
-        request.env['HTTP_REFERER'] = '/admin/member/3'
-
-        post :update, id: sponsor.id, sponsor: {
-          name: 'name', email: 'test@test.com', contact_first_name: 'new_first_name',
-          contact_surname: 'smith', website: 'https://example.com', seats: 40,
-          address: address, avatar: avatar, member_ids: [member.id, member1.id]
-        }
-        expect(sponsor.reload.members.count).to eq 2
-        expect(sponsor.reload.contact_first_name).to eq 'new_first_name'
-      end
-
       it 'only members as contacts' do
         login admin
         request.env['HTTP_REFERER'] = '/admin/member/3'

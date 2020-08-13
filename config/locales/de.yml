@@ -90,6 +90,7 @@ de:
     feedback_saved: "Vielen Dank für dein Feedback!"
     feedback_not_found: "Sie haben bereits ein Feedback eingereicht."
     updated_note: "Aktualisierung erfolgreich."
+    invalid_session: 'Your session is invalid'
     invitations:
       meeting:
         cancel: "Thanks for letting us know you can't make it."

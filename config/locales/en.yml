@@ -147,6 +147,7 @@ en:
     no_available_seats: "There are no more spots left for this event, but you can join the waiting list."
     feedback_saved: "Thank you for taking the time to give us feedback!"
     feedback_not_found: "You have already submitted feedback for this event."
+    invalid_session: 'Your session is invalid'
     invitations:
       meeting:
         cancel: "Thanks for letting us know you can't make it."
@@ -175,6 +176,9 @@ en:
     codebar_stories: "codebar Stories"
     cookies: 'Cookies'
     privacy-policy: 'Privacy Policy'
+    contact_preferences:
+      updated: 'Contact preferences updated'
+
   dashboard:
     join_workshops_in: "Join our <i>free</i> workshops in"
     workshops_goal: "to get to grips with the basics of programming and web development."
@@ -639,7 +643,9 @@ en:
         avatar: The avatar is displayed in sponsors and on the event pages.
         accessibility_info: Is the office on the second floor? Is there a lift? How can someone with a handicap get there.
         contacts:
-          mailing_list_consent: Adds contact to sponsors mailing list and  triggers email enabling contact to self opt-out.
+          mailing_list_consent: Adds contact to sponsors mailing list and triggers email enabling contact to self opt-out.
+      contact:
+        mailing_list_consent: Stay up to date with codebar's news and ways your company can help us make a difference.
       workshop:
         slack_channel: 'Create a workshop specific channel in the codebar Slack. This is the place you will use for socialising and sharing details about the workshop.'
         slack_channel_link: 'Right click the Slack channel to get the link'
