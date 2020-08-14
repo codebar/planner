@@ -4,6 +4,8 @@ services:
     image: postgres
     volumes:
       - db_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: password
   web:
     env_file:
       - docker-compose.env
