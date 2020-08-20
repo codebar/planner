@@ -11,12 +11,12 @@
           = f.input :slug, placeholder: 'for URI, e.g. 24-pull-requests'
       .row
         .large-6.columns
-          = f.input :date_and_time, as: :string, required: true, label: 'Date'
+          = f.input :date_and_time, as: :string, required: true, label: 'Date', input_html: { data: { value: @event.date_and_time&.strftime('%d/%m/%Y') } }
       .row
         .large-3.columns
-          = f.input :begins_at, as: :string, required: true
+          = f.input :begins_at, as: :string, required: true, input_html: { data: { value: @event.date_and_time&.time&.strftime('%H:%M') }}
         .large-3.columns
-          = f.input :ends_at, as: :string, required: true
+          = f.input :ends_at, as: :string, required: true, input_html: { data: { value: @event.ends_at&.strftime('%H:%M') }}
   .row
     .large-12.columns
       = f.input :description, as: :text,
@@ -100,7 +100,7 @@
             = f.input :display_students, as: :boolean
         .row
           .large-12.columns
-            = f.input :confirmation_required, as: :boolean, hint: 'Will we confirm each registration?'
+            = f.input :confirmation_required, as: :boolean, hint: 'Will we be confirming members\' attendance?'
         .row
           .large-12.columns
             = f.input :surveys_required, as: :boolean, hint: 'Do we need to collect additional info from attendees?'
