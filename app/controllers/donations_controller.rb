@@ -1,5 +1,7 @@
 class DonationsController < ApplicationController
-  def new; end
+  def new
+    redirect_to I18n.t('services.donations')
+  end
 
   def create
     @amount = params[:amount]

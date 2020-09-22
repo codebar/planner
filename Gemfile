@@ -63,7 +63,7 @@ group :development, :test do
   gem 'pry-remote'
   gem 'rspec-collection_matchers'
   gem 'rspec-rails'
-  gem 'rubocop', '~> 0.89.1', require: false
+  gem 'rubocop', '~> 0.91.0', require: false
   gem 'rubocop-rails', require: false
   gem 'bullet'
 end

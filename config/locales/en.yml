@@ -695,3 +695,5 @@ en:
     benevity:
       title: "Benevity"
       text: "Benevity is a platform enabling corporate social responsibility and employee engagement. We receive a donation from your employer with every hour you volunteer with us."
+  services:
+    donations: https://codebar.enthuse.com/donate/#!/
