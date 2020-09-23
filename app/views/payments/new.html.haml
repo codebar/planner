@@ -1,0 +1,22 @@
+- content_for :page_footer do
+  :javascript
+    var stripePublishableKey = "#{Rails.configuration.stripe[:publishable_key]}"
+  = javascript_include_tag 'payments'
+  %script{ :src => 'https://checkout.stripe.com/checkout.js', :type => 'text/javascript', 'data-cfasync' => 'false' }
+
+.stripe.reverse
+  .row
+    .large-12.columns
+      %h2 Payments
+
+.stripe.reverse.payment-container
+  .row
+    .medium-6.columns
+      %p.lead By submitting a job to the codebar #{link_to 'job board', jobs_path} you are helping promote diversity in the tech industry so that more women, non-binary, LGBTQA and other minority groups will be able to get started with their tech career.
+    .medium-6.columns
+      = simple_form_for :payment, url: payments_path, method: :post do |f|
+        = f.input :name, placeholder: 'Name', required: false, html: { id: 'name' }
+        = f.input :amount, placeholder: '50.00', required: true, id: 'amount'
+        = f.submit :Confirm, class: 'button', id: 'donate'
+        .message
+
