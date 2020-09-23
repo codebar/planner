@@ -1,4 +1,6 @@
 class PaymentsController < ApplicationController
+  before_action :is_logged_in?
+
   def new; end
 
   def create
