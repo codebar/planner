@@ -42,6 +42,13 @@ RSpec.feature 'Jobs', type: :feature do
           expect(page).to have_content(job.title)
         end
 
+        it 'when company_website is present' do
+          job = Fabricate(:published_job)
+          visit job_path(job)
+
+          expect(page).to have_link(href: job.company_website)
+        end
+
         context 'location' do
           it 'when a job post is remote is set to remote' do
             job = Fabricate(:published_job, remote: true)

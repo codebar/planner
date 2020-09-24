@@ -16,7 +16,7 @@
       = @job.company
       -if @job.company_website.present?
         %br
-        =link_to(@job.company_website)
+        =link_to(@job.company_website, @job.company_website)
 
 
     .medium-3.columns
