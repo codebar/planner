@@ -10,6 +10,7 @@ Fabricator(:job) do
   submitted { false }
   expiry_date { Time.zone.today + 1.week }
   status :draft
+  company_website { Faker::Internet.url }
 end
 
 Fabricator(:published_job, from: :job) do
