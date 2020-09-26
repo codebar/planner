@@ -1,7 +1,7 @@
-=render partial: 'shared_mailers/header', locals: { title: 'Workshop Coach Invitation' }
+=render partial: 'shared_mailers/header', locals: { title: "Workshop #{@workshop.chapter.name} Coach Invitation" }
 %body{ bgcolor: '#FFFFFF' }
 
-  =render partial: 'shared_mailers/body_header', locals: { title: 'Workshop Coach Invitation' }
+  =render partial: 'shared_mailers/body_header', locals: { title: "Workshop #{@workshop.chapter.name} Coach Invitation" }
 
   %table{ class: 'body-wrap'}
     %tr
@@ -14,7 +14,7 @@
               %td
                 %h3 Hi #{@member.name},
                 %p.lead
-                  Invites for our next virtual workshop are now open and we are looking for coaches.
+                  Invites for our next virtual #{@workshop.chapter.name} workshop are now open and we are looking for coaches.
 
                 %p At the workshop you will be helping students remotely as they work their way through one of our tutorials or a personal project they need help on. Don't worry we'll only match you with someone who you'll be able to help.
 
