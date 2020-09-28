@@ -1,7 +1,7 @@
-= render partial: 'shared_mailers/header', locals: { title: 'Workshop Student Invitation' }
+= render partial: 'shared_mailers/header', locals: { title: "Workshop #{@workshop.chapter.name} Student Invitation" }
 %body{ bgcolor: '#FFFFFF' }
 
-  = render partial: 'shared_mailers/body_header', locals: { title: 'Workshop Student Invitation' }
+  = render partial: 'shared_mailers/body_header', locals: { title: "Workshop #{@workshop.chapter.name} Student Invitation" }
 
   %table{ class: 'body-wrap'}
     %tr
@@ -13,7 +13,7 @@
               %td
                 %h3 Hi #{@member.name},
                 %p.lead
-                  If you would like to attend the workshop please RSVP as we need to know who is coming to make sure we have enough coaches and food.
+                  If you would like to attend the #{@workshop.chapter.name} workshop please RSVP as we need to know who is coming to make sure we have enough coaches and food.
                 %p
                   In our workshops, you can work through any of our #{link_to 'tutorials', 'http://codebar.github.io/tutorials' } or get help and guidance on another technology for your personal project. We believe that everyone should be entitled to free learning and our community has #{ link_to 'a lot of devoted developers', full_url_for(coaches_url)} who help out by coaching.
                 %p You will also get the opportunity to meet other people interested in coding and collaborate with them.
