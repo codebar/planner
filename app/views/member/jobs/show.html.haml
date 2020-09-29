@@ -22,7 +22,7 @@
           = link_to "Submit", '#', class: 'button disabled round default'
         - else
           = link_to "Submit", member_job_submit_path(@job.id), class: 'button round default', method: :post
-          =link_to t('member.jobs.new.button.pay'), new_donation_path, class: 'button info'
+          =link_to t('member.jobs.new.button.pay'), new_payment_path, class: 'button info'
           %br
           %small= t('member.jobs.new.approval_info')
 
