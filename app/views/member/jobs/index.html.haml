@@ -1,32 +1,40 @@
 .job
-  .stripe
+  .row
+    .large-12.columns
+      %br
+      %ul.breadcrumbs
+        %li.current=link_to t('member.jobs.title'), "#"
+
+  - if @jobs.any?
     .row
-      .large-12.columns
-        %br
-        %ul.breadcrumbs
-          %li.current=link_to  t('member.jobs.title'), "#"
+      %table.large-12.columns
+        %thead
+          %tr
+            %th Job title
+            %th Company
+            %th Location
+            %th Published on
+            %th Expires on
+            %th Status
+            %th
+        %tbody
+          - @jobs.each do |job|
+            = render partial: 'member/jobs/job', locals: { job: job }
+    .row
+      .medium-6.columns.text-left
+        = page_entries_info(@jobs, model: 'job')
+      .medium-6.columns.text-right
+        = will_paginate(@jobs)
 
-    - if @jobs.any?
-      .row
-        %table.large-12.columns
-          %thead
-            %tr
-              %th Job title
-              %th Company
-              %th Location
-              %th Published on
-              %th Expires on
-              %th Status
-              %th
-          %tbody
-            - @jobs.each do |job|
-              = render partial: 'member/jobs/job', locals: { job: job }
-      .row
-        .medium-6.columns.text-left
-          = page_entries_info(@jobs, model: 'job')
-        .medium-6.columns.text-right
-          = will_paginate(@jobs)
+  - else
+    .row
+      .small-12.large-8.large-offset-2.columns
+        %blockquote
+          %p= t('member.jobs.index.testimonial')
+          %footer.clearfix
+            = image_tag('ok.png', size: "30", class: 'th radius left', alt: 'Bruno Girin')
+            %cite.left Bruno Girin, CTO, Imby
 
-    .row.mt2
-      .large-12.columns
-        =link_to('New job', new_member_job_path, class: 'button medium ')
+  .row.mt2
+    .small-12
+      =link_to('Post a job', new_member_job_path, class: 'button medium')

@@ -445,6 +445,7 @@ en:
       index:
         description: You have %{count} jobs listed
         none: You have not listed any jobs yet. Please consider submitting a paid internship, apprenticeship or junior developer role job to our community.
+        testimonial: Within 2 days of posting an ad on the codebar job board, we had dozens of high quality applications and we made an offer to a candidate within 2 weeks. There are a lot of talented interns and junior developers; posting on the codebar job board is a great way to reach them.
       pending:
         title: Your pending job posts
         description: You have %{count} job posts pending submission.
