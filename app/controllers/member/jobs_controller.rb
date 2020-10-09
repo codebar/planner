@@ -6,6 +6,11 @@ class Member::JobsController < ApplicationController
     @jobs = current_user.jobs
                         .owner_order
                         .paginate(page: page)
+    @students_count = Member.joins(subscriptions: { group: :chapter })
+                            .where(groups: { name: 'Students' },
+                                   chapters: { active: true })
+                            .distinct
+                            .count
   end
 
   def new
