@@ -148,7 +148,7 @@ GEM
     github-markdown (0.6.9)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
-    haml (5.1.2)
+    haml (5.2.0)
       temple (>= 0.8.0)
       tilt
     hashie (4.1.0)
