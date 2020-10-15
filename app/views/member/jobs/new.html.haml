@@ -9,36 +9,47 @@
             %span=t('member.jobs.new.title')
 
     .row
-      .large-12.columns
-        %p=t('member.jobs.new.description')
-
-    .row
-      .large-12.columns
+      .small-12.large-5.large-push-7.columns
         .panel
           %p=t('member.jobs.new.rules_intro')
           %ul.no-bullet
-            %li
-              %input#work-details{type: 'checkbox'}
-              %label{for: 'work-details'}= t('member.jobs.new.details')
-            %li
-              %input#roles{type: 'checkbox'}
-              %label{for: 'roles'}= t('member.jobs.new.suitability')
-            %li
-              %input#pay{type: 'checkbox'}
-              %label{for: 'pay'}= t('member.jobs.new.salary')
-            %li
-              %input#short{type: 'checkbox'}
-              %label{for: 'short'}= t('member.jobs.new.short')
-            %li
-              %input#payment{type: 'checkbox'}
-              %label{for: 'payment'}= t('member.jobs.new.pay.html', link: new_payment_path)
-
-    .row
-      .large-12.columns
+            %li.row.collapse
+              .small-1.columns.text-center
+                %input#roles{type: 'checkbox'}
+              .small-11.columns.mb1
+                %label{for: 'roles'}= t('member.jobs.new.suitability')
+            %li.row.collapse
+              .small-1.columns.text-center
+                %input#degree{type: 'checkbox'}
+              .small-11.columns.mb1
+                %label{for: 'degree'}= t('member.jobs.new.degree')
+            %li.row.collapse
+              .small-1.columns.text-center
+                %input#experience{type: 'checkbox'}
+              .small-11.columns.mb1
+                %label{for: 'experience'}= t('member.jobs.new.experience')
+            %li.row.collapse
+              .small-1.columns.text-center
+                %input#work-details{type: 'checkbox'}
+              .small-11.columns.mb1
+                %label{for: 'work-details'}= t('member.jobs.new.details')
+            %li.row.collapse
+              .small-1.columns.text-center
+                %input#short{type: 'checkbox'}
+              .small-11.columns.mb1
+                %label{for: 'short'}= t('member.jobs.new.short')
+            %li.row.collapse
+              .small-1.columns.text-center
+                %input#pay{type: 'checkbox'}
+              .small-11.columns.mb1
+                %label{for: 'pay'}= t('member.jobs.new.salary')
+            %li.row.collapse
+              .small-1.columns.text-center
+                %input#payment{type: 'checkbox'}
+              .small-11.columns
+                %label{for: 'payment'}= t('member.jobs.new.pay.html', link: new_payment_path)
         %p= raw t('member.jobs.new.newsletter')
-
-    %br
-    .row
-      .large-12.columns
+        %br
+      .small-12.large-7.large-pull-5.columns
         = simple_form_for @job, url: member_jobs_path, method: :post do |f|
           = render partial: 'form', locals: { f: f }
