@@ -352,15 +352,22 @@ de:
       title: My jobs
       preview: Preview
       index:
-        description: Du hast %{count} Jobs eingestellt
-        none: Du hast noch keine Jobs eingestellt
+        description: Our aim is to be the one stop shop for junior developer roles. All jobs featured on our job board must fall under the following three categories; paid internships, apprenticeships or junior developer roles. Additionally, jobs must not require previous experience or a degree and must be paid positions. Each job that is submitted will be approved by the codebar team before appearing on the job board.
+        testimonial: Within 2 days of posting an ad on the codebar job board, we had dozens of high quality applications and we made an offer to a candidate within 2 weeks. There are a lot of talented interns and junior developers; posting on the codebar job board is a great way to reach them.
+        title: Reach our community of %{students_count} junior developers
+        offer:
+          title: "For a flat fee of <strong>£50</strong> your post will be:"
+          job_board: "- shown on the job board for 30 days"
+          slack: "- promoted to our Slack community of 5500 members"
+          twitter: "- promoted to our 8600 Twitter followers"
       pending:
         title: Deine Jobeinträge in Prüfung
         description: Du hast %{count} Jobeinträge die geprüft werden.
         none: Du hast keine Jobeinträge in Prüfung.
       new:
         title: Job eintragen
-        description: "Our aim is to be the one stop shop for junior developer roles! All jobs featured on our jobs board fall under the following three categories; paid internships, apprenticeships or junior developer roles. We will not share jobs that are looking for senior, mid-weight, or junior developer with 2 years of industry experience. Each job that is submitted will be approved by the codebar team before appearing on the job board."
+        degree: There is no degree requirement
+        experience: There is no previous experience requirement
         rules_intro: "Bitte prüfe vor dem Abschicken, dass:"
         details: dein Eintrag detailliert die zu erledigende Arbeit darstellt
         suitability: "der Job passend für Menschen ist, die nach Praktika und Junior-Positionen suchen, die ihnen helfen ihre Karriere aufzubauen"
