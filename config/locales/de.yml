@@ -367,7 +367,7 @@ de:
         salary: der Job ein angemessenes Gehalt bietet
         short: "der Eintrag kurz und auf den Punkt ist"
         approval_info: "*Nach dem Abschicken wird der Job sichtbar sobald er geprüft und bestätigt wurde."
-        newsletter: "For an additional <strong>£250</strong> you can have your job listing featured in our newsletter and made available to an audience of over 10000 students and coaches. To find out more details and when our next newsletter is due send us an email at <a href='mailto:hello@codebar.io'>hello@codebar.io</a>."
+        newsletter: "For an additional <strong>£200</strong> you can have your job listing featured in our newsletter and made available to an audience of over 10000 students and coaches. To find out more details and when our next newsletter is due send us an email at <a href='mailto:hello@codebar.io'>hello@codebar.io</a>."
         pay:
           html: You have made the <a href="%{link}">required payment of £50</a>.
         button:

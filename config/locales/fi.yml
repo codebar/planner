@@ -360,14 +360,17 @@ fi:
         none: You have no pending job posts.
       new:
         title: List a job
+        degree: There is no degree requirement
         description: "Our aim is to be the one stop shop for junior developer roles! All jobs featured on our jobs board fall under the following three categories; paid internships, apprenticeships or junior developer roles. We will not share jobs that are looking for senior, mid-weight, or junior developer with 2 years of industry experience. Each job that is submitted will be approved by the codebar team before appearing on the job board."
+        details: The job description details the work that will have to be undertaken
+        experience: There is no previous experience requirement
         rules_intro: "Before posting make sure that:"
-        details: Your post details the work that will have to be undertaken
-        suitability: "It's suitable for people looking for Internships and Junior roles that will enable them to build up their career"
+        suitability: The position is suitable for people looking for internships, apprenticeships or junior level roles that will enable them to build up their career
         salary: The job pays an appropriate salary
-        short: "It's short and to the point"
+        short: The job description is short and to the point
         approval_info: "*Once submitted, a job will be visible once it has been reviewed and approved."
-        newsletter: "For an additional <strong>£250</strong> you can have your job listing featured in our newsletter and made available to an audience of over 10000 students and coaches. To find out more details and when our next newsletter is due send us an email at <a href='mailto:hello@codebar.io'>hello@codebar.io</a>."
+        optional_details_message: The information below is only required if you want this job post to be shared with Google Search UK.
+        newsletter: "For an additional <strong>£200</strong> you can have your job listing featured in our newsletter and made available to an audience of over 10000 students and coaches. To find out more details and when our next newsletter is due send us an email at <a href='mailto:hello@codebar.io'>hello@codebar.io</a>."
         pay:
           html: You have made the <a href="%{link}">required payment of £50</a>.
         button:
