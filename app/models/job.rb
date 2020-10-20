@@ -23,6 +23,13 @@ class Job < ActiveRecord::Base
     published!
   end
 
+  def unpublish!
+    update(approved: false,
+           approved_by_id: nil,
+           published_on: nil)
+    pending!
+  end
+
   def expired?
     expiry_date.past?
   end

@@ -65,4 +65,17 @@ RSpec.describe Job, type: :model do
       expect(job.status).to eq('published')
     end
   end
+
+  context "#unpublish!" do
+    it 'unpublishes a job' do
+      job = Fabricate(:published_job)
+
+      job.unpublish!
+
+      expect(job.approved_by).to be_nil
+      expect(job.published_on).to be_nil
+      expect(job.approved).to eq(false)
+      expect(job.status).to eq('pending')
+    end
+  end
 end
