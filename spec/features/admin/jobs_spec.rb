@@ -44,6 +44,17 @@ RSpec.feature 'Admin Jobs', type: :feature do
 
       expect(page).to have_content("Approved by #{job.reload.approved_by.full_name}")
     end
+
+    scenario 'can unpublish jobs' do
+      job = Fabricate(:published_job)
+      visit admin_jobs_path
+      expect(page).to have_content('Approved')
+
+      click_on 'Unpublish'
+
+      expect(page).to have_content('The job has been successfully unpublished')
+      expect(page).to have_content('Pending approval')
+    end
   end
 
   context 'an organiser' do
