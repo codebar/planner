@@ -25,6 +25,16 @@ class Admin::JobsController < SuperAdmin::ApplicationController
     redirect_to admin_jobs_path
   end
 
+  def unpublish
+    job = Job.published.find(params[:job_id])
+    authorize job
+
+    job.unpublish!
+    flash[:notice] = 'The job has been successfully unpublished'
+
+    redirect_to admin_jobs_path
+  end
+
   def page
     params.permit(:page)[:page]
   end

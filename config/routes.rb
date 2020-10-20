@@ -104,6 +104,7 @@ Planner::Application.routes.draw do
 
     resources :jobs, only: %i[index show] do
       get 'approve'
+      get 'unpublish'
     end
 
     resources :announcements, only: %i[new index create edit update]
