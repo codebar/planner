@@ -30,7 +30,7 @@ class Admin::JobsController < SuperAdmin::ApplicationController
     authorize job
 
     job.unpublish!
-    flash[:notice] = 'The job has been successfully unpublished'
+    flash[:notice] = I18n.t('admin.jobs.messages.unpublished')
 
     redirect_to admin_jobs_path
   end

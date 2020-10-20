@@ -571,8 +571,9 @@ en:
         approved_by_no_date: Approved by %{name}
       messages:
         approved: "The job has been approved and an email has been sent out to %{name} at %{email}"
-        cannot_approve: 'You cannot approve expired job listings'
-        confirm_approval: 'Are you sure this job listing meets all requirements and you want to approve it?'
+        cannot_approve: You cannot approve expired job listings
+        confirm_approval: Are you sure this job listing meets all requirements and you want to approve it?
+        unpublished: The job has been successfully unpublished
     members:
       unsubscribed: "You have unsubscribed %{member} from %{city}'s %{group} group"
       eligibility_confirmation_request: 'You have sent an eligibility confirmation request.'
