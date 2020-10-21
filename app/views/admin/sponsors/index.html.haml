@@ -1,29 +1,39 @@
-%section#banner
+%section#admin#banner
   .row
-    %h1 Sponsors
-    .row
-      %hr
-      .large-3.columns
-        NAME / ADDRESS
-      .large-4.columns
-        LOGO
-      .large-3.columns
-        CONTACT(S)
-
-  - @sponsors.each do |sponsor|
-    .row
-      %hr
-      .large-3.columns
-        = sponsor.name
-        %p= AddressPresenter.new(sponsor.address).to_html
-        %p
-          %em Sponsored #{sponsor.workshop_sponsors.count} workshops
-
-      .large-4.columns
-        = image_tag(sponsor.avatar.url, class: 'sponsor', alt: sponsor.name)
-      .large-3.columns
-        %p= SponsorPresenter.new(sponsor).contact_info
-
-      .large-1.columns
-        = link_to "Edit", edit_admin_sponsor_path(sponsor), class: 'button round small'
+    .large-12.columns
+      %ul.breadcrumbs
+        %li.current Sponsors
+  .row
+    .large-12.columns
+      .digg_pagination
+        .page_info
+          = page_entries_info(@sponsors, model: 'sponsor')
+        = will_paginate(@sponsors)
+    %table{width: '100%'}
+      %thead
+        %tr
+          %th
+            Name
+          %th
+            Level
+          %th
+            Chapter(s)
+          %th
+            Sponsorships
+      %tbody
+        - @decorated_sponsors.each do |sponsor|
+          %tr
+            %td
+              = link_to(sponsor.name, admin_sponsor_path(sponsor))
+            %td
+              =sponsor.level
+            %td
+              - sponsor.chapters.each do |chapter|
+                =link_to chapter.name, admin_chapter_path(chapter)
+            %td
+              = sponsor.sponsorships_count
+  .row
+    .large-12.columns
+      .digg_pagination
+        = will_paginate(@sponsors)
   %br

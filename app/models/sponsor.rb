@@ -1,4 +1,5 @@
 class Sponsor < ActiveRecord::Base
+  self.per_page = 20
   require 'uri'
 
   enum level: {

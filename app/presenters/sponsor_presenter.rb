@@ -1,6 +1,10 @@
 class SponsorPresenter < BasePresenter
   include Rails.application.routes.url_helpers
 
+  def self.decorate_collection(collection)
+    collection.map { |e| SponsorPresenter.new(e) }
+  end
+
   def address
     @address ||= model.address.present? ? AddressPresenter.new(model.address) : nil
   end
@@ -22,6 +26,10 @@ class SponsorPresenter < BasePresenter
       details = "#{c.name} #{c.surname} (#{h.mail_to(c.email)}) #{mailing_list_status(c)}"
       h.content_tag(:li, h.raw(details))
     end
+  end
+
+  def sponsorships_count
+    @sponsorships_count = workshops.count + sponsorships.count + meetings.count
   end
 
   private

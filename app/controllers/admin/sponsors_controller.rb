@@ -3,7 +3,8 @@ class Admin::SponsorsController < Admin::ApplicationController
 
   def index
     authorize Sponsor
-    @sponsors = Sponsor.all.order(:name)
+    @sponsors = Sponsor.all.reorder('lower(name)').paginate(page: page)
+    @decorated_sponsors = SponsorPresenter.decorate_collection(@sponsors)
   end
 
   def show
@@ -62,5 +63,9 @@ class Admin::SponsorsController < Admin::ApplicationController
   def set_sponsor
     @sponsor = Sponsor.find(params[:id])
     authorize @sponsor
+  end
+
+  def page
+    params.permit(:page)[:page]
   end
 end
