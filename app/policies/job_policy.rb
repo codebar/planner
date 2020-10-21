@@ -10,4 +10,8 @@ class JobPolicy < ApplicationPolicy
   def approve?
     user.has_role?(:admin) || Chapter.find_roles(:organiser, user).any?
   end
+
+  def unpublish?
+    user.has_role?(:admin)
+  end
 end
