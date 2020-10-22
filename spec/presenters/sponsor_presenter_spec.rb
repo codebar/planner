@@ -3,19 +3,30 @@ require 'spec_helper'
 RSpec.describe SponsorPresenter do
   let(:sponsor_presenter) { SponsorPresenter.new(sponsor) }
   let(:sponsor) { Fabricate(:sponsor, contacts: contacts, members: []) }
-  let(:contact) { Fabricate(:contact, name: 'Jean', surname: 'Doe', email: 'jean@doe.com') }
+  let(:contact) { Fabricate(:contact) }
   let(:contacts) { [contact] }
-  let(:member_contact_details) { ['<li>Jean Doe (<a href="mailto:jean@doe.com">jean@doe.com</a>) <i class="fa fa-bell"></i></li>'] }
 
-  context '#contact_info' do
-    it 'should correctly format both member and contact details' do
-      expect(sponsor_presenter.contact_info).to eq(member_contact_details.join)
+  context '#decorate_collection' do
+    it 'decorates a collection of Sponsors' do
+      expect(SponsorPresenter).to receive(:new).with(sponsor)
+
+      SponsorPresenter.decorate_collection([sponsor])
     end
   end
 
-  context '#member_contact_details' do
-    it 'should correctly format the contacts details' do
-      expect(sponsor_presenter.contacts_details).to eq(member_contact_details)
+  context '#address' do
+    it 'should decorate the sponsor address' do
+      expect(AddressPresenter).to receive(:new).with(sponsor.address)
+
+      sponsor_presenter.address
+    end
+  end
+
+  context '#contacts' do
+    it 'should decorate the sponsor contacts' do
+      expect(ContactPresenter).to receive(:decorate_collection).with(contacts)
+
+      sponsor_presenter.contacts
     end
   end
 

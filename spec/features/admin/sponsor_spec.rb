@@ -8,7 +8,7 @@ RSpec.feature 'Admin::Sponsors', type: :feature do
   end
 
   context 'Sponsor page' do
-    let(:sponsor) { Fabricate(:sponsor_full) }
+    let(:sponsor) { Fabricate(:sponsor_with_contacts) }
 
     before(:each) do
       visit admin_sponsor_path(sponsor)
@@ -19,7 +19,7 @@ RSpec.feature 'Admin::Sponsors', type: :feature do
       expect(page).to have_content(sponsor.description)
       expect(page).to have_link(sponsor.website)
       expect(page).to have_content(sponsor.level)
-      expect(page).to have_content(SponsorPresenter.new(sponsor).contact_info)
+      expect(page).to have_content(ContactPresenter.new(sponsor.contacts.first).full_name)
 
       expect(page).to have_content(sponsor.seats)
       expect(page).to have_content(sponsor.coach_spots)
@@ -87,7 +87,7 @@ RSpec.feature 'Admin::Sponsors', type: :feature do
       fill_in 'sponsor_contacts_attributes_0_email', with: 'jane@codebar.io'
 
       click_on 'Save changes'
-      expect(page).to have_content('Jane Doe (jane@codebar.io)')
+      expect(page).to have_link('Jane Doe', href: 'mailto:jane@codebar.io')
     end
   end
 

@@ -25,10 +25,13 @@
           %i.fa.fa-trophy
         %dd= @sponsor.level
 
-        %dt Contact details
+        %dt Contacts
         %dd
-          %ul.no-bullet
-            = @sponsor.contact_info
+          %ul.no-bullet#contacts
+            - @sponsor.contacts.each do |contact|
+              %li
+                = mail_to(contact.email, contact.full_name)
+                %i.fa{ class: contact.mailing_list_subscription_class }
 
     .medium-6.columns
 

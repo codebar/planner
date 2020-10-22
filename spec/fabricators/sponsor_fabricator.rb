@@ -33,7 +33,7 @@ Fabricator(:sponsor_no_contact_details, from: :sponsor) do
   contact_surname { nil }
 end
 
-Fabricator(:sponsor_with_contacts, from: :sponsor) do
+Fabricator(:sponsor_with_contacts, from: :sponsor_full) do
   after_build do |sponsor, transients|
     Fabricate(:contact,
               sponsor: sponsor)

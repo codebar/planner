@@ -89,7 +89,9 @@ RSpec.feature 'Managing sponsors', type: :feature do
 
         click_on 'Save changes'
 
-        expect(page).to have_content 'Jane Doe (jane@codebar.io)'
+        within '#contacts' do
+          expect(page).to have_content 'Jane Doe'
+        end
       end
     end
   end
