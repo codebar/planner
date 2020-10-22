@@ -31,3 +31,6 @@ Style/ClassAndModuleChildren:
 
 Rails/Date:
   Enabled: true
+
+Metrics/BlockLength:
+  ExcludedMethods: ['namespace']
