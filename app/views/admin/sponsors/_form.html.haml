@@ -33,10 +33,6 @@
             .links
               = link_to_add_association 'Add contact', f, :contacts, class: 'button tiny'
 
-            %p Members associated with sponsor
-            = f.collection_select :member_ids, Member.all, :id, :full_name,
-              { selected: @sponsor.members.map(&:id), prompt: 'Select a member' }, { multiple: true }
-
     .large-6.columns
       .panel.callout
         %p Only required for hosts

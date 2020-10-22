@@ -10,13 +10,7 @@ class SponsorPresenter < BasePresenter
   end
 
   def contact_info
-    [member_contacts_details, contacts_details].flatten.compact.join.html_safe
-  end
-
-  def member_contacts_details
-    model.members.map do |member|
-      h.content_tag(:li, h.link_to(member.full_name, admin_member_path(member.id)))
-    end
+    h.safe_join(contacts_details.flatten.compact)
   end
 
   def contacts_details

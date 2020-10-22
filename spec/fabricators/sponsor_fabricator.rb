@@ -20,6 +20,13 @@ Fabricator(:sponsor_full, from: :sponsor) do
   level { 'gold' }
 end
 
+Fabricator(:sponsor_with_member_contacts, from: :sponsor) do
+  after_build do |sponsor, transients|
+    Fabricate.times(3, :member_contact,
+                    sponsor: sponsor)
+  end
+end
+
 Fabricator(:sponsor_no_contact_details, from: :sponsor) do
   email { nil }
   contact_first_name { nil }
