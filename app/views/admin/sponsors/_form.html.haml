@@ -29,7 +29,9 @@
             %strong Contact Details
             %p Required so that all organisers can get in touch with sponsor when required. Please do not use your personal or chapter details.
             = f.simple_fields_for :contacts do |c|
-              = render 'contact_fields', form: c
+              = render 'contact_fields', f: c
+            .links
+              = link_to_add_association 'Add contact', f, :contacts, class: 'button tiny'
 
             %p Members associated with sponsor
             = f.collection_select :member_ids, Member.all, :id, :full_name,

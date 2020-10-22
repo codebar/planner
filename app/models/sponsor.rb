@@ -26,7 +26,7 @@ class Sponsor < ActiveRecord::Base
            inverse_of: :sponsor
   has_many :workshops, through: :workshop_sponsors
 
-  accepts_nested_attributes_for :contacts, reject_if: :invalid_contact?
+  accepts_nested_attributes_for :contacts, reject_if: :invalid_contact?, allow_destroy: true
   accepts_nested_attributes_for :address
 
   validates :level, inclusion: { in: Sponsor.levels.keys }

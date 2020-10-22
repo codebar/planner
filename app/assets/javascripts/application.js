@@ -24,6 +24,7 @@
 //= require gosquared
 //= require subscriptions-toggle
 //= require invitations
+//= require cocoon
 
 $(function(){
   $(document).foundation();

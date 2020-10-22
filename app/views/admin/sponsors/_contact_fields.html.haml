@@ -1,5 +1,7 @@
-%b Contact
-= form.input :name
-= form.input :surname
-= form.input :email
-= form.input :mailing_list_consent, as: :boolean
+.nested-fields.panel.callout
+  .text-right
+    = link_to_remove_association 'Delete', f
+  = f.input :name
+  = f.input :surname
+  = f.input :email
+  = f.input :mailing_list_consent, as: :boolean

@@ -75,6 +75,22 @@ RSpec.feature 'Admin::Sponsors', type: :feature do
     end
   end
 
+  context 'Editing a sponsor' do
+    let(:sponsor) { Fabricate(:sponsor_full) }
+
+    it 'can set contact information' do
+      visit edit_admin_sponsor_path(sponsor)
+
+      click_on 'Add contact'
+      fill_in 'sponsor_contacts_attributes_0_name', with: 'Jane'
+      fill_in 'sponsor_contacts_attributes_0_surname', with: 'Doe'
+      fill_in 'sponsor_contacts_attributes_0_email', with: 'jane@codebar.io'
+
+      click_on 'Save changes'
+      expect(page).to have_content('Jane Doe (jane@codebar.io)')
+    end
+  end
+
   context 'Sponsor contacts page' do
     let!(:sponsor) { Fabricate(:sponsor_with_contacts) }
     let!(:sponsor_no_contacts) { Fabricate(:sponsor) }
