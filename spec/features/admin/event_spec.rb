@@ -32,7 +32,7 @@ RSpec.feature 'Event creation', type: :feature do
         expect(page).to have_content('Event successfully created')
 
         expect(page).to have_content('A test event')
-        expect(page).to have_content("#{I18n.l(date, format: :humanised)} | 16:00 - 18:00 BST (GMT+01:00)")
+        expect(page).to have_content("#{I18n.l(date, format: :humanised)} | 16:00 - 18:00 GMT (GMT+00:00)")
         expect(page).to have_content('A test event description')
         expect(page).to have_content('25 student spots, 19 coach spots')
         expect(find('#schedule', visible: false).text).to eq('9:00 Sign up & breakfast 9:30 kick off')

@@ -56,7 +56,7 @@ RSpec.feature 'An admin managing workshops', type: :feature do
         click_on 'Save'
 
         expect(page).to have_content('Workshop successfully created')
-        expect(page).to have_content '11:30 - 12:45 BST (GMT+01:00)'
+        expect(page).to have_content '11:30 - 12:45 GMT (GMT+00:00)'
         expect(page).to have_content 'Invite'
       end
 
@@ -116,7 +116,7 @@ RSpec.feature 'An admin managing workshops', type: :feature do
         click_on 'Save'
 
         expect(page).to have_content('Workshop successfully created')
-        expect(page).to have_content '18:30 - 20:45 CEST (GMT+02:00)'
+        expect(page).to have_content '18:30 - 20:45 CET (GMT+01:00)'
       end
     end
 
