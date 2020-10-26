@@ -12,6 +12,6 @@ class SponsorPresenter < BasePresenter
   end
 
   def sponsorships_count
-    @sponsorships_count = workshops.count + sponsorships.count + meetings.count
+    @sponsorships_count = workshops.count + events.count + meetings.count
   end
 end

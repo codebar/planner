@@ -82,7 +82,7 @@
       %dl
         %dt Sponsorships
         %dd
-          - if @sponsor.workshops.none? && @sponsor.sponsorships.none? && @sponsor.meetings.none?
+          - if @sponsor.workshops.none? && @sponsor.events.none? && @sponsor.meetings.none?
             No sponsorships
           - else
             .row
@@ -95,11 +95,11 @@
                       = link_to admin_workshop_path(ws.workshop) do
                         = I18n.l(ws.workshop.date_and_time, format: :default_date)
                         #{ws.workshop.chapter.name} #{ws.workshop.host ? '(host)' : ''}
-            - if @sponsor.sponsorships.any?
+            - if @sponsor.event_sponsorships.any?
               .large-4.columns
                 %strong Events
                 %ul.no-bullet
-                  - @sponsor.sponsorships.each do |sponsorship|
+                  - @sponsor.event_sponsorships.each do |sponsorship|
                     %li
                       = link_to admin_event_path(sponsorship.event) do
                         = I18n.l(sponsorship.event.date_and_time, format: :default_date)
