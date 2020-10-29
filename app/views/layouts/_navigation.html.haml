@@ -1,47 +1,32 @@
-.contain-to-grid.sticky
-  %nav.top-bar{ 'data-topbar': '' }
-    %ul.title-area
-      %li.name
-        =link_to root_path do
-          .brand
-            = image_tag("logo.png", alt: "codebar logo", size: "148x40")
-      %li.toggle-topbar
-        = link_to '#' do
-          .button
-            %span.fa.fa-bars{"aria-hidden" => "true"}
-            %span Menu
-
-    %section.top-bar-section
-      %ul.right
-        %li
-          = link_to 'https://medium.com/@codebar' do
-            %span Blog
-        %li{class: active_link_class(events_path)}
-          = link_to events_path do
-            %span Events
-        %li
-          = link_to 'http://tutorials.codebar.io' do
-            %span Tutorials
-        %li{class: active_link_class(coaches_path)}
-          = link_to coaches_path do
-            %span Coaches
-        %li{class: active_link_class(sponsors_path)}
-          = link_to sponsors_path do
-            %span Sponsors
-        %li{class: active_link_class(jobs_path)}
-          = link_to jobs_path do
-            %span Jobs
-        %li{class: active_link_class(new_donation_path)}
-          = link_to new_donation_path do
-            %span.highlight
-              Donate
+%nav.navbar.navbar-expand-lg.navbar-light.bg-white.fixed-top.pt-3.pb-3
+  %div.container
+    =link_to root_path, class: "border-0" do
+      = image_tag("logo.png", alt: "codebar logo", size: "148x40")
+    %button.navbar-toggler{"type": "button", "data-toggle": "collapse", "data-target": "#navbarSupportedContent", "aria-controls": "navbarSupportedContent", "aria-expanded": "false", "aria-label": "Toggle navigation"}
+      %span.navbar-toggler-icon
+    %div#navbarSupportedContent.collapse.navbar-collapse.justify-content-end
+      %ul.navbar-nav
+        %li.nav-item
+          = link_to "https://medium.com/@codebar", class: "nav-link border-0" do
+            Blogs
+        %li.nav-item
+          = link_to "http://tutorials.codebar.io", class: "nav-link border-0" do
+            Tutorials
+        %li.nav-item
+          = link_to coaches_path, class: "nav-link border-0" do
+            Coaches
+        %li.nav-item
+          = link_to jobs_path, class: "nav-link border-0" do
+            Jobs
+        %li.nav-item
+          = link_to new_donation_path, class: "nav-link border-0" do
+            Donate
         - if !logged_in?
           %li
-            = link_to '/auth/github', method: :post do
-              %span
-                Sign in
+          = link_to "/auth/github", class: "nav-link border-0" do
+            Sign in
         - else
-          %li
-            = link_to '#', class: 'left-off-canvas-toggle', id: 'profile' do
-              .fa.fa-navicon
+          %li.nav-item.dropdown
+            = link_to "#", {"role": "button", "aria-expanded": "false", "data-toggle": "dropdown", class: "nav-link border-0 dropdown-toggle", id: "navbarDropdown"} do
               Menu
+              = render 'layouts/aside'

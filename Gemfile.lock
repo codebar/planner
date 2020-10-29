@@ -461,15 +461,10 @@ DEPENDENCIES
   simplecov
   simplecov-lcov
   skylight
+  sprockets-rails (= 3.2.1)
   stripe
   turbolinks
     tzinfo-data
   uglifier (>= 1.3.0)
   webdrivers
   will_paginate
-
-RUBY VERSION
-   ruby 2.4.2p198
-
-BUNDLED WITH
-   1.17.1
