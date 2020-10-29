@@ -20,15 +20,11 @@
 
     = csrf_meta_tags
 
-  %body.no-js{ 'class': "#{params[:controller]}-#{params[:action]}"}
-    .off-canvas-wrap{ 'data-offcanvas': true }
-      .inner-wrap
-        #top
-          = render partial: 'layouts/navigation'
-          = render partial: 'layouts/messages'
-          = render partial: 'layouts/aside' if logged_in?
-        = yield
-        = render partial: 'layouts/footer'
-        %a.exit-off-canvas
+  %body.no-js{ 'class': "#{params[:controller]}-#{params[:action]}", "data-no-jquery": "true"}
+    #top
+      = render partial: 'layouts/navigation'
+      = render partial: 'layouts/messages'
+    = yield
+    = render partial: 'layouts/footer'
 
     = content_for :page_footer
