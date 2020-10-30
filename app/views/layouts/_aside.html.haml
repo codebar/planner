@@ -1,23 +1,38 @@
-%aside.left-off-canvas-menu
-  %ul.off-canvas-list
-    - if current_user.is_admin?
-      = render 'layouts/admin_menu'
-    - elsif current_user.is_organiser? || current_user.is_monthlies_organiser?
-      = render 'layouts/organiser_menu'
-    %li
-      %label Portal
-      %li= link_to 'My Jobs',  member_jobs_path
-      %li= link_to 'List a job',  new_member_job_path
-    %li
-      %label Account
-    %li= link_to 'My Profile', profile_path
-    %li= link_to 'My Dashboard', dashboard_path
-    %li= link_to 'Invitations', invitations_path
-    %li= link_to 'Manage subscriptions', subscriptions_path
-    %li= link_to 'Update your details', edit_member_path
-    %li
-      = link_to logout_path do
-        Sign out
-        %i.fa-stack.fa-lg
-          %i.fa.fa-stack-2x
-          %i.fa.fa-sign-out.fa-stack-1x
+%ul.dropdown-menu
+  - if current_user.is_admin?
+    = render 'layouts/admin_menu'
+  - elsif current_user.is_organiser? || current_user.is_monthlies_organiser?
+    = render 'layouts/organiser_menu'
+  %li
+    %hr.dropdown-divider
+  %li
+    %label.pl-3 Portal
+  %li
+    %hr.dropdown-divider
+  %li
+    = link_to member_jobs_path, class: "dropdown-item" do
+      My Jobs
+  %li
+    = link_to new_member_job_path, class: "dropdown-item" do
+      List a job
+  %li
+    %hr.dropdown-divider
+  %li
+    %label.pl-3 Account
+  %li
+    %hr.dropdown-divider
+  %li
+    = link_to dashboard_path, class: "dropdown-item" do
+      My Dashboard
+  %li
+    = link_to invitations_path, class: "dropdown-item" do
+      Invitations
+  %li
+    = link_to subscriptions_path, class: "dropdown-item" do
+      Manage subscriptions
+  %li
+    = link_to edit_member_path, class: "dropdown-item" do
+      Update your details
+  %li
+    = link_to logout_path, class: "dropdown-item" do
+      Sign out
