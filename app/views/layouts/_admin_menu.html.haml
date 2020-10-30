@@ -5,32 +5,32 @@
 %li
   %hr.dropdown-divider
 %li
-  = link_to admin_root_path class: "dropdown-item" do
+  = link_to admin_root_path, class: "dropdown-item" do
     Admin Dashboard
 %li
-  = link_to new_admin_announcement_path class: "dropdown-item" do
+  = link_to new_admin_announcement_path, class: "dropdown-item" do
     New Announcement
 - if current_user.is_admin_or_organiser?
   %li
-    = link_to new_admin_workshop_path class: "dropdown-item" do
+    = link_to new_admin_workshop_path, class: "dropdown-item" do
       New workshop
   %li
-    = link_to new_admin_sponsor_path class: "dropdown-item" do
+    = link_to new_admin_sponsor_path, class: "dropdown-item" do
       New sponsor
 %li
-  = link_to new_admin_event_path class: "dropdown-item" do
+  = link_to new_admin_event_path, class: "dropdown-item" do
     New event
 %li
-  = link_to new_admin_meeting_path class: "dropdown-item" do
+  = link_to new_admin_meeting_path, class: "dropdown-item" do
     New monthly
 %li
-  = link_to new_admin_chapter_path class: "dropdown-item" do
+  = link_to new_admin_chapter_path, class: "dropdown-item" do
     New chapter
 %li
-  = link_to new_admin_group_path class: "dropdown-item" do
+  = link_to new_admin_group_path, class: "dropdown-item" do
     New group
 %li
-  = link_to admin_jobs_path class: "dropdown-item" do
+  = link_to admin_jobs_path, class: "dropdown-item" do
     Review jobs (#{jobs_pending_approval})
 - if current_user.has_role?(:organiser, :any)
   %li
@@ -40,7 +40,7 @@
   %li
     %hr.dropdown-divider
   %li
-    = link_to new_admin_chapter_path class: "dropdown-item" do
+    = link_to new_admin_chapter_path, class: "dropdown-item" do
       New chapter
   - current_user.organised_chapters.each do |chapter|
     %li= link_to chapter.name, admin_chapter_path(chapter)
