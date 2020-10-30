@@ -1,25 +1,33 @@
 .row
-  .columns.small-12
+  .col
     %h2= t("donation_platforms.title")
 
-.row.flex-grid
-  .columns.small-12.medium-6.large-3.flex-item
-    .card.mt1
-      =image_tag("logo.png", style: "max-height: 50px;", class: "mb1", alt: "codebar logo")
-      %h3.h6=link_to(t("donation_platforms.donation_form.title"), new_donation_path)
-      %p= t("donation_platforms.donation_form.text")
-  .columns.small-12.medium-6.large-3.flex-item
-    .card.mt1
-      =image_tag("amazon-smile-logo.png", style: "max-height: 50px;", class: "mb1", alt: "Amazon Smile logo")
-      %h3.h6=link_to(t("donation_platforms.amazon_smile.title"), "https://smile.amazon.co.uk")
-      %p= t("donation_platforms.amazon_smile.text")
-  .columns.small-12.medium-6.large-3.flex-item
-    .card.mt1
-      =image_tag("open-collective-logo.png", style: "max-height: 50px;", class: "mb1", alt: "Open Collective logo")
-      %h3.h6=link_to(t("donation_platforms.open_collective.title"), "https://opencollective.com/")
-      %p= t("donation_platforms.open_collective.text")
-  .columns.small-12.medium-6.large-3.flex-item
-    .card.mt1
-      =image_tag("benevity-logo.png", style: "max-height: 50px;", class: "mb1", alt: "Benevity logo")
-      %h3.h6=link_to(t("donation_platforms.benevity.title"), "https://www.benevity.com/")
-      %p= t("donation_platforms.benevity.text")
+.row.d-flex
+  .d-flex.col-sm-12.col-md-6.col-lg-3
+    .card.mt-1.border-0
+      %div.card-header.bg-white.border-0.pb-0.pt-4
+        =image_tag("logo.png", style: "max-height: 50px;", alt: "codebar logo")
+      %div.card-body
+        %h3.h6=link_to(t("donation_platforms.donation_form.title"), new_donation_path)
+        %p= t("donation_platforms.donation_form.text")
+  .d-flex.col-sm-12.col-md-6.col-lg-3
+    .card.mt-1.border-0
+      %div.card-header.bg-white.border-0.pb-0.pt-4
+        =image_tag("amazon-smile-logo.png", style: "max-height: 50px;", alt: "Amazon Smile logo")
+      %div.card-body
+        %h3.h6=link_to(t("donation_platforms.amazon_smile.title"), "https://smile.amazon.co.uk")
+        %p= t("donation_platforms.amazon_smile.text")
+  .d-flex.col-sm-12.col-md-6.col-lg-3
+    .card.mt-1.border-0
+      %div.card-header.bg-white.border-0.pb-0.pt-4
+        =image_tag("open-collective-logo.png", style: "max-height: 50px;", alt: "Open Collective logo")
+      %div.card-body
+        %h3.h6=link_to(t("donation_platforms.open_collective.title"), "https://opencollective.com/")
+        %p= t("donation_platforms.open_collective.text")
+  .d-flex.col-sm-12.col-md-6.col-lg-3
+    .card.mt-1.border-0
+      %div.card-header.bg-white.border-0.pb-0.pt-4
+        =image_tag("benevity-logo.png", style: "max-height: 50px;", alt: "Benevity logo")
+      %div.card-body
+        %h3.h6=link_to(t("donation_platforms.benevity.title"), "https://www.benevity.com/")
+        %p= t("donation_platforms.benevity.text")
