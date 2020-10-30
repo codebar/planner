@@ -1,16 +1,20 @@
 - title t('homepage.title')
 
-%section.hero.opaque
-  .row
-    .medium-offset-1.medium-6.columns
-      %p.lead
-        = raw t('homepage.intro')
+%div.homepage-hero.d-flex.align-items-center
+  %row.container.d-flex
+    %div.col-md-4.offset-md-1.p-3.text
+      %p= raw t('homepage.intro')
 
-%section.stripe.reverse
-  .row
-    .medium-offset-1.medium-10.columns
-      %p.lead
-        = t('homepage.explanation')
+%row
+  %div.col-md-4.align-self-center
+    %p= raw t('homepage.explanation')
+
+-# %section.stripe.reverse
+-#   .row
+-#     .medium-offset-1.medium-10.columns
+-#       %p.lead
+-#         = t('homepage.explanation')
+
 
 %section.stripe.reverse
   .row
