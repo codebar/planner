@@ -1,18 +1,46 @@
 %li
-  %label Admin Menu
-%li= link_to 'Admin Dashboard', admin_root_path
-%li= link_to 'View Feedback', admin_feedback_index_path
-%li= link_to 'New Announcement', new_admin_announcement_path
+  %hr.dropdown-divider
+%li
+  %label.pl-3 Admin Menu
+%li
+  %hr.dropdown-divider
+%li
+  = link_to admin_root_path class: "dropdown-item" do
+    Admin Dashboard
+%li
+  = link_to new_admin_announcement_path class: "dropdown-item" do
+    New Announcement
 - if current_user.is_admin_or_organiser?
-  %li= link_to 'New workshop', new_admin_workshop_path
-  %li= link_to 'New sponsor', new_admin_sponsor_path
-%li= link_to 'New event', new_admin_event_path
-%li= link_to 'New monthly', new_admin_meeting_path
-%li= link_to 'New chapter', new_admin_chapter_path
-%li= link_to 'New group', new_admin_group_path
-%li= link_to "Review jobs (#{jobs_pending_approval})", admin_jobs_path
+  %li
+    = link_to new_admin_workshop_path class: "dropdown-item" do
+      New workshop
+  %li
+    = link_to new_admin_sponsor_path class: "dropdown-item" do
+      New sponsor
+%li
+  = link_to new_admin_event_path class: "dropdown-item" do
+    New event
+%li
+  = link_to new_admin_meeting_path class: "dropdown-item" do
+    New monthly
+%li
+  = link_to new_admin_chapter_path class: "dropdown-item" do
+    New chapter
+%li
+  = link_to new_admin_group_path class: "dropdown-item" do
+    New group
+%li
+  = link_to admin_jobs_path class: "dropdown-item" do
+    Review jobs (#{jobs_pending_approval})
 - if current_user.has_role?(:organiser, :any)
   %li
-    %label My Chapters
+    %hr.dropdown-divider
+  %li
+    %label.pl-3 My Chapters
+  %li
+    %hr.dropdown-divider
+  %li
+    = link_to new_admin_chapter_path class: "dropdown-item" do
+      New chapter
   - current_user.organised_chapters.each do |chapter|
     %li= link_to chapter.name, admin_chapter_path(chapter)
