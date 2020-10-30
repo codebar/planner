@@ -1,17 +1,16 @@
 %footer.main-footer
-  .row
-    .large-3.columns
-      %p.copyright
+  .row.pt-5
+    .col-sm-12.col-md-6.col-lg-3
+      %p
         &#169; #{Date.today.year} codebar
-
 
       %p.contact
         =t("footer.email_us")
         -# encoded email address
         <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#104;&#101;&#108;&#108;&#111;&#64;&#99;&#111;&#100;&#101;&#98;&#97;&#114;&#46;&#105;&#111;&#63;&#83;&#117;&#98;&#106;&#101;&#99;&#116;&#61;&#72;&#101;&#108;&#108;&#111;&#32;&#99;&#111;&#100;&#101;&#98;&#97;&#114;">&#104;&#101;&#108;&#108;&#111;&#64;&#99;&#111;&#100;&#101;&#98;&#97;&#114;&#46;&#105;&#111;</a>
 
-    .large-3.columns
-      %ul.no-bullet
+    .col-sm-12.col-md-6.col-lg-3
+      %ul.list-unstyled.ml-0
         %li= link_to t("navigation.code_of_conduct"), code_of_conduct_path
         %li= link_to t("navigation.coach_guide"), teaching_guide_path
         %li= link_to t("navigation.student_guide"), student_guide_path
@@ -19,8 +18,8 @@
         %li= link_to t("navigation.becoming_sponsor"), "http://manual.codebar.io/becoming-a-sponsor"
         %li= link_to t("navigation.faq"), faq_path
 
-    .large-3.columns
-      %ul.no-bullet
+    .col-sm-12.col-md-6.col-lg-3
+      %ul.list-unstyled.ml-0
         %li= link_to t("navigation.blog"), "https://medium.com/the-codelog"
         %li= link_to t("navigation.codebar_stories"), "https://medium.com/codebar-stories"
         %li= link_to t("navigation.coaches"), coaches_path
@@ -29,14 +28,13 @@
         %li= link_to t("navigation.jobs"), jobs_path
         %li.active= link_to t("navigation.donate"), new_donation_path
 
-    .large-3.columns
+    .col-sm-12.col-md-6.col-lg-3
       = render partial: 'shared/social_media'
 
-  .row
-    .large-12.columns
-
-      %ul.inline-list.registration
-        %li
+  .row.pb-4
+    .col
+      %ul.list-inline.registration.m-0.p-0
+        %li.list-inline-item
           Registered UK and Wales charity no. 1187776
-        %li= link_to t("navigation.cookie-policy"), cookie_policy_path
-        %li= link_to t("navigation.privacy-policy"), privacy_policy_path
+        %li.list-inline-item= link_to t("navigation.cookie-policy"), cookie_policy_path
+        %li.list-inline-item= link_to t("navigation.privacy-policy"), privacy_policy_path

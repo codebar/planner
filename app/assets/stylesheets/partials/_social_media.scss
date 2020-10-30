@@ -1,33 +1,8 @@
-li.slack a {
-  color: #3eb991;
-  color: rgba(62, 185, 145, 0.8);
-
+.social-svg {
+  width: 30px;
+  height: 30px;
   &:hover {
-    color: rgba(62, 185, 145, 1);
-  }
-}
-
-li.facebook a {
-  color: #5279cc;
-  color: rgba(82, 121, 204, 0.8);
-
-  &:hover {
-    color: rgba(82, 121, 204, 1);
-  }
-}
-
-li.twitter a {
-  color: rgba(85, 172, 238, 0.8);
-
-  &:hover {
-    color: rgba(85, 172, 238, 1);
-  }
-}
-
-li.github a {
-  color: rgba(51, 51, 51, 0.8);
-
-  &:hover {
-    color: rgba(51, 51, 51, 1);
+    transform: rotate(-90deg);
+    transition: transform 0.75s;
   }
 }
