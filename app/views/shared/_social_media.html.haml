@@ -1,25 +1,13 @@
-%ul.inline-list.right.social-media
-  %li.slack
+%ul.list-inline.ml-0.social-media
+  %li.list-inline-item
     = link_to 'https://slack.codebar.io' do
-      %span.fa-stack.fa-lg{"aria-hidden" => "true"}
-        %i.fa.fa-square.fa-stack-2x
-        %i.fa.fa-slack.fa-stack-1x.fa-inverse
-      %span.sr-only codebar Slack
-  %li.github
+      =image_tag("svgs/slack.svg", style: "max-height: 50px;", class: "social-svg", alt: "Slack logo")
+  %li.list-inline-item
     = link_to 'https://github.com/codebar' do
-      %span.fa-stack.fa-lg{"aria-hidden" => "true"}
-        %i.fa.fa-square.fa-stack-2x
-        %i.fa.fa-github.fa-stack-1x.fa-inverse
-      %span.sr-only codebar on Github
-  %li.twitter
-    = link_to 'https://twitter.com/codebar' do
-      %span.fa-stack.fa-lg{"aria-hidden" => "true"}
-        %i.fa.fa-square.fa-stack-2x
-        %i.fa.fa-twitter.fa-stack-1x.fa-inverse
-      %span.sr-only codebar on Twitter
-  %li.facebook
+      =image_tag("svgs/github.svg", style: "max-height: 50px;", class: "social-svg", alt: "GitHub logo")
+  %li.list-inline-item
     = link_to 'https://facebook.com/codebarHQ' do
-      %span.fa-stack.fa-lg{"aria-hidden" => "true"}
-        %i.fa.fa-square.fa-stack-2x
-        %i.fa.fa-facebook.fa-stack-1x.fa-inverse
-      %span.sr-only codebar on Facebook
+      =image_tag("svgs/facebook.svg", style: "max-height: 50px;", class: "social-svg", alt: "Facebook logo")
+  %li.list-inline-item
+    = link_to 'https://twitter.com/codebar' do
+      =image_tag("svgs/twitter.svg", style: "max-height: 50px;", class: "social-svg", alt: "Twitter logo")
