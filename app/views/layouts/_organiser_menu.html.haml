@@ -1,17 +1,21 @@
 %li
-  %label Admin Menu
+  %hr.dropdown-divider
+%li
+  %label.pl-3 Admin Menu
+%li
+  %hr.dropdown-dividers
 - if current_user.is_admin_or_organiser?
   %li
-    = link_to new_admin_workshop_path class: "dropdown-item" do
+    = link_to new_admin_workshop_path, class: "dropdown-item" do
       New workshop
   %li
-    = link_to new_admin_sponsor_path class: "dropdown-item" do
+    = link_to new_admin_sponsor_path, class: "dropdown-item" do
       New sponsor
 
 - if current_user.is_monthlies_organiser?
   %li
-  = link_to new_admin_meeting_path class: "dropdown-item" do
-    New monthly
+    = link_to new_admin_meeting_path, class: "dropdown-item" do
+      New monthly
 
 -if current_user.organised_chapters.any?
   %li
