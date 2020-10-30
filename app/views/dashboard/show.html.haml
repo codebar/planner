@@ -5,20 +5,14 @@
     %div.col-md-4.offset-md-1.p-3.text
       %p= raw t('homepage.intro')
 
-%row
-  %div.col-md-4.align-self-center
-    %p= raw t('homepage.explanation')
+.container-fluid.stripe.reverse
+  %row
+    %div.col-md-6.mx-auto
+      %p.lead= raw t('homepage.explanation')
 
--# %section.stripe.reverse
--#   .row
--#     .medium-offset-1.medium-10.columns
--#       %p.lead
--#         = t('homepage.explanation')
-
-
-%section.stripe.reverse
+.container-fluid.stripe.reverse
   .row
-    .large-4.columns
+    .col-md-4
       .text-center
         %h4
           = t('homepage.participate.students_title')
@@ -26,10 +20,10 @@
         = t('homepage.participate.students_explanation_p1')
       %p
         = t('homepage.participate.students_explanation_p2')
-      .text-center
-        = link_to t('homepage.participate.students_button'), new_member_path, class: 'button'
+      .text-center.mt-5.mb-5.mb-md-0
+        = link_to t('homepage.participate.students_button'), new_member_path, class: 'btn btn-primary'
 
-    .large-4.columns
+    .col-md-4
       .text-center
         %h4
           = t('homepage.participate.coaches_title')
@@ -37,10 +31,10 @@
         = raw t('homepage.participate.coaches_explanation_p1')
       %p
         = t('homepage.participate.coaches_explanation_p2')
-      .text-center
-        = link_to t('homepage.participate.coaches_button'), new_member_path, class: 'button'
+      .text-center.mt-5.mb-5.mb-md-0
+        = link_to t('homepage.participate.coaches_button'), new_member_path, class: 'btn btn-primary'
 
-    .large-4.columns
+    .col-md-4
       .text-center
         %h4
           = t('homepage.participate.workshop_title')
@@ -48,15 +42,15 @@
         = t('homepage.participate.workshop_explanation_p1')
       %p
         = t('homepage.participate.workshop_explanation_p2')
-      .text-center
-        = mail_to "hello@codebar.io", t('homepage.participate.workshop_button'), subject: t('homepage.participate.workshop_email_subject'), class: 'button'
+      .text-center.mt-5.mb-5.mb-md-0
+        = mail_to "hello@codebar.io", t('homepage.participate.workshop_button'), subject: t('homepage.participate.workshop_email_subject'), class: 'btn btn-primary'
 
-%section.stripe.reverse
+.container-fluid.stripe.reverse
   = render partial: 'shared/donation_platforms'
 
-%section.stripe.reverse
+.container-fluid.stripe.reverse
   .row
-    .large-8.columns
+    .col-lg-8
       - if @upcoming_workshops.empty?
         %p
           = t('events.no_upcoming_events')
@@ -70,7 +64,7 @@
             %h3.date= date
             = render workshops
 
-    .large-4.columns
+    .col-lg-4
       %h3
         = t('homepage.chapters.title')
       %ul.no-bullet
@@ -79,7 +73,7 @@
             = link_to chapter.name, chapter_path(chapter.slug)
 
 - if @testimonials.any?
-  %section.stripe.reverse
+  .container-fluid.stripe.reverse
     .row
       .medium-offset-1.medium-10.columns
         = render partial: 'members/testimonials'
