@@ -1332,19 +1332,9 @@ table thead tr td {
   border-bottom: 1px solid rgb(34, 34, 34);
 }
 
-.top-bar-section li:not(.has-form):hover a span  {
-  text-decoration: underline;
-  text-decoration-skip: ink;
-}
-
-.top-bar-section li:not(.has-form):hover a .highlight  {
-  text-decoration-color: currentColor;
-}
-
 .highlight {
   color: $secondary-color;
 }
-
 
 blockquote {
   background: $white;
