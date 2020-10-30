@@ -1,34 +1,33 @@
+@import "partials/colors";
+
+#top {
+  margin-top: 73px;
+}
+
+// to delete
 .flex-grid {
   display: flex;
   flex-wrap: wrap;
 }
 
+// to delete
 .flex-item {
   display: flex;
 }
 
 .main-footer {
-  background-color: $primary-color;
-  padding: 50px 0;
-  color: rgba(255, 255, 255, 0.8);
+  background-color: $dark-codebar-blue;
+  color: white;
 
   a {
     color: $white;
     border: none;
-
     &:hover {
-      color: $secondary-color;
+      color: $codebar-green;
     }
   }
 
   .registration {
-    color: $white;
     font-size: 0.75rem;
-    margin-top: 30px;
-    margin-bottom: 0;
-  }
-
-  .social-media a {
-    border-bottom: none;
   }
 }

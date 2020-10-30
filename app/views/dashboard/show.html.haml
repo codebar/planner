@@ -55,7 +55,7 @@
         %p
           = t('events.no_upcoming_events')
         %p
-          =link_to t('events.view_past_events'), events_url(anchor: 'past'), class: 'button round expand'
+          =link_to t('events.view_past_events'), events_url(anchor: 'past'), class: 'btn btn-primary btn-block'
 
       - if @upcoming_workshops.any?
         %h2.h3 Upcoming Events
@@ -75,5 +75,5 @@
 - if @testimonials.any?
   .container-fluid.stripe.reverse
     .row
-      .medium-offset-1.medium-10.columns
+      .offset-md-1.col-md-10
         = render partial: 'members/testimonials'
