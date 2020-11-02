@@ -58,16 +58,18 @@
           =link_to t('events.view_past_events'), events_url(anchor: 'past'), class: 'btn btn-primary btn-block'
 
       - if @upcoming_workshops.any?
-        %h2.h3 Upcoming Events
+        %h2.h3.mb-4= t('homepage.events.upcoming')
         - @upcoming_workshops.each do |date, workshops|
-          .grouped-events
-            %h3.date= date
-            = render workshops
+          %row.ml-0
+            .col
+              %h3.h5.mb-3
+                = date
+          = render workshops
 
-    .col-lg-4
+    .col-lg-4.pl-5
       %h3
         = t('homepage.chapters.title')
-      %ul.no-bullet
+      %ul.list-unstyled.ml-0
         - @chapters.each do |chapter|
           %li
             = link_to chapter.name, chapter_path(chapter.slug)
