@@ -71,6 +71,8 @@ en:
     newsletter:
       title: Subscribe to our newsletter
       description: Get regular updates about the codebar community. Be informed about upcoming events, jobs, scholarships and other learning opportunities.
+    events:
+      upcoming: "Upcoming Events"
   mailer:
     workshop_invitation:
       attending:
