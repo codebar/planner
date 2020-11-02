@@ -1,41 +1,43 @@
-.event
-  .event__col-1
-    %header.event__header
-      %h3.title
+.row.event.border.p-4.mb-4
+  .col-lg-9
+    %div
+      %h3.event__header
         = link_to event.to_s, event.path
         - if event.venue.present?
           at
           = link_to event.venue.name, event.venue.website
-    .event__details
-      .date
+    %div.mt-3
+      %p.date.mb-0
         %i.material-icons
           calendar_today
         = event.date
-      .time
+      %p.time
         %i.material-icons
           access_time
         = event.time
 
       - if event.organisers.any?
-        .event__organisers
-          .event__organisers-list
-            - event.organisers.each do |organiser|
-              = link_to twitter_url_for(organiser.twitter), class: 'user-link' do
-                = image_tag(organiser.avatar(26), class: 'th radius', title: organiser.full_name, alt: organiser.full_name)
-  .event__col-2
-    .event__labels
+        %div.mt-3
+          - event.organisers.each do |organiser|
+            = link_to twitter_url_for(organiser.twitter), class: 'border-0' do
+              = image_tag(organiser.avatar(26), class: 'rounded-circle', title: organiser.full_name, alt: organiser.full_name)
+
+  .col-lg-3.d-flex.flex-column.align-items-end.justify-content-between
+    .mb-3.d-flex
       - if event.chapter
-        %span.label.status
+        %span.badge.bg-primary.text-light
           = event.chapter.name
       - if @user
         - if @user.attending?(event.__getobj__)
-          = link_to event.path do
-            %span.label.success Attending
+          %span.badge.bg-success.ml-2
+            = link_to event.path, class: "text-light border-0" do
+              Attending
         - if @user.event_organiser?(event)
-          = link_to event.admin_path do
-            %span.label Manage
-    .event__sponsors
+          %span.badge.bg-secondary.ml-2
+            = link_to event.admin_path, class: "text-light border-0" do
+              Manage
+    .d-flex
       - if event.sponsors.any?
         - event.sponsors.each do |sponsor|
-          = link_to sponsor.website do
-            = image_tag(sponsor.avatar.thumb, class: 'sponsor', alt: sponsor.name)
+          = link_to sponsor.website, class: "border-0" do
+            = image_tag(sponsor.avatar.thumb, class: 'ml-2', alt: sponsor.name)
