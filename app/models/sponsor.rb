@@ -1,4 +1,6 @@
 class Sponsor < ActiveRecord::Base
+  include Auditor::Model
+
   self.per_page = 20
   require 'uri'
 

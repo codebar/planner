@@ -48,6 +48,7 @@ gem 'stripe'
 gem 'rails-html-sanitizer', '~> 1.3.0'
 
 gem 'jbuilder'
+gem 'public_activity'
 
 group :development do
   gem 'better_errors'
