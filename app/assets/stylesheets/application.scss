@@ -1,0 +1,42 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the top of the
+ * compiled file, but it's generally better to create a new file per style scope.
+ *
+ *= require_self
+ *= require foundation_and_overrides
+ *= require font-awesome
+ *= require main
+ *= require pickadate/classic
+ *= require pickadate/classic.date
+ *= require pickadate/classic.time
+ *= require chosen
+ *= require jquery-ui
+ */
+
+@import "partials/colors";
+@import "partials/links";
+@import "partials/margins";
+@import "partials/layout";
+@import "partials/hero";
+@import "partials/events";
+@import "partials/social_media";
+@import "partials/chapter";
+@import "partials/member_note";
+@import "partials/attendances";
+@import "partials/admin_workshop";
+@import "partials/sponsors";
+@import "partials/organisers";
+@import "partials/jobs";
+@import "partials/star-rating";
+@import "partials/event";
+@import "partials/workshop";
+
+$primary: $dark-codebar-blue !default;
+
+@import "bootstrap-custom";

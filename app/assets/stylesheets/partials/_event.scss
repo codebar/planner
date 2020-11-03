@@ -12,8 +12,12 @@
       opacity: 0.5;
     }
   }
+}
 
-  img {
-    max-width: 120px;
-  }
+img.sponsor-sm {
+  max-width: 120px;
+}
+
+img.sponsor-md {
+  max-width: 150px;
 }
