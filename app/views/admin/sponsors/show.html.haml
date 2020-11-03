@@ -115,3 +115,10 @@
                       = link_to admin_meeting_path(meeting) do
                         #{I18n.l(meeting.date_and_time, format: :default_date)}
                         = meeting.title
+
+  .row#activities
+    .medium-12.columns
+      %dl
+        %dt Activities
+        %ul
+          = render_activities @sponsor.activities

@@ -1,11 +1,12 @@
 module Auditor
   class Audit
-    attr_reader :model, :key, :user
+    attr_reader :model, :key, :user, :recipient
 
     def initialize(model, key, user, recipient = nil)
       @model = model
       @key = key
       @user = user
+      @recipient = recipient
     end
 
     def log(&block)

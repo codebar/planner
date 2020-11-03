@@ -4,4 +4,5 @@ Fabricator(:contact) do
   email { Faker::Internet.email }
   mailing_list_consent { true }
   token { 'random-token' }
+  sponsor
 end

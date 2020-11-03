@@ -85,9 +85,32 @@ RSpec.feature 'Admin::Sponsors', type: :feature do
       fill_in 'sponsor_contacts_attributes_0_name', with: 'Jane'
       fill_in 'sponsor_contacts_attributes_0_surname', with: 'Doe'
       fill_in 'sponsor_contacts_attributes_0_email', with: 'jane@codebar.io'
+      click_on 'Save changes'
+
+      expect(page).to have_link('Jane Doe', href: 'mailto:jane@codebar.io')
+    end
+
+    it 'can subscribe a contact to the sponsor newsletter' do
+      visit edit_admin_sponsor_path(sponsor)
+
+      click_on 'Add contact'
+      fill_in 'sponsor_contacts_attributes_0_name', with: 'Jane'
+      fill_in 'sponsor_contacts_attributes_0_surname', with: 'Doe'
+      fill_in 'sponsor_contacts_attributes_0_email', with: 'jane@codebar.io'
+      check 'sponsor_contacts_attributes_0_mailing_list_consent'
 
       click_on 'Save changes'
-      expect(page).to have_link('Jane Doe', href: 'mailto:jane@codebar.io')
+      expect(page).to have_content("#{manager.full_name} subscribed Jane Doe with email jane@codebar.io to the Sponsor newsletter")
+    end
+
+    it 'can unsubscribe a contact to the sponsor newsletter', wip: true do
+      contact = Fabricate(:contact, sponsor: sponsor, mailing_list_consent: true)
+      visit edit_admin_sponsor_path(sponsor)
+
+      uncheck 'sponsor_contacts_attributes_0_mailing_list_consent'
+      click_on 'Save changes'
+
+      expect(page).to have_content("#{manager.full_name} unsubscribed #{contact.name} #{contact.surname} with email #{contact.email} from the Sponsor newsletter")
     end
   end
 
