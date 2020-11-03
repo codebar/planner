@@ -1,15 +1,15 @@
 - title t('events.title')
-%section#banner
+
+.container-fluid
   .row
-    .large-12.columns
+    .col
       - if @events.any?
-        .events-list.events-list--upcoming
-          %h3 Upcoming Events
-          = render partial: 'events', locals: { grouped_events: @events }
+        %h3 Upcoming Events
+        = render partial: 'events', locals: { grouped_events: @events }
 
 .stripe
   .row
-    .large-12.columns
+    .col
       - if @past_events.any?
         .events-list.events-list--past
           %h3 Past Events
