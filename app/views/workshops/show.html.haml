@@ -2,38 +2,37 @@
 
 = render partial: 'meta_tags', locals: { workshop: @workshop }
 
-.stripe.reverse
+.container-fluid.stripe.reverse
   .row
-    .large-12.columns
+    .col
       %h2
         = t('workshops.title', host: @workshop.host.name)
         %br
         %small #{humanize_date(@workshop.date_and_time, @workshop.ends_at, with_time: true)} #{@workshop.distance_of_time}
       - if @workshop.date_and_time.past?
-        %label.label.warning= t('messages.already_taken_place')
-  %section#banner
-    .row
-      .medium-12.columns
-        %p.lead
-          = t("workshops.lead")
-        %p.description
-          = sanitize(@workshop.description)
+        %span.badge.bg-danger= t('messages.already_taken_place')
+  .row.mt-3
+    .col
+      %p.lead
+        = t("workshops.lead")
+      %p
+        = sanitize(@workshop.description)
 
-        = render 'actions' unless current_user&.banned?
+      = render 'actions' unless current_user&.banned?
 
-.stripe.reverse
+.container-fluid.stripe.reverse
   .row
     = render partial: 'shared/venue', locals: { venue: @workshop.host, address: @workshop.address}
 
-    #sponsors
-      .small-12.column
-        %h3 Sponsors
-        %ul.row.no-bullet
-          - @workshop.sponsors.each do |sponsor|
-            %li.small-4.columns
-              = image_tag(sponsor.avatar.url, class: 'sponsor', alt: sponsor.name)
-              %p
-                = link_to sponsor.name, sponsor.website
 
-.stripe.reverse
+.container-fluid.stripe.reverse.text-center
+  .row
+    .col
+      %h3 Sponsors
+  .row.mt-4
+    - @workshop.sponsors.each do |sponsor|
+      .col-4
+        = image_tag(sponsor.avatar.url, class: 'sponsor-md', alt: sponsor.name)
+
+.container-fluid.stripe.reverse
   = render partial: 'members/organisers_grid', locals: { members: @workshop.organisers, show_info: false }

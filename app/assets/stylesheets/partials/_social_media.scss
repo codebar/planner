@@ -1,8 +1,8 @@
 .social-svg {
   width: 30px;
   height: 30px;
+  transition: all 1s ease;
   &:hover {
-    transform: rotate(-90deg);
-    transition: transform 0.75s;
+    transform: scale(1.5);
   }
 }

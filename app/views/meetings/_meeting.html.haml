@@ -1,6 +1,6 @@
 .container
   .row.event.border.p-4.mb-4
-    .col-lg-9
+    .col-9
       %div
         %h3.event__header
           = link_to meeting.name, meeting_path(meeting.slug)
@@ -23,7 +23,7 @@
               = link_to twitter_url_for(organiser.twitter), class: 'border-0' do
                 = image_tag(organiser.avatar(26), class: 'rounded-circle', title: organiser.full_name, alt: organiser.full_name)
 
-    .col-lg-3.d-flex.flex-column.align-items-end.justify-content-between
+    .col-3.d-flex.flex-column.align-items-end.justify-content-between
       .mb-3.d-flex
         - if meeting.chapter
           %span.badge.bg-primary.text-light
@@ -40,4 +40,4 @@
       .d-flex
         - if meeting.venue.present?
           = link_to meeting.venue.website, class: "border-0" do
-            = image_tag(meeting.venue.avatar, class: 'sponsor', alt: meeting.venue.name)
+            = image_tag(meeting.venue.avatar, class: 'sponsor-sm', alt: meeting.venue.name)

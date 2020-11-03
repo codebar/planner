@@ -4,7 +4,7 @@
   .row
     .col
       - if @events.any?
-        %h3 Upcoming Events
+        %h3.mb-4 Upcoming Events
         = render partial: 'events', locals: { grouped_events: @events }
 
 .stripe
@@ -12,5 +12,5 @@
     .col
       - if @past_events.any?
         .events-list.events-list--past
-          %h3 Past Events
+          %h3.mb-4 Past Events
           = render partial: 'events', locals: { grouped_events: @past_events }
