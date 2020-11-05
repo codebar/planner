@@ -1,25 +1,24 @@
 - formatted_address = address.to_html
 - section_title = formatted_address.empty? ? "Host" : "Venue"
 
-#venue
-  .medium-6.columns
-    %h3= section_title
+.col-sm-12.col-md-6
+  %h3= section_title
+  %p
+    %strong= venue.name
+  - unless formatted_address.empty?
+    .smb-5.mb-md-0
+      = address.to_html
+
+  - if address.directions.present?
     %p
-      %strong= venue.name
-    - unless formatted_address.empty?
-      #address
-        = address.to_html
+      %strong Directions:
+      = address.directions
 
-    - if address.directions.present?
-      %p
-        %strong Directions:
-        = address.directions
+  - if venue.accessibility_info.present?
+    %p
+      %strong Accessibility information:
+      = venue.accessibility_info
 
-    - if venue.accessibility_info.present?
-      %p
-        %strong Accessibility information:
-        = venue.accessibility_info
-
-  .medium-6.columns
-    %iframe{ width: '100%', height: '350', frameborder: '0', scrolling: 'no', marginheight: '0', marginwidth: '0', src: %{https://maps.google.com/maps?f=q&source=s_q&hl=en&amp;geocode=&q=#{address.for_map}&ie=UTF8&t=m&z=15&output=embed} }
-    = link_to "View larger map", %{https://maps.google.com/maps?f=q&source=s_q&hl=en&amp;geocode=&q=#{address.for_map}&ie=UTF8&hq=&t=m&z=15}, style: "color:#0000FF;text-align:left"
+.col-sm-12.col-md-6
+  %iframe{ width: '100%', height: '350', frameborder: '0', scrolling: 'no', marginheight: '0', marginwidth: '0', src: %{https://maps.google.com/maps?f=q&source=s_q&hl=en&amp;geocode=&q=#{address.for_map}&ie=UTF8&t=m&z=15&output=embed} }
+  = link_to "View larger map", %{https://maps.google.com/maps?f=q&source=s_q&hl=en&amp;geocode=&q=#{address.for_map}&ie=UTF8&hq=&t=m&z=15}, style: "color:#0000FF;text-align:left"
