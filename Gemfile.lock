@@ -1,12 +1,3 @@
-GIT
-  remote: https://github.com/Compass/compass-rails
-  revision: 23aa73778d6656cc8e168d3e4fe380ed5ad64b2b
-  specs:
-    compass-rails (4.0.0)
-      compass (~> 1.0.0)
-      sass-rails (< 5.1)
-      sprockets (< 4.0)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -102,6 +93,10 @@ GEM
       sass (>= 3.3.0, < 3.5)
     compass-import-once (1.0.5)
       sass (>= 3.2, < 3.5)
+    compass-rails (4.0.0)
+      compass (~> 1.0.0)
+      sass-rails (< 5.1)
+      sprockets (< 4.0)
     concurrent-ruby (1.1.7)
     connection_pool (2.2.2)
     coveralls (0.8.23)
@@ -401,7 +396,7 @@ DEPENDENCIES
   carrierwave-ftp
   chosen-rails
   cocoon
-  compass-rails!
+  compass-rails
   coveralls (~> 0.8.23)
   database_cleaner
   delayed_job
