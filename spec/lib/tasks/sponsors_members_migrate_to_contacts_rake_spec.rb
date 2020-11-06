@@ -25,6 +25,19 @@ RSpec.describe 'rake sponsors:members:migrate_to_contacts', type: :task do
         end
       end
 
+      it 'handles a failure when a Contact already exists for that member' do
+        members = sponsor.members
+        Fabricate(:contact, sponsor: sponsor, email: members.first.email)
+
+        task.execute
+
+        sponsor.reload
+
+        members.each do |member|
+          contact = sponsor.contacts.where(email: member.email).exists?
+        end
+      end
+
       it 'deletes the sponsor MemberContact association' do
         task.execute
 

@@ -27,7 +27,11 @@ namespace :sponsors do
           contact.name = member_contact.member.name
           contact.surname = member_contact.member.surname
           contact.email = member_contact.member.email
-          if contact.save
+          if sponsor.contacts.exists?(email: contact.email)
+            member_contact.delete
+            Rails.logger.info("Sponsor #{sponsor.name} MemberContact #{member_contact.member.name}" \
+                              'already exists as Contact')
+          elsif contact.save
             member_contact.delete
             Rails.logger.info("Sponsor #{sponsor.name} MemberContact #{member_contact.member.name} migrated to Contact")
           end
