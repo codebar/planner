@@ -15,7 +15,7 @@ RSpec.feature 'event listing', type: :feature do
     end
 
     scenario 'i can view a list with upcoming events' do
-      within('.events-list--upcoming') do
+      within('*[data-test=upcoming-events]') do
         expect(page).to have_content upcoming_course.title
         expect(page).to have_content 'Workshop'
         expect(page).to have_content event.name
@@ -23,7 +23,7 @@ RSpec.feature 'event listing', type: :feature do
     end
 
     scenario 'i can view a list with past events' do
-      within('.events-list--past') do
+      within('*[data-test=past-events]') do
         expect(page).to have_content past_course.title
         expect(page).to have_content 'Workshop'
         expect(page).to have_content past_event.name
@@ -38,8 +38,8 @@ RSpec.feature 'event listing', type: :feature do
       Fabricate(:workshop, date_and_time: 3.weeks.ago)
 
       visit events_path
-      within('.events-list--past') do
-        expect(page).to have_selector('.event', count: 10)
+      within('*[data-test=past-events]') do
+        expect(page).to have_selector('.event', count: 11)
         expect(page).not_to have_content 'Workshop'
       end
     end

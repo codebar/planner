@@ -2,15 +2,14 @@
 
 .container-fluid
   .row
-    .col
+    .col{"data-test": "upcoming-events"}
       - if @events.any?
         %h3.mb-4 Upcoming Events
         = render partial: 'events', locals: { grouped_events: @events }
 
-.stripe
+.container-fluid.stripe
   .row
-    .col
+    .col{"data-test": "past-events"}
       - if @past_events.any?
-        .events-list.events-list--past
-          %h3.mb-4 Past Events
-          = render partial: 'events', locals: { grouped_events: @past_events }
+        %h3.mb-4 Past Events
+        = render partial: 'events', locals: { grouped_events: @past_events }
