@@ -28,7 +28,7 @@
             %td
               =sponsor.level
             %td
-              - sponsor.chapters.each do |chapter|
+              - sponsor.chapters.uniq.each do |chapter|
                 =link_to chapter.name, admin_chapter_path(chapter)
             %td
               = sponsor.sponsorships_count
