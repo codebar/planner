@@ -2,7 +2,7 @@ RSpec.shared_examples 'viewing workshop details' do
   scenario 'sponsors' do
     within '#sponsors' do
       workshop.sponsors.each do |sponsor|
-        expect(page).to have_content(sponsor.name)
+        expect(page).to have_css("img[src=\"#{sponsor.avatar}\"]")
       end
     end
   end
