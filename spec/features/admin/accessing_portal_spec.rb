@@ -29,5 +29,13 @@ RSpec.feature 'admin portal', type: :feature do
         expect(page).to_not have_content(group.to_s)
       end
     end
+
+    scenario 'can access sponsor contacts' do
+      visit admin_root_path
+      click_on 'Sponsor contacts'
+
+      expect(page).to have_content('Contacts')
+      expect(page).to have_content('Sponsor Contact name Contact email Mailchimp')
+    end
   end
 end

@@ -1,4 +1,7 @@
 class Sponsor < ActiveRecord::Base
+  include Auditor::Model
+
+  self.per_page = 20
   require 'uri'
 
   enum level: {
@@ -11,14 +14,27 @@ class Sponsor < ActiveRecord::Base
 
   has_one :address
   has_many :chapters, through: :workshops
-  has_many :workshop_sponsors
-  has_many :workshops, through: :workshop_sponsors
+  has_many :contacts
+  has_many :meetings, -> { order(date_and_time: :desc) }, foreign_key: 'venue_id', inverse_of: :venue
   has_many :member_contacts
-  has_many :contacts, through: :member_contacts, class_name: 'Member', foreign_key: 'member_id'
+  has_many :members, through: :member_contacts
+  has_many :event_sponsorships, -> { includes([:event]).joins(:event).order('events.date_and_time desc') },
+           class_name: 'Sponsorship', inverse_of: :sponsor
+  has_many :events, through: :event_sponsorships
+  has_many :workshop_sponsors, lambda {
+    includes([workshop: :chapter])
+      .joins(:workshop)
+      .order('workshops.date_and_time desc')
+  },
+           inverse_of: :sponsor
+  has_many :workshops, through: :workshop_sponsors
+
+  accepts_nested_attributes_for :contacts, reject_if: :invalid_contact?, allow_destroy: true
+  accepts_nested_attributes_for :address
 
   validates :level, inclusion: { in: Sponsor.levels.keys }
-  validates :name, :address, :avatar, :website, :seats, :level, presence: true
-  validate :website_is_url
+  validates :name, :address, :avatar, :website, :level, presence: true
+  validate :website_is_url, if: :website?
 
   default_scope -> { order('updated_at desc') }
   scope :active, -> { where.not(level: 'hidden') }
@@ -34,8 +50,6 @@ class Sponsor < ActiveRecord::Base
   }
 
   mount_uploader(:avatar, AvatarUploader)
-
-  accepts_nested_attributes_for :address, :contacts
 
   def coach_spots
     number_of_coaches || (seats / 2.0).round
@@ -55,5 +69,9 @@ class Sponsor < ActiveRecord::Base
       valid = false
     end
     errors.add(:website, 'must be a full, valid URL') unless valid
+  end
+
+  def invalid_contact?(attrs)
+    attrs['name'].blank? && attrs['surname'].blank? && attrs['email'].blank?
   end
 end

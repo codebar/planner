@@ -90,6 +90,7 @@
     feedback_saved: "Thank you for taking the time to give us feedback!"
     feedback_not_found: "You have already submitted feedback for this event."
     updated_note: "Successfully updated note."
+    invalid_session: 'Your session is invalid'
     invitations:
       meeting:
         cancel: "Thanks for letting us know you can't make it."

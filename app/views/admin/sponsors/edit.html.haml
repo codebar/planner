@@ -1,4 +1,11 @@
-%section#banner
+%section#admin#banner
+  .row
+    .large-12.columns
+      %ul.breadcrumbs
+        %li= link_to 'Sponsors', admin_sponsors_path
+        %li= link_to(@sponsor.name, admin_sponsor_path(@sponsor))
+        %li.current Edit
+
   .row
     .medium-12.columns
       %h2 Edit Sponsor

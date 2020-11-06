@@ -17,4 +17,5 @@
  *= require pickadate/classic.time
  *= require chosen
  *= require jquery-ui
+ *= require pagination
  */

@@ -2,12 +2,42 @@ require 'spec_helper'
 
 RSpec.describe SponsorPresenter do
   let(:sponsor_presenter) { SponsorPresenter.new(sponsor) }
+  let(:sponsor) { Fabricate(:sponsor, contacts: contacts, members: []) }
+  let(:contact) { Fabricate(:contact) }
+  let(:contacts) { [contact] }
 
-  context '#contact_full_name' do
-    let(:sponsor) { double(:sponsor, contact_first_name: 'leonardo', contact_surname: 'da Vinci') }
+  context '#decorate_collection' do
+    it 'decorates a collection of Sponsors' do
+      expect(SponsorPresenter).to receive(:new).with(sponsor)
 
-    it 'should be stylised as camelcase' do
-      expect(sponsor_presenter.contact_full_name).to eq('Leonardo Da Vinci')
+      SponsorPresenter.decorate_collection([sponsor])
+    end
+  end
+
+  context '#address' do
+    it 'should decorate the sponsor address' do
+      expect(AddressPresenter).to receive(:new).with(sponsor.address)
+
+      sponsor_presenter.address
+    end
+  end
+
+  context '#contacts' do
+    it 'should decorate the sponsor contacts' do
+      expect(ContactPresenter).to receive(:decorate_collection).with(contacts)
+
+      sponsor_presenter.contacts
+    end
+  end
+
+  context '#sponsorships_count' do
+    before(:each) do
+      Fabricate(:workshop_sponsor, sponsor: sponsor)
+      Fabricate.times(2, :sponsorship, sponsor: sponsor)
+    end
+
+    it 'returns the total number of event sponsorships associated with the sponsor' do
+      expect(sponsor_presenter.sponsorships_count).to eq(3)
     end
   end
 end

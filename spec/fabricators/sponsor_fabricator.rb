@@ -15,6 +15,31 @@ Fabricator(:sponsor) do
   contact_surname { Faker::Name.last_name }
 end
 
+Fabricator(:sponsor_full, from: :sponsor) do
+  description { Faker::Lorem.word }
+  level { 'gold' }
+end
+
+Fabricator(:sponsor_with_member_contacts, from: :sponsor) do
+  after_build do |sponsor, transients|
+    Fabricate.times(3, :member_contact,
+                    sponsor: sponsor)
+  end
+end
+
+Fabricator(:sponsor_no_contact_details, from: :sponsor) do
+  email { nil }
+  contact_first_name { nil }
+  contact_surname { nil }
+end
+
+Fabricator(:sponsor_with_contacts, from: :sponsor_full) do
+  after_build do |sponsor, transients|
+    Fabricate(:contact,
+              sponsor: sponsor)
+  end
+end
+
 def sponsor_image
   "#{%w[8th-Light StreetTeam bloomberg gds-logo mozilla pivotal shutl_logo softwire the-guardian ticketmaster ustwo].sample}.png"
 end

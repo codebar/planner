@@ -1,0 +1,10 @@
+%section
+  .stripe.reverse
+    .row
+      .large-6.columns
+        %h1 Contact Preferences
+        - if @contact.present?
+          = simple_form_for @contact, url: :contact_preferences, method: :put do |f|
+            = f.input :token, as: :hidden
+            = f.input :mailing_list_consent, label: 'Sponsors mailing list'
+            = f.submit 'Update', class: 'button'

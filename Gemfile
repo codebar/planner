@@ -6,6 +6,7 @@ gem 'rails', '4.2.11.3'
 gem 'acts-as-taggable-on', '~> 5.0'
 gem 'carrierwave'
 gem 'carrierwave-ftp', require: 'carrierwave/storage/sftp'
+gem 'cocoon'
 gem 'compass-rails', git: 'https://github.com/Compass/compass-rails'
 gem 'delayed_job'
 gem 'delayed_job_active_record'
@@ -47,6 +48,7 @@ gem 'stripe'
 gem 'rails-html-sanitizer', '~> 1.3.0'
 
 gem 'jbuilder'
+gem 'public_activity'
 
 group :development do
   gem 'better_errors'

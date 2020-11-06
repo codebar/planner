@@ -17,7 +17,7 @@ RSpec.feature 'Managing sponsors', type: :feature do
         fill_in 'sponsor_name', with: 'Sponsor name'
         fill_in 'Website', with: 'https://www.sponsorname.com/'
         attach_file('Avatar', Rails.root + 'spec/support/codebar-logo.png')
-        fill_in 'Student Spots', with: 20
+        fill_in 'Student spots', with: 20
         select "Bronze", from: "Level"
 
         click_on 'Create sponsor'
@@ -33,7 +33,7 @@ RSpec.feature 'Managing sponsors', type: :feature do
         fill_in 'sponsor_name', with: ''
         fill_in 'Website', with: 'https://www.sponsorname.com/'
         attach_file('Avatar', Rails.root + 'spec/support/codebar-logo.png')
-        fill_in 'Student Spots', with: 20
+        fill_in 'Student spots', with: 20
 
         click_on 'Create sponsor'
 
@@ -48,7 +48,7 @@ RSpec.feature 'Managing sponsors', type: :feature do
         fill_in 'sponsor_name', with: ''
         fill_in 'Website', with: 'https://www.sponsorname.com/'
         attach_file('Avatar', Rails.root + 'spec/support/codebar-logo.png')
-        fill_in 'Student Spots', with: 20
+        fill_in 'Student spots', with: 20
 
         click_on 'Create sponsor'
 
@@ -74,35 +74,24 @@ RSpec.feature 'Managing sponsors', type: :feature do
     end
   end
 
-  describe 'assigning a contact to a sponsor' do
-    context 'assigning an existing member' do
-      it 'updates the sponsor' do
-        sponsor = Fabricate(:sponsor)
-        member = Fabricate(:member)
+  describe 'adding contact information to a sponsor' do
+    let(:sponsor) { Fabricate(:sponsor) }
 
+    context 'adding contact details' do
+      it 'adds a new contact entry' do
         visit edit_admin_sponsor_path(sponsor)
 
-        select member.name, from: 'sponsor_contact_ids'
+        within '#contacts' do
+          fill_in 'Name', with: 'Jane'
+          fill_in 'Surname', with: 'Doe'
+          fill_in 'Email', with: 'jane@codebar.io'
+        end
 
         click_on 'Save changes'
 
-        expect(page).to have_content member.name
-      end
-    end
-
-    context 'assigning not a member' do
-      it 'updates the sponsor' do
-        sponsor = Fabricate(:sponsor)
-
-        visit edit_admin_sponsor_path(sponsor)
-
-        fill_in 'Email', with: 'test@email.com'
-        fill_in 'Contact First Name', with: 'First name'
-        fill_in 'Contact Surname', with: 'Surname'
-
-        click_on 'Save changes'
-
-        expect(page).to have_content 'First name Surname'
+        within '#contacts' do
+          expect(page).to have_content 'Jane Doe'
+        end
       end
     end
   end

@@ -1,25 +1,17 @@
 class SponsorPresenter < BasePresenter
-  include Rails.application.routes.url_helpers
-
-  def contact_info
-    [member_contact_details, contact_full_name, model.email].flatten.compact.delete_if(&:empty?).join('<br/>').html_safe
+  def self.decorate_collection(collection)
+    collection.map { |e| SponsorPresenter.new(e) }
   end
 
-  def member_contact_details
-    model.contacts.map do |member|
-      h.link_to(member.full_name, admin_member_path(member.id))
-    end
+  def address
+    @address ||= model.address.present? ? AddressPresenter.new(model.address) : nil
   end
 
-  def contact_full_name
-    return unless model.contact_first_name && model.contact_surname
-
-    "#{model.contact_first_name.camelize} #{model.contact_surname.camelize}"
+  def contacts
+    @contacts ||= ContactPresenter.decorate_collection(model.contacts)
   end
 
-  private
-
-  def h
-    ActionController::Base.helpers
+  def sponsorships_count
+    @sponsorships_count = workshops.count + events.count + meetings.count
   end
 end

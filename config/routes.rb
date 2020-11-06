@@ -15,6 +15,8 @@ Planner::Application.routes.draw do
     get 'step2'
   end
 
+  resource :contact_preferences, only: %i[show update]
+
   resource :terms_and_conditions, only: %i[show update patch]
   resource :mailing_lists, only: %i[create destroy]
 
@@ -147,6 +149,7 @@ Planner::Application.routes.draw do
     resources :groups, only: %i[index new create show]
     resources :sponsors, except: [:destroy]
     resources :feedback, only: [:index]
+    resources :contacts
 
     resources :workshops, except: [:index] do
       post :host

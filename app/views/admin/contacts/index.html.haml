@@ -1,0 +1,29 @@
+%section#admin#banner
+  .row
+    .large-12.columns
+      %ul.breadcrumbs
+        %li= link_to 'Sponsors', admin_sponsors_path
+        %li.current Contacts
+  .row
+    .medium-12.columns
+      %table.hover
+        %thead
+          %tr
+            %th Sponsor
+            %th Contact name
+            %th Contact email
+            %th Mailchimp
+        %tbody
+          - @contacts.each do |contact|
+            %tr
+              %td
+                =link_to contact.sponsor.name, admin_sponsor_path(contact.sponsor)
+              %td
+                #{contact.name} #{contact.surname}
+              %td
+                = contact.email
+              %td.text-center
+                - if contact.mailing_list_consent
+                  %i.fa.fa-check.success
+                - else
+                  %i.fa.fa-times
