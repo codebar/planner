@@ -52,6 +52,7 @@ RSpec.feature 'Admin::Sponsors', type: :feature do
       scenario 'when there are event sponsorships' do
         gold_event = Fabricate(:sponsorship, sponsor: sponsor, level: 'gold').event
         silver_event = Fabricate(:sponsorship, sponsor: sponsor, level: 'silver').event
+        standard_event = Fabricate(:sponsorship, sponsor: sponsor, level: nil).event
 
         visit admin_sponsor_path(sponsor)
 
@@ -59,6 +60,7 @@ RSpec.feature 'Admin::Sponsors', type: :feature do
           expect(page).to have_content('Events')
           expect(page).to have_content("#{gold_event.to_s} - GOLD")
           expect(page).to have_content("#{silver_event} - SILVER")
+          expect(page).to have_content("#{standard_event} - Standard")
         end
       end
 

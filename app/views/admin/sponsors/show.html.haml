@@ -104,7 +104,7 @@
                       = link_to admin_event_path(sponsorship.event) do
                         = I18n.l(sponsorship.event.date_and_time, format: :default_date)
                         = sponsorship.event.to_s
-                        \- #{sponsorship.level.upcase}
+                        \- #{sponsorship&.level&.upcase || 'Standard'}
 
             - if @sponsor.meetings.any?
               .large-4.columns

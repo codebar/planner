@@ -1,7 +1,7 @@
 class Sponsor < ActiveRecord::Base
   include Auditor::Model
 
-  self.per_page = 20
+  self.per_page = 50
   require 'uri'
 
   enum level: {
