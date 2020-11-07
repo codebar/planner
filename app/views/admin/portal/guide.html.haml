@@ -9,28 +9,28 @@
 
       %p Chapter organisers can create and modify sponsors and workshops only for chapters that they are permissioned. To make a member into an organiser of a chapter,
 
-      = raw @markdown.render("`Member.find(:id).add_role(:organiser, Chapter.find(:id))`")
+      = raw CommonMarker.render_html("`Member.find(:id).add_role(:organiser, Chapter.find(:id))`")
 
       %p Meeting organisers can create and modify monthlies. To make a member into a meeting organiser,
 
-      = raw @markdown.render("`Member.find(:id).add_role(:organiser, Meeting`")
+      = raw CommonMarker.render_html("`Member.find(:id).add_role(:organiser, Meeting`")
 
       %p Admins can create and modify sponsors, workshops, meetings and events across all chapters. Admins can also create new chapters. To permission a member as an admin,
 
-      = raw @markdown.render("`Member.find(:id).add_role(:admin)`")
+      = raw CommonMarker.render_html("`Member.find(:id).add_role(:admin)`")
 
       %p Similarly, to remove privileges,
 
-      = raw @markdown.render("`Member.find(:id).remove_role(:organiser, Chapter.find(:id))`")
+      = raw CommonMarker.render_html("`Member.find(:id).remove_role(:organiser, Chapter.find(:id))`")
 
-      = raw @markdown.render("`Member.find(:id).remove_role(:organiser, Meeting)`")
+      = raw CommonMarker.render_html("`Member.find(:id).remove_role(:organiser, Meeting)`")
 
-      = raw @markdown.render("`Member.find(:id).remove_role(:admin)`")
+      = raw CommonMarker.render_html("`Member.find(:id).remove_role(:admin)`")
 
       %p You can also check if a member has permissions. The second argument for organiser roles can be a specific chapter or :any.
 
-      = raw @markdown.render("`Member.find(:id).has_role?(:organiser, :any)`")
+      = raw CommonMarker.render_html("`Member.find(:id).has_role?(:organiser, :any)`")
 
       %p You can query all of the organisers from a Chapter as well.
 
-      = raw @markdown.render("`Member.with_role(:organiser, Chapter.find(:13))`")
+      = raw CommonMarker.render_html("`Member.with_role(:organiser, Chapter.find(:13))`")
