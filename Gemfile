@@ -38,7 +38,7 @@ gem 'icalendar'
 gem 'tzinfo-data'
 
 gem 'chosen-rails'
-gem 'redcarpet'
+gem 'commonmarker'
 
 gem 'gibbon', '~> 3.3.4'
 

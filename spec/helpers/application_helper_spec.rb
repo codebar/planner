@@ -35,4 +35,18 @@ RSpec.describe ApplicationHelper, type: :helper do
       expect(helper.retrieve_title).to eq('codebar.io')
     end
   end
+
+  describe '#dot_markdown' do
+    it 'renders CommonMark' do
+      text = 'This is **bold** and this is _italic_'
+      expected = '<p>This is <strong>bold</strong> and this is <em>italic</em></p>'
+      expect(helper.dot_markdown(text)).to include(expected)
+    end
+
+    it 'removes potentially harmful HTML tags' do
+      text = '<scrip>alert("Hi");</script>'
+      expected = '<p><!-- raw HTML omitted -->alert(&quot;Hi&quot;);<!-- raw HTML omitted --></p>'
+      expect(helper.dot_markdown(text)).to include(expected)
+    end
+  end
 end

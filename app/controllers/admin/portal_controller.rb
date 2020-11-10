@@ -10,7 +10,5 @@ class Admin::PortalController < Admin::ApplicationController
                                .ordered.limit(20).includes(:member, :group)
   end
 
-  def guide
-    @markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, fenced_code_blocks: true, hard_wrap: true)
-  end
+  def guide; end
 end

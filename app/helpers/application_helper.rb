@@ -17,8 +17,8 @@ module ApplicationHelper
     content_for?(:title) ? content_for(:title) : t(:brand)
   end
 
-  def dot_markdown(text, renderer: Rails.configuration.redcarpet)
-    renderer.render(text).html_safe
+  def dot_markdown(text)
+    CommonMarker.render_html(text, :DEFAULT).html_safe
   end
 
   def belongs_to_group?(group)
