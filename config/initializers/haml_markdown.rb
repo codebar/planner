@@ -5,7 +5,7 @@ module Haml::Filters
     include Haml::Filters::Base
 
     def render(text)
-      CommonMarker.render_html(text)
+      CommonMarker.render_html(text, :DEFAULT).html_safe
     end
   end
 end
