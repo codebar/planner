@@ -1,6 +1,7 @@
 # Find out more about the rubocop cops  https://github.com/bbatsov/rubocop/blob/master/config/enabled.yml
 
 AllCops:
+  NewCops: disable
   Exclude:
     - db/**/*
     - spec/**/*
@@ -8,10 +9,15 @@ AllCops:
     - bin/**/*
 
 require:
+  - rubocop
   - rubocop-rails
+  - rubocop-rspec
+  - rubocop-performance
 
 Layout/LineLength:
   Max: 120
+  Exclude:
+    - 'spec/**/*'
 
 Layout/EndOfLine:
   EnforcedStyle: lf
@@ -23,14 +29,244 @@ Naming/MethodParameterName:
 Style/Documentation:
   Enabled: false
 
-Style/FrozenStringLiteralComment:
+Style/ClassAndModuleChildren:
   Enabled: false
 
-Style/ClassAndModuleChildren:
+Style/OptionalBooleanParameter:
   Enabled: false
 
 Rails/Date:
   Enabled: true
 
 Metrics/BlockLength:
-  ExcludedMethods: ['namespace']
+  ExcludedMethods: ['describe', 'context', 'draw', 'namespace']
+
+Performance:
+  Exclude:
+    - '**/test/**/*'
+
+Rails:
+  Enabled: true
+
+Rails/OutputSafety:
+  Enabled: true
+  Exclude:
+    - 'app/presenters/job_presenter.rb'
+
+Bundler/OrderedGems:
+  Enabled: false
+
+Layout/CaseIndentation:
+  Enabled: true
+
+Layout/CommentIndentation:
+  Enabled: true
+
+Layout/ElseAlignment:
+  Enabled: true
+
+Layout/EndAlignment:
+  Enabled: true
+  EnforcedStyleAlignWith: variable
+  AutoCorrect: true
+
+Layout/EmptyLineAfterMagicComment:
+  Enabled: true
+
+Layout/EmptyLinesAroundBlockBody:
+  Enabled: true
+
+Layout/EmptyLinesAroundClassBody:
+  Enabled: true
+
+Layout/EmptyLinesAroundMethodBody:
+  Enabled: true
+
+Layout/EmptyLinesAroundModuleBody:
+  Enabled: true
+
+Layout/FirstArgumentIndentation:
+  Enabled: true
+
+Layout/IndentationConsistency:
+  Enabled: true
+  EnforcedStyle: indented_internal_methods
+
+Layout/LeadingCommentSpace:
+  Enabled: true
+
+Layout/ParameterAlignment:
+  EnforcedStyle: with_fixed_indentation
+
+Layout/SpaceAfterColon:
+  Enabled: true
+
+Layout/SpaceAfterComma:
+  Enabled: true
+
+Layout/SpaceAroundEqualsInParameterDefault:
+  Enabled: true
+
+Layout/SpaceAroundKeyword:
+  Enabled: true
+
+Layout/SpaceAroundOperators:
+  Enabled: true
+
+Layout/SpaceBeforeComma:
+    Enabled: true
+
+Layout/SpaceBeforeBlockBraces:
+  Enabled: true
+
+Layout/SpaceBeforeFirstArg:
+    Enabled: true
+
+Layout/SpaceInsideBlockBraces:
+  Enabled: true
+  EnforcedStyleForEmptyBraces: space
+
+Layout/SpaceInsideHashLiteralBraces:
+  Enabled: true
+
+Layout/SpaceInsideParens:
+  Enabled: true
+
+Layout/IndentationStyle:
+  Enabled: true
+
+Layout/IndentationWidth:
+  Enabled: false
+
+Layout/TrailingEmptyLines:
+  Enabled: true
+
+Layout/TrailingWhitespace:
+  Enabled: true
+
+Lint/AssignmentInCondition:
+  AllowSafeAssignment: false
+
+Lint/RedundantStringCoercion:
+  Enabled: true
+
+Lint/RequireParentheses:
+  Enabled: true
+
+Lint/UriEscapeUnescape:
+  Enabled: true
+
+Metrics/MethodLength:
+  Max: 10
+  Exclude:
+    - 'spec/**/*'
+
+Style/AndOr:
+  Enabled: true
+
+Style/BlockComments:
+  Enabled: true
+  Exclude:
+    - 'spec/spec_helper.rb'
+
+Style/CaseEquality:
+  Enabled: false
+
+Style/CollectionMethods:
+  PreferredMethods:
+    inject: 'inject'
+    reduce: 'inject'
+
+Style/ColonMethodCall:
+  Enabled: true
+
+Style/DefWithParentheses:
+  Enabled: true
+
+Style/FormatString:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/StringLiterals:
+  Enabled: true
+  Exclude:
+    - 'config/*.rb'
+
+Style/GuardClause:
+  Enabled: false
+
+Style/HashSyntax:
+  Enabled: true
+
+Style/IfUnlessModifier:
+  Enabled: false
+
+Style/MethodDefParentheses:
+  Enabled: true
+
+Style/ParenthesesAroundCondition:
+  Enabled: true
+
+Style/RedundantFetchBlock:
+  Enabled: false
+
+Style/RedundantFreeze:
+  Enabled: true
+
+Style/RedundantPercentQ:
+  Enabled: true
+
+Style/RedundantReturn:
+  Enabled: true
+  AllowMultipleReturnValues: true
+
+Style/Semicolon:
+  Enabled: true
+  AllowAsExpressionSeparator: true
+
+Style/TrivialAccessors:
+  Enabled: true
+
+Performance/FlatMap:
+  Enabled: true
+
+Performance/RedundantMerge:
+  Enabled: true
+
+Performance/StartWith:
+  Enabled: true
+
+Performance/EndWith:
+  Enabled: true
+
+Performance/RegexpMatch:
+  Enabled: true
+
+Performance/UnfreezeString:
+  Enabled: true
+
+Rails/Validation:
+  Enabled: true
+
+Rails/SkipsModelValidations:
+  Enabled: true
+  Exclude:
+    - 'spec/**/*'
+
+Rails/FilePath:
+  Enabled: true
+  Exclude:
+    - 'spec/rails_helper.rb'
+
+RSpec/MultipleExpectations:
+  Max: 2
+
+RSpec/ExampleLength:
+  Max: 10
+
+RSpec/SubjectStub:
+  Enabled: true
+  Exclude:
+    - 'spec/models/job_spec.rb'
