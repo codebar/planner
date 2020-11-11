@@ -27,6 +27,8 @@ class MailingList
 
     client.lists(list_id).members(md5_hashed_email_address(email))
           .update(body: { status: 'unsubscribed' })
+  rescue Gibbon::MailChimpError
+    false
   end
   handle_asynchronously :unsubscribe
 
