@@ -33,7 +33,7 @@ $(function(){
   });
 
   $('#announcement_expires_at, #ban_expires_at').pickadate();
-  $('#meeting_local_time, #workshop_local_time, #workshop_local_end_time, #event_begins_at, #event_ends_at, #workshop_rsvp_open_local_time').pickatime({
+  $('#meeting_local_time, #workshop_local_time, #workshop_local_end_time, #event_begins_at, #event_ends_at, #meeting_local_end_time, #workshop_rsvp_open_local_time').pickatime({
     format: 'HH:i'
   });
 
