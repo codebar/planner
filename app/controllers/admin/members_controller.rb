@@ -1,5 +1,5 @@
 class Admin::MembersController < Admin::ApplicationController
-  before_action :set_member, only: [:update_subscriptions, :send_attendance_email, :send_eligibility_email]
+  before_action :set_member, only: %i[update_subscriptions send_attendance_email send_eligibility_email]
 
   def index
     @members = Member.all

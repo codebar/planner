@@ -1,11 +1,5 @@
 class MeetingPresenter < EventPresenter
-  def venue
-    model.venue
-  end
-
-  def description
-    model.description
-  end
+  delegate :venue, :description, to: :model
 
   def organisers
     @organisers ||= model.permissions.find_by(name: 'organiser').members rescue []

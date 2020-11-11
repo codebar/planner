@@ -74,7 +74,7 @@ class DashboardController < ApplicationController
     accepted_workshops = current_user.workshop_invitations.accepted
                                      .joins(:workshop)
                                      .merge(Workshop.upcoming)
-                                     .includes(workshop: [:chapter, :sponsors])
+                                     .includes(workshop: %i[chapter sponsors])
                                      .map(&:workshop)
 
     all_events(chapter_workshops + accepted_workshops)

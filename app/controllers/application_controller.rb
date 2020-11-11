@@ -25,7 +25,7 @@ class ApplicationController < ActionController::Base
 
   def render_not_found
     respond_to do |format|
-      format.html { render template: "errors/not_found", layout: false, status: :not_found }
+      format.html { render template: 'errors/not_found', layout: false, status: :not_found }
       format.all  { render nothing: true, status: :not_found }
     end
   end
@@ -149,7 +149,7 @@ class ApplicationController < ActionController::Base
   helper_method :jobs_pending_approval, :chapters
 
   def redirect_back(fallback_location:, **args)
-    if referer = request.headers["Referer"]
+    if referer = request.headers['Referer']
       redirect_to referer, **args
     else
       redirect_to fallback_location, **args

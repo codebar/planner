@@ -1,5 +1,5 @@
 class Admin::AnnouncementsController < Admin::ApplicationController
-  before_action :set_announcement, only: [:update, :edit]
+  before_action :set_announcement, only: %i[update edit]
 
   def index
     @announcements = Announcement.includes(:created_by).includes(:groups).all
