@@ -38,6 +38,7 @@ class Sponsor < ActiveRecord::Base
 
   default_scope -> { order('updated_at desc') }
   scope :active, -> { where.not(level: 'hidden') }
+  scope :by_name, ->(name) { where('lower(sponsors.name) like ?', "%#{name.downcase}%") }
 
   scope :recent_for_chapter, lambda { |chapter|
     distinct

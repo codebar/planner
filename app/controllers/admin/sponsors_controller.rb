@@ -3,7 +3,10 @@ class Admin::SponsorsController < Admin::ApplicationController
 
   def index
     authorize Sponsor
-    @sponsors = Sponsor.all.reorder('lower(name)').paginate(page: page)
+
+    @sponsors_search = SponsorsSearch.new(search_params)
+    @sponsors = @sponsors_search.call
+
     @decorated_sponsors = SponsorPresenter.decorate_collection(@sponsors)
   end
 
@@ -80,5 +83,13 @@ class Admin::SponsorsController < Admin::ApplicationController
     contact_audit_key = contact.mailing_list_consent ? 'subscribe' : 'unsubscribe'
     Auditor::Audit.new(@sponsor, "sponsor.admin_contact_#{contact_audit_key}", current_user, contact)
                   .log_with_note(contact.email)
+  end
+
+  def filter_search_params
+    params[:sponsors_search] || ActionController::Parameters.new
+  end
+
+  def search_params
+    { name: filter_search_params[:name], page: params[:page] }
   end
 end
