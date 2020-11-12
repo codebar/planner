@@ -7,6 +7,7 @@ RSpec.describe Meeting, type: :model do
   context 'validations' do
     subject(:meeting) { Fabricate(:meeting) }
     it { is_expected.to validate_presence_of(:date_and_time) }
+    it { is_expected.to validate_presence_of(:ends_at) }
     it { is_expected.to validate_presence_of(:venue) }
 
     context '#slug' do

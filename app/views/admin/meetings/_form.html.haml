@@ -12,6 +12,8 @@
   .row
     .medium-6.columns
       = f.input :local_time, as: :string, required: true, input_html: { data: { value: @meeting.time.try(:strftime, '%H:%M') } }
+    .medium-6.columns
+      = f.input :local_end_time, label: 'Ends at', as: :string, required: true, input_html: { data: { value: @meeting.ends_at.try(:strftime, '%H:%M') } }
   .row
     .large-12.columns.admin_margin
       = f.input :description, placeholder: 'Supports HTML', as: :text, input_html: { style: 'height: 300px;' }

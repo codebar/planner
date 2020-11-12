@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20201102173506) do
+ActiveRecord::Schema.define(version: 20201109043756) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -129,8 +129,8 @@ ActiveRecord::Schema.define(version: 20201102173506) do
     t.string   "name"
     t.string   "surname"
     t.string   "email"
-    t.boolean  "mailing_list_consent",        default: false
-    t.string   "token",                                       null: false
+    t.boolean  "mailing_list_consent", default: false
+    t.string   "token",                                null: false
   end
 
   add_index "contacts", ["email", "sponsor_id"], name: "index_contacts_on_email_and_sponsor_id", unique: true, using: :btree
@@ -174,6 +174,7 @@ ActiveRecord::Schema.define(version: 20201102173506) do
     t.integer  "sponsor_id"
     t.string   "ticket_url"
     t.integer  "chapter_id"
+    t.datetime "ends_at"
   end
 
   add_index "courses", ["chapter_id"], name: "index_courses_on_chapter_id", using: :btree
@@ -382,6 +383,7 @@ ActiveRecord::Schema.define(version: 20201102173506) do
     t.integer  "spaces"
     t.integer  "sponsor_id"
     t.boolean  "invites_sent",  default: false
+    t.datetime "ends_at"
   end
 
   add_index "meetings", ["slug"], name: "index_meetings_on_slug", unique: true, using: :btree

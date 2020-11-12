@@ -4,6 +4,7 @@ Fabricator(:course) do
   description { Faker::Lorem.paragraph }
   tutor { Fabricate(:member) }
   date_and_time { Time.zone.now + 1.week }
+  ends_at       { Time.zone.now + 2.weeks }
   seats 1
   url { Faker::Internet.url }
   sponsor
