@@ -1,10 +1,6 @@
 class MeetingPresenter < EventPresenter
   delegate :venue, :description, to: :model
 
-  def organisers
-    @organisers ||= model.permissions.find_by(name: 'organiser').members rescue []
-  end
-
   def attendees_emails
     Member.joins(:meeting_invitations)
           .where('meeting_invitations.meeting_id = ? and meeting_invitations.attending = ?', model.id, true)

@@ -20,8 +20,29 @@ RSpec.describe EventPresenter do
     expect(event.description).to be(workshop.description)
   end
 
-  it '#organisers' do
-    expect(event.organisers)
+  describe 'short_#description' do
+    it 'when there is no short_description on the event model it fallsback to description' do
+      expect(event.short_description).to be(workshop.description)
+    end
+
+    it 'when there is a short_description' do
+      course = Fabricate(:course)
+      event = EventPresenter.new(course)
+
+      expect(event.short_description).to be(course.short_description)
+    end
+  end
+
+  describe '#organisers' do
+    it 'when there are no organisers' do
+      expect(event.organisers).to match_array([])
+    end
+
+    it 'when there are organisers' do
+      permissions = Fabricate(:permission, resource: workshop, name: 'organiser')
+
+      expect(event.organisers).to match_array(permissions.members)
+    end
   end
 
   it '#month' do

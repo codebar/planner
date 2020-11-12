@@ -60,11 +60,25 @@ RSpec.describe WorkshopPresenter do
     presenter.venue
   end
 
-  it '#organisers' do
-    expect(workshop).to receive(:permissions)
-    expect(workshop).to receive(:chapter).and_return(chapter)
+  describe '#organisers' do
+    let(:workshop) { Fabricate(:workshop) }
 
-    presenter.organisers
+    it 'when there are no organisers' do
+      workshop = Fabricate(:workshop, chapter: Fabricate(:chapter_without_organisers))
+      presenter = WorkshopPresenter.new(workshop)
+
+      expect(presenter.organisers).to match_array([])
+    end
+
+    it 'when there are organisers' do
+      permissions = Fabricate(:permission, resource: workshop, name: 'organiser')
+
+      expect(presenter.organisers).to match_array(permissions.members)
+    end
+
+    it 'when there are chapter organisers' do
+      expect(presenter.organisers).to match_array(workshop.chapter.organisers)
+    end
   end
 
   context 'time formatting' do
