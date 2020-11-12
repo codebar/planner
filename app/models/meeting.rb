@@ -3,7 +3,7 @@ class Meeting < ActiveRecord::Base
   include Listable
   include Invitable
 
-  attr_accessor :local_date, :local_time
+  attr_accessor :local_date, :local_time, :local_end_time
 
   resourcify :permissions, role_cname: 'Permission', role_table_name: :permission
 
@@ -12,10 +12,10 @@ class Meeting < ActiveRecord::Base
   has_many :invitations, foreign_key: 'meeting_id', class_name: 'MeetingInvitation'
   has_and_belongs_to_many :chapters
 
-  validates :date_and_time, :venue, presence: true
+  validates :date_and_time, :ends_at, :venue, presence: true
   validates :slug, uniqueness: true, if: proc { |model| model.slug.present? }
 
-  before_validation :set_date_and_time
+  before_validation :set_date_and_time, :set_end_date_and_time
   before_save :set_slug
 
   def invitees
