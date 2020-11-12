@@ -5,6 +5,13 @@
         %li.current Sponsors
   .row
     .large-12.columns
+      =simple_form_for @sponsors_search, url: admin_sponsors_path, method: :get do |f|
+        .row
+          = f.input :name, required: false, label: false, wrapper_html: { class: 'medium-4 columns' }, placeholder: 'Filter by sponsor name'
+          = f.submit 'Filter', class: 'button tiny'
+
+  .row
+    .large-12.columns
       .digg_pagination
         .page_info
           = page_entries_info(@sponsors, model: 'sponsor')
@@ -22,7 +29,7 @@
             Sponsorships
       %tbody
         - @decorated_sponsors.each do |sponsor|
-          %tr
+          %tr.sponsor
             %td
               = link_to(sponsor.name, admin_sponsor_path(sponsor))
             %td

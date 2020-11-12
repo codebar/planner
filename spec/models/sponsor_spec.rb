@@ -10,6 +10,27 @@ RSpec.describe Sponsor, type: :model do
     it { is_expected.to validate_presence_of(:website) }
     it { is_expected.to validate_presence_of(:level) }
 
+    context 'scopes' do
+      describe 'searching by_name' do
+        let!(:search_sponsor) { Fabricate(:sponsor, name: 'codebar') }
+        before do
+          Fabricate.times(5, :sponsor)
+        end
+
+        it 'matches on any part of the name' do
+          results = Sponsor.by_name('debar')
+
+          expect(results.count).to eq(1)
+        end
+
+        it 'is not case sensitive' do
+          results = Sponsor.by_name('CODEBAR')
+
+          expect(results.count).to eq(1)
+        end
+      end
+    end
+
     context '#website_is_url format' do
       it 'allows full URLs' do
         sponsor.website = 'http://google.com'
