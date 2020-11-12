@@ -18,6 +18,7 @@ RSpec.feature 'Managing meetings', type: :feature do
       fill_in 'Name', with: 'August meeting'
       fill_in 'Local date', with: Date.current
       fill_in 'Local time', with: '11:30'
+      fill_in 'Ends at', with: '12:00'
       select venue.name
       click_on 'Update'
 
