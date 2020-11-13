@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 ruby '2.4.2'
 
-gem 'rails', '4.2.11.3'
+gem 'rails', '5.0.7.2'
 
 gem 'acts-as-taggable-on', '~> 5.0'
 gem 'carrierwave'
