@@ -61,11 +61,11 @@ class Member < ActiveRecord::Base
   end
 
   def student?
-    groups.students.count > 0
+    groups.students.any?
   end
 
   def coach?
-    groups.coaches.count > 0
+    groups.coaches.any?
   end
 
   def organised_chapters
@@ -98,7 +98,7 @@ class Member < ActiveRecord::Base
   end
 
   def has_existing_RSVP_on(date)
-    invitations_on(date).count > 0
+    invitations_on(date).any?
   end
 
   def already_attending(event)
