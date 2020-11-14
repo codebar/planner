@@ -47,7 +47,7 @@ Rails.application.configure do
   # Suppress logger output for asset requests.
   config.assets.quiet = true
   
-  config.logger = Logger.new(STDOUT)
+  config.logger = ActiveSupport::Logger.new(STDOUT)
   config.log_level = :debug
 
   # Raises error for missing translations
