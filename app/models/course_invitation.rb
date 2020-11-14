@@ -1,4 +1,4 @@
-class CourseInvitation < ActiveRecord::Base
+class CourseInvitation < ApplicationRecord
   include InvitationConcerns
 
   belongs_to :course

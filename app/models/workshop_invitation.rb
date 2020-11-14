@@ -1,4 +1,4 @@
-class WorkshopInvitation < ActiveRecord::Base
+class WorkshopInvitation < ApplicationRecord
   include InvitationConcerns
 
   belongs_to :workshop

@@ -1,4 +1,4 @@
-class Job < ActiveRecord::Base
+class Job < ApplicationRecord
   self.per_page = 10
 
   enum status: { draft: 0, pending: 1, published: 2 }

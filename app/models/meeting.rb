@@ -1,4 +1,4 @@
-class Meeting < ActiveRecord::Base
+class Meeting < ApplicationRecord
   include DateTimeConcerns
   include Listable
   include Invitable

@@ -1,4 +1,4 @@
-class MeetingInvitation < ActiveRecord::Base
+class MeetingInvitation < ApplicationRecord
   include InvitationConcerns
 
   belongs_to :meeting

@@ -1,4 +1,4 @@
-class Course < ActiveRecord::Base
+class Course < ApplicationRecord
   include Listable
 
   resourcify :permissions, role_cname: 'Permission', role_table_name: :permission

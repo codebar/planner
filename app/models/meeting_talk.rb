@@ -1,4 +1,4 @@
-class MeetingTalk < ActiveRecord::Base
+class MeetingTalk < ApplicationRecord
   belongs_to :speaker, class_name: 'Member'
   belongs_to :meeting
 

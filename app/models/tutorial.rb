@@ -1,4 +1,4 @@
-class Tutorial < ActiveRecord::Base
+class Tutorial < ApplicationRecord
   belongs_to :workshop
 
   validates :title, presence: true

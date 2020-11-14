@@ -1,4 +1,4 @@
-class FeedbackRequest < ActiveRecord::Base
+class FeedbackRequest < ApplicationRecord
   belongs_to :member
   belongs_to :workshop
 

@@ -1,4 +1,4 @@
-class Member < ActiveRecord::Base
+class Member < ApplicationRecord
   self.per_page = 80
   rolify role_cname: 'Permission', role_table_name: :permission, role_join_table_name: :members_permissions
 

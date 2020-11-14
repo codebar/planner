@@ -1,4 +1,4 @@
-class WorkshopSponsor < ActiveRecord::Base
+class WorkshopSponsor < ApplicationRecord
   belongs_to :sponsor
   belongs_to :workshop
 
