@@ -1,4 +1,4 @@
-Planner::Application.routes.draw do
+Rails.application.routes.draw do
   root 'dashboard#show'
 
   scope controller: 'dashboard' do
