@@ -17,13 +17,14 @@
                 =link_to twitter_url_for(coach.twitter) do
                   = coach.full_name
                 %p.small= coach.about_you
-                - if coach.skills.any?
+                - skills = coach.skills.map(&:name)
+                - if skills.any?
                   %p
                     skills:
-                    - coach.skills.each do |skill|
-                      = link_to skill.name, skill_url(skill.name), class: "skill"
+                    - skills.each do |skill|
+                      = link_to skill, skill_url(skill), class: "skill"
   .row
     .medium-6.columns.text-left
-      = page_entries_info(@coaches, model: 'coaches')
+      = page_entries_info(coaches, model: 'coaches')
     .medium-6.columns.text-right
-      = will_paginate(@coaches)
+      = will_paginate(coaches)
