@@ -32,7 +32,13 @@ class Admin::InvitationsController < Admin::ApplicationController
     if request.xhr?
       set_admin_workshop_data
 
-      render partial: 'admin/workshops/invitation_management'
+      render partial: 'admin/workshops/invitation_management', locals: {
+        workshop: @workshop,
+        attending_students: @attending_students,
+        attending_coaches: @attending_coaches,
+        student_waiting_list: @student_waiting_list,
+        coach_waiting_list: @coach_waiting_list
+      }
     else
       redirect_to :back, notice: message
     end
