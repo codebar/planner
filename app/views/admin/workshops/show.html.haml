@@ -97,4 +97,9 @@
             = image_tag(organiser.avatar(40), alt: organiser.full_name)
 
   .stripe.reverse#invitations
-    = render partial: 'invitation_management'
+    = render partial: 'invitation_management',
+      locals: { workshop: @workshop,
+                attending_students: @attending_students,
+                attending_coaches: @attending_coaches,
+                student_waiting_list: @student_waiting_list,
+                coach_waiting_list: @coach_waiting_list }
