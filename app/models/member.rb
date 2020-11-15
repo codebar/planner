@@ -33,7 +33,9 @@ class Member < ApplicationRecord
                                 .where('meeting_invitations.meeting_id = ? and meeting_invitations.attending = ?',
                                        meeting.id, true)
                             }
-  scope :in_group, ->(group) { not_banned.joins(:groups).merge(group) }
+  scope :in_group, lambda { |group|
+    not_banned.includes(:groups).joins(:groups).merge(group)
+  }
 
   acts_as_taggable_on :skills
 
