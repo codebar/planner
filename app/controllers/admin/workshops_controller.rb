@@ -2,7 +2,8 @@ class Admin::WorkshopsController < Admin::ApplicationController
   include  Admin::SponsorConcerns
   include  Admin::WorkshopConcerns
 
-  before_action :set_workshop_by_id, only: %i[show edit destroy update]
+  before_action :set_workshop_by_id, only: %i[edit destroy update]
+  before_action :set_workshop_with_dependencies_by_id, only: %i[show]
   before_action :set_and_decorate_workshop, only: %i[attendees_checklist attendees_emails send_invites]
 
   WORKSHOP_DELETION_TIME_FRAME_SINCE_CREATION = 4.hours
@@ -120,6 +121,10 @@ class Admin::WorkshopsController < Admin::ApplicationController
 
   def set_workshop_by_id
     @workshop = Workshop.find(params[:id])
+  end
+
+  def set_workshop_with_dependencies_by_id
+    @workshop = Workshop.includes(invitations: :workshop).find(params[:id])
   end
 
   def set_and_decorate_workshop

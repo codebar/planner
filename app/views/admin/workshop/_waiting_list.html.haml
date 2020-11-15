@@ -9,10 +9,10 @@
           - invitation = list.invitation
           %tr.row
             %td.small-1.columns
-              = link_to admin_workshop_invitation_path(@workshop, invitation, attending: true), class: 'waiting_list', method: :put, remote: true, title: 'Add to attendees' do
+              = link_to admin_workshop_invitation_path(workshop, invitation, attending: true), class: 'waiting_list', method: :put, remote: true, title: 'Add to attendees' do
                 %i.fa.fa-plus-square-o
             %td.small-1.columns
-              = link_to admin_workshop_invitation_path(@workshop, invitation, attending: false), class: 'waiting_list_remove',
+              = link_to admin_workshop_invitation_path(workshop, invitation, attending: false), class: 'waiting_list_remove',
               method: :put, remote: true, title: 'Remove from waitlist' do
                 %i.fa.fa-minus-square-o
             %td.small-5.columns

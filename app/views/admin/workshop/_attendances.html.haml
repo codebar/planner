@@ -6,12 +6,12 @@
           %td.small-1.columns
             - if (invitation.parent.date_and_time - 30.minutes).past?
               - if invitation.attended.nil?
-                = link_to admin_workshop_invitation_path(@workshop, invitation, attended: true), class: 'verify_attendance', title: 'Verify attendance', method: :put, remote: true do
+                = link_to admin_workshop_invitation_path(workshop, invitation, attended: true), class: 'verify_attendance', title: 'Verify attendance', method: :put, remote: true do
                   %i.fa.fa-square-o
               - else
                 %i.fa.fa-check-square-o
             - else
-              = link_to admin_workshop_invitation_path(@workshop, invitation, attending: false), class: 'cancel_attendance', title: 'Cancel RSVP', data: { confirm: "Are you sure you want to remove #{invitation.member.full_name} from the list of attendees?" }, method: :put, remote: true do
+              = link_to admin_workshop_invitation_path(workshop, invitation, attending: false), class: 'cancel_attendance', title: 'Cancel RSVP', data: { confirm: "Are you sure you want to remove #{invitation.member.full_name} from the list of attendees?" }, method: :put, remote: true do
                 %i.fa.fa-minus-square-o
           %td.small-5.columns
             - if invitation.member.newbie?
