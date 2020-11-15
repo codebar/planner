@@ -49,5 +49,9 @@ Rails.application.configure do
     Bullet.enable = true
     Bullet.bullet_logger = true
     Bullet.raise = true # raise an error if n+1 query occurs
+    # TODO: Either disable Bullet for tests or find a better way to make it helpful
+    %i[workshop member].each do |association|
+      Bullet.add_whitelist(type: :unused_eager_loading, class_name: 'WorkshopInvitation', association: association)
+    end
   end
 end
