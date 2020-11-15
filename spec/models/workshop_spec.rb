@@ -17,7 +17,7 @@ RSpec.describe Workshop, type: :model do
       end
 
       it 'validate if chapter_id present' do
-        workshop.chapter = Fabricate(:chapter)
+        workshop.chapter_id = Fabricate(:chapter).id
         workshop.date_and_time = nil
         workshop.valid?
         expect(workshop.errors[:date_and_time]).to include("can't be blank")
@@ -33,7 +33,7 @@ RSpec.describe Workshop, type: :model do
       end
 
       it 'validate if chapter_id present' do
-        workshop.chapter = Fabricate(:chapter)
+        workshop.chapter_id = Fabricate(:chapter).id
         workshop.ends_at = nil
         workshop.valid?
         expect(workshop.errors[:ends_at]).to include("can't be blank")
