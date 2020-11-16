@@ -2,7 +2,7 @@ class Admin::WorkshopsController < Admin::ApplicationController
   include  Admin::SponsorConcerns
   include  Admin::WorkshopConcerns
 
-  before_action :set_workshop_by_id, only: %i[edit destroy update]
+  before_action :load_workshop_by_id, only: %i[edit destroy update]
   before_action :set_and_decorate_workshop, only: %i[attendees_checklist attendees_emails send_invites]
 
   WORKSHOP_DELETION_TIME_FRAME_SINCE_CREATION = 4.hours
@@ -39,7 +39,7 @@ class Admin::WorkshopsController < Admin::ApplicationController
 
   def show
     csv_requested = request.format.csv?
-    set_workshop_by_id(preload: !csv_requested)
+    load_workshop_by_id(preload: !csv_requested)
 
     authorize @workshop
     @workshop = WorkshopPresenter.decorate(@workshop)
@@ -122,12 +122,13 @@ class Admin::WorkshopsController < Admin::ApplicationController
     params.permit(:chapter_id)[:chapter_id]
   end
 
-  def set_workshop_by_id(preload: false)
-    @workshop = if preload
-      Workshop.includes(invitations: :workshop).find(params[:id])
-    else
-      Workshop.find(params[:id])
-    end
+  def workshop_by_id(preload: false)
+    @workshop =
+      if preload
+        Workshop.includes(invitations: :workshop).find(params[:id])
+      else
+        Workshop.find(params[:id])
+      end
   end
 
   def set_and_decorate_workshop
