@@ -41,10 +41,16 @@ GEM
       public_suffix (>= 2.0.2, < 5.0)
     arel (6.0.4)
     ast (2.4.1)
+    autoprefixer-rails (10.0.1.0)
+      execjs
     better_errors (2.7.1)
       coderay (>= 1.0.0)
       erubi (>= 1.0.0)
       rack (>= 0.9.0)
+    bootstrap (5.0.0.alpha1)
+      autoprefixer-rails (>= 9.1.0)
+      popper_js (>= 1.14.3, < 2)
+      sassc-rails (>= 2.0.0)
     builder (3.2.4)
     bullet (6.1.0)
       activesupport (>= 3.0.0)
@@ -213,6 +219,7 @@ GEM
     pg (0.20.0)
     pickadate-rails (3.5.6.0)
       railties (>= 3.1.0)
+    popper_js (1.16.0)
     premailer (1.11.1)
       addressable
       css_parser (>= 1.6.0)
@@ -390,6 +397,7 @@ PLATFORMS
 DEPENDENCIES
   acts-as-taggable-on (~> 5.0)
   better_errors
+  bootstrap (~> 5.0.0.alpha1)
   bullet
   capybara
   carrierwave
@@ -444,6 +452,7 @@ DEPENDENCIES
   sass-rails (~> 5.0.1)
   shoulda-matchers (~> 4.3)
   simple_form
+  sprockets-rails (= 3.2.1)
   stripe
   turbolinks
   tzinfo-data
