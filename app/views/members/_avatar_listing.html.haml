@@ -1,10 +1,5 @@
-%ul.small-block-grid-2.medium-block-grid-4
-  - member.each do |member|
-    %li.text-center
-      =link_to twitter_url_for(member.twitter), class: 'user-link' do
-        =image_tag(member.avatar(56), class: 'th radius', title: member.full_name, alt: member.full_name)
-      %br
-      %br
-      = member.full_name
-      - if show_info
-        = member.mobile
+- member.each do |member|
+  .col-sm-4.col-md-3.mb-4
+    =link_to twitter_url_for(member.twitter), class: 'user-link' do
+      =image_tag(member.avatar(56), class: 'rounded-circle', title: member.full_name, alt: member.full_name)
+    %p.mt-3.mb-1= member.full_name
