@@ -130,7 +130,11 @@ ActiveRecord::Schema.define(version: 20201120012812) do
     t.string   "surname"
     t.string   "email"
     t.boolean  "mailing_list_consent", default: false
+<<<<<<< HEAD
     t.string   "token",                                null: false
+=======
+    t.string   "token", null: false
+>>>>>>> bootstrap organsiers and avatar shared partial
   end
 
   add_index "contacts", ["email", "sponsor_id"], name: "index_contacts_on_email_and_sponsor_id", unique: true, using: :btree
