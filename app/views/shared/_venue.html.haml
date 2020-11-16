@@ -1,8 +1,8 @@
 - formatted_address = address.to_html
 - section_title = formatted_address.empty? ? "Host" : "Venue"
 
-#venue
-  .medium-6.columns
+#venue.row
+  .col-md-6.col-sm-12.mb-4.mb-md-0
     %h3= section_title
     %p
       %strong= venue.name
@@ -20,6 +20,6 @@
         %strong Accessibility information:
         = venue.accessibility_info
 
-  .medium-6.columns
+  .col-md-6.col-sm-12
     %iframe{ width: '100%', height: '350', frameborder: '0', scrolling: 'no', marginheight: '0', marginwidth: '0', src: %{https://maps.google.com/maps?f=q&source=s_q&hl=en&amp;geocode=&q=#{address.for_map}&ie=UTF8&t=m&z=15&output=embed} }
     = link_to "View larger map", %{https://maps.google.com/maps?f=q&source=s_q&hl=en&amp;geocode=&q=#{address.for_map}&ie=UTF8&hq=&t=m&z=15}, style: "color:#0000FF;text-align:left"
