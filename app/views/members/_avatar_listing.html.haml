@@ -3,3 +3,5 @@
     =link_to twitter_url_for(member.twitter), class: 'user-link' do
       =image_tag(member.avatar(56), class: 'rounded-circle', title: member.full_name, alt: member.full_name)
     %p.mt-3.mb-1= member.full_name
+    - if show_info
+      %p.mt-1.mb-1= member.mobile
