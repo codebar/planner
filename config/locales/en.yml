@@ -95,7 +95,7 @@ en:
     title: Workshop at %{host} - %{date}
     calendar:
       summary: codebar @ %{host_name}
-      description:  "Declining or removing this event from your calendar does not update your invitation. If you are unable to attend please follow the link found on this calendar entry and update your attendance status. Missing codebar events repeatedly will result in a ban.\n
+      description:  "Declining or removing this event from your calendar does not update your invitation. If you are unable to attend please follow the link found on this calendar entry and update your attendance status. Missing codebar events repeatedly will result in a suspension.\n
 
                      Invitation link: %{invitation_link}"
     virtual:
@@ -654,6 +654,10 @@ en:
         coach_spaces: Available coach spaces
         student_spaces: Available student spaces
         invitable: When checked, it overrides the RSVP open local date and time and makes RSVPs available right away.
+      ban:
+        note: Only visible to admins and organisers.
+        explanation: 'Emailed to the suspended member. Do not include confidential information including information related to other codebar members.'
+
     labels:
       terms_and_conditions_form:
         terms: 'I have read codebar''s Code of Conduct and agree with all of its terms.'

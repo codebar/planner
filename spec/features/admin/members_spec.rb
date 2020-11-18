@@ -32,14 +32,14 @@ RSpec.feature 'Managing users', type: :feature do
 
   scenario 'Ban a user' do
     visit admin_member_path member
-    click_on 'Ban'
+    click_on 'Suspend'
 
     select 'Violated attendance policy', from: 'ban_reason'
     fill_in 'ban_note', with: Faker::Lorem.word
     fill_in 'ban_expires_at', with: Time.zone.today + 1.month
-    click_on 'Ban user'
+    click_on 'Suspend member'
 
-    expect(page).to have_content 'The user has been banned'
+    expect(page).to have_content 'The user has been suspended'
   end
 
   scenario 'unsubscribe a user from group', js: true do

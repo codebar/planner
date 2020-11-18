@@ -1,0 +1,6 @@
+en:
+  admin:
+    bans:
+      new:
+        title: 'Suspension'
+        create: 'Suspend member'

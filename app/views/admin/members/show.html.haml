@@ -1,7 +1,7 @@
 .icon-bar.six-up
   = link_to new_admin_member_ban_path(@member), class: 'item' do
     %i.fa.fa-ban.warning
-    %label Ban
+    %label Suspend
   = link_to '#', class: 'item', 'data-reveal-id': 'note-modal' do
     %i.fa.fa-pencil
     %label Note
@@ -49,7 +49,8 @@
           %span.fa-stack.fa-lg
             %i.fa.fa-user.fa-stack-1x
             %i.fa.fa-ban.fa-stack-2x.warning
-          %label.label.warning Banned
+          =link_to  '#suspensions' do
+            %label.label.warning Suspended
         - if @member.groups.any?
           %h3 Subscriptions
           %ul.no-bullet#subscriptions
@@ -152,18 +153,19 @@
                 = render partial: 'member_note', collection: @member.member_notes
 
   - if @member.bans.any?
-    .stripe.reverse
+    .stripe.reverse#suspensions
       .row
         .medium-12.columns
-          %h3 Bans
-          %table
+          %h3 Suspensions
+          %table.table
             %thead
               %tr
                 %th
-                %th expires on
-                %th reason
-                %th admin note
-                %th explanation sent to user
+                %th Expires on
+                %th Reason
+                %th Note
+                %th Explanation sent to user
+                %th Suspended by
             - @member.bans.each do |ban|
               %tr
                 %td
@@ -180,5 +182,6 @@
                 %td= ban.reason
                 %td= ban.note
                 %td= ban.explanation
+                %td= link_to ban.added_by.full_name, admin_member_path(ban.added_by)
 
 = render partial: 'note'

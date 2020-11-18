@@ -11,7 +11,7 @@ class Admin::BansController < Admin::ApplicationController
 
     if @ban.save
       MemberMailer.ban(@ban.member, @ban).deliver_now
-      redirect_to [:admin, @member], notice: 'The user has been banned'
+      redirect_to [:admin, @member], notice: 'The user has been suspended'
     else
       render 'new'
     end
