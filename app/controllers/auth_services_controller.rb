@@ -30,8 +30,8 @@ class AuthServicesController < ApplicationController
         member = Member.find_by(email: omnihash[:info][:email])
         member = Member.new(email: (omnihash[:info][:email])) if member.nil?
 
-        member.name    ||= omnihash[:info][:name].split(' ').first rescue('')
-        member.surname ||= omnihash[:info][:name].split(' ').drop(1).join(' ') rescue('')
+        member.name    ||= omnihash[:info][:name].split(' ')&.first || ''
+        member.surname ||= omnihash[:info][:name].split(' ')&.drop(1)&.join(' ') || ''
         member.twitter ||= omnihash[:info][:nickname]
 
         member_service = member.auth_services.build(

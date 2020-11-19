@@ -23,11 +23,11 @@ class EventPresenter < BasePresenter
   end
 
   def short_description
-    model.short_description rescue model.description
+    model.respond_to?(:short_description) ? model.short_description : description
   end
 
   def organisers
-    @organisers ||= model.permissions.find_by(name: 'organiser').members rescue []
+    @organisers ||= model.permissions.find_by(name: 'organiser')&.members || []
   end
 
   def month
@@ -104,9 +104,5 @@ class EventPresenter < BasePresenter
 
   def attendee_array
     model.attendances.map { |i| [i.member.full_name, i.role.upcase] }
-  end
-
-  def chapter_organisers
-    model.chapter.permissions.find_by(name: 'organiser').members rescue []
   end
 end

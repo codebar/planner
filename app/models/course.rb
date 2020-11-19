@@ -27,9 +27,7 @@ class Course < ActiveRecord::Base
     title
   end
 
-  def time
-    date_and_time.time
-  end
+  delegate :time, to: :date_and_time
 
   def date
     I18n.l(date_and_time, format: :dashboard)

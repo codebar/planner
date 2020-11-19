@@ -3,6 +3,7 @@ class Event < ActiveRecord::Base
   include Invitable
 
   attr_accessor :begins_at
+
   resourcify :permissions, role_cname: 'Permission', role_table_name: :permission
 
   belongs_to :venue, class_name: 'Sponsor'

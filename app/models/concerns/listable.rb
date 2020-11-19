@@ -1,5 +1,5 @@
 module Listable
-  NUMBER_OF_RECENT_WORKSHOPS_TO_RETRIEVE = 10.freeze
+  NUMBER_OF_RECENT_WORKSHOPS_TO_RETRIEVE = 10
 
   extend ActiveSupport::Concern
 

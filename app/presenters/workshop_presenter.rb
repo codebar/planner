@@ -32,7 +32,7 @@ class WorkshopPresenter < EventPresenter
   end
 
   def organisers
-    @organisers ||= model.permissions&.find_by(name: 'organiser')&.members || chapter_organisers
+    @organisers ||= model.permissions.find_by(name: 'organiser')&.members || chapter_organisers
   end
 
   def attendees_checklist
@@ -113,5 +113,9 @@ class WorkshopPresenter < EventPresenter
 
   def map_member_details(organisers, member, role)
     organisers.include?(member) ? [member.full_name, 'ORGANISER'] : [member.full_name, role.upcase]
+  end
+
+  def chapter_organisers
+    model.chapter.permissions.find_by(name: 'organiser')&.members || []
   end
 end

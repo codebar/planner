@@ -1,5 +1,5 @@
 class Admin::ChaptersController < Admin::ApplicationController
-  before_action :set_chapter, only: [:show, :edit, :update]
+  before_action :set_chapter, only: %i[show edit update]
   after_action :verify_authorized
 
   def new
@@ -50,11 +50,7 @@ class Admin::ChaptersController < Admin::ApplicationController
     authorize chapter
     type = params[:type]
 
-    @emails = if %w[students coaches].include?(type)
-                chapter.send(type).map(&:email).join("\n")
-              else
-                chapter.members.pluck(:email).uniq.join("\n")
-              end
+    @emails = member_emails(chapter, type)
 
     render plain: @emails
   end
@@ -67,5 +63,11 @@ class Admin::ChaptersController < Admin::ApplicationController
 
   def set_chapter
     @chapter = Chapter.find(params[:id])
+  end
+
+  def member_emails(chapter, type)
+    return chapter.send(type).map(&:email).join("\n") if %w[students coaches].include?(type)
+
+    chapter.members.pluck(:email).uniq.join("\n")
   end
 end

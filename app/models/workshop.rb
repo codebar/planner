@@ -93,12 +93,10 @@ class Workshop < ActiveRecord::Base
   end
 
   def location
-    host.address.city rescue ''
+    host&.address&.city
   end
 
-  def time_zone
-    chapter.time_zone
-  end
+  delegate :time_zone, to: :chapter
 
   def self.policy_class
     WorkshopPolicy
