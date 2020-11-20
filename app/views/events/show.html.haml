@@ -1,18 +1,18 @@
 .stripe.reverse
   .row
-    .large-12.columns
+    .col
       %h2
         = @event.name
         %br
         %small #{humanize_date(@event.date_and_time, @event.ends_at, with_time: true)}
 
-  %section#banner
-    .row
-      .medium-12.columns
-        %p.lead
-          = @event.description.html_safe
   .row
-    .large-10.columns
+    .col
+      %p.lead
+        = @event.description.html_safe
+
+  .row
+    .col
       = render partial: 'event_actions'
 
 .stripe.reverse
@@ -20,7 +20,7 @@
     = render partial: 'shared/venue', locals: { venue: @event.venue, address: @host_address}
 
   .row
-    .small-12.column
+    .col
       - if @event.announce_only
         %a{ name: "information" }
         %h3{ "data-magellan-destination" => "information"} Information
@@ -33,7 +33,7 @@
 - if @event.show_faq?
   .stripe.reverse
     .row
-      .large-12.columns
+      .col
         %a{ name: "faq" }
           %h2{ "data-magellan-destination" => "faq"}
             .text-center FAQ
@@ -43,58 +43,52 @@
         - else
           = render partial: 'events/faq'
 
+-if @event.sponsors?
+  .stripe.reverse
+    .row
+      .col
+        %a{ name: "sponsors" }
+        %h2.text-center{ "data-magellan-destination" => "sponsors"}
+          = t('events.sponsors')
+        %p.text-center
+          %i= t('events.thx_to_sponsors')
+    .row.mt-4
+      - if @event.sponsors?(:gold)
+        %h3.text-center Gold
+        = render partial: "sponsors", object: @event.gold_sponsors
+      - if @event.sponsors?(:silver)
+        %h3.text-center Silver
+        = render partial: "sponsors", object: @event.silver_sponsors
+      - if @event.sponsors?(:bronze)
+        %h3.text-center Bronze
+        = render partial: "sponsors", object: @event.bronze_sponsors
+      - if @event.sponsors?(:standard)
+        = render partial: "sponsors", object: @event.sponsors
 
-.stripe.reverse
-  .row
-    .large-12.columns
-      %a{ name: "sponsors" }
-      %h2{ "data-magellan-destination" => "sponsors"}
-        .text-center= t('events.sponsors')
-      %p.text-center
-        %i= t('events.thx_to_sponsors')
-      %br
-      - if @event.sponsors?
-        - if @event.sponsors?(:gold)
-          %h3.text-center Gold
-          = render partial: "sponsors", object: @event.gold_sponsors
-        - if @event.sponsors?(:silver)
-          %h3.text-center Silver
-          = render partial: "sponsors", object: @event.silver_sponsors
-        - if @event.sponsors?(:bronze)
-          %h3.text-center Bronze
-          = render partial: "sponsors", object: @event.bronze_sponsors
-        - if @event.sponsors?(:standard)
-          = render partial: "sponsors", object: @event.sponsors
 - if @event.verified_coaches.any?
   .stripe.reverse
     .row
-      .large-12.columns
+      .col
         %a{ name: "coaches" }
           %h2{ "data-magellan-destination" => "coaches"}
             .text-center= t('events.coaches')
-          %ul.small-block-grid-2.medium-block-grid-4
-            - @event.verified_coaches.each do |coach|
-              %li.text-center
-                =link_to twitter_url_for(coach.twitter), class: 'user-link' do
-                  =image_tag(coach.avatar(56), class: 'th radius', title: coach.full_name, alt: coach.full_name)
-                  %br
-                  %br
-                  = coach.full_name
-    %br
-.stripe.reverse
-  .row
-    .large-12.columns
-      %a{ name: "organisers" }
-        %h2{ "data-magellan-destination" => "organisers"}
-          .text-center= t('events.organisers')
-      %br
-      - if @event.organisers.any?
-        %ul.small-block-grid-2.medium-block-grid-4
-          - @event.organisers.each do |organiser|
-            %li.text-center
-              =link_to twitter_url_for(organiser.twitter), class: 'user-link' do
-                =image_tag(organiser.avatar(56), class: 'th radius', title: organiser.full_name, alt: organiser.full_name)
-                %br
-                %br
-                = organiser.full_name
-    %br
+    .row.mt-4
+      .col-md-2.col-sm-3
+        - @event.verified_coaches.each do |coach|
+          =link_to twitter_url_for(coach.twitter), class: 'user-link' do
+            =image_tag(coach.avatar(56), class: 'th radius', title: coach.full_name, alt: coach.full_name)
+            %p.mt-3.mb-1= coach.full_name
+
+- if @event.organisers.any?
+  .stripe.reverse
+    .row
+      .col
+        %a{ name: "organisers" }
+          %h2{ "data-magellan-destination" => "organisers"}
+            .text-center= t('events.organisers')
+    .row.mt-4
+      .col-sm-4.col-md-3.mb-4
+        - @event.organisers.each do |organiser|
+          =link_to twitter_url_for(organiser.twitter), class: 'user-link' do
+            =image_tag(organiser.avatar(56), class: 'th radius', title: organiser.full_name, alt: organiser.full_name)
+            %p.mt-3.mb-1= organiser.full_name
