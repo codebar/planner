@@ -25,11 +25,11 @@ RSpec.feature 'viewing a meeting', type: :feature do
       visit meeting_path(meeting)
       login_mock_omniauth(member, 'Log in')
 
-      click_on 'Attend'
+      click_on 'RSVP here'
 
       expect(page).to have_content('Your RSVP was successful. We look forward to seeing you at the Monthly!')
 
-      click_on "Can't make it anymore? Click here to cancel your spot."
+      click_on "Can't make it anymore? Click here to cancel your spot"
 
       expect(page).to have_content("Thanks for letting us know you can't make it")
     end
