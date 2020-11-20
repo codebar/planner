@@ -1,3 +1,4 @@
 - sponsors.each do |sponsor|
-  .large-3.columns.sponsor-image
-    = link_to image_tag(sponsor.avatar.url, class: "sponsor", alt: sponsor.name), sponsor.website
+  .col-4.pl-3.pr-3
+    =link_to sponsor.website, class: 'border-0' do
+      = image_tag(sponsor.avatar.url, class: 'sponsor', alt: sponsor.name)
