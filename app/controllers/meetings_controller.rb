@@ -2,9 +2,9 @@ class MeetingsController < ApplicationController
   before_action :set_meeting
 
   def show
-    if @meeting.attending?(current_user)
-      @invitation = MeetingInvitation.where(meeting: @meeting, member: current_user).last
-    end
+    @invitation = MeetingInvitation
+      .where(meeting: @meeting, member: current_user)
+      .last
     @host_address = AddressPresenter.new(@meeting.venue.address)
     @attendees = @meeting.invitations.where(attending: true)
   end

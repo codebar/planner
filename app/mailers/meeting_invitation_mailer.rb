@@ -4,9 +4,10 @@ class MeetingInvitationMailer < ActionMailer::Base
 
   helper ApplicationHelper
 
-  def invite(meeting, member)
+  def invite(meeting, member, invitation)
     @member = member
     @meeting = meeting
+    @invitation = invitation
     @host_address = AddressPresenter.new(@meeting.venue.address)
     @rsvp_url = meeting_url(@meeting)
 

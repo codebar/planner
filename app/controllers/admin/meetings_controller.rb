@@ -52,7 +52,9 @@ class Admin::MeetingsController < Admin::ApplicationController
     end
 
     @meeting.invitees.not_banned.each do |invitee|
-      MeetingInvitationMailer.invite(@meeting, invitee).deliver_now
+      invitation = MeetingInvitation
+        .create(meeting: @meeting, member: invitee, role: 'Participant')
+      MeetingInvitationMailer.invite(@meeting, invitee, invitation).deliver_now
     end
     @meeting.update_attribute(:invites_sent, true)
 

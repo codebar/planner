@@ -59,7 +59,13 @@ class InvitationsController < ApplicationController
 
     meeting = Meeting.find_by(slug: params[:meeting_id])
 
-    invitation = MeetingInvitation.find_or_create_by(meeting: meeting, member: current_user, role: 'Participant')
+    invitation = if params[:token].present?
+      MeetingInvitation.find_by(token: params[:token])
+    else
+      MeetingInvitation.build(
+        meeting: meeting, member: current_user, role: 'Participant'
+      )
+    end
 
     invitation.update_attribute(:attending, true)
 
