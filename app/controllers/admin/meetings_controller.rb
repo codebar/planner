@@ -51,12 +51,7 @@ class Admin::MeetingsController < Admin::ApplicationController
                          notice: t('admin.messages.meeting.invitations_already_sent')
     end
 
-    @meeting.invitees.not_banned.each do |invitee|
-      invitation = MeetingInvitation
-        .create(meeting: @meeting, member: invitee, role: 'Participant')
-      MeetingInvitationMailer.invite(@meeting, invitee, invitation).deliver_now
-    end
-    @meeting.update_attribute(:invites_sent, true)
+    InvitationManager.new.send_meeting_emails(@meeting)
 
     redirect_to admin_meeting_path(@meeting), notice: t('admin.messages.meeting.sending_invitations')
   end
