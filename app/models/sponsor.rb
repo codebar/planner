@@ -16,8 +16,6 @@ class Sponsor < ActiveRecord::Base
   has_many :chapters, through: :workshops
   has_many :contacts
   has_many :meetings, -> { order(date_and_time: :desc) }, foreign_key: 'venue_id', inverse_of: :venue
-  has_many :member_contacts
-  has_many :members, through: :member_contacts
   has_many :event_sponsorships, -> { includes([:event]).joins(:event).order('events.date_and_time desc') },
            class_name: 'Sponsorship', inverse_of: :sponsor
   has_many :events, through: :event_sponsorships

@@ -10,9 +10,6 @@ Fabricator(:sponsor) do
   website { "http://#{Faker::Internet.domain_name}" }
   avatar { Rack::Test::UploadedFile.new(Rails.root.join('app', 'assets', 'images', 'sponsors', sponsor_image), 'image/jpeg') }
   address
-  email { Faker::Internet.email }
-  contact_first_name { Faker::Name.first_name }
-  contact_surname { Faker::Name.last_name }
 end
 
 Fabricator(:sponsor_full, from: :sponsor) do
@@ -25,12 +22,6 @@ Fabricator(:sponsor_with_member_contacts, from: :sponsor) do
     Fabricate.times(3, :member_contact,
                     sponsor: sponsor)
   end
-end
-
-Fabricator(:sponsor_no_contact_details, from: :sponsor) do
-  email { nil }
-  contact_first_name { nil }
-  contact_surname { nil }
 end
 
 Fabricator(:sponsor_with_contacts, from: :sponsor_full) do
