@@ -129,8 +129,8 @@ ActiveRecord::Schema.define(version: 20201102173506) do
     t.string   "name"
     t.string   "surname"
     t.string   "email"
-    t.boolean  "mailing_list_consent",        default: false
-    t.string   "token",                                       null: false
+    t.boolean  "mailing_list_consent", default: false
+    t.string   "token", null: false
   end
 
   add_index "contacts", ["email", "sponsor_id"], name: "index_contacts_on_email_and_sponsor_id", unique: true, using: :btree
