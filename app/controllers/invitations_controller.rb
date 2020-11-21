@@ -60,7 +60,7 @@ class InvitationsController < ApplicationController
     meeting = Meeting.find_by(slug: params[:meeting_id])
 
     invitation = if params[:token].present?
-      MeetingInvitation.find_by(token: params[:token])
+      MeetingInvitation.find_by(token: params[:token], member: current_user)
     else
       MeetingInvitation.build(
         meeting: meeting, member: current_user, role: 'Participant'
