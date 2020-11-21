@@ -22,6 +22,7 @@ class Member < ActiveRecord::Base
   validates :email, uniqueness: true
   validates :about_you, length: { maximum: 255 }
 
+  scope :order_by_email, -> { order(:email) }
   scope :subscribers, -> { joins(:subscriptions).order('created_at desc').uniq }
   scope :not_banned, lambda {
                        joins('LEFT OUTER JOIN bans ON members.id = bans.member_id')
