@@ -1,14 +1,11 @@
 .row
-  .medium-12.columns
+  .col
     - @chapter.groups.each do |group|
       - if belongs_to_group?(group)
-        %span{ "data-tooltip" =>"", "aria-haspopup" => "true",  class: "has-tip", title: "Unsubscribe from #{@chapter.name} #{group.name}" }
-          = link_to subscriptions_path(subscription: { group_id: group }), method: 'delete', class: 'button secondary small' do
-            =group.name
-            %i.fa.fa-check
+        = link_to subscriptions_path(subscription: { group_id: group }), method: 'delete', class: 'btn btn-success mr-2' do
+          =group.name
+          %i.fa.fa-check
       - else
-        %span{ "data-tooltip" =>"", "aria-haspopup" => "true",  class: "has-tip", title: "Subscribe to #{@chapter.name} #{group.name}" }
-
-          = link_to subscriptions_path(subscription: { group_id: group }), method: 'post', class: 'button small' do
-            = group.name
-            %i.fa.fa-rss
+        = link_to subscriptions_path(subscription: { group_id: group }), method: 'post', class: 'btn btn-primary mr-2' do
+          = group.name
+          %i.fa.fa-rss

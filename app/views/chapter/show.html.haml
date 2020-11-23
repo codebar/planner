@@ -1,20 +1,20 @@
 .container
   .row
-    .col-md-6.col-sm-12
+    .col-12.col-md-6
       %h1= @chapter.name
       - if @chapter.description
         %p.lead= @chapter.description
       - else
         %p.lead= t('chapters.intro_html')
     - if @chapter.image.present?
-      .col-6.chapter-header-image
+      .col-12.col-md-6
         = image_tag @chapter.image.bg, alt: "#{@chapter.name} chapter"
 
 .alert.alert-primary
   .row
-    .col-6
+    .col-12.col-md-6
       = t('chapters.info', email: h(@chapter.email)).html_safe
-    .col-6.text-center
+    .col-12.col-md-6.text-center
       - if logged_in?
         = render partial: 'subscriptions'
       - else
@@ -22,7 +22,7 @@
 
 .container.stripe.reverse
   .row
-    .col-md-8.col-sm-12
+    .col-12.col-md-8
       - if @upcoming_workshops.any?
         .events-list.events-list--upcoming
           %h3 Upcoming Events
@@ -37,7 +37,7 @@
             .grouped-events
               = render workshops
 
-    .col-md-4.col-sm-12
+    .col-12.col-md-4
       - if @chapter.twitter_handle
         %a.twitter-timeline{href: "https://twitter.com/#{@chapter.twitter_handle}", "data-widget-id" => @chapter.twitter_id }="Tweets by #{@chapter.twitter_handle}"
       - else
