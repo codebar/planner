@@ -2,7 +2,7 @@ require 'spec_helper'
 
 RSpec.describe SponsorPresenter do
   let(:sponsor_presenter) { SponsorPresenter.new(sponsor) }
-  let(:sponsor) { Fabricate(:sponsor, contacts: contacts, members: []) }
+  let(:sponsor) { Fabricate(:sponsor, contacts: contacts) }
   let(:contact) { Fabricate(:contact) }
   let(:contacts) { [contact] }
 

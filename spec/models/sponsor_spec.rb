@@ -62,13 +62,4 @@ RSpec.describe Sponsor, type: :model do
         .with_values(%i[hidden standard bronze silver gold])
     end
   end
-
-  context '#members' do
-    it 'returns the members set as contacts for the sponsor' do
-      members = Fabricate.times(2, :member)
-      members.each { |m| Fabricate(:member_contact, sponsor: sponsor, member: m) }
-
-      expect(sponsor.members).to include(*members)
-    end
-  end
 end

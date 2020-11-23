@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20201109043756) do
+ActiveRecord::Schema.define(version: 20201120012812) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -389,13 +389,6 @@ ActiveRecord::Schema.define(version: 20201109043756) do
   add_index "meetings", ["slug"], name: "index_meetings_on_slug", unique: true, using: :btree
   add_index "meetings", ["venue_id"], name: "index_meetings_on_venue_id", using: :btree
 
-  create_table "member_contacts", force: :cascade do |t|
-    t.integer  "sponsor_id"
-    t.integer  "member_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "member_notes", force: :cascade do |t|
     t.integer  "member_id"
     t.integer  "author_id"
@@ -470,9 +463,6 @@ ActiveRecord::Schema.define(version: 20201109043756) do
     t.integer  "seats",              default: 15
     t.string   "image_cache"
     t.integer  "number_of_coaches"
-    t.string   "email"
-    t.string   "contact_first_name"
-    t.string   "contact_surname"
     t.text     "accessibility_info"
     t.integer  "level",              default: 1,  null: false
   end
