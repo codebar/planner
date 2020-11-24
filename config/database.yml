@@ -4,7 +4,7 @@ development: &default
   database: planner_development
   pool: 5
   username: <%= ENV['DB_USER'] || ''  %>
-  password:
+  password: <%= ENV['POSTGRES_PASSWORD'] || '' %>
   host: <%= (ENV['DB_HOST'] || 'localhost').to_json %>
 
 test:
