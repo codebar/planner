@@ -19,7 +19,8 @@ RSpec.shared_examples DateTimeConcerns do |date_time_type|
   context '#time' do
     it 'returns nil if not available' do
       travel_to Time.zone.local(2010, 12, 31, 23, 59, 42) do
-        date_time_able = Fabricate.build(date_time_type, date_and_time: nil)
+        date_time_able = Fabricate.build(date_time_type)
+        date_time_able.date_and_time = nil
         expect(date_time_able.time).to be_nil
       end
     end
