@@ -1,13 +1,13 @@
-.stripe.reverse
+.container.stripe.reverse
   .row
-    .large-12.columns
+    .col
       %h2 Sponsors
       %p.lead
         Without our sponsors running <strong>codebar</strong> would be impossible. They provide us with space, food and drinks, internet, and they also help us cover our running costs.
       %p.lead
         Thank you for sharing our dream of creating a more welcoming, equal and diverse tech industry.
 
-      %p
+      %p.lead
         If you are interested in becoming a host please do get in touch with us at #{mail_to "hello@codebar.io", "hello@codebar.io"}
         ='.'
 
@@ -16,11 +16,12 @@
   - if @sponsor_levels[level]
     .stripe.reverse
       .row
-        .large-12.columns
-          %h3.sponsor-header-margin.text-center
+        .col.mb-3
+          %h3.text-center
             #{level == 'standard' ? 'And thanks to our other ' : level.humanize} sponsors
       - @sponsor_levels[level].in_groups_of(6) do |grouped_sponsors|
-        .row.sponsor-row
+        .row.align-items-center.text-center
           - grouped_sponsors.compact.each do |sponsor|
-            .medium-2.small-4.columns.sponsor-image
-              = link_to image_tag(sponsor.avatar, class: "small-image", alt: sponsor.name), sponsor.website
+            .col-4.col-md-2
+              =link_to sponsor.website, class: 'border-0' do
+                = image_tag(sponsor.avatar.url, class: 'small-image', alt: sponsor.name)
