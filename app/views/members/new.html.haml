@@ -1,10 +1,10 @@
-.stripe.reverse#banner
+.container.pt-5.pb-5
   .row
-    .large-12.columns
+    .cols
       %h2=@page_title
-.stripe.reverse
+.container-fluid.stripe.reverse
   .row
-    .medium-12.columns
+    .col
       %p.lead
         = t('members.new.intro')
         = link_to t('members.code_of_conduct'), code_of_conduct_path
@@ -15,10 +15,10 @@
         = t('members.new.students.criteria_brief')
       %p.lead
         = t('members.new.students.github')
-      = link_to registration_path(member_type: "student"), class: "button round" do
-        = t('members.sign_up_as_student')
-        %i.fa.fa-github.fa-fw
-      %br
-      = link_to registration_path(member_type: "coach"), class: "button round" do
-        = t('members.sign_up_as_coach')
-        %i.fa.fa-github.fa-fw
+      .d-flex.flex-column.align-items-start
+        = link_to registration_path(member_type: "student"), class: "btn-lg btn-primary mb-4" do
+          = t('members.sign_up_as_student')
+          %i.fa.fa-github.fa-fw
+        = link_to registration_path(member_type: "coach"), class: "btn-lg btn-primary" do
+          = t('members.sign_up_as_coach')
+          %i.fa.fa-github.fa-fw
