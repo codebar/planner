@@ -1,8 +1,7 @@
 .stripe.reverse#banner
   .row
-    .large-12.columns
+    .col
       %h2= t('participant_student_guide.title')
-      %p
       = link_to t('participant_student_guide.attendance_policy.title') , '#attendance'
       \|
       = link_to t('participant_student_guide.eligibility_criteria.title') , '#eligibility'
@@ -11,7 +10,7 @@
 
 .stripe.reverse
   .row
-    .large-12.columns
+    .col
       %h3#attendance= t('participant_student_guide.attendance_policy.title')
       %p
         = t('participant_student_guide.attendance_policy.intro')
