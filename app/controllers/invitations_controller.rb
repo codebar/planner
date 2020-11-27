@@ -62,7 +62,7 @@ class InvitationsController < ApplicationController
     invitation = if params[:token].present?
       MeetingInvitation.find_by(token: params[:token], member: current_user)
     else
-      MeetingInvitation.build(
+      MeetingInvitation.new(
         meeting: meeting, member: current_user, role: 'Participant'
       )
     end
@@ -71,7 +71,8 @@ class InvitationsController < ApplicationController
 
     if invitation.save
       MeetingInvitationMailer.attending(meeting, current_user).deliver_now
-      redirect_to meeting_path(meeting), notice: t('messages.invitations.meeting.rsvp')
+      redirect_to meeting_path(meeting, token: invitation.token),
+                  notice: t('messages.invitations.meeting.rsvp')
     else
       redirect_to :back, notice: 'Sorry, something went wrong'
     end
