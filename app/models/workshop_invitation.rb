@@ -10,7 +10,6 @@ class WorkshopInvitation < ActiveRecord::Base
   validates :tutorial, presence: true, if: :student_attending?
 
   scope :year, ->(year) { joins(:workshop).where('EXTRACT(year FROM workshops.date_and_time) = ?', year) }
-  scope :accepted, -> { where(attending: true) }
   scope :attended, -> { where(attended: true) }
   scope :accepted_or_attended, -> { where('attending=? or attended=?', true, true) }
   scope :to_students, -> { where(role: 'Student') }

@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 RSpec.describe WorkshopInvitation, type: :model do
-  it_behaves_like InvitationConcerns, :workshop_invitation
+  it_behaves_like InvitationConcerns, :workshop_invitation, :workshop
 
   context 'defaults' do
     it { is_expected.to have_attributes(attending: nil) }
