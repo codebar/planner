@@ -80,16 +80,6 @@ class Member < ActiveRecord::Base
     true
   end
 
-  def send_eligibility_email(user)
-    MemberMailer.eligibility_check(self, user.email).deliver_now
-    eligibility_inquiries.create(sent_by_id: user.id)
-  end
-
-  def send_attendance_email(user)
-    MemberMailer.attendance_warning(self, user.email).deliver_now
-    attendance_warnings.create(sent_by_id: user.id)
-  end
-
   def avatar(size = 100)
     "https://secure.gravatar.com/avatar/#{md5_email}?size=#{size}&default=identicon"
   end

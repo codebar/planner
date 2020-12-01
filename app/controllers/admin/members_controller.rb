@@ -23,12 +23,14 @@ class Admin::MembersController < Admin::ApplicationController
   end
 
   def send_eligibility_email
-    @member.send_eligibility_email(current_user)
+    @member.eligibility_inquiries.create!(issued_by: current_user)
+
     redirect_to [:admin, @member], notice: t('admin.members.eligibility_confirmation_request')
   end
 
   def send_attendance_email
-    @member.send_attendance_email(current_user)
+    @member.attendance_warnings.create!(issued_by: current_user)
+
     redirect_to [:admin, @member], notice: t('admin.members.attendance_warning')
   end
 
