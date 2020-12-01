@@ -4,8 +4,12 @@ class EventPresenter < BasePresenter
                 meeting: 'MeetingPresenter',
                 event: 'EventPresenter' }.freeze
 
+  def self.decorate(event)
+    PRESENTER[event.class.to_s.downcase.to_sym].constantize.new(event)
+  end
+
   def self.decorate_collection(collection)
-    collection.map { |e| PRESENTER[e.class.to_s.downcase.to_sym].constantize.new(e) }
+    collection.map { |event| decorate(event) }
   end
 
   def chapter
