@@ -1,6 +1,7 @@
 class Member < ActiveRecord::Base
+  include Permissions
+
   self.per_page = 80
-  rolify role_cname: 'Permission', role_table_name: :permission, role_join_table_name: :members_permissions
 
   has_many :attendance_warnings
   has_many :bans
@@ -69,10 +70,6 @@ class Member < ActiveRecord::Base
     groups.coaches.any?
   end
 
-  def organised_chapters
-    Chapter.with_role(:organiser, self)
-  end
-
   def received_welcome_for?(subscription)
     return received_student_welcome_email if subscription.student?
     return received_coach_welcome_email if subscription.coach?
@@ -94,18 +91,6 @@ class Member < ActiveRecord::Base
 
   def already_attending(event)
     invitations.where(attending: true).map { |e| e.event.id }.include?(event.id)
-  end
-
-  def is_organiser?
-    organised_chapters.present?
-  end
-
-  def is_admin_or_organiser?
-    has_role?(:admin) || is_organiser?
-  end
-
-  def is_monthlies_organiser?
-    Meeting.with_role(:organiser, self).present?
   end
 
   private

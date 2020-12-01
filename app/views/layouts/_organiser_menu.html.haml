@@ -1,10 +1,10 @@
 %li
   %label Admin Menu
-  - if current_user.is_admin_or_organiser?
+  - if current_user.admin_or_organiser?
     %li= link_to "New workshop", new_admin_workshop_path
     %li= link_to "New sponsor", new_admin_sponsor_path
 
-- if current_user.is_monthlies_organiser?
+- if current_user.monthlies_organiser?
   %li= link_to "New monthly", new_admin_meeting_path
 
 -if current_user.organised_chapters.any?

@@ -2,7 +2,7 @@
   %ul.off-canvas-list
     - if current_user.is_admin?
       = render 'layouts/admin_menu'
-    - elsif current_user.is_organiser? || current_user.is_monthlies_organiser?
+    - elsif current_user.organiser? || current_user.monthlies_organiser?
       = render 'layouts/organiser_menu'
     %li
       %label Portal
