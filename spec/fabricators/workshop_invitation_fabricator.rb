@@ -41,3 +41,7 @@ Fabricator(:waitinglist_invitation_reminded, from: :workshop_invitation) do
   waiting_list
   reminded_at 2.days.ago
 end
+
+Fabricator(:past_attending_workshop_invitation, from: :attending_workshop_invitation) do
+  workshop { Fabricate(:workshop, date_and_time: 1.month.ago) }
+end

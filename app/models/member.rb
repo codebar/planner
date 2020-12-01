@@ -53,10 +53,6 @@ class Member < ActiveRecord::Base
     bans.permanent.present?
   end
 
-  def more_than_two_absences?
-    workshop_invitations.last_six_months.accepted.length - workshop_invitations.last_six_months.attended.length > 2
-  end
-
   def full_name
     pronoun = pronouns.present? ? "(#{pronouns})" : nil
     [name, surname, pronoun].compact.join ' '
@@ -91,6 +87,15 @@ class Member < ActiveRecord::Base
 
   def already_attending(event)
     invitations.where(attending: true).map { |e| e.event.id }.include?(event.id)
+  end
+
+  def flag_to_organisers?
+    multiple_no_shows? && attendance_warnings.last_six_months.length >= 2
+  end
+
+  def multiple_no_shows?
+    last_six_month_rsvps = workshop_invitations.taken_place.last_six_months.accepted
+    (last_six_month_rsvps.length - last_six_month_rsvps.attended.length) > 3
   end
 
   private
