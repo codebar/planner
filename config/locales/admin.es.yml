@@ -1,0 +1,15 @@
+es:
+  admin:
+    bans:
+      create:
+        success: 'Member marked as supended and suspension email sent.'
+      new:
+        title: 'Suspension'
+        create: 'Suspend member'
+    members:
+      update_subscriptions:
+        unsubscribe: "Successfully unsubscribed %{member} from %{chapter}'s %{group} group"
+      send_attendance_email:
+        success: 'Attendance warning email sent.'
+      send_eligibility_email:
+        success: 'Eligibility inquiry email sent.'

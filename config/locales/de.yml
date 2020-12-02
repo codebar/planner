@@ -468,10 +468,6 @@ de:
         cannot_approve: You cannot approve expired job listings
         confirm_approval: Are you sure this job listing meets all requirements and you want to approve it?
         unpublished: The job has been successfully unpublished
-    members:
-      unsubscribed: "You have unsubscribed %{member} from %{city}'s %{group} group"
-      eligibility_confirmation_request: 'You have sent an eligibility confirmation request.'
-      attendance_warning: 'You have sent an attendance warning.'
     workshop:
       manage_rsvps:
         text: 'Studenten und Trainer zum Workshop einladen. Die Bestätigungs-E-Mail wird ausgelöst und sie werden von der Warteliste entfernt.'
