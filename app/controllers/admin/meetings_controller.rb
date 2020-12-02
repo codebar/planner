@@ -46,11 +46,6 @@ class Admin::MeetingsController < Admin::ApplicationController
   end
 
   def invite
-    if @meeting.invites_sent
-      return redirect_to admin_meeting_path(@meeting),
-                         notice: t('admin.messages.meeting.invitations_already_sent')
-    end
-
     InvitationManager.new.send_meeting_emails(@meeting)
 
     redirect_to admin_meeting_path(@meeting), notice: t('admin.messages.meeting.sending_invitations')

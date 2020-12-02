@@ -191,5 +191,21 @@ RSpec.describe InvitationManager, type: :model do
 
       manager.send_meeting_emails(meeting)
     end
+
+    it 'emails valid invitees only once' do
+      meeting = Fabricate(:meeting, chapters: [chapter])
+      Fabricate(:students, chapter: chapter, members: students)
+
+      # Emulate a member already invited
+      MeetingInvitation.create(meeting: meeting, member: students.last, role: 'Participant')
+      expected_student_count = students.count - 1
+
+      expect(MeetingInvitationMailer).to receive(:invite)
+        .exactly(expected_student_count).times
+        .with(meeting, instance_of(Member), instance_of(MeetingInvitation))
+        .and_call_original
+
+      manager.send_meeting_emails(meeting)
+    end
   end
 end

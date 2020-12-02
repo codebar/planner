@@ -31,7 +31,6 @@ class InvitationManager
       invitation = MeetingInvitation.new(meeting: meeting, member: invitee, role: 'Participant')
       MeetingInvitationMailer.invite(meeting, invitee, invitation).deliver_now if invitation.save
     end
-    meeting.update_attribute(:invites_sent, true)
   end
   handle_asynchronously :send_meeting_emails
 
