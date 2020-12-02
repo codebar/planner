@@ -1,0 +1,65 @@
+@import 'foundation_and_overrides';
+
+#admin-member {
+
+  #actions {
+    .alert {
+      color: $lightyellow;
+    }
+
+    .success {
+      color: $lightgreen;
+    }
+
+    li {
+      padding-bottom: 1em;
+
+      .note, .suspension, .warning {
+        display: inline-flex;
+      }
+
+      .details {
+        display: inline-grid;
+        padding-left: 10px;
+        padding-top: 5px;
+
+        .date {
+          font-size: 0.9em;
+        }
+
+        .explanation {
+          font-size: 0.9em;
+          color: #999;
+          display: flex;
+
+          span {
+            &.warning {
+              color: $lightyellow;
+            }
+          }
+
+          div {
+            padding: 5px;
+          }
+        }
+      }
+
+    }
+  }
+
+  section  {
+    padding-top: 50px;
+
+  }
+
+  #profile {
+    img {
+      padding-bottom: 10px;
+    }
+
+    .name {
+      font-size: 1.5em;
+      line-height: 1.2em;
+    }
+  }
+}

@@ -89,6 +89,13 @@ class Member < ActiveRecord::Base
     invitations.where(attending: true).map { |e| e.event.id }.include?(event.id)
   end
 
+  def upcoming_rsvps
+    @upcoming_rsvps ||= (invitations.joins(:event).upcoming_rsvps +
+                         workshop_invitations.joins(:workshop).includes(workshop: :chapter).upcoming_rsvps +
+                         meeting_invitations.joins(:meeting).upcoming_rsvps)
+                        .sort_by { |i| i.event.date_and_time }
+  end
+
   def flag_to_organisers?
     multiple_no_shows? && attendance_warnings.last_six_months.length >= 2
   end

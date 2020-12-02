@@ -3,6 +3,6 @@
   = simple_form_for [:admin, @member_note] do |f|
     = f.input :note, label: false, placeholder: 'e.g. very enthusiastic student.'
     = f.hidden_field :member_id, value: @member.id
-    = f.submit 'Add note', class: 'button small'
+    = f.submit 'Save', class: 'button small'
   = link_to '#', class: 'close-reveal-modal', 'aria-label': 'Close' do
     &#215;

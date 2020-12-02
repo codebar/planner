@@ -15,6 +15,7 @@ end
 
 Fabricator(:attended_workshop_invitation, from: :attending_workshop_invitation) do
   attended true
+  workshop { Fabricate(:workshop, date_and_time: 3.days.ago) }
 end
 
 Fabricator(:student_workshop_invitation, from: :workshop_invitation) do

@@ -1,3 +1,5 @@
-#note
-  %p= member_note.note
-  %cite &ndash; #{member_note.author.full_name}, #{member_note.created_at.to_s(:short)}
+%li.note
+  %small #{l(member_note.created_at, format: :short)}
+  %br
+  #{link_to member_note.author.full_name, admin_member_path(member_note.author)}
+  = member_note.note

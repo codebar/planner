@@ -1,0 +1,30 @@
+.event
+  .event__col-1
+    %header.event__header
+      %h3.title
+        = link_to event.to_s, [:admin, event]
+        - if event.venue.present?
+          at
+          = event.venue.name
+    .event__details
+      .date
+        %i.material-icons
+          calendar_today
+        = event.date
+      .time
+        %i.material-icons
+          access_time
+        = event.time
+
+  .event__col-2
+    .event__labels
+      - if event.chapter
+        %span.label.status
+          = event.chapter.name
+        %span.label.success= invitation.role
+    - if event.organisers.any?
+      .event__organisers
+        .event__organisers-list
+          - event.organisers.each do |organiser|
+            = link_to twitter_url_for(organiser.twitter), class: 'user-link' do
+              = image_tag(organiser.avatar(26), class: 'th radius', title: organiser.full_name, alt: organiser.full_name)

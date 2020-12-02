@@ -9,4 +9,6 @@ class MeetingInvitation < ActiveRecord::Base
 
   scope :accepted, -> { where(attending: true) }
   scope :attended, -> { where(attended: true) }
+
+  alias event meeting
 end

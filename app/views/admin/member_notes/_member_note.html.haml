@@ -1,0 +1,9 @@
+.note
+  %span.fa-stack.fa-lg
+    %i.fa.fa-circle.fa-stack-2x.info
+    %i.fa.fa-pencil.fa-stack-1x
+  .details
+    %strong Note added by #{link_to(action.author.full_name, admin_member_path(action.author))}
+    %blockquote=action.note
+    .date
+      = l(action.created_at, format: :workshop)

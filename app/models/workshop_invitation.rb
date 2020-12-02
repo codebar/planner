@@ -32,6 +32,8 @@ class WorkshopInvitation < ActiveRecord::Base
     workshop
   end
 
+  alias event parent
+
   def student_attending?
     for_student? && attending.present?
   end

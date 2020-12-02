@@ -1,0 +1,8 @@
+.eligibility-inquiry
+  %span.fa-stack.fa-lg
+    %i.fa.fa-circle.fa-stack-2x.alert
+    %i.fa.fa-paper-plane-o.fa-stack-1x
+  .details
+    %strong Sent eligibility inquiry email by #{link_to(action.issued_by.full_name, action.issued_by)}
+    .date
+      = l(action.created_at, format: :website_format)
