@@ -1,0 +1,54 @@
+name: Ruby
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:11.5
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Ruby
+    # To automatically get bug fixes and new Ruby versions for ruby/setup-ruby,
+    # change this to (see https://github.com/ruby/setup-ruby#versioning):
+    # uses: ruby/setup-ruby@v1
+      uses: ruby/setup-ruby@ec106b438a1ff6ff109590de34ddc62c540232e0
+      with:
+        ruby-version: 2.4.2
+
+    - name: Install dependencies
+      run: |
+        sudo apt-get -yqq install libpq-dev build-essential libcurl4-openssl-dev
+        gem install bundler
+        bundle install --jobs 4 --retry 3
+
+    - name: Setup test database
+      env:
+        DATABASE_URL: postgres://postgres:@localhost:5432/test
+        RAILS_ENV: test
+      run:
+        rake db:create db:migrate
+
+    - name: Run style check
+      run: bundle exec rake rubocop
+
+    - name: Run tests
+      env:
+        DATABASE_URL: postgres://postgres:@localhost:5432/test
+        RAILS_ENV: test
+      run: bundle exec rake spec
