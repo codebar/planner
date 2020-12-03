@@ -4,14 +4,8 @@ module LoginHelpers
   end
 
   def login_mock_omniauth(member, login_link = 'Sign in')
-    OmniAuth.config.mock_auth[:github] = {
-      provider: member.auth_services.first.provider,
-      uid: member.auth_services.first.uid,
-      credentials: {
-        token: 'mock_token',
-        secret: 'mock_secret'
-      }
-    }
+    mock_auth_hash(provider: member.auth_services.first.provider,
+                   uid: member.auth_services.first.uid)
     click_on login_link
   end
 
@@ -26,15 +20,7 @@ module LoginHelpers
   end
 
   def mock_github_auth
-    OmniAuth.config.mock_auth[:github] = OmniAuth::AuthHash.new(
-      provider: 'github',
-      uid: '42',
-      credentials: { token: 'Fake token' },
-      info: {
-        email: Faker::Internet.email,
-        name: Faker::Name.name
-      }
-    )
+    mock_auth_hash
   end
 
   def accept_toc
