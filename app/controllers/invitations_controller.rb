@@ -57,19 +57,10 @@ class InvitationsController < ApplicationController
   def rsvp_meeting
     return redirect_to :back, notice: 'Please login first' unless logged_in?
 
-    meeting = Meeting.find_by(slug: params[:meeting_id])
+    invitation = load_invitation
+    meeting = invitation.meeting
 
-    invitation = if params[:token].present?
-      MeetingInvitation.find_by(token: params[:token], member: current_user)
-    else
-      MeetingInvitation.new(
-        meeting: meeting, member: current_user, role: 'Participant'
-      )
-    end
-
-    invitation.update_attribute(:attending, true)
-
-    if invitation.save
+    if invitation.update(attending: true)
       MeetingInvitationMailer.attending(meeting, current_user).deliver_now
       redirect_to meeting_path(meeting, token: invitation.token),
                   notice: t('messages.invitations.meeting.rsvp')
@@ -90,5 +81,14 @@ class InvitationsController < ApplicationController
 
   def set_invitation
     @invitation = Invitation.find_by(token: params[:token])
+  end
+
+  def load_invitation
+    if params[:token].present?
+      MeetingInvitation.find_by(token: params[:token], member: current_user)
+    else
+      meeting = Meeting.find_by(slug: params[:meeting_id])
+      MeetingInvitation.new(meeting: meeting, member: current_user, role: 'Participant')
+    end
   end
 end
