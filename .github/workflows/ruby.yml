@@ -1,14 +1,10 @@
-name: Ruby
+name: CI
 
-on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+on: [ push, pull_request ]
 
 jobs:
   test:
-
+    name: 'Tests'
     runs-on: ubuntu-latest
 
     services:
@@ -22,19 +18,18 @@ jobs:
           --health-retries 5
 
     steps:
-    - uses: actions/checkout@v2
+    - name: Checkout code
+      uses: actions/checkout@v2
+
     - name: Set up Ruby
-    # To automatically get bug fixes and new Ruby versions for ruby/setup-ruby,
-    # change this to (see https://github.com/ruby/setup-ruby#versioning):
-    # uses: ruby/setup-ruby@v1
-      uses: ruby/setup-ruby@ec106b438a1ff6ff109590de34ddc62c540232e0
+      uses: ruby/setup-ruby@v1
       with:
         ruby-version: 2.4.2
 
     - name: Install dependencies
       run: |
-        sudo apt-get -yqq install libpq-dev build-essential libcurl4-openssl-dev
         gem install bundler
+        bundle config path vendor/bundle
         bundle install --jobs 4 --retry 3
 
     - name: Setup test database
@@ -42,10 +37,7 @@ jobs:
         DATABASE_URL: postgres://postgres:@localhost:5432/test
         RAILS_ENV: test
       run:
-        rake db:create db:migrate
-
-    - name: Run style check
-      run: bundle exec rake rubocop
+        bundle exec rake db:create db:migrate
 
     - name: Run tests
       env:
