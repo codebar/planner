@@ -55,7 +55,6 @@ group :development do
 end
 
 group :development, :test do
-  gem 'coveralls', '~> 0.8.23', require: false
   gem 'dotenv-rails'
   gem 'fabrication'
   gem 'faker'
@@ -76,6 +75,8 @@ group :test do
   gem 'database_cleaner'
   gem 'shoulda-matchers', '~> 4.3'
   gem 'webdrivers'
+  gem 'simplecov',      require: false
+  gem 'simplecov-lcov', require: false
 end
 
 group :production do
