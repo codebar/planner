@@ -20,7 +20,7 @@
           %h3.text-center
             #{level == 'standard' ? 'And thanks to our other ' : level.humanize} sponsors
       - @sponsor_levels[level].in_groups_of(6) do |grouped_sponsors|
-        .row.align-items-center.text-center
+        .row.gx-5.align-items-center.text-center
           - grouped_sponsors.compact.each do |sponsor|
             .col-4.col-md-2
               =link_to sponsor.website, class: 'border-0' do
