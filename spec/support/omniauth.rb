@@ -1,7 +1,7 @@
 require 'omniauth'
 
 module OmniauthMacros
-  def mock_auth_hash(name: Faker::Name.name, email: Faker::Internet.email, provider: 'github', uid: uid)
+  def mock_auth_hash(name: Faker::Name.name, email: Faker::Internet.email, provider: 'github', uid: 'uid')
     OmniAuth.config.mock_auth[:github] = {
       provider: provider,
       uid: uid,
