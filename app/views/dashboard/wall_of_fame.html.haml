@@ -1,21 +1,20 @@
-.stripe.reverse#banner
+.stripe.reverse
   .row
-    .large-12.columns
+    .col
       %h2 Coaches
       %p.lead
         Here you can find a list of the #{ @coaches_count } volunteers who have coached at codebar.
-
       %p.lead
         If you’d like to start coaching at a workshop near you, read our #{ link_to "teaching guide", teaching_guide_path } and then #{ link_to "sign up", new_member_path } as a coach. It’s easier than you think!
 
   .row
-    .large-12.columns
-      .right
+    .col
+      .float-right
         %ul.inline-list
           - Time.zone.now.year.downto(2013).each do |year|
             %li
               - if page_year?(year)
-                %strong.label.primary= year
+                .btn.btn-sm.btn-outline-success= year
               - else
-                = link_to year, coaches_path(year: year), class: 'label success'
+                = link_to year, coaches_path(year: year), class: 'btn btn-sm btn-success'
   = render partial: '/coach/coach', locals: { coaches: @coaches }
