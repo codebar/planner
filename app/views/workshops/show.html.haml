@@ -21,8 +21,7 @@
       = render 'actions' unless current_user&.banned?
 
 .container-fluid.stripe.reverse
-  .row
-    = render partial: 'shared/venue', locals: { venue: @workshop.host, address: @workshop.address}
+  = render partial: 'shared/venue', locals: { venue: @workshop.host, address: @workshop.address}
 
 
 #sponsors.container-fluid.stripe.reverse.text-center
