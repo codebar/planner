@@ -1,6 +1,6 @@
 # codebar website & event planner
 
-[![Build Status](https://travis-ci.org/codebar/planner.png?branch=master)](https://travis-ci.org/codebar/planner)
+[![CI](https://github.com/codebar/planner/workflows/CI/badge.svg?branch=master)](https://github.com/codebar/planner/actions?query=workflow%3ACI)
 [![Coverage Status](https://coveralls.io/repos/codebar/planner/badge.png)](https://coveralls.io/r/codebar/planner)
 [![Code Climate](https://codeclimate.com/github/codebar/planner.png)](https://codeclimate.com/github/codebar/planner)
 
