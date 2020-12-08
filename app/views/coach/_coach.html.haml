@@ -1,29 +1,23 @@
 .stripe.reverse
   .row
-    .medium-12.columns
-      .text-right
-        %br
-        %br
-      %ul.small-block-grid-2.medium-block-grid-4.large-block-grid-4
-        - coaches.each do |coach|
-          %li.coach
-            .row
-              .small-12.columns
-                .text-center
-                  =link_to twitter_url_for(coach.twitter), class: 'user-link' do
-                    =image_tag(coach.avatar(50), class: 'th radius', title: coach.full_name, alt: coach.full_name)
+    - coaches.each do |coach|
+      .col-sm-6.col-md-3.coach
+        .row
+          .col
+            .text-center.mb-4
+              =link_to twitter_url_for(coach.twitter), class: 'border-0' do
+                =image_tag(coach.avatar(50), class: 'rounded-circle', title: coach.full_name, alt: coach.full_name)
 
-                %br
-                =link_to twitter_url_for(coach.twitter) do
-                  = coach.full_name
-                %p.small= coach.about_you
-                - if coach.skills.any?
-                  %p
-                    skills:
-                    - coach.skills.each do |skill|
-                      = link_to skill.name, skill_url(skill.name), class: "skill"
+            =link_to twitter_url_for(coach.twitter) do
+              = coach.full_name
+            %p.small.mt-3.mb-3= coach.about_you
+            - if coach.skills.any?
+              %p
+                skills:
+                - coach.skills.each do |skill|
+                  = link_to skill.name, skill_url(skill.name), class: "skill"
   .row
-    .medium-6.columns.text-left
+    .col-6.float-left
       = page_entries_info(@coaches, model: 'coaches')
-    .medium-6.columns.text-right
+    .col-6.float-right
       = will_paginate(@coaches)
