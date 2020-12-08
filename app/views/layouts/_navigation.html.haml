@@ -37,7 +37,7 @@
               Donate
         - if !logged_in?
           %li
-            = link_to '/auth/github' do
+            = link_to '/auth/github', method: :post do
               %span
                 Sign in
         - else
