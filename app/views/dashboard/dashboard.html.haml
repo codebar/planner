@@ -1,45 +1,38 @@
 .stripe.reverse
   .row
-    .large-12.columns
+    .col
       %h2
         Dashboard
-%section
-  .row
-    .large-3.columns#sidebar
-      =image_tag(current_user.avatar(33), alt: current_user.full_name)
-      = link_to @user.full_name, profile_path
 
-      %br
-      %br
-      %br
-      .row
-        .large-12.columns
-          %h4
-            Subscriptions
-            %small
-              =link_to "Edit", subscriptions_path
-          - if current_user.chapters.any?
-            %ul.stack.button-group.secondary.no-bullet
-              - current_user.chapters.each do |chapter|
-                %li= link_to chapter.name, chapter_url(chapter.slug)
-          - else
-            %i.fa.fa-warning
-            %small You are not subscribed to any groups.
+.row
+  .col-sm-12.col-md-3.mb-sm-5.mb-md-0
+    =image_tag(current_user.avatar(33), alt: current_user.full_name)
+    = link_to @user.full_name, profile_path
+
+    .row.mt-4
+      .col
+        %h4
+          Subscriptions
+          %small
+            =link_to "Edit", subscriptions_path
+        - if current_user.chapters.any?
+          %ul.list-unstyled
+            - current_user.chapters.each do |chapter|
+              %li= link_to chapter.name, chapter_url(chapter.slug)
+        - else
+          %i.fa.fa-warning
+          %small You are not subscribed to any groups.
 
 
-    .large-9.columns#main
-      - if @announcements.any?
-        %p.lead
-          %ul.panel.no-bullet
-            - @announcements.each do |announcement|
-              %li= dot_markdown(announcement.message)
-      %section#chapter
-        .large-12.columns.events
-          - if @ordered_events.none?
-            There are no upcoming events announced for the chapters you are subscribed to.
-          - @ordered_events.each do |date, workshops|
-            .row
-              .medium-12.columns
-                %h4= date
-            = render workshops
-            %br
+  .col-sm-12.col-md-9
+    - if @announcements.any?
+      - @announcements.each do |announcement|
+        .alert.alert-info= dot_markdown(announcement.message)
+    .col
+      - if @ordered_events.none?
+        There are no upcoming events announced for the chapters you are subscribed to.
+      - @ordered_events.each do |date, workshops|
+        .row
+          .col
+            %h4= date
+        = render workshops
