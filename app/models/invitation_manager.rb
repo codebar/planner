@@ -26,6 +26,14 @@ class InvitationManager
   end
   handle_asynchronously :send_course_emails
 
+  def send_meeting_emails(meeting)
+    meeting.invitees.not_banned.each do |invitee|
+      invitation = MeetingInvitation.new(meeting: meeting, member: invitee, role: 'Participant')
+      MeetingInvitationMailer.invite(meeting, invitee, invitation).deliver_now if invitation.save
+    end
+  end
+  handle_asynchronously :send_meeting_emails
+
   private
 
   def invite_students_to_event(event, chapter)

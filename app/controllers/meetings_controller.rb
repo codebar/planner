@@ -2,8 +2,8 @@ class MeetingsController < ApplicationController
   before_action :set_meeting
 
   def show
-    if @meeting.attending?(current_user)
-      @invitation = MeetingInvitation.where(meeting: @meeting, member: current_user).last
+    @invitation = if params[:token].present?
+      MeetingInvitation.find_by(token: params[:token], member: current_user)
     end
     @host_address = AddressPresenter.new(@meeting.venue.address)
     @attendees = @meeting.invitations.where(attending: true)

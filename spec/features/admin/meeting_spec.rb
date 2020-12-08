@@ -85,13 +85,6 @@ RSpec.feature 'Managing meetings', type: :feature do
   end
 
   context 'sending invitations' do
-    scenario 'redirects back to the meeting if the invitations have been sent' do
-      meeting = Fabricate(:meeting, invites_sent: true)
-
-      visit invite_admin_meeting_path(meeting)
-      expect(page).to have_content("Invitations were previously sent; they will not be sent again")
-    end
-
     scenario 'sends the invitations' do
       chapter = Fabricate(:chapter_with_groups)
       meeting = Fabricate(:meeting, chapters: [chapter])

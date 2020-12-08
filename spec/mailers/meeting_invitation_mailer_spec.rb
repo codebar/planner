@@ -3,9 +3,10 @@ require 'spec_helper'
 RSpec.describe MeetingInvitationMailer, type: :mailer do
   let(:meeting) { Fabricate(:meeting) }
   let(:member) { Fabricate(:member) }
+  let(:invitation) { Fabricate(:meeting_invitation, meeting: meeting, member: member) }
 
   describe '#invite' do
-    let(:mail) { MeetingInvitationMailer.invite(meeting, member).deliver_now }
+    let(:mail) { MeetingInvitationMailer.invite(meeting, member, invitation).deliver_now }
 
     it 'renders the headers' do
       expect(mail.subject).to eq("You are invited to codebar\'s #{meeting.name} on #{humanize_date(meeting.date_and_time)}")

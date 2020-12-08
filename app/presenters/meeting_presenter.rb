@@ -4,6 +4,7 @@ class MeetingPresenter < EventPresenter
   def attendees_emails
     Member.joins(:meeting_invitations)
           .where('meeting_invitations.meeting_id = ? and meeting_invitations.attending = ?', model.id, true)
+          .order_by_email
           .pluck(:email).join(', ')
   end
 
