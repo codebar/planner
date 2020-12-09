@@ -1,29 +1,29 @@
 = simple_form_for @member, method: :put do |f|
   .row
-    .large-6.columns
-      = f.input :name
-    .large-6.columns
-      = f.input :surname
+    .col-sm
+      = f.input :name, required: true
+    .col-sm
+      = f.input :surname, required: true
   .row
-    .large-6.columns
+    .col-sm-12.col-md-6
       = f.input :pronouns, label: "What pronouns do you use?", placeholder: "e.g. she/her/they"
 
   .row
-    .large-6.columns
-      = f.input :email
-    .large-6.columns
+    .col-sm
+      = f.input :email, required: true
+    .col-sm
       = f.input :twitter
   .row
-    .large-6.columns
+    .col-sm
       = f.input :mobile
 
   .row
-    .large-6.columns
+    .col-sm
       = f.input :about_you, as: :text, label: "Tell us a little bit about yourself", required: true
     - if @member.coach?
-      .large-6.columns
+      .col-sm
         = f.input :skill_list, label: "Skills, enter as a comma separated list", input_html: { value: @member.skill_list.join(", ") }
 
   .row
-    .large-12.columns.text-right
-      = f.submit submit_text, class: 'button round right'
+    .col.text-right
+      = f.submit submit_text, class: 'btn btn-primary btn-lg'
