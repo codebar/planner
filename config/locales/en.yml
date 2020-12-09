@@ -484,7 +484,7 @@ en:
     summary: Subscriptions control the invitation emails you receive. For example, if you would like to receive student invitations for the Brighton and West London workshops then subscribe to the Brighton (Students) and West London (Students) options.
     mailing_list:
       title: codebar newsletter
-      summary: Stay up to date with codebar''s news and opportunities by subscribing to the newsletter.
+      summary: Stay up to date with codebar's news and opportunities by subscribing to the newsletter.
       subscribe: Subscribe to newsletter
       unsubscribe: Unsubscribe from newsletter
     messages:
