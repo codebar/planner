@@ -1,52 +1,50 @@
-%section
-  .stripe.reverse
-    .row
-      .medium-1.columns
-        =image_tag(member.avatar(100), class: 'th radius', title: member.full_name, alt: member.full_name)
-      .medium-11.columns
-        %h2
-          = member.full_name
-        %br
-    .row
-      .medium-8.columns
-        %dl
-          - if member.pronouns.present?
-            %dt Pronouns
-            %dd= member.pronouns || "Not specified"
+.container-fluid.mt-5.mb-5
+  .row
+    .col-1
+      =image_tag(member.avatar(100), title: member.full_name, alt: member.full_name)
+    .col-11
+      %h2
+        = member.full_name
 
-          %dt Email
-          %dd= mail_to member.email, member.email
+  .row.mt-4
+    .col-12.col-md-8
+      %dl
+        - if member.pronouns.present?
+          %dt Pronouns
+          %dd= member.pronouns || "Not specified"
 
-          %dt Twitter handle
-          %dd= link_to "@#{member.twitter}", twitter_url_for(member.twitter)
+        %dt Email
+        %dd= mail_to member.email, member.email
 
-          %dt Phone number
-          %dd= member.mobile || "N/A"
+        %dt Twitter handle
+        %dd= link_to "@#{member.twitter}", twitter_url_for(member.twitter)
 
-          %dt About
-          %dd= member.about_you
+        %dt Phone number
+        %dd= member.mobile || "N/A"
 
-          - if member.skills.any?
-            %dt Skills
-            %p
-              - member.skills.each do |skill|
-                = link_to skill.name, skill_url(skill.name), class: "skill"
-        = link_to "Update your details", edit_member_path, class: 'button tiny round'
+        %dt About
+        %dd= member.about_you
 
-      .medium-4.columns
-        - if member.groups.any?
-          %h3 Subscriptions
-          %ul.no-bullet
-            - member.groups.each do |group|
-              %li
-                = link_to chapter_path(group.chapter.slug) do
-                  #{group.name} (#{group.chapter.name})
-        - else
-          %label.label.secondary You are not subscribed to any chapters
-        %br
-        %br
+        - if member.skills.any?
+          %dt Skills
+          %p
+            - member.skills.each do |skill|
+              = link_to skill.name, skill_url(skill.name), class: "skill"
+      = link_to "Update your details", edit_member_path, class: 'btn btn-primary'
 
-        = link_to "Manage subscriptions", subscriptions_path, class: 'button tiny round'
-        %br
-        Member since
-        %em #{l(member.created_at, format: :website_format)}
+    .col-12.col-md-4
+      - if member.groups.any?
+        %h3 Subscriptions
+        %ul.list-unstyled.ml-0
+          - member.groups.each do |group|
+            %li
+              = link_to chapter_path(group.chapter.slug) do
+                #{group.name} (#{group.chapter.name})
+      - else
+        .badge.bg-primary You are not subscribed to any chapters
+
+      .mt-4.mb-4
+        = link_to "Manage subscriptions", subscriptions_path, class: 'btn btn-primary'
+
+      Member since
+      %em #{l(member.created_at, format: :website_format)}
