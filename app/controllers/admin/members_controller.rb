@@ -1,18 +1,19 @@
 class Admin::MembersController < Admin::ApplicationController
-  before_action :set_member, only: %i[update_subscriptions send_attendance_email send_eligibility_email]
+  before_action :set_member, only: %i[events update_subscriptions send_attendance_email send_eligibility_email]
 
   def index
     @members = Member.all
   end
 
   def show
-    @member = Member.includes(:member_notes).find(params[:id])
-    @actions = admin_actions(@member).sort_by(&:created_at).reverse
-    @workshop_attendances = @member.workshop_invitations.joins(:workshop).taken_place.attended.count
-    @event_rsvps = @member.invitations.joins(:event).taken_place.accepted.count
-    @meeting_rsvps = @member.meeting_invitations.joins(:meeting).taken_place.count
+    @member = Member.find(params[:id])
+    load_attendance_data(@member)
 
-    @member_note = MemberNote.new
+    @actions = admin_actions(@member).sort_by(&:created_at).reverse
+  end
+
+  def events
+    load_attendance_data(@member)
   end
 
   def update_subscriptions
@@ -40,6 +41,12 @@ class Admin::MembersController < Admin::ApplicationController
 
   def set_member
     @member = Member.find(params[:member_id])
+  end
+
+  def load_attendance_data(member)
+    @workshop_attendances = member.workshop_invitations.joins(:workshop).taken_place.attended.count
+    @event_rsvps = member.invitations.joins(:event).taken_place.accepted.count
+    @meeting_rsvps = member.meeting_invitations.joins(:meeting).taken_place.count
   end
 
   def admin_actions(member)

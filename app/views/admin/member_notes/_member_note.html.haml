@@ -6,4 +6,4 @@
     %strong Note added by #{link_to(action.author.full_name, admin_member_path(action.author))}
     %blockquote=action.note
     .date
-      = l(action.created_at, format: :workshop)
+      = l(action.created_at, format: :website_format)

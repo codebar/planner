@@ -5,4 +5,4 @@
   .details{ style: 'display: inline-grid' }
     %strong Sent attendance warning email by #{link_to(action.issued_by.full_name, admin_member_path(action.issued_by))}
     .date
-      #{l(action.created_at, format: :workshop)}
+      #{l(action.created_at, format: :website_format)}

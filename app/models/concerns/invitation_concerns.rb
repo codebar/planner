@@ -11,6 +11,7 @@ module InvitationConcerns
     scope :accepted, -> { where(attending: true) }
     scope :not_accepted, -> { where('attending is NULL or attending = false') }
     scope :upcoming_rsvps, -> { accepted.where('date_and_time >= ?', Time.zone.now) }
+    scope :past_rsvps, -> { accepted.taken_place }
     scope :taken_place, -> { where('date_and_time < ?', Time.zone.now) }
 
     before_create :set_token

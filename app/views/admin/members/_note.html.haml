@@ -1,6 +1,6 @@
 #note-modal.reveal-modal{ 'data-reveal': true, 'aria-labelledby': 'modalTitle',  'aria-hidden': 'true', role: 'dialog' }
   %h3#modalTitle Add a note for #{@member.full_name}
-  = simple_form_for [:admin, @member_note] do |f|
+  = simple_form_for [:admin, MemberNote.new] do |f|
     = f.input :note, label: false, placeholder: 'e.g. very enthusiastic student.'
     = f.hidden_field :member_id, value: @member.id
     = f.submit 'Save', class: 'button small'

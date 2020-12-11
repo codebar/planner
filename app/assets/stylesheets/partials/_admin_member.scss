@@ -62,4 +62,26 @@
       line-height: 1.2em;
     }
   }
+
+  .attendance {
+    .attended, .not-attended, .no-attendance {
+      color: $white;
+      padding-left: 10px;
+      font-size: 0.9em;
+      text-transform: uppercase;
+      font-weight: bold;
+    }
+  }
+
+  .attended {
+    background-color: $lightgreen;
+  }
+
+  .not-attended {
+    background-color: $red;
+  }
+
+  .no-attendance {
+    background-color: $lightgray;
+  }
 }

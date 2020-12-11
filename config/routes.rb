@@ -112,6 +112,7 @@ Planner::Application.routes.draw do
     resources :announcements, only: %i[new index create edit update]
 
     resources :members, only: %i[show index] do
+      get :events
       get :send_eligibility_email
       get :send_attendance_email
       get :update_subscriptions

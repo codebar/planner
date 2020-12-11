@@ -1,3 +1,14 @@
+- if event.date_and_time.past?
+  .attendance
+    - if (invitation.is_a?(WorkshopInvitation) && invitation.attended?)
+      .attended
+        attended
+    - elsif (invitation.is_a?(WorkshopInvitation) && !invitation.attended?)
+      .not-attended
+        not attended
+    - else
+      .no-attendance
+        No attendance data
 .event
   .event__col-1
     %header.event__header

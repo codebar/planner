@@ -39,7 +39,7 @@ en:
       year_month: "%Y-%B"
       log: "at %H:%M on the %d/%m/%Y"
       workshop: "%A, %e %B %Y at %R"
-      dashboard: "%A, %b %d"
+      dashboard: "%a, %d %b %Y"
   number:
     currency:
       format:

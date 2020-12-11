@@ -90,10 +90,11 @@ class Member < ActiveRecord::Base
   end
 
   def upcoming_rsvps
-    @upcoming_rsvps ||= (invitations.joins(:event).upcoming_rsvps +
-                         workshop_invitations.joins(:workshop).includes(workshop: :chapter).upcoming_rsvps +
-                         meeting_invitations.joins(:meeting).upcoming_rsvps)
-                        .sort_by { |i| i.event.date_and_time }
+    @upcoming_rsvps ||= rsvps(period: :upcoming)
+  end
+
+  def past_rsvps
+    @past_rsvps ||= rsvps(period: :past).reverse
   end
 
   def flag_to_organisers?
@@ -116,5 +117,13 @@ class Member < ActiveRecord::Base
 
   def md5_email
     Digest::MD5.hexdigest(email.strip.downcase)
+  end
+
+  def rsvps(period:)
+    time_period = "#{period}_rsvps"
+
+    [invitations.joins(:event),
+     workshop_invitations.joins(:workshop).includes(workshop: :chapter),
+     meeting_invitations.joins(:meeting)].map(&time_period.to_sym).inject(:+).sort_by { |i| i.event.date_and_time }
   end
 end
