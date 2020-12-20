@@ -25,6 +25,7 @@
 //= require subscriptions-toggle
 //= require invitations
 //= require cocoon
+//= require events_form
 
 $(function(){
   $(document).foundation();
@@ -50,6 +51,22 @@ $(function(){
 
   $('#member_lookup_id').chosen().change(function(e) {
     $('#view_profile').attr('href', '/admin/members/' + $(this).val())
+  });
+
+  $("[data-form-prepend]").click(function(e) {
+    var obj = $($(this).attr("data-form-prepend"));
+    obj.find("input, select, textarea").each(function() {
+      $(this).attr("name", function() {
+        return $(this)
+          .attr("name")
+          .replace("new_record", new Date().getTime());
+      });
+    });
+
+    $(this.dataset["target"]).append(obj);
+    $(this.dataset["target"]).trigger("newChild");
+
+    return false;
   });
 
   // Prevent tabbing through side menu links when menu is hidden.

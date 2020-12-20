@@ -1,0 +1,15 @@
+.row
+  .large-12.columns
+    %label
+      Type of Sponsor
+    = radio_button_tag "sponsorships-type", "standard", f.object.standard_sponsors?
+    = label_tag "sponsorships-type_standard", "Standard"
+    = radio_button_tag "sponsorships-type", "levelled", !f.object.standard_sponsors?
+    = label_tag "sponsorships-type_levelled", "Levelled"
+#sponsorships
+  = f.simple_fields_for :sponsorships do |s|
+    = render partial: "sponsorship_fields", locals: { f: s }
+    
+.row
+  .large-12.columns
+    = link_to_add_fields "Add sponsor", f, :sponsorships, {}, { "data-target" => "#sponsorships", "class" => "button" }

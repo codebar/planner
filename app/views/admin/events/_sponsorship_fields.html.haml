@@ -1,0 +1,17 @@
+.sponsorship
+  %fieldset
+    = f.input :id, as: :hidden
+    .large-6.columns
+      = f.association :sponsor, input_html: { data: { placeholder: 'Select sponsors' }}, collection: Sponsor.all
+    .large-4.columns.sponsor-levels{ class: (f.object.level? ? "" : "hide") }
+      = f.input :level,
+        collection: [["Bronze", "bronze"], ["Silver", "silver"], ["Gold", "gold"]], 
+        label_method: :first, 
+        value_method: :last,
+        input_html: { disabled: !f.object.level?, required: true, class: "levels-sponsor-input" }
+      = f.input :level, 
+        as: :hidden, 
+        input_html: { disabled: f.object.level?, value: "", class: "standard-sponsor-input" }
+    .large-2.columns
+      = f.input :_destroy, as: :hidden, input_html: { class: "remove-sponsor-input" }
+      = button_tag "Remove", type: :button, class: f.object.new_record? ? "remove-new-sponsor-button" : "remove-in-db-sponsor-button"

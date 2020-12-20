@@ -8,6 +8,7 @@ class Event < ActiveRecord::Base
 
   belongs_to :venue, class_name: 'Sponsor'
   has_many :sponsorships
+  accepts_nested_attributes_for :sponsorships, allow_destroy: true
   has_many :sponsors, -> { where('sponsorships.level' => nil) }, through: :sponsorships, source: :sponsor
   has_many :bronze_sponsors, -> { where('sponsorships.level' => 'bronze') }, through: :sponsorships, source: :sponsor
   has_many :silver_sponsors, -> { where('sponsorships.level' => 'silver') }, through: :sponsorships, source: :sponsor
@@ -24,6 +25,7 @@ class Event < ActiveRecord::Base
   validate :bronze_sponsors_uniqueness
   validate :silver_sponsors_uniqueness
   validate :gold_sponsors_uniqueness
+  validate :validate_sponsorships
 
   before_save do
     begins_at = Time.parse(self.begins_at)
@@ -95,6 +97,10 @@ class Event < ActiveRecord::Base
     end
   end
 
+  def standard_sponsors?
+    !sponsors.empty?
+  end
+
   private
 
   def duplicated_sponsors
@@ -120,5 +126,9 @@ class Event < ActiveRecord::Base
 
   def gold_sponsors_uniqueness
     errors.add(:gold_sponsors, :duplicated_sponsor) unless (gold_sponsors.map(&:id) & duplicated_sponsors).empty?
+  end
+
+  def validate_sponsorships
+    errors.add(:sponsorships, :invalid_sponsorships) unless sponsorships.reject(&:marked_for_destruction?).reject(&:valid?).empty?
   end
 end
