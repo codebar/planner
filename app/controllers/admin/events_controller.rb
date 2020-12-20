@@ -83,11 +83,11 @@ class Admin::EventsController < Admin::ApplicationController
       gold_sponsor_ids: [],
       sponsor_ids: [],
       chapter_ids: [],
-      sponsorships_attributes: [
-        :sponsor_id,
-        :level,
-        :_destroy,
-        :id
+      sponsorships_attributes: %i[
+        sponsor_id
+        level
+        _destroy
+        id
       ]
     )
   end

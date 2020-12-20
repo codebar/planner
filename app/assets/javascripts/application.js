@@ -53,7 +53,7 @@ $(function(){
     $('#view_profile').attr('href', '/admin/members/' + $(this).val())
   });
 
-  $("[data-form-prepend]").click(function(e) {
+  $("[data-form-prepend]").click(function() {
     var obj = $($(this).attr("data-form-prepend"));
     obj.find("input, select, textarea").each(function() {
       $(this).attr("name", function() {

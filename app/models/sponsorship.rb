@@ -3,11 +3,11 @@ class Sponsorship < ActiveRecord::Base
   belongs_to :sponsor
 
   before_validation :set_empty_to_nil
-  validates_inclusion_of :level, in: ["gold", "silver", "bronze", nil]
+  validates :level, inclusion: { in: ['gold', 'silver', 'bronze', nil] }
 
   protected
 
   def set_empty_to_nil
-    self.level = nil if self.level == ""
+    self.level = nil if level == ''
   end
 end
