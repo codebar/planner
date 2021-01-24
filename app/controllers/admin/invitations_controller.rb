@@ -33,7 +33,7 @@ class Admin::InvitationsController < Admin::ApplicationController
   end
 
   def update_to_attended
-    @invitation.update_attribute(:attended, true)
+    @invitation.update(attended: true)
 
     "You have verified #{@invitation.member.full_name}’s attendace."
   end
@@ -59,7 +59,7 @@ class Admin::InvitationsController < Admin::ApplicationController
   end
 
   def update_to_not_attending
-    @invitation.update_attribute(:attending, false)
+    @invitation.update(attending: false)
 
     {
       message: "You have removed #{@invitation.member.full_name} from the workshop.",
