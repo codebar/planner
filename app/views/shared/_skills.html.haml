@@ -1,0 +1,5 @@
+- if member.skills.any?
+  %dt Skills
+  %dd
+    - member.skills.each do |skill|
+      = link_to skill.name, skill_url(skill.name), class: "skill"
