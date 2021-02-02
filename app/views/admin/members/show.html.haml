@@ -43,6 +43,8 @@
           %dt About
           %dd= @member.about_you
 
+          = render "shared/skills", member: @member
+
       .medium-4.columns
         - if @member.banned?
 

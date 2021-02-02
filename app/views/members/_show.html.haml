@@ -26,11 +26,7 @@
           %dt About
           %dd= member.about_you
 
-          - if member.skills.any?
-            %dt Skills
-            %p
-              - member.skills.each do |skill|
-                = link_to skill.name, skill_url(skill.name), class: "skill"
+          = render "shared/skills", member: member
         = link_to "Update your details", edit_member_path, class: 'button tiny round'
 
       .medium-4.columns
