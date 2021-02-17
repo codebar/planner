@@ -6,7 +6,9 @@
           %td.small-1.columns
             - if (invitation.parent.date_and_time - 30.minutes).past?
               - if invitation.attended.nil?
-                = link_to admin_workshop_invitation_path(@workshop, invitation, attended: true), class: 'verify_attendance', title: 'Verify attendance', method: :put, remote: true do
+                = link_to admin_workshop_invitation_path(@workshop, invitation, attended: true),
+                  class: 'verify_attendance', title: 'Verify attendance', method: :put, remote: true,
+                  data: { disable_with: "<i class='fa fa-spinner spin'></i>" } do
                   %i.fa.fa-square-o
               - else
                 %i.fa.fa-check-square-o
