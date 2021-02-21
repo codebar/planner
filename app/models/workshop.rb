@@ -72,6 +72,10 @@ class Workshop < ActiveRecord::Base
     open_for_rsvp? || invitable
   end
 
+  def available_for_rsvp?
+    invitable_yet? && date_and_time.future?
+  end
+
   # Is this person attending this event?
   def attendee?(person)
     return false if person.nil?
