@@ -163,8 +163,8 @@ RSpec.shared_examples 'managing workshop attendance' do
             visit workshop_path(workshop)
 
             expect(page).to have_button('Manage your invitation')
-            expect(page).not_to have_link('Attend as a student')
-            expect(page).not_to have_link('Attend as a coach')
+            expect(page).not_to have_button('Attend as a student')
+            expect(page).not_to have_button('Attend as a coach')
           end
         end
 
