@@ -9,7 +9,7 @@ class Course < ActiveRecord::Base
   belongs_to :sponsor
   belongs_to :chapter
 
-  belongs_to :tutor, class_name: 'Member', foreign_key: 'tutor_id'
+  belongs_to :tutor, class_name: 'Member'
 
   before_save :set_slug
 

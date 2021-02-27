@@ -3,8 +3,8 @@ class Job < ActiveRecord::Base
 
   enum status: { draft: 0, pending: 1, published: 2 }
 
-  belongs_to :created_by, class_name: 'Member', foreign_key: :created_by_id
-  belongs_to :approved_by, class_name: 'Member', foreign_key: :approved_by_id
+  belongs_to :created_by, class_name: 'Member'
+  belongs_to :approved_by, class_name: 'Member'
 
   scope :pending_or_published, -> { where(status: [statuses[:pending], statuses[:published]]) }
   scope :ordered, -> { order('created_at desc') }
