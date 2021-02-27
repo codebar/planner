@@ -9,7 +9,7 @@ class WorkshopsController < ApplicationController
   end
 
   def rsvp
-    redirect_to :back, notice: t('workshops.registration_not_open') unless @workshop.invitable_yet?
+    return redirect_to :back, notice: t('workshops.registration_not_open') unless @workshop.available_for_rsvp?
 
     if role_params.nil?
       @invitation = find_attending_invitation(@workshop, current_user)

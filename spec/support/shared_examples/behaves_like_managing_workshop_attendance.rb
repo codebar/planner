@@ -163,9 +163,20 @@ RSpec.shared_examples 'managing workshop attendance' do
             visit workshop_path(workshop)
 
             expect(page).to have_button('Manage your invitation')
-            expect(page).not_to have_link('Attend as a student')
-            expect(page).not_to have_link('Attend as a coach')
+            expect(page).not_to have_button('Attend as a student')
+            expect(page).not_to have_button('Attend as a coach')
           end
+        end
+
+        context 'when the workshop has already happened' do
+          it 'can not rsvp to workshop that is now in the past' do
+            travel_into_the_future = Time.zone.now + 3.days
+            allow(Time).to receive(:now).and_return(travel_into_the_future)
+      
+            click_on 'Attend as a coach'
+            expect(page).to have_content('This event has already taken place')
+            expect(page).not_to have_button('Attend as a coach')
+          end    
         end
       end
     end
