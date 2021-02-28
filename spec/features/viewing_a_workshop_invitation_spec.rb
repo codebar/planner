@@ -90,6 +90,7 @@ RSpec.feature 'Viewing a workshop invitation', type: :feature, wip: true do
           expect(page).to have_content('How to join')
           within '#join-info' do
             expect(page).to have_content("Join ##{workshop.slack_channel}")
+            expect(page).to have_link(href: I18n.t('social_media_links.slack_html'))
           end
         end
       end
