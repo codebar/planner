@@ -684,7 +684,7 @@ en:
       member:
         email: 'Email address'
         name: 'First name'
-        newsletter: 'If you want to receive the codebar newsletter check this box'
+        newsletter: 'Sign up for our newsletter'
         pronouns: 'What pronouns do you use?'
     errors:
       models:
