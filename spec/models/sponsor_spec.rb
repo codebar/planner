@@ -59,7 +59,7 @@ RSpec.describe Sponsor, type: :model do
 
     it 'defines enum level' do
       is_expected.to define_enum_for(:level)
-        .with_values(%i[hidden standard bronze silver gold])
+        .with_values(%i[hidden standard bronze silver gold community])
     end
   end
 end

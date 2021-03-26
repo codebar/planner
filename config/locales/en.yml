@@ -287,6 +287,8 @@ en:
       contact: "contact us"
       email_subject: "Regarding code of conduct"
   sponsors:
+    standard_title: And thanks to our other sponsors
+    community_partner_title: Community partners
     sponsoring: "Sponsoring"
   members:
     sign_up: "Sign up"

@@ -60,6 +60,13 @@ module ApplicationHelper
     super(number, options)
   end
 
+  def sponsorship_level_title(level)
+    return t('sponsors.standard_title') if level === 'standard'
+    return t('sponsors.community_partner_title') if level === 'community'
+
+    "#{level.humanize} sponsors"
+  end
+
   private
 
   def humanize_date_with_time(datetime, end_time)
