@@ -11,14 +11,13 @@
         If you are interested in becoming a host please do get in touch with us at #{mail_to "hello@codebar.io", "hello@codebar.io"}
         ='.'
 
-
-- ['gold', 'silver', 'bronze', 'standard'].each do |level|
+- ['gold', 'silver', 'bronze', 'community', 'standard'].each do |level|
   - if @sponsor_levels[level]
     .stripe.reverse
       .row
         .large-12.columns
           %h3.sponsor-header-margin.text-center
-            #{level == 'standard' ? 'And thanks to our other ' : level.humanize} sponsors
+            = sponsorship_level_title(level)
       - @sponsor_levels[level].in_groups_of(6) do |grouped_sponsors|
         .row.sponsor-row
           - grouped_sponsors.compact.each do |sponsor|

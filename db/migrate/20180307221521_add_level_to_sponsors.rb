@@ -5,6 +5,7 @@ class AddLevelToSponsors < ActiveRecord::Migration
     # bronze: 2,
     # silver: 3,
     # gold: 4,
+    # community: 5,
     add_column :sponsors, :level, :integer, null: false, default: 1, index: true
   end
 

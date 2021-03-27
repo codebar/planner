@@ -49,4 +49,21 @@ RSpec.describe ApplicationHelper, type: :helper do
       expect(helper.dot_markdown(text)).to include(expected)
     end
   end
+
+  describe '#sponsorship_level_title' do
+    it 'returns title for sponsorship level sections on /sponsors page' do
+      title = helper.sponsorship_level_title('gold')
+      expect(title).to eq('Gold sponsors')
+    end
+
+    it 'returns custom title for standard level' do
+      title = helper.sponsorship_level_title('standard')
+      expect(title).to eq('And thanks to our other sponsors')
+    end
+
+    it 'returns custom title for community level' do
+      title = helper.sponsorship_level_title('community')
+      expect(title).to eq('Community partners')
+    end
+  end
 end
