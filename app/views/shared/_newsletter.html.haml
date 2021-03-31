@@ -1,0 +1,35 @@
+.row
+  .medium-10.medium-offset-1.columns
+    %h2 Subscribe to our newsletter
+    %p Summary of what's in the newsletter. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+
+    -# Mailchimp Signup Form
+    #mc_embed_signup
+      %form.validate#mc-embedded-subscribe-form{ action: "https://codebar.us8.list-manage.com/subscribe/post?u=b4652d85b385945c79f2ffa2e&amp;id=3798974cb3",
+                                                 method: "post",
+                                                 name: "mc-embedded-subscribe-form",
+                                                 target: "_blank",
+                                                 novalidate: true }
+        #mc_embed_signup_scroll
+          #indicates-required
+            %small.right
+              %span.asterisk *
+              indicates required
+
+          .mc-field-group
+            %label{ for: "mce-EMAIL" }
+              Email Address 
+              %span.asterisk *
+            %input.required.email#mce-EMAIL{ type: 'email', value: '', name: 'EMAIL' }
+
+          .clear#mce-responses
+            .response#mce-error-response{ style: 'display:none' }
+            .response#mce-success-response{ style: 'display:none' }
+
+          -# real people should not fill this in and expect good things - do not remove this or risk form bot signups
+          %div{ style: 'position: absolute; left: -5000px;', 'aria-hidden': 'true' }
+            %input{ type: 'text', name: 'b_b4652d85b385945c79f2ffa2e_3798974cb3', tabindex: '-1', value: '' }
+          .clear
+            %input.button.small#mc-embedded-subscribe{ type: 'submit', value: 'Subscribe', name: 'subscribe' }
+
+          %a{ href: 'https://us8.campaign-archive.com/home/?u=b4652d85b385945c79f2ffa2e&id=3798974cb3' } View previous newsletters.
