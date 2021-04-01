@@ -97,8 +97,6 @@ Planner::Application.routes.draw do
     end
   end
 
-  resources :skills, only: [:show]
-
   namespace :admin do
     root 'portal#index'
 
