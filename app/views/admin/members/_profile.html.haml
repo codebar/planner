@@ -7,6 +7,13 @@
 
   %hr
 
+  - if @member.skills.any?
+    %h5 Skills
+
+    - @member.skills.each do |skill|
+      %span.label= skill.name
+    %hr
+
   - if @workshop_attendances.positive? || @meeting_rsvps.positive? || @event_rsvps.positive?
     .attendance-summary
       %h5 Attendance summary
