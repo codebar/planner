@@ -68,6 +68,9 @@ en:
       workshop_email_subject: "Regarding hosting a workshop"
     chapters:
       title: "Chapters"
+    newsletter:
+      title: Subscribe to our newsletter
+      description: Get regular updates about the codebar community. Be informed about upcoming events, jobs, scholarships and other learning opportunities.
   mailer:
     workshop_invitation:
       attending:
