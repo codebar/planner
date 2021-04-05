@@ -26,6 +26,9 @@ jobs:
       with:
         ruby-version: 2.4.2
         bundler-cache: true
+      env:
+        BUNDLE_JOBS: 4
+        BUNDLE_RETRY: 3
 
     - name: Setup test database
       env:
