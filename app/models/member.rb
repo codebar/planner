@@ -36,14 +36,11 @@ class Member < ActiveRecord::Base
                                        meeting.id, true)
                             }
   scope :in_group, ->(group) { not_banned.joins(:groups).merge(group) }
+  scope :with_skill, ->(skill_name) { tagged_with(skill_name) }
 
   acts_as_taggable_on :skills
 
   attr_accessor :attendance, :newsletter
-
-  def self.with_skill(skill_name)
-    tagged_with(skill_name)
-  end
 
   def banned?
     bans.active.present? || bans.permanent.present?
