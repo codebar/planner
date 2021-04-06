@@ -1,6 +1,7 @@
 class Member < ActiveRecord::Base
+  include Permissions
+
   self.per_page = 80
-  rolify role_cname: 'Permission', role_table_name: :permission, role_join_table_name: :members_permissions
 
   has_many :attendance_warnings
   has_many :bans
@@ -52,10 +53,6 @@ class Member < ActiveRecord::Base
     bans.permanent.present?
   end
 
-  def more_than_two_absences?
-    workshop_invitations.last_six_months.accepted.length - workshop_invitations.last_six_months.attended.length > 2
-  end
-
   def full_name
     pronoun = pronouns.present? ? "(#{pronouns})" : nil
     [name, surname, pronoun].compact.join ' '
@@ -69,25 +66,11 @@ class Member < ActiveRecord::Base
     groups.coaches.any?
   end
 
-  def organised_chapters
-    Chapter.with_role(:organiser, self)
-  end
-
   def received_welcome_for?(subscription)
     return received_student_welcome_email if subscription.student?
     return received_coach_welcome_email if subscription.coach?
 
     true
-  end
-
-  def send_eligibility_email(user)
-    MemberMailer.eligibility_check(self, user.email).deliver_now
-    eligibility_inquiries.create(sent_by_id: user.id)
-  end
-
-  def send_attendance_email(user)
-    MemberMailer.attendance_warning(self, user.email).deliver_now
-    attendance_warnings.create(sent_by_id: user.id)
   end
 
   def avatar(size = 100)
@@ -106,16 +89,21 @@ class Member < ActiveRecord::Base
     invitations.where(attending: true).map { |e| e.event.id }.include?(event.id)
   end
 
-  def is_organiser?
-    organised_chapters.present?
+  def upcoming_rsvps
+    @upcoming_rsvps ||= rsvps(period: :upcoming)
   end
 
-  def is_admin_or_organiser?
-    has_role?(:admin) || is_organiser?
+  def past_rsvps
+    @past_rsvps ||= rsvps(period: :past).reverse
   end
 
-  def is_monthlies_organiser?
-    Meeting.with_role(:organiser, self).present?
+  def flag_to_organisers?
+    multiple_no_shows? && attendance_warnings.last_six_months.length >= 2
+  end
+
+  def multiple_no_shows?
+    last_six_month_rsvps = workshop_invitations.taken_place.last_six_months.accepted
+    (last_six_month_rsvps.length - last_six_month_rsvps.attended.length) > 3
   end
 
   private
@@ -129,5 +117,13 @@ class Member < ActiveRecord::Base
 
   def md5_email
     Digest::MD5.hexdigest(email.strip.downcase)
+  end
+
+  def rsvps(period:)
+    time_period = "#{period}_rsvps"
+
+    [invitations.joins(:event),
+     workshop_invitations.joins(:workshop).includes(workshop: :chapter),
+     meeting_invitations.joins(:meeting)].map(&time_period.to_sym).inject(:+).sort_by { |i| i.event.date_and_time }
   end
 end

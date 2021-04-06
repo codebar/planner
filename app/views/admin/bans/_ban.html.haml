@@ -1,0 +1,21 @@
+.suspension
+  %span.fa-stack.fa-lg
+    %i.fa.fa-user.fa-stack-1x
+    %i.fa.fa-ban.fa-stack-2x.warning
+  .details
+    %strong
+      - if action.permanent?
+        Suspended indefinitely
+      - else
+        Suspended until #{l(action.expires_at, format: :default_date)}
+      by #{link_to(action.added_by.full_name, action.added_by)}
+    %em= action.reason
+    %blockquote
+      = action.note
+    - if action.explanation.present?
+      .explanation
+        %span.fa-stack.fa-lg
+          %i.fa.fa-envelope-open.fa-stack-1x.info
+        %div= action.explanation
+    .date
+      = l(@member.bans.active.first.created_at, format: :website_format)

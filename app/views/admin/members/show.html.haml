@@ -1,189 +1,27 @@
-.icon-bar.six-up
-  = link_to new_admin_member_ban_path(@member), class: 'item' do
-    %i.fa.fa-ban.warning
-    %label Suspend
-  = link_to '#', class: 'item', 'data-reveal-id': 'note-modal' do
-    %i.fa.fa-pencil
-    %label Note
-  - if @member.student?
-    = link_to admin_member_send_eligibility_email_path(@member), data: {confirm: "Clicking OK will send an automated email to this user now to verify their eligibility for codebar. This cannot be undone. Are you sure?"}, class: 'item' do
-      %i.fa.fa-envelope
-      %label Eligibility
-  - if @member.attendance_warnings.empty?
-    = link_to admin_member_send_attendance_email_path(@member), data: {confirm: "Clicking OK will send an automated email to this user now to warn them about missing too many workshops. This cannot be undone. Are you sure?"}, class: 'item' do
-      %i.fa.fa-clock-o
-      %label Attendance
-  - else
-    = link_to admin_member_send_attendance_email_path(@member), data: {confirm: "#{@member.name} has already received a warning about missing too many workshops on #{@member.attendance_warnings.last.created_at.strftime("%Y-%m-%d at %H:%M")}. Are you sure you want to proceed with sending another one?"}, class: 'item' do
-      %i.fa.fa-clock-o
-      %label Attendance
-
-%section
-  .stripe.reverse
+#admin-member
+  = render 'actions'
+  %section
     .row
-      .medium-1.columns
-        = image_tag(@member.avatar(100), class: 'th radius', title: @member.full_name, alt: @member.full_name)
-      .medium-11.columns
-        %h2= @member.full_name
-    .row
-      .medium-8.columns
-        %dl
-          %dt Pronouns
-          %dd= @member.pronouns || 'Not specified'
+      .medium-3.columns
+        = render 'profile'
+      .medium-9.columns
+        %ul.no-bullet#actions
+          - @actions.each do |action|
+            %li= render action, action: action
 
-          %dt Email
-          %dd= mail_to @member.email, @member.email
-
-          %dt Twitter
-          %dd= link_to "@#{@member.twitter}", twitter_url_for(@member.twitter)
-
-          %dt Phone number
-          %dd= @member.mobile || 'N/A'
-
-          %dt About
-          %dd= @member.about_you
-
-          = render "shared/skills", member: @member
-
-      .medium-4.columns
-        - if @member.banned?
-
-          %span.fa-stack.fa-lg
-            %i.fa.fa-user.fa-stack-1x
-            %i.fa.fa-ban.fa-stack-2x.warning
-          =link_to  '#suspensions' do
-            %label.label.warning Suspended
-        - if @member.groups.any?
-          %h3 Subscriptions
-          %ul.no-bullet#subscriptions
-            - @member.groups.each do |group|
-              %li
-                = link_to [:admin, group] do
-                  #{group.name} (#{group.chapter.name})
-                = link_to admin_member_update_subscriptions_path(member_id: @member, group: group), data: {confirm: "Clicking OK will remove this user from this subscription. This cannot be undone. Are you sure?"} do
-                  %span.fa.fa-times
-        - else
-          %label.label.secondary #{@member.name} is not subscribed to any groups
-        %br
-        Member since
-        %em #{l(@member.created_at, format: :website_format)}
-        - if @member.eligibility_inquiries.present?
-          %p
-          Sent eligibility check email on
-          %em #{l(@member.eligibility_inquiries.last.created_at, format: :website_format)}
-        - if @member.attendance_warnings.present?
-          %p
-          Sent attendance warning on
-          %em #{l(@member.attendance_warnings.last.created_at, format: :website_format)}
-
-  .stripe.reverse
-    .row
-      .medium-8.columns
-        - if @member.workshop_invitations.accepted.any?
-          .panel
-            %p
-              #{@member.name} RSVPed to
-              %label.label.secondary.round #{@invitations.accepted.count}
-              workshops and attended
-              %label.label.secondary.round #{@invitations.attended.count}.
-              - if @invitations.to_coaches.any? or @invitations.to_students.any?
-                %h4 Attended
-                %ul.no-bullet
-                  - if @invitations.to_coaches.any?
-                    %li
-                      %label.label.round #{@invitations.to_coaches.attended.count}
-                      times as a coach
-                  - if @invitations.to_students.any?
-                    %li
-                      %label.label.secondary.round #{@invitations.to_students.attended.count}
-                      times as a student
-                  - if @monthly_invitations.any?
-                    %li
-                      %label.label.round #{@monthly_invitations.attended.count}
-                      Monthlies
-        - if @invitations.any?
-          %p
-            The last workshop they attended was on <u> #{l(@last_attendance.date_and_time, format: :date)}</u>
-        - else
-          %label.label.secondary
-            #{@member.name} has not attended any events!
+          %li
+            %span.fa-stack.fa-lg
+              %i.fa.fa-circle.fa-stack-2x.success
+              %i.fa.fa-user-o.fa-stack-1x
+            .details
+              %strong Signed up
+              .date
+                = l(@member.created_at, format: :website_format)
 
 
-        - if @invitations.any?
-          %h3 Workshops
-          %table
-            - @invitations.each do |invitation|
-              - workshop = invitation.workshop
-              - if workshop.present?
-                %tr
-                  %td
-                    - if invitation.attended?
-                      %i.fa.fa-check
-                    - else
-                      %i.fa.fa-warning
-                  %td
-                    = link_to invitation_path(invitation) do
-                      %label.label=workshop.chapter.name
-                  %td
-                    = l(workshop.date_and_time, format: :date)
-                  %td
-                    = invitation.note
+        - if @member.upcoming_rsvps.any?
+          %h3 Upcoming RSVPs
+          - @member.upcoming_rsvps.each do |invitation|
+            = render EventPresenter.decorate(invitation.event), invitation: invitation
 
-        - if @monthly_invitations.any?
-          %h3 Monthlies/Events
-          %table
-            - @monthly_invitations.each do |invitation|
-              %tr
-                %td
-                  - if invitation.attended?
-                    %i.fa.fa-check
-                  - else
-                    %i.fa.fa-warning
-                %td
-                  = l(invitation.meeting.date_and_time, format: :date)
-                %td
-                  =invitation.meeting.venue.name
-
-
-      .medium-4.columns
-        - if @member.member_notes.any?
-          %dl.accordion{ 'data-accordion': true }
-            %dd.accordion-navigation
-              = link_to '#notes' do
-                Notes (#{@member.member_notes.count})
-              #notes.content
-                = render partial: 'member_note', collection: @member.member_notes
-
-  - if @member.bans.any?
-    .stripe.reverse#suspensions
-      .row
-        .medium-12.columns
-          %h3 Suspensions
-          %table.table
-            %thead
-              %tr
-                %th
-                %th Expires on
-                %th Reason
-                %th Note
-                %th Explanation sent to user
-                %th Suspended by
-            - @member.bans.each do |ban|
-              %tr
-                %td
-                  - if ban.permanent?
-                    %label.label.success Permanent
-                    %td Indefinite
-                  - elsif ban.active?
-                    %label.label.success Active
-                    %td= l(ban.expires_at, format: :date)
-                  - else
-                    %label.label.success Expired
-                    %td= l(ban.expires_at, format: :date)
-
-                %td= ban.reason
-                %td= ban.note
-                %td= ban.explanation
-                %td= link_to ban.added_by.full_name, admin_member_path(ban.added_by)
-
-= render partial: 'note'
+        = link_to 'View all RSVPS', admin_member_events_path(@member), class: 'button expand'

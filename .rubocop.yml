@@ -270,3 +270,6 @@ RSpec/SubjectStub:
   Enabled: true
   Exclude:
     - 'spec/models/job_spec.rb'
+
+RSpec/NestedGroups:
+  Max: 5

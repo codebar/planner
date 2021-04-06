@@ -6,14 +6,14 @@ RSpec.shared_examples DateTimeConcerns do |date_time_type|
   it '#date returns formatted date' do
     travel_to Time.zone.local(2010, 12, 31, 23, 59, 42) do
       date_time_able = Fabricate(date_time_type, date_and_time: Time.zone.now)
-      expect(date_time_able.date).to eq 'Friday, Dec 31'
+      expect(date_time_able.date).to eq 'Fri, 31 Dec 2010'
     end
   end
 
   it '#date returns the date in dashboard format' do
     date_time_able = Fabricate(date_time_type, date_and_time: Time.zone.local(2018, 8, 22, 18, 30))
 
-    expect(date_time_able.date).to eq('Wednesday, Aug 22')
+    expect(date_time_able.date).to eq('Wed, 22 Aug 2018')
   end
 
   context '#time' do
