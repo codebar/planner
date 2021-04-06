@@ -21,7 +21,7 @@
                   %p
                     skills:
                     - coach.skills.each do |skill|
-                      = link_to skill.name, skill_url(skill.name), class: "skill"
+                      .label= skill.name
   .row
     .medium-6.columns.text-left
       = page_entries_info(@coaches, model: 'coaches')

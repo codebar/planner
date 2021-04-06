@@ -37,21 +37,4 @@ RSpec.feature 'when visiting the coaches page', type: :feature do
     click_on old_workshop.date_and_time.year.to_s
     expect(page).to have_css(".coach", count: 12)
   end
-
-  scenario 'I can view coaches listed by skills' do
-    coaches = Fabricate.times(3, :coach, skill_list: ['ruby'])
-    other_coaches = Fabricate.times(2, :coach, skill_list: ['javascript'])
-
-    visit skill_path('ruby')
-
-    expect(page).to have_content("Coaches skilled in 'ruby'")
-
-    coaches.each do |coach|
-      expect(page).to have_content(coach.full_name)
-    end
-
-    other_coaches.each do |coach|
-      expect(page).to_not have_content(coach.full_name)
-    end
-  end
 end
