@@ -7,14 +7,19 @@ module Admin::WorkshopConcerns
 
   module InstanceMethods
     def set_admin_workshop_data
-      @attending_students = InvitationPresenter.decorate_collection(@workshop.attending_students.all)
-      @attending_coaches = InvitationPresenter.decorate_collection(@workshop.attending_coaches.all)
-      @coach_waiting_list = WaitingListPresenter.new(WaitingList.by_workshop(@workshop)
-                                                .where_role('Coach')
-                                                .order(:created_at))
-      @student_waiting_list = WaitingListPresenter.new(WaitingList.by_workshop(@workshop)
-                                                  .where_role('Student')
-                                                  .order(:created_at))
+      @attending_students = InvitationPresenter.decorate_collection(
+        @workshop.attending_students.all.with_notes_and_their_authors
+      )
+      @attending_coaches = InvitationPresenter.decorate_collection(
+        @workshop.attending_coaches.all.with_notes_and_their_authors
+      )
+
+      @coach_waiting_list = WaitingListPresenter.new(
+        WaitingList.by_workshop(@workshop).where_role('Coach').order(:created_at).with_notes_and_their_authors
+      )
+      @student_waiting_list = WaitingListPresenter.new(
+        WaitingList.by_workshop(@workshop).where_role('Student').order(:created_at).with_notes_and_their_authors
+      )
     end
 
     private

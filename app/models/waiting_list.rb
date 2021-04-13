@@ -6,6 +6,7 @@ class WaitingList < ActiveRecord::Base
 
   scope :by_workshop, ->(workshop) { joins(:invitation).where('workshop_invitations.workshop_id = ?', workshop.id) }
   scope :where_role, ->(role) { where('workshop_invitations.role = ?', role) }
+  scope :with_notes_and_their_authors, -> { includes(member: { member_notes: :author }) }
 
   def self.add(invitation, auto_rsvp = true)
     create(invitation: invitation, auto_rsvp: auto_rsvp)

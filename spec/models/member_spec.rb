@@ -28,6 +28,30 @@ RSpec.describe Member, type: :model do
         encrypted_email = Digest::MD5.hexdigest(member.email.strip.downcase)
         expect(member.avatar).to eq("https://secure.gravatar.com/avatar/#{encrypted_email}?size=100&default=identicon")
       end
+
+      describe '#recent_notes' do
+        it 'returns no notes when member attented no workshops' do
+          expect(member.workshop_invitations.attended.length).to eq(0)
+          expect(member.recent_notes.length).to eq(0)
+        end
+
+        it 'returns notes for the most recent five workshops' do
+          latest_workshops = (1..6).map do |time_ago|
+            Fabricate.create(:workshop_invitation, member: member) do
+              workshop { Fabricate(:workshop, date_and_time: Time.now - (7 * time_ago).days) }
+              attended { true }
+            end
+          end
+
+          outside_deadline = latest_workshops.last.workshop.date_and_time
+          within_deadline = latest_workshops.fifth.workshop.date_and_time
+
+          old_note = Fabricate.create(:member_note, member: member, created_at: outside_deadline)
+          new_note = Fabricate.create(:member_note, member: member, created_at: within_deadline)
+
+          expect(member.recent_notes.to_a).to eq([new_note])
+        end
+      end
     end
   end
 

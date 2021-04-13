@@ -1,11 +1,8 @@
 #note  {
-  margin-bottom: 1em;
-  padding-bottom: 1em;
-
-  border-bottom: 1px solid #ddd;
-
-  &:last-child {
-    border-bottom: none;
+  & + & {
+    margin-top: 1em;
+    padding-top: 1em;
+    border-top: 1px solid #ddd;
   }
 
   p {
