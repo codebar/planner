@@ -18,4 +18,4 @@
           %i.fa.fa-envelope-open.fa-stack-1x.info
         %div= action.explanation
     .date
-      = l(@member.bans.active.first.created_at, format: :website_format)
+      = l(action.created_at, format: :website_format)
