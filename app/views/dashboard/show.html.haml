@@ -1,14 +1,14 @@
 - title t('homepage.title')
 
 %div.homepage-hero.d-flex.align-items-center
-  %row.container.d-flex
+  .container.d-flex
     %div.col-md-4.offset-md-1.p-3.text
       %p= raw t('homepage.intro')
 
 .container-fluid.stripe.reverse
-  %row
+  .row
     %div.col-md-7.mx-auto
-      %p.lead= raw t('homepage.explanation')
+      %p.lead.mb-0= raw t('homepage.explanation')
 
 .container-fluid.stripe.reverse
   .row
@@ -66,7 +66,7 @@
                 = date
           = render workshops
 
-    .col-lg-4.pl-5
+    .col-lg-4.pl-lg-5
       %h3
         = t('homepage.chapters.title')
       %ul.list-unstyled.ml-0
