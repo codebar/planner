@@ -66,29 +66,18 @@
         = render partial: "sponsors", object: @event.sponsors
 
 - if @event.verified_coaches.any?
-  .stripe.reverse
+  .container-fluid.stripe.reverse
     .row
       .col
-        %a{ name: "coaches" }
-          %h2{ "data-magellan-destination" => "coaches"}
-            .text-center= t('events.coaches')
-    .row.mt-4
-      .col-md-2.col-sm-3
+        %h2.text-center
+          = t('events.coaches')
+    .row.mt-4.text-center
+      .col-sm-4.col-md-3.mb-4
         - @event.verified_coaches.each do |coach|
-          =link_to twitter_url_for(coach.twitter), class: 'user-link' do
-            =image_tag(coach.avatar(56), class: 'th radius', title: coach.full_name, alt: coach.full_name)
+          = link_to twitter_url_for(coach.twitter), class: 'user-link' do
+            = image_tag(coach.avatar(56), class: 'rounded-circle', title: coach.full_name, alt: coach.full_name)
             %p.mt-3.mb-1= coach.full_name
 
 - if @event.organisers.any?
-  .stripe.reverse
-    .row
-      .col
-        %a{ name: "organisers" }
-          %h2{ "data-magellan-destination" => "organisers"}
-            .text-center= t('events.organisers')
-    .row.mt-4
-      .col-sm-4.col-md-3.mb-4
-        - @event.organisers.each do |organiser|
-          =link_to twitter_url_for(organiser.twitter), class: 'user-link' do
-            =image_tag(organiser.avatar(56), class: 'th radius', title: organiser.full_name, alt: organiser.full_name)
-            %p.mt-3.mb-1= organiser.full_name
+  .container-fluid.stripe.reverse
+    = render partial: 'members/organisers_grid', locals: { members: @event.organisers, show_info: false }
