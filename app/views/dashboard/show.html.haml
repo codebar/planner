@@ -12,10 +12,11 @@
 
 .container-fluid.stripe.reverse
   .row
-    .col-md-4
+    .col-md-4.mb-4.mb-md-0
       .card.h-100.text-md-center.border-0
         .card-body
-          %h3.h4.card-title= t('homepage.participate.students_title')
+          %h3.h4.card-title
+            = t('homepage.participate.students_title')
           %p.card-text
             = t('homepage.participate.students_explanation_p1')
           %p.card-text
@@ -23,13 +24,14 @@
         .card-footer.border-0.bg-transparent
           = link_to t('homepage.participate.students_button'), new_member_path, class: 'btn btn-primary'
 
-    .col-md-4
+    .col-md-4.mb-4.mb-md-0
       .card.h-100.text-md-center.border-0
         .card-body
-          %h3.h4.card-title= t('homepage.participate.coaches_title')
-          %p
+          %h3.h4.card-title
+            = t('homepage.participate.coaches_title')
+          %p.card-text
             = raw t('homepage.participate.coaches_explanation_p1')
-          %p
+          %p.card-text
             = t('homepage.participate.coaches_explanation_p2')
         .card-footer.border-0.bg-transparent
           = link_to t('homepage.participate.coaches_button'), new_member_path, class: 'btn btn-primary'
@@ -37,13 +39,14 @@
     .col-md-4
       .card.h-100.text-md-center.border-0
         .card-body
-          %h3.h4.card-title= t('homepage.participate.workshop_title')
-          %p
+          %h3.h4.card-title
+            = t('homepage.participate.workshop_title')
+          %p.card-text
             = t('homepage.participate.workshop_explanation_p1')
-          %p
+          %p.card-text
             = t('homepage.participate.workshop_explanation_p2')
         .card-footer.border-0.bg-transparent
-          = mail_to "hello@codebar.io", t('homepage.participate.workshop_button'), subject: t('homepage.participate.workshop_email_subject'), class: 'btn btn-primary'
+          = mail_to 'hello@codebar.io', t('homepage.participate.workshop_button'), subject: t('homepage.participate.workshop_email_subject'), class: 'btn btn-primary'
 
 .container-fluid.stripe.reverse
   = render partial: 'shared/donation_platforms'
