@@ -22,11 +22,9 @@
   .row
     .col
       - if @event.announce_only
-        %a{ name: "information" }
-        %h3{ "data-magellan-destination" => "information"} Information
+        %h3 Information
       - else
-        %a{ name: "schedule" }
-        %h3{ "data-magellan-destination" => "schedule"}
+        %h3
           = t('events.schedule')
       = dot_markdown(@event.schedule)
 
@@ -34,36 +32,37 @@
   .stripe.reverse
     .row
       .col
-        %a{ name: "faq" }
-          %h2{ "data-magellan-destination" => "faq"}
-            .text-center FAQ
+        %h2.text-center FAQ
         - if @event.announce_only
           %p.text-center If you have any questions, #{mail_to(@event.email, "get in contact")}
-
         - else
           = render partial: 'events/faq'
 
 -if @event.sponsors?
-  .stripe.reverse
+  #sponsors.container-fluid.stripe.reverse
     .row
       .col
-        %a{ name: "sponsors" }
-        %h2.text-center{ "data-magellan-destination" => "sponsors"}
+        %h2.text-center
           = t('events.sponsors')
         %p.text-center
           %i= t('events.thx_to_sponsors')
-    .row.mt-4
       - if @event.sponsors?(:gold)
-        %h3.text-center Gold
-        = render partial: "sponsors", object: @event.gold_sponsors
+        .row.mt-4
+          .col
+            %h3.text-center Gold
+        = render partial: 'shared/sponsors', object: @event.gold_sponsors
       - if @event.sponsors?(:silver)
-        %h3.text-center Silver
-        = render partial: "sponsors", object: @event.silver_sponsors
+        .row.mt-4
+          .col
+            %h3.text-center Silver
+        = render partial: 'shared/sponsors', object: @event.silver_sponsors
       - if @event.sponsors?(:bronze)
-        %h3.text-center Bronze
-        = render partial: "sponsors", object: @event.bronze_sponsors
+        .row.mt-4
+          .col
+            %h3.text-center Bronze
+        = render partial: 'shared/sponsors', object: @event.bronze_sponsors
       - if @event.sponsors?(:standard)
-        = render partial: "sponsors", object: @event.sponsors
+        = render partial: 'shared/sponsors', object: @event.sponsors
 
 - if @event.verified_coaches.any?
   .container-fluid.stripe.reverse
