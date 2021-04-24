@@ -60,10 +60,7 @@
       - if @upcoming_workshops.any?
         %h2.h3.mb-4= t('homepage.events.upcoming')
         - @upcoming_workshops.each do |date, workshops|
-          %row.ml-0
-            .col
-              %h3.h5.mb-3
-                = date
+          %h3.h5.mb-3= date
           = render workshops
 
     .col-lg-4.pl-lg-5
