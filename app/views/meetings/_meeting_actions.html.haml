@@ -1,8 +1,8 @@
 - if @meeting.venue.present?
   %h4 Venue
-  %p.mb-1
+  %p
     %strong= @meeting.venue.name
-  =link_to @meeting.venue.website, class: 'border-0' do
+  = link_to @meeting.venue.website, class: 'd-block border-0 mb-4' do
     = image_tag(@meeting.venue.avatar.thumb, alt: @meeting.venue.name)
   %strong Address
   %p= @host_address
@@ -14,7 +14,6 @@
     %p= @meeting.venue.accessibility_info
 
   %h4 RSVP
-
   - if logged_in?
     - if @meeting.past?
       %p.badge.bg-primary This event has already occurred.
@@ -23,21 +22,24 @@
       %p.badge.bg-danger Your invitations have been temporarily suspended.
 
     - elsif @meeting.attending?(current_user)
-      %p.badge.bg-success You are attending this event
-      = link_to "Can't make it anymore? Click here to cancel your spot.", meeting_cancel_path(meeting_id: @meeting.id, token: @invitation.token)
+      %p.badge.bg-success You are attending this event.
+      %p
+        %strong
+          = link_to "Can't make it anymore? Click here to cancel your spot.", meeting_cancel_path(meeting_id: @meeting.id, token: @invitation.token)
 
     - elsif @meeting.invitable && @meeting.not_full
       = link_to meeting_invitation_path(@meeting), class: 'btn btn-primary' do
-        = "RSVP here"
+        = 'RSVP here'
 
     - elsif !@meeting.not_full
-      %p.badge.bg-warning.text-dark This event is now full
+      %p.badge.bg-warning.text-dark This event is now full.
       %p
         %strong To join the waitlist, please <a href="https://airtable.com/shrWPRlXDgjDGSYk6">fill in your details here</a>.
 
     - else
-      %h5 This event is not open for RSVP.
+      %p
+        %strong This event is not open for RSVP.
 
   - else
-    = link_to "Sign up", new_member_path, class: 'btn btn-primary'
-    = link_to "Log in", login_path, class: 'btn btn-primary'
+    = link_to 'Sign up', new_member_path, class: 'btn btn-primary'
+    = link_to 'Log in', login_path, class: 'btn btn-primary'
