@@ -15,10 +15,10 @@ module Admin::WorkshopConcerns
       )
 
       @coach_waiting_list = WaitingListPresenter.new(
-        WaitingList.by_workshop(@workshop).where_role('Coach').order(:created_at).with_notes_and_their_authors
+        WaitingList.coaches_for(@workshop).with_notes_and_their_authors
       )
       @student_waiting_list = WaitingListPresenter.new(
-        WaitingList.by_workshop(@workshop).where_role('Student').order(:created_at).with_notes_and_their_authors
+        WaitingList.students_for(@workshop).with_notes_and_their_authors
       )
     end
 

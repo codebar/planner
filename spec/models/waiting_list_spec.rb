@@ -35,4 +35,24 @@ RSpec.describe WaitingList, type: :model do
       expect(WaitingList.by_workshop(workshop).map(&:invitation)).to eq([invitation])
     end
   end
+
+  context '#coaches_for' do
+    it 'returns waitlisted coaches for a specific workshop' do
+      coach = Fabricate(:coach)
+
+      invitation = Fabricate(:coach_workshop_invitation, workshop: workshop, member: coach)
+      coach_invitation = WaitingList.add(invitation)
+
+      expect(WaitingList.coaches_for(workshop)).to eq([coach_invitation])
+    end
+
+    it 'returns waitlisted students for a specific workshop' do
+      student = Fabricate(:student)
+      
+      invitation = Fabricate(:student_workshop_invitation, workshop: workshop, member: student)
+      student_invitation = WaitingList.add(invitation)
+
+      expect(WaitingList.students_for(workshop)).to eq([student_invitation])
+    end
+  end
 end

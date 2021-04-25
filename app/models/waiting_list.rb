@@ -23,4 +23,12 @@ class WaitingList < ActiveRecord::Base
   def self.next_spot(workshop, role)
     by_workshop(workshop).where_role(role).where(auto_rsvp: true).first
   end
+
+  def self.coaches_for(workshop)
+    by_workshop(workshop).where_role('Coach').order(:created_at)
+  end
+
+  def self.students_for(workshop)
+    by_workshop(workshop).where_role('Student').order(:created_at)
+  end
 end
