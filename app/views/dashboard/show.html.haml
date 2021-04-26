@@ -1,49 +1,52 @@
 - title t('homepage.title')
 
-%div.homepage-hero.d-flex.align-items-center
-  %row.container.d-flex
-    %div.col-md-4.offset-md-1.p-3.text
+.homepage-hero.d-flex.align-items-center
+  .container.d-flex
+    .col-md-4.offset-md-1.p-3.text
       %p= raw t('homepage.intro')
 
 .container-fluid.stripe.reverse
-  %row
-    %div.col-md-7.mx-auto
-      %p.lead= raw t('homepage.explanation')
+  .row.justify-content-md-center
+    .col-md-8
+      %p.lead.mb-0= raw t('homepage.explanation')
 
 .container-fluid.stripe.reverse
   .row
-    .col-md-4
-      .text-center
-        %h4
-          = t('homepage.participate.students_title')
-      %p
-        = t('homepage.participate.students_explanation_p1')
-      %p
-        = t('homepage.participate.students_explanation_p2')
-      .text-center.mt-5.mb-5.mb-md-0
-        = link_to t('homepage.participate.students_button'), new_member_path, class: 'btn btn-primary'
+    .col-md-4.mb-4.mb-md-0
+      .card.h-100.text-md-center.border-0
+        .card-body
+          %h3.h4.card-title
+            = t('homepage.participate.students_title')
+          %p.card-text
+            = t('homepage.participate.students_explanation_p1')
+          %p.card-text
+            = t('homepage.participate.students_explanation_p2')
+        .card-footer.border-0.bg-transparent
+          = link_to t('homepage.participate.students_button'), new_member_path, class: 'btn btn-primary'
+
+    .col-md-4.mb-4.mb-md-0
+      .card.h-100.text-md-center.border-0
+        .card-body
+          %h3.h4.card-title
+            = t('homepage.participate.coaches_title')
+          %p.card-text
+            = raw t('homepage.participate.coaches_explanation_p1')
+          %p.card-text
+            = t('homepage.participate.coaches_explanation_p2')
+        .card-footer.border-0.bg-transparent
+          = link_to t('homepage.participate.coaches_button'), new_member_path, class: 'btn btn-primary'
 
     .col-md-4
-      .text-center
-        %h4
-          = t('homepage.participate.coaches_title')
-      %p
-        = raw t('homepage.participate.coaches_explanation_p1')
-      %p
-        = t('homepage.participate.coaches_explanation_p2')
-      .text-center.mt-5.mb-5.mb-md-0
-        = link_to t('homepage.participate.coaches_button'), new_member_path, class: 'btn btn-primary'
-
-    .col-md-4
-      .text-center
-        %h4
-          = t('homepage.participate.workshop_title')
-      %p
-        = t('homepage.participate.workshop_explanation_p1')
-      %p
-        = t('homepage.participate.workshop_explanation_p2')
-      .text-center.mt-5.mb-5.mb-md-0
-        = mail_to "hello@codebar.io", t('homepage.participate.workshop_button'), subject: t('homepage.participate.workshop_email_subject'), class: 'btn btn-primary'
+      .card.h-100.text-md-center.border-0
+        .card-body
+          %h3.h4.card-title
+            = t('homepage.participate.workshop_title')
+          %p.card-text
+            = t('homepage.participate.workshop_explanation_p1')
+          %p.card-text
+            = t('homepage.participate.workshop_explanation_p2')
+        .card-footer.border-0.bg-transparent
+          = mail_to 'hello@codebar.io', t('homepage.participate.workshop_button'), subject: t('homepage.participate.workshop_email_subject'), class: 'btn btn-primary'
 
 .container-fluid.stripe.reverse
   = render partial: 'shared/donation_platforms'
@@ -60,13 +63,10 @@
       - if @upcoming_workshops.any?
         %h2.h3.mb-4= t('homepage.events.upcoming')
         - @upcoming_workshops.each do |date, workshops|
-          %row.ml-0
-            .col
-              %h3.h5.mb-3
-                = date
+          %h3.h5.mb-3= date
           = render workshops
 
-    .col-lg-4.pl-5
+    .col-lg-4.pl-lg-5
       %h3
         = t('homepage.chapters.title')
       %ul.list-unstyled.ml-0
@@ -76,9 +76,9 @@
 
 - if @testimonials.any?
   .container-fluid.stripe.reverse
-    .row
-      .offset-md-1.col-md-10
+    .row.justify-content-md-center
+      .col-md-8
         = render partial: 'members/testimonials'
 
-%section.stripe.reverse
+%section.container-fluid.stripe.reverse
   = render partial: 'shared/newsletter'
