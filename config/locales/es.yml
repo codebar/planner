@@ -152,7 +152,7 @@ es:
     registration_not_open: 'This workshop is not open for registrations'
   events:
     title: "Eventos"
-    past: "Pasado"
+    past: "Pasados"
     no_upcoming_events: "There are no upcoming events."
     view_past_events: "View past events"
     view_all: "View all"
