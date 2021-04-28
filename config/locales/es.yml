@@ -50,11 +50,11 @@ es:
     intro: "<strong>codebar</strong> is a charity that facilitates the growth of a diverse tech community by running free regular programming workshops for minority groups in tech."
     explanation: "Our goal is to enable minority groups members to learn programming in a safe and collaborative environment and expand their career opportunities. To achieve this we run free regular workshops, regular one-off events and try to create opportunities for our students making technology and coding more accessible."
     participate:
-      students_title: "Students"
+      students_title: "Estudiantes"
       students_explanation_p1: "Our students come from a variety of backgrounds. Some want to become full-time developers, whereas some would like to learn the basics of coding in a supportive environment."
       students_explanation_p2: "Sign up to join our vibrant community and attend our workshops."
       students_button: "Sign up as a student"
-      coaches_title: "Coaches"
+      coaches_title: "Entrenadores"
       coaches_explanation_p1: "We encourage new students to work on our HTML/CSS, JavaScript, Ruby, Python or Git <a href='http://tutorials.codebar.io'>tutorials</a>. We also help them understand programming concepts."
       coaches_explanation_p2: "Therefore we are always on the lookout for more developers to join our community and help coach at our workshops."
       coaches_button: "Sign up as a coach"
@@ -114,7 +114,7 @@ es:
   dashboard:
     join_workshops_in: "Join our <i>free</i> workshops in"
     workshops_goal: "to get to grips with the basics of programming and web development."
-    tweets_by: "Tweets by"
+    tweets_by: "Tweets de"
     latest_sponsors: "Latest Sponsors"
     policy:
       intro: "There’s high demand for our workshops and we have a waiting list on most weeks. To make sure as many people as possible can come, we have a straightforward attendance policy."
@@ -151,22 +151,22 @@ es:
     lead: "Attend our workshops to learn programming in a safe and supportive environment at your own pace, or to share your knowledge and coach our students."
     registration_not_open: 'This workshop is not open for registrations'
   events:
-    title: "Events"
-    past: "Past"
+    title: "Eventos"
+    past: "Pasados"
     no_upcoming_events: "There are no upcoming events."
     view_past_events: "View past events"
     view_all: "View all"
     hosted_by: "Hosted by"
     organisers: "Organisers"
-    venue_at: "at"
+    venue_at: "en"
     attend_as_student: "Attend as a student"
     attend_as_coach: "Attend as a coach"
     location: "Location"
-    sponsors: "Sponsors"
+    sponsors: "Patrocinadores"
     thx_to_sponsors: "A big thanks to all of our sponsors for making the event possible!"
-    coaches: "Coaches"
+    coaches: "Entrenadores"
     schedule: "Schedule"
-    send_us_an_email: "send us an email"
+    send_us_an_email: "envianos un email"
     not_open_for_rsvp: This event is not open for RSVP yet.
     faq:
       experience:
@@ -231,7 +231,7 @@ es:
     payment:
       q: "Do I need to pay to attend codebar?"
       a_p1: "Absolutely not! We are lucky enough to have some great companies who are able to host the workshops and/or kindly provide food. And our"
-      awesome_coaches: "awesome coaches"
+      awesome_coaches: "Entrenadores Increíbles"
       a_p2: "give their time freely to help the community."
     technologies:
       q: "What technologies do you teach?"
@@ -268,7 +268,7 @@ es:
       q: "I would like to bring codebar to my city. Can I do that?"
       a: "Of course. codebar is about building a community of experienced developers that are able to give up some of their time to help others. If you are keen on running codebar where you live, we would love to speak to you about it and see how we can help make this happen, so send <a href=\"mailto:contact@codebar.io\">us an email</a>."
     our_coaches:
-      q: "Our coaches"
+      q: "Nuestros Entrenadores"
       a_p1: "You can see all the coaches have helped out in our workshops on the"
       a_p2: ". They are ordered by number of attendances. This is our way of showing our appreciation to them, as without them, we wouldn't be able to exist."
   participant_student_guide:
