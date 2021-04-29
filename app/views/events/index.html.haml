@@ -1,16 +1,15 @@
 - title t('events.title')
-%section#banner
-  .row
-    .large-12.columns
-      - if @events.any?
-        .events-list.events-list--upcoming
-          %h3 Upcoming Events
-          = render partial: 'events', locals: { grouped_events: @events }
 
-.stripe
+.container-fluid
   .row
-    .large-12.columns
+    .col{"data-test": "upcoming-events"}
+      - if @events.any?
+        %h3.mb-4 Upcoming Events
+        = render partial: 'events', locals: { grouped_events: @events }
+
+.container-fluid.stripe
+  .row
+    .col{"data-test": "past-events"}
       - if @past_events.any?
-        .events-list.events-list--past
-          %h3 Past Events
-          = render partial: 'events', locals: { grouped_events: @past_events }
+        %h3.mb-4 Past Events
+        = render partial: 'events', locals: { grouped_events: @past_events }

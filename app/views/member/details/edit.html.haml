@@ -1,36 +1,25 @@
-%section#banner
-  .row
-    .medium-12.columns
+.container-fluid
+  .row.justify-content-md-center.pt-3
+    .col-12.col-md-7
       %h1= t('member.details.edit.title')
       %p= t('member.details.edit.summary')
 
   = simple_form_for @member, url: member_details_path, method: :put do |f|
-    .row
-      .large-6.large-offset-3.columns
+    .row.justify-content-md-center
+      .col-12.col-md-7
         = f.input :name, required: true
-    .row
-      .large-6.large-offset-3.columns
         = f.input :surname, required: true
-    .row
-      .large-6.large-offset-3.columns
         = f.input :pronouns
-
-    .row
-      .large-6.large-offset-3.columns
         = f.input :email, required: true
 
-    .row
-      .large-6.large-offset-3.columns
         - if @member.coach?
           = f.input :about_you, as: :text, label: t('member.details.edit.coach.about_you'), required: true
         - else
           = f.input :about_you, as: :text, label: t('member.details.edit.student.about_you'), required: true
 
-    .row
-      .large-6.large-offset-3.columns
         = f.input :newsletter, as: :boolean, boolean_style: :inline, checked_value: true, unchecked_value: false
 
-    .row
-      .large-6.large-offset-3.columns.text-right
+    .row.justify-content-md-center.mt-4.mb-4
+      .col-12.col-md-7.text-right
         = hidden_field_tag :next_page, step2_member_path(member_type: @type)
-        = f.submit t('member.details.edit.submit'), class: 'button round right'
+        = f.submit t('member.details.edit.submit'), class: 'btn-lg btn-primary border-0'

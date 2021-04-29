@@ -1,7 +1,7 @@
-.row#organisers
-  .large-12.columns
-    .text-center
+#organisers.text-center
+  .row
+    .col
       %h3= t('events.organisers')
-    %br
-    %br
+
+  .row.mt-4
     = render partial: 'members/avatar_listing', locals: { member: members, show_info: show_info }

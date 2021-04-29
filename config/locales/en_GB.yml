@@ -65,6 +65,8 @@ en-GB:
       workshop_email_subject: "Regarding hosting a workshop"
     chapters:
       title: "Chapters"
+    events:
+      upcoming: "Upcoming Events"
   mailer:
     workshop_invitation:
       attending:

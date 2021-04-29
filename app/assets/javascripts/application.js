@@ -10,6 +10,8 @@
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
 //
+//= require popper
+//= require bootstrap
 //= require jquery
 //= require jquery_ujs
 //= require jquery-ui
@@ -51,19 +53,4 @@ $(function(){
   $('#member_lookup_id').chosen().change(function(e) {
     $('#view_profile').attr('href', '/admin/members/' + $(this).val())
   });
-
-  // Prevent tabbing through side menu links when menu is hidden.
-  // This somewhat hacky approach is required because Foundation doesn't
-  // allow us to modify the functionality directly :(
-  var $menuContainer = $('.off-canvas-wrap');
-  var $menuLinks = $('.left-off-canvas-menu').find('a');
-  var toggleMenuLinkTabindex = function() {
-    // Use rAF to delay the call a frame, to wait until the class has been updated:
-    window.requestAnimationFrame(function(){
-      var menuIsVisible = $menuContainer.hasClass('move-right');
-      $menuLinks.attr('tabindex', menuIsVisible ? 0 : -1);
-    });
-  };
-  toggleMenuLinkTabindex();
-  $(document).on('click', toggleMenuLinkTabindex);
 });
