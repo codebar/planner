@@ -23,15 +23,11 @@
 .container-fluid.stripe.reverse
   = render partial: 'shared/venue', locals: { venue: @workshop.host, address: @workshop.address}
 
-
-#sponsors.container-fluid.stripe.reverse.text-center
+#sponsors.container-fluid.stripe.reverse
   .row
     .col
-      %h3 Sponsors
-  .row.mt-4
-    - @workshop.sponsors.each do |sponsor|
-      .col-4
-        = image_tag(sponsor.avatar.url, class: 'sponsor-md', alt: sponsor.name)
+      %h3.text-center Sponsors
+  = render partial: 'shared/sponsors', object: @workshop.sponsors
 
 .container-fluid.stripe.reverse
   = render partial: 'members/organisers_grid', locals: { members: @workshop.organisers, show_info: false }
