@@ -1,35 +1,40 @@
 %nav.navbar.navbar-expand-lg.navbar-light.bg-white.fixed-top.pt-3.pb-3
   %div.container
-    =link_to root_path, class: "navbar-brand border-0" do
-      = image_tag("logo.png", alt: "codebar logo", size: "148x40")
-    %button.navbar-toggler.m-0{"type": "button", "data-toggle": "collapse", "data-target": "#navbarSupportedContent", "aria-controls": "navbarSupportedContent", "aria-expanded": "false", "aria-label": "Toggle navigation"}
+    = link_to root_path, class: 'navbar-brand border-0' do
+      = image_tag('logo.png', alt: 'codebar logo', size: '148x40')
+    %button.navbar-toggler.m-0{'type': 'button', 'data-bs-toggle': 'collapse', 'data-bs-target': '#navbarSupportedContent', 'aria-controls': 'navbarSupportedContent', 'aria-expanded': 'false', 'aria-label': 'Toggle navigation'}
       %span.navbar-toggler-icon
     %div.collapse.navbar-collapse.justify-content-end#navbarSupportedContent
-      %ul.navbar-nav
+      %ul.navbar-nav.navbar-nav-scroll
         %li.nav-item
-          = link_to "https://medium.com/@codebar", class: "nav-link border-0" do
+          = link_to 'https://medium.com/@codebar', class: 'nav-link border-0' do
             Blogs
         %li.nav-item
-          = link_to events_path, class: "nav-link border-0" do
+          = link_to events_path, class: 'nav-link border-0' do
             Events
         %li.nav-item
-          = link_to "http://tutorials.codebar.io", class: "nav-link border-0" do
+          = link_to 'http://tutorials.codebar.io', class: 'nav-link border-0' do
             Tutorials
         %li.nav-item
-          = link_to coaches_path, class: "nav-link border-0" do
+          = link_to coaches_path, class: 'nav-link border-0' do
             Coaches
         %li.nav-item
-          = link_to jobs_path, class: "nav-link border-0" do
+          = link_to jobs_path, class: 'nav-link border-0' do
             Jobs
         %li.nav-item
-          = link_to new_donation_path, class: "nav-link border-0" do
+          = link_to new_donation_path, class: 'nav-link border-0' do
             Donate
         - if !logged_in?
           %li
-          = link_to "/auth/github", class: "nav-link border-0" do
+          = link_to '/auth/github', class: 'nav-link border-0' do
             Sign in
         - else
           %li.nav-item.dropdown
-            = link_to "#", {"role": "button", "aria-expanded": "false", "data-toggle": "dropdown", class: "nav-link border-0 dropdown-toggle", id: "navbarDropdown"} do
+            = link_to '#', {'role': 'button', 'aria-expanded': 'false', 'data-bs-toggle': 'dropdown', class: 'nav-link border-0 dropdown-toggle', id: 'navbarDropdown'} do
               Menu
-            = render 'layouts/aside'
+            = render 'layouts/member_menu'
+          - if current_user.admin_or_organiser? || current_user.monthlies_organiser?
+            %li.nav-item.dropdown
+              = link_to '#', {'role': 'button', 'aria-expanded': 'false', 'data-bs-toggle': 'dropdown', class: 'nav-link border-0 dropdown-toggle', id: 'adminDropdown'} do
+                Admin Menu
+              = render 'layouts/aside'
