@@ -47,7 +47,7 @@ es:
         precision: 0
         format: '%u%n'
   homepage:
-    intro: "<strong>codebar</strong> is a charity that facilitates the growth of a diverse tech community by running free regular programming workshops for minority groups in tech."
+    intro: "<strong>codebar</strong> es una organización benéfica que facilita el crecimiento de una comunidad tecnológica diversa mediante la realización de talleres de programación regulares y gratuitos para grupos minoritarios en tecnología."
     explanation: "Our goal is to enable minority groups members to learn programming in a safe and collaborative environment and expand their career opportunities. To achieve this we run free regular workshops, regular one-off events and try to create opportunities for our students making technology and coding more accessible."
     participate:
       students_title: "Estudiantes"
@@ -64,7 +64,7 @@ es:
       workshop_button: "Host a workshop"
       workshop_email_subject: "Regarding hosting a workshop"
     chapters:
-      title: "Chapters"
+      title: "Capítulos"
   mailer:
     workshop_invitation:
       attending:
@@ -82,7 +82,7 @@ es:
   messages:
     accepted_invitation: "Thanks for getting back to us %{name}. See you at the workshop!"
     already_invited: 'You have already RSVPd or joined the waitlist for this workshop.'
-    error_blank_note: 'You must select a note'
+    error_blank_note: 'Debes seleccionar una nota'
     rejected_invitation: "We are so sad you can't make it, but thanks for letting us know %{name}."
     already_rsvped: "You have already confirmed you attendance!"
     not_attending_already: "You have already confirmed you can't make it!"
@@ -90,7 +90,7 @@ es:
     feedback_saved: "Thank you for taking the time to give us feedback!"
     feedback_not_found: "You have already submitted feedback for this event."
     updated_note: "Successfully updated note."
-    invalid_session: 'Your session is invalid'
+    invalid_session: 'Tu sesión no es válida'
     invitations:
       meeting:
         cancel: "Thanks for letting us know you can't make it."
@@ -211,7 +211,7 @@ es:
   sponsors:
     sponsoring: "Sponsoring"
   members:
-    sign_up: "Sign up"
+    sign_up: "Inscribirse"
     sign_in_with_github: "Iniciar sesión con Github"
     sign_up_as_student: "I understand and meet the eligibility criteria. Sign me up as a student"
     sign_up_as_coach: "Sign up as a coach"
@@ -303,14 +303,14 @@ es:
   job:
     status:
       draft: Draft
-      pending: Pending approval
-      published: Published
-      expired: Expired
+      pending: Aprobación pendiente
+      published: Publicado
+      expired: Caducado
     admin:
       status:
         pending: Pending approval
-        published: Approved
-        expired: Approved
+        published: Aprobado
+        expired: Aprobado
     expired: 'This job post has expired.'
     check_out_jobs_html: 'Check out the rest of our %{link}.'
     published_on: 'Published on'
@@ -320,9 +320,10 @@ es:
     salary: 'Salario'
     closing_date: Closing date
     contact_email: Contact email
-    posted_by: Posted by
+    posted_by: Publicado por
+
     location:
-      title: Location
+      title: Localización
       remote: 'Remote'
     messages:
       draft_html: 'This is a preview of your job.<b>Edit</b> to amend or <b>Submit</b> for approval.'
@@ -462,8 +463,8 @@ es:
       title: Manage jobs
       info:
         request_changes_html: To request changes email %{name} at %{email}
-        approved_by: Approved by %{name} on %{date}.
-        approved_by_no_date: Approved by %{name}
+        approved_by: Aprobado por %{name} el %{date}.
+        approved_by_no_date: Aprobado por %{name}
       messages:
         approved: "The job has been approved and an email has been sent out to %{name} at %{email}"
         cannot_approve: You cannot approve expired job listings
@@ -501,8 +502,8 @@ es:
   activerecord:
     attributes:
       job:
-        title: Title
-        company: Name
+        title: Título
+        company: Nombre
         company_address: Address
         company_postcode: Postcode
         company_website: Website
