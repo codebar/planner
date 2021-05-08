@@ -1,25 +1,21 @@
 %section#banner
-  = render partial: 'shared/title', locals: { title: "Subscriptions", date: nil }
+  = render partial: 'shared/title', locals: { title: 'Subscriptions', date: nil }
 
 .row.mt-4
-  .col
+  .col.col-lg-9
     %h3= t('subscriptions.mailing_list.title')
     %p.lead= t('subscriptions.mailing_list.summary')
-    .row
-      .col-3
-        - if @member.subscribed_to_newsletter?
-          = simple_form_for @mailing_list, url: mailing_lists_path, method: :delete do |f|
-            = f.submit t('subscriptions.mailing_list.unsubscribe'), class: 'btn btn-success btn-lg'
-        - else
-          = simple_form_for @mailing_list, url: mailing_lists_path do |f|
-            = f.submit t('subscriptions.mailing_list.subscribe'), class: 'btn btn-success btn-lg'
-
+    - if @member.subscribed_to_newsletter?
+      = simple_form_for @mailing_list, url: mailing_lists_path, method: :delete do |f|
+        = f.submit t('subscriptions.mailing_list.unsubscribe'), class: 'btn btn-success btn-lg'
+    - else
+      = simple_form_for @mailing_list, url: mailing_lists_path do |f|
+        = f.submit t('subscriptions.mailing_list.subscribe'), class: 'btn btn-success btn-lg'
 %hr
 
-
 .row
-  .col
-    %p.lead.mb-4= t('subscriptions.summary')
+  .col.col.col-lg-9
+    %p.lead= t('subscriptions.summary')
 
 - @groups.group_by(&:chapter).each do |chapter, groups|
   .row.mb-4.border-bottom
@@ -27,15 +23,15 @@
       %h4= chapter.name
   - groups.sort_by(&:name).each do |group|
     .row.mb-3
-      .col-9
+      .col
         %p= group.name
-      .col-3.d-flex.justify-content-end
+      .col.col-md-4.col-lg-3
         - if belongs_to_group?(group)
           = simple_form_for :subscription, method: :delete, html: { class: 'w-100' } do |f|
             = f.input :subscription_id, as: :hidden, input_html: { value: nil }
             = f.input :group_id, as: :hidden, input_html: { value: group.id }
-            = f.submit "Subscribed", class: 'btn btn-success btn-lg w-100', id: "#{chapter.name.downcase}-#{group.name.downcase}"
+            = f.submit 'Subscribed', class: 'btn btn-success btn-lg w-100', id: "#{chapter.name.downcase}-#{group.name.downcase}"
         - else
           = simple_form_for :subscription, html: { class: 'w-100' } do |f|
             = f.input :group_id, as: :hidden, input_html: { value: group.id }
-            = f.submit "Subscribe", class: 'btn btn-primary btn-lg w-100', id: "#{chapter.name.downcase}-#{group.name.downcase}"
+            = f.submit 'Subscribe', class: 'btn btn-primary btn-lg w-100', id: "#{chapter.name.downcase}-#{group.name.downcase}"
