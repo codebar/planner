@@ -6,6 +6,7 @@ class WaitingList < ActiveRecord::Base
 
   scope :by_workshop, ->(workshop) { joins(:invitation).where('workshop_invitations.workshop_id = ?', workshop.id) }
   scope :where_role, ->(role) { where('workshop_invitations.role = ?', role) }
+  scope :with_notes_and_their_authors, -> { includes(member: { member_notes: :author }) }
 
   def self.add(invitation, auto_rsvp = true)
     create(invitation: invitation, auto_rsvp: auto_rsvp)
@@ -21,5 +22,13 @@ class WaitingList < ActiveRecord::Base
 
   def self.next_spot(workshop, role)
     by_workshop(workshop).where_role(role).where(auto_rsvp: true).first
+  end
+
+  def self.coaches_for(workshop)
+    by_workshop(workshop).where_role('Coach').order(:created_at)
+  end
+
+  def self.students_for(workshop)
+    by_workshop(workshop).where_role('Student').order(:created_at)
   end
 end

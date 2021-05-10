@@ -36,14 +36,11 @@ class Member < ActiveRecord::Base
                                        meeting.id, true)
                             }
   scope :in_group, ->(group) { not_banned.joins(:groups).merge(group) }
+  scope :with_skill, ->(skill_name) { tagged_with(skill_name) }
 
   acts_as_taggable_on :skills
 
   attr_accessor :attendance, :newsletter
-
-  def self.with_skill(skill_name)
-    tagged_with(skill_name)
-  end
 
   def banned?
     bans.active.present? || bans.permanent.present?
@@ -104,6 +101,16 @@ class Member < ActiveRecord::Base
   def multiple_no_shows?
     last_six_month_rsvps = workshop_invitations.taken_place.last_six_months.accepted
     (last_six_month_rsvps.length - last_six_month_rsvps.attended.length) > 3
+  end
+
+  def recent_notes
+    last_five_workshops = workshop_invitations.order_by_latest.attended.take(5)
+    return [] if last_five_workshops.empty?
+
+    # Take 1 day out to include notes added on the previous day of the workshop
+    notes_from_date = last_five_workshops.last.workshop.date_and_time - 1.day
+
+    member_notes.where('created_at > ?', notes_from_date)
   end
 
   private
