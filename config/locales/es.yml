@@ -53,12 +53,12 @@ es:
       students_title: "Estudiantes"
       students_explanation_p1: "Our students come from a variety of backgrounds. Some want to become full-time developers, whereas some would like to learn the basics of coding in a supportive environment."
       students_explanation_p2: "Sign up to join our vibrant community and attend our workshops."
-      students_button: "Regístrate como estudiante"
+      students_button: "Regístrate como Estudiante"
       coaches_title: "Entrenadores"
       coaches_explanation_p1: "We encourage new students to work on our HTML/CSS, JavaScript, Ruby, Python or Git <a href='http://tutorials.codebar.io'>tutorials</a>. We also help them understand programming concepts."
       coaches_explanation_p2: "Therefore we are always on the lookout for more developers to join our community and help coach at our workshops."
-      coaches_button: "Sign up as a coach"
-      workshop_title: "Workshops"
+      coaches_button: "Regístrate como Entrenador"
+      workshop_title: "Talleres"
       workshop_explanation_p1: "We are hosted by some amazing companies who support our cause. Our normal format is 30 minutes of socialising with food and drink, followed by a lightning talk then coding."
       workshop_explanation_p2: Help our expansion and enable us to provide help and support to our chapters by hosting and sponsoring our workshops.
       workshop_button: "Host a workshop"
@@ -68,13 +68,13 @@ es:
   mailer:
     workshop_invitation:
       attending:
-        subject: "Attendance Confirmation for %{date_time}"
+        subject: "Confirmación de Asistencia para %{date_time}"
       attending_reminder:
-        subject: "Workshop Reminder %{date_time}"
+        subject: "Recordatorio de Taller %{date_time}"
       invite_coach:
-        subject: "Workshop Coach Invitation %{date_time}"
+        subject: "Invitación al Entrenador del Taller %{date_time}"
       invite_student:
-        subject: "Workshop Invitation %{date_time}"
+        subject: "Invitación al Taller %{date_time}"
       notify_waiting_list:
         subject: "A spot just became available"
       waiting_list_reminder:
@@ -162,7 +162,7 @@ es:
     venue_at: "en"
     attend_as_student: "Attend as a student"
     attend_as_coach: "Attend as a coach"
-    location: "Location"
+    location: "Localización"
     sponsors: "Patrocinadores"
     thx_to_sponsors: "A big thanks to all of our sponsors for making the event possible!"
     coaches: "Entrenadores"
@@ -177,10 +177,10 @@ es:
         q: "What kind of contributions can I make?"
         a: "Your contributions can be tiny, as simple as fixing a typo, to something incredible. You can help with documentation, fix a bug that you found, improve the copy, help with design or even tackle bigger tasks and help introduce new features. Every little helps!"
       laptop:
-        q: "Do I need to bring a laptop?"
+        q: "¿Necesito traer una computadora portátil?"
         a_html: "Yes, you should bring a laptop. If you don't have one %{link} as we may be able to help."
       keyboard:
-        q: "Do I need to bring a keyboard?"
+        q: "¿Necesito traer un teclado?"
         a_html: "A keyboard would help as you will spend the entire day pairing with someone on your laptop. If you don't have a keyboard, %{link} and we'll try to organise something for you."
       travel_costs:
         q: "I will be commuting. Can you help with my travel expenses?"
@@ -215,7 +215,7 @@ es:
     sign_up: "Inscribirse"
     sign_in_with_github: "Iniciar sesión con Github"
     sign_up_as_student: "I understand and meet the eligibility criteria. Sign me up as a student"
-    sign_up_as_coach: "Sign up as a coach"
+    sign_up_as_coach: "Regístrate como Entrenador"
     code_of_conduct: "código de conducta"
     new:
       intro: "We offer a welcoming, inclusive and learning-friendly environment, and have a zero tolerance policy towards any form of harassment or inappropriate behavior. Before you sign up, read our"
@@ -226,11 +226,11 @@ es:
         github: "Lastly, when you click the sign up button, you'll be taken to something called GitHub. After logging in with a GitHub account, you'll be taken back to the codebar website. If you don't have an account yet, you'll need to create one. It doesn't take long and it's something that will come in handy when you get started with coding!"
       invitations: "Invitations are sent out periodically, so don't worry if you don't receive one as soon as you register."
   footer:
-    email_us: "Send us an email at"
+    email_us: "Envíenos un correo electrónico a"
     contact_info: "Contact Info:"
   faq:
     payment:
-      q: "Do I need to pay to attend codebar?"
+      q: "¿Tengo que pagar para asistir a codebar?"
       a_p1: "Absolutely not! We are lucky enough to have some great companies who are able to host the workshops and/or kindly provide food. And our"
       awesome_coaches: "Entrenadores Increíbles"
       a_p2: "give their time freely to help the community."
