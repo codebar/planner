@@ -1,24 +1,25 @@
-.container
-  .row
-    .col-md-6.col-sm-12
+.container-fluid
+  .row.align-items-center
+    .col-md-6.pt-4.pb-4
       %h1= @chapter.name
       - if @chapter.description
         %p.lead= @chapter.description
       - else
-        %p.lead= t('chapters.intro_html')
+        %p.lead.mb-0= t('chapters.intro_html')
     - if @chapter.image.present?
-      .medium-6.columns.chapter-header-image
+      .col-md-6
         = image_tag @chapter.image.bg, alt: "#{@chapter.name} chapter"
 
-.alert.alert-primary
-  .row
-    .col-6
-      = t('chapters.info', email: h(@chapter.email)).html_safe
-    .col-6.text-center
-      - if logged_in?
-        = render partial: 'subscriptions'
-      - else
-        =link_to 'Sign up', new_member_path, class: 'btn btn-primary'
+.alert-primary.pt-4.pb-4
+  .container-fluid
+    .row.align-items-center
+      .col-md-6.mb-4.mb-md-0
+        = t('chapters.info', email: h(@chapter.email)).html_safe
+      .col-md-6.text-center
+        - if logged_in?
+          = render partial: 'subscriptions'
+        - else
+          =link_to 'Sign up', new_member_path, class: 'btn btn-primary'
 
 .container.stripe.reverse#chapter
   .row
