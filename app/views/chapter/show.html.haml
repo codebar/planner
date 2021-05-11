@@ -52,17 +52,9 @@
         %h2.text-center Sponsors
     = render partial: 'shared/sponsors', object: @recent_sponsors
 
-.stripe.reverse
-  .container.row
-    .col.text-center
-      %a{ name: 'organisers' }
-      %h2 Team
-  .container.row.mt-4
-    - @chapter.organisers.shuffle.each do |organiser|
-      .col-4.col-md-3.text-center.border.pt-4
-        = link_to twitter_url_for(organiser.twitter), title: "#{organiser.full_name} Twitter profile" do
-          = image_tag(organiser.avatar(65), class: "mt-3", alt: organiser.full_name, class: 'rounded-circle')
-          = organiser.full_name
-  .container.row.mt-4
-    .col.alert.alert-primary
+.container-fluid.stripe.reverse
+  = render partial: 'members/organisers_grid', locals: { members: @chapter.organisers.shuffle, show_info: false, title: t('chapters.team') }
+
+  .row.mt-5
+    .col.alert.alert-primary.mb-0
       = t('chapters.contact', city: @chapter.name, email: @chapter.email)

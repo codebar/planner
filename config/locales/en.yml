@@ -392,6 +392,7 @@ en:
     sign_up: "to be invited to our workshops."
     no_incoming: "There are no workshops coming up."
     contact: "To contact the %{city} team, send an email to %{email}"
+    team: Team
   job:
     status:
       draft: Draft
