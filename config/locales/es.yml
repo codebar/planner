@@ -48,21 +48,21 @@ es:
         format: '%u%n'
   homepage:
     intro: "<strong>codebar</strong> es una organización benéfica que facilita el crecimiento de una comunidad tecnológica diversa mediante la realización de talleres de programación regulares y gratuitos para grupos minoritarios en tecnología."
-    explanation: "Our goal is to enable minority groups members to learn programming in a safe and collaborative environment and expand their career opportunities. To achieve this we run free regular workshops, regular one-off events and try to create opportunities for our students making technology and coding more accessible."
+    explanation: "Nuestro objetivo es permitir que los miembros de grupos minoritarios aprendan programación en un entorno seguro y colaborativo y amplíen sus oportunidades profesionales. Para lograr esto, organizamos talleres regulares gratuitos, eventos únicos regulares y tratamos de crear oportunidades para nuestros estudiantes haciendo que la tecnología y la codificación sean más accesibles."
     participate:
       students_title: "Estudiantes"
-      students_explanation_p1: "Our students come from a variety of backgrounds. Some want to become full-time developers, whereas some would like to learn the basics of coding in a supportive environment."
-      students_explanation_p2: "Sign up to join our vibrant community and attend our workshops."
+      students_explanation_p1: "Nuestros estudiantes provienen de una variedad de orígenes. Algunos quieren convertirse en desarrolladores a tiempo completo, mientras que a otros les gustaría aprender los conceptos básicos de la codificación en un entorno de apoyo."
+      students_explanation_p2: "Regístrese para unirse a nuestra vibrante comunidad y asistir a nuestros talleres."
       students_button: "Regístrate como Estudiante"
       coaches_title: "Entrenadores"
-      coaches_explanation_p1: "We encourage new students to work on our HTML/CSS, JavaScript, Ruby, Python or Git <a href='http://tutorials.codebar.io'>tutorials</a>. We also help them understand programming concepts."
-      coaches_explanation_p2: "Therefore we are always on the lookout for more developers to join our community and help coach at our workshops."
+      coaches_explanation_p1: "Alentamos a los nuevos estudiantes a trabajar en nuestro HTML/CSS, JavaScript, Ruby, Python o Git <a href='http://tutorials.codebar.io'>tutoriales</a>. También les ayudamos a comprender los conceptos de programación."
+      coaches_explanation_p2: "Entonces, siempre estamos buscando más desarrolladores para que se unan a nuestra comunidad y ayuden a entrenar en nuestros talleres."
       coaches_button: "Regístrate como Entrenador"
       workshop_title: "Talleres"
-      workshop_explanation_p1: "We are hosted by some amazing companies who support our cause. Our normal format is 30 minutes of socialising with food and drink, followed by a lightning talk then coding."
-      workshop_explanation_p2: Help our expansion and enable us to provide help and support to our chapters by hosting and sponsoring our workshops.
-      workshop_button: "Host a workshop"
-      workshop_email_subject: "Regarding hosting a workshop"
+      workshop_explanation_p1: "Estamos alojados por algunas empresas increíbles que apoyan nuestra causa. Nuestro formato normal es de 30 minutos de socialización con comida y bebida, seguidos de una charla relámpago y luego codificación."
+      workshop_explanation_p2: "Ayude a nuestra expansión y permítanos brindar ayuda y apoyo a nuestros capítulos organizando y patrocinando nuestros talleres."
+      workshop_button: "Organiza un taller"
+      workshop_email_subject: "Respecto a la realización de un taller"
     chapters:
       title: "Capítulos"
   mailer:
@@ -76,9 +76,9 @@ es:
       invite_student:
         subject: "Invitación al Taller %{date_time}"
       notify_waiting_list:
-        subject: "A spot just became available"
+        subject: "Un lugar acaba de estar disponible"
       waiting_list_reminder:
-        subject: "Reminder: you're on the codebar waiting list (%{date_time})"
+        subject: "Recordatorio: estás en la lista de espera de codebar (%{date_time})"
   messages:
     accepted_invitation: "Thanks for getting back to us %{name}. See you at the workshop!"
     already_invited: 'You have already RSVPd or joined the waitlist for this workshop.'
