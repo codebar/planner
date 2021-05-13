@@ -12,6 +12,8 @@ RSpec.describe WorkshopInvitation, type: :model do
     it { is_expected.to validate_presence_of(:workshop) }
     it { is_expected.to validate_uniqueness_of(:member_id).scoped_to(:workshop_id, :role) }
     it { is_expected.to validate_inclusion_of(:role).in_array(%w[Student Coach]) }
+
+    it { is_expected.to validate_presence_of(:tutorial).on(:waitinglist) }
   end
 
   context 'scopes' do
