@@ -102,7 +102,7 @@ es:
     provider_already_connected: 'You are already signed in!'
     not_logged_in: "Debes iniciar sesión para acceder a esta página."
   navigation:
-    dashboard: "Dashboard"
+    dashboard: "Tablero"
     code_of_conduct: "Código de conducta"
     coach_guide: "Guía para entrenadores"
     student_guide: "Guía para estudiantes"
@@ -113,7 +113,7 @@ es:
     codebar_stories: "codebar Cuentos"
   dashboard:
     join_workshops_in: "Únase a nuestros talleres <i>gratuitos</i> en"
-    workshops_goal: "to get to grips with the basics of programming and web development."
+    workshops_goal: "para familiarizarse con los conceptos básicos de programación y desarrollo web."
     tweets_by: "Tweets de"
     latest_sponsors: "Últimos patrocinadores"
     policy:
@@ -157,18 +157,18 @@ es:
     view_past_events: "Ver eventos pasados
 "
     view_all: "Ver todos"
-    hosted_by: "Hosted by"
+    hosted_by: "Alojado por"
     organisers: "Organizadores"
     venue_at: "en"
-    attend_as_student: "Attend as a student"
-    attend_as_coach: "Attend as a coach"
+    attend_as_student: "Asiste como estudiante"
+    attend_as_coach: "Asiste como entrenador"
     location: "Localización"
     sponsors: "Patrocinadores"
-    thx_to_sponsors: "A big thanks to all of our sponsors for making the event possible!"
+    thx_to_sponsors: "¡Muchas gracias a todos nuestros patrocinadores por hacer posible el evento!"
     coaches: "Entrenadores"
     schedule: "Calendario"
     send_us_an_email: "envianos un email"
-    not_open_for_rsvp: This event is not open for RSVP yet.
+    not_open_for_rsvp: "Este evento aún no está abierto para confirmar su asistencia."
     faq:
       experience:
         q: "How experienced should I be to join the workshop?"
@@ -214,7 +214,7 @@ es:
   members:
     sign_up: "Inscribirse"
     sign_in_with_github: "Iniciar sesión con Github"
-    sign_up_as_student: "I understand and meet the eligibility criteria. Sign me up as a student"
+    sign_up_as_student: "Entiendo y cumplo con los criterios de elegibilidad. Inscribirme como estudiante"
     sign_up_as_coach: "Regístrate como Entrenador"
     code_of_conduct: "código de conducta"
     new:
@@ -273,7 +273,7 @@ es:
       a_p1: "You can see all the coaches have helped out in our workshops on the"
       a_p2: ". They are ordered by number of attendances. This is our way of showing our appreciation to them, as without them, we wouldn't be able to exist."
   participant_student_guide:
-    title: "Student Guide"
+    title: "Guía de estudiante"
     attendance_policy:
       title: "Politica de asistencia"
       intro: "codebar is, and always has been, open to all levels of coding experience. While most of the tutorials on our website are aimed at newcomers to web development, we intend to continue our open-door policy for any student who needs coach support on their own projects. Due to the fact that our workshops are frequently oversubscribed, we ask students to respect the following expectations for participation in our workshops"
@@ -296,7 +296,7 @@ es:
       title: "Alumnos con discapacidad"
       description: "We want to ensure that our workshops are as accessible as possible. If you are disabled and are unsure about whether our venues can cater to your needs, we encourage you to please get in touch with us at <a href='mailto:hello@codebar.io'>hello@codebar.io</a> and we will do what we can to accommodate you."
   chapters:
-    intro_html: "Hi and welcome to codebar!"
+    intro_html: "¡Hola y bienvenido a coderbar!"
     info: "Check out our <a href='http://codebar.io/faq'>FAQ</a> page for any questions you might have, or email us at <a href='mailto:%{email}'>%{email}</a> if you can't find the answer you're looking for. Otherwise, click the Sign up button to get started."
     sign_up: "to be invited to our workshops."
     no_incoming: "There are no workshops coming up."
@@ -505,10 +505,10 @@ es:
       job:
         title: Título
         company: Nombre
-        company_address: Address
-        company_postcode: Postcode
-        company_website: Website
-        email: Contact email
+        company_address: Dirección
+        company_postcode: Código postal
+        company_website: Sitio web
+        email: Email de contacto
         link_to_job: Link to job post
         expiry_date: Application closing date
   donation_platforms:
