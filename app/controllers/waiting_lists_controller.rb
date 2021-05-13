@@ -3,7 +3,8 @@ class WaitingListsController < ApplicationController
 
   def create
     @invitation.assign_attributes(invitation_params)
-    return back_with_message(@invitatiaon.errors.full_messages) unless @invitation.valid?
+
+    return back_with_message(@invitation.errors.full_messages) unless @invitation.valid?(:waitinglist)
 
     @invitation.save && WaitingList.add(@invitation, auto_rsvp)
     message = auto_rsvp ? 'You have been added to the waiting list' :

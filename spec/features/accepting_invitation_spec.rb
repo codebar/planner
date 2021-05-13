@@ -3,7 +3,7 @@ require 'spec_helper'
 RSpec.feature 'Accepting a workshop invitation', type: :feature do
   context '#workshop' do
     let(:member) { Fabricate(:member) }
-    let(:invitation) { Fabricate(:workshop_invitation, member: member) }
+    let(:invitation) { Fabricate(:workshop_invitation, member: member, tutorial: tutorial.title) }
     let(:invitation_route) { invitation_path(invitation) }
     let(:accept_invitation_route) { accept_invitation_path(invitation) }
     let(:reject_invitation_route) { reject_invitation_path(invitation) }
