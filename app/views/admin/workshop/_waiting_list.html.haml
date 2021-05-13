@@ -25,5 +25,9 @@
                 - else
                   = invitation.member.full_name
             %td.small-5.columns
-              %p
-                %small= invitation.note
+              - if invitation.tutorial?
+                %small Tutorial: #{invitation.tutorial}
+                %br
+              - if invitation.note?
+                %small=invitation.note
+                %br
