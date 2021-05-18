@@ -41,7 +41,7 @@ gem 'tzinfo-data'
 gem 'chosen-rails'
 gem 'commonmarker'
 
-gem 'gibbon', '~> 3.3.4'
+gem 'gibbon', '~> 3.4.0'
 
 gem 'stripe'
 
