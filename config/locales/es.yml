@@ -233,15 +233,15 @@ es:
       q: "¿Tengo que pagar para asistir a codebar?"
       a_p1: "Absolutely not! We are lucky enough to have some great companies who are able to host the workshops and/or kindly provide food. And our"
       awesome_coaches: "Entrenadores Increíbles"
-      a_p2: "give their time freely to help the community."
+      a_p2: "dar su tiempo libremente para ayudar a la comunidad"
     technologies:
       q: "¿Qué tecnologías enseñas?"
-      a: "We have a variety of available tutorials in HTML, CSS, JavaScript and Ruby. If you want to learn something else don't hesitate to <a href=\"mailto:contact@codebar.io\">send us an email</a> as we might still be able to find someone to help you out."
+      a: "Tenemos una variedad de tutoriales disponibles en HTML, CSS, JavaScript and Ruby. Si quieres aprender algo más, no dudes en <a href=\"mailto:contact@codebar.io\">enviarnos un correo electrónico</a> ya que aún podríamos encontrar a alguien que te ayude."
     eligibility:
       q: "Quiero asistir a un taller. ¿Soy elegible?"
-      a: "Our workshops are available to women, LGBTQ and people who are underrepresented in the tech industry. If you belong to one of these groups, you are more than welcome to attend. If not, there are some other great initiatives like <a href='https://www.meetup.com/opentechschool-london/'>Open Tech School London</a> where you can learn in a collaborative environment. Please see our <a href='http://codebar.io/student-guide'>student guide</a> for more information."
+      a: "ya que aún podríamos encontrar a alguien que te ayude. If you belong to one of these groups, you are more than welcome to attend. If not, there are some other great initiatives like <a href='https://www.meetup.com/opentechschool-london/'>Open Tech School London</a> where you can learn in a collaborative environment. Please see our <a href='http://codebar.io/student-guide'>student guide</a> for more information."
     career:
-      q: "Is codebar only aimed at people who want to move into a career as a developer?"
+      q: "¿Codebar solo está dirigido a personas que desean avanzar en una carrera como desarrollador?"
       a: "No! codebar is about getting people excited about programming. We'll help them learn some basic coding skills, as well as how to explore and do things on their own. For those who do want to become developers, we will provide help and guidance to help them achieve their goal."
     format:
       q: "¿Cuál es el formato de los talleres?"
@@ -250,11 +250,11 @@ es:
       q: "¿Necesito traer una computadora portátil a los talleres?"
       a: "Yes, we suggest that you bring a laptop as it will be easier for you to carry on working on things after the workshops. It you don't have one, <a href=\"mailto:contact@codebar.io\">send us an email</a> so we can try and help out."
     online_resources:
-      q: "There are so many online resources, why should I come to codebar?"
+      q: "Hay tantos recursos en línea, ¿por qué debería ir a Codebar?"
       a: "Coding can be intimidating and a lot of people find it hard to get started. By putting you in touch with people who can help and guide you we make the experience and learning process easier and more enjoyable."
     preperations:
       q: "I would like to coach at codebar. Is there anything I should do besides signing up?"
-      a_p1: "Yes. First you should read our"
+      a_p1: "Si. Primero deberías leer nuestro"
       coaching_guide_tutorials: "tutoriales de guía de entrenador"
       a_p2: ". Then spend sometime familiarising yourself with the"
       a_p3: "<a href='http://tutorials.codebar.io'>tutorials</a>. The tutorials are open source so if there is something that you want to improve open an issue on the GitHub repository or send a pull request."
@@ -298,7 +298,7 @@ es:
   chapters:
     intro_html: "¡Hola y bienvenido a coderbar!"
     info: "Check out our <a href='http://codebar.io/faq'>FAQ</a> page for any questions you might have, or email us at <a href='mailto:%{email}'>%{email}</a> if you can't find the answer you're looking for. Otherwise, click the Sign up button to get started."
-    sign_up: "to be invited to our workshops."
+    sign_up: "ser invitado a nuestros talleres."
     no_incoming: "There are no workshops coming up."
     contact: "To contact the %{city} team, send an email to %{email}"
   job:
@@ -333,10 +333,10 @@ es:
       expired_html: 'This job has expired.'
       updated: 'Your job has been updated.'
       submitted: "Job submitted for approval. You will receive an email when it's been approved."
-      cannot_edit: You cannot edit a job that has already been approved.
+      cannot_edit: No puede editar un trabajo que ya ha sido aprobado.
       public_page_html: View the %{link} for this job.
   jobs:
-    title: Jobs
+    title: Trabajos
     index:
       description: There are %{count} jobs listed
       none: There are no jobs listed at this time. Please check back soon as positions get added regularly.
@@ -344,7 +344,7 @@ es:
     title: 'Workshop feedback'
     description: Your submission will be completely anonymous. We read every piece of feedback and use it to help us improve our workshops.
     note: Please do not mention any names, but instead choose your coach from the dropdown. This enables us to address issues but also to anonymously share feedback with coaches. Member privacy is very important to us!
-    rating: Your overall rating of the workshop
+    rating: Tu calificación general del taller
     coach: '¿Quién fue tu entrenador?'
     select_coach: '- Seleccionar entrenador -'
     tutorial: 'What tutorial did you go through?'
@@ -353,8 +353,8 @@ es:
     suggestions: "Was there something you didn't like? What can we do to improve your experience?"
   member:
     jobs:
-      title: My jobs
-      preview: Preview
+      title: Mi trabajaos
+      preview: Avance
       index:
         description: Our aim is to be the one stop shop for junior developer roles. All jobs featured on our job board must fall under the following three categories; paid internships, apprenticeships or junior developer roles. Additionally, jobs must not require previous experience or a degree and must be paid positions. Each job that is submitted will be approved by the codebar team before appearing on the job board.
         testimonial: Within 2 days of posting an ad on the codebar job board, we had dozens of high quality applications and we made an offer to a candidate within 2 weeks. There are a lot of talented interns and junior developers; posting on the codebar job board is a great way to reach them.
@@ -404,15 +404,15 @@ es:
         info: We don’t allow Google to use or share our analytics data.
         opt_out: You can [opt out of Google Analytics](https://tools.google.com/dlpage/gaoptout).
         ga: Tracks if you have visited codebar.io before
-        ga_expiry: After 2 years
+        ga_expiry: Después de 2 años
         gid: Tracks if you have visited codebar.io before
-        gid_expiry: After 24 hours
+        gid_expiry: Después de 24 horas
       cloudflare:
         title: Cloudflare
         cfduid: Used to identify individual clients behind a shared IP address and apply security settings on a per-client basis.
         cfduid_expiry: '1 year'
     privacy_policy:
-      title: Privacy Policy
+      title: Política de privacidad
       subtitle: Your privacy matters to us
       p1: 'Your privacy means a lot to us, and we take it very seriously. We aim to be transparent with you about the data we collect about you and how it is used and shared. By signing up to our workshops you consent to our use of your data under this Privacy Policy. The document below has been created by codebar whose companies house registered name and address is as follows:'
       address_html: '
@@ -449,7 +449,7 @@ es:
           **2.4 Data Access and Portability**<br/>
           You have the right to request a copy of the personal information we hold about you in a structured, electronic format. If you wish to receive a copy of the information we hold about you, please email company@codebar.io.'
       security:
-        title: 3. Security
+        title: 3. Seguridad
         text: From time to time we implement and update administrative, technical, and physical security measures to help protect your information against unauthorised access, loss, destruction, or alteration. However, the Internet is not a 100% secure environment so we can’t guarantee the security of the transmission or storage of your information.
       changes:
         title: 4. Changes to this privacy policy
@@ -475,11 +475,11 @@ es:
       manage_rsvps:
         text: 'RSVP Students and Coaches to the workshop. The attendance confirmation email will be triggered and they will be removed from the waiting list.'
       destroy:
-        success: "Workshop deleted successfully"
+        success: "Taller eliminado correctamente"
         failure: "Workshop cannot be deleted. This is because it has invitees and/or workshop information is on the website for a while long enough that it cannot be deleted."
     messages:
       meeting:
-        created: 'Meeting successfully created'
+        created: 'Reunión creada con éxito'
         updated: 'You have successfully updated the details of this meeting'
         invitations_already_sent: 'Invitations were previously sent; they will not be sent again'
         sending_invitations: 'Invitations are being sent out'
@@ -499,7 +499,7 @@ es:
     hints:
       job:
         remote: Only check if the role is fully remote only
-        salary: Annual pay before tax, without commas or decimal points
+        salary: Pago anual antes de impuestos, sin comas ni puntos decimales
   activerecord:
     attributes:
       job:
