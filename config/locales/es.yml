@@ -80,26 +80,26 @@ es:
       waiting_list_reminder:
         subject: "Recordatorio: estás en la lista de espera de codebar (%{date_time})"
   messages:
-    accepted_invitation: "Thanks for getting back to us %{name}. See you at the workshop!"
-    already_invited: 'You have already RSVPd or joined the waitlist for this workshop.'
+    accepted_invitation: "Gracias por responder a nosotros, %{name}. ¡Nos vemos en el taller!"
+    already_invited: 'Ya ha confirmado su asistencia o se ha unido a la lista de espera para este taller.'
     error_blank_note: 'Debes seleccionar una nota'
-    rejected_invitation: "We are so sad you can't make it, but thanks for letting us know %{name}."
-    already_rsvped: "You have already confirmed you attendance!"
+    rejected_invitation: "Estamos muy tristes de que no pueda asistir, pero gracias por hacérnoslo saber, %{name}."
+    already_rsvped: "¡Ya has confirmado tu asistencia!"
     not_attending_already: "You have already confirmed you can't make it!"
-    no_available_seats: "Unfortunately there are no more spaces left :(. If you would like to join our waiting list send us an email at %{email}"
-    feedback_saved: "Thank you for taking the time to give us feedback!"
-    feedback_not_found: "You have already submitted feedback for this event."
+    no_available_seats: "Desafortunadamente no hay más espacios :(. Si desea unirse a nuestra lista de espera, envíenos un correo electrónico a %{email}"
+    feedback_saved: "¡Gracias por tomarse el tiempo para enviarnos sus comentarios!"
+    feedback_not_found: "Ya ha enviado comentarios para este evento."
     updated_note: "Nota actualizada correctamente"
     invalid_session: 'Tu sesión no es válida'
     invitations:
       meeting:
-        cancel: "Thanks for letting us know you can't make it."
-        rsvp: "Your RSVP was successful. We look forward to seeing you at the Monthly!"
-      rsvped_to_other_workshop: "You have already RSVP'd to another workshop on this date. If you would prefer to attend this workshop, please cancel your other RSVP first."
-      spot_confirmed: "Your spot has been confirmed for %{event}! We look forward to seeing you there."
-      spot_not_confirmed: 'Your spot has not yet been confirmed. We will verify your attendance after you complete the questionnaire.'
+        cancel: "Gracias por informarnos que no puede asistir."
+        rsvp: "Su RSVP fue exitoso. ¡Esperamos verte en el Monthly!"
+      rsvped_to_other_workshop: "Ya ha confirmado su asistencia a otro taller en esta fecha. Si prefiere asistir a este taller, primero cancele su otro RSVP."
+      spot_confirmed: "Tu lugar ha sido confirmado para %{event}! Esperamos verlos allí."
+      spot_not_confirmed: 'Tu lugar aún no ha sido confirmado. Verificaremos su asistencia después de completar el cuestionario.'
   notifications:
-    provider_already_connected: 'You are already signed in!'
+    provider_already_connected: '¡Ya has iniciado sesión!'
     not_logged_in: "Debes iniciar sesión para acceder a esta página."
   navigation:
     dashboard: "Tablero"
@@ -153,7 +153,7 @@ es:
   events:
     title: "Eventos"
     past: "Pasados"
-    no_upcoming_events: "There are no upcoming events."
+    no_upcoming_events: "No hay eventos próximos."
     view_past_events: "Ver eventos pasados
 "
     view_all: "Ver todos"
@@ -171,7 +171,7 @@ es:
     not_open_for_rsvp: "Este evento aún no está abierto para confirmar su asistencia."
     faq:
       experience:
-        q: "How experienced should I be to join the workshop?"
+        q: "¿Qué experiencia necesito tener para unirme al taller?"
         a:
       contribution:
         q: "What kind of contributions can I make?"
