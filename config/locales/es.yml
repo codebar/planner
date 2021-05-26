@@ -117,11 +117,11 @@ es:
     tweets_by: "Tweets de"
     latest_sponsors: "Últimos patrocinadores"
     policy:
-      intro: "There’s high demand for our workshops and we have a waiting list on most weeks. To make sure as many people as possible can come, we have a straightforward attendance policy."
-      rule1: "Before you RSVP make sure you are eligible to attend. If you’re not sure get in touch for a chat."
-      rule2: "You must sign up and RSVP to attend our workshops."
-      rule3: "If you RSVP then later realise you can’t make it, you must cancel. It only takes a few seconds to do through your confirmation email."
-      rule4: "Please try to cancel with at least 24 hours notice."
+      intro: "Nuestros talleres tienen una gran demanda y tenemos una lista de espera la mayoría de las semanas. Para asegurarnos de que pueda venir la mayor cantidad de personas posible, tenemos una política de asistencia fácil de entender."
+      rule1: "Antes de confirmar su asistencia, asegúrese de ser elegible para asistir. Si no estás seguro, ponte en contacto para chatear."
+      rule2: "Debe registrarse y confirmar su asistencia para asistir a nuestros talleres."
+      rule3: "Si confirma su asistencia y luego descubre que no puede asistir, debe cancelar. Solo toma unos segundos hacerlo a través de su correo electrónico de confirmación."
+      rule4: "Intente cancelar con al menos 24 horas de anticipación."
       rule5: "We know that sometimes things come up last minute, but even if you only cancel an hour before the workshop, get in touch and let us know."
       what_happens: "What happens if I don’t respect the policy?"
       strikes_system: "We operate a three strikes system. That means if you don’t come in without cancelling an RSVP three times, we will take you off our invite list for four weeks. We’ll get in touch after your first absence to make sure you understand this."
@@ -253,11 +253,11 @@ es:
       q: "Hay tantos recursos en línea, ¿por qué debería ir a Codebar?"
       a: "Coding can be intimidating and a lot of people find it hard to get started. By putting you in touch with people who can help and guide you we make the experience and learning process easier and more enjoyable."
     preperations:
-      q: "I would like to coach at codebar. Is there anything I should do besides signing up?"
+      q: "Me gustaría entrenar en codebar. ¿Debo hacer algo más que registrarme?"
       a_p1: "Si. Primero deberías leer nuestro"
       coaching_guide_tutorials: "tutoriales de guía de entrenador"
-      a_p2: ". Then spend sometime familiarising yourself with the"
-      a_p3: "<a href='http://tutorials.codebar.io'>tutorials</a>. The tutorials are open source so if there is something that you want to improve open an issue on the GitHub repository or send a pull request."
+      a_p2: ". Luego, dedique algún tiempo a familiarizarse con los"
+      a_p3: "<a href='http://tutorials.codebar.io'>tutoriales</a>. The tutorials are open source so if there is something that you want to improve open an issue on the GitHub repository or send a pull request."
       a_p4: "We don't expect the coaches to be familiar with all the technologies and languages we have material on."
     location:
       q: "¿Dónde se llevan a cabo los talleres?"
@@ -349,7 +349,7 @@ es:
     select_coach: '- Seleccionar entrenador -'
     tutorial: 'What tutorial did you go through?'
     select_tutorial: '- Select Tutorial -'
-    request: 'How did you find the workshop?'
+    request: '¿Cómo encontraste el taller?'
     suggestions: "Was there something you didn't like? What can we do to improve your experience?"
   member:
     jobs:
@@ -389,7 +389,7 @@ es:
   pages:
     cookies:
       title: Cookies
-      p1: 'Cookies are small pieces of text used to store information on web browsers. They are used by websites accross a number of different devices to store and receive identifiers and other information. Our Website and Service use cookies and other similar technologies (collectively in this Policy, "cookies"), in order to provide a better service to you and to generally improve our Website and Service. For example, we may use cookies to help direct you to the appropriate part of our Website, by indicating that you are a repeat visitor. We also may use information to present you with services that are matched to your preferences and to manage and track the effectiveness of our marketing efforts.'
+      p1: 'Las cookies son pequeños fragmentos de texto que se utilizan para almacenar información en los navegadores web. Los sitios web los utilizan en varios dispositivos diferentes para almacenar y recibir identificadores y otra información. Nuestro sitio web y servicio utilizan cookies y otras tecnologías similares (colectivamente en esta Política, "cookies"), para brindarle un mejor servicio y, en general, mejorar nuestro sitio web y nuestro servicio. Por ejemplo, podemos utilizar cookies para ayudarlo a dirigirlo a la parte apropiada de nuestro sitio web, lo que indica que es un visitante habitual. También podemos utilizar información para presentarle servicios que se adapten a sus preferencias y para administrar y rastrear la efectividad de nuestros esfuerzos de marketing.'
       p2: Some portions of the codebar website are functional without cookies, and you may generally choose whether to accept cookies. Most web browsers are set to accept cookies by default, however, you may be able to delete cookies yourself through your browser's cookie manager. To do so, please follow the instructions provided by your web browser. Please note that disabling cookies will reset your session, disable auto-login, and may adversely affect the availability and functionality of our Website and the services we can provide to you.
       sub:
         title: Below the cookies used by the codebar website.
