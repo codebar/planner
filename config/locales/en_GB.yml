@@ -48,7 +48,7 @@ en-GB:
         format: '%u%n'
   homepage:
     intro: "<strong>codebar</strong> is a charity that facilitates the growth of a diverse tech community by running free regular programming workshops for minority groups in tech."
-    explanation: "Our goal is to enable minority group members to learn programming in a safe and collaborative environment and expand their career opportunities. To achieve this we run free regular workshops, regular one-off events and try to create opportunities for our students making technology and coding more accessible."
+    explanation: "Our goal is to enable people in groups that are underrepresented in technology to learn programming in a safe and collaborative environment and expand their career opportunities. To achieve this we run free regular workshops, regular one-off events and try to create opportunities for our students making technology and coding more accessible."
     participate:
       students_title: "Students"
       students_explanation_p1: "Our students come from a variety of backgrounds. Some want to become full-time developers, whereas some would like to learn the basics of coding in a supportive environment."
