@@ -85,7 +85,7 @@ es:
     error_blank_note: 'Debes seleccionar una nota'
     rejected_invitation: "Estamos muy tristes de que no pueda asistir, pero gracias por hacérnoslo saber, %{name}."
     already_rsvped: "¡Ya has confirmado tu asistencia!"
-    not_attending_already: "You have already confirmed you can't make it!"
+    not_attending_already: "¡Ya has confirmado que no puedes asistir!"
     no_available_seats: "Desafortunadamente no hay más espacios :(. Si desea unirse a nuestra lista de espera, envíenos un correo electrónico a %{email}"
     feedback_saved: "¡Gracias por tomarse el tiempo para enviarnos sus comentarios!"
     feedback_not_found: "Ya ha enviado comentarios para este evento."
@@ -119,21 +119,21 @@ es:
     policy:
       intro: "There’s high demand for our workshops and we have a waiting list on most weeks. To make sure as many people as possible can come, we have a straightforward attendance policy."
       rule1: "Before you RSVP make sure you are eligible to attend. If you’re not sure get in touch for a chat."
-      rule2: "You must sign up and RSVP to attend our workshops."
+      rule2: "Debe registrarse y confirmar su asistencia para asistir a nuestros talleres."
       rule3: "If you RSVP then later realise you can’t make it, you must cancel. It only takes a few seconds to do through your confirmation email."
-      rule4: "Please try to cancel with at least 24 hours notice."
+      rule4: "Intente cancelar con al menos 24 horas de anticipación."
       rule5: "We know that sometimes things come up last minute, but even if you only cancel an hour before the workshop, get in touch and let us know."
-      what_happens: "What happens if I don’t respect the policy?"
+      what_happens: "¿Qué pasa si no respeto la política?"
       strikes_system: "We operate a three strikes system. That means if you don’t come in without cancelling an RSVP three times, we will take you off our invite list for four weeks. We’ll get in touch after your first absence to make sure you understand this."
       removing: "If you fail to attend without cancelling another three times, we might have to remove you permanently from our invitation list."
       rsvping: "There is no penalty for RSVP-ing and then cancelling on a regular basis, but please avoid it. If you always struggle to make it in on a certain day then let us know – that kind of feedback is really important to us."
-      eligibility_note: "Another note on eligibility"
+      eligibility_note: "Otra nota sobre elegibilidad"
       abuse: "We’re a fairly relaxed bunch and we trust you, so we don’t police students as to their eligibility. However if it ever looks like this is being abused we may have to change that – which we really don’t want to do."
       reminder: "So please remember what these workshops are for – to open up tech to people that are underrepresented in the industry."
     teacher_guide:
       laptop: "You don't need a laptop for our workshops. You are there to watch and guide the students. If you don't feel comfortable with the tutorial you should spend time on it before coming if you want to help out."
       keyboard: "Do not take over the keyboard! This can be off-putting and scary."
-      typing: "Encourage the students to type and not copy paste."
+      typing: "Anime a los estudiantes a escribir y no a copiar y pegar."
       questions: "Explain that there are no bad questions."
       mistakes: "Explain to students that it's OK to make mistakes."
       introduction: "Always introduce yourself. Say why you want to help out and are spending your own time on this, why you like programming."
@@ -147,9 +147,9 @@ es:
       stubling: "Let them stumble. We learn by making mistakes, getting frustrated, and working through problem in our own way. Be supportive, but let them explore."
       suggestions: "Do you have something to suggest? Make a <a href='https://github.com/codebar/planner'>pull request</a> or <a href='https://github.com/codebar/planner/issues/new'>create an issue</a>"
   workshops:
-    already_wish_to_attend: 'You have already RSVPd or joined the waitlist for this workshop.'
+    already_wish_to_attend: "You have already RSVPd or joined the waitlist for this workshop."
     lead: "Attend our workshops to learn programming in a safe and supportive environment at your own pace, or to share your knowledge and coach our students."
-    registration_not_open: 'This workshop is not open for registrations'
+    registration_not_open: "Este taller no está abierto para inscripciones."
   events:
     title: "Eventos"
     past: "Pasados"
@@ -178,17 +178,17 @@ es:
         a: "Your contributions can be tiny, as simple as fixing a typo, to something incredible. You can help with documentation, fix a bug that you found, improve the copy, help with design or even tackle bigger tasks and help introduce new features. Every little helps!"
       laptop:
         q: "¿Necesito traer una computadora portátil?"
-        a_html: "Yes, you should bring a laptop. If you don't have one %{link} as we may be able to help."
+        a_html: "Sí, debe traer una computadora portátil. Si no tiene un %{link}, es posible que podamos ayudarlo."
       keyboard:
         q: "¿Necesito traer un teclado?"
         a_html: "A keyboard would help as you will spend the entire day pairing with someone on your laptop. If you don't have a keyboard, %{link} and we'll try to organise something for you."
       travel_costs:
-        q: "I will be commuting. Can you help with my travel expenses?"
+        q: "Estaré viajando. ¿Me pueden ayudar con mis gastos de viaje?"
         a: "We will be offering some travel grants. Just make sure you fill in the questionnaire after you RSVP and we will get in touch."
   coaches:
-    want_to_coach: "Do you want to coach at our workshops?"
+    want_to_coach: "¿Quieres formarte en nuestros talleres?"
     read_before: "If you have not attended our workshops before, make sure you read our"
-    code_of_conduct: "code of conduct"
+    code_of_conduct: "código de conducta"
     policy: "as we have a zero tolerance policy and expect everyone to behave appropriately. You should also  go through our"
     guide: "coaching guide"
     unable_attend: "In case you are unable to attend after you RSVP, please make sure you come back and update your attendance as we rely on coaches showing up in order for our workshops to run smoothly."
@@ -207,7 +207,7 @@ es:
       concerns: "If you are being harassed, notice that someone else is being harassed, or have any other concerns, please contact one of the organisers immediately."
       applies_to: "We expect participants to follow these rules at all <b>codebar</b> events."
       questions: "If you have any questions or concerns about this code please"
-      contact: "contact us"
+      contact: "Contacta con nosotros"
       email_subject: "Regarding code of conduct"
   sponsors:
     sponsoring: "Patrocinio"
@@ -231,7 +231,7 @@ es:
   faq:
     payment:
       q: "¿Tengo que pagar para asistir a codebar?"
-      a_p1: "Absolutely not! We are lucky enough to have some great companies who are able to host the workshops and/or kindly provide food. And our"
+      a_p1: "¡Absolutamente no! Tenemos la suerte de contar con grandes empresas que pueden organizar los talleres y / o proporcionar amablemente la comida. Y nuestros"
       awesome_coaches: "Entrenadores Increíbles"
       a_p2: "dar su tiempo libremente para ayudar a la comunidad"
     technologies:
@@ -509,12 +509,12 @@ es:
         company_postcode: Código postal
         company_website: Sitio web
         email: Email de contacto
-        link_to_job: Link to job post
-        expiry_date: Application closing date
+        link_to_job: Enlace a la publicación de empleo
+        expiry_date: Fecha de cierre de la solicitud
   donation_platforms:
     title: "How to support us"
     donation_form:
-      title: "Use the donation page"
+      title: "Usa la página de donaciones"
       text: "Support us with a one-time or recurring donation through the donation form on our website."
     amazon_smile:
       title: "Amazon Smile"
