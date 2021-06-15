@@ -118,18 +118,18 @@ es:
     latest_sponsors: "Últimos patrocinadores"
     policy:
       intro: "Hay una gran demanda de nuestros talleres y tenemos una lista de espera durante la mayoría de las semanas. Para asegurarse de que puedan llegar la mayor cantidad posible, tenemos una política de asistencia directa."
-      rule1: "Antes de que RSVP se asegure de que usted es elegible para asistir. Si no está seguro de ponerse en contacto con un chat".
+      rule1: "Antes de que RSVP se asegure de que usted es elegible para asistir. Si no está seguro de ponerse en contacto con un chat."
       rule2: "Debe registrarse y confirmar su asistencia para asistir a nuestros talleres."
-      rule3: "Si luego descubre que no puede hacerlo, debe cancelarlo. Solo le tomará unos segundos hacerlo a través de su correo electrónico de confirmación".
+      rule3: "Si luego descubre que no puede hacerlo, debe cancelarlo. Solo le tomará unos segundos hacerlo a través de su correo electrónico de confirmación."
       rule4: "Intente cancelar con al menos 24 horas de anticipación."
-      rule5: "Sabemos que a veces las cosas surgen de última hora, pero incluso si solo cancelas una hora antes del taller, ponte en contacto y háganoslo saber".
+      rule5: "Sabemos que a veces las cosas surgen de última hora, pero incluso si solo cancelas una hora antes del taller, ponte en contacto y háganoslo saber."
       what_happens: "¿Qué pasa si no respeto la política?"
       strikes_system:  "Operamos un sistema de 'tres huelgas'. Eso significa que si no entiende sin cancelar un RSVP tres veces, lo llevaremos a nuestra lista de invitación durante cuatro semanas. Nos pondremos en contacto después de su primera ausencia para asegurarse de que usted Entienda esto."
-      removing: "Si no asiste sin cancelar otras tres veces, es posible que tengamos que eliminarlo permanentemente de nuestra lista de invitación".
-      rsvping:  "No hay penalización por RSVP-ING y luego cancelando regularmente, pero evítelo. Si siempre lucha para hacerlo en un día determinado, háganoslo saber, ese tipo de retroalimentación es realmente importante para nosotros".
+      removing: "Si no asiste sin cancelar otras tres veces, es posible que tengamos que eliminarlo permanentemente de nuestra lista de invitación."
+      rsvping:  "No hay penalización por RSVP-ING y luego cancelando regularmente, pero evítelo. Si siempre lucha para hacerlo en un día determinado, háganoslo saber, ese tipo de retroalimentación es realmente importante para nosotros."
       eligibility_note: "Otra nota sobre elegibilidad"
       abuse:  "Somos un grupo bastante relajado y confiamos en usted, por lo que no contamos con los estudiantes de policía en cuanto a su elegibilidad. Sin embargo, si alguna vez parece que esto está siendo abusado, es posible que tengamos que cambiar eso, lo que realmente no queremos hacer."
-      reminder:  "Así que, por favor, recuerde que son estos talleres, para abrir tecnología a las personas que están subrepresentadas en la industria".
+      reminder:  "Así que, por favor, recuerde que son estos talleres, para abrir tecnología a las personas que están subrepresentadas en la industria."
     teacher_guide:
       laptop: "You don't need a laptop for our workshops. You are there to watch and guide the students. If you don't feel comfortable with the tutorial you should spend time on it before coming if you want to help out."
       keyboard: "Do not take over the keyboard! This can be off-putting and scary."
