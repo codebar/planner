@@ -147,8 +147,8 @@ es:
       stubling: "Let them stumble. We learn by making mistakes, getting frustrated, and working through problem in our own way. Be supportive, but let them explore."
       suggestions: "Do you have something to suggest? Make a <a href='https://github.com/codebar/planner'>pull request</a> or <a href='https://github.com/codebar/planner/issues/new'>create an issue</a>"
   workshops:
-    already_wish_to_attend: "You have already RSVPd or joined the waitlist for this workshop."
-    lead: "Attend our workshops to learn programming in a safe and supportive environment at your own pace, or to share your knowledge and coach our students."
+    already_wish_to_attend:  "Ya tienes RSVPD o se unió a la lista de espera para este taller."
+    lead:  "Asista a nuestros talleres para aprender la programación en un entorno seguro y de apoyo a su propio ritmo, o para compartir sus conocimientos y entrenar a nuestros estudiantes."
     registration_not_open: "Este taller no está abierto para inscripciones."
   events:
     title: "Eventos"
@@ -174,23 +174,23 @@ es:
         q: "¿Qué experiencia necesito tener para unirme al taller?"
         a:
       contribution:
-        q: "What kind of contributions can I make?"
-        a: "Your contributions can be tiny, as simple as fixing a typo, to something incredible. You can help with documentation, fix a bug that you found, improve the copy, help with design or even tackle bigger tasks and help introduce new features. Every little helps!"
+        q:  "¿Qué tipo de contribuciones puedo hacer?"
+        a:  "Sus contribuciones pueden ser pequeñas, tan simples como arreglar un error tipográfico, a algo increíble. Puede ayudar con la documentación, solucionar un error que ha encontrado, mejorar la copia, ayudar a diseñar o incluso abordar tareas más grandes y ayudar a introducir nuevas características. Cada Poco ayuda!"
       laptop:
         q: "¿Necesito traer una computadora portátil?"
         a_html: "Sí, debe traer una computadora portátil. Si no tiene un %{link}, es posible que podamos ayudarlo."
       keyboard:
         q: "¿Necesito traer un teclado?"
-        a_html: "A keyboard would help as you will spend the entire day pairing with someone on your laptop. If you don't have a keyboard, %{link} and we'll try to organise something for you."
+        a_html: "Un teclado ayudaría, ya que pasará todo el día emparejando con alguien en su computadora portátil. Si no tiene un teclado,% {link} e intentaremos organizar algo para usted."
       travel_costs:
         q: "Estaré viajando. ¿Me pueden ayudar con mis gastos de viaje?"
-        a: "We will be offering some travel grants. Just make sure you fill in the questionnaire after you RSVP and we will get in touch."
+        a:  "Vamos a ofrecer algunas becas de viaje. Solo asegúrate de completar el cuestionario después de que RSVP y nos pondremos en contacto."
   coaches:
     want_to_coach: "¿Quieres formarte en nuestros talleres?"
-    read_before: "If you have not attended our workshops before, make sure you read our"
+    read_before:  "Si no ha asistido a nuestros talleres antes, asegúrate de leer nuestro"
     code_of_conduct: "código de conducta"
-    policy: "as we have a zero tolerance policy and expect everyone to behave appropriately. You should also  go through our"
-    guide: "coaching guide"
+    policy: "Como tenemos una política de tolerancia cero y esperamos que todos se comporten de manera adecuada. También deberías pasar por nuestro"
+    guide: "guía para entrenadores"
     unable_attend: "In case you are unable to attend after you RSVP, please make sure you come back and update your attendance as we rely on coaches showing up in order for our workshops to run smoothly."
     food: "PS: There will also be food at the workshop. We always make an effort to have vegetarian, vegan and gluten-free options available. If you have any other dietary requirements, send us email at"
   code_of_conduct:
@@ -221,7 +221,7 @@ es:
       intro: "We offer a welcoming, inclusive and learning-friendly environment, and have a zero tolerance policy towards any form of harassment or inappropriate behavior. Before you sign up, read our"
       students:
         intro: "If you would like to attend as a student, make sure you meet our"
-        criteria_link: "eligibility criteria"
+        criteria_link:  "criterio de elegibilidad"
         criteria_brief: "as our workshops are only available to women, LGBTQ, people from underrepresented minority groups."
         github: "Lastly, when you click the sign up button, you'll be taken to something called GitHub. After logging in with a GitHub account, you'll be taken back to the codebar website. If you don't have an account yet, you'll need to create one. It doesn't take long and it's something that will come in handy when you get started with coding!"
       invitations: "Invitations are sent out periodically, so don't worry if you don't receive one as soon as you register."
@@ -383,9 +383,9 @@ es:
         pay:
           html: You have made the <a href="%{link}">required payment of £50</a>.
         button:
-          pay: Make a payment
+          pay: realizar un pago
       edit:
-        title: Edit job listing
+        title: Editar listado de trabajos
   pages:
     cookies:
       title: Cookies
