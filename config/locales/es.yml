@@ -133,7 +133,7 @@ es:
     teacher_guide:
       laptop:  "No necesita una computadora portátil para nuestros talleres. Usted está ahí para ver y guiar a los estudiantes. Si no se siente cómodo con el tutorial, debe pasar tiempo antes de venir si quiere ayudarlo."
       keyboard:  "¡No tomes el teclado! Esto puede estar fuera de lugar y aterrador."
-      typing:  "Explique que no hay malas preguntas."
+      typing: "Anime a los estudiantes a escribir y no a copiar y pegar."
       questions:  "Explique a los estudiantes que está bien cometer errores."
       mistakes: "Explain to students that it's OK to make mistakes."
       introduction:  "Siempre preséntate. Diga por qué quiere ayudar y está gastando su propio tiempo en esto, por qué le gusta la programación."
