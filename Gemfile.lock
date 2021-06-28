@@ -41,15 +41,15 @@ GEM
       public_suffix (>= 2.0.2, < 5.0)
     arel (6.0.4)
     ast (2.4.1)
-    autoprefixer-rails (10.0.1.0)
+    autoprefixer-rails (10.2.4.0)
       execjs
     better_errors (2.7.1)
       coderay (>= 1.0.0)
       erubi (>= 1.0.0)
       rack (>= 0.9.0)
-    bootstrap (5.0.0.alpha1)
+    bootstrap (5.0.0.beta3)
       autoprefixer-rails (>= 9.1.0)
-      popper_js (>= 1.14.3, < 2)
+      popper_js (>= 2.9.1, < 3)
       sassc-rails (>= 2.0.0)
     builder (3.2.4)
     bullet (6.1.0)
@@ -78,7 +78,6 @@ GEM
       coffee-rails (>= 3.2)
       railties (>= 3.0)
       sassc-rails (>= 2.1.2)
-    chunky_png (1.3.11)
     cocoon (1.2.15)
     coderay (1.1.3)
     coffee-rails (4.2.2)
@@ -90,22 +89,6 @@ GEM
     coffee-script-source (1.12.2)
     commonmarker (0.21.0)
       ruby-enum (~> 0.5)
-    compass (1.0.3)
-      chunky_png (~> 1.2)
-      compass-core (~> 1.0.2)
-      compass-import-once (~> 1.0.5)
-      rb-fsevent (>= 0.9.3)
-      rb-inotify (>= 0.9)
-      sass (>= 3.3.13, < 3.5)
-    compass-core (1.0.3)
-      multi_json (~> 1.0)
-      sass (>= 3.3.0, < 3.5)
-    compass-import-once (1.0.5)
-      sass (>= 3.2, < 3.5)
-    compass-rails (4.0.0)
-      compass (~> 1.0.0)
-      sass-rails (< 5.1)
-      sprockets (< 4.0)
     concurrent-ruby (1.1.8)
     connection_pool (2.2.2)
     crass (1.0.6)
@@ -219,7 +202,7 @@ GEM
     pg (0.20.0)
     pickadate-rails (3.5.6.0)
       railties (>= 3.1.0)
-    popper_js (1.16.0)
+    popper_js (2.9.2)
     premailer (1.11.1)
       addressable
       css_parser (>= 1.6.0)
@@ -282,9 +265,6 @@ GEM
       thor (>= 0.18.1, < 2.0)
     rainbow (3.0.0)
     rake (13.0.1)
-    rb-fsevent (0.10.3)
-    rb-inotify (0.10.1)
-      ffi (~> 1.0)
     regexp_parser (1.8.2)
     rexml (3.2.4)
     rolify (5.3.0)
@@ -334,12 +314,6 @@ GEM
     ruby-progressbar (1.10.1)
     rubyzip (2.3.0)
     sass (3.4.25)
-    sass-rails (5.0.7)
-      railties (>= 4.0.0, < 6)
-      sass (~> 3.1)
-      sprockets (>= 2.8, < 4.0)
-      sprockets-rails (>= 2.0, < 4.0)
-      tilt (>= 1.1, < 3)
     sassc (2.2.1)
       ffi (~> 1.9)
     sassc-rails (2.1.2)
@@ -403,7 +377,7 @@ PLATFORMS
 DEPENDENCIES
   acts-as-taggable-on (~> 5.0)
   better_errors
-  bootstrap (~> 5.0.0.alpha1)
+  bootstrap (~> 5.0.0.beta3)
   bullet
   capybara
   carrierwave
@@ -411,7 +385,6 @@ DEPENDENCIES
   chosen-rails
   cocoon
   commonmarker
-  compass-rails
   database_cleaner
   delayed_job
   delayed_job_active_record
@@ -457,10 +430,9 @@ DEPENDENCIES
   rubocop-performance
   rubocop-rails
   rubocop-rspec
-  sass-rails (~> 5.0.1)
+  sassc-rails
   shoulda-matchers (~> 4.3)
   simple_form
-  sprockets-rails (= 3.2.1)
   simplecov
   simplecov-lcov
   sprockets-rails (= 3.2.1)
@@ -470,3 +442,9 @@ DEPENDENCIES
   uglifier (>= 1.3.0)
   webdrivers
   will_paginate
+
+RUBY VERSION
+   ruby 2.4.2p198
+
+BUNDLED WITH
+   1.17.3
