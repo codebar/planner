@@ -88,7 +88,7 @@ es:
     not_attending_already: "¡Ya has confirmado que no puedes asistir!"
     no_available_seats: "Desafortunadamente no quedan más espacios :(. Si desea unirse a nuestra lista de espera envíenos un correo electrónico a %{email}"
     feedback_saved: "¡Gracias por tomarse el tiempo para darnos su opinión!"
-    feedback_not_found: "Ya ha enviado comentarios para este evento".
+    feedback_not_found: "Ya ha enviado comentarios para este evento."
     updated_note: "Nota actualizada correctamente"
     invalid_session: 'Tu sesión no es válida'
     invitations:
