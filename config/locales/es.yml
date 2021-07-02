@@ -196,19 +196,19 @@ es:
   code_of_conduct:
     title: "Código de Conducta"
     summary:
-      title: "The Quick Version"
-      intro: "Our events are dedicated to providing a harassment-free experience for everyone, regardless of gender, sexual orientation, disability, physical appearance, body size, race, or religion. We do not tolerate harassment of our members in any form. Sexual language and imagery is not appropriate for any of our events, including talks, workshops, parties, Twitter and any other online media. Members violating these rules may be sanctioned or expelled from the event and any future events at the discretion of the organisers."
+      title: "La Versión Rápida"
+      intro: "Nuestros eventos están dedicados a proporcionar una experiencia libre de acoso para todos, independientemente del género, la orientación sexual, la discapacidad, la apariencia física, el tamaño del cuerpo, la raza o la religión. No toleramos el acoso de nuestros miembros en ninguna forma. Lenguaje sexual y Las imágenes no son apropiadas para ninguno de nuestros eventos, incluidas las conversaciones, talleres, fiestas, twitter y cualquier otro medio en línea. Los miembros que violan estas reglas pueden ser sancionados o expulsados del evento y cualquier evento futuro a discreción de los organizadores."
     content:
-      title: "The Long Version"
-      harassment: "Harassment includes offensive verbal comments related to gender, sexual orientation, disability, physical appearance, body size, race, religion, sexual images in public spaces, deliberate intimidation, stalking, following, harassing photography or recording, sustained disruption of talks or other events, inappropriate physical contact, and unwelcome sexual attention."
-      comply: "We expect any participants asked to stop any harassing behaviour to comply immediately."
-      sponsors: "Sponsors are also subject to the anti-harassment policy. In particular, sponsors should not use sexualized images, activities, or other material. Staff (including volunteers) should not use sexualized clothing/uniforms/costumes, or otherwise create a sexualized environment."
-      sanctions: "If a participant engages in harassing behaviour the organisers may take any action they deem appropriate. This includes warning the offender or expulsion."
-      concerns: "If you are being harassed, notice that someone else is being harassed, or have any other concerns, please contact one of the organisers immediately."
-      applies_to: "We expect participants to follow these rules at all <b>codebar</b> events."
-      questions: "If you have any questions or concerns about this code please"
+      title: "La Versión Larga"
+      harassment: "El hostigamiento incluye comentarios verbales ofensivos relacionados con el género, la orientación sexual, la discapacidad, la apariencia física, el tamaño del cuerpo, la raza, la religión, las imágenes sexuales en los espacios públicos, la intimidación deliberada, el acecho, lo siguiente, hostigando la fotografía o la grabación, la interrupción sostenida de las conversaciones u otros eventos. , contacto físico inapropiado, y atención sexual no deseada."
+      comply: "Esperamos que cualquier participante le pida que detengamos cualquier comportamiento de acoso para cumplirlo de inmediato."
+      sponsors: "Los patrocinadores también están sujetos a la política contra el acoso. En particular, los patrocinadores no deben usar imágenes, actividades u otros materiales sexualizados. El personal (incluidos los voluntarios) no debe usar ropa / uniformes / disfraces sexualizados, o crear un entorno sexualizado."
+      sanctions: "Si un participante se involucra en el comportamiento de acoso, los organizadores pueden tomar cualquier acción que considere apropiados. Esto incluye advertir al delincuente o expulsión."
+      concerns: "Si está siendo acosado, observe que alguien más está siendo acosado, o tiene alguna otra inquietud, comuníquese con uno de los organizadores de inmediato."
+      applies_to: "Esperamos que los participantes sigan estas reglas en todos los eventos <b>codebar</ b>."
+      questions: "Si tiene alguna pregunta o inquietud sobre este código, por favor"
       contact: "Contacta con nosotros"
-      email_subject: "Regarding code of conduct"
+      email_subject:  "Con respecto al Código de conducta"
   sponsors:
     sponsoring: "Patrocinio"
   members:
@@ -218,12 +218,12 @@ es:
     sign_up_as_coach: "Regístrate como Entrenador"
     code_of_conduct: "código de conducta"
     new:
-      intro: "We offer a welcoming, inclusive and learning-friendly environment, and have a zero tolerance policy towards any form of harassment or inappropriate behavior. Before you sign up, read our"
+      intro:  "Ofrecemos un ambiente acogedor, inclusivo y amigable para el aprendizaje, y tenemos una política de tolerancia cero hacia cualquier forma de acoso o comportamiento inapropiado. Antes de registrarse, lea nuestro"
       students:
-        intro: "If you would like to attend as a student, make sure you meet our"
+        intro: "Si desea asistir a un estudiante, asegúrese de conocer a nuestro"
         criteria_link:  "criterio de elegibilidad"
-        criteria_brief: "as our workshops are only available to women, LGBTQ, people from underrepresented minority groups."
-        github: "Lastly, when you click the sign up button, you'll be taken to something called GitHub. After logging in with a GitHub account, you'll be taken back to the codebar website. If you don't have an account yet, you'll need to create one. It doesn't take long and it's something that will come in handy when you get started with coding!"
+        criteria_brief:  "Como nuestros talleres solo están disponibles para las mujeres, LGBTQ, personas de grupos minoritarios subrepresentados."
+        github:  "Por último, cuando hace clic en el botón Registrarse, se lo llevará a algo llamado GitHub. Después de iniciar sesión con una cuenta GitHub, volverá al sitio web de CodeBar. Si aún no tiene una cuenta, Tendrás que crear uno. ¡No tarda mucho tiempo y es algo que vendrá de manera útil cuando comience con la codificación!"
       invitations: "Invitations are sent out periodically, so don't worry if you don't receive one as soon as you register."
   footer:
     email_us: "Envíenos un correo electrónico a"
