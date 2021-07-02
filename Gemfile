@@ -85,6 +85,5 @@ group :production do
   gem 'rails_12factor'
 end
 
-gem 'newrelic_rpm'
 gem 'rollbar'
 gem 'skylight'
