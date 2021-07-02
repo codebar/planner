@@ -87,3 +87,4 @@ end
 
 gem 'newrelic_rpm'
 gem 'rollbar'
+gem 'skylight'
