@@ -22,6 +22,10 @@ module Planner
     config.time_zone = 'London'
     config.active_record.default_timezone = :local
     config.active_record.raise_in_transactional_callbacks = true
+    
+    # Allow Skylight to show insights from local development.
+    # More info at https://skylight.io/support/environments
+    config.skylight.environments << 'development'
   end
 end
 
