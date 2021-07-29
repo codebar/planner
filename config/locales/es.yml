@@ -253,7 +253,7 @@ es:
       q: "Hay tantos recursos en línea, ¿por qué debería ir a Codebar?"
       a: "La codificación puede ser intimidante y muchas personas les resulta difícil comenzar. Al ponerte en contacto con personas que pueden ayudarlo y guiarlo, hacemos que la experiencia y el proceso de aprendizaje sean más fáciles y más agradables."
     preperations:
-      q:  "Me gustaría entrenar en CodeBar. ¿Hay algo que deba hacer además de inscribirse?"
+      q: "Me gustaría entrenar en CodeBar. ¿Hay algo que deba hacer además de inscribirse?"
       a_p1: "Si. Primero deberías leer nuestro"
       coaching_guide_tutorials: "tutoriales de guía de entrenador"
       a_p2:  ". Luego pasa alguna vez familiarizándote con el"
