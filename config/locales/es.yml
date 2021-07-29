@@ -256,7 +256,7 @@ es:
       q: "Me gustaría entrenar en CodeBar. ¿Hay algo que deba hacer además de inscribirse?"
       a_p1: "Si. Primero deberías leer nuestro"
       coaching_guide_tutorials: "tutoriales de guía de entrenador"
-      a_p2:  ". Luego pasa alguna vez familiarizándote con el"
+      a_p2: ". Luego pasa alguna vez familiarizándote con el"
       a_p3: "<a href='http://tutorials.codebar.io'>tutorials</a>. Los tutoriales son de código abierto, por lo que si hay algo que desea mejorar, abre un problema en el repositorio de GitHUB o envíe una 'pull request'."
       a_p4: "No esperamos que los entrenadores estén familiarizados con todas las tecnologías e idiomas en los que tenemos material."
     location:
