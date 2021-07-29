@@ -261,7 +261,7 @@ es:
       a_p4: "No esperamos que los entrenadores estén familiarizados con todas las tecnologías e idiomas en los que tenemos material."
     location:
       q: "¿Dónde se llevan a cabo los talleres?"
-      a:  "Como no tenemos un lugar permanente, nuestros talleres son organizados por diferentes compañías en varios lugares de Londres. Hasta ahora, hemos realizado talleres en Shoreditch, London Bridge, Holborn y Kings Cross."
+      a: "Como no tenemos un lugar permanente, nuestros talleres son organizados por diferentes compañías en varios lugares de Londres. Hasta ahora, hemos realizado talleres en Shoreditch, London Bridge, Holborn y Kings Cross."
     disabled_access:
       q: "¿Hay acceso para discapacitados en los talleres?"
       a: "Desafortunadamente, eso depende completamente de dónde estamos alojando nuestros talleres y si el lugar tiene un acceso para discapacitados. Si desea asistir, envíenos un correo electrónico a <a href = 'mailto <a href='mailto:meetings@codebar.io'>meetings[at]codebar.io</a> así que podemos preguntarle al respecto y le avisamos."
