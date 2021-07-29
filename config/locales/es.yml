@@ -245,7 +245,7 @@ es:
       a: "¡No! codebar se trata de conseguir que las personas se entusiasman con la programación. Los ayudaremos a aprender algunas habilidades básicas de codificación, así como cómo explorar y hacer las cosas por su cuenta. Para aquellos que quieren convertirse en desarrolladores, proporcionaremos ayuda y Orientación para ayudarles a lograr su objetivo."
     format:
       q: "¿Cuál es el formato de los talleres?"
-      a:  "Tratamos de tener un entrenador para cada dos estudiantes. Vamos a emparejar a los estudiantes que quieran trabajar en el mismo tutorial y asignarles un entrenador. El resto solo sucede."
+      a: "Tratamos de tener un entrenador para cada dos estudiantes. Vamos a emparejar a los estudiantes que quieran trabajar en el mismo tutorial y asignarles un entrenador. El resto solo sucede."
     laptop:
       q: "¿Necesito traer una computadora portátil a los talleres?"
       a: "Sí, le sugerimos que traiga una computadora portátil, ya que será más fácil para usted seguir trabajando en cosas después de los talleres. No tiene uno, <a href=\"mailto:contact@codebar.io\"> envíenos un correo electrónico </a? para que podamos intentar y ayudarlo."
