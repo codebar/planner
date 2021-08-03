@@ -191,7 +191,7 @@ es:
     code_of_conduct: "código de conducta"
     policy: "Como tenemos una política de tolerancia cero y esperamos que todos se comporten de manera adecuada. También deberías pasar por nuestro"
     guide: "guía para entrenadores"
-    unable_attend: "In case you are unable to attend after you RSVP, please make sure you come back and update your attendance as we rely on coaches showing up in order for our workshops to run smoothly."
+    unable_attend: "En caso de que no pueda asistir después de su RSVP, asegúrese de regresar y actualizar su asistencia a medida que confíe en los entrenadores que aparecen para que nuestros talleres se ejecuten sin problemas."
     food: "PS: There will also be food at the workshop. We always make an effort to have vegetarian, vegan and gluten-free options available. If you have any other dietary requirements, send us email at"
   code_of_conduct:
     title: "Código de Conducta"
@@ -224,7 +224,7 @@ es:
         criteria_link:  "criterio de elegibilidad"
         criteria_brief:  "Como nuestros talleres solo están disponibles para las mujeres, LGBTQ, personas de grupos minoritarios subrepresentados."
         github:  "Por último, cuando hace clic en el botón Registrarse, se lo llevará a algo llamado GitHub. Después de iniciar sesión con una cuenta GitHub, volverá al sitio web de CodeBar. Si aún no tiene una cuenta, Tendrás que crear uno. ¡No tarda mucho tiempo y es algo que vendrá de manera útil cuando comience con la codificación!"
-      invitations: "Invitations are sent out periodically, so don't worry if you don't receive one as soon as you register."
+      invitations: "Las invitaciones se envían periódicamente, así que no se preocupe si no recibe uno tan pronto como se registre."
   footer:
     email_us: "Envíenos un correo electrónico a"
     contact_info: "Datos de contacto:"
@@ -242,31 +242,31 @@ es:
       a: "ya que aún podríamos encontrar a alguien que te ayude. If you belong to one of these groups, you are more than welcome to attend. If not, there are some other great initiatives like <a href='https://www.meetup.com/opentechschool-london/'>Open Tech School London</a> where you can learn in a collaborative environment. Please see our <a href='http://codebar.io/student-guide'>student guide</a> for more information."
     career:
       q: "¿Codebar solo está dirigido a personas que desean avanzar en una carrera como desarrollador?"
-      a: "No! codebar is about getting people excited about programming. We'll help them learn some basic coding skills, as well as how to explore and do things on their own. For those who do want to become developers, we will provide help and guidance to help them achieve their goal."
+      a: "¡No! codebar se trata de conseguir que las personas se entusiasman con la programación. Los ayudaremos a aprender algunas habilidades básicas de codificación, así como cómo explorar y hacer las cosas por su cuenta. Para aquellos que quieren convertirse en desarrolladores, proporcionaremos ayuda y Orientación para ayudarles a lograr su objetivo."
     format:
       q: "¿Cuál es el formato de los talleres?"
-      a: "We try to have one coach for every two students. We will pair up students who want to work on the same tutorial, and assign them a coach. The rest just happens."
+      a: "Tratamos de tener un entrenador para cada dos estudiantes. Vamos a emparejar a los estudiantes que quieran trabajar en el mismo tutorial y asignarles un entrenador. El resto solo sucede."
     laptop:
       q: "¿Necesito traer una computadora portátil a los talleres?"
-      a: "Yes, we suggest that you bring a laptop as it will be easier for you to carry on working on things after the workshops. It you don't have one, <a href=\"mailto:contact@codebar.io\">send us an email</a> so we can try and help out."
+      a: "Sí, le sugerimos que traiga una computadora portátil, ya que será más fácil para usted seguir trabajando en cosas después de los talleres. No tiene uno, <a href=\"mailto:contact@codebar.io\"> envíenos un correo electrónico </a? para que podamos intentar y ayudarlo."
     online_resources:
       q: "Hay tantos recursos en línea, ¿por qué debería ir a Codebar?"
-      a: "Coding can be intimidating and a lot of people find it hard to get started. By putting you in touch with people who can help and guide you we make the experience and learning process easier and more enjoyable."
+      a: "La codificación puede ser intimidante y muchas personas les resulta difícil comenzar. Al ponerte en contacto con personas que pueden ayudarlo y guiarlo, hacemos que la experiencia y el proceso de aprendizaje sean más fáciles y más agradables."
     preperations:
-      q: "I would like to coach at codebar. Is there anything I should do besides signing up?"
+      q: "Me gustaría entrenar en CodeBar. ¿Hay algo que deba hacer además de inscribirse?"
       a_p1: "Si. Primero deberías leer nuestro"
       coaching_guide_tutorials: "tutoriales de guía de entrenador"
-      a_p2: ". Then spend sometime familiarising yourself with the"
-      a_p3: "<a href='http://tutorials.codebar.io'>tutorials</a>. The tutorials are open source so if there is something that you want to improve open an issue on the GitHub repository or send a pull request."
-      a_p4: "We don't expect the coaches to be familiar with all the technologies and languages we have material on."
+      a_p2: ". Luego pasa alguna vez familiarizándote con el"
+      a_p3: "<a href='http://tutorials.codebar.io'>tutorials</a>. Los tutoriales son de código abierto, por lo que si hay algo que desea mejorar, abre un problema en el repositorio de GitHUB o envíe una 'pull request'."
+      a_p4: "No esperamos que los entrenadores estén familiarizados con todas las tecnologías e idiomas en los que tenemos material."
     location:
       q: "¿Dónde se llevan a cabo los talleres?"
-      a: "As we don't have a permanent venue, our workshops are hosted by different companies in various locations around London. So far we've run workshops in Shoreditch, London Bridge, Holborn and Kings Cross."
+      a: "Como no tenemos un lugar permanente, nuestros talleres son organizados por diferentes compañías en varios lugares de Londres. Hasta ahora, hemos realizado talleres en Shoreditch, London Bridge, Holborn y Kings Cross."
     disabled_access:
       q: "¿Hay acceso para discapacitados en los talleres?"
-      a: "Unfortunately, that depends entirely on where we are hosting our workshops and if the venue has disabled access. If you would like to attend, send us an email at <a href='mailto:meetings@codebar.io'>meetings[at]codebar.io</a> so we can enquire about it and let you know."
+      a: "Desafortunadamente, eso depende completamente de dónde estamos alojando nuestros talleres y si el lugar tiene un acceso para discapacitados. Si desea asistir, envíenos un correo electrónico a <a href = 'mailto <a href='mailto:meetings@codebar.io'>meetings[at]codebar.io</a> así que podemos preguntarle al respecto y le avisamos."
     bring_codebar_to_my_city:
-      q: "I would like to bring codebar to my city. Can I do that?"
+      q: "Me gustaría traer la barra de código a mi ciudad. ¿Puedo hacer eso?"
       a: "Of course. codebar is about building a community of experienced developers that are able to give up some of their time to help others. If you are keen on running codebar where you live, we would love to speak to you about it and see how we can help make this happen, so send <a href=\"mailto:contact@codebar.io\">us an email</a>."
     our_coaches:
       q: "Nuestros Entrenadores"
@@ -353,7 +353,7 @@ es:
     suggestions: "Was there something you didn't like? What can we do to improve your experience?"
   member:
     jobs:
-      title: Mi trabajaos
+      title: Mi trabajos
       preview: Avance
       index:
         description: Our aim is to be the one stop shop for junior developer roles. All jobs featured on our job board must fall under the following three categories; paid internships, apprenticeships or junior developer roles. Additionally, jobs must not require previous experience or a degree and must be paid positions. Each job that is submitted will be approved by the codebar team before appearing on the job board.
