@@ -103,7 +103,8 @@ es:
     not_logged_in: "Debes iniciar sesión para acceder a esta página."
   navigation:
     dashboard: "Tablero"
-    code_of_conduct: "Código de conducta"
+    code_of_conduct: "Código de Conducta"
+    breach_code_of_conduct: "Breach Code of Conduct"
     coach_guide: "Guía para entrenadores"
     student_guide: "Guía para estudiantes"
     tutorials: "Tutoriales"
@@ -204,7 +205,7 @@ es:
       sponsors: "Los patrocinadores también están sujetos a la política contra el acoso. En particular, los patrocinadores no deben usar imágenes, actividades u otros materiales sexualizados. El personal (incluidos los voluntarios) no debe usar ropa / uniformes / disfraces sexualizados, o crear un entorno sexualizado."
       sanctions: "Si un participante se involucra en el comportamiento de acoso, los organizadores pueden tomar cualquier acción que considere apropiados. Esto incluye advertir al delincuente o expulsión."
       concerns: "Si está siendo acosado, observe que alguien más está siendo acosado, o tiene alguna otra inquietud, comuníquese con uno de los organizadores de inmediato."
-      applies_to: "We expect participants to follow these rules at all <b>codebar</b> events. If you do not the following <a href='https://codebar.io/breach-code-of-conduct'>process will happen</a>."
+      applies_to: "We expect participants to follow these rules at all <b>codebar</b> events. If they fail to do so, the following <a href='https://codebar.io/breach-code-of-conduct'>process will take place</a>."
       questions: "Si tiene alguna pregunta o inquietud sobre este código, por favor"
       contact: "Contacta con nosotros"
       email_subject: "Con respecto al Código de conducta"

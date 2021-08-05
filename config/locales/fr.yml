@@ -102,7 +102,8 @@ fr:
     not_logged_in: "Vous devez être connecter pour accéder à cette page."
   navigation:
     dashboard: "Dashboard"
-    code_of_conduct: "Code de conduite"
+    code_of_conduct: "Code de Conduite"
+    breach_code_of_conduct: "Breach Code of Conduct"
     coach_guide: "Guide enseignant"
     student_guide: "Guide étudiant"
     tutorials: "Tutoriels"
@@ -521,9 +522,6 @@ fr:
       warning: Warning - You will receive an email warning. The organiser will explain the incident, including the impact on the person involved and the community. We will give as much information as possible, so you’re aware of what happened and try to learn from the incident. The organiser will add a note to your codebar profile so that all chapter organisers are aware of the incident. We expect you to take our comments on board, further action may be taken depending on your reaction. Examples of behaviour that will get you a warning include - targeted offensive language, or the sharing of sexual images in codebar spaces. 2 email warnings will result in a lifetime ban.
       lifetime_ban: Lifetime ban - You will no longer be able to RSVP to any future codebar events. You will also be removed from codebar’s Slack workspace. Examples of behaviour that will get you an automatic lifetime ban include - physical intimidation, stalking, inappropriate physical contact, unwelcome sexual attention or repeated behaviour after you’ve been spoken to by someone from the codebar team (directors or chapter organisers).
       closing_para: The above is only a starting point. The details of the incident may change how we view it, e.g. some verbal harassment may be so serious that we would give a lifetime ban.
-
-
-
   admin:
     dashboard:
       title: 'Admin'
