@@ -1,41 +1,137 @@
-.row.mt2
-  .large-12.columns
-    :markdown
+.stripe.reverse
+  .row
+    .large-12.columns
+      :markdown
+        # #{t('pages.privacy_policy.title')}
 
-      # #{t('pages.privacy_policy.title')}
+      %h2.subheader= t('pages.privacy_policy.subtitle')
 
-      ### #{t('pages.privacy_policy.subtitle')}
+.stripe.reverse
+  .row
+    .large-12.columns
+      :markdown
 
-      #{t('pages.privacy_policy.p1')}
+        #{t('pages.privacy_policy.intro.p1')}
 
-      #{t('pages.privacy_policy.address_html')}
+      %p
+        %address
+          #{t('pages.privacy_policy.intro.address_html')}
 
-      ### #{t('pages.privacy_policy.information.title')}
+      :markdown
+        #{t('pages.privacy_policy.intro.p2')}
 
-      #{t('pages.privacy_policy.information.description')}
+        #{t('pages.privacy_policy.intro.p3')}
 
-      #{t('pages.privacy_policy.information.subscribing_html')}
+        ### #{t('pages.privacy_policy.information.title')}
 
-      #{t('pages.privacy_policy.information.cookies_html')}
+        #### #{t('pages.privacy_policy.information.what_we_collect.title')}
 
-      #{t('pages.privacy_policy.information.usage_html')}
+        #{t('pages.privacy_policy.information.what_we_collect.p1')}
 
-      ### #{t('pages.privacy_policy.your_rights.title')}
+      %table
+        %thead
+          %tr
+            %th= t('pages.privacy_policy.information.what_we_collect.table.headers.h1')
+            %th= t('pages.privacy_policy.information.what_we_collect.table.headers.h2')
+            %th= t('pages.privacy_policy.information.what_we_collect.table.headers.h3')
+            %th= t('pages.privacy_policy.information.what_we_collect.table.headers.h4')
+        %tbody
+          %tr
+            %td= t('pages.privacy_policy.information.what_we_collect.table.r1.c1')
+            %td= t('pages.privacy_policy.information.what_we_collect.table.r1.c2')
+            %td= t('pages.privacy_policy.information.what_we_collect.table.r1.c3')
+            %td
+              %ul
+                %li= t('pages.privacy_policy.information.what_we_collect.table.r1.c4.l1')
+                %li= t('pages.privacy_policy.information.what_we_collect.table.r1.c4.l2')
+                %li= t('pages.privacy_policy.information.what_we_collect.table.r1.c4.l3')
+          %tr
+            %td= t('pages.privacy_policy.information.what_we_collect.table.r2.c1')
+            %td= t('pages.privacy_policy.information.what_we_collect.table.r2.c2')
+            %td= t('pages.privacy_policy.information.what_we_collect.table.r2.c3')
+            %td
+              %ul
+                %li= t('pages.privacy_policy.information.what_we_collect.table.r2.c4.l1')
+                %li= t('pages.privacy_policy.information.what_we_collect.table.r2.c4.l2')
+          %tr
+            %td= t('pages.privacy_policy.information.what_we_collect.table.r3.c1')
+            %td= t('pages.privacy_policy.information.what_we_collect.table.r3.c2')
+            %td= t('pages.privacy_policy.information.what_we_collect.table.r3.c3')
+            %td
+              %ul
+                %li= t('pages.privacy_policy.information.what_we_collect.table.r3.c4.l1')
+          %tr
+            %td= t('pages.privacy_policy.information.what_we_collect.table.r4.c1')
+            %td= t('pages.privacy_policy.information.what_we_collect.table.r4.c2')
+            %td= t('pages.privacy_policy.information.what_we_collect.table.r4.c3')
+            %td
+              %ul
+                %li= t('pages.privacy_policy.information.what_we_collect.table.r4.c4.l1')
+          %tr
+            %td= t('pages.privacy_policy.information.what_we_collect.table.r5.c1')
+            %td= t('pages.privacy_policy.information.what_we_collect.table.r5.c2')
+            %td= t('pages.privacy_policy.information.what_we_collect.table.r5.c3')
+            %td
+              %ul
+                %li= t('pages.privacy_policy.information.what_we_collect.table.r5.c4.l1')
+                %li= t('pages.privacy_policy.information.what_we_collect.table.r5.c4.l2')
+          %tr
+            %td= t('pages.privacy_policy.information.what_we_collect.table.r6.c1')
+            %td= t('pages.privacy_policy.information.what_we_collect.table.r6.c2')
+            %td= t('pages.privacy_policy.information.what_we_collect.table.r6.c3')
+            %td
+              %ul
+                %li= t('pages.privacy_policy.information.what_we_collect.table.r6.c4.l1')
+                %li= t('pages.privacy_policy.information.what_we_collect.table.r6.c4.l2')
 
-      #{t('pages.privacy_policy.your_rights.rights_html')}
+      :markdown
+        #### #{t('pages.privacy_policy.information.how_we_share.title')}
 
-      #{t('pages.privacy_policy.your_rights.data_retention_html')}
+        #{t('pages.privacy_policy.information.how_we_share.p1_html')}
 
-      #{t('pages.privacy_policy.your_rights.personal_data_access_html')}
+        #### #{t('pages.privacy_policy.information.legal_basis.title')}
 
-      ####{t('pages.privacy_policy.security.title')}
-      #{t('pages.privacy_policy.security.text')}
+        #{t('pages.privacy_policy.information.legal_basis.p1')}
 
-      ####{t('pages.privacy_policy.changes.title')}
-      #{t('pages.privacy_policy.changes.text')}
+        ### #{t('pages.privacy_policy.retention.title')}
 
-      ####{t('pages.privacy_policy.contact.title')}
-      #{t('pages.privacy_policy.contact.text')}
+        #{t('pages.privacy_policy.retention.p1')}
 
+        #{t('pages.privacy_policy.retention.p2')}
 
-      <div class='mb4'>&nbsp;</div>
+        ### #{t('pages.privacy_policy.international_transfers.title')}
+
+        #{t('pages.privacy_policy.international_transfers.p1')}
+
+        #{t('pages.privacy_policy.international_transfers.p2')}
+
+        ### #{t('pages.privacy_policy.your_rights.title')}
+
+        #{t('pages.privacy_policy.your_rights.p1')}
+
+        - #{t('pages.privacy_policy.your_rights.l1')}
+        - #{t('pages.privacy_policy.your_rights.l2')}
+        - #{t('pages.privacy_policy.your_rights.l3')}
+        - #{t('pages.privacy_policy.your_rights.l4')}
+        - #{t('pages.privacy_policy.your_rights.l5')}
+        - #{t('pages.privacy_policy.your_rights.l6')}
+        - #{t('pages.privacy_policy.your_rights.l7')}
+        - #{t('pages.privacy_policy.your_rights.l8')}
+
+        #{t('pages.privacy_policy.your_rights.p2')}
+
+        ### #{t('pages.privacy_policy.security.title')}
+
+        #{t('pages.privacy_policy.security.p1')}
+
+        ### #{t('pages.privacy_policy.changes.title')}
+
+        #{t('pages.privacy_policy.changes.p1')}
+
+        ### #{t('pages.privacy_policy.cookies.title')}
+
+        #{t('pages.privacy_policy.cookies.p1_html')}
+
+        ### #{t('pages.privacy_policy.contact.title')}
+
+        #{t('pages.privacy_policy.contact.p1')}
