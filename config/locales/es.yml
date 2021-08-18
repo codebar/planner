@@ -103,7 +103,8 @@ es:
     not_logged_in: "Debes iniciar sesión para acceder a esta página."
   navigation:
     dashboard: "Tablero"
-    code_of_conduct: "Código de conducta"
+    code_of_conduct: "Código de Conducta"
+    breach_code_of_conduct: "Breach Code of Conduct"
     coach_guide: "Guía para entrenadores"
     student_guide: "Guía para estudiantes"
     tutorials: "Tutoriales"
@@ -147,15 +148,14 @@ es:
       stubling:  "Déjalos tropezar. Aprendemos cometer errores, frustrándonos y trabajando a través del problema a nuestra manera. Esperamos, pero déjalos explorar."
       suggestions:  "¿Tienes algo que sugerir? Haz una <a href='https://github.com/codebar/planner'>'pull request'</a> o <a href='https://github.com/codebar/planner/issues/new'>crear un problema</a>"
   workshops:
-    already_wish_to_attend:  "Ya tienes RSVPD o se unió a la lista de espera para este taller."
-    lead:  "Asista a nuestros talleres para aprender la programación en un entorno seguro y de apoyo a su propio ritmo, o para compartir sus conocimientos y entrenar a nuestros estudiantes."
+    already_wish_to_attend: "Ya tienes RSVPD o se unió a la lista de espera para este taller."
+    lead: "Asista a nuestros talleres para aprender la programación en un entorno seguro y de apoyo a su propio ritmo, o para compartir sus conocimientos y entrenar a nuestros estudiantes."
     registration_not_open: "Este taller no está abierto para inscripciones."
   events:
     title: "Eventos"
     past: "Pasados"
     no_upcoming_events: "No hay eventos próximos."
-    view_past_events: "Ver eventos pasados
-"
+    view_past_events: "Ver eventos pasados"
     view_all: "Ver todos"
     hosted_by: "Alojado por"
     organisers: "Organizadores"
@@ -174,8 +174,8 @@ es:
         q: "¿Qué experiencia necesito tener para unirme al taller?"
         a:
       contribution:
-        q:  "¿Qué tipo de contribuciones puedo hacer?"
-        a:  "Sus contribuciones pueden ser pequeñas, tan simples como arreglar un error tipográfico, a algo increíble. Puede ayudar con la documentación, solucionar un error que ha encontrado, mejorar la copia, ayudar a diseñar o incluso abordar tareas más grandes y ayudar a introducir nuevas características. Cada Poco ayuda!"
+        q: "¿Qué tipo de contribuciones puedo hacer?"
+        a: "Sus contribuciones pueden ser pequeñas, tan simples como arreglar un error tipográfico, a algo increíble. Puede ayudar con la documentación, solucionar un error que ha encontrado, mejorar la copia, ayudar a diseñar o incluso abordar tareas más grandes y ayudar a introducir nuevas características. Cada Poco ayuda!"
       laptop:
         q: "¿Necesito traer una computadora portátil?"
         a_html: "Sí, debe traer una computadora portátil. Si no tiene un %{link}, es posible que podamos ayudarlo."
@@ -184,10 +184,10 @@ es:
         a_html: "Un teclado ayudaría, ya que pasará todo el día emparejando con alguien en su computadora portátil. Si no tiene un teclado,% {link} e intentaremos organizar algo para usted."
       travel_costs:
         q: "Estaré viajando. ¿Me pueden ayudar con mis gastos de viaje?"
-        a:  "Vamos a ofrecer algunas becas de viaje. Solo asegúrate de completar el cuestionario después de que RSVP y nos pondremos en contacto."
+        a: "Vamos a ofrecer algunas becas de viaje. Solo asegúrate de completar el cuestionario después de que RSVP y nos pondremos en contacto."
   coaches:
     want_to_coach: "¿Quieres formarte en nuestros talleres?"
-    read_before:  "Si no ha asistido a nuestros talleres antes, asegúrate de leer nuestro"
+    read_before: "Si no ha asistido a nuestros talleres antes, asegúrate de leer nuestro"
     code_of_conduct: "código de conducta"
     policy: "Como tenemos una política de tolerancia cero y esperamos que todos se comporten de manera adecuada. También deberías pasar por nuestro"
     guide: "guía para entrenadores"
@@ -205,10 +205,10 @@ es:
       sponsors: "Los patrocinadores también están sujetos a la política contra el acoso. En particular, los patrocinadores no deben usar imágenes, actividades u otros materiales sexualizados. El personal (incluidos los voluntarios) no debe usar ropa / uniformes / disfraces sexualizados, o crear un entorno sexualizado."
       sanctions: "Si un participante se involucra en el comportamiento de acoso, los organizadores pueden tomar cualquier acción que considere apropiados. Esto incluye advertir al delincuente o expulsión."
       concerns: "Si está siendo acosado, observe que alguien más está siendo acosado, o tiene alguna otra inquietud, comuníquese con uno de los organizadores de inmediato."
-      applies_to: "Esperamos que los participantes sigan estas reglas en todos los eventos <b>codebar</ b>."
+      applies_to: "We expect participants to follow these rules at all <b>codebar</b> events. If they fail to do so, the following <a href='https://codebar.io/breach-code-of-conduct'>process will take place</a>."
       questions: "Si tiene alguna pregunta o inquietud sobre este código, por favor"
       contact: "Contacta con nosotros"
-      email_subject:  "Con respecto al Código de conducta"
+      email_subject: "Con respecto al Código de conducta"
   sponsors:
     sponsoring: "Patrocinio"
   members:
@@ -218,12 +218,12 @@ es:
     sign_up_as_coach: "Regístrate como Entrenador"
     code_of_conduct: "código de conducta"
     new:
-      intro:  "Ofrecemos un ambiente acogedor, inclusivo y amigable para el aprendizaje, y tenemos una política de tolerancia cero hacia cualquier forma de acoso o comportamiento inapropiado. Antes de registrarse, lea nuestro"
+      intro: "Ofrecemos un ambiente acogedor, inclusivo y amigable para el aprendizaje, y tenemos una política de tolerancia cero hacia cualquier forma de acoso o comportamiento inapropiado. Antes de registrarse, lea nuestro"
       students:
         intro: "Si desea asistir a un estudiante, asegúrese de conocer a nuestro"
-        criteria_link:  "criterio de elegibilidad"
-        criteria_brief:  "Como nuestros talleres solo están disponibles para las mujeres, LGBTQ, personas de grupos minoritarios subrepresentados."
-        github:  "Por último, cuando hace clic en el botón Registrarse, se lo llevará a algo llamado GitHub. Después de iniciar sesión con una cuenta GitHub, volverá al sitio web de CodeBar. Si aún no tiene una cuenta, Tendrás que crear uno. ¡No tarda mucho tiempo y es algo que vendrá de manera útil cuando comience con la codificación!"
+        criteria_link: "criterio de elegibilidad"
+        criteria_brief: "como nuestros talleres solo están disponibles para las mujeres, LGBTQ, personas de grupos minoritarios subrepresentados."
+        github: "Por último, cuando hace clic en el botón Registrarse, se lo llevará a algo llamado GitHub. Después de iniciar sesión con una cuenta GitHub, volverá al sitio web de CodeBar. Si aún no tiene una cuenta, Tendrás que crear uno. ¡No tarda mucho tiempo y es algo que vendrá de manera útil cuando comience con la codificación!"
       invitations: "Las invitaciones se envían periódicamente, así que no se preocupe si no recibe uno tan pronto como se registre."
   footer:
     email_us: "Envíenos un correo electrónico a"
@@ -515,6 +515,15 @@ es:
       contact:
         title: 8. Contact
         p1: "If you have any questions or complaints about this Privacy Policy or our information handling practices, you may email us at company@codebar.io stating 'Data inquiry' in the subject title, or by postal mail at: codebar Ltd, International House, 24 Holborn Viaduct, London, England, EC1A 2BN."
+    breach:
+      title: What happens if you violate codebar’s code of conduct?
+      opening_para: All codebar events are dedicated to providing a harassment-free experience for everyone, regardless of gender, sexual orientation, disability, physical appearance, body size, race, or religion. We do not tolerate harassment towards any community member or organiser in any form. Harassment includes any type of aggressive behaviour or offensive verbal comments related to gender, sexual orientation, disability, physical appearance, body size, race, religion, sexual images in public spaces, deliberate intimidation, stalking, following, harassing photography or recording, sustained disruption of talks or other events, inappropriate physical contact, and unwelcome sexual attention.
+      second_para: The Code of Conduct is in place to protect every codebar member - students, coaches and organisers. If any member violates these rules the below procedure and sanctions will be implemented.
+      outcome_title: 3 types of outcomes
+      correction: Correction - The use of inappropriate language or other behavior deemed unprofessional or unwelcome in the codebar community. This includes the use of terminology that is discouraged I.E guys. In this situation you will be sent a private message, providing clarity around the nature of the violation and an explanation of why the behavior was inappropriate. A public apology may be requested.
+      warning: Warning - You will receive an email warning. The organiser will explain the incident, including the impact on the person involved and the community. We will give as much information as possible, so you’re aware of what happened and try to learn from the incident. The organiser will add a note to your codebar profile so that all chapter organisers are aware of the incident. We expect you to take our comments on board, further action may be taken depending on your reaction. Examples of behaviour that will get you a warning include - targeted offensive language, or the sharing of sexual images in codebar spaces. 2 email warnings will result in a lifetime ban.
+      lifetime_ban: Lifetime ban - You will no longer be able to RSVP to any future codebar events. You will also be removed from codebar’s Slack workspace. Examples of behaviour that will get you an automatic lifetime ban include - physical intimidation, stalking, inappropriate physical contact, unwelcome sexual attention or repeated behaviour after you’ve been spoken to by someone from the codebar team (directors or chapter organisers).
+      closing_para: The above is only a starting point. The details of the incident may change how we view it, e.g. some verbal harassment may be so serious that we would give a lifetime ban.
 
   admin:
     dashboard:
