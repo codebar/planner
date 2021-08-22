@@ -11,19 +11,20 @@
         %small #{humanize_date(@workshop.date_and_time, @workshop.ends_at, with_time: true)} #{@workshop.distance_of_time}
       - if @workshop.date_and_time.past?
         %span.badge.bg-danger= t('messages.already_taken_place')
-  .row.mt-3
-    .col
-      %p.lead
-        = t("workshops.lead")
-      %p
-        = sanitize(@workshop.description)
 
+  .row.mt-3
+    .col.col-md-9
+      %p.lead
+        = t('workshops.lead')
+      - unless @workshop.description.blank?
+        %p
+          = sanitize(@workshop.description)
       = render 'actions' unless current_user&.banned?
 
 .container-fluid.stripe.reverse
   = render partial: 'shared/venue', locals: { venue: @workshop.host, address: @workshop.address}
 
-#sponsors.container-fluid.stripe.reverse
+.container-fluid.stripe.reverse#sponsors
   .row
     .col
       %h3.text-center Sponsors

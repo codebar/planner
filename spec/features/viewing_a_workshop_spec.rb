@@ -48,7 +48,7 @@ RSpec.feature 'Viewing a workshop page', type: :feature do
             expect(page).to have_content('Participate in our workshops')
             expect(page).to have_content('Our virtual workshops take place online')
 
-            within '.lead.description' do
+            within '.description' do
               expect(page).to have_content(workshop.description)
             end
           end
