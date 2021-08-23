@@ -342,7 +342,7 @@ GEM
     selenium-webdriver (3.142.7)
       childprocess (>= 0.5, < 4.0)
       rubyzip (>= 1.2.2)
-    shoulda-matchers (4.3.0)
+    shoulda-matchers (4.5.1)
       activesupport (>= 4.2.0)
     simple_form (4.0.0)
       actionpack (> 4)
@@ -450,7 +450,7 @@ DEPENDENCIES
   rubocop-rails
   rubocop-rspec
   sass-rails (~> 5.0.1)
-  shoulda-matchers (~> 4.3)
+  shoulda-matchers (~> 4.5)
   simple_form
   simplecov
   simplecov-lcov
