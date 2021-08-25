@@ -1,0 +1,23 @@
+.row
+  .col
+    %h2.text-center
+      = t('events.sponsors')
+    %p.text-center
+      %i= t('events.thx_to_sponsors')
+  - if event.sponsors?(:gold)
+    .row.mt-4
+      .col
+        %h3.text-center Gold
+    = render partial: 'shared/sponsors', object: event.gold_sponsors
+  - if event.sponsors?(:silver)
+    .row.mt-4
+      .col
+        %h3.text-center Silver
+    = render partial: 'shared/sponsors', object: event.silver_sponsors
+  - if event.sponsors?(:bronze)
+    .row.mt-4
+      .col
+        %h3.text-center Bronze
+    = render partial: 'shared/sponsors', object: event.bronze_sponsors
+  - if event.sponsors?(:standard)
+    = render partial: 'shared/sponsors', object: event.sponsors

@@ -1323,7 +1323,6 @@ $icon-bar-disabled-opacity: 0.9;
   float: left;
 }
 
-
 ul.off-canvas-list li label {
   background: none repeat scroll 0 0 #333333;
 }
@@ -1365,14 +1364,8 @@ blockquote::after{
   content: "";
 }
 
-
 blockquote em {
   font-style: italic;
-}
-
-body.dashboard-faq dl dt {
-	font-size: 1.25rem;
-	padding-top: 0.75rem;
 }
 
 .top-bar a,
@@ -1391,13 +1384,6 @@ body.dashboard-faq dl dt {
 
 .top-bar {
   padding: 0 10px;
-}
-
-.avatar-container {
-  margin: 1.142rem 0;
-  span {
-    margin-left: 0.5rem;
-  }
 }
 
 .underline {
