@@ -1,7 +1,3 @@
-.row-spaced {
-  padding-bottom: 20px;
-}
-
 #banner,
 #chapter {
   margin-top: 30px;
@@ -76,15 +72,6 @@ nav a.menu {
   color: grey;
 }
 
-.exposition {
-  font-size: 0.8rem;
-  margin-bottom: 3rem;
-}
-
-.row.people-and-place {
-  margin-bottom: 3rem;
-}
-
 .sponsors {
   text-align: center;
   margin: 0.5rem 0 2rem;
@@ -106,11 +93,6 @@ img.sponsor {
 
 u {
   text-decoration: underline;
-}
-
-.fa-collaboration {
-  background-image: asset-url('collaboration.png');
-  background-size: 10px 10px;
 }
 
 .stripe:not(.reverse):first-child {
@@ -162,10 +144,6 @@ u {
   }
 }
 
-.sponsor-image a {
-  border-bottom: none;
-}
-
 .admin_margin {
   margin-top: 15px;
 }
@@ -179,4 +157,8 @@ form .hint {
 
 .chosen-dropwdown {
   margin-bottom: 1.14286rem;
+}
+
+.small-image {
+  max-height: 100px;
 }
