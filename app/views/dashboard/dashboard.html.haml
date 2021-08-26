@@ -25,10 +25,7 @@
 
     .col-12.col-lg-8.offset-lg-1#main
       - if @announcements.any?
-        .mb-4
-          - @announcements.each do |announcement|
-            .alert.alert-primary
-              = dot_markdown(announcement.message)
+        = render partial: 'shared/announcements', locals: { announcements: @announcements }
 
       %div
         - if @ordered_events.none?
