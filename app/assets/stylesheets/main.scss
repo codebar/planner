@@ -131,6 +131,7 @@ u {
     margin-bottom: 15px;
   }
 }
+
 .events-list {
   margin-bottom: 30px;
 
@@ -161,4 +162,8 @@ form .hint {
 
 .small-image {
   max-height: 100px;
+}
+
+.announcement p:last-child {
+  margin-bottom: 0;
 }
