@@ -1,7 +1,7 @@
-.container-fluid
-  .event
-    - grouped_events.each do |date, workshops|
-      .row
-        .col
-          %h3.h5= date
-        = render workshops
+- grouped_events.each do |date, workshops|
+  .row
+    .col-12
+      %h3.h5= date
+  .row
+    .col-md-8
+      = render workshops

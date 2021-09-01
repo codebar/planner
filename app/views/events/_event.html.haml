@@ -1,43 +1,41 @@
-.card.event.mb-4
+.card.mb-4{'data-test': 'event'}
   .card-body
     .d-md-flex.justify-content-md-between
       .order-md-2
         - if event.chapter
-          %span.badge.bg-primary
+          %span.badge.bg-primary.mb-3.mb-md-0
             = event.chapter.name
         - if @user
           - if @user.attending?(event.__getobj__)
-            %span.badge.bg-success.ml-2
-              = link_to "Attending", event.path, class: "text-light border-0"
+            %span.badge.bg-success.mb-3.mb-md-0
+              = link_to 'Attending', event.path, class: 'text-light border-0'
           - if @user.event_organiser?(event)
-            %span.badge.bg-secondary.ml-2
-              = link_to "Manage", event.admin_path, class: "text-light border-0"
+            %span.badge.bg-secondary.mb-3.mb-md-0
+              = link_to 'Manage', event.admin_path, class: 'text-light border-0'
       .order-md-1
-        %h3.event__header
+        %h3.h5
           = link_to event.to_s, event.path
           - if event.venue.present?
             at
             = link_to event.venue.name, event.venue.website
 
     .mt-3
-      %p.date.mb-0
-        %i.material-icons
-          calendar_today
+      %p.mb-0
+        %i.fa.fa-calendar-o
         = event.date
-      %p.time
-        %i.material-icons
-          access_time
+      %p
+        %i.fa.fa-clock-o
         = event.time
+
     - if event.organisers.any? || event.sponsors.any?
       .d-md-flex.justify-content-md-between.align-items-md-center
         - if event.organisers.any?
-          %div
+          .mb-3.mb-md-0
             - event.organisers.each do |organiser|
-              = link_to twitter_url_for(organiser.twitter), class: "border-0 d-inline-block" do
-                = image_tag(organiser.avatar(26), class: "rounded-circle", title: organiser.full_name, alt: organiser.full_name)
-
+              = link_to twitter_url_for(organiser.twitter), class: 'border-0 d-inline-block mx-1' do
+                = image_tag(organiser.avatar(26), class: 'rounded-circle', title: organiser.full_name, alt: organiser.full_name)
         - if event.sponsors.any?
           %div
             - event.sponsors.each do |sponsor|
-              = link_to sponsor.website, class: "border-0 d-inline-block" do
-                = image_tag(sponsor.avatar.thumb, class: "sponsor-sm", alt: sponsor.name)
+              = link_to sponsor.website, class: 'border-0 d-inline-block' do
+                = image_tag(sponsor.avatar.thumb, class: 'sponsor-sm mx-1', alt: sponsor.name)

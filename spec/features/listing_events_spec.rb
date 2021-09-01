@@ -39,7 +39,7 @@ RSpec.feature 'event listing', type: :feature do
 
       visit events_path
       within('*[data-test=past-events]') do
-        expect(page).to have_selector('.event', count: 11)
+        expect(page).to have_selector('*[data-test=event]', count: 10)
         expect(page).not_to have_content 'Workshop'
       end
     end
