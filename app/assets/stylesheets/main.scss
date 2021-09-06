@@ -30,16 +30,8 @@ nav a.menu {
 
 /* The new user flow. */
 .sign-up-wizard {
-  .row.subscriptions {
-    margin-bottom: 2rem;
-  }
-
   span.error {
     margin-top: -17px;
-  }
-
-  .toggle {
-    cursor: pointer;
   }
 
   label.required abbr {
@@ -54,10 +46,14 @@ nav a.menu {
 }
 
 /* Show/hide togglable elements are controlled by JavaScript. */
-.sign-up-wizard .collapsed {
+.toggle {
+  cursor: pointer;
+}
+
+.collapsed {
   display: none;
 }
-.no-js .sign-up-wizard .collapsed {
+.no-js .collapsed {
   display: block;
 }
 

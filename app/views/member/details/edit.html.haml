@@ -1,5 +1,5 @@
 .container-fluid
-  .row.justify-content-md-center.pt-3
+  .row.justify-content-md-center.pt-4
     .col-12.col-md-7
       %h1= t('member.details.edit.title')
       %p= t('member.details.edit.summary')
@@ -13,13 +13,13 @@
         = f.input :email, required: true
 
         - if @member.coach?
-          = f.input :about_you, as: :text, label: t('member.details.edit.coach.about_you'), required: true
+          = f.input :about_you, as: :text, label: t('member.details.edit.coach.about_you'), input_html: { rows: 3 }, required: true
         - else
-          = f.input :about_you, as: :text, label: t('member.details.edit.student.about_you'), required: true
-
-        = f.input :newsletter, as: :boolean, boolean_style: :inline, checked_value: true, unchecked_value: false
+          = f.input :about_you, as: :text, label: t('member.details.edit.student.about_you'), input_html: { rows: 3 }, required: true
+        %div
+          = f.input :newsletter, as: :boolean, checked_value: true, unchecked_value: false
 
     .row.justify-content-md-center.mt-4.mb-4
       .col-12.col-md-7.text-right
         = hidden_field_tag :next_page, step2_member_path(member_type: @type)
-        = f.submit t('member.details.edit.submit'), class: 'btn-lg btn-primary border-0'
+        = f.button :button, t('member.details.edit.submit'), class: 'btn btn-primary'
