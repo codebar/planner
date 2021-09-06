@@ -1,15 +1,15 @@
 - title t('events.title')
 
-.container-fluid
+.container-fluid{'data-test': 'upcoming-events'}
   .row
-    .col{"data-test": "upcoming-events"}
+    .col
       - if @events.any?
         %h3.mb-4 Upcoming Events
-        = render partial: 'events', locals: { grouped_events: @events }
+  = render partial: 'events', locals: { grouped_events: @events }
 
-.container-fluid.stripe
+.container-fluid{'data-test': 'past-events'}
   .row
-    .col{"data-test": "past-events"}
+    .col
       - if @past_events.any?
         %h3.mb-4 Past Events
-        = render partial: 'events', locals: { grouped_events: @past_events }
+  = render partial: 'events', locals: { grouped_events: @past_events }

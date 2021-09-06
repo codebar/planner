@@ -1,43 +1,40 @@
-.container
-  .row.event.border.p-4.mb-4
-    .col-9
-      %div
-        %h3.event__header
+.card.mb-4{'data-test': 'event'}
+  .card-body
+    .d-md-flex.justify-content-md-between
+      .order-md-2
+        - if meeting.chapter
+          %span.badge.bg-primary.mb-3.mb-md-0
+            = meeting.chapter.name
+        - if @user
+          - if @user.attending?(meeting)
+            %span.badge.bg-success.mb-3.mb-md-0
+              = link_to 'Attending', meeting.path, class: 'text-light border-0'
+          - if @user.event_organiser?(meeting)
+            %span.badge.bg-secondary.mb-3.mb-md-0
+              = link_to 'Manage', meeting.admin_path, class: 'text-light border-0'
+      .order-md-1
+        %h3.h5
           = link_to meeting.name, meeting_path(meeting.slug)
           - if meeting.venue.present?
             at
             = link_to meeting.venue.name, meeting.venue.website
-      %div.mt-3
-        %p.date.mb-0
-          %i.material-icons
-            calendar_today
-          = meeting.date
-        %p.time
-          %i.material-icons
-            access_time
-          = meeting.time
 
+    .mt-3
+      %p.mb-0
+        %i.fa.fa-calendar-o
+        = meeting.date
+      %p
+        %i.fa.fa-clock-o
+        = meeting.time
+
+    - if meeting.organisers.any? || meeting.venue.present?
+      .d-md-flex.justify-content-md-between.align-items-md-center
         - if meeting.organisers.any?
-          %div.mt-3
+          .mb-3.mb-md-0
             - meeting.organisers.each do |organiser|
-              = link_to twitter_url_for(organiser.twitter), class: 'border-0' do
+              = link_to twitter_url_for(organiser.twitter), class: 'border-0 d-inline-block mr-2' do
                 = image_tag(organiser.avatar(26), class: 'rounded-circle', title: organiser.full_name, alt: organiser.full_name)
-
-    .col-3.d-flex.flex-column.align-items-end.justify-content-between
-      .mb-3.d-flex
-        - if meeting.chapter
-          %span.badge.bg-primary.text-light
-            = meeting.chapter.name
-        - if @user
-          - if @user.attending?(meeting)
-            %span.badge.bg-success.ml-2
-              = link_to meeting.path, class: "text-light border-0" do
-                Attending
-          - if @user.event_organiser?(meeting)
-            %span.badge.bg-secondary.ml-2
-              = link_to meeting.admin_path, class: "text-light border-0" do
-                %span.label Manage
-      .d-flex
         - if meeting.venue.present?
-          = link_to meeting.venue.website, class: "border-0" do
-            = image_tag(meeting.venue.avatar, class: 'sponsor-sm', alt: meeting.venue.name)
+          %div
+            = link_to meeting.venue.website, class: 'border-0 d-inline-block' do
+              = image_tag(meeting.venue.avatar, class: 'sponsor-sm', alt: meeting.venue.name)
