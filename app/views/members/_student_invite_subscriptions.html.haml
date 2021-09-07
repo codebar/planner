@@ -1,22 +1,22 @@
-.row.subscriptions
-  .large-6.large-offset-3.columns
-    %h2.toggle
+.row.justify-content-md-center.subscriptions
+  .col-12.col-md-7
+    %h2.h4.toggle
       As a Student
       - if collapsed
         %i.fa.fa-chevron-right
       - else
         %i.fa.fa-chevron-down
-    .group-container{class: collapsed ? "collapsed" : ""}
-      %p.lead #{link_to("Are you eligible to be a student?", "http://codebar.io/student-guide#eligibility")}
+    .group-container{class: collapsed ? 'collapsed' : ''}
+      %p.lead #{link_to('Are you eligible to be a student?', 'http://codebar.io/student-guide#eligibility')}
       - groups.each do |group|
         - if belongs_to_group?(group)
           = simple_form_for :subscription, url: :destroy_subscriptions, method: :delete do |f|
             = f.input :subscription_id, as: :hidden, input_html: { value: nil }
             = f.input :group_id, as: :hidden, input_html: { value: group.id }
-            = button_tag type: :submit, class: 'button expand success round' do
-              %i.fa.fa-check.fa-lg
-              =group.chapter.name
+            = button_tag type: :submit, class: 'btn btn-success w-100' do
+              %i.fa.fa-check
+              = group.chapter.name
         - else
           = simple_form_for :subscription, url: :subscriptions do |f|
             = f.input :group_id, as: :hidden, input_html: { value: group.id }
-            = f.submit group.chapter.name, class: 'button expand warn round'
+            = f.button :button, group.chapter.name, class: 'btn btn-secondary w-100'
