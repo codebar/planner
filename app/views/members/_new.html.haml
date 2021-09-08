@@ -1,29 +1,23 @@
 = simple_form_for @member, method: :put do |f|
   .row
-    .large-6.columns
-      = f.input :name
-    .large-6.columns
-      = f.input :surname
-  .row
-    .large-6.columns
-      = f.input :pronouns, label: "What pronouns do you use?", placeholder: "e.g. she/her/they"
-
-  .row
-    .large-6.columns
-      = f.input :email
-    .large-6.columns
-      = f.input :twitter
-  .row
-    .large-6.columns
+    .col-12.col-lg-6
+      = f.input :name, required: true
+    .col-12.col-lg-6
+      = f.input :surname, required: true
+    .col-12
+      = f.input :pronouns, label: 'What pronouns do you use?', placeholder: 'e.g. she/her/they'
+    .col-12
+      = f.input :email, required: true
+    .col-12.col-lg-6
       = f.input :mobile
-
-  .row
-    .large-6.columns
-      = f.input :about_you, as: :text, label: "Tell us a little bit about yourself", required: true
+    .col-12.col-lg-6
+      = f.input :twitter
+    .col-12
+      = f.input :about_you, as: :text, label: 'Tell us a little bit about yourself', input_html: { rows: 3 }, required: true
     - if @member.coach?
-      .large-6.columns
-        = f.input :skill_list, label: "Skills, enter as a comma separated list", input_html: { value: @member.skill_list.join(", ") }
+      .col-12
+        = f.input :skill_list, label: 'Skills, enter as a comma separated list', input_html: { value: @member.skill_list.join(", ") }
 
   .row
-    .large-12.columns.text-right
-      = f.submit submit_text, class: 'button round right'
+    .col-12.text-right
+      = f.button :button, submit_text, class: 'btn btn-primary'
