@@ -223,7 +223,7 @@ es:
         intro: "Si desea asistir a un estudiante, asegúrese de conocer a nuestro"
         criteria_link: "criterio de elegibilidad"
         criteria_brief: "como nuestros talleres solo están disponibles para las mujeres, LGBTQ, personas de grupos minoritarios subrepresentados."
-        github: "Por último, cuando hace clic en el botón Registrarse, se lo llevará a algo llamado GitHub. Después de iniciar sesión con una cuenta GitHub, volverá al sitio web de Codebar. Si aún no tiene una cuenta, Tendrás que crear uno. ¡No tarda mucho tiempo y es algo que vendrá de manera útil cuando comience con la codificación!"
+        github: "Por último, cuando hace clic en el botón Registrarse, se lo llevará a algo llamado GitHub. Después de iniciar sesión con una cuenta GitHub, volverá al sitio web de codebar. Si aún no tiene una cuenta, Tendrás que crear uno. ¡No tarda mucho tiempo y es algo que vendrá de manera útil cuando comience con la codificación!"
       invitations: "Las invitaciones se envían periódicamente, así que no se preocupe si no recibe uno tan pronto como se registre."
   footer:
     email_us: "Envíenos un correo electrónico a"
