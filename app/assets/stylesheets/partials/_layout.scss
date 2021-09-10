@@ -1,18 +1,13 @@
 @import "partials/colors";
 
 #top {
-  margin-top: 73px;
+  margin-top: 82px;
 }
 
-// to delete
-.flex-grid {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-// to delete
-.flex-item {
-  display: flex;
+@media (min-width: 991.98px) {
+  #top {
+    margin-top: 77px;
+  }
 }
 
 .main-footer {
