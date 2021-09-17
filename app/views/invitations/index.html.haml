@@ -1,56 +1,51 @@
-= render partial: 'shared/title', locals: { title: "Invitations", date: nil }
-%section
-  .inner-nav{ "data-magellan-expedition" => "fixed" }
-    %dl.sub-nav
-      .row
-        %dd{ "data-magellan-arrival" => "upcoming" }
-          =link_to "Upcoming", "#upcoming"
-        %dd{ "data-magellan-arrival" => "attended" }
-          =link_to "Attended", "#attended"
-
-
+.container-fluid.stripe.reverse
   .row
-    .large-12.columns
-      %a{ name: "upcoming" }
-      %h3{ "data-magellan-destination" => "upcoming"} Upcoming workshops
+    .col-12
+      %h1 Invitations
+    .col-12
+      = link_to 'Upcoming', '#upcoming'
+      \|
+      = link_to 'Attended', '#attended'
 
+.container-fluid
+  .row
+    .col.col-md-8
+      %h3#upcoming Upcoming workshops
       - if @upcoming_invitations.any?
-        .row
-          - @upcoming_invitations.each do |invitation|
-            .medium-4.small-12.columns
-              .panel
-                %p
-                  %h4
-                    = invitation.parent.to_s
-                    %br
-                    - if invitation.parent.present?
-                      %small.subheader #{invitation.parent.chapter.name} Group: #{invitation.role.pluralize}
-                      .date #{humanize_date(invitation.parent.date_and_time, with_time: true)}
+        - @upcoming_invitations.each do |invitation|
+          .card.shadow-sm.mb-4
+            .card-body
+              .d-flex.align-items-start.justify-content-between
+                %h4= invitation.parent.to_s
+                %span.badge.bg-primary= invitation.parent.chapter.name
+              - if invitation.parent.present?
+                .mb-3
+                  Group: #{invitation.role.pluralize}
                   %br
-                  - if invitation.is_a? WorkshopInvitation
-                    =link_to attendance_status(invitation), invitation_path(invitation), class: "button round expand"
-                  - elsif invitation.is_a? CourseInvitation
-                    =link_to attendance_status(invitation), course_invitation_path(invitation), class: "button round expand"
-      - elsif @upcoming_workshop
-        %em You have no invitations. If you just signed up you should receive one soon.
-      - else
-        %em There are no upcoming events.
+                  .text-muted #{humanize_date(invitation.parent.date_and_time, with_time: true)}
+                - if invitation.is_a? WorkshopInvitation
+                  = link_to attendance_status(invitation), invitation_path(invitation), class: 'btn btn-sm btn-primary', role: 'button'
+                - elsif invitation.is_a? CourseInvitation
+                  = link_to attendance_status(invitation), course_invitation_path(invitation), class: 'btn btn-sm btn-primary', role: 'button'
 
-      %a{ name: "attended" }
-      %h3{ "data-magellan-destination" => "attended"} Workshops attended
-      - unless @attended_invitations.any?
-        You haven't attended any events yet.
+      - elsif @upcoming_workshop
+        %p You have no invitations. If you just signed up you should receive one soon.
       - else
-        .row
-          - @attended_invitations.each do |invitation|
-            .medium-4.small-12.columns
-              .panel
-                %p
-                  %h4
-                    = invitation.parent.to_s
-                    %br
-                    - if invitation.parent.present?
-                      %small.subheader #{invitation.parent.chapter.name} Group: #{invitation.role.pluralize}
-                      .date #{humanize_date(invitation.parent.date_and_time, with_time: true)}
+        %p There are no upcoming events.
+
+      %h3#attended Workshops attended
+      - unless @attended_invitations.any?
+        %p You haven't attended any events yet.
+      - else
+        - @attended_invitations.each do |invitation|
+          .card.shadow-sm.mb-4
+            .card-body
+              .d-flex.align-items-start.justify-content-between
+                %h4= invitation.parent.to_s
+                %span.badge.bg-primary= invitation.parent.chapter.name
+              - if invitation.parent.present?
+                .mb-3
+                  Group: #{invitation.role.pluralize}
                   %br
-                  =link_to "View", invitation_path(invitation), class: "button round expand"
+                  .text-muted #{humanize_date(invitation.parent.date_and_time, with_time: true)}
+                = link_to 'View', invitation_path(invitation), class: 'btn btn-sm btn-primary', role: 'button'
