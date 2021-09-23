@@ -1,18 +1,19 @@
 - title t('jobs.title')
-.stripe.reverse
+
+.container-fluid.stripe.reverse
   .row
-    .large-12.columns
-      %h1=t('jobs.title')
+    .col
+      %h1= t('jobs.title')
       %p.lead
         - if @jobs.any?
-          =t('jobs.index.description', count: @jobs.count)
+          = t('jobs.index.description', count: @jobs.count)
         - else
-          =t('jobs.index.none')
+          = t('jobs.index.none')
         %br
         %small #{link_to('Click here', new_member_job_path)} if you would like to post a new job.
   - if @jobs.any?
     .row
-      .large-12.columns
-        %ul.jobs
+      .col.col-md-8.col-lg-6
+        %ul.jobs.list-unstyled.ml-0.mb-0
           - @jobs.each do |job|
             = render partial: 'job', locals: { job: job }
