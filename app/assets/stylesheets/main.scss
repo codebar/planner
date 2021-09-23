@@ -101,12 +101,14 @@ u {
 }
 
 .stripe.reverse:nth-child(even) {
-  padding: 60px 0;
+  padding-top: 60px;
+  padding-bottom: 60px;
 }
 
 .stripe.reverse:nth-child(odd) {
   background-color: #f5f6f7;
-  padding: 60px 0;
+  padding-top: 60px;
+  padding-bottom: 60px;
 }
 
 .stripe.reverse:first-child {

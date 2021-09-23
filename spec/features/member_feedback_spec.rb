@@ -26,7 +26,7 @@ RSpec.feature 'member feedback', type: :feature do
       expect(page).to have_field 'feedback_request'
       expect(page).to have_field 'feedback_suggestions'
       expect(page).to have_selector '//div.rating'
-      expect(page).to have_selector '//input[type=submit]'
+      expect(page).to have_button 'Submit feedback'
     end
 
     scenario 'I can select an entry from the coaches list' do
