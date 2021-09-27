@@ -1,51 +1,32 @@
-#new_job
-  %h4 Job post details
-  .row
-    .small-12.columns
-      = f.input :title, required: true
-  .row
-    .small-12.columns
-      = f.input :description, input_html: { rows: 10 }, required: true
-  .row
-    .small-12.columns
-      = f.input :salary, required: true
-  .row
-    .small-12.columns
-      = f.input :remote, wrapper: :checkbox
-      %br
-  .row
-    .small-12.columns
-      = f.input :email
-  .row
-    .small-12.columns
-      = f.input :link_to_job, required: true
-  .row
-    .small-12.columns
-      = f.input :expiry_date, as: :string, required: true, input_html: { data: { value: @job.expiry_date.try(:strftime, '%d/%m/%Y') } }
+%fieldset.mt-0
+  %legend.mb-3 Job post details
+  .mb-3
+    = f.input :title, required: true
+  .mb-3
+    = f.input :description, input_html: { rows: 10 }, required: true
+  .mb-3
+    = f.input :salary, required: true
+  .mb-3
+    = f.input :remote, wrapper: :checkbox
+  .mb-3
+    = f.input :email
+  .mb-3
+    = f.input :link_to_job, required: true
+  = f.input :expiry_date, as: :string, required: true, input_html: { data: { value: @job.expiry_date.try(:strftime, '%d/%m/%Y') } }
 
-  %hr
-  %h4 Company details
-  .row
-    .small-12.columns
-      = f.input :company, required: true
-  .row
-    .small-12.columns
-      = f.input :company_website, required: true
-  .row
-    .small-12.columns
-      = f.input :location, required: true
+%fieldset
+  %legend.mb-3 Company details
+  .mb-3
+    = f.input :company, required: true
+  .mb-3
+    = f.input :company_website, required: true
+  = f.input :location, required: true
 
-  .row
-    .small-12.columns
-      %small
-        = t('member.jobs.new.optional_details_message')
+%fieldset
+  %p
+    %small= t('member.jobs.new.optional_details_message')
+  .mb-3
+    = f.input :company_address
+  = f.input :company_postcode
 
-  .row
-    .small-12.columns
-      = f.input :company_address
-  .row
-    .small-12.columns
-      = f.input :company_postcode
-  .row
-    .small-12.columns
-      = f.submit "Submit job for approval", class: "button"
+= f.button :button, 'Submit job for approval', class: "btn btn-primary"
