@@ -328,7 +328,7 @@ fi:
       title: Location
       remote: 'Remote'
     messages:
-      draft_html: 'This is a preview of your job.<b>Edit</b> to amend or <b>Submit</b> for approval.'
+      draft_html: 'This is a preview of your job. <b>Edit</b> to amend or <b>Submit</b> for approval.'
       pending_html: 'This job is pending approval. <b>Edit</b> to amend your post.'
       published_html: 'This job has been published.'
       expired_html: 'This job has expired.'
