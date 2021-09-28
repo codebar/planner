@@ -1,16 +1,16 @@
-.stripe.reverse#banner
+.container-fluid.stripe.reverse
   .row.justify-content-md-center
-    .col.col-md-8
-      %h2= t('participant_student_guide.title')
+    .col-md-10.col-lg-8
+      %h1= t('participant_student_guide.title')
       = link_to t('participant_student_guide.attendance_policy.title') , '#attendance'
       \|
       = link_to t('participant_student_guide.eligibility_criteria.title') , '#eligibility'
       \|
       = link_to t('participant_student_guide.disability.title') , '#disability'
 
-.stripe.reverse
+.container-fluid.stripe.reverse
   .row.justify-content-md-center
-    .col.col-md-8
+    .col-md-10.col-lg-8
       %h3#attendance= t('participant_student_guide.attendance_policy.title')
       %p
         = t('participant_student_guide.attendance_policy.intro')
