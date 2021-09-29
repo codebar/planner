@@ -186,7 +186,7 @@ $list-style-position: outside;
 // $list-ordered-side-margin: 1.4rem;
 // $list-side-margin-no-bullet: 0;
 // $list-nested-margin: rem-calc(20);
-$definition-list-header-weight: 100;
+// $definition-list-header-weight: 100;
 // $definition-list-header-margin-bottom: .3rem;
 // $definition-list-margin-bottom: rem-calc(12);
 
@@ -1360,7 +1360,7 @@ blockquote::before {
   top: 5px;
 }
 
-blockquote::after{
+blockquote::after {
   content: "";
 }
 
@@ -1368,7 +1368,6 @@ blockquote em {
   font-style: italic;
 }
 
-.top-bar a,
 #sponsors a,
 .icon-bar a {
   border-bottom: none;
@@ -1380,10 +1379,6 @@ blockquote em {
 
 .info {
   color: $info-color;
-}
-
-.top-bar {
-  padding: 0 10px;
 }
 
 .underline {
