@@ -70,7 +70,7 @@ RSpec.feature 'Member managing jobs', type: :feature do
 
       click_on 'Submit job'
 
-      expect(page).to have_content('This is a preview of your job.Edit to amend or Submit for approval')
+      expect(page).to have_content('This is a preview of your job. Edit to amend or Submit for approval')
     end
 
     scenario 'can view text that address and postcode fields are optional' do
@@ -86,7 +86,7 @@ RSpec.feature 'Member managing jobs', type: :feature do
 
       visit member_job_path(job.id)
 
-      expect(page).to have_content('This is a preview of your job.Edit to amend or Submit for approval')
+      expect(page).to have_content('This is a preview of your job. Edit to amend or Submit for approval')
       expect(page).to have_content(job.title)
     end
 
@@ -101,7 +101,7 @@ RSpec.feature 'Member managing jobs', type: :feature do
       job = Fabricate(:job, created_by: member)
       visit member_job_path(job.id)
 
-      expect(page).to have_content('This is a preview of your job.Edit to amend or Submit for approval.')
+      expect(page).to have_content('This is a preview of your job. Edit to amend or Submit for approval.')
 
       click_on 'Submit'
       expect(page).to have_content("Job submitted for approval. You will receive an email when it's been approved.")

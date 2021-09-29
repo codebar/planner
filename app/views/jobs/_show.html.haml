@@ -7,7 +7,10 @@
           = t('job.check_out_jobs_html', link: link_to('jobs', jobs_url, class: 'alert-link'))
   .row.justify-content-between
     .col-12
-      %h1= @job.title
+      - if preview
+        %h2= @job.title
+      - else
+        %h1= @job.title
     .col-12.col-md-9.col-lg-8
       = dot_markdown(@job.description)
       %h4 Company
