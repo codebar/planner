@@ -141,7 +141,7 @@ GEM
       sass (>= 3.3.0, < 3.5)
     friendly_id (5.4.2)
       activerecord (>= 4.0.0)
-    gibbon (3.4.0)
+    gibbon (3.4.1)
       faraday (>= 0.16.0)
       multi_json (>= 1.11.0)
     globalid (0.4.2)
@@ -423,7 +423,7 @@ DEPENDENCIES
   foreman
   foundation-rails (= 5.5.3.2)
   friendly_id
-  gibbon (~> 3.4.0)
+  gibbon (~> 3.4.1)
   haml
   high_voltage
   icalendar
