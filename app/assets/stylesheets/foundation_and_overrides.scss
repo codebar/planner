@@ -186,7 +186,7 @@ $list-style-position: outside;
 // $list-ordered-side-margin: 1.4rem;
 // $list-side-margin-no-bullet: 0;
 // $list-nested-margin: rem-calc(20);
-$definition-list-header-weight: 100;
+// $definition-list-header-weight: 100;
 // $definition-list-header-margin-bottom: .3rem;
 // $definition-list-margin-bottom: rem-calc(12);
 
@@ -1323,7 +1323,6 @@ $icon-bar-disabled-opacity: 0.9;
   float: left;
 }
 
-
 ul.off-canvas-list li label {
   background: none repeat scroll 0 0 #333333;
 }
@@ -1332,19 +1331,9 @@ table thead tr td {
   border-bottom: 1px solid rgb(34, 34, 34);
 }
 
-.top-bar-section li:not(.has-form):hover a span  {
-  text-decoration: underline;
-  text-decoration-skip: ink;
-}
-
-.top-bar-section li:not(.has-form):hover a .highlight  {
-  text-decoration-color: currentColor;
-}
-
 .highlight {
   color: $secondary-color;
 }
-
 
 blockquote {
   background: $white;
@@ -1371,21 +1360,14 @@ blockquote::before {
   top: 5px;
 }
 
-blockquote::after{
+blockquote::after {
   content: "";
 }
-
 
 blockquote em {
   font-style: italic;
 }
 
-body.dashboard-faq dl dt {
-	font-size: 1.25rem;
-	padding-top: 0.75rem;
-}
-
-.top-bar a,
 #sponsors a,
 .icon-bar a {
   border-bottom: none;
@@ -1397,17 +1379,6 @@ body.dashboard-faq dl dt {
 
 .info {
   color: $info-color;
-}
-
-.top-bar {
-  padding: 0 10px;
-}
-
-.avatar-container {
-  margin: 1.142rem 0;
-  span {
-    margin-left: 0.5rem;
-  }
 }
 
 .underline {

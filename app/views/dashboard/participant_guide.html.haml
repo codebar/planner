@@ -1,36 +1,35 @@
-.stripe.reverse#banner
-  .row
-    .large-12.columns
-      %h2= t('participant_student_guide.title')
-      %p
+.container-fluid.stripe.reverse
+  .row.justify-content-md-center
+    .col-md-10.col-lg-8
+      %h1= t('participant_student_guide.title')
       = link_to t('participant_student_guide.attendance_policy.title') , '#attendance'
       \|
       = link_to t('participant_student_guide.eligibility_criteria.title') , '#eligibility'
       \|
       = link_to t('participant_student_guide.disability.title') , '#disability'
 
-.stripe.reverse
-  .row
-    .large-12.columns
+.container-fluid.stripe.reverse
+  .row.justify-content-md-center
+    .col-md-10.col-lg-8
       %h3#attendance= t('participant_student_guide.attendance_policy.title')
       %p
         = t('participant_student_guide.attendance_policy.intro')
 
         %ol
           %li
-            = raw t('participant_student_guide.attendance_policy.rule1')
+            %p.mb-2= raw t('participant_student_guide.attendance_policy.rule1')
           %li
-            = raw t('participant_student_guide.attendance_policy.rule2')
+            %p.mb-2= raw t('participant_student_guide.attendance_policy.rule2')
           %li
-            = t('participant_student_guide.attendance_policy.rule3')
+            %p.mb-2= t('participant_student_guide.attendance_policy.rule3')
           %li
-            = t('participant_student_guide.attendance_policy.rule4')
+            %p.mb-2= t('participant_student_guide.attendance_policy.rule4')
           %li
-            = raw t('participant_student_guide.attendance_policy.rule5')
+            %p.mb-2= raw t('participant_student_guide.attendance_policy.rule5')
           %li
-            = t('participant_student_guide.attendance_policy.rule6')
+            %p.mb-2= t('participant_student_guide.attendance_policy.rule6')
           %li
-            = t('participant_student_guide.attendance_policy.rule7')
+            %p.mb-2= t('participant_student_guide.attendance_policy.rule7')
 
       %h4= t('dashboard.policy.what_happens')
 

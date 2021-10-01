@@ -1,28 +1,29 @@
-%section
-  .row.chapter-header
-    .medium-6.columns.chapter-header-text
+.container-fluid
+  .row.align-items-center
+    .col-md-6.pt-4.pb-4
       %h1= @chapter.name
       - if @chapter.description
         %p.lead= @chapter.description
       - else
-        %p.lead= t('chapters.intro_html')
+        %p.lead.mb-0= t('chapters.intro_html')
     - if @chapter.image.present?
-      .medium-6.columns.chapter-header-image
+      .col-md-6
         = image_tag @chapter.image.bg, alt: "#{@chapter.name} chapter"
 
-.panel
-  .row
-    .medium-6.columns
-      = t('chapters.info', email: h(@chapter.email)).html_safe
-    .medium-6.columns.text-center
-      - if logged_in?
-        = render partial: 'subscriptions'
-      - else
-        =link_to 'Sign up', new_member_path, class: 'button small radius'
+.alert-primary.pt-4.pb-4
+  .container-fluid
+    .row.align-items-center
+      .col-md-6.mb-4.mb-md-0
+        = t('chapters.info', email: h(@chapter.email)).html_safe
+      .col-md-6.text-center
+        - if logged_in?
+          = render partial: 'subscriptions'
+        - else
+          =link_to 'Sign up', new_member_path, class: 'btn btn-primary'
 
-%section.stripe.reverse#chapter
+.container.stripe.reverse#chapter
   .row
-    .large-8.columns
+    .col-md-8.col-sm-12
       - if @upcoming_workshops.any?
         .events-list.events-list--upcoming
           %h3 Upcoming Events
@@ -37,7 +38,7 @@
             .grouped-events
               = render workshops
 
-    .large-4.columns
+    .col-md-4.col-sm-12
       - if @chapter.twitter_handle
         %a.twitter-timeline{href: "https://twitter.com/#{@chapter.twitter_handle}", "data-widget-id" => @chapter.twitter_id }="Tweets by #{@chapter.twitter_handle}"
       - else
@@ -46,27 +47,15 @@
       %script(async src="https://platform.twitter.com/widgets.js" charset="utf-8")
 
 - if @recent_sponsors.any?
-  .stripe.reverse
+  .container-fluid.stripe.reverse
     .row
-      .small-12.columns
-        %h2 Sponsors
-    .row.sponsor-row
-      - @recent_sponsors.each do |sponsor|
-        .small-4.medium-2.columns.sponsor-image
-          = link_to image_tag(sponsor.avatar, class: "small-image", alt: sponsor.name), sponsor.website, title: sponsor.name
+      .col
+        %h2.text-center Sponsors
+    = render partial: 'shared/sponsors', object: @recent_sponsors
 
-.stripe.reverse
-  .row
-    .large-12.columns
-      %a{ name: 'organisers' }
-      %h2 Team
-  .row.flex-grid
-    - @chapter.organisers.shuffle.each do |organiser|
-      .small-12.medium-6.large-3.columns.flex-item.mb2
-        = link_to twitter_url_for(organiser.twitter), title: "#{organiser.full_name} Twitter profile", class: 'organiser-content' do
-          = image_tag(organiser.avatar(65), alt: organiser.full_name, class: 'organiser-image')
-          = organiser.full_name
-  .row  
-    .large-12.columns
-      .panel
-        = t('chapters.contact', city: @chapter.name, email: @chapter.email)
+.container-fluid.stripe.reverse
+  = render partial: 'members/organisers_grid', locals: { members: @chapter.organisers.shuffle, show_info: false, title: t('chapters.team') }
+
+  .row.mt-5
+    .col.alert.alert-primary.mb-0
+      = t('chapters.contact', city: @chapter.name, email: @chapter.email)

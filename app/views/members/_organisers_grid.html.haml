@@ -1,7 +1,9 @@
-.row#organisers
-  .large-12.columns
-    .text-center
-      %h3= t('events.organisers')
-    %br
-    %br
+- title = local_assigns[:title] ? local_assigns[:title] : t('events.organisers')
+
+#organisers.text-center
+  .row
+    .col
+      %h2= title
+
+  .row
     = render partial: 'members/avatar_listing', locals: { member: members, show_info: show_info }

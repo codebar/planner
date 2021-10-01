@@ -1,170 +1,109 @@
-.past__container
+.container-fluid.stripe.reverse
   .row
-    .large-12.columns
-      %h2
+    .col-12
+      %h1
         = @event.name
         - if @invitation.attending
-          %label.label.success Attending
-      %h3
-        %small #{l(@event.date_and_time)} to #{l(@event.ends_at, format: :time) }
-        %p.lead= @event.description.html_safe
+          %span.badge.bg-success Attending
+        %br
+        %small #{humanize_date(@event.date_and_time, @event.ends_at, with_time: true)}
+    .col-12.col-md-9
+      %p.lead= @event.description.html_safe
 
   .row
-    .large-10.columns
+    .col-12.col-md-9
       - if @invitation.for_student?
         - if !@invitation.attending
           - if @member.already_attending(@event)
-            %p
-              You have already RSVP'd to this event as a coach! Please cancel through the email confirmation you received if you wish to sign up as a student instead.
+            %p You have already RSVP'd to this event as a coach! Please cancel through the email confirmation you received if you wish to sign up as a student instead.
           - else
             - if @event.event_student_spaces?
               - if @event.tito_url.present?
-                =link_to @event.tito_url, target: '_blank', class: 'button round', method: :post do
+                = link_to @event.tito_url, target: '_blank', class: 'btn btn-primary', method: :post do
                   RSVP
               - else
-                =link_to event_attend_path, class: 'button round', method: :post do
+                = link_to event_attend_path, class: 'btn btn-primary', method: :post do
                   RSVP as a student
             - else
               %p Unfortunately there are no more student spots left. Send us an email at #{@event.email} to be added to the waiting list.
         - else
-          =link_to event_reject_path, class: 'tiny warning button round', method: :post, "data-confirm" => "Are you sure you won't be able to attend the event? There may not be any spots available later on." do
+          = link_to event_reject_path, class: 'btn btn-danger', method: :post, 'data-confirm' => "Are you sure you won't be able to attend the event? There may not be any spots available later on." do
             Cancel my spot
-
 
       - if @invitation.for_coach?
         - if !@invitation.attending
           - if @member.already_attending(@event)
-            %p
-              You have already RSVP'd to this event as a student! Please cancel through the email confirmation you received if you wish to sign up as a coach instead.
+            %p You have already RSVP'd to this event as a student! Please cancel through the email confirmation you received if you wish to sign up as a coach instead.
           - else
             - if @event.event_coach_spaces?
               - if @event.tito_url.present?
-                =link_to @event.tito_url, target: '_blank', class: 'button round', method: :post do
+                = link_to @event.tito_url, target: '_blank', class: 'btn btn-primary', method: :post do
                   RSVP
               - else
-                =link_to event_attend_path, class: 'button round', method: :post do
+                = link_to event_attend_path, class: 'btn btn-primary', method: :post do
                   RSVP as a coach
             - else
-              %p
-                There are no more coach spots left. Send an email at #{@event.email} to be added to the waiting list.
+              %p Unfortunately there are no more coach spots left. Send an email at #{@event.email} to be added to the waiting list.
         - else
-          =link_to event_reject_path, class: 'tiny button round warning', method: :post, "data-confirm" => "Are you sure you won't be able to attend the event? There may not be any spots available later on." do
+          = link_to event_reject_path, class: 'btn btn-danger', method: :post, 'data-confirm' => "Are you sure you won't be able to attend the event? There may not be any spots available later on." do
             Cancel my spot
-      %br
 
   - if @invitation.attending
     .row
-      .large-12.columns
+      .col
         - if !@invitation.verified
           - if @event.surveys_required
-            %p.alert-box.info{ "data-alert" => true }
-              %i.fa.fa-warning.warning
-              To complete signing up for the event, you must #{link_to("complete our questionnaire", @event.questionnaire(@invitation))} as we need to know a couple of things in advance to plan the day.
-              %br
-              %u You will receive an email when your attendance is verified.
-          %br
-    %br
-%br
-%br
-.row
-  .large-7.columns
-    %a{ name: "schedule" }
-    %h4{ "data-magellan-destination" => "schedule"} Schedule
-    = dot_markdown(@event.schedule)
-  .large-5.columns
-    %h4 Location
-    .row
-      .medium-8.columns
-        %p
-          = @host_address.to_html
-      .medium-4.columns
-        = image_tag(@event.venue.avatar.url, class: 'sponsor-logo-image', alt: @event.venue.name)
-    .row
-      .large-12.columns
-        %iframe{ width: '100%', height: '250', frameborder: '0', scrolling: 'no', marginheight: '0', marginwidth: '0', src: %{https://maps.google.com/maps?f=q&source=s_q&hl=en&amp;geocode=&q=#{@host_address.for_map}&ie=UTF8&t=m&z=15&output=embed} }
-        =link_to "View larger map", %{https://maps.google.com/maps?f=q&source=s_q&hl=en&amp;geocode=&q=#{@host_address.for_map}&ie=UTF8&hq=&t=m&z=15}, style: "color:#0000FF;text-align:left"
-      .medium-6.columns
-- if @event.show_faq
-  .past__container
-    .row
-      .large-12.columns
-        %a{ name: "faq" }
-          %h2{ "data-magellan-destination" => "faq"}
-            .text-center FAQ
-        = render partial: 'events/faq'
+            .alert.alert-warning.mt-4{ "data-alert" => true }
+              .d-flex.align-items-center
+                %i.fa.fa-warning.warning.mr-3
+                %p.mb-0 
+                  To complete signing up for the event, you must #{link_to("complete our questionnaire", @event.questionnaire(@invitation), class: 'alert-link border-0 text-decoration-underline')} as we need to know a couple of things in advance to plan the day.
+                  %strong You will receive an email when your attendance is verified.
 
-%br
-%br
-.row
-  .large-12.columns
-    %a{ name: "sponsors" }
-    %h2{ "data-magellan-destination" => "sponsors"}
-      .text-center Sponsors
-    %p.text-center
-      %i A big thanks to all of our sponsors for making the event possible!
-    %br
-    - if @event.sponsors.any?
-      %ul.no-bullet
-        - @event.sponsors.each do |sponsor|
-          %li
-            .row
-              .large-2.columns
-                = image_tag(sponsor.avatar, class: 'sponsor', alt: sponsor.name)
-              .large-10.columns
-                =link_to sponsor.name, sponsor.website
-                %p
-                  = sponsor.description
-            %br
-%br
-- if @event.display_coaches
-  .past__container
-    .row
-      .large-12.columns
-        %a{ name: "coaches" }
-          %h2{ "data-magellan-destination" => "coaches"}
-            .text-center Coaches
-        %br
-        - if @event.verified_coaches.any?
-          %ul.small-block-grid-2.medium-block-grid-5
-            - @event.verified_coaches.each do |coach|
-              %li.text-center
-                =link_to twitter_url_for(coach.twitter), class: 'user-link' do
-                  =image_tag(coach.avatar(56), class: 'th radius', title: coach.full_name)
-                  %br
-                  %br
-                  = coach.full_name
-
-- if @event.display_students
+.container-fluid.stripe.reverse
   .row
-    .large-12.columns
-      %a{ name: "students" }
-        %h2{ "data-magellan-destination" => "students"}
-          .text-center Students
-        %br
-        - if @event.verified_students.any?
-          %ul.small-block-grid-2.medium-block-grid-5
-            - @event.verified_students.each do |student|
-              %li.text-center
-                =link_to twitter_url_for(student.twitter), class: 'user-link' do
-                  =image_tag(student.avatar(56), class: 'th radius', title: student.full_name, alt: student.full_name)
-                  %br
-                  %br
-                  = student.full_name
+    .col-12.col-lg-6
+      %h3 Schedule
+      = dot_markdown(@event.schedule)
+    .col-12.col-lg-6
+      %h3 Location
+      .row
+        .col-12.col-md-8
+          %address= @host_address.to_html
+        .col-12.col-md-4
+          = image_tag(@event.venue.avatar, class: 'small-image', alt: @event.venue.name)
+      .row
+        .col
+          %iframe{ width: '100%', height: '250', frameborder: '0', scrolling: 'no', marginheight: '0', marginwidth: '0', src: %{https://maps.google.com/maps?f=q&source=s_q&hl=en&amp;geocode=&q=#{@host_address.for_map}&ie=UTF8&t=m&z=15&output=embed} }
+          = link_to 'View larger map', %{https://maps.google.com/maps?f=q&source=s_q&hl=en&amp;geocode=&q=#{@host_address.for_map}&ie=UTF8&hq=&t=m&z=15}, style: "color:#0000FF;text-align:left"
+
+- if @event.show_faq
+  .container-fluid.stripe.reverse
+    .row
+      .col
+        %h2.text-center FAQ
+    = render partial: 'events/faq'
+
+- if @event.sponsors?
+  .container-fluid.stripe.reverse
+    = render partial: 'events/event_sponsors', locals: { event: @event }
+
+- if @event.verified_coaches.any? && @event.display_coaches
+  .container-fluid.stripe.reverse
+    .row
+      .col
+        %h2.text-center= t('events.coaches')
+    .row.text-center
+      = render partial: 'members/avatar_listing', locals: { member: @event.verified_coaches, show_info: false }
+
+- if @event.verified_students.any? && @event.display_students
+  .container-fluid.stripe.reverse
+    .row
+      .col
+        %h2.text-center= t('events.students')
+    .row.text-center
+      = render partial: 'members/avatar_listing', locals: { member: @event.verified_students, show_info: false }
 
 - if @event.organisers.any?
-  %br
-  .past__container
-    .row
-      .large-12.columns
-        %a{ name: "organisers" }
-          %h2{ "data-magellan-destination" => "organisers"}
-            .text-center Organisers
-        %br
-          %ul.small-block-grid-1.medium-block-grid-4
-            - @event.organisers.each do |organiser|
-              %li.text-center
-                =link_to twitter_url_for(organiser.twitter), class: 'user-link' do
-                  =image_tag(organiser.avatar(56), class: 'th radius', title: organiser.full_name, alt: organiser.full_name)
-                  %br
-                  %br
-                  = organiser.full_name
+  .container-fluid.stripe.reverse
+    = render partial: 'members/organisers_grid', locals: { members: @event.organisers, show_info: false }

@@ -1,10 +1,4 @@
-- if announcements.present?
-  .row
-    .large-12.columns
-      %br
-        .alert-box.info{ "data-alert" => true }
-          =link_to "#", class: 'close' do
-            &times;
-          %ul.no-bullet
-            - announcements.each do |announcement|
-              %li= dot_markdown(announcement.message)
+.mb-4
+  - @announcements.each do |announcement|
+    .alert.alert-primary.announcement
+      = dot_markdown(announcement.message)

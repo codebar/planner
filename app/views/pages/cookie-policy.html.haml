@@ -1,50 +1,77 @@
-.row.mt2
-  .large-12.columns
-    :markdown
+.container-fluid.stripe.reverse
+  .row.justify-content-md-center
+    .col-md-10.col-lg-8
+      :markdown
+        # #{t('pages.cookies.title')}
 
-      ##{t('pages.cookies.title')}
+.container-fluid.stripe.reverse
+  .row.justify-content-md-center
+    .col-md-10.col-lg-8
+      :markdown
+        #{t('pages.cookies.p1')}
 
-      #{t('pages.cookies.p1')}
+        #{t('pages.cookies.p2')}
 
-      #{t('pages.cookies.p2')}
+        #{t('pages.cookies.sub.title')}
 
-      #{t('pages.cookies.sub.title')}
+        ### #{t('pages.cookies.functional.title')}
 
+        #{t('pages.cookies.functional.description')}
 
-      ## #{t('pages.cookies.functional.title')}
+      %table.table.table-secondary
+        %thead
+          %tr
+            %th= t('pages.cookies.table.header.h1')
+            %th= t('pages.cookies.table.header.h2')
+            %th= t('pages.cookies.table.header.h3')
+        %tbody
+          %tr
+            %th
+              %code= t('pages.cookies.functional.planner_name')
+            %th= t('pages.cookies.functional.planner_purpose')
+            %th= t('pages.cookies.functional.planner_expiry')
+      %br
 
-       #{t('pages.cookies.functional.description')}
-      <br/>
+      :markdown
+        ### #{t('pages.cookies.google_analytics.title')}
 
-      | Cookie name | Purpose | Expires |
-      | ---- | ------- |    ----- |
-      | `_planner_session` | #{t('pages.cookies.functional.planner')} | #{t('pages.cookies.functional.planner_expiry ')} |
+        #{t('pages.cookies.google_analytics.description')}
 
-      <div style="height:1px;font-size:1px;">&nbsp;</div>
+        **#{t('pages.cookies.google_analytics.info')}**
 
-      ## #{t('pages.cookies.google_analytics.title')}
+      %table.table.table-secondary
+        %thead
+          %tr
+            %th= t('pages.cookies.table.header.h1')
+            %th= t('pages.cookies.table.header.h2')
+            %th= t('pages.cookies.table.header.h3')
+        %tbody
+          %tr
+            %th
+              %code= t('pages.cookies.google_analytics.ga_name')
+            %th= t('pages.cookies.google_analytics.ga_purpose')
+            %th= t('pages.cookies.google_analytics.ga_expiry')
+          %tr
+            %th
+              %code= t('pages.cookies.google_analytics.gid_name')
+            %th= t('pages.cookies.google_analytics.gid_purpose')
+            %th= t('pages.cookies.google_analytics.gid_expiry')
+      %br
 
-      #{t('pages.cookies.google_analytics.description')}
+      :markdown
+        #{t('pages.cookies.google_analytics.opt_out')}
 
-      **#{t('pages.cookies.google_analytics.info')}**
+        ### #{t('pages.cookies.cloudflare.title')}
 
-      <div style="height:1px;font-size:1px;">&nbsp;</div>
-
-      | Name |	Purpose | 	Expires |
-      | ---- | ------- |    ----- |
-      | `_ga` | #{t('pages.cookies.google_analytics.ga')} | #{t('pages.cookies.google_analytics.ga_expiry ')} |
-      | `_ga` | #{t('pages.cookies.google_analytics.gid')} | #{t('pages.cookies.google_analytics.gid_expiry ')} |
-
-      <div style="height:1px;font-size:1px;">&nbsp;</div>
-
-      #{t('pages.cookies.google_analytics.opt_out')}
-
-      ### #{t('pages.cookies.cloudflare.title')}
-
-      <div style="height:1px;font-size:1px;">&nbsp;</div>
-
-      | Name | Purpose | Expires |
-      | ---- | ------- |    ----- |
-      | `_cfduid` | #{t('pages.cookies.cloudflare.cfduid')} | #{t('pages.cookies.cloudflare.cfduid_expiry')} |
-
-      <div class='mb4'>&nbsp;</div>
+      %table.table.table-secondary
+        %thead
+          %tr
+            %th= t('pages.cookies.table.header.h1')
+            %th= t('pages.cookies.table.header.h2')
+            %th= t('pages.cookies.table.header.h3')
+        %tbody
+          %tr
+            %th
+              %code= t('pages.cookies.cloudflare.cfduid_name')
+            %th= t('pages.cookies.cloudflare.cfduid_purpose')
+            %th= t('pages.cookies.cloudflare.cfduid_expiry')

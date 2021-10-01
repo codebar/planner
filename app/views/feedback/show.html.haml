@@ -1,40 +1,41 @@
-= render partial: 'shared/title', locals: { title: t('feedback_form.title'), date: humanize_date(@workshop.date_and_time, with_time: true) }
-%section#banner
-  .row
-    .large-12.columns
+.container-fluid.stripe.reverse
+  .row.justify-content-md-center
+    .col-md-8
+      %h1= t('feedback_form.title')
+      %p.lead.text-muted= humanize_date(@workshop.date_and_time, with_time: true)
+
+.container-fluid
+  .row.justify-content-md-center
+    .col-md-8
       %p
         = t('feedback_form.description')
-      %small= t('feedback_form.note')
+        %br
+        %small= t('feedback_form.note')
 
-  .row
-    .large-12.columns
-      = simple_form_for @feedback, url: submit_feedback_path(params[:id]), html: {method: "patch"} do |f|
+  .row.justify-content-md-center
+    .col-md-8
+      = simple_form_for @feedback, url: submit_feedback_path(params[:id]), html: { method: 'patch' } do |f|
         = f.hidden_field :token, :value => params[:id]
         = f.hidden_field :rating
         .row
-          .large-6.columns
+          .mb-4
             %label.required
               %abbr(title='required') *
-              =t('feedback_form.rating')
+              = t('feedback_form.rating')
             .rating{:data => {:rating_max => 5 }}
         .row
-          .large-6.columns
+          .col-lg-6.mb-4
             = f.association :coach, collection: @coaches, label_method: :full_name, value_method: :id, label: t('feedback.coach')
-        .row
-          .large-6.columns
+          .col-lg-6.mb-4
             = f.association :tutorial, label_method: :title, value_method: :id, label: t('feedback_form.tutorial'), include_blank: t('feedback_form.select_tutorial')
+          = f.input :request, label: t('feedback_form.request'), input_html: { rows: 3 }
+          = f.input :suggestions, label: t('feedback_form.suggestions'), input_html: { rows: 3 }
         .row
-          .large-12.columns
-            = f.input :request, label: t('feedback_form.request')
-        .row
-          .large-12.columns
-            = f.input :suggestions, label: t('feedback_form.suggestions')
-        .row
-          .large-12.columns.text-right
-            = f.submit 'Submit feedback', class: 'button round right'
+          .text-right
+            = f.button :button, 'Submit feedback', class: 'btn btn-primary'
 
 :javascript
-  $(".rating").starRating({
+  $('.rating').starRating({
     minus: false
     });
     $('input[name="commit"]').click(function(){

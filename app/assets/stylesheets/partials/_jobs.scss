@@ -1,34 +1,3 @@
-ul.jobs {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-
-
-  li.job {
-    border-bottom: 1px solid #dee0e2;
-    padding: 10px 0 5px;
-    margin: 5px 0;
-
-    dl {
-      font-size: '0.9em';
-
-      dt {
-        color: #6f777b;
-        display: inline-block;
-        width: 24%;
-      }
-      dd {
-        display: inline-block;
-        width: 24%;
-        margin-bottom: 0;
-      }
-      dd.double {
-        width: 60%;
-      }
-    }
-  }
-}
-
 .job {
   .stripe:not(.reverse):first-child {
     padding: 40px 0px 20px;

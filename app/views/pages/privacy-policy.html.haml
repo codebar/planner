@@ -1,21 +1,19 @@
-.stripe.reverse
-  .row
-    .large-12.columns
+.container-fluid.stripe.reverse
+  .row.justify-content-md-center
+    .col-md-10.col-lg-8
       :markdown
         # #{t('pages.privacy_policy.title')}
 
-      %h2.subheader= t('pages.privacy_policy.subtitle')
+      %p.lead= t('pages.privacy_policy.subtitle')
 
-.stripe.reverse
-  .row
-    .large-12.columns
+.container-fluid.stripe.reverse
+  .row.justify-content-md-center
+    .col-md-10.col-lg-8
       :markdown
-
         #{t('pages.privacy_policy.intro.p1')}
 
-      %p
-        %address
-          #{t('pages.privacy_policy.intro.address_html')}
+      %address
+        #{t('pages.privacy_policy.intro.address_html')}
 
       :markdown
         #{t('pages.privacy_policy.intro.p2')}
@@ -28,7 +26,7 @@
 
         #{t('pages.privacy_policy.information.what_we_collect.p1')}
 
-      %table
+      %table.table.table-secondary
         %thead
           %tr
             %th= t('pages.privacy_policy.information.what_we_collect.table.headers.h1')
@@ -83,6 +81,7 @@
               %ul
                 %li= t('pages.privacy_policy.information.what_we_collect.table.r6.c4.l1')
                 %li= t('pages.privacy_policy.information.what_we_collect.table.r6.c4.l2')
+      %br
 
       :markdown
         #### #{t('pages.privacy_policy.information.how_we_share.title')}
