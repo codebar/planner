@@ -526,6 +526,15 @@ en-GB:
       contact:
         title: 8. Contact
         p1: "If you have any questions or complaints about this Privacy Policy or our information handling practices, you may email us at company@codebar.io stating 'Data inquiry' in the subject title, or by postal mail at: codebar Ltd, International House, 24 Holborn Viaduct, London, England, EC1A 2BN."
+    breach:
+      title: What happens if you violate codebar’s Code of Conduct?
+      opening_para: All codebar events are dedicated to providing a harassment-free experience for everyone, regardless of gender, sexual orientation, disability, physical appearance, body size, race, or religion. We do not tolerate harassment towards any community member or organiser in any form. Harassment includes any type of aggressive behaviour or offensive verbal comments related to gender, sexual orientation, disability, physical appearance, body size, race, religion, sexual images in public spaces, deliberate intimidation, stalking, following, harassing photography or recording, sustained disruption of talks or other events, inappropriate physical contact, and unwelcome sexual attention.
+      second_para: The Code of Conduct is in place to protect every codebar member - students, coaches and organisers. If any member violates these rules the below procedure and sanctions will be implemented.
+      outcome_title: 3 types of outcomes
+      correction: Correction - The use of inappropriate language or other behavior deemed unprofessional or unwelcome in the codebar community. This includes the use of terminology that is discouraged I.E guys. In this situation you will be sent a private message, providing clarity around the nature of the violation and an explanation of why the behavior was inappropriate. A public apology may be requested.
+      warning: Warning - You will receive an email warning. The organiser will explain the incident, including the impact on the person involved and the community. We will give as much information as possible, so you’re aware of what happened and try to learn from the incident. The organiser will add a note to your codebar profile so that all chapter organisers are aware of the incident. We expect you to take our comments on board, further action may be taken depending on your reaction. Examples of behaviour that will get you a warning include - targeted offensive language, or the sharing of sexual images in codebar spaces. 2 email warnings will result in a lifetime ban.
+      lifetime_ban: Lifetime ban - You will no longer be able to RSVP to any future codebar events. You will also be removed from codebar’s Slack workspace. Examples of behaviour that will get you an automatic lifetime ban include - physical intimidation, stalking, inappropriate physical contact, unwelcome sexual attention or repeated behaviour after you’ve been spoken to by someone from the codebar team (directors or chapter organisers).
+      closing_para: The above is only a starting point. The details of the incident may change how we view it, e.g. some verbal harassment may be so serious that we would give a lifetime ban.
 
   admin:
     dashboard:
