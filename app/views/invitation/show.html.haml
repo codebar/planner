@@ -1,151 +1,140 @@
 - title t('workshop.invitation.title', date: humanize_date(@workshop.date_and_time))
 
-.stripe.reverse
+.container-fluid.stripe.reverse
   .row
-    .large-12.columns
-      %h2
+    .col
+      %h1
         = @workshop.title
         %br
         %small #{humanize_date(@workshop.date_and_time, @workshop.ends_at, with_time: true)} #{@workshop.distance_of_time}
       - if @workshop.date_and_time.past?
-        %label.label.warning= t('messages.already_taken_place')
-.alert-box.info
+        %span.badge.bg-danger= t('messages.already_taken_place')
+
+.alert.alert-info.rounded-0
   .row
-    .large-12.columns
-      This link can be accessed without authentication so please don't share it with others. You can access and share the <strong> #{link_to("public listing", workshop_url(@workshop))}</strong> of the workshop.
+    .col
+      This link can be accessed without authentication so please don't share it with others. You can access and share the <strong>#{link_to("public listing", workshop_url(@workshop), class: 'alert-link')}</strong> of the workshop.
 
-
-.stripe.reverse
-  = render partial: 'shared/announcements', locals: { announcements: @announcements }
+.container-fluid.mb-4
+  - if @announcements.any?
+    .row
+      = render partial: 'shared/announcements', locals: { announcements: @announcements }
 
   .row
-    .medium-7.large-8.columns
+    .col-12.col-md-7.col-lg-8
       %p#introduction
         Hi #{@invitation.member.name},
-        = render partial: @invitation.role.downcase
+      = render partial: @invitation.role.downcase
+      - if @workshop.description? || @workshop.virtual? && @invitation.attending.eql?(true)
+        #info
+          %h3= t('workshop.invitation.info')
+          - if @workshop.description?
+            %p= sanitize(@workshop.description)
+          - if @workshop.virtual? && @invitation.attending.eql?(true)
+            %h4= t('workshop.virtual.invitation.info.title')
+            #join-info
+              %ol
+                %li= t('workshop.virtual.invitation.info.line_1_html', slack_link: link_to(nil, t('social_media_links.slack_html')))
+                %li= t('workshop.virtual.invitation.info.line_2_html', channel: link_to("##{@workshop.slack_channel}", @workshop.slack_channel_link))
+                %li= t('workshop.virtual.invitation.info.line_3_html', discord: link_to("discord", t('social_media_links.discord_invitation')))
+                %li= t('workshop.virtual.invitation.info.line_4_html', discord_app: link_to('https://discord.com/download', 'https://discord.com/download'))
 
-    .medium-5.large-4.columns
-      .panel
+              %h4= t('workshop.virtual.invitation.info.begins_title')
+              %ol
+                %li= t('workshop.virtual.invitation.info.line_5')
+                %li= t('workshop.virtual.invitation.info.line_6')
+
+    .col-12.col-md-5.col-lg-4
+      .card.border-info.mb-3
         - if @workshop.past?
-          %em= t('workshops.already_taken_place')
+          .card-body
+            %span.badge.bg-danger= t('messages.already_taken_place')
         - else
-          - if @invitation.attending.eql?(true)
-            - if @invitation.for_student?
-              = simple_form_for @invitation, url: :invitation, method: :put do |f|
-                = f.input :tutorial, collection: @tutorial_titles, include_blank: true
-                = f.input :note, required: false, input_html: { rows: 3, maxlength: 100 }, hint: 'Anything else we should know?', placeholder: 'e.g. I need help understanding selectors'
-                = f.button :submit, "Update",  class: "button expand round"
-            - if @invitation.for_coach?
-              %span.has-tip{ 'data-tooltip': '', 'aria-haspopup': 'true', title: I18n.t('workshop_invitation.coach_skills_tooltip') }
-                %i.fa.fa-info
-              =link_to 'Keep your skills up-to-date!', edit_member_path
-              %hr
-              = simple_form_for @invitation, url: :invitation, method: :put do |f|
-                = f.input :note, required: false, input_html: { rows: 3, maxlength: 100 }
-                = f.button :submit, "Update note",  class: "button expand round"
-            - if @workshop.rsvp_available?
-              = link_to "I can no longer attend", reject_invitation_url(@invitation), class: "expand button small alert"
-            - else
+          .card-body
+            - if @invitation.attending.eql?(true)
+              - if @invitation.for_student?
+                = simple_form_for @invitation, url: :invitation, method: :put do |f|
+                  = f.input :tutorial, collection: @tutorial_titles, include_blank: true
+                  = f.input :note, required: false, input_html: { rows: 3, maxlength: 100 }, hint: 'Anything else we should know?', placeholder: 'e.g. I need help understanding selectors'
+                  = f.button :submit, 'Update', class: 'btn btn-primary w-100'
+              - if @invitation.for_coach?
+                = link_to 'Keep your skills up-to-date!', edit_member_path
+                %span.d-block
+                  %small= I18n.t('workshop_invitation.coach_skills_tooltip')
+                %hr
+                = simple_form_for @invitation, url: :invitation, method: :put do |f|
+                  = f.input :note, required: false, input_html: { rows: 3, maxlength: 100 }
+                  = f.button :submit, 'Update note', class: 'btn btn-primary w-100'
+              - if @workshop.rsvp_available?
+                = link_to 'I can no longer attend', reject_invitation_url(@invitation), class: 'btn btn-danger w-100 mt-3', role: 'button'
+              - else
+                %p= t('workshop.invitation.cant_make_it_note', email: @workshop.chapter.email)
+            - elsif @invitation.member.banned?
               %p
-                = t('workshop.invitation.cant_make_it_note', email: @workshop.chapter.email)
-          - elsif @invitation.member.banned?
-            %p
-              %label.label.warning Your account has been suspended.
-              %br
-
-              %small
+                %span.badge.bg-danger Your account has been suspended.
+              %p.mb-0
                 %strong Why?
                 - if @invitation.member.banned_permanently?
                   = @invitation.member.bans.permanent.first.reason
                 - else
                   = @invitation.member.bans.active.first.reason
-          - else
-            - if @invitation.for_coach?
-              - if @workshop.coach_spaces?
-                %span.has-tip{ 'data-tooltip': '', 'aria-haspopup': 'true', title: I18n.t('workshop_invitation.coach_skills_tooltip') }
-                  %i.fa.fa-info
-                =link_to 'Keep your skills up-to-date!', edit_member_path
-                %hr
-                = simple_form_for @invitation, url: :accept_invitation, method: :post do |f|
-                  = f.input :note, required: false, input_html: { rows: 3, maxlength: 100 }
-                  %br
-                  = f.button :submit, "Attend",  class: "button expand round"
-              - else
-                = render partial: 'invitation/waiting_list', locals: { invitation: @invitation }
             - else
-              - if @workshop.student_spaces?
-                = simple_form_for @invitation, url: :accept_invitation, method: :post do |f|
-                  = f.input :tutorial, collection: @tutorial_titles, include_blank: true
-                  = f.input :note, required: false, input_html: { rows: 3, maxlength: 100 }, hint: 'Anything else we should know?', placeholder: 'e.g. I need help understanding selectors'
-                  = f.button :submit, "Attend",  class: "button expand round"
+              - if @invitation.for_coach?
+                - if @workshop.coach_spaces?
+                  = link_to 'Keep your skills up-to-date!', edit_member_path
+                  %span.d-block
+                    %small= I18n.t('workshop_invitation.coach_skills_tooltip')
+                  %hr
+                  = simple_form_for @invitation, url: :accept_invitation, method: :post do |f|
+                    = f.input :note, required: false, input_html: { rows: 3, maxlength: 100 }
+                    = f.button :submit, 'Attend', class: 'btn btn-primary w-100'
+                - else
+                  = render partial: 'invitation/waiting_list', locals: { invitation: @invitation }
               - else
-                = render partial: 'invitation/waiting_list', locals: { invitation: @invitation }
-          Read our #{link_to "attendance policy", attendance_policy_path}.
+                - if @workshop.student_spaces?
+                  = simple_form_for @invitation, url: :accept_invitation, method: :post do |f|
+                    = f.input :tutorial, collection: @tutorial_titles, include_blank: true
+                    = f.input :note, required: false, input_html: { rows: 3, maxlength: 100 }, hint: 'Anything else we should know?', placeholder: 'e.g. I need help understanding selectors'
+                    = f.button :submit, 'Attend', class: 'btn btn-primary w-100'
+                - else
+                  = render partial: 'invitation/waiting_list', locals: { invitation: @invitation }
+          .card-footer.bg-transparent
+            Read our #{link_to "attendance policy", attendance_policy_path}.
 
-
-.stripe.reverse#info
-  .row
-    .small-12.column
-      %h4= t('workshop.invitation.info')
-      - if @workshop.description?
-        %p.lead
-          = sanitize(@workshop.description)
-      - if @workshop.virtual? &&  @invitation.attending.eql?(true)
-        %h4= t('workshop.virtual.invitation.info.title')
-        #join-info
-          %ol
-            %li= t('workshop.virtual.invitation.info.line_1_html', slack_link: link_to(nil, t('social_media_links.slack_html')))
-            %li= t('workshop.virtual.invitation.info.line_2_html', channel: link_to("##{@workshop.slack_channel}", @workshop.slack_channel_link))
-            %li= t('workshop.virtual.invitation.info.line_3_html', discord: link_to("discord", t('social_media_links.discord_invitation')))
-            %li= t('workshop.virtual.invitation.info.line_4_html', discord_app: link_to('https://discord.com/download', 'https://discord.com/download'))
-
-          %h5= t('workshop.virtual.invitation.info.begins_title')
-          %ol
-            %li= t('workshop.virtual.invitation.info.line_5')
-            %li= t('workshop.virtual.invitation.info.line_6')
-
-  - unless @workshop.virtual?
-    .row
-      = render partial: 'shared/venue', locals: { venue: @workshop.host, address: @workshop.address}
+- unless @workshop.virtual?
+  .container-fluid.stripe.reverse
+    = render partial: 'shared/venue', locals: { venue: @workshop.host, address: @workshop.address}
 
 - if @workshop.sponsors.any?
-  .stripe.reverse#sponsors
+  .container-fluid.stripe.reverse#sponsors
     .row
-      .small-12.column
-        %h3 Sponsors
-        %ul.row.no-bullet
-          - @workshop.sponsors.each do |sponsor|
-            %li.small-4.columns
-              = image_tag(sponsor.avatar.url, class: 'sponsor', alt: sponsor.name)
-              %p
-                = link_to sponsor.name, sponsor.website
+      .col
+        %h2.text-center Sponsors
+    = render partial: 'shared/sponsors', object: @workshop.sponsors
 
-.stripe.reverse
+.container-fluid.stripe.reverse
   = render partial: 'members/organisers_grid', locals: { members: @workshop.organisers, show_info: true }
 
-.stripe.reverse
+.container-fluid.stripe.reverse
   .row
-    .medium-6.columns
-      %h4 Students (#{@workshop.attending_and_available_student_spots})
-      %ul.attendances.no-bullet
+    .col-12.col-md-6
+      %h3 Students (#{@workshop.attending_and_available_student_spots})
+      %ul.list-unstyled.ml-0
         - @workshop.attending_students.each do |invitation|
-          %li.attendance
-            .row
-              .small-2.columns
-                =image_tag(invitation.member.avatar(96), class: 'th radius', title: invitation.member.full_name, alt: invitation.member.full_name)
-              .small-10.columns
-                =invitation.member.full_name
+          %li.mt-4
+            .d-flex.align-items-center
+              = image_tag(invitation.member.avatar(56), class: 'rounded-circle', title: invitation.member.full_name, alt: invitation.member.full_name)
+              .ml-3
+                = invitation.member.full_name
                 %br
-                .subheader=invitation.note
-            %br
-    .medium-6.columns
-      %h4 Coaches (#{@workshop.attending_and_available_coach_spots})
-      %ul.attendances.no-bullet
+                %small.text-muted= invitation.note
+
+    .col-12.col-md-6.mt-5.mt-md-0
+      %h3 Coaches (#{@workshop.attending_and_available_coach_spots})
+      %ul.list-unstyled.ml-0
         - @workshop.attending_coaches.each do |invitation|
-          %li.attendance
-            .row
-              .small-2.columns
-                =image_tag(invitation.member.avatar(96), class: 'th radius', title: invitation.member.full_name, alt: invitation.member.full_name)
-              .small-10.columns
-                =invitation.member.full_name
-            %br
+          %li.mt-4
+            .d-flex.align-items-center
+              = image_tag(invitation.member.avatar(56), class: 'rounded-circle', title: invitation.member.full_name, alt: invitation.member.full_name)
+              .ml-3
+                = invitation.member.full_name

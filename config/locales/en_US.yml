@@ -65,6 +65,8 @@ en-US:
       workshop_email_subject: "Regarding hosting a workshop"
     chapters:
       title: "Chapters"
+    events:
+      upcoming: "Upcoming Events"
   mailer:
     workshop_invitation:
       attending:
@@ -103,11 +105,12 @@ en-US:
     not_logged_in: "You must be logged in to access this page."
   navigation:
     dashboard: "Dashboard"
-    code_of_conduct: "Code of conduct"
-    coach_guide: "Coach guide"
-    student_guide: "Student guide"
+    code_of_conduct: "Code of Conduct"
+    breach_code_of_conduct: "Breach Code of Conduct"
+    coach_guide: "Coach Guide"
+    student_guide: "Student Guide"
     tutorials: "Tutorials"
-    becoming_sponsor: "Becoming a sponsor"
+    becoming_sponsor: "Becoming a Sponsor"
     faq: "FAQ"
     blog: "Blog"
     codebar_stories: "codebar Stories"
@@ -163,6 +166,7 @@ en-US:
     sponsors: "Sponsors"
     thx_to_sponsors: "A big thanks to all of our sponsors for making the event possible!"
     coaches: "Coaches"
+    students: Students
     schedule: "Schedule"
     send_us_an_email: "send us an email"
     not_open_for_rsvp: This event is not open for RSVP yet.
@@ -202,7 +206,7 @@ en-US:
       sponsors: "Sponsors are also subject to the anti-harassment policy. In particular, sponsors should not use sexualized images, activities, or other material. Staff (including volunteers) should not use sexualized clothing/uniforms/costumes, or otherwise create a sexualized environment."
       sanctions: "If a participant engages in harassing behaviour the organisers may take any action they deem appropriate. This includes warning the offender or expulsion."
       concerns: "If you are being harassed, notice that someone else is being harassed, or have any other concerns, please contact one of the organisers immediately."
-      applies_to: "We expect participants to follow these rules at all <b>codebar</b> events."
+      applies_to: "We expect participants to follow these rules at all <b>codebar</b> events. If they fail to do so, the following <a href='https://codebar.io/breach-code-of-conduct'>process will take place</a>."
       questions: "If you have any questions or concerns about this code please"
       contact: "contact us"
       email_subject: "Regarding code of conduct"
@@ -323,7 +327,7 @@ en-US:
       title: Location
       remote: 'Remote'
     messages:
-      draft_html: 'This is a preview of your job.<b>Edit</b> to amend or <b>Submit</b> for approval.'
+      draft_html: 'This is a preview of your job. <b>Edit</b> to amend or <b>Submit</b> for approval.'
       pending_html: 'This job is pending approval. <b>Edit</b> to amend your post.'
       published_html: 'This job has been published.'
       expired_html: 'This job has expired.'
@@ -384,75 +388,143 @@ en-US:
         title: Edit job listing
   pages:
     cookies:
-      title: Cookies
+      title: Cookie Policy
       p1: 'Cookies are small pieces of text used to store information on web browsers. They are used by websites accross a number of different devices to store and receive identifiers and other information. Our Website and Service use cookies and other similar technologies (collectively in this Policy, "cookies"), in order to provide a better service to you and to generally improve our Website and Service. For example, we may use cookies to help direct you to the appropriate part of our Website, by indicating that you are a repeat visitor. We also may use information to present you with services that are matched to your preferences and to manage and track the effectiveness of our marketing efforts.'
       p2: Some portions of the codebar website are functional without cookies, and you may generally choose whether to accept cookies. Most web browsers are set to accept cookies by default, however, you may be able to delete cookies yourself through your browser's cookie manager. To do so, please follow the instructions provided by your web browser. Please note that disabling cookies will reset your session, disable auto-login, and may adversely affect the availability and functionality of our Website and the services we can provide to you.
       sub:
-        title: Below the cookies used by the codebar website.
+        title: Below are the cookies used by the codebar website.
+      table:
+        header:
+          h1: Name
+          h2: Purpose
+          h3: Expires
       functional:
         title: Functional Cookies
         description: Stores information about your session.
-        planner: Stores session data
+        planner_name: _planner_session
+        planner_purpose: Stores session data
         planner_expiry: Expires after 24 hours
       google_analytics:
         title: Google Analytics
-        description: Google Analytics  collects information about how you use the codebar website. This enables us to identify how busy the website is and possible improvements.
+        description: Google Analytics collects information about how you use the codebar website. This enables us to identify how busy the website is and possible improvements.
         info: We don’t allow Google to use or share our analytics data.
         opt_out: You can [opt out of Google Analytics](https://tools.google.com/dlpage/gaoptout).
-        ga: Tracks if you have visited codebar.io before
+        ga_name: _ga
+        ga_purpose: Tracks if you have visited codebar.io before
         ga_expiry: After 2 years
-        gid: Tracks if you have visited codebar.io before
+        gid_name: _ga
+        gid_purpose: Tracks if you have visited codebar.io before
         gid_expiry: After 24 hours
       cloudflare:
         title: Cloudflare
-        cfduid: Used to identify individual clients behind a shared IP address and apply security settings on a per-client basis.
-        cfduid_expiry: '1 year'
+        cfduid_name: _pfduid
+        cfduid_purpose: Used to identify individual clients behind a shared IP address and apply security settings on a per-client basis.
+        cfduid_expiry: 1 year
     privacy_policy:
       title: Privacy Policy
-      subtitle: Your privacy matters to us
-      p1: 'Your privacy means a lot to us, and we take it very seriously. We aim to be transparent with you about the data we collect about you and how it is used and shared. By signing up to our workshops you consent to our use of your data under this Privacy Policy. The document below has been created by codebar whose companies house registered name and address is as follows:'
-      address_html: '
-        codebar Ltd,<br/>
-        International House,<br/>
-        24 Holborn Viaduct,<br/>
-        London,<br/>
-        England,<br/>
-        EC1A 2BN<br/>
-        Company No. 10791813<br/>'
+      subtitle: This Privacy Policy was last updated on 13 May 2021.
+      intro:
+        p1: 'This Privacy Policy has been created by codebar ("codebar", "we", "us", or "our") whose companies house registered name and address is as follows:'
+        address_html: '
+          codebar Ltd,<br>
+          International House,<br>
+          24 Holborn Viaduct,<br>
+          London, England,<br>
+          EC1A 2BN<br>
+          Company No. 10791813<br>'
+        p2: codebar Ltd trades on behalf of the charity registered UK and Wales no. 1187776. For the purpose of this Privacy Policy codebar Ltd is the data controller.
+        p3: Your privacy means a lot to us, and we take it very seriously. We aim to be transparent with you about the data we collect about you and how it is used and shared. This Privacy Policy lets you know what information we collect when you use the codebar website, https://codebar.io/, or interact with any of the services we provide, such as signing up to workshops and events ("Services"). By using our Services you acknowledge and understand our use of your data under this Privacy Policy and how it applies to your use of our Services.
       information:
         title: 1. Information we collect
-        description: We do not share any of your information with any third parties without your consent. We also do not sell your contact information or use it for marketing purposes.
-        subscribing_html: '**1.1 Subscribing to an event**<br/>
-        We share your name with our host companies as we are required to provide a list with all attendee names when you subscribe to any of our events. We **do not share** your email address or any other personal information.'
-        cookies_html: '**1.2 Cookie Policy**<br/>
-        We use cookies to recognize you and your location. You can control cookies through your browser settings and other tools. For more information read our [cookie policy](/cookie-policy).'
-        usage_html:  '**1.3 How we use information we collect**<br/>
-        The legal basis on which we collect and process your data is “legitimate interest”. This is because we collect and store your data in order to process event information.'
+        what_we_collect:
+          title: 1.1 Personal data we collect from you
+          p1: 'We have set out in the table below the personal data we collect about you and how we use it, which will differ based on the capacity in which you interact with codebar:'
+          table:
+            headers:
+              h1: Who
+              h2: What data we process
+              h3: What we use it for
+              h4: Lawful basis
+            r1:
+              c1: Students
+              c2: This includes personal data that is provided by you or collected by us to enable you to subscribe to codebar as a student. This may include your name, email address, phone number, pronouns, self-written bio, social media details (e.g. twitter handle), your self-recognition as being underrepresented (with your consent), and the location you choose to subscribe to.
+              c3: For administrative purposes when you sign up to events, to communicate with you, and to provide you with our newsletters and events information.
+              c4:
+                l1: Performance of a contract
+                l2: Consent
+                l3: Legitimate interests
+            r2:
+              c1: Coaches
+              c2: This includes personal data that is provided by you or collected by us to enable you to volunteer at codebar as a coach. This may include your name, email address, phone number, pronouns, self-written bio/skills, social media details (e.g. twitter handle), your self-recognition as being underrepresented (with your consent), and the location you choose to volunteer at.
+              c3: For administrative purposes when you volunteer for workshops, to communicate with you, to manage workshop attendance, and to provide you with our newsletters and events information.
+              c4:
+                l1: Consent
+                l2: Legitimate interests
+            r3:
+              c1: Organizers
+              c2: This includes personal data that is provided by you or collected by us, which may include your name, email address, phone number, pronouns, self-written bio/skills, social media details (e.g. twitter handle), slack username, signed documentation, and the location you choose to volunteer at.
+              c3: To organise and communicate workshops.
+              c4:
+                l1: Legitimate interests
+            r4:
+              c1: Hosts
+              c2: We may collect personal information of employees working at companies that agree to host our workshops. This information may include the employees' name, email address, contact number, social media details (e.g. twitter handle), and place of work.
+              c3: In order to market, promote, host and operate workshops.
+              c4:
+                l1: Legitimate interests
+            r5:
+              c1: Sponsors
+              c2: We need to collect personal data in relation to your sponsorship of codebar. This may include information such as your name, and bank details.
+              c3: To fulfill contractual obligations we have with you, for example, to process invoices related to your sponsorship.
+              c4:
+                l1: Performance of a contract
+                l2: Legitimate interests
+            r6:
+              c1: Trustees and directors
+              c2: We need to collect personal data in relation to your position as trustee and/or director. This may include information such as your name, contact number, address, email address, and date of birth.
+              c3: In order to establish our status as a charity, to comply with legal obligations, and respond to legal requests.
+              c4:
+                l1: Legitimate interests
+                l2: Compliance with legal obligations
+        how_we_share:
+          title: 1.2 How we share your information
+          p1_html: 'When you subscribe to an event, we share your name with our host companies as we are required to provide a list with all attendee names when you subscribe to any of our events. We **do not share** your email address or any other personal information.'
+        legal_basis:
+          title: 1.3 Legal basis for our use of your personal information
+          p1: As set out in the table above, sometimes the legal basis on which we collect and process your data is because our legitimate interests make the processing necessary, and those legitimate interests are not overridden by your interests or fundamental rights and freedoms. For example, we collect and store your data in order to process event information, and to ensure the efficient running and promotion of workshops.
+      retention:
+        title: 2. Retention
+        p1: We will keep your personal information for as long as reasonably necessary to fulfil the purposes we collected it for. To determine the appropriate retention period, we consider the amount, nature and sensitivity of the personal information, the potential risk of harm from unauthorised use or disclosure of your personal information, the purposes for which we process your personal data and whether we can achieve those purposes through other means, and the applicable legal, regulatory, tax, accounting or other requirements.
+        p2: We may retain your personal information for a longer period in the event of a complaint or if we reasonably believe there is a prospect of dispute in respect to our relationship with you.
+      international_transfers:
+        title: 3. International transfers
+        p1: Personal information we collect may be transferred to and stored in countries outside of the jurisdiction you are in for the purposes specified in this Privacy Policy. We will only transfer your personal information to countries that have been deemed to provide an adequate level of protection for personal information, and/or any international transfers will be made pursuant to appropriate safeguards in accordance with the applicable laws and regulations, such as standard data protection clauses adopted by the UK and European Commission.
+        p2: If you wish to enquire further about these safeguards used, please contact us by email at the address below or by mail using the postal address provided below.
       your_rights:
-        title: 2. Your rights, choices and obligations
-        rights_html: '
-          **2.1 Your rights**<br/>
-          Data protection law provides you with rights in respect of personal data that we hold about you, including the right to request a copy of the personal data and request that we rectify, restrict or delete your data.
-          If you would like to exercise any of these rights please email us at company@codebar.io.
-          If you have a complaint about how we handle your data, please get in touch with us at company@codebar.io. If you are not happy about the way a complaint has been handled, you have the right to refer your complaint to the Information Commissioner’s Office.'
-        data_retention_html: '
-          **2.2 Data retention**<br/>
-          We will retain your data for as long as necessary to provide our services to you and fulfil transactions you have requested. If at any point you wish us to delete your data please email company@codebar.io.'
-        personal_data_access_html: '
-          **2.3 Right to Access and Control Your Personal Data**<br/>
-          You can request a copy of the data we hold about you, or request that we delete any data we hold on you. You can also ask us to correct, update or delete any inaccurate personal data that we hold about you. Just email us at company@codebar.io at any time.  We aim to process requests for data records or deletion within two weeks of receipt.'
-        access_and_portability_html: '
-          **2.4 Data Access and Portability**<br/>
-          You have the right to request a copy of the personal information we hold about you in a structured, electronic format. If you wish to receive a copy of the information we hold about you, please email company@codebar.io.'
+        title: 4. Your data protection rights
+        p1: 'Data protection law provides you with rights in respect of personal data that we hold about you, including the:'
+        l1: 'Right to Access: You have the right to obtain access to your data, and certain other information (similar to that provided in this Privacy Policy).'
+        l2: 'Right to Rectification: You are entitled to have your data corrected if it is inaccurate or incomplete.'
+        l3: 'Right to Erasure: This enables you in some circumstances to request and obtain the deletion of your data where there is no legal reason for us to keep using it.'
+        l4: 'Right to Restriction of Processing: You have rights to suspend further use of your data, whereby we can still store your data but cannot use it further. This may mean we can no longer provide you with Services.'
+        l5: 'Right to Data Portability: You have rights in some circumstances to request the transfer of your data to yourself or to a third party.'
+        l6: 'Right to Objection: You have the right to object to certain types of data processing, including for direct marketing purposes.'
+        l7: 'Right to Withdrawal of Consent: Where we are relying on consent to process your data, you have the right to withdraw your consent at any time by using any opt-out links, or by contacting us at the details provided below (although if you do so, it does not mean that anything we have done with your data with your consent up to that point is unlawful and we may be able to continue to process your personal information to the extent required or otherwise permitted by law, in particular in connection with exercising and defending our legal rights or meeting our legal and regulatory obligations).'
+        l8: 'Right to Lodge a Complaint: You can lodge a complaint in relation to our use of your personal information with the local supervisory authority, the Information Commissioner (UK).'
+        p2: If you would like to exercise any of these rights or if you have a complaint about how we handle your data, please contact us at the email address stated below.
       security:
-        title: 3. Security
-        text: From time to time we implement and update administrative, technical, and physical security measures to help protect your information against unauthorised access, loss, destruction, or alteration. However, the Internet is not a 100% secure environment so we can’t guarantee the security of the transmission or storage of your information.
+        title: 5. Security
+        p1: The security of your personal information is important to us. codebar takes reasonable steps to implement and update administrative, technical, and physical security measures to help protect your information against unauthorised access, loss, destruction, or alteration. However, the Internet is not a 100% secure environment so we can't guarantee the security of the transmission or storage of your information. codebar has no control over or responsibility for the security or practices or privacy policies of third parties, even if you interact with them when using our Services.
       changes:
-        title: 4. Changes to this privacy policy
-        text: We reserve the right to modify this Privacy Policy at any time in accordance with this provision. If we make changes to this Privacy Policy, we will post the revised Privacy Policy on the codebar website. If you disagree with the revised Privacy Policy, you may ask us to remove your information from our systems pleas email company@codebar.io.
+        title: 6. Changes to this Privacy Policy
+        p1: We reserve the right to modify or update this Privacy Policy at any time in accordance with this provision. If we make changes to this Privacy Policy, we will post the revised Privacy Policy on the codebar website. Please regularly review https://codebar.io/privacy-policy to check for any updates or changes to our Privacy Policy. The date this Privacy Policy was last revised is identified at the top of this page.
+      cookies:
+        title: 7. Cookies
+        p1_html: 'We use cookies to recognise you and your location. You can control cookies through your browser settings and other tools. For more information read our [cookie policy](https://codebar.io/cookie-policy).'
       contact:
-        title: 5. Contact
-        text: If you have any questions or complaints about this Privacy Policy or our information handling practices, you may email us company@codebar.io stating 'Data inquiry' in the subject title.
+        title: 8. Contact
+        p1: "If you have any questions or complaints about this Privacy Policy or our information handling practices, you may email us at company@codebar.io stating 'Data inquiry' in the subject title, or by postal mail at: codebar Ltd, International House, 24 Holborn Viaduct, London, England, EC1A 2BN."
+
   admin:
     dashboard:
       title: 'Admin'

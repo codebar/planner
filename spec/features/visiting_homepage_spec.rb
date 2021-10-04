@@ -26,7 +26,7 @@ RSpec.feature 'when visiting the homepage', type: :feature do
   end
 
   scenario 'i can access the code of conduct' do
-    click_on 'Code of conduct'
+    click_on 'Code of Conduct'
 
     expect(page).to have_content 'Code of conduct'
     expect(page).to have_content 'The Quick Version'

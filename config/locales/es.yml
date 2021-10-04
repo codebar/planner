@@ -85,7 +85,7 @@ es:
     error_blank_note: 'Debes seleccionar una nota'
     rejected_invitation: "Estamos muy tristes de que no pueda asistir, pero gracias por hacérnoslo saber, %{name}."
     already_rsvped: "¡Ya has confirmado tu asistencia!"
-    not_attending_already: "You have already confirmed you can't make it!"
+    not_attending_already: "¡Ya has confirmado que no puedes asistir!"
     no_available_seats: "Desafortunadamente no hay más espacios :(. Si desea unirse a nuestra lista de espera, envíenos un correo electrónico a %{email}"
     feedback_saved: "¡Gracias por tomarse el tiempo para enviarnos sus comentarios!"
     feedback_not_found: "Ya ha enviado comentarios para este evento."
@@ -103,7 +103,8 @@ es:
     not_logged_in: "Debes iniciar sesión para acceder a esta página."
   navigation:
     dashboard: "Tablero"
-    code_of_conduct: "Código de conducta"
+    code_of_conduct: "Código de Conducta"
+    breach_code_of_conduct: "Breach Code of Conduct"
     coach_guide: "Guía para entrenadores"
     student_guide: "Guía para estudiantes"
     tutorials: "Tutoriales"
@@ -117,45 +118,44 @@ es:
     tweets_by: "Tweets de"
     latest_sponsors: "Últimos patrocinadores"
     policy:
-      intro: "Nuestros talleres tienen una gran demanda y tenemos una lista de espera la mayoría de las semanas. Para asegurarnos de que pueda venir la mayor cantidad de personas posible, tenemos una política de asistencia fácil de entender."
-      rule1: "Antes de confirmar su asistencia, asegúrese de ser elegible para asistir. Si no estás seguro, ponte en contacto para chatear."
+      intro: "Hay una gran demanda de nuestros talleres y tenemos una lista de espera durante la mayoría de las semanas. Para asegurarse de que puedan llegar la mayor cantidad posible, tenemos una política de asistencia directa."
+      rule1: "Antes de que RSVP se asegure de que usted es elegible para asistir. Si no está seguro de ponerse en contacto con un chat."
       rule2: "Debe registrarse y confirmar su asistencia para asistir a nuestros talleres."
-      rule3: "Si confirma su asistencia y luego descubre que no puede asistir, debe cancelar. Solo toma unos segundos hacerlo a través de su correo electrónico de confirmación."
+      rule3: "Si luego descubre que no puede hacerlo, debe cancelarlo. Solo le tomará unos segundos hacerlo a través de su correo electrónico de confirmación."
       rule4: "Intente cancelar con al menos 24 horas de anticipación."
-      rule5: "We know that sometimes things come up last minute, but even if you only cancel an hour before the workshop, get in touch and let us know."
-      what_happens: "What happens if I don’t respect the policy?"
-      strikes_system: "We operate a three strikes system. That means if you don’t come in without cancelling an RSVP three times, we will take you off our invite list for four weeks. We’ll get in touch after your first absence to make sure you understand this."
-      removing: "If you fail to attend without cancelling another three times, we might have to remove you permanently from our invitation list."
-      rsvping: "There is no penalty for RSVP-ing and then cancelling on a regular basis, but please avoid it. If you always struggle to make it in on a certain day then let us know – that kind of feedback is really important to us."
-      eligibility_note: "Another note on eligibility"
-      abuse: "We’re a fairly relaxed bunch and we trust you, so we don’t police students as to their eligibility. However if it ever looks like this is being abused we may have to change that – which we really don’t want to do."
-      reminder: "So please remember what these workshops are for – to open up tech to people that are underrepresented in the industry."
+      rule5: "Sabemos que a veces las cosas surgen de última hora, pero incluso si solo cancelas una hora antes del taller, ponte en contacto y háganoslo saber."
+      what_happens: "¿Qué pasa si no respeto la política?"
+      strikes_system: "Operamos un sistema de 'tres huelgas'. Eso significa que si no entiende sin cancelar un RSVP tres veces, lo llevaremos a nuestra lista de invitación durante cuatro semanas. Nos pondremos en contacto después de su primera ausencia para asegurarse de que usted Entienda esto."
+      removing: "Si no asiste sin cancelar otras tres veces, es posible que tengamos que eliminarlo permanentemente de nuestra lista de invitación."
+      rsvping: "No hay penalización por RSVP-ING y luego cancelando regularmente, pero evítelo. Si siempre lucha para hacerlo en un día determinado, háganoslo saber, ese tipo de retroalimentación es realmente importante para nosotros."
+      eligibility_note: "Otra nota sobre elegibilidad"
+      abuse: "Somos un grupo bastante relajado y confiamos en usted, por lo que no contamos con los estudiantes de policía en cuanto a su elegibilidad. Sin embargo, si alguna vez parece que esto está siendo abusado, es posible que tengamos que cambiar eso, lo que realmente no queremos hacer."
+      reminder: "Así que, por favor, recuerde que son estos talleres, para abrir tecnología a las personas que están subrepresentadas en la industria."
     teacher_guide:
-      laptop: "You don't need a laptop for our workshops. You are there to watch and guide the students. If you don't feel comfortable with the tutorial you should spend time on it before coming if you want to help out."
-      keyboard: "Do not take over the keyboard! This can be off-putting and scary."
-      typing: "Encourage the students to type and not copy paste."
-      questions: "Explain that there are no bad questions."
-      mistakes: "Explain to students that it's OK to make mistakes."
-      introduction: "Always introduce yourself. Say why you want to help out and are spending your own time on this, why you like programming."
-      backgrounds: "Give your students the opportunity to get to know each other. Ask their names, why they are here, what they do in their day jobs. Encourage a brief discussion before starting."
-      limits: "Assume that anyone you're teaching has no knowledge but infinite intelligence."
-      collaboration: "Work collaboratively with your student. If you have two students, you should work with both. Don't focus all your attention on one of them."
-      discussion: "Let students have a go at answering the questions first. Help with open and leading questions. Encourage a discussion."
-      talk_slow: "Take it slow, you are the teacher, they are the student. Allow for time between questions."
-      mild_approach: "Don't say no when the students are not doing something right. Be gentle, approach it in a mild way."
-      paper: "Use pen and paper or go to a whiteboard! Often students are coming from a non-technical background. Drawing and explaining with visual material is really helpful."
-      stubling: "Let them stumble. We learn by making mistakes, getting frustrated, and working through problem in our own way. Be supportive, but let them explore."
-      suggestions: "Do you have something to suggest? Make a <a href='https://github.com/codebar/planner'>pull request</a> or <a href='https://github.com/codebar/planner/issues/new'>create an issue</a>"
+      laptop: "No necesita una computadora portátil para nuestros talleres. Usted está ahí para ver y guiar a los estudiantes. Si no se siente cómodo con el tutorial, debe pasar tiempo antes de venir si quiere ayudarlo."
+      keyboard: "¡No tomes el teclado! Esto puede estar fuera de lugar y aterrador."
+      typing: "Anime a los estudiantes a escribir y no a copiar y pegar."
+      questions: "Explique que no hay malas preguntas."
+      mistakes: "Explique a los estudiantes que está bien cometer errores."
+      introduction: "Siempre preséntate. Diga por qué quiere ayudar y está gastando su propio tiempo en esto, por qué le gusta la programación."
+      backgrounds: "Dale a tus alumnos la oportunidad de conocerse. Pregunte sus nombres, por qué están aquí, lo que hacen en sus trabajos del día. Fomente una breve discusión antes de comenzar."
+      limits: "Supongamos que cualquier persona que estás enseñando no tiene conocimiento, sino inteligencia infinita."
+      collaboration: "Trabaja en colaboración con su estudiante. Si tiene dos estudiantes, debe trabajar con ambos. No enfoque toda su atención en uno de ellos."
+      discussion: "Deje que los estudiantes tengan una oportunidad primero respondiendo las preguntas. Ayuda con preguntas abiertas y líderes. Fomenta una discusión."
+      talk_slow: "Tómalo lento, tú eres el maestro, son el estudiante. Permitir tiempo entre preguntas."
+      mild_approach: "No digas que no cuando los estudiantes no están haciendo algo bien. Sé amable, acercarse de una manera suave."
+      paper: "¡Usa la pluma y el papel o vaya a una pizarra! A menudo, los estudiantes provengan de un fondo no técnico. El dibujo y la explicación con material visual es realmente útil."
+      stubling: "Déjalos tropezar. Aprendemos cometer errores, frustrándonos y trabajando a través del problema a nuestra manera. Esperamos, pero déjalos explorar."
+      suggestions: "¿Tienes algo que sugerir? Haz una <a href='https://github.com/codebar/planner'>'pull request'</a> o <a href='https://github.com/codebar/planner/issues/new'>crear un problema</a>"
   workshops:
-    already_wish_to_attend: 'You have already RSVPd or joined the waitlist for this workshop.'
-    lead: "Attend our workshops to learn programming in a safe and supportive environment at your own pace, or to share your knowledge and coach our students."
-    registration_not_open: 'This workshop is not open for registrations'
+    already_wish_to_attend: "Ya tienes RSVPD o se unió a la lista de espera para este taller."
+    lead: "Asista a nuestros talleres para aprender la programación en un entorno seguro y de apoyo a su propio ritmo, o para compartir sus conocimientos y entrenar a nuestros estudiantes."
+    registration_not_open: "Este taller no está abierto para inscripciones."
   events:
     title: "Eventos"
     past: "Pasados"
     no_upcoming_events: "No hay eventos próximos."
-    view_past_events: "Ver eventos pasados
-"
+    view_past_events: "Ver eventos pasados"
     view_all: "Ver todos"
     hosted_by: "Alojado por"
     organisers: "Organizadores"
@@ -166,6 +166,7 @@ es:
     sponsors: "Patrocinadores"
     thx_to_sponsors: "¡Muchas gracias a todos nuestros patrocinadores por hacer posible el evento!"
     coaches: "Entrenadores"
+    students: Estudiantes
     schedule: "Calendario"
     send_us_an_email: "envianos un email"
     not_open_for_rsvp: "Este evento aún no está abierto para confirmar su asistencia."
@@ -174,41 +175,41 @@ es:
         q: "¿Qué experiencia necesito tener para unirme al taller?"
         a:
       contribution:
-        q: "What kind of contributions can I make?"
-        a: "Your contributions can be tiny, as simple as fixing a typo, to something incredible. You can help with documentation, fix a bug that you found, improve the copy, help with design or even tackle bigger tasks and help introduce new features. Every little helps!"
+        q: "¿Qué tipo de contribuciones puedo hacer?"
+        a: "Sus contribuciones pueden ser pequeñas, tan simples como arreglar un error tipográfico, a algo increíble. Puede ayudar con la documentación, solucionar un error que ha encontrado, mejorar la copia, ayudar a diseñar o incluso abordar tareas más grandes y ayudar a introducir nuevas características. Cada Poco ayuda!"
       laptop:
         q: "¿Necesito traer una computadora portátil?"
-        a_html: "Yes, you should bring a laptop. If you don't have one %{link} as we may be able to help."
+        a_html: "Sí, debe traer una computadora portátil. Si no tiene un %{link}, es posible que podamos ayudarlo."
       keyboard:
         q: "¿Necesito traer un teclado?"
-        a_html: "A keyboard would help as you will spend the entire day pairing with someone on your laptop. If you don't have a keyboard, %{link} and we'll try to organise something for you."
+        a_html: "Un teclado ayudaría, ya que pasará todo el día emparejando con alguien en su computadora portátil. Si no tiene un teclado,% {link} e intentaremos organizar algo para usted."
       travel_costs:
-        q: "I will be commuting. Can you help with my travel expenses?"
-        a: "We will be offering some travel grants. Just make sure you fill in the questionnaire after you RSVP and we will get in touch."
+        q: "Estaré viajando. ¿Me pueden ayudar con mis gastos de viaje?"
+        a: "Vamos a ofrecer algunas becas de viaje. Solo asegúrate de completar el cuestionario después de que RSVP y nos pondremos en contacto."
   coaches:
-    want_to_coach: "Do you want to coach at our workshops?"
-    read_before: "If you have not attended our workshops before, make sure you read our"
-    code_of_conduct: "code of conduct"
-    policy: "as we have a zero tolerance policy and expect everyone to behave appropriately. You should also  go through our"
-    guide: "coaching guide"
-    unable_attend: "In case you are unable to attend after you RSVP, please make sure you come back and update your attendance as we rely on coaches showing up in order for our workshops to run smoothly."
+    want_to_coach: "¿Quieres formarte en nuestros talleres?"
+    read_before: "Si no ha asistido a nuestros talleres antes, asegúrate de leer nuestro"
+    code_of_conduct: "código de conducta"
+    policy: "Como tenemos una política de tolerancia cero y esperamos que todos se comporten de manera adecuada. También deberías pasar por nuestro"
+    guide: "guía para entrenadores"
+    unable_attend: "En caso de que no pueda asistir después de su RSVP, asegúrese de regresar y actualizar su asistencia a medida que confíe en los entrenadores que aparecen para que nuestros talleres se ejecuten sin problemas."
     food: "PS: There will also be food at the workshop. We always make an effort to have vegetarian, vegan and gluten-free options available. If you have any other dietary requirements, send us email at"
   code_of_conduct:
     title: "Código de Conducta"
     summary:
-      title: "The Quick Version"
-      intro: "Our events are dedicated to providing a harassment-free experience for everyone, regardless of gender, sexual orientation, disability, physical appearance, body size, race, or religion. We do not tolerate harassment of our members in any form. Sexual language and imagery is not appropriate for any of our events, including talks, workshops, parties, Twitter and any other online media. Members violating these rules may be sanctioned or expelled from the event and any future events at the discretion of the organisers."
+      title: "La Versión Rápida"
+      intro: "Nuestros eventos están dedicados a proporcionar una experiencia libre de acoso para todos, independientemente del género, la orientación sexual, la discapacidad, la apariencia física, el tamaño del cuerpo, la raza o la religión. No toleramos el acoso de nuestros miembros en ninguna forma. Lenguaje sexual y Las imágenes no son apropiadas para ninguno de nuestros eventos, incluidas las conversaciones, talleres, fiestas, twitter y cualquier otro medio en línea. Los miembros que violan estas reglas pueden ser sancionados o expulsados del evento y cualquier evento futuro a discreción de los organizadores."
     content:
-      title: "The Long Version"
-      harassment: "Harassment includes offensive verbal comments related to gender, sexual orientation, disability, physical appearance, body size, race, religion, sexual images in public spaces, deliberate intimidation, stalking, following, harassing photography or recording, sustained disruption of talks or other events, inappropriate physical contact, and unwelcome sexual attention."
-      comply: "We expect any participants asked to stop any harassing behaviour to comply immediately."
-      sponsors: "Sponsors are also subject to the anti-harassment policy. In particular, sponsors should not use sexualized images, activities, or other material. Staff (including volunteers) should not use sexualized clothing/uniforms/costumes, or otherwise create a sexualized environment."
-      sanctions: "If a participant engages in harassing behaviour the organisers may take any action they deem appropriate. This includes warning the offender or expulsion."
-      concerns: "If you are being harassed, notice that someone else is being harassed, or have any other concerns, please contact one of the organisers immediately."
-      applies_to: "We expect participants to follow these rules at all <b>codebar</b> events."
-      questions: "If you have any questions or concerns about this code please"
-      contact: "contact us"
-      email_subject: "Regarding code of conduct"
+      title: "La Versión Larga"
+      harassment: "El hostigamiento incluye comentarios verbales ofensivos relacionados con el género, la orientación sexual, la discapacidad, la apariencia física, el tamaño del cuerpo, la raza, la religión, las imágenes sexuales en los espacios públicos, la intimidación deliberada, el acecho, lo siguiente, hostigando la fotografía o la grabación, la interrupción sostenida de las conversaciones u otros eventos. , contacto físico inapropiado, y atención sexual no deseada."
+      comply: "Esperamos que cualquier participante le pida que detengamos cualquier comportamiento de acoso para cumplirlo de inmediato."
+      sponsors: "Los patrocinadores también están sujetos a la política contra el acoso. En particular, los patrocinadores no deben usar imágenes, actividades u otros materiales sexualizados. El personal (incluidos los voluntarios) no debe usar ropa / uniformes / disfraces sexualizados, o crear un entorno sexualizado."
+      sanctions: "Si un participante se involucra en el comportamiento de acoso, los organizadores pueden tomar cualquier acción que considere apropiados. Esto incluye advertir al delincuente o expulsión."
+      concerns: "Si está siendo acosado, observe que alguien más está siendo acosado, o tiene alguna otra inquietud, comuníquese con uno de los organizadores de inmediato."
+      applies_to: "We expect participants to follow these rules at all <b>codebar</b> events. If they fail to do so, the following <a href='https://codebar.io/breach-code-of-conduct'>process will take place</a>."
+      questions: "Si tiene alguna pregunta o inquietud sobre este código, por favor"
+      contact: "Contacta con nosotros"
+      email_subject: "Con respecto al Código de conducta"
   sponsors:
     sponsoring: "Patrocinio"
   members:
@@ -218,20 +219,20 @@ es:
     sign_up_as_coach: "Regístrate como Entrenador"
     code_of_conduct: "código de conducta"
     new:
-      intro: "We offer a welcoming, inclusive and learning-friendly environment, and have a zero tolerance policy towards any form of harassment or inappropriate behavior. Before you sign up, read our"
+      intro: "Ofrecemos un ambiente acogedor, inclusivo y amigable para el aprendizaje, y tenemos una política de tolerancia cero hacia cualquier forma de acoso o comportamiento inapropiado. Antes de registrarse, lea nuestro"
       students:
-        intro: "If you would like to attend as a student, make sure you meet our"
-        criteria_link: "eligibility criteria"
-        criteria_brief: "as our workshops are only available to women, LGBTQ, people from underrepresented minority groups."
-        github: "Lastly, when you click the sign up button, you'll be taken to something called GitHub. After logging in with a GitHub account, you'll be taken back to the codebar website. If you don't have an account yet, you'll need to create one. It doesn't take long and it's something that will come in handy when you get started with coding!"
-      invitations: "Invitations are sent out periodically, so don't worry if you don't receive one as soon as you register."
+        intro: "Si desea asistir a un estudiante, asegúrese de conocer a nuestro"
+        criteria_link: "criterio de elegibilidad"
+        criteria_brief: "como nuestros talleres solo están disponibles para las mujeres, LGBTQ, personas de grupos minoritarios subrepresentados."
+        github: "Por último, cuando hace clic en el botón Registrarse, se lo llevará a algo llamado GitHub. Después de iniciar sesión con una cuenta GitHub, volverá al sitio web de codebar. Si aún no tiene una cuenta, Tendrás que crear uno. ¡No tarda mucho tiempo y es algo que vendrá de manera útil cuando comience con la codificación!"
+      invitations: "Las invitaciones se envían periódicamente, así que no se preocupe si no recibe uno tan pronto como se registre."
   footer:
     email_us: "Envíenos un correo electrónico a"
     contact_info: "Datos de contacto:"
   faq:
     payment:
       q: "¿Tengo que pagar para asistir a codebar?"
-      a_p1: "Absolutely not! We are lucky enough to have some great companies who are able to host the workshops and/or kindly provide food. And our"
+      a_p1: "¡Absolutamente no! Tenemos la suerte de contar con grandes empresas que pueden organizar los talleres y / o proporcionar amablemente la comida. Y nuestros"
       awesome_coaches: "Entrenadores Increíbles"
       a_p2: "dar su tiempo libremente para ayudar a la comunidad"
     technologies:
@@ -241,66 +242,66 @@ es:
       q: "Quiero asistir a un taller. ¿Soy elegible?"
       a: "ya que aún podríamos encontrar a alguien que te ayude. If you belong to one of these groups, you are more than welcome to attend. If not, there are some other great initiatives like <a href='https://www.meetup.com/opentechschool-london/'>Open Tech School London</a> where you can learn in a collaborative environment. Please see our <a href='http://codebar.io/student-guide'>student guide</a> for more information."
     career:
-      q: "¿Codebar solo está dirigido a personas que desean avanzar en una carrera como desarrollador?"
-      a: "No! codebar is about getting people excited about programming. We'll help them learn some basic coding skills, as well as how to explore and do things on their own. For those who do want to become developers, we will provide help and guidance to help them achieve their goal."
+      q: "¿codebar solo está dirigido a personas que desean avanzar en una carrera como desarrollador?"
+      a: "¡No! codebar se trata de conseguir que las personas se entusiasman con la programación. Los ayudaremos a aprender algunas habilidades básicas de codificación, así como cómo explorar y hacer las cosas por su cuenta. Para aquellos que quieren convertirse en desarrolladores, proporcionaremos ayuda y Orientación para ayudarles a lograr su objetivo."
     format:
       q: "¿Cuál es el formato de los talleres?"
-      a: "We try to have one coach for every two students. We will pair up students who want to work on the same tutorial, and assign them a coach. The rest just happens."
+      a: "Tratamos de tener un entrenador para cada dos estudiantes. Vamos a emparejar a los estudiantes que quieran trabajar en el mismo tutorial y asignarles un entrenador. El resto solo sucede."
     laptop:
       q: "¿Necesito traer una computadora portátil a los talleres?"
-      a: "Yes, we suggest that you bring a laptop as it will be easier for you to carry on working on things after the workshops. It you don't have one, <a href=\"mailto:contact@codebar.io\">send us an email</a> so we can try and help out."
+      a: "Sí, le sugerimos que traiga una computadora portátil, ya que será más fácil para usted seguir trabajando en cosas después de los talleres. No tiene uno, <a href=\"mailto:contact@codebar.io\"> envíenos un correo electrónico </a? para que podamos intentar y ayudarlo."
     online_resources:
-      q: "Hay tantos recursos en línea, ¿por qué debería ir a Codebar?"
-      a: "Coding can be intimidating and a lot of people find it hard to get started. By putting you in touch with people who can help and guide you we make the experience and learning process easier and more enjoyable."
+      q: "Hay tantos recursos en línea, ¿por qué debería ir a codebar?"
+      a: "La codificación puede ser intimidante y muchas personas les resulta difícil comenzar. Al ponerte en contacto con personas que pueden ayudarlo y guiarlo, hacemos que la experiencia y el proceso de aprendizaje sean más fáciles y más agradables."
     preperations:
-      q: "Me gustaría entrenar en codebar. ¿Debo hacer algo más que registrarme?"
+      q: "Me gustaría entrenar en codebar. ¿Hay algo que deba hacer además de inscribirse?"
       a_p1: "Si. Primero deberías leer nuestro"
       coaching_guide_tutorials: "tutoriales de guía de entrenador"
-      a_p2: ". Luego, dedique algún tiempo a familiarizarse con los"
-      a_p3: "<a href='http://tutorials.codebar.io'>tutoriales</a>. The tutorials are open source so if there is something that you want to improve open an issue on the GitHub repository or send a pull request."
-      a_p4: "We don't expect the coaches to be familiar with all the technologies and languages we have material on."
+      a_p2: ". Luego pasa alguna vez familiarizándote con el"
+      a_p3: "<a href='http://tutorials.codebar.io'>tutorials</a>. Los tutoriales son de código abierto, por lo que si hay algo que desea mejorar, abre un problema en el repositorio de GitHUB o envíe una 'pull request'."
+      a_p4: "No esperamos que los entrenadores estén familiarizados con todas las tecnologías e idiomas en los que tenemos material."
     location:
       q: "¿Dónde se llevan a cabo los talleres?"
-      a: "As we don't have a permanent venue, our workshops are hosted by different companies in various locations around London. So far we've run workshops in Shoreditch, London Bridge, Holborn and Kings Cross."
+      a: "Como no tenemos un lugar permanente, nuestros talleres son organizados por diferentes compañías en varios lugares de Londres. Hasta ahora, hemos realizado talleres en Shoreditch, London Bridge, Holborn y Kings Cross."
     disabled_access:
       q: "¿Hay acceso para discapacitados en los talleres?"
-      a: "Unfortunately, that depends entirely on where we are hosting our workshops and if the venue has disabled access. If you would like to attend, send us an email at <a href='mailto:meetings@codebar.io'>meetings[at]codebar.io</a> so we can enquire about it and let you know."
+      a: "Desafortunadamente, eso depende completamente de dónde estamos alojando nuestros talleres y si el lugar tiene un acceso para discapacitados. Si desea asistir, envíenos un correo electrónico a <a href = 'mailto <a href='mailto:meetings@codebar.io'>meetings[at]codebar.io</a> así que podemos preguntarle al respecto y le avisamos."
     bring_codebar_to_my_city:
-      q: "I would like to bring codebar to my city. Can I do that?"
-      a: "Of course. codebar is about building a community of experienced developers that are able to give up some of their time to help others. If you are keen on running codebar where you live, we would love to speak to you about it and see how we can help make this happen, so send <a href=\"mailto:contact@codebar.io\">us an email</a>."
+      q: "Me gustaría traer la barra de código a mi ciudad. ¿Puedo hacer eso?"
+      a: "Por supuesto. codebar se trata de construir una comunidad de desarrolladores experimentados que puedan renunciar a uno de sus tiempo para ayudar a otros. Si está interesado en correr la barra de código donde vive, nos encantaría hablarle al respecto y ver cómo podemos ayudarlo a suceder esto, así que envíenos <a href=\"mailto:contact@codebar.io\">un correo electrónico</a>."
     our_coaches:
       q: "Nuestros Entrenadores"
-      a_p1: "You can see all the coaches have helped out in our workshops on the"
-      a_p2: ". They are ordered by number of attendances. This is our way of showing our appreciation to them, as without them, we wouldn't be able to exist."
+      a_p1: "Puedes ver que todos los entrenadores han ayudado en nuestros talleres sobre el"
+      a_p2: ". Están ordenados por el número de asistencias. Esta es nuestra forma de mostrarles nuestra apreciación, ya que sin ellos, no podríamos existir."
   participant_student_guide:
     title: "Guía de estudiante"
     attendance_policy:
       title: "Politica de asistencia"
-      intro: "codebar is, and always has been, open to all levels of coding experience. While most of the tutorials on our website are aimed at newcomers to web development, we intend to continue our open-door policy for any student who needs coach support on their own projects. Due to the fact that our workshops are frequently oversubscribed, we ask students to respect the following expectations for participation in our workshops"
-      rule1: "In order to attend a workshop, <u>you must be on the RSVP list.</u> If you have not RSVP’d or were not allocated a spot, you will not be admitted into a workshop."
-      rule2: "If you can no longer attend a workshop, <u>please cancel your RSVP by 12:00 latest </u> on the day of the workshop. We understand that last-minute emergencies occur -- if this is the case, please get in touch with an organizer directly as soon as possible. Repeated no-shows will result in temporary or permanent suspension of your invitations."
-      rule3: "No guests are allowed. Our workshops are already overcrowded and we cannot make any exceptions. If your friend meets our eligibility criteria, get them to sign up and RSVP themselves."
-      rule4: "Please be respectful of our hosts. Do not show up exceedingly early to a workshop (not earlier than 15 minutes before the event begins) and try to leave the workstation clean and as you found it."
-      rule5: "<u>Please do not work on projects that were assigned as part of any bootcamp or university curriculum.</u> Talk to your course adviser if you feel like you need additional support with your coursework. We welcome your attendance, but we encourage you to use your time at codebar to develop skills that are outside the normal scope of your studies."
-      rule6: "Do not bring along and ask for help with any commercial work. This involves work you're being paid to do."
-      rule7: "Projects that involve specific frameworks/libraries (Rails, NodeJS, Meteor, Angular, Ember, React, etc) or languages that are not part of the codebar tutorials (anything other than Ruby or Javascript) are welcome but we cannot guarantee that a coach will be available to help you. In these cases we recommend selecting a codebar tutorial or katas (codewars.com or exercism.io) as a back-up option."
+      intro:  "codebar es, y siempre ha sido, abierta a todos los niveles de experiencia de codificación. Si bien la mayoría de los tutoriales en nuestro sitio web están dirigidos a recién llegados al desarrollo web, tenemos la intención de continuar con nuestra política de puertas abiertas para cualquier estudiante que necesite apoyo de entrenadores en sus propios proyectos. Debido al hecho de que nuestros talleres con frecuencia se suscriben sobre suscripción, le pedimos a los estudiantes que respeten las siguientes expectativas de participación en nuestros talleres:"
+      rule1: "Para asistir a un taller, <u>debe estar en la lista RSVP.</u> Si no tiene RSVP'd o no se le asignó un lugar, no se le admitirá en un taller."
+      rule2: "Si ya no puede asistir a un taller, <u>cancele su RSVP antes de las 12:00 más reciente </u> en el día del taller. Entendemos que ocurren emergencias de última hora, si este es el caso, por favor póngase en contacto con un organizador directamente lo antes posible. Las repetidas no programas resultarán en suspensión temporal o permanente de sus invitaciones."
+      rule3: "No se permiten invitados. Nuestros talleres ya están superpoblados y no podemos hacer excepciones. Si su amigo cumple con nuestros criterios de elegibilidad, haga que se inscienden a ellos mismos y RSVP."
+      rule4: "Por favor, sea respetuoso con nuestros anfitriones. No aparezca extremadamente temprano a un taller (no antes de 15 minutos antes de que comience el evento) e intente dejar la estación de trabajo limpia y, como lo encontró."
+      rule5:  "<u>No trabaje en proyectos que fueron asignados como parte de cualquier currículo de bootcamp o universidad. </u> Hable con su asesor de cursos si siente que necesita un soporte adicional con sus cursos. Damos la bienvenida a su asistencia, pero nosotros Anímelo a usar su tiempo en Codebar para desarrollar habilidades que están fuera del alcance normal de sus estudios."
+      rule6: "No lo traigan y pida ayuda con cualquier trabajo comercial. Esto implica que el trabajo está pagado para hacer."
+      rule7:  "Los proyectos que involucran marcos / bibliotecas específicas (rieles, nodejs, meteoros, angulares, embriagos, reaccionar, etc.) o idiomas que no forman parte de los tutoriales de Codebar (nada más que Ruby o JavaScript) son bienvenidos, pero no podemos garantizar que un entrenador estará disponible para ayudarlo. En estos casos, le recomendamos seleccionar un tutorial de codebar o katas (Codewars.com o Ejercismo) como opción de respaldo."
     eligibility_criteria:
       title: "Criterio de elegibilidad"
-      p_1: "codebar was started out of recognition that there is a shortage of women, LGBTQ, and people belonging to <a href='http://sciencecampaign.org.uk/CaSEDiversityinSTEMreport2014.pdf'>underrepresented ethnic groups in tech</a>."
-      p_2: "If you belong to one of these groups, you are more than welcome to attend. If not, there are some other great initiatives like <a href='http://www.opentechschool.org/'>Open Tech School</a> or <a href='https://askadev.org/'>Ask a Dev</a> where you can learn in a collaborative environment."
-      p_3: "Bearing that in mind, it is sometimes difficult for us to identify whether attendees meet the eligibility criteria based on their first and last names. If we cannot determine your eligibility, we will contact you asking for a short confirmation that you have read this document and assert that you meet one or more of the criteria. We will never ask participants to specify which group."
-      p_4: "codebar is first and foremost a resource for students who cannot afford formal training through coding bootcamps or university degrees, for financial reasons or otherwise. Our coaches, organisers and sponsors donate their time and money to help those who have faced unfair barriers to entry into the tech world. We have strived to create an inclusive, welcoming community, and so far, we have not had to implement a formal policy to enforce the eligibility criteria -- we have left this to the honesty and good faith of the students."
-      p_5: "If you are unsure whether you are eligible, please get in touch. If we determine that you have signed up and do not belong to an eligible group, we will permanently suspend your student invitations without warning."
-      p_6: "We take this issue very seriously, and we appreciate your cooperation and understanding."
+      p_1: "codebar se inició sin reconocimiento de que hay una escasez de mujeres, LGBTQ y personas que pertenecen a <a href='http://sciencecampaign.org.uk/CaSEDiversityinSTEMreport2014.pdf'>grupos étnicos subrepresentados en tecnología</a>."
+      p_2: "Si perteneces a uno de estos grupos, es más que bienvenido a asistir. Si no, hay otras iniciativas excelentes como <a href='http://www.opentechschool.org/'> Open Tech School</a> o <a href='https://askadev.org/'> Ask a Dev</a> donde puede aprender en un entorno de colaboración."
+      p_3: "Teniendo eso en mente, a veces es difícil para nosotros identificar si los asistentes cumplen con los criterios de elegibilidad según sus nombres y apellidos. Si no podemos determinar su elegibilidad, nos pondremos en contacto con usted para solicitar una breve confirmación de que ha leído este documento. y afirmar que cumple uno o más de los criterios. Nunca pediremos a los participantes que especifiquen a qué grupo."
+      p_4: "codebar es, ante todo, un recurso para los estudiantes que no pueden pagar capacitación formal a través de codificación de bootcamps o títulos universitarios, por razones financieras o de otro tipo. Nuestros entrenadores, organizadores y patrocinadores donan su tiempo y dinero para ayudar a aquellos que han enfrentado barreras injustas para ingresar a El mundo de la tecnología. Nos hemos esforzado por crear una comunidad inclusiva y acogida, y hasta ahora, no hemos tenido que implementar una política formal para hacer cumplir los criterios de elegibilidad, lo hemos dejado esto a la honestidad y la buena fe de los estudiantes."
+      p_5: "Si no está seguro de si es elegible, póngase en contacto. Si determinamos que se ha registrado y no pertenezca a un grupo elegible, suspenderemos permanentemente a sus invitaciones de estudiantes sin previo aviso."
+      p_6: "Tomamos este tema muy en serio, y apreciamos su cooperación y comprensión."
     disability:
       title: "Alumnos con discapacidad"
-      description: "We want to ensure that our workshops are as accessible as possible. If you are disabled and are unsure about whether our venues can cater to your needs, we encourage you to please get in touch with us at <a href='mailto:hello@codebar.io'>hello@codebar.io</a> and we will do what we can to accommodate you."
+      description: "Queremos asegurarnos de que nuestros talleres sean lo más accesibles posible. Si está deshabilitado y no está seguro de si nuestros lugares pueden satisfacer sus necesidades, lo alentamos a ponerse en contacto con nosotros en <a href='mailto:hello@codebar.io'>hello@codebar.io</a> y haremos lo que podamos para acomodarlo."
   chapters:
     intro_html: "¡Hola y bienvenido a coderbar!"
-    info: "Check out our <a href='http://codebar.io/faq'>FAQ</a> page for any questions you might have, or email us at <a href='mailto:%{email}'>%{email}</a> if you can't find the answer you're looking for. Otherwise, click the Sign up button to get started."
+    info: "Echa un vistazo a nuestro <a href='http:///codebar.io/faq'>FAQ</a> para cualquier pregunta que pueda tener, o envíenos un correo electrónico a <a href='mailto:%{email}'>%{email}</a> si no puede encontrar la respuesta que está buscando. De lo contrario, haga clic en el botón Registrarse para comenzar."
     sign_up: "ser invitado a nuestros talleres."
-    no_incoming: "There are no workshops coming up."
-    contact: "To contact the %{city} team, send an email to %{email}"
+    no_incoming: "No hay talleres que se presentan."
+    contact: "Para ponerse en contacto con el equipo %{city}, envíe un correo electrónico a %{email}"
   job:
     status:
       draft: Borrador
@@ -327,7 +328,7 @@ es:
       title: Localización
       remote: 'Remote'
     messages:
-      draft_html: 'This is a preview of your job.<b>Edit</b> to amend or <b>Submit</b> for approval.'
+      draft_html: 'This is a preview of your job. <b>Edit</b> to amend or <b>Submit</b> for approval.'
       pending_html: 'This job is pending approval. <b>Edit</b> to amend your post.'
       published_html: 'This job has been published.'
       expired_html: 'This job has expired.'
@@ -353,7 +354,7 @@ es:
     suggestions: "Was there something you didn't like? What can we do to improve your experience?"
   member:
     jobs:
-      title: Mi trabajaos
+      title: Mi trabajos
       preview: Avance
       index:
         description: Our aim is to be the one stop shop for junior developer roles. All jobs featured on our job board must fall under the following three categories; paid internships, apprenticeships or junior developer roles. Additionally, jobs must not require previous experience or a degree and must be paid positions. Each job that is submitted will be approved by the codebar team before appearing on the job board.
@@ -383,80 +384,157 @@ es:
         pay:
           html: You have made the <a href="%{link}">required payment of £50</a>.
         button:
-          pay: Make a payment
+          pay: realizar un pago
       edit:
-        title: Edit job listing
+        title: Editar listado de trabajos
   pages:
     cookies:
       title: Cookies
-      p1: 'Las cookies son pequeños fragmentos de texto que se utilizan para almacenar información en los navegadores web. Los sitios web los utilizan en varios dispositivos diferentes para almacenar y recibir identificadores y otra información. Nuestro sitio web y servicio utilizan cookies y otras tecnologías similares (colectivamente en esta Política, "cookies"), para brindarle un mejor servicio y, en general, mejorar nuestro sitio web y nuestro servicio. Por ejemplo, podemos utilizar cookies para ayudarlo a dirigirlo a la parte apropiada de nuestro sitio web, lo que indica que es un visitante habitual. También podemos utilizar información para presentarle servicios que se adapten a sus preferencias y para administrar y rastrear la efectividad de nuestros esfuerzos de marketing.'
+      p1: Las cookies son pequeños fragmentos de texto que se utilizan para almacenar información en los navegadores web. Los sitios web los utilizan en varios dispositivos diferentes para almacenar y recibir identificadores y otra información. Nuestro sitio web y servicio utilizan cookies y otras tecnologías similares (colectivamente en esta Política, "cookies"), para brindarle un mejor servicio y, en general, mejorar nuestro sitio web y nuestro servicio. Por ejemplo, podemos utilizar cookies para ayudarlo a dirigirlo a la parte apropiada de nuestro sitio web, lo que indica que es un visitante habitual. También podemos utilizar información para presentarle servicios que se adapten a sus preferencias y para administrar y rastrear la efectividad de nuestros esfuerzos de marketing.
       p2: Some portions of the codebar website are functional without cookies, and you may generally choose whether to accept cookies. Most web browsers are set to accept cookies by default, however, you may be able to delete cookies yourself through your browser's cookie manager. To do so, please follow the instructions provided by your web browser. Please note that disabling cookies will reset your session, disable auto-login, and may adversely affect the availability and functionality of our Website and the services we can provide to you.
       sub:
-        title: Below the cookies used by the codebar website.
+        title: Below are the cookies used by the codebar website.
+      table:
+        header:
+          h1: Name
+          h2: Purpose
+          h3: Expires
       functional:
         title: Functional Cookies
         description: Stores information about your session.
-        planner: Stores session data
+        planner_name: _planner_session
+        planner_purpose: Stores session data
         planner_expiry: Expires after 24 hours
       google_analytics:
         title: Google Analytics
-        description: Google Analytics  collects information about how you use the codebar website. This enables us to identify how busy the website is and possible improvements.
+        description: Google Analytics collects information about how you use the codebar website. This enables us to identify how busy the website is and possible improvements.
         info: We don’t allow Google to use or share our analytics data.
         opt_out: You can [opt out of Google Analytics](https://tools.google.com/dlpage/gaoptout).
-        ga: Tracks if you have visited codebar.io before
+        ga_name: _ga
+        ga_purpose: Tracks if you have visited codebar.io before
         ga_expiry: Después de 2 años
-        gid: Tracks if you have visited codebar.io before
+        gid_name: _ga
+        gid_purpose: Tracks if you have visited codebar.io before
         gid_expiry: Después de 24 horas
       cloudflare:
         title: Cloudflare
-        cfduid: Used to identify individual clients behind a shared IP address and apply security settings on a per-client basis.
-        cfduid_expiry: '1 year'
+        cfduid_name: _pfduid
+        cfduid_purpose: Used to identify individual clients behind a shared IP address and apply security settings on a per-client basis.
+        cfduid_expiry: 1 year
     privacy_policy:
-      title: Política de privacidad
-      subtitle: Your privacy matters to us
-      p1: 'Your privacy means a lot to us, and we take it very seriously. We aim to be transparent with you about the data we collect about you and how it is used and shared. By signing up to our workshops you consent to our use of your data under this Privacy Policy. The document below has been created by codebar whose companies house registered name and address is as follows:'
-      address_html: '
-        codebar Ltd,<br/>
-        International House,<br/>
-        24 Holborn Viaduct,<br/>
-        London,<br/>
-        England,<br/>
-        EC1A 2BN<br/>
-        Company No. 10791813<br/>'
+      title: Privacy Policy
+      subtitle: This Privacy Policy was last updated on 13 May 2021.
+      intro:
+        p1: 'This Privacy Policy has been created by codebar ("codebar", "we", "us", or "our") whose companies house registered name and address is as follows:'
+        address_html: '
+          codebar Ltd,<br>
+          International House,<br>
+          24 Holborn Viaduct,<br>
+          London, England,<br>
+          EC1A 2BN<br>
+          Company No. 10791813<br>'
+        p2: codebar Ltd trades on behalf of the charity registered UK and Wales no. 1187776. For the purpose of this Privacy Policy codebar Ltd is the data controller.
+        p3: Your privacy means a lot to us, and we take it very seriously. We aim to be transparent with you about the data we collect about you and how it is used and shared. This Privacy Policy lets you know what information we collect when you use the codebar website, https://codebar.io/, or interact with any of the services we provide, such as signing up to workshops and events ("Services"). By using our Services you acknowledge and understand our use of your data under this Privacy Policy and how it applies to your use of our Services.
       information:
         title: 1. Information we collect
-        description: We do not share any of your information with any third parties without your consent. We also do not sell your contact information or use it for marketing purposes.
-        subscribing_html: '**1.1 Subscribing to an event**<br/>
-        We share your name with our host companies as we are required to provide a list with all attendee names when you subscribe to any of our events. We **do not share** your email address or any other personal information.'
-        cookies_html: '**1.2 Cookie Policy**<br/>
-        We use cookies to recognize you and your location. You can control cookies through your browser settings and other tools. For more information read our [cookie policy](/cookie-policy).'
-        usage_html:  '**1.3 How we use information we collect**<br/>
-        The legal basis on which we collect and process your data is “legitimate interest”. This is because we collect and store your data in order to process event information.'
+        what_we_collect:
+          title: 1.1 Personal data we collect from you
+          p1: 'We have set out in the table below the personal data we collect about you and how we use it, which will differ based on the capacity in which you interact with codebar:'
+          table:
+            headers:
+              h1: Who
+              h2: What data we process
+              h3: What we use it for
+              h4: Lawful basis
+            r1:
+              c1: Students
+              c2: This includes personal data that is provided by you or collected by us to enable you to subscribe to codebar as a student. This may include your name, email address, phone number, pronouns, self-written bio, social media details (e.g. twitter handle), your self-recognition as being underrepresented (with your consent), and the location you choose to subscribe to.
+              c3: For administrative purposes when you sign up to events, to communicate with you, and to provide you with our newsletters and events information.
+              c4:
+                l1: Performance of a contract
+                l2: Consent
+                l3: Legitimate interests
+            r2:
+              c1: Coaches
+              c2: This includes personal data that is provided by you or collected by us to enable you to volunteer at codebar as a coach. This may include your name, email address, phone number, pronouns, self-written bio/skills, social media details (e.g. twitter handle), your self-recognition as being underrepresented (with your consent), and the location you choose to volunteer at.
+              c3: For administrative purposes when you volunteer for workshops, to communicate with you, to manage workshop attendance, and to provide you with our newsletters and events information.
+              c4:
+                l1: Consent
+                l2: Legitimate interests
+            r3:
+              c1: Organizers
+              c2: This includes personal data that is provided by you or collected by us, which may include your name, email address, phone number, pronouns, self-written bio/skills, social media details (e.g. twitter handle), slack username, signed documentation, and the location you choose to volunteer at.
+              c3: To organise and communicate workshops.
+              c4:
+                l1: Legitimate interests
+            r4:
+              c1: Hosts
+              c2: We may collect personal information of employees working at companies that agree to host our workshops. This information may include the employees' name, email address, contact number, social media details (e.g. twitter handle), and place of work.
+              c3: In order to market, promote, host and operate workshops.
+              c4:
+                l1: Legitimate interests
+            r5:
+              c1: Sponsors
+              c2: We need to collect personal data in relation to your sponsorship of codebar. This may include information such as your name, and bank details.
+              c3: To fulfill contractual obligations we have with you, for example, to process invoices related to your sponsorship.
+              c4:
+                l1: Performance of a contract
+                l2: Legitimate interests
+            r6:
+              c1: Trustees and directors
+              c2: We need to collect personal data in relation to your position as trustee and/or director. This may include information such as your name, contact number, address, email address, and date of birth.
+              c3: In order to establish our status as a charity, to comply with legal obligations, and respond to legal requests.
+              c4:
+                l1: Legitimate interests
+                l2: Compliance with legal obligations
+        how_we_share:
+          title: 1.2 How we share your information
+          p1_html: 'When you subscribe to an event, we share your name with our host companies as we are required to provide a list with all attendee names when you subscribe to any of our events. We **do not share** your email address or any other personal information.'
+        legal_basis:
+          title: 1.3 Legal basis for our use of your personal information
+          p1: As set out in the table above, sometimes the legal basis on which we collect and process your data is because our legitimate interests make the processing necessary, and those legitimate interests are not overridden by your interests or fundamental rights and freedoms. For example, we collect and store your data in order to process event information, and to ensure the efficient running and promotion of workshops.
+      retention:
+        title: 2. Retention
+        p1: We will keep your personal information for as long as reasonably necessary to fulfil the purposes we collected it for. To determine the appropriate retention period, we consider the amount, nature and sensitivity of the personal information, the potential risk of harm from unauthorised use or disclosure of your personal information, the purposes for which we process your personal data and whether we can achieve those purposes through other means, and the applicable legal, regulatory, tax, accounting or other requirements.
+        p2: We may retain your personal information for a longer period in the event of a complaint or if we reasonably believe there is a prospect of dispute in respect to our relationship with you.
+      international_transfers:
+        title: 3. International transfers
+        p1: Personal information we collect may be transferred to and stored in countries outside of the jurisdiction you are in for the purposes specified in this Privacy Policy. We will only transfer your personal information to countries that have been deemed to provide an adequate level of protection for personal information, and/or any international transfers will be made pursuant to appropriate safeguards in accordance with the applicable laws and regulations, such as standard data protection clauses adopted by the UK and European Commission.
+        p2: If you wish to enquire further about these safeguards used, please contact us by email at the address below or by mail using the postal address provided below.
       your_rights:
-        title: 2. Your rights, choices and obligations
-        rights_html: '
-          **2.1 Your rights**<br/>
-          Data protection law provides you with rights in respect of personal data that we hold about you, including the right to request a copy of the personal data and request that we rectify, restrict or delete your data.
-          If you would like to exercise any of these rights please email us at company@codebar.io.
-          If you have a complaint about how we handle your data, please get in touch with us at company@codebar.io. If you are not happy about the way a complaint has been handled, you have the right to refer your complaint to the Information Commissioner’s Office.'
-        data_retention_html: '
-          **2.2 Data retention**<br/>
-          We will retain your data for as long as necessary to provide our services to you and fulfil transactions you have requested. If at any point you wish us to delete your data please email company@codebar.io.'
-        personal_data_access_html: '
-          **2.3 Right to Access and Control Your Personal Data**<br/>
-          You can request a copy of the data we hold about you, or request that we delete any data we hold on you. You can also ask us to correct, update or delete any inaccurate personal data that we hold about you. Just email us at company@codebar.io at any time.  We aim to process requests for data records or deletion within two weeks of receipt.'
-        access_and_portability_html: '
-          **2.4 Data Access and Portability**<br/>
-          You have the right to request a copy of the personal information we hold about you in a structured, electronic format. If you wish to receive a copy of the information we hold about you, please email company@codebar.io.'
+        title: 4. Your data protection rights
+        p1: 'Data protection law provides you with rights in respect of personal data that we hold about you, including the:'
+        l1: 'Right to Access: You have the right to obtain access to your data, and certain other information (similar to that provided in this Privacy Policy).'
+        l2: 'Right to Rectification: You are entitled to have your data corrected if it is inaccurate or incomplete.'
+        l3: 'Right to Erasure: This enables you in some circumstances to request and obtain the deletion of your data where there is no legal reason for us to keep using it.'
+        l4: 'Right to Restriction of Processing: You have rights to suspend further use of your data, whereby we can still store your data but cannot use it further. This may mean we can no longer provide you with Services.'
+        l5: 'Right to Data Portability: You have rights in some circumstances to request the transfer of your data to yourself or to a third party.'
+        l6: 'Right to Objection: You have the right to object to certain types of data processing, including for direct marketing purposes.'
+        l7: 'Right to Withdrawal of Consent: Where we are relying on consent to process your data, you have the right to withdraw your consent at any time by using any opt-out links, or by contacting us at the details provided below (although if you do so, it does not mean that anything we have done with your data with your consent up to that point is unlawful and we may be able to continue to process your personal information to the extent required or otherwise permitted by law, in particular in connection with exercising and defending our legal rights or meeting our legal and regulatory obligations).'
+        l8: 'Right to Lodge a Complaint: You can lodge a complaint in relation to our use of your personal information with the local supervisory authority, the Information Commissioner (UK).'
+        p2: If you would like to exercise any of these rights or if you have a complaint about how we handle your data, please contact us at the email address stated below.
       security:
-        title: 3. Seguridad
-        text: From time to time we implement and update administrative, technical, and physical security measures to help protect your information against unauthorised access, loss, destruction, or alteration. However, the Internet is not a 100% secure environment so we can’t guarantee the security of the transmission or storage of your information.
+        title: 5. Security
+        p1: The security of your personal information is important to us. codebar takes reasonable steps to implement and update administrative, technical, and physical security measures to help protect your information against unauthorised access, loss, destruction, or alteration. However, the Internet is not a 100% secure environment so we can't guarantee the security of the transmission or storage of your information. codebar has no control over or responsibility for the security or practices or privacy policies of third parties, even if you interact with them when using our Services.
       changes:
-        title: 4. Changes to this privacy policy
-        text: We reserve the right to modify this Privacy Policy at any time in accordance with this provision. If we make changes to this Privacy Policy, we will post the revised Privacy Policy on the codebar website. If you disagree with the revised Privacy Policy, you may ask us to remove your information from our systems pleas email company@codebar.io.
+        title: 6. Changes to this Privacy Policy
+        p1: We reserve the right to modify or update this Privacy Policy at any time in accordance with this provision. If we make changes to this Privacy Policy, we will post the revised Privacy Policy on the codebar website. Please regularly review https://codebar.io/privacy-policy to check for any updates or changes to our Privacy Policy. The date this Privacy Policy was last revised is identified at the top of this page.
+      cookies:
+        title: 7. Cookies
+        p1_html: 'We use cookies to recognise you and your location. You can control cookies through your browser settings and other tools. For more information read our [cookie policy](https://codebar.io/cookie-policy).'
       contact:
-        title: 5. Contact
-        text: If you have any questions or complaints about this Privacy Policy or our information handling practices, you may email us company@codebar.io stating 'Data inquiry' in the subject title.
+        title: 8. Contact
+        p1: "If you have any questions or complaints about this Privacy Policy or our information handling practices, you may email us at company@codebar.io stating 'Data inquiry' in the subject title, or by postal mail at: codebar Ltd, International House, 24 Holborn Viaduct, London, England, EC1A 2BN."
+    breach:
+      title: What happens if you violate codebar’s code of conduct?
+      opening_para: All codebar events are dedicated to providing a harassment-free experience for everyone, regardless of gender, sexual orientation, disability, physical appearance, body size, race, or religion. We do not tolerate harassment towards any community member or organiser in any form. Harassment includes any type of aggressive behaviour or offensive verbal comments related to gender, sexual orientation, disability, physical appearance, body size, race, religion, sexual images in public spaces, deliberate intimidation, stalking, following, harassing photography or recording, sustained disruption of talks or other events, inappropriate physical contact, and unwelcome sexual attention.
+      second_para: The Code of Conduct is in place to protect every codebar member - students, coaches and organisers. If any member violates these rules the below procedure and sanctions will be implemented.
+      outcome_title: 3 types of outcomes
+      correction: Correction - The use of inappropriate language or other behavior deemed unprofessional or unwelcome in the codebar community. This includes the use of terminology that is discouraged I.E guys. In this situation you will be sent a private message, providing clarity around the nature of the violation and an explanation of why the behavior was inappropriate. A public apology may be requested.
+      warning: Warning - You will receive an email warning. The organiser will explain the incident, including the impact on the person involved and the community. We will give as much information as possible, so you’re aware of what happened and try to learn from the incident. The organiser will add a note to your codebar profile so that all chapter organisers are aware of the incident. We expect you to take our comments on board, further action may be taken depending on your reaction. Examples of behaviour that will get you a warning include - targeted offensive language, or the sharing of sexual images in codebar spaces. 2 email warnings will result in a lifetime ban.
+      lifetime_ban: Lifetime ban - You will no longer be able to RSVP to any future codebar events. You will also be removed from codebar’s Slack workspace. Examples of behaviour that will get you an automatic lifetime ban include - physical intimidation, stalking, inappropriate physical contact, unwelcome sexual attention or repeated behaviour after you’ve been spoken to by someone from the codebar team (directors or chapter organisers).
+      closing_para: The above is only a starting point. The details of the incident may change how we view it, e.g. some verbal harassment may be so serious that we would give a lifetime ban.
+
   admin:
     dashboard:
       title: 'Admin'
@@ -509,12 +587,12 @@ es:
         company_postcode: Código postal
         company_website: Sitio web
         email: Email de contacto
-        link_to_job: Link to job post
-        expiry_date: Application closing date
+        link_to_job: Enlace a la publicación de empleo
+        expiry_date: Fecha de cierre de la solicitud
   donation_platforms:
     title: "How to support us"
     donation_form:
-      title: "Use the donation page"
+      title: "Usa la página de donaciones"
       text: "Support us with a one-time or recurring donation through the donation form on our website."
     amazon_smile:
       title: "Amazon Smile"

@@ -1,6 +1,5 @@
 - if !@workshop.invitable_yet?
-  %p
-    %label.label.info= t('workshops.not_open_for_rsvp')
+  %p.badge.bg-primary= t('workshops.not_open_for_rsvp')
 - else
   - if @workshop.past? and !logged_in?
     %p= t('workshops.sign_up_to_be_invited')
@@ -15,19 +14,20 @@
 
 - if logged_in? && @workshop.future? && (@workshop.invitable || @workshop.open_for_rsvp?)
   - if @workshop.attendee?(current_user)
-    = button_to "Manage your invitation", rsvp_workshop_path(@workshop), method: :post, class: 'button round '
+    = button_to "Manage your invitation", rsvp_workshop_path(@workshop), method: :post, class: 'btn btn-primary'
   - else
     - if current_user.student? && current_user.coach?
-      = button_to "Attend as a student", rsvp_workshop_path(@workshop, role: "Student"), method: :post,class: 'button round '
-      = button_to "Attend as a coach", rsvp_workshop_path(@workshop, role: "Coach"), method: :post,class: 'button round '
+      .d-flex
+        = button_to "Attend as a student", rsvp_workshop_path(@workshop, role: "Student"), method: :post,class: 'btn btn-primary mr-3'
+        = button_to "Attend as a coach", rsvp_workshop_path(@workshop, role: "Coach"), method: :post,class: 'btn btn-primary'
     - elsif current_user.student?
-      = button_to "Attend as a student", rsvp_workshop_path(@workshop, role: "Student"), method: :post,class: 'button round '
+      = button_to "Attend as a student", rsvp_workshop_path(@workshop, role: "Student"), method: :post,class: 'btn btn-primary'
     - elsif current_user.coach?
-      = button_to "Attend as a coach", rsvp_workshop_path(@workshop, role: "Coach"), method: :post,class: 'button round '
+      = button_to "Attend as a coach", rsvp_workshop_path(@workshop, role: "Coach"), method: :post,class: 'btn btn-primary'
     - else
       It looks like something went wrong while you were signing up.
       = link_to "Please tell us whether you want to attend as a student or coach.", subscriptions_path
 
 - elsif not logged_in?
-  = link_to "Sign up", new_member_path, class: 'button'
-  = link_to "Log in", login_path, class: 'button'
+  = link_to "Sign up", new_member_path, class: 'btn btn-primary'
+  = link_to "Log in", login_path, class: 'btn btn-primary'

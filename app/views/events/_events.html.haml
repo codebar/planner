@@ -1,7 +1,7 @@
-.events#chapter
-  %ul.no-bullet
-    - grouped_events.each do |date, workshops|
-      .row.grouped-events
-        .medium-12.columns
-          %h3.date= date
-        = render workshops
+- grouped_events.each do |date, workshops|
+  .row
+    .col-12
+      %h3.h5= date
+  .row
+    .col-md-8
+      = render workshops

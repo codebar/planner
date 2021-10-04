@@ -1,16 +1,17 @@
-%section#banner
+.container-fluid.stripe.reverse
   .row
-    .large-12.columns
+    .col
       %h2 Update your details
-      .subheader Please make sure your details are always up to date.
+      %p.lead.text-muted Please make sure your details are always up to date.
+
+.container-fluid
   .row
-    .large-12.columns
-      .avatar-container
-        =image_tag(current_user.avatar(75), alt: current_user.name)
-      %span
-        You can change your avatar at
-        =link_to('gravatar.com.', 'http://en.gravatar.com/')
-      %br
-      %br
-      = render partial: 'members/new', locals: { submit_text: "Save" }
-      %hr
+    .col-12.col-lg-3.mb-4
+      .bg-light.p-3
+        .d-flex.d-lg-block.align-items-center.text-lg-center
+          = image_tag(current_user.avatar(80), alt: current_user.full_name, class: 'rounded-circle mb-lg-2')
+          %p.mb-0.ml-2.ml-lg-0
+            You can change your avatar at
+            = link_to('gravatar.com.', 'http://en.gravatar.com/')
+    .col-12.col-lg-8.offset-lg-1.mb-4
+      = render partial: 'members/new', locals: { submit_text: 'Save' }

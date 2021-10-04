@@ -1,5 +1,5 @@
-.row
-  .medium-10.medium-offset-1.columns
+.row.justify-content-md-center
+  .col-md-8
     %h2= t('homepage.newsletter.title')
     %p= t('homepage.newsletter.description')
 
@@ -29,7 +29,6 @@
           -# real people should not fill this in and expect good things - do not remove this or risk form bot signups
           %div{ style: 'position: absolute; left: -5000px;', 'aria-hidden': 'true' }
             %input{ type: 'text', name: 'b_b4652d85b385945c79f2ffa2e_3798974cb3', tabindex: '-1', value: '' }
-          .clear
-            %input.button.small#mc-embedded-subscribe{ type: 'submit', value: 'Subscribe', name: 'subscribe' }
-
-          %a{ href: 'https://us8.campaign-archive.com/home/?u=b4652d85b385945c79f2ffa2e&id=3798974cb3' } View previous newsletters.
+          .d-flex.justify-content-between.align-items-center
+            %input.btn.btn-primary#mc-embedded-subscribe{ type: 'submit', value: 'Subscribe', name: 'subscribe' }
+            %a{ href: 'https://us8.campaign-archive.com/home/?u=b4652d85b385945c79f2ffa2e&id=3798974cb3' } View previous newsletters.

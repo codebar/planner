@@ -1,15 +1,25 @@
 %li
-  %label Admin Menu
-  - if current_user.admin_or_organiser?
-    %li= link_to "New workshop", new_admin_workshop_path
-    %li= link_to "New sponsor", new_admin_sponsor_path
+  %h6.dropdown-header Admin Menu
+- if current_user.admin_or_organiser?
+  %li
+    = link_to new_admin_workshop_path, class: 'dropdown-item' do
+      New workshop
+  %li
+    = link_to new_admin_sponsor_path, class: 'dropdown-item' do
+      New sponsor
 
 - if current_user.monthlies_organiser?
-  %li= link_to "New monthly", new_admin_meeting_path
+  %li
+    = link_to new_admin_meeting_path, class: 'dropdown-item' do
+      New monthly
 
 -if current_user.organised_chapters.any?
   %li
-    %label My Chapters
+    %hr.dropdown-divider
+  %li
+    %h6.dropdown-header My Chapters
   - current_user.organised_chapters.each do |chapter|
-    %li= link_to chapter.name, admin_chapter_path(chapter)
-    %li= link_to "#{chapter.name} feedback", admin_chapter_feedback_index_path(chapter)
+    %li
+      = link_to chapter.name, admin_chapter_path(chapter), class: 'dropdown-item'
+    %li
+      = link_to "#{chapter.name} feedback", admin_chapter_feedback_index_path(chapter), class: 'dropdown-item'
