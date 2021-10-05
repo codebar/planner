@@ -2,14 +2,14 @@ de:
   admin:
     bans:
       create:
-        success: 'Member marked as supended and suspension email sent.'
+        success: 'Mitglied wurde gesperrt und per E-mail informiert.'
       new:
-        title: 'Suspension'
-        create: 'Suspend member'
+        title: 'Sperrung'
+        create: 'Mitglied sperren'
     members:
       update_subscriptions:
-        unsubscribe: "Successfully unsubscribed %{member} from %{chapter}'s %{group} group"
+        unsubscribe: "%{member} wurde erfolgreich aus der Liste der %{chapter}er %{group} ausgetragen."
       send_attendance_email:
-        success: 'Attendance warning email sent.'
+        success: 'Anwesenheits-Warn-E-mail verschickt.'
       send_eligibility_email:
-        success: 'Eligibility inquiry email sent.'
+        success: 'Anfrage zur Teilnahmeberechtigung verschickt'
