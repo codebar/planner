@@ -1,49 +1,56 @@
-%section#banner
+.container-fluid.pt-3
   .row
-    .medium-12.columns
-      %h2.subheader
+    .col
+      %h1.mb-3
         %small
-          = link_to edit_admin_chapter_path(@chapter) do
+          = link_to edit_admin_chapter_path(@chapter), class: 'border-0' do
             %i.fa.fa-edit
         = @chapter.name
-        %small= @chapter.email
+        %small.text-muted= @chapter.email
 
   .row
-    .large-4.columns.panel
-      %h3 Organisers
-      %ul.no-bullet
-        - @chapter.organisers.each do |organiser|
-          %li
-            = organiser.full_name
-            - if organiser.mobile.present?
-              = organiser.mobile
-            - else
-              .label.alert Phone number not set
-      - if current_user.is_admin?
-        = link_to 'Edit organisers', admin_chapter_organisers_path(@chapter), class: 'button tiny right'
-
-    .large-4.columns
-      %ul.side-nav
+    .col-12.col-lg-4.d-md-flex.d-lg-block
+      .card.border-info.mb-4
+        .card-body
+          %h3 Organisers
+          %ul.list-unstyled.ml-0
+            - @chapter.organisers.each do |organiser|
+              %li
+                = organiser.full_name
+                - if organiser.mobile.present?
+                  = organiser.mobile
+                - else
+                  %span.badge.bg-warning.text-dark Phone no. not set
+          - if current_user.is_admin?
+            = link_to 'Edit organisers', admin_chapter_organisers_path(@chapter), class: 'btn btn-primary btn-sm'
+      %ul.nav.flex-column.ml-0.mb-4
         - @groups.each do |group|
-          %li
-            = link_to [ :admin, group ] do
+          %li.nav-item
+            = link_to [ :admin, group ], class: 'nav-link border-0' do
               #{group.name} (#{group.members.count})
-            = link_to admin_chapter_members_path(@chapter, type: group.name.downcase) do
+          %li.nav-item
+            = link_to admin_chapter_members_path(@chapter, type: group.name.downcase), class: 'nav-link border-0' do
               View #{group.name} emails
-    .large-3.columns.end
-      = link_to 'View all sponsors', admin_sponsors_path, class: 'button round expand small'
-      = link_to 'View all workshops', admin_chapter_workshops_path(@chapter), class: 'button round expand small'
+        %li.nav-item
+          = link_to 'View all sponsors', admin_sponsors_path, class: 'nav-link border-0'
+        %li.nav-item
+          = link_to 'View all workshops', admin_chapter_workshops_path(@chapter), class: 'nav-link border-0'
 
-  .row
-    .large-4.columns
-      %h3 Upcoming Workshops
-      %ul.side-nav
-        - @workshops.each do |workshop|
-          %li
-            = link_to admin_workshop_path(workshop) do
-              = humanize_date(workshop.date_and_time, with_time: true)
-              - if workshop.invitable?
-                (#{workshop.invitations.accepted.count})
-    .large-8.columns
-      %h3 Latest subscribers
-      = render partial: 'admin/subscriptions/index', locals: { subscribers: @subscribers }
+    .col-12.col-lg-7.offset-lg-1
+      .mb-4
+        .d-md-flex.justify-content-between.align-items-center
+          %h3 Upcoming Workshops
+          = link_to 'New workshop', new_admin_workshop_path, class: 'btn btn-primary btn-sm'
+        - if @workshops.any?
+          %ul.list-unstyled.ml-0.mb-0
+            - @workshops.each do |workshop|
+              %li.py-2
+                = link_to admin_workshop_path(workshop), class: 'border-0' do
+                  = humanize_date(workshop.date_and_time, with_time: true)
+                  - if workshop.invitable?
+                    (#{workshop.invitations.accepted.count})
+        - else
+          There are no upcoming workshops.
+      .mb-4
+        %h3 Latest subscribers
+        = render partial: 'admin/subscriptions/index', locals: { subscribers: @subscribers }
