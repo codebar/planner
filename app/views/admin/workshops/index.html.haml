@@ -1,29 +1,29 @@
-%section#banner
+.container-fluid.pt-3
   .row
-    .medium-12.columns
-      %h2.subheader
+    .col
+      %h1.mb-3
         Workshops
-        %small=@chapter.name
+        %small.text-muted= @chapter.name
 
   .row
-    %table.large-12.columns
-      %thead
-        %td Date
-        %td Attendances
-        %td Sponsors
-        %td
-
-      %tbody
-        - @workshops.each do |workshop|
-          %tr
-            %td
-              = link_to admin_workshop_path(workshop) do
-                = humanize_date(workshop.date_and_time, with_time: true, with_year: true)
-            %td
-              = workshop.invitations.accepted.count
-            %td
-              - workshop.sponsors.each do |sponsor|
-                = link_to sponsor.name, sponsor.website
-            %td
-              - if workshop.date_and_time.future?
-                %label.label upcoming
+    .col
+      %table.table
+        %thead
+          %td Date
+          %td Attendances
+          %td Sponsors
+          %td
+        %tbody
+          - @workshops.each do |workshop|
+            %tr
+              %td
+                = link_to admin_workshop_path(workshop), class: 'border-0' do
+                  = humanize_date(workshop.date_and_time, with_time: true, with_year: true)
+              %td
+                = workshop.invitations.accepted.count
+              %td
+                - workshop.sponsors.each do |sponsor|
+                  = link_to sponsor.name, sponsor.website, class: 'border-0'
+              %td
+                - if workshop.date_and_time.future?
+                  %span.badge.bg-primary Upcoming
