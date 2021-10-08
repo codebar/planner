@@ -1,16 +1,18 @@
-%section#banner
+.container-fluid.pt-3
   .row
-    .large-12.columns
-      %h1
+    .col
+      %h1.mb-3
         = @group.name
-        %small.subheader #{@group.chapter.name}
-    .large-12.columns
+        %small.text-muted #{@group.chapter.name}
+
+  .row
+    .col
       %h3 Members (#{@group.members.count})
-      %table
-        - @group.members.each do |member|
-          %tbody
+      %table.table
+        %tbody
+          - @group.members.each do |member|
             %tr
-              %td= image_tag(member.avatar(32), class: 'th radius', title: member.full_name, alt: member.full_name)
-              %td= link_to member.full_name, admin_member_path(member)
-              %td= mail_to member.email, member.email
+              %td= image_tag(member.avatar(32), class: 'rounded-circle', title: member.full_name, alt: member.full_name)
+              %td= link_to member.full_name, admin_member_path(member), class: 'border-0'
+              %td= mail_to member.email, member.email, class: 'border-0'
               %td= member.mobile
