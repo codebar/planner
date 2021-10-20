@@ -1,104 +1,97 @@
-%section#admin#banner
+.container-fluid.pt-3
   .row
-    .large-12.columns
-      %ul.breadcrumbs
-        %li=link_to 'Sponsors', admin_sponsors_path
-        %li.current=@sponsor.name
-
-  .row
-    .medium-6.columns
-      %dl
-        %dt Name
-        %dd= @sponsor.name
-
-        %dt Logo
-        %dd.large-6= image_tag(@sponsor.avatar.url, alt: @sponsor.name)
-
-        %dt Website
-        %dd= link_to @sponsor.website
-
-        %dt Description
-        %dd= @sponsor.description
-
-        %dt
-          Level
-          %i.fa.fa-trophy
-        %dd= @sponsor.level
-
-        %dt Contacts
-        %dd
-          %ul.no-bullet#contacts
-            - @sponsor.contacts.each do |contact|
-              %li
-                = mail_to(contact.email, contact.full_name)
-                %i.fa{ class: contact.mailing_list_subscription_class }
-
-    .medium-6.columns
-
-      .row
-        .large-6.columns
-          %dl
-            %dt Student spots
-            %dd= @sponsor.seats
-        .large-6.columns
-          %dl
-            %dt Coach spots
-            %dd= @sponsor.coach_spots
-
-      %dl
-        %dt
-          Accessibility information
-          .fa.fa-universal-access
-        %dd
-          = @sponsor.accessibility_info
-
-        %dt Address
-        - if @sponsor.address.present?
-          %dd= @sponsor.address.to_html
-
-        %dt Directions
-        - if @sponsor.address.present?
-          %dd= @sponsor.address.directions
+    .col
+      %nav{'aria-label': 'breadcrumb'}
+        %ol.breadcrumb.ml-0
+          %li.breadcrumb-item= link_to t('admin.shared.sponsors'), admin_sponsors_path, class: 'border-0'
+          %li.breadcrumb-item.active= @sponsor.name
 
   .row
-    .medium-12.columns.text-right
-      = link_to edit_admin_sponsor_path(@sponsor), class: 'button small' do
-        Edit
+    .d-flex.justify-content-between.align-items-center.mb-4
+      %h1= @sponsor.name
+      = link_to t('.edit_button'), edit_admin_sponsor_path(@sponsor), class: 'btn btn-primary'
+    .col-12.col-lg-3
+      .d-flex.justify-content-center.py-3.mb-4
+        = image_tag(@sponsor.avatar.url, alt: @sponsor.name, class: 'small-image')
+      .bg-light.p-3.mb-4
+        %dl.row
+          %dt= t('.website')
+          %dd= link_to @sponsor.website
 
-  .row#map
-    .medium-12.columns
-      %dl
-        %dt Map preview
-        %dd.panel.medium-12.columns
+          %dt= t('.address')
+          - if @sponsor.address.present?
+            %dd= @sponsor.address.to_html
+
+          %dt= t('.directions')
+          %dd
+            - if @sponsor&.address&.directions.present?
+              = @sponsor.address.directions
+            - else
+              = t('.empty_state.directions')
+
+          %dt= t('.description')
+          %dd
+            - if @sponsor.description.present?
+              = @sponsor.description
+            - else
+              = t('.empty_state.description')
+
+          %dt.col-8= t('.student_spots')
+          %dd.col-4= @sponsor.seats
+
+          %dt.col-8= t('.coach_spots')
+          %dd.col-4= @sponsor.coach_spots
+
+          %dt
+            = t('.level')
+            %i.fa.fa-trophy
+          %dd= @sponsor.level
+
+          %dt
+            = t('.accessibility_info')
+            %i.fa.fa-universal-access
+          %dd
+            - if @sponsor.accessibility_info.present?
+              = @sponsor.accessibility_info
+            - else
+              = t('.empty_state.accessibility_info')
+
+          %dt.mb-0= t('.contacts')
+          %dd
+            %ul.list-unstyled.ml-0.mb-0#contacts
+              - @sponsor.contacts.each do |contact|
+                %li.mt-1
+                  = mail_to(contact.email, contact.full_name)
+                  %i.fa{ class: contact.mailing_list_subscription_class }
+
+    .col-12.col-lg-9
+      %h2.h3.mb-3= t('.map_preview')
+      .card.mb-4
+        .card-body
           - if @sponsor.address.present?
             = render partial: 'shared/venue', locals: { venue: @sponsor, address: @sponsor.address}
           - else
-            An address must be specified for the map preview to be generated
+            = t('.empty_state.map')
 
-
-
-  .row#sponsorships
-    .medium-12.columns
-      %dl
-        %dt Sponsorships
-        %dd
-          - if @sponsor.workshops.none? && @sponsor.events.none? && @sponsor.meetings.none?
-            No sponsorships
-          - else
-            .row
+      #sponsorships.mb-4
+        %h2.h3.mb-3= t('.sponsorships')
+        - if @sponsor.workshops.none? && @sponsor.events.none? && @sponsor.meetings.none?
+          = t('.empty_state.sponsorships')
+        - else
+          .row.row-cols-md-3
             - if @sponsor.workshops.any?
-              .large-4.columns
-                %strong Workshops
-                %ul.no-bullet
+              .col
+                %strong= t('admin.shared.workshops')
+                %ul.list-unstyled.ml-0
                   - @sponsor.workshop_sponsors.each do |ws|
                     %li
                       = link_to admin_workshop_path(ws.workshop) do
                         = I18n.l(ws.workshop.date_and_time, format: :default_date)
                         #{ws.workshop.chapter.name} #{ws.workshop.host ? '(host)' : ''}
             - if @sponsor.event_sponsorships.any?
-              .large-4.columns
-                %strong Events
-                %ul.no-bullet
+              .col
+                %strong= t('admin.shared.events')
+                %ul.list-unstyled.ml-0
                   - @sponsor.event_sponsorships.each do |sponsorship|
                     %li
                       = link_to admin_event_path(sponsorship.event) do
@@ -107,18 +100,16 @@
                         \- #{sponsorship&.level&.upcase || 'Standard'}
 
             - if @sponsor.meetings.any?
-              .large-4.columns
-                %strong Meetings
-                %ul.no-bullet
+              .col
+                %strong= t('admin.shared.meetings')
+                %ul.list-unstyled.ml-0
                   - @sponsor.meetings.each do |meeting|
                     %li
                       = link_to admin_meeting_path(meeting) do
                         #{I18n.l(meeting.date_and_time, format: :default_date)}
                         = meeting.title
 
-  .row#activities
-    .medium-12.columns
-      %dl
-        %dt Activities
-        %ul
+      #activities.mb-4
+        %h2.h3.mb-3= t('.activities')
+        %ul.list-unstyled.ml-0
           = render_activities @sponsor.activities
