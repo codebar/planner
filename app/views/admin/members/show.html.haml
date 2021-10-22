@@ -5,7 +5,7 @@
       .col-12.col-md-3
         = render 'profile'
       .col-12.col-md-9
-        %ul.list-unstyled#actions
+        %ul.list-unstyled.m-0#actions
           - @actions.each do |action|
             %li= render action, action: action
 
