@@ -1,11 +1,11 @@
 #admin-member
   = render 'actions'
-  %section
+  .container.mb-4
     .row
-      .medium-3.columns
+      .col-12.col-md-3
         = render 'profile'
-      .medium-9.columns
-        %ul.no-bullet#actions
+      .col-12.col-md-9
+        %ul.list-unstyled#actions
           - @actions.each do |action|
             %li= render action, action: action
 
@@ -15,8 +15,7 @@
               %i.fa.fa-user-o.fa-stack-1x
             .details
               %strong Signed up
-              .date
-                = l(@member.created_at, format: :website_format)
+              = l(@member.created_at, format: :website_format)
 
 
         - if @member.upcoming_rsvps.any?
@@ -24,4 +23,4 @@
           - @member.upcoming_rsvps.each do |invitation|
             = render EventPresenter.decorate(invitation.event), invitation: invitation
 
-        = link_to 'View all RSVPS', admin_member_events_path(@member), class: 'button expand'
+        = link_to 'View all RSVPS', admin_member_events_path(@member), class: 'btn btn-primary btn-block'

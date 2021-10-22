@@ -9,33 +9,29 @@
     - else
       .no-attendance
         No attendance data
-.event
-  .event__col-1
-    %header.event__header
-      %h3.title
-        = link_to event.to_s, [:admin, event]
-        - if event.venue.present?
-          at
-          = event.venue.name
-    .event__details
-      .date
-        %i.material-icons
-          calendar_today
-        = event.date
-      .time
-        %i.material-icons
-          access_time
-        = event.time
 
-  .event__col-2
-    .event__labels
-      - if event.chapter
-        %span.label.status
-          = event.chapter.name
-        %span.label.success= invitation.role
-    - if event.organisers.any?
-      .event__organisers
-        .event__organisers-list
+.col.event
+  .card.mb-4
+    .card-body
+      .d-md-flex.justify-content-md-between
+        .order-md-2
+          %span.badge.bg-success
+            = invitation.role
+          - if event.chapter
+            %span.badge.bg-primary.mb-3.mb-md-0
+              = event.chapter.name
+        .order-md-1
+          %h3.h5
+            = link_to event.to_s, [:admin, event]
+          .mb-3
+            %p.mb-0
+              %i.fa.fa-calendar-o
+              = event.date
+            %p
+              %i.fa.fa-clock-o
+              = event.time
+      - if event.organisers.any?
+        .d-md-flex.align-items-md-center
           - event.organisers.each do |organiser|
-            = link_to twitter_url_for(organiser.twitter), class: 'user-link' do
-              = image_tag(organiser.avatar(26), class: 'th radius', title: organiser.full_name, alt: organiser.full_name)
+            = link_to twitter_url_for(organiser.twitter), class: 'border-0 d-inline-block mx-1' do
+              = image_tag(organiser.avatar(26), class: 'rounded-circle', title: organiser.full_name, alt: organiser.full_name)
