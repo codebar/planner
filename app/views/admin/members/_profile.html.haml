@@ -13,7 +13,7 @@
         .badge.bg-success= skill.name
 
   - if @workshop_attendances.positive? || @meeting_rsvps.positive? || @event_rsvps.positive?
-    .mt-4
+    .attendance-summary.mt-4
       %h5 Attendance summary
       %ul.list-unstyled.ml-0
         - if @workshop_attendances.positive?
