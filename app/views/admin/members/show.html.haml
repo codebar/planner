@@ -5,21 +5,24 @@
       .col-12.col-md-3
         = render 'profile'
       .col-12.col-md-9
-        %ul.list-unstyled.m-0#actions
-          - @actions.each do |action|
-            %li= render action, action: action
+        .row
+          .col
+            %ul.list-unstyled.m-2#actions
+              - @actions.each do |action|
+                %li.border-bottom.border-light.mb-3= render action, action: action
 
-          %li
+        .row.d-flex.align-items-center
+          .col-1
             %span.fa-stack.fa-lg
-              %i.fa.fa-circle.fa-stack-2x.success
-              %i.fa.fa-user-o.fa-stack-1x
-            .details
-              %strong Signed up
-              = l(@member.created_at, format: :website_format)
+              %i.fa.fa-circle.fa-stack-2x.info
+              %i.fa.fa-pencil.fa-stack-1x
+          .col-11
+            %strong Signed up
+            = l(@member.created_at, format: :website_format)
 
 
         - if @member.upcoming_rsvps.any?
-          %h3 Upcoming RSVPs
+          %h3.mt-4 Upcoming RSVPs
           - @member.upcoming_rsvps.each do |invitation|
             = render EventPresenter.decorate(invitation.event), invitation: invitation
 

@@ -1,8 +1,9 @@
-.note
-  %span.fa-stack.fa-lg
-    %i.fa.fa-circle.fa-stack-2x.info
-    %i.fa.fa-pencil.fa-stack-1x
-  .details
+.row.mb-3.d-flex.align-items-start
+  .col-1
+    %span.fa-stack.fa-lg
+      %i.fa.fa-circle.fa-stack-2x.info
+      %i.fa.fa-pencil.fa-stack-1x
+  .col-11
     %strong Note added by #{link_to(action.author.full_name, admin_member_path(action.author))}
     %blockquote=action.note
     .date
