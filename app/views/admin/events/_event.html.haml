@@ -1,17 +1,16 @@
-- if event.date_and_time.past?
-  .attendance
-    - if (invitation.is_a?(WorkshopInvitation) && invitation.attended?)
-      .attended
-        attended
-    - elsif (invitation.is_a?(WorkshopInvitation) && !invitation.attended?)
-      .not-attended
-        not attended
-    - else
-      .no-attendance
-        No attendance data
-
 .col.event
   .card.mb-4
+    - if event.date_and_time.past?
+      .attendance
+        - if (invitation.is_a?(WorkshopInvitation) && invitation.attended?)
+          .attended.p-1.bg-success
+            Attended
+        - elsif (invitation.is_a?(WorkshopInvitation) && !invitation.attended?)
+          .not-attended.p-1.bg-danger
+            Not attended
+        - else
+          .no-attendance.p-1.bg-danger
+            No attendance data
     .card-body
       .d-md-flex.justify-content-md-between
         .order-md-2
