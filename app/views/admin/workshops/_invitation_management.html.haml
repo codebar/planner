@@ -1,43 +1,41 @@
 - if @workshop.invitations.any?
-  .row
-    .large-12.columns
+  .row.mb-4
+    .col
       - if @workshop.invitations.any?
-        .panel
-          %p
-            <strong>#{@workshop.invitations.count}</strong> members have been invited to this event.
-            %br
-            <strong>#{@attending_students.count}</strong> are attending as students and <strong>#{@attending_coaches.count}</strong> as coaches.
-            - if @student_waiting_list.any? or @coach_waiting_list.any?
-              There is also a waiting list of <strong>#{@student_waiting_list.count}</strong> students and <strong>#{@coach_waiting_list.count}</strong> coaches.
-  .row
-    .large-9.columns
-      %small
-      .row
-        = simple_form_for :workshop, url: admin_workshop_invitations_path(@workshop, attending: true), remote: true, method: :put do |f|
-          .medium-6.columns
-            = f.select :invitations,
-                       @workshop.invitations.includes(:member).not_accepted.all.map { |u| [ "#{u.member.full_name} (#{u.role})", u.token] },
-                       { include_blank: true },
-                       { class: 'chosen-select', required: true,
-                       data: { placeholder: t('messages.invitations.select_a_member_to_rsvp') } }
-          .large-3.columns
-            %span.has-tip{ 'data-tooltip': true, 'aria-haspopup': 'true', title: t('admin.workshop.manage_rsvps.text') }
-              %i.fa.fa-info
-      %br
+        .card.bg-light.border-info
+          .card-body
+            %p.mb-0
+              <strong>#{@workshop.invitations.count}</strong> members have been invited to this event.
+              %br
+              <strong>#{@attending_students.count}</strong> are attending as students and <strong>#{@attending_coaches.count}</strong> as coaches.
+              - if @student_waiting_list.any? or @coach_waiting_list.any?
+                There is also a waiting list of <strong>#{@student_waiting_list.count}</strong> students and <strong>#{@coach_waiting_list.count}</strong> coaches.
+  .row.mb-4
+    .col-4
+      = simple_form_for :workshop, url: admin_workshop_invitations_path(@workshop, attending: true), remote: true, method: :put do |f|
+        = f.select :invitations,
+                    @workshop.invitations.includes(:member).not_accepted.all.map { |u| [ "#{u.member.full_name} (#{u.role})", u.token] },
+                    { include_blank: true },
+                    { class: 'chosen-select', required: true,
+                    data: { placeholder: t('messages.invitations.select_a_member_to_rsvp') } }
+    .col-3
+      -# %span.has-tip{ 'data-tooltip': true, 'aria-haspopup': 'true', title: t('admin.workshop.manage_rsvps.text') }
+      %i.fa.fa-info{'data-bs-toggle': 'tooltip', 'data-bs-placement': 'right', 'title': 'test'}
 
   .row
-    .medium-6.columns
-      %h4
-        Students
-        %label.label.round.secondary #{@attending_students.count} of #{@workshop.student_spaces}
-        %label.label.round.signed-in #{ @attending_students.count(&:attended) }
+    .col-6
+      .d-flex.align-items-center
+        %h4
+          Students
+        %span.badge.rounded-pill.bg-primary.ml-2 #{@attending_students.count} of #{@workshop.student_spaces}
+        %span.badge.rounded-pill.bg-success.ml-1 #{ @attending_students.count(&:attended) }
       = render partial: 'admin/workshop/attendances', locals: { invitations: @attending_students }
       = render partial: 'admin/workshop/waiting_list', locals: { waiting_list: @student_waiting_list }
-    .medium-6.columns
-      .row
+    .col-6
+      .d-flex.align-items-center
         %h4
           Coaches
-          %label.label.round.secondary #{@attending_coaches.count} of #{@workshop.coach_spaces}
-          %label.label.round.signed-in #{ @attending_coaches.count(&:attended) }
+        %span.badge.rounded-pill.bg-primary.ml-2 #{@attending_coaches.count} of #{@workshop.coach_spaces}
+        %span.badge.rounded-pill.bg-success.ml-1 #{ @attending_coaches.count(&:attended) }
       = render partial: 'admin/workshop/attendances', locals: { invitations: @attending_coaches }
       = render partial: 'admin/workshop/waiting_list', locals: { waiting_list: @coach_waiting_list }
