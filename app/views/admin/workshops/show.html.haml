@@ -1,4 +1,4 @@
-.container-fluid.p-0.mb-4
+.container-fluid.p-0
   .btn-group.d-flex
     = link_to edit_admin_workshop_path(@workshop), class: 'btn btn-primary d-block py-4' do
       %i.fa.fa-pencil
@@ -32,70 +32,69 @@
       %label.text-light Destroy
 
 
-%section
-  .stripe.reverse
-    .row
-      .medium-12.columns
-        %h2
-          = @workshop.to_s
-          = link_to [:admin, @workshop.chapter] do
-            %small=@workshop.chapter.name
-        %h3
-          %small #{humanize_date(@workshop.date_and_time, @workshop.ends_at, with_time: true)}
-        - if @workshop.rsvp_opens_at
-          %div.mb2
-            - if @workshop.open_for_rsvp?
-              RSVPs opened at
-            - else
-              RSVPs will open at
-            = @workshop.rsvp_opens_at.strftime('%H:%M on %d/%m/%Y.')
-        - if @workshop.venue.present? || @workshop.virtual?
-          %strong.label.round.primary #{@workshop.student_spaces} student spots, #{@workshop.coach_spaces} coach spots
-          - unless @workshop.spaces?
-            %label.label.round.warning Full
-        - if !@workshop.invitable?
-          %br
-          %p
-            %label.label.info= t('admin.workshop.not_invitable')
-        %p.description
-          %br
-          = sanitize(@workshop.description)
+.container-fluid.stripe.reverse
+  .row
+    .col
+      %h2
+        = @workshop.to_s
+        = link_to [:admin, @workshop.chapter] do
+          %small=@workshop.chapter.name
+      %h3
+        %small #{humanize_date(@workshop.date_and_time, @workshop.ends_at, with_time: true)}
+      - if @workshop.rsvp_opens_at
+        %div.mb-2
+          - if @workshop.open_for_rsvp?
+            RSVPs opened at
+          - else
+            RSVPs will open at
+          = @workshop.rsvp_opens_at.strftime('%H:%M on %d/%m/%Y.')
+      - if @workshop.venue.present? || @workshop.virtual?
+        .badge.bg-primary #{@workshop.student_spaces} student spots, #{@workshop.coach_spaces} coach spots
+        - unless @workshop.spaces?
+          .badge.bg-danger Full
+      - if !@workshop.invitable?
+        %br
+        .badge.bg-info= t('admin.workshop.not_invitable')
+      %p.description
+        %br
+        = sanitize(@workshop.description)
     - if @workshop.virtual?
-      .row
-        .large-12.small-6.columns#slack-details
-          .panel.callout
-            %h5= t('admin.workshop.virtual.details.title')
-            %p
-              %strong="#{t('admin.workshop.virtual.details.slack')}:"
-              #{link_to("##{@workshop.slack_channel}", @workshop.slack_channel_link)}
-              %br
-              %strong="#{t('admin.workshop.virtual.details.discord')}:"
-              #{link_to(t('social_media_links.discord_invitation'), t('social_media_links.discord_invitation'))}
-              %br
-              %br
-              #{t('admin.workshop.virtual.details.more_html', slack_channel: link_to('#organisers', 'https://codebar.slack.com/archives/G08CQ5KFD'))}
+      .row.mb-4
+        .col#slack-details
+          .card.bg-light.border-info
+            .card-body
+              %h5= t('admin.workshop.virtual.details.title')
+              %p
+                %strong="#{t('admin.workshop.virtual.details.slack')}:"
+                #{link_to("##{@workshop.slack_channel}", @workshop.slack_channel_link)}
+                %br
+                %strong="#{t('admin.workshop.virtual.details.discord')}:"
+                #{link_to(t('social_media_links.discord_invitation'), t('social_media_links.discord_invitation'))}
+                %br
+                %br
+                #{t('admin.workshop.virtual.details.more_html', slack_channel: link_to('#organisers', 'https://codebar.slack.com/archives/G08CQ5KFD'))}
 
-    %br
     .row
-      .large-3.small-6.columns#host
-        - if @workshop.venue.present?
-          %h4 Venue
-          %strong= @workshop.venue.name
-          %br
-          %small= @workshop.address.to_html
-      .large-3.small-6.columns#sponsors
-        - if (@workshop.sponsors - [@workshop.host]).any?
+      - if !@workshop.virtual?
+        .col-6.col-md-3#host
+          - if @workshop.venue.present?
+            %h4 Venue
+            %strong= @workshop.venue.name
+            %br
+            %small= @workshop.address.to_html
+      - if (@workshop.sponsors - [@workshop.host]).any?
+        .col-6.col-md-3#sponsors
           %h4 Sponsors
-          %ul.no-bullet
+          %ul.list-unstyled.ml-0
             - (@workshop.sponsors - [@workshop.host]).each do |sponsor|
               %li
                 %span
                   = link_to sponsor.name, [:admin, sponsor]
-      .large-6.small-12.columns
+      .col-12.col-md-6
         %h4 Team
         - @workshop.organisers.each do |organiser|
           %span.has-tip{ 'data-tooltip': '', 'aria-haspopup': 'true',  title: organiser.full_name }
             = image_tag(organiser.avatar(40), alt: organiser.full_name)
 
-  .stripe.reverse#invitations
-    = render partial: 'invitation_management'
+.stripe.reverse#invitations
+  = render partial: 'invitation_management'
