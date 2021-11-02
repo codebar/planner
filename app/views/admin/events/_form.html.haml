@@ -1,110 +1,102 @@
 = simple_form_for [:admin, @event] do |f|
   .row
-    .large-12.columns
+    .col
       .row
-        .large-4.columns
+        .col-12
           = f.input :name, label: 'Event Name'
       .row
-        .large-4.columns
+        .col-12.col-md-6
           = f.input :email, as: :email, label: 'Contact email'
-        .large-4.columns
+        .col-12.col-md-6
           = f.input :slug, placeholder: 'for URI, e.g. 24-pull-requests'
       .row
-        .large-6.columns
+        .col-12.col-md-6
           = f.input :date_and_time, as: :string, required: true, label: 'Date'
       .row
-        .large-3.columns
+        .col-6.col-md-3
           = f.input :begins_at, as: :string, required: true
-        .large-3.columns
+        .col-6.col-md-3
           = f.input :ends_at, as: :string, required: true
   .row
-    .large-12.columns
+    .col
       = f.input :description, as: :text,
       placeholder: 'Use this space to write an invitation message and description of the event. This copy will also be used in the email invitation. You can use HTML here!'
   .row
-    .large-12.columns
+    .col
       = f.input :info, label: 'RSVP instructions'
   .row
-    .large-12.columns
+    .col
       = f.input :schedule
-  .row
-    .large-3.columns
+  .row.mb-3
+    .col-12.col-md-6
       = f.association :venue, input_html: { data: { placeholder: 'Select sponsors' }}, required: true
   .row
-    .large-12.columns
-      %h3
-        Please add sponsors only to either Standard level OR Gold/Silver/Bronze levels.
-  .row
-    .large-3.medium-6.small-12.columns
-      %br
+    .col
+      %h2 Please add sponsors only to either Standard level OR Gold/Silver/Bronze levels.
+  .row.mb-3
+    .col-12.col-md-6
       = f.association :sponsors, input_html: { data: { placeholder: 'Select standard sponsors' }}, collection: Sponsor.all
   .row
-    .large-3.medium-6.small-12.columns
-      %br
+    .col-12.col-md-6.col-lg-4
       = f.association :bronze_sponsors, input_html: { data: { placeholder: 'Select bronze sponsors' }}, collection: Sponsor.all
-    .large-3.medium-6.small-12.columns
-      %br
+    .col-12.col-md-6.col-lg-4
       = f.association :silver_sponsors, input_html: { data: { placeholder: 'Select silver sponsors' }}, collection: Sponsor.all
-    .large-3.medium-6.small-12.columns
-      %br
+    .col-12.col-md-6.col-lg-4
       = f.association :gold_sponsors, input_html: { data: { placeholder: 'Select sponsors' }}, collection: Sponsor.all
-  .row
-    .large-6.columns
-      %br
+  .row.mt-3
+    .col-6
       %label Organisers
       = f.collection_select :organisers, Member.all, :id, :full_name, { selected: @event.organisers.map(&:id) }, { multiple: true }
-  .row
-    .large-12.columns
-      %br
+  .row.mt-3
+    .col
       = f.input :announce_only, as: :boolean, hint: 'Events where invitations are not handled via our application'
-    .large-12.columns
-      %br
+  .row
+    .col
       = f.input :external_url, label: 'External Registration URL', placeholder: 'include protocol, e.g. https://codebar.io'
+  .row.mb-3
+    .col
+      %h3 Invitation details
+      .card.bg-light.border-info
+        .card-body
+          .row
+            .col
+              = f.input :tito_url, as: :url, hint: 'Only used for student tickets'
+          .row
+            .col-12.col-md-6
+              = f.input :coach_spaces
+            .col-12.col-md-6
+              = f.input :student_spaces
+          .row
+            .col
+              = f.input :coach_questionnaire
+          .row
+            .col
+              = f.input :student_questionnaire
+          .row
+            .col
+              = f.association :chapters, hint: 'Which chapters do you want to invite to this event? Only one invitation will be emailed out to members with multiple subscriptions when you click Invite from the event page.'
+          .row.mt-3
+            .col
+              = f.input :audience, collection: @event.permitted_audience_values,
+              hint: 'Optionally, specify if invitations should only be sent to students or coaches (ex. a CV workshop targeted toward students may not need invites sent to the entire coach listserv) If left blank, all subscribers to a chapter will be invited via email'
+          .row.mt-3
+            .col
+              = f.input :invitable, as: :boolean, hint: 'Allow members to RSVP'
+          .row
+            .col
+              = f.input :show_faq, as: :boolean, hint: 'Display FAQ section?'
+          .row
+            .col
+              = f.input :display_coaches, as: :boolean
+          .row
+            .col
+              = f.input :display_students, as: :boolean
+          .row
+            .col
+              = f.input :confirmation_required, as: :boolean, hint: 'Will we confirm each registration?'
+          .row
+            .col
+              = f.input :surveys_required, as: :boolean, hint: 'Do we need to collect additional info from attendees?'
   .row
-    .large-12.columns
-      %h5 Invitation details
-      .panel.callout
-        .row
-          .large-12.columns
-            = f.input :tito_url, as: :url, hint: 'Only used for student tickets'
-          .large-6.columns
-            = f.input :coach_spaces
-          .large-6.columns
-            = f.input :student_spaces
-        .row
-          .large-12.columns
-            = f.input :coach_questionnaire
-        .row
-          .large-12.columns
-            = f.input :student_questionnaire
-        .row
-          .large-12.columns
-            = f.association :chapters, hint: 'Which chapters do you want to invite to this event? Only one invitation will be emailed out to members with multiple subscriptions when you click Invite from the event page.'
-        %br
-        .row
-          .large-12.columns
-            = f.input :audience, collection: @event.permitted_audience_values,
-            hint: 'Optionally, specify if invitations should only be sent to students or coaches (ex. a CV workshop targeted toward students may not need invites sent to the entire coach listserv) If left blank, all subscribers to a chapter will be invited via email'
-        .row
-          .large-12.columns
-            %br
-            = f.input :invitable, as: :boolean, hint: 'Allow members to RSVP'
-        .row
-          .large-12.columns
-            = f.input :show_faq, as: :boolean, hint: 'Display FAQ section?'
-        .row
-          .large-12.columns
-            = f.input :display_coaches, as: :boolean
-        .row
-          .large-12.columns
-            = f.input :display_students, as: :boolean
-        .row
-          .large-12.columns
-            = f.input :confirmation_required, as: :boolean, hint: 'Will we confirm each registration?'
-        .row
-          .large-12.columns
-            = f.input :surveys_required, as: :boolean, hint: 'Do we need to collect additional info from attendees?'
-  .row
-    .large-12.columns.text-right
-      = f.submit 'Save', class: 'button'
-
+    .col
+      = f.button :button, 'Save', class: 'btn btn-primary'
