@@ -97,6 +97,6 @@
           .row
             .col
               = f.input :surveys_required, as: :boolean, hint: 'Do we need to collect additional info from attendees?'
-  .row
+  .row.mb-4
     .col
-      = f.button :button, 'Save', class: 'btn btn-primary'
+      = f.submit 'Save', class: 'btn btn-primary'
