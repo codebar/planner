@@ -112,6 +112,7 @@ es:
     faq: "Preguntas más frecuentes"
     blog: "Blog"
     codebar_stories: "codebar Cuentos"
+    stats: "Stats"
   dashboard:
     join_workshops_in: "Únase a nuestros talleres <i>gratuitos</i> en"
     workshops_goal: "para familiarizarse con los conceptos básicos de programación y desarrollo web."

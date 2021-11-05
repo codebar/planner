@@ -113,6 +113,7 @@ fr:
     faq: "FAQ"
     blog: "Blog"
     codebar_stories: "codebar Stories"
+    stats: "Statistiques"
   dashboard:
     join_workshops_in: "Rejoignez nos ateliers <i>gratuit</i>"
     workshops_goal: "pour apprendre les bases de la programmation et du développement web."
