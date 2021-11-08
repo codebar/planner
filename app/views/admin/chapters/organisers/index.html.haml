@@ -1,4 +1,4 @@
-.container-fluid
+.container-fluid.organisers
   .row
     .col
       %h1
@@ -11,15 +11,15 @@
         = f.select :organiser, @chapter_members.uniq.map { |member| ["#{member.full_name}", member.id] }, { include_blank: true }, { class: 'form-select form-select-lg', required: true, data: { placeholder: 'Select a member to make organiser' } }
         = f.submit 'Add organiser', class: 'btn btn-primary btn-block mt-3'
 
-  .row.mt-4.organisers
+  .row.mt-4
     .col-3
-      %p.mb-0 Name
+      %p.fw-bold.mb-0 Name
     .col-3
-      %p.mb-0 Email
+      %p.fw-bold.mb-0 Email
     .col-3
-      %p.mb-0 Phone number
+      %p.fw-bold.mb-0 Phone number
     .col-3
-      %p.mb-0 Actions
+      %p.fw-bold.mb-0 Actions
 
   - @organisers.each do |organiser|
     .row.mt-4.mb-4
