@@ -5,7 +5,7 @@ RSpec.describe Admin::SponsorsController, type: :controller do
   let(:member1) { Fabricate(:member) }
   let(:address) { Fabricate(:address) }
   let(:admin) { Fabricate(:chapter_organiser) }
-  let(:avatar) { Rack::Test::UploadedFile.new(Rails.root.join('app', 'assets', 'images', 'logo.png'), 'image/jpeg') }
+  let(:avatar) { Rack::Test::UploadedFile.new(Rails.root.join('app', 'assets', 'images', 'logo.png'), 'image/png') }
   let(:sponsor) { Fabricate(:sponsor) }
 
   describe 'POST #create' do

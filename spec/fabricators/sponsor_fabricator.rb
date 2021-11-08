@@ -8,7 +8,7 @@
 Fabricator(:sponsor) do
   name { Faker::Name.name }
   website { "http://#{Faker::Internet.domain_name}" }
-  avatar { Rack::Test::UploadedFile.new(Rails.root.join('app', 'assets', 'images', 'sponsors', sponsor_image), 'image/jpeg') }
+  avatar { Rack::Test::UploadedFile.new(Rails.root.join('app', 'assets', 'images', 'sponsors', sponsor_image), 'image/png') }
   address
 end
 
