@@ -45,6 +45,23 @@ $(function(){
 
   $('body').removeClass('no-js');
 
+  // Chosen hides inputs and selects, which becomes problematic when they are
+  // required: browser validation doesn't get shown to the user.
+  // This fix places "the original input behind the Chosen input, matching the
+  // height and width so that the warning appears in the correct position."
+  // https://github.com/harvesthq/chosen/issues/515#issuecomment-474588057
+  $('select').on('chosen:ready', function () {
+    var height = $(this).next('.chosen-container').height();
+    var width = $(this).next('.chosen-container').width();
+
+    $(this).css({
+      position: 'absolute',
+      height: height,
+      width: width,
+      opacity: 0
+    }).show();
+  });
+
   $('select').chosen(function(){
     allow_single_deselect: true
     no_results_text: 'No results matched'
