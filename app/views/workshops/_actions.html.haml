@@ -29,5 +29,6 @@
       = link_to "Please tell us whether you want to attend as a student or coach.", subscriptions_path
 
 - elsif not logged_in?
-  = link_to "Sign up", new_member_path, class: 'btn btn-primary'
-  = link_to "Log in", login_path, class: 'btn btn-primary'
+  %div
+    = link_to "Sign up", new_member_path, class: 'btn btn-primary'
+    = link_to "Log in", login_path, class: 'btn btn-primary'
