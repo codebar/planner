@@ -6,11 +6,11 @@
   - else
     - if logged_in?
       - if @workshop.attendee?(current_user)
-        %p= t('workshops.already_attending')
+        %p.badge.bg-success= t('workshops.already_attending')
       - elsif @workshop.waitlisted?(current_user)
-        %p=t('workshops.on_waiting_list')
+        %p.badge.bg-info=t('workshops.on_waiting_list')
       - elsif(!@workshop.spaces?)
-        %p= t('workshops.no_spaces_available')
+        %p.badge.bg-danger= t('workshops.no_spaces_available')
 
 - if logged_in? && @workshop.future? && (@workshop.invitable || @workshop.open_for_rsvp?)
   - if @workshop.attendee?(current_user)
