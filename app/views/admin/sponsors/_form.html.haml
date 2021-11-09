@@ -1,66 +1,68 @@
 = simple_form_for [:admin, @sponsor], :html => {:multipart => true, novalidate: true } do |f|
   .row
-    .large-6.columns
+    .col-12.col-md-6
       .row
-        .large-12.columns
+        .col
           = f.input :name
 
       .row
-        .large-12.columns
+        .col
           = f.input :website, as: :url
 
       .row
-        .large-12.columns
+        .col
           = f.input :description
 
       - if current_user.has_role?(:admin)
         .row
-          .large-6.columns
+          .col-6
             = f.input :level, collection: Sponsor.levels.keys, label_method: :humanize
 
-      .row
-        .large-12.columns.admin_margin
+      .row.mt-3
+        .col
           = f.input :avatar, as: :file, required: !@sponsor.avatar?
           = f.hidden_field :image_cache
 
       .row
-        .large-12.columns
-          .panel.callout#contacts
-            %strong Contact Details
-            %p Required so that all organisers can get in touch with sponsor when required. Please do not use your personal or chapter details.
-            = f.simple_fields_for :contacts do |c|
-              = render 'contact_fields', f: c
-            .links
-              = link_to_add_association 'Add contact', f, :contacts, class: 'button tiny'
+        .col
+          #contacts.card.bg-light.border-info.mb-4.mb-md-0
+            .card-body
+              %strong Contact Details
+              %p Required so that all organisers can get in touch with sponsor when required. Please do not use your personal or chapter details.
+              = f.simple_fields_for :contacts do |c|
+                = render 'contact_fields', f: c
+              %div
+                = link_to_add_association 'Add contact', f, :contacts, class: 'btn btn-primary'
 
-    .large-6.columns
-      .panel.callout
-        %p Only required for hosts
-        .row
-          .large-6.columns
-            = f.input :seats
-          .large-6.columns
-            = f.input :number_of_coaches
+    .col-12.col-md-6
+      .card.bg-light.border-info
+        .card-body
+          %p Only required for hosts
+          .row
+            .col-6
+              = f.input :seats
+            .col-6
+              = f.input :number_of_coaches
 
 
-        .row
-          .large-12.columns
-            = f.input :accessibility_info
-        .row
-          .large-12.columns
-            %strong Address
-            = f.simple_fields_for :address do |address|
-              = address.input :flat, label: 'Line 1'
-              = address.input :street, label: 'Line 2'
-              = address.input :postal_code
-              = address.input :city
-              = address.input :latitude
-              = address.input :longitude
-              = address.input :directions
+          .row
+            .col
+              = f.input :accessibility_info
+          .row
+            .col
+              %strong Address
+              = f.simple_fields_for :address do |address|
+                = address.input :flat, label: 'Line 1'
+                = address.input :street, label: 'Line 2'
+                = address.input :postal_code
+                = address.input :city
+                = address.input :latitude
+                = address.input :longitude
+                = address.input :directions
 
-  .row
-    .large-12.columns.text-right
+  .row.mt-4.mb-4.text-right
+    .col
       - if params[:action] == 'new' || params[:action] == 'create'
-        = f.submit 'Create sponsor', class: 'button round'
+        = f.submit 'Create sponsor', class: 'btn btn-primary'
       - else
-        = f.submit 'Save changes', class: 'button round'
+        = f.submit 'Save changes', class: 'btn btn-primary'

@@ -1,7 +1,8 @@
-.nested-fields.panel.callout
-  .text-right
-    = link_to_remove_association 'Delete', f
-  = f.input :name
-  = f.input :surname
-  = f.input :email
-  = f.input :mailing_list_consent, as: :boolean
+.nested-fields.card.bg-light.border-secondary.mb-3
+  .card-body
+    .text-right
+      = link_to_remove_association 'Delete', f
+    = f.input :name
+    = f.input :surname
+    = f.input :email
+    = f.input :mailing_list_consent, as: :boolean
