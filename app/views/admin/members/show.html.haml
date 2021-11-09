@@ -1,27 +1,31 @@
 #admin-member
   = render 'actions'
-  %section
+  .container-fluid.mb-4
     .row
-      .medium-3.columns
+      .col-12.col-md-3
         = render 'profile'
-      .medium-9.columns
-        %ul.no-bullet#actions
-          - @actions.each do |action|
-            %li= render action, action: action
+      .col-12.col-md-9
+        .row
+          .col
+            %ul.list-unstyled.m-1#actions
+              - @actions.each do |action|
+                %li.border-bottom.border-light.mb-3= render action, action: action
 
-          %li
+        .row.d-flex.align-items-center
+          .col-2.col-md-1
             %span.fa-stack.fa-lg
-              %i.fa.fa-circle.fa-stack-2x.success
-              %i.fa.fa-user-o.fa-stack-1x
-            .details
-              %strong Signed up
-              .date
-                = l(@member.created_at, format: :website_format)
+              %i.fa.fa-pencil.fa-stack-1x.bg-success.rounded-circle
+          .col-9.col-md-11
+            %strong Signed up
+            = l(@member.created_at, format: :website_format)
 
 
         - if @member.upcoming_rsvps.any?
-          %h3 Upcoming RSVPs
-          - @member.upcoming_rsvps.each do |invitation|
-            = render EventPresenter.decorate(invitation.event), invitation: invitation
-
-        = link_to 'View all RSVPS', admin_member_events_path(@member), class: 'button expand'
+          .row
+            .col
+              %h3.mt-4 Upcoming RSVPs
+              - @member.upcoming_rsvps.each do |invitation|
+                = render EventPresenter.decorate(invitation.event), invitation: invitation
+        .row.mt-4
+          .col
+            = link_to 'View all RSVPS', admin_member_events_path(@member), class: 'btn btn-primary btn-block'

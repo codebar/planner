@@ -21,7 +21,7 @@ RSpec.describe 'Admin managing members', type: :feature do
 
     it 'can view a summary of member event attendances' do
       within '.attendance-summary' do
-        expect(page).to have_content('1 workshops')
+        expect(page).to have_content('1 workshops', normalize_ws: true)
       end
     end
 

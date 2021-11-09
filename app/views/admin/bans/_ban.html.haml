@@ -1,8 +1,9 @@
-.suspension
-  %span.fa-stack.fa-lg
-    %i.fa.fa-user.fa-stack-1x
-    %i.fa.fa-ban.fa-stack-2x.warning
-  .details
+.row.d-flex.align-items-center.suspension
+  .col-2.col-md-1
+    %span.fa-stack.fa-lg
+      %i.fa.fa-user.fa-stack-1x
+      %i.fa.fa-ban.fa-stack-2x.warning
+  .col-9.col-md-11.details
     %strong
       - if action.permanent?
         Suspended indefinitely
