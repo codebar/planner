@@ -1,46 +1,46 @@
-%section#admin#banner
+.container-fluid.pt-3
   .row
-    .large-12.columns
-      %ul.breadcrumbs
-        %li.current Sponsors
-  .row
-    .large-12.columns
-      =simple_form_for @sponsors_search, url: admin_sponsors_path, method: :get do |f|
-        .row
-          = f.input :name, required: false, label: false, wrapper_html: { class: 'medium-4 columns' }, placeholder: 'Filter by sponsor name'
-          = f.submit 'Filter', class: 'button tiny'
+    .col-12
+      %nav{'aria-label': 'breadcrumb'}
+        %ol.breadcrumb.ml-0
+          %li.breadcrumb-item.active= t('admin.shared.sponsors')
+    .col-12
+      = simple_form_for @sponsors_search, url: admin_sponsors_path, method: :get do |f|
+        .input-group.mb-3
+          = f.input :name, required: false, label: false, placeholder: 'Filter by sponsor name'
+          = f.button :button, 'Filter', class: 'btn btn-primary'
 
-  .row
-    .large-12.columns
-      .digg_pagination
-        .page_info
-          = page_entries_info(@sponsors, model: 'sponsor')
-        = will_paginate(@sponsors)
-    %table{width: '100%'}
-      %thead
-        %tr
-          %th
-            Name
-          %th
-            Level
-          %th
-            Chapter(s)
-          %th
-            Sponsorships
-      %tbody
-        - @decorated_sponsors.each do |sponsor|
-          %tr.sponsor
-            %td
-              = link_to(sponsor.name, admin_sponsor_path(sponsor))
-            %td
-              =sponsor.level
-            %td
-              - sponsor.chapters.uniq.each do |chapter|
-                =link_to chapter.name, admin_chapter_path(chapter)
-            %td
-              = sponsor.sponsorships_count
-  .row
-    .large-12.columns
-      .digg_pagination
-        = will_paginate(@sponsors)
-  %br
+  .row.mb-3
+    .col-md-6
+      = page_entries_info(@sponsors, model: 'sponsor')
+    .col-md-6.text-md-right
+      = will_paginate(@sponsors)
+
+  .row.mb-3
+    .col
+      %table.table
+        %thead
+          %tr
+            %th
+              Name
+            %th
+              Level
+            %th
+              Chapter(s)
+            %th
+              Sponsorships
+        %tbody
+          - @decorated_sponsors.each do |sponsor|
+            %tr.sponsor
+              %td
+                = link_to(sponsor.name, admin_sponsor_path(sponsor))
+              %td
+                =sponsor.level
+              %td
+                - sponsor.chapters.uniq.each do |chapter|
+                  =link_to chapter.name, admin_chapter_path(chapter)
+              %td
+                = sponsor.sponsorships_count
+  .row.mb-4
+    .col.text-md-right
+      = will_paginate(@sponsors)
