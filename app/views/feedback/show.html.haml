@@ -35,9 +35,8 @@
             = f.button :button, 'Submit feedback', class: 'btn btn-primary'
 
 :javascript
-  $('.rating').starRating({
-    minus: false
-    });
-    $('input[name="commit"]').click(function(){
+  $('.rating').starRating({ minus: false });
+
+  $('button[type="submit"]').on('click', function () {
     $('#feedback_rating').val($('.rating').data('val'))
   });
