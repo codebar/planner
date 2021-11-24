@@ -1,12 +1,13 @@
-%section#admin#banner
+.containuer-fluid
   .row
-    .large-12.columns
-      %ul.breadcrumbs
-        %li= link_to 'Sponsors', admin_sponsors_path
-        %li= link_to(@sponsor.name, admin_sponsor_path(@sponsor))
-        %li.current Edit
+    .col
+      %nav
+        %ol.breadcrumb.m-0
+          %li.breadcrumb-item= link_to 'Sponsors', admin_sponsors_path
+          %li.breadcrumb-item= link_to(@sponsor.name, admin_sponsor_path(@sponsor))
+          %li.breadcrumb-item.active Edit
 
-  .row
-    .medium-12.columns
-      %h2 Edit Sponsor
+  .row.mt-2
+    .col
+      %h1 Edit Sponsor
       = render 'form'
