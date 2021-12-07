@@ -1,12 +1,11 @@
 %h1 Hi #{@member.name}!
 
 %p
-  Welcome to codebar. Thanks so much for volunteering - we rely on coaches
-  to make our workshops a success. We're looking forward to seeing you at one of our events soon.
+  Welcome to codebar and thank you so much for volunteering. Coaches are a big part of our workshops’ success. We're looking forward to seeing you at one of our events soon.
 
 %p
   - if @member.subscriptions.any?
-    You'll automatically receive email invitations to our workshops as soon as a workshop is open for RSVP.
+    You'll automatically receive email invitations to our workshops as soon as they are open for RSVP.
     - if @member.chapters.pluck(:name).include?("London")
       However, our London chapter doesn't send workshop invitations via email, so you won't receive email invites for regular London events. We open RSVPs at around 1pm on the Friday before the workshop, and you will be able to register through the workshop page on our website. To be notified when we open RSVPs, join the #london-chapters channel
       = link_to 'on our Slack', 'http://slack.codebar.io'
@@ -15,7 +14,7 @@
       on Twitter.
   - else
     We send out invitations to our events via email.
-    = link_to "Sign up from the subscriptions page", subscriptions_url
+    = link_to "Sign up on our subscriptions page", subscriptions_url
     to receive invitations to our workshops.
   Places are limited, so be sure to respond quickly if you want to attend.
 
@@ -39,7 +38,7 @@
   =link_to "tips for coaching on the codebar website.", teaching_guide_url
 
 %p
-  It's important to us that our workshops are a welcoming &amp; accepting environment
+  It's important to us that our workshops are a welcoming and accepting environment
   for everyone. Please make sure you
   = link_to "read our code of conduct", code_of_conduct_url
   before attending.
@@ -51,10 +50,10 @@
 
 %p
   If you didn't mean to sign up as a coach, not to worry! You can always
-  = link_to "change your subscriptions on our website.", subscriptions_url
+  = link_to "change your subscriptions via our website.", subscriptions_url
 
 %p
-  We hope to see you at a workshop soon, and thanks for volunteering!
+  We hope to see you at a workshop soon, and thank you again for volunteering!
 
 %p
   #{"-- "}
