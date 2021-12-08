@@ -4,41 +4,38 @@
 
 %p
   - if @member.subscriptions.any?
-    You'll automatically receive email invitations to our workshops as soon as a workshop is open for RSVP.
+    You'll automatically receive email invitations to our workshops as soon as they are open for RSVP.
     - if @member.chapters.pluck(:name).include?("London")
       However, our London chapter doesn't send workshop invitations via email, so you won't receive email invites for regular London events. We open RSVPs at around 1pm on the Friday before the workshop, and you will be able to register through the workshop page on our website. To be notified when we open RSVPs, join the #london-chapters channel
       = link_to 'on our Slack', 'http://slack.codebar.io'
       or
-      = link_to 'follow us', 'https://twitter.com/codebar'
+      = link_to 'follow us', 'https://twitter.com/codebarLDN'
       on Twitter.
   - else
     We send out invitations to our events via email.
-    = link_to "Sign up from the subscriptions page", subscriptions_url
+    = link_to "Sign up on our subscriptions page", subscriptions_url
     to receive invitations to our workshops.
   Places are limited, so be sure to respond quickly if you want to attend.
 
 %p
-  Our workshops are available to women, LGBTQ people, and others under-represented
-  in the tech industry. If you belong to one of these groups, you are more than welcome
-  to attend. You can find out more about codebar's workshops
+  Our workshops are available to women, non-binary, LGBTQ people, and people belonging to underrepresented ethnic groups in the tech industry. If you belong to one of these groups, you are more than welcome to attend. You can find out more about codebar's workshops
   = link_to "in our FAQ.", faq_url
 
 %p
-  Each workshop starts with around 30 minutes of socialising and food, before we assign
+  Each workshop starts with 30 minutes of socialising and food, before we assign
   you to a coach with one to three other students. You can either work through
   = link_to "one of our tutorials", "http://tutorials.codebar.io/"
-  or get help with your own project. After 2 hours of coaching, we retire to a nearby
-  pub for some post-codebar relaxation.
+  or get help with your own project.
 
 %p
-  It's important to us that our workshops are a welcoming &amp; accepting environment
+  It's important to us that our workshops are a welcoming and accepting environment
   for everyone. Please make sure you
   = link_to "read our code of conduct", attendance_policy_url
   before attending.
 
 %p
   If you didn't mean to sign up as a student, not to worry! You can always
-  = link_to "change your subscriptions on our website.", subscriptions_url
+  = link_to "change your subscription on our website.", subscriptions_url
 
 %p
   If you have any questions, reply to this email or chat to one of the organisers at
