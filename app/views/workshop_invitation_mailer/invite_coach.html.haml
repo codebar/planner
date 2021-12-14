@@ -14,13 +14,16 @@
               %td
                 %h3 Hi #{@member.name},
                 %p.lead
-                  Invites for our next #{@workshop.chapter.name} workshop are now open and we are looking for coaches. The workshop will take place on #{humanize_date(@workshop.date_and_time, with_time: true)}.
+                  Our next #{@workshop.chapter.name} workshop is coming soon, and we’d like to invite you to be a part of it.
 
-                %p At the workshop you will be helping students as they work their way through one of our tutorials or a personal project they need help. Don't worry we'll only match you with someone who you'll be able to help.
+                %p
+                  We’re looking for coaches to join us for our next workshop happening on #{humanize_date(@workshop.date_and_time, with_time: true)}.
 
-                %p You can find all of our tutorials at #{link_to 'http://tutorials.codebar.io/', 'http://tutorials.codebar.io/'}. If you would like to improve any of the existing content, you can issue a pull request to our #{link_to 'GitHub repository', 'https://github.com/codebar/tutorials'}
+                %p As a coach you will be helping students as they work their way through one of our tutorials or a personal project that they need help with. Not to worry, you’ll only be matched with students who you’ll be able to help based on your experience and expertise.
 
-                %p Before attending, make sure you have read and understood our #{link_to 'Code of Conduct', 'http://codebar.io/code-of-conduct'}. We have a zero tolerance policy towards conduct and expect everyone to behave appropriately. You should also go through our #{link_to 'How to be an effective teacher', 'http://codebar.io/effective-teacher-guide'}.
+                %p You can find all of our tutorials at #{link_to 'http://tutorials.codebar.io/', 'http://tutorials.codebar.io/'}. If you have any suggestions to improve our existing content, you can issue a pull request to our #{link_to 'GitHub repository', 'https://github.com/codebar/tutorials'}
+
+                %p Before attending, make sure that you have read and understood our #{link_to 'Code of Conduct', 'http://codebar.io/code-of-conduct'}. We have a zero tolerance policy towards negative conduct and expect everyone to behave appropriately. You should also go through our guide on #{link_to 'How to be an effective teacher', 'http://codebar.io/effective-teacher-guide'}.
 
                 %p Please note: We do not accept any RSVPs over email.
 
