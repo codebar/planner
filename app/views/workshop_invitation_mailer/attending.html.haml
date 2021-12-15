@@ -15,16 +15,19 @@
                 %h3 Hi #{@member.name},
                 %p.lead
                   - if @waiting_list
-                    A spot became available and your attendance has now been confirmed.
+                    A spot became available and your attendance has now been confirmed!
                   - else
-                    Your spot has been confirmed.
+                    Your spot at the workshop has been confirmed!
                     - if @invitation.role.eql?('Student')
-                      %p If you haven't already, please remember to let us know what you will be working on through the invitation. Projects that involve specific frameworks, libraries, or languages that are not part of the codebar tutorials (anything other than Ruby or Javascript) are welcome, but we cannot guarantee that a coach will be available to help you. We recommend having a backup option to work on, such as codebar tutorials or katas (codewars.com or exercism.io). See you at our workshop!
+                      %p If you haven't already, please let us know what you will be working on through the invitation. Projects that involve specific frameworks, libraries, or languages that are not part of the codebar tutorials (anything other than Ruby or Javascript) are welcome, but we cannot guarantee that a coach will be available to help you. We recommend having a backup option to work on, such as the codebar tutorials or katas (<a href='https://www.codewars.com/'>codewars.com</a> or <a href='https://exercism.org/'>exercism.org</a>).
                   %p
                     If you can no longer make it, please cancel your invitation <strong>before 15:00</strong> on the day of the workshop.
                     <a href='https://codebar.io/student-guide#attendance'>We have a three-strikes attendance policy for no-shows.</a>
                   %p
                     Please remember that removing the calendar entry will not cancel your invitation RSVP.
+                  %p
+                    See you at our workshop!
+
 
         .content
           %table{ bgcolor: '#FFFFFF' }
