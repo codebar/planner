@@ -13,14 +13,14 @@
           %table
             %tr
               %td
-                %h3 Hi, #{@member.name}
+                %h3 Hi #{@member.name},
                 %p.lead
                   The
                   %a{ href: full_url_for(job_url(@job)) }#{@job.title} at #{@job.company}
                   job you submitted has been approved.
                 %p.callout
-                  It is now available to all members at
-                  %a{ href: full_url_for(jobs_url) }codebar's jobs section &raquo;
+                  It is now visible to all members at
+                  %a{ href: full_url_for(jobs_url) }our jobs section &raquo;
 
                 %table.social{ width: "100%" }
                   %tr
