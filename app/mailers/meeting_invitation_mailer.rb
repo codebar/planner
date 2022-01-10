@@ -31,7 +31,7 @@ class MeetingInvitationMailer < ActionMailer::Base
     @host_address = AddressPresenter.new(@meeting.venue.address)
     @cancellation_url = meeting_url(@meeting)
 
-    subject = "A spot opened up for #{@meeting.name} on #{humanize_date(@meeting.date_and_time)}"
+    subject = "A spot has opened up for #{@meeting.name} on #{humanize_date(@meeting.date_and_time)}"
     mail(mail_args(@member, subject), &:html)
   end
 
