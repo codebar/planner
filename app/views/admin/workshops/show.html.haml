@@ -72,7 +72,7 @@
               %br
               #{t('admin.workshop.virtual.details.more_html', slack_channel: link_to('#organisers', 'https://codebar.slack.com/archives/G08CQ5KFD'))}
 
-  .row.mt-4
+  .row.my-4
     .col-6.col-md-3#host
       - if @workshop.venue.present?
         %h4 Venue
@@ -94,5 +94,6 @@
           = image_tag(organiser.avatar(40), alt: organiser.full_name)
 
 
+.container-fluid.bg-light.pt-4
   .row.mt-4#invitations
     = render partial: 'invitation_management'
