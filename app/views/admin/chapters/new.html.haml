@@ -1,20 +1,22 @@
-%section#banner
+.container-fluid
   .row
-    .medium-12.columns
+    .col
       %h2 New Chapter
+  .row
+    .col
       = simple_form_for [:admin, @chapter] do |f|
         .row
-          .large-6.columns
+          .col-12.col-md-6
             = f.input :name, placeholder: 'e.g. Cambridge', required: true
         .row
-          .large-6.columns
+          .col-12.col-md-6
             = f.input :email, placeholder: 'e.g. cambridge@codebar.io', required: true
         .row
-          .large-6.columns
+          .col-12.col-md-6
             = f.input :city, required: true
         .row
-          .large-6.columns
+          .col-12.col-md-6
             = f.input :time_zone, required: true
-        .row
-          .large-12.columns.text-right
-            = f.submit 'Create chapter', class: 'button'
+        .row.mt-4
+          .col.text-right
+            = f.button :button, 'Create chapter', class: 'btn btn-primary'
