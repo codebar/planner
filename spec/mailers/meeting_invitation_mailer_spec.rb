@@ -16,7 +16,7 @@ RSpec.describe MeetingInvitationMailer, type: :mailer do
     end
 
     it 'renders the body' do
-      expect(mail.body.encoded).to match('We\'re back for another installment of codebar Monthlies')
+      expect(mail.body.encoded).to match('We\'re back for another instalment of codebar Monthlies')
       expect(mail.body.encoded).to match('hello@codebar.io')
     end
   end
@@ -41,14 +41,14 @@ RSpec.describe MeetingInvitationMailer, type: :mailer do
     let(:mail) { MeetingInvitationMailer.approve_from_waitlist(meeting, member).deliver_now }
 
     it 'renders the headers' do
-      expect(mail.subject).to eq("A spot opened up for #{meeting.name} on #{humanize_date(meeting.date_and_time)}")
+      expect(mail.subject).to eq("A spot has opened up for #{meeting.name} on #{humanize_date(meeting.date_and_time)}")
       expect(mail.to).to eq([member.email])
       expect(mail.from).to eq(['meetings@codebar.io'])
       expect(mail.cc).to eq([])
     end
 
     it 'renders the body' do
-      expect(mail.body.encoded).to match('A spot opened up for the next codebar Monthly')
+      expect(mail.body.encoded).to match('A spot has opened up for the next codebar Monthly')
       expect(mail.body.encoded).to match('hello@codebar.io')
     end
   end
