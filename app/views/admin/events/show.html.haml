@@ -1,130 +1,123 @@
-.icon-bar.five-up
-  = link_to edit_admin_event_path(@event), class: 'item' do
+.container-fluid.btn-group.p-0
+  = link_to edit_admin_event_path(@event), class: 'btn btn-primary py-3' do
     %i.fa.fa-pencil
-    %label Edit
+    %label.text-white Edit
 
   - if !@event.date_and_time.future?
-    = link_to '#', class: 'item disabled', title: t('messages.already_taken_place') do
+    = link_to '#', class: 'btn btn-primary py-3 disabled', title: t('messages.already_taken_place') do
       %i.fa.fa-send-o
-      %label Invite
+      %label.text-white Invite
   - elsif @event.venue and @event.invitable?
-    = link_to admin_event_invite_path(@event), method: :post, class: 'item' do
+    = link_to admin_event_invite_path(@event), method: :post, class: 'btn btn-primary py-3' do
       %i.fa.fa-send-o
-      %label Invite
+      %label.text-white Invite
   - else
-    = link_to '#', class: 'item disabled', title: 'The event is not invitable.' do
+    = link_to '#', class: 'btn btn-primary py-3 disabled', title: 'The event is not invitable.' do
       %i.fa.fa-send-o
-      %label Invite
+      %label.text-white Invite
 
-  = link_to admin_event_attendees_emails_path(@event, format: 'text'), class: 'item' do
+  = link_to admin_event_attendees_emails_path(@event, format: 'text'), class: 'btn btn-primary py-3' do
     %i.fa.fa-at
-    %label Emails
+    %label.text-white Emails
 
-  = link_to admin_event_path(@event, format: 'csv'), class: 'item', title: 'CSV for labels' do
+  = link_to admin_event_path(@event, format: 'csv'), class: 'btn btn-primary py-3', title: 'CSV for labels' do
     %i.fa.fa-users
-    %label Labels
+    %label.text-white Labels
 
 
-%section
-  .stripe.reverse
+.container-fluid.bg-light.py-5
+  .row
+    .col
+      %h1= @event.to_s
+      %h2
+        %small #{humanize_date(@event.date_and_time, @event.ends_at, with_time: true)}
+
+  .row
+    - if @event.venue.present?
+      .col-12.col-md-6
+        %span.badge.bg-primary #{@event.student_spaces} student spots, #{@event.coach_spaces} coach spots
+        %h4.mt-3 Chapters
+        %ul.list-inline.ml-0
+          - @event.chapters.each do |chapter|
+            %li.list-inline-item= link_to chapter.name, [:admin, chapter]
+
+  .row
+    - if @event.venue.present?
+      .col-6.col-md-3#host
+        %h4 Venue
+        %strong= @event.venue.name
+        %br
+        %small
+          = @address.to_html
+    .col-6.col-md-3#sponsors
+      - if @event.sponsors?
+        %h4 Sponsors
+        - if @event.sponsors?(:standard)
+          %h5 Standard
+          %ul.no-bullet
+            - @event.sponsors.each do |sponsor|
+              %li
+                %span
+                  = link_to sponsor.name, [:admin, sponsor]
+        - if @event.sponsors?(:bronze)
+          %h5 Bronze
+          %ul.no-bullet
+            - @event.bronze_sponsors.each do |sponsor|
+              %li
+                %span
+                  = link_to sponsor.name, [:admin, sponsor]
+        - if @event.sponsors?(:silver)
+          %h5 Silver
+          %ul.no-bullet
+            - @event.silver_sponsors.each do |sponsor|
+              %li
+                %span
+                  = link_to sponsor.name, [:admin, sponsor]
+        - if @event.sponsors?(:gold)
+          %h5 Gold
+          %ul.no-bullet
+            - @event.gold_sponsors.each do |sponsor|
+              %li
+                %span
+                  = link_to sponsor.name, [:admin, sponsor]
+    .col-12.col-md-6
+      %h4 Team
+      - @event.organisers.each do |organiser|
+        %span.has-tip{ 'data-tooltip': '', 'aria-haspopup': 'true', title: organiser.full_name }
+          = image_tag(organiser.avatar(40), alt: organiser.full_name)
+
+  .row.mt-4
+    .col
+      %p.lead= @event.description.html_safe
+
+  - if @event.tito_url.present?
     .row
-      .medium-12.columns
-        %h2= @event.to_s
-        %h3
-          %small #{humanize_date(@event.date_and_time, @event.ends_at, with_time: true)}
+      .col-12.col-md-6
+        .row
+          .col
+            %strong Student ticket url
+            %p= link_to @event.tito_url, @event.tito_url
+            - if @event.student_questionnaire.present?
+              %strong Student questionnaire
+              %p= link_to @event.student_questionnaire, @event.student_questionnaire
+            - if @event.coach_questionnaire.present?
+              %strong Coach questionnaire
+              %p= link_to @event.coach_questionnaire, @event.coach_questionnaire
 
-    .row
-      - if @event.venue.present?
-        .medium-6.columns
-          %strong.label.round.primary #{@event.student_spaces} student spots, #{@event.coach_spaces} coach spots
-          %br
-          %br
-          %strong Chapters
-          %ul.inline-list
-            - @event.chapters.each do |chapter|
-              %li= link_to chapter.name, [:admin, chapter]
-
-    .row
-      .large-3.small-6.columns#host
-        - if @event.venue.present?
-          %h4 Venue
-          %strong= @event.venue.name
-          %br
-          %small
-            = @address.to_html
-      .large-3.small-6.columns#sponsors
-        - if @event.sponsors?
-          %h4 Sponsors
-          - if @event.sponsors?(:standard)
-            %h5 Standard
-            %ul.no-bullet
-              - @event.sponsors.each do |sponsor|
-                %li
-                  %span
-                    = link_to sponsor.name, [:admin, sponsor]
-          - if @event.sponsors?(:bronze)
-            %h5 Bronze
-            %ul.no-bullet
-              - @event.bronze_sponsors.each do |sponsor|
-                %li
-                  %span
-                    = link_to sponsor.name, [:admin, sponsor]
-          - if @event.sponsors?(:silver)
-            %h5 Silver
-            %ul.no-bullet
-              - @event.silver_sponsors.each do |sponsor|
-                %li
-                  %span
-                    = link_to sponsor.name, [:admin, sponsor]
-          - if @event.sponsors?(:gold)
-            %h5 Gold
-            %ul.no-bullet
-              - @event.gold_sponsors.each do |sponsor|
-                %li
-                  %span
-                    = link_to sponsor.name, [:admin, sponsor]
-      .large-6.small-12.columns
-        %h4 Team
-        - @event.organisers.each do |organiser|
-          %span.has-tip{ 'data-tooltip': '', 'aria-haspopup': 'true', title: organiser.full_name }
-            = image_tag(organiser.avatar(40), alt: organiser.full_name)
-
-    %br
-    .row
-      .large-12.columns
-        %p.lead= @event.description.html_safe
-    - if @event.tito_url.present?
-      .row
-        .large-6.columns
-          .row
-            .large-12.columns
-              %strong Student ticket url
-              %p.lead= link_to @event.tito_url, @event.tito_url
-          .row
-            .large-12.columns
-              - if @event.student_questionnaire.present?
-                .row
-                  .large-12.columns
-                    %strong Student questionnaire
-                    %p.lead= link_to @event.student_questionnaire, @event.student_questionnaire
-              - if @event.coach_questionnaire.present?
-                .row
-                  .large-12.columns
-                    %strong Coach questionnaire
-                    %p.lead= link_to @event.coach_questionnaire, @event.coach_questionnaire
-
-        .large-6.columns
-          .panel
+      .col-12.col-md-6
+        .card.border-info
+          .card-body
             %strong Webhook url for student tickets
             %p.lead= event_rsvp_url(@event)
             %small You can setup this up in ti.to unde <strong>Customise/Webhooks</strong>
-    .row
-      .large-6.columns
-        %dl.accordion{ 'data-accordion': true }
-          %dd.accordion-navigation
-            = link_to 'Schedule', '#schedule'
-            #schedule.content
-              = dot_markdown(@event.schedule)
 
-  #invitations.stripe.reverse
-    = render partial: 'invitation_management'
+  .row.mt-4
+    .col-12.col-md-6
+      %dl.accordion{ 'data-accordion': true }
+        %dd.accordion-navigation
+          = link_to 'Schedule', '#schedule'
+          #schedule.content
+            = dot_markdown(@event.schedule)
+
+.container-fluid.py-5
+  = render partial: 'invitation_management'
