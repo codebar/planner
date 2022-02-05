@@ -18,7 +18,7 @@
                 =feedback.tutorial.title
             .large-2.columns
               - (0...feedback.rating).each do |rating|
-                .fa.fa-star
+                .fas.fa-star
           - if current_user.admin_or_organiser? and feedback.coach.present?
             .row
               .large-12.columns

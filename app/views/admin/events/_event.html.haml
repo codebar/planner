@@ -24,10 +24,10 @@
             = link_to event.to_s, [:admin, event]
           .mb-3
             %p.mb-0
-              %i.fa.fa-calendar-o
+              %i.far.fa-calendar
               = event.date
             %p
-              %i.fa.fa-clock-o
+              %i.far.fa-clock
               = event.time
       - if event.organisers.any?
         .d-md-flex.align-items-md-center

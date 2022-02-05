@@ -1,8 +1,8 @@
-.row.d-flex.align-items-center.suspension
+.row.d-flex.suspension
   .col-2.col-md-1
-    %span.fa-stack.fa-lg
-      %i.fa.fa-user.fa-stack-1x
-      %i.fa.fa-ban.fa-stack-2x.warning
+    %span.fa-stack
+      %i.fas.fa-user.fa-stack-1x
+      %i.fas.fa-ban.fa-stack-2x.warning
   .col-9.col-md-11.details
     %strong
       - if action.permanent?
@@ -15,8 +15,9 @@
       = action.note
     - if action.explanation.present?
       .explanation
-        %span.fa-stack.fa-lg
-          %i.fa.fa-envelope-open.fa-stack-1x.info
+        %span.fa-stack.text-info
+          %i.fas.fa-circle.fa-stack-2x
+          %i.fas.fa-envelope-open.fa-stack-1x.fa-inverse
         %div= action.explanation
     .date
       = l(action.created_at, format: :website_format)

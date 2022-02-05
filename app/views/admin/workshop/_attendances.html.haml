@@ -9,23 +9,23 @@
                 = link_to admin_workshop_invitation_path(@workshop, invitation, attended: true),
                   class: 'verify_attendance', title: 'Verify attendance', method: :put, remote: true,
                   data: { disable_with: "<i class='fa fa-spinner spin'></i>" } do
-                  %i.fa.fa-square-o
+                  %i.far.fa-square
               - else
-                %i.fa.fa-check-square-o
+                %i.far.fa-check-square
             - else
               = link_to admin_workshop_invitation_path(@workshop, invitation, attending: false), class: 'cancel_attendance', title: 'Cancel RSVP', data: { confirm: "Are you sure you want to remove #{invitation.member.full_name} from the list of attendees?" }, method: :put, remote: true do
-                %i.fa.fa-minus-square-o
+                %i.far.fa-minus-square
           %td.small-5.columns
             - if invitation.member.newbie?
               %span.has-tip{ 'data-tooltip': '', 'aria-haspopup': 'true', title: 'New attendee.' }
-                %i.fa.fa-paw
+                %i.fas.fa-paw
             - elsif invitation.member.flag_to_organisers?
               %span.has-tip{ 'data-tooltip': '', 'aria-haspopup': 'true', title: 'Multiple no shows and attendance warnings in the last six months' }
-                %i.fa.fa-exclamation-circle
+                %i.fas.fa-exclamation-circle
 
             - if invitation.member.recent_notes.any?
               %span.has-tip{ 'data-tooltip': '', 'aria-haspopup': 'true', title: render(partial: 'admin/member_notes/member_note', collection: invitation.member.recent_notes, as: :action) }
-                %i.fa.fa-comment
+                %i.fas.fa-comment
 
             = link_to admin_member_path(invitation.member) do
               - if invitation.member.full_name.blank?
@@ -33,24 +33,24 @@
               - else
                 = invitation.member.full_name
           %td.small-6.columns
-            -if invitation.tutorial?
+            - if invitation.tutorial?
               %small Tutorial: #{invitation.tutorial}
               %br
-            -if invitation.note?
+            - if invitation.note?
               %small=invitation.note
               %br
             - if invitation.rsvp_time.present?
               %span.has-tip{ 'data-tooltip': '', 'aria-haspopup': 'true',  title: 'Time of RSVP' }
                 %small
-                  %i.fa.fa-history
-                  =l(invitation.rsvp_time)
+                  %i.fas.fa-history
+                  = l(invitation.rsvp_time)
               - if invitation.automated_rsvp?
                 %span.has-tip{ 'data-tooltip': '', 'aria-haspopup': 'true',  title: 'Waiting list or admin addition' }
                   %small
-                    %i.fa.fa-magic
+                    %i.fas.fa-magic
               %br
             - if invitation.reminded_at.present?
               %span.has-tip{ 'data-tooltip': '', 'aria-haspopup': 'true',  title: 'Reminder emailed at' }
                 %small
-                  %i.fa.fa-clock-o
-                  =l(invitation.reminded_at)
+                  %i.far.fa-clock
+                  = l(invitation.reminded_at)

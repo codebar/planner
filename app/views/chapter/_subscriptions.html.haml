@@ -3,9 +3,9 @@
     %span{ title: "Unsubscribe from #{@chapter.name} #{group.name}" }
       = link_to subscriptions_path(subscription: { group_id: group }), method: 'delete', class: 'btn btn-success' do
         = group.name
-        %i.fa.fa-check
+        %i.fas.fa-check
   - else
     %span{ title: "Subscribe to #{@chapter.name} #{group.name}" }
       = link_to subscriptions_path(subscription: { group_id: group }), method: 'post', class: 'btn btn-secondary' do
         = group.name
-        %i.fa.fa-rss
+        %i.fas.fa-rss

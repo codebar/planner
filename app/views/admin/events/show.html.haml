@@ -1,29 +1,28 @@
 .container-fluid.btn-group.p-0
   = link_to edit_admin_event_path(@event), class: 'btn btn-primary py-3' do
-    %i.fa.fa-pencil
+    %i.fas.fa-pencil-alt
     %label.text-white Edit
 
   - if !@event.date_and_time.future?
     = link_to '#', class: 'btn btn-primary py-3 disabled', title: t('messages.already_taken_place') do
-      %i.fa.fa-send-o
+      %i.fas.fa-paper-plane
       %label.text-white Invite
   - elsif @event.venue and @event.invitable?
     = link_to admin_event_invite_path(@event), method: :post, class: 'btn btn-primary py-3' do
-      %i.fa.fa-send-o
+      %i.fas.fa-paper-plane
       %label.text-white Invite
   - else
     = link_to '#', class: 'btn btn-primary py-3 disabled', title: 'The event is not invitable.' do
-      %i.fa.fa-send-o
+      %i.fas.fa-paper-plane
       %label.text-white Invite
 
   = link_to admin_event_attendees_emails_path(@event, format: 'text'), class: 'btn btn-primary py-3' do
-    %i.fa.fa-at
+    %i.fas.fa-at
     %label.text-white Emails
 
   = link_to admin_event_path(@event, format: 'csv'), class: 'btn btn-primary py-3', title: 'CSV for labels' do
-    %i.fa.fa-users
+    %i.fas.fa-users
     %label.text-white Labels
-
 
 .container-fluid.bg-light.py-5
   .row

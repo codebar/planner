@@ -19,7 +19,7 @@
             - current_user.chapters.each do |chapter|
               = link_to chapter.name, chapter_url(chapter.slug), class: 'list-group-item list-group-item-action'
         - else
-          %i.fa.fa-warning
+          %i.fas.fa-exclamation-triangle
           %small You are not subscribed to any groups.
 
 

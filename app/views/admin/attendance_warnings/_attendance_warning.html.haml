@@ -1,7 +1,8 @@
 .row.d-flex.align-items-center.attendance-warning
   .col-2.col-md-1
-    %span.fa-stack.fa-lg
-      %i.fa.fa-clock-o.fa-stack-1x.bg-warning.rounded-circle
+    %span.fa-stack.text-warning
+      %i.fas.fa-circle.fa-stack-2x
+      %i.far.fa-clock.fa-stack-1x.fa-inverse
   .col-9.col-md-11.details
     %strong Sent attendance warning email by #{link_to(action.issued_by.full_name, admin_member_path(action.issued_by))}
     .date
