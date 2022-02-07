@@ -3,10 +3,6 @@
   margin-top: 30px;
 }
 
-.brand {
-  line-height: 5.8rem;
-}
-
 nav a.menu {
   margin: 20px;
   top: 20px;
@@ -153,4 +149,9 @@ form .hint {
 
 .picker {
   width: 320px !important;
+}
+
+.festival-banner {
+  background-image: image-url('festival/festival-banner-background.jpg');
+  background-size: cover;
 }
