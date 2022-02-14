@@ -1,32 +1,34 @@
 - if @event.invitations.any?
   .row
-    .large-12.columns
-      = simple_form_for :invitation, url: admin_invitation_path, method: :put do |f|
-        .medium-6.columns
-          = f.select :id,
-                     @event.invitations.not_accepted.all.map { |u| [ "#{u.member.full_name} (#{u.role})", u.token] },
-                     { include_blank: true },
-                     { class: 'chosen-select', required: true,
-                     data: { placeholder: t('messages.invitations.select_a_member_to_rsvp') } }
-          = f.input :event_id, :as => :hidden, :input_html => { :value => @event.id }
-        .medium-3.columns
-          = f.submit "Add"
+    .col
+      .card.border-info
+        .card-body
+          %p.mb-0
+            <strong>#{@event.invitations.count}</strong> members have been invited to this event.
+            %br
+            <strong>#{@attending_students.count}</strong> are attending as students and <strong>#{@attending_coaches.count}</strong> as coaches.
 
-        .large-3.columns
+
+  .mt-4
+    = simple_form_for :invitation, url: admin_invitation_path, method: :put do |f|
+      .row
+        .col-6
+          = f.select :id,
+                    @event.invitations.not_accepted.all.map { |u| [ "#{u.member.full_name} (#{u.role})", u.token] },
+                    { include_blank: true },
+                    { class: 'chosen-select', required: true,
+                    data: { placeholder: t('messages.invitations.select_a_member_to_rsvp') } }
+          = f.input :event_id, :as => :hidden, :input_html => { :value => @event.id }
+        .col-1
+          = f.submit "Add"
+        .col-1
           %span{ "data-tooltip" => true, "aria-haspopup" => "true", class: "has-tip", title: t('admin.workshop.manage_rsvps.text') }
             %i.fa.fa-info
-  %br
-  .row
-    .large-12.columns
-      .panel
-        %p
-          <strong>#{@event.invitations.count}</strong> members have been invited to this event.
-          %br
-          <strong>#{@attending_students.count}</strong> are attending as students and <strong>#{@attending_coaches.count}</strong> as coaches.
-  .row
-    .medium-6.columns
+
+  .row.mt-4
+    .col-12.col-md-6
       %h4 Students
       = render partial: 'admin/events/attendances', locals: { invitations: @attending_students }
-    .medium-6.columns
+    .col-12.col-md-6
       %h4 Coaches
       = render partial: 'admin/events/attendances', locals: { invitations: @attending_coaches }
