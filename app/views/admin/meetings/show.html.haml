@@ -1,60 +1,57 @@
-.icon-bar.five-up
-  = link_to invite_admin_meeting_path(@meeting), class: 'item', title: 'Invite' do
+.container-fluid.btn-group.p-0
+  = link_to invite_admin_meeting_path(@meeting), class: 'btn btn-primary py-3', title: 'Invite' do
     %i.fa.fa-send-o
-    %label Invite
-  = link_to edit_admin_meeting_path(@meeting), class: 'item' do
+    %label.text-white Invite
+  = link_to edit_admin_meeting_path(@meeting), class: 'btn btn-primary py-3' do
     %i.fa.fa-pencil
-    %label Edit
-  = link_to attendees_emails_admin_meeting_path(@meeting, format: 'text'), class: 'item' do
+    %label.text-white Edit
+  = link_to attendees_emails_admin_meeting_path(@meeting, format: 'text'), class: 'btn btn-primary py-3' do
     %i.fa.fa-at
-    %label Emails
-  = link_to admin_meeting_path(@meeting, format: 'csv'), class: 'item', title: 'CSV for labels' do
+    %label.text-white Emails
+  = link_to admin_meeting_path(@meeting, format: 'csv'), class: 'btn btn-primary py-3', title: 'CSV for labels' do
     %i.fa.fa-users
-    %label Labels
+    %label.text-white Labels
 
-%section
-  .stripe.reverse
-    .row
-      .medium-12.columns
-        %h2
-          =@meeting.name
-        %h3
-          %small #{humanize_date(@meeting.date_and_time, @meeting.ends_at, with_time: true)}
+.container-fluid.mt-5
+  .row
+    .col
+      %h1
+        =@meeting.name
+      %h2
+        %small #{humanize_date(@meeting.date_and_time, @meeting.ends_at, with_time: true)}
+  .row
+    .col
+      %p
+        %strong #{@meeting.spaces} spaces
 
-    .row
-      .medium-2.columns
+  .row.mt-3
+    .col-6.col-md-4#host
+      - if @meeting.venue.present?
+        %h4 Venue
         %p
-          %strong #{@meeting.spaces} spaces
+          %strong= @meeting.venue.name
+        %strong Accessibility info
+        - if @meeting.venue.accessibility_info.present?
+          %p= @meeting.venue.accessibility_info
+        - else
+          %p This venue does not have accessibility information yet. Please update the sponsor entry with accessibility information.
 
-    .row
-      .large-3.small-6.columns#host
-        - if @meeting.venue.present?
-          %h4 Venue
-          %p
-            %strong= @meeting.venue.name
-          %strong Accessibility info
-          - if @meeting.venue.accessibility_info.present?
-            %p= @meeting.venue.accessibility_info
-          - else
-            %p This venue does not have accessibility information yet. Please update the sponsor entry with accessibility information.
+    .col-6.col-md-4
+      %h4 Team
+      - @meeting.organisers.each do |organiser|
+        %span.has-tip{ 'data-tooltip': '', 'aria-haspopup': 'true',  title: organiser.full_name }
+          = image_tag(organiser.avatar(40), alt: organiser.full_name)
 
-      .large-3.small-12.columns
-        %h4 Team
-        - @meeting.organisers.each do |organiser|
-          %span.has-tip{ 'data-tooltip': '', 'aria-haspopup': 'true',  title: organiser.full_name }
-            = image_tag(organiser.avatar(40), alt: organiser.full_name)
+    .col-6.col-md-4
+      %h4 Chapters
+      - @meeting.chapters.each do |chapter|
+        %div
+          = chapter.name
 
-      .large-3.columns
-        %h4 Chapters
-        - @meeting.chapters.each do |chapter|
-          %div
-            = chapter.name
-
-    .row
-      .large-8.columns
-        %h4 Agenda
-        %br
-        = @meeting.description.html_safe
+  .row.mt-3
+    .col-10
+      %h4 Agenda
+      = @meeting.description.html_safe
 
 #invitations.stripe.reverse
   = render partial: 'invitation_management'
