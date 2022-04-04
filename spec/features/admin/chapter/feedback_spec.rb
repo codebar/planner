@@ -27,6 +27,6 @@ RSpec.feature 'Chapter workshop feedback', type: :feature do
     visit root_path
     click_on "#{chapter.name} feedback"
 
-    expect(page).to have_content("No feedback has been submitted for #{chapter.name}'s workshops yet.")
+    expect(page).to have_content("No feedback has been submitted for #{chapter.name} workshops yet.")
   end
 end
