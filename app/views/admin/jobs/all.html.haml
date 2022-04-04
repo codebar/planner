@@ -14,7 +14,7 @@
           - @jobs.each do |job|
             %dt
               = link_to job.title, admin_job_path(job)
-              %small.fa.fa-map-marker= job.location
+              %small.fas.fa-map-marker= job.location
               - if job.approved?
                 %label.label.success approved
               - if job.expiry_date.past?

@@ -46,7 +46,7 @@
               = link_to chapter_path(group.chapter.slug) do
                 #{group.name} (#{group.chapter.name})
       - else
-        %i.fa.fa-warning
+        %i.fas.fa-exclamation-triangle
         %small You are not subscribed to any groups.
 
       = link_to 'Manage subscriptions', subscriptions_path, class: 'btn btn-secondary btn-sm', role: 'button'

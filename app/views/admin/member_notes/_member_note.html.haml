@@ -1,7 +1,8 @@
 .row.d-flex.align-items-start.note
   .col-2.col-md-1
-    %span.fa-stack.fa-lg
-      %i.fa.fa-pencil.fa-stack-1x.bg-primary.rounded-circle
+    %span.fa-stack.text-primary
+      %i.fas.fa-circle.fa-stack-2x
+      %i.fas.fa-pencil-alt.fa-stack-1x.fa-inverse
   .col-9.col-md-11
     %strong Note added by #{link_to(action.author.full_name, admin_member_path(action.author))}
     %blockquote.blockquote.mb-0=action.note

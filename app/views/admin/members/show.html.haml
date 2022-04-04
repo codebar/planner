@@ -13,8 +13,9 @@
 
         .row.d-flex.align-items-center
           .col-2.col-md-1
-            %span.fa-stack.fa-lg
-              %i.fa.fa-pencil.fa-stack-1x.bg-success.rounded-circle
+            %span.fa-stack.text-success
+              %i.fas.fa-circle.fa-stack-2x
+              %i.fas.fa-user-plus.fa-stack-1x.fa-inverse
           .col-9.col-md-11
             %strong Signed up
             = l(@member.created_at, format: :website_format)

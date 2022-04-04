@@ -55,7 +55,7 @@
           - if @event.surveys_required
             .alert.alert-warning.mt-4{ "data-alert" => true }
               .d-flex.align-items-center
-                %i.fa.fa-warning.warning.mr-3
+                %i.fas.fa-exclamation-triangle.warning.mr-3
                 %p.mb-0 
                   To complete signing up for the event, you must #{link_to("complete our questionnaire", @event.questionnaire(@invitation), class: 'alert-link border-0 text-decoration-underline')} as we need to know a couple of things in advance to plan the day.
                   %strong You will receive an email when your attendance is verified.

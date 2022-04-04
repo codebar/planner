@@ -3,9 +3,9 @@
     %h2.h4.toggle
       As a Student
       - if collapsed
-        %i.fa.fa-chevron-right
+        %i.fas.fa-chevron-right
       - else
-        %i.fa.fa-chevron-down
+        %i.fas.fa-chevron-down
     .group-container{class: collapsed ? 'collapsed' : ''}
       %p.lead #{link_to('Are you eligible to be a student?', 'http://codebar.io/student-guide#eligibility')}
       - groups.each do |group|
@@ -14,7 +14,7 @@
             = f.input :subscription_id, as: :hidden, input_html: { value: nil }
             = f.input :group_id, as: :hidden, input_html: { value: group.id }
             = button_tag type: :submit, class: 'btn btn-success w-100' do
-              %i.fa.fa-check
+              %i.fas.fa-check
               = group.chapter.name
         - else
           = simple_form_for :subscription, url: :subscriptions do |f|

@@ -44,12 +44,12 @@
 
           %dt
             = t('.level')
-            %i.fa.fa-trophy
+            %i.fas.fa-trophy
           %dd= @sponsor.level
 
           %dt
             = t('.accessibility_info')
-            %i.fa.fa-universal-access
+            %i.fas.fa-universal-access
           %dd
             - if @sponsor.accessibility_info.present?
               = @sponsor.accessibility_info
@@ -62,7 +62,7 @@
               - @sponsor.contacts.each do |contact|
                 %li.mt-1
                   = mail_to(contact.email, contact.full_name)
-                  %i.fa{ class: contact.mailing_list_subscription_class }
+                  %i.fas{ class: contact.mailing_list_subscription_class }
 
     .col-12.col-lg-9
       %h2.h3.mb-3= t('.map_preview')

@@ -27,6 +27,7 @@
 //= require subscriptions-toggle
 //= require invitations
 //= require cocoon
+//= require font_awesome5
 
 $(function(){
   $(document).foundation();

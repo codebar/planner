@@ -8,7 +8,6 @@
             %br
             <strong>#{@attending_students.count}</strong> are attending as students and <strong>#{@attending_coaches.count}</strong> as coaches.
 
-
   .mt-4
     = simple_form_for :invitation, url: admin_invitation_path, method: :put do |f|
       .row
@@ -23,7 +22,7 @@
           = f.submit "Add"
         .col-1
           %span{ "data-tooltip" => true, "aria-haspopup" => "true", class: "has-tip", title: t('admin.workshop.manage_rsvps.text') }
-            %i.fa.fa-info
+            %i.fas.fa-info
 
   .row.mt-4
     .col-12.col-md-6

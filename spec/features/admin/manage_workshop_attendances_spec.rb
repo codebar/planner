@@ -18,7 +18,7 @@ RSpec.feature 'managing workshop attendances', type: :feature do
         visit admin_workshop_path(workshop)
         find('.verify_attendance').click
 
-        expect(page).to have_css('.fa-check-square-o')
+        expect(page).to have_css('.fa-check-square')
       end
     end
 
@@ -58,7 +58,7 @@ RSpec.feature 'managing workshop attendances', type: :feature do
       expect(page).to have_content('2 are attending as students')
 
       expect(page).to have_content(I18n.l(other_invitation.reload.rsvp_time))
-      expect(page).to have_selector('i.fa-magic')
+      expect(page).to have_css('.fa-magic')
     end
 
     scenario 'can view the tutorial and note set by an attendee' do
