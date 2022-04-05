@@ -1,33 +1,33 @@
 .container-fluid
-  .row.mb-3
+  .row.mb-4
     .col
       %h1 Announcements
-  .row
+  .row.border-bottom.border-primary
     .col
-      .row.border-bottom.border-primary
-        .col-3
-          %p.mb-2 Created by
-        .col-3
-          %p.mb-2 Message
-        .col-3
-          %p.mb-2 Groups
-        .col-3
-          %p.mb-2 Expires at
-      - @announcements.each do |announcement|
-        .row.mt-3
-          .col-3
-            .row
-              .col-2
-                = image_tag(announcement.created_by.avatar(24), alt: announcement.created_by.full_name)
-              .col-10
-                %p= announcement.created_by.full_name
-          .col-3
-            = dot_markdown(announcement.message)
-          .col-3
-            %ul
-              - announcement.groups.each do |group|
-                %li
-                  %p.mb-2= group.to_s
-          .col-3
-            - if announcement.expires_at.present?
-              %p=l(announcement.expires_at, format: :date)
+      %p.mb-2 Created by
+    .col-4
+      %p.mb-2 Message
+    .col
+      %p.mb-2 Groups
+    .col
+      %p.mb-2 Expires at
+    .col
+      %p.mb-2 Edit
+  - @announcements.each do |announcement|
+    .row.mt-3
+      .col
+        .d-flex.align-items-start
+          = image_tag(announcement.created_by.avatar(25), alt: announcement.created_by.full_name)
+          %p.ml-2.mb-0= announcement.created_by.full_name
+      .col-4
+        = dot_markdown(announcement.message)
+      .col
+        %ul
+          - announcement.groups.each do |group|
+            %li
+              %p.mb-2= group.to_s
+      .col
+        - if announcement.expires_at.present?
+          %p= l(announcement.expires_at, format: :date)
+      .col
+        = link_to 'Edit', edit_admin_announcement_path(announcement), class: 'border-0'
