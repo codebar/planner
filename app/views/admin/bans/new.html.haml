@@ -3,7 +3,7 @@
     .col
       %nav
         %ol.breadcrumb.ml0
-          %li.breadcrumb-item= link_to @member.full_name, admin_member_path(@member)
+          %li.breadcrumb-item= link_to @member.full_name, admin_member_path(@member), class: 'border-0'
           %li.breadcrumb-item.active=t('.title')
 
   .row
@@ -27,4 +27,4 @@
 
         .row
           .col.text-right
-            = f.submit t('.create'), class: 'btn btn-primary'
+            = f.button :button, t('.create'), class: 'btn btn-primary'

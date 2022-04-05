@@ -56,7 +56,7 @@
                 = simple_form_for @invitation, url: :invitation, method: :put do |f|
                   = f.input :tutorial, collection: @tutorial_titles, include_blank: true
                   = f.input :note, required: false, input_html: { rows: 3, maxlength: 100 }, hint: 'Anything else we should know?', placeholder: 'e.g. I need help understanding selectors'
-                  = f.button :submit, 'Update', class: 'btn btn-primary w-100'
+                  = f.button :button, 'Update', class: 'btn btn-primary w-100'
               - if @invitation.for_coach?
                 = link_to 'Keep your skills up-to-date!', edit_member_path
                 %span.d-block
@@ -64,9 +64,9 @@
                 %hr
                 = simple_form_for @invitation, url: :invitation, method: :put do |f|
                   = f.input :note, required: false, input_html: { rows: 3, maxlength: 100 }
-                  = f.button :submit, 'Update note', class: 'btn btn-primary w-100'
+                  = f.button :button, 'Update note', class: 'btn btn-primary w-100'
               - if @workshop.rsvp_available?
-                = link_to 'I can no longer attend', reject_invitation_url(@invitation), class: 'btn btn-danger w-100 mt-3', role: 'button'
+                = link_to 'I can no longer attend', reject_invitation_url(@invitation), class: 'btn btn-danger w-100', role: 'button'
               - else
                 %p= t('workshop.invitation.cant_make_it_note', email: @workshop.chapter.email)
             - elsif @invitation.member.banned?
@@ -87,7 +87,7 @@
                   %hr
                   = simple_form_for @invitation, url: :accept_invitation, method: :post do |f|
                     = f.input :note, required: false, input_html: { rows: 3, maxlength: 100 }
-                    = f.button :submit, 'Attend', class: 'btn btn-primary w-100'
+                    = f.button :button, 'Attend', class: 'btn btn-primary w-100'
                 - else
                   = render partial: 'invitation/waiting_list', locals: { invitation: @invitation }
               - else
@@ -95,7 +95,7 @@
                   = simple_form_for @invitation, url: :accept_invitation, method: :post do |f|
                     = f.input :tutorial, collection: @tutorial_titles, include_blank: true
                     = f.input :note, required: false, input_html: { rows: 3, maxlength: 100 }, hint: 'Anything else we should know?', placeholder: 'e.g. I need help understanding selectors'
-                    = f.button :submit, 'Attend', class: 'btn btn-primary w-100'
+                    = f.button :button, 'Attend', class: 'btn btn-primary w-100'
                 - else
                   = render partial: 'invitation/waiting_list', locals: { invitation: @invitation }
           .card-footer.bg-transparent

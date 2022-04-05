@@ -43,8 +43,6 @@
               = f.input :seats
             .col-6
               = f.input :number_of_coaches
-
-
           .row
             .col
               = f.input :accessibility_info
@@ -63,6 +61,6 @@
   .row.mt-4.mb-4.text-right
     .col
       - if params[:action] == 'new' || params[:action] == 'create'
-        = f.submit 'Create sponsor', class: 'btn btn-primary'
+        = f.button :button, 'Create sponsor', class: 'btn btn-primary'
       - else
-        = f.submit 'Save changes', class: 'btn btn-primary'
+        = f.button :button, 'Save changes', class: 'btn btn-primary'
