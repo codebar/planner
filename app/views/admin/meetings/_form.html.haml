@@ -1,39 +1,37 @@
 = simple_form_for [:admin, @meeting] do |f|
   .row
-    .large-12.columns
-      .row
-        .medium-6.columns
-          = f.input :name, required: true
-        .medium-6.columns
-          = f.input :slug
+    .col
+      = f.input :name, required: true
   .row
-    .medium-6.columns.admin_margin
+    .col-12.col-md-6
+      = f.input :slug, required: true
+    .col-12.col-md-6
       = f.input :local_date, as: :string, required: true, input_html: { data: { value: @meeting.date_and_time.try(:strftime, '%d/%m/%Y') } }
   .row
-    .medium-6.columns
+    .col-12.col-md-6
       = f.input :local_time, as: :string, required: true, input_html: { data: { value: @meeting.time.try(:strftime, '%H:%M') } }
-    .medium-6.columns
+    .col-12.col-md-6
       = f.input :local_end_time, label: 'Ends at', as: :string, required: true, input_html: { data: { value: @meeting.ends_at.try(:strftime, '%H:%M') } }
   .row
-    .large-12.columns.admin_margin
+    .col
       = f.input :description, placeholder: 'Supports HTML', as: :text, input_html: { style: 'height: 300px;' }
   .row
-    .large-3.columns
+    .col-12.col-md-6
       = f.input :spaces, as: :integer
   .row
-    .large-3.columns
+    .col-12.col-md-6
       = f.association :venue, input_html: { data: { placeholder: 'Select venue' }}, required: true
   .row
-    .large-6.columns.admin_margin
+    .col-12.col-md-6.mt-3
       %label Organisers
       = f.collection_select :organisers, Member.all, :id, :full_name, { selected: @meeting.organisers.map(&:id) }, { multiple: true }
   .row
-    .large-6.columns.admin_margin
+    .col-12.col-md-6.mt-3
       %label Chapters
       = f.collection_select :chapters, Chapter.all, :id, :name, { selected: @meeting.chapters.map(&:id) }, { multiple: true }
   .row
-    .large-6.columns.admin_margin
+    .col-12.col-md-6.mt-3
       = f.input :invitable, as: :boolean, hint: 'Allow members to RSVP'
-  .row
-    .large-12.columns.text-right
-      = f.submit 'Update', class: 'button'
+  .row.float-right
+    .col
+      = f.button :button, 'Save', class: 'btn btn-primary'

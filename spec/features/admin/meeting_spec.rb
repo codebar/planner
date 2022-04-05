@@ -20,7 +20,7 @@ RSpec.feature 'Managing meetings', type: :feature do
       fill_in 'Local time', with: '11:30'
       fill_in 'Ends at', with: '12:00'
       select venue.name
-      click_on 'Update'
+      click_on 'Save'
 
       expect(page).to have_content('Meeting successfully created')
       expect(page.current_path)
@@ -31,7 +31,7 @@ RSpec.feature 'Managing meetings', type: :feature do
     scenario 'renders an error when no chapter has been selected' do
       visit new_admin_meeting_path
 
-      click_on 'Update'
+      click_on 'Save'
 
       expect(page).to have_content('Venue can\'t be blank')
     end
@@ -45,7 +45,7 @@ RSpec.feature 'Managing meetings', type: :feature do
       visit edit_admin_meeting_path(meeting)
       fill_in 'Slug', with: "#{I18n.l(meeting.date_and_time, format: :year_month).downcase}-august-meeting-1"
 
-      click_on 'Update'
+      click_on 'Save'
 
       expect(page).to have_content('Slug has already been taken')
     end
@@ -57,7 +57,7 @@ RSpec.feature 'Managing meetings', type: :feature do
       fill_in 'Name', with: "March Meeting"
       unselect permissions.members.first.full_name
 
-      click_on 'Update'
+      click_on 'Save'
 
       expect(page).to have_content('You have successfully updated the details of this meeting')
       expect(page).to have_css(%(span[title="#{permissions.members.last.full_name}"]))
