@@ -1,8 +1,11 @@
-#container
-  .row
-    .large-12.columns
+.container-fluid
+  .row.mb-4
+    .col
+      %h1 Edit announcement
+  .row.mb-4
+    .col
       = simple_form_for [:admin, @announcement] do |f|
         = f.association :groups, label_method: :to_s
         = f.input :message
         = f.input :expires_at, as: :string
-        = f.submit :update, class: 'button tiny'
+        = f.button :button, :update, class: 'btn btn-primary'
