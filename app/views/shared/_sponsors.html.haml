@@ -1,4 +1,4 @@
-.row.align-items-center
+.row.d-flex.align-items-center.justify-content-center
   - sponsors.each do |sponsor|
-    .col-4.col-md-3.col-lg-2.mt-4.d-flex.justify-content-center
-      = link_to image_tag(sponsor.avatar, class: 'small-image mw-100', alt: sponsor.name), sponsor.website, title: sponsor.name, class: 'd-inline-block border-0'
+    .col-4.col-md-3.col-lg-2.mt-4
+      = link_to image_tag(sponsor.avatar, alt: sponsor.name), sponsor.website, title: sponsor.name, class: 'border-0 mw-100'
