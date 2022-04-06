@@ -19,7 +19,7 @@
                     data: { placeholder: t('messages.invitations.select_a_member_to_rsvp') } }
           = f.input :event_id, :as => :hidden, :input_html => { :value => @event.id }
         .col-1
-          = f.submit "Add"
+          = f.button :button, 'Add'
         .col-1
           %span{ "data-tooltip" => true, "aria-haspopup" => "true", class: "has-tip", title: t('admin.workshop.manage_rsvps.text') }
             %i.fas.fa-info

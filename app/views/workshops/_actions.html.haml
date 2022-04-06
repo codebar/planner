@@ -8,27 +8,27 @@
       - if @workshop.attendee?(current_user)
         %p.badge.bg-success= t('workshops.already_attending')
       - elsif @workshop.waitlisted?(current_user)
-        %p.badge.bg-info=t('workshops.on_waiting_list')
+        %p.badge.bg-info= t('workshops.on_waiting_list')
       - elsif(!@workshop.spaces?)
         %p.badge.bg-danger= t('workshops.no_spaces_available')
 
 - if logged_in? && @workshop.future? && (@workshop.invitable || @workshop.open_for_rsvp?)
   - if @workshop.attendee?(current_user)
-    = button_to "Manage your invitation", rsvp_workshop_path(@workshop), method: :post, class: 'btn btn-primary'
+    = button_to 'Manage your invitation', rsvp_workshop_path(@workshop), method: :post, class: 'btn btn-primary'
   - else
     - if current_user.student? && current_user.coach?
       .d-flex
-        = button_to "Attend as a student", rsvp_workshop_path(@workshop, role: "Student"), method: :post,class: 'btn btn-primary mr-3'
-        = button_to "Attend as a coach", rsvp_workshop_path(@workshop, role: "Coach"), method: :post,class: 'btn btn-primary'
+        = button_to 'Attend as a student', rsvp_workshop_path(@workshop, role: 'Student'), method: :post, class: 'btn btn-primary mr-3'
+        = button_to 'Attend as a coach', rsvp_workshop_path(@workshop, role: 'Coach'), method: :post, class: 'btn btn-primary'
     - elsif current_user.student?
-      = button_to "Attend as a student", rsvp_workshop_path(@workshop, role: "Student"), method: :post,class: 'btn btn-primary'
+      = button_to 'Attend as a student', rsvp_workshop_path(@workshop, role: 'Student'), method: :post, class: 'btn btn-primary'
     - elsif current_user.coach?
-      = button_to "Attend as a coach", rsvp_workshop_path(@workshop, role: "Coach"), method: :post,class: 'btn btn-primary'
+      = button_to 'Attend as a coach', rsvp_workshop_path(@workshop, role: 'Coach'), method: :post, class: 'btn btn-primary'
     - else
       It looks like something went wrong while you were signing up.
-      = link_to "Please tell us whether you want to attend as a student or coach.", subscriptions_path
+      = link_to 'Please tell us whether you want to attend as a student or coach.', subscriptions_path
 
 - elsif not logged_in?
   %div
-    = link_to "Sign up", new_member_path, class: 'btn btn-primary'
-    = link_to "Log in", login_path, class: 'btn btn-primary'
+    = link_to 'Sign up', new_member_path, class: 'btn btn-primary'
+    = link_to 'Log in', login_path, class: 'btn btn-primary'
