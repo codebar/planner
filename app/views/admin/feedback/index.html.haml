@@ -8,13 +8,14 @@
       - @feedback.each do |feedback|
         .col-12
           .card.mt-4
-            .card-header.d-md-flex.justify-content-md-between
-              .d-block= I18n.l(feedback.created_at, format: :date)
-              .d-block= feedback.tutorial.title
-              .d-block
-                = image_tag(feedback.coach.avatar(24), class: 'rounded-circle', title: feedback.coach.full_name, alt: feedback.coach.full_name)
-                %small= feedback.coach.full_name
-              .d-block
+            .card-header.d-md-flex.align-items-center
+              .d-block.pr-4= I18n.l(feedback.created_at, format: :date)
+              .d-block.pr-4= feedback.tutorial.title
+              - if feedback.coach.present?
+                .d-block.pr-4
+                  = image_tag(feedback.coach.avatar(24), class: 'rounded-circle', alt: feedback.coach.full_name)
+                  %small= feedback.coach.full_name
+              .d-block.text-warning.ml-auto
                 - (0...feedback.rating).each do |rating|
                   %i.fas.fa-star
             .card-body
