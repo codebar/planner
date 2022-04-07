@@ -90,7 +90,7 @@
     .col-6.col-md-3
       %h4 Team
       - @workshop.organisers.each do |organiser|
-        %span.has-tip{ 'data-tooltip': '', 'aria-haspopup': 'true',  title: organiser.full_name }
+        %span{'data-bs-toggle': 'tooltip', 'data-bs-placement': 'bottom', title: organiser.full_name}
           = image_tag(organiser.avatar(40), alt: organiser.full_name)
 
 .container-fluid.bg-light.pt-4

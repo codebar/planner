@@ -22,7 +22,7 @@ RSpec.shared_examples 'invitation route' do
       # admin view
       login_as_admin(member)
       visit admin_workshop_path(invitation.workshop)
-      within 'tr.row.attendee' do
+      within 'div.row.attendee.mb-3' do
         expect(page).to have_content(member.full_name)
         expect(page).to have_selector('i.fa-history')
         expect(page).to_not have_selector('i.fa-magic')
@@ -138,7 +138,6 @@ RSpec.shared_examples 'invitation route' do
       invitation.update(attending: true, member: member)
 
       invitation2 = Fabricate(:coach_workshop_invitation, member: member)
-      invitation2_route = invitation_path(invitation2)
 
       visit accept_invitation_path(invitation2)
 

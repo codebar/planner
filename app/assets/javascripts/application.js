@@ -71,4 +71,7 @@ $(function(){
   $('#member_lookup_id').chosen().change(function(e) {
     $('#view_profile').attr('href', '/admin/members/' + $(this).val())
   });
+
+  $('[data-bs-toggle="tooltip"]').tooltip();
+
 });

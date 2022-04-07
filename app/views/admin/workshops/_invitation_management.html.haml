@@ -20,7 +20,7 @@
                       { class: 'chosen-select', required: true,
                       data: { placeholder: t('messages.invitations.select_a_member_to_rsvp') } }
         .col-3
-          %span.has-tip{ 'data-tooltip': true, 'aria-haspopup': 'true', title: t('admin.workshop.manage_rsvps.text') }
+          %span{'data-bs-toggle': 'tooltip', 'data-bs-placement': 'bottom', title: t('admin.workshop.manage_rsvps.text')}
             %i.fas.fa-info
 
   .row.mt-4
