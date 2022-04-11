@@ -1,6 +1,7 @@
 class Event < ActiveRecord::Base
   include Listable
   include Invitable
+  include DateTimeConcerns
 
   attr_accessor :begins_at
 
@@ -96,6 +97,10 @@ class Event < ActiveRecord::Base
   end
 
   private
+
+  def time_zone
+    'London'
+  end
 
   def duplicated_sponsors
     @duplicated_sponsors ||= fetch_duplicated_sponsors

@@ -3,15 +3,18 @@
     Go to external booking site
 - else
   - if @event.invitable
-    - if logged_in?
-      - unless @event.coaches_only?
-        = link_to event_student_rsvp_path(@event), class: 'btn btn-primary mr-2' do
-          = t('events.attend_as_student')
-      - unless @event.students_only?
-        = link_to event_coach_rsvp_path(@event), class: 'btn btn-primary' do
-          = t('events.attend_as_coach')
+    - if @event.past?
+      %p.badge.bg-primary This event has already occurred.
     - else
-      = link_to 'Sign up', new_member_path, class: 'btn btn-primary mr-2'
-      = link_to 'Log in', login_path, class: 'btn btn-primary'
+      - if logged_in?
+        - unless @event.coaches_only?
+          = link_to event_student_rsvp_path(@event), class: 'btn btn-primary mr-2' do
+            = t('events.attend_as_student')
+        - unless @event.students_only?
+          = link_to event_coach_rsvp_path(@event), class: 'btn btn-primary' do
+            = t('events.attend_as_coach')
+      - else
+        = link_to 'Sign up', new_member_path, class: 'btn btn-primary mr-2'
+        = link_to 'Log in', login_path, class: 'btn btn-primary'
   - else
     %p.badge.bg-primary= t('events.not_open_for_rsvp')
