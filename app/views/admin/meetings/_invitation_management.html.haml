@@ -1,11 +1,12 @@
 - if @invitations.any?
   .row
     .col
-      .panel
-        %p
-          <strong>#{@invitations.count}</strong> members have RSVP'd to this event.
+      .card.bg-white.border-success
+        .card-body
+          %p.mb-0
+            <strong>#{@invitations.count}</strong> members have RSVP'd to this event.
 
-  %div
+  %div.mt-4
     = simple_form_for :meeting_invitations, url: admin_meeting_invitations_path do |f|
       .row
         .col-6
@@ -16,11 +17,10 @@
           = f.input :meeting_id, as: :hidden, input_html: { value: @meeting.slug }
 
         .col-3
-          %span{ 'data-tooltip': true, 'aria-haspopup': 'true', class: 'has-tip', title: t('admin.workshop.manage_rsvps.text') }
-            %i.fas.fa-info
-          = f.submit 'Add'
+          %span{'data-bs-toggle': 'tooltip', 'data-bs-placement': 'bottom', title: t('admin.workshop.manage_rsvps.text')}
+          = f.button :button, 'Add', class: 'btn btn-primary'
 
-  .row.mt-4
+  .row
     .col.attendances
       %h4 Participants
 
