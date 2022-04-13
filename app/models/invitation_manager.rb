@@ -17,15 +17,6 @@ class InvitationManager
   end
   handle_asynchronously :send_monthly_attendance_reminder_emails
 
-  def send_course_emails(course)
-    students = Member.in_group(course.chapter.groups.students)
-    students.each do |student|
-      invitation = CourseInvitation.new(course: course, member: student)
-      invitation.send(:email) if invitation.save
-    end
-  end
-  handle_asynchronously :send_course_emails
-
   def send_meeting_emails(meeting)
     meeting.invitees.not_banned.each do |invitee|
       invitation = MeetingInvitation.new(meeting: meeting, member: invitee, role: 'Participant')

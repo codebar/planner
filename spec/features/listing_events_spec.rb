@@ -3,10 +3,8 @@ require 'events_controller'
 
 RSpec.feature 'event listing', type: :feature do
   describe 'I can see the names and titles of events' do
-    let!(:upcoming_course) { Fabricate(:course) }
     let!(:upcoming_workshop) { Fabricate(:workshop) }
     let!(:event) { Fabricate(:event) }
-    let!(:past_course) { Fabricate(:course, chapter: upcoming_course.chapter, date_and_time: Time.zone.now - 1.week) }
     let!(:past_event) { Fabricate(:event, date_and_time: Time.zone.now - 2.weeks) }
     let!(:past_workshop) { Fabricate(:workshop, date_and_time: Time.zone.now - 1.week) }
 
@@ -16,7 +14,6 @@ RSpec.feature 'event listing', type: :feature do
 
     scenario 'i can view a list with upcoming events' do
       within('*[data-test=upcoming-events]') do
-        expect(page).to have_content upcoming_course.title
         expect(page).to have_content 'Workshop'
         expect(page).to have_content event.name
       end
@@ -24,7 +21,6 @@ RSpec.feature 'event listing', type: :feature do
 
     scenario 'i can view a list with past events' do
       within('*[data-test=past-events]') do
-        expect(page).to have_content past_course.title
         expect(page).to have_content 'Workshop'
         expect(page).to have_content past_event.name
       end

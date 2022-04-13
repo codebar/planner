@@ -1,6 +1,5 @@
 class EventPresenter < BasePresenter
   PRESENTER = { workshop: 'WorkshopPresenter',
-                course: 'CoursePresenter',
                 meeting: 'MeetingPresenter',
                 event: 'EventPresenter' }.freeze
 

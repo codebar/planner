@@ -61,15 +61,6 @@ Planner::Application.routes.draw do
     get 'invitation/:token/cancel' => 'invitations#cancel_meeting', as: :cancel
   end
 
-  namespace :course do
-    resources :invitation, only: [:show] do
-      member do
-        get 'accept'
-        get 'reject'
-      end
-    end
-  end
-
   resources :events, only: %i[index show] do
     post 'rsvp'
     get 'student', as: :student_rsvp
@@ -77,10 +68,6 @@ Planner::Application.routes.draw do
     get 'invitation/:token' => 'invitations#show', as: :invitation
     post 'invitation/:token/attend' => 'invitations#attend', as: :attend
     post 'invitation/:token/reject' => 'invitations#reject', as: :reject
-  end
-
-  resources :courses, only: [:show] do
-    get 'rsvp'
   end
 
   resources :workshops, only: [:show] do

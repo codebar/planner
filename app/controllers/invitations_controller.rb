@@ -9,10 +9,6 @@ class InvitationsController < ApplicationController
                                              .joins(:workshop)
                                              .merge(Workshop.upcoming)
                                              .includes(workshop: :chapter)
-    upcoming_invitations += CourseInvitation.where(member: current_user)
-                                            .joins(:course)
-                                            .merge(Course.upcoming)
-                                            .includes(:course)
     @upcoming_invitations = InvitationPresenter.decorate_collection(upcoming_invitations)
 
     @attended_invitations = WorkshopInvitation.where(member: current_user)

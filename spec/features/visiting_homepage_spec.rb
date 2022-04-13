@@ -2,7 +2,6 @@ require 'spec_helper'
 
 RSpec.feature 'when visiting the homepage', type: :feature do
   let!(:next_workshop) { Fabricate(:workshop) }
-  let!(:next_course) { Fabricate(:course) }
   let!(:events) { Fabricate.times(8, :event) }
 
   before(:each) do
@@ -15,10 +14,6 @@ RSpec.feature 'when visiting the homepage', type: :feature do
 
   scenario 'i can view the next workshop' do
     expect(page).to have_content "Workshop at #{next_workshop.host.name}"
-  end
-
-  scenario 'i can view the next course' do
-    expect(page).to have_content next_course.title
   end
 
   scenario 'i can view the next 5 upcoming events' do
