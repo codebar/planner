@@ -2,33 +2,37 @@
 
 = render partial: 'meta_tags', locals: { workshop: @workshop }
 
-.container-fluid.stripe.reverse
-  .row
-    .col
-      %h2
-        = t('workshops.title', host: @workshop.host.name)
-        %br
-        %small #{humanize_date(@workshop.date_and_time, @workshop.ends_at, with_time: true)} #{@workshop.distance_of_time}
-      - if @workshop.date_and_time.past?
-        %span.badge.bg-danger= t('messages.already_taken_place')
+.stripe.reverse
+  .container
+    .row
+      .col
+        %h2
+          = t('workshops.title', host: @workshop.host.name)
+          %br
+          %small #{humanize_date(@workshop.date_and_time, @workshop.ends_at, with_time: true)} #{@workshop.distance_of_time}
+        - if @workshop.date_and_time.past?
+          %span.badge.bg-danger= t('messages.already_taken_place')
 
-  .row.mt-3
-    .col.col-md-9
-      %p.lead
-        = t('workshops.lead')
-      - unless @workshop.description.blank?
-        %p
-          = sanitize(@workshop.description)
-      = render 'actions' unless current_user&.banned?
+    .row.mt-3
+      .col.col-md-9
+        %p.lead
+          = t('workshops.lead')
+        - unless @workshop.description.blank?
+          %p
+            = sanitize(@workshop.description)
+        = render 'actions' unless current_user&.banned?
 
-.container-fluid.stripe.reverse
-  = render partial: 'shared/venue', locals: { venue: @workshop.host, address: @workshop.address}
+.stripe.reverse
+  .container
+    = render partial: 'shared/venue', locals: { venue: @workshop.host, address: @workshop.address}
 
-.container-fluid.stripe.reverse#sponsors
-  .row
-    .col
-      %h3.text-center Sponsors
-  = render partial: 'shared/sponsors', object: @workshop.sponsors
+.stripe.reverse#sponsors
+  .container
+    .row
+      .col
+        %h3.text-center Sponsors
+    = render partial: 'shared/sponsors', object: @workshop.sponsors
 
-.container-fluid.stripe.reverse
-  = render partial: 'members/organisers_grid', locals: { members: @workshop.organisers, show_info: false }
+.stripe.reverse
+  .container
+    = render partial: 'members/organisers_grid', locals: { members: @workshop.organisers, show_info: false }
