@@ -2,33 +2,36 @@
 
 = render partial: 'virtual_workshops/meta_tags', locals: { workshop: @workshop }
 
-.container-fluid.stripe.reverse
-  .row
-    .col
-      %h2
-        = t('workshops.virtual.title', chapter: @workshop.chapter.name)
-        %br
-        %small #{humanize_date(@workshop.date_and_time, @workshop.ends_at, with_time: true)} #{@workshop.distance_of_time}
-      - if @workshop.date_and_time.past?
-        %span.badge.bg-danger= t('messages.already_taken_place')
-
-  .row.mt-3#banner
-    .col.col-md-9
-      %p.lead
-        = t('workshops.virtual.lead')
-      %p.lead
-        = t('workshops.virtual.intro', chapter_email: @workshop.chapter.email)
-      - unless @workshop.description.blank?
-        %p.description
-          = sanitize(@workshop.description)
-      = render 'workshops/actions' unless current_user&.banned?
-
-- if @workshop.sponsors.any?
-  .container-fluid.stripe.reverse#sponsors
+.stripe.reverse
+  .container
     .row
       .col
-        %h3.text-center Sponsors
-    = render partial: 'shared/sponsors', object: @workshop.sponsors
+        %h2
+          = t('workshops.virtual.title', chapter: @workshop.chapter.name)
+          %br
+          %small #{humanize_date(@workshop.date_and_time, @workshop.ends_at, with_time: true)} #{@workshop.distance_of_time}
+        - if @workshop.date_and_time.past?
+          %span.badge.bg-danger= t('messages.already_taken_place')
 
-.container-fluid.stripe.reverse
-  = render partial: 'members/organisers_grid', locals: { members: @workshop.organisers, show_info: false }
+    .row.mt-3#banner
+      .col.col-md-9
+        %p.lead
+          = t('workshops.virtual.lead')
+        %p.lead
+          = t('workshops.virtual.intro', chapter_email: @workshop.chapter.email)
+        - unless @workshop.description.blank?
+          %p.description
+            = sanitize(@workshop.description)
+        = render 'workshops/actions' unless current_user&.banned?
+
+- if @workshop.sponsors.any?
+  .stripe.reverse#sponsors
+    .container
+      .row
+        .col
+          %h3.text-center Sponsors
+      = render partial: 'shared/sponsors', object: @workshop.sponsors
+
+.stripe.reverse
+  .container
+    = render partial: 'members/organisers_grid', locals: { members: @workshop.organisers, show_info: false }
