@@ -33,14 +33,6 @@ if Rails.env.development?
                         date_and_time: Time.zone.now + 2.months - n.months)
     end
 
-    Rails.logger.info "Creating courses..."
-
-    20.times do |n|
-      Fabricate(:course, chapter: chapters.sample,
-                         title: 'Course',
-                         date_and_time: Time.zone.now + 1.month - n.months)
-    end
-
     Rails.logger.info "Creating meetings..."
 
     20.times.map do |n|

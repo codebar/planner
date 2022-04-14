@@ -25,15 +25,8 @@ RSpec.describe EventPresenter do
   end
 
   describe '#short_description' do
-    it 'when there is no short_description on the event model it fallsback to description' do
+    it 'when there is no short_description on the event model it falls back to description' do
       expect(event.short_description).to be(workshop.description)
-    end
-
-    it 'when there is a short_description' do
-      course = Fabricate(:course)
-      event = described_class.new(course)
-
-      expect(event.short_description).to be(course.short_description)
     end
   end
 

@@ -22,18 +22,6 @@ RSpec.describe InvitationManager, type: :model do
     include_examples 'sending workshop emails'
   end
 
-  it '#send_course_emails' do
-    course = Fabricate(:course, chapter: chapter)
-    invitation = Fabricate(:course_invitation)
-    student_group = Fabricate(:students, chapter: chapter, members: students)
-
-    students.each do |student|
-      expect(CourseInvitation).to receive(:new).with(course: course, member: student).and_return(invitation)
-    end
-
-    manager.send_course_emails(course)
-  end
-
   context '#send_event_emails' do
     let!(:student_group) { Fabricate(:students, chapter: chapter, members: students) }
     let!(:coaches_group) { Fabricate(:coaches, chapter: chapter, members: coaches) }

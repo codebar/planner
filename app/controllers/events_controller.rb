@@ -9,7 +9,6 @@ class EventsController < ApplicationController
     fresh_when(latest_model_updated, etag: latest_model_updated)
 
     events = [Workshop.past.includes(:chapter).joins(:chapter).merge(Chapter.active).limit(RECENT_EVENTS_DISPLAY_LIMIT)]
-    events << Course.past.limit(RECENT_EVENTS_DISPLAY_LIMIT)
     events << Meeting.past.includes(:venue).limit(RECENT_EVENTS_DISPLAY_LIMIT)
     events << Event.past.includes(:venue, :sponsors).limit(RECENT_EVENTS_DISPLAY_LIMIT)
     events = events.compact.flatten.sort_by(&:date_and_time).reverse.first(RECENT_EVENTS_DISPLAY_LIMIT)
@@ -20,7 +19,6 @@ class EventsController < ApplicationController
     end
 
     events = [Workshop.includes(:chapter).upcoming.joins(:chapter).merge(Chapter.active)]
-    events << Course.upcoming.all
     events << Meeting.upcoming.all
     events << Event.upcoming.includes(:venue, :sponsors).all
     events = events.compact.flatten.sort_by(&:date_and_time).group_by(&:date)
@@ -62,7 +60,6 @@ class EventsController < ApplicationController
   def latest_model_updated
     [
       Workshop.maximum(:updated_at),
-      Course.maximum(:updated_at),
       Meeting.maximum(:updated_at),
       Event.maximum(:updated_at),
       Member.maximum(:updated_at)
