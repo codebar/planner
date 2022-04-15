@@ -4,6 +4,6 @@
       %h1 Contact Preferences
       - if @contact.present?
         = simple_form_for @contact, url: :contact_preferences, method: :put do |f|
-          = f.input :token, as: :hidden
-          = f.input :mailing_list_consent, label: 'Sponsors mailing list'
+          = f.hidden_field :token, value: @contact.token
+          = f.input :mailing_list_consent, label: 'Sponsors mailing list', hint_html: { class: 'd-block ml-1' }
           = f.button :button, 'Update', class: 'btn btn-primary'

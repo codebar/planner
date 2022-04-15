@@ -17,7 +17,5 @@
     - if @member.coach?
       .col-12
         = f.input :skill_list, label: 'Skills, enter as a comma separated list', input_html: { value: @member.skill_list.join(", ") }
-
-  .row
     .col-12.text-right
       = f.button :button, submit_text, class: 'btn btn-primary'

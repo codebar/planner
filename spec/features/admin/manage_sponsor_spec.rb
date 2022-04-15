@@ -37,7 +37,7 @@ RSpec.feature 'Managing sponsors', type: :feature do
 
         click_on 'Create sponsor'
 
-        expect(page).to have_content 'Namecan\'t be blank'
+        expect(page).to have_content 'Name can\'t be blank'
       end
     end
 

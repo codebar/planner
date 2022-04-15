@@ -15,8 +15,8 @@
       %p.lead By submitting a job to the codebar #{link_to 'job board', jobs_path} you are helping promote diversity in the tech industry so that more women, non-binary, LGBTQA and other minority groups will be able to get started with their tech career.
     .col-md-6
       = simple_form_for :payment, url: payments_path, method: :post do |f|
-        = f.input :name, placeholder: 'Name', required: false, html: { id: 'name' }
-        = f.input :amount, placeholder: '50.00', required: true, id: 'amount'
+        = f.input :name, placeholder: 'Name', required: false
+        = f.input :amount, placeholder: '50.00', required: true
         = f.button :button, 'Confirm', class: 'btn btn-primary', id: 'donate'
         .message
 

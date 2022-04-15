@@ -5,11 +5,11 @@
     = simple_form_for @invitation, url: invitation_waiting_list_path(@invitation), method: :post do |f|
       = f.input :tutorial, collection: @tutorial_titles, include_blank: true
       = f.input :note, required: false, input_html: { rows: 3, maxlength: 100 }, hint: 'Anything else we should know?', placeholder: 'e.g. I need help understanding selectors'
-      = f.button :button, 'Join the waiting list', class: 'btn btn-primary w-100'
+      = f.button :button, 'Join the waiting list', class: 'btn btn-primary w-100 mb-0'
   - else
     = simple_form_for @invitation, url: invitation_waiting_list_path(@invitation), method: :post do |f|
       = f.input :note, required: false, input_html: { rows: 3, maxlength: 100 }
-      = f.button :button, 'Join the waiting list', class: 'btn btn-primary w-100'
+      = f.button :button, 'Join the waiting list', class: 'btn btn-primary w-100 mb-0'
 - else
   %p Waiting List position: <strong>#{invitation.waiting_list_position}</strong>/#{@workshop.waiting_list_count_for(invitation.role)}
   - if @invitation.for_student?

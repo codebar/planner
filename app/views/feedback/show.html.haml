@@ -15,22 +15,20 @@
   .row.justify-content-md-center
     .col-md-8
       = simple_form_for @feedback, url: submit_feedback_path(params[:id]), html: { method: 'patch' } do |f|
-        = f.hidden_field :token, :value => params[:id]
-        = f.hidden_field :rating
         .row
-          .mb-4
+          = f.hidden_field :token, value: params[:id]
+          = f.hidden_field :rating
+          .mb-3
             %label.required
               %abbr(title='required') *
               = t('feedback_form.rating')
             .rating{:data => {:rating_max => 5 }}
-        .row
-          .col-lg-6.mb-4
+          .col-lg-6
             = f.association :coach, collection: @coaches, label_method: :full_name, value_method: :id, label: t('feedback.coach')
-          .col-lg-6.mb-4
+          .col-lg-6
             = f.association :tutorial, label_method: :title, value_method: :id, label: t('feedback_form.tutorial'), include_blank: t('feedback_form.select_tutorial')
           = f.input :request, label: t('feedback_form.request'), input_html: { rows: 3 }
           = f.input :suggestions, label: t('feedback_form.suggestions'), input_html: { rows: 3 }
-        .row
           .text-right
             = f.button :button, 'Submit feedback', class: 'btn btn-primary'
 
