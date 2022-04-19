@@ -1389,17 +1389,3 @@ blockquote em {
   height: 105px;
   visibility: hidden;
 }
-
-.label.status {
-  @include label(
-    $text-size: 13px,
-    $bg: $codebar-blue
-  );
-}
-
-.label.admin.status.pending {
-  @include label(
-    $text-size: 13px,
-    $bg: $alert-color
-  );
-}

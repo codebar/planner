@@ -1,16 +1,15 @@
-.job.mb4
-  .stripe
-    .row
-      .large-12.columns
-        %br
-        %ul.breadcrumbs
-          %li=link_to  t('admin.dashboard.title'), admin_root_path
-          %li.current
-            %span= t('admin.jobs.title')
+.container-fluid.pt-3
+  .row.mb-4
+    .col
+      %nav{'aria-label': 'breadcrumb'}
+        %ol.breadcrumb.ml-0
+          %li.breadcrumb-item= link_to t('admin.dashboard.title'), admin_root_path, class: 'border-0'
+          %li.breadcrumb-item.active= t('admin.jobs.title')
 
-    - if @jobs.any?
-      .row
-        %table.large-12.columns
+  - if @jobs.any?
+    .row.mb-4
+      .col
+        %table.table
           %thead
             %tr
               %th Title
@@ -22,8 +21,8 @@
           %tbody
             - @jobs.each do |job|
               = render partial: 'admin/jobs/job', locals: { job: job }
-      .row
-        .medium-6.columns.text-left
-          = page_entries_info(@jobs, model: 'job')
-        .medium-6.columns.text-right
-          = will_paginate(@jobs)
+    .row.mb-4
+      .col-6
+        = page_entries_info(@jobs, model: 'job')
+      .col-6.text-right
+        = will_paginate(@jobs)
