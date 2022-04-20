@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 RSpec.describe WorkshopInvitation, type: :model do
+  subject(:workshop_invitation) { Fabricate(:workshop_invitation) }
   it_behaves_like InvitationConcerns, :workshop_invitation, :workshop
 
   context 'defaults' do
@@ -13,7 +14,11 @@ RSpec.describe WorkshopInvitation, type: :model do
     it { is_expected.to validate_uniqueness_of(:member_id).scoped_to(:workshop_id, :role) }
     it { is_expected.to validate_inclusion_of(:role).in_array(%w[Student Coach]) }
 
-    it { is_expected.to validate_presence_of(:tutorial).on(:waitinglist) }
+    context 'if Student invitation' do
+      before { allow(subject).to receive(:student_attending?).and_return(true) }
+      it { is_expected.to validate_presence_of(:tutorial) }
+      it { is_expected.to validate_presence_of(:tutorial).on(:waitinglist) }
+    end
   end
 
   context 'scopes' do

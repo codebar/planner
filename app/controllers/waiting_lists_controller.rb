@@ -7,8 +7,13 @@ class WaitingListsController < ApplicationController
     return back_with_message(@invitation.errors.full_messages) unless @invitation.valid?(:waitinglist)
 
     @invitation.save && WaitingList.add(@invitation, auto_rsvp)
-    message = auto_rsvp ? 'You have been added to the waiting list' :
+
+    message = if auto_rsvp
+      'You have been added to the waiting list'
+    else
       'We will send you an email if any spots become available'
+    end
+
     back_with_message(message)
   end
 
