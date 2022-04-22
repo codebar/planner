@@ -35,7 +35,7 @@ RSpec.feature 'Event creation', type: :feature do
         expect(page).to have_content(humanize_date(date))
         expect(page).to have_content('A test event description')
         expect(page).to have_content('25 student spots, 19 coach spots')
-        expect(find('#schedule', visible: false).text).to eq('9:00 Sign up & breakfast 9:30 kick off')
+        expect(page).to have_content('9:00 Sign up & breakfast 9:30 kick off')
 
         within '#host' do
           expect(page).to have_content sponsor.name

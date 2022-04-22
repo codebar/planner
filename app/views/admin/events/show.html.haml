@@ -112,11 +112,11 @@
 
   .row
     .col-12.col-md-6
-      %dl.accordion{ 'data-accordion': true }
-        %dd.accordion-navigation
-          = link_to 'Schedule', '#schedule'
-          #schedule.content
-            = dot_markdown(@event.schedule)
+      .card
+        .card-header#schedule
+          = t('events.schedule')
+        .card-body
+          = dot_markdown(@event.schedule)
 
 .container-fluid.py-5
   = render partial: 'invitation_management'
