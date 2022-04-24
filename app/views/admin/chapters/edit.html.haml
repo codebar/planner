@@ -1,32 +1,18 @@
-.container-fluid
-  .row
+.container-fluid.pt-3
+  .row.mb-4
     .col
       %h1 Edit #{@chapter.name} chapter
+
   .row
-    .col
+    .col.col-lg-8
       = simple_form_for [:admin, @chapter] do |f|
-        .row
-          .col-12.col-md-6
-            = f.input :name, placeholder: 'e.g. Cambridge', required: true
-        .row
-          .col-12.col-md-6
-            = f.input :email, placeholder: 'e.g. cambridge@codebar.io', required: true
-        .row
-          .col-12.col-md-6
-            = f.input :city, required: true
-        .row
-          .col-12.col-md-6
-            = f.input :description, required: false, hint: 'Optionally, specify a custom welcome message for the chapter, to be displayed on the chapter page. Max. 280 characters.'
-        .row
-          .col-12.col-md-6
-            = f.input :twitter, placeholder: '@codebarCam', required: false
-        .row
-          .col-12.col-md-6.chosen-dropwdown
-            = f.input :time_zone, required: true
-        .row
-          .col-12.col-md-6
-            = f.input :image, as: :file
-            = f.hidden_field :image_cache
-        .row
-          .col.text-right
-            = f.button :button, 'Update chapter', class: 'btn btn-primary'
+        = f.input :name, placeholder: 'e.g. Cambridge', required: true
+        = f.input :email, placeholder: 'e.g. cambridge@codebar.io', required: true
+        = f.input :city, required: true
+        = f.input :description, required: false, input_html: { rows: 3 }, hint: 'Optionally, specify a custom welcome message for the chapter, to be displayed on the chapter page. Max. 280 characters.'
+        = f.input :twitter, placeholder: '@codebarCam', required: false
+        = f.input :time_zone, required: true
+        = f.input :image, as: :file
+        = f.hidden_field :image_cache
+        .text-right
+          = f.button :button, 'Update chapter', class: 'btn btn-primary'

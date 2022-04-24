@@ -1,13 +1,14 @@
-.containuer-fluid
-  .row
+.containuer-fluid.pt-3
+  .row.mb-2
     .col
       %nav
         %ol.breadcrumb.m-0
-          %li.breadcrumb-item= link_to 'Sponsors', admin_sponsors_path
-          %li.breadcrumb-item= link_to(@sponsor.name, admin_sponsor_path(@sponsor))
+          %li.breadcrumb-item= link_to 'Sponsors', admin_sponsors_path, class: 'border-0'
+          %li.breadcrumb-item= link_to @sponsor.name, admin_sponsor_path(@sponsor), class: 'border-0'
           %li.breadcrumb-item.active Edit
 
-  .row.mt-2
+  .row.mb-4
     .col
       %h1 Edit Sponsor
-      = render 'form'
+
+  = render 'form'

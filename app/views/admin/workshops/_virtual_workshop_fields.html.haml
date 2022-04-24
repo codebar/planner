@@ -1,10 +1,8 @@
-.row.mt-4.mt-md-0
-  .col
-    .card.bg-light.border-info
-      .card-body
-        %p= t('admin.workshop.form.virtual_info')
-        = f.input :virtual, as: :boolean
-        = f.input :slack_channel
-        = f.input :slack_channel_link
-        = f.input :coach_spaces
-        = f.input :student_spaces
+.card.bg-light.border-info.mt-4.mt-md-0
+  .card-body
+    %p= t('admin.workshop.form.virtual_info')
+    = f.input :virtual, as: :boolean
+    = f.input :slack_channel
+    = f.input :slack_channel_link
+    = f.input :coach_spaces
+    = f.input :student_spaces

@@ -1,30 +1,28 @@
 - if @invitations.any?
-  .row
+  .row.mb-4
     .col
       .card.bg-white.border-success
         .card-body
           %p.mb-0
             <strong>#{@invitations.count}</strong> members have RSVP'd to this event.
 
-  %div.mt-4
-    = simple_form_for :meeting_invitations, url: admin_meeting_invitations_path do |f|
-      .row
-        .col-6
-          = f.select :member,
-                      Member.all.map { |u| ["#{u.full_name}", u.id] },
-                      { include_blank: true }, { class: 'chosen-select', required: true,
-                      data: { placeholder: t('messages.invitations.select_a_member_to_rsvp') } }
-          = f.input :meeting_id, as: :hidden, input_html: { value: @meeting.slug }
+  = simple_form_for :meeting_invitations, url: admin_meeting_invitations_path do |f|
+    .row
+      .col-6
+        = f.select :member,
+                    Member.all.map { |u| ["#{u.full_name}", u.id] },
+                    { include_blank: true }, { class: 'chosen-select', required: true,
+                    data: { placeholder: t('messages.invitations.select_a_member_to_rsvp') } }
+        = f.hidden_field :meeting_id, value: @meeting.slug
+      .col
+        = f.button :button, 'Add', class: 'btn btn-sm btn-primary mb-0 mr-2'
+        %span{'data-bs-toggle': 'tooltip', 'data-bs-placement': 'bottom', title: t('admin.workshop.manage_rsvps.text')}
+          %i.fas.fa-info-circle
 
-        .col-3
-          %span{'data-bs-toggle': 'tooltip', 'data-bs-placement': 'bottom', title: t('admin.workshop.manage_rsvps.text')}
-          = f.button :button, 'Add', class: 'btn btn-primary'
-
-  .row
-    .col.attendances
+  .row.mt-4
+    .col-12.attendances
       %h4 Participants
 
-  .row
     - @invitations.each do |invitation|
       .col-5.attendee
         .row.mb-4

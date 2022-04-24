@@ -10,18 +10,18 @@
               <strong>#{@attending_students.count}</strong> are attending as students and <strong>#{@attending_coaches.count}</strong> as coaches.
               - if @student_waiting_list.any? or @coach_waiting_list.any?
                 There is also a waiting list of <strong>#{@student_waiting_list.count}</strong> students and <strong>#{@coach_waiting_list.count}</strong> coaches.
-  %div
-    = simple_form_for :workshop, url: admin_workshop_invitations_path(@workshop, attending: true), remote: true, method: :put do |f|
-      .row
-        .col-6
-          = f.select :invitations,
-                      @workshop.invitations.includes(:member).not_accepted.all.map { |u| [ "#{u.member.full_name} (#{u.role})", u.token] },
-                      { include_blank: true },
-                      { class: 'chosen-select', required: true,
-                      data: { placeholder: t('messages.invitations.select_a_member_to_rsvp') } }
-        .col-3
-          %span{'data-bs-toggle': 'tooltip', 'data-bs-placement': 'bottom', title: t('admin.workshop.manage_rsvps.text')}
-            %i.fas.fa-info
+
+  = simple_form_for :workshop, url: admin_workshop_invitations_path(@workshop, attending: true), remote: true, method: :put do |f|
+    .row
+      .col-6
+        = f.select :invitations,
+                    @workshop.invitations.includes(:member).not_accepted.all.map { |u| [ "#{u.member.full_name} (#{u.role})", u.token] },
+                    { include_blank: true },
+                    { class: 'chosen-select', required: true,
+                    data: { placeholder: t('messages.invitations.select_a_member_to_rsvp') } }
+      .col
+        %span{'data-bs-toggle': 'tooltip', 'data-bs-placement': 'bottom', title: t('admin.workshop.manage_rsvps.text')}
+          %i.fas.fa-info-circle
 
   .row.mt-4
     .col-12.col-md-6

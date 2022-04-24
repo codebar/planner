@@ -1,37 +1,26 @@
 = simple_form_for [:admin, @meeting] do |f|
   .row
-    .col
+    .col-12
       = f.input :name, required: true
-  .row
     .col-12.col-md-6
       = f.input :slug, required: true
     .col-12.col-md-6
       = f.input :local_date, as: :string, required: true, input_html: { data: { value: @meeting.date_and_time.try(:strftime, '%d/%m/%Y') } }
-  .row
     .col-12.col-md-6
-      = f.input :local_time, as: :string, required: true, input_html: { data: { value: @meeting.time.try(:strftime, '%H:%M') } }
+      = f.input :local_time, label: 'Starts at', as: :string, required: true, input_html: { data: { value: @meeting.time.try(:strftime, '%H:%M') } }
     .col-12.col-md-6
       = f.input :local_end_time, label: 'Ends at', as: :string, required: true, input_html: { data: { value: @meeting.ends_at.try(:strftime, '%H:%M') } }
-  .row
-    .col
-      = f.input :description, placeholder: 'Supports HTML', as: :text, input_html: { style: 'height: 300px;' }
-  .row
-    .col-12.col-md-6
+    .col-12
+      = f.input :description, placeholder: 'Supports HTML', as: :text, input_html: { rows: 5 }
+    .col-12
       = f.input :spaces, as: :integer
-  .row
-    .col-12.col-md-6
+    .col-12
       = f.association :venue, input_html: { data: { placeholder: 'Select venue' }}, required: true
-  .row
-    .col-12.col-md-6.mt-3
-      %label Organisers
-      = f.collection_select :organisers, Member.all, :id, :full_name, { selected: @meeting.organisers.map(&:id) }, { multiple: true }
-  .row
-    .col-12.col-md-6.mt-3
-      %label Chapters
-      = f.collection_select :chapters, Chapter.all, :id, :name, { selected: @meeting.chapters.map(&:id) }, { multiple: true }
-  .row
-    .col-12.col-md-6.mt-3
+    .col-12
+      = f.input :organisers, collection: Member.all, label_method: :full_name, value_method: :id, selected: @meeting.organisers.map(&:id), input_html: { multiple: true }
+    .col-12
+      = f.input :chapters, collection: Chapter.all, label_method: :name, value_method: :id, selected: @meeting.chapters.map(&:id), input_html: { multiple: true }
+    .col-12
       = f.input :invitable, as: :boolean, hint: 'Allow members to RSVP'
-  .row.float-right
-    .col
+    .text-right
       = f.button :button, 'Save', class: 'btn btn-primary'

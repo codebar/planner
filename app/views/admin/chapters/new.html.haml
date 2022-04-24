@@ -1,22 +1,14 @@
-.container-fluid
-  .row
+.container-fluid.pt-3
+  .row.mb-4
     .col
-      %h2 New Chapter
+      %h1 New Chapter
+
   .row
-    .col
+    .col.col-lg-8
       = simple_form_for [:admin, @chapter] do |f|
-        .row
-          .col-12.col-md-6
-            = f.input :name, placeholder: 'e.g. Cambridge', required: true
-        .row
-          .col-12.col-md-6
-            = f.input :email, placeholder: 'e.g. cambridge@codebar.io', required: true
-        .row
-          .col-12.col-md-6
-            = f.input :city, required: true
-        .row
-          .col-12.col-md-6
-            = f.input :time_zone, required: true
-        .row.mt-4
-          .col.text-right
-            = f.button :button, 'Create chapter', class: 'btn btn-primary'
+        = f.input :name, placeholder: 'e.g. Cambridge', required: true
+        = f.input :email, placeholder: 'e.g. cambridge@codebar.io', required: true
+        = f.input :city, required: true
+        = f.input :time_zone, required: true
+        .text-right
+          = f.button :button, 'Create chapter', class: 'btn btn-primary'
