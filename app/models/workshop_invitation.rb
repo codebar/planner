@@ -1,4 +1,5 @@
 class WorkshopInvitation < ActiveRecord::Base
+  include Auditor::Model
   include InvitationConcerns
 
   belongs_to :workshop
@@ -38,5 +39,13 @@ class WorkshopInvitation < ActiveRecord::Base
 
   def student_attending?
     for_student? && attending.present?
+  end
+
+  def admin_set_attending
+    return if activities.empty?
+
+    last_owner = activities.last.owner
+
+    return last_owner.full_name if last_owner.id != member_id
   end
 end

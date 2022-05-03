@@ -101,4 +101,49 @@ RSpec.describe WorkshopInvitation, type: :model do
       expect(WorkshopInvitation.on_waiting_list).to eq(waiting_list)
     end
   end
+
+  context '#admin_set_attending' do
+    it 'returns nil if has no recorded activities' do
+      invitation = Fabricate(
+        :workshop_invitation,
+        attending: true,
+        automated_rsvp: true,
+        rsvp_time: Time.zone.now,
+      )
+
+      expect(invitation.admin_set_attending).to be_nil
+    end
+
+    it 'returns nil if last editor was the invited member' do
+      waiting_list_invitation = Fabricate(:waitinglist_invitation)
+      invited_user = waiting_list_invitation.member
+
+      audit = Auditor::Audit.new(waiting_list_invitation, :attending, invited_user)
+      audit.log do
+        waiting_list_invitation.update(
+          attending: true,
+          automated_rsvp: true,
+          rsvp_time: Time.zone.now,
+        )
+      end
+
+      expect(waiting_list_invitation.admin_set_attending).to be_nil
+    end
+
+    it 'returns the name of the last editor if not the member invited' do
+      waiting_list_invitation = Fabricate(:waitinglist_invitation)
+      admin = Fabricate(:chapter_organiser)
+
+      audit = Auditor::Audit.new(waiting_list_invitation, :attending, admin)
+      audit.log do
+        waiting_list_invitation.update(
+          attending: true,
+          automated_rsvp: true,
+          rsvp_time: Time.zone.now,
+        )
+      end
+
+      expect(waiting_list_invitation.admin_set_attending).to eq(admin.full_name)
+    end
+  end
 end

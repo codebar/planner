@@ -10,4 +10,12 @@ class InvitationPresenter < BasePresenter
   def attendance_status
     model.attending ? 'Attending' : 'RSVP'
   end
+
+  def automated_rsvp_message
+    if model.admin_set_attending
+      "Added by #{model.admin_set_attending}"
+    else
+      'Waiting list'
+    end
+  end
 end

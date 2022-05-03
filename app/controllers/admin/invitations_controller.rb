@@ -38,12 +38,33 @@ class Admin::InvitationsController < Admin::ApplicationController
     "You have verified #{@invitation.member.full_name}’s attendace."
   end
 
+  def record_attending_update(&block)
+    audit = Auditor::Audit.new(@invitation, :attending, current_user)
+    audit.log(&block)
+  end
+
   def update_to_attending
-    update_successful = @invitation.update(attending: true, rsvp_time: Time.zone.now, automated_rsvp: true)
+    # `assign_attributes` instead of `update` because we want to separate the
+    # change from the save. Change the values now but only save when recording
+    # activity with the public_activity gem.
+    @invitation.assign_attributes(attending: true, rsvp_time: Time.zone.now, automated_rsvp: true)
+
+    update_successful = record_attending_update { @invitation.save }
 
     {
       message: update_successful ? attending_successful : attending_failed,
       error: !update_successful
+    }
+  end
+
+  def update_to_not_attending
+    @invitation.assign_attributes(attending: false)
+
+    record_attending_update { @invitation.save }
+
+    {
+      message: "You have removed #{@invitation.member.full_name} from the workshop.",
+      error: false
     }
   end
 
@@ -56,15 +77,6 @@ class Admin::InvitationsController < Admin::ApplicationController
   def attending_failed
     "Error adding #{@invitation.member.full_name} as a #{@invitation.role}. "\
       "#{@invitation.errors.full_messages.to_sentence}."
-  end
-
-  def update_to_not_attending
-    @invitation.update(attending: false)
-
-    {
-      message: "You have removed #{@invitation.member.full_name} from the workshop.",
-      error: false
-    }
   end
 
   def set_invitation

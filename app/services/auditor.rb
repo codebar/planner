@@ -11,8 +11,11 @@ module Auditor
 
     def log(&block)
       changes = model.changes
-      yield block if block
+      result = yield block if block
+
       create(changes)
+
+      result
     end
 
     def log_with_note(note)

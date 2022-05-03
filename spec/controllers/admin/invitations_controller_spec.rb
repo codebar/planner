@@ -22,6 +22,14 @@ RSpec.describe Admin::InvitationsController, type: :controller do
       expect(flash[:notice]).to match("You have added")
     end
 
+    it "Records change author when updating an invitation" do
+      expect(invitation.activities.length).to eq(0)
+
+      put :update, id: invitation.token, workshop_id: workshop.id, attending: "true"
+
+      expect(invitation.activities.length).to eq(1)
+    end
+
     it "Warns the user about failed updates" do
       # Trigger an error when trying to update the `attending` attribute
       invitation.update_attribute(:tutorial, nil)

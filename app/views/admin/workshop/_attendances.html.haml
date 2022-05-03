@@ -42,7 +42,7 @@
                 %i.fas.fa-history
                 =l(invitation.rsvp_time)
             - if invitation.automated_rsvp?
-              %span{'data-bs-toggle': 'tooltip', 'data-bs-placement': 'bottom', title: 'Waiting list or admin addition'}
+              %span{'data-bs-toggle': 'tooltip', 'data-bs-placement': 'bottom', title: invitation.automated_rsvp_message}
                 %p.mb-1.small
                   %i.fas.fa-magic
           - if invitation.reminded_at.present?
