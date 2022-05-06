@@ -25,10 +25,10 @@ RSpec.feature 'A new student signs up', type: :feature do
 
     click_on 'Next'
 
-    expect(page).to have_selector('.member_name .error')
-    expect(page).to have_selector('.member_surname .error')
-    expect(page).to have_selector('.member_email .error')
-    expect(page).to have_selector('.member_about_you .error')
+    expect(page).to have_content "First name can't be blank"
+    expect(page).to have_content "Surname can't be blank"
+    expect(page).to have_content "Email address can't be blank"
+    expect(page).to have_content "About you can't be blank"
   end
 
   scenario 'A new member details are successfully captured' do
@@ -57,7 +57,6 @@ RSpec.feature 'A new student signs up', type: :feature do
   scenario 'Picking a mailing list on step 2 subscribes you to that list' do
     member = Fabricate(:member)
     group = Fabricate(:group)
-    coach_group = Fabricate(:coaches)
 
     login member
     member.update(can_log_in: true)

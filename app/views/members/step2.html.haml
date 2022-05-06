@@ -1,6 +1,6 @@
-.container-fluid
-  .row.justify-content-md-center.pt-4
-    .col-12.col-md-7
+.container-fluid.pt-3
+  .row.justify-content-md-center
+    .col.col-md-8
       %h1 Subscribe
       %p To receive invitations to our events you must subscribe to the appropriate chapters. Alternatively, you can always RSVP directly from the website. Just be aware that spots to some of our busier chapters fill up fast.
 
@@ -13,5 +13,5 @@
     = render partial: 'coach_invite_subscriptions', locals: {groups: @coach_groups, collapsed: false}
 
   .row.justify-content-md-center.mb-4
-    .col-12.col-md-7.text-right
+    .col.col-md-8.text-right
       = link_to 'Done', profile_path, class: 'btn btn-primary', role: 'button'

@@ -10,8 +10,5 @@
   = simple_form_for @terms_and_conditions_form, url: terms_and_conditions_path, method: :patch do |f|
     .row.justify-content-md-center
       .col.col-md-8
-        = f.check_box :terms
-        = f.label :terms
-    .row.justify-content-md-center
-      .col.col-md-8
-        = f.button :button, t('terms_and_conditions.accept'), class: 'btn btn-primary'
+        = f.input :terms, as: :boolean
+        = f.button :button, t('terms_and_conditions.accept'), class: 'btn btn-primary mb-0'
