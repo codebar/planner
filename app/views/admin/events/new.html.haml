@@ -1,7 +1,8 @@
-.container-fluid
-  .row
-    .col.mb-2
+.container-fluid.pt-3
+  .row.mb-4
+    .col
       %h1 New Event
 
   .row
-    = render partial: 'form'
+    .col.col-md-10
+      = render partial: 'form'

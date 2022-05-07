@@ -1,17 +1,17 @@
-.container-fluid.organisers
-  .row
+.container-fluid.organisers.pt-3
+  .row.mb-4
     .col
       %h1
         Organisers
         %small.subheader= @chapter.name
-  .row
-    .col-12.col-md-6.mt-3
-      = simple_form_for :organiser, url: admin_chapter_organisers_path(@chapter), html: { class: 'border border-primary p-3' } do |f|
-        %label.form-label.mb-2 Add new organiser
-        = f.select :organiser, @chapter_members.uniq.map { |member| ["#{member.full_name}", member.id] }, { include_blank: true }, { class: 'form-select form-select-lg', required: true, data: { placeholder: 'Select a member to make organiser' } }
-        = f.button :button, 'Add organiser', class: 'btn btn-primary btn-block mt-3'
 
-  .row.mt-4
+  .row.mb-4
+    .col-12.col-md-6
+      = simple_form_for :organiser, url: admin_chapter_organisers_path(@chapter), html: { class: 'border border-primary p-3' } do |f|
+        = f.input :organiser, collection: @chapter_members, label_method: :full_name, required: true, prompt: 'Select a member to make organiser'
+        = f.button :button, 'Add organiser', class: 'btn btn-primary btn-block mb-0'
+
+  .row.mb-2
     .col-3
       %p.fw-bold.mb-0 Name
     .col-3
@@ -22,7 +22,7 @@
       %p.fw-bold.mb-0 Actions
 
   - @organisers.each do |organiser|
-    .row.mt-4.mb-4
+    .row.mb-4
       .col-3
         %p.mb-0= organiser.full_name
       .col-3

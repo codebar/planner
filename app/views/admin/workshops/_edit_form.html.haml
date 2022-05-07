@@ -1,16 +1,13 @@
 = simple_form_for [:admin, @workshop], url: :admin_workshop, method: :put do |f|
   .row
     .col-12.col-md-6
-      =render partial: 'shared_form', locals: { f: f }
+      = render partial: 'shared_form', locals: { f: f }
     .col-12.col-md-6
-      =render partial: 'virtual_workshop_fields', locals: { f: f }
-      .row.mt-3
-        .col-6
-          %label Organisers
-          = f.collection_select :organisers, Member.all, :id, :full_name, { selected: @workshop.organisers.map(&:id) }, { multiple: true }
-  .row.mt-3
-    .col
-      = f.input :invitable
-  .row.mb-4
+      = render partial: 'virtual_workshop_fields', locals: { f: f }
+    .col-12.col-md-6
+      = f.input :organisers, collection: Member.all, value_method: :id, label_method: :full_name, selected: @workshop.organisers.map(&:id), input_html: { multiple: true }
+    .col-12
+      = f.input :invitable, hint_html: { class: 'd-block ml-1' }
+  .row
     .col
       = f.button :button, 'Save', class: 'btn btn-primary'

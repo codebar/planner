@@ -1,17 +1,13 @@
-.container-fluid.mb-4
-  .row
+.container-fluid.pt-3
+  .row.mb-4
     .col
       %h1 New Group
+
+  .row
+    .col.col-lg-8
       = simple_form_for [:admin, @group] do |f|
-        .row
-          .col-12.col-md-6
-            = f.input :name, label: "Name", collection: Group::NAMES, prompt: "Select one"
-        .row.mt-3
-          .col-12.col-md-6
-            = f.input :description
-        .row
-          .col-12.col-md-6
-            = f.association :chapter, required: true
-        .row
-          .col.text-right
-            = f.button :button, 'Create group', class: 'btn btn-primary mt-4'
+        = f.input :name, label: 'Name', collection: Group::NAMES
+        = f.input :description, input_html: { rows: 3 }
+        = f.association :chapter, required: true
+        .text-right
+          = f.button :button, 'Create group', class: 'btn btn-primary'

@@ -1,5 +1,5 @@
-.container-fluid.mb-4
-  .row
+.container-fluid.pt-3
+  .row.mb-4
     .col
       %nav
         %ol.breadcrumb.ml0
@@ -7,24 +7,12 @@
           %li.breadcrumb-item.active=t('.title')
 
   .row
-    .col
+    .col.col-lg-8
       = simple_form_for [:admin, @member, @ban], method: :post do |f|
-        .row
-          .col-12.col-md-4
-            = f.input :reason, as: :select, collection: [ 'Violated attendance policy', 'Violated code of conduct', 'Violated attendance eligibility', 'Offensive behavior' ]
-        .row.mt-3
-          .col
-            = f.input :note
-        .row
-          .col
-            = f.input :explanation
-        .row
-          .col-12.col-md-4
-            = f.input :expires_at, as: :string, required: true, label: 'Date', input_html: { data: { value: Time.zone.now+1.month } }
-        .row
-          .col
-            = f.input :permanent, as: :boolean
-
-        .row
-          .col.text-right
-            = f.button :button, t('.create'), class: 'btn btn-primary'
+        = f.input :reason, as: :select, collection: [ 'Violated attendance policy', 'Violated code of conduct', 'Violated attendance eligibility', 'Offensive behavior' ]
+        = f.input :note, input_html: { rows: 3 }
+        = f.input :explanation, input_html: { rows: 3 }
+        = f.input :expires_at, as: :string, required: true, label: 'Date', input_html: { data: { value: Time.zone.now+1.month } }
+        = f.input :permanent, as: :boolean
+        .text-right
+          = f.button :button, t('.create'), class: 'btn btn-primary'

@@ -1,35 +1,24 @@
 .row
-  .col
+  .col-12
     = f.association :chapter, as: :select, collection: Chapter.available_to_user(current_user)
-
-.row.mt-3
-  .col
-    = f.input :local_date, label: "Date", as: :string, required: true, input_html: { data: { value: @workshop.date_and_time.try(:strftime, '%d/%m/%Y') } }
-.row
-  .col-6
+  .col-12
+    = f.input :local_date, label: 'Date', as: :string, required: true, input_html: { data: { value: @workshop.date_and_time.try(:strftime, '%d/%m/%Y') } }
+  .col-12.col-md-6
     = f.input :local_time, label: 'Begins at', as: :string, required: true, input_html: { data: { value: @workshop.time.try(:strftime, '%H:%M') } }
-  .col-6
+  .col-12.col-md-6
     = f.input :local_end_time, label: 'Ends at', as: :string, required: true, input_html: { data: { value: @workshop.ends_at.try(:strftime, '%H:%M') } }
-.row
-  .col#host
+  .col-12#host
     = f.input :host, as: :select, collection: Sponsor.all, include_blank: true, selected: (@workshop.host.id rescue '')
-.row.mt-3
-  .col
+  .col-12
     = f.association :sponsors
-
-.row.mt-3
-  .col
+  .col-12
     = f.input :description, as: :text
-
-.row
-  .col
+  .col-12
     %h6 Default description text:
     %p
       %small= t("workshops.lead")
-
-.row
-  .col
-    .card.bg-light.border-info
+  .col-12
+    .card.bg-light.border-info.mb-3
       .card-body
         %p= t('admin.workshop.form.rsvp_details')
         = f.input :rsvp_open_local_date, as: :string, input_html: { data: { value: @workshop.rsvp_opens_at.try(:strftime, '%d/%m/%Y') } }

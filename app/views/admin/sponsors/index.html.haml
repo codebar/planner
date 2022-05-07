@@ -4,11 +4,11 @@
       %nav{'aria-label': 'breadcrumb'}
         %ol.breadcrumb.ml-0
           %li.breadcrumb-item.active= t('admin.shared.sponsors')
+
     .col-12
-      = simple_form_for @sponsors_search, url: admin_sponsors_path, method: :get do |f|
-        .input-group.mb-3
-          = f.input :name, required: false, label: false, placeholder: 'Filter by sponsor name'
-          = f.button :button, 'Filter', class: 'btn btn-primary'
+      = simple_form_for @sponsors_search, url: admin_sponsors_path, method: :get, wrapper: :inline_form, html: { class: 'row row-cols-auto align-items-center' } do |f|
+        = f.input :name, required: false, label: false, placeholder: 'Filter by sponsor name'
+        = f.button :button, 'Filter', class: 'btn-primary'
 
   .row.mb-3
     .col-md-6

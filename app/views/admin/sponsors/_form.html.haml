@@ -1,62 +1,43 @@
 = simple_form_for [:admin, @sponsor], :html => {:multipart => true, novalidate: true } do |f|
   .row
     .col-12.col-md-6
-      .row
-        .col
-          = f.input :name
-
-      .row
-        .col
-          = f.input :website, as: :url
-
-      .row
-        .col
-          = f.input :description
-
+      = f.input :name
+      = f.input :website, as: :url
+      = f.input :description, input_html: { rows: 3 }
       - if current_user.has_role?(:admin)
-        .row
-          .col-6
-            = f.input :level, collection: Sponsor.levels.keys, label_method: :humanize
+        = f.input :level, collection: Sponsor.levels.keys, label_method: :humanize
+      = f.input :avatar, as: :file, required: !@sponsor.avatar?
+      = f.hidden_field :image_cache
 
-      .row.mt-3
-        .col
-          = f.input :avatar, as: :file, required: !@sponsor.avatar?
-          = f.hidden_field :image_cache
-
-      .row
-        .col
-          #contacts.card.bg-light.border-info.mb-4.mb-md-0
-            .card-body
-              %strong Contact Details
-              %p Required so that all organisers can get in touch with sponsor when required. Please do not use your personal or chapter details.
-              = f.simple_fields_for :contacts do |c|
-                = render 'contact_fields', f: c
-              %div
-                = link_to_add_association 'Add contact', f, :contacts, class: 'btn btn-primary'
+      #contacts.card.bg-light.border-info.mb-4.mb-md-0
+        .card-body
+          %strong Contact Details
+          %p Required so that all organisers can get in touch with sponsor when required. Please do not use your personal or chapter details.
+          = f.simple_fields_for :contacts do |c|
+            = render 'contact_fields', f: c
+          %div
+            = link_to_add_association 'Add contact', f, :contacts, class: 'btn btn-primary'
 
     .col-12.col-md-6
       .card.bg-light.border-info
         .card-body
-          %p Only required for hosts
+          %p Only required for hosts.
           .row
             .col-6
               = f.input :seats
             .col-6
               = f.input :number_of_coaches
-          .row
-            .col
-              = f.input :accessibility_info
-          .row
-            .col
-              %strong Address
-              = f.simple_fields_for :address do |address|
-                = address.input :flat, label: 'Line 1'
-                = address.input :street, label: 'Line 2'
-                = address.input :postal_code
-                = address.input :city
-                = address.input :latitude
-                = address.input :longitude
-                = address.input :directions
+          = f.input :accessibility_info, input_html: { rows: 3 }
+          %p
+            %strong Address
+          = f.simple_fields_for :address do |address|
+            = address.input :flat, label: 'Line 1'
+            = address.input :street, label: 'Line 2'
+            = address.input :postal_code
+            = address.input :city
+            = address.input :latitude
+            = address.input :longitude
+            = address.input :directions, input_html: { rows: 3 }
 
   .row.mt-4.mb-4.text-right
     .col
