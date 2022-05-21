@@ -1,9 +1,10 @@
-%ul{ "data-orbit" => true, "data-options" => " animation:fade;timer_speed:60000;next_on_click:false;bullets:false;slide_number:false;circular:true;navigation_arrows:false;pause_on_hover:false;timer:false;" }
-  - @testimonials.each_with_index do |testimonial, index|
-    %li{ "data-orbit-slide" => "testimonial-#{index}" }
-      %blockquote
-        %p= testimonial.text
-        %footer.clearfix
-          = image_tag(testimonial.member.avatar(32), class: 'th radius left', alt: testimonial.member.name)
-          %cite.left
-            = testimonial.member.full_name
+.carousel.slider#testimonials-carousel
+  .carousel-inner
+    - @testimonials.each_with_index do |testimonial, index|
+      .carousel-item{ class: ('active' if index === 0) }
+        %blockquote
+          %p= testimonial.text
+          %footer.clearfix
+            = image_tag(testimonial.member.avatar(32), class: 'th radius left', alt: testimonial.member.name)
+            %cite.left
+              = testimonial.member.full_name

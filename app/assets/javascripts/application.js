@@ -17,7 +17,6 @@
 //= require jquery-ui
 //= require autocomplete-rails
 //= require chosen-jquery
-//= require foundation
 //= require 'jsimple-star-rating.min.js'
 //= require pickadate/picker
 //= require pickadate/picker.date
@@ -29,8 +28,7 @@
 //= require cocoon
 //= require font_awesome5
 
-$(function(){
-  $(document).foundation();
+$(function() {
   $('#meeting_local_date, #workshop_local_date, #event_date_and_time, #workshop_rsvp_open_local_date').pickadate({
     format: 'dd/mm/yyyy'
   });
@@ -74,4 +72,6 @@ $(function(){
 
   $('[data-bs-toggle="tooltip"]').tooltip();
 
+  const myCarousel = document.querySelector("#testimonials-carousel");
+  new bootstrap.Carousel(myCarousel);
 });
