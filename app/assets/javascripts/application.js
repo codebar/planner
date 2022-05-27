@@ -71,7 +71,4 @@ $(function() {
   });
 
   $('[data-bs-toggle="tooltip"]').tooltip();
-
-  const myCarousel = document.querySelector("#testimonials-carousel");
-  new bootstrap.Carousel(myCarousel);
 });
