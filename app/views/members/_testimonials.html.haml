@@ -1,10 +1,10 @@
-.carousel.slider#testimonials-carousel
+.carousel.slider{ 'data-ride': 'carousel' }
   .carousel-inner
     - @testimonials.each_with_index do |testimonial, index|
       .carousel-item{ class: ('active' if index === 0) }
         %blockquote
           %p= testimonial.text
           %footer.clearfix
-            = image_tag(testimonial.member.avatar(32), class: 'th radius left', alt: testimonial.member.name)
+            = image_tag(testimonial.member.avatar(32), class: 'rounded-circle ml-2', alt: testimonial.member.name)
             %cite.left
               = testimonial.member.full_name
