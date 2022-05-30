@@ -20,8 +20,6 @@ Planner::Application.routes.draw do
   resource :terms_and_conditions, only: %i[show update patch]
   resource :mailing_lists, only: %i[create destroy]
 
-  resources :jobs, only: %i[index show]
-
   namespace :member do
     resource :details, only: %i[edit update]
   end

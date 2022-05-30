@@ -25,10 +25,10 @@
           = link_to coaches_path, class: 'nav-link border-0' do
             Coaches
         %li.nav-item
-          = link_to jobs_path, class: 'nav-link border-0' do
-            Jobs
+          = link_to "http://jobs.codebar.io/", class: 'nav-link border-0' do
+            Job Board
         %li.nav-item
-          = link_to new_donation_path, class: 'nav-link border-0 link-primary' do
+          = link_to "https://codebar.enthuse.com/donate/#!/", class: 'nav-link border-0 link-primary' do
             Donate
         - if !logged_in?
           %li.nav-item

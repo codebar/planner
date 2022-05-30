@@ -26,8 +26,8 @@
         %li= link_to t("navigation.coaches"), coaches_path
         %li= link_to t("navigation.sponsors"), sponsors_path
         %li= link_to t("navigation.events"), events_path
-        %li= link_to t("navigation.jobs"), jobs_path
-        %li.active= link_to t("navigation.donate"), new_donation_path
+        %li= link_to t("navigation.jobs"), "http://jobs.codebar.io/"
+        %li.active= link_to t("navigation.donate"),"https://codebar.enthuse.com/donate/#!/"
 
     .col-sm-12.col-md-6.col-lg-3
       = render partial: 'shared/social_media'

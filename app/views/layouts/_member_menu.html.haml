@@ -1,11 +1,8 @@
 %ul.dropdown-menu.dropdown-menu-right{'aria-labelledby': 'navbarDropdownMenuLinkMember'}
   %li.d-none.d-lg-block
-    %h6.dropdown-header Portal
+    %h6.dropdown-header Porta
   %li
-    = link_to member_jobs_path, class: 'dropdown-item' do
-      My Jobs
-  %li
-    = link_to new_member_job_path, class: 'dropdown-item' do
+    = link_to "http://jobs.codebar.io/", class: 'dropdown-item' do
       List a job
   %li.d-none.d-lg-block
     %hr.dropdown-divider

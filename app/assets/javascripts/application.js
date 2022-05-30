@@ -38,10 +38,6 @@ $(function() {
     format: 'HH:i'
   });
 
-  $('#job_expiry_date').pickadate({
-    format: 'dd/mm/yyyy'
-  });
-
   $('body').removeClass('no-js');
 
   // Chosen hides inputs and selects, which becomes problematic when they are
