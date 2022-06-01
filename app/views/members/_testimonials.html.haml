@@ -2,9 +2,10 @@
   .carousel-inner
     - @testimonials.each_with_index do |testimonial, index|
       .carousel-item{ class: ('active' if index === 0) }
-        %blockquote
-          %p= testimonial.text
-          %footer.clearfix
-            = image_tag(testimonial.member.avatar(32), class: 'rounded-circle ml-2', alt: testimonial.member.name)
-            %cite.left
+        %figure.bg-white.rounded.p-4.mb-0
+          %blockquote.blockquote
+            %p= testimonial.text
+          %figcaption.blockquote-footer.mt-0.mb-0
+            = image_tag(testimonial.member.avatar(25), class: 'rounded-circle', alt: testimonial.member.name)
+            %cite.mb-0{ title: testimonial.member.full_name }
               = testimonial.member.full_name
