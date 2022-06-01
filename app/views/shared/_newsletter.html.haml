@@ -12,15 +12,14 @@
                                                  novalidate: true }
         #mc_embed_signup_scroll
           #indicates-required
-            %small.right
-              %span.asterisk *
-              indicates required
-
-          .mc-field-group
-            %label{ for: "mce-EMAIL" }
-              Email Address 
-              %span.asterisk *
-            %input.required.email#mce-EMAIL{ type: 'email', value: '', name: 'EMAIL' }
+          .mc-field-group.mb-3
+            .d-flex.justify-content-between
+              %label.form-label{ for: "mce-EMAIL" }
+                Email Address
+                %span.asterisk *
+              %small
+                %span.asterisk * indicates required
+            %input.required.email.form-control#mce-EMAIL{ type: 'email', value: '', name: 'EMAIL' }
 
           .clear#mce-responses
             .response#mce-error-response{ style: 'display:none' }
@@ -31,4 +30,3 @@
             %input{ type: 'text', name: 'b_b4652d85b385945c79f2ffa2e_3798974cb3', tabindex: '-1', value: '' }
           .d-flex.justify-content-between.align-items-center
             %input.btn.btn-primary#mc-embedded-subscribe{ type: 'submit', value: 'Subscribe', name: 'subscribe' }
-            %a{ href: 'https://us8.campaign-archive.com/home/?u=b4652d85b385945c79f2ffa2e&id=3798974cb3' } View previous newsletters.
