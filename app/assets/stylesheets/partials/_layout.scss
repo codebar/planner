@@ -12,11 +12,12 @@
 
 .main-footer {
   background-color: $dark-codebar-blue;
-  color: white;
+  color: $white;
 
   a {
     color: $white;
-    border: none;
+    text-decoration: none;
+
     &:hover {
       color: $codebar-green;
     }
