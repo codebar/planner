@@ -9,7 +9,6 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *
  *= require_self
- *= require foundation_and_overrides
  *= require font_awesome5
  *= require main
  *= require pickadate/classic
@@ -21,14 +20,11 @@
 
 @import "partials/colors";
 @import "partials/links";
-@import "partials/margins";
 @import "partials/layout";
 @import "partials/hero";
 @import "partials/events";
 @import "partials/social_media";
 @import "partials/attendances";
-@import "partials/admin_workshop";
-@import "partials/organisers";
 @import "partials/jobs";
 @import "partials/star-rating";
 @import "partials/event";

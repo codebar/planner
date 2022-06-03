@@ -8,8 +8,6 @@ $(document).ready(function() {
       allow_single_deselect: true
       no_results_text: 'No results matched'
     });
-
-    $invitations.foundation('tooltip', 'reflow');
   });
   
   $(document).on('change','#workshop_invitations ',function() {
