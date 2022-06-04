@@ -1,31 +1,32 @@
-.container-fluid.stripe.reverse
+.container.py-4.py-lg-5
   .row.justify-content-md-center
     .col-md-10.col-lg-8
       %h1 Attendance Policy
 
-.container-fluid.stripe.reverse
-  .row.justify-content-md-center
-    .col-md-10.col-lg-8
-      %p
-        = t('dashboard.policy.intro')
-        %ul
-          %li= t('dashboard.policy.rule1')
-          %li= t('dashboard.policy.rule2')
-          %li= t('dashboard.policy.rule3')
-          %li= t('dashboard.policy.rule4')
-          %li= t('dashboard.policy.rule5')
+.py-4.py-lg-5.bg-light
+  .container
+    .row.justify-content-md-center
+      .col-md-10.col-lg-8
+        %p
+          = t('dashboard.policy.intro')
+          %ul
+            %li= t('dashboard.policy.rule1')
+            %li= t('dashboard.policy.rule2')
+            %li= t('dashboard.policy.rule3')
+            %li= t('dashboard.policy.rule4')
+            %li= t('dashboard.policy.rule5')
 
-      %h3
-        = t('dashboard.policy.what_happens')
-      %p
-        = t('dashboard.policy.strikes_system')
-      %p
-        = t('dashboard.policy.removing')
-      %p
-        = t('dashboard.policy.rsvping')
-      %h3
-        = t('dashboard.policy.eligibility_note')
-      %p
-        = t('dashboard.policy.abuse')
-      %p
-        = t('dashboard.policy.reminder')
+        %h3
+          = t('dashboard.policy.what_happens')
+        %p
+          = t('dashboard.policy.strikes_system')
+        %p
+          = t('dashboard.policy.removing')
+        %p
+          = t('dashboard.policy.rsvping')
+        %h3
+          = t('dashboard.policy.eligibility_note')
+        %p
+          = t('dashboard.policy.abuse')
+        %p
+          = t('dashboard.policy.reminder')
