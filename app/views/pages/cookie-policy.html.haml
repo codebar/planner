@@ -1,77 +1,78 @@
-.container-fluid.stripe.reverse
+.container.py-4.py-lg-5
   .row.justify-content-md-center
     .col-md-10.col-lg-8
       :markdown
         # #{t('pages.cookies.title')}
 
-.container-fluid.stripe.reverse
-  .row.justify-content-md-center
-    .col-md-10.col-lg-8
-      :markdown
-        #{t('pages.cookies.p1')}
+.py-4.py-lg-5.bg-light
+  .container
+    .row.justify-content-md-center
+      .col-md-10.col-lg-8
+        :markdown
+          #{t('pages.cookies.p1')}
 
-        #{t('pages.cookies.p2')}
+          #{t('pages.cookies.p2')}
 
-        #{t('pages.cookies.sub.title')}
+          #{t('pages.cookies.sub.title')}
 
-        ### #{t('pages.cookies.functional.title')}
+          ### #{t('pages.cookies.functional.title')}
 
-        #{t('pages.cookies.functional.description')}
+          #{t('pages.cookies.functional.description')}
 
-      %table.table.table-secondary
-        %thead
-          %tr
-            %th= t('pages.cookies.table.header.h1')
-            %th= t('pages.cookies.table.header.h2')
-            %th= t('pages.cookies.table.header.h3')
-        %tbody
-          %tr
-            %th
-              %code= t('pages.cookies.functional.planner_name')
-            %th= t('pages.cookies.functional.planner_purpose')
-            %th= t('pages.cookies.functional.planner_expiry')
-      %br
+        %table.table.table-secondary
+          %thead
+            %tr
+              %th= t('pages.cookies.table.header.h1')
+              %th= t('pages.cookies.table.header.h2')
+              %th= t('pages.cookies.table.header.h3')
+          %tbody
+            %tr
+              %th
+                %code= t('pages.cookies.functional.planner_name')
+              %th= t('pages.cookies.functional.planner_purpose')
+              %th= t('pages.cookies.functional.planner_expiry')
+        %br
 
-      :markdown
-        ### #{t('pages.cookies.google_analytics.title')}
+        :markdown
+          ### #{t('pages.cookies.google_analytics.title')}
 
-        #{t('pages.cookies.google_analytics.description')}
+          #{t('pages.cookies.google_analytics.description')}
 
-        **#{t('pages.cookies.google_analytics.info')}**
+          **#{t('pages.cookies.google_analytics.info')}**
 
-      %table.table.table-secondary
-        %thead
-          %tr
-            %th= t('pages.cookies.table.header.h1')
-            %th= t('pages.cookies.table.header.h2')
-            %th= t('pages.cookies.table.header.h3')
-        %tbody
-          %tr
-            %th
-              %code= t('pages.cookies.google_analytics.ga_name')
-            %th= t('pages.cookies.google_analytics.ga_purpose')
-            %th= t('pages.cookies.google_analytics.ga_expiry')
-          %tr
-            %th
-              %code= t('pages.cookies.google_analytics.gid_name')
-            %th= t('pages.cookies.google_analytics.gid_purpose')
-            %th= t('pages.cookies.google_analytics.gid_expiry')
-      %br
+        %table.table.table-secondary
+          %thead
+            %tr
+              %th= t('pages.cookies.table.header.h1')
+              %th= t('pages.cookies.table.header.h2')
+              %th= t('pages.cookies.table.header.h3')
+          %tbody
+            %tr
+              %th
+                %code= t('pages.cookies.google_analytics.ga_name')
+              %th= t('pages.cookies.google_analytics.ga_purpose')
+              %th= t('pages.cookies.google_analytics.ga_expiry')
+            %tr
+              %th
+                %code= t('pages.cookies.google_analytics.gid_name')
+              %th= t('pages.cookies.google_analytics.gid_purpose')
+              %th= t('pages.cookies.google_analytics.gid_expiry')
+        %br
 
-      :markdown
-        #{t('pages.cookies.google_analytics.opt_out')}
+        :markdown
+          #{t('pages.cookies.google_analytics.opt_out')}
 
-        ### #{t('pages.cookies.cloudflare.title')}
+          ### #{t('pages.cookies.cloudflare.title')}
 
-      %table.table.table-secondary
-        %thead
-          %tr
-            %th= t('pages.cookies.table.header.h1')
-            %th= t('pages.cookies.table.header.h2')
-            %th= t('pages.cookies.table.header.h3')
-        %tbody
-          %tr
-            %th
-              %code= t('pages.cookies.cloudflare.cfduid_name')
-            %th= t('pages.cookies.cloudflare.cfduid_purpose')
-            %th= t('pages.cookies.cloudflare.cfduid_expiry')
+        %table.table.table-secondary
+          %thead
+            %tr
+              %th= t('pages.cookies.table.header.h1')
+              %th= t('pages.cookies.table.header.h2')
+              %th= t('pages.cookies.table.header.h3')
+          %tbody
+            %tr
+              %th
+                %code= t('pages.cookies.cloudflare.cfduid_name')
+              %th= t('pages.cookies.cloudflare.cfduid_purpose')
+              %th= t('pages.cookies.cloudflare.cfduid_expiry')

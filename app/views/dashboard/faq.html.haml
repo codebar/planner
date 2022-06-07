@@ -1,55 +1,56 @@
-.container-fluid.stripe.reverse
+.container.py-4.py-lg-5
   .row.justify-content-md-center
     .col-md-10.col-lg-8
       %h1 Frequently Asked Questions
 
-.container-fluid.stripe.reverse
-  .row.justify-content-md-center
-    .col-md-10.col-lg-8
-      %dl
-        %dt= t('faq.payment.q')
-        %dd
-          = t('faq.payment.a_p1')
-          = link_to t('faq.payment.awesome_coaches'), coaches_path
-          = t('faq.payment.a_p2')
+.py-4.py-lg-5.bg-light
+  .container
+    .row.justify-content-md-center
+      .col-md-10.col-lg-8
+        %dl
+          %dt= t('faq.payment.q')
+          %dd.mb-4
+            = t('faq.payment.a_p1')
+            = link_to t('faq.payment.awesome_coaches'), coaches_path
+            = t('faq.payment.a_p2')
 
-        %dt= t('faq.technologies.q')
-        %dd= raw t('faq.technologies.a')
+          %dt= t('faq.technologies.q')
+          %dd.mb-4= raw t('faq.technologies.a')
 
-        %dt#attendance-eligibility= t('faq.eligibility.q')
-        %dd= raw t('faq.eligibility.a')
+          %dt#attendance-eligibility= t('faq.eligibility.q')
+          %dd.mb-4= raw t('faq.eligibility.a')
 
-        %dt= t('faq.career.q')
-        %dd= t('faq.career.a')
+          %dt= t('faq.career.q')
+          %dd.mb-4= t('faq.career.a')
 
-        %dt= t('faq.format.q')
-        %dd= t('faq.format.a')
+          %dt= t('faq.format.q')
+          %dd.mb-4= t('faq.format.a')
 
-        %dt= t('faq.laptop.q')
-        %dd= raw t('faq.laptop.a')
+          %dt= t('faq.laptop.q')
+          %dd.mb-4= raw t('faq.laptop.a')
 
-        %dt= t('faq.online_resources.q')
-        %dd= t('faq.online_resources.a')
+          %dt= t('faq.online_resources.q')
+          %dd.mb-4= t('faq.online_resources.a')
 
-        %dt= t('faq.preperations.q')
-        %dd
-          = t('faq.preperations.a_p1')
-          = link_to t('faq.preperations.coaching_guide_tutorials'), teaching_guide_path
-          = t('faq.preperations.a_p2')
-          = raw t('faq.preperations.a_p3')
-          = t('faq.preperations.a_p4')
+          %dt= t('faq.preperations.q')
+          %dd.mb-4
+            = t('faq.preperations.a_p1')
+            = link_to t('faq.preperations.coaching_guide_tutorials'), teaching_guide_path
+            = t('faq.preperations.a_p2')
+            = raw t('faq.preperations.a_p3')
+            = t('faq.preperations.a_p4')
 
-        %dt= t('faq.location.q')
-        %dd= t('faq.location.a')
+          %dt= t('faq.location.q')
+          %dd.mb-4= t('faq.location.a')
 
-        %dt= t('faq.disabled_access.q')
-        %dd= raw t('faq.disabled_access.a')
+          %dt= t('faq.disabled_access.q')
+          %dd.mb-4= raw t('faq.disabled_access.a')
 
-        %dt= t('faq.bring_codebar_to_my_city.q')
-        %dd= raw t('faq.bring_codebar_to_my_city.a')
+          %dt= t('faq.bring_codebar_to_my_city.q')
+          %dd.mb-4= raw t('faq.bring_codebar_to_my_city.a')
 
-        %dt= t('faq.our_coaches.q')
-        %dd
-          = t('faq.our_coaches.a_p1')
-          = link_to "coaches page", coaches_path
-          = t('faq.our_coaches.a_p2')
+          %dt= t('faq.our_coaches.q')
+          %dd
+            = t('faq.our_coaches.a_p1')
+            = link_to "coaches page", coaches_path
+            = t('faq.our_coaches.a_p2')

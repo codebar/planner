@@ -1,39 +1,40 @@
-.container-fluid.stripe.reverse
+.container.py-4.py-lg-5
   .row.justify-content-md-center
     .col-md-10.col-lg-8
       %h1 Coach Guide
       %p.lead
         This is a brief guide we've put together for our coaches. If you have any suggestions to make open a #{link_to "pull request", "https://github.com/codebar/planner"} or #{link_to "create an issue", "https://github.com/codebar/planner/issues/new"}.
 
-.container-fluid.stripe.reverse
-  .row.justify-content-md-center
-    .col-md-10.col-lg-8
-      %ul
-        %li
-          %p.mb-2= t('dashboard.teacher_guide.laptop')
-        %li
-          %p.mb-2= t('dashboard.teacher_guide.keyboard')
-        %li
-          %p.mb-2= t('dashboard.teacher_guide.typing')
-        %li
-          %p.mb-2= t('dashboard.teacher_guide.questions')
-        %li
-          %p.mb-2= t('dashboard.teacher_guide.mistakes')
-        %li
-          %p.mb-2= t('dashboard.teacher_guide.introduction')
-        %li
-          %p.mb-2= t('dashboard.teacher_guide.backgrounds')
-        %li
-          %p.mb-2= t('dashboard.teacher_guide.limits')
-        %li
-          %p.mb-2= t('dashboard.teacher_guide.collaboration')
-        %li
-          %p.mb-2= t('dashboard.teacher_guide.discussion')
-        %li
-          %p.mb-2= t('dashboard.teacher_guide.talk_slow')
-        %li
-          %p.mb-2= t('dashboard.teacher_guide.mild_approach')
-        %li
-          %p.mb-2= t('dashboard.teacher_guide.paper')
-        %li
-          %p.mb-2= t('dashboard.teacher_guide.stubling')
+.py-4.py-lg-5.bg-light
+  .container
+    .row.justify-content-md-center
+      .col-md-10.col-lg-8
+        %ul.pl-3
+          %li
+            %p.mb-2= t('dashboard.teacher_guide.laptop')
+          %li
+            %p.mb-2= t('dashboard.teacher_guide.keyboard')
+          %li
+            %p.mb-2= t('dashboard.teacher_guide.typing')
+          %li
+            %p.mb-2= t('dashboard.teacher_guide.questions')
+          %li
+            %p.mb-2= t('dashboard.teacher_guide.mistakes')
+          %li
+            %p.mb-2= t('dashboard.teacher_guide.introduction')
+          %li
+            %p.mb-2= t('dashboard.teacher_guide.backgrounds')
+          %li
+            %p.mb-2= t('dashboard.teacher_guide.limits')
+          %li
+            %p.mb-2= t('dashboard.teacher_guide.collaboration')
+          %li
+            %p.mb-2= t('dashboard.teacher_guide.discussion')
+          %li
+            %p.mb-2= t('dashboard.teacher_guide.talk_slow')
+          %li
+            %p.mb-2= t('dashboard.teacher_guide.mild_approach')
+          %li
+            %p.mb-2= t('dashboard.teacher_guide.paper')
+          %li
+            %p.mb-2= t('dashboard.teacher_guide.stubling')

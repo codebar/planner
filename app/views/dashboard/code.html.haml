@@ -1,38 +1,39 @@
-.container-fluid.stripe.reverse#code-of-conduct
+.container.py-4.py-lg-5#code-of-conduct
   .row.justify-content-md-center
     .col-md-10.col-lg-8
       %h1= t('code_of_conduct.title')
 
-.container-fluid.stripe.reverse
-  .row.justify-content-md-center
-    .col-md-10.col-lg-8
-      %h3
-        = t('code_of_conduct.summary.title')
+.py-4.py-lg-5.bg-light
+  .container
+    .row.justify-content-md-center
+      .col-md-10.col-lg-8
+        %h3
+          = t('code_of_conduct.summary.title')
 
-      %p.lead
-        = t('code_of_conduct.summary.intro')
+        %p.lead
+          = t('code_of_conduct.summary.intro')
 
-      %h3
-        = t('code_of_conduct.content.title')
+        %h3
+          = t('code_of_conduct.content.title')
 
-      %p
-        = t('code_of_conduct.content.harassment')
+        %p
+          = t('code_of_conduct.content.harassment')
 
-      %p
-        = t('code_of_conduct.content.comply')
+        %p
+          = t('code_of_conduct.content.comply')
 
-      %p
-        = t('code_of_conduct.content.sponsors')
+        %p
+          = t('code_of_conduct.content.sponsors')
 
-      %p
-        = t('code_of_conduct.content.sanctions')
+        %p
+          = t('code_of_conduct.content.sanctions')
 
-      %p
-        = t('code_of_conduct.content.concerns')
+        %p
+          = t('code_of_conduct.content.concerns')
 
-      %p
-        = raw t('code_of_conduct.content.applies_to')
+        %p
+          = raw t('code_of_conduct.content.applies_to')
 
-      %p
-        = t('code_of_conduct.content.questions')
-        = mail_to 'hello@codebar.io', t('code_of_conduct.content.contact'), subject: t('code_of_conduct.content.email_subject')
+        %p
+          = t('code_of_conduct.content.questions')
+          = mail_to 'hello@codebar.io', t('code_of_conduct.content.contact'), subject: t('code_of_conduct.content.email_subject')

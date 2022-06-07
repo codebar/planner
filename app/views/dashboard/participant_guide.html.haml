@@ -1,4 +1,4 @@
-.container-fluid.stripe.reverse
+.container.py-4.py-lg-5
   .row.justify-content-md-center
     .col-md-10.col-lg-8
       %h1= t('participant_student_guide.title')
@@ -8,51 +8,51 @@
       \|
       = link_to t('participant_student_guide.disability.title') , '#disability'
 
-.container-fluid.stripe.reverse
-  .row.justify-content-md-center
-    .col-md-10.col-lg-8
-      %h3#attendance= t('participant_student_guide.attendance_policy.title')
-      %p
-        = t('participant_student_guide.attendance_policy.intro')
+.py-4.py-lg-5.bg-light
+  .container
+    .row.justify-content-md-center
+      .col-md-10.col-lg-8
+        %h3#attendance= t('participant_student_guide.attendance_policy.title')
+        %p
+          = t('participant_student_guide.attendance_policy.intro')
+          %ol
+            %li
+              %p.mb-2= raw t('participant_student_guide.attendance_policy.rule1')
+            %li
+              %p.mb-2= raw t('participant_student_guide.attendance_policy.rule2')
+            %li
+              %p.mb-2= t('participant_student_guide.attendance_policy.rule3')
+            %li
+              %p.mb-2= t('participant_student_guide.attendance_policy.rule4')
+            %li
+              %p.mb-2= raw t('participant_student_guide.attendance_policy.rule5')
+            %li
+              %p.mb-2= t('participant_student_guide.attendance_policy.rule6')
+            %li
+              %p.mb-2= t('participant_student_guide.attendance_policy.rule7')
 
-        %ol
-          %li
-            %p.mb-2= raw t('participant_student_guide.attendance_policy.rule1')
-          %li
-            %p.mb-2= raw t('participant_student_guide.attendance_policy.rule2')
-          %li
-            %p.mb-2= t('participant_student_guide.attendance_policy.rule3')
-          %li
-            %p.mb-2= t('participant_student_guide.attendance_policy.rule4')
-          %li
-            %p.mb-2= raw t('participant_student_guide.attendance_policy.rule5')
-          %li
-            %p.mb-2= t('participant_student_guide.attendance_policy.rule6')
-          %li
-            %p.mb-2= t('participant_student_guide.attendance_policy.rule7')
+        %h4= t('dashboard.policy.what_happens')
 
-      %h4= t('dashboard.policy.what_happens')
+        %p= t('dashboard.policy.strikes_system')
 
-      %p= t('dashboard.policy.strikes_system')
+        %p= t('dashboard.policy.removing')
 
-      %p= t('dashboard.policy.removing')
+        %p= t('dashboard.policy.rsvping')
 
-      %p= t('dashboard.policy.rsvping')
+        %h3.mt-5#eligibility= t('participant_student_guide.eligibility_criteria.title')
 
-      %h3#eligibility= t('participant_student_guide.eligibility_criteria.title')
+        %p= raw t('participant_student_guide.eligibility_criteria.p_1')
 
-      %p= raw t('participant_student_guide.eligibility_criteria.p_1')
+        %p= raw t('participant_student_guide.eligibility_criteria.p_2')
 
-      %p= raw t('participant_student_guide.eligibility_criteria.p_2')
+        %p= t('participant_student_guide.eligibility_criteria.p_3')
 
-      %p= t('participant_student_guide.eligibility_criteria.p_3')
+        %p= t('participant_student_guide.eligibility_criteria.p_4')
 
-      %p= t('participant_student_guide.eligibility_criteria.p_4')
+        %p= t('participant_student_guide.eligibility_criteria.p_5')
 
-      %p= t('participant_student_guide.eligibility_criteria.p_5')
+        %p= t('participant_student_guide.eligibility_criteria.p_6')
 
-      %p= t('participant_student_guide.eligibility_criteria.p_6')
+        %h3.mt-5#disability= t('participant_student_guide.disability.title')
 
-      %h3#disability= t('participant_student_guide.disability.title')
-
-      %p= raw t('participant_student_guide.disability.description')
+        %p= raw t('participant_student_guide.disability.description')
