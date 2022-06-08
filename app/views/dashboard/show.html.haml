@@ -5,10 +5,11 @@
     .col-md-4.offset-md-1.p-3.text
       %p= raw t('homepage.intro')
 
-.container-fluid.py-4.py-lg-5.bg-light
-  .row.justify-content-md-center
-    .col-md-8
-      %p.lead.mb-0= raw t('homepage.explanation')
+.py-4.py-lg-5.bg-light
+  .container
+    .row.justify-content-md-center
+      .col-md-8
+        %p.lead.mb-0= raw t('homepage.explanation')
 
 .container.py-4.py-lg-5
   .row
@@ -48,8 +49,9 @@
         .card-footer.border-0.bg-transparent
           = mail_to 'hello@codebar.io', t('homepage.participate.workshop_button'), subject: t('homepage.participate.workshop_email_subject'), class: 'btn btn-primary'
 
-.container-fluid.py-4.py-lg-5.bg-light
-  = render partial: 'shared/donation_platforms'
+.py-4.py-lg-5.bg-light
+  .container
+    = render partial: 'shared/donation_platforms'
 
 .container.py-4.py-lg-5
   .row
@@ -74,10 +76,11 @@
             = link_to chapter.name, chapter_path(chapter.slug)
 
 - if @testimonials.any?
-  .container-fluid.py-4.py-lg-5.bg-light
-    .row.justify-content-md-center
-      .col-md-8
-        = render partial: 'members/testimonials'
+  .py-4.py-lg-5.bg-light
+    .container
+      .row.justify-content-md-center
+        .col-md-8
+          = render partial: 'members/testimonials'
 
-%section.container-fluid.py-4.py-lg-5
+.container.py-4.py-lg-5
   = render partial: 'shared/newsletter'
