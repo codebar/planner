@@ -1,5 +1,4 @@
-#banner,
-#chapter {
+#banner {
   margin-top: 30px;
 }
 
@@ -109,19 +108,6 @@ u {
 
 .stripe.reverse:first-child {
   padding: 50px 0;
-}
-
-.events-list {
-  margin-bottom: 30px;
-
-  &--past-events {
-    h3.date {
-      opacity: 0.5;
-    }
-    .event {
-      opacity: 0.5;
-    }
-  }
 }
 
 .admin_margin {

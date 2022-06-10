@@ -8,10 +8,10 @@
         - if @user
           - if @user.attending?(event.__getobj__)
             %span.badge.bg-success.mb-3.mb-md-0
-              = link_to 'Attending', event.path, class: 'text-light border-0'
+              = link_to 'Attending', event.path, class: 'text-light text-decoration-none'
           - if @user.event_organiser?(event)
             %span.badge.bg-secondary.mb-3.mb-md-0
-              = link_to 'Manage', event.admin_path, class: 'text-light border-0'
+              = link_to 'Manage', event.admin_path, class: 'text-light text-decoration-none'
       .order-md-1
         %h3.h5
           = link_to event.to_s, event.path
@@ -32,10 +32,10 @@
         - if event.organisers.any?
           .mb-3.mb-md-0
             - event.organisers.each do |organiser|
-              = link_to twitter_url_for(organiser.twitter), class: 'border-0 d-inline-block mx-1' do
+              = link_to twitter_url_for(organiser.twitter), class: 'd-inline-block mx-1' do
                 = image_tag(organiser.avatar(26), class: 'rounded-circle', title: organiser.full_name, alt: organiser.full_name)
         - if event.sponsors.any?
           %div
             - event.sponsors.each do |sponsor|
-              = link_to sponsor.website, class: 'border-0 d-inline-block' do
+              = link_to sponsor.website, class: 'd-inline-block' do
                 = image_tag(sponsor.avatar.thumb, class: 'sponsor-sm mx-1', alt: sponsor.name)

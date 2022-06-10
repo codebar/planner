@@ -1,20 +1,20 @@
-.stripe.reverse
+.container.py-4.py-lg-5
   .row
-    .col.col-lg-9
-      %h2 Sponsors
+    .col.col-md-10.col-lg-8
+      %h1 Sponsors
       %p.lead
         Without our sponsors running <strong>codebar</strong> would be impossible. They provide us with space, food and drinks, internet, and they also help us cover our running costs.
       %p.lead
         Thank you for sharing our dream of creating a more welcoming, equal and diverse tech industry.
       %p.mb-0
-        If you are interested in becoming a host please do get in touch with us at #{mail_to "hello@codebar.io", "hello@codebar.io"}
-        ='.'
+        If you are interested in becoming a host please do get in touch with us at #{mail_to "hello@codebar.io", "hello@codebar.io"}.
 
 - ['gold', 'silver', 'bronze', 'community', 'standard'].each do |level|
   - if @sponsor_levels[level]
-    .stripe.reverse
-      .row
-        .col
-          %h3.text-center
-            = sponsorship_level_title(level)
-      = render partial: 'shared/sponsors', object: @sponsor_levels[level].compact
+    .py-4.py-lg-5.bg-light
+      .container
+        .row
+          .col
+            %h3.text-center
+              = sponsorship_level_title(level)
+        = render partial: 'shared/sponsors', object: @sponsor_levels[level].compact

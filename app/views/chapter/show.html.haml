@@ -1,17 +1,17 @@
-.container-fluid
+.container
   .row.align-items-center
-    .col-md-6.pt-4.pb-4
+    .col-md-6.py-4
       %h1= @chapter.name
-      - if @chapter.description
+      - if @chapter.description.present?
         %p.lead= @chapter.description
       - else
         %p.lead.mb-0= t('chapters.intro_html')
     - if @chapter.image.present?
       .col-md-6
-        = image_tag @chapter.image.bg, alt: "#{@chapter.name} chapter"
+        = image_tag @chapter.image.bg, alt: "#{@chapter.name} chapter", class: 'mw-100'
 
 .alert-primary.pt-4.pb-4
-  .container-fluid
+  .container
     .row.align-items-center
       .col-md-6.mb-4.mb-md-0
         = t('chapters.info', email: h(@chapter.email)).html_safe
@@ -21,41 +21,41 @@
         - else
           =link_to 'Sign up', new_member_path, class: 'btn btn-primary'
 
-.container.stripe.reverse#chapter
+.container.py-4.py-lg-5
   .row
     .col-md-8.col-sm-12
       - if @upcoming_workshops.any?
-        .events-list.events-list--upcoming
+        .pt-4
           %h3 Upcoming Events
           - @upcoming_workshops.each do |date, workshops|
             .grouped-events
               = render workshops
 
       - if @latest_workshops.any?
-        .events-list.events-list--past
+        .pt-4
           %h3 Past Events
           - @latest_workshops.each do |date, workshops|
             .grouped-events
               = render workshops
 
-    .col-md-4.col-sm-12
+    .col-md-4.col-sm-12.mt-4
       - if @chapter.twitter_handle
         %a.twitter-timeline{href: "https://twitter.com/#{@chapter.twitter_handle}", "data-widget-id" => @chapter.twitter_id }="Tweets by #{@chapter.twitter_handle}"
       - else
         %a.twitter-timeline{href: "https://twitter.com/codebar", "data-widget-id" => @chapter.twitter_id, "data-height" => "500" }="Tweets by codebar"
-
       %script(async src="https://platform.twitter.com/widgets.js" charset="utf-8")
 
 - if @recent_sponsors.any?
-  .container-fluid.stripe.reverse
-    .row
-      .col
-        %h2.text-center Sponsors
-    = render partial: 'shared/sponsors', object: @recent_sponsors
+  .py-4.py-lg-5.bg-light
+    .container
+      .row
+        .col
+          %h2.text-center Sponsors
+      = render partial: 'shared/sponsors', object: @recent_sponsors
 
-.container-fluid.stripe.reverse
+.container.py-4.py-lg-5
   = render partial: 'members/organisers_grid', locals: { members: @chapter.organisers.shuffle, show_info: false, title: t('chapters.team') }
 
-  .row.mt-5
-    .col.alert.alert-primary.mb-0
+  .mt-5
+    .alert.alert-primary.mb-0
       = t('chapters.contact', city: @chapter.name, email: @chapter.email)
