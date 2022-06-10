@@ -1,20 +1,19 @@
-.stripe.reverse
+.container.py-4.py-lg-5
   .row
-    .col
-      %h2 Coaches
+    .col-md-10.col-lg-8
+      %h1 Coaches
       %p.lead
         Here you can find a list of the #{ @coaches_count } volunteers who have coached at codebar.
-      %p.lead
+      %p.lead.mb-4
         If you’d like to start coaching at a workshop near you, read our #{ link_to "teaching guide", teaching_guide_path } and then #{ link_to "sign up", new_member_path } as a coach. It’s easier than you think!
-
-  .row
-    .col
+    .col-12
       .float-right
-        %ul.inline-list
+        %ul.list-inline
           - Time.zone.now.year.downto(2013).each do |year|
-            %li
+            %li.list-inline-item
               - if page_year?(year)
                 .btn.btn-sm.btn-outline-success= year
               - else
                 = link_to year, coaches_path(year: year), class: 'btn btn-sm btn-success'
-  = render partial: '/coach/coach', locals: { coaches: @coaches }
+
+= render partial: '/coach/coach', locals: { coaches: @coaches }

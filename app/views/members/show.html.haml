@@ -1,37 +1,37 @@
-.container-fluid.stripe.reverse
+.container.py-4.py-lg-5
   .row.align-items-center
     .col-auto
       = image_tag(@member.avatar(80), alt: @member.full_name, class: 'rounded-circle mb-2')
     .col-auto
-      %h2.mb-0= @member.full_name
+      %h1.mb-0= @member.full_name
       %small
         Member since
         %em #{l(@member.created_at, format: :website_format)}
 
-.container-fluid#member_profile
+.container.pb-4.pb-lg-5#member_profile
   .row
     .col-12.col-md-7.mb-4
       %h4 Details
       %dl
         - if @member.pronouns.present?
           %dt Pronouns
-          %dd= @member.pronouns || 'Not specified'
+          %dd.mb-3= @member.pronouns || 'Not specified'
 
         %dt Email
-        %dd= mail_to @member.email, @member.email
+        %dd.mb-3= mail_to @member.email, @member.email
 
         %dt Twitter handle
-        %dd= link_to "@#{@member.twitter}", twitter_url_for(@member.twitter)
+        %dd.mb-3= link_to "@#{@member.twitter}", twitter_url_for(@member.twitter)
 
         %dt Phone number
-        %dd= @member.mobile || 'N/A'
+        %dd.mb-3= @member.mobile.present? || 'N/A'
 
         %dt About
-        %dd= @member.about_you
+        %dd.mb-3= @member.about_you
 
         - if @member.skills.any?
           %dt Skills
-          %dd
+          %dd.mb-3
             - @member.skills.each do |skill|
               .badge.bg-secondary= skill.name
 
