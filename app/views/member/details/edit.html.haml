@@ -1,12 +1,12 @@
-.container-fluid.pt-3
+.container.py-4.py-lg-5
   .row.justify-content-md-center
-    .col.col-md-8
+    .col-md-10.col-lg-8
       %h1= t('member.details.edit.title')
       %p= t('member.details.edit.summary')
 
   = simple_form_for @member, url: member_details_path, method: :put do |f|
     .row.justify-content-md-center
-      .col.col-md-8
+      .col-md-10.col-lg-8
         = f.input :name, required: true
         = f.input :surname, required: true
         = f.input :pronouns
@@ -16,6 +16,6 @@
         - else
           = f.input :about_you, as: :text, label: t('member.details.edit.student.about_you'), input_html: { rows: 3 }, required: true
         = f.input :newsletter, as: :boolean, checked_value: true, unchecked_value: false
-        .text-right
+        .text-right.mb-4
           = hidden_field_tag :next_page, step2_member_path(member_type: @type)
           = f.button :button, t('member.details.edit.submit'), class: 'btn btn-primary'

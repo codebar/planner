@@ -1,25 +1,26 @@
-.container-fluid.stripe.reverse
+.container.py-4.py-lg-5
   .row.justify-content-md-center
-    .col.col-md-8
+    .col-md-10.col-lg-8
       %h1= @page_title
 
-.container-fluid.stripe.reverse
-  .row.justify-content-md-center
-    .col.col-md-8
-      %p.lead
-        = t('members.new.intro')
-        = link_to t('members.code_of_conduct'), code_of_conduct_path
-        \.
-      %p.lead
-        = t('members.new.students.intro')
-        = link_to t('members.new.students.criteria_link'), 'http://codebar.io/student-guide#eligibility'
-        = t('members.new.students.criteria_brief')
-      %p.lead
-        = t('members.new.students.github')
-      .d-flex.flex-column.align-items-start
-        = link_to registration_path(member_type: 'student'), class: 'btn-lg btn-primary mb-4' do
-          = t('members.sign_up_as_student')
-          %i.fab.fa-github
-        = link_to registration_path(member_type: 'coach'), class: 'btn-lg btn-primary' do
-          = t('members.sign_up_as_coach')
-          %i.fab.fa-github
+.py-4.py-lg-5.bg-light
+  .container
+    .row.justify-content-md-center
+      .col-md-10.col-lg-8
+        %p.lead
+          = t('members.new.intro')
+          = link_to t('members.code_of_conduct'), code_of_conduct_path
+          \.
+        %p.lead
+          = t('members.new.students.intro')
+          = link_to t('members.new.students.criteria_link'), 'http://codebar.io/student-guide#eligibility'
+          = t('members.new.students.criteria_brief')
+        %p.lead
+          = t('members.new.students.github')
+        .d-flex.flex-column.align-items-start
+          = link_to registration_path(member_type: 'student'), class: 'btn-lg btn-primary mb-4 text-decoration-none' do
+            = t('members.sign_up_as_student')
+            %i.fab.fa-github
+          = link_to registration_path(member_type: 'coach'), class: 'btn-lg btn-primary text-decoration-none' do
+            = t('members.sign_up_as_coach')
+            %i.fab.fa-github

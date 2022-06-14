@@ -1,5 +1,5 @@
 .row.justify-content-md-center.subscriptions
-  .col.col-md-8
+  .col-md-10.col-lg-8
     %h2.h4.toggle
       As a Coach
       - if collapsed
@@ -13,10 +13,10 @@
           = simple_form_for :subscription, url: :destroy_subscriptions, method: :delete do |f|
             = f.hidden_field :subscription_id, value: nil
             = f.hidden_field :group_id, value: group.id
-            = button_tag type: :submit, class: 'btn btn-success w-100' do
+            = button_tag type: :submit, class: 'btn btn-success w-100 mb-4' do
               %i.fas.fa-check
               = group.chapter.name
         - else
           = simple_form_for :subscription, url: :subscriptions do |f|
             = f.hidden_field :group_id, value: group.id
-            = f.button :button, group.chapter.name, class: 'btn btn-secondary w-100'
+            = f.button :button, group.chapter.name, class: 'btn btn-secondary w-100 mb-4'
