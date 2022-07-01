@@ -1,6 +1,6 @@
 - title t('jobs.title')
 
-.container-fluid.stripe.reverse
+.container.py-4.py-lg-5
   .row
     .col
       %h1= t('jobs.title')
@@ -11,6 +11,7 @@
           = t('jobs.index.none')
         %br
         %small #{link_to('Click here', new_member_job_path)} if you would like to post a new job.
+
   - if @jobs.any?
     .row
       .col.col-md-8
