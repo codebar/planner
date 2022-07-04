@@ -126,7 +126,7 @@ You can stop the server when you're finished by typing `Ctrl + C`.
 
 ## Front-end framework
 
-We use Foundation at version 5.5.3, you can find the documentation here: http://foundation.zurb.com/sites/docs/v/5.5.3/
+We use Bootstrap 5, you can find the documentation here: https://getbootstrap.com/docs/5.2/getting-started/introduction/
 
 ## Finding something to work on
 
