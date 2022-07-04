@@ -50,3 +50,8 @@ $enable-negative-margins: true;
 // Utilities
 @import "bootstrap/utilities/api";
 // scss-docs-end import-stack
+
+// TODO: move this somewhere better
+.section:nth-child(odd) {
+  background-color: $light;
+}

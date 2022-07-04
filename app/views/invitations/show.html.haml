@@ -1,4 +1,4 @@
-.container-fluid.stripe.reverse
+.container.py-4.py-lg-5
   .row
     .col-12
       %h1
@@ -60,50 +60,56 @@
                   To complete signing up for the event, you must #{link_to("complete our questionnaire", @event.questionnaire(@invitation), class: 'alert-link border-0 text-decoration-underline')} as we need to know a couple of things in advance to plan the day.
                   %strong You will receive an email when your attendance is verified.
 
-.container-fluid.stripe.reverse
-  .row
-    .col-12.col-lg-6
-      %h3 Schedule
-      = dot_markdown(@event.schedule)
-    .col-12.col-lg-6
-      %h3 Location
-      .row
-        .col-12.col-md-8
-          %address= @host_address.to_html
-        .col-12.col-md-4
-          = image_tag(@event.venue.avatar, class: 'small-image', alt: @event.venue.name)
-      .row
-        .col
-          %iframe{ width: '100%', height: '250', frameborder: '0', scrolling: 'no', marginheight: '0', marginwidth: '0', src: %{https://maps.google.com/maps?f=q&source=s_q&hl=en&amp;geocode=&q=#{@host_address.for_map}&ie=UTF8&t=m&z=15&output=embed} }
-          = link_to 'View larger map', %{https://maps.google.com/maps?f=q&source=s_q&hl=en&amp;geocode=&q=#{@host_address.for_map}&ie=UTF8&hq=&t=m&z=15}, style: "color:#0000FF;text-align:left"
+.py-4.py-lg-5.bg-light
+  .container
+    .row
+      .col-12.col-lg-6
+        %h3 Schedule
+        = dot_markdown(@event.schedule)
+      .col-12.col-lg-6
+        %h3 Location
+        .row
+          .col-12.col-md-8
+            %address= @host_address.to_html
+          .col-12.col-md-4
+            = image_tag(@event.venue.avatar, class: 'small-image mw-100 mb-4', alt: @event.venue.name)
+        .row
+          .col
+            %iframe{ width: '100%', height: '250', frameborder: '0', scrolling: 'no', marginheight: '0', marginwidth: '0', src: %{https://maps.google.com/maps?f=q&source=s_q&hl=en&amp;geocode=&q=#{@host_address.for_map}&ie=UTF8&t=m&z=15&output=embed} }
+            = link_to 'View larger map', %{https://maps.google.com/maps?f=q&source=s_q&hl=en&amp;geocode=&q=#{@host_address.for_map}&ie=UTF8&hq=&t=m&z=15}, style: "color:#0000FF;text-align:left"
 
 - if @event.show_faq
-  .container-fluid.stripe.reverse
-    .row
-      .col
-        %h2.text-center FAQ
-    = render partial: 'events/faq'
+  .py-4.py-lg-5.section
+    .container
+      .row
+        .col
+          %h2.text-center FAQ
+      = render partial: 'events/faq'
 
 - if @event.sponsors?
-  .container-fluid.stripe.reverse
-    = render partial: 'events/event_sponsors', locals: { event: @event }
+  .py-4.py-lg-5.section
+    .container
+      = render partial: 'events/event_sponsors', locals: { event: @event }
 
 - if @event.verified_coaches.any? && @event.display_coaches
-  .container-fluid.stripe.reverse
-    .row
-      .col
-        %h2.text-center= t('events.coaches')
-    .row.text-center
-      = render partial: 'members/avatar_listing', locals: { member: @event.verified_coaches, show_info: false }
+  .py-4.py-lg-5.section
+    .container
+      .row
+        .col
+          %h2.text-center= t('events.coaches')
+      .row.text-center
+        = render partial: 'members/avatar_listing', locals: { member: @event.verified_coaches, show_info: false }
 
 - if @event.verified_students.any? && @event.display_students
-  .container-fluid.stripe.reverse
-    .row
-      .col
-        %h2.text-center= t('events.students')
-    .row.text-center
-      = render partial: 'members/avatar_listing', locals: { member: @event.verified_students, show_info: false }
+  .py-4.py-lg-5.section
+    .container
+      .row
+        .col
+          %h2.text-center= t('events.students')
+      .row.text-center
+        = render partial: 'members/avatar_listing', locals: { member: @event.verified_students, show_info: false }
 
 - if @event.organisers.any?
-  .container-fluid.stripe.reverse
-    = render partial: 'members/organisers_grid', locals: { members: @event.organisers, show_info: false }
+  .py-4.py-lg-5.section
+    .container
+      = render partial: 'members/organisers_grid', locals: { members: @event.organisers, show_info: false }

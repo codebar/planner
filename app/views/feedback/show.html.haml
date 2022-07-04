@@ -1,19 +1,19 @@
-.container-fluid.stripe.reverse
+.container.py-4.py-lg-5
   .row.justify-content-md-center
-    .col-md-8
+    .col-md-10.col-lg-8
       %h1= t('feedback_form.title')
       %p.lead.text-muted= humanize_date(@workshop.date_and_time, with_time: true)
 
-.container-fluid
+.container.pb-4.pb-lg-5
   .row.justify-content-md-center
-    .col-md-8
+    .col-md-10.col-lg-8
       %p
         = t('feedback_form.description')
         %br
         %small= t('feedback_form.note')
 
   .row.justify-content-md-center
-    .col-md-8
+    .col-md-10.col-lg-8
       = simple_form_for @feedback, url: submit_feedback_path(params[:id]), html: { method: 'patch' } do |f|
         .row
           = f.hidden_field :token, value: params[:id]
