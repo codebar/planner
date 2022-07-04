@@ -1,6 +1,6 @@
 - title t('workshop.invitation.title', date: humanize_date(@workshop.date_and_time))
 
-.container-fluid.stripe.reverse
+.container.py-4.py-lg-5
   .row
     .col
       %h1
@@ -10,12 +10,12 @@
       - if @workshop.date_and_time.past?
         %span.badge.bg-danger= t('messages.already_taken_place')
 
-.alert.alert-info.rounded-0
+.alert.alert-info.rounded-0.mb-0
   .row
     .col
       This link can be accessed without authentication so please don't share it with others. You can access and share the <strong>#{link_to("public listing", workshop_url(@workshop), class: 'alert-link')}</strong> of the workshop.
 
-.container-fluid.mb-4
+.container.py-4.py-lg-5
   - if @announcements.any?
     .row
       = render partial: 'shared/announcements', locals: { announcements: @announcements }
@@ -102,39 +102,43 @@
             Read our #{link_to "attendance policy", attendance_policy_path}.
 
 - unless @workshop.virtual?
-  .container-fluid.stripe.reverse
-    = render partial: 'shared/venue', locals: { venue: @workshop.host, address: @workshop.address}
+  .py-4.py-lg-5.section
+    .container
+      = render partial: 'shared/venue', locals: { venue: @workshop.host, address: @workshop.address}
 
 - if @workshop.sponsors.any?
-  .container-fluid.stripe.reverse#sponsors
+  .py-4.py-lg-5.section#sponsors
+    .container
+      .row
+        .col
+          %h2.text-center Sponsors
+      = render partial: 'shared/sponsors', object: @workshop.sponsors
+
+.py-4.py-lg-5.section
+  .container
+    = render partial: 'members/organisers_grid', locals: { members: @workshop.organisers, show_info: true }
+
+.py-4.py-lg-5.section
+  .container
     .row
-      .col
-        %h2.text-center Sponsors
-    = render partial: 'shared/sponsors', object: @workshop.sponsors
+      .col-12.col-md-6
+        %h3 Students (#{@workshop.attending_and_available_student_spots})
+        %ul.list-unstyled.ml-0
+          - @workshop.attending_students.each do |invitation|
+            %li.mt-4
+              .d-flex.align-items-center
+                = image_tag(invitation.member.avatar(56), class: 'rounded-circle', title: invitation.member.full_name, alt: invitation.member.full_name)
+                .ml-3
+                  = invitation.member.full_name
+                  %br
+                  %small.text-muted= invitation.note
 
-.container-fluid.stripe.reverse
-  = render partial: 'members/organisers_grid', locals: { members: @workshop.organisers, show_info: true }
-
-.container-fluid.stripe.reverse
-  .row
-    .col-12.col-md-6
-      %h3 Students (#{@workshop.attending_and_available_student_spots})
-      %ul.list-unstyled.ml-0
-        - @workshop.attending_students.each do |invitation|
-          %li.mt-4
-            .d-flex.align-items-center
-              = image_tag(invitation.member.avatar(56), class: 'rounded-circle', title: invitation.member.full_name, alt: invitation.member.full_name)
-              .ml-3
-                = invitation.member.full_name
-                %br
-                %small.text-muted= invitation.note
-
-    .col-12.col-md-6.mt-5.mt-md-0
-      %h3 Coaches (#{@workshop.attending_and_available_coach_spots})
-      %ul.list-unstyled.ml-0
-        - @workshop.attending_coaches.each do |invitation|
-          %li.mt-4
-            .d-flex.align-items-center
-              = image_tag(invitation.member.avatar(56), class: 'rounded-circle', title: invitation.member.full_name, alt: invitation.member.full_name)
-              .ml-3
-                = invitation.member.full_name
+      .col-12.col-md-6.mt-5.mt-md-0
+        %h3 Coaches (#{@workshop.attending_and_available_coach_spots})
+        %ul.list-unstyled.ml-0
+          - @workshop.attending_coaches.each do |invitation|
+            %li.mt-4
+              .d-flex.align-items-center
+                = image_tag(invitation.member.avatar(56), class: 'rounded-circle', title: invitation.member.full_name, alt: invitation.member.full_name)
+                .ml-3
+                  = invitation.member.full_name
