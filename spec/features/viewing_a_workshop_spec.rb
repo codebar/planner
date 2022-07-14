@@ -44,7 +44,7 @@ RSpec.feature 'Viewing a workshop page', type: :feature do
         end
 
         scenario 'workshop info' do
-          within '#banner' do
+          within '*[data-test=workshop-info]' do
             expect(page).to have_content('Participate in our workshops')
             expect(page).to have_content('Our virtual workshops take place online')
 

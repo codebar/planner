@@ -2,10 +2,10 @@
 
 = render partial: 'meta_tags', locals: { workshop: @workshop }
 
-.container-fluid.stripe.reverse
+.container.py-4.py-lg-5
   .row
     .col
-      %h2
+      %h1
         = t('workshops.title', host: @workshop.host.name)
         %br
         %small #{humanize_date(@workshop.date_and_time, @workshop.ends_at, with_time: true)} #{@workshop.distance_of_time}
@@ -21,14 +21,16 @@
           = sanitize(@workshop.description)
       = render 'actions' unless current_user&.banned?
 
-.container-fluid.stripe.reverse
-  = render partial: 'shared/venue', locals: { venue: @workshop.host, address: @workshop.address}
+.py-4.py-lg-5.bg-light
+  .container
+    = render partial: 'shared/venue', locals: { venue: @workshop.host, address: @workshop.address}
 
-.container-fluid.stripe.reverse#sponsors
+.container.py-4.py-lg-5#sponsors
   .row
     .col
-      %h3.text-center Sponsors
+      %h2.text-center Sponsors
   = render partial: 'shared/sponsors', object: @workshop.sponsors
 
-.container-fluid.stripe.reverse
-  = render partial: 'members/organisers_grid', locals: { members: @workshop.organisers, show_info: false }
+.py-4.py-lg-5.bg-light
+  .container
+    = render partial: 'members/organisers_grid', locals: { members: @workshop.organisers, show_info: false }

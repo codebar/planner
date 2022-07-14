@@ -1,13 +1,13 @@
 - title t('events.title')
 
-.container-fluid{'data-test': 'upcoming-events'}
+.container{'data-test': 'upcoming-events'}
   .row
     .col
       - if @events.any?
         %h3.mb-4 Upcoming Events
   = render partial: 'events', locals: { grouped_events: @events }
 
-.container-fluid{'data-test': 'past-events'}
+.container{'data-test': 'past-events'}
   .row
     .col
       - if @past_events.any?

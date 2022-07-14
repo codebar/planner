@@ -2,17 +2,17 @@
 
 = render partial: 'virtual_workshops/meta_tags', locals: { workshop: @workshop }
 
-.container-fluid.stripe.reverse
+.container.py-4.py-lg-5
   .row
     .col
-      %h2
+      %h1
         = t('workshops.virtual.title', chapter: @workshop.chapter.name)
         %br
         %small #{humanize_date(@workshop.date_and_time, @workshop.ends_at, with_time: true)} #{@workshop.distance_of_time}
       - if @workshop.date_and_time.past?
         %span.badge.bg-danger= t('messages.already_taken_place')
 
-  .row.mt-3#banner
+  .row.mt-3{'data-test': 'workshop-info'}
     .col.col-md-9
       %p.lead
         = t('workshops.virtual.lead')
@@ -24,11 +24,13 @@
       = render 'workshops/actions' unless current_user&.banned?
 
 - if @workshop.sponsors.any?
-  .container-fluid.stripe.reverse#sponsors
-    .row
-      .col
-        %h3.text-center Sponsors
-    = render partial: 'shared/sponsors', object: @workshop.sponsors
+  .py-4.py-lg-5.section#sponsors
+    .container
+      .row
+        .col
+          %h2.text-center Sponsors
+      = render partial: 'shared/sponsors', object: @workshop.sponsors
 
-.container-fluid.stripe.reverse
-  = render partial: 'members/organisers_grid', locals: { members: @workshop.organisers, show_info: false }
+.py-4.py-lg-5.section
+  .container
+    = render partial: 'members/organisers_grid', locals: { members: @workshop.organisers, show_info: false }
