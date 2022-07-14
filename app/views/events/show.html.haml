@@ -1,19 +1,18 @@
-.stripe.reverse
-  .container
-    .row
-      .col-12
-        %h1
-          = @event.name
-          %br
-          %small #{humanize_date(@event.date_and_time, @event.ends_at, with_time: true)}
-      .col-12.col-md-9
-        %p.lead= @event.description.html_safe
+.container.py-4.py-lg-5
+  .row
+    .col-12
+      %h1
+        = @event.name
+        %br
+        %small #{humanize_date(@event.date_and_time, @event.ends_at, with_time: true)}
+    .col-12.col-md-9
+      %p.lead= @event.description.html_safe
 
-    .row
-      .col
-        = render partial: 'event_actions'
+  .row
+    .col
+      = render partial: 'event_actions'
 
-.stripe.reverse
+.py-4.py-lg-5.bg-light
   .container
     .row
       = render partial: 'shared/venue', locals: { venue: @event.venue, address: @host_address}
@@ -27,7 +26,7 @@
         = dot_markdown(@event.schedule)
 
 - if @event.show_faq?
-  .stripe.reverse
+  .py-4.py-lg-5.section
     .container
       .row
         .col
@@ -38,12 +37,12 @@
         = render partial: 'events/faq'
 
 - if @event.sponsors?
-  .stripe.reverse#sponsors
+  .py-4.py-lg-5.section#sponsors
     .container
       = render partial: 'event_sponsors', locals: { event: @event }
 
 - if @event.verified_coaches.any?
-  .stripe.reverse
+  .py-4.py-lg-5.section
     .container
       .row
         .col
@@ -52,6 +51,6 @@
         = render partial: 'members/avatar_listing', locals: { member: @event.verified_coaches, show_info: false }
 
 - if @event.organisers.any?
-  .stripe.reverse
+  .py-4.py-lg-5.section
     .container
       = render partial: 'members/organisers_grid', locals: { members: @event.organisers, show_info: false }
