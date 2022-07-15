@@ -1,12 +1,12 @@
-.container-fluid.pt-3
-  .row.mb-3
+.container.py-4.py-lg-5
+  .row.mb-4
     .col
       %nav{'aria-label': 'breadcrumb'}
         %ol.breadcrumb.ml-0
-          %li.breadcrumb-item= link_to t('admin.shared.sponsors'), admin_sponsors_path, class: 'border-0'
+          %li.breadcrumb-item= link_to t('admin.shared.sponsors'), admin_sponsors_path
           %li.breadcrumb-item.active Contacts
 
-  .row.mb-4
+  .row
     .col
       %table.table.table-striped.table-hover
         %thead
@@ -19,7 +19,7 @@
           - @contacts.each do |contact|
             %tr
               %td
-                = link_to contact.sponsor.name, admin_sponsor_path(contact.sponsor), class: 'border-0'
+                = link_to contact.sponsor.name, admin_sponsor_path(contact.sponsor)
               %td
                 #{contact.name} #{contact.surname}
               %td
