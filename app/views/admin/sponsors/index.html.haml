@@ -1,5 +1,5 @@
-.container-fluid.pt-3
-  .row
+.container.py-4.py-lg-5
+  .row.mb-2
     .col-12
       %nav{'aria-label': 'breadcrumb'}
         %ol.breadcrumb.ml-0
@@ -8,9 +8,9 @@
     .col-12
       = simple_form_for @sponsors_search, url: admin_sponsors_path, method: :get, wrapper: :inline_form, html: { class: 'row row-cols-auto align-items-center' } do |f|
         = f.input :name, required: false, label: false, placeholder: 'Filter by sponsor name'
-        = f.button :button, 'Filter', class: 'btn-primary'
+        = f.button :button, 'Filter', class: 'btn btn-primary'
 
-  .row.mb-3
+  .row.mb-4
     .col-md-6
       = page_entries_info(@sponsors, model: 'sponsor')
     .col-md-6.text-md-right
@@ -18,7 +18,7 @@
 
   .row.mb-3
     .col
-      %table.table
+      %table.table.table-striped.table-hover
         %thead
           %tr
             %th
@@ -35,12 +35,12 @@
               %td
                 = link_to(sponsor.name, admin_sponsor_path(sponsor))
               %td
-                =sponsor.level
+                = sponsor.level
               %td
                 - sponsor.chapters.uniq.each do |chapter|
-                  =link_to chapter.name, admin_chapter_path(chapter)
+                  = link_to chapter.name, admin_chapter_path(chapter)
               %td
                 = sponsor.sponsorships_count
-  .row.mb-4
+  .row
     .col.text-md-right
       = will_paginate(@sponsors)

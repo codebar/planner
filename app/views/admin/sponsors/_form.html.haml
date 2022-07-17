@@ -39,7 +39,7 @@
             = address.input :longitude
             = address.input :directions, input_html: { rows: 3 }
 
-  .row.mt-4.mb-4.text-right
+  .row.mt-4.text-right
     .col
       - if params[:action] == 'new' || params[:action] == 'create'
         = f.button :button, 'Create sponsor', class: 'btn btn-primary'
