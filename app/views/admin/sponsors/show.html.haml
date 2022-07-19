@@ -1,9 +1,9 @@
-.container-fluid.pt-3
-  .row
+.container.py-4.py-lg-5
+  .row.mb-4
     .col
       %nav{'aria-label': 'breadcrumb'}
         %ol.breadcrumb.ml-0
-          %li.breadcrumb-item= link_to t('admin.shared.sponsors'), admin_sponsors_path, class: 'border-0'
+          %li.breadcrumb-item= link_to t('admin.shared.sponsors'), admin_sponsors_path
           %li.breadcrumb-item.active= @sponsor.name
 
   .row
@@ -11,8 +11,8 @@
       %h1= @sponsor.name
       = link_to t('.edit_button'), edit_admin_sponsor_path(@sponsor), class: 'btn btn-primary'
     .col-12.col-lg-3
-      .d-flex.justify-content-center.py-3.mb-4
-        = image_tag(@sponsor.avatar.url, alt: @sponsor.name, class: 'small-image')
+      .d-flex.justify-content-center.p-3.mb-4
+        = image_tag(@sponsor.avatar.url, alt: @sponsor.name, class: 'small-image mw-100')
       .bg-light.p-3.mb-4
         %dl.row
           %dt= t('.website')
@@ -109,7 +109,7 @@
                         #{I18n.l(meeting.date_and_time, format: :default_date)}
                         = meeting.title
 
-      #activities.mb-4
+      #activities
         %h2.h3.mb-3= t('.activities')
         %ul.list-unstyled.ml-0
           = render_activities @sponsor.activities
