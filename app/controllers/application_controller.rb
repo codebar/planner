@@ -138,15 +138,9 @@ class ApplicationController < ActionController::Base
     request.referrer || root_path
   end
 
-  def jobs_pending_approval
-    @jobs_pending_approval ||= Job.where(approved: false, submitted: true).count
-  end
-
   def chapters
     @chapters ||= Chapter.all
   end
-
-  helper_method :jobs_pending_approval, :chapters
 
   def redirect_back(fallback_location:, **args)
     if referer = request.headers['Referer']

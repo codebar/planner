@@ -27,9 +27,6 @@
 %li
   = link_to new_admin_group_path, class: 'dropdown-item' do
     New group
-%li
-  = link_to admin_jobs_path, class: 'dropdown-item' do
-    Review jobs (#{jobs_pending_approval})
 
 - if current_user.has_role?(:organiser, :any)
   %li

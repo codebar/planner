@@ -10,7 +10,6 @@ class Member < ActiveRecord::Base
   has_many :invitations
   has_many :auth_services
   has_many :feedbacks, foreign_key: :coach_id
-  has_many :jobs, foreign_key: :created_by_id
   has_many :subscriptions
   has_many :groups, through: :subscriptions
   has_many :member_notes
