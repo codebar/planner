@@ -1,22 +1,21 @@
-.container-fluid
-  .stripe.reverse
-    .row
-      .col
-        %h1
-          Workshop
-          = link_to [:admin, @workshop.chapter] do
-            %small=@workshop.chapter.name
-    .row
-      - unless @workshop.virtual?
-        .col-3
-          %h2.h4
-            = @workshop.venue.name
-      .col-3
-        %h2.h5
-          #{l(@workshop.date_and_time)}
+.container.py-4.py-lg-5
+  .row
+    .col
+      %h1
+        Workshop
+        = link_to [:admin, @workshop.chapter] do
+          %small=@workshop.chapter.name
+  .row.align-items-center
+    - unless @workshop.virtual?
+      .col-auto
+        %h2.h4
+          = @workshop.venue.name
+    .col-auto
+      %h2.h5
+        #{l(@workshop.date_and_time)}
 
-.container-fluid
-  .stripe
+.py-4.py-lg-5.bg-light
+  .container
     .row
       .col
         %h3

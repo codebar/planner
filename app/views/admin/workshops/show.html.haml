@@ -1,4 +1,4 @@
-.container-fluid.btn-group.p-0
+.container-fluid.btn-group.p-0{ role: 'group' }
   = link_to edit_admin_workshop_path(@workshop), class: 'btn btn-primary py-3 rounded-0' do
     %i.fas.fa-pencil-alt
     %label.text-white Edit
@@ -30,7 +30,7 @@
     %i.fas.fa-times
     %label.text-white Destroy
 
-.container-fluid.mt-5
+.container.py-4.py-lg-5
   .row
     .col
       %h2
@@ -72,7 +72,7 @@
               %br
               #{t('admin.workshop.virtual.details.more_html', slack_channel: link_to('#organisers', 'https://codebar.slack.com/archives/G08CQ5KFD'))}
 
-  .row.my-4
+  .row.mt-4
     .col-6.col-md-3#host
       - if @workshop.venue.present?
         %h4 Venue
@@ -93,6 +93,7 @@
         %span{'data-bs-toggle': 'tooltip', 'data-bs-placement': 'bottom', title: organiser.full_name}
           = image_tag(organiser.avatar(40), alt: organiser.full_name)
 
-.container-fluid.bg-light.pt-4
-  .row.mt-4#invitations
-    = render partial: 'invitation_management'
+- if @workshop.invitations.any?
+  .py-4.py-lg-5.bg-light
+    .container#invitations
+      = render partial: 'invitation_management'

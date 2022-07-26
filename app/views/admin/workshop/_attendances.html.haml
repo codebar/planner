@@ -1,7 +1,7 @@
 .row
   .col.attendances
     - invitations.each do |invitation|
-      .row.attendee.mb-3
+      .row.attendee.mt-3
         .col-1
           - if (invitation.parent.date_and_time - 30.minutes).past?
             - if invitation.attended.nil?
@@ -23,7 +23,7 @@
               %i.fas.fa-exclamation-circle
 
           - if invitation.member.recent_notes.any?
-            %span{'data-bs-toggle': 'tooltip', 'data-bs-placement': 'bottom', title: "Note recently added"}
+            %span{'data-bs-toggle': 'tooltip', 'data-bs-placement': 'bottom', title: 'Note recently added'}
               %i.fas.fa-comment
 
           = link_to admin_member_path(invitation.member) do
@@ -32,15 +32,15 @@
             - else
               = invitation.member.full_name
         .col-6
-          -if invitation.tutorial?
+          - if invitation.tutorial?
             %p.mb-1 Tutorial: #{invitation.tutorial}
-          -if invitation.note?
-            %p.mb-1=invitation.note
+          - if invitation.note?
+            %p.mb-1 Note: #{invitation.note}
           - if invitation.rsvp_time.present?
             %span{'data-bs-toggle': 'tooltip', 'data-bs-placement': 'bottom', title: 'Time of RSVP'}
               %p.mb-1.small
                 %i.fas.fa-history
-                =l(invitation.rsvp_time)
+                = l(invitation.rsvp_time)
             - if invitation.automated_rsvp?
               %span{'data-bs-toggle': 'tooltip', 'data-bs-placement': 'bottom', title: 'Waiting list or admin addition'}
                 %p.mb-1.small
@@ -49,4 +49,4 @@
             %span{'data-bs-toggle': 'tooltip', 'data-bs-placement': 'bottom', title: 'Reminder emailed at'}
               %p.mb-1.small
                 %i.far.fa-clock
-                =l(invitation.reminded_at)
+                = l(invitation.reminded_at)
