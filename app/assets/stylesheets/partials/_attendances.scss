@@ -3,11 +3,6 @@
         margin-bottom: 0;
     }
 
-    .verify_attendance,
-    .cancel_attendance {
-        border: none;
-    }
-
     a .fa {
         color: black;
 
@@ -18,10 +13,6 @@
         &:active {
             text-shadow: -2px 1px 1px #999;
         }
-    }
-
-    .attendee {
-        padding: 0.5em 0;
     }
 }
 

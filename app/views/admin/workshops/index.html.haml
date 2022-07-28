@@ -1,13 +1,13 @@
-.container-fluid.pt-3
-  .row
+.container.py-4.py-lg-5
+  .row.mb-4
     .col
-      %h1.mb-3
+      %h1
         Workshops
         %small.text-muted= @chapter.name
 
   .row
     .col
-      %table.table
+      %table.table.table-striped.table-hover
         %thead
           %td Date
           %td Attendances
@@ -17,13 +17,13 @@
           - @workshops.each do |workshop|
             %tr
               %td
-                = link_to admin_workshop_path(workshop), class: 'border-0' do
+                = link_to admin_workshop_path(workshop) do
                   = humanize_date(workshop.date_and_time, with_time: true, with_year: true)
               %td
                 = workshop.invitations.accepted.count
               %td
                 - workshop.sponsors.each do |sponsor|
-                  = link_to sponsor.name, sponsor.website, class: 'border-0'
+                  = link_to sponsor.name, sponsor.website
               %td
                 - if workshop.date_and_time.future?
                   %span.badge.bg-primary Upcoming
