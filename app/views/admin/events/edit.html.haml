@@ -1,10 +1,10 @@
-.container-fluid.pt-3
+.container.py-4.py-lg-5
   .row.mb-4
     .col
       %h1 Edit Event
 
   .row
-    .col.col-lg-10
+    .col.col-md-10.col-lg-8
       = simple_form_for [:admin, @event] do |f|
         .row
           .col-12
