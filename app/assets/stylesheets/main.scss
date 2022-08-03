@@ -44,6 +44,7 @@ nav a.menu {
 .collapsed {
   display: none;
 }
+
 .no-js .collapsed {
   display: block;
 }
@@ -80,34 +81,6 @@ img.sponsor {
 
 u {
   text-decoration: underline;
-}
-
-.stripe:not(.reverse):first-child {
-  padding: 80px 0px 40px;
-}
-
-.stripe:not(.reverse):nth-child(even) {
-  background-color: #f5f6f7;
-  padding: 60px 0;
-}
-
-.stripe.reverse:nth-child(even) {
-  padding-top: 60px;
-  padding-bottom: 60px;
-}
-
-.stripe.reverse:nth-child(odd) {
-  background-color: #f5f6f7;
-  padding-top: 60px;
-  padding-bottom: 60px;
-}
-
-.stripe.reverse:first-child {
-  padding: 50px 0;
-}
-
-.admin_margin {
-  margin-top: 15px;
 }
 
 form .hint {
