@@ -1,9 +1,9 @@
-.container-fluid.pt-3
+.container.py-4.py-lg-5
   .row
     .col
       %h1.mb-3
         %small
-          = link_to edit_admin_chapter_path(@chapter), class: 'border-0' do
+          = link_to edit_admin_chapter_path(@chapter), class: 'text-decoration-none' do
             %i.fas.fa-edit
         = @chapter.name
         %small.text-muted= @chapter.email
@@ -26,15 +26,15 @@
       %ul.nav.flex-column.ml-0.mb-4
         - @groups.each do |group|
           %li.nav-item
-            = link_to [ :admin, group ], class: 'nav-link border-0' do
+            = link_to [ :admin, group ], class: 'nav-link' do
               #{group.name} (#{group.members.count})
           %li.nav-item
-            = link_to admin_chapter_members_path(@chapter, type: group.name.downcase), class: 'nav-link border-0' do
+            = link_to admin_chapter_members_path(@chapter, type: group.name.downcase), class: 'nav-link' do
               View #{group.name} emails
         %li.nav-item
-          = link_to 'View all sponsors', admin_sponsors_path, class: 'nav-link border-0'
+          = link_to 'View all sponsors', admin_sponsors_path, class: 'nav-link'
         %li.nav-item
-          = link_to 'View all workshops', admin_chapter_workshops_path(@chapter), class: 'nav-link border-0'
+          = link_to 'View all workshops', admin_chapter_workshops_path(@chapter), class: 'nav-link'
 
     .col-12.col-lg-7.offset-lg-1
       .mb-4
@@ -45,12 +45,12 @@
           %ul.list-unstyled.ml-0.mb-0
             - @workshops.each do |workshop|
               %li.py-2
-                = link_to admin_workshop_path(workshop), class: 'border-0' do
+                = link_to admin_workshop_path(workshop) do
                   = humanize_date(workshop.date_and_time, with_time: true)
                   - if workshop.invitable?
                     (#{workshop.invitations.accepted.count})
         - else
           There are no upcoming workshops.
-      .mb-4
+      %div
         %h3 Latest subscribers
         = render partial: 'admin/subscriptions/index', locals: { subscribers: @subscribers }

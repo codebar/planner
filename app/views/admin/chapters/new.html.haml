@@ -1,10 +1,10 @@
-.container-fluid.pt-3
+.container.py-4.py-lg-5
   .row.mb-4
     .col
       %h1 New Chapter
 
   .row
-    .col.col-lg-8
+    .col.col-md-10.col-lg-8
       = simple_form_for [:admin, @chapter] do |f|
         = f.input :name, placeholder: 'e.g. Cambridge', required: true
         = f.input :email, placeholder: 'e.g. cambridge@codebar.io', required: true

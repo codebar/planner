@@ -1,4 +1,4 @@
-.container-fluid.organisers.pt-3
+.container.py-4.py-lg-5.organisers
   .row.mb-4
     .col
       %h1
@@ -11,23 +11,23 @@
         = f.input :organiser, collection: @chapter_members, label_method: :full_name, required: true, prompt: 'Select a member to make organiser'
         = f.button :button, 'Add organiser', class: 'btn btn-primary btn-block mb-0'
 
-  .row.mb-2
-    .col-3
-      %p.fw-bold.mb-0 Name
-    .col-3
-      %p.fw-bold.mb-0 Email
-    .col-3
-      %p.fw-bold.mb-0 Phone number
-    .col-3
-      %p.fw-bold.mb-0 Actions
-
-  - @organisers.each do |organiser|
-    .row.mb-4
-      .col-3
-        %p.mb-0= organiser.full_name
-      .col-3
-        %p.mb-0= organiser.email
-      .col-3
-        %p.mb-0= organiser.mobile
-      .col-3
-        = link_to 'Remove', admin_chapter_organiser_path(@chapter, organiser), method: :delete, data: { confirm: 'Are you sure?' }
+  .row
+    .col
+      %table.table.table-striped.table-hover
+        %thead
+          %tr
+            %th Name
+            %th Email
+            %th Phone number
+            %th Actions
+        %tbody
+          - @organisers.each do |organiser|
+            %tr
+              %td
+                = organiser.full_name
+              %td
+                = organiser.email
+              %td
+                = organiser.mobile
+              %td
+                = link_to 'Remove', admin_chapter_organiser_path(@chapter, organiser), method: :delete, data: { confirm: 'Are you sure?' }
