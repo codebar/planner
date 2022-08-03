@@ -1,4 +1,4 @@
-.container-fluid.btn-group.p-0
+.container-fluid.btn-group.p-0{ role: 'group' }
   = link_to invite_admin_meeting_path(@meeting), class: 'btn btn-primary py-3 rounded-0', title: 'Invite' do
     %i.fas.fa-paper-plane
     %label.text-white Invite
@@ -12,11 +12,11 @@
     %i.fas.fa-users
     %label.text-white Labels
 
-.container-fluid.mt-5
+.container.py-4.py-lg-5
   .row
     .col
       %h1
-        =@meeting.name
+        = @meeting.name
       %h2
         %small #{humanize_date(@meeting.date_and_time, @meeting.ends_at, with_time: true)}
   .row
@@ -53,5 +53,7 @@
       %h4 Agenda
       = @meeting.description.html_safe
 
-#invitations.stripe.reverse
-  = render partial: 'invitation_management'
+- if @invitations.any?
+  .py-4.py-lg-5.bg-light
+    .container#invitations
+      = render partial: 'invitation_management'
