@@ -1,7 +1,8 @@
-.container-fluid
+.container.py-4.py-lg-5
   .row.mb-4
     .col
       %h1 Announcements
+
   .row.border-bottom.border-primary
     .col
       %p.mb-2 Created by
@@ -30,4 +31,4 @@
         - if announcement.expires_at.present?
           %p= l(announcement.expires_at, format: :date)
       .col
-        = link_to 'Edit', edit_admin_announcement_path(announcement), class: 'border-0'
+        = link_to 'Edit', edit_admin_announcement_path(announcement)
