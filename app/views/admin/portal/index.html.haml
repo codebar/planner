@@ -1,17 +1,17 @@
-.container-fluid
+.container.py-4.py-lg-5
   .row
     .col-12.col-md-3
       %h3.mb-3 Chapters
       %ul.list-unstyled.m-0
         - @chapters.each do |chapter|
           %li.pb-2.mb-3.border-bottom.border-dark
-            = link_to chapter.name, [ :admin, chapter ], class: 'border-0 pl-2'
+            = link_to chapter.name, [ :admin, chapter ], class: 'pl-2'
     .col-12.col-md-5
       %h3.mb-3 Upcoming Workshops
       %ul.list-unstyled.m-0
         - @workshops.each do |workshop|
           %li.border-bottom.border-dark.pb-2.mb-3
-            = link_to admin_workshop_path(workshop), class: 'border-0' do
+            = link_to admin_workshop_path(workshop) do
               %strong= workshop.chapter.name
               %br
               = humanize_date(workshop.date_and_time, with_time: true)
@@ -28,7 +28,7 @@
       %ul.list-unstyled.m-0
         - @groups.each do |group|
           %li.border-bottom.border-dark.pb-2.mb-3
-            = link_to [:admin, group], class: 'border-0' do
+            = link_to [:admin, group] do
               #{group.name} (#{group.chapter.name})
 
     .col-12.col-md-9

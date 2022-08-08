@@ -1,9 +1,9 @@
-.container-fluid.pt-3
+.container.py-4.py-lg-5
   .row.mb-4
     .col
-      %nav
-        %ol.breadcrumb.ml0
-          %li.breadcrumb-item= link_to @member.full_name, admin_member_path(@member), class: 'border-0'
+      %nav{'aria-label': 'breadcrumb'}
+        %ol.breadcrumb.ml-0
+          %li.breadcrumb-item= link_to @member.full_name, admin_member_path(@member)
           %li.breadcrumb-item.active=t('.title')
 
   .row

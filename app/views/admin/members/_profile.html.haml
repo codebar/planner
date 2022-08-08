@@ -1,8 +1,8 @@
 #profile
-  = image_tag(@member.avatar(200), title: @member.full_name, alt: @member.full_name)
-  %span.d-block= @member.full_name
-  %span.d-block= mail_to @member.email, @member.email
-  %span.d-block= @member&.mobile
+  = image_tag(@member.avatar(200), title: @member.full_name, alt: @member.full_name, class: 'mb-4 rounded-circle')
+  %span.d-block.mb-2= @member.full_name
+  %span.d-block.mb-2= mail_to @member.email, @member.email
+  %span.d-block.mb-2= @member&.mobile
   %span.d-block
     %p.lead= @member.about_you
 
