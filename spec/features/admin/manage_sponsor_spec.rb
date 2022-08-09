@@ -65,11 +65,14 @@ RSpec.feature 'Managing sponsors', type: :feature do
         visit edit_admin_sponsor_path(sponsor)
 
         fill_in 'Accessibility information', with: 'This venue is fully accessible to wheelchair users.'
+        fill_in 'Description', with: 'This sponsor has great WiFi.'
         fill_in 'Directions', with: 'Office is located on the third floor.'
 
         click_on 'Save changes'
 
         expect(page).to have_content 'This venue is fully accessible to wheelchair users.'
+        expect(page).to have_content 'This sponsor has great WiFi.'
+        expect(page).to have_content 'Office is located on the third floor.'
       end
     end
   end
