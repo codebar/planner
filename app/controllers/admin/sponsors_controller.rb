@@ -61,7 +61,7 @@ class Admin::SponsorsController < Admin::ApplicationController
 
   def sponsor_params
     params.require(:sponsor).permit(:name, :avatar, :website, :seats, :accessibility_info,
-                                    :number_of_coaches, :level,
+                                    :number_of_coaches, :level, :description,
                                     address_attributes: %i[id flat street postal_code city
                                                            latitude longitude directions],
                                     contacts_attributes: %i[id name surname email mailing_list_consent
