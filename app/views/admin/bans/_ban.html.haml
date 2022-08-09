@@ -1,8 +1,8 @@
 .row.d-flex.suspension
   .col-2.col-md-1
-    %span.fa-stack
+    %span.fa-stack.text-danger
       %i.fas.fa-user.fa-stack-1x
-      %i.fas.fa-ban.fa-stack-2x.warning
+      %i.fas.fa-ban.fa-stack-2x
   .col-9.col-md-11.details
     %strong
       - if action.permanent?
@@ -10,8 +10,9 @@
       - else
         Suspended until #{l(action.expires_at, format: :default_date)}
       by #{link_to(action.added_by.full_name, action.added_by)}
-    %em= action.reason
-    %blockquote
+    %div
+      %em= action.reason
+    %p.mb-0
       = action.note
     - if action.explanation.present?
       .explanation
