@@ -1,10 +1,10 @@
 class Event < ApplicationRecord
+  include DateTimeConcerns
   include Listable
   include Invitable
-  include DateTimeConcerns
   include EventHelper
 
-  attr_accessor :begins_at
+  attr_accessor :local_date, :local_time, :local_end_time
 
   resourcify :permissions, role_cname: 'Permission', role_table_name: :permission
 
@@ -27,11 +27,9 @@ class Event < ApplicationRecord
   validate :silver_sponsors_uniqueness
   validate :gold_sponsors_uniqueness
   validate :venue_or_remote_must_be_present
+  validates :date_and_time, :ends_at, presence: true
 
-  before_save do
-    begins_at = Time.parse(self.begins_at)
-    self.date_and_time = date_and_time.change(hour: begins_at.hour, min: begins_at.min)
-  end
+  before_validation :set_date_and_time, :set_end_date_and_time
 
   def to_s
     name
@@ -65,10 +63,6 @@ class Event < ApplicationRecord
     !coaches_only? && student_spaces > attending_students.count
   end
 
-  def date
-    I18n.l(date_and_time, format: :dashboard)
-  end
-
   def invitability
     errors.add(:coach_spaces, :required) if coach_spaces.blank?
     errors.add(:student_spaces, :required) if student_spaces.blank?
@@ -99,10 +93,6 @@ class Event < ApplicationRecord
   end
 
   private
-
-  def time_zone
-    'London'
-  end
 
   def duplicated_sponsors
     @duplicated_sponsors ||= fetch_duplicated_sponsors

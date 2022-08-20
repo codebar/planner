@@ -30,16 +30,17 @@
 //= require font_awesome5
 
 $(function() {
-  $('#meeting_local_date, #workshop_local_date, #event_date_and_time, #workshop_rsvp_open_local_date').pickadate({
+  $("body").removeClass("no-js");
+
+  $('#event_local_date, #meeting_local_date, #workshop_local_date, #workshop_rsvp_open_local_date').pickadate({
     format: 'dd/mm/yyyy'
   });
-
   $('#announcement_expires_at, #ban_expires_at').pickadate();
-  $('#meeting_local_time, #workshop_local_time, #workshop_local_end_time, #event_begins_at, #event_ends_at, #meeting_local_end_time, #workshop_rsvp_open_local_time').pickatime({
-    format: 'HH:i'
+  $(
+    "#meeting_local_time, #meeting_local_end_time, #event_local_time, #event_local_end_time, #workshop_local_time, #workshop_local_end_time, #workshop_rsvp_open_local_time"
+  ).pickatime({
+    format: "HH:i",
   });
-
-  $('body').removeClass('no-js');
 
   // Chosen hides inputs and selects, which becomes problematic when they are
   // required: browser validation doesn't get shown to the user.

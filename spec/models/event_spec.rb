@@ -3,6 +3,7 @@ require 'spec_helper'
 RSpec.describe Event, type: :model do
   subject(:event) { Fabricate(:event) }
   include_examples "Invitable", :invitation, :event
+  include_examples DateTimeConcerns, :event
 
   context 'validates' do
     it { is_expected.to validate_presence_of(:name) }
@@ -10,6 +11,8 @@ RSpec.describe Event, type: :model do
     it { is_expected.to validate_presence_of(:info) }
     it { is_expected.to validate_presence_of(:schedule) }
     it { is_expected.to validate_presence_of(:description) }
+    it { is_expected.to validate_presence_of(:date_and_time) }
+    it { is_expected.to validate_presence_of(:ends_at) }
     it { is_expected.to validate_uniqueness_of(:slug) }
     it { is_expected.to validate_numericality_of(:coach_spaces) }
     it { is_expected.to validate_numericality_of(:student_spaces) }
