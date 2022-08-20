@@ -1,14 +1,14 @@
 class ApplicationController < ActionController::Base
   include Pundit
 
-  rescue_from Exception do |ex|
-    Rollbar.error(ex)
-    Rails.logger.fatal(ex)
-    respond_to do |format|
-      format.html { render 'errors/error', layout: false, status: :internal_server_error }
-      format.all  { render nothing: true, status: :internal_server_error }
-    end
-  end
+  # rescue_from Exception do |ex|
+  #   Rollbar.error(ex)
+  #   Rails.logger.fatal(ex)
+  #   respond_to do |format|
+  #     format.html { render 'errors/error', layout: false, status: :internal_server_error }
+  #     format.all  { render nothing: true, status: :internal_server_error }
+  #   end
+  # end
 
   rescue_from ActionController::RoutingError, with: :render_not_found
   rescue_from ActiveRecord::RecordNotFound, with: :render_not_found

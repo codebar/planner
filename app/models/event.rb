@@ -25,6 +25,14 @@ class Event < ActiveRecord::Base
   validate :bronze_sponsors_uniqueness
   validate :silver_sponsors_uniqueness
   validate :gold_sponsors_uniqueness
+  
+  validate :venue_or_remote_must_be_present
+
+  def venue_or_remote_must_be_present
+    if !remote && !venue
+      errors.add(:venue, "must be set, or event must be marked as remote")
+    end
+  end
 
   before_save do
     begins_at = Time.parse(self.begins_at)

@@ -18,7 +18,7 @@ class InvitationsController < ApplicationController
 
   def show
     @event = EventPresenter.new(@invitation.event)
-    @host_address = AddressPresenter.new(@event.venue.address)
+    @host_address = AddressPresenter.new(@event.venue.address) if @event.venue.present?
     @member = @invitation.member
   end
 

@@ -8,7 +8,7 @@ class EventInvitationMailer < ActionMailer::Base
     @event = event
     @member = member
     @invitation = invitation
-    @host_address = AddressPresenter.new(@event.venue.address)
+    @host_address = AddressPresenter.new(@event.venue.address) if @event.venue.present?
 
     subject = "Invitation: #{@event.name}"
 
@@ -19,7 +19,7 @@ class EventInvitationMailer < ActionMailer::Base
     @event = event
     @member = member
     @invitation = invitation
-    @host_address = AddressPresenter.new(@event.venue.address)
+    @host_address = AddressPresenter.new(@event.venue.address) if @event.venue.present?
     @everyone_is_invited = !event.audience
 
     mail(mail_args(member, @everyone_is_invited ? "Invitation: #{@event.name}" : "Coach Invitation: #{@event.name}"),
@@ -30,7 +30,7 @@ class EventInvitationMailer < ActionMailer::Base
     @event = EventPresenter.new(event)
     @member = member
     @invitation = invitation
-    @host_address = AddressPresenter.new(@event.venue.address)
+    @host_address = AddressPresenter.new(@event.venue.address) if @event.venue.present?
 
     require 'services/event_calendar'
     attachments['codebar.ics'] = { mime_type: 'text/calendar',
