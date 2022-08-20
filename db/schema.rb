@@ -224,6 +224,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_03_225601) do
     t.boolean "surveys_required", default: false
     t.string "audience"
     t.boolean "virtual", default: false, null: false
+    t.string "time_zone", default: "London", null: false
     t.index ["slug"], name: "index_events_on_slug", unique: true
     t.index ["venue_id"], name: "index_events_on_venue_id"
   end
