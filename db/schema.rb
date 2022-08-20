@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20201120012812) do
+ActiveRecord::Schema.define(version: 20220820180050) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -235,6 +235,7 @@ ActiveRecord::Schema.define(version: 20201120012812) do
     t.boolean  "confirmation_required", default: false
     t.boolean  "surveys_required",      default: false
     t.string   "audience"
+    t.boolean  "remote",                default: false, null: false
   end
 
   add_index "events", ["slug"], name: "index_events_on_slug", unique: true, using: :btree
