@@ -40,7 +40,6 @@ ActiveRecord::Migration.check_pending! if defined?(ActiveRecord::Migration)
 RSpec.configure do |config|
   config.include ApplicationHelper
   config.include LoginHelpers
-  config.include JobrefHelpers
   config.include ActiveSupport::Testing::TimeHelpers
   config.include SelectFromChosen, type: :feature
   config.use_transactional_fixtures = false
