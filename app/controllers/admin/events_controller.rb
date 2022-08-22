@@ -74,11 +74,11 @@ class Admin::EventsController < Admin::ApplicationController
 
   def event_params
     params.require(:event).permit(
-      :virtual, :name, :slug, :date_and_time, :begins_at, :ends_at, :description, :info, :schedule, :venue_id, :external_url,
-      :coach_spaces, :student_spaces, :email, :announce_only, :tito_url, :invitable, :student_questionnaire,
-      :confirmation_required, :surveys_required, :audience,
-      :coach_questionnaire, :show_faq, :display_coaches, :display_students,
-      bronze_sponsor_ids: [], silver_sponsor_ids: [], gold_sponsor_ids: [], sponsor_ids: [], chapter_ids: []
+      :virtual, :name, :slug, :date_and_time, :begins_at, :ends_at, :description, :info, :schedule, :venue_id, 
+      :external_url, :coach_spaces, :student_spaces, :email, :announce_only, :tito_url, :invitable, 
+      :student_questionnaire, :confirmation_required, :surveys_required, :audience, :coach_questionnaire,
+      :show_faq, :display_coaches, :display_students, bronze_sponsor_ids: [], silver_sponsor_ids: [], 
+      gold_sponsor_ids: [], sponsor_ids: [], chapter_ids: []
     )
   end
 
