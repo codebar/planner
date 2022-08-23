@@ -7,6 +7,32 @@ RSpec.feature 'Admin::Sponsors', type: :feature do
     login_as_admin(manager)
   end
 
+  context 'Sponsors list' do
+    let(:sponsor) { Fabricate(:sponsor_with_contacts) }
+    let(:sponsor2) { Fabricate(:sponsor_with_contacts) }
+
+
+    scenario 'can filter by chapter' do
+      sponsored_workshop = Fabricate(:workshop_sponsor, sponsor: sponsor).workshop
+      hosted_workshop = Fabricate(:workshop_sponsor, sponsor: sponsor2, host: true).workshop
+
+      visit admin_sponsors_path
+
+      expect(page).to have_content(sponsor.name)
+      expect(page).to have_content(sponsor2.name)
+
+      expect(page.all(:css, 'tbody tr', count: 2))
+
+      expect(page).to have_content(hosted_workshop.chapter.name)
+      expect(page).to have_content(sponsored_workshop.chapter.name)
+
+      select sponsored_workshop.chapter.name, from: 'sponsors_search[chapter]'
+      click_on "Filter"
+
+      expect(page.all(:css, 'tbody tr', count: 1))
+    end
+  end
+
   context 'Sponsor page' do
     let(:sponsor) { Fabricate(:sponsor_with_contacts) }
 
@@ -82,6 +108,7 @@ RSpec.feature 'Admin::Sponsors', type: :feature do
 
     it 'can set contact information' do
       visit edit_admin_sponsor_path(sponsor)
+
 
       click_on 'Add contact'
       fill_in 'sponsor_contacts_attributes_0_name', with: 'Jane'
