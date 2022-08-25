@@ -113,19 +113,4 @@ class Event < ActiveRecord::Base
     ids.select { |e| ids.count(e) > 1 }
   end
 
-  def sponsors_uniqueness
-    errors.add(:sponsors, :duplicated_sponsor) unless (sponsors.map(&:id) & duplicated_sponsors).empty?
-  end
-
-  def bronze_sponsors_uniqueness
-    errors.add(:bronze_sponsors, :duplicated_sponsor) unless (bronze_sponsors.map(&:id) & duplicated_sponsors).empty?
-  end
-
-  def silver_sponsors_uniqueness
-    errors.add(:silver_sponsors, :duplicated_sponsor) unless (silver_sponsors.map(&:id) & duplicated_sponsors).empty?
-  end
-
-  def gold_sponsors_uniqueness
-    errors.add(:gold_sponsors, :duplicated_sponsor) unless (gold_sponsors.map(&:id) & duplicated_sponsors).empty?
-  end
 end
