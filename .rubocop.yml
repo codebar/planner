@@ -7,6 +7,7 @@ AllCops:
     - spec/**/*
     - config/**/*
     - bin/**/*
+    - vendor/bundle/**/*
 
 require:
   - rubocop
@@ -17,7 +18,7 @@ require:
 Layout/LineLength:
   Max: 120
   Exclude:
-    - 'spec/**/*'
+    - "spec/**/*"
 
 Layout/EndOfLine:
   EnforcedStyle: lf
@@ -39,11 +40,11 @@ Rails/Date:
   Enabled: true
 
 Metrics/BlockLength:
-  ExcludedMethods: ['describe', 'context', 'draw', 'namespace']
+  ExcludedMethods: ["describe", "context", "draw", "namespace"]
 
 Performance:
   Exclude:
-    - '**/test/**/*'
+    - "**/test/**/*"
 
 Rails:
   Enabled: true
@@ -51,7 +52,7 @@ Rails:
 Rails/OutputSafety:
   Enabled: true
   Exclude:
-    - 'app/presenters/job_presenter.rb'
+    - "app/presenters/job_presenter.rb"
 
 Bundler/OrderedGems:
   Enabled: false
@@ -114,13 +115,13 @@ Layout/SpaceAroundOperators:
   Enabled: true
 
 Layout/SpaceBeforeComma:
-    Enabled: true
+  Enabled: true
 
 Layout/SpaceBeforeBlockBraces:
   Enabled: true
 
 Layout/SpaceBeforeFirstArg:
-    Enabled: true
+  Enabled: true
 
 Layout/SpaceInsideBlockBraces:
   Enabled: true
@@ -159,7 +160,7 @@ Lint/UriEscapeUnescape:
 Metrics/MethodLength:
   Max: 10
   Exclude:
-    - 'spec/**/*'
+    - "spec/**/*"
 
 Style/AndOr:
   Enabled: true
@@ -167,15 +168,15 @@ Style/AndOr:
 Style/BlockComments:
   Enabled: true
   Exclude:
-    - 'spec/spec_helper.rb'
+    - "spec/spec_helper.rb"
 
 Style/CaseEquality:
   Enabled: false
 
 Style/CollectionMethods:
   PreferredMethods:
-    inject: 'inject'
-    reduce: 'inject'
+    inject: "inject"
+    reduce: "inject"
 
 Style/ColonMethodCall:
   Enabled: true
@@ -192,7 +193,7 @@ Style/FrozenStringLiteralComment:
 Style/StringLiterals:
   Enabled: true
   Exclude:
-    - 'config/*.rb'
+    - "config/*.rb"
 
 Style/GuardClause:
   Enabled: false
@@ -253,12 +254,12 @@ Rails/Validation:
 Rails/SkipsModelValidations:
   Enabled: true
   Exclude:
-    - 'spec/**/*'
+    - "spec/**/*"
 
 Rails/FilePath:
   Enabled: true
   Exclude:
-    - 'spec/rails_helper.rb'
+    - "spec/rails_helper.rb"
 
 RSpec/MultipleExpectations:
   Max: 2
@@ -269,7 +270,7 @@ RSpec/ExampleLength:
 RSpec/SubjectStub:
   Enabled: true
   Exclude:
-    - 'spec/models/job_spec.rb'
+    - "spec/models/job_spec.rb"
 
 RSpec/NestedGroups:
   Max: 5

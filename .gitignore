@@ -35,3 +35,5 @@ TAGS
 
 # Ignore local uploads
 public/uploads/
+
+vendor/bundle

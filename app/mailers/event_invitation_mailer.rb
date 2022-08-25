@@ -20,9 +20,10 @@ class EventInvitationMailer < ActionMailer::Base
     @member = member
     @invitation = invitation
     @host_address = AddressPresenter.new(@event.venue.address)
-    @everyone_is_invited = event.audience.empty?
+    @everyone_is_invited = !event.audience
 
-    mail(mail_args(member, @everyone_is_invited ? "Coach Invitation: #{@event.name}" : "Coach Invitation: #{@event.name}"), &:html)
+    mail(mail_args(member, @everyone_is_invited ? "Coach Invitation: #{@event.name}" : "Invitation: #{@event.name}"),
+         &:html)
   end
 
   def attending(event, member, invitation)
