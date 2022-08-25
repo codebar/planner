@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20220821112614) do
+ActiveRecord::Schema.define(version: 20201120012812) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -234,7 +234,7 @@ ActiveRecord::Schema.define(version: 20220821112614) do
     t.string   "external_url"
     t.boolean  "confirmation_required", default: false
     t.boolean  "surveys_required",      default: false
-    t.string   "audience",                                           array: true
+    t.string   "audience",
     t.boolean  "remote",                default: false, null: false
     t.string   "timezone"
   end
