@@ -1,7 +1,7 @@
-= render partial: 'shared_mailers/header', locals: { title: 'Coach Event Invitation' }
+= render partial: 'shared_mailers/header', locals: { title: @everyone_is_invited ? 'Event Invitation' : 'Coach Event Invitation' }
 %body{ bgcolor: '#FFFFFF' }
 
-  = render partial: 'shared_mailers/body_header', locals: { title: 'Coach Event Invitation' }
+  = render partial: 'shared_mailers/body_header', locals: { title: @everyone_is_invited ? 'Event Invitation' : 'Coach Event Invitation' }
 
   %table{ class: 'body-wrap'}
     %tr
