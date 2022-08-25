@@ -28,8 +28,8 @@ class Event < ActiveRecord::Base
   validate :venue_or_remote_must_be_present
 
   def venue_or_remote_must_be_present
-    if !remote && !venue
-      errors.add(:venue, 'must be set, or event must be marked as remote')
+    if !virtual && !venue
+      errors.add(:venue, 'must be set, or event must be marked as virtual')
     end
   end
 
