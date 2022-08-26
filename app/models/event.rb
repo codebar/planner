@@ -112,5 +112,4 @@ class Event < ActiveRecord::Base
     ids = sponsorships.reject(&:marked_for_destruction?).map(&:sponsor_id)
     ids.select { |e| ids.count(e) > 1 }
   end
-
 end
