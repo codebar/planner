@@ -34,6 +34,8 @@ class Sponsor < ActiveRecord::Base
   validates :level, inclusion: { in: Sponsor.levels.keys }
   validates :name, :address, :avatar, :website, :level, presence: true
   validate :website_is_url, if: :website?
+  validates :number_of_coaches, presence: true, numericality: { greater_than_or_equal_to: 0, only_integer: true }
+  validates :seats, presence: true, numericality: { greater_tha_or_equal_to: 0, only_integer: true }
 
   default_scope -> { order('updated_at desc') }
   scope :active, -> { where.not(level: 'hidden') }
