@@ -1,41 +1,3 @@
-nav a.menu {
-  margin: 20px;
-  top: 20px;
-}
-
-.user {
-  color: #e3573e;
-}
-
-.sign-up {
-  border-radius: 1rem;
-  padding: 1rem;
-  border: 1px solid #ffee2c;
-  background-color: #ffeea6;
-}
-
-.sign-up.past {
-  border: 1px solid grey;
-  background-color: #ccc;
-}
-
-/* The new user flow. */
-.sign-up-wizard {
-  span.error {
-    margin-top: -17px;
-  }
-
-  label.required abbr {
-    display: none;
-  }
-
-  .hint {
-    position: relative;
-    top: -1rem;
-    font-size: 65%;
-  }
-}
-
 /* Show/hide togglable elements are controlled by JavaScript. */
 .toggle {
   cursor: pointer;
@@ -49,38 +11,8 @@ nav a.menu {
   display: block;
 }
 
-.workshop.title {
-  color: grey;
-  font-style: italic;
-  line-height: 1.2;
-  margin-bottom: 0.5rem;
-}
-
-.workshop.schedule small {
-  color: grey;
-}
-
-.sponsors {
-  text-align: center;
-  margin: 0.5rem 0 2rem;
-
-  img {
-    max-height: 120px;
-  }
-}
-
-#sponsors {
-  li img {
-    max-height: 120px;
-  }
-}
-
 img.sponsor {
   max-height: 100px;
-}
-
-u {
-  text-decoration: underline;
 }
 
 form .hint {
@@ -96,6 +28,10 @@ form .hint {
 
 .small-image {
   max-height: 100px;
+}
+
+.sponsor-sm {
+  max-width: 120px;
 }
 
 .announcement p:last-child {
