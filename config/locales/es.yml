@@ -329,61 +329,61 @@ es:
       title: Localización
       remote: 'Remote'
     messages:
-      draft_html: 'This is a preview of your job. <b>Edit</b> to amend or <b>Submit</b> for approval.'
-      pending_html: 'This job is pending approval. <b>Edit</b> to amend your post.'
-      published_html: 'This job has been published.'
-      expired_html: 'This job has expired.'
-      updated: 'Your job has been updated.'
-      submitted: "Job submitted for approval. You will receive an email when it's been approved."
-      cannot_edit: No puede editar un trabajo que ya ha sido aprobado.
-      public_page_html: View the %{link} for this job.
+      -draft_html: 'Esta es una vista previa de su trabajo. <b>Edite</b> para modificar o <b>Envíe</b> para aprobación.'
+      -pending_html: 'Este trabajo está pendiente de aprobación. <b>Edite</b>para modificar su publicación.'
+      -published_html: 'Este trabajo ha sido publicado.'
+      -expired_html: 'Este trabajo ha caducado.'
+      -updated: 'Su trabajo ha sido actualizado.'
+      -submitted: "Trabajo enviado para aprobación. Recibirás un correo electrónico cuando haya sido aprobado."
+      -cannot_edit: No puede editar un trabajo que ya ha sido aprobado.
+      -public_page_html: Ver el %{link} para este trabajo.
   jobs:
     title: Trabajos
     index:
-      description: There are %{count} jobs listed
-      none: There are no jobs listed at this time. Please check back soon as positions get added regularly.
+      description: Hay %{count} trabajos listados
+      none: No hay trabajos listados en este momento. Vuelva a consultar pronto ya que las posiciones se agregan regularmente.
   feedback_form:
-    title: 'Workshop feedback'
-    description: Your submission will be completely anonymous. We read every piece of feedback and use it to help us improve our workshops.
-    note: Please do not mention any names, but instead choose your coach from the dropdown. This enables us to address issues but also to anonymously share feedback with coaches. Member privacy is very important to us!
+    title: 'Comentarios del taller'
+    description: Su envío será completamente anónimo. Leemos todos los comentarios y los usamos para ayudarnos a mejorar nuestros talleres.
+    note: Por favor, no mencione ningún nombre, sino que elija su entrenador del menú desplegable. Esto nos permite abordar problemas, pero también compartir comentarios de forma anónima con los entrenadores. ¡La privacidad de los miembros es muy importante para nosotros!
     rating: Tu calificación general del taller
     coach: '¿Quién fue tu entrenador?'
     select_coach: '- Seleccionar entrenador -'
-    tutorial: 'What tutorial did you go through?'
+    tutorial: '¿Qué tutorial hiciste?'
     select_tutorial: '- Select Tutorial -'
     request: '¿Cómo encontraste el taller?'
-    suggestions: "Was there something you didn't like? What can we do to improve your experience?"
+    suggestions: "¿Hubo algo que no te gustó? ¿Qué podemos hacer para mejorar tu experiencia?"
   member:
     jobs:
       title: Mi trabajos
       preview: Avance
       index:
-        description: Our aim is to be the one stop shop for junior developer roles. All jobs featured on our job board must fall under the following three categories; paid internships, apprenticeships or junior developer roles. Additionally, jobs must not require previous experience or a degree and must be paid positions. Each job that is submitted will be approved by the codebar team before appearing on the job board.
-        testimonial: Within 2 days of posting an ad on the codebar job board, we had dozens of high quality applications and we made an offer to a candidate within 2 weeks. There are a lot of talented interns and junior developers; posting on the codebar job board is a great way to reach them.
-        title: Reach our community of %{students_count} junior developers
+        description: Nuestro objetivo es ser la ventanilla única para los roles de desarrollador junior. Todos los trabajos que aparecen en nuestra bolsa de trabajo deben pertenecer a las siguientes tres categorías; pasantías pagadas, aprendizaje o roles de desarrollador junior. Además, los trabajos no deben requerir experiencia previa o un título y deben ser puestos remunerados. Cada trabajo que se envíe será aprobado por el equipo de Codebar antes de aparecer en la bolsa de trabajo.
+        testimonial: A los 2 días de publicar un anuncio en la bolsa de trabajo Codebar, teníamos docenas de solicitudes de alta calidad y le hicimos una oferta a un candidato en 2 semanas. Hay muchos pasantes talentosos y desarrolladores junior; Publicar en la bolsa de trabajo Codebar es una excelente manera de llegar a ellos.
+        title: Llega a nuestra comunidad de %{students_count} desarrolladores junior
         offer:
-          title: "For a flat fee of <strong>£50</strong> your post will be:"
-          job_board: "- shown on the job board for 30 days"
-          slack: "- promoted to our Slack community of 5500 members"
-          twitter: "- promoted to our 8600 Twitter followers"
+          title: "Por una tarifa plana de <strong>£50</strong> tu publicación:"
+          job_board: "- se mostrará en la bolsa de trabajo durante 30 días"
+          slack: "- se promocionará a nuestra comunidad Slack de 5500 miembros"
+          twitter: "- Será promocionado a nuestros 8600 seguidores en Twitter."
       pending:
-        title: Your pending job posts
-        description: You have %{count} job posts pending submission.
-        none: You have no pending job posts.
+        title: Tus ofertas de trabajo pendientes
+        description: Tienes %{count} ofertas de trabajo pendientes de enviar.
+        none: No tienes ofertas de trabajo pendientes.
       new:
-        title: List a job
-        degree: There is no degree requirement
-        details: The job description details the work that will have to be undertaken
-        experience: There is no previous experience requirement
-        rules_intro: "Before posting make sure that:"
-        suitability: The position is suitable for people looking for internships, apprenticeships or junior level roles that will enable them to build up their career
-        salary: The job pays an appropriate salary
-        short: The job description is short and to the point
-        approval_info: "*Once submitted, a job will be visible once it has been reviewed and approved."
-        optional_details_message: The information below is only required if you want this job post to be shared with Google Search UK.
-        newsletter: "For an additional <strong>£200</strong> you can have your job listing featured in our newsletter and made available to an audience of over 10000 students and coaches. To find out more details and when our next newsletter is due send us an email at <a href='mailto:hello@codebar.io'>hello@codebar.io</a>."
+        title: Listar un trabajo
+        degree: No hay requisito de grado
+        details: La descripción del puesto detalla el trabajo que se tendrá que realizar
+        experience: No hay requisito de experiencia previa
+        rules_intro: "Antes de publicar asegúrate de que:"
+        suitability: El puesto es adecuado para personas que buscan pasantías, aprendizaje o roles de nivel junior que les permitan desarrollar su carrera.
+        salary: El trabajo paga un salario adecuado.
+        short: La descripción del trabajo es corta y al punto.
+        approval_info: "*Cuando se envía, un trabajo será visible una vez que haya sido revisado y aprobado."
+        optional_details_message: La información a continuación solo es necesaria si desea que esta publicación de trabajo se comparta con la Búsqueda de Google en el Reino Unido.
+        newsletter: "Por un adicional <strong>£200</strong> puede hacer que su lista de trabajos aparezca en nuestro boletín y esté disponible para una audiencia de más de 10000 estudiantes y entrenadores. Para conocer más detalles y cuándo vence nuestro próximo boletín, envíenos un correo electrónico a <a href='mailto:hello@codebar.io'>hello@codebar.io</a>."
         pay:
-          html: You have made the <a href="%{link}">required payment of £50</a>.
+          html: Ha realizado <a href="%{link}">el pago requerido de £50</a>.
         button:
           pay: realizar un pago
       edit:
