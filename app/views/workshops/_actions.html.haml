@@ -4,7 +4,7 @@
   - if @workshop.past? and !logged_in?
     %p= t('workshops.sign_up_to_be_invited')
   - else
-    - if logged_in?
+    - if logged_in? and @workshop.future?
       - if @workshop.attendee?(current_user)
         %p.badge.bg-success= t('workshops.already_attending')
       - elsif @workshop.waitlisted?(current_user)
