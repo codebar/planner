@@ -3,14 +3,15 @@ FROM ruby:2.4.2
 # Default node version on apt is old. This makes sure a recent version is installed
 # This step also runs apt-get update
 RUN curl -sL https://deb.nodesource.com/setup_12.x | bash -
-RUN apt-get install -y build-essential libpq-dev nodejs
+RUN apt-get install -y --force-yes build-essential libpq-dev nodejs
 
 # Install latest chrome dev package
 RUN set -ex; \
-    wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \
+    wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | apt-key add - \
+    && wget -q -O - https://deb.nodesource.com/gpgkey/nodesource.gpg.key | apt-key add - \
     && sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list' \
     && apt-get update \
-    && apt-get install -y google-chrome-stable --no-install-recommends \
+    && apt-get install -y --force-yes google-chrome-stable --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /planner
