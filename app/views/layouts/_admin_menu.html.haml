@@ -27,6 +27,9 @@
 %li
   = link_to new_admin_group_path, class: 'dropdown-item' do
     New group
+%li
+  = link_to admin_testimonials_path, class: 'dropdown-item' do
+    Testimonials
 
 - if current_user.has_role?(:organiser, :any)
   %li

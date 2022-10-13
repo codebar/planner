@@ -143,6 +143,8 @@ Planner::Application.routes.draw do
       resource :invitations, only: [:update]
       resources :invitations, only: [:update]
     end
+
+    resources :testimonials, only: %i[index]
   end
 
   get   '/login', to: 'auth_services#new'
