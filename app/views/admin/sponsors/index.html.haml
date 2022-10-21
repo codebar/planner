@@ -1,16 +1,17 @@
 .container.py-4.py-lg-5
-  .row.mb-2
+  .row.mb-4
     .col-12
       %nav{'aria-label': 'breadcrumb'}
         %ol.breadcrumb.ml-0
           %li.breadcrumb-item.active= t('admin.shared.sponsors')
 
     .col-12
-      = simple_form_for @sponsors_search, url: admin_sponsors_path, method: :get, wrapper: :inline_form, html: { class: 'row row-cols-auto align-items-center' } do |f|
-        
-        = f.collection_select :chapter, @chapters, :id, :name, { include_blank: true }, { class: 'chosen-select'}
-        = f.input :name, required: false, label: false, placeholder: 'Filter by sponsor name'
-        = f.button :button, 'Filter', class: 'btn btn-primary'
+      .row.row-cols-md-auto.align-items-center
+        = simple_form_for @sponsors_search, url: admin_sponsors_path, method: :get, wrapper: :inline_form, html: { class: 'row row-cols-1 row-cols-md-auto align-items-center' } do |f|
+          = f.collection_select :chapter, @chapters, :id, :name, { include_blank: true, prompt: 'Select a chapter' }, { class: 'chosen-select'}
+          = f.input :name, required: false, label: false, placeholder: 'Filter by sponsor name', input_html: { class: 'my-2 my-md-0' }
+          = f.button :button, 'Filter', class: 'btn btn-primary'
+        = link_to 'Reset form', admin_sponsors_path
 
   .row.mb-4
     .col-md-6

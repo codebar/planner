@@ -11,7 +11,6 @@ RSpec.feature 'Admin::Sponsors', type: :feature do
     let(:sponsor) { Fabricate(:sponsor_with_contacts) }
     let(:sponsor2) { Fabricate(:sponsor_with_contacts) }
 
-
     scenario 'can filter by chapter' do
       sponsored_workshop = Fabricate(:workshop_sponsor, sponsor: sponsor).workshop
       hosted_workshop = Fabricate(:workshop_sponsor, sponsor: sponsor2, host: true).workshop
@@ -27,9 +26,32 @@ RSpec.feature 'Admin::Sponsors', type: :feature do
       expect(page).to have_content(sponsored_workshop.chapter.name)
 
       select sponsored_workshop.chapter.name, from: 'sponsors_search[chapter]'
-      click_on "Filter"
+      click_on 'Filter'
 
       expect(page.all(:css, 'tbody tr', count: 1))
+    end
+
+    scenario 'can clear filtering form' do
+      sponsored_workshop = Fabricate(:workshop_sponsor, sponsor: sponsor).workshop
+      hosted_workshop = Fabricate(:workshop_sponsor, sponsor: sponsor2, host: true).workshop
+
+      visit admin_sponsors_path
+
+      expect(page).to have_content(sponsor.name)
+      expect(page).to have_content(sponsor2.name)
+
+      expect(page.all(:css, 'tbody tr', count: 2))
+
+      expect(page).to have_content(hosted_workshop.chapter.name)
+      expect(page).to have_content(sponsored_workshop.chapter.name)
+
+      select sponsored_workshop.chapter.name, from: 'sponsors_search[chapter]'
+      click_on 'Filter'
+
+      expect(page.all(:css, 'tbody tr', count: 1))
+
+      click_on 'Reset form'
+      expect(page.all(:css, 'tbody tr', count: 2))
     end
   end
 
