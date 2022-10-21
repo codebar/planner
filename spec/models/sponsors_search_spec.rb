@@ -1,11 +1,11 @@
 require 'spec_helper'
 
 RSpec.describe SponsorsSearch, type: :model do
-  let(:search_params) { { per_page: 5, page: 2, name: Faker::Name.name } }
+  let(:search_params) { { per_page: 5, page: 2, name: Faker::Name.name, chapter: Faker::Name.name } }
 
   describe 'initialization params' do
     it 'configures its properties using the param hash' do
-      params = { per_page: 5, page: 2, name: Faker::Name.name }
+      params = { per_page: 5, page: 2, name: Faker::Name.name, chapter: Faker::Name.name }
 
       sponsors_search = described_class.new(search_params)
 
@@ -25,7 +25,7 @@ RSpec.describe SponsorsSearch, type: :model do
     it 'returns all sponsors when no filter is specified' do
       expect(Sponsor).to_not receive(:by_name)
 
-      described_class.new({ name: nil}).call
+      described_class.new({ name: nil, chapter: nil}).call
     end
   end
 end

@@ -8,6 +8,8 @@ class Admin::SponsorsController < Admin::ApplicationController
     @sponsors = @sponsors_search.call
 
     @decorated_sponsors = SponsorPresenter.decorate_collection(@sponsors)
+
+    @chapters = Chapter.all
   end
 
   def show
@@ -90,6 +92,6 @@ class Admin::SponsorsController < Admin::ApplicationController
   end
 
   def search_params
-    { name: filter_search_params[:name], page: params[:page] }
+    { name: filter_search_params[:name], page: params[:page], chapter: filter_search_params[:chapter] }
   end
 end
