@@ -27,9 +27,10 @@
                   %small #{humanize_date(@event.date_and_time, @event.ends_at, with_time: true)}
                 = link_to 'View invitation and RSVP', full_url_for(event_invitation_url(event_id: @event.slug, token: @invitation.token)), class: 'btn'
 
-        .content
-          %table
-            = render partial: 'shared_mailers/venue', locals: { host: @event.venue, address: @host_address }
+        - if @event.venue.present?
+          .content
+            %table
+              = render partial: 'shared_mailers/venue', locals: { host: @event.venue, address: @host_address }
 
         .content
           %table

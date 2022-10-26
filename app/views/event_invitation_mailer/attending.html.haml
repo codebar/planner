@@ -31,7 +31,8 @@
 
         .content
           %table
-            = render partial: 'shared_mailers/venue', locals: { host: @event.venue, address: @host_address }
+            - if @event.venue.present?
+              = render partial: 'shared_mailers/venue', locals: { host: @event.venue, address: @host_address }
             %tr
               %td
                 %p If you have any trouble finding the venue, give one of the organisers a call:
