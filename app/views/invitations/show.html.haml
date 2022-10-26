@@ -68,15 +68,18 @@
         = dot_markdown(@event.schedule)
       .col-12.col-lg-6
         %h3 Location
-        .row
-          .col-12.col-md-8
-            %address= @host_address.to_html
-          .col-12.col-md-4
-            = image_tag(@event.venue.avatar, class: 'small-image mw-100 mb-4', alt: @event.venue.name)
-        .row
-          .col
-            %iframe{ width: '100%', height: '250', frameborder: '0', scrolling: 'no', marginheight: '0', marginwidth: '0', src: %{https://maps.google.com/maps?f=q&source=s_q&hl=en&amp;geocode=&q=#{@host_address.for_map}&ie=UTF8&t=m&z=15&output=embed} }
-            = link_to 'View larger map', %{https://maps.google.com/maps?f=q&source=s_q&hl=en&amp;geocode=&q=#{@host_address.for_map}&ie=UTF8&hq=&t=m&z=15}, style: "color:#0000FF;text-align:left"
+        - if @event.venue.present?
+          .row
+            .col-12.col-md-8
+              %address= @host_address.to_html
+            .col-12.col-md-4
+              = image_tag(@event.venue.avatar, class: 'small-image mw-100 mb-4', alt: @event.venue.name)
+          .row
+            .col
+              %iframe{ width: '100%', height: '250', frameborder: '0', scrolling: 'no', marginheight: '0', marginwidth: '0', src: %{https://maps.google.com/maps?f=q&source=s_q&hl=en&amp;geocode=&q=#{@host_address.for_map}&ie=UTF8&t=m&z=15&output=embed} }
+              = link_to 'View larger map', %{https://maps.google.com/maps?f=q&source=s_q&hl=en&amp;geocode=&q=#{@host_address.for_map}&ie=UTF8&hq=&t=m&z=15}, style: "color:#0000FF;text-align:left"
+        - elsif @event.virtual?
+          %p= "#{t('events.virtual')}."
 
 - if @event.show_faq
   .py-4.py-lg-5.section
