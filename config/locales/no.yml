@@ -173,6 +173,7 @@
     schedule: "Schedule"
     send_us_an_email: "send us an email"
     not_open_for_rsvp: This event is not open for RSVP yet.
+    virtual: This is a virtual event
     faq:
       experience:
         q: "How experienced should I be to join the workshop?"

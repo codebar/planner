@@ -15,10 +15,10 @@
 .py-4.py-lg-5.bg-light
   .container
     .row
-      -  if @event.venue.present?
+      - if @event.venue.present?
         = render partial: 'shared/venue', locals: { venue: @event.venue, address: @host_address}
       - else
-        %p This is a remote event.
+        %p= "#{t('events.virtual')}."
 
     .row.mt-4
       .col

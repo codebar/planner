@@ -171,6 +171,7 @@ es:
     schedule: "Calendario"
     send_us_an_email: "envianos un email"
     not_open_for_rsvp: "Este evento aún no está abierto para confirmar su asistencia."
+    virtual: This is a virtual event
     faq:
       experience:
         q: "¿Qué experiencia necesito tener para unirme al taller?"

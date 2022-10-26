@@ -172,6 +172,7 @@ fr:
     schedule: "Programme"
     send_us_an_email: "envoyez nous un email"
     not_open_for_rsvp: Il n'est pas encore possible de s'inscrire pour cet évènement.
+    virtual: This is a virtual event
     faq:
       experience:
         q: "Me faut-il beaucoup d'expérience pour m'inscrire à un atelier?"
