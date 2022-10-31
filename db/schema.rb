@@ -235,7 +235,7 @@ ActiveRecord::Schema.define(version: 20220820180050) do
     t.boolean  "confirmation_required", default: false
     t.boolean  "surveys_required",      default: false
     t.string   "audience"
-    t.boolean  "remote",                default: false, null: false
+    t.boolean  "virtual",               default: false, null: false
   end
 
   add_index "events", ["slug"], name: "index_events_on_slug", unique: true, using: :btree
