@@ -2,6 +2,7 @@ class Event < ActiveRecord::Base
   include Listable
   include Invitable
   include DateTimeConcerns
+  include EventHelper
 
   attr_accessor :begins_at
 
@@ -25,6 +26,7 @@ class Event < ActiveRecord::Base
   validate :bronze_sponsors_uniqueness
   validate :silver_sponsors_uniqueness
   validate :gold_sponsors_uniqueness
+  validate :venue_or_remote_must_be_present
 
   before_save do
     begins_at = Time.parse(self.begins_at)
@@ -109,21 +111,5 @@ class Event < ActiveRecord::Base
   def fetch_duplicated_sponsors
     ids = sponsorships.reject(&:marked_for_destruction?).map(&:sponsor_id)
     ids.select { |e| ids.count(e) > 1 }
-  end
-
-  def sponsors_uniqueness
-    errors.add(:sponsors, :duplicated_sponsor) unless (sponsors.map(&:id) & duplicated_sponsors).empty?
-  end
-
-  def bronze_sponsors_uniqueness
-    errors.add(:bronze_sponsors, :duplicated_sponsor) unless (bronze_sponsors.map(&:id) & duplicated_sponsors).empty?
-  end
-
-  def silver_sponsors_uniqueness
-    errors.add(:silver_sponsors, :duplicated_sponsor) unless (silver_sponsors.map(&:id) & duplicated_sponsors).empty?
-  end
-
-  def gold_sponsors_uniqueness
-    errors.add(:gold_sponsors, :duplicated_sponsor) unless (gold_sponsors.map(&:id) & duplicated_sponsors).empty?
   end
 end

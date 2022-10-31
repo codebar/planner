@@ -15,7 +15,10 @@
 .py-4.py-lg-5.bg-light
   .container
     .row
-      = render partial: 'shared/venue', locals: { venue: @event.venue, address: @host_address}
+      - if @event.venue.present?
+        = render partial: 'shared/venue', locals: { venue: @event.venue, address: @host_address}
+      - else
+        %p= "#{t('events.virtual')}."
 
     .row.mt-4
       .col

@@ -29,7 +29,8 @@ class EventsController < ApplicationController
     event = Event.find_by(slug: params[:id])
 
     @event = EventPresenter.new(event)
-    @host_address = AddressPresenter.new(@event.venue.address)
+    @host_address = AddressPresenter.new(@event.venue.address) if @event.venue.present?
+
     return unless logged_in?
 
     invitation = Invitation.find_by(member: current_user, event: event, attending: true)
