@@ -52,5 +52,29 @@ RSpec.feature 'Announcements', type: :feature do
       expect(page).to have_content(announcement.message)
       expect(page).to have_content(old_announcement.message)
     end
+
+    scenario 'can successfully send a new announcement to every group' do
+      visit new_admin_announcement_path
+      fill_in 'Message', with: 'An announcement to every group'
+      check 'Send to all groups'
+      click_on 'create'
+
+      expect(page).to have_content('An announcement to every group')
+      expect(page).to have_content("Coaches #{chapter.name}")
+      expect(page).to have_content("Students #{chapter.name}")
+      expect(page.current_path).to eq(admin_announcements_path)
+    end
+
+    scenario 'can successfully send a new announcement to selected groups' do
+      visit new_admin_announcement_path
+      fill_in 'Message', with: 'An announcement to selected groups'
+      select "Coaches", from: 'Select group'
+      click_on 'create'
+
+      expect(page).to have_content('An announcement to selected groups')
+      expect(page).to have_content("Coaches #{chapter.name}")
+      expect(page).to_not have_content("Students #{chapter.name}")
+      expect(page.current_path).to eq(admin_announcements_path)
+    end
   end
 end

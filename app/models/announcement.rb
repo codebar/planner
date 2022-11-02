@@ -6,5 +6,7 @@ class Announcement < ActiveRecord::Base
 
   scope :active, -> { where('expires_at > ?', Date.current) }
 
+  attr_accessor :all_groups
+
   validates :message, presence: true
 end
