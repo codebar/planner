@@ -217,7 +217,8 @@ es:
   members:
     sign_up: "Inscribirse"
     sign_in_with_github: "Iniciar sesión con Github"
-    sign_up_as_student: "Entiendo y cumplo con los criterios de elegibilidad. Inscribirme como estudiante"
+    sign_up_as_student: "Inscribirme como estudiante *"
+    sign_up_as_student_disclaimer: "* Entiendo y cumplo con los criterios de elegibilidad."
     sign_up_as_coach: "Regístrate como Entrenador"
     code_of_conduct: "código de conducta"
     new:

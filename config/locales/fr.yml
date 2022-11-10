@@ -218,7 +218,8 @@ fr:
   members:
     sign_up: "S'inscrire"
     sign_in_with_github: "Se connecter via GitHub"
-    sign_up_as_student: "Je comprends et j'accept les critères d'éligibilité. Je souhaite m'inscrire en tant qu'étudiant"
+    sign_up_as_student: "Je souhaite m'inscrire en tant qu'étudiant *"
+    sign_up_as_student_disclaimer: "* Je comprends et j'accept les critères d'éligibilité."
     sign_up_as_coach: "S'inscrire en tant qu'enseignant"
     code_of_conduct: "code de conduite"
     new:
