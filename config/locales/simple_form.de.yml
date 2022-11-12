@@ -1,0 +1,31 @@
+de:
+  simple_form:
+    "yes": 'Ja'
+    "no": 'Nein'
+    required:
+      text: 'erforderlich'
+      mark: '*'
+      # You can uncomment the line below if you need to overwrite the whole required html.
+      # When using html, text and mark won't be used.
+      # html: '<abbr title="required">*</abbr>'
+    error_notification:
+      default_message: "Bitte korrigieren Sie die folgenden Fehler:"
+    # Examples
+    # labels:
+    #   defaults:
+    #     password: 'Passwort'
+    #   user:
+    #     new:
+    #       email: 'Bitte geben Sie Ihre E-Mail-Adresse ein.'
+    #     edit:
+    #       email: 'E-Mail-Adresse'
+    # hints:
+    #   defaults:
+    #     username: 'Bitte geben Sie Ihren Benutzernamen.'
+    #     password: 'Bitte keine Sonderzeichen verwenden.'
+    # include_blanks:
+    #   defaults:
+    #     age: 'Möchte ich nicht sagen'
+    # prompts:
+    #   defaults:
+    #     age: 'Bitte wählen Sie Ihr Alter aus'
