@@ -3,7 +3,8 @@
     .col-12.col-md-6
       = f.input :name
       = f.input :website, as: :url
-      = f.input :description, input_html: { rows: 3 }
+      = f.input :description, input_html: { rows: 3 },
+        hint: raw(t('admin.shared.markdown_hint', link: link_to(t('admin.shared.markdown'), 'https://commonmark.org/help/')))
       - if current_user.has_role?(:admin)
         = f.input :level, collection: Sponsor.levels.keys, label_method: :humanize
       = f.input :avatar, as: :file, required: !@sponsor.avatar?
@@ -27,7 +28,8 @@
               = f.input :seats
             .col-6
               = f.input :number_of_coaches
-          = f.input :accessibility_info, input_html: { rows: 3 }
+          = f.input :accessibility_info, input_html: { rows: 3 },
+            hint: raw(t('admin.shared.markdown_hint', link: link_to(t('admin.shared.markdown'), 'https://commonmark.org/help/')))
           %p
             %strong Address
           = f.simple_fields_for :address do |address|
@@ -37,7 +39,8 @@
             = address.input :city
             = address.input :latitude
             = address.input :longitude
-            = address.input :directions, input_html: { rows: 3 }
+            = address.input :directions, input_html: { rows: 3 },
+              hint: raw(t('admin.shared.markdown_hint', link: link_to(t('admin.shared.markdown'), 'https://commonmark.org/help/')))
 
   .row.mt-4.text-right
     .col
