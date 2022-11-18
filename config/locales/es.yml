@@ -541,44 +541,44 @@ es:
     dashboard:
       title: 'Admin'
     jobs:
-      title: Manage jobs
+      title: Administrar trabajos
       info:
-        request_changes_html: To request changes email %{name} at %{email}
+        request_changes_html: Para solicitar cambios, envíe un correo electrónico a %{name} a %{email}
         approved_by: Aprobado por %{name} el %{date}.
         approved_by_no_date: Aprobado por %{name}
       messages:
-        approved: "The job has been approved and an email has been sent out to %{name} at %{email}"
-        cannot_approve: You cannot approve expired job listings
-        confirm_approval: Are you sure this job listing meets all requirements and you want to approve it?
-        unpublished: The job has been successfully unpublished
+        approved: "El trabajo ha sido aprobado y se ha enviado un correo electrónico a %{name} a %{email}"
+        cannot_approve: No puede aprobar ofertas de trabajo caducadas
+        confirm_approval: ¿Está seguro de que esta oferta de trabajo cumple con todos los requisitos y desea aprobarla?
+        unpublished: El trabajo se ha despublicado con éxito.
     workshop:
       manage_rsvps:
-        text: 'RSVP Students and Coaches to the workshop. The attendance confirmation email will be triggered and they will be removed from the waiting list.'
+        text: 'RSVP Estudiantes y Entrenadores al taller. Se activará el correo electrónico de confirmación de asistencia y se eliminarán de la lista de espera.'
       destroy:
         success: "Taller eliminado correctamente"
-        failure: "Workshop cannot be deleted. This is because it has invitees and/or workshop information is on the website for a while long enough that it cannot be deleted."
+        failure: "El taller no se puede eliminar. Esto se debe a que tiene invitados y/o la información del taller está en el sitio web durante un tiempo suficiente para que no se pueda eliminar."
     messages:
       meeting:
         created: 'Reunión creada con éxito'
-        updated: 'You have successfully updated the details of this meeting'
-        invitations_already_sent: 'Invitations were previously sent; they will not be sent again'
-        sending_invitations: 'Invitations are being sent out'
+        updated: 'Ha actualizado con éxito los detalles de esta reunión'
+        invitations_already_sent: 'Las invitaciones fueron enviadas previamente; no se volverán a enviar'
+        sending_invitations: 'Las invitaciones están siendo enviadas.'
       invitation:
-        rsvp_member: "%{name} has been successfully added and notified via email."
-        already_on_list: "%{name} is already on the list!"
-        rsvp_error: "Something went wrong, %{name} has not been added."
-        update_rsvp: 'Updated attendance of %{name}'
+        rsvp_member: "%{name} se ha agregado con éxito y se le notificó por correo electrónico."
+        already_on_list: "¡%{name} ya está en la lista!"
+        rsvp_error: "Algo salió mal, %{name} no se agregó."
+        update_rsvp: 'Asistencia actualizada de %{name}'
   simple_form:
     placeholders:
       job:
-        company: 'e.g. codebar'
-        company_website: 'e.g. https://codebar.io'
-        title: 'e.g. Internship'
-        description: 'Use text or markdown for the job description'
+        company: 'p.ej. codebar'
+        company_website: 'p.ej. https://codebar.io'
+        title: 'p.ej. Internado'
+        description: 'Use texto o descuento para la descripción del trabajo'
         location: 'e.g. London or Berlin'
     hints:
       job:
-        remote: Only check if the role is fully remote only
+        remote: Solo verifique si el rol es completamente remoto solo
         salary: Pago anual antes de impuestos, sin comas ni puntos decimales
   activerecord:
     attributes:
@@ -592,16 +592,17 @@ es:
         link_to_job: Enlace a la publicación de empleo
         expiry_date: Fecha de cierre de la solicitud
   donation_platforms:
-    title: "How to support us"
+    title: "Como apoyarnos"
     donation_form:
       title: "Usa la página de donaciones"
-      text: "Support us with a one-time or recurring donation through the donation form on our website."
+      text: "Apóyenos con una donación única o recurrente a través del formulario de donación en nuestro sitio web."
     amazon_smile:
       title: "Amazon Smile"
-      text: "Pick us as your charitable organisation while shopping on Amazon. This allows us to receive 0.5% of the net purchase price of eligible purchases as a donation."
+      text: "Elíjanos como su organización benéfica mientras compra en Amazon. Esto nos permite recibir el 0,5% del precio de compra neto de las compras elegibles como donación."
     open_collective:
       title: "Open Collective"
-      text: "Setup a recurring contribution or make a one-time donation through Open Collective."
+      text: "Configure una contribución recurrente o haga una donación única con Open Collective."
     benevity:
       title: "Benevity"
-      text: "Benevity is a platform enabling corporate social responsibility and employee engagement. We receive a donation from your employer with every hour you volunteer with us."
+      text: "Benevity es una plataforma que permite la responsabilidad social corporativa y el compromiso de los empleados. Recibimos una donación de su empleador por cada hora que se ofrece como voluntario con nosotros.
+"
