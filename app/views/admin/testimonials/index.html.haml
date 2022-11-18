@@ -1,0 +1,25 @@
+.container.py-4.py-lg-5
+  .row.mb-4
+    .col
+      %h1 Testimonials
+
+  .row
+    .col
+      %table.table.table-striped.table-hover
+        %thead
+          %tr
+            %th
+              Name
+            %th
+              Text
+            %th
+              Status
+            %th
+              Actions
+        %tbody
+          - @testimonials.each do |testimonial|
+            %tr
+              %td= testimonial.member.full_name
+              %td= testimonial.text
+              %td
+              %td
