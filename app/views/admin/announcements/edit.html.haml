@@ -7,7 +7,8 @@
     .col.col-md-10.col-lg-8
       = simple_form_for [:admin, @announcement] do |f|
         = f.association :groups, label_method: :to_s
-        = f.input :message, input_html: { rows: 3 }
+        = f.input :message, input_html: { rows: 3 },
+          hint: raw(t('admin.shared.markdown_hint', link: link_to(t('admin.shared.markdown'), 'https://commonmark.org/help/')))
         = f.input :expires_at, as: :string
         .text-right
           = f.button :button, :update, class: 'btn btn-primary'

@@ -8,10 +8,10 @@
   %p= @host_address
   - if @host_address.directions
     %strong Directions
-    %p= @host_address.directions
+    = dot_markdown(@host_address.directions)
   - if @meeting.venue.accessibility_info
     %strong Accessibility information
-    %p= @meeting.venue.accessibility_info
+    = dot_markdown(@meeting.venue.accessibility_info)
 
   %h4 RSVP
   - if logged_in?

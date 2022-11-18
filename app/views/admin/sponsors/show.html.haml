@@ -22,17 +22,14 @@
           - if @sponsor.address.present?
             %dd= @sponsor.address.to_html
 
-          %dt= t('.directions')
-          %dd
-            - if @sponsor&.address&.directions.present?
-              = @sponsor.address.directions
-            - else
-              = t('.empty_state.directions')
+          - unless @sponsor&.address&.directions.present?
+            %dt= t('.directions')
+            %dd= t('.empty_state.directions')
 
           %dt= t('.description')
           %dd
             - if @sponsor.description.present?
-              = @sponsor.description
+              = dot_markdown(@sponsor.description)
             - else
               = t('.empty_state.description')
 
@@ -47,13 +44,11 @@
             %i.fas.fa-trophy
           %dd= @sponsor.level
 
-          %dt
-            = t('.accessibility_info')
-            %i.fas.fa-universal-access
-          %dd
-            - if @sponsor.accessibility_info.present?
-              = @sponsor.accessibility_info
-            - else
+          - unless @sponsor.accessibility_info.present?
+            %dt
+              = t('.accessibility_info')
+              %i.fas.fa-universal-access
+            %dd
               = t('.empty_state.accessibility_info')
 
           %dt.mb-0= t('.contacts')

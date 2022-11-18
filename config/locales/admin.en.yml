@@ -8,6 +8,8 @@ en:
       students: Students
       coaches: Coaches
       organisers: Organisers
+      markdown: Markdown
+      markdown_hint: This field supports %{link}.
 
     bans:
       create:
