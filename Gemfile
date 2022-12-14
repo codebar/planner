@@ -45,7 +45,7 @@ gem 'gibbon', '~> 3.4.4'
 
 gem 'stripe'
 
-gem 'rails-html-sanitizer', '~> 1.4.3'
+gem 'rails-html-sanitizer', '~> 1.4.4'
 
 gem 'jbuilder'
 gem 'public_activity'
