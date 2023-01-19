@@ -45,7 +45,8 @@ class DashboardController < ApplicationController
   private
 
   def page
-    params.permit(:page)[:page]
+    p = params.permit(:page)[:page].to_i
+    p > 1 ? p : 1
   end
 
   def year_param

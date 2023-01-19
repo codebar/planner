@@ -8,6 +8,7 @@ class Admin::FeedbackController < SuperAdmin::ApplicationController
   private
 
   def page
-    params.permit(:page)[:page]
+    p = params.permit(:page)[:page].to_i
+    p > 1 ? p : 1
   end
 end
