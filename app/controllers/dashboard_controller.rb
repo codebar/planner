@@ -50,7 +50,7 @@ class DashboardController < ApplicationController
   end
 
   def year_param
-    params.permit(:year)[:year] || Time.zone.today.year
+    params.permit(:year)[:year]&.to_i || Time.zone.today.year
   end
 
   def top_coach_query
