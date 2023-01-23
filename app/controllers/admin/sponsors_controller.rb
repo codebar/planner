@@ -92,6 +92,9 @@ class Admin::SponsorsController < Admin::ApplicationController
   end
 
   def search_params
-    { name: filter_search_params[:name], page: params[:page], chapter: filter_search_params[:chapter] }
+    p = params[:page].to_i
+    p = p > 1 ? p : 1
+
+    { name: filter_search_params[:name], chapter: filter_search_params[:chapter], page: p }
   end
 end

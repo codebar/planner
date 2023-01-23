@@ -45,11 +45,12 @@ class DashboardController < ApplicationController
   private
 
   def page
-    params.permit(:page)[:page]
+    p = params.permit(:page)[:page].to_i
+    p > 1 ? p : 1
   end
 
   def year_param
-    params.permit(:year)[:year] || Time.zone.today.year
+    params.permit(:year)[:year]&.to_i || Time.zone.today.year
   end
 
   def top_coach_query
