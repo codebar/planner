@@ -66,4 +66,9 @@ Rollbar.configure do |config|
   # setup for Heroku. See:
   # https://devcenter.heroku.com/articles/deploying-to-a-custom-rails-environment
   config.environment = ENV['ROLLBAR_ENV'].presence || Rails.env
+
+  # https://docs.rollbar.com/docs/ruby#section-enabling-local-variables-in-stack-traces
+  config.send_extra_frame_data = :app
+  config.locals = { :enabled => true }
+  config.backtrace_cleaner = ActiveSupport::BacktraceCleaner.new
 end
