@@ -1,6 +1,6 @@
 class AuthServicesController < ApplicationController
   def new
-    referer_path = URI(request.referer).path
+    referer_path = URI(request.referer).path if request.referer
     if Rails.application.routes.recognize_path(referer_path)[:controller].in?(%w[workshops events meetings])
       session[:referer_path] = referer_path
     end
