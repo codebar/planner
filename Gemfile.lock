@@ -281,7 +281,7 @@ GEM
     regexp_parser (1.8.2)
     rexml (3.2.5)
     rolify (5.3.0)
-    rollbar (3.2.0)
+    rollbar (3.4.0)
     rspec-collection_matchers (1.2.0)
       rspec-expectations (>= 2.99.0.beta1)
     rspec-core (3.12.0)
