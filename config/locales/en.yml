@@ -234,7 +234,7 @@ en:
     virtual:
       title: 'Virtual workshop for %{chapter}'
       lead: 'Participate in our workshops to learn programming in a supportive and collaborative online environment at your own pace, or share your knowledge and coach our students.'
-      intro: 'Our virtual workshops take place online. Our aim is to help you get started with programming by pairing you with a coach that will be able to remotely assist and guide you through what you want to learn. Once you sign up we will email you more details about how to join the workshop and tools that we reccomend to make the process easier for you. In the meantime if you have any questions, do not hesitate to send an email to %{chapter_email}.'
+      intro: 'Our virtual workshops take place online. Our aim is to help you get started with programming by pairing you with a coach that will be able to remotely assist and guide you through what you want to learn. Once you sign up we will email you more details about how to join the workshop and tools that we recommend to make the process easier for you. In the meantime if you have any questions, do not hesitate to send an email to %{chapter_email}.'
   events:
     title: "Events"
     past: "Past"
