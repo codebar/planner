@@ -5,18 +5,12 @@
 
 %p
   - if @member.subscriptions.any?
-    You'll automatically receive email invitations to our workshops as soon as they are open for RSVP.
-    - if @member.chapters.pluck(:name).include?("London")
-      However, our London chapter doesn't send workshop invitations via email, so you won't receive email invites for regular London events. We open RSVPs at around 1pm on the Friday before the workshop, and you will be able to register through the workshop page on our website. To be notified when we open RSVPs, join the #london-chapters channel
-      = link_to 'on our Slack', 'http://slack.codebar.io'
-      or
-      = link_to 'follow us', 'https://twitter.com/codebar'
-      on Twitter.
+    You'll receive email invitations to our workshops as soon as they are open for RSVP.
   - else
     We send out invitations to our events via email.
     = link_to "Sign up on our subscriptions page", subscriptions_url
     to receive invitations to our workshops.
-  Places are limited, so be sure to respond quickly if you want to attend.
+  Places are limited, so be sure to respond quickly if you would like to attend.
 
 %p
   %strong
@@ -25,14 +19,14 @@
   %strong
     as soon as possible
   so we can allocate your place to someone on the waiting list. If you take a place
-  on the waiting list, please keep that evening free and check your email frequently.
+  on the waiting list, please keep that evening free and check your emails frequently.
   You will be notified at least three hours before the event if you receive a place.
 
 %p
-  Our workshops start with around 30 minutes of socialising, before we assign
+  Our workshops start with around 30 minutes of socialising with food, before we assign
   you to coach one or two students. They'll either be working on
   = link_to "one of our tutorials", "http://tutorials.codebar.io/"
-  or looking for help with their own projects. Don't worry if you're not an expert on
+  or looking for help with their own project. Don't worry if you're not an expert on
   the topics - your role is not about having all the answers! Guiding a student through
   solving their own problem is more useful in the long run. There are more
   =link_to "tips for coaching on the codebar website.", teaching_guide_url
@@ -45,15 +39,15 @@
 
 %p
   If you have any questions, reply to this email or chat to one of the organisers at
-  the workshop. We'll be at the table with the name stickers. We're here to help
+  the workshop. They'll be at a table with the name stickers. They're there to help
   with anything on your mind.
 
 %p
   If you didn't mean to sign up as a coach, not to worry! You can always
-  = link_to "change your subscriptions via our website.", subscriptions_url
+  = link_to "change your subscriptions via our website here.", subscriptions_url
 
 %p
-  We hope to see you at a workshop soon, and thank you again for volunteering!
+  We hope to see you at a workshop soon, and thank you so much for volunteering!
 
 %p
   #{"-- "}
