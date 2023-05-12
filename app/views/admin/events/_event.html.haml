@@ -3,13 +3,13 @@
     - if event.date_and_time.past?
       .attendance
         - if (invitation.is_a?(WorkshopInvitation) && invitation.attended?)
-          .attended.p-1.bg-success
+          .attended.p-1.text-white.bg-success
             Attended
         - elsif (invitation.is_a?(WorkshopInvitation) && !invitation.attended?)
-          .not-attended.p-1.bg-danger
+          .not-attended.p-1.text-white.bg-danger
             Not attended
         - else
-          .no-attendance.p-1.bg-secondary.text-white
+          .no-attendance.p-1.text-white.bg-secondary
             No attendance data
     .card-body
       .d-md-flex.justify-content-md-between
