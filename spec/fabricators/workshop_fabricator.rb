@@ -7,7 +7,7 @@ Fabricator(:workshop) do
               workshop: workshop,
               sponsor: Fabricate(:sponsor,
                                  seats: transients[:student_count] || 10,
-                                 number_of_coaches: transients[:coach_count || 10]),
+                                 number_of_coaches: transients[:coach_count] || 10),
               host: true)
   end
 
