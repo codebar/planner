@@ -26,7 +26,7 @@ class EventsController < ApplicationController
   end
 
   def show
-    event = Event.find_by(slug: params[:id])
+    event = Event.find_by!(slug: params[:id])
 
     @event = EventPresenter.new(event)
     @host_address = AddressPresenter.new(@event.venue.address) if @event.venue.present?
