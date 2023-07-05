@@ -6,7 +6,7 @@
         %br
         %small #{humanize_date(@event.date_and_time, @event.ends_at, with_time: true)}
     .col-12.col-md-9
-      %p.lead= @event.description.html_safe
+      %p.lead= sanitize(@event.description)
 
   .row
     .col
