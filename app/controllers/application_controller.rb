@@ -61,6 +61,13 @@ class ApplicationController < ActionController::Base
 
   def accept_terms
     store_path
+
+    unless logged_in?
+      # https://guides.rubyonrails.org/layouts_and_rendering.html#avoiding-double-render-errors
+      redirect_to redirect_path
+      return
+    end
+
     redirect_to terms_and_conditions_path if current_user.accepted_toc_at.blank?
   end
 
