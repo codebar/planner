@@ -21,12 +21,15 @@ class SubscriptionsController < ApplicationController
   end
 
   def destroy
-    @subscription = current_user.subscriptions.find_by(group_id: group_id)
-    @subscription.destroy
+    # Don't error if subscription is not found
+    subscription = current_user.subscriptions.find_by(group_id: group_id)
+    subscription&.destroy
 
+    # Instead, rely on the group's existence (rather than the subscription)
+    group = Group.find(group_id)
     flash[:notice] = I18n.t('subscriptions.messages.group.unsubscribe',
-                            chapter: @subscription.group.chapter.city,
-                            role: @subscription.group.name)
+                            chapter: group.chapter.city,
+                            role: group.name)
 
     redirect_to :back
   end
