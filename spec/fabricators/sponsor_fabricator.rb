@@ -15,6 +15,7 @@ end
 Fabricator(:sponsor_full, from: :sponsor) do
   description { Faker::Lorem.word }
   level { 'gold' }
+  accessibility_info { 'Accessible parking spaces' }
 end
 
 Fabricator(:sponsor_with_member_contacts, from: :sponsor) do
