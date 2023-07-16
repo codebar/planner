@@ -1,0 +1,15 @@
+name: Docker
+
+on: [ push, pull_request ]
+
+jobs:
+  test:
+    name: 'Docker-powered tests'
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    - name: Build Docker image
+      run: bin/dbuild
+    - name: Run tests
+      run: bin/drake
