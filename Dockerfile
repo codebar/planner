@@ -16,4 +16,7 @@ WORKDIR /planner
 COPY Gemfile Gemfile.lock ./
 RUN bundle install --jobs $(getconf _NPROCESSORS_ONLN) --retry 3
 
+# Setup our database
+RUN bundle exec rake db:create db:migrate db:seed db:test:prepare
+
 COPY . ./
