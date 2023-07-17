@@ -18,3 +18,7 @@ jobs:
       run: bin/dbuild
     - name: Run tests
       run: bin/drake
+    - name: Report to Coveralls
+      uses: coverallsapp/github-action@v2
+      with:
+        github-token: ${{ secrets.github_token }}
