@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 set +e
-docker-compose down -v --remove-orphans
+
+# Only remove previous containers if no on CI
+[ ${CI} ] || docker-compose down -v --remove-orphans
 docker-compose build
 docker-compose run --rm web rake db:create db:migrate db:seed db:test:prepare
