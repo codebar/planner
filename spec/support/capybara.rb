@@ -1,5 +1,8 @@
 require 'webdrivers'
 
+# Temporary fix
+Webdrivers::Chromedriver.required_version = "114.0.5735.90"
+
 Capybara.register_driver :chrome do |app|
   options = Selenium::WebDriver::Chrome::Options.new
 
