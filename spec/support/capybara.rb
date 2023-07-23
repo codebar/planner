@@ -1,6 +1,6 @@
 require 'webdrivers'
 
-# Temporary fix
+# Temporary fix for https://github.com/titusfortner/webdrivers/issues/247
 Webdrivers::Chromedriver.required_version = "114.0.5735.90"
 
 Capybara.register_driver :chrome do |app|
