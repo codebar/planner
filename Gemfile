@@ -38,9 +38,6 @@ gem 'uglifier'
 gem 'will_paginate'
 gem 'sprockets-rails'
 
-# Only to avoid https://github.com/ruby/net-imap/issues/16
-gem 'net-http'
-
 gem 'icalendar'
 gem 'tzinfo-data'
 
