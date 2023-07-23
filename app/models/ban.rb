@@ -1,4 +1,4 @@
-class Ban < ActiveRecord::Base
+class Ban < ApplicationRecord
   belongs_to :member
   belongs_to :added_by, class_name: 'Member'
 

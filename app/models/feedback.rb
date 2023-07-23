@@ -1,4 +1,4 @@
-class Feedback < ActiveRecord::Base
+class Feedback < ApplicationRecord
   self.per_page = 25
   belongs_to :tutorial
   belongs_to :coach, class_name: 'Member'
