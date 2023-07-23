@@ -1,12 +1,12 @@
 .row.justify-content-md-center.subscriptions
   .col-md-10.col-lg-8
-    %h2.h4.toggle
+    %h2.h4.codebar-toggle
       As a Coach
       - if collapsed
         %i.fas.fa-chevron-right
       - else
         %i.fas.fa-chevron-down
-    .group-container{class: collapsed ? 'collapsed' : ''}
+    .group-container{class: collapsed ? 'codebar-collapsed' : ''}
       %p.lead #{link_to('Read our effective teacher guide', 'http://codebar.io/effective-teacher-guide')}
       - groups.each do |group|
         - if belongs_to_group?(group)
