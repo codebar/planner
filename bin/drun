@@ -2,5 +2,4 @@
 
 set -e
 
-rm ./tmp/pids/server.pid
-docker-compose up web
+docker-compose exec web make serve

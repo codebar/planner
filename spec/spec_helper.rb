@@ -92,8 +92,8 @@ RSpec.configure do |config|
 
 
   config.after do |example|
-    # Take a screenshot if the example failed
-    if example.exception && defined?(page)
+    # Take a screenshot if the example failed and JavaScript is enabled
+    if example.exception && defined?(page) && Capybara.current_driver == :selenium
       # Get the filename and line number of the failing spec
       location = example.metadata[:location]
       filename, line_number = location.split(':')

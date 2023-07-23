@@ -12,7 +12,7 @@ $enable-negative-margins: true;
 @import "bootstrap/functions";
 @import "bootstrap/variables";
 // https://stackoverflow.com/questions/73054062/sasserror-undefined-variable-failing-dependencies
-// @import "bootstrap/maps";
+@import "bootstrap/maps";
 @import "bootstrap/mixins";
 @import "bootstrap/utilities";
 

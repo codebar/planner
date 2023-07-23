@@ -1,7 +1,7 @@
 if Rails.env.development?
   begin
     Rails.logger.info 'Running migrations...'
-    Planner::Application.config.log_level = :info
+    Rails.application.config.log_level = :info
     Rails.logger.info "Creating chapters..."
     chapters = ['London', 'Brighton', 'Cambridge', 'Barcelona', 'Paris', 'Merlbourne', 'Berlin', 'New York'].map do |name|
       Fabricate(:chapter_with_groups, name: name)
