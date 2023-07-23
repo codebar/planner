@@ -8,7 +8,7 @@ RSpec.describe Admin::MemberNotesController, type: :controller do
   describe 'POST #create' do
     it "Doesn't allow anonymous users to create notes" do
       expect do
-        post :create, member_note: { note: member_note.note, member_id: member.id }
+        post :create, params: { member_note: { note: member_note.note, member_id: member.id } }
       end.not_to change { MemberNote.all.count }
     end
 
@@ -16,7 +16,7 @@ RSpec.describe Admin::MemberNotesController, type: :controller do
       login member
 
       expect do
-        post :create, member_note: { note: member_note.note, member_id: member.id }
+        post :create, params: { member_note: { note: member_note.note, member_id: member.id } }
       end.not_to change { MemberNote.all.count }
     end
 
@@ -25,13 +25,13 @@ RSpec.describe Admin::MemberNotesController, type: :controller do
       request.env['HTTP_REFERER'] = '/admin/member/3'
 
       expect do
-        post :create, member_note: { note: member_note.note, member_id: member.id }
+        post :create, params: { member_note: { note: member_note.note, member_id: member.id } }
       end.to change { MemberNote.all.count }.by 1
     end
 
     it "Doesn't allow blank notes to be created" do
       expect do
-        post :create, member_note: { note: ' ', member_id: member.id }
+        post :create, params: { member_note: { note: ' ', member_id: member.id } }
       end.not_to change { MemberNote.all.count }
     end
   end

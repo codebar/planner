@@ -8,6 +8,7 @@ RSpec.describe MailingList do
   let(:members) { double(:members) }
 
   before do
+    allow(ENV).to receive(:[]).and_call_original
     allow(ENV).to receive(:[]).with('MAILCHIMP_KEY').and_return('test')
     allow(mailing_list).to receive(:client).and_return(client)
     allow(Rails).to receive(:env).and_return("production".inquiry)

@@ -1,4 +1,4 @@
-class CreateBans < ActiveRecord::Migration
+class CreateBans < ActiveRecord::Migration[4.2]
   def change
     create_table :bans do |t|
       t.references :member, index: true

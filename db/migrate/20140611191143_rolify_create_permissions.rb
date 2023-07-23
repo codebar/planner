@@ -1,4 +1,4 @@
-class RolifyCreatePermissions < ActiveRecord::Migration
+class RolifyCreatePermissions < ActiveRecord::Migration[4.2]
   def change
     create_table(:permissions) do |t|
       t.string :name

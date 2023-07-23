@@ -190,6 +190,8 @@ RSpec.feature 'An admin managing workshops', type: :feature do
     end
 
     scenario 'viewing a text file with all attendee emails' do
+      Rails.logger = Logger.new(STDOUT)
+
       workshop = Fabricate(:workshop)
       attendees = Fabricate.times(4, :attending_workshop_invitation, workshop: workshop)
       attendees_emails = attendees.map(&:member).map(&:email)

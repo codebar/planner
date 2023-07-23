@@ -1,5 +1,7 @@
 $(document).ready(function() {
-  $(document).on("ajax:success", "a[data-remote]", function(e, data, status, xhr) {
+  $(document).on("ajax:success", "#invitations [data-remote]", function(e) {
+    // data, status, xhr
+    const [_, __, xhr] = e.detail;
     var $invitations = $("#invitations");
 
     $invitations.html(xhr.responseText);
@@ -12,5 +14,7 @@ $(document).ready(function() {
   
   $(document).on('change','#workshop_invitations ',function() {
     this.form.submit();
+    // https://stackoverflow.com/questions/12683524/with-rails-ujs-how-to-submit-a-remote-form-from-a-function
+    Rails.fire(this.form, 'submit');
   })
 });

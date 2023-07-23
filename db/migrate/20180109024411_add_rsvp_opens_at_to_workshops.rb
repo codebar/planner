@@ -1,4 +1,4 @@
-class AddRsvpOpensAtToWorkshops < ActiveRecord::Migration
+class AddRsvpOpensAtToWorkshops < ActiveRecord::Migration[4.2]
   def change
     rename_column :workshops, :rsvp_open_time, :rsvp_opens_at
     remove_column :workshops, :rsvp_open_date, :datetime

@@ -1,4 +1,4 @@
-class CreateInvitations2 < ActiveRecord::Migration
+class CreateInvitations2 < ActiveRecord::Migration[4.2]
   def change
     create_table :invitations do |t|
       t.references :event, index: true

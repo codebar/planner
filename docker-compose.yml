@@ -21,10 +21,12 @@ services:
       DB_HOST: db
     volumes:
       - .:/planner
+      - gem_cache:/usr/local/bundle/gems
     ports:
       - 3000:3000
     depends_on:
       - db
 
 volumes:
-  db_data: {}
+  db_data:
+  gem_cache:

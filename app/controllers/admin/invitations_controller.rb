@@ -12,7 +12,7 @@ class Admin::InvitationsController < Admin::ApplicationController
       set_admin_workshop_data
       render partial: 'admin/workshops/invitation_management'
     else
-      redirect_to :back, notice: message
+      redirect_back fallback_location: root_path, notice: message
     end
   end
 

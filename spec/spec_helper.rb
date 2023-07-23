@@ -90,6 +90,22 @@ RSpec.configure do |config|
     DatabaseCleaner.clean
   end
 
+
+  config.after do |example|
+    # Take a screenshot if the example failed
+    if example.exception && defined?(page)
+      # Get the filename and line number of the failing spec
+      location = example.metadata[:location]
+      filename, line_number = location.split(':')
+
+      # Build a custom filename for the screenshot
+      screenshot_filename = "#{filename}:#{line_number}.png"
+
+      # Save the screenshot using the custom filename
+      page.save_screenshot(screenshot_filename, full: true)
+    end
+  end
+
   config.example_status_persistence_file_path = 'tmp/spec_failures'
 
   if Bullet.enable?

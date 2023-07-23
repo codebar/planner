@@ -1,4 +1,4 @@
-class CreateChaptersMeetings < ActiveRecord::Migration
+class CreateChaptersMeetings < ActiveRecord::Migration[4.2]
   def change
     create_table :chapters_meetings do |t|
       t.belongs_to :chapter, index: true

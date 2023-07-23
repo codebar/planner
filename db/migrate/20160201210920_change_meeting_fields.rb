@@ -1,4 +1,4 @@
-class ChangeMeetingFields < ActiveRecord::Migration
+class ChangeMeetingFields < ActiveRecord::Migration[4.2]
   def change
     add_column :meetings, :invitable, :boolean
     add_column :meetings, :spaces, :integer

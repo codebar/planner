@@ -9,7 +9,7 @@ class Admin::InvitationController < Admin::ApplicationController
 
     EventInvitationMailer.attending(invitation.event, invitation.member, invitation).deliver_now
 
-    redirect_to :back, notice: "You have verified #{invitation.member.full_name}'s spot at the event!"
+    redirect_back fallback_location: root_path, notice: "You have verified #{invitation.member.full_name}'s spot at the event!"
   end
 
   def verify
@@ -18,13 +18,13 @@ class Admin::InvitationController < Admin::ApplicationController
 
     EventInvitationMailer.attending(invitation.event, invitation.member, invitation).deliver_now
 
-    redirect_to :back, notice: "You have verified #{invitation.member.full_name}'s spot at the event!"
+    redirect_back fallback_location: root_path, notice: "You have verified #{invitation.member.full_name}'s spot at the event!"
   end
 
   def cancel
     invitation = Invitation.find_by(token: params[:invitation_id])
     invitation.update(attending: false)
 
-    redirect_to :back, notice: "You have cancelled #{invitation.member.full_name}'s attendance."
+    redirect_back fallback_location: root_path, notice: "You have cancelled #{invitation.member.full_name}'s attendance."
   end
 end

@@ -22,7 +22,7 @@ class Admin::MembersController < Admin::ApplicationController
                                        chapter: subscription.group.chapter.city,
                                        group: subscription.group.name)
     subscription.destroy
-    redirect_to :back
+    redirect_back fallback_location: root_path
   end
 
   def send_eligibility_email

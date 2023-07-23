@@ -2,18 +2,18 @@
   .container
     = link_to root_path, class: 'navbar-brand border-0' do
       = image_tag('logo.png', alt: 'codebar logo', size: '200x54')
-    %button.navbar-toggler.mb-0{'type': 'button', 'data-toggle': 'collapse', 'data-target': '#navbarSupportedContent', 'aria-controls': 'navbarSupportedContent', 'aria-expanded': 'false', 'aria-label': 'Toggle navigation'}
+    %button.navbar-toggler.collapsed.mb-0{'type': 'button', 'data-bs-toggle': 'collapse', 'data-bs-target': '#navbarSupportedContent', 'aria-controls': 'navbarSupportedContent', 'aria-expanded': 'false', 'aria-label': 'Toggle navigation'}
       %span.navbar-toggler-icon
     %div.collapse.navbar-collapse.justify-content-end#navbarSupportedContent
       %ul.navbar-nav.ml-0
         %li.nav-item.dropdown
-          = link_to '#', {'role': 'button', 'aria-expanded': 'false', 'data-toggle': 'dropdown', class: 'nav-link border-0 dropdown-toggle', id: 'navbarDropdownMenuLinkEvents'} do
+          = link_to '#', {'role': 'button', 'aria-expanded': 'false', 'data-bs-toggle': 'dropdown', class: 'nav-link border-0 dropdown-toggle', id: 'navbarDropdownMenuLinkEvents'} do
             Events
           %ul.dropdown-menu{'aria-labelledby': 'navbarDropdownMenuLinkEvents'}
             %li= link_to 'Events', events_path, class: 'dropdown-item'
             %li= link_to 'codebar Festival', 'http://festival.codebar.io/', class: 'dropdown-item'
         %li.nav-item.dropdown
-          = link_to '#', {'role': 'button', 'aria-expanded': 'false', 'data-toggle': 'dropdown', class: 'nav-link border-0 dropdown-toggle', id: 'navbarDropdownMenuLinkCommunity'} do
+          = link_to '#', {'role': 'button', 'aria-expanded': 'false', 'data-bs-toggle': 'dropdown', class: 'nav-link border-0 dropdown-toggle', id: 'navbarDropdownMenuLinkCommunity'} do
             Community
           %ul.dropdown-menu{'aria-labelledby': 'navbarDropdownMenuLinkCommunity'}
             %li= link_to 'Coaches', coaches_path, class: 'dropdown-item'
@@ -40,7 +40,7 @@
         - else
           - if current_user.is_admin? || current_user.organiser? || current_user.monthlies_organiser?
             %li.nav-item.dropdown
-              = link_to '#', {'role': 'button', 'aria-expanded': 'false', 'data-toggle': 'dropdown', class: 'nav-link border-0 dropdown-toggle', id: 'navbarDropdownMenuLinkAdmin'} do
+              = link_to '#', {'role': 'button', 'aria-expanded': 'false', 'data-bs-toggle': 'dropdown', class: 'nav-link border-0 dropdown-toggle', id: 'navbarDropdownMenuLinkAdmin'} do
                 Admin
               %ul.dropdown-menu.dropdown-menu-right{'aria-labelledby': 'navbarDropdownMenuLinkAdmin'}
                 - if current_user.is_admin?
@@ -48,6 +48,6 @@
                 - elsif current_user.organiser? || current_user.monthlies_organiser?
                   = render 'layouts/organiser_menu'
           %li.nav-item.dropdown
-            = link_to '#', {'role': 'button', 'aria-expanded': 'false', 'data-toggle': 'dropdown', class: 'nav-link border-0 dropdown-toggle', id: 'navbarDropdownMenuLinkMember'} do
+            = link_to '#', {'role': 'button', 'aria-expanded': 'false', 'data-bs-toggle': 'dropdown', class: 'nav-link border-0 dropdown-toggle', id: 'navbarDropdownMenuLinkMember'} do
               Menu
             = render 'layouts/member_menu'

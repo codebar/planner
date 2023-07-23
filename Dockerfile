@@ -17,6 +17,6 @@ RUN set -ex; \
 WORKDIR /planner
 
 COPY Gemfile Gemfile.lock ./
-RUN bundle install
+RUN bundle install --jobs 4
 
 COPY . ./

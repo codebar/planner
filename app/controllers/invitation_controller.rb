@@ -7,7 +7,7 @@ class InvitationController < ApplicationController
 
     @workshop = WorkshopPresenter.decorate(@invitation.workshop)
 
-    render text: @workshop.attendees_csv if request.format.csv?
+    render plain: @workshop.attendees_csv if request.format.csv?
   end
 
   def update
