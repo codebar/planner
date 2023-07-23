@@ -1,7 +1,6 @@
 $(document).ready(function() {
   $(document).on("ajax:success", "#invitations [data-remote]", function(e) {
-    // data, status, xhr
-    const [_, __, xhr] = e.detail;
+    var xhr = e.detail.xhr;
     var $invitations = $("#invitations");
 
     $invitations.html(xhr.responseText);
