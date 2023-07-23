@@ -1,4 +1,4 @@
-class VirtualWorkshopInvitationMailer < ActionMailer::Base
+class VirtualWorkshopInvitationMailer < ApplicationMailer
   include EmailHelper
   include EmailHeaderHelper
   include ApplicationHelper
