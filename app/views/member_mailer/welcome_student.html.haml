@@ -1,31 +1,31 @@
 %h1 Hi #{@member.name}!
 
-%p Welcome to codebar. We're looking forward to seeing you at one of our events soon.
+%p A big welcome to codebar, we're looking forward to seeing you at one of our events.
 
 %p
   - if @member.subscriptions.any?
-    You'll receive email invitations to our events as soon as they are open for RSVP.
+    You'll start to receive email invitations to our events as soon as they are open for RSVP.
   - else
-    We send out invitations to our events via email.
+    We send out invitations to all our events via email.
     = link_to "Sign up on our subscriptions page", subscriptions_url
-    to receive invitations to our workshops.
-  Places are limited, so be sure to respond quickly if you want to attend.
+    to start receiving invitations to our events.
+  Places are limited, so be sure to respond quickly if you would like to attend.
 
 %p
   If you accept an invitation and can no longer make it, please cancel your spot as soon as possible so we can allocate it to someone else. If you take a place on the waiting list, please keep that evening free and check your emails frequently. You will be notified at least three hours before the event if you receive a place.
 
 %p
-  Our workshops are available to women, non-binary, LGBTQ+, and people belonging to underrepresented ethnic groups in the tech industry. If you belong to one of these groups, you are more than welcome to attend. You can find out more about codebar's workshops
-  = link_to "in our FAQ.", faq_url
+  Our workshops are available to women, non-binary, LGBTQ+, and people belonging to underrepresented ethnic groups in the tech industry. If you belong to one of these groups, you are more than welcome to attend. You can find out more about codebar's events
+  = link_to "in our FAQ here.", faq_url
 
 %p
-  Our workshops start with 30 minutes of socialising with food, before we assign
-  you to a coach with one or two other students. You can either work through
+  Our in-person events start with 30 minutes of socialising with food, before we pair
+  you with a coach and maybe another student working on the same thing. You can either work through
   = link_to "one of our tutorials", "http://tutorials.codebar.io/"
-  or get help with your own project.
+  or get help with your own project. Our virtual events typically happen on Discord or Zoom, for which you'll receive details for when you RSVP.
 
 %p
-  It's important to us that our workshops are a welcoming and accepting environment
+  It's important to us that our events are a welcoming and inclusive environment
   for everyone. Please make sure you
   = link_to "read our code of conduct", attendance_policy_url
   before attending.
@@ -35,13 +35,11 @@
   = link_to "change your subscription on our website.", subscriptions_url
 
 %p
-  If you have any questions, reply to this email or chat to one of the organisers at
-  the workshop. They'll be at a table with the name stickers. They're there to help
-  with anything on your mind.
+  If you have any questions, please do not hesitate to reach out to us. Either reply to this email, or chat to one of the organisers at an event. They're there to help with anything on your mind.
 
-%p We hope to see you at a workshop soon!
+%p We hope to see you at an event very soon!
 
 %p
   #{"-- "}
   %br
-  The codebar organisational team
+  The codebar team
