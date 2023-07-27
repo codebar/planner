@@ -39,15 +39,26 @@ class InvitationsController < ApplicationController
       redirect_back fallback_location: root_path, notice: notice
     else
       email = event.chapters.present? ? event.chapters.first.email : 'hello@codebar.io'
-      redirect_back fallback_location: root_path, notice: t('messages.invitations.event.no_available_seats', email: email)
+      redirect_back(
+        fallback_location: root_path,
+        notice: t('messages.invitations.event.no_available_seats', email: email)
+      )
     end
   end
 
   def reject
-    return redirect_back fallback_location: root_path, notice: t('messages.not_attending_already') unless @invitation.attending?
+    unless @invitation.attending?
+      return redirect_back(
+        fallback_location: root_path,
+        notice: t('messages.not_attending_already')
+      )
+    end
 
     @invitation.update_attribute(:attending, false)
-    redirect_back fallback_location: root_path, notice: t('messages.rejected_invitation', name: @invitation.member.name)
+    redirect_back(
+      fallback_location: root_path,
+      notice: t('messages.rejected_invitation', name: @invitation.member.name)
+    )
   end
 
   def rsvp_meeting

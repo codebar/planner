@@ -9,7 +9,12 @@ class WorkshopsController < ApplicationController
   end
 
   def rsvp
-    return redirect_back fallback_location: root_path, notice: t('workshops.registration_not_open') unless @workshop.available_for_rsvp?
+    unless @workshop.available_for_rsvp?
+      return redirect_back(
+        fallback_location: root_path,
+        notice: t('workshops.registration_not_open')
+      )
+    end
 
     if role_params.nil?
       @invitation = find_attending_invitation(@workshop, current_user)
