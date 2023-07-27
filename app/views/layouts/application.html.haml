@@ -21,7 +21,7 @@
     = csrf_meta_tags
     = csp_meta_tag
 
-  %body.no-js{ 'class': "#{params[:controller]}-#{params[:action]}", "data-no-jquery": "true"}
+  %body.no-js{ 'class': "#{params[:controller]}-#{params[:action]}", "data-bs-no-jquery": "true"}
     #top
       = render partial: 'layouts/navigation'
       = render partial: 'layouts/messages'
