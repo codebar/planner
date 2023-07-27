@@ -3,8 +3,7 @@
     .modal-content
       .modal-header
         %h5.modal-title#modal-title Add a note for #{@member.full_name}
-        %button.close{ type: 'button', 'data-bs-dismiss': 'modal', 'aria-label': 'Close' }
-          %span{ 'aria-hidden': 'true'} &times;
+        %button.btn-close{ type: 'button', 'data-bs-dismiss': 'modal', 'aria-label': 'Close' }
       .modal-body
         = simple_form_for [:admin, MemberNote.new], html: { class: 'form-inline' } do |f|
           = f.input :note, label: false, input_html: { rows: 3 }, placeholder: 'e.g. very enthusiastic student.'
