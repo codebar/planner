@@ -1,4 +1,4 @@
-class AddLevelToSponsors < ActiveRecord::Migration
+class AddLevelToSponsors < ActiveRecord::Migration[4.2]
   def up
     # hidden: 0,
     # standard: 1,

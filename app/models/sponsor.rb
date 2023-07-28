@@ -1,4 +1,4 @@
-class Sponsor < ActiveRecord::Base
+class Sponsor < ApplicationRecord
   include Auditor::Model
 
   self.per_page = 50
@@ -14,7 +14,7 @@ class Sponsor < ActiveRecord::Base
   }
 
   has_one :address
-  has_many :chapters, through: :workshops
+
   has_many :contacts
   has_many :meetings, -> { order(date_and_time: :desc) }, foreign_key: 'venue_id', inverse_of: :venue
   has_many :event_sponsorships, -> { includes([:event]).joins(:event).order('events.date_and_time desc') },
@@ -27,6 +27,7 @@ class Sponsor < ActiveRecord::Base
   },
            inverse_of: :sponsor
   has_many :workshops, through: :workshop_sponsors
+  has_many :chapters, through: :workshops
 
   accepts_nested_attributes_for :contacts, reject_if: :invalid_contact?, allow_destroy: true
   accepts_nested_attributes_for :address

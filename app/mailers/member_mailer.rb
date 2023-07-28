@@ -1,4 +1,4 @@
-class MemberMailer < ActionMailer::Base
+class MemberMailer < ApplicationMailer
   include EmailHeaderHelper
 
   def welcome(member)

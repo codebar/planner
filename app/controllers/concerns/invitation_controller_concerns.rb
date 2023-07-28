@@ -51,12 +51,16 @@ module InvitationControllerConcerns
             @workshop.send_attending_email(invitation, true)
           end
 
-          redirect_back(fallback_location: invitation_path(@invitation),
-                        notice: t('messages.rejected_invitation', name: @invitation.member.name))
+          redirect_back(
+            fallback_location: invitation_path(@invitation),
+            notice: t('messages.rejected_invitation', name: @invitation.member.name)
+          )
         end
       else
-        redirect_back(fallback_location: invitation_path(@invitation),
-                      notice: 'You can only change your RSVP status up to 3.5 hours before the workshop')
+        redirect_back(
+          fallback_location: invitation_path(@invitation),
+          notice: 'You can only change your RSVP status up to 3.5 hours before the workshop'
+        )
       end
     end
 

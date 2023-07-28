@@ -1,4 +1,4 @@
-class CreateMemberRole < ActiveRecord::Migration
+class CreateMemberRole < ActiveRecord::Migration[4.2]
   def change
     create_table :members_roles, id: false do |t|
       t.references :member

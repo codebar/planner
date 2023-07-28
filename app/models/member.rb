@@ -1,4 +1,4 @@
-class Member < ActiveRecord::Base
+class Member < ApplicationRecord
   include Permissions
 
   self.per_page = 80
@@ -34,7 +34,8 @@ class Member < ActiveRecord::Base
                                 .where('meeting_invitations.meeting_id = ? and meeting_invitations.attending = ?',
                                        meeting.id, true)
                             }
-  scope :in_group, ->(group) { not_banned.joins(:groups).merge(group) }
+  scope :in_group, ->(members) { not_banned.joins(:groups).where(groups: { id: members.select(:id) }) }
+
   scope :with_skill, ->(skill_name) { tagged_with(skill_name) }
 
   acts_as_taggable_on :skills

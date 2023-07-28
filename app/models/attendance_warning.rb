@@ -1,4 +1,4 @@
-class AttendanceWarning < ActiveRecord::Base
+class AttendanceWarning < ApplicationRecord
   belongs_to :member
   belongs_to :issued_by, class_name: 'Member', foreign_key: 'sent_by_id', inverse_of: false
 

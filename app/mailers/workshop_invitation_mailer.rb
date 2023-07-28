@@ -1,4 +1,4 @@
-class WorkshopInvitationMailer < ActionMailer::Base
+class WorkshopInvitationMailer < ApplicationMailer
   include EmailHelper
   include EmailHeaderHelper
   include ApplicationHelper

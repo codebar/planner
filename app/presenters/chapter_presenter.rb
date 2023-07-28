@@ -1,10 +1,10 @@
 class ChapterPresenter < BasePresenter
   def twitter_id
-    model.twitter_id || Planner::Application.config.twitter_id
+    model.twitter_id || Rails.application.config.twitter_id
   end
 
   def twitter_handle
-    model.twitter || Planner::Application.config.twitter
+    model.twitter || Rails.application.config.twitter
   end
 
   def upcoming_workshops

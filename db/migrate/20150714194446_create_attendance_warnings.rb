@@ -1,4 +1,4 @@
-class CreateAttendanceWarnings < ActiveRecord::Migration
+class CreateAttendanceWarnings < ActiveRecord::Migration[4.2]
   def change
     create_table :attendance_warnings do |t|
       t.references :member, index: true

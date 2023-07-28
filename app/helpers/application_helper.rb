@@ -31,11 +31,11 @@ module ApplicationHelper
   end
 
   def twitter
-    Planner::Application.config.twitter
+    Rails.application.config.twitter
   end
 
   def twitter_id
-    Planner::Application.config.twitter_id
+    Rails.application.config.twitter_id
   end
 
   def contact_email(workshop: nil)

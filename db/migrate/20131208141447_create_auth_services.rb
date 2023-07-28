@@ -1,4 +1,4 @@
-class CreateAuthServices < ActiveRecord::Migration
+class CreateAuthServices < ActiveRecord::Migration[4.2]
   def change
     create_table :auth_services do |t|
       t.references :member, index: true

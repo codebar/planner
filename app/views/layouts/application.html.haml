@@ -1,4 +1,4 @@
-!!!DOCTYPE html
+!!!
 %html{ lang: 'en' }
   %head
     = render partial: 'layouts/meta'
@@ -9,9 +9,9 @@
     %title
       = retrieve_title
     = favicon_link_tag 'favicon.ico'
-    = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': true
-    = javascript_include_tag 'vendor/modernizr'
-    = javascript_include_tag 'application', 'data-turbolinks-track': true
+    = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
+
+    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
     %link{ href: 'https://fonts.googleapis.com/css?family=Open+Sans:400,300', rel:'stylesheet', type:'text/css' }
     %link{ href: 'https://fonts.googleapis.com/icon?family=Material+Icons', rel:'stylesheet', type:'text/css' }
 
@@ -19,8 +19,9 @@
     = content_for :head
 
     = csrf_meta_tags
+    = csp_meta_tag
 
-  %body.no-js{ 'class': "#{params[:controller]}-#{params[:action]}", "data-no-jquery": "true"}
+  %body.no-js{ 'class': "#{params[:controller]}-#{params[:action]}", "data-bs-no-jquery": "true"}
     #top
       = render partial: 'layouts/navigation'
       = render partial: 'layouts/messages'

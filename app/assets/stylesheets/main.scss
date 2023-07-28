@@ -1,13 +1,13 @@
 /* Show/hide togglable elements are controlled by JavaScript. */
-.toggle {
+.codebar-toggle {
   cursor: pointer;
 }
 
-.collapsed {
+.codebar-collapsed {
   display: none;
 }
 
-.no-js .collapsed {
+.no-js .codebar-collapsed {
   display: block;
 }
 

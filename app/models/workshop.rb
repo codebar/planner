@@ -1,4 +1,4 @@
-class Workshop < ActiveRecord::Base
+class Workshop < ApplicationRecord
   include DateTimeConcerns
   include Invitable
   include Listable

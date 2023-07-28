@@ -17,12 +17,12 @@ RSpec.describe Admin::WorkshopsController, type: :controller do
       context "workshop deletion tried within specific time frame since it's creation" do
         it 'should not delete the workshop' do
           expect do
-            delete :destroy, id: workshop.id
+            delete :destroy, params: { id: workshop.id }
           end.not_to change { Workshop.count }
         end
 
         it "should display workshop can't be deleted related flash message" do
-          delete :destroy, id: workshop.id
+          delete :destroy, params: { id: workshop.id }
 
           expect(flash[:notice]).to eq(I18n.t('admin.workshop.destroy.failure'))
         end
@@ -35,7 +35,7 @@ RSpec.describe Admin::WorkshopsController, type: :controller do
 
           travel new_current_time do
             expect do
-              delete :destroy, id: workshop.id
+              delete :destroy, params: { id: workshop.id }
             end.not_to change { Workshop.count }
           end
         end
@@ -45,7 +45,7 @@ RSpec.describe Admin::WorkshopsController, type: :controller do
                                      WORKSHOP_DELETION_TIME_FRAME_SINCE_CREATION
 
           travel new_current_time do
-            delete :destroy, id: workshop.id
+            delete :destroy, params: { id: workshop.id }
           end
 
           expect(flash[:notice]).to eq(I18n.t('admin.workshop.destroy.failure'))
@@ -57,12 +57,12 @@ RSpec.describe Admin::WorkshopsController, type: :controller do
       context "workshop deletion tried within specific time frame since it's creation" do
         it 'should successfully delete the workshop' do
           expect do
-            delete :destroy, id: workshop.id
+            delete :destroy, params: { id: workshop.id }
           end.to change { Workshop.count }.by -1
         end
 
         it 'should display workshop deleted successfully related flash message' do
-          delete :destroy, id: workshop.id
+          delete :destroy, params: { id: workshop.id }
 
           expect(flash[:notice]).to eq(I18n.t('admin.workshop.destroy.success'))
         end
@@ -75,7 +75,7 @@ RSpec.describe Admin::WorkshopsController, type: :controller do
 
           travel new_current_time do
             expect do
-              delete :destroy, id: workshop.id
+              delete :destroy, params: { id: workshop.id }
             end.not_to change { Workshop.count }
           end
         end
@@ -85,7 +85,7 @@ RSpec.describe Admin::WorkshopsController, type: :controller do
                                      WORKSHOP_DELETION_TIME_FRAME_SINCE_CREATION
 
           travel new_current_time do
-            delete :destroy, id: workshop.id
+            delete :destroy, params: { id: workshop.id }
           end
 
           expect(flash[:notice]).to eq(I18n.t('admin.workshop.destroy.failure'))

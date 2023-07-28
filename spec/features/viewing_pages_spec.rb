@@ -14,4 +14,5 @@ RSpec.feature 'A visitor to the website', type: :feature do
     click_on 'Privacy Policy'
     expect(page).to have_content('Your privacy means a lot to us')
   end
+
 end

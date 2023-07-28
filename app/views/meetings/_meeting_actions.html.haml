@@ -3,7 +3,7 @@
   %p
     %strong= @meeting.venue.name
   = link_to @meeting.venue.website, class: 'd-block border-0 mb-4' do
-    = image_tag(@meeting.venue.avatar.thumb, alt: @meeting.venue.name)
+    = image_tag(@meeting.venue.avatar.thumb.url, alt: @meeting.venue.name)
   %strong Address
   %p= @host_address
   - if @host_address.directions

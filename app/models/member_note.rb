@@ -1,4 +1,4 @@
-class MemberNote < ActiveRecord::Base
+class MemberNote < ApplicationRecord
   belongs_to :member
   belongs_to :author, class_name: 'Member'
 

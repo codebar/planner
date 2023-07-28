@@ -1,5 +1,5 @@
 class SuperAdmin::ApplicationController < ApplicationController
-  include Pundit
+  include Pundit::Authorization
 
   before_action :authenticate_admin!
 end

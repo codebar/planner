@@ -1,4 +1,4 @@
-class CreateMemberContacts < ActiveRecord::Migration
+class CreateMemberContacts < ActiveRecord::Migration[4.2]
   def change
     create_table :member_contacts do |t|
       t.integer :sponsor_id

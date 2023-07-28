@@ -1,4 +1,4 @@
-class CreateCourseTutors < ActiveRecord::Migration
+class CreateCourseTutors < ActiveRecord::Migration[4.2]
   def change
     create_table :course_tutors do |t|
       t.belongs_to :course, index: true

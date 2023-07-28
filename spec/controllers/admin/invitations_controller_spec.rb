@@ -16,7 +16,7 @@ RSpec.describe Admin::InvitationsController, type: :controller do
     end
 
     it "Successfuly updates an invitation" do
-      put :update, id: invitation.token, workshop_id: workshop.id, attending: "true"
+      put :update, params: { id: invitation.token, workshop_id: workshop.id, attending: "true" }
       
       expect(invitation.reload.attending).to be true
       expect(flash[:notice]).to match("You have added")
@@ -26,7 +26,7 @@ RSpec.describe Admin::InvitationsController, type: :controller do
       # Trigger an error when trying to update the `attending` attribute
       invitation.update_attribute(:tutorial, nil)
 
-      put :update, id: invitation.token, workshop_id: workshop.id, attending: "true"
+      put :update, params: { id: invitation.token, workshop_id: workshop.id, attending: "true" }
       
       # State didn't change and we have an error message explaining why
       expect(invitation.reload.attending).to be_nil

@@ -1,4 +1,4 @@
-class ExtendJobModel < ActiveRecord::Migration
+class ExtendJobModel < ActiveRecord::Migration[4.2]
   def change
     add_column :jobs, :company_website, :string
     add_column :jobs, :company_address, :string

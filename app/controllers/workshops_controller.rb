@@ -9,13 +9,18 @@ class WorkshopsController < ApplicationController
   end
 
   def rsvp
-    return redirect_to :back, notice: t('workshops.registration_not_open') unless @workshop.available_for_rsvp?
+    unless @workshop.available_for_rsvp?
+      return redirect_back(
+        fallback_location: root_path,
+        notice: t('workshops.registration_not_open')
+      )
+    end
 
     if role_params.nil?
       @invitation = find_attending_invitation(@workshop, current_user)
     else
       if user_attending_or_waitlisted?(@workshop, current_user)
-        return redirect_to :back, notice: t('workshops.already_wish_to_attend')
+        return redirect_back fallback_location: root_path, notice: t('workshops.already_wish_to_attend')
       end
 
       @invitation = find_or_create_invitation(@workshop, current_user, role_params)

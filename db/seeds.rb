@@ -1,7 +1,7 @@
 if Rails.env.development?
   begin
     Rails.logger.info 'Running migrations...'
-    Planner::Application.config.log_level = :info
+    Rails.application.config.log_level = :info
     Rails.logger.info "Creating chapters..."
     chapters = ['London', 'Brighton', 'Cambridge', 'Barcelona', 'Paris', 'Merlbourne', 'Berlin', 'New York'].map do |name|
       Fabricate(:chapter_with_groups, name: name)
@@ -20,7 +20,7 @@ if Rails.env.development?
     workshops.concat Fabricate.times(2, :workshop, title: 'Workshop', chapter: chapters.sample)
 
     Rails.logger.info "Creating a lot of old workshops..."
-    past_workshops = 100.times.map do |n|
+    past_workshops = 50.times.map do |n|
       Fabricate(:workshop, title: 'Workshop',
                            chapter: chapters.sample,
                            date_and_time:  Time.zone.now - 9.years + n.months)
@@ -41,7 +41,7 @@ if Rails.env.development?
     end
 
     Rails.logger.info "Creating coaches..."
-    coaches = 200.times.map { Fabricate(:coach, groups: Group.coaches.order('RANDOM()').limit(2)) }
+    coaches = 50.times.map { Fabricate(:coach, groups: Group.coaches.order('RANDOM()').limit(2)) }
     tutorials = Fabricate.times(20, :tutorial)
     30.times { Fabricate(:feedback_request, workshop: past_workshops.sample) }
     20.times { Fabricate(:feedback, tutorial: tutorials.sample, coach: coaches.sample) }
@@ -64,13 +64,8 @@ if Rails.env.development?
       Wonka
     ]
 
-    Rails.logger.info "Creating jobs..."
-    15.times do |n|
-      Fabricate(:job, title: job_titles.sample, company: job_companies.sample, expiry_date: Time.zone.today + 3.weeks - n.weeks)
-    end
-
     Rails.logger.info "Creating students..."
-    students = 200.times.map { Fabricate(:student, groups: Group.students.order('RANDOM()').limit(2)) }
+    students = 50.times.map { Fabricate(:student, groups: Group.students.order('RANDOM()').limit(2)) }
 
     Rails.logger.info "Creating event invitations..."
     10.times do |n|
@@ -79,7 +74,7 @@ if Rails.env.development?
     end
 
     Rails.logger.info "Creating workshop invitations..."
-    300.times do |n|
+    30.times do |n|
       Fabricate(:coach_workshop_invitation, member: coaches.sample, workshop: workshops.sample) rescue nil
       Fabricate(:student_workshop_invitation, member: students.sample, workshop: workshops.sample) rescue nil
     end

@@ -11,9 +11,11 @@ RSpec.describe Admin::SponsorsController, type: :controller do
   describe 'POST #create' do
     it "Doesn't allow anonymous users to create sponsors" do
       expect do
-        post :create, sponsor: {
-          name: 'name', website: 'https://example.com', seats: 40,
-          address: address, avatar: avatar, members: [1, 2]
+        post :create, params: {
+          sponsor: {
+            name: 'name', website: 'https://example.com', seats: 40,
+            address: address, avatar: avatar, members: [1, 2]
+          }
         }
       end.to change(Sponsor, :count).by(0)
     end
@@ -22,9 +24,11 @@ RSpec.describe Admin::SponsorsController, type: :controller do
       login member
 
       expect do
-        post :create, sponsor: {
-          name: 'name', website: 'https://example.com', seats: 40,
-          address: address, avatar: avatar
+        post :create, params: {
+          sponsor: {
+            name: 'name', website: 'https://example.com', seats: 40,
+            address: address, avatar: avatar
+          }
         }
       end.to change(Sponsor, :count).by(0)
     end
@@ -35,9 +39,11 @@ RSpec.describe Admin::SponsorsController, type: :controller do
         request.env['HTTP_REFERER'] = '/admin/member/3'
 
         expect do
-          post :create, sponsor: {
-            name: 'name', website: 'https://example.com', seats: 40,
-            address: address, avatar: avatar
+          post :create, params: {
+            sponsor: {
+              name: 'name', website: 'https://example.com', seats: 40,
+              address: address, avatar: avatar
+            }
           }
         end.to change(Sponsor, :count).by(1)
       end
@@ -47,9 +53,11 @@ RSpec.describe Admin::SponsorsController, type: :controller do
         request.env['HTTP_REFERER'] = '/admin/member/3'
 
         expect do
-          post :create, sponsor: {
-            name: 'name', website: 'https://example.com', seats: 40,
-            address: address, avatar: avatar, contact_ids: [member.id, member1.id]
+          post :create, params: {
+            sponsor: {
+              name: 'name', website: 'https://example.com', seats: 40,
+              address: address, avatar: avatar, contact_ids: [member.id, member1.id]
+            }
           }
         end.to change(Sponsor, :count).by(1)
       end
@@ -59,9 +67,11 @@ RSpec.describe Admin::SponsorsController, type: :controller do
         request.env['HTTP_REFERER'] = '/admin/member/3'
 
         expect do
-          post :create, sponsor: {
-            name: 'name', website: 'https://example.com', seats: 40,
-            address: address, avatar: avatar, contact_ids: [member.id, member1.id]
+          post :create, params: {
+            sponsor: {
+              name: 'name', website: 'https://example.com', seats: 40,
+              address: address, avatar: avatar, contact_ids: [member.id, member1.id]
+            }
           }
         end.to change(Sponsor, :count).by(1)
       end
@@ -71,10 +81,12 @@ RSpec.describe Admin::SponsorsController, type: :controller do
         request.env['HTTP_REFERER'] = '/admin/member/3'
 
         expect do
-          post :create, sponsor: {
-            name: 'name', website: 'https://example.com', seats: 40,
-            address: Fabricate(:address, latitude: '54.47474', longitude: '-0.12345'),
-            avatar: avatar, members: []
+          post :create, params: {
+            sponsor: {
+              name: 'name', website: 'https://example.com', seats: 40,
+              address: Fabricate(:address, latitude: '54.47474', longitude: '-0.12345'),
+              avatar: avatar, members: []
+            }
           }
         end.to change(Sponsor, :count).by(1)
       end
@@ -82,9 +94,11 @@ RSpec.describe Admin::SponsorsController, type: :controller do
 
     it "Doesn't allow blank sponsors to be created" do
       expect do
-        post :create, sponsor: {
-          name: '', website: '', seats: '',
-          address: '', avatar: '', members: []
+        post :create, params: {
+          sponsor: {
+            name: '', website: '', seats: '',
+            address: '', avatar: '', members: []
+          }
         }
       end.to change(Sponsor, :count).by(0)
     end
@@ -92,8 +106,10 @@ RSpec.describe Admin::SponsorsController, type: :controller do
 
   describe 'POST #update' do
     it "Doesn't allow anonymous users to update sponsors" do
-      post :update, id: sponsor.id, sponsor: {
-        name: 'new name'
+      post :update, params: {
+        id: sponsor.id, sponsor: {
+          name: 'new name'
+        }
       }
       expect(sponsor.reload.name).to eq sponsor.name
     end
@@ -101,8 +117,10 @@ RSpec.describe Admin::SponsorsController, type: :controller do
     it "Doesn't allow regular users to update sponsors" do
       login member
 
-      post :update, id: sponsor.id, sponsor: {
-        name: 'new_name'
+      post :update, params: {
+        id: sponsor.id, sponsor: {
+          name: 'new_name'
+        }
       }
       expect(sponsor.reload.name).to eq sponsor.name
     end
@@ -112,8 +130,10 @@ RSpec.describe Admin::SponsorsController, type: :controller do
         login admin
         request.env['HTTP_REFERER'] = '/admin/member/3'
 
-        post :update, id: sponsor.id, sponsor: {
-          name: 'new_name'
+        post :update, params: {
+          id: sponsor.id, sponsor: {
+            name: 'new_name'
+          }
         }
         expect(sponsor.reload.name).to eq sponsor.name
       end

@@ -37,4 +37,4 @@
         - if meeting.venue.present?
           %div
             = link_to meeting.venue.website, class: 'border-0 d-inline-block' do
-              = image_tag(meeting.venue.avatar, class: 'sponsor-sm', alt: meeting.venue.name)
+              = image_tag(meeting.venue.avatar.url, class: 'sponsor-sm', alt: meeting.venue.name)

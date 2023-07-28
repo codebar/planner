@@ -1,6 +1,6 @@
 require 'services/mailing_list'
 
-class Subscription < ActiveRecord::Base
+class Subscription < ApplicationRecord
   belongs_to :group
   belongs_to :member
   has_one :chapter, through: :group

@@ -1,4 +1,4 @@
-class UpdateContacts < ActiveRecord::Migration
+class UpdateContacts < ActiveRecord::Migration[4.2]
   def change
     add_column :contacts, :name, :string
     add_column :contacts, :surname, :string
