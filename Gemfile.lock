@@ -405,6 +405,8 @@ GEM
     ssrf_filter (1.1.1)
     stripe (8.6.0)
     temple (0.10.2)
+    terser (1.1.17)
+      execjs (>= 0.3.0, < 3)
     thor (1.2.2)
     thread_safe (0.3.6)
     tilt (2.2.0)
@@ -416,8 +418,6 @@ GEM
       thread_safe (~> 0.1)
     tzinfo-data (1.2023.3)
       tzinfo (>= 1.0.0)
-    uglifier (4.2.0)
-      execjs (>= 0.3.0, < 3)
     unicode-display_width (2.4.2)
     uniform_notifier (1.16.0)
     version_gem (1.1.3)
@@ -507,9 +507,9 @@ DEPENDENCIES
   spring-watcher-listen (~> 2.0.0)
   sprockets-rails
   stripe
+  terser (~> 1.1)
   turbolinks
   tzinfo-data
-  uglifier
   web-console (>= 3.3.0)
   webdrivers
   will_paginate
