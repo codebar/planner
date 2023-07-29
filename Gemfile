@@ -34,7 +34,7 @@ gem 'rolify'
 gem 'sassc-rails'
 gem 'simple_form'
 gem 'turbolinks'
-gem 'uglifier'
+gem 'terser', '~> 1.1'
 gem 'will_paginate'
 gem 'sprockets-rails'
 
