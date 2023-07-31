@@ -391,10 +391,10 @@ GEM
     snaky_hash (2.0.1)
       hashie
       version_gem (~> 1.1, >= 1.1.1)
-    spring (2.1.1)
-    spring-watcher-listen (2.0.1)
+    spring (4.1.1)
+    spring-watcher-listen (2.1.0)
       listen (>= 2.7, < 4.0)
-      spring (>= 1.2, < 3.0)
+      spring (>= 4)
     sprockets (4.2.0)
       concurrent-ruby (~> 1.0)
       rack (>= 2.2.4, < 4)
@@ -504,7 +504,7 @@ DEPENDENCIES
   simplecov-lcov
   skylight
   spring
-  spring-watcher-listen (~> 2.0.0)
+  spring-watcher-listen (~> 2.1.0)
   sprockets-rails
   stripe
   terser (~> 1.1)
