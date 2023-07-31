@@ -169,7 +169,9 @@ GEM
       thor (>= 0.14, < 2.0)
     jquery-ui-rails (6.0.1)
       railties (>= 3.2.16)
+    json (2.6.3)
     jwt (2.7.1)
+    language_server-protocol (3.17.0.3)
     launchy (2.5.2)
       addressable (~> 2.8)
     letter_opener (1.8.1)
@@ -311,7 +313,7 @@ GEM
     rb-inotify (0.10.1)
       ffi (~> 1.0)
     regexp_parser (2.8.1)
-    rexml (3.2.5)
+    rexml (3.2.6)
     rolify (6.0.1)
     rollbar (3.4.0)
     rouge (4.1.2)
@@ -334,15 +336,17 @@ GEM
       rspec-mocks (~> 3.10)
       rspec-support (~> 3.10)
     rspec-support (3.12.1)
-    rubocop (1.12.1)
+    rubocop (1.55.0)
+      json (~> 2.3)
+      language_server-protocol (>= 3.17.0)
       parallel (~> 1.10)
-      parser (>= 3.0.0.0)
+      parser (>= 3.2.2.3)
       rainbow (>= 2.2.2, < 4.0)
       regexp_parser (>= 1.8, < 3.0)
-      rexml
-      rubocop-ast (>= 1.2.0, < 2.0)
+      rexml (>= 3.2.5, < 4.0)
+      rubocop-ast (>= 1.28.1, < 2.0)
       ruby-progressbar (~> 1.7)
-      unicode-display_width (>= 1.4.0, < 3.0)
+      unicode-display_width (>= 2.4.0, < 3.0)
     rubocop-ast (1.29.0)
       parser (>= 3.2.1.0)
     rubocop-performance (1.18.0)
@@ -493,7 +497,7 @@ DEPENDENCIES
   rollbar
   rspec-collection_matchers
   rspec-rails
-  rubocop (~> 1.12.1)
+  rubocop (~> 1.55.0)
   rubocop-performance
   rubocop-rails
   rubocop-rspec
