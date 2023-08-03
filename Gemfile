@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '2.7.2'
+ruby '3.2.2'
 
 gem 'rails', '6.1.7.4'
 # Reduces boot times through caching; required in config/boot.rb
