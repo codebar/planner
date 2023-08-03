@@ -128,5 +128,14 @@ end
 CarrierWave.configure do |config|
   config.enable_processing = false
   config.storage = :file
-  config.root = Rails.root.join('tmp')
+  # NOTE: We're taking this out for now because it results in:
+  #  ActionController::RoutingError:
+  #  No route matches [GET] "/uploads/sponsor/avatar/1/thumb_the-guardian.png"
+  # ...
+  # Your application server raised an error - It has been raised in your test code because Capybara.raise_server_errors == true
+  #
+  # Ideally there would be a clear seperation between production uploads and testing uploads. Testing uploads would also be cleaned up
+  # see https://til.codes/testing-carrierwave-file-uploads-with-rspec-and-factorygirl/.
+  # Funny enough this issue has been present for a while. For some reason Capybara wasnraising server errors!
+  # config.root = Rails.root.join('tmp')
 end

@@ -45,7 +45,7 @@ class Sponsor < ApplicationRecord
       .unscope(:order)
       .includes(:workshops)
       .joins(:workshops, :chapters)
-      .where(chapters: { id: chapter.id })
+      .where(chapters_sponsors: { id: chapter.id }) # TODO: figure out of there are more affected aliases
       .order('workshops.date_and_time DESC')
       .limit(6)
   }
