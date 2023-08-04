@@ -18,9 +18,9 @@
         %p.lead
           = t('members.new.students.github')
         .d-flex.flex-column.align-items-start
-          = link_to registration_path(member_type: 'student'), class: 'btn-lg btn-primary mb-4 text-decoration-none' do
+          = link_to registration_path(member_type: 'student'), class: 'btn btn-lg btn-primary mb-4 text-decoration-none' do
             = t('members.sign_up_as_student')
             %i.fab.fa-github
-          = link_to registration_path(member_type: 'coach'), class: 'btn-lg btn-primary text-decoration-none' do
+          = link_to registration_path(member_type: 'coach'), class: 'btn btn-lg btn-primary text-decoration-none' do
             = t('members.sign_up_as_coach')
             %i.fab.fa-github
