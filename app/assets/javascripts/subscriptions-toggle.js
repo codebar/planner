@@ -5,11 +5,11 @@
 /* global $ */
 
 $(() =>
-  $(".subscriptions .toggle").click(function (e) {
+  $(".subscriptions .codebar-toggle").click(function (e) {
     const $section = $(e.target).closest(".subscriptions");
     const $container = $(".group-container", $section);
-    const $icon = $(".toggle i", $section);
-    $container.slideToggle(400, () => $container.toggleClass("collapsed"));
+    const $icon = $(".codebar-toggle i", $section);
+    $container.slideToggle(400, () => $container.toggleClass("codebar-collapsed"));
     $icon.toggleClass("fa-chevron-right fa-chevron-down");
   })
 );

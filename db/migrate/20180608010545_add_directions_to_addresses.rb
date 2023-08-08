@@ -1,4 +1,4 @@
-class AddDirectionsToAddresses < ActiveRecord::Migration
+class AddDirectionsToAddresses < ActiveRecord::Migration[4.2]
   def change
     add_column :addresses, :directions, :text
   end

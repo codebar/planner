@@ -21,7 +21,7 @@ class Admin::MeetingsController < Admin::ApplicationController
   def show
     @invitations = @meeting.invitations.accepted.includes(:member).order(:created_at)
 
-    return render text: @meeting.attendees_csv if request.format.csv?
+    return render plain: @meeting.attendees_csv if request.format.csv?
   end
 
   def edit; end
@@ -40,7 +40,7 @@ class Admin::MeetingsController < Admin::ApplicationController
 
   def attendees_emails
     meeting = MeetingPresenter.new(@meeting)
-    return render text: meeting.attendees_emails if request.format.text?
+    return render plain: meeting.attendees_emails if request.format.text?
 
     redirect_to admin_meeting_path(@meeting)
   end

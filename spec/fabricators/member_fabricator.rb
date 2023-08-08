@@ -31,7 +31,7 @@ Fabricator(:banned_student, from: :member) do
 end
 
 Fabricator(:chapter_organiser, from: :member) do
-  after_save do |member|
+  after_create do |member|
     chapter = Fabricate(:chapter)
     member.add_role :organiser, chapter
   end

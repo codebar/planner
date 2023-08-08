@@ -20,7 +20,7 @@ class Verifier
   private
 
   def verifier
-    @verifier ||= ActiveSupport::MessageVerifier.new(Planner::Application.config.secret_token)
+    @verifier ||= ActiveSupport::MessageVerifier.new(Rails.application.config.secret_key_base)
   end
 
   def generate_access_token

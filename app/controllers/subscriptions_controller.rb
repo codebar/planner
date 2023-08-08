@@ -17,7 +17,7 @@ class SubscriptionsController < ApplicationController
     else
       flash[:notice] = @subscription.errors.inspect
     end
-    redirect_to :back
+    redirect_back fallback_location: root_path
   end
 
   def destroy
@@ -31,7 +31,7 @@ class SubscriptionsController < ApplicationController
                             chapter: group.chapter.city,
                             role: group.name)
 
-    redirect_to :back
+    redirect_back fallback_location: root_path
   end
 
   private

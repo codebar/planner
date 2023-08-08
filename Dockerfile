@@ -1,8 +1,8 @@
-FROM ruby:2.5.9
+FROM ruby:2.7.2
 
 # Default node version on apt is old. This makes sure a recent version is installed
 # This step also runs apt-get update
-RUN curl -sL https://deb.nodesource.com/setup_12.x | bash -
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
 RUN apt-get install -y --force-yes build-essential libpq-dev nodejs
 
 # Install latest chrome dev package
@@ -17,6 +17,6 @@ RUN set -ex; \
 WORKDIR /planner
 
 COPY Gemfile Gemfile.lock ./
-RUN bundle install
+RUN bundle install --jobs 4
 
 COPY . ./

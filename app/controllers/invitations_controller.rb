@@ -24,7 +24,7 @@ class InvitationsController < ApplicationController
 
   def attend
     event = @invitation.event
-    return redirect_to :back, notice: t('messages.already_rsvped') if @invitation.attending?
+    return redirect_back fallback_location: root_path, notice: t('messages.already_rsvped') if @invitation.attending?
 
     if @invitation.student_spaces? || @invitation.coach_spaces?
       @invitation.update_attribute(:attending, true)
@@ -36,22 +36,33 @@ class InvitationsController < ApplicationController
         EventInvitationMailer.attending(@invitation.event, @invitation.member, @invitation).deliver_now
       end
       notice = t('messages.invitations.spot_not_confirmed') if event.surveys_required
-      redirect_to :back, notice: notice
+      redirect_back fallback_location: root_path, notice: notice
     else
       email = event.chapters.present? ? event.chapters.first.email : 'hello@codebar.io'
-      redirect_to :back, notice: t('messages.invitations.event.no_available_seats', email: email)
+      redirect_back(
+        fallback_location: root_path,
+        notice: t('messages.invitations.event.no_available_seats', email: email)
+      )
     end
   end
 
   def reject
-    return redirect_to :back, notice: t('messages.not_attending_already') unless @invitation.attending?
+    unless @invitation.attending?
+      return redirect_back(
+        fallback_location: root_path,
+        notice: t('messages.not_attending_already')
+      )
+    end
 
     @invitation.update_attribute(:attending, false)
-    redirect_to :back, notice: t('messages.rejected_invitation', name: @invitation.member.name)
+    redirect_back(
+      fallback_location: root_path,
+      notice: t('messages.rejected_invitation', name: @invitation.member.name)
+    )
   end
 
   def rsvp_meeting
-    return redirect_to :back, notice: 'Please login first' unless logged_in?
+    return redirect_back fallback_location: root_path, notice: 'Please login first' unless logged_in?
 
     invitation = load_invitation
     meeting = invitation.meeting
@@ -61,7 +72,7 @@ class InvitationsController < ApplicationController
       redirect_to meeting_path(meeting, token: invitation.token),
                   notice: t('messages.invitations.meeting.rsvp')
     else
-      redirect_to :back, notice: 'Sorry, something went wrong'
+      redirect_back fallback_location: root_path, notice: 'Sorry, something went wrong'
     end
   end
 
@@ -70,7 +81,7 @@ class InvitationsController < ApplicationController
 
     @invitation.update_attribute(:attending, false)
 
-    redirect_to :back, notice: t('messages.invitations.meeting.cancel')
+    redirect_back fallback_location: root_path, notice: t('messages.invitations.meeting.cancel')
   end
 
   private

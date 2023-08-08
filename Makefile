@@ -20,3 +20,5 @@ deploy_staging:
 	git push staging master
 	heroku run rake db:migrate --app=codebar-staging
 	heroku maintenance:off --app=codebar-staging
+serve:
+	rm -f ./tmp/pids/server.pid && bundle exec rails server --binding=0.0.0.0 --port=3000

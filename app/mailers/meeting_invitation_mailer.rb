@@ -1,4 +1,4 @@
-class MeetingInvitationMailer < ActionMailer::Base
+class MeetingInvitationMailer < ApplicationMailer
   include EmailHeaderHelper
   include ApplicationHelper
 

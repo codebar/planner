@@ -1,4 +1,4 @@
-class FeedbackRequestMailer < ActionMailer::Base
+class FeedbackRequestMailer < ApplicationMailer
   include EmailHeaderHelper
 
   helper ApplicationHelper

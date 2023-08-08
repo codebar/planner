@@ -3,7 +3,7 @@ require 'verifier'
 
 RSpec.describe Verifier do
   before do
-    Planner::Application.config.secret_token = '123'
+    Rails.application.config.secret_key_base = '123'
   end
 
   it 'generates access_token for an id' do

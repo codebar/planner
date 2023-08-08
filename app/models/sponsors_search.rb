@@ -19,7 +19,8 @@ class SponsorsSearch
   private
 
   def sponsors
-    @sponsors ||= Sponsor.includes([:chapters]).reorder('lower(sponsors.name)').paginate(page: page)
+    # Get rid of unsafe SQL warning
+    @sponsors ||= Sponsor.includes(:chapters).reorder(Arel.sql('lower(sponsors.name)')).paginate(page: page)
   end
 
   def by_name

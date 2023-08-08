@@ -1,4 +1,4 @@
-class WaitingList < ActiveRecord::Base
+class WaitingList < ApplicationRecord
   belongs_to :invitation, class_name: 'WorkshopInvitation'
 
   has_one :workshop, through: :invitation

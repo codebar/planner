@@ -1,4 +1,6 @@
 CarrierWave.configure do |config|
+  config.cache_storage = :file
+
   if Rails.env.development?
     config.storage = :file
   elsif Rails.env.production?

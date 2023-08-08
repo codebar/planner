@@ -42,7 +42,7 @@ class Admin::WorkshopsController < Admin::ApplicationController
     @workshop = WorkshopPresenter.decorate(@workshop)
     if request.format.csv?
       csv_to_render = params[:type].eql?('labels') ? @workshop.attendees_csv : @workshop.pairing_csv
-      return render text: csv_to_render
+      return render plain: csv_to_render
     end
 
     set_admin_workshop_data
@@ -67,14 +67,14 @@ class Admin::WorkshopsController < Admin::ApplicationController
   def send_invites; end
 
   def attendees_checklist
-    return render text: @workshop.attendees_checklist if request.format.text?
+    return render plain: @workshop.attendees_checklist if request.format.text?
 
     redirect_to admin_workshop_path(@workshop),
                 notice: I18n.t('messages.invalid_format', invalid_format: request.format)
   end
 
   def attendees_emails
-    return render text: @workshop.attendees_emails if request.format.text?
+    return render plain: @workshop.attendees_emails if request.format.text?
 
     redirect_to admin_workshop_path(@workshop)
   end

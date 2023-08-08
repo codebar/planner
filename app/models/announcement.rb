@@ -1,4 +1,4 @@
-class Announcement < ActiveRecord::Base
+class Announcement < ApplicationRecord
   has_many :group_announcements
   has_many :groups, through: :group_announcements
 

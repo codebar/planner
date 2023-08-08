@@ -1,4 +1,4 @@
-class CreateChaptersEvents < ActiveRecord::Migration
+class CreateChaptersEvents < ActiveRecord::Migration[4.2]
   def change
     create_table :chapters_events do |t|
       t.integer :chapter_id, index: true

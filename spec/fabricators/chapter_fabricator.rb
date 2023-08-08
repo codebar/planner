@@ -6,7 +6,7 @@ Fabricator(:chapter) do
   email { Faker::Internet.email }
   time_zone { 'London' }
 
-  after_save do |chapter|
+  after_create do |chapter|
     member = Fabricate(:member)
     member.add_role :organiser, chapter
   end
@@ -18,7 +18,7 @@ Fabricator(:chapter_with_groups, from: :chapter) do
   email { Faker::Internet.email }
   time_zone { 'London' }
 
-  after_save do |chapter|
+  after_create do |chapter|
     Fabricate(:students, chapter: chapter)
     Fabricate(:coaches, chapter: chapter)
   end

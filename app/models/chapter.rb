@@ -1,4 +1,4 @@
-class Chapter < ActiveRecord::Base
+class Chapter < ApplicationRecord
   resourcify :permissions, role_cname: 'Permission', role_table_name: :permission
 
   validates :name, :email, uniqueness: true, presence: true

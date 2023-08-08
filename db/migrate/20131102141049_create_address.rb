@@ -1,4 +1,4 @@
-class CreateAddress < ActiveRecord::Migration
+class CreateAddress < ActiveRecord::Migration[4.2]
   def change
     create_table :addresses do |t|
       t.string :flat

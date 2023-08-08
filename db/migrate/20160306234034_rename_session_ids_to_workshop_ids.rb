@@ -1,4 +1,4 @@
-class RenameSessionIdsToWorkshopIds < ActiveRecord::Migration
+class RenameSessionIdsToWorkshopIds < ActiveRecord::Migration[4.2]
   def change
     rename_column :feedback_requests, :sessions_id, :workshop_id
     rename_column :session_invitations, :sessions_id, :workshop_id

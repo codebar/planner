@@ -1,4 +1,4 @@
-class CreateSponsorSessions < ActiveRecord::Migration
+class CreateSponsorSessions < ActiveRecord::Migration[4.2]
   def change
     create_table :sponsor_sessions do |t|
       t.belongs_to :sponsor, index: true
