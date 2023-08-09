@@ -257,7 +257,7 @@ SimpleForm.setup do |config|
   end
 
   # inline input for boolean
-  config.wrappers :inline_boolean, tag: 'span', class: 'form-check flex-wrap justify-content-start mr-sm-2', error_class: 'form-group-invalid', valid_class: 'form-group-valid' do |b|
+  config.wrappers :inline_boolean, tag: 'span', class: 'form-check flex-wrap justify-content-start me-sm-2', error_class: 'form-group-invalid', valid_class: 'form-group-valid' do |b|
     b.use :html5
     b.optional :readonly
     b.use :input, class: 'form-check-input', error_class: 'is-invalid', valid_class: 'is-valid'

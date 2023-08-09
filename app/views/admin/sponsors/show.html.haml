@@ -2,7 +2,7 @@
   .row.mb-4
     .col
       %nav{'aria-label': 'breadcrumb'}
-        %ol.breadcrumb.ml-0
+        %ol.breadcrumb.ms-0
           %li.breadcrumb-item= link_to t('admin.shared.sponsors'), admin_sponsors_path
           %li.breadcrumb-item.active= @sponsor.name
 
@@ -53,7 +53,7 @@
 
           %dt.mb-0= t('.contacts')
           %dd
-            %ul.list-unstyled.ml-0.mb-0#contacts
+            %ul.list-unstyled.ms-0.mb-0#contacts
               - @sponsor.contacts.each do |contact|
                 %li.mt-1
                   = mail_to(contact.email, contact.full_name)
@@ -77,7 +77,7 @@
             - if @sponsor.workshops.any?
               .col
                 %strong= t('admin.shared.workshops')
-                %ul.list-unstyled.ml-0
+                %ul.list-unstyled.ms-0
                   - @sponsor.workshop_sponsors.each do |ws|
                     %li
                       = link_to admin_workshop_path(ws.workshop) do
@@ -86,7 +86,7 @@
             - if @sponsor.event_sponsorships.any?
               .col
                 %strong= t('admin.shared.events')
-                %ul.list-unstyled.ml-0
+                %ul.list-unstyled.ms-0
                   - @sponsor.event_sponsorships.each do |sponsorship|
                     %li
                       = link_to admin_event_path(sponsorship.event) do
@@ -97,7 +97,7 @@
             - if @sponsor.meetings.any?
               .col
                 %strong= t('admin.shared.meetings')
-                %ul.list-unstyled.ml-0
+                %ul.list-unstyled.ms-0
                   - @sponsor.meetings.each do |meeting|
                     %li
                       = link_to admin_meeting_path(meeting) do
@@ -106,5 +106,5 @@
 
       #activities
         %h2.h3.mb-3= t('.activities')
-        %ul.list-unstyled.ml-0
+        %ul.list-unstyled.ms-0
           = render_activities @sponsor.activities

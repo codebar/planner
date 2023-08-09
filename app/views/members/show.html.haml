@@ -40,7 +40,7 @@
     .col-12.col-md-4.offset-md-1.mb-4
       - if @member.groups.any?
         %h4 Subscriptions
-        %ul.list-unstyled.ml-0
+        %ul.list-unstyled.ms-0
           - @member.groups.each do |group|
             %li
               = link_to chapter_path(group.chapter.slug) do

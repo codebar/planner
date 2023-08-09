@@ -13,7 +13,7 @@
       .card.border-info.mb-4
         .card-body
           %h3 Organisers
-          %ul.list-unstyled.ml-0
+          %ul.list-unstyled.ms-0
             - @chapter.organisers.each do |organiser|
               %li
                 = organiser.full_name
@@ -23,7 +23,7 @@
                   %span.badge.bg-warning.text-dark Phone no. not set
           - if current_user.is_admin?
             = link_to 'Edit organisers', admin_chapter_organisers_path(@chapter), class: 'btn btn-primary btn-sm'
-      %ul.nav.flex-column.ml-0.mb-4
+      %ul.nav.flex-column.ms-0.mb-4
         - @groups.each do |group|
           %li.nav-item
             = link_to [ :admin, group ], class: 'nav-link' do
@@ -42,7 +42,7 @@
           %h3 Upcoming Workshops
           = link_to 'New workshop', new_admin_workshop_path, class: 'btn btn-primary btn-sm'
         - if @workshops.any?
-          %ul.list-unstyled.ml-0.mb-0
+          %ul.list-unstyled.ms-0.mb-0
             - @workshops.each do |workshop|
               %li.py-2
                 = link_to admin_workshop_path(workshop) do

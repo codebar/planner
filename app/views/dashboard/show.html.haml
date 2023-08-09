@@ -76,7 +76,7 @@
     .col-lg-4.pl-lg-5
       %h3
         = t('homepage.chapters.title')
-      %ul.list-unstyled.ml-0
+      %ul.list-unstyled.ms-0
         - @chapters.each do |chapter|
           %li
             = link_to chapter.name, chapter_path(chapter.slug)

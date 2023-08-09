@@ -32,7 +32,7 @@
         - if meeting.organisers.any?
           .mb-3.mb-md-0
             - meeting.organisers.each do |organiser|
-              = link_to twitter_url_for(organiser.twitter), class: 'border-0 d-inline-block mr-2' do
+              = link_to twitter_url_for(organiser.twitter), class: 'border-0 d-inline-block me-2' do
                 = image_tag(organiser.avatar(26), class: 'rounded-circle', title: organiser.full_name, alt: organiser.full_name)
         - if meeting.venue.present?
           %div

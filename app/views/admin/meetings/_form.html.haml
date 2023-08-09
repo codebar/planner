@@ -21,6 +21,6 @@
     .col-12
       = f.input :chapters, collection: Chapter.all, label_method: :name, value_method: :id, selected: @meeting.chapters.map(&:id), input_html: { multiple: true }
     .col-12
-      = f.input :invitable, as: :boolean, hint: 'Allow members to RSVP', hint_html: { class: 'ml-1' }
+      = f.input :invitable, as: :boolean, hint: 'Allow members to RSVP', hint_html: { class: 'ms-1' }
     .text-right
       = f.button :button, 'Save', class: 'btn btn-primary'
