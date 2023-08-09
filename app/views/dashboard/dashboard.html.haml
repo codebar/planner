@@ -13,7 +13,7 @@
 
         .d-flex.align-items-center.mb-2
           %h4 Subscriptions
-          %small= link_to 'Edit', subscriptions_path, class: 'ml-2'
+          %small= link_to 'Edit', subscriptions_path, class: 'ms-2'
         - if current_user.chapters.any?
           .list-group.list-group-flush
             - current_user.chapters.each do |chapter|

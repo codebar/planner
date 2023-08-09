@@ -22,9 +22,9 @@
           Who should receive the invitations?
         %p
           If you click "Students" now, you can come back and send them to the coaches at a separate time, and vice versa.
-        = link_to admin_workshop_invite_path(@workshop, for: "students"), method: :post, class: 'btn btn-primary btn-lg mr-2' do
+        = link_to admin_workshop_invite_path(@workshop, for: "students"), method: :post, class: 'btn btn-primary btn-lg me-2' do
           Students
-        = link_to admin_workshop_invite_path(@workshop, for: "coaches"), method: :post, class: 'btn btn-primary btn-lg mr-2' do
+        = link_to admin_workshop_invite_path(@workshop, for: "coaches"), method: :post, class: 'btn btn-primary btn-lg me-2' do
           Coaches
-        = link_to admin_workshop_invite_path(@workshop, for: "everyone"), method: :post, class: 'btn btn-primary btn-lg mr-2' do
+        = link_to admin_workshop_invite_path(@workshop, for: "everyone"), method: :post, class: 'btn btn-primary btn-lg' do
           Everybody

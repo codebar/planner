@@ -15,7 +15,7 @@
   - if @workshop_attendances.positive? || @meeting_rsvps.positive? || @event_rsvps.positive?
     .attendance-summary.mt-4
       %h5 Attendance summary
-      %ul.list-unstyled.ml-0
+      %ul.list-unstyled.ms-0
         - if @workshop_attendances.positive?
           %li
             .badge.rounded-pill.bg-secondary
@@ -36,7 +36,7 @@
 
   - if @member.groups.any?
     %h5 Groups
-    %ul.list-unstyled.ml-0#subscriptions
+    %ul.list-unstyled.ms-0#subscriptions
       - @member.groups.each do |group|
         %li
           = link_to [:admin, group] do

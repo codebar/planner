@@ -14,7 +14,7 @@
                   data: { placeholder: t('messages.invitations.select_a_member_to_rsvp') } }
       = f.hidden_field :meeting_id, value: @meeting.slug
     .col
-      = f.button :button, 'Add', class: 'btn btn-sm btn-primary mb-0 mr-2'
+      = f.button :button, 'Add', class: 'btn btn-sm btn-primary mb-0 me-2'
       %span{'data-bs-toggle': 'tooltip', 'data-bs-placement': 'bottom', title: t('admin.workshop.manage_rsvps.text')}
         %i.fas.fa-info-circle
 

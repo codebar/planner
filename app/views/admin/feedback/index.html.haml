@@ -15,7 +15,7 @@
                 .d-block.pr-4
                   = image_tag(feedback.coach.avatar(24), class: 'rounded-circle', alt: feedback.coach.full_name)
                   %small= feedback.coach.full_name
-              .d-block.text-warning.ml-auto
+              .d-block.text-warning.ms-auto
                 - (0...feedback.rating).each do |rating|
                   %i.fas.fa-star
             .card-body

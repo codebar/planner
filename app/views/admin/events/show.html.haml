@@ -44,28 +44,28 @@
       - if @event.sponsors?
         - if @event.sponsors?(:standard)
           %h5 Standard
-          %ul.list-unstyled.ml-0
+          %ul.list-unstyled.ms-0
             - @event.sponsors.each do |sponsor|
               %li
                 %span
                   = link_to sponsor.name, [:admin, sponsor]
         - if @event.sponsors?(:bronze)
           %h5 Bronze
-          %ul.list-unstyled.ml-0
+          %ul.list-unstyled.ms-0
             - @event.bronze_sponsors.each do |sponsor|
               %li
                 %span
                   = link_to sponsor.name, [:admin, sponsor]
         - if @event.sponsors?(:silver)
           %h5 Silver
-          %ul.list-unstyled.ml-0
+          %ul.list-unstyled.ms-0
             - @event.silver_sponsors.each do |sponsor|
               %li
                 %span
                   = link_to sponsor.name, [:admin, sponsor]
         - if @event.sponsors?(:gold)
           %h5 Gold
-          %ul.list-unstyled.ml-0
+          %ul.list-unstyled.ms-0
             - @event.gold_sponsors.each do |sponsor|
               %li
                 %span
@@ -83,7 +83,7 @@
     .col-12.col-md-6.col-lg-3.mb-4
       %h4 Chapters
       - if @event.chapters.any?
-        %ul.list-inline.ml-0
+        %ul.list-inline.ms-0
           - @event.chapters.each do |chapter|
             %li.list-inline-item= link_to chapter.name, [:admin, chapter]
       - else

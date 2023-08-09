@@ -18,7 +18,7 @@
   - else
     - if current_user.student? && current_user.coach?
       .d-flex
-        = button_to 'Attend as a student', rsvp_workshop_path(@workshop, role: 'Student'), method: :post, class: 'btn btn-primary mr-3'
+        = button_to 'Attend as a student', rsvp_workshop_path(@workshop, role: 'Student'), method: :post, class: 'btn btn-primary me-3'
         = button_to 'Attend as a coach', rsvp_workshop_path(@workshop, role: 'Coach'), method: :post, class: 'btn btn-primary'
     - elsif current_user.student?
       = button_to 'Attend as a student', rsvp_workshop_path(@workshop, role: 'Student'), method: :post, class: 'btn btn-primary'
