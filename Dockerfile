@@ -1,4 +1,4 @@
-FROM ruby:3.2.2
+FROM --platform=linux/amd64 ruby:3.2.2
 
 # Default node version on apt is old. This makes sure a recent version is installed
 # This step also runs apt-get update
