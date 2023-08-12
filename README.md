@@ -76,6 +76,9 @@ The current Dockerfile and docker-compose were closely copied from [the Docker g
 
 **Note:** If you are using Windows, you can run `bin/dbuild` using Git Bash.
 
+**Note:** If you are using a Mac with an Apple Silicon processer (M1, M2, etc) you will need to enable the following option in Docker's settings:
+> Use Rosetta for x86/amd64 emulation on Apple Silicon
+
 ### 4. Run the tests
 
 Run `bin/drake` to run all the tests and make sure everything works.
