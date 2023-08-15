@@ -33,8 +33,6 @@ gem 'pundit'
 gem 'rails4-autocomplete'
 gem 'rolify'
 gem 'sass-rails', '>= 6'
-# Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
-gem 'webpacker', '~> 5.0'
 gem 'simple_form'
 
 gem 'terser'
