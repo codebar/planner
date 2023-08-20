@@ -20,10 +20,14 @@ if Rails.env.development?
     workshops.concat Fabricate.times(2, :workshop, title: 'Workshop', chapter: chapters.sample)
 
     Rails.logger.info "Creating a lot of old workshops..."
-    past_workshops = 50.times.map do |n|
+    past_workshops_since_n_months = 5 * 12
+    past_workshops_one_per_n_months = 6
+    past_workshops_count = past_workshops_since_n_months/past_workshops_one_per_n_months
+    
+    past_workshops = past_workshops_count.times.map do |n|
       Fabricate(:workshop, title: 'Workshop',
                            chapter: chapters.sample,
-                           date_and_time:  Time.zone.now - 9.years + n.months)
+                           date_and_time:  Time.zone.now - past_workshops_since_n_months.months + (past_workshops_one_per_n_months * n).months)
     end
 
     Rails.logger.info "Creating events..."
@@ -70,7 +74,14 @@ if Rails.env.development?
     Rails.logger.info "Creating event invitations..."
     10.times do |n|
       Fabricate(:invitation, member: students.sample, event: events.sample)
-      Fabricate(:coach_invitation, member: students.sample, event: events.sample)
+      Fabricate(:coach_invitation, member: coaches.sample, event: events.sample)
+    end
+
+    Rails.logger.info "Creating attended by coach workshop invitations..."
+    coaches.sample(15).each do |coach|
+      past_workshops.sample(3).each do |workshop|
+        Fabricate(:attended_coach, workshop: workshop, member: coach)
+      end
     end
 
     Rails.logger.info "Creating workshop invitations..."
