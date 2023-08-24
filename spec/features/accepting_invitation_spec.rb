@@ -15,7 +15,7 @@ RSpec.feature 'Accepting a workshop invitation', type: :feature do
     context 'amend invitation details' do
       context 'a student' do
         scenario 'cannot accept an invitation  without a tutorial' do
-          invitation.update_attributes(attending: nil, tutorial: nil)
+          invitation.update(attending: nil, tutorial: nil)
           visit invitation_route
 
           click_on 'Attend'
@@ -59,7 +59,7 @@ RSpec.feature 'Accepting a workshop invitation', type: :feature do
 
         scenario 'can update the note on their invitation' do
           note = 'I am most comfortable with being paired in JavaScript'
-          invitation.update_attributes(note: 'A note', attending: true)
+          invitation.update(note: 'A note', attending: true)
           visit invitation_route
 
           expect(page).to have_field('workshop_invitation_note', with: 'A note')

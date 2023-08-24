@@ -15,4 +15,10 @@ RSpec.feature 'A visitor to the website', type: :feature do
     expect(page).to have_content('Your privacy means a lot to us')
   end
 
+  scenario 'can access page not found', js: true do
+    visit '/does_not_exist'
+
+    expect(page).to have_content('Page not found')
+  end
+
 end

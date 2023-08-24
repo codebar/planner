@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
     Rails.logger.fatal(ex)
     respond_to do |format|
       format.html { render 'errors/error', layout: false, status: :internal_server_error }
-      format.all  { render nothing: true, status: :internal_server_error }
+      format.all  { head :internal_server_error }
     end
   end
 
@@ -28,7 +28,7 @@ class ApplicationController < ActionController::Base
   def render_not_found
     respond_to do |format|
       format.html { render template: 'errors/not_found', layout: false, status: :not_found }
-      format.all  { render nothing: true, status: :not_found }
+      format.all  { head :not_found }
     end
   end
 

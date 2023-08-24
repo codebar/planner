@@ -2,5 +2,5 @@
 set +e
 
 docker-compose build
-docker-compose run --rm web rake db:drop db:create db:migrate db:seed db:test:prepare
+docker-compose run --rm web bash -c "bundle; rake db:drop db:create db:migrate db:seed db:test:prepare"
 echo "Built."

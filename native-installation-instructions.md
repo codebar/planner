@@ -16,20 +16,20 @@ These are the original instructions for natively installing the app to your mach
 
 ## Set up a Ruby Environment
 
-You will need to install Ruby 2.7.2 using RVM or rbenv.
+You will need to install Ruby 3.2.2 using RVM or rbenv.
 
 ### Option 1: Using [rvm](https://rvm.io/rvm/install)
 
 ```bash
-CPPFLAGS=-DUSE_FFI_CLOSURE_ALLOC rvm install 2.7.2
+CPPFLAGS=-DUSE_FFI_CLOSURE_ALLOC rvm install 3.2.2
 ```
-We need to set the CPPFLAGS env variable to be able to install Ruby 2.7.2 on M1 Mac machines. See more: [https://github.com/ffi/ffi/issues/869#issuecomment-1233000037](https://github.com/ffi/ffi/issues/869#issuecomment-1233000037)
+We need to set the CPPFLAGS env variable to be able to install Ruby 3.2.2 on M1 Mac machines. See more: [https://github.com/ffi/ffi/issues/869#issuecomment-1233000037](https://github.com/ffi/ffi/issues/869#issuecomment-1233000037)
 
 ### Option 2: Using [rbenv](https://github.com/sstephenson/rbenv) and [ruby-build](https://github.com/sstephenson/ruby-build)
 
 ```bash
-rbenv install 2.7.2
-rbenv global 2.7.2
+rbenv install 3.2.2
+rbenv global 3.2.2
 ```
 
 ## Install and run PostgreSQL

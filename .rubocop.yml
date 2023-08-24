@@ -40,7 +40,7 @@ Rails/Date:
   Enabled: true
 
 Metrics/BlockLength:
-  ExcludedMethods: ["describe", "context", "draw", "namespace"]
+  AllowedMethods: ["describe", "context", "draw", "namespace"]
 
 Performance:
   Exclude:

@@ -31,7 +31,7 @@ RSpec.shared_examples 'invitation route' do
 
     context 'RSVPing directly through the invitation' do
       scenario 'a Student must first select a tutorial' do
-        invitation.update_attributes(role: 'Student', attending: nil, tutorial: nil)
+        invitation.update(role: 'Student', attending: nil, tutorial: nil)
         visit accept_invitation_route
 
         expect(page).to_not have_link 'I can no longer attend'
@@ -39,7 +39,7 @@ RSpec.shared_examples 'invitation route' do
       end
 
       scenario 'a Coach must can RSVP diredctly' do
-        invitation.update_attributes(role: 'Coach', attending: nil, tutorial: nil)
+        invitation.update(role: 'Coach', attending: nil, tutorial: nil)
         visit accept_invitation_route
 
         expect(page).to have_link 'I can no longer attend'

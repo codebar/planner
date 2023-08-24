@@ -76,7 +76,8 @@ class WorkshopCalendar
   end
 
   def timezone
-    @timezone ||= tzinfo.ical_timezone start_datetime(workshop)
+    # NOTE: this is because tzinfo.ical_timezone now complains: String values are not supported
+    @timezone ||= tzinfo.ical_timezone workshop.date_and_time
   end
 
   def tzinfo
