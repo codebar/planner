@@ -4,6 +4,6 @@
       %i.fas.fa-circle.fa-stack-2x
       %i.fas.fa-paper-plane.fa-stack-1x.fa-inverse
   .col-9.col-md-11.details
-    %strong Sent eligibility inquiry email by #{link_to(action.issued_by.full_name, action.issued_by)}
+    %strong Sent eligibility inquiry email by #{link_to(action.issued_by.full_name, admin_member_path(action.issued_by))}
     .date
       = l(action.created_at, format: :website_format)
