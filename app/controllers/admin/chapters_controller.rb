@@ -23,7 +23,7 @@ class Admin::ChaptersController < Admin::ApplicationController
   def show
     authorize(@chapter)
 
-    @workshops = @chapter.workshops.upcoming
+    @workshops = @chapter.workshops.today_and_upcoming
     @sponsors = @chapter.sponsors.uniq
     @groups = @chapter.groups
     @subscribers = @chapter.subscriptions.last(20).reverse

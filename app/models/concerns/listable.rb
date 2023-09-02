@@ -4,6 +4,7 @@ module Listable
   extend ActiveSupport::Concern
 
   included do
+    scope :today_and_upcoming, -> { where('date_and_time >= ?', Time.zone.today).order(date_and_time: :asc) }
     scope :upcoming, -> { where('date_and_time >= ?', Time.zone.now).order(date_and_time: :asc) }
     scope :past, -> { where('date_and_time < ?', Time.zone.now).order(:date_and_time) }
     scope :recent, lambda {
