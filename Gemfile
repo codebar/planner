@@ -7,7 +7,7 @@ gem 'bootsnap', '>= 1.4.4', require: false
 
 gem 'acts-as-taggable-on'
 gem 'carrierwave'
-gem 'carrierwave-ftp', require: 'carrierwave/storage/sftp'
+gem 'carrierwave-ftp', github: 'luan/carrierwave-ftp', ref: '5481c13', require: 'carrierwave/storage/sftp'
 gem 'cocoon'
 gem 'delayed_job'
 gem 'delayed_job_active_record'
