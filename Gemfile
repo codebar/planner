@@ -1,9 +1,11 @@
 source 'https://rubygems.org'
 ruby '3.2.2'
 
-gem 'rails', '6.1.7.4'
+gem 'rails', '7.0.6'
+# The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
+gem 'sprockets-rails'
 # Reduces boot times through caching; required in config/boot.rb
-gem 'bootsnap', '>= 1.4.4', require: false
+gem 'bootsnap', require: false
 
 gem 'acts-as-taggable-on'
 gem 'carrierwave'
@@ -28,17 +30,17 @@ gem 'omniauth-rails_csrf_protection'
 gem 'pg'
 gem 'pickadate-rails'
 gem 'premailer-rails'
-gem 'puma', '~> 5.0'
+
 gem 'pundit'
 gem 'rails4-autocomplete'
 gem 'rolify'
-gem 'sass-rails', '>= 6'
+# Use Sass to process CSS
+gem 'sassc-rails'
 gem 'simple_form'
 
 gem 'terser'
 
 gem 'will_paginate'
-gem 'sprockets-rails'
 
 gem 'icalendar'
 gem 'tzinfo-data'
@@ -52,10 +54,16 @@ gem 'stripe'
 
 gem 'rails-html-sanitizer', '~> 1.4.4'
 
-# Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
-gem 'turbolinks', '~> 5'
-# Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 2.7'
+# Use the Puma web server [https://github.com/puma/puma]
+gem 'puma', '~> 5.0'
+# Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
+gem 'importmap-rails'
+# Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
+gem 'turbo-rails'
+# Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
+gem 'stimulus-rails'
+# Build JSON APIs with ease [https://github.com/rails/jbuilder]
+gem 'jbuilder'
 gem 'public_activity'
 
 group :development do
@@ -67,7 +75,7 @@ group :development do
   gem 'rack-mini-profiler', '~> 2.0'
   gem 'listen', '~> 3.3'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-  gem 'spring'
+  # gem 'spring'
 end
 
 group :development, :test do
@@ -87,10 +95,12 @@ group :development, :test do
 end
 
 group :test do
-  gem 'capybara', '>= 3.26'
+  # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
+  gem 'capybara'
+  gem 'selenium-webdriver'
+  gem 'webdrivers'
   gem 'database_cleaner'
   gem 'shoulda-matchers', '~> 4.5'
-  gem 'webdrivers'
   gem 'simplecov',      require: false
   gem 'simplecov-lcov', require: false
 end
