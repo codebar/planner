@@ -63,6 +63,9 @@ RSpec.feature 'Managing sponsors', type: :feature do
         sponsor = Fabricate(:sponsor)
 
         visit edit_admin_sponsor_path(sponsor)
+        puts page.body
+
+        expect(page.find('.small-image')['alt']).to match("#{sponsor.name} logo")
 
         fill_in 'Accessibility information', with: 'This venue is fully accessible to wheelchair users.'
         fill_in 'Description', with: 'This sponsor has great WiFi.'
@@ -73,6 +76,15 @@ RSpec.feature 'Managing sponsors', type: :feature do
         expect(page).to have_content 'This venue is fully accessible to wheelchair users.'
         expect(page).to have_content 'This sponsor has great WiFi.'
         expect(page).to have_content 'Office is located on the third floor.'
+      end
+    end
+    context 'with existing avatar' do
+      it 'shows the current avatar on the edit page' do
+        sponsor = Fabricate(:sponsor)
+
+        visit edit_admin_sponsor_path(sponsor)
+
+        expect(page.find('*[data-test=sponsor-logo]')['alt']).to match("#{sponsor.name} logo")
       end
     end
   end

@@ -755,7 +755,6 @@ en:
         remote: Only check if the role is fully remote only
         salary: Annual pay before tax, without commas or decimal points
       sponsor:
-        avatar: The avatar is displayed in sponsors and on the event pages.
         accessibility_info: Is the office on the second floor? Is there a lift? How can someone with a handicap get there.
         contacts:
           mailing_list_consent: Adds contact to sponsors mailing list and triggers email enabling contact to self opt-out.

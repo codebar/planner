@@ -8,6 +8,8 @@
       - if current_user.has_role?(:admin)
         = f.input :level, collection: Sponsor.levels.keys, label_method: :humanize
       = f.input :avatar, as: :file, required: !@sponsor.avatar?
+      - if @sponsor.avatar?
+        = image_tag(@sponsor.avatar.url, alt: "#{@sponsor.name} logo", class: 'small-image mw-100 mb-4', 'data-test': 'sponsor-logo')
       = f.hidden_field :image_cache
 
       #contacts.card.bg-light.border-info.mb-4.mb-md-0
