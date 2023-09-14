@@ -15,7 +15,7 @@ class Event < ApplicationRecord
   has_many :silver_sponsors, -> { where('sponsorships.level' => 'silver') }, through: :sponsorships, source: :sponsor
   has_many :gold_sponsors, -> { where('sponsorships.level' => 'gold') }, through: :sponsorships, source: :sponsor
   has_many :organisers, -> { where('permissions.name' => 'organiser') }, through: :permissions, source: :members
-  has_and_belongs_to_many :chapters
+  has_and_belongs_to_many :chapters, join_table: 'chapters_events'
   has_many :invitations
 
   validates :name, :slug, :info, :schedule, :description, presence: true

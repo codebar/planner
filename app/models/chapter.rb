@@ -8,7 +8,7 @@ class Chapter < ApplicationRecord
   validates :description, length: { maximum: 280 }
 
   has_many :workshops
-  has_and_belongs_to_many :events
+  has_and_belongs_to_many :events, join_table: 'chapters_events'
   has_many :groups
   has_many :sponsors, through: :workshops
   has_many :subscriptions, through: :groups

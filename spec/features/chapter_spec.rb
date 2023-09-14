@@ -38,6 +38,19 @@ RSpec.feature 'viewing a Chapter', type: :feature do
       end
     end
 
+    it 'renders any upcoming events for the chapter' do
+      chapter = Fabricate(:chapter)
+      2.times.map do |n|
+        Fabricate(:event, name: "Event #{n + 1}",
+                          chapters: [chapter],
+                          date_and_time: Time.zone.now + 2.months - n.months)
+      end
+
+      visit chapter_path(chapter.slug)
+      expect(page).to have_content 'Event 1'
+      expect(page).to have_content 'Event 2'
+    end
+
     it 'renders the most recent past workshop for the chapter' do
       chapter = Fabricate(:chapter)
       past_workshop = Fabricate(:workshop, chapter: chapter, date_and_time: Time.zone.today - 2.weeks)
