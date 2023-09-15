@@ -15,7 +15,7 @@
                 %p.lead
                   We’d love to have you at our next #{@workshop.chapter.name} workshop. RSVP now to secure a spot, some light bites and time with a dedicated coach.
                 %p
-                  As part of our workshop, you'll get to work through any of our #{link_to 'tutorials', 'http://codebar.github.io/tutorials' } or receive guidance on your personal project. We believe that everyone should be entitled to free learning and our community has #{ link_to 'a lot of devoted developers', full_url_for(coaches_url)} who help out as coaches.
+                  As part of our workshop, you'll get to work through any of our #{link_to 'tutorials', 'http://codebar.github.io/tutorials' } or receive guidance on your personal project. We believe that everyone should be entitled to free learning and our community has #{ link_to 'a lot of devoted developers', email_full_url_for(coaches_url)} who help out as coaches.
                 %p You will also get the opportunity to meet other people interested in coding and collaborate with them.
                 %p We’re looking forward to having you with us. See you there!
                 %p Please note: We do not accept any RSVPs over email.
@@ -30,7 +30,7 @@
                   Workshop
                   %br
                   %small #{humanize_date(@workshop.date_and_time, @workshop.ends_at, with_time: true)}
-                = link_to 'View invitation and RSVP', full_url_for(invitation_url(@invitation)), class: 'btn'
+                = link_to 'View invitation and RSVP', email_full_url_for(invitation_url(@invitation)), class: 'btn'
               %td{ width: '40%', style: 'vertical-align: top;'}
                 %h4
                   Venue

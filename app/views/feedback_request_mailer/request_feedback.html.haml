@@ -29,7 +29,7 @@
             %tr
               %td
                 %p
-                  =link_to "Submit feedback", full_url_for(feedback_url(@feedback_request.token)), class: 'btn'
+                  =link_to "Submit feedback", email_full_url_for(feedback_url(@feedback_request.token)), class: 'btn'
 
         .content
           = render partial: 'shared_mailers/social', locals: { workshop: @workshop }

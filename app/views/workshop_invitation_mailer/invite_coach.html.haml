@@ -37,7 +37,7 @@
                   Workshop
                   %br
                   %small #{humanize_date(@workshop.date_and_time, @workshop.ends_at, with_time: true)}
-                = link_to 'View invitation and RSVP', full_url_for(invitation_url(@invitation)), class: 'btn'
+                = link_to 'View invitation and RSVP', email_full_url_for(invitation_url(@invitation)), class: 'btn'
               %td{ width: '40%', style: 'vertical-align: top;'}
                 %h4
                   Venue

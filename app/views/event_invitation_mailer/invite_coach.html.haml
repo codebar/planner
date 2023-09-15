@@ -25,7 +25,7 @@
                 %h4
                   #{@event.name}
                   %small #{humanize_date(@event.date_and_time, @event.ends_at, with_time: true)}
-                = link_to 'View invitation and RSVP', full_url_for(event_invitation_url(event_id: @event.slug, token: @invitation.token)), class: 'btn'
+                = link_to 'View invitation and RSVP', email_full_url_for(event_invitation_url(event_id: @event.slug, token: @invitation.token)), class: 'btn'
 
         - if @event.venue.present?
           .content

@@ -15,7 +15,7 @@
                 %p.lead
                   We’d love to have you at our next #{@workshop.chapter.name} virtual workshop.
                 %p
-                  As part of our workshops, you’ll get to work through any of our #{link_to 'tutorials', 'http://codebar.github.io/tutorials' } or receive guidance on your personal project. We believe that everyone should be entitled to free learning and our community has #{ link_to 'a lot of devoted developers', full_url_for(coaches_url)} who help out as coaches.
+                  As part of our workshops, you’ll get to work through any of our #{link_to 'tutorials', 'http://codebar.github.io/tutorials' } or receive guidance on your personal project. We believe that everyone should be entitled to free learning and our community has #{ link_to 'a lot of devoted developers', email_full_url_for(coaches_url)} who help out as coaches.
                 %p You will also get the opportunity to interact with other people interested in coding and collaborate with them.
                 %p Please note: We do not accept any RSVPs over email.
 
@@ -27,7 +27,7 @@
               %td{ width: '60%', style: 'vertical-align: top; padding-right: 20px;' }
                 %h4
                   %small #{humanize_date(@workshop.date_and_time, @workshop.ends_at, with_time: true)}
-                = link_to 'View invitation and RSVP', full_url_for(invitation_url(@invitation)), class: 'btn'
+                = link_to 'View invitation and RSVP', email_full_url_for(invitation_url(@invitation)), class: 'btn'
               %td{ width: '40%', style: 'vertical-align: top;'}
                 - if @workshop.sponsors.any?
                   %h4 Sponsored by

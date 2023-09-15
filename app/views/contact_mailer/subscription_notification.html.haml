@@ -3,4 +3,4 @@ Hi #{@contact.name},
 %p
   You have been subscribed to codebar's sponsors mailing list. To opt-out follow the link below:
   %br
-  =link_to 'Update subscription preferences', full_url_for(contact_preferences_url(token: @contact.token)), class: 'btn'
+  =link_to 'Update subscription preferences', email_full_url_for(contact_preferences_url(token: @contact.token)), class: 'btn'

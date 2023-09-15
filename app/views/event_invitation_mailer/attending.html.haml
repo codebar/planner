@@ -27,7 +27,7 @@
                 %h4
                   #{@event.name}
                   %small #{humanize_date(@event.date_and_time, @event.ends_at, with_time: true)}
-                = link_to 'Update your attendance', full_url_for(event_invitation_url(@event.id, @invitation.token)), class: 'btn'
+                = link_to 'Update your attendance', email_full_url_for(event_invitation_url(@event.id, @invitation.token)), class: 'btn'
 
         .content
           %table

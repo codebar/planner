@@ -21,7 +21,7 @@
                   so you should keep the slot available and check your email during the afternoon on the day of the workshop.
                 %p
                   Alternatively, if you know you can no longer make it, please
-                  = link_to 'remove yourself from the waiting list', full_url_for(invitation_url(@invitation))
+                  = link_to 'remove yourself from the waiting list', email_full_url_for(invitation_url(@invitation))
                   so someone else can take part in the workshop.
 
         .content
@@ -30,7 +30,7 @@
               %td
                 %h4
                   %small #{humanize_date(@workshop.date_and_time, @workshop.ends_at, with_time: true)}
-                = link_to 'Update or cancel your attendance', full_url_for(invitation_url(@invitation)), class: 'btn'
+                = link_to 'Update or cancel your attendance', email_full_url_for(invitation_url(@invitation)), class: 'btn'
 
         .content
           %table
