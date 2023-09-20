@@ -10,7 +10,7 @@
       .col-md-6
         = image_tag @chapter.image.bg.url, alt: "#{@chapter.name} chapter", class: 'mw-100'
 
-.alert-primary.pt-4.pb-4
+.alert.alert-primary.pt-4.pb-4.mb-0.rounded-0
   .container
     .row.align-items-center
       .col-md-6.mb-4.mb-md-0
@@ -19,24 +19,22 @@
         - if logged_in?
           = render partial: 'subscriptions'
         - else
-          =link_to 'Sign up', new_member_path, class: 'btn btn-primary'
+          = link_to 'Sign up', new_member_path, class: 'btn btn-primary'
 
 .container.py-4.py-lg-5
   .row
     .col-md-8.col-sm-12
       - if @upcoming_workshops.any?
-        .pt-4
-          %h3 Upcoming Events
-          - @upcoming_workshops.each do |date, workshops|
-            .grouped-events
-              = render workshops
+        %h2.mb-4= t('homepage.events.upcoming')
+        - @upcoming_workshops.each do |date, workshops|
+          %h3.h5= date
+          = render workshops
 
       - if @latest_workshops.any?
         .pt-4
-          %h3 Past Events
+          %h2.mb-4 Past Events
           - @latest_workshops.each do |date, workshops|
-            .grouped-events
-              = render workshops
+            = render workshops
 
     .col-md-4.col-sm-12.mt-4
       - if @chapter.twitter_handle
