@@ -19,7 +19,7 @@
           - else
             - if @event.event_student_spaces?
               - if @event.tito_url.present?
-                = link_to @event.tito_url, target: '_blank', class: 'btn btn-primary', method: :post do
+                = link_to @event.tito_url, target: '_blank', class: 'btn btn-primary' do
                   RSVP
               - else
                 = link_to event_attend_path, class: 'btn btn-primary', method: :post do
@@ -37,7 +37,7 @@
           - else
             - if @event.event_coach_spaces?
               - if @event.tito_url.present?
-                = link_to @event.tito_url, target: '_blank', class: 'btn btn-primary', method: :post do
+                = link_to @event.tito_url, target: '_blank', class: 'btn btn-primary' do
                   RSVP
               - else
                 = link_to event_attend_path, class: 'btn btn-primary', method: :post do
