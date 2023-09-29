@@ -103,6 +103,7 @@ group :test do
   gem 'shoulda-matchers', '~> 4.5'
   gem 'simplecov',      require: false
   gem 'simplecov-lcov', require: false
+  gem 'timecop', '~> 0.9.8'
 end
 
 group :production do

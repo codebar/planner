@@ -1,4 +1,5 @@
 require "active_support/core_ext/integer/time"
+require "timecop"
 
 # The test environment is used exclusively to run your application's
 # test suite. You never need to work with it otherwise. Remember that
@@ -74,4 +75,7 @@ Rails.application.configure do
     Bullet.bullet_logger = true
     Bullet.raise = false # raise an error if n+1 query occurs
   end
+
+  # https://github.com/travisjeffery/timecop#timecopsafe_mode
+  Timecop.safe_mode = true
 end

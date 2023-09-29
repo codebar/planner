@@ -6,14 +6,16 @@ RSpec.describe Listable, type: :model do
   context 'scopes' do
     context '#today_and_upcoming' do
       it 'returns a list of all today and upcoming workshops' do
-        Fabricate.times(5, :past_workshop)
-        future_workshops = Fabricate.times(3, :workshop)
+        Timecop.travel(Time.now.utc) do
+          Fabricate.times(5, :past_workshop)
+          future_workshops = Fabricate.times(3, :workshop)
 
-        # Make sure one is not technically upcoming but is happening now
-        future_workshops.last.date_and_time = 1.hour.ago
-        future_workshops.last.save
+          # Make sure one is not technically upcoming but is happening now
+          future_workshops.last.date_and_time = 1.hour.ago
+          future_workshops.last.save
 
-        expect(Workshop.today_and_upcoming).to match_array(future_workshops)
+          expect(Workshop.today_and_upcoming).to match_array(future_workshops)
+        end
       end
     end
 
