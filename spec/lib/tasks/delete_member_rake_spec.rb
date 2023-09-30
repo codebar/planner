@@ -11,7 +11,9 @@ RSpec.describe 'rake member:delete', type: :task do
   end
 
   it 'when no email is provided' do
-    expect { task.invoke }.to raise_error(SystemExit, "You have to provide an email address. Usage: rake member:delete'[email@address.com]'")
+    regexed_msg = Regexp.quote("You have to provide an email address. Usage: rake member:delete'[email@address.com]'")
+    expect { task.invoke }.to output(/#{regexed_msg}\s*/).to_stderr
+      .and raise_error(SystemExit)
   end
 
   it 'anonymises member information' do
