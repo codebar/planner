@@ -8,7 +8,7 @@ RSpec.feature 'A new student signs up', type: :feature do
   scenario 'A visitor can access signups through the landing page' do
     visit root_path
     click_on 'Sign up as a student'
-    click_on 'I understand and meet the eligibility criteria. Sign me up as a student'
+    click_on 'Sign up as a student'
 
     accept_toc
 
