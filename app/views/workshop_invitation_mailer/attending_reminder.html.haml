@@ -16,7 +16,7 @@
                 %p.lead
                   This is a quick email to remind you that you have signed up for #{@workshop.day_temporal_pronoun}'s workshop.
                 %p
-                  If you can no longer make it make, please cancel your invitation before #{@workshop.day_temporal_pronoun} <strong>#{I18n.l(@workshop.rsvp_closing_date_and_time, format: :email_title)}</strong> so we can reallocate your spot to someone else.
+                  If you can no longer make it, please cancel your invitation before #{@workshop.day_temporal_pronoun} <strong>#{I18n.l(@workshop.rsvp_closing_date_and_time, format: :email_title)}</strong> so we can reallocate your spot to someone else.
                   Remember that we have a <a href='https://codebar.io/student-guide#attendance'>three-strikes attendance policy</a> for no-shows.
                 %p
                   As most of our hosts are busy before the workshops begin, please do not turn up before #{(@workshop.date_and_time).strftime('%H:%M')} as you may not be allowed in. If you are early, we suggest waiting at a nearby cafe.
