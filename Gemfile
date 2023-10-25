@@ -52,7 +52,7 @@ gem 'gibbon', '~> 3.4.4'
 
 gem 'stripe'
 
-gem 'rails-html-sanitizer', '~> 1.4.4'
+gem 'rails-html-sanitizer', '~> 1.6.0'
 
 # Use the Puma web server [https://github.com/puma/puma]
 gem 'puma', '~> 5.0'
