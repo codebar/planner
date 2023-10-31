@@ -6,7 +6,7 @@
   .row
     .col.col-md-10.col-lg-8
       = simple_form_for [:admin, @announcement] do |f|
-        = f.association :groups, label: 'Select groups'
+        = f.association :groups, label_method: :to_s, label: 'Select groups'
         = f.input :all_groups, as: :boolean, checked_value: true, unchecked_value: false, label: 'Send to all groups'
         = f.input :message, input_html: { rows: 3 },
           hint: raw(t('admin.shared.markdown_hint', link: link_to(t('admin.shared.markdown'), 'https://commonmark.org/help/')))

@@ -68,7 +68,7 @@ RSpec.feature 'Announcements', type: :feature do
     scenario 'can successfully send a new announcement to selected groups' do
       visit new_admin_announcement_path
       fill_in 'Message', with: 'An announcement to selected groups'
-      select "Coaches", from: 'Select group'
+      select "Coaches #{chapter.name}", from: 'Select group'
       click_on 'announcement[create]'
 
       expect(page).to have_content('An announcement to selected groups')
