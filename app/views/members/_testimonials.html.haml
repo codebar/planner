@@ -1,11 +1,20 @@
-.carousel.slider{ 'data-bs-ride': 'carousel' }
+.carousel.carousel-dark.slide#testimonials-carousel{ 'data-bs-ride': 'carousel' }
+  .carousel-indicators
+    - @testimonials.length.times do |n|
+      %button{type: 'button', 'data-bs-target': '#testimonials-carousel', 'data-bs-slide-to': n, class: ('active' if n === 0), 'aria-current': 'true', 'aria-label': "Slide #{n + 1}"}
   .carousel-inner
     - @testimonials.each_with_index do |testimonial, index|
-      .carousel-item{ class: ('active' if index === 0) }
-        %figure.bg-white.rounded.p-4.mb-0
+      .carousel-item.p-5.bg-white.rounded{ class: ('active' if index === 0) }
+        %figure.p-3.mb-0
           %blockquote.blockquote
             %p= testimonial.text
-          %figcaption.blockquote-footer.mt-0.mb-0
+          %figcaption.blockquote-footer.my-0
             = image_tag(testimonial.member.avatar(25), class: 'rounded-circle', alt: testimonial.member.name)
             %cite.mb-0{ title: testimonial.member.full_name }
               = testimonial.member.full_name
+  %button.carousel-control-prev.bg-white{type: 'button', 'data-bs-target': '#testimonials-carousel', 'data-bs-slide': 'prev'}
+    %span.carousel-control-prev-icon{'aria-hidden': 'true'}
+    %span.visually-hidden Previous
+  %button.carousel-control-next.bg-white{type: 'button', 'data-bs-target': '#testimonials-carousel', 'data-bs-slide': 'next'}
+    %span.carousel-control-next-icon{'aria-hidden': 'true'}
+    %span.visually-hidden Next
