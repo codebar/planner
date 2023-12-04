@@ -153,7 +153,7 @@ GEM
     double-bag-ftps (0.1.4)
     erubi (1.12.0)
     execjs (2.9.1)
-    fabrication (2.30.0)
+    fabrication (2.31.0)
     faker (3.2.2)
       i18n (>= 1.8.11, < 2)
     faraday (2.7.10)
