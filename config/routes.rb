@@ -25,13 +25,6 @@ Rails.application.routes.draw do
     resource :details, only: %i[edit update]
   end
 
-  namespace :member, path: 'my' do
-    resources :jobs, except: [:destroy] do
-      post 'submit'
-      get 'pending', on: :collection
-    end
-  end
-
   resource :members do
     get :autocomplete_skill_name, on: :collection
   end
@@ -163,4 +156,7 @@ Rails.application.routes.draw do
   get 'breach-code-of-conduct' => 'pages#show', id: 'breach-code-of-conduct'
 
   get ':id' => 'chapter#show', as: :chapter
+
+  # Redirects
+  get '/my/jobs/new', to: redirect('https://jobs.codebar.io/my/jobs/new')
 end
