@@ -14,7 +14,7 @@
 
     .col-md-7.col-sm-12
       %h4 Agenda
-      %p= @meeting.description.html_safe
+      %p= sanitize(@meeting.description)
 
 .py-4.py-lg-5.bg-light
   .container
