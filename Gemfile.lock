@@ -172,7 +172,7 @@ GEM
       multi_json (>= 1.11.0)
     globalid (1.2.1)
       activesupport (>= 6.1)
-    haml (6.2.3)
+    haml (6.3.0)
       temple (>= 0.8.2)
       thor
       tilt
