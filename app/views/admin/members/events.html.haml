@@ -15,10 +15,3 @@
 
       - if @member.past_rsvps.any?
         %h3 Past RSVPs
-        .digg_pagination.mb-3
-          .page_info
-            = page_entries_info(@member.past_rsvps.paginate(per_page: 20, page: params['page']), model: 'past events')
-          = will_paginate(@member.past_rsvps.paginate(per_page: 20, page: params['page']))
-
-        - @member.past_rsvps.paginate(per_page: 20, page: params['page']).each do |invitation|
-          = render EventPresenter.decorate(invitation.event), invitation: invitation

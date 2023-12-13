@@ -1,7 +1,5 @@
 class Sponsor < ApplicationRecord
   include Auditor::Model
-
-  self.per_page = 50
   require 'uri'
 
   enum level: {

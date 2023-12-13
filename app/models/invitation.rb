@@ -1,8 +1,6 @@
 class Invitation < ApplicationRecord
   include InvitationConcerns
 
-  self.per_page = 20
-
   belongs_to :event
   belongs_to :member
   belongs_to :verified_by, class_name: 'Member'

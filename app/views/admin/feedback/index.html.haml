@@ -1,9 +1,5 @@
 .container.py-4.py-lg-5
   - if @feedback.any?
-    .row
-      .col
-        = page_entries_info(@feedback, model: 'feedback')
-
     .row.mb-4
       - @feedback.each do |feedback|
         .col-12
@@ -25,10 +21,6 @@
               - if feedback.suggestions.present?
                 %h5.card-title Suggestions
                 %p.card-text= feedback.suggestions
-
-    .row.mb-4
-      .col.text-right
-        = will_paginate(@feedback)
 
   - elsif @chapter.present?
     .row

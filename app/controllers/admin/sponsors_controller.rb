@@ -75,10 +75,6 @@ class Admin::SponsorsController < Admin::ApplicationController
     authorize @sponsor
   end
 
-  def page
-    params.permit(:page)[:page]
-  end
-
   def audit_contact_subscription(contact)
     return unless contact.previous_changes.key?(:mailing_list_consent)
 
@@ -92,9 +88,6 @@ class Admin::SponsorsController < Admin::ApplicationController
   end
 
   def search_params
-    p = params[:page].to_i
-    p = p > 1 ? p : 1
-
-    { name: filter_search_params[:name], chapter: filter_search_params[:chapter], page: p }
+    { name: filter_search_params[:name], chapter: filter_search_params[:chapter] }
   end
 end

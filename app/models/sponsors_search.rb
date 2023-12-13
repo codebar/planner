@@ -1,11 +1,9 @@
 class SponsorsSearch
   include ActiveModel::Model
 
-  attr_accessor :name, :page, :per_page, :chapter
+  attr_accessor :name, :chapter
 
   def initialize(params = {})
-    @page = params.fetch(:page, 1)
-    @per_page = params.fetch(:per_page, Sponsor.per_page)
     @name = params.fetch(:name)
     @chapter = params.fetch(:chapter)
   end
@@ -20,7 +18,7 @@ class SponsorsSearch
 
   def sponsors
     # Get rid of unsafe SQL warning
-    @sponsors ||= Sponsor.includes(:chapters).reorder(Arel.sql('lower(sponsors.name)')).paginate(page: page)
+    @sponsors ||= Sponsor.includes(:chapters).reorder(Arel.sql('lower(sponsors.name)'))
   end
 
   def by_name
