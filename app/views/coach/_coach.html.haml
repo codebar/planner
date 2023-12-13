@@ -15,3 +15,10 @@
               Skills:
               - coach.skills.each do |skill|
                 = skill.name
+
+    .row.align-items-center.justify-content-between
+      .col-auto
+        %p.mb-3
+          != pagy_info(@pagy)
+      .col-auto
+        != pagy_bootstrap_nav(@pagy) if @pagy.pages > 1

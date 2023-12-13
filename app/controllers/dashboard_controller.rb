@@ -34,9 +34,10 @@ class DashboardController < ApplicationController
 
   def wall_of_fame
     @coaches_count = top_coach_query.length
-    @coaches = Member.where(id: top_coach_query
-                     .year(year_param))
-                     .includes(:skills)
+    coaches = Member.where(id: top_coach_query
+                    .year(year_param))
+                    .includes(:skills)
+    @pagy, @coaches = pagy(coaches, items: 80)
   end
 
   def participant_guide; end
