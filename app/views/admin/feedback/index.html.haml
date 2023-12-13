@@ -1,14 +1,21 @@
 .container.py-4.py-lg-5
   - if @feedback.any?
+    .row.align-items-center.justify-content-between
+      .col-auto
+        %p.mb-3
+          != pagy_info(@pagy)
+      .col-auto
+        != pagy_bootstrap_nav(@pagy) if @pagy.pages > 1
+
     .row.mb-4
       - @feedback.each do |feedback|
         .col-12
           .card.mt-4
             .card-header.d-md-flex.align-items-center
-              .d-block.pr-4= I18n.l(feedback.created_at, format: :date)
-              .d-block.pr-4= feedback.tutorial.title
+              .d-block.pe-4= I18n.l(feedback.created_at, format: :date)
+              .d-block.pe-4= feedback.tutorial.title
               - if feedback.coach.present?
-                .d-block.pr-4
+                .d-block.pe-4
                   = image_tag(feedback.coach.avatar(24), class: 'rounded-circle', alt: feedback.coach.full_name)
                   %small= feedback.coach.full_name
               .d-block.text-warning.ms-auto
@@ -21,6 +28,13 @@
               - if feedback.suggestions.present?
                 %h5.card-title Suggestions
                 %p.card-text= feedback.suggestions
+
+    .row.align-items-center.justify-content-between
+      .col-auto
+        %p.mb-3
+          != pagy_info(@pagy)
+      .col-auto
+        != pagy_bootstrap_nav(@pagy) if @pagy.pages > 1
 
   - elsif @chapter.present?
     .row

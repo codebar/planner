@@ -4,9 +4,11 @@ class Admin::Chapters::FeedbackController < Admin::ApplicationController
 
   def index
     authorize(@chapter)
-    @feedback = @chapter.feedbacks.includes(:tutorial)
-                        .includes(:coach)
-                        .order('feedbacks.created_at desc')
+
+    feedback = @chapter.feedbacks.includes(:tutorial)
+                       .includes(:coach)
+                       .order('feedbacks.created_at desc')
+    @pagy, @feedback = pagy(feedback)
 
     render template: 'admin/feedback/index'
   end
