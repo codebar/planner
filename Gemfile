@@ -40,6 +40,8 @@ gem 'simple_form'
 
 gem 'terser'
 
+gem 'pagy'
+
 gem 'icalendar'
 gem 'tzinfo-data'
 
