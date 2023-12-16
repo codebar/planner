@@ -13,6 +13,13 @@
           = f.button :button, 'Filter', class: 'btn btn-primary'
         = link_to 'Reset form', admin_sponsors_path
 
+  .row.align-items-center.justify-content-between
+    .col-auto
+      %p.mb-3
+        != pagy_info(@pagy)
+    .col-auto
+      != pagy_bootstrap_nav(@pagy) if @pagy.pages > 1
+
   .row.mb-3
     .col
       %table.table.table-striped.table-hover
@@ -38,3 +45,10 @@
                   = link_to chapter.name, admin_chapter_path(chapter)
               %td
                 = sponsor.sponsorships_count
+
+  .row.align-items-center.justify-content-between
+    .col-auto
+      %p.mb-3
+        != pagy_info(@pagy)
+    .col-auto
+      != pagy_bootstrap_nav(@pagy) if @pagy.pages > 1

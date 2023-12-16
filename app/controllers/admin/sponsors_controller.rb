@@ -4,12 +4,13 @@ class Admin::SponsorsController < Admin::ApplicationController
   def index
     authorize Sponsor
 
-    @sponsors_search = SponsorsSearch.new(search_params)
-    @sponsors = @sponsors_search.call
-
-    @decorated_sponsors = SponsorPresenter.decorate_collection(@sponsors)
-
     @chapters = Chapter.all
+
+    @sponsors_search = SponsorsSearch.new(search_params)
+    sponsors = @sponsors_search.call
+    @pagy, paginated_sponsors = pagy(sponsors)
+
+    @decorated_sponsors = SponsorPresenter.decorate_collection(paginated_sponsors)
   end
 
   def show
