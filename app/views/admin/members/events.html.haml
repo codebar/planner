@@ -15,13 +15,9 @@
 
       - if @past_rsvps.any?
         %h3 Past RSVPs
-
-        .row.align-items-center.justify-content-between
-          .col-auto
-            %p.mb-3
-              != pagy_info(@pagy)
-          .col-auto
-            != pagy_bootstrap_nav(@pagy) if @pagy.pages > 1
+        = render partial: 'shared/pagination', locals: { pagy: @pagy }
 
         - @past_rsvps.each do |invitation|
           = render EventPresenter.decorate(invitation.event), invitation: invitation
+
+        = render partial: 'shared/pagination', locals: { pagy: @pagy }
