@@ -16,4 +16,4 @@
               - coach.skills.each do |skill|
                 = skill.name
 
-    = render partial: 'shared/pagination', locals: { pagy: @pagy }
+    = render partial: 'shared/pagination', locals: { pagy: @pagy, model: 'coach' }

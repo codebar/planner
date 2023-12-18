@@ -13,7 +13,7 @@
           = f.button :button, 'Filter', class: 'btn btn-primary'
         = link_to 'Reset form', admin_sponsors_path
 
-  = render partial: 'shared/pagination', locals: { pagy: @pagy }
+  = render partial: 'shared/pagination', locals: { pagy: @pagy, model: 'sponsor' }
 
   .row.mb-3
     .col
@@ -41,4 +41,4 @@
               %td
                 = sponsor.sponsorships_count
 
-  = render partial: 'shared/pagination', locals: { pagy: @pagy }
+  = render partial: 'shared/pagination', locals: { pagy: @pagy, model: 'sponsor' }

@@ -1,6 +1,6 @@
 .container.py-4.py-lg-5
   - if @feedback.any?
-    = render partial: 'shared/pagination', locals: { pagy: @pagy }
+    = render partial: 'shared/pagination', locals: { pagy: @pagy, model: 'feedback' }
 
     .row.mb-4
       - @feedback.each do |feedback|
@@ -24,7 +24,7 @@
                 %h5.card-title Suggestions
                 %p.card-text= feedback.suggestions
 
-    = render partial: 'shared/pagination', locals: { pagy: @pagy }
+    = render partial: 'shared/pagination', locals: { pagy: @pagy, model: 'feedback' }
 
   - elsif @chapter.present?
     .row
