@@ -15,8 +15,5 @@
               Skills:
               - coach.skills.each do |skill|
                 = skill.name
-    .row
-      .col-6.float-left
-        = page_entries_info(@coaches, model: 'coaches')
-      .col-6.float-right
-        = will_paginate(@coaches)
+
+    = render partial: 'shared/pagination', locals: { pagy: @pagy, model: 'coach' }

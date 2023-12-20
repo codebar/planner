@@ -1,4 +1,6 @@
 module ApplicationHelper
+  include Pagy::Frontend
+
   def humanize_date(datetime, end_time = nil, with_time: false, with_year: false)
     return I18n.l(datetime, format: :humanised_with_year) if with_year
     return humanize_date_with_time(datetime, end_time) if with_time

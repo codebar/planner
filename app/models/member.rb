@@ -1,8 +1,6 @@
 class Member < ApplicationRecord
   include Permissions
 
-  self.per_page = 80
-
   has_many :attendance_warnings
   has_many :bans
   has_many :eligibility_inquiries

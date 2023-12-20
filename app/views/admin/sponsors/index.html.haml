@@ -13,11 +13,7 @@
           = f.button :button, 'Filter', class: 'btn btn-primary'
         = link_to 'Reset form', admin_sponsors_path
 
-  .row.mb-4
-    .col-md-6
-      = page_entries_info(@sponsors, model: 'sponsor')
-    .col-md-6.text-md-right
-      = will_paginate(@sponsors)
+  = render partial: 'shared/pagination', locals: { pagy: @pagy, model: 'sponsor' }
 
   .row.mb-3
     .col
@@ -44,6 +40,5 @@
                   = link_to chapter.name, admin_chapter_path(chapter)
               %td
                 = sponsor.sponsorships_count
-  .row
-    .col.text-md-right
-      = will_paginate(@sponsors)
+
+  = render partial: 'shared/pagination', locals: { pagy: @pagy, model: 'sponsor' }

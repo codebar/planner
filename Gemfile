@@ -40,7 +40,7 @@ gem 'simple_form'
 
 gem 'terser'
 
-gem 'will_paginate'
+gem 'pagy'
 
 gem 'icalendar'
 gem 'tzinfo-data'

@@ -4,10 +4,11 @@ class Admin::Chapters::FeedbackController < Admin::ApplicationController
 
   def index
     authorize(@chapter)
-    @feedback = @chapter.feedbacks.includes(:tutorial)
-                        .includes(:coach)
-                        .order('feedbacks.created_at desc')
-                        .paginate(page: page)
+
+    feedback = @chapter.feedbacks.includes(:tutorial)
+                       .includes(:coach)
+                       .order('feedbacks.created_at desc')
+    @pagy, @feedback = pagy(feedback)
 
     render template: 'admin/feedback/index'
   end
@@ -16,10 +17,5 @@ class Admin::Chapters::FeedbackController < Admin::ApplicationController
 
   def set_chapter
     @chapter = Chapter.find(params[:chapter_id])
-  end
-
-  def page
-    p = params.permit(:page)[:page].to_i
-    p > 1 ? p : 1
   end
 end
