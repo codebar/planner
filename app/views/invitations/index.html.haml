@@ -23,8 +23,9 @@
                   Group: #{invitation.role.pluralize}
                   %br
                   .text-muted #{humanize_date(invitation.parent.date_and_time, with_time: true)}
-                - if invitation.is_a? WorkshopInvitation
-                  = link_to attendance_status(invitation), invitation_path(invitation), class: 'btn btn-sm btn-primary', role: 'button'
+                - if invitation.is_a? InvitationPresenter
+                  = link_to invitation.attendance_status, invitation_path(invitation),
+                    class: 'btn btn-sm btn-primary', role: 'button'
 
       - elsif @upcoming_workshop
         %p You have no invitations. If you just signed up you should receive one soon.
