@@ -9,6 +9,8 @@
             <strong>#{@attending_students.count}</strong> are attending as students and <strong>#{@attending_coaches.count}</strong> as coaches.
             - if @student_waiting_list.any? or @coach_waiting_list.any?
               There is also a waiting list of <strong>#{@student_waiting_list.count}</strong> students and <strong>#{@coach_waiting_list.count}</strong> coaches.
+            %br
+            = link_to 'See all invitations’ statuses', admin_workshop_changes_path(@workshop)
 
 = simple_form_for :workshop, url: admin_workshop_invitations_path(@workshop, attending: true), remote: true, method: :put do |f|
   .row.mb-4

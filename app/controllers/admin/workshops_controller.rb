@@ -3,7 +3,7 @@ class Admin::WorkshopsController < Admin::ApplicationController
   include  Admin::WorkshopConcerns
 
   before_action :set_workshop_by_id, only: %i[show edit destroy update]
-  before_action :set_and_decorate_workshop, only: %i[attendees_checklist attendees_emails send_invites]
+  before_action :set_and_decorate_workshop, only: %i[attendees_checklist attendees_emails send_invites changes]
 
   WORKSHOP_DELETION_TIME_FRAME_SINCE_CREATION = 4.hours
 
@@ -103,6 +103,15 @@ class Admin::WorkshopsController < Admin::ApplicationController
     else
       redirect_to admin_workshop_path(@workshop), notice: t('admin.workshop.destroy.failure')
     end
+  end
+
+  def changes
+    invitations = @workshop.invitations
+                           .where.not(attending: nil)
+                           .includes(:member).order('members.name')
+
+    @coach_invitations = invitations.to_coaches
+    @student_invitations = invitations.to_students
   end
 
   private

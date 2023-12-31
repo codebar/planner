@@ -1,0 +1,14 @@
+%tr
+  %th{ scope: "col" }
+    = link_to invitation.member.name_and_surname,
+      admin_member_path(invitation.member_id)
+  %td
+    - if invitation.not_attending?
+      %span.text-muted No
+    - else
+      Yes
+  %td
+    - if invitation.last_overridden_by_id?
+      = link_to invitation.overrider.full_name, admin_member_path(invitation.last_overridden_by_id)
+    - else
+      %span.text-muted No
