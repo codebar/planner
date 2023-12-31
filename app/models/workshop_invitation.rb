@@ -43,4 +43,8 @@ class WorkshopInvitation < ApplicationRecord
   def student_attending?
     for_student? && attending.present?
   end
+
+  def not_attending?
+    attending == false
+  end
 end

@@ -9,6 +9,7 @@
       Yes
   %td
     - if invitation.last_overridden_by_id?
-      = link_to invitation.overrider.full_name, admin_member_path(invitation.last_overridden_by_id)
+      = link_to invitation.overrider.full_name,
+        admin_member_path(invitation.last_overridden_by_id)
     - else
       %span.text-muted No

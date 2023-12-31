@@ -38,7 +38,7 @@ RSpec.feature 'managing workshop attendances', type: :feature do
 
       expect(page).to have_content('2 are attending as students')
       expect(page).to have_content(I18n.l(other_invitation.reload.rsvp_time))
-      expect(page).to have_selector('i.fa-magic')
+      expect(page).to have_selector('i.fa-hat-wizard')
     end
 
     scenario 'can rsvp an invited student to the workshop', js: true do
@@ -56,7 +56,7 @@ RSpec.feature 'managing workshop attendances', type: :feature do
       expect(page).to have_content('2 are attending as students')
 
       expect(page).to have_content(I18n.l(other_invitation.reload.rsvp_time))
-      expect(page).to have_css('.fa-magic')
+      expect(page).to have_css('.fa-hat-wizard')
     end
 
     scenario 'can view the tutorial and note set by an attendee' do
@@ -66,6 +66,39 @@ RSpec.feature 'managing workshop attendances', type: :feature do
       visit admin_workshop_path(workshop)
       expect(page).to have_content(invitation.note)
       expect(page).to have_content(invitation.tutorial)
+    end
+
+    context '#changes' do
+      before do
+        # Workshop invitations without `attending` status
+        Fabricate(:workshop_invitation, workshop: workshop, role: 'Coach')
+        Fabricate(:workshop_invitation, workshop: workshop, role: 'Student')
+
+        # Not attenting
+        Fabricate(:workshop_invitation, workshop: workshop, role: 'Coach', attending: false)
+        Fabricate(:workshop_invitation, workshop: workshop, role: 'Student', attending: false)
+
+        # Attending, with a student having been manually added/confirmed by an organiser
+        Fabricate(:attending_workshop_invitation, workshop: workshop, role: 'Coach')
+        Fabricate(:attending_workshop_invitation, workshop: workshop, role: 'Student')
+        overridden = Fabricate(:attending_workshop_invitation, workshop: workshop, role: 'Student')
+        overridden.update(last_overridden_by_id: member.id)
+      end
+
+      scenario 'can verify if a invitation has been overridden by an organiser' do
+        visit admin_workshop_changes_path(workshop)
+
+        expect(page).to have_css(
+          '.coaches-table tbody tr',
+          count: workshop.invitations.to_coaches.where.not(attending: nil).count
+        )
+        expect(page).to have_css(
+          '.students-table tbody tr',
+          count: workshop.invitations.to_students.where.not(attending: nil).count
+        )
+
+        expect(page).to have_link(member.name_and_surname, href: admin_member_path(member.id))
+      end
     end
   end
 end
