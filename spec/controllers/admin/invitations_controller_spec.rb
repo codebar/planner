@@ -22,15 +22,20 @@ RSpec.describe Admin::InvitationsController, type: :controller do
       expect(flash[:notice]).to match("You have added")
     end
 
-    it "Warns the user about failed updates" do
-      # Trigger an error when trying to update the `attending` attribute
+    # While similar to the previous test, this specifically tests that organisers
+    # have the ability to manually add a student to the workshop that has not
+    # selected a tutorial. This is helpful for when a student shows up for a
+    # workshop they have not have a spot — this happens from time to time.
+    it "Successfuly adds a user as attenting, even without a tutorial" do
       invitation.update_attribute(:tutorial, nil)
+      expect(invitation.automated_rsvp).to be_nil
 
       put :update, params: { id: invitation.token, workshop_id: workshop.id, attending: "true" }
-      
-      # State didn't change and we have an error message explaining why
-      expect(invitation.reload.attending).to be_nil
-      expect(flash[:notice]).to match("Tutorial must be selected.")
+      invitation.reload
+
+      expect(invitation.attending).to be true
+      expect(invitation.automated_rsvp).to be true
+      expect(flash[:notice]).to match("You have added")
     end
 
     it "Records the organiser ID that overrides an invitations" do
