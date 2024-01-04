@@ -69,7 +69,7 @@ SimpleForm.setup do |config|
       b.use :input, class: 'form-check-input', error_class: 'is-invalid', valid_class: 'is-valid'
       b.use :label, class: 'form-check-label'
       b.use :full_error, wrap_with: { tag: 'div', class: 'invalid-feedback' }
-      b.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
+      b.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted ms-1' }
   end
 
   # vertical input for radio buttons and check boxes
