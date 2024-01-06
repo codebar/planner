@@ -15,7 +15,6 @@ Fabricator(:event) do
   student_spaces 2
   slug { Fabricate.sequence(:slug) }
   info Faker::Lorem.sentence
-  begins_at '11:00'
   chapters { [Fabricate(:chapter)] }
   after_build do |event|
     Fabricate(:sponsorship, event: event, sponsor: Fabricate(:sponsor))

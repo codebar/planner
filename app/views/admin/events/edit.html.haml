@@ -14,11 +14,15 @@
           .col-12.col-md-6
             = f.input :slug
           .col-12
-            = f.input :date_and_time, as: :string, required: true, label: 'Date', input_html: { data: { value: @event.date_and_time.strftime('%d/%m/%Y') } }
+            = f.input :local_date, label: 'Date', as: :string, required: true, input_html: { data: { value: @event.date_and_time.try(:strftime, '%d/%m/%Y') } }
           .col-12.col-md-6
-            = f.input :begins_at, as: :string, required: true, input_html: { data: { value: @event.date_and_time.time.strftime('%H:%M') }}
-          .col-6.col-md-6
-            = f.input :ends_at, as: :string, required: true, input_html: { data: { value: @event.ends_at.strftime('%H:%M') }}
+            = f.input :local_time, label: 'Starts at', as: :string, required: true, input_html: { data: { value: @event.time.try(:strftime, '%H:%M') } }
+          .col-12.col-md-6
+            = f.input :local_end_time, label: 'Ends at', as: :string, required: true, input_html: { data: { value: @event.ends_at.try(:strftime, '%H:%M') } }
+          .col-12
+            .mb-3
+              %label.form-label{ for: "event_timezone" } Time zone
+              = f.time_zone_select :time_zone, nil, {}, { class: 'form-control'}
           .col-12
             = f.input :description, as: :text, input_html: { rows: 3 },
             hint: 'Use this space to write an invitation message and description of the event. This copy will also be used in the email invitation. You can use HTML here!'

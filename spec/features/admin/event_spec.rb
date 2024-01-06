@@ -19,7 +19,7 @@ RSpec.feature 'Event creation', type: :feature do
         fill_in 'Event Name', with: 'A test event'
         fill_in 'Slug', with: 'a-test-event'
         fill_in 'Date', with: date
-        fill_in 'Begins at', with: '16:00'
+        fill_in 'Starts at', with: '16:00'
         fill_in 'Ends at', with: '18:00'
         fill_in 'Description', with: 'A test event description'
         fill_in 'RSVP instructions', with: 'Some instructions'
@@ -54,7 +54,7 @@ RSpec.feature 'Event creation', type: :feature do
         fill_in 'Event Name', with: 'A test virtual event'
         fill_in 'Slug', with: 'a-test-virtual-event'
         fill_in 'Date', with: date
-        fill_in 'Begins at', with: '16:00'
+        fill_in 'Starts at', with: '16:00'
         fill_in 'Ends at', with: '18:00'
         fill_in 'Description', with: 'A test virtual event description'
         fill_in 'RSVP instructions', with: 'Some instructions'
