@@ -1,14 +1,14 @@
 .container.py-4.py-lg-5
   .row
-    .col-12
-      %h1
+    .col-12.col-lg-9
+      %h1.mb-4
         = @event.name
         %br
         %small #{humanize_date(@event.date_and_time, @event.ends_at, with_time: true)}
-    .col-12.col-md-9
-      %p.lead= sanitize(@event.description)
+    .col-12.col-lg-9
+      .lead= sanitize(@event.description)
 
-  .row
+  .row.mt-4
     .col
       = render partial: 'event_actions'
 
@@ -18,7 +18,7 @@
       - if @event.venue.present?
         = render partial: 'shared/venue', locals: { venue: @event.venue, address: @host_address}
       - else
-        %p= "#{t('events.virtual')}."
+        %p= t('events.virtual')
 
     .row.mt-4
       .col
@@ -44,7 +44,7 @@
     .container
       = render partial: 'event_sponsors', locals: { event: @event }
 
-- if @event.verified_coaches.any?
+- if @event.verified_coaches.any? && @event.display_coaches
   .py-4.py-lg-5.section
     .container
       .row

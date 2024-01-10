@@ -173,7 +173,7 @@ de:
     schedule: "Zeitplan"
     send_us_an_email: "Schreibe uns eine E-Mail"
     not_open_for_rsvp: Die Anmeldung für diese Veranstaltung ist noch nicht geöffnet.
-    virtual: This is a virtual event
+    virtual: This is a virtual event.
     faq:
       experience:
         q: "Wie erfahren sollte ich sein, um am Workshop teilnehmen?"
