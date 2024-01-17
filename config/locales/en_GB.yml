@@ -67,6 +67,8 @@ en-GB:
       title: "Chapters"
     events:
       upcoming: "Upcoming Events"
+    donation_platforms:
+      title: "How to support us"
   mailer:
     workshop_invitation:
       attending:
@@ -594,16 +596,17 @@ en-GB:
         link_to_job: Link to job post
         expiry_date: Application closing date
   donation_platforms:
-    title: "How to support us"
+    title: "Donate"
+    link: "Find out how else to support us"
     donation_form:
       title: "Use the donation page"
-      text: "Support us with a one-time or recurring donation through the donation form on our website."
-    amazon_smile:
-      title: "Amazon Smile"
-      text: "Pick us as your charitable organisation while shopping on Amazon. This allows us to receive 0.5% of the net purchase price of eligible purchases as a donation."
+      text: "Consider making a lasting impact through codebar with a one-time donation or a monthly recurring contribution. Your support, whether a single gift or ongoing commitment, fuels our efforts to create an inclusive tech industry and provides consistent opportunities for learning and growth for members of groups underrepresented in the tech industry."
+    github_sponsors:
+      title: "Github Sponsors"
+      text: "Support codebar's mission directly through GitHub Sponsors. Join us in shaping the future of technology through your generous donation."
     open_collective:
       title: "Open Collective"
       text: "Setup a recurring contribution or make a one-time donation through Open Collective."
-    benevity:
-      title: "Benevity"
-      text: "Benevity is a platform enabling corporate social responsibility and employee engagement. We receive a donation from your employer with every hour you volunteer with us."
+    give_as_you_live:
+      title: "Give as you Live"
+      text: "Give as you Live is a platform enabling you to raise funds for your favourite charity with your everyday online shopping."

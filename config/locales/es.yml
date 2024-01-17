@@ -65,6 +65,8 @@ es:
       workshop_email_subject: "Respecto a la realización de un taller"
     chapters:
       title: "Capítulos"
+    donation_platforms:
+      title: "How to support us"
   mailer:
     workshop_invitation:
       attending:
@@ -593,17 +595,17 @@ es:
         link_to_job: Enlace a la publicación de empleo
         expiry_date: Fecha de cierre de la solicitud
   donation_platforms:
-    title: "Como apoyarnos"
+    title: "Donate"
+    link: "Find out how else to support us"
     donation_form:
       title: "Usa la página de donaciones"
-      text: "Apóyenos con una donación única o recurrente a través del formulario de donación en nuestro sitio web."
-    amazon_smile:
-      title: "Amazon Smile"
-      text: "Elíjanos como su organización benéfica mientras compra en Amazon. Esto nos permite recibir el 0,5% del precio de compra neto de las compras elegibles como donación."
+      text: "Consider making a lasting impact through codebar with a one-time donation or a monthly recurring contribution. Your support, whether a single gift or ongoing commitment, fuels our efforts to create an inclusive tech industry and provides consistent opportunities for learning and growth for members of groups underrepresented in the tech industry."
+    github_sponsors:
+      title: "Github Sponsors"
+      text: "Support codebar's mission directly through GitHub Sponsors. Join us in shaping the future of technology through your generous donation."
     open_collective:
       title: "Open Collective"
       text: "Configure una contribución recurrente o haga una donación única con Open Collective."
-    benevity:
-      title: "Benevity"
-      text: "Benevity es una plataforma que permite la responsabilidad social corporativa y el compromiso de los empleados. Recibimos una donación de su empleador por cada hora que se ofrece como voluntario con nosotros.
-"
+    give_as_you_live:
+      title: "Give as you Live"
+      text: "Give as you Live is a platform enabling you to raise funds for your favourite charity with your everyday online shopping."

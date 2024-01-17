@@ -57,7 +57,7 @@
 
 .py-4.py-lg-5.bg-light
   .container
-    = render partial: 'shared/donation_platforms'
+    = render partial: 'shared/donation_platforms', locals: { title: t('homepage.donation_platforms.title') }
 
 .container.py-4.py-lg-5
   .row
