@@ -74,7 +74,7 @@ RSpec.feature 'managing workshop attendances', type: :feature do
         Fabricate(:workshop_invitation, workshop: workshop, role: 'Coach')
         Fabricate(:workshop_invitation, workshop: workshop, role: 'Student')
 
-        # Not attenting
+        # Not attending
         Fabricate(:workshop_invitation, workshop: workshop, role: 'Coach', attending: false)
         Fabricate(:workshop_invitation, workshop: workshop, role: 'Student', attending: false)
 
