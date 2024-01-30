@@ -39,7 +39,12 @@ class Admin::InvitationsController < Admin::ApplicationController
   end
 
   def update_to_attending
-    update_successful = @invitation.update(attending: true, rsvp_time: Time.zone.now, automated_rsvp: true)
+    update_successful = @invitation.update(
+      attending: true,
+      rsvp_time: Time.zone.now,
+      automated_rsvp: true,
+      last_overridden_by_id: current_user.id
+    )
 
     {
       message: update_successful ? attending_successful : attending_failed,
@@ -59,7 +64,7 @@ class Admin::InvitationsController < Admin::ApplicationController
   end
 
   def update_to_not_attending
-    @invitation.update(attending: false)
+    @invitation.update!(attending: false, last_overridden_by_id: current_user.id)
 
     {
       message: "You have removed #{@invitation.member.full_name} from the workshop.",

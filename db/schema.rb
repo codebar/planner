@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_03_225601) do
+ActiveRecord::Schema[7.0].define(version: 2023_12_30_162506) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -527,6 +527,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_03_225601) do
     t.datetime "rsvp_time", precision: nil
     t.boolean "automated_rsvp"
     t.text "tutorial"
+    t.integer "last_overridden_by_id"
     t.index ["member_id"], name: "index_workshop_invitations_on_member_id"
     t.index ["token"], name: "index_workshop_invitations_on_token", unique: true
     t.index ["workshop_id"], name: "index_workshop_invitations_on_workshop_id"

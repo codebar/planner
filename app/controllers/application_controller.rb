@@ -4,12 +4,15 @@ class ApplicationController < ActionController::Base
   include Pundit::Authorization
   include Pagy::Backend
 
-  rescue_from Exception do |ex|
-    Rollbar.error(ex)
-    Rails.logger.fatal(ex)
-    respond_to do |format|
-      format.html { render 'errors/error', layout: false, status: :internal_server_error }
-      format.all  { head :internal_server_error }
+  if Rails.env.production?
+    rescue_from Exception do |ex|
+      Rollbar.error(ex)
+      Rails.logger.fatal(ex)
+
+      respond_to do |format|
+        format.html { render 'errors/error', layout: false, status: :internal_server_error }
+        format.all  { head :internal_server_error }
+      end
     end
   end
 

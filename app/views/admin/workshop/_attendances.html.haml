@@ -42,9 +42,15 @@
                 %i.fas.fa-history
                 = l(invitation.rsvp_time)
             - if invitation.automated_rsvp?
-              %span{'data-bs-toggle': 'tooltip', 'data-bs-placement': 'bottom', title: 'Waiting list or admin addition'}
-                %p.mb-1.small
-                  %i.fas.fa-magic
+              - tooltip_args = { 'data-bs-toggle': 'tooltip', 'data-bs-placement': 'bottom' }
+              - if invitation.last_overridden_by_id?
+                %span{ tooltip_args, title: "Addition by #{invitation.overrider.full_name}" }
+                  %p.mb-1.small
+                    %i.fas.fa-hat-wizard
+              - else
+                %span{ tooltip_args, title: 'Waiting list or admin addition' }
+                  %p.mb-1.small
+                    %i.fas.fa-magic
           - if invitation.reminded_at.present?
             %span{'data-bs-toggle': 'tooltip', 'data-bs-placement': 'bottom', title: 'Reminder emailed at'}
               %p.mb-1.small

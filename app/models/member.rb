@@ -48,9 +48,13 @@ class Member < ApplicationRecord
     bans.permanent.present?
   end
 
+  def name_and_surname
+    [name, surname].compact.join ' '
+  end
+
   def full_name
     pronoun = pronouns.present? ? "(#{pronouns})" : nil
-    [name, surname, pronoun].compact.join ' '
+    [name_and_surname, pronoun].compact.join ' '
   end
 
   def student?

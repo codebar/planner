@@ -2,12 +2,16 @@ class WorkshopInvitation < ApplicationRecord
   include InvitationConcerns
 
   belongs_to :workshop
+  belongs_to :member
+  belongs_to :overrider, foreign_key: :last_overridden_by_id, class_name: 'Member', inverse_of: false
   has_one :waiting_list, foreign_key: :invitation_id
 
   validates :workshop, :member, presence: true
   validates :member_id, uniqueness: { scope: %i[workshop_id role] }
   validates :role, inclusion: { in: %w[Student Coach], allow_nil: true }
-  validates :tutorial, presence: true, if: :student_attending?
+  validates :tutorial, presence: true, if: lambda {
+    student_attending? && !automated_rsvp
+  }
   validates :tutorial, presence: true, on: :waitinglist, if: :student_attending?
 
   scope :year, ->(year) { joins(:workshop).where('EXTRACT(year FROM workshops.date_and_time) = ?', year) }
@@ -38,5 +42,9 @@ class WorkshopInvitation < ApplicationRecord
 
   def student_attending?
     for_student? && attending.present?
+  end
+
+  def not_attending?
+    attending == false
   end
 end
