@@ -155,6 +155,7 @@ Rails.application.routes.draw do
   get 'cookie-policy' => 'pages#show', id: 'cookie-policy'
   get 'privacy-policy' => 'pages#show', id: 'privacy-policy'
   get 'breach-code-of-conduct' => 'pages#show', id: 'breach-code-of-conduct'
+  get 'how-to-support-us' => 'pages#show', id: 'how-to-support-us'
 
   get ':id' => 'chapter#show', as: :chapter
 
