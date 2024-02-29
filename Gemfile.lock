@@ -304,7 +304,7 @@ GEM
     pundit (2.3.1)
       activesupport (>= 3.0.0)
     racc (1.7.3)
-    rack (2.2.8)
+    rack (2.2.8.1)
     rack-mini-profiler (3.3.0)
       rack (>= 1.2.0)
     rack-protection (3.1.0)
