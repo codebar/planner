@@ -354,7 +354,7 @@ GEM
     regexp_parser (2.9.0)
     rexml (3.2.6)
     rolify (6.0.1)
-    rollbar (3.5.1)
+    rollbar (3.5.2)
     rouge (4.1.3)
     rspec-collection_matchers (1.2.1)
       rspec-expectations (>= 2.99.0.beta1)
