@@ -19,21 +19,23 @@
           %ul.dropdown-menu{'aria-labelledby': 'navbarDropdownMenuLinkCommunity'}
             %li= link_to 'Coaches', coaches_path, class: 'dropdown-item'
             %li= link_to 'Impact Report', 'https://impact-report.codebar.io/', class: 'dropdown-item'
-        %li.nav-item
-          = link_to 'https://medium.com/@codebar', class: 'nav-link border-0' do
-            Blogs
+            %li= link_to 'codebar Stories', 'https://medium.com/codebar-stories', class: 'dropdown-item'
+            %li= link_to 'codebar Blog', 'https://medium.com/the-codelog', class: 'dropdown-item'
+            %li.dropdown-divider
+            %li= link_to 'Tutorials', 'http://tutorials.codebar.io', class: 'dropdown-item'
         %li.nav-item
           = link_to sponsors_path, class: 'nav-link border-0' do
             Sponsors
         %li.nav-item
-          = link_to 'http://tutorials.codebar.io', class: 'nav-link border-0' do
-            Tutorials
+          = link_to how_to_support_us_path, class: 'nav-link border-0' do
+            How to support us
         %li.nav-item
           = link_to "http://jobs.codebar.io/", class: 'nav-link border-0' do
             Job Board
-        %li.nav-item
-          = link_to new_donation_path, class: 'nav-link border-0 link-primary' do
-            Donate
+        %li.nav-item.d-flex.align-items-center
+          .nav-link.py-0
+            = link_to new_donation_path, class: 'btn btn-sm btn-outline-primary' do
+              Donate
         - if !logged_in?
           %li.nav-item
             = link_to '/auth/github', class: 'nav-link border-0' do
