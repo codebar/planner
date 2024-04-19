@@ -159,10 +159,10 @@ GEM
     fabrication (2.31.0)
     faker (3.2.3)
       i18n (>= 1.8.11, < 2)
-    faraday (2.7.10)
-      faraday-net_http (>= 2.0, < 3.1)
-      ruby2_keywords (>= 0.0.4)
-    faraday-net_http (3.0.2)
+    faraday (2.9.0)
+      faraday-net_http (>= 2.0, < 3.2)
+    faraday-net_http (3.1.0)
+      net-http
     ffi (1.16.3)
     font_awesome5_rails (1.5.0)
       nokogiri (>= 1.11.3)
@@ -170,7 +170,7 @@ GEM
     foreman (0.87.2)
     friendly_id (5.5.1)
       activerecord (>= 4.0.0)
-    gibbon (3.4.4)
+    gibbon (3.5.0)
       faraday (>= 1.0)
       multi_json (>= 1.11.0)
     globalid (1.2.1)
@@ -231,6 +231,8 @@ GEM
     msgpack (1.7.2)
     multi_json (1.15.0)
     multi_xml (0.6.0)
+    net-http (0.4.1)
+      uri
     net-imap (0.4.10)
       date
       net-protocol
@@ -410,7 +412,6 @@ GEM
     ruby-progressbar (1.13.0)
     ruby-vips (2.2.1)
       ffi (~> 1.12)
-    ruby2_keywords (0.0.5)
     rubyzip (2.3.2)
     sassc (2.4.0)
       ffi (~> 1.9)
@@ -470,6 +471,7 @@ GEM
       tzinfo (>= 1.0.0)
     unicode-display_width (2.5.0)
     uniform_notifier (1.16.0)
+    uri (0.13.0)
     version_gem (1.1.3)
     web-console (4.2.1)
       actionview (>= 6.0.0)
@@ -513,7 +515,7 @@ DEPENDENCIES
   font_awesome5_rails
   foreman
   friendly_id
-  gibbon (~> 3.4.4)
+  gibbon (~> 3.5.0)
   haml
   high_voltage
   icalendar
