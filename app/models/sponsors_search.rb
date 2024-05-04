@@ -26,6 +26,6 @@ class SponsorsSearch
   end
 
   def by_chapter
-    @sponsors = sponsors.joins(:workshops).where('workshops.chapter_id' => chapter) if chapter.present?
+    @sponsors = sponsors.joins(:workshops).where('workshops.chapter_id' => chapter).group('sponsors.id') if chapter.present?
   end
 end
