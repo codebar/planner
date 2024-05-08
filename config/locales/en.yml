@@ -431,44 +431,6 @@ en:
     no_incoming: "There are no workshops coming up."
     contact: "To contact the %{city} team, send an email to %{email}"
     team: Team
-  job:
-    status:
-      draft: Draft
-      pending: Pending approval
-      published: Published
-      expired: Expired
-    admin:
-      status:
-        pending: Pending approval
-        published: Approved
-        expired: Approved
-    expired: 'This job post has expired.'
-    check_out_jobs_html: 'Check out the rest of our %{link}.'
-    published_on: 'Published on'
-    expires_on: 'Closing date'
-    apply: 'Apply for this job'
-    company: 'Company'
-    salary: 'Salary'
-    closing_date: Closing date
-    contact_email: Contact email
-    posted_by: Posted by
-    location:
-      title: Location
-      remote: 'Remote'
-    messages:
-      draft_html: 'This is a preview of your job. <b>Edit</b> to amend or <b>Submit</b> for approval.'
-      pending_html: 'This job is pending approval. <b>Edit</b> to amend your post.'
-      published_html: 'This job has been published.'
-      expired_html: 'This job has expired.'
-      updated: 'Your job has been updated.'
-      submitted: "Job submitted for approval. You will receive an email when it's been approved."
-      cannot_edit: You cannot edit a job that has already been approved.
-      public_page_html: View the %{link} for this job.
-  jobs:
-    title: Jobs
-    index:
-      description: There are %{count} jobs listed
-      none: There are no jobs listed at this time. Please check back soon as positions get added regularly.
   feedback_form:
     title: 'Workshop feedback'
     description: Your submission will be completely anonymous. We read every piece of feedback and use it to help us improve our workshops.
@@ -490,40 +452,6 @@ en:
         student:
           about_you: What do you want to work on at codebar? What have you done in the past? Tell us a little bit about yourself!
         submit: Next
-    jobs:
-      title: My jobs
-      preview: Preview
-      index:
-        description: Our aim is to be the one stop shop for junior developer roles. All jobs featured on our job board must fall under the following three categories; paid internships, apprenticeships or junior developer roles. Additionally, jobs must not require previous experience or a degree and must be paid positions. Each job that is submitted will be approved by the codebar team before appearing on the job board.
-        testimonial: Within 2 days of posting an ad on the codebar job board, we had dozens of high quality applications and we made an offer to a candidate within 2 weeks. There are a lot of talented interns and junior developers; posting on the codebar job board is a great way to reach them.
-        title: Reach our community of %{students_count} junior developers
-        offer:
-          title: "For a flat fee of <strong>£50</strong> your post will be:"
-          job_board: "- shown on the job board for 30 days"
-          slack: "- promoted to our Slack community of 5500 members"
-          twitter: "- promoted to our 8600 Twitter followers"
-      pending:
-        title: Your pending job posts
-        description: You have %{count} job posts pending submission.
-        none: You have no pending job posts.
-      new:
-        title: List a job
-        degree: There is no degree requirement
-        details: The job description details the work that will have to be undertaken
-        experience: There is no previous experience requirement
-        rules_intro: "Before posting make sure that:"
-        suitability: The position is suitable for people looking for internships, apprenticeships or junior level roles that will enable them to build up their career
-        salary: The job pays an appropriate salary
-        short: The job description is short and to the point
-        approval_info: "*Once submitted, a job will be visible once it has been reviewed and approved."
-        optional_details_message: The information below is only required if you want this job post to be shared with Google Search UK.
-        newsletter: "For an additional <strong>£200</strong> you can have your job listing featured in our newsletter and made available to an audience of over 10000 students and coaches. To find out more details and when our next newsletter is due send us an email at <a href='mailto:hello@codebar.io'>hello@codebar.io</a>."
-        pay:
-          html: You have made the <a href="%{link}">required payment of £50</a>.
-        button:
-          pay: Make a payment
-      edit:
-        title: Edit job listing
   subscriptions:
     summary: Subscriptions control the invitation emails you receive. For example, if you would like to receive student invitations for the Brighton and West London workshops then subscribe to the Brighton (Students) and West London (Students) options.
     mailing_list:
@@ -702,17 +630,6 @@ en:
   admin:
     dashboard:
       title: 'Admin'
-    jobs:
-      title: Manage jobs
-      info:
-        request_changes_html: To request changes email %{name} at %{email}
-        approved_by: Approved by %{name} on %{date}.
-        approved_by_no_date: Approved by %{name}
-      messages:
-        approved: "The job has been approved and an email has been sent out to %{name} at %{email}"
-        cannot_approve: You cannot approve expired job listings
-        confirm_approval: Are you sure this job listing meets all requirements and you want to approve it?
-        unpublished: The job has been successfully unpublished
     workshop:
       manage_rsvps:
         text: 'RSVP Students and Coaches to the workshop. The attendance confirmation email will be triggered and they will be removed from the waiting list.'
