@@ -52,12 +52,12 @@ en-AU:
     participate:
       students_title: "Students"
       students_explanation_p1: "Our students come from a variety of backgrounds. Some want to become full-time developers, whereas some would like to learn the basics of coding in a supportive environment."
-      students_explanation_p2: "Sign up to join our vibrant community and attend our workshops."
-      students_button: "Sign up as a student"
+      students_explanation_p2: "Join our vibrant community and attend our workshops."
+      students_button: "Join us as a student"
       coaches_title: "Coaches"
       coaches_explanation_p1: "We encourage new students to work on our HTML/CSS, JavaScript, Ruby, Python or Git <a href='http://tutorials.codebar.io'>tutorials</a>. We also help them understand programming concepts."
       coaches_explanation_p2: "Therefore we are always on the lookout for more developers to join our community and help coach at our workshops."
-      coaches_button: "Sign up as a coach"
+      coaches_button: "Join us as a coach"
       workshop_title: "Workshops"
       workshop_explanation_p1: "We are hosted by some amazing companies who support our cause. Our normal format is 30 minutes of socialising with food and drink, followed by a lightning talk then coding."
       workshop_explanation_p2: Help our expansion and enable us to provide help and support to our chapters by hosting and sponsoring our workshops.
@@ -88,7 +88,7 @@ en-AU:
     already_invited: 'You have already RSVPd or joined the waitlist for this workshop.'
     error_blank_note: 'You must select a note'
     rejected_invitation: "We are so sad you can't make it, but thanks for letting us know %{name}."
-    already_rsvped: "You have already confirmed you attendance!"
+    already_rsvped: "You have already confirmed your attendance!"
     not_attending_already: "You have already confirmed you can't make it!"
     no_available_seats: "Unfortunately there are no more spaces left :(. If you would like to join our waiting list send us an email at %{email}"
     feedback_saved: "Thank you for taking the time to give us feedback!"
@@ -219,7 +219,7 @@ en-AU:
   sponsors:
     sponsoring: "Sponsoring"
   members:
-    sign_up: "Sign up"
+    sign_up: "Join our community"
     sign_in_with_github: "Sign in with GitHub"
     sign_up_as_student: "Sign up as a student"
     sign_up_as_student_disclaimer: "* I understand and meet the eligibility criteria."
@@ -230,7 +230,7 @@ en-AU:
       students:
         intro: "If you would like to attend as a student, make sure you meet our"
         criteria_link: "eligibility criteria"
-        criteria_brief: "as our workshops are only available to women, LGBTQ, people from underrepresented minority groups."
+        criteria_brief: "as our workshops are only available to women, non-binary, LGBTQ, and people from underrepresented minority groups."
         github: "Lastly, when you click the sign up button, you'll be taken to something called GitHub. After logging in with a GitHub account, you'll be taken back to the codebar website. If you don't have an account yet, you'll need to create one. It doesn't take long and it's something that will come in handy when you get started with coding!"
       invitations: "Invitations are sent out periodically, so don't worry if you don't receive one as soon as you register."
   footer:
