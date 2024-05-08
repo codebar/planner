@@ -15,7 +15,7 @@
       - if @invitation.for_student?
         - if !@invitation.attending
           - if @member.already_attending(@event)
-            %p You have already RSVP'd to this event as a coach! Please cancel through the email confirmation you received if you wish to sign up as a student instead.
+            %p You have already RSVP'd to this event as a coach! Please cancel through the email confirmation you received if you wish to join us as a student instead.
           - else
             - if @event.event_student_spaces?
               - if @event.tito_url.present?
