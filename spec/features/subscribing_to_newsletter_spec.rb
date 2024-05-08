@@ -20,7 +20,7 @@ RSpec.feature 'Subscribing to the newsletter', type: :feature do
       expect(mailing_list).to receive(:subscribe).with('jane@codebar.io', 'Jane', 'Doe')
 
       visit new_member_path
-      click_on 'Sign up as a coach'
+      click_on 'Join us as a coach'
 
       accept_toc
 
@@ -39,7 +39,7 @@ RSpec.feature 'Subscribing to the newsletter', type: :feature do
       expect(mailing_list).to receive(:unsubscribe).with('jane@codebar.io')
 
       visit new_member_path
-      click_on 'Sign up as a coach'
+      click_on 'Join us as a coach'
 
       accept_toc
 

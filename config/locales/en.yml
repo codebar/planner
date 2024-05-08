@@ -333,11 +333,11 @@ en:
     community_partner_title: Community partners
     sponsoring: "Sponsoring"
   members:
-    sign_up: "Sign up"
+    sign_up: "Join our community"
     sign_in_with_github: "Sign in with GitHub"
-    sign_up_as_student: "Sign up as a student*"
+    sign_up_as_student: "Join us as a student*"
     sign_up_as_student_disclaimer: "* I understand and meet the eligibility criteria."
-    sign_up_as_coach: "Sign up as a coach"
+    sign_up_as_coach: "Join us as a coach"
     code_of_conduct: "code of conduct"
     new:
       intro: "We offer a welcoming, inclusive and learning-friendly environment, and have a zero tolerance policy towards any form of harassment or inappropriate behavior. Before you sign up, read our"
