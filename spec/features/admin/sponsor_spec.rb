@@ -31,6 +31,38 @@ RSpec.feature 'Admin::Sponsors', type: :feature do
       expect(page.all(:css, 'tbody tr', count: 1))
     end
 
+    scenario 'can filter by sponsor' do
+      # Single workshop
+      Fabricate(:workshop_sponsor, sponsor: sponsor)
+      # Multiple works with the same sponsor and chapter
+      chapter = Fabricate(:chapter)
+      5.times do
+        Fabricate(:workshop_sponsor, sponsor: sponsor2, workshop: Fabricate(:workshop_no_sponsor, chapter: chapter))
+      end
+
+      visit admin_sponsors_path
+
+      expect(page).to have_content(sponsor.name)
+      expect(page).to have_content(sponsor2.name)
+
+      expect(page.all(:css, 'tbody tr', count: 2))
+
+      # Make sure both sponsors can be filtered by
+      [sponsor.name, sponsor2.name].each do |name|
+        fill_in 'sponsors_search[name]', with: name
+        click_on 'Filter'
+
+        expect(page.all(:css, 'tbody tr', count: 1))
+      end
+
+      # Invalid sponsor name should return no results
+      fill_in 'sponsors_search[name]', with: 'this-sponsor-does-not-exist'
+      click_on 'Filter'
+
+      expect(page.all(:css, 'tbody tr', count: 0))
+      expect(page).to have_content('No sponsors found')
+    end
+
     scenario 'can clear filtering form' do
       sponsored_workshop = Fabricate(:workshop_sponsor, sponsor: sponsor).workshop
       hosted_workshop = Fabricate(:workshop_sponsor, sponsor: sponsor2, host: true).workshop
