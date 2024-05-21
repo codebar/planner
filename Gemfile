@@ -101,7 +101,7 @@ group :test do
   gem 'selenium-webdriver'
   gem 'webdrivers'
   gem 'database_cleaner'
-  gem 'shoulda-matchers', '~> 6.0'
+  gem 'shoulda-matchers', '~> 6.2'
   gem 'simplecov',      require: false
   gem 'simplecov-lcov', require: false
   gem 'timecop', '~> 0.9.8'
