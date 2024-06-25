@@ -10,7 +10,7 @@ services:
     env_file:
       - docker-compose.env
     build: .
-    command: tail -f /dev/null
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
     environment:
       DB_HOST: db
     volumes:
