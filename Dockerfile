@@ -1,4 +1,4 @@
-FROM ruby:3.2.2
+FROM --platform=linux/amd64 ruby:3.2.2
 
 # Default node version on apt is old. This makes sure a recent version is installed
 # This step also runs apt-get update
@@ -17,6 +17,6 @@ RUN set -ex; \
 WORKDIR /planner
 
 COPY Gemfile Gemfile.lock ./
-RUN bundle install --jobs 4
+RUN gem install bundler:2.4.17 && bundle install --jobs 4
 
 COPY . ./

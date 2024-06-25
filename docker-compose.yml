@@ -1,12 +1,14 @@
-version: '2'
+version: '2.4'
 services:
   db:
     image: postgres
+    platform: "linux/amd64"
     volumes:
       - db_data:/var/lib/postgresql/data
     environment:
       POSTGRES_PASSWORD: password
   web:
+    platform: "linux/amd64"
     env_file:
       - docker-compose.env
     build: .
