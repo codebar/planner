@@ -36,13 +36,6 @@
           - @latest_workshops.each do |date, workshops|
             = render workshops
 
-    .col-md-4.col-sm-12.mt-4
-      - if @chapter.twitter_handle
-        %a.twitter-timeline{href: "https://twitter.com/#{@chapter.twitter_handle}", "data-widget-id" => @chapter.twitter_id }="Tweets by #{@chapter.twitter_handle}"
-      - else
-        %a.twitter-timeline{href: "https://twitter.com/codebar", "data-widget-id" => @chapter.twitter_id, "data-height" => "500" }="Tweets by codebar"
-      %script(async src="https://platform.twitter.com/widgets.js" charset="utf-8")
-
 - if @recent_sponsors.any?
   .py-4.py-lg-5.bg-light
     .container
