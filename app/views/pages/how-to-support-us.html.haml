@@ -1,13 +1,24 @@
-.container.py-4.py-lg-5
-  .row
-    .col
-      %h1.display-2.text-center How to support us
+.py-4.py-lg-5.bg-primary
+  .container
+    .row.align-items-center
+      .col-12.col-md-6
+        %h1.display-2.text-white.lh-1.mb-4
+          How to support
+          %br
+          our mission
+        %ul.list-inline
+          %li.list-inline-item
+            = link_to t('pages.how_to_support_us.volunteer.title'), '#volunteer-with-us', class: 'btn btn-light'
+          %li.list-inline-item
+            = link_to t('donation_platforms.title'), '#donate', class: 'btn btn-light'
+      .col-12.col-md-6
+        = image_tag 'how-to-support-us/codebar-festival-2023.jpg', alt: '', class: 'mw-100 rounded'
 
-.py-4.py-lg-5
+.py-4.py-lg-5#volunteer-with-us
   .container
     .row.mb-3
       .col
-        %h2.h1.text-center Volunteer with us
+        %h2.h1.text-center= t('pages.how_to_support_us.volunteer.title')
     .row.justify-content-center
       .col-12.col-lg-9
         .card.mb-3
@@ -16,10 +27,10 @@
               = image_tag 'how-to-support-us/become-an-organiser.jpg', class: 'rounded-start mw-100'
             .col-md-7
               .card-body
-                %h3.card-title= t('pages.how_to_support_us.become_an_organiser.title')
+                %h3.card-title= t('pages.how_to_support_us.volunteer.become_an_organiser.title')
                 %p.card-text
-                  = t('pages.how_to_support_us.become_an_organiser.description')
-                = mail_to 'hello@codebar.io', t('pages.how_to_support_us.become_an_organiser.link'), subjetc: "I'd like to become a codebar organiser for [city] chapter", class: 'btn btn-primary btn-sm text-decoration-none'
+                  = t('pages.how_to_support_us.volunteer.become_an_organiser.description')
+                = mail_to 'hello@codebar.io', t('pages.how_to_support_us.volunteer.become_an_organiser.link'), subjetc: "I'd like to become a codebar organiser for [city] chapter", class: 'btn btn-primary btn-sm text-decoration-none'
       .col-12.col-lg-9
         .card.mb-3
           .row.g-0
@@ -27,9 +38,9 @@
               = image_tag 'how-to-support-us/become-a-coach.jpg', class: 'rounded-start mw-100'
             .col-md-7
               .card-body
-                %h3.card-title= t('pages.how_to_support_us.become_a_coach.title')
+                %h3.card-title= t('pages.how_to_support_us.volunteer.become_a_coach.title')
                 %p.card-text
-                  = t('pages.how_to_support_us.become_a_coach.description')
+                  = t('pages.how_to_support_us.volunteer.become_a_coach.description')
                 = link_to registration_path(member_type: 'coach'), class: 'btn btn-primary btn-sm text-decoration-none' do
                   = t('members.sign_up_as_coach')
                   %i.fab.fa-github
@@ -40,11 +51,11 @@
               = image_tag 'how-to-support-us/volunteer.jpg', class: 'rounded-start mw-100'
             .col-md-7
               .card-body
-                %h3.card-title= t('pages.how_to_support_us.volunteer.title')
+                %h3.card-title= t('pages.how_to_support_us.volunteer.volunteer.title')
                 %p.card-text
-                  = t('pages.how_to_support_us.volunteer.description')
-                = mail_to 'hello@codebar.io', t('pages.how_to_support_us.volunteer.link'), subjetc: "I'd like to volunteer with codebar", class: 'btn btn-primary btn-sm text-decoration-none'
+                  = t('pages.how_to_support_us.volunteer.volunteer.description')
+                = mail_to 'hello@codebar.io', t('pages.how_to_support_us.volunteer.volunteer.link'), subjetc: "I'd like to volunteer with codebar", class: 'btn btn-primary btn-sm text-decoration-none'
 
-.py-4.py-lg-5.bg-light
+.py-4.py-lg-5.bg-light#donate
   .container
     = render partial: 'shared/donation_platforms'

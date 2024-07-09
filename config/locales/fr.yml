@@ -467,17 +467,19 @@ fr:
       lifetime_ban: Lifetime ban - You will no longer be able to RSVP to any future codebar events. You will also be removed from codebar’s Slack workspace. Examples of behaviour that will get you an automatic lifetime ban include - physical intimidation, stalking, inappropriate physical contact, unwelcome sexual attention or repeated behaviour after you’ve been spoken to by someone from the codebar team (directors or chapter organisers).
       closing_para: The above is only a starting point. The details of the incident may change how we view it, e.g. some verbal harassment may be so serious that we would give a lifetime ban.
     how_to_support_us:
-      become_an_organiser:
-        title: Become an organiser
-        description: Champion inclusion and diversity in the tech industry as a workshop organiser with codebar. Your contribution will create an empowering and safe environment, fostering learning and collaboration among individuals exploring coding in our vibrant community.
-        link: Email us to become an organiser
-      become_a_coach:
-        title: Become a coach
-        description: Affect change as a volunteer coach with codebar - your expertise and guidance will pave the way for aspiring developers, unlocking the world of coding and creating opportunities for folks from groups under represented in the tech industry.
       volunteer:
-        title: Other skills
-        description: codebar welcomes volunteers with a diverse range of skills - whether it's event coordination, fundraising, marketing or any other skill. Your unique abilities can enrich our community and drive our mission forward.
-        link: Email us to become a volunteer
+        title: Volunteer with us
+        become_an_organiser:
+          title: Become an organiser
+          description: Champion inclusion and diversity in the tech industry as a workshop organiser with codebar. Your contribution will create an empowering and safe environment, fostering learning and collaboration among individuals exploring coding in our vibrant community.
+          link: Email us to become an organiser
+        become_a_coach:
+          title: Become a coach
+          description: Affect change as a volunteer coach with codebar - your expertise and guidance will pave the way for aspiring developers, unlocking the world of coding and creating opportunities for folks from groups under represented in the tech industry.
+        volunteer:
+          title: Other skills
+          description: codebar welcomes volunteers with a diverse range of skills - whether it's event coordination, fundraising, marketing or any other skill. Your unique abilities can enrich our community and drive our mission forward.
+          link: Email us to become a volunteer
 
   admin:
     dashboard:
