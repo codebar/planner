@@ -523,16 +523,21 @@ en-US:
         expiry_date: Application closing date
   donation_platforms:
     title: "Donate"
+    description: "Your support, whether a single gift or ongoing commitment, fuels our efforts to create an inclusive tech industry and provides consistent opportunities for learning and growth for members of groups underrepresented in the tech industry."
     link: "Find out how else to support us"
     donation_form:
       title: "Use the donation page"
-      text: "Consider making a lasting impact through codebar with a one-time donation or a monthly recurring contribution. Your support, whether a single gift or ongoing commitment, fuels our efforts to create an inclusive tech industry and provides consistent opportunities for learning and growth for members of groups underrepresented in the tech industry."
+      text: "Consider making a lasting impact through codebar with a one-time donation or a monthly recurring contribution."
+      image_alt: "codebar logo"
     github_sponsors:
       title: "Github Sponsors"
       text: "Support codebar's mission directly through GitHub Sponsors. Join us in shaping the future of technology through your generous donation."
+      image_alt: "Github Sponsors logo"
     open_collective:
       title: "Open Collective"
       text: "Setup a recurring contribution or make a one-time donation through Open Collective."
+      image_alt: "Open Collective logo"
     give_as_you_live:
       title: "Give as you Live"
       text: "Give as you Live is a platform enabling you to raise funds for your favourite charity with your everyday online shopping."
+      image_alt: "Give as you Live logo"
