@@ -10,6 +10,8 @@
           %li.list-inline-item
             = link_to t('pages.how_to_support_us.volunteer.title'), '#volunteer-with-us', class: 'btn btn-light'
           %li.list-inline-item
+            = link_to t('pages.how_to_support_us.fundraise.title'), '#fundraise', class: 'btn btn-light'
+          %li.list-inline-item
             = link_to t('donation_platforms.title'), '#donate', class: 'btn btn-light'
       .col-12.col-md-6
         = image_tag 'how-to-support-us/codebar-festival-2023.jpg', alt: '', class: 'mw-100 rounded'
@@ -56,6 +58,25 @@
                   = t('pages.how_to_support_us.volunteer.volunteer.description')
                 = mail_to 'hello@codebar.io', t('pages.how_to_support_us.volunteer.volunteer.link'), subjetc: "I'd like to volunteer with codebar", class: 'btn btn-primary btn-sm text-decoration-none'
 
-.py-4.py-lg-5.bg-light#donate
+.py-4.py-lg-5.bg-light#fundraise
+  .container
+    .row.d-flex.align-items-center.mb-5
+      .col-12.col-md-6
+        %h2.h1= t('pages.how_to_support_us.fundraise.title')
+        %p= t('pages.how_to_support_us.fundraise.description_html')
+      .col-12.col-md-6
+        = image_tag 'how-to-support-us/hackney-half.jpeg', alt: t('pages.how_to_support_us.fundraise.image_alt'), class: 'mw-100 rounded'
+    .row
+      .col-12.col-lg-4
+        .ratio.shadow{style: '--bs-aspect-ratio: 150%;'}
+          %iframe{title: 'Great South Run', src: '//runforcharity.com/codebar/great-south-run/493220'}
+      .col-12.col-lg-4
+        .ratio.shadow{style: '--bs-aspect-ratio: 150%;'}
+          %iframe{title: 'Run Alton Towers Half', src: '//runforcharity.com/codebar/run-alton-towers-half/register'}
+      .col-12.col-lg-4
+        .ratio.shadow{style: '--bs-aspect-ratio: 150%;'}
+          %iframe{title: 'Hackney Half', src: '//runforcharity.com/codebar/hackney-half/register'}
+
+.py-4.py-lg-5#donate
   .container
     = render partial: 'shared/donation_platforms'

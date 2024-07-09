@@ -481,6 +481,10 @@ en-GB:
           title: Other skills
           description: codebar welcomes volunteers with a diverse range of skills - whether it's event coordination, fundraising, marketing or any other skill. Your unique abilities can enrich our community and drive our mission forward.
           link: Email us to become a volunteer
+      fundraise:
+        title: Fundraise
+        description_html: "Join our team at running and sporting events across the UK and challenge yourself physically while also supporting codebar. Use the registration forms below to register for an event. If you are not seeing an event in your area, <a href='mailto:hello@codebar.io'>drop us an email</a> telling us where you are located and we'll let you know about upcoming events in your area."
+        image_alt: A Black British woman crosses the finish line at the Hackney Half Marathon in London in a shower of confetti while spectators cheer her on.
 
   admin:
     dashboard:
