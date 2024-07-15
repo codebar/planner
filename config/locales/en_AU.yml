@@ -468,17 +468,23 @@ en-AU:
       lifetime_ban: Lifetime ban - You will no longer be able to RSVP to any future codebar events. You will also be removed from codebar’s Slack workspace. Examples of behaviour that will get you an automatic lifetime ban include - physical intimidation, stalking, inappropriate physical contact, unwelcome sexual attention or repeated behaviour after you’ve been spoken to by someone from the codebar team (directors or chapter organisers).
       closing_para: The above is only a starting point. The details of the incident may change how we view it, e.g. some verbal harassment may be so serious that we would give a lifetime ban.
     how_to_support_us:
-      become_an_organiser:
-        title: Become an organiser
-        description: Champion inclusion and diversity in the tech industry as a workshop organiser with codebar. Your contribution will create an empowering and safe environment, fostering learning and collaboration among individuals exploring coding in our vibrant community.
-        link: Email us to become an organiser
-      become_a_coach:
-        title: Become a coach
-        description: Affect change as a volunteer coach with codebar - your expertise and guidance will pave the way for aspiring developers, unlocking the world of coding and creating opportunities for folks from groups under represented in the tech industry.
       volunteer:
-        title: Other skills
-        description: codebar welcomes volunteers with a diverse range of skills - whether it's event coordination, fundraising, marketing or any other skill. Your unique abilities can enrich our community and drive our mission forward.
-        link: Email us to become a volunteer
+        title: Volunteer with us
+        become_an_organiser:
+          title: Become an organiser
+          description: Champion inclusion and diversity in the tech industry as a workshop organiser with codebar. Your contribution will create an empowering and safe environment, fostering learning and collaboration among individuals exploring coding in our vibrant community.
+          link: Email us to become an organiser
+        become_a_coach:
+          title: Become a coach
+          description: Affect change as a volunteer coach with codebar - your expertise and guidance will pave the way for aspiring developers, unlocking the world of coding and creating opportunities for folks from groups under represented in the tech industry.
+        volunteer:
+          title: Other skills
+          description: codebar welcomes volunteers with a diverse range of skills - whether it's event coordination, fundraising, marketing or any other skill. Your unique abilities can enrich our community and drive our mission forward.
+          link: Email us to become a volunteer
+      fundraise:
+        title: Fundraise
+        description_html: "Join our team at running and sporting events across the UK and challenge yourself physically while also supporting codebar. Use the registration forms below to register for an event. If you are not seeing an event in your area, <a href='mailto:hello@codebar.io'>drop us an email</a> telling us where you are located and we'll let you know about upcoming events in your area."
+        image_alt: A Black British woman crosses the finish line at the Hackney Half Marathon in London in a shower of confetti while spectators cheer her on.
 
   admin:
     dashboard:
@@ -525,16 +531,21 @@ en-AU:
         expiry_date: Application closing date
   donation_platforms:
     title: "Donate"
+    description: "Your support, whether a single gift or ongoing commitment, fuels our efforts to create an inclusive tech industry and provides consistent opportunities for learning and growth for members of groups underrepresented in the tech industry."
     link: "Find out how else to support us"
     donation_form:
       title: "Use the donation page"
-      text: "Consider making a lasting impact through codebar with a one-time donation or a monthly recurring contribution. Your support, whether a single gift or ongoing commitment, fuels our efforts to create an inclusive tech industry and provides consistent opportunities for learning and growth for members of groups underrepresented in the tech industry."
+      text: "Consider making a lasting impact through codebar with a one-time donation or a monthly recurring contribution."
+      image_alt: "codebar logo"
     github_sponsors:
       title: "Github Sponsors"
       text: "Support codebar's mission directly through GitHub Sponsors. Join us in shaping the future of technology through your generous donation."
+      image_alt: "Github Sponsors logo"
     open_collective:
       title: "Open Collective"
       text: "Setup a recurring contribution or make a one-time donation through Open Collective."
+      image_alt: "Open Collective logo"
     give_as_you_live:
       title: "Give as you Live"
       text: "Give as you Live is a platform enabling you to raise funds for your favourite charity with your everyday online shopping."
+      image_alt: "Give as you Live logo"

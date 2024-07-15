@@ -1,15 +1,16 @@
 - title = local_assigns[:title] ? local_assigns[:title] : t("donation_platforms.title")
 
-.row
-  .col.mb-3
+.row.justify-content-center
+  .col-12.col-md-7.text-center.mb-3
     %h2.h1= title
+    %p= t("donation_platforms.description")
 
 .row.d-flex
   .d-flex.col-sm-12.col-md-6.col-lg-3
     .card.mt-3.mt-lg-0.shadow
       .card-header.bg-white.border-0.p-0.ratio.ratio-21x9
         .bg-white.rounded-top.p-3.d-flex.align-items-center
-          = image_tag("logo.png", alt: "codebar logo", class: "mw-100")
+          = image_tag("logo.png", alt:t("donation_platforms.donation_form.image_alt"), class: "mw-100")
       .card-body
         %h3.h6= link_to(t("donation_platforms.donation_form.title"), new_donation_path)
         %p.card-text= t("donation_platforms.donation_form.text")
@@ -17,7 +18,7 @@
     .card.mt-3.mt-lg-0.shadow
       .card-header.bg-white.border-0.p-0.ratio.ratio-21x9
         .bg-dark.rounded-top
-          = image_tag("give-as-you-live.png", alt: "Give as you Live logo", class: "mw-100 rounded-top")
+          = image_tag("give-as-you-live.png", alt: t("donation_platforms.give_as_you_live.image_alt"), class: "mw-100 rounded-top")
       .card-body
         %h3.h6= link_to(t("donation_platforms.give_as_you_live.title"), "https://www.giveasyoulive.com/join/codebar?utm_source=charitytoolkit&utm_content=233896&utm_medium=post&utm_campaign=CTGenericCampaign")
         %p.card-text= t("donation_platforms.give_as_you_live.text")
@@ -25,7 +26,7 @@
     .card.mt-3.mt-lg-0.shadow
       .card-header.bg-white.border-0.p-0.ratio.ratio-21x9
         .bg-white.rounded-top.p-3.d-flex.align-items-center
-          = image_tag("open-collective-logo.png", alt: "Open Collective logo", class: "mw-100")
+          = image_tag("open-collective-logo.png", alt: t("donation_platforms.open_collective.image_alt"), class: "mw-100")
       .card-body
         %h3.h6= link_to(t("donation_platforms.open_collective.title"), "https://opencollective.com/codebar")
         %p.card-text= t("donation_platforms.open_collective.text")
@@ -33,11 +34,11 @@
     .card.mt-3.mt-lg-0.shadow
       .card-header.bg-white.border-0.p-0.ratio.ratio-21x9
         .bg-dark.rounded-top
-          = image_tag("GitHub_Logo_White.png", alt: "Github Sponsors logo", class: "mw-100")
+          = image_tag("GitHub_Logo_White.png", alt: t("donation_platforms.github_sponsors.image_alt"), class: "mw-100")
       .card-body
         %h3.h6= link_to(t("donation_platforms.github_sponsors.title"), "https://github.com/sponsors/codebar")
         %p.card-text= t("donation_platforms.github_sponsors.text")
 
 - if local_assigns[:with_button]
   .d-flex.justify-content-center.mt-4
-    = link_to t("donation_platforms.link"), how_to_support_us_path, class: 'btn btn-primary btn-lg'
+    = link_to t("donation_platforms.link"), how_to_support_us_path, class: "btn btn-primary btn-lg"
