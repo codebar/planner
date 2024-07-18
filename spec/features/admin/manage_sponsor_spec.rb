@@ -63,7 +63,6 @@ RSpec.feature 'Managing sponsors', type: :feature do
         sponsor = Fabricate(:sponsor)
 
         visit edit_admin_sponsor_path(sponsor)
-        puts page.body
 
         expect(page.find('.small-image')['alt']).to match("#{sponsor.name} logo")
 

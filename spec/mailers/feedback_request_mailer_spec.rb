@@ -28,7 +28,6 @@ RSpec.describe FeedbackRequestMailer, type: :mailer do
 
       expect(email.subject).to eq(email_subject)
       expect(email.from).to eq(['meetings@codebar.io'])
-      puts email.body
     end
   end
 end

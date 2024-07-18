@@ -28,7 +28,7 @@ namespace :member do
         invitation.save
       end
 
-      member.email = "deleted_user_#{Time.zone.now.to_s(:number)}@codebar.io"
+      member.email = "deleted_user_#{Time.zone.now.to_fs(:number)}@codebar.io"
       member.name = 'Deleted'
       member.surname = 'User'
       member.pronouns = nil
