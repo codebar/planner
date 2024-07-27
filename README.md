@@ -61,43 +61,39 @@ from a command prompt in your project folder:
 
 **Note:** If when starting the application with Docker you get the error `UnicodeDecodeError: 'utf-8' codec can't decode byte 0xff in position 0: invalid start byte` this may be because you created the `.env`-file using PowerShell. This can be solved by deleting that file and creating a new one using a bash shell (for example Git Bash).
 
-### 3. Install and set up the environment
+### 3. Install and set up the environment using docker
 
-We recommend using Docker to install and run the application. However alternatively if you prefer, [you can install directly to your system environment instead](https://github.com/codebar/planner/blob/master/native-installation-instructions.md).
+We recommend using Docker to install and run the application. However alternatively if you prefer, [you can install directly to your system environment instead](./native-installation-instructions.md).
 
-#### Install using Docker
+Before you start, you will need to have Docker installed and running. You can [download it from the Docker website](https://docker.com/). Once downloaded, install and start the Docker application.
 
-Before you start, you will need to have Docker installed and running. You can [download it from the Docker website](https://docker.com/).
+Run `bin/dup` to build and create the docker container. This will also set up the Rails application within the container and start the container. You will only have to run this command once. After initial setup, use `bin/dstart` to start an existing container - using `bin/dup` will recreate an existing container and reset the database.
 
-The current Dockerfile and docker-compose were closely copied from [the Docker guide](https://docs.docker.com/compose/rails/).
+### 4. Start the app
 
-1. Run `bin/dbuild` to build and setup the docker environment.
-2. Run `bin/drake` to run all the tests and make sure everything works.
+Run `bin/dserver` to start the Rails server.
 
-**Note:** If you are using Windows, you can run `bin/dbuild` using Git Bash.
+*If you have previously stopped the container, you will have to first start the container using `bin/dstart`.
 
-### 4. Run the tests
-
-Run `bin/drake` to run all the tests and make sure everything works.
-You can also use `bin/drails` and `bin/dspec` to run specific rails and rspec commands via docker.
-
-#### Running single tests/test files
-
-If you just want to run a single test file you can pass the path to the file, either using `rspec` or via the `SPEC` variable with `rake`:
-```bash
-bundle exec rspec <path to test>
-bundle exec rake SPEC=<path to test>
+This should run a process which starts a server in a Docker container on your computer. This process won't finish - you'll know the server is ready when it stops doing anything and displays a message like this:
+```
+Rails 4.2.11 application starting in development on http://localhost:3000
 ```
 
-This can also be used with specific line number (running only that one test), for example:
-```bash
-bundle exec rspec spec/features/admin/manage_workshop_attendances_spec.rb:42
-bundle exec rake SPEC=spec/features/admin/manage_workshop_attendances_spec.rb:42
-```
+(Optional) Note that to be able to use the page as an admin, you must first give yourself admin privileges. Make sure you have started your app and signed up as an user on your locally running app. Then run the script `bin/dadmin <your email>`.
 
-These also work with the corresponding `bin/dspec` and `bin/drake` commands.
+**You can now view the app at http://localhost:3000**
+
+You can stop the server when you're finished by typing `Ctrl + C`.
+
+### 5. Run the tests
+
+Run `bin/drspec` to run all the tests.
+
+This command passes any additional arguments into `rspec` in the docker container, so you can run individual tests with `bin/drspec PATH_TO_TEST` and run a single test case in a file with `bin/drspec PATH_TO_TEST:LINE_NUMBER`
 
 #### Running JavaScript enabled feature tests with a visible browser
+
 There are a small number of feature tests marked with `js: true` which use
 headless Chrome. These can be hard to work with without being able to see what is
 actually happening in the browser. To spin up a visible browser, pass
@@ -109,20 +105,18 @@ CHROME_HEADLESS=false bundle exec rspec
 
 Running JavaScript enabled tests with a visible browser currently doesn't work with Docker.
 
-### 5. Start the app
+### Available Docker commands
 
-Run `bin/dstart` to start the app.
-
-This should run a process which starts a server in a Docker container on your computer. This process won't finish - you'll know the server is ready when it stops doing anything and displays a message like this:
-```
-Rails 4.2.11 application starting in development on http://localhost:3000
-```
-
-(Optional) Note that to be able to use the page as an admin, you must first give yourself admin privileges. Make sure you have started your app and signed up as an user on your locally running app. Then run a script `bin/dadmin <your email>`.
-
-**You can now view the app at http://localhost:3000**
-
-You can stop the server when you're finished by typing `Ctrl + C`.
+- `bin/dup`: `docker-compose up --build -d --wait && rake db:drop db:create db:migrate db:seed db:test:prepare`. Rebuilds and boots up a new container, and then initialize the Rails database.
+- `bin/dstart`: `docker-compose start`. Starts the existing container.
+- `bin/dserver`: `docker-compose exec web make serve`. Runs the Rails server. Use this instead of `bin/drails server` to make it bind to the correct IP addresses to allow the server to be viewable outside the container.
+- `drails`: `docker-compose exec web rails $@`. Runs rails within the container.
+- `drspec`: `docker-compose exec web rspec $@`. Runs rspec within the container.
+- `drake`: `docker-compose exec web rake $@`. Runs rake inside the container.
+- `dexec`: `docker-compose exec web bash`. Runs a bash shell inside the container.
+- `dadmin`: Gives the the last user (or the one with a given email) the admin role
+- `bin/dstop`: `docker-compose stop`. Stops container but does not remove it
+- `bin/ddown`: `docker-compose down`. Stops and destroy a container.
 
 ## Front-end framework
 
