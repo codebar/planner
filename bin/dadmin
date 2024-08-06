@@ -1,11 +1,9 @@
 #!/usr/bin/env bash
 set -e
 
-docker-compose up -d web
-
 if [ $# -gt 0 ]
 then
-  docker-compose exec web rails runner "Member.find_by(email: '$@').add_role(:admin)"
+  docker compose exec web rails runner "Member.find_by(email: '$@').add_role(:admin)"
 else
-  docker-compose exec web rails runner "Member.last.add_role(:admin)"
+  docker compose exec web rails runner "Member.last.add_role(:admin)"
 fi

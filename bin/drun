@@ -1,6 +1,0 @@
-#!/usr/bin/env bash
-
-set -e
-
-docker-compose up -d web
-docker-compose exec web make serve
