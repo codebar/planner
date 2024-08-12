@@ -14,7 +14,7 @@
           = link_to event_coach_rsvp_path(@event), class: 'btn btn-primary' do
             = t('events.attend_as_coach')
       - else
-        = link_to 'Sign up', new_member_path, class: 'btn btn-primary me-2'
+        = link_to t('members.sign_up'), new_member_path, class: 'btn btn-primary me-2'
         = link_to 'Log in', login_path, class: 'btn btn-primary'
   - else
     %p.badge.bg-primary= t('events.not_open_for_rsvp')

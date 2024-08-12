@@ -18,13 +18,13 @@ RSpec.feature 'viewing an event', type: :feature do
 
       scenario 'a student cannot RSVP if they are not logged in' do
         expect(page).to have_link('Log in')
-        expect(page).to have_link('Sign up')
+        expect(page).to have_link('Join our community')
         expect(page).to_not have_link('Attend as a student')
       end
 
       scenario 'a coach cannot RSVP if they are not logged in' do
         expect(page).to have_link('Log in')
-        expect(page).to have_link('Sign up')
+        expect(page).to have_link('Join our community')
         expect(page).to_not have_link('Attend as a coach')
       end
     end
