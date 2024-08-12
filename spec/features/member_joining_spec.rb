@@ -7,8 +7,8 @@ RSpec.feature 'A new student signs up', type: :feature do
 
   scenario 'A visitor can access signups through the landing page' do
     visit root_path
-    click_on 'Sign up as a student'
-    click_on 'Sign up as a student'
+    click_on 'Join us as a student'
+    click_on 'Join us as a student'
 
     accept_toc
 
@@ -33,7 +33,7 @@ RSpec.feature 'A new student signs up', type: :feature do
 
   scenario 'A new member details are successfully captured' do
     visit new_member_path
-    click_on 'Sign up as a coach'
+    click_on 'Join us as a coach'
 
     accept_toc
 

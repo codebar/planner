@@ -19,7 +19,7 @@
         - if logged_in?
           = render partial: 'subscriptions'
         - else
-          = link_to 'Sign up', new_member_path, class: 'btn btn-primary'
+          = link_to t('members.sign_up'), new_member_path, class: 'btn btn-primary'
 
 .container.py-4.py-lg-5
   .row

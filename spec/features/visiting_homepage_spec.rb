@@ -53,13 +53,13 @@ RSpec.feature 'when visiting the homepage', type: :feature do
     scenario 'i can sign up as a student' do
       visit root_path
 
-      expect(page).to have_content 'Sign up as a student'
+      expect(page).to have_content 'Join us as a student'
     end
 
     scenario 'i can sign up as a coach' do
       visit root_path
 
-      expect(page).to have_content 'Sign up as a coach'
+      expect(page).to have_content 'Join us as a coach'
     end
   end
 end

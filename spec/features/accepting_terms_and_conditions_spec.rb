@@ -8,8 +8,8 @@ RSpec.feature 'Accepting Terms and Conditions', type: :feature do
 
     scenario 'they can''t proceed unless they accept the ToCs' do
       visit root_path
-      click_on 'Sign up as a student'
-      click_on 'Sign up as a student'
+      click_on 'Join us as a student'
+      click_on 'Join us as a student'
 
       expect(page).to have_current_path(terms_and_conditions_path)
 
@@ -20,8 +20,8 @@ RSpec.feature 'Accepting Terms and Conditions', type: :feature do
 
     scenario 'they can read the Code of Conduct before accepting the ToCs', js: true do
       visit root_path
-      click_on 'Sign up as a student'
-      click_on 'Sign up as a student'
+      click_on 'Join us as a student'
+      click_on 'Join us as a student'
 
       expect(page).to have_current_path(terms_and_conditions_path)
 
@@ -35,8 +35,8 @@ RSpec.feature 'Accepting Terms and Conditions', type: :feature do
 
     scenario 'they can fill in their details after they accept the ToCs' do
       visit root_path
-      click_on 'Sign up as a student'
-      click_on 'Sign up as a student'
+      click_on 'Join us as a student'
+      click_on 'Join us as a student'
 
       expect(page).to have_current_path(terms_and_conditions_path)
 
