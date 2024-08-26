@@ -270,7 +270,7 @@ GEM
     omniauth-rails_csrf_protection (1.0.2)
       actionpack (>= 4.2)
       omniauth (~> 2.0)
-    pagy (6.4.3)
+    pagy (9.0.6)
     parallel (1.25.1)
     parser (3.3.3.0)
       ast (~> 2.4.1)
