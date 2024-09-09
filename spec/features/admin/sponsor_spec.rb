@@ -155,6 +155,34 @@ RSpec.feature 'Admin::Sponsors', type: :feature do
         end
       end
     end
+
+    context 'activities' do
+      scenario 'when there are activities' do
+        contact = sponsor.contacts.first
+        audit = Auditor::Audit.new(sponsor, 'sponsor.admin_contact_subscribe', manager, contact)
+        audit.log_with_note(contact.email)
+
+        visit admin_sponsor_path(sponsor)
+
+        within '#activities' do
+          expect(page).to have_content("#{manager.full_name} subscribed #{contact.name} #{contact.surname} with email #{contact.email} to the Sponsor newsletter")
+        end
+      end
+
+      scenario 'when an activity is associated with a deleted contact' do
+        contact = sponsor.contacts.first
+        audit = Auditor::Audit.new(sponsor, 'sponsor.admin_contact_subscribe', manager, contact)
+        audit.log_with_note(contact.email)
+
+        contact.delete
+
+        visit admin_sponsor_path(sponsor)
+
+        within '#activities' do
+          expect(page).to_not have_content("#{manager.full_name} subscribed #{contact.name} #{contact.surname} with email #{contact.email} to the Sponsor newsletter")
+        end
+      end
+    end
   end
 
   context 'Editing a sponsor' do
