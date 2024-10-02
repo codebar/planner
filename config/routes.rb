@@ -156,6 +156,7 @@ Rails.application.routes.draw do
   get 'privacy-policy' => 'pages#show', id: 'privacy-policy'
   get 'breach-code-of-conduct' => 'pages#show', id: 'breach-code-of-conduct'
   get 'how-to-support-us' => 'pages#show', id: 'how-to-support-us'
+  get 'codebar-stories-podcast' => 'pages#show', id: 'codebar-stories-podcast'
 
   get ':id' => 'chapter#show', as: :chapter
 
