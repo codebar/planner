@@ -1,5 +1,20 @@
-.container.py-4.py-lg-5
+.div.mb-5
+    = image_tag 'codebar-stories-banner.png', alt: 'codebar stories banner', class: 'mw-100'
+
+.container.mb-5
     .row.justify-content-md-center
-        .col-md-10.col-lg-8
-            %h1.display-2.text-white.lh-1.mb-4 
-            codebar Stories Podcast
+        .col-12.col-md-7.text-center
+            %p.lead= t('pages.codebar_stories_podcast.opening')
+
+
+.container.mb-5
+    .row.justify-content-md-center
+        .col-12.col-md-8
+            <iframe src="https://podcasters.spotify.com/pod/show/codebar/embed" height="100%" width="100%" frameborder="0" scrolling="no"></iframe>
+
+
+.container.mb-5
+    .row.justify-content-md-center
+        .col-12.col-md-7.text-center.border.border-3.border-primary
+            %p.lead.pt-3= t('pages.codebar_stories_podcast.contact_us_html')
+        

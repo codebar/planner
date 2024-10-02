@@ -485,6 +485,9 @@ en-GB:
         title: Fundraise
         description_html: "Join our team at running and sporting events across the UK and challenge yourself physically while also supporting codebar. Use the registration forms below to register for an event. If you are not seeing an event in your area, <a href='mailto:hello@codebar.io'>drop us an email</a> telling us where you are located and we'll let you know about upcoming events in your area."
         image_alt: A Black British woman crosses the finish line at the Hackney Half Marathon in London in a shower of confetti while spectators cheer her on.
+    codebar_stories_podcast:
+      opening: codebar Stories is a new podcast brought to you by codebar, we'll be smashing down the belief that tech isn't for you by sharing real-life stories from members of our community who have transitioned into a new career in tech.
+      contact_us: "Sponsoring codebar Stories offers you a unique opportunity to connect with a diverse, engaged audience within the tech community. As a podcast dedicated to empowering underrepresented groups through coding education, your brand will align with our values of diversity, inclusivity, and social impact. Through sponsorship, you'll gain visibility, build positive PR, and demonstrate your commitment to fostering the next generation of tech talent, all while supporting a meaningful cause. Sound good? Please drop us an email <a href='mailto:podcast@codebar.io'>podcast@codebar.io</a>."
 
   admin:
     dashboard:
