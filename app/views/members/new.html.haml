@@ -7,14 +7,8 @@
   .container
     .row.justify-content-md-center
       .col-12.col-lg-6
-        %p
-          = t('members.new.intro')
-          = link_to t('members.code_of_conduct'), code_of_conduct_path
-          \.
-        %p
-          = t('members.new.students.intro')
-          = link_to t('members.new.students.criteria_link'), student_guide_path(anchor: 'eligibility')
-          = t('members.new.students.criteria_brief')
+        %p= t('members.new.intro_html')
+        %p= t('members.new.students.intro_html')
         %p.mb-4
           = t('members.new.students.github')
         .d-grid.d-lg-block
