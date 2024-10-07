@@ -51,17 +51,17 @@ en-GB:
     explanation: "Our goal is to enable minority group members to learn programming in a safe and collaborative environment and expand their career opportunities. To achieve this we run free regular workshops, regular one-off events and try to create opportunities for our students making technology and coding more accessible."
     participate:
       students_title: "Students"
-      students_explanation_p1: "Our students come from a variety of backgrounds. Some want to become full-time developers, whereas some would like to learn the basics of coding in a supportive environment."
-      students_explanation_p2: "Join our vibrant community and attend our workshops."
+      students_explanation_p1: "Our students come from diverse backgrounds—some aspiring to become full-time developers, while others simply want to learn the basics of coding in a supportive environment."
+      students_explanation_p2: "Join our vibrant community and take part in our workshops!"
       students_button: "Join us as a student"
       coaches_title: "Coaches"
-      coaches_explanation_p1: "We encourage new students to work on our HTML/CSS, JavaScript, Ruby, Python or Git <a href='http://tutorials.codebar.io'>tutorials</a>. We also help them understand programming concepts."
-      coaches_explanation_p2: "Therefore we are always on the lookout for more developers to join our community and help coach at our workshops."
+      coaches_explanation_p1: "We encourage new students to start with our <a href='http://tutorials.codebar.io'>tutorials</a> on HTML/CSS, JavaScript, Ruby, Python, or Git, while also helping them grasp key programming concepts."
+      coaches_explanation_p2: "That’s why we’re always looking for more developers to join our community and coach at our workshops."
       coaches_button: "Join us as a coach"
       workshop_title: "Workshops"
-      workshop_explanation_p1: "We are hosted by some amazing companies who support our cause. Our normal format is 30 minutes of socialising with food and drink, followed by a lightning talk then coding."
-      workshop_explanation_p2: Help our expansion and enable us to provide help and support to our chapters by hosting and sponsoring our workshops.
-      workshop_button: "Host a workshop"
+      workshop_explanation_p1: "We’re proud to be hosted by amazing companies that support our mission. Our typical format includes 30 minutes of socialising over food and drinks, a lightning talk, and then hands-on coding."
+      workshop_explanation_p2: "Help us grow and support our chapters by hosting or sponsoring our workshops, and together, we can expand opportunities for more aspiring developers."
+      workshop_button: "Let's work together"
       workshop_email_subject: "Regarding hosting a workshop"
     chapters:
       title: "Chapters"
@@ -226,12 +226,10 @@ en-GB:
     sign_up_as_coach: "Join us as a coach"
     code_of_conduct: "code of conduct"
     new:
-      intro: "We offer a welcoming, inclusive and learning-friendly environment, and have a zero tolerance policy towards any form of harassment or inappropriate behavior. Before you sign up, read our"
+      intro_html: "We provide a welcoming, inclusive, and supportive learning environment, with a strict zero-tolerance policy for any form of harassment or inappropriate behavior. Please take a moment to review our <a href='https://codebar.io/code-of-conduct'>code of conduct</a> before signing up."
       students:
-        intro: "If you would like to attend as a student, make sure you meet our"
-        criteria_link: "eligibility criteria"
-        criteria_brief: "as our workshops are only available to women, non-binary,  LGBTQ, and people from underrepresented minority groups."
-        github: "Lastly, when you click the sign up button, you'll be taken to something called GitHub. After logging in with a GitHub account, you'll be taken back to the codebar website. If you don't have an account yet, you'll need to create one. It doesn't take long and it's something that will come in handy when you get started with coding!"
+        intro_html: "If you’re interested in attending as a student, be sure to check our <a href='https://codebar.io/student-guide#eligibility'>eligibility criteria</a>. Our workshops and events are exclusively for women, non-binary, LGBTQ+ members, and people from underrepresented minority groups."
+        github: "When you click the sign-up button, you'll be redirected to GitHub. After logging in with your GitHub account, you'll return to the codebar website. If you don’t have an account yet, creating one is quick and easy—and it will be useful as you begin your coding journey!"
       invitations: "Invitations are sent out periodically, so don't worry if you don't receive one as soon as you register."
   footer:
     email_us: "Send us an email at"
@@ -479,11 +477,11 @@ en-GB:
           description: Affect change as a volunteer coach with codebar - your expertise and guidance will pave the way for aspiring developers, unlocking the world of coding and creating opportunities for folks from groups under represented in the tech industry.
         volunteer:
           title: Other skills
-          description: codebar welcomes volunteers with a diverse range of skills - whether it's event coordination, fundraising, marketing or any other skill. Your unique abilities can enrich our community and drive our mission forward.
+          description: Your unique abilities could be our missing piece in the codebar puzzle. Having a diverse range of skills in our team is necessary to enrich our community. From fundraising to event coordination to marketing, we always welcome new talent to drive our mission forward. 
           link: Email us to become a volunteer
       fundraise:
         title: Fundraise
-        description_html: "Join our team at running and sporting events across the UK and challenge yourself physically while also supporting codebar. Use the registration forms below to register for an event. If you are not seeing an event in your area, <a href='mailto:hello@codebar.io'>drop us an email</a> telling us where you are located and we'll let you know about upcoming events in your area."
+        description_html: "Join the codebar team with a physical challenge event. Whether you are a runner, swimmer, or cyclist, sign up with our registration form for your desired event and raise vital funds to help keep our events running. If your event does not appear below, feel free to <a href='mailto:hello@codebar.io'>drop us an email</a> and we would be happy to coordinate with you."
         image_alt: A Black British woman crosses the finish line at the Hackney Half Marathon in London in a shower of confetti while spectators cheer her on.
     codebar_stories_podcast:
       image_alt: codebar stories banner
@@ -535,15 +533,15 @@ en-GB:
         expiry_date: Application closing date
   donation_platforms:
     title: "Donate"
-    description: "Your support, whether a single gift or ongoing commitment, fuels our efforts to create an inclusive tech industry and provides consistent opportunities for learning and growth for members of groups underrepresented in the tech industry."
+    description: "Your support—whether through a one-time gift or ongoing commitment—drives our mission to create a more inclusive tech industry. It enables us to provide continuous learning opportunities and empower individuals from underrepresented groups to grow and thrive in tech."
     link: "Find out how else to support us"
     donation_form:
       title: "Use the donation page"
-      text: "Consider making a lasting impact through codebar with a one-time donation or a monthly recurring contribution."
+      text: "Make a lasting impact with codebar by giving a one-time donation or committing to a monthly contribution."
       image_alt: "codebar logo"
     github_sponsors:
       title: "Github Sponsors"
-      text: "Support codebar's mission directly through GitHub Sponsors. Join us in shaping the future of technology through your generous donation."
+      text: "Support codebar’s mission directly through GitHub Sponsors and help shape the future of technology with your generous donation."
       image_alt: "Github Sponsors logo"
     open_collective:
       title: "Open Collective"

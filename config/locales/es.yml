@@ -551,11 +551,11 @@ es:
           description: Affect change as a volunteer coach with codebar - your expertise and guidance will pave the way for aspiring developers, unlocking the world of coding and creating opportunities for folks from groups under represented in the tech industry.
         volunteer:
           title: Other skills
-          description: codebar welcomes volunteers with a diverse range of skills - whether it's event coordination, fundraising, marketing or any other skill. Your unique abilities can enrich our community and drive our mission forward.
+          description: Your unique abilities could be our missing piece in the codebar puzzle. Having a diverse range of skills in our team is necessary to enrich our community. From fundraising to event coordination to marketing, we always welcome new talent to drive our mission forward. 
           link: Email us to become a volunteer
       fundraise:
         title: Fundraise
-        description_html: "Join our team at running and sporting events across the UK and challenge yourself physically while also supporting codebar. Use the registration forms below to register for an event. If you are not seeing an event in your area, <a href='mailto:hello@codebar.io'>drop us an email</a> telling us where you are located and we'll let you know about upcoming events in your area."
+        description_html: "Join the codebar team with a physical challenge event. Whether you are a runner, swimmer, or cyclist, sign up with our registration form for your desired event and raise vital funds to help keep our events running. If your event does not appear below, feel free to <a href='mailto:hello@codebar.io'>drop us an email</a> and we would be happy to coordinate with you."
         image_alt: A Black British woman crosses the finish line at the Hackney Half Marathon in London in a shower of confetti while spectators cheer her on.
     codebar_stories_podcast:
       image_alt: codebar stories banner
@@ -618,15 +618,15 @@ es:
         expiry_date: Fecha de cierre de la solicitud
   donation_platforms:
     title: "Donate"
-    description: "Your support, whether a single gift or ongoing commitment, fuels our efforts to create an inclusive tech industry and provides consistent opportunities for learning and growth for members of groups underrepresented in the tech industry."
+    description: "Your support—whether through a one-time gift or ongoing commitment—drives our mission to create a more inclusive tech industry. It enables us to provide continuous learning opportunities and empower individuals from underrepresented groups to grow and thrive in tech."
     link: "Find out how else to support us"
     donation_form:
       title: "Usa la página de donaciones"
-      text: "Consider making a lasting impact through codebar with a one-time donation or a monthly recurring contribution."
+      text: "Make a lasting impact with codebar by giving a one-time donation or committing to a monthly contribution."
       image_alt: "codebar logo"
     github_sponsors:
       title: "Github Sponsors"
-      text: "Support codebar's mission directly through GitHub Sponsors. Join us in shaping the future of technology through your generous donation."
+      text: "Support codebar’s mission directly through GitHub Sponsors and help shape the future of technology with your generous donation."
       image_alt: "Github Sponsors logo"
     open_collective:
       title: "Open Collective"
