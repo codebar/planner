@@ -50,3 +50,7 @@
   .mt-5
     .alert.alert-primary.mb-0
       = t('chapters.contact', city: @chapter.name, email: @chapter.email)
+
+.py-4.py-lg-5.bg-light
+  .container
+    = render partial: 'shared/donation_platforms', locals: { title: t('homepage.donation_platforms.title'), with_button: true }
