@@ -7,6 +7,8 @@ class Member::DetailsController < ApplicationController
 
   def edit
     accept_terms
+    # https://apidock.com/rails/ActionController/Metal/performed%3F
+    return if performed?
 
     flash[notice] = I18n.t('notifications.signing_up')
     @member.newsletter ||= true
