@@ -29,8 +29,6 @@ class InvitationManager
 
   def invite_students_to_event(event, chapter)
     chapter_students(chapter).each do |student|
-      next unless student.accepted_toc_at
-
       invitation = Invitation.new(event: event, member: student, role: 'Student')
       EventInvitationMailer.invite_student(event, student, invitation).deliver_now if invitation.save
     end
@@ -38,8 +36,6 @@ class InvitationManager
 
   def invite_coaches_to_event(event, chapter)
     chapter_coaches(chapter).each do |coach|
-      next unless coach.accepted_toc_at
-
       invitation = Invitation.new(event: event, member: coach, role: 'Coach')
       EventInvitationMailer.invite_coach(event, coach, invitation).deliver_now if invitation.save
     end
