@@ -66,6 +66,52 @@ RSpec.describe InvitationManager, type: :model do
 
       manager.send_event_emails(event, chapter)
     end
+
+    it 'emails only students that accepted toc' do
+      event = Fabricate(:event, chapters: [chapter], audience: 'Students')
+
+      first_student, *other_students = students
+      first_student.update(accepted_toc_at: nil)
+
+      expect(Invitation).to_not(
+        receive(:new).
+        with(event: event, member: first_student, role: 'Student').
+        and_call_original
+      )
+
+      other_students.each do |other_student|
+        expect(Invitation).to(
+          receive(:new).
+          with(event: event, member: other_student, role: 'Student').
+          and_call_original
+        )
+      end
+
+      manager.send_event_emails(event, chapter)
+    end
+
+    it 'emails only coaches that accepted toc' do
+      event = Fabricate(:event, chapters: [chapter], audience: 'Coaches')
+
+      first_coach, *other_coaches = coaches
+      first_coach.update(accepted_toc_at: nil)
+
+      expect(Invitation).to_not(
+        receive(:new).
+        with(event: event, member: first_coach, role: 'Coach').
+        and_call_original
+      )
+
+      other_coaches.each do |other_coach|
+        expect(Invitation).to(
+          receive(:new).
+          with(event: event, member: other_coach, role: 'Coach').
+          and_call_original
+        )
+      end
+
+      manager.send_event_emails(event, chapter)
+    end
   end
 
   describe '#send_monthly_attendance_reminder_emails', wip: true do

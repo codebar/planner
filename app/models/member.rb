@@ -20,6 +20,7 @@ class Member < ApplicationRecord
   validates :email, uniqueness: true
   validates :about_you, length: { maximum: 255 }
 
+  scope :accepted_toc, -> { where.not(accepted_toc_at: nil) }
   scope :order_by_email, -> { order(:email) }
   scope :subscribers, -> { joins(:subscriptions).order('created_at desc').uniq }
   scope :not_banned, lambda {
@@ -32,7 +33,9 @@ class Member < ApplicationRecord
                                 .where('meeting_invitations.meeting_id = ? and meeting_invitations.attending = ?',
                                        meeting.id, true)
                             }
-  scope :in_group, ->(members) { not_banned.joins(:groups).where(groups: { id: members.select(:id) }) }
+  scope :in_group, lambda { |members|
+    not_banned.accepted_toc.joins(:groups).where(groups: { id: members.select(:id) })
+  }
 
   scope :with_skill, ->(skill_name) { tagged_with(skill_name) }
 
