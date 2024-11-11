@@ -55,7 +55,8 @@ brew install imagemagick
 Install the Gems:
 ```bash
 gem install bundler
-bundle install --without production
+bundle config without production
+bundle install
 ```
 
 ## Set up the Database
