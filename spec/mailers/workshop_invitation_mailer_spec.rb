@@ -48,7 +48,7 @@ RSpec.describe WorkshopInvitationMailer, type: :mailer do
 
     expect(email.subject).to eq('A spot just became available')
     expect(email.from).to eq([workshop.chapter.email])
-    expect(email.body.encoded).to match('A spot just opened up for the workshop')
+    expect(email.body.encoded).to match('A spot just opened up for you at the workshop')
   end
 
   it '#waitlist_reminder' do
