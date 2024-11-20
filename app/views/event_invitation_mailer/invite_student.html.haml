@@ -14,7 +14,7 @@
               %td
                 %h3 Hi #{@member.name},
                 %p.lead
-                  We'd like to invite you to #{@event.name}. If you can come, please RSVP using the link in this email.
+                  We’re excited to invite you to #{@event.name}. If you can come, please RSVP using the link in this email.
                 %p
                   #{@event.description.html_safe}.
 
@@ -24,7 +24,8 @@
               %td
                 %h4
                   #{@event.name}
-                  %small #{humanize_date(@event.date_and_time, @event.ends_at, with_time: true)}
+                %p
+                  #{humanize_date(@event.date_and_time, @event.ends_at, with_time: true)}
                 = link_to 'View invitation and RSVP', full_url_for(event_invitation_url(event_id: @event.slug, token: @invitation.token)), class: 'btn'
 
         - if @event.venue.present?
