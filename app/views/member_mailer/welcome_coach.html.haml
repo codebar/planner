@@ -1,16 +1,16 @@
 %h1 Hi #{@member.name}!
 
 %p
-  Welcome to codebar and thank you so much for volunteering. Coaches are a big part of our workshops’ success. We're looking forward to seeing you at one of our events soon.
+  Welcome to codebar! Thank you so much for volunteering your time as a coach. Coaches like you are at the heart of our workshops, and your involvement plays a vital role in their success. We can’t wait to see you at an event soon!
 
 %p
   - if @member.subscriptions.any?
     You'll receive email invitations to our workshops as soon as they are open for RSVP.
   - else
-    We send out invitations to our events via email.
+    We send out invitations to all our workshops and events via email.
     = link_to "Sign up on our subscriptions page", subscriptions_url
     to receive invitations to our workshops.
-  Places are limited, so be sure to respond quickly if you would like to attend.
+  Spots are limited, so respond promptly if you'd like to attend.
 
 %p
   %strong
@@ -32,22 +32,19 @@
   =link_to "tips for coaching on the codebar website.", teaching_guide_url
 
 %p
-  It's important to us that our workshops are a welcoming and accepting environment
-  for everyone. Please make sure you
-  = link_to "read our code of conduct", code_of_conduct_url
+  At codebar, fostering an inclusive and supportive space is our top priority. Please make sure you
+  = link_to "read our Code of Conduct", code_of_conduct_url
   before attending.
 
 %p
-  If you have any questions, reply to this email or chat to one of the organisers at
-  the workshop. They'll be at a table with the name stickers. They're there to help
-  with anything on your mind.
+  If you have questions, reply to this email or speak to an organiser at the workshop. You’ll find them at the table with the name stickers – they’re there to support you with anything you need. table with the name stickers. They're there to help with anything on your mind.
 
 %p
-  If you didn't mean to sign up as a coach, not to worry! You can always
-  = link_to "change your subscriptions via our website here.", subscriptions_url
+  If you didn't mean to sign up as a coach, not to worry! You can update
+  = link_to "your subscription on our website here.", subscriptions_url
 
 %p
-  We hope to see you at a workshop soon, and thank you so much for volunteering!
+  Thank you once again for volunteering – your time and expertise make a huge difference. We look forward to seeing you at a workshop soon!
 
 %p
   #{"-- "}
