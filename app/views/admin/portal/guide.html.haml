@@ -34,3 +34,13 @@
       %p You can query all of the organisers from a Chapter as well.
 
       = dot_markdown("`Member.with_role(:organiser, Chapter.find(:13))`")
+
+      %h2 Deleting a member
+
+      %p To delete a member you need to have access to Heroku and the Heroku CLI.
+
+      %p From your terminal run the following command:
+
+      = dot_markdown("`rake member:delete'[email@address.com]'`")
+
+      %p Deleting will anonymise the member’s data, remove the authentication service so that the member cannot log in again and delete all subscriptions to chapters. It will also update all invitation tokens so any past emails sent with access links to workshops will stop working.
