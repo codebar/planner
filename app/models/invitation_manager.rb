@@ -33,6 +33,7 @@ class InvitationManager
       EventInvitationMailer.invite_student(event, student, invitation).deliver_now if invitation.save
     end
   end
+  handle_asynchronously :invite_students_to_event
 
   def invite_coaches_to_event(event, chapter)
     chapter_coaches(chapter).each do |coach|
@@ -40,6 +41,7 @@ class InvitationManager
       EventInvitationMailer.invite_coach(event, coach, invitation).deliver_now if invitation.save
     end
   end
+  handle_asynchronously :invite_coaches_to_event
 
   def chapter_students(chapter)
     Member.in_group(chapter.groups.students)
