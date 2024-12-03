@@ -51,17 +51,17 @@ de:
     explanation: "Unser Ziel ist unterrepräsentierten Menschen zu programmieren in einer sicheren und kollaborative Umgebung lernen und erweitern ihre Karrierechancen zu ermöglichen. Um dies zu erreichen betreiben wir kostenlose regelmäßige Workshops, regelmäßige Einzelveranstaltungen und versuchen, die Möglichkeiten für unsere Schüler die Technologie und Programmierung zugänglicher zu schaffen."
     participate:
       students_title: "Students"
-      students_explanation_p1: "Our students come from a variety of backgrounds. Some want to become full-time developers, whereas some would like to learn the basics of coding in a supportive environment."
-      students_explanation_p2: "Join our vibrant community and attend our workshops."
+      students_explanation_p1: "Our students come from diverse backgrounds—some aspiring to become full-time developers, while others simply want to learn the basics of coding in a supportive environment."
+      students_explanation_p2: "Join our vibrant community and take part in our workshops!"
       students_button: "Join us as a student"
       coaches_title: "Coaches"
-      coaches_explanation_p1: "We encourage new students to work on our HTML/CSS, JavaScript, Ruby, Python or Git <a href='http://tutorials.codebar.io'>tutorials</a>. We also help them understand programming concepts."
-      coaches_explanation_p2: "Therefore we are always on the lookout for more developers to join our community and help coach at our workshops."
+      coaches_explanation_p1: "We encourage new students to start with our <a href='%{link}'>tutorials</a> on HTML/CSS, JavaScript, Ruby, Python, or Git, while also helping them grasp key programming concepts."
+      coaches_explanation_p2: "That’s why we’re always looking for more developers to join our community and coach at our workshops."
       coaches_button: "Join us as a coach"
       workshop_title: "Workshops"
-      workshop_explanation_p1: "We are hosted by some amazing companies who support our cause. Our normal format is 30 minutes of socialising with food and drink, followed by a lightning talk then coding."
-      workshop_explanation_p2: Help our expansion and enable us to provide help and support to our chapters by hosting and sponsoring our workshops.
-      workshop_button: "Host a workshop"
+      workshop_explanation_p1: "We’re proud to be hosted by amazing companies that support our mission. Our typical format includes 30 minutes of socialising over food and drinks, a lightning talk, and then hands-on coding."
+      workshop_explanation_p2: "Help us grow and support our chapters by hosting or sponsoring our workshops, and together, we can expand opportunities for more aspiring developers."
+      workshop_button: "Let's work together"
       workshop_email_subject: "Regarding hosting a workshop"
     chapters:
       title: "Chapters"
@@ -83,6 +83,15 @@ de:
         subject: "A spot just became available"
       waiting_list_reminder:
         subject: "Reminder: you're on the codebar waiting list (%{date_time})"
+      virtual:
+        invite_coach:
+          subject: "Virtual Workshop Coach Invitation %{date_time}"
+        invite_student:
+          subject: "Virtual Workshop Invitation %{date_time}"
+        attending_reminder:
+          subject: "Virtual Workshop Reminder %{date_time}"
+        waiting_list_reminder:
+          subject: "Reminder: you're on the codebar waiting list (%{date_time})"
   messages:
     accepted_invitation: "Vielen Dank für die Rückmeldung, %{name}. Wir sehen uns beim Workshop!"
     already_invited: 'You have already RSVPd or joined the waitlist for this workshop.'
@@ -226,11 +235,9 @@ de:
     sign_up_as_coach: "Melde dich als Trainer an"
     code_of_conduct: "Verhaltenskodex"
     new:
-      intro: "Wir bieten eine einladendes, inklusives und lern-freundliches Umfeld und haben eine Nulltoleranzpolitik bei Belästigung und anderem unangemessenen Verhalten. Bevor du dich anmeldest, lies unseren"
+      intro_html: "We provide a welcoming, inclusive, and supportive learning environment, with a strict zero-tolerance policy for any form of harassment or inappropriate behavior. Please take a moment to review our <a href='%{link}'>code of conduct</a> before signing up."
       students:
-        intro: "Wenn du als Student teilnehmen möchtest, musst du unsere"
-        criteria_link: "Teilnahmebedingungen erfüllen"
-        criteria_brief: "weil unsere Workshops nur für Frauen, LGBTQ und Menschen aus unterrepräsentierten Gruppen geöffnet sind."
+        intro_html: "Wenn du als Student teilnehmen möchtest, musst du unsere <a href='%{link}'>Teilnahmebedingungen</a> erfüllen weil unsere Workshops nur für Frauen, LGBTQ und Menschen aus unterrepräsentierten Gruppen geöffnet sind."
         github: "Abschließend, wenn du auf den Anmeldebutton klickst, wirst du auf eine Seite namens GitHub weitergeleitet. Nachdem du dich mit deinem GitHub Zugang angemeldet hast, wirst du wieder auf die codebar Seite zurückgeleitet. Du musst dir einen Zugang erstellen, wenn du noch keinen hast. Das dauert nicht lang und ist etwas was sich als nützlich erweisen wird wenn du anfängst zu programmieren!"
       invitations: "Wir verschicken Einladungen regelmäßig, sei also bitte nicht besorgt, wenn du sie nicht direkt nach der Anmeldung erhältst."
   footer:
@@ -513,17 +520,16 @@ de:
           description: Affect change as a volunteer coach with codebar - your expertise and guidance will pave the way for aspiring developers, unlocking the world of coding and creating opportunities for folks from groups under represented in the tech industry.
         volunteer:
           title: Other skills
-          description: codebar welcomes volunteers with a diverse range of skills - whether it's event coordination, fundraising, marketing or any other skill. Your unique abilities can enrich our community and drive our mission forward.
+          description: Your unique abilities could be our missing piece in the codebar puzzle. Having a diverse range of skills in our team is necessary to enrich our community. From fundraising to event coordination to marketing, we always welcome new talent to drive our mission forward.  
           link: Email us to become a volunteer
       fundraise:
         title: Fundraise
-        description_html: "Join our team at running and sporting events across the UK and challenge yourself physically while also supporting codebar. Use the registration forms below to register for an event. If you are not seeing an event in your area, <a href='mailto:hello@codebar.io'>drop us an email</a> telling us where you are located and we'll let you know about upcoming events in your area."
+        description_html: "Join the codebar team with a physical challenge event. Whether you are a runner, swimmer, or cyclist, sign up with our registration form for your desired event and raise vital funds to help keep our events running. If your event does not appear below, feel free to <a href='mailto:%{email}'>drop us an email</a> and we would be happy to coordinate with you."
         image_alt: A Black British woman crosses the finish line at the Hackney Half Marathon in London in a shower of confetti while spectators cheer her on.
     codebar_stories_podcast:
       image_alt: codebar stories banner
       opening: codebar Stories is a new podcast brought to you by codebar, we'll be smashing down the belief that tech isn't for you by sharing real-life stories from members of our community who have transitioned into a new career in tech.
-      contact_us_html: "Sponsoring codebar Stories offers you a unique opportunity to connect with a diverse, engaged audience within the tech community. As a podcast dedicated to empowering underrepresented groups through coding education, your brand will align with our values of diversity, inclusivity, and social impact. Through sponsorship, you'll gain visibility, build positive PR, and demonstrate your commitment to fostering the next generation of tech talent, all while supporting a meaningful cause. Sound good? Please drop us an email <a href='mailto:podcast@codebar.io'>podcast@codebar.io</a>."
-    
+      contact_us_html: "Sponsoring codebar Stories offers you a unique opportunity to connect with a diverse, engaged audience within the tech community. As a podcast dedicated to empowering underrepresented groups through coding education, your brand will align with our values of diversity, inclusivity, and social impact. Through sponsorship, you'll gain visibility, build positive PR, and demonstrate your commitment to fostering the next generation of tech talent, all while supporting a meaningful cause. Sound good? Please drop us an email <a href='mailto:%{email}'>podcast@codebar.io</a>."
 
   admin:
     dashboard:
@@ -570,15 +576,15 @@ de:
         expiry_date: Application closing date
   donation_platforms:
     title: "Donate"
-    description: "Your support, whether a single gift or ongoing commitment, fuels our efforts to create an inclusive tech industry and provides consistent opportunities for learning and growth for members of groups underrepresented in the tech industry."
+    description: "Your support—whether through a one-time gift or ongoing commitment—drives our mission to create a more inclusive tech industry. It enables us to provide continuous learning opportunities and empower individuals from underrepresented groups to grow and thrive in tech."
     link: "Find out how else to support us"
     donation_form:
       title: "Use the donation page"
-      text: "Consider making a lasting impact through codebar with a one-time donation or a monthly recurring contribution."
+      text: "Make a lasting impact with codebar by giving a one-time donation or committing to a monthly contribution."
       image_alt: "codebar logo"
     github_sponsors:
       title: "Github Sponsors"
-      text: "Support codebar's mission directly through GitHub Sponsors. Join us in shaping the future of technology through your generous donation."
+      text: "Support codebar’s mission directly through GitHub Sponsors and help shape the future of technology with your generous donation."
       image_alt: "Github Sponsors logo"
     open_collective:
       title: "Open Collective"

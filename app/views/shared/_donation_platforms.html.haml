@@ -3,7 +3,7 @@
 .row.justify-content-center
   .col-12.col-md-7.text-center.mb-3
     %h2.h1= title
-    %p= t("donation_platforms.description")
+    %p.my-4= t("donation_platforms.description")
 
 .row.d-flex
   .d-flex.col-sm-12.col-md-6.col-lg-3
@@ -41,4 +41,4 @@
 
 - if local_assigns[:with_button]
   .d-flex.justify-content-center.mt-4
-    = link_to t("donation_platforms.link"), how_to_support_us_path, class: "btn btn-primary btn-lg"
+    = link_to t("donation_platforms.link"), how_to_support_us_path, class: "btn btn-primary btn-lg my-4"

@@ -33,10 +33,6 @@
         %li.nav-item
           = link_to "http://jobs.codebar.io/", class: 'nav-link border-0' do
             Job Board
-        %li.nav-item.d-flex.align-items-center
-          .nav-link.py-0
-            = link_to new_donation_path, class: 'btn btn-sm btn-outline-primary' do
-              Donate
         - if !logged_in?
           %li.nav-item
             = link_to '/auth/github', class: 'nav-link border-0' do
@@ -55,3 +51,7 @@
             = link_to '#', {'role': 'button', 'aria-expanded': 'false', 'data-bs-toggle': 'dropdown', class: 'nav-link border-0 dropdown-toggle', id: 'navbarDropdownMenuLinkMember'} do
               Menu
             = render 'layouts/member_menu'
+        %li.nav-item.d-flex.align-items-center
+          .nav-link.py-0
+            = link_to new_donation_path, class: 'btn btn-sm fs-6 fw-semibold btn-primary' do
+              Donate
