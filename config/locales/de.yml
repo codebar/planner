@@ -55,7 +55,7 @@ de:
       students_explanation_p2: "Join our vibrant community and take part in our workshops!"
       students_button: "Join us as a student"
       coaches_title: "Coaches"
-      coaches_explanation_p1: "We encourage new students to start with our <a href='http://tutorials.codebar.io'>tutorials</a> on HTML/CSS, JavaScript, Ruby, Python, or Git, while also helping them grasp key programming concepts."
+      coaches_explanation_p1: "We encourage new students to start with our <a href='%{link}'>tutorials</a> on HTML/CSS, JavaScript, Ruby, Python, or Git, while also helping them grasp key programming concepts."
       coaches_explanation_p2: "That’s why we’re always looking for more developers to join our community and coach at our workshops."
       coaches_button: "Join us as a coach"
       workshop_title: "Workshops"
@@ -83,6 +83,15 @@ de:
         subject: "A spot just became available"
       waiting_list_reminder:
         subject: "Reminder: you're on the codebar waiting list (%{date_time})"
+      virtual:
+        invite_coach:
+          subject: "Virtual Workshop Coach Invitation %{date_time}"
+        invite_student:
+          subject: "Virtual Workshop Invitation %{date_time}"
+        attending_reminder:
+          subject: "Virtual Workshop Reminder %{date_time}"
+        waiting_list_reminder:
+          subject: "Reminder: you're on the codebar waiting list (%{date_time})"
   messages:
     accepted_invitation: "Vielen Dank für die Rückmeldung, %{name}. Wir sehen uns beim Workshop!"
     already_invited: 'You have already RSVPd or joined the waitlist for this workshop.'
@@ -226,11 +235,9 @@ de:
     sign_up_as_coach: "Melde dich als Trainer an"
     code_of_conduct: "Verhaltenskodex"
     new:
-      intro: "Wir bieten eine einladendes, inklusives und lern-freundliches Umfeld und haben eine Nulltoleranzpolitik bei Belästigung und anderem unangemessenen Verhalten. Bevor du dich anmeldest, lies unseren"
+      intro_html: "We provide a welcoming, inclusive, and supportive learning environment, with a strict zero-tolerance policy for any form of harassment or inappropriate behavior. Please take a moment to review our <a href='%{link}'>code of conduct</a> before signing up."
       students:
-        intro: "Wenn du als Student teilnehmen möchtest, musst du unsere"
-        criteria_link: "Teilnahmebedingungen erfüllen"
-        criteria_brief: "weil unsere Workshops nur für Frauen, LGBTQ und Menschen aus unterrepräsentierten Gruppen geöffnet sind."
+        intro_html: "Wenn du als Student teilnehmen möchtest, musst du unsere <a href='%{link}'>Teilnahmebedingungen</a> erfüllen weil unsere Workshops nur für Frauen, LGBTQ und Menschen aus unterrepräsentierten Gruppen geöffnet sind."
         github: "Abschließend, wenn du auf den Anmeldebutton klickst, wirst du auf eine Seite namens GitHub weitergeleitet. Nachdem du dich mit deinem GitHub Zugang angemeldet hast, wirst du wieder auf die codebar Seite zurückgeleitet. Du musst dir einen Zugang erstellen, wenn du noch keinen hast. Das dauert nicht lang und ist etwas was sich als nützlich erweisen wird wenn du anfängst zu programmieren!"
       invitations: "Wir verschicken Einladungen regelmäßig, sei also bitte nicht besorgt, wenn du sie nicht direkt nach der Anmeldung erhältst."
   footer:
@@ -517,13 +524,12 @@ de:
           link: Email us to become a volunteer
       fundraise:
         title: Fundraise
-        description_html: "Join the codebar team with a physical challenge event. Whether you are a runner, swimmer, or cyclist, sign up with our registration form for your desired event and raise vital funds to help keep our events running. If your event does not appear below, feel free to <a href='mailto:hello@codebar.io'>drop us an email</a> and we would be happy to coordinate with you."
+        description_html: "Join the codebar team with a physical challenge event. Whether you are a runner, swimmer, or cyclist, sign up with our registration form for your desired event and raise vital funds to help keep our events running. If your event does not appear below, feel free to <a href='mailto:%{email}'>drop us an email</a> and we would be happy to coordinate with you."
         image_alt: A Black British woman crosses the finish line at the Hackney Half Marathon in London in a shower of confetti while spectators cheer her on.
     codebar_stories_podcast:
       image_alt: codebar stories banner
       opening: codebar Stories is a new podcast brought to you by codebar, we'll be smashing down the belief that tech isn't for you by sharing real-life stories from members of our community who have transitioned into a new career in tech.
-      contact_us_html: "Sponsoring codebar Stories offers you a unique opportunity to connect with a diverse, engaged audience within the tech community. As a podcast dedicated to empowering underrepresented groups through coding education, your brand will align with our values of diversity, inclusivity, and social impact. Through sponsorship, you'll gain visibility, build positive PR, and demonstrate your commitment to fostering the next generation of tech talent, all while supporting a meaningful cause. Sound good? Please drop us an email <a href='mailto:podcast@codebar.io'>podcast@codebar.io</a>."
-    
+      contact_us_html: "Sponsoring codebar Stories offers you a unique opportunity to connect with a diverse, engaged audience within the tech community. As a podcast dedicated to empowering underrepresented groups through coding education, your brand will align with our values of diversity, inclusivity, and social impact. Through sponsorship, you'll gain visibility, build positive PR, and demonstrate your commitment to fostering the next generation of tech talent, all while supporting a meaningful cause. Sound good? Please drop us an email <a href='mailto:%{email}'>podcast@codebar.io</a>."
 
   admin:
     dashboard:

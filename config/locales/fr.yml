@@ -54,7 +54,7 @@ fr:
       students_explanation_p2: "Join our vibrant community and take part in our workshops!"
       students_button: "Join us as a student"
       coaches_title: "Coaches"
-      coaches_explanation_p1: "We encourage new students to start with our <a href='http://tutorials.codebar.io'>tutorials</a> on HTML/CSS, JavaScript, Ruby, Python, or Git, while also helping them grasp key programming concepts."
+      coaches_explanation_p1: "We encourage new students to start with our <a href='%{link}'>tutorials</a> on HTML/CSS, JavaScript, Ruby, Python, or Git, while also helping them grasp key programming concepts."
       coaches_explanation_p2: "That’s why we’re always looking for more developers to join our community and coach at our workshops."
       coaches_button: "Join us as a coach"
       workshop_title: "Workshops"
@@ -225,11 +225,9 @@ fr:
     sign_up_as_coach: "S'inscrire en tant qu'enseignant"
     code_of_conduct: "code de conduite"
     new:
-      intro_html: "We provide a welcoming, inclusive, and supportive learning environment, with a strict zero-tolerance policy for any form of harassment or inappropriate behavior. Please take a moment to review our <a href='https://codebar.io/code-of-conduct'>code of conduct</a> before signing up."
+      intro_html: "We provide a welcoming, inclusive, and supportive learning environment, with a strict zero-tolerance policy for any form of harassment or inappropriate behavior. Please take a moment to review our <a href='%{link}'>code of conduct</a> before signing up."
       students:
-        intro: "Si vous souhaiter vous inscrire en tant qu'étudiant, assurez vous que vous"
-        criteria_link: "soyez éligible"
-        criteria_brief: "puisque nos ateliers ne sont ouvert qu'aux femmes, LGBTQ, et personnes issus de minorités."
+        intro_html: "Si vous souhaiter vous inscrire en tant qu'étudiant, assurez vous que vous <a href='${link}'>soyez éligible</a> puisque nos ateliers ne sont ouvert qu'aux femmes, LGBTQ, et personnes issus de minorités."
         github: "Enfin, quand vous cliquez sur le boutton pour s'inscrire, vous allez être rediriger vers GitHub. Après vous être connecter avec votre compte GitHub, vous serez redirigé vers le site de codebar. Si vous n'avez pas de compte, vous devrez en créer un. Cela ne prend que quelques minutes et cela vous sera utile quand vous commencerez à coder!"
       invitations: "Les invitations sont envoyer régulierement, ne vous inquiétez pas si vous n'en recevez pas une quand vous venez de vous inscrire."
   footer:
@@ -482,12 +480,12 @@ fr:
           link: Email us to become a volunteer
       fundraise:
         title: Fundraise
-        description_html: "Join the codebar team with a physical challenge event. Whether you are a runner, swimmer, or cyclist, sign up with our registration form for your desired event and raise vital funds to help keep our events running. If your event does not appear below, feel free to <a href='mailto:hello@codebar.io'>drop us an email</a> and we would be happy to coordinate with you."
+        description_html: "Join the codebar team with a physical challenge event. Whether you are a runner, swimmer, or cyclist, sign up with our registration form for your desired event and raise vital funds to help keep our events running. If your event does not appear below, feel free to <a href='mailto:%{email}'>drop us an email</a> and we would be happy to coordinate with you."
         image_alt: A Black British woman crosses the finish line at the Hackney Half Marathon in London in a shower of confetti while spectators cheer her on.
     codebar_stories_podcast:
       image_alt: codebar stories banner
       opening: codebar Stories is a new podcast brought to you by codebar, we'll be smashing down the belief that tech isn't for you by sharing real-life stories from members of our community who have transitioned into a new career in tech.
-      contact_us: "Sponsoring codebar Stories offers you a unique opportunity to connect with a diverse, engaged audience within the tech community. As a podcast dedicated to empowering underrepresented groups through coding education, your brand will align with our values of diversity, inclusivity, and social impact. Through sponsorship, you'll gain visibility, build positive PR, and demonstrate your commitment to fostering the next generation of tech talent, all while supporting a meaningful cause. Sound good? Please drop us an email <a href='mailto:podcast@codebar.io'>podcast@codebar.io</a>."
+      contact_us_html: "Sponsoring codebar Stories offers you a unique opportunity to connect with a diverse, engaged audience within the tech community. As a podcast dedicated to empowering underrepresented groups through coding education, your brand will align with our values of diversity, inclusivity, and social impact. Through sponsorship, you'll gain visibility, build positive PR, and demonstrate your commitment to fostering the next generation of tech talent, all while supporting a meaningful cause. Sound good? Please drop us an email <a href='mailto:%{email}'>podcast@codebar.io</a>."
       
   admin:
     dashboard:
