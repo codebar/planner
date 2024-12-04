@@ -25,12 +25,12 @@ body {
 /* ------------------------------------- 
 		ELEMENTS 
 ------------------------------------- */
-a { color: #2BA6CB;}
+a { color: #006cc2;}
 
 .btn {
 	text-decoration:none;
 	color: #FFF;
-	background-color: #666;
+	background-color: #006cc2;
 	padding:10px 16px;
 	font-weight:bold;
 	margin-right:10px;
@@ -56,7 +56,7 @@ table.social {
 }
 .social .soc-btn {
 	padding: 3px 7px;
-	font-size:12px;
+	font-size:13px;
 	margin-bottom:10px;
 	text-decoration:none;
 	color: #FFF;font-weight:bold;
@@ -64,9 +64,11 @@ table.social {
 	text-align:center;
 }
 a.fb { background-color: #3B5998!important; }
-a.tw { background-color: #1daced!important; }
-a.gp { background-color: #DB4A39!important; }
+a.bs { background-color: #1daced!important; }
 a.ms { background-color: #000!important; }
+a.sl { background-color: #2EB67D!important; }
+a.yt { background-color: #FF0000!important; }
+a.li { background-color: #0077B5!important; }
 
 .sidebar .soc-btn { 
 	display:block;
@@ -121,10 +123,10 @@ h6 { font-weight:900; font-size: 14px; text-transform: uppercase; color:#444;}
 p, ul { 
 	margin-bottom: 10px; 
 	font-weight: normal; 
-	font-size:14px; 
+	font-size:15px; 
 	line-height:1.6;
 }
-p.lead { font-size:17px; }
+p.lead { font-size:18px; }
 p.last { margin-bottom:0px;}
 
 ul li {
