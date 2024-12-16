@@ -13,12 +13,16 @@
               %td
                 %h3 Hi #{@member.name},
                 %p.lead
-                  We’d love to have you at our next #{@workshop.chapter.name} workshop. RSVP now to secure a spot, some light bites and time with a dedicated coach.
-                %p
-                  As part of our workshop, you'll get to work through any of our #{link_to 'tutorials', 'http://codebar.github.io/tutorials' } or receive guidance on your personal project. We believe that everyone should be entitled to free learning and our community has #{ link_to 'a lot of devoted developers', full_url_for(coaches_url)} who help out as coaches.
-                %p You will also get the opportunity to meet other people interested in coding and collaborate with them.
-                %p We’re looking forward to having you with us. See you there!
-                %p Please note: We do not accept any RSVPs over email.
+                  We’d love to see you at the next #{@workshop.chapter.name} workshop! Don’t miss this chance to secure your spot, enjoy some light refreshments, and work one-on-one with a dedicated coach.
+                %p At the workshop, you’ll have the opportunity to:
+                %ul
+                  %li Work through our #{link_to 'tutorials', 'http://codebar.github.io/tutorials' } or get guidance on your personal projects.
+                  %li Connect and collaborate with others who share your passion for coding.
+                  %li Be part of a supportive community that believes learning should be accessible to everyone.
+                %p Our workshops are powered by a network of dedicated developers who volunteer their time to coach and guide participants like you.
+                %p We can’t wait to welcome you and support you on your coding journey. RSVP now, and we’ll see you there!
+                
+                %p <strong>Please note:</strong> We do not accept any RSVPs over email.
 
                 %p.callout If you are working through the tutorials outside our workshop, or need any other help or advice #{ link_to 'join the codebar Slack', 'https://slack.codebar.io'}.
 
@@ -36,6 +40,8 @@
                   Venue
                   %br
                   %small= @workshop.host.name
+                  %br
+                  %small= @workshop.address
                 = image_tag(@workshop.host.avatar.url, alt: @workshop.host.name)
 
         .content

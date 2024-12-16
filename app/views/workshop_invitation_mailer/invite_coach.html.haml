@@ -13,19 +13,19 @@
             %tr
               %td
                 %h3 Hi #{@member.name},
-                %p.lead
-                  Our next #{@workshop.chapter.name} workshop is coming soon, and we’d like to invite you to be a part of it.
+                %p.lead We’re excited to invite you to our next #{@workshop.chapter.name} workshop and would love for you to join us as a coach.
 
-                %p
-                  We’re looking for coaches to join us for our next workshop happening on #{humanize_date(@workshop.date_and_time, with_time: true)}.
+                %p As a coach, you’ll guide students as they work through one of our #{link_to 'tutorials', 'http://codebar.github.io/tutorials' } or seek help on a personal project. Rest assured, we’ll match you with a student based on your expertise and experience, ensuring a fulfilling and impactful coaching session for everyone involved.
 
-                %p As a coach you will be helping students as they work their way through one of our tutorials or a personal project that they need help with. Not to worry, you’ll only be matched with students who you’ll be able to help based on your experience and expertise.
+                %p You can find all of our tutorials at #{link_to 'http://tutorials.codebar.io/', 'http://tutorials.codebar.io/'}. If you spot areas for improvement, we’d appreciate your contributions via a pull request to our #{link_to 'GitHub repository', 'https://github.com/codebar/tutorials'}
 
-                %p You can find all of our tutorials at #{link_to 'http://tutorials.codebar.io/', 'http://tutorials.codebar.io/'}. If you have any suggestions to improve our existing content, you can issue a pull request to our #{link_to 'GitHub repository', 'https://github.com/codebar/tutorials'}
+                %h5 Before the Workshop
 
-                %p Before attending, make sure that you have read and understood our #{link_to 'Code of Conduct', 'http://codebar.io/code-of-conduct'}. We have a zero tolerance policy towards negative conduct and expect everyone to behave appropriately. You should also go through our guide on #{link_to 'How to be an effective teacher', 'http://codebar.io/effective-teacher-guide'}.
-
-                %p Please note: We do not accept any RSVPs over email.
+                %ul
+                  %li Please read and understand our #{link_to 'Code of Conduct', 'http://codebar.io/code-of-conduct'}. We are committed to creating a safe and inclusive environment, with zero tolerance for negative behavior.
+                  %li Review our guide on #{link_to 'How to be an effective teacher', 'http://codebar.io/effective-teacher-guide'} to make the most of your coaching experience.
+                 
+                %p <strong>Please note:</strong> We do not accept any RSVPs over email.
 
                 %p.callout #{link_to 'Join us on Slack', 'https://slack.codebar.io'} to offer help and guidance outside the workshops.
 

@@ -14,7 +14,7 @@ RSpec.describe MemberMailer, type: :mailer do
     end
 
     it 'renders the body' do
-      expect(mail.body.encoded).to match('Places are limited')
+      expect(mail.body.encoded).to match('Spots are limited')
     end
   end
 
