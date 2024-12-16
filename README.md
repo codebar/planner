@@ -71,6 +71,8 @@ Before you start, you will need to have Docker installed and running. You can [d
 
 The current Dockerfile and docker-compose were closely copied from [the Docker guide](https://docs.docker.com/compose/rails/).
 
+If you're using a Mac with an M1 chip, you'll need to run `export DOCKER_DEFAULT_PLATFORM=linux/amd64` and turn off Rosetta emulation in Docker Desktop, if you're using it
+
 1. Run `bin/dbuild` to build and setup the docker environment.
 2. Run `bin/drake` to run all the tests and make sure everything works.
 
