@@ -11,6 +11,7 @@
         = f.input :surname, required: true
         = f.input :pronouns
         = f.input :email, required: true
+        = f.input :dietary_restrictions, label: t('member.details.edit.dietary_restrictions')
         - if @member.coach?
           = f.input :about_you, as: :text, label: t('member.details.edit.coach.about_you'), input_html: { rows: 3 }, required: true
         - else
