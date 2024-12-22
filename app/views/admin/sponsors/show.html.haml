@@ -16,7 +16,7 @@
       .bg-light.p-3.mb-4
         %dl.row
           %dt= t('.website')
-          %dd= link_to @sponsor.website
+          %dd= link_to @sponsor.website, @sponsor.website, target: '_blank'
 
           %dt= t('.address')
           - if @sponsor.address.present?

@@ -97,7 +97,7 @@ RSpec.feature 'Admin::Sponsors', type: :feature do
     scenario 'displays all sponsor details' do
       expect(page).to have_content(sponsor.name)
       expect(page).to have_content(sponsor.description)
-      expect(page).to have_link(sponsor.website)
+      expect(page).to have_link(sponsor.website, href: sponsor.website)
       expect(page).to have_content(sponsor.level)
       expect(page).to have_content(ContactPresenter.new(sponsor.contacts.first).full_name)
 
