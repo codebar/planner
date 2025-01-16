@@ -1,45 +1,42 @@
 %h1 Hi #{@member.name}!
 
-%p Welcome to codebar. We're looking forward to seeing you at one of our events soon.
+%p Welcome to codebar! We’re excited to have you with us and look forward to seeing you at one of our upcoming events.
 
 %p
   - if @member.subscriptions.any?
     You'll receive email invitations to our events as soon as they are open for RSVP.
   - else
-    We send out invitations to our events via email.
+    We send out all invitations to our workshops and events via email.
     = link_to "Sign up on our subscriptions page", subscriptions_url
     to receive invitations to our workshops.
-  Places are limited, so be sure to respond quickly if you want to attend.
+  Spots are limited, so we encourage you to respond quickly if you’d like to attend.
 
 %p
-  If you accept an invitation and can no longer make it, please cancel your spot as soon as possible so we can allocate it to someone else. If you take a place on the waiting list, please keep that evening free and check your emails frequently. You will be notified at least three hours before the event if you receive a place.
+  If you’ve accepted an invitation but can no longer attend, please cancel your spot as soon as possible so we can offer it to someone else. If you’re on the waiting list, please keep the evening free and check your emails regularly. You’ll be notified at least three hours before the event if a spot becomes available.
 
 %p
-  Our workshops are available to women, non-binary, LGBTQ+, and people belonging to underrepresented ethnic groups in the tech industry. If you belong to one of these groups, you are more than welcome to attend. You can find out more about codebar's workshops
+  Our workshops are available to women, non-binary, LGBTQ+, and people belonging to underrepresented ethnic groups in the tech industry. If you identify with one of these groups, we’d love for you to join us. You can find out more about codebar's workshops
   = link_to "in our FAQ.", faq_url
 
 %p
-  Our workshops start with 30 minutes of socialising with food, before we assign
+  Our in-person workshops start with 30 minutes of socialising with food, before we assign
   you to a coach with one or two other students. You can either work through
   = link_to "one of our tutorials", "http://tutorials.codebar.io/"
   or get help with your own project.
 
 %p
-  It's important to us that our workshops are a welcoming and accepting environment
-  for everyone. Please make sure you
-  = link_to "read our code of conduct", attendance_policy_url
+  We believe in creating a welcoming and supportive environment for everyone. Please make sure you
+  = link_to "read our Code of Conduct", attendance_policy_url
   before attending.
 
 %p
-  If you didn't mean to sign up as a student, not to worry! You can always
-  = link_to "change your subscription on our website.", subscriptions_url
+  If you didn’t mean to sign up as a student or need to adjust your preferences, don’t worry! You can easily
+  = link_to "update your subscription on our website here.", subscriptions_url
 
 %p
-  If you have any questions, reply to this email or chat to one of the organisers at
-  the workshop. They'll be at a table with the name stickers. They're there to help
-  with anything on your mind.
+  If you have any questions before or during the workshop, feel free to reply to this email or speak to one of our organisers at the event. Look for the table with the name stickers – we’re here to help!
 
-%p We hope to see you at a workshop soon!
+%p We look forward to seeing you at one of our workshops soon!
 
 %p
   #{"-- "}

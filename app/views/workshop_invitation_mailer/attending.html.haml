@@ -26,7 +26,7 @@
                   %p
                     Please remember that removing the calendar entry will not cancel your invitation RSVP.
                   %p
-                    See you at our workshop!
+                    See you at the workshop!
 
 
         .content
@@ -35,7 +35,7 @@
               %td
                 %h4
                   Workshop
-                  %small #{humanize_date(@workshop.date_and_time, @workshop.ends_at, with_time: true)}
+                %p #{humanize_date(@workshop.date_and_time, @workshop.ends_at, with_time: true)}
                 = link_to 'Update your attendance', full_url_for(invitation_url(@invitation)), class: 'btn'
 
         .content
