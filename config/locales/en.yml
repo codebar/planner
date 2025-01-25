@@ -99,9 +99,6 @@ en:
       workshop_email_subject: "Regarding hosting a workshop"
     chapters:
       title: "Chapters"
-    newsletter:
-      title: Subscribe to our newsletter
-      description: Stay connected with the codebar community! Get regular updates on upcoming events, job opportunities, scholarships, and other learning resources.
     events:
       upcoming: "Upcoming Events"
     donation_platforms:
@@ -567,7 +564,7 @@ en:
                 l2: Compliance with legal obligations
         how_we_share:
           title: 1.2 How we share your information
-          p1_html: 'When you subscribe to an event, we share your name with our host companies as we are required to provide a list with all attendee names when you subscribe to any of our events. We **do not share** your email address or any other personal information.'
+          p1_html: 'When you subscribe to an event, we share your name with our host companies as we are required to provide a list with all attendee names when you subscribe to any of our events. We **do not share** your email address or any other personal information.'
         legal_basis:
           title: 1.3 Legal basis for our use of your personal information
           p1: As set out in the table above, sometimes the legal basis on which we collect and process your data is because our legitimate interests make the processing necessary, and those legitimate interests are not overridden by your interests or fundamental rights and freedoms. For example, we collect and store your data in order to process event information, and to ensure the efficient running and promotion of workshops.
@@ -599,10 +596,10 @@ en:
         p1: We reserve the right to modify or update this Privacy Policy at any time in accordance with this provision. If we make changes to this Privacy Policy, we will post the revised Privacy Policy on the codebar website. Please regularly review https://codebar.io/privacy-policy to check for any updates or changes to our Privacy Policy. The date this Privacy Policy was last revised is identified at the top of this page.
       cookies:
         title: 7. Cookies
-        p1_html: 'We use cookies to recognise you and your location. You can control cookies through your browser settings and other tools. For more information read our [cookie policy](https://codebar.io/cookie-policy).'
+        p1_html: 'We use cookies to recognise you and your location. You can control cookies through your browser settings and other tools. For more information read our [cookie policy](https://codebar.io/cookie-policy).'
       contact:
         title: 8. Contact
-        p1: "If you have any questions or complaints about this Privacy Policy or our information handling practices, you may email us at company@codebar.io stating 'Data inquiry' in the subject title, or by postal mail at: codebar Ltd, International House, 101 King's Cross Road, London, WC1X 9LP."
+        p1: "If you have any questions or complaints about this Privacy Policy or our information handling practices, you may email us at company@codebar.io stating 'Data inquiry' in the subject title, or by postal mail at: codebar Ltd, International House, 101 King's Cross Road, London, WC1X 9LP."
     breach:
       title: What happens if you violate codebar’s Code of Conduct?
       opening_para: All codebar events are dedicated to providing a harassment-free experience for everyone, regardless of gender, sexual orientation, disability, physical appearance, body size, race, or religion. We do not tolerate harassment towards any community member or organiser in any form. Harassment includes any type of aggressive behaviour or offensive verbal comments related to gender, sexual orientation, disability, physical appearance, body size, race, religion, sexual images in public spaces, deliberate intimidation, stalking, following, harassing photography or recording, sustained disruption of talks or other events, inappropriate physical contact, and unwelcome sexual attention.
