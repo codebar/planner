@@ -4,6 +4,7 @@ class Member::DetailsController < ApplicationController
 
   before_action :set_member
   before_action :suppress_notices
+  before_action :is_logged_in?, only: %i[edit]
 
   def edit
     accept_terms
