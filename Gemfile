@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 ruby '3.2.2'
 
-gem 'rails', '7.0.8.1'
+gem 'rails', '8.0.1'
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem 'sprockets-rails'
 # Reduces boot times through caching; required in config/boot.rb
