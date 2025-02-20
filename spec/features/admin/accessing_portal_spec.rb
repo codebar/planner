@@ -35,7 +35,7 @@ RSpec.feature 'admin portal', type: :feature do
       click_on 'Sponsor contacts'
 
       expect(page).to have_content('Contacts')
-      expect(page).to have_content('Sponsor Contact name Contact email Mailchimp')
+      expect(page).to have_content('Sponsor Contact name Contact email Mailing list')
     end
   end
 end

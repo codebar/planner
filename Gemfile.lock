@@ -173,9 +173,6 @@ GEM
     foreman (0.88.1)
     friendly_id (5.5.1)
       activerecord (>= 4.0.0)
-    gibbon (3.5.0)
-      faraday (>= 1.0)
-      multi_json (>= 1.11.0)
     globalid (1.2.1)
       activesupport (>= 6.1)
     haml (6.3.0)
@@ -237,7 +234,6 @@ GEM
     mini_portile2 (2.8.8)
     minitest (5.25.4)
     msgpack (1.7.5)
-    multi_json (1.15.0)
     multi_xml (0.6.0)
     net-http (0.4.1)
       uri
@@ -301,6 +297,8 @@ GEM
     pry-byebug (3.10.1)
       byebug (~> 11.0)
       pry (>= 0.13, < 0.15)
+    pry-rails (0.3.11)
+      pry (>= 0.13.0)
     pry-remote (0.1.8)
       pry (~> 0.9)
       slop (~> 3.0)
@@ -515,10 +513,10 @@ DEPENDENCIES
   dotenv-rails
   fabrication
   faker
+  faraday
   font_awesome5_rails
   foreman
   friendly_id
-  gibbon (~> 3.5.0)
   haml
   high_voltage
   icalendar
@@ -539,6 +537,7 @@ DEPENDENCIES
   pickadate-rails
   premailer-rails
   pry-byebug
+  pry-rails
   pry-remote
   public_activity
   puma (~> 6.4)

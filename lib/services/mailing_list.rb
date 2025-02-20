@@ -1,7 +1,4 @@
 class MailingList
-  SUBSCRIBED = 'subscribed'.freeze
-  MEMBER_EXISTS = 'Member Exists'.freeze
-
   attr_reader :list_id
 
   def initialize(list_id)
@@ -9,59 +6,34 @@ class MailingList
   end
 
   def subscribe(email, first_name, last_name)
-    return if disabled?
+    return if client.disabled?
 
-    begin
-      client.lists(list_id).members
-            .create(body: { email_address: email,
-                            status: 'subscribed',
-                            merge_fields: { FNAME: first_name, LNAME: last_name } })
-    rescue Gibbon::MailChimpError => e
-      reactivate_subscription(email, first_name, last_name) if e.title.eql?(MEMBER_EXISTS)
-    end
+    client.subscribe(email:, first_name:, last_name:, segment_ids: [@list_id])
+  rescue Flodesk::FlodeskError
+    false
   end
   handle_asynchronously :subscribe
 
   def unsubscribe(email)
-    return if disabled?
+    return if client.disabled?
 
-    client.lists(list_id).members(md5_hashed_email_address(email))
-          .update(body: { status: 'unsubscribed' })
-  rescue Gibbon::MailChimpError
+    client.unsubscribe(email:, segment_ids: [@list_id])
+  rescue Flodesk::FlodeskError
     false
   end
   handle_asynchronously :unsubscribe
 
-  def reactivate_subscription(email, first_name, last_name)
-    return if disabled?
-
-    client.lists(list_id).members(md5_hashed_email_address(email))
-          .upsert(body: { email_address: email,
-                          status: 'subscribed',
-                          merge_fields: { FNAME: first_name, LNAME: last_name } })
-  end
-
   def subscribed?(email)
-    return if disabled?
+    return if client.disabled?
 
-    info = client.lists(list_id).members(md5_hashed_email_address(email)).retrieve
-    info.body[:status].eql?(SUBSCRIBED)
-  rescue Gibbon::MailChimpError
+    client.subscribed?(email:, segment_ids: [@list_id])
+  rescue Flodesk::FlodeskError
     false
   end
 
   private
 
   def client
-    @client ||= Gibbon::Request.new
-  end
-
-  def md5_hashed_email_address(email)
-    require 'digest'
-    Digest::MD5.hexdigest(email.downcase)
-  end
-
-  def disabled?
-    !ENV['MAILCHIMP_KEY']
+    @client ||= Flodesk::Client.new
   end
 end
