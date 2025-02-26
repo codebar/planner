@@ -48,7 +48,7 @@ gem 'tzinfo-data'
 gem 'chosen-rails'
 gem 'commonmarker'
 
-gem 'gibbon', '~> 3.5.0'
+gem 'faraday'
 
 gem 'stripe'
 
@@ -84,6 +84,7 @@ group :development, :test do
   gem 'fabrication'
   gem 'faker'
   gem 'launchy'
+  gem 'pry-rails'
   gem 'pry-byebug'
   gem 'pry-remote'
   gem 'rspec-collection_matchers'
