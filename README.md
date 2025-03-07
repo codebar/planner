@@ -16,9 +16,9 @@ The following steps walk through getting the application running. Before you sta
 
 1. [Clone the project](#1-clone-the-project)
 2. [Enable GitHub Authentication](#2-enable-github-authentication)
-3. [Install and set up the environment](#3-install-and-set-up-the-environment)
-4. [Run the tests](#4-run-the-tests)
-5. [Start the app](#5-start-the-app)
+3. [Install and set up the environment using docker](#3-install-and-set-up-the-environment-using-docker)
+4. [Start the app](#4-start-the-app)
+5. [Run the tests](#5-run-the-tests)
 
 ### 1. Clone the project
 
