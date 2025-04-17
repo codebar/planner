@@ -16,4 +16,15 @@ class Admin::MemberNotesController < Admin::ApplicationController
   def member_note_params
     params.expect(member_note: %i[note member_id])
   end
+
+  def destroy
+    @note = MemberNote.find(params[:id])
+    authorize @note
+    if @note.destroy
+      flash[:notice] = "Note successfully deleted."
+    else
+      flash[:error] = "Failed to delete note."
+    end
+    redirect_back fallback_location: root_path
+  end
 end
