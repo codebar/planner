@@ -7,7 +7,7 @@ class MemberNotePolicy < ApplicationPolicy
     user && (user.has_role?(:admin) || user == record.author)
   end
 
-  def edit?
+  def update?
     user && (user.has_role?(:admin) || user == record.author)
   end
 end
