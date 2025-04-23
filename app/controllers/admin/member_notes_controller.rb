@@ -17,13 +17,11 @@ class Admin::MemberNotesController < Admin::ApplicationController
     params.expect(member_note: %i[note member_id])
   end
 
-  def edit
-    @note = MemberNote.find(params[:id])
-    authorize @note
-  end
+  def edit; end
   
   def update
     @note = MemberNote.find(params[:id])
+    authorize @note
   
     if @note.update(member_note_params)
       flash[:notice] = "Note updated successfully."
