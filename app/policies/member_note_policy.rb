@@ -6,4 +6,8 @@ class MemberNotePolicy < ApplicationPolicy
   def destroy?
     user && (user.has_role?(:admin) || user == record.author)
   end
+
+  def edit?
+    user && (user.has_role?(:admin) || user == record.author)
+  end
 end
