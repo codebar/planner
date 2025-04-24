@@ -1,5 +1,5 @@
 class Admin::MemberNotesController < Admin::ApplicationController
-  before_action :authorize_note, only: [:update, :destroy]
+  before_action :authorize_note, only: %i[update destroy]
 
   def create
     @note = MemberNote.new(member_note_params)
