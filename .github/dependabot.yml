@@ -5,6 +5,13 @@ updates:
   schedule:
     interval: weekly
   open-pull-requests-limit: 10
+  groups:
+    ruby-deps:
+      update-types:
+      - "minor"
+      - "patch"
+      patterns:
+      - "*"
   ignore:
   - dependency-name: pg
     versions:
