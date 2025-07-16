@@ -1,7 +1,0 @@
-version: "2"
-plugins:
-  rubocop:
-    enabled: true
-    channel: rubocop-1-50-2
-  brakeman:
-    enabled: true
