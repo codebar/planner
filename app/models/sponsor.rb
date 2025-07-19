@@ -31,7 +31,7 @@ class Sponsor < ApplicationRecord
   accepts_nested_attributes_for :address
 
   validates :level, inclusion: { in: Sponsor.levels.keys }
-  validates :name, :address, :avatar, :website, :level, presence: true
+  validates :name, :address, :website, :level, presence: true
   validate :website_is_url, if: :website?
 
   default_scope -> { order('updated_at desc') }
