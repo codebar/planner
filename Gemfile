@@ -8,6 +8,7 @@ gem 'sprockets-rails'
 gem 'bootsnap', require: false
 
 gem 'acts-as-taggable-on'
+gem "bigdecimal"
 gem 'carrierwave'
 gem 'carrierwave-ftp', github: 'luan/carrierwave-ftp', ref: '5481c13', require: 'carrierwave/storage/sftp'
 gem 'cocoon'
