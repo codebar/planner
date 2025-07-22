@@ -8,6 +8,7 @@ gem 'sprockets-rails'
 gem 'bootsnap', require: false
 
 gem 'acts-as-taggable-on'
+gem "bigdecimal"
 gem 'carrierwave'
 gem 'cocoon'
 gem 'delayed_job'

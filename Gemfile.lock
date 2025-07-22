@@ -96,6 +96,7 @@ GEM
       erubi (>= 1.0.0)
       rack (>= 0.9.0)
       rouge (>= 1.0.0)
+    bigdecimal (3.2.2)
     bindex (0.8.1)
     binding_of_caller (1.0.1)
       debug_inspector (>= 1.2.0)
@@ -505,6 +506,7 @@ PLATFORMS
 DEPENDENCIES
   acts-as-taggable-on
   better_errors
+  bigdecimal
   binding_of_caller
   bootsnap
   bootstrap (~> 5)
@@ -583,4 +585,4 @@ RUBY VERSION
    ruby 3.4.4
 
 BUNDLED WITH
-   2.4.17
+   2.6.7
