@@ -8,23 +8,25 @@ gem 'sprockets-rails'
 gem 'bootsnap', require: false
 
 gem 'acts-as-taggable-on'
-gem "benchmark" # LOCKED: Added because of activesupport 7.0
-gem "bigdecimal" # LOCKED: Added because of activesupport 7.0
+gem 'benchmark' # LOCKED: Added because of activesupport 7.0
+gem 'bigdecimal' # LOCKED: Added because of activesupport 7.0
 gem 'carrierwave'
 gem 'cocoon'
 gem 'delayed_job'
 gem 'delayed_job_active_record'
+gem 'drb' # LOCKED: Added because of pry-remote
 gem 'font_awesome5_rails'
 gem 'bootstrap', '~> 5'
 gem 'friendly_id'
 gem 'haml'
 gem 'high_voltage'
+gem 'irb' # LOCKED: Added because of byebug
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 
 # Use Active Storage variant
 gem 'image_processing', '~> 1.2'
-gem "mutex_m" # LOCKED: Added because of activesupport 7.0
+gem 'mutex_m' # LOCKED: Added because of activesupport 7.0
 gem 'nokogiri'
 gem 'omniauth'
 gem 'omniauth-github'
@@ -35,7 +37,7 @@ gem 'premailer-rails'
 
 gem 'pundit'
 gem 'rails4-autocomplete'
-gem "reline" # LOCKED: Added because of readline is not part of Ruby 3.5.0
+gem 'reline' # LOCKED: Added because of readline is not part of Ruby 3.5.0
 gem 'rolify'
 # Use Sass to process CSS
 gem 'sassc-rails'
