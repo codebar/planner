@@ -23,6 +23,7 @@ gem 'jquery-ui-rails'
 
 # Use Active Storage variant
 gem 'image_processing', '~> 1.2'
+gem "mutex_m"
 gem 'nokogiri'
 gem 'omniauth'
 gem 'omniauth-github'

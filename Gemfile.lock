@@ -247,6 +247,7 @@ GEM
     minitest (5.25.5)
     msgpack (1.7.5)
     multi_xml (0.6.0)
+    mutex_m (0.3.0)
     net-http (0.4.1)
       uri
     net-imap (0.4.20)
@@ -538,6 +539,7 @@ DEPENDENCIES
   launchy
   letter_opener
   listen (~> 3.9)
+  mutex_m
   nokogiri
   omniauth
   omniauth-github
