@@ -36,6 +36,7 @@ gem 'premailer-rails'
 
 gem 'pundit'
 gem 'rails4-autocomplete'
+gem "reline" # LOCKED: Added because of readline is not part of Ruby 3.5.0
 gem 'rolify'
 # Use Sass to process CSS
 gem 'sassc-rails'
