@@ -150,6 +150,7 @@ GEM
     crass (1.0.6)
     css_parser (1.14.0)
       addressable
+    csv (3.3.5)
     database_cleaner (2.0.2)
       database_cleaner-active_record (>= 2, < 3)
     database_cleaner-active_record (2.1.0)
@@ -540,6 +541,7 @@ DEPENDENCIES
   chosen-rails
   cocoon
   commonmarker
+  csv
   database_cleaner
   delayed_job
   delayed_job_active_record

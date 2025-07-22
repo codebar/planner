@@ -12,6 +12,7 @@ gem 'benchmark' # LOCKED: Added because of activesupport 7.0
 gem 'bigdecimal' # LOCKED: Added because of activesupport 7.0
 gem 'carrierwave'
 gem 'cocoon'
+gem "csv" # LOCKED: csv was loaded from the standard library, but is not part of the default gems starting from Ruby 3.4.0. Due to config/application.rb
 gem 'delayed_job'
 gem 'delayed_job_active_record'
 gem 'drb' # LOCKED: Added because of pry-remote
