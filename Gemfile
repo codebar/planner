@@ -8,7 +8,8 @@ gem 'sprockets-rails'
 gem 'bootsnap', require: false
 
 gem 'acts-as-taggable-on'
-gem "bigdecimal"
+gem "benchmark" # LOCKED: Added because of activesupport 7.0
+gem "bigdecimal" # LOCKED: Added because of activesupport 7.0
 gem 'carrierwave'
 gem 'carrierwave-ftp', github: 'luan/carrierwave-ftp', ref: '5481c13', require: 'carrierwave/storage/sftp'
 gem 'cocoon'
@@ -24,7 +25,7 @@ gem 'jquery-ui-rails'
 
 # Use Active Storage variant
 gem 'image_processing', '~> 1.2'
-gem "mutex_m"
+gem "mutex_m" # LOCKED: Added because of activesupport 7.0
 gem 'nokogiri'
 gem 'omniauth'
 gem 'omniauth-github'
