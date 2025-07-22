@@ -207,6 +207,7 @@ GEM
       actionpack (>= 6.0.0)
       activesupport (>= 6.0.0)
       railties (>= 6.0.0)
+    io-console (0.8.1)
     jbuilder (2.12.0)
       actionview (>= 5.0.0)
       activesupport (>= 5.0.0)
@@ -373,6 +374,8 @@ GEM
     rb-inotify (0.10.1)
       ffi (~> 1.0)
     regexp_parser (2.10.0)
+    reline (0.6.2)
+      io-console (~> 0.5)
     rexml (3.4.1)
     rolify (6.0.1)
     rollbar (3.6.0)
@@ -507,7 +510,7 @@ PLATFORMS
 
 DEPENDENCIES
   acts-as-taggable-on
-  benchmark (~> 0.4.1)
+  benchmark
   better_errors
   bigdecimal
   binding_of_caller
@@ -561,6 +564,7 @@ DEPENDENCIES
   rails-html-sanitizer (~> 1.6.1)
   rails4-autocomplete
   rails_12factor
+  reline
   rolify
   rollbar
   rspec-collection_matchers
