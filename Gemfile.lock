@@ -83,6 +83,24 @@ GEM
     ast (2.4.2)
     autoprefixer-rails (10.4.16.0)
       execjs (~> 2)
+    aws-eventstream (1.4.0)
+    aws-partitions (1.1137.0)
+    aws-sdk-core (3.227.0)
+      aws-eventstream (~> 1, >= 1.3.0)
+      aws-partitions (~> 1, >= 1.992.0)
+      aws-sigv4 (~> 1.9)
+      base64
+      jmespath (~> 1, >= 1.6.1)
+      logger
+    aws-sdk-kms (1.108.0)
+      aws-sdk-core (~> 3, >= 3.227.0)
+      aws-sigv4 (~> 1.5)
+    aws-sdk-s3 (1.194.0)
+      aws-sdk-core (~> 3, >= 3.227.0)
+      aws-sdk-kms (~> 1)
+      aws-sigv4 (~> 1.5)
+    aws-sigv4 (1.12.1)
+      aws-eventstream (~> 1, >= 1.0.2)
     base64 (0.2.0)
     better_errors (2.10.1)
       erubi (>= 1.0.0)
@@ -117,6 +135,9 @@ GEM
       image_processing (~> 1.1)
       marcel (~> 1.0.0)
       ssrf_filter (~> 1.0)
+    carrierwave-aws (1.6.0)
+      aws-sdk-s3 (~> 1.0)
+      carrierwave (>= 2.0, < 4)
     childprocess (5.1.0)
       logger (~> 1.5)
     chosen-rails (1.10.0)
@@ -198,6 +219,7 @@ GEM
     jbuilder (2.12.0)
       actionview (>= 5.0.0)
       activesupport (>= 5.0.0)
+    jmespath (1.6.2)
     jquery-rails (4.6.0)
       rails-dom-testing (>= 1, < 3)
       railties (>= 4.2.0)
@@ -503,6 +525,7 @@ DEPENDENCIES
   bullet
   capybara
   carrierwave
+  carrierwave-aws (~> 1.6)
   carrierwave-ftp!
   chosen-rails
   cocoon
