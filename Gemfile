@@ -9,7 +9,6 @@ gem 'bootsnap', require: false
 
 gem 'acts-as-taggable-on'
 gem 'carrierwave'
-gem 'carrierwave-ftp', github: 'luan/carrierwave-ftp', ref: '5481c13', require: 'carrierwave/storage/sftp'
 gem 'cocoon'
 gem 'delayed_job'
 gem 'delayed_job_active_record'
@@ -114,3 +113,5 @@ end
 
 gem 'rollbar'
 gem 'skylight'
+
+gem "carrierwave-aws", "~> 1.6"
