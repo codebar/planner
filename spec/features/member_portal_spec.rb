@@ -92,6 +92,7 @@ RSpec.feature 'Member portal', type: :feature do
     end
 
     it 'is redirected to sign_in page when they attempt not access the profile page' do
+      mock_github_auth
       visit profile_path
 
       expect(page).to_not have_selector('#member_profile')
