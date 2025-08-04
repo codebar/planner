@@ -4,7 +4,7 @@
       .order-md-2
         - if event.chapter
           %span.badge.bg-primary.mb-3.mb-md-0
-            = event.chapter.name
+            = link_to event.chapter.name, event.chapter.slug, class: 'text-light text-decoration-none' 
         - if @user
           - if @user.attending?(event.__getobj__)
             %span.badge.bg-success.mb-3.mb-md-0
