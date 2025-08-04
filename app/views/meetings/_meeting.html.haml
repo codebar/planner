@@ -4,7 +4,7 @@
       .order-md-2
         - if meeting.chapter
           %span.badge.bg-primary.mb-3.mb-md-0
-            = meeting.chapter.name
+            = link_to meeting.chapter.name, meeting.chapter.slug, class: 'text-light text-decoration-none'
         - if @user
           - if @user.attending?(meeting)
             %span.badge.bg-success.mb-3.mb-md-0
