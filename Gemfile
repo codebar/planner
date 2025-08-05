@@ -26,7 +26,7 @@ gem 'jquery-rails'
 gem 'jquery-ui-rails'
 
 # Use Active Storage variant
-gem 'image_processing', '~> 1.2'
+gem 'image_processing', '~> 1.14'
 gem 'mutex_m' # LOCKED: Added because of activesupport 7.0
 gem 'nokogiri'
 gem 'omniauth'
@@ -58,10 +58,10 @@ gem 'faraday'
 
 gem 'stripe'
 
-gem 'rails-html-sanitizer', '~> 1.6.1'
+gem 'rails-html-sanitizer', '~> 1.6.2'
 
 # Use the Puma web server [https://github.com/puma/puma]
-gem 'puma', '~> 6.4'
+gem 'puma', '~> 6.6'
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
 gem 'importmap-rails'
 # Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
@@ -107,10 +107,10 @@ group :test do
   gem 'capybara'
   gem 'selenium-webdriver'
   gem 'database_cleaner'
-  gem 'shoulda-matchers', '~> 6.2'
+  gem 'shoulda-matchers', '~> 6.5'
   gem 'simplecov',      require: false
   gem 'simplecov-lcov', require: false
-  gem 'timecop', '~> 0.9.8'
+  gem 'timecop', '~> 0.9.10'
 end
 
 group :production do
