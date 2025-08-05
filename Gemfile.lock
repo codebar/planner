@@ -563,7 +563,7 @@ DEPENDENCIES
   haml
   high_voltage
   icalendar
-  image_processing (~> 1.14)
+  image_processing
   importmap-rails
   irb
   jbuilder
