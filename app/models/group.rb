@@ -13,7 +13,7 @@ class Group < ApplicationRecord
 
   validates :name, presence: true, inclusion: { in: NAMES, message: 'Invalid name for Group' }
 
-  alias_attribute :city, :chapter
+  alias city chapter
 
   default_scope -> { joins(:chapter).includes(:chapter) }
 

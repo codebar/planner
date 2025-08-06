@@ -1,19 +1,21 @@
-class Ticket
-  def initialize(request, params)
-    authorise(request)
-    @params = params
-  end
+module Services
+  class Ticket
+    def initialize(request, params)
+      authorise(request)
+      @params = params
+    end
 
-  def email
-    @email ||= params[:email]
-  end
+    def email
+      @email ||= params[:email]
+    end
 
-  private
+    private
 
-  attr_reader :params
+    attr_reader :params
 
-  def authorise(request)
-    # TODO
-    # verify referer
+    def authorise(request)
+      # TODO
+      # verify referer
+    end
   end
 end
