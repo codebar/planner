@@ -18,7 +18,7 @@ class Contact < ApplicationRecord
   end
 
   def mailing_list
-    @mailing_list ||= MailingList.new(ENV['SPONSOR_NEWSLETTER_ID'])
+    @mailing_list ||= Services::MailingList.new(ENV['SPONSOR_NEWSLETTER_ID'])
   end
 
   private

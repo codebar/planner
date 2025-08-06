@@ -17,8 +17,8 @@ RSpec.describe 'rake mailing_list:subscribe_active_members', type: :task do
     subscribed.each { |member| Fabricate(:subscription, member: member) }
     subscribed[0...3].each { |member| Fabricate(:subscription, member: member) }
 
-    newslettter = MailingList.new(:id)
-    expect(MailingList).to receive(:new).and_return(newslettter)
+    newslettter = Services::MailingList.new(:id)
+    expect(Services::MailingList).to receive(:new).and_return(newslettter)
 
     subscribed.each do |subscriber|
       expect(newslettter).to receive(:subscribe).with(subscriber.email,
