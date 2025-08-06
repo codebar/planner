@@ -1,4 +1,4 @@
-class EventCalendar
+class Services::EventCalendar
   attr_reader :event
 
   def initialize(event)
