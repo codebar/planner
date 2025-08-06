@@ -1,4 +1,4 @@
-class MailingList
+class Services::MailingList
   attr_reader :list_id
 
   def initialize(list_id)
