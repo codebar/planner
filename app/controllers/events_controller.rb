@@ -13,16 +13,17 @@ class EventsController < ApplicationController
     events << Event.past.includes(:venue, :sponsors).limit(RECENT_EVENTS_DISPLAY_LIMIT)
     events = events.compact.flatten.sort_by(&:date_and_time).reverse.first(RECENT_EVENTS_DISPLAY_LIMIT)
     events_hash_grouped_by_date = events.group_by(&:date)
-    @past_events = events_hash_grouped_by_date.map.inject({}) do |hash, (key, value)|
+    @past_events = events_hash_grouped_by_date.map.each_with_object({}) do |(key, value), hash|
       hash[key] = EventPresenter.decorate_collection(value)
-      hash
     end
 
     events = [Workshop.includes(:chapter).upcoming.joins(:chapter).merge(Chapter.active)]
     events << Meeting.upcoming.all
     events << Event.upcoming.includes(:venue, :sponsors).all
     events = events.compact.flatten.sort_by(&:date_and_time).group_by(&:date)
-    @events = events.map.inject({}) { |hash, (key, value)| hash[key] = EventPresenter.decorate_collection(value); hash }
+    @events = events.map.each_with_object({}) do |(key, value), hash|
+ hash[key] = EventPresenter.decorate_collection(value)
+    end
   end
 
   def show
@@ -34,7 +35,7 @@ class EventsController < ApplicationController
     return unless logged_in?
 
     invitation = Invitation.find_by(member: current_user, event: event, attending: true)
-    return redirect_to event_invitation_path(@event, invitation) if invitation
+    redirect_to event_invitation_path(@event, invitation) if invitation
   end
 
   def student
@@ -47,7 +48,7 @@ class EventsController < ApplicationController
 
   def rsvp
     set_event
-    ticket = Ticket.new(request, params)
+    ticket = Services::Ticket.new(request, params)
     member = Member.find_by(email: ticket.email)
     invitation = member.invitations.where(event: @event, role: 'Student').try(:first)
     invitation ||= Invitation.create(event: @event, member: member, role: 'Student')
