@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'events_controller'
 
 RSpec.feature 'event listing', type: :feature do
   describe 'I can see the names and titles of events' do
