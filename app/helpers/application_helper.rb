@@ -32,24 +32,12 @@ module ApplicationHelper
     Verifier.new(id: member.id).access_token
   end
 
-  def twitter
-    Rails.application.config.twitter
-  end
-
-  def twitter_id
-    Rails.application.config.twitter_id
-  end
-
   def contact_email(workshop: nil)
     @contact_email ||= workshop.present? ? workshop.chapter.email : 'hello@codebar.io'
   end
 
   def active_link_class(link_path)
     current_page?(link_path) ? 'active' : ''
-  end
-
-  def twitter_url_for(username)
-    "http://twitter.com/#{username}"
   end
 
   def page_year?(year)
