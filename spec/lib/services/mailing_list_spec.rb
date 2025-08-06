@@ -1,8 +1,8 @@
 require 'json'
 require 'services/mailing_list'
 
-RSpec.describe MailingList do
-  let(:mailing_list) { MailingList.new(:list_id) }
+RSpec.describe Services::MailingList do
+  let(:mailing_list) { Services::MailingList.new(:list_id) }
   let(:client) { double(:flodesk) }
 
   before do
