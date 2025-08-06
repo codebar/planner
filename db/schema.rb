@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_12_30_162506) do
+ActiveRecord::Schema[7.0].define(version: 2024_12_20_215044) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -394,6 +394,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_30_162506) do
     t.string "pronouns"
     t.datetime "accepted_toc_at", precision: nil
     t.datetime "opt_in_newsletter_at", precision: nil
+    t.string "dietary_restrictions"
     t.index ["email"], name: "index_members_on_email", unique: true
   end
 
