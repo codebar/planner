@@ -4,10 +4,10 @@ class MemberNotePolicy < ApplicationPolicy
   end
 
   def destroy?
-    user && (user.has_role?(:admin) || user == record.author)
+    user && (user.has_role?(:admin) || user.has_role?(:organiser, record.chapter))
   end
 
   def update?
-    user && (user.has_role?(:admin) || user == record.author)
+    user && (user.has_role?(:admin) || user.has_role?(:organiser, record.chapter))
   end
 end
