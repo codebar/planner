@@ -17,7 +17,7 @@
 # of the bootsnap cache if you use it.
 #
 # To set this configuration, add the following line to `config/application.rb` (NOT this file):
-#   config.add_autoload_paths_to_load_path = false
+# config.add_autoload_paths_to_load_path = false
 
 ###
 # Remove the default X-Download-Options headers since it is used only by Internet Explorer.
