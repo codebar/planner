@@ -1,5 +1,5 @@
 require 'json'
-require 'services/flodesk'
+require 'flodesk'
 
 RSpec.describe Flodesk do
   let(:stub)  { Faraday::Adapter::Test::Stubs.new }

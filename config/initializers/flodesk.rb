@@ -1,4 +1,4 @@
-require 'services/flodesk'
+require 'flodesk'
 
 key = Rails.env.test? ? 'test' : ENV['FLODESK_KEY']
 Rails.logger.warn 'Missing FLODESK_KEY environment variable' unless key
