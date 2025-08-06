@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 RSpec.describe 'Admin managing members', type: :feature do
   let(:member) { Fabricate(:student) }
   let(:admin) { Fabricate(:chapter_organiser) }

@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 RSpec.describe 'rake feedback:request', type: :task do
   context 'when most recent workshop has attendances' do
     let(:workshop) { Fabricate(:workshop, date_and_time: 23.hours.ago) }

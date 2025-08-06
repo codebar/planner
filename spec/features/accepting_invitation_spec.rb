@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 RSpec.feature 'Accepting a workshop invitation', type: :feature do
   context '#workshop' do
     let(:member) { Fabricate(:member) }

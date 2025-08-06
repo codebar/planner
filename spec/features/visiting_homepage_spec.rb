@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 RSpec.feature 'when visiting the homepage', type: :feature do
   let!(:next_workshop) { Fabricate(:workshop) }
   let!(:events) { Fabricate.times(8, :event) }

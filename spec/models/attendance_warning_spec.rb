@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 RSpec.describe AttendanceWarning, type: :model do
   describe '#create' do
     let(:member) { Fabricate(:member) }

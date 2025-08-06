@@ -1,4 +1,3 @@
-require 'spec_helper'
 require 'events_controller'
 
 RSpec.feature 'event listing', type: :feature do

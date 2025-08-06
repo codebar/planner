@@ -1,5 +1,4 @@
-require 'spec_helper'
-describe WorkshopCalendar do
+RSpec.describe WorkshopCalendar do
   let(:invitation_url) { Faker::Internet.url }
   let(:calendar) { WorkshopCalendar.new(workshop, invitation_url).calendar }
 

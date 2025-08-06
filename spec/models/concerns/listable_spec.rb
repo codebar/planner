@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 RSpec.describe Listable, type: :model do
   subject(:workshop) { Fabricate(:workshop) }
 

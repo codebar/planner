@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 RSpec.feature 'a Coach can', type: :feature do
   context '#workshop' do
     let(:member) { Fabricate(:member) }

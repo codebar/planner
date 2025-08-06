@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 RSpec.describe MeetingInvitationMailer, type: :mailer do
   let(:meeting) { Fabricate(:meeting) }
   let(:member) { Fabricate(:member) }

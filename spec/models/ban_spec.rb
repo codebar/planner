@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 RSpec.describe Ban, type: :model do
   context 'validates' do
     it { is_expected.to validate_presence_of(:expires_at) }

@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 RSpec.feature 'viewing a meeting', type: :feature do
   let!(:meeting) { Fabricate(:meeting) }
 

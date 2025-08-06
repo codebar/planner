@@ -1,4 +1,3 @@
-require 'spec_helper'
 require 'verifier'
 
 RSpec.describe Verifier do

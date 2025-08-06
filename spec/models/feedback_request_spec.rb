@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 RSpec.describe FeedbackRequest, type: :model do
   subject { Fabricate(:feedback_request) }
 

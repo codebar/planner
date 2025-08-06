@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 RSpec.describe EligibilityInquiry, type: :model do
   describe '#create' do
     let(:member) { Fabricate(:member) }

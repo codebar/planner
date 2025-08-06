@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 RSpec.describe SponsorPresenter do
   let(:sponsor_presenter) { SponsorPresenter.new(sponsor) }
   let(:sponsor) { Fabricate(:sponsor, contacts: contacts) }
