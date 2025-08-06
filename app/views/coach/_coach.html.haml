@@ -4,11 +4,9 @@
       - coaches.each do |coach|
         .col-sm-6.col-md-3.coach.mb-4
           .text-center.mb-4
-            = link_to twitter_url_for(coach.twitter), class: 'border-0' do
-              = image_tag(coach.avatar(50), class: 'rounded-circle', title: coach.full_name, alt: coach.full_name)
+            = image_tag(coach.avatar(50), class: 'rounded-circle', title: coach.full_name, alt: coach.full_name)
 
-          = link_to twitter_url_for(coach.twitter) do
-            = coach.full_name
+          = coach.full_name
           %p.small.mt-3= coach.about_you
           - if coach.skills.any?
             %p.small

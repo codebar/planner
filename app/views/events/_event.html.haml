@@ -32,8 +32,7 @@
         - if event.organisers.any?
           .mb-3.mb-md-0
             - event.organisers.each do |organiser|
-              = link_to twitter_url_for(organiser.twitter), class: 'd-inline-block mx-1' do
-                = image_tag(organiser.avatar(26), class: 'rounded-circle', title: organiser.full_name, alt: organiser.full_name)
+              = image_tag(organiser.avatar(26), class: 'rounded-circle', title: organiser.full_name, alt: organiser.full_name)
         - if event.sponsors.any?
           .ms-auto
             - event.sponsors.each do |sponsor|
