@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 RSpec.feature 'Member portal', type: :feature do
   subject { page }
 

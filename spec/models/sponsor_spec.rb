@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 RSpec.describe Sponsor, type: :model do
   subject(:sponsor) { Fabricate.build(:sponsor) }
 

@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 RSpec.describe WaitingList, type: :model do
   let(:workshop) { Fabricate(:workshop) }
 

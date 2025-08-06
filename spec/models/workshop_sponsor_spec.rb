@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 RSpec.describe WorkshopSponsor, type: :model do
   context 'validates' do
     it 'sponsor_id for uniqueness' do

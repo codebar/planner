@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 RSpec.feature 'when visiting the coaches page', type: :feature do
   scenario 'I can see the most active coaches' do
     coach = Fabricate(:attended_coach).member

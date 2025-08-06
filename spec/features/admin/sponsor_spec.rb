@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 RSpec.feature 'Admin::Sponsors', type: :feature do
   let(:manager) { Fabricate(:member) }
 

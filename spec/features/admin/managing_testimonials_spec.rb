@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 RSpec.feature 'Managing testimonials', type: :feature do
   let(:member) { Fabricate(:member) }
 

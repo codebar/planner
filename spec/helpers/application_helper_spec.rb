@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 RSpec.describe ApplicationHelper, type: :helper do
   describe '#contact_email' do
     it "returns the workshop chapter's email" do

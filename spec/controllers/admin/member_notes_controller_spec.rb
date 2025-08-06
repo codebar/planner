@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 RSpec.describe Admin::MemberNotesController, type: :controller do
   let(:member) { Fabricate(:member) }
   let(:admin) { Fabricate(:chapter_organiser) }

@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 RSpec.feature 'Viewing feedback', type: :feature do
   let(:member) { Fabricate(:member) }
 
