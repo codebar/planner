@@ -24,6 +24,9 @@ module Planner
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.0
 
+    config.add_autoload_paths_to_load_path = false
+
+    
     config.autoload_lib(ignore: %w(assets tasks))
 
     # Configuration for the application, engines, and railties goes here.
