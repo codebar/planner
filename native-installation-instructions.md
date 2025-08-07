@@ -88,3 +88,14 @@ bundle exec rails server
 ```bash
 bundle exec rake
 ```
+
+## Setting up a local admin user
+
+- To assign admin permissions to a local user run the below commands using the member's email address.
+- Note that a member is effectively a user.
+
+```bash
+rails c
+user = Member.find_by(email: 'test@example.com')
+user.add_role :admin
+```
