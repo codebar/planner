@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 RSpec.feature 'managing workshop attendances', type: :feature do
+  MAX_RETRIES = 3
+
   context 'an admin' do
     let(:member) { Fabricate(:member) }
     let(:chapter) { Fabricate(:chapter) }
@@ -52,11 +54,19 @@ RSpec.feature 'managing workshop attendances', type: :feature do
 
       dropdown_text = 'Select a member to RSVP'
       dropdown = find('span', text: dropdown_text, visible: true)
-      if dropdown.visible?
-        begin
-          dropdown.click
-        rescue Selenium::WebDriver::Error::ElementClickInterceptedError
-          puts "Dropdown is visible but cannot be clicked."
+
+      attempts = 0
+
+      begin
+        dropdown.click
+      rescue Selenium::WebDriver::Error::ElementClickInterceptedError
+        attempts += 1
+        puts "Attempt #{attempts}: Dropdown is visible but not clickable. Retrying..."
+        if attempts < MAX_RETRIES
+          sleep 0.5
+          retry
+        else
+          raise "Dropdown could not be clicked after #{max_attempts} attempts"
         end
       end
 
