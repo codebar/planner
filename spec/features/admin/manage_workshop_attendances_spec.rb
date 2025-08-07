@@ -52,25 +52,7 @@ RSpec.feature 'managing workshop attendances', type: :feature do
       expect(page).to have_content('1 are attending as students')
       expect(page).to_not have_selector('i.fa-magic')
 
-      dropdown_text = 'Select a member to RSVP'
-      dropdown = find('span', text: dropdown_text, visible: true)
-
-      attempts = 0
-
-      begin
-        dropdown.click
-      rescue Selenium::WebDriver::Error::ElementClickInterceptedError
-        attempts += 1
-        puts "Attempt #{attempts}: Dropdown is visible but not clickable. Retrying..."
-        if attempts < MAX_RETRIES
-          sleep 0.5
-          retry
-        else
-          raise "Dropdown could not be clicked after #{max_attempts} attempts"
-        end
-      end
-
-      find('span', text: dropdown_text).click
+      find('span', text: 'Select a member to RSVP', visible: true).click
       find('li', text: "#{other_invitation.member.full_name} (#{other_invitation.role})", visible: true).click
 
       expect(page).to have_content('2 are attending as students')
