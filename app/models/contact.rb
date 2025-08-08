@@ -1,6 +1,6 @@
 require 'services/mailing_list'
 class Contact < ApplicationRecord
-  belongs_to :sponsor
+  belongs_to :sponsor, optional: true
 
   validates :name, :surname, :email, presence: true
 

@@ -1,3 +1,3 @@
 class Address < ApplicationRecord
-  belongs_to :sponsor
+  belongs_to :sponsor, optional: true
 end
