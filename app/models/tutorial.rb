@@ -1,5 +1,5 @@
 class Tutorial < ApplicationRecord
-  belongs_to :workshop
+  belongs_to :workshop, optional:  true
 
   validates :title, presence: true
   default_scope -> { order(:created_at) }
