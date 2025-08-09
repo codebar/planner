@@ -33,5 +33,4 @@
       - if event.organisers.any?
         .d-md-flex.align-items-md-center
           - event.organisers.each do |organiser|
-            = link_to twitter_url_for(organiser.twitter), class: 'border-0 d-inline-block mx-1' do
-              = image_tag(organiser.avatar(26), class: 'rounded-circle', title: organiser.full_name, alt: organiser.full_name)
+            = image_tag(organiser.avatar(26), class: 'rounded-circle', title: organiser.full_name, alt: organiser.full_name)

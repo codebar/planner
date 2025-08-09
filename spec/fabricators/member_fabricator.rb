@@ -4,7 +4,6 @@ Fabricator(:member) do
   surname { Faker::Name.last_name }
   email { Faker::Internet.email }
   about_you { Faker::Lorem.sentence }
-  twitter { Faker::Name.first_name }
   auth_services(count: 1) { Fabricate(:auth_service) }
   accepted_toc_at { Time.zone.now }
 end
