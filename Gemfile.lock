@@ -99,8 +99,6 @@ GEM
     bindex (0.8.1)
     binding_of_caller (1.0.1)
       debug_inspector (>= 1.2.0)
-    bootsnap (1.18.6)
-      msgpack (~> 1.2)
     bootstrap (5.3.5)
       popper_js (>= 2.11.8, < 3)
     builder (3.3.0)
@@ -257,7 +255,6 @@ GEM
     mini_mime (1.1.5)
     mini_portile2 (2.8.9)
     minitest (5.25.5)
-    msgpack (1.8.0)
     multi_xml (0.6.0)
     mutex_m (0.3.0)
     net-http (0.6.0)
@@ -539,7 +536,6 @@ DEPENDENCIES
   better_errors
   bigdecimal
   binding_of_caller
-  bootsnap
   bootstrap (~> 5)
   bullet
   capybara

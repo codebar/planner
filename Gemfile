@@ -4,8 +4,6 @@ ruby '3.4.4'
 gem 'rails', '7.0.8.1'
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem 'sprockets-rails'
-# Reduces boot times through caching; required in config/boot.rb
-gem 'bootsnap', require: false
 
 gem 'acts-as-taggable-on'
 gem 'benchmark' # LOCKED: Added because of activesupport 7.0
