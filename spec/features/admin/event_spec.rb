@@ -64,6 +64,7 @@ RSpec.feature 'Event creation', type: :feature do
         check 'This is a virtual event'
         click_on 'Save'
 
+
         expect(page).to have_content('Event successfully created')
 
         expect(page).to have_content('A test virtual event')
