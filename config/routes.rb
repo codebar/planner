@@ -140,6 +140,13 @@ Rails.application.routes.draw do
     end
 
     resources :testimonials, only: %i[index]
+
+    resources :member_search, path: 'member-search', only: [:index, :results] do
+      collection do
+        get 'index'
+        get 'results'
+      end
+    end
   end
 
   get   '/login', to: 'auth_services#new'
