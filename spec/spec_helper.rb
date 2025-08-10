@@ -90,7 +90,7 @@ RSpec.configure do |config|
   config.after(:each) do
     DatabaseCleaner.clean
     Capybara.reset_sessions!
-    Capybara.use_default_driver
+    Capybara.current_driver = Capybara.default_driver
   end
 
   config.after do |example|
