@@ -78,6 +78,7 @@ RSpec.configure do |config|
   # and must be BELOW the main `config.before(:each)` configuration
   config.before(:each, js: true) do
     DatabaseCleaner.strategy = :truncation
+    Capybara.current_driver = Capybara.javascript_driver
   end
 
   # This block must be here, do not combine with the other `config.before(:each)` block.
@@ -88,8 +89,9 @@ RSpec.configure do |config|
 
   config.after(:each) do
     DatabaseCleaner.clean
+    Capybara.reset_sessions!
+    Capybara.use_default_driver
   end
-
 
   config.after do |example|
     # Take a screenshot if the example failed and JavaScript is enabled
