@@ -72,13 +72,38 @@ RSpec.configure do |config|
     DatabaseCleaner.strategy = :transaction
   end
 
+  config.around(:each) do |example|
+    original_driver = Capybara.current_driver
+
+    if example.metadata[:type] == :system
+      if example.metadata[:js]
+        driven_by Capybara.javascript_driver
+      else
+        driven_by :rack_test
+      end
+    elsif example.metadata[:type] == :feature
+      if example.metadata[:js]
+        Capybara.current_driver = Capybara.javascript_driver
+      else
+        Capybara.current_driver = :rack_test
+      end
+    end
+
+    Capybara.reset_sessions!
+
+    example.run
+
+    Capybara.reset_sessions!
+    Capybara.use_default_driver
+    Capybara.current_driver = original_driver
+  end
+
   # Driver is using an external browser with an app
   # under test that does *not* share a database connection with the
   # specs, so use truncation strategy. This config is order dependent
   # and must be BELOW the main `config.before(:each)` configuration
   config.before(:each, js: true) do
     DatabaseCleaner.strategy = :truncation
-    Capybara.current_driver = Capybara.javascript_driver
   end
 
   # This block must be here, do not combine with the other `config.before(:each)` block.
@@ -89,8 +114,6 @@ RSpec.configure do |config|
 
   config.after(:each) do
     DatabaseCleaner.clean
-    Capybara.reset_sessions!
-    Capybara.current_driver = Capybara.default_driver
   end
 
   config.after do |example|
