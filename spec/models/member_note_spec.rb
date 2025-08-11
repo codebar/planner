@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 RSpec.describe MemberNote, type: :model do
   context 'Mandatory attributes' do
     it 'Requires a note' do

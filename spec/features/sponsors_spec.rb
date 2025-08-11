@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 RSpec.feature 'Sponsors', type: :feature do
   context 'Listing' do
     scenario 'can see a listing of all non expired job posts' do

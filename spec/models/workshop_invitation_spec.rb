@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 RSpec.describe WorkshopInvitation, type: :model do
   subject(:workshop_invitation) { Fabricate(:workshop_invitation) }
   it_behaves_like InvitationConcerns, :workshop_invitation, :workshop

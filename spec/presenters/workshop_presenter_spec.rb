@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 RSpec.describe WorkshopPresenter do
   let(:chapter) { Fabricate(:chapter) }
   let(:host) { Fabricate(:sponsor, seats: 5, number_of_coaches: 15) }

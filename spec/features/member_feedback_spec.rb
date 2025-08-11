@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 RSpec.feature 'member feedback', type: :feature do
   let(:feedback_request) { Fabricate(:feedback_request) }
   let(:valid_token) { feedback_request.token }

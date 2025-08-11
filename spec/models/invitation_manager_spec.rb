@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 RSpec.describe InvitationManager, type: :model do
   subject(:manager) { InvitationManager.new }
 

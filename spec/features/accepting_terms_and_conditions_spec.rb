@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 RSpec.feature 'Accepting Terms and Conditions', type: :feature do
   context 'When a user signs up to codebar' do
     before do

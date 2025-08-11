@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 RSpec.feature 'managing workshop attendances', type: :feature do
   MAX_RETRIES = 3
 
