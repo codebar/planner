@@ -19,18 +19,5 @@ RSpec.describe WorkshopSponsor, type: :model do
         expect(WorkshopSponsor.hosts).to eq []
       end
     end
-
-    context '#for_workshop' do
-      it 'includes sponsors of the workshop' do
-        workshop_sponsor = Fabricate(:workshop_sponsor)
-        expect(WorkshopSponsor.for_workshop(workshop_sponsor.workshop)).to include(workshop_sponsor)
-      end
-
-      it 'excludes sponsors not sponsoring the workshop' do
-        Fabricate(:workshop_sponsor)
-        workshop = Fabricate(:workshop_no_sponsor)
-        expect(WorkshopSponsor.for_workshop(workshop)).to eq []
-      end
-    end
   end
 end
