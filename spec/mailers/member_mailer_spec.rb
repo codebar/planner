@@ -1,4 +1,4 @@
-RSpec.describe MemberMailer, type: :mailer do
+RSpec.describe MemberMailer do
   let(:member) { Fabricate(:member) }
 
   describe 'welcome_student' do

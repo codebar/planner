@@ -1,4 +1,4 @@
-RSpec.describe Listable, type: :model do
+RSpec.describe Listable do
   subject(:workshop) { Fabricate(:workshop) }
 
   context 'scopes' do

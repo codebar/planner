@@ -1,4 +1,4 @@
-RSpec.describe EventInvitationMailer, type: :mailer do
+RSpec.describe EventInvitationMailer do
   let(:email) { ActionMailer::Base.deliveries.last }
   let(:event) { Fabricate(:event, date_and_time: Time.zone.local(2017, 11, 12, 10, 0), name: 'Test event') }
   let(:coach_event) { Fabricate(:event, date_and_time: Time.zone.local(2017, 11, 12, 10, 0), name: 'Test event', audience: 'Coaches') }

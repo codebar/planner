@@ -1,4 +1,4 @@
-RSpec.describe AuthServicesController, type: :controller do
+RSpec.describe AuthServicesController do
   describe "GET #new" do
     it "redirects when referer is missing" do
       expected_referer_path = nil

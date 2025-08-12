@@ -1,4 +1,4 @@
-RSpec.describe Feedback, type: :model do
+RSpec.describe Feedback do
   subject(:feedback) { Fabricate.build(:feedback) }
 
   context 'validations' do

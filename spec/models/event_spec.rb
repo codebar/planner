@@ -1,4 +1,4 @@
-RSpec.describe Event, type: :model do
+RSpec.describe Event do
   subject(:event) { Fabricate(:event) }
   include_examples "Invitable", :invitation, :event
   include_examples DateTimeConcerns, :event

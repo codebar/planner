@@ -1,4 +1,4 @@
-RSpec.describe MeetingInvitation, type: :model do
+RSpec.describe MeetingInvitation do
   it_behaves_like InvitationConcerns, :meeting_invitation, :meeting
 
   context 'defaults' do
