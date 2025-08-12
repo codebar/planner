@@ -119,7 +119,7 @@ class Member < ApplicationRecord
   end
 
   def self.find_members(name)
-    where('name ILIKE ?', "%#{name}%").or(where('surname ILIKE ?', "%#{name}%"))
+    where("CONCAT(name, ' ', surname) ILIKE ?", "%#{name}%")
   end
 
   private
