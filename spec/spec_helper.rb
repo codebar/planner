@@ -102,7 +102,7 @@ RSpec.configure do |config|
       screenshot_filename = "#{filename}:#{line_number}.png"
 
       # Save the screenshot using the custom filename
-      page.save_screenshot(screenshot_filename, full: true)
+      page.save_screenshot(screenshot_filename)
     end
   end
 
