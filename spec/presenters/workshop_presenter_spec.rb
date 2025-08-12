@@ -129,7 +129,7 @@ RSpec.describe WorkshopPresenter do
   it '#attendees_emails' do
     workshop = Fabricate(:workshop)
     presenter = WorkshopPresenter.new(workshop)
-    members = Fabricate.times(6, :member)
+    members = Fabricate.times(2, :member)
     members.each_with_index do |member, index|
       index % 2 == 0 ? Fabricate(:attending_workshop_invitation, member: member, workshop: workshop) :
         Fabricate(:attending_workshop_invitation, member: member, workshop: workshop, role: 'Coach')

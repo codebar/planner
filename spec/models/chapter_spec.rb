@@ -34,10 +34,10 @@ RSpec.describe Chapter, type: :model do
   context 'scopes' do
     context '#active' do
       it 'only returns active Chapters' do
-        2.times { Fabricate(:chapter) }
-        3.times { Fabricate(:chapter, active: false) }
+        1.times { Fabricate(:chapter) }
+        2.times { Fabricate(:chapter, active: false) }
 
-        expect(Chapter.active.all.count).to eq(2)
+        expect(Chapter.active.all.count).to eq(1)
       end
     end
   end

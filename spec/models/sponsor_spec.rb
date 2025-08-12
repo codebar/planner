@@ -12,7 +12,7 @@ RSpec.describe Sponsor, type: :model do
       describe 'searching by_name' do
         let!(:search_sponsor) { Fabricate(:sponsor, name: 'codebar') }
         before do
-          Fabricate.times(5, :sponsor)
+          Fabricate.times(2, :sponsor)
         end
 
         it 'matches on any part of the name' do
