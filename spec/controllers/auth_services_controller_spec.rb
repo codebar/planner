@@ -1,5 +1,3 @@
-require "spec_helper"
-
 RSpec.describe AuthServicesController, type: :controller do
   describe "GET #new" do
     it "redirects when referer is missing" do
