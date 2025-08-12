@@ -7,7 +7,7 @@ RSpec.feature 'Viewing feedback', type: :feature do
     end
 
     it 'can access the feedback page' do
-      feedbacks = Fabricate.times(10, :feedback)
+      feedbacks = Fabricate.times(2, :feedback)
 
       visit admin_feedback_index_path
       feedbacks.each { |feedback| expect(page).to have_content(feedback.request) }

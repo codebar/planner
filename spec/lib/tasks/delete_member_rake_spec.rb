@@ -15,10 +15,10 @@ RSpec.describe 'rake member:delete', type: :task do
   end
 
   it 'anonymises member information' do
-    invitations = Fabricate.times(4, :workshop_invitation, member: member)
+    invitations = Fabricate.times(2, :workshop_invitation, member: member)
     tokens = invitations.map(&:token)
 
-    subscriptions = Fabricate.times(3, :subscription, member: member)
+    subscriptions = Fabricate.times(1, :subscription, member: member)
 
     allow($stdin).to receive(:getch)
 

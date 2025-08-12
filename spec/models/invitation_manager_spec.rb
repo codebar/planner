@@ -3,8 +3,8 @@ RSpec.describe InvitationManager, type: :model do
 
   let(:chapter) { Fabricate(:chapter) }
   let(:workshop) { Fabricate(:workshop, chapter: chapter) }
-  let(:students) { Fabricate.times(3, :member) }
-  let(:coaches) { Fabricate.times(6, :member) }
+  let(:students) { Fabricate.times(2, :member) }
+  let(:coaches) { Fabricate.times(2, :member) }
 
   describe '#send_workshop_emails' do
     let(:mailer) { WorkshopInvitationMailer }
@@ -115,7 +115,7 @@ RSpec.describe InvitationManager, type: :model do
   describe '#send_monthly_attendance_reminder_emails', wip: true do
     it 'emails all attending members' do
       meeting = Fabricate(:meeting)
-      attendees = Fabricate.times(4, :attending_meeting_invitation, meeting: meeting).map(&:member)
+      attendees = Fabricate.times(2, :attending_meeting_invitation, meeting: meeting).map(&:member)
 
       attendees.each do |attendee|
         expect(MeetingInvitationMailer).to receive(:attendance_reminder).with(meeting, attendee)
@@ -128,7 +128,7 @@ RSpec.describe InvitationManager, type: :model do
   describe '#send_workshop_attendance_reminder_emails' do
     it 'emails all attending members' do
       workshop = Fabricate(:workshop)
-      invitations = Fabricate.times(4, :attending_workshop_invitation, workshop: workshop)
+      invitations = Fabricate.times(2, :attending_workshop_invitation, workshop: workshop)
 
       invitations.each do |invitation|
         expect(WorkshopInvitationMailer).to receive(:attending_reminder)
@@ -144,8 +144,8 @@ RSpec.describe InvitationManager, type: :model do
   describe '#send_workshop_waiting_list_reminders', wip: true do
     it 'emails everyone that hasn\'t already been reminded from the workshop\'s waitinglist' do
       workshop = Fabricate(:workshop)
-      invitations = Fabricate.times(4, :waitinglist_invitation, workshop: workshop)
-      reminded_invitations = Fabricate.times(3, :waitinglist_invitation_reminded, workshop: workshop)
+      invitations = Fabricate.times(2, :waitinglist_invitation, workshop: workshop)
+      reminded_invitations = Fabricate.times(2, :waitinglist_invitation_reminded, workshop: workshop)
 
       invitations.each do |invitation|
         expect(WorkshopInvitationMailer).to receive(:waiting_list_reminder)

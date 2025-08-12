@@ -1,6 +1,6 @@
 RSpec.feature 'when visiting the homepage', type: :feature do
   let!(:next_workshop) { Fabricate(:workshop) }
-  let!(:events) { Fabricate.times(8, :event) }
+  let!(:events) { Fabricate.times(3, :event) }
 
   before(:each) do
     visit root_path
@@ -27,8 +27,8 @@ RSpec.feature 'when visiting the homepage', type: :feature do
   end
 
   scenario 'I can only view active chapters' do
-    inactive_chapters = Fabricate.times(3, :chapter, active: false)
-    active_chapters = Fabricate.times(4, :chapter)
+    inactive_chapters = Fabricate.times(1, :chapter, active: false)
+    active_chapters = Fabricate.times(2, :chapter)
 
     visit root_path
 

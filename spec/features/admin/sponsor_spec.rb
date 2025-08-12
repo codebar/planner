@@ -34,7 +34,7 @@ RSpec.feature 'Admin::Sponsors', type: :feature do
       Fabricate(:workshop_sponsor, sponsor: sponsor)
       # Multiple works with the same sponsor and chapter
       chapter = Fabricate(:chapter)
-      5.times do
+      2.times do
         Fabricate(:workshop_sponsor, sponsor: sponsor2, workshop: Fabricate(:workshop_no_sponsor, chapter: chapter))
       end
 

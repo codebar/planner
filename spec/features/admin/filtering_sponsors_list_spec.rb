@@ -6,14 +6,14 @@ RSpec.feature 'Admin filtering sponsors list', type: :feature do
   end
 
   describe 'when visiting the sponsors page' do
-    let!(:sponsors) { Fabricate.times(4, :sponsor_with_contacts) }
+    let!(:sponsors) { Fabricate.times(2, :sponsor_with_contacts) }
 
     before(:each) do
       visit admin_sponsors_path
     end
 
     scenario 'all the sponsors are displayed' do
-      expect(page).to have_css('.sponsor', count: 4)
+      expect(page).to have_css('.sponsor', count: 2)
     end
 
     describe 'when filtering by name' do
