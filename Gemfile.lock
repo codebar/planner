@@ -299,7 +299,7 @@ GEM
       ast (~> 2.4.1)
       racc
     pg (1.6.1)
-    pickadate-rails (3.5.6.0)
+    pickadate-rails (3.5.6.1)
       railties (>= 3.1.0)
     popper_js (2.11.8)
     pp (0.6.2)
