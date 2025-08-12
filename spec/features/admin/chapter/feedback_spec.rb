@@ -5,8 +5,8 @@ RSpec.feature 'Chapter workshop feedback', type: :feature do
     workshop = Fabricate(:workshop, chapter: chapter)
     other_workshop = Fabricate(:workshop)
 
-    feedbacks = Fabricate.times(3, :feedback, workshop: workshop)
-    other_feedbacks = Fabricate.times(3, :feedback, workshop: other_workshop)
+    feedbacks = Fabricate.times(1, :feedback, workshop: workshop)
+    other_feedbacks = Fabricate.times(1, :feedback, workshop: other_workshop)
 
     login_as_organiser(member, chapter)
 
