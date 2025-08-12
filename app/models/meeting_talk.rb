@@ -1,6 +1,6 @@
 class MeetingTalk < ApplicationRecord
-  belongs_to :speaker, class_name: 'Member'
-  belongs_to :meeting
+  belongs_to :speaker, class_name: 'Member', optional: true
+  belongs_to :meeting, optional: true
 
   validates :title, :abstract, :speaker, :meeting, presence: true
 

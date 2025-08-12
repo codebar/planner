@@ -57,9 +57,7 @@ module Planner
     # More info at https://skylight.io/support/environments
     config.skylight.environments << 'development'
 
-    # TODO: sort this out properly at 
-    # See https://guides.rubyonrails.org/upgrading_ruby_on_rails.html#active-record-belongs-to-required-by-default-option
-    config.active_record.belongs_to_required_by_default = false
+    config.active_record.belongs_to_required_by_default = true
   end
 end
 

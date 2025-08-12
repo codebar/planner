@@ -3,7 +3,7 @@ class Invitation < ApplicationRecord
 
   belongs_to :event
   belongs_to :member
-  belongs_to :verified_by, class_name: 'Member'
+  belongs_to :verified_by, class_name: 'Member', optional: true
 
   validates :event, :member, presence: true
   validates :member_id, uniqueness: { scope: %i[event_id role] }
