@@ -20,7 +20,7 @@ module ApplicationHelper
   end
 
   def dot_markdown(text)
-    CommonMarker.render_html(text, :DEFAULT).html_safe
+    Commonmarker.to_html(text).html_safe
   end
 
   def belongs_to_group?(group)
