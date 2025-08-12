@@ -137,4 +137,25 @@ RSpec.describe Member do
       expect(member.flag_to_organisers?).to be true
     end
   end
+
+  describe '#find_members' do
+    describe 'search by first name' do
+      it 'finds the member' do
+        expect(Member.find_members(member.name).first).to eq(member)
+      end
+    end
+
+    describe 'search by last name' do
+      it 'finds the member' do
+        expect(Member.find_members(member.surname).first).to eq(member)
+      end
+    end
+
+    describe 'search by full name' do
+      it 'finds the member' do
+        expect(Member.find_members("#{member.name} #{member.surname}").first).to eq(member)
+      end
+    end
+
+  end
 end
