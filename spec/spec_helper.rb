@@ -90,7 +90,6 @@ RSpec.configure do |config|
     DatabaseCleaner.clean
   end
 
-
   config.after do |example|
     # Take a screenshot if the example failed and JavaScript is enabled
     if example.exception && defined?(page) && Capybara.current_driver == :chrome
