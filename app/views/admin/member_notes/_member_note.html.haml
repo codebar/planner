@@ -3,8 +3,23 @@
     %span.fa-stack.text-primary
       %i.fas.fa-circle.fa-stack-2x
       %i.fas.fa-pencil-alt.fa-stack-1x.fa-inverse
+  .col-2.col-md-1
+    = link_to 'Edit', "#edit-note-modal-#{action.id}", data: { bs_toggle: 'modal', bs_target: "#edit-note-modal-#{action.id}" }
   .col-9.col-md-11
     %strong Note added by #{link_to(action.author.full_name, admin_member_path(action.author))}
-    %blockquote.blockquote.mb-0=action.note
+    %blockquote.blockquote.mb-0= action.note
     .date
       = l(action.created_at, format: :website_format)
+
+  .modal.fade{ id: "edit-note-modal-#{action.id}", tabindex: "-1", role: "dialog" }
+    .modal-dialog
+      .modal-content
+        .modal-header
+          %h5.modal-title Edit Note for ID #{action.id}
+          %button.btn-close{ type: 'button', 'data-bs-dismiss': 'modal', 'aria-label': 'Close' }
+        .modal-body
+          = simple_form_for [:admin, member_note], html: { class: 'form-inline' } do |f|
+            = f.input :note, label: false, input_html: { rows: 3 }
+            = f.hidden_field :member_id, value: member_note.member_id
+            .text-right
+            = f.button :submit, 'Save note', class: 'btn btn-primary mb-0'
