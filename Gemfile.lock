@@ -342,7 +342,7 @@ GEM
       activesupport (>= 3.0.0)
     racc (1.8.1)
     rack (2.2.17)
-    rack-mini-profiler (3.3.1)
+    rack-mini-profiler (4.0.1)
       rack (>= 1.2.0)
     rack-protection (3.2.0)
       base64 (>= 0.1.0)
@@ -587,7 +587,7 @@ DEPENDENCIES
   public_activity
   puma (~> 6.6)
   pundit
-  rack-mini-profiler (~> 3.3)
+  rack-mini-profiler (~> 4.0)
   rails (= 7.0.8.1)
   rails-html-sanitizer (~> 1.6.2)
   rails4-autocomplete
