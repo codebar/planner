@@ -33,7 +33,6 @@ namespace :member do
       member.surname = 'User'
       member.pronouns = nil
       member.about_you = nil
-      member.twitter = nil
       member.mobile = nil
       member.save(validate: false)
     end
