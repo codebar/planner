@@ -13,18 +13,18 @@ RSpec.describe 'Add a user to an existing workshop', type: :feature do
   scenario 'An admin searches and gets an exact match', js: true do
     visit @start_page
 
-    params = {callback: @start_page.to_s}.to_query
+    params = {callback_url: @start_page.to_s}.to_query
     visit "/admin/member-search?#{params}"
-    fill_in 'Member Name', with: juliet.name
+    fill_in 'Member Name', with: juliet.name_and_surname
     click_on 'Search'
-    expect(current_url).to include(@start_page)
+    expect(page).to have_current_path(@start_page, ignore_query: true)
   end
 
-  scenario 'An admin adds a member to a workshop' do
-
-  end
-
-  scenario 'An admin adds multiple members to a workshop' do
-
-  end
+  # scenario 'An admin adds a member to a workshop' do
+  #   assert false
+  # end
+  #
+  # scenario 'An admin adds multiple members to a workshop' do
+  #   assert false
+  # end
 end
