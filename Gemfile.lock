@@ -194,7 +194,7 @@ GEM
       thor
       tilt
     hashie (5.0.0)
-    high_voltage (3.1.2)
+    high_voltage (4.0.0)
     htmlentities (4.3.4)
     i18n (1.14.7)
       concurrent-ruby (~> 1.0)
