@@ -1,6 +1,6 @@
 # codebar website & event planner
 
-[![CI](https://github.com/codebar/planner/workflows/CI/badge.svg?branch=master)](https://github.com/codebar/planner/actions?query=workflow%3ACI)
+[![CI](https://github.com/codebar/planner/actions/workflows/ruby.yml/badge.svg)](https://github.com/codebar/planner/actions/workflows/ruby.yml)
 [![Coverage Status](https://coveralls.io/repos/codebar/planner/badge.png)](https://coveralls.io/r/codebar/planner)
 
 A tool to help manage [codebar.io](https://codebar.io) members and events.
