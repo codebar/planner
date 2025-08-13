@@ -20,9 +20,6 @@
         %dt Email
         %dd.mb-3= mail_to @member.email, @member.email
 
-        %dt Twitter handle
-        %dd.mb-3= link_to "@#{@member.twitter}", twitter_url_for(@member.twitter)
-
         %dt Phone number
         %dd.mb-3= @member.mobile.present? || 'N/A'
 

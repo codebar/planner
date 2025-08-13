@@ -1,6 +1,6 @@
 class FeedbackRequest < ApplicationRecord
   belongs_to :member
-  belongs_to :workshop
+  belongs_to :workshop, optional: true
 
   validates :member_id, presence: true, uniqueness: { scope: [:workshop] }
   validates :workshop, presence: true

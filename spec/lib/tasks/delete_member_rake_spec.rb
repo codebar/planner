@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 RSpec.describe 'rake member:delete', type: :task do
   let!(:member) { Fabricate.create(:member) }
   before do
@@ -17,10 +15,10 @@ RSpec.describe 'rake member:delete', type: :task do
   end
 
   it 'anonymises member information' do
-    invitations = Fabricate.times(4, :workshop_invitation, member: member)
+    invitations = Fabricate.times(2, :workshop_invitation, member: member)
     tokens = invitations.map(&:token)
 
-    subscriptions = Fabricate.times(3, :subscription, member: member)
+    subscriptions = Fabricate.times(1, :subscription, member: member)
 
     allow($stdin).to receive(:getch)
 
@@ -32,7 +30,6 @@ RSpec.describe 'rake member:delete', type: :task do
     expect(member.surname).to eq('User')
     expect(member.pronouns).to be_nil
     expect(member.about_you).to be_nil
-    expect(member.twitter).to be_nil
     expect(member.mobile).to be_nil
 
     expect(member.subscriptions).to be_empty

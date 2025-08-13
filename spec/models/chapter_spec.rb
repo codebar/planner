@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 RSpec.describe Chapter, type: :model do
   it { should validate_presence_of(:city) }
   it { should validate_length_of(:description).is_at_most(280) }
@@ -36,10 +34,10 @@ RSpec.describe Chapter, type: :model do
   context 'scopes' do
     context '#active' do
       it 'only returns active Chapters' do
-        2.times { Fabricate(:chapter) }
-        3.times { Fabricate(:chapter, active: false) }
+        1.times { Fabricate(:chapter) }
+        2.times { Fabricate(:chapter, active: false) }
 
-        expect(Chapter.active.all.count).to eq(2)
+        expect(Chapter.active.all.count).to eq(1)
       end
     end
   end

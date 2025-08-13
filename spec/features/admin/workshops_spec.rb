@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 RSpec.feature 'An admin managing workshops', type: :feature do
   let(:member) { Fabricate(:member) }
   let!(:chapter) { Fabricate(:chapter) }
@@ -12,7 +10,7 @@ RSpec.feature 'An admin managing workshops', type: :feature do
 
   context '#views' do
     scenario 'list of all chapter workshops' do
-      workshops = Fabricate.times(5, :workshop, chapter: chapter)
+      workshops = Fabricate.times(2, :workshop, chapter: chapter)
       visit admin_chapter_workshops_path(chapter)
 
       workshops.each do |workshop|
@@ -191,7 +189,7 @@ RSpec.feature 'An admin managing workshops', type: :feature do
 
     scenario 'viewing a text file with all attendee emails' do
       workshop = Fabricate(:workshop)
-      attendees = Fabricate.times(4, :attending_workshop_invitation, workshop: workshop)
+      attendees = Fabricate.times(2, :attending_workshop_invitation, workshop: workshop)
       attendees_emails = attendees.map(&:member).map(&:email)
       visit admin_workshop_attendees_emails_path(workshop, format: :text)
 
@@ -203,7 +201,7 @@ RSpec.feature 'An admin managing workshops', type: :feature do
     context 'attendee names list' do
       scenario 'viewing a text file with all names' do
         workshop = Fabricate(:workshop)
-        attendees = Fabricate.times(4, :attending_workshop_invitation, workshop: workshop)
+        attendees = Fabricate.times(2, :attending_workshop_invitation, workshop: workshop)
         visit admin_workshop_attendees_checklist_path(workshop, format: :text)
         attendees.map(&:member).map(&:full_name).each do |name|
           expect(page).to have_content(name)

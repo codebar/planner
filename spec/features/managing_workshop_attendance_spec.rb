@@ -1,4 +1,3 @@
-require 'spec_helper'
 RSpec.feature 'Managing workshop attendance', type: :feature do
   let(:coach) { Fabricate(:coach) }
   let(:student) { Fabricate(:student) }

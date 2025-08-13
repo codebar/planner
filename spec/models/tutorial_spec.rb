@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 RSpec.describe Tutorial, type: :model do
   subject(:tutorial) { Fabricate.build(:tutorial) }
 

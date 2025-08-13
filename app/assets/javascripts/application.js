@@ -22,8 +22,6 @@
 //= require pickadate/picker
 //= require pickadate/picker.date
 //= require pickadate/picker.time
-//= require analytics
-//= require gosquared
 //= require subscriptions-toggle
 //= require invitations
 //= require cocoon

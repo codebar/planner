@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 RSpec.feature 'A visitor to the website', type: :feature do
   scenario 'can access and view the cookie policy' do
     visit root_path

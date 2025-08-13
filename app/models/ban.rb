@@ -1,5 +1,5 @@
 class Ban < ApplicationRecord
-  belongs_to :member
+  belongs_to :member, optional: true
   belongs_to :added_by, class_name: 'Member'
 
   validates :expires_at, :reason, :note, :added_by, presence: true

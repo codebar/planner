@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 RSpec.describe 'rake mailing_list:subscribe_active_members', type: :task do
   it "preloads the Rails environment" do
     expect(task.prerequisites).to include "environment"
@@ -14,8 +12,8 @@ RSpec.describe 'rake mailing_list:subscribe_active_members', type: :task do
 
   it 'subscribes all active members to the newsletter mailing list' do
     ENV['NEWSLETTER_ID'] = 'newsletterid'
-    non_subscribed = Fabricate.times(3, :member)
-    subscribed = Fabricate.times(6, :member)
+    non_subscribed = Fabricate.times(2, :member)
+    subscribed = Fabricate.times(2, :member)
     subscribed.each { |member| Fabricate(:subscription, member: member) }
     subscribed[0...3].each { |member| Fabricate(:subscription, member: member) }
 

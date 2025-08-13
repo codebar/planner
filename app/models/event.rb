@@ -8,7 +8,7 @@ class Event < ApplicationRecord
 
   resourcify :permissions, role_cname: 'Permission', role_table_name: :permission
 
-  belongs_to :venue, class_name: 'Sponsor'
+  belongs_to :venue, class_name: 'Sponsor', optional: true
   has_many :sponsorships
   has_many :sponsors, -> { where('sponsorships.level' => nil) }, through: :sponsorships, source: :sponsor
   has_many :bronze_sponsors, -> { where('sponsorships.level' => 'bronze') }, through: :sponsorships, source: :sponsor

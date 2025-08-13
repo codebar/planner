@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 RSpec.feature 'Subscribing to the newsletter', type: :feature do
   before do
     OmniAuth.config.mock_auth[:github] = OmniAuth::AuthHash.new(

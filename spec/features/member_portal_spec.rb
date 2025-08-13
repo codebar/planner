@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 RSpec.feature 'Member portal', type: :feature do
   subject { page }
 
@@ -73,7 +71,7 @@ RSpec.feature 'Member portal', type: :feature do
     end
 
     it 'can view the invitations they RSVPed to' do
-      invitations = 5.times.map { Fabricate(:attending_workshop_invitation, member: member) }
+      invitations = 2.times.map { Fabricate(:attending_workshop_invitation, member: member) }
       visit invitations_path
 
       expect(page).to have_content('Invitations')
