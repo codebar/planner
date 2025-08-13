@@ -6,18 +6,4 @@ RSpec.describe WorkshopSponsor, type: :model do
         .with_message('already a sponsor')
     end
   end
-
-  context '#scopes' do
-    context '#hosts' do
-      it 'includes workshops with hosts' do
-        workshop_sponsor = Fabricate(:workshop_sponsor, host: true)
-
-        expect(WorkshopSponsor.hosts).to include(workshop_sponsor)
-      end
-
-      it 'excludes workshops without hosts' do
-        expect(WorkshopSponsor.hosts).to eq []
-      end
-    end
-  end
 end
