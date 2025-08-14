@@ -1,5 +1,5 @@
 class ImageUploader < CarrierWave::Uploader::Base
-  storage :sftp if Rails.env.production?
+  storage :aws if Rails.env.production?
 
   # Include RMagick or MiniMagick support:
   include CarrierWave::MiniMagick

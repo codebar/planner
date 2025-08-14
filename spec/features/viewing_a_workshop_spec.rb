@@ -1,4 +1,3 @@
-require 'spec_helper'
 RSpec.feature 'Viewing a workshop page', type: :feature do
   context 'visitor' do
     before do

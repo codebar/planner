@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 RSpec.describe MemberPresenter do
   let(:member) { Fabricate(:member, skill_list: 'java, ruby') }
   let(:member_presenter) { MemberPresenter.new(member) }

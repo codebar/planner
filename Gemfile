@@ -1,28 +1,31 @@
 source 'https://rubygems.org'
-ruby '3.2.2'
+ruby '3.4.4'
 
 gem 'rails', '7.0.8.1'
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem 'sprockets-rails'
-# Reduces boot times through caching; required in config/boot.rb
-gem 'bootsnap', require: false
 
 gem 'acts-as-taggable-on'
+gem 'benchmark' # LOCKED: Added because of activesupport 7.0
+gem 'bigdecimal' # LOCKED: Added because of activesupport 7.0
 gem 'carrierwave'
-gem 'carrierwave-ftp', github: 'luan/carrierwave-ftp', ref: '5481c13', require: 'carrierwave/storage/sftp'
 gem 'cocoon'
+gem "csv" # LOCKED: csv was loaded from the standard library, but is not part of the default gems starting from Ruby 3.4.0. Due to config/application.rb
 gem 'delayed_job'
 gem 'delayed_job_active_record'
+gem 'drb' # LOCKED: Added because of pry-remote
 gem 'font_awesome5_rails'
 gem 'bootstrap', '~> 5'
 gem 'friendly_id'
 gem 'haml'
 gem 'high_voltage'
+gem 'irb' # LOCKED: Added because of byebug
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 
 # Use Active Storage variant
-gem 'image_processing', '~> 1.2'
+gem 'image_processing'
+gem 'mutex_m' # LOCKED: Added because of activesupport 7.0
 gem 'nokogiri'
 gem 'omniauth'
 gem 'omniauth-github'
@@ -33,6 +36,7 @@ gem 'premailer-rails'
 
 gem 'pundit'
 gem 'rails4-autocomplete'
+gem 'reline' # LOCKED: Added because of readline is not part of Ruby 3.5.0
 gem 'rolify'
 # Use Sass to process CSS
 gem 'sassc-rails'
@@ -52,10 +56,10 @@ gem 'faraday'
 
 gem 'stripe'
 
-gem 'rails-html-sanitizer', '~> 1.6.1'
+gem 'rails-html-sanitizer', '~> 1.6.2'
 
 # Use the Puma web server [https://github.com/puma/puma]
-gem 'puma', '~> 6.4'
+gem 'puma', '~> 6.6'
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
 gem 'importmap-rails'
 # Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
@@ -101,10 +105,10 @@ group :test do
   gem 'capybara'
   gem 'selenium-webdriver'
   gem 'database_cleaner'
-  gem 'shoulda-matchers', '~> 6.2'
+  gem 'shoulda-matchers', '~> 6.5'
   gem 'simplecov',      require: false
   gem 'simplecov-lcov', require: false
-  gem 'timecop', '~> 0.9.8'
+  gem 'timecop', '~> 0.9.10'
 end
 
 group :production do
@@ -114,3 +118,5 @@ end
 
 gem 'rollbar'
 gem 'skylight'
+
+gem "carrierwave-aws", "~> 1.6"

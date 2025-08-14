@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 RSpec.feature 'Managing contact preferences', type: :feature do
 
   context 'A sponsor contact can manage their contact preferences' do

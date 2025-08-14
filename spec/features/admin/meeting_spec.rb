@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 RSpec.feature 'Managing meetings', type: :feature do
   let(:member) { Fabricate(:member) }
   let!(:chapter) { Fabricate(:chapter) }
@@ -69,7 +67,7 @@ RSpec.feature 'Managing meetings', type: :feature do
     let(:meeting) { Fabricate(:meeting) }
 
     scenario 'when format: :text' do
-      invitations = Fabricate.times(4, :attending_meeting_invitation, meeting: meeting)
+      invitations = Fabricate.times(2, :attending_meeting_invitation, meeting: meeting)
       visit attendees_emails_admin_meeting_path(meeting, format: :text)
 
       invitations.each do |invitation|

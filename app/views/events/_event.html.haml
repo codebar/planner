@@ -4,7 +4,7 @@
       .order-md-2
         - if event.chapter
           %span.badge.bg-primary.mb-3.mb-md-0
-            = event.chapter.name
+            = link_to event.chapter.name, event.chapter.slug, class: 'text-light text-decoration-none' 
         - if @user
           - if @user.attending?(event.__getobj__)
             %span.badge.bg-success.mb-3.mb-md-0
@@ -32,8 +32,7 @@
         - if event.organisers.any?
           .mb-3.mb-md-0
             - event.organisers.each do |organiser|
-              = link_to twitter_url_for(organiser.twitter), class: 'd-inline-block mx-1' do
-                = image_tag(organiser.avatar(26), class: 'rounded-circle', title: organiser.full_name, alt: organiser.full_name)
+              = image_tag(organiser.avatar(26), class: 'rounded-circle', title: organiser.full_name, alt: organiser.full_name)
         - if event.sponsors.any?
           .ms-auto
             - event.sponsors.each do |sponsor|

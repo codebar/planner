@@ -9,8 +9,11 @@ jobs:
 
     services:
       postgres:
-        image: postgres:11.5
+        image: postgres:17
         ports: ["5432:5432"]
+        env:
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: test
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
@@ -24,22 +27,19 @@ jobs:
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
       with:
-        ruby-version: 3.2.2
+        # .ruby-version provides the Ruby version implicitly.
         bundler-cache: true
-      env:
-        BUNDLE_JOBS: 4
-        BUNDLE_RETRY: 3
 
     - name: Setup test database
       env:
-        DATABASE_URL: postgres://postgres:@localhost:5432/test
+        DATABASE_URL: postgres://postgres:postgres@localhost:5432/test
         RAILS_ENV: test
       run:
         bundle exec rake db:create db:migrate
 
     - name: Run tests
       env:
-        DATABASE_URL: postgres://postgres:@localhost:5432/test
+        DATABASE_URL: postgres://postgres:postgres@localhost:5432/test
         RAILS_ENV: test
       run: bundle exec rake spec
     - name: Report to Coveralls

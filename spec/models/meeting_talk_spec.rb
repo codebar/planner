@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 RSpec.describe MeetingTalk, type: :model do
   context 'validations' do
     subject { MeetingTalk.new }

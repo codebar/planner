@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 RSpec.feature 'member feedback', type: :feature do
   let(:feedback_request) { Fabricate(:feedback_request) }
   let(:valid_token) { feedback_request.token }
@@ -61,13 +59,12 @@ RSpec.feature 'member feedback', type: :feature do
   context 'Submitting a feedback request' do
     scenario 'I can see success page with message and link to homepage when valid data is given', js: true do
       visit feedback_path(valid_token)
-
       within('.rating') { all('li').at(3).click }
       select_from_chosen(coach.full_name, from: 'feedback_coach_id')
       select_from_chosen(@tutorial.title, from: 'feedback_tutorial_id')
       click_button('Submit feedback')
 
-      expect(current_path).to eq(root_path)
+      expect(page).to have_current_path(root_path)
 
       expect(page).to have_content(feedback_submited_message)
     end

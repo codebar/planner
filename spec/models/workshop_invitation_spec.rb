@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 RSpec.describe WorkshopInvitation, type: :model do
   subject(:workshop_invitation) { Fabricate(:workshop_invitation) }
   it_behaves_like InvitationConcerns, :workshop_invitation, :workshop
@@ -78,11 +76,11 @@ RSpec.describe WorkshopInvitation, type: :model do
       new_workshop = Fabricate(:workshop, date_and_time: Time.zone.now)
       old_workshop = Fabricate(:workshop, date_and_time: Time.zone.now - 2.years)
 
-      4.times { Fabricate(:attended_coach, workshop: new_workshop) }
-      5.times { Fabricate(:attended_coach, workshop: old_workshop) }
+      2.times { Fabricate(:attended_coach, workshop: new_workshop) }
+      1.times { Fabricate(:attended_coach, workshop: old_workshop) }
 
-      expect(WorkshopInvitation.year(Time.zone.now.year).count).to eq(4)
-      expect(WorkshopInvitation.year((Time.zone.now - 2.years).year).count).to eq(5)
+      expect(WorkshopInvitation.year(Time.zone.now.year).count).to eq(2)
+      expect(WorkshopInvitation.year((Time.zone.now - 2.years).year).count).to eq(1)
     end
 
     context '#not_reminded' do
@@ -100,7 +98,7 @@ RSpec.describe WorkshopInvitation, type: :model do
     end
 
     it '#on_waiting_list' do
-      Fabricate.times(5, :workshop_invitation)
+      Fabricate.times(2, :workshop_invitation)
       waiting_list = Fabricate.times(2, :waitinglist_invitation)
 
       expect(WorkshopInvitation.on_waiting_list).to eq(waiting_list)

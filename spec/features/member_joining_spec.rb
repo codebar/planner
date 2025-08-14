@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 RSpec.feature 'A new student signs up', type: :feature do
   before do
     mock_github_auth

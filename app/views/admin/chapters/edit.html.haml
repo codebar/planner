@@ -10,7 +10,6 @@
         = f.input :email, placeholder: 'e.g. cambridge@codebar.io', required: true
         = f.input :city, required: true
         = f.input :description, required: false, input_html: { rows: 3 }, hint: 'Optionally, specify a custom welcome message for the chapter, to be displayed on the chapter page. Max. 280 characters.'
-        = f.input :twitter, placeholder: '@codebarCam', required: false
         = f.input :time_zone, required: true
         = f.input :image, as: :file
         = f.hidden_field :image_cache

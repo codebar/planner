@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 RSpec.describe SponsorsSearch, type: :model do
   let(:search_params) { { name: Faker::Name.name, chapter: Faker::Name.name } }
 

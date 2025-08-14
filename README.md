@@ -2,7 +2,6 @@
 
 [![CI](https://github.com/codebar/planner/workflows/CI/badge.svg?branch=master)](https://github.com/codebar/planner/actions?query=workflow%3ACI)
 [![Coverage Status](https://coveralls.io/repos/codebar/planner/badge.png)](https://coveralls.io/r/codebar/planner)
-[![Code Climate](https://codeclimate.com/github/codebar/planner.png)](https://codeclimate.com/github/codebar/planner)
 
 A tool to help manage [codebar.io](https://codebar.io) members and events.
 

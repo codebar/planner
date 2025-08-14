@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 RSpec.describe ContactPresenter do
   let(:contact_presenter) { ContactPresenter.new(contact) }
   let(:contact) { Fabricate(:contact) }

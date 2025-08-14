@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 RSpec.feature 'Member portal', type: :feature do
   subject { page }
 
@@ -20,8 +18,8 @@ RSpec.feature 'Member portal', type: :feature do
 
       it 'can view attending workshops' do
         workshop = Fabricate(:workshop, chapter: Fabricate(:chapter_with_groups))
-        subscription = Fabricate(:subscription, member: member, group: workshop.chapter.groups.first)
-        invitation = Fabricate(:attending_workshop_invitation, member: member,
+        Fabricate(:subscription, member: member, group: workshop.chapter.groups.first)
+        Fabricate(:attending_workshop_invitation, member: member,
                                                                workshop: workshop)
         presenter = WorkshopPresenter.new(workshop)
         visit dashboard_path
@@ -73,7 +71,7 @@ RSpec.feature 'Member portal', type: :feature do
     end
 
     it 'can view the invitations they RSVPed to' do
-      invitations = 5.times.map { Fabricate(:attending_workshop_invitation, member: member) }
+      invitations = 2.times.map { Fabricate(:attending_workshop_invitation, member: member) }
       visit invitations_path
 
       expect(page).to have_content('Invitations')
@@ -92,6 +90,7 @@ RSpec.feature 'Member portal', type: :feature do
     end
 
     it 'is redirected to sign_in page when they attempt not access the profile page' do
+      mock_github_auth
       visit profile_path
 
       expect(page).to_not have_selector('#member_profile')

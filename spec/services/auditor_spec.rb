@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 RSpec.describe 'Auditor::Audit' do
   let(:sponsor) { Fabricate.build(:sponsor) }
   let(:member) { Fabricate(:member) }

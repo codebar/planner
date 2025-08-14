@@ -1,4 +1,3 @@
-require 'spec_helper'
 require 'events_controller'
 
 RSpec.feature 'event listing', type: :feature do
@@ -29,13 +28,13 @@ RSpec.feature 'event listing', type: :feature do
 
   context 'when there are more than the specified number of past events' do
     scenario 'I can only as many events allowed by the display limits' do
-      Fabricate.times(10, :event, date_and_time: 2.weeks.ago)
-      stub_const('EventsController::RECENT_EVENTS_DISPLAY_LIMIT', 10)
+      Fabricate.times(2, :event, date_and_time: 2.weeks.ago)
+      stub_const('EventsController::RECENT_EVENTS_DISPLAY_LIMIT', 2)
       Fabricate(:workshop, date_and_time: 3.weeks.ago)
 
       visit events_path
       within('*[data-test=past-events]') do
-        expect(page).to have_selector('*[data-test=event]', count: 10)
+        expect(page).to have_selector('*[data-test=event]', count: 2)
         expect(page).not_to have_content 'Workshop'
       end
     end

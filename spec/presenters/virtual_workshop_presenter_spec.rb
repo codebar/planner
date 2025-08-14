@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 RSpec.describe VirtualWorkshopPresenter do
   def double_workshop(attending_coaches:, attending_students:)
     double(:workshop, coach_spaces: 3, student_spaces: 5, chapter: chapter,

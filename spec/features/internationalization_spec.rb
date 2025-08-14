@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 RSpec.feature 'Internationalization', type: :feature do
   after(:each) do
     I18n.locale = :en

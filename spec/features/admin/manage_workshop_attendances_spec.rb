@@ -1,6 +1,6 @@
-require 'spec_helper'
-
 RSpec.feature 'managing workshop attendances', type: :feature do
+  MAX_RETRIES = 3
+
   context 'an admin' do
     let(:member) { Fabricate(:member) }
     let(:chapter) { Fabricate(:chapter) }
@@ -50,8 +50,8 @@ RSpec.feature 'managing workshop attendances', type: :feature do
       expect(page).to have_content('1 are attending as students')
       expect(page).to_not have_selector('i.fa-magic')
 
-      find('span', text: 'Select a member to RSVP').click
-      find("li", text: "#{other_invitation.member.full_name} (#{other_invitation.role})").click
+      find('span', text: 'Select a member to RSVP', visible: true).click
+      find('li', text: "#{other_invitation.member.full_name} (#{other_invitation.role})", visible: true).click
 
       expect(page).to have_content('2 are attending as students')
 

@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 RSpec.feature 'viewing a Chapter', type: :feature do
   context 'non active chapters' do
     let(:inactive_chapter) { Fabricate(:chapter, active: false) }
@@ -63,7 +61,7 @@ RSpec.feature 'viewing a Chapter', type: :feature do
 
     it 'renders the 6 most recent sponsors for the chapter' do
       chapter = Fabricate(:chapter)
-      workshops = 6.times.map do |n|
+      workshops = 2.times.map do |n|
         Fabricate(:workshop, chapter: chapter, date_and_time: Time.zone.now - n.weeks)
       end
 

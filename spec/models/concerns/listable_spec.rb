@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 RSpec.describe Listable, type: :model do
   subject(:workshop) { Fabricate(:workshop) }
 
@@ -7,8 +5,8 @@ RSpec.describe Listable, type: :model do
     context '#today_and_upcoming' do
       it 'returns a list of all today and upcoming workshops' do
         Timecop.travel(Time.now.utc) do
-          Fabricate.times(5, :past_workshop)
-          future_workshops = Fabricate.times(3, :workshop)
+          Fabricate.times(2, :past_workshop)
+          future_workshops = Fabricate.times(1, :workshop)
 
           # Make sure one is not technically upcoming but is happening now
           future_workshops.last.date_and_time = 1.hour.ago
@@ -21,8 +19,8 @@ RSpec.describe Listable, type: :model do
 
     context '#upcoming' do
       it 'returns a list of all upcoming workshops' do
-        Fabricate.times(5, :past_workshop)
-        future_workshops = Fabricate.times(3, :workshop)
+        Fabricate.times(2, :past_workshop)
+        future_workshops = Fabricate.times(1, :workshop)
 
         expect(Workshop.upcoming).to match_array(future_workshops)
       end
@@ -30,8 +28,8 @@ RSpec.describe Listable, type: :model do
 
     context '#past' do
       it 'returns a list of all upcoming workshops' do
-        past_workshops = Fabricate.times(5, :past_workshop)
-        Fabricate.times(3, :workshop)
+        past_workshops = Fabricate.times(2, :past_workshop)
+        Fabricate.times(1, :workshop)
 
         expect(Workshop.past).to match_array(past_workshops)
       end
@@ -39,8 +37,8 @@ RSpec.describe Listable, type: :model do
 
     context '#recent' do
       it 'returns a list of the last 10 workshops' do
-        Fabricate.times(9, :past_workshop)
-        Fabricate.times(3, :workshop)
+        Fabricate.times(1, :past_workshop)
+        Fabricate.times(2, :workshop)
         recent_workshops = 10.times.map do |n|
           Fabricate(:workshop, date_and_time: n.days.ago)
         end

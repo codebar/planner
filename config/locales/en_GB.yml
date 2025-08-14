@@ -204,7 +204,7 @@ en-GB:
     title: "Code of conduct"
     summary:
       title: "The Quick Version"
-      intro: "Our events are dedicated to providing a harassment-free experience for everyone, regardless of gender, sexual orientation, disability, physical appearance, body size, race, or religion. We do not tolerate harassment of our members in any form. Sexual language and imagery is not appropriate for any of our events, including talks, workshops, parties, Twitter and any other online media. Members violating these rules may be sanctioned or expelled from the event and any future events at the discretion of the organisers."
+      intro: "Our events are dedicated to providing a harassment-free experience for everyone, regardless of gender, sexual orientation, disability, physical appearance, body size, race, or religion. We do not tolerate harassment of our members in any form. Sexual language and imagery is not appropriate for any of our events, including talks, workshops, parties, and online media. Members violating these rules may be sanctioned or expelled from the event and any future events at the discretion of the organisers."
     content:
       title: "The Long Version"
       harassment: "Harassment includes offensive verbal comments related to gender, sexual orientation, disability, physical appearance, body size, race, religion, sexual images in public spaces, deliberate intimidation, stalking, following, harassing photography or recording, sustained disruption of talks or other events, inappropriate physical contact, and unwelcome sexual attention."
@@ -379,7 +379,7 @@ en-GB:
               h4: Lawful basis
             r1:
               c1: Students
-              c2: This includes personal data that is provided by you or collected by us to enable you to subscribe to codebar as a student. This may include your name, email address, phone number, pronouns, self-written bio, social media details (e.g. twitter handle), your self-recognition as being underrepresented (with your consent), and the location you choose to subscribe to.
+              c2: This includes personal data that is provided by you or collected by us to enable you to subscribe to codebar as a student. This may include your name, email address, phone number, pronouns, self-written bio, , your self-recognition as being underrepresented (with your consent), and the location you choose to subscribe to.
               c3: For administrative purposes when you sign up to events, to communicate with you, and to provide you with our newsletters and events information.
               c4:
                 l1: Performance of a contract
@@ -387,20 +387,20 @@ en-GB:
                 l3: Legitimate interests
             r2:
               c1: Coaches
-              c2: This includes personal data that is provided by you or collected by us to enable you to volunteer at codebar as a coach. This may include your name, email address, phone number, pronouns, self-written bio/skills, social media details (e.g. twitter handle), your self-recognition as being underrepresented (with your consent), and the location you choose to volunteer at.
+              c2: This includes personal data that is provided by you or collected by us to enable you to volunteer at codebar as a coach. This may include your name, email address, phone number, pronouns, self-written bio/skills, , your self-recognition as being underrepresented (with your consent), and the location you choose to volunteer at.
               c3: For administrative purposes when you volunteer for workshops, to communicate with you, to manage workshop attendance, and to provide you with our newsletters and events information.
               c4:
                 l1: Consent
                 l2: Legitimate interests
             r3:
               c1: Organizers
-              c2: This includes personal data that is provided by you or collected by us, which may include your name, email address, phone number, pronouns, self-written bio/skills, social media details (e.g. twitter handle), slack username, signed documentation, and the location you choose to volunteer at.
+              c2: This includes personal data that is provided by you or collected by us, which may include your name, email address, phone number, pronouns, self-written bio/skills, , slack username, signed documentation, and the location you choose to volunteer at.
               c3: To organise and communicate workshops.
               c4:
                 l1: Legitimate interests
             r4:
               c1: Hosts
-              c2: We may collect personal information of employees working at companies that agree to host our workshops. This information may include the employees' name, email address, contact number, social media details (e.g. twitter handle), and place of work.
+              c2: We may collect personal information of employees working at companies that agree to host our workshops. This information may include the employees' name, email address, contact number, , and place of work.
               c3: In order to market, promote, host and operate workshops.
               c4:
                 l1: Legitimate interests

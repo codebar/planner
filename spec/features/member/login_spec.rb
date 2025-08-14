@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 RSpec.feature 'Member logging in', type: :feature do
   let(:member) { Fabricate(:member) }
 

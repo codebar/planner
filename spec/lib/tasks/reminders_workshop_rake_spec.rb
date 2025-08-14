@@ -1,5 +1,3 @@
-require 'spec_helper'
-
 RSpec.describe 'rake reminders:workshop', type: :task do
   let!(:workshop) { Fabricate(:workshop, date_and_time: Time.zone.now + 29.hours) }
 

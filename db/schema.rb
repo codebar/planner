@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_12_30_162506) do
+ActiveRecord::Schema[7.0].define(version: 2025_08_06_181500) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -93,8 +93,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_30_162506) do
     t.datetime "created_at", precision: nil
     t.datetime "updated_at", precision: nil
     t.string "email"
-    t.string "twitter"
-    t.string "twitter_id"
     t.string "slug"
     t.boolean "active", default: true
     t.string "time_zone", default: "London", null: false
@@ -382,7 +380,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_30_162506) do
     t.string "name"
     t.string "surname"
     t.string "email"
-    t.string "twitter"
     t.string "about_you"
     t.datetime "created_at", precision: nil
     t.datetime "updated_at", precision: nil
