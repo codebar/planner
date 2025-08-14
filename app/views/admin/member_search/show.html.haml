@@ -7,6 +7,6 @@
       .col.col-md-10.col-lg-8
         %h2 Search Results
         %ul.list-group
-          - @members.each do |member|
+          - members.each do |member|
             %li.list-group-item
               = link_to member.name_and_surname, admin_member_path(member)
