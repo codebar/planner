@@ -1,4 +1,4 @@
-RSpec.describe 'Add a user to an existing workshop', type: :feature do
+RSpec.describe 'Add a user to an existing workshop', js: true, type: :feature do
   let(:member) {Fabricate(:member)}
 
   let(:juliet) {Fabricate(:member, name: 'Juliet',  surname: 'Capulet')}
@@ -10,7 +10,7 @@ RSpec.describe 'Add a user to an existing workshop', type: :feature do
    @start_page = "/admin/workshops/#{workshop.id}"
   end
 
-  scenario 'An admin searches and gets an exact match', js: true do
+  scenario 'An admin searches and gets an exact match' do
     visit @start_page
 
     params = {callback_url: @start_page.to_s}.to_query
