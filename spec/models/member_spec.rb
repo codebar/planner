@@ -157,5 +157,13 @@ RSpec.describe Member do
       end
     end
 
+    describe 'search bar is empty' do
+      it 'returns no members' do
+        Fabricate(:member)
+        expect(Member.all.size).to be > 0
+        expect(Member.find_members('').size).to eq(0)
+      end
+    end
+
   end
 end
