@@ -40,8 +40,4 @@ RSpec.describe 'Add a user to an existing workshop', js: true, type: :feature do
 
     expect(params[:member_pick][:members]).to eq([romeo.id.to_s])
   end
-  #
-  # scenario 'An admin adds multiple members to a workshop' do
-  #   assert false
-  # end
 end
