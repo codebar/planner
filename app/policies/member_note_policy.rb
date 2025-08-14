@@ -4,10 +4,11 @@ class MemberNotePolicy < ApplicationPolicy
   end
 
   def destroy?
-    user && (user.has_role?(:admin) || user.has_role?(:organiser, record.chapter))
+    puts "Chapters: #{record.member.chapters.inspect}"
+    user && (user.has_role?(:admin) || user == record.author || record.member.chapters.any? { |chapter| user.has_role?(:organiser, chapter) })
   end
 
   def update?
-    user && (user.has_role?(:admin) || user.has_role?(:organiser, record.chapter))
+    user && (user.has_role?(:admin) || user == record.author || record.member.chapters.any? { |chapter| user.has_role?(:organiser, chapter) })
   end
 end
