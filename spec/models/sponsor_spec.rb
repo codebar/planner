@@ -1,4 +1,4 @@
-RSpec.describe Sponsor, type: :model do
+RSpec.describe Sponsor do
   subject(:sponsor) { Fabricate.build(:sponsor) }
 
   context 'validations' do

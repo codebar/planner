@@ -1,4 +1,4 @@
-RSpec.describe EligibilityInquiry, type: :model do
+RSpec.describe EligibilityInquiry do
   describe '#create' do
     let(:member) { Fabricate(:member) }
     let(:admin) { Fabricate(:member) }

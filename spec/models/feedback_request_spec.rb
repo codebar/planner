@@ -1,4 +1,4 @@
-RSpec.describe FeedbackRequest, type: :model do
+RSpec.describe FeedbackRequest do
   subject { Fabricate(:feedback_request) }
 
   it { should respond_to(:member) }

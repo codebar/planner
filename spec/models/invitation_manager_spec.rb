@@ -1,4 +1,4 @@
-RSpec.describe InvitationManager, type: :model do
+RSpec.describe InvitationManager do
   subject(:manager) { InvitationManager.new }
 
   let(:chapter) { Fabricate(:chapter) }

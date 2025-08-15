@@ -1,4 +1,4 @@
-RSpec.describe MemberNote, type: :model do
+RSpec.describe MemberNote do
   context 'Mandatory attributes' do
     it 'Requires a note' do
       note = Fabricate.build(:member_note, note: nil)

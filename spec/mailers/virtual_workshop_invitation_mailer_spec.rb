@@ -1,4 +1,4 @@
-RSpec.describe VirtualWorkshopInvitationMailer, type: :mailer do
+RSpec.describe VirtualWorkshopInvitationMailer do
   let(:email) { ActionMailer::Base.deliveries.last }
   let(:workshop) { Fabricate(:workshop) }
   let(:member) { Fabricate(:member) }

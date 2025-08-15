@@ -1,4 +1,4 @@
-RSpec.describe Member, type: :model do
+RSpec.describe Member do
   let(:member) { Fabricate(:member) }
 
   describe 'mandatory attributes' do

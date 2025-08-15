@@ -1,4 +1,4 @@
-RSpec.describe Ban, type: :model do
+RSpec.describe Ban do
   context 'validates' do
     it { is_expected.to validate_presence_of(:expires_at) }
     it { is_expected.to validate_presence_of(:reason) }

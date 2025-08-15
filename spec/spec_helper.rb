@@ -42,6 +42,7 @@ RSpec.configure do |config|
   config.include LoginHelpers
   config.include ActiveSupport::Testing::TimeHelpers
   config.include SelectFromChosen, type: :feature
+  config.infer_spec_type_from_file_location!
   config.use_transactional_fixtures = false
   config.infer_base_class_for_anonymous_controllers = false
   config.order = 'random'
@@ -89,7 +90,6 @@ RSpec.configure do |config|
   config.after(:each) do
     DatabaseCleaner.clean
   end
-
 
   config.after do |example|
     # Take a screenshot if the example failed and JavaScript is enabled

@@ -1,3 +1,3 @@
-RSpec.describe Address, type: :model do
+RSpec.describe Address do
   subject(:address) { Fabricate.build(:address) }
 end

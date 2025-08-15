@@ -1,4 +1,4 @@
-RSpec.describe Chapter, type: :model do
+RSpec.describe Chapter do
   it { should validate_presence_of(:city) }
   it { should validate_length_of(:description).is_at_most(280) }
 

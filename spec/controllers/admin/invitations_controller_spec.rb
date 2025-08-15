@@ -1,5 +1,3 @@
-require "spec_helper"
-
 RSpec.describe Admin::InvitationsController, type: :controller do
   let(:invitation) { Fabricate(:student_workshop_invitation) }
   let(:workshop) { invitation.workshop }

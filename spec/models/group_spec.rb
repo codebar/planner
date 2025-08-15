@@ -1,4 +1,4 @@
-RSpec.describe Group, type: :model do
+RSpec.describe Group do
   subject(:group) { Fabricate.build(:group) }
 
   context 'validations' do

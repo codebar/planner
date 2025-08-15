@@ -1,4 +1,4 @@
-RSpec.describe ApplicationHelper, type: :helper do
+RSpec.describe ApplicationHelper do
   describe '#contact_email' do
     it "returns the workshop chapter's email" do
       workshop = Fabricate(:workshop)

@@ -1,4 +1,4 @@
-RSpec.describe WaitingList, type: :model do
+RSpec.describe WaitingList do
   let(:workshop) { Fabricate(:workshop) }
 
   context 'scopes' do

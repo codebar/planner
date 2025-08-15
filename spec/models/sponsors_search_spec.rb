@@ -1,4 +1,4 @@
-RSpec.describe SponsorsSearch, type: :model do
+RSpec.describe SponsorsSearch do
   let(:search_params) { { name: Faker::Name.name, chapter: Faker::Name.name } }
 
   describe 'initialization params' do

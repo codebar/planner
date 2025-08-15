@@ -1,4 +1,4 @@
-RSpec.describe AttendanceWarning, type: :model do
+RSpec.describe AttendanceWarning do
   describe '#create' do
     let(:member) { Fabricate(:member) }
     let(:admin) { Fabricate(:member) }

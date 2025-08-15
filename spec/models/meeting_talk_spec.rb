@@ -1,4 +1,4 @@
-RSpec.describe MeetingTalk, type: :model do
+RSpec.describe MeetingTalk do
   context 'validations' do
     subject { MeetingTalk.new }
 

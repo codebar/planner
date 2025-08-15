@@ -1,4 +1,4 @@
-RSpec.describe Tutorial, type: :model do
+RSpec.describe Tutorial do
   subject(:tutorial) { Fabricate.build(:tutorial) }
 
   it { should respond_to(:title) }

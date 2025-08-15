@@ -1,4 +1,4 @@
-RSpec.describe MeetingInvitationMailer, type: :mailer do
+RSpec.describe MeetingInvitationMailer do
   let(:meeting) { Fabricate(:meeting) }
   let(:member) { Fabricate(:member) }
   let(:invitation) { Fabricate(:meeting_invitation, meeting: meeting, member: member) }
