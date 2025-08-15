@@ -137,4 +137,33 @@ RSpec.describe Member do
       expect(member.flag_to_organisers?).to be true
     end
   end
+
+  describe '#find_members' do
+    describe 'search by first name' do
+      it "should find the member" do
+        expect(Member.find_members(member.name).first).to eq(member)
+      end
+    end
+
+    describe 'search by last name' do
+      it "should find the member" do
+        expect(Member.find_members(member.surname).first).to eq(member)
+      end
+    end
+
+    describe 'search by full name' do
+      it "should find the member" do
+        expect(Member.find_members("#{member.name} #{member.surname}").first).to eq(member)
+      end
+    end
+
+    describe 'search bar is empty' do
+      it 'should return no members' do
+        Fabricate(:member)
+        expect(Member.all.size).to be > 0
+        expect(Member.find_members('').size).to eq(0)
+      end
+    end
+
+  end
 end

@@ -1,0 +1,6 @@
+= simple_form_for :member_search, url: admin_member_search_index_path, method: :get, html: {multipart: true, novalidate: true } do |f|
+  .row 
+    .col-12.col-md-6
+      = f.input :name, label: 'Member Name', input_html: { placeholder: 'Enter member name' }
+      = f.button :submit, 'Search', class: 'btn btn-primary mt-3', name: nil
+      = f.hidden_field 'callback_url', value: callback_url
