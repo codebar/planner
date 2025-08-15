@@ -43,6 +43,7 @@ jobs:
         RAILS_ENV: test
       run: bundle exec rake spec
     - name: Report to Coveralls
+      continue-on-error: true # Don't fail the build if Coveralls fails to upload.
       uses: coverallsapp/github-action@v2
       with:
         github-token: ${{ secrets.github_token }}
