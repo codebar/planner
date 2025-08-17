@@ -2,7 +2,7 @@
   - unless (name.eql?('notice') && @suppress_notices) || (name.eql?('warning') && @suppress_warnings)
     - name = name.eql?('notice') ? 'info' : name
     - if msg.is_a?(String)
-      .alert.alert-dismissible.fade.show.mb-0{ 'data-alert': '', class: "alert-#{name}", role: 'alert' }
+      .alert.alert-dismissible.fade.show.mb-0.text-center.bg-warning{ 'data-alert': '', class: "alert-#{name}", role: 'alert' }
         = content_tag :div, msg.html_safe
         %button.btn-close{ type: 'button', 'data-bs-dismiss': 'alert', 'aria-label': 'Close' }
     - elsif msg.is_a?(Array)
