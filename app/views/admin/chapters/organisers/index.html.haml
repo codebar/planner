@@ -1,4 +1,8 @@
 .container.py-4.py-lg-5.organisers
+  - if flash[:notice]
+    .alert.alert-success= flash[:notice]
+  - if flash[:alert]
+    .alert.alert-danger= flash[:alert]
   .row.mb-4
     .col
       %h1
