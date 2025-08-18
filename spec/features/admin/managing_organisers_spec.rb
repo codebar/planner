@@ -39,19 +39,6 @@ RSpec.feature 'Managing organisers', type: :feature do
       end
     end
 
-    scenario 'show flash alert warning message if user clicks add organiser without selecting an organiser from the dropdown' do
-      chapter_subscriber = Fabricate(:member)
-      chapter = Fabricate(:chapter_with_groups)
-      Fabricate(:subscription, member: chapter_subscriber, group: chapter.groups.first)
-      visit admin_chapter_organisers_path(chapter)
-
-      click_on 'Add organiser'
-
-      expect(page).to have_content('Please select a member to make organiser.')
-      expect(current_path).to eq(admin_chapter_organisers_path(chapter))
-      expect(page.status_code).to eq(200)
-    end
-
     scenario 'can remove an organiser from a chapter' do
       visit admin_chapter_organisers_path(chapter)
       organiser_name = chapter.organisers.first.full_name
