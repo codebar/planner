@@ -36,7 +36,7 @@
                   %small #{humanize_date(@workshop.date_and_time, @workshop.ends_at, with_time: true)}
                 = link_to 'View invitation and RSVP', full_url_for(invitation_url(@invitation)), class: 'btn'
                 - if @workshop.description.present?
-                  %p
+                  %p{ style: 'margin-top: 15px;' }
                     %strong Description:
                     = @workshop.description
               %td{ width: '40%', style: 'vertical-align: top;'}
