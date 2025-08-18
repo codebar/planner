@@ -60,4 +60,14 @@ RSpec.describe WorkshopInvitationMailer do
     expect(email.body.encoded).to match("the workshop on #{humanize_date(workshop.date_and_time, with_time: true)}")
     expect(email.body.encoded).to match(workshop.chapter.email)
   end
+
+  it '#attending includes the workshop description' do
+    description = "This is a test workshop description."
+    workshop = Fabricate(:workshop, description: description)
+    invitation = Fabricate(:workshop_invitation, workshop: workshop, member: member)
+
+    WorkshopInvitationMailer.attending(workshop, member, invitation).deliver_now
+
+    expect(email.body.encoded).to include(description)
+  end
 end
