@@ -25,7 +25,7 @@ RSpec.describe Admin::MemberSearchController, type: :controller do
 
       context "and when admin user searches for a single existing user" do
         before do
-          allow(Member).to receive(:find_members).with('Juliet').and_return(fake_relation)
+          allow(Member).to receive(:find_members_by_name).with('Juliet').and_return(fake_relation)
           allow(fake_relation).to receive(:select).with(any_args).and_return([fake_juliet])
           get :index, params: {member_search: {name: "Juliet", callback_url: root_path}}
         end
@@ -43,7 +43,7 @@ RSpec.describe Admin::MemberSearchController, type: :controller do
       let(:fake_romeo) { double('Member', id: 2, name: 'Romeo', surname: 'Capulet')}
 
         before do
-          allow(Member).to receive(:find_members).with('e').and_return(fake_relation)
+          allow(Member).to receive(:find_members_by_name).with('e').and_return(fake_relation)
           allow(fake_relation).to receive(:select).with(any_args).and_return([fake_juliet, fake_romeo])
           get :index, params: {member_search: {name: 'e', callback_url: root_path}}
         end
