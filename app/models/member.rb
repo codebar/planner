@@ -118,6 +118,11 @@ class Member < ApplicationRecord
     member_notes.where('created_at > ?', notes_from_date)
   end
 
+  def self.find_members_by_name(name)
+    name.strip!
+    name.eql?('') ? self.none : where("CONCAT(name, ' ', surname) ILIKE ?", "%#{name}%")
+  end
+
   private
 
   def invitations_on(date)
