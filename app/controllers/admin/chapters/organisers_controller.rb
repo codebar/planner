@@ -12,11 +12,6 @@ class Admin::Chapters::OrganisersController < Admin::ApplicationController
   def create
     authorize :organiser
 
-    if params[:organiser].blank? || params[:organiser][:organiser].blank?
-      flash[:alert] = 'Please select a member to make organiser.'
-      redirect_to admin_chapter_organisers_path(@chapter) and return
-    end
-
     member = Member.find(params[:organiser][:organiser])
     member.add_role(:organiser, @chapter)
 
