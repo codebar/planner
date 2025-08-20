@@ -20,6 +20,9 @@ class Member < ApplicationRecord
   validates :email, uniqueness: true
   validates :about_you, length: { maximum: 255 }
 
+  DIETARY_RESTRICTIONS = %w[vegan vegetarian pescetarian halal gluten_free dairy_free other].freeze
+  validates_inclusion_of :dietary_restrictions, in: DIETARY_RESTRICTIONS
+
   scope :accepted_toc, -> { where.not(accepted_toc_at: nil) }
   scope :order_by_email, -> { order(:email) }
   scope :subscribers, -> { joins(:subscriptions).order('created_at desc').uniq }
