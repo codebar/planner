@@ -31,6 +31,10 @@
               = invitation.member.email
             - else
               = invitation.member.full_name
+          - if invitation.member.dietary_restrictions.present?
+            %p
+              - invitation.member.dietary_restrictions.each do |dr|
+                %span.badge.bg-secondary= dr.titleize
         .col-6
           - if invitation.tutorial?
             %p.mb-1 Tutorial: #{invitation.tutorial}
