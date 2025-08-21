@@ -721,6 +721,8 @@ en:
         accessibility_info: Accessibility information
         number_of_coaches: Coach spots
         seats: Student spots
+      member:
+        dietary_restrictions: If you have any dietary restrictions, let us know about them here
   activerecord:
     attributes:
       job:

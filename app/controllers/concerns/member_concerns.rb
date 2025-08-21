@@ -10,8 +10,10 @@ module MemberConcerns
 
     def member_params
       params.require(:member).permit(
-        :pronouns, :name, :surname, :email, :mobile, :about_you, :skill_list, :newsletter
-      )
+        :pronouns, :name, :surname, :email, :mobile, :about_you, :skill_list, :newsletter, dietary_restrictions: [],
+      ).tap do |params|
+        params[:dietary_restrictions] = params[:dietary_restrictions].reject(&:blank?) if params[:dietary_restrictions]
+      end
     end
 
     def suppress_notices
