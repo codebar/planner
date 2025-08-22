@@ -23,6 +23,12 @@ class MemberPresenter < BasePresenter
     role.eql?('Coach') ? coach_pairing_details(note) : student_pairing_details(tutorial, note)
   end
 
+  def displayed_dietary_restrictions
+    (dietary_restrictions - ['other']).map(&:humanize).tap do |drs|
+      drs << other_dietary_restrictions if other_dietary_restrictions? && other_dietary_restrictions.present?
+    end.map(&:upcase_first)
+  end
+
   private
 
   def coach_pairing_details(note)
