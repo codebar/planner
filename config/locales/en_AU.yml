@@ -48,7 +48,7 @@ en-AU:
         format: '%u%n'
   homepage:
     intro: "<strong>codebar</strong> is a charity that facilitates the growth of a diverse tech community by running free regular programming workshops for minority groups in tech."
-    explanation: "Our goal is to enable minority group members to learn programming in a safe and collaborative environment and expand their career opportunities. To achieve this we run free regular workshops, regular one-off events and try to create opportunities for our students making technology and coding more accessible."
+    explanation: "Our goal is to enable people from underrepresented groups to learn programming in a safe and collaborative environment and expand their career opportunities. To achieve this we run free regular workshops, regular one-off events and try to create opportunities for our students making technology and coding more accessible."
     participate:
       students_title: "Students"
       students_explanation_p1: "Our students come from diverse backgrounds—some aspiring to become full-time developers, while others simply want to learn the basics of coding in a supportive environment."
@@ -228,7 +228,7 @@ en-AU:
     new:
       intro_html: "We provide a welcoming, inclusive, and supportive learning environment, with a strict zero-tolerance policy for any form of harassment or inappropriate behavior. Please take a moment to review our <a href='%{link}'>code of conduct</a> before signing up."
       students:
-        intro_html: "If you’re interested in attending as a student, be sure to check our <a href='%{link}'>eligibility criteria</a>. Our workshops and events are exclusively for women, non-binary, LGBTQ+ members, and people from underrepresented minority groups."
+        intro_html: "If you’re interested in attending as a student, be sure to check our <a href='%{link}'>eligibility criteria</a>. Our workshops and events are exclusively for women, non-binary, LGBTQ+ members, and people from underrepresented groups."
         github: "When you click the sign-up button, you'll be redirected to GitHub. After logging in with your GitHub account, you'll return to the codebar website. If you don’t have an account yet, creating one is quick and easy—and it will be useful as you begin your coding journey!"
       invitations: "Invitations are sent out periodically, so don't worry if you don't receive one as soon as you register."
   footer:
