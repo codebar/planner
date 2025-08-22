@@ -15,7 +15,7 @@
     .col-12
       = f.input :dietary_restrictions, collection: Member::DIETARY_RESTRICTIONS, as: :check_boxes, label_method: :titleize
       = f.input :other_dietary_restrictions, placeholder: 'Other dietary restrictions',
-        wrapper_html: { class: "mt-n3 #{!@member.other_dietary_restrictions? ? 'd-none' : ''}" }, label_html: { class: 'sr-only' }
+        wrapper_html: { class: class_names('mt-n3', 'd-none': !@member.other_dietary_restrictions?) }, label_html: { class: 'sr-only' }
     - if @member.coach?
       .col-12
         = f.input :skill_list, label: 'Skills, enter as a comma separated list', input_html: { value: @member.skill_list.join(", ") }
