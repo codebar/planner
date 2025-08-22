@@ -121,6 +121,10 @@ class Member < ApplicationRecord
     member_notes.where('created_at > ?', notes_from_date)
   end
 
+  def other_dietary_restrictions?
+    dietary_restrictions.present? && dietary_restrictions.include?('other')
+  end
+
   def self.find_members_by_name(name)
     name.strip!
     name.eql?('') ? self.none : where("CONCAT(name, ' ', surname) ILIKE ?", "%#{name}%")
