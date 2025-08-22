@@ -22,6 +22,7 @@ class Member < ApplicationRecord
 
   DIETARY_RESTRICTIONS = %w[vegan vegetarian pescetarian halal gluten_free dairy_free other].freeze
   validates_inclusion_of :dietary_restrictions, in: DIETARY_RESTRICTIONS
+  validates_presence_of :other_dietary_restrictions, if: :other_dietary_restrictions?
 
   scope :accepted_toc, -> { where.not(accepted_toc_at: nil) }
   scope :order_by_email, -> { order(:email) }
