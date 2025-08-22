@@ -1,10 +1,10 @@
 $(document).ready(function() {
   $('#member_dietary_restrictions_other').on('change', function () {
-    const $el = $('#member_other_dietary_restrictions').parent();
-    if ($el.hasClass('d-none')) {
-      $el.removeClass('d-none').hide().slideDown(50);
+    const $elementToToggle = $('#member_other_dietary_restrictions').parent();
+    if ($elementToToggle.hasClass('d-none')) {
+      $elementToToggle.removeClass('d-none').hide().slideDown(50);
     } else {
-      $el.slideUp(50, () => $el.addClass('d-none'));
+      $elementToToggle.slideUp(50, () => $elementToToggle.addClass('d-none'));
     }
   });
 });
