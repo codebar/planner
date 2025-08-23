@@ -30,14 +30,8 @@ class Workshop < ApplicationRecord
   before_validation :set_date_and_time, :set_end_date_and_time, if: proc { |model| model.chapter_id.present? }
   before_validation :set_opens_at
 
-  def workshop_sponsors_with_host_true
-    Workshop.includes(:workshop_sponsors).flat_map do |workshop|
-      workshop.workshop_sponsors.select { |ws| ws.host == true && ws.workshop_id == id }
-    end
-  end
-
   def host
-    workshop_sponsors_with_host_true.first&.sponsor
+    WorkshopSponsor.hosts.for_workshop(id).first&.sponsor
   end
 
   def waiting_list
