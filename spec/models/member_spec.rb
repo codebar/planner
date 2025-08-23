@@ -15,6 +15,28 @@ RSpec.describe Member do
         it { expect(member).to validate_presence_of(:email) }
         it { expect(member).to validate_presence_of(:about_you) }
       end
+
+
+      context 'how_you_found_us validation' do
+        let(:new_member) { Fabricate(:member) }
+        it 'is invalid if how_you_found_us is nil' do
+          new_member.how_you_found_us = nil
+          new_member.valid?
+          expect(new_member.errors[:how_you_found_us]).to include("You must select at least one option")
+        end
+
+        it 'is invalid if how_you_found_us is an empty array' do
+          new_member.how_you_found_us = []
+          new_member.valid?
+          expect(new_member.errors[:how_you_found_us]).to include("You must select at least one option")
+        end
+
+        it 'is valid if how_you_found_us has at least one non-blank option' do
+          new_member.how_you_found_us = ['From a friend']
+          new_member.valid?
+          expect(new_member.errors[:how_you_found_us]).to be_empty
+        end
+      end
     end
 
     describe 'properties' do

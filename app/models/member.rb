@@ -19,6 +19,7 @@ class Member < ApplicationRecord
   validates :name, :surname, :email, :about_you, presence: true, if: :can_log_in?
   validates :email, uniqueness: true
   validates :about_you, length: { maximum: 255 }
+  validate :how_you_found_us_must_have_at_least_one_option
 
   scope :accepted_toc, -> { where.not(accepted_toc_at: nil) }
   scope :order_by_email, -> { order(:email) }
@@ -124,6 +125,12 @@ class Member < ApplicationRecord
   end
 
   private
+
+  def how_you_found_us_must_have_at_least_one_option
+    if how_you_found_us.blank? || how_you_found_us.reject(&:blank?).empty?
+      errors.add(:how_you_found_us, 'You must select at least one option')
+    end
+  end
 
   def invitations_on(date)
     workshop_invitations
