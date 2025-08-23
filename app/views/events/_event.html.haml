@@ -5,10 +5,11 @@
         - if event.chapter
           %span.badge.bg-primary.mb-3.mb-md-0
             = link_to event.chapter.name, event.chapter.slug, class: 'text-light text-decoration-none' 
-        - if @user
-          - if @user.attending?(event.__getobj__)
+        - if !attending_ids.blank?
+          - if attending_ids.include?(event.id)
             %span.badge.bg-success.mb-3.mb-md-0
               = link_to 'Attending', event.path, class: 'text-light text-decoration-none'
+        - if @user
           - if @user.event_organiser?(event)
             %span.badge.bg-secondary.mb-3.mb-md-0
               = link_to 'Manage', event.admin_path, class: 'text-light text-decoration-none'

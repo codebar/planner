@@ -4,7 +4,7 @@ class DashboardController < ApplicationController
 
   DEFAULT_UPCOMING_EVENTS = 5
 
-  helper_method :year_param
+  helper_method :year_param, :attending_workshops
 
   def show
     @chapters = Chapter.active.all.order(:created_at)
@@ -13,7 +13,7 @@ class DashboardController < ApplicationController
       hash[key] = EventPresenter.decorate_collection(value)
       hash
     end
-
+    @attending_ids = attending_workshops
     @testimonials = Testimonial.order(Arel.sql('RANDOM()')).limit(5).includes(:member)
   end
 
@@ -83,5 +83,9 @@ class DashboardController < ApplicationController
     events = Event.includes(:venue, :sponsors).upcoming.take(DEFAULT_UPCOMING_EVENTS)
 
     [*workshops, *events, meeting].uniq.compact
+  end
+
+  def attending_workshops
+    current_user.nil? ? Set.new : current_user.workshop_invitations.accepted.pluck(:id).to_set
   end
 end
