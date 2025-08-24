@@ -1,4 +1,5 @@
 class MemberPresenter < BasePresenter
+  include FalseResponder
 
   def initialize(current_user)
     @member = current_user
