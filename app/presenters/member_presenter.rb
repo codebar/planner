@@ -32,6 +32,10 @@ class MemberPresenter < BasePresenter
     @member.nil? ? Set.new : workshop_invitations.accepted.pluck(:id).to_set
   end
 
+  def attending_events
+    @member.nil? ? Set.new : invitations.accepted.pluck(:id).to_set
+  end
+
   private
 
   def coach_pairing_details(note)

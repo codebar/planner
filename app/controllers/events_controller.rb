@@ -23,6 +23,7 @@ class EventsController < ApplicationController
     events << Event.upcoming.includes(:venue, :sponsors).all
     events = events.compact.flatten.sort_by(&:date_and_time).group_by(&:date)
     @events = events.map.inject({}) { |hash, (key, value)| hash[key] = EventPresenter.decorate_collection(value); hash }
+    @attending_ids = MemberPresenter.new(current_user).attending_events
   end
 
   def show
