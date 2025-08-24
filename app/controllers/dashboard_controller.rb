@@ -24,6 +24,7 @@ class DashboardController < ApplicationController
       hash
     end
     @announcements = current_user.announcements.active
+    @attending_ids = MemberPresenter.new(current_user).attending_workshops
   end
 
   def code; end
