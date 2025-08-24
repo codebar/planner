@@ -4,8 +4,19 @@ class MemberPresenter < BasePresenter
     has_role? :organiser, :any
   end
 
+  # Gather all the ids of all the events the member has organised or has organising permissions for
+  def organising_events
+    @organised_events ||= roles.preload(:resource).where(name: 'organiser').pluck(:resource_type, :resource_id).group_by(&:first).transform_values { |pairs | pairs.map(&:last)}
+  end
+
   def event_organiser?(event)
-    has_role?(:organiser, event) || has_role?(:organiser, event.chapter) || has_role?(:admin)
+    if model.nil?
+      false
+    else
+      event_types = %w[Workshop Meeting Event]
+      organising_events.slice(*event_types).values.any? { |ids| ids.include?(event.id) } || @organised_events['Chapter']&.include?(event.chapter.id) || has_role?(:admin)
+    end
+
   end
 
   def newbie?
