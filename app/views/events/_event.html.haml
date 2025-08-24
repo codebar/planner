@@ -32,10 +32,12 @@
       .d-md-flex.justify-content-md-between.align-items-md-center
         - if event.organisers.any?
           .mb-3.mb-md-0
-            - event.organisers.each do |organiser|
+            - organisers = event.organisers
+            - organisers.each do |organiser|
               = image_tag(organiser.avatar(26), class: 'rounded-circle', title: organiser.full_name, alt: organiser.full_name)
         - if event.sponsors.any?
           .ms-auto
-            - event.sponsors.each do |sponsor|
+            - sponsors = event.sponsors
+            - sponsors.each do |sponsor|
               = link_to sponsor.website, class: 'd-inline-block' do
                 = image_tag(sponsor.avatar.thumb.url, class: 'sponsor-sm mx-1', alt: sponsor.name)
