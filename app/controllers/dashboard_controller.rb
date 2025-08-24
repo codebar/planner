@@ -1,4 +1,5 @@
 class DashboardController < ApplicationController
+  include AttendanceConcerns
   before_action :is_logged_in?, only: %i[dashboard]
   skip_before_action :accept_terms, except: %i[dashboard show]
 
@@ -8,12 +9,12 @@ class DashboardController < ApplicationController
 
   def show
     @chapters = Chapter.active.all.order(:created_at)
-    @user = MemberPresenter.new(current_user)
+    @user = current_user ? MemberPresenter.new(current_user) : nil
     @upcoming_workshops = upcoming_events.map.inject({}) do |hash, (key, value)|
       hash[key] = EventPresenter.decorate_collection(value)
       hash
     end
-    @attending_ids = @user.attending_workshops
+    @attending_ids = attending_workshops
     @testimonials = Testimonial.order(Arel.sql('RANDOM()')).limit(5).includes(:member)
   end
 
@@ -24,7 +25,7 @@ class DashboardController < ApplicationController
       hash
     end
     @announcements = current_user.announcements.active
-    @attending_ids = MemberPresenter.new(current_user).attending_workshops
+    @attending_ids = attending_workshops
   end
 
   def code; end

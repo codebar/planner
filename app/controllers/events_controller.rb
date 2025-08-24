@@ -1,6 +1,7 @@
 require 'services/ticket'
 
 class EventsController < ApplicationController
+  include AttendanceConcerns
   before_action :is_logged_in?, only: %i[student coach]
 
   RECENT_EVENTS_DISPLAY_LIMIT = 40
@@ -23,7 +24,7 @@ class EventsController < ApplicationController
     events << Event.upcoming.includes(:venue, :sponsors).all
     events = events.compact.flatten.sort_by(&:date_and_time).group_by(&:date)
     @events = events.map.inject({}) { |hash, (key, value)| hash[key] = EventPresenter.decorate_collection(value); hash }
-    @attending_ids = MemberPresenter.new(current_user).attending_events
+    @attending_ids = attending_events
   end
 
   def show

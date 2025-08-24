@@ -1,9 +1,5 @@
 class MemberPresenter < BasePresenter
 
-  def initialize(current_user)
-    @member = current_user
-    super
-  end
   def organiser?
     has_role? :organiser, :any
   end
@@ -28,13 +24,7 @@ class MemberPresenter < BasePresenter
     role.eql?('Coach') ? coach_pairing_details(note) : student_pairing_details(tutorial, note)
   end
 
-  def attending_workshops
-    @member.nil? ? Set.new : workshop_invitations.accepted.pluck(:id).to_set
-  end
 
-  def attending_events
-    @member.nil? ? Set.new : invitations.accepted.pluck(:id).to_set
-  end
 
   private
 
