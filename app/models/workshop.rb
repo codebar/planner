@@ -30,12 +30,19 @@ class Workshop < ApplicationRecord
   before_validation :set_date_and_time, :set_end_date_and_time, if: proc { |model| model.chapter_id.present? }
   before_validation :set_opens_at
 
-  def workshop_sponsors_with_host_true
-    workshop_sponsors.where(host: true)
-  end
-
   def host
-    workshop_sponsors_with_host_true.first&.sponsor
+    sql = <<~SQL
+      SELECT sponsors.*
+      FROM sponsors
+      LEFT JOIN workshop_sponsors ON workshop_sponsors.workshop_id = sponsors.id
+      WHERE workshop_sponsors.workshop_id = ?
+        AND workshop_sponsors.host = TRUE
+        AND sponsors.id = workshop_sponsors.sponsor_id
+      ORDER BY sponsors.updated_at DESC, workshop_sponsors.id ASC
+      LIMIT 1
+    SQL
+
+    Sponsor.find_by_sql([sql, id]).first
   end
 
   def waiting_list
