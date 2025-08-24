@@ -37,7 +37,8 @@
   - if @member.groups.any?
     %h5 Groups
     %ul.list-unstyled.ms-0#subscriptions
-      - @member.groups.each do |group|
+      - member_groups = @member.groups
+      - member_groups.each do |group|
         %li
           = link_to [:admin, group] do
             #{group.name} (#{group.chapter.name})
