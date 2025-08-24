@@ -10,6 +10,7 @@ class ChapterController < ApplicationController
     @latest_workshops = event_presenters_by_date(past_events)
 
     @recent_sponsors = Sponsor.recent_for_chapter(@chapter)
+    @attending_ids = MemberPresenter.new(current_user).attending_workshops
   end
 
   private
