@@ -31,7 +31,18 @@ class Workshop < ApplicationRecord
   before_validation :set_opens_at
 
   def host
-    WorkshopSponsor.hosts.for_workshop(id).first&.sponsor
+    sql = <<~SQL
+      SELECT sponsors.*
+      FROM sponsors
+      LEFT JOIN workshop_sponsors ON workshop_sponsors.sponsor_id = sponsors.id
+      WHERE workshop_sponsors.workshop_id = ?
+        AND workshop_sponsors.host = TRUE
+        AND sponsors.id = workshop_sponsors.sponsor_id
+      ORDER BY sponsors.updated_at DESC, workshop_sponsors.id ASC
+      LIMIT 1
+    SQL
+
+    Sponsor.find_by_sql([sql, id]).first
   end
 
   def waiting_list
