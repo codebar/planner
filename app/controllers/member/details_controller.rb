@@ -15,6 +15,12 @@ class Member::DetailsController < ApplicationController
   def update
     attrs = member_params.to_h
 
+    if attrs[:how_you_found_us].blank?
+      @member.assign_attributes(attrs)
+      @member.errors.add(:how_you_found_us, 'You must select at least one option')
+      return render :edit
+    end
+
     how_found = params.dig(:member, :how_you_found_us)
     attrs[:how_you_found_us] =
       if how_found.is_a?(Array)
