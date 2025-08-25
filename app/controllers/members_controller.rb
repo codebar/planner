@@ -12,9 +12,7 @@ class MembersController < ApplicationController
 
   end
 
-  def edit
-    binding.pry
-  end
+  def edit; end
 
   def step2
     @type = cookies[:member_type]
