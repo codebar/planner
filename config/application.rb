@@ -53,9 +53,6 @@ module Planner
     # Related to https://stackoverflow.com/questions/72970170/upgrading-to-rails-6-1-6-1-causes-psychdisallowedclass-tried-to-load-unspecif
     # and https://discuss.rubyonrails.org/t/cve-2022-32224-possible-rce-escalation-bug-with-serialized-columns-in-active-record/81017
     config.active_record.yaml_column_permitted_classes = [Symbol, Date, Time, ActiveSupport::TimeWithZone, ActiveSupport::TimeZone, ActiveSupport::HashWithIndifferentAccess]
-    # Allow Skylight to show insights from local development.
-    # More info at https://skylight.io/support/environments
-    config.skylight.environments << 'development'
 
     config.active_record.belongs_to_required_by_default = true
   end
