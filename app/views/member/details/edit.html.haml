@@ -21,14 +21,14 @@
             %ul
               - @member.errors.full_messages.each do |msg|
                 %li= msg
-        .col-12
+        .col-12.mb-3
           %label{ for: 'how_you_found_us' }= t('member.details.edit.how_you_found_us')
-          - options = ['From a friend', 'Search engine (Google etc.)', 'Social Media', "One of Codebar's hosts or partners", 'Other reason']
+          - options = ['From a friend', 'Search engine (Google etc.)', 'Social Media', "One of Codebar's hosts or partners"]
           - options.each do |option|
             .form-check
               = check_box_tag 'member[how_you_found_us][]', option, false, id: "how_you_found_us_#{option.parameterize}", class: 'form-check-input'
               = label_tag "how_you_found_us_#{option.parameterize}", option, class: 'form-check-label', style: 'margin-left: 8px;'
-          = label_tag :other_reason, t('member.details.edit.other_reason')
+          = label_tag :other_reason, t('member.details.edit.other_reason'), class: 'my-1'
           = text_field_tag :other_reason, nil, placeholder: "Please specify", style: 'width: 500px;'
         = f.input :newsletter, as: :boolean, checked_value: true, unchecked_value: false
         .text-right.mb-4
