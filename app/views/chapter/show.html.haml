@@ -28,13 +28,13 @@
         %h2.mb-4= t('homepage.events.upcoming')
         - @upcoming_workshops.each do |date, workshops|
           %h3.h5= date
-          = render workshops
+          = render workshops, attending_ids: @attending_ids
 
       - if @latest_workshops.any?
         .pt-4
           %h2.mb-4 Past Events
           - @latest_workshops.each do |date, workshops|
-            = render workshops
+            = render workshops, attending_ids: @attending_ids
 
 - if @recent_sponsors.any?
   .py-4.py-lg-5.bg-light

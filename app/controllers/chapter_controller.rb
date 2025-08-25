@@ -1,4 +1,5 @@
 class ChapterController < ApplicationController
+  include AttendanceConcerns
   def show
     @chapter = ChapterPresenter.new(Chapter.active.find_by!(slug: slug))
 
@@ -10,6 +11,7 @@ class ChapterController < ApplicationController
     @latest_workshops = event_presenters_by_date(past_events)
 
     @recent_sponsors = Sponsor.recent_for_chapter(@chapter)
+    @attending_ids = attending_workshops
   end
 
   private

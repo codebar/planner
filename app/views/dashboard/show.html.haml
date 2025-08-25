@@ -71,7 +71,7 @@
         %h2.h3.mb-4= t('homepage.events.upcoming')
         - @upcoming_workshops.each do |date, workshops|
           %h3.h5= date
-          = render workshops
+          = render workshops, attending_ids: @attending_ids
 
     .col-lg-4.pl-lg-5
       %h3
