@@ -34,7 +34,7 @@ class Workshop < ApplicationRecord
     sql = <<~SQL
       SELECT sponsors.*
       FROM sponsors
-      LEFT JOIN workshop_sponsors ON workshop_sponsors.workshop_id = sponsors.id
+      LEFT JOIN workshop_sponsors ON workshop_sponsors.sponsor_id = sponsors.id
       WHERE workshop_sponsors.workshop_id = ?
         AND workshop_sponsors.host = TRUE
         AND sponsors.id = workshop_sponsors.sponsor_id
