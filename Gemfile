@@ -117,6 +117,5 @@ group :production do
 end
 
 gem 'rollbar'
-gem 'skylight'
 
 gem "carrierwave-aws", "~> 1.6"
