@@ -16,7 +16,8 @@
           %small= link_to 'Edit', subscriptions_path, class: 'ms-2'
         - if current_user.chapters.any?
           .list-group.list-group-flush
-            - current_user.chapters.each do |chapter|
+            - chapters = current_user.chapters
+            - chapters.each do |chapter|
               = link_to chapter.name, chapter_url(chapter.slug), class: 'list-group-item list-group-item-action'
         - else
           %i.fas.fa-exclamation-triangle
@@ -32,4 +33,4 @@
           There are no upcoming events announced for the chapters you are subscribed to.
         - @ordered_events.each do |date, workshops|
           %h4= date
-          = render workshops
+          = render workshops, attending_ids: @attending_ids

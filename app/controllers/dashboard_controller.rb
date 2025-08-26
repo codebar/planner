@@ -1,4 +1,5 @@
 class DashboardController < ApplicationController
+  include AttendanceConcerns
   before_action :is_logged_in?, only: %i[dashboard]
   skip_before_action :accept_terms, except: %i[dashboard show]
 
@@ -13,7 +14,7 @@ class DashboardController < ApplicationController
       hash[key] = EventPresenter.decorate_collection(value)
       hash
     end
-
+    @attending_ids = attending_workshops
     @testimonials = Testimonial.order(Arel.sql('RANDOM()')).limit(5).includes(:member)
   end
 
@@ -24,6 +25,7 @@ class DashboardController < ApplicationController
       hash
     end
     @announcements = current_user.announcements.active
+    @attending_ids = attending_workshops
   end
 
   def code; end

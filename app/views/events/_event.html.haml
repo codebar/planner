@@ -5,10 +5,11 @@
         - if event.chapter
           %span.badge.bg-primary.mb-3.mb-md-0
             = link_to event.chapter.name, event.chapter.slug, class: 'text-light text-decoration-none' 
-        - if @user
-          - if @user.attending?(event.__getobj__)
+        - if !attending_ids.blank?
+          - if attending_ids.include?(event.id)
             %span.badge.bg-success.mb-3.mb-md-0
               = link_to 'Attending', event.path, class: 'text-light text-decoration-none'
+        - if @user
           - if @user.event_organiser?(event)
             %span.badge.bg-secondary.mb-3.mb-md-0
               = link_to 'Manage', event.admin_path, class: 'text-light text-decoration-none'
@@ -31,10 +32,12 @@
       .d-md-flex.justify-content-md-between.align-items-md-center
         - if event.organisers.any?
           .mb-3.mb-md-0
-            - event.organisers.each do |organiser|
+            - organisers = event.organisers
+            - organisers.each do |organiser|
               = image_tag(organiser.avatar(26), class: 'rounded-circle', title: organiser.full_name, alt: organiser.full_name)
         - if event.sponsors.any?
           .ms-auto
-            - event.sponsors.each do |sponsor|
+            - sponsors = event.sponsors
+            - sponsors.each do |sponsor|
               = link_to sponsor.website, class: 'd-inline-block' do
                 = image_tag(sponsor.avatar.thumb.url, class: 'sponsor-sm mx-1', alt: sponsor.name)
