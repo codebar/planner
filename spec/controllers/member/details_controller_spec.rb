@@ -27,13 +27,13 @@ RSpec.describe Member::DetailsController, type: :controller do
           id: member.id,
           member: {
             how_you_found_us: ['Search engine (Google etc.)'],
+            how_you_found_us_other_reason: 'Saw a pamphlet',
             newsletter: 'false'
           },
-          other_reason: 'Saw a flyer'
         }
 
         member.reload
-        expect(member.how_you_found_us).to contain_exactly('Search engine (Google etc.)', 'Saw a flyer')
+        expect(member.how_you_found_us).to contain_exactly('Search engine (Google etc.)', 'Saw a pamphlet')
         expect(response).to redirect_to(step2_member_path)
       end
 
@@ -42,9 +42,9 @@ RSpec.describe Member::DetailsController, type: :controller do
           id: member.id,
           member: {
             how_you_found_us: [],
+            how_you_found_us_other_reason: 'At a meetup',
             newsletter: 'true'
           },
-          other_reason: 'At a meetup'
         }
 
         member.reload
@@ -57,9 +57,9 @@ RSpec.describe Member::DetailsController, type: :controller do
           id: member.id,
           member: {
             how_you_found_us: ['From a friend', '', 'From a friend'],
+            how_you_found_us_other_reason: 'From a friend',
             newsletter: 'true'
           },
-          other_reason: 'From a friend'
         }
 
         member.reload

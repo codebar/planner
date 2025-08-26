@@ -443,7 +443,7 @@ en:
         title: Almost there...
         summary: We need some more details from you to finish creating your account. We use these to help run our events.
         how_you_found_us: "How did you find out about us?"
-        other_reason: "Please specify (if Other)"
+        how_you_found_us_other_reason: "Please specify (if Other)"
         coach:
           about_you: What experience do you have? What languages do you like to use? Tell us a little bit about yourself!
         student:

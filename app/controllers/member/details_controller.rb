@@ -13,30 +13,20 @@ class Member::DetailsController < ApplicationController
   end
 
   def update
-    attrs = member_params.to_h
+    how_found = Array(params.dig(:member, :how_you_found_us)).reject(&:blank?)
+    other_reason = params.dig(:member, :how_you_found_us_other_reason)
 
-    if attrs[:how_you_found_us].blank?
-      @member.assign_attributes(attrs)
+    how_found << other_reason if other_reason.present?
+    how_found.uniq!
+
+    if how_found.blank?
+      @member.assign_attributes(member_params.to_h.except(:how_you_found_us_other_reason))
       @member.errors.add(:how_you_found_us, 'You must select at least one option')
       return render :edit
     end
 
-    how_found = params.dig(:member, :how_you_found_us)
-    attrs[:how_you_found_us] =
-      if how_found.is_a?(Array)
-        how_found
-      elsif how_found.blank?
-        []
-      else
-        [how_found]
-      end
-
-    if params[:other_reason].present?
-      attrs[:how_you_found_us] << params[:other_reason]
-    end
-
-    attrs[:how_you_found_us].uniq!
-    attrs[:how_you_found_us].reject!(&:blank?)
+    attrs = member_params.to_h.except(:how_you_found_us_other_reason)
+    attrs[:how_you_found_us] = how_found
 
     return render :edit unless @member.update(attrs)
 

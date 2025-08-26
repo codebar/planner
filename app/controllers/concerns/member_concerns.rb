@@ -18,7 +18,7 @@ module MemberConcerns
         :about_you,
         :skill_list,
         :newsletter,
-        :other_reason,
+        :how_you_found_us_other_reason,
         how_you_found_us: []
       )
     end

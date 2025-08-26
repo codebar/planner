@@ -42,7 +42,7 @@ RSpec.feature 'A new student signs up', type: :feature do
     fill_in 'member_email', with: 'jane@codebar.io'
     fill_in 'member_about_you', with: Faker::Lorem.paragraph
     find('#how_you_found_us_from-a-friend').click
-    fill_in 'other_reason', with: 'found on a poster', id: true
+    fill_in 'member_how_you_found_us_other_reason', with: 'found on a poster', id: true
     click_on 'Next'
 
     expect(page).to have_current_path(step2_member_path)
