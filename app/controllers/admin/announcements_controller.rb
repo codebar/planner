@@ -1,4 +1,4 @@
-class Admin::AnnouncementsController < Admin::ApplicationController
+class Admin::AnnouncementsController < SuperAdmin::ApplicationController
   before_action :set_announcement, only: %i[update edit]
 
   def index
