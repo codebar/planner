@@ -461,6 +461,8 @@ GEM
       sprockets (> 3.0)
       sprockets-rails
       tilt
+    scout_apm (5.7.1)
+      parser
     selenium-webdriver (4.34.0)
       base64 (~> 0.2)
       logger (~> 1.4)
@@ -600,6 +602,7 @@ DEPENDENCIES
   rubocop-rails
   rubocop-rspec
   sassc-rails
+  scout_apm
   selenium-webdriver
   shoulda-matchers (~> 6.5)
   simple_form
