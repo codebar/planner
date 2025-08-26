@@ -15,6 +15,9 @@
           = f.input :about_you, as: :text, label: t('member.details.edit.coach.about_you'), input_html: { rows: 3 }, required: true
         - else
           = f.input :about_you, as: :text, label: t('member.details.edit.student.about_you'), input_html: { rows: 3 }, required: true
+        = f.input :dietary_restrictions, collection: Member::DIETARY_RESTRICTIONS, as: :check_boxes, label_method: :titleize
+        = f.input :other_dietary_restrictions, placeholder: 'Other dietary restrictions',
+            wrapper_html: { class: class_names('mt-n3', 'd-none': !@member.other_dietary_restrictions?) }, label_html: { class: 'sr-only' }
         = f.input :newsletter, as: :boolean, checked_value: true, unchecked_value: false
         .text-right.mb-4
           = hidden_field_tag :next_page, step2_member_path(member_type: @type)
