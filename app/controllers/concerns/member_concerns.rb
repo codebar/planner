@@ -9,8 +9,17 @@ module MemberConcerns
     private
 
     def member_params
-      params.require(:member).permit(
-        :pronouns, :name, :surname, :email, :mobile, :about_you, :skill_list, :newsletter
+      params.fetch(:member, {}).permit(
+        :pronouns,
+        :name,
+        :surname,
+        :email,
+        :mobile,
+        :about_you,
+        :skill_list,
+        :newsletter,
+        :other_reason,
+        how_you_found_us: []
       )
     end
 

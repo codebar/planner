@@ -15,6 +15,21 @@
           = f.input :about_you, as: :text, label: t('member.details.edit.coach.about_you'), input_html: { rows: 3 }, required: true
         - else
           = f.input :about_you, as: :text, label: t('member.details.edit.student.about_you'), input_html: { rows: 3 }, required: true
+        - if @member.errors.any?
+          #error_explanation
+            %h2= "#{pluralize(@member.errors.count, 'error')} prohibited this member from being saved:"
+            %ul
+              - @member.errors.full_messages.each do |msg|
+                %li= msg
+        .col-12
+          %label{ for: 'how_you_found_us' }= t('member.details.edit.how_you_found_us')
+          - options = ['From a friend', 'Search engine (Google etc.)', 'Social Media', "One of Codebar's hosts or partners", 'Other reason']
+          - options.each do |option|
+            .form-check
+              = check_box_tag 'member[how_you_found_us][]', option, false, id: "how_you_found_us_#{option.parameterize}", class: 'form-check-input'
+              = label_tag "how_you_found_us_#{option.parameterize}", option, class: 'form-check-label', style: 'margin-left: 8px;'
+          = label_tag :other_reason, t('member.details.edit.other_reason')
+          = text_field_tag :other_reason, nil, placeholder: "Please specify", style: 'width: 500px;'
         = f.input :newsletter, as: :boolean, checked_value: true, unchecked_value: false
         .text-right.mb-4
           = hidden_field_tag :next_page, step2_member_path(member_type: @type)

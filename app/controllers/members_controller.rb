@@ -9,9 +9,12 @@ class MembersController < ApplicationController
 
   def new
     @page_title = 'Sign up'
+
   end
 
-  def edit; end
+  def edit
+    binding.pry
+  end
 
   def step2
     @type = cookies[:member_type]
