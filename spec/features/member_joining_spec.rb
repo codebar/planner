@@ -27,6 +27,7 @@ RSpec.feature 'A new student signs up', type: :feature do
     expect(page).to have_content "Surname can't be blank"
     expect(page).to have_content "Email address can't be blank"
     expect(page).to have_content "About you can't be blank"
+    expect(page).to have_content "You must select at least one option"
   end
 
   scenario 'A new member details are successfully captured' do
@@ -43,6 +44,8 @@ RSpec.feature 'A new student signs up', type: :feature do
     check 'Vegan'
     check 'Other'
     fill_in 'Other dietary restrictions', with: 'peanut allergy'
+    find('#how_you_found_us_from-a-friend').click
+    fill_in 'member_how_you_found_us_other_reason', with: 'found on a poster', id: true
     click_on 'Next'
 
     expect(page).to have_current_path(step2_member_path)

@@ -27,6 +27,8 @@ RSpec.feature 'Subscribing to the newsletter', type: :feature do
       fill_in 'member_surname', with: 'Doe'
       fill_in 'member_email', with: 'jane@codebar.io'
       fill_in 'member_about_you', with: Faker::Lorem.paragraph
+      find('#how_you_found_us_from-a-friend').click
+      fill_in 'member_how_you_found_us_other_reason', with: Faker::Lorem.paragraph, id: true
 
       click_on 'Next'
     end
@@ -46,6 +48,8 @@ RSpec.feature 'Subscribing to the newsletter', type: :feature do
       fill_in 'member_surname', with: 'Doe'
       fill_in 'member_email', with: 'jane@codebar.io'
       fill_in 'member_about_you', with: Faker::Lorem.paragraph
+      find('#how_you_found_us_from-a-friend').click
+      fill_in 'member_how_you_found_us_other_reason', with: Faker::Lorem.paragraph, id: true
 
       uncheck 'newsletter'
 

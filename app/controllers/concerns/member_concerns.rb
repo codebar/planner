@@ -10,8 +10,7 @@ module MemberConcerns
 
     def member_params
       params.require(:member).permit(
-        :pronouns, :name, :surname, :email, :mobile, :about_you, :skill_list, :newsletter, :other_dietary_restrictions,
-          dietary_restrictions: [],
+        :pronouns, :name, :surname, :email, :mobile, :about_you, :skill_list, :newsletter, :other_dietary_restrictions, :other_reason,  :how_you_found_us_other_reason, how_you_found_us: [], dietary_restrictions: [] 
       ).tap do |params|
         # We want to keep Rails' hidden blank field in the form so that all dietary restrictions for a member can be
         # removed by submitting the form with all check boxes unticked. However, we want to remove the blank value

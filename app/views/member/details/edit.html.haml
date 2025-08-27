@@ -19,6 +19,24 @@
           label_method:  ->(r) { r.humanize.upcase_first }
         = f.input :other_dietary_restrictions, placeholder: 'Other dietary restrictions',
             wrapper_html: { class: class_names('mt-n3', 'd-none': !@member.other_dietary_restrictions?) }, label_html: { class: 'sr-only' }
+        - if @member.errors.any?
+          #error_explanation
+            %h2= "#{pluralize(@member.errors.count, 'error')} prohibited this member from being saved:"
+            %ul
+              - @member.errors.full_messages.each do |msg|
+                %li= msg
+        - if @member.errors[:how_you_found_us].any?
+          %span.text-danger= @member.errors[:how_you_found_us].first
+        .col-12.mb-3
+          %label{ for: 'how_you_found_us' }= t('member.details.edit.how_you_found_us')
+          %span *
+          - options = ['From a friend', 'Search engine (Google etc.)', 'Social Media', "One of Codebar's hosts or partners"]
+          - options.each do |option|
+            .form-check
+              = check_box_tag 'member[how_you_found_us][]', option, false, id: "how_you_found_us_#{option.parameterize}", class: 'form-check-input'
+              = label_tag "how_you_found_us_#{option.parameterize}", option, class: 'form-check-label', style: 'margin-left: 8px;'
+          = label_tag :how_you_found_us_other_reason, t('member.details.edit.how_you_found_us_other_reason'), class: 'my-1'
+          = text_field_tag 'member[how_you_found_us_other_reason]', nil, placeholder: "Please specify how you heard about us", class: 'form-control w-100'
         = f.input :newsletter, as: :boolean, checked_value: true, unchecked_value: false
         .text-right.mb-4
           = hidden_field_tag :next_page, step2_member_path(member_type: @type)
