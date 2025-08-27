@@ -17,7 +17,7 @@ namespace :member do
     $stdin.getch
 
     ActiveRecord::Base.transaction do
-      MailingList.new(ENV['NEWSLETTER_ID']).unsubscribe(member.email)
+      Services::MailingList.new(ENV['NEWSLETTER_ID']).unsubscribe(member.email)
 
       member.auth_services.delete_all
       member.subscriptions.delete_all

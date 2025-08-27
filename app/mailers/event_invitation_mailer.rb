@@ -34,7 +34,7 @@ class EventInvitationMailer < ApplicationMailer
 
     require 'services/event_calendar'
     attachments['codebar.ics'] = { mime_type: 'text/calendar',
-                                   content: EventCalendar.new(@event).calendar.to_ical }
+                                   content: Services::EventCalendar.new(@event).calendar.to_ical }
 
     subject = "Your spot to #{@event.name} has been confirmed."
 

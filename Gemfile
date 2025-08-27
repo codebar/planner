@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 ruby '3.4.4'
 
-gem 'rails', '7.0.8.1'
+gem 'rails', '~> 7.1.5.1' # LOCKED: It is Rails.
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem 'sprockets-rails'
 
@@ -10,7 +10,7 @@ gem 'benchmark' # LOCKED: Added because of activesupport 7.0
 gem 'bigdecimal' # LOCKED: Added because of activesupport 7.0
 gem 'carrierwave'
 gem 'cocoon'
-gem "csv" # LOCKED: csv was loaded from the standard library, but is not part of the default gems starting from Ruby 3.4.0. Due to config/application.rb
+gem 'csv' # LOCKED: csv was loaded from the standard library, but is not part of the default gems starting from Ruby 3.4.0. Due to config/application.rb
 gem 'delayed_job'
 gem 'delayed_job_active_record'
 gem 'drb' # LOCKED: Added because of pry-remote
@@ -119,4 +119,4 @@ end
 gem 'rollbar'
 gem 'scout_apm'
 
-gem "carrierwave-aws", "~> 1.6"
+gem 'carrierwave-aws', '~> 1.6'
