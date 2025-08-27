@@ -6,7 +6,7 @@ namespace :mailing_list do
     newsletter_id = ENV['NEWSLETTER_ID'] || Rails.logger.info('NEWSLETTER_ID not set. Aborting task') && abort
 
     members = Member.includes(:subscriptions).where.not('subscriptions.member_id' => nil).uniq
-    newsletter = MailingList.new(newsletter_id)
+    newsletter = Services::MailingList.new(newsletter_id)
 
     members.each do |member|
       member.update(opt_in_newsletter_at: Time.zone.now)

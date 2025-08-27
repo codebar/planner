@@ -22,10 +22,10 @@ class Subscription < ApplicationRecord
   private
 
   def subscribe_to_mailing_list
-    MailingList.new(group.mailing_list_id).subscribe(member.email, member.name, member.surname)
+    Services::MailingList.new(group.mailing_list_id).subscribe(member.email, member.name, member.surname)
   end
 
   def unsubscribe_from_mailing_list
-    MailingList.new(group.mailing_list_id).unsubscribe(member.email)
+    Services::MailingList.new(group.mailing_list_id).unsubscribe(member.email)
   end
 end

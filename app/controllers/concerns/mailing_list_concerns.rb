@@ -10,14 +10,14 @@ module MailingListConcerns
   module InstanceMethods
     def subscribe_to_newsletter(member)
       member.update(opt_in_newsletter_at: Time.zone.now)
-      MailingList.new(ENV['NEWSLETTER_ID']).subscribe(member.email,
-                                                      member.name,
-                                                      member.surname)
+      Services::MailingList.new(ENV['NEWSLETTER_ID']).subscribe(member.email,
+                                                                member.name,
+                                                                member.surname)
     end
 
     def unsubscribe_from_newsletter(member)
       member.update(opt_in_newsletter_at: nil)
-      MailingList.new(ENV['NEWSLETTER_ID']).unsubscribe(member.email)
+      Services::MailingList.new(ENV['NEWSLETTER_ID']).unsubscribe(member.email)
     end
   end
 end
