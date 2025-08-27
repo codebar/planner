@@ -117,5 +117,6 @@ group :production do
 end
 
 gem 'rollbar'
+gem 'scout_apm'
 
 gem 'carrierwave-aws', '~> 1.6'

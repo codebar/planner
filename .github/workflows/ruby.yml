@@ -7,6 +7,10 @@ jobs:
     name: 'Tests'
     runs-on: ubuntu-latest
 
+    env:
+      # prevent unnecessary log output -- https://bundler.io/man/bundle-config.1.html
+      BUNDLE_IGNORE_FUNDING_REQUESTS: true
+      BUNDLE_IGNORE_MESSAGES: true
     services:
       postgres:
         image: postgres:17
