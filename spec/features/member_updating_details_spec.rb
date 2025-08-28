@@ -25,7 +25,7 @@ RSpec.feature 'Update your details', type: :feature do
     click_on 'Save'
 
     expect(page).to have_content('Your details have been updated.')
-    expect(page).to have_selector(".badge", text: "Peanut allergye")
+    expect(page).to have_selector(".badge", text: 'Peanut allergy')
     member.reload
     expect(member.dietary_restrictions).to eq(['other'])
     expect(member.other_dietary_restrictions).to eq('peanut allergy')
