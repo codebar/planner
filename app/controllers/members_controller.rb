@@ -9,7 +9,6 @@ class MembersController < ApplicationController
 
   def new
     @page_title = 'Sign up'
-
   end
 
   def edit; end

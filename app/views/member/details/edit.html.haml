@@ -15,7 +15,7 @@
           = f.input :about_you, as: :text, label: t('member.details.edit.coach.about_you'), input_html: { rows: 3 }, required: true
         - else
           = f.input :about_you, as: :text, label: t('member.details.edit.student.about_you'), input_html: { rows: 3 }, required: true
-        - if @member.errors[:how_you_found_us].any?
+        - if @member.errors[:how_you_found_us]&.any?
           %span.text-danger= @member.errors[:how_you_found_us].first
         .col-12.mb-3
           %label{ for: 'how_you_found_us' }= t('member.details.edit.how_you_found_us')
