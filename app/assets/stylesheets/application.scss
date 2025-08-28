@@ -28,7 +28,7 @@ $primary: $dark-codebar-blue !default;
 
 @import "bootstrap-custom";
 
-/* Bootstrap's Reboot sets the legend to float: left, which puts the first check box for a fieldset off to the
+/* Bootstrap's Reboot sets legends to float: left, which puts the first check box in a fieldset off to the
    right instead of underneath the legend. This overrides that. */
 legend {
   float: none !important;
