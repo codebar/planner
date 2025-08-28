@@ -28,5 +28,19 @@ module MemberConcerns
     def set_member
       @member = current_user
     end
+
+    def how_you_found_us_selections
+      how_found = Array(member_params[:how_you_found_us]).reject(&:blank?)
+      other_reason = member_params[:how_you_found_us_other_reason]
+
+      how_found << other_reason if other_reason.present?
+      how_found.uniq!
+
+      how_found
+    end
+
+    def member_params_without_how_you_found_us_other_reason
+      member_params.to_h.except(:how_you_found_us_other_reason)
+    end
   end
 end

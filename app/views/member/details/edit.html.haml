@@ -25,18 +25,25 @@
             %ul
               - @member.errors.full_messages.each do |msg|
                 %li= msg
-        - if @member.errors[:how_you_found_us].any?
+        - if @member.errors[:how_you_found_us]&.any?
           %span.text-danger= @member.errors[:how_you_found_us].first
         .col-12.mb-3
-          %label{ for: 'how_you_found_us' }= t('member.details.edit.how_you_found_us')
-          %span *
-          - options = ['From a friend', 'Search engine (Google etc.)', 'Social Media', "One of Codebar's hosts or partners"]
-          - options.each do |option|
-            .form-check
-              = check_box_tag 'member[how_you_found_us][]', option, false, id: "how_you_found_us_#{option.parameterize}", class: 'form-check-input'
-              = label_tag "how_you_found_us_#{option.parameterize}", option, class: 'form-check-label', style: 'margin-left: 8px;'
-          = label_tag :how_you_found_us_other_reason, t('member.details.edit.how_you_found_us_other_reason'), class: 'my-1'
-          = text_field_tag 'member[how_you_found_us_other_reason]', nil, placeholder: "Please specify how you heard about us", class: 'form-control w-100'
+          %fieldset
+            %legend= t('member.details.edit.how_you_found_us')
+            %span *
+
+            = f.input :how_you_found_us,
+                      as: :check_boxes,
+                      collection: Member::HOW_YOU_FOUND_US_OPTIONS,
+                      item_wrapper_class: 'form-check',
+                      label_item: true,
+                      input_html: { class: 'form-check-input' },
+                      label_html: { class: 'form-check-label', style: 'margin-left: 8px;' }
+
+          = f.input :how_you_found_us_other_reason,
+                    label: t('member.details.edit.how_you_found_us_other_reason'),
+                    placeholder: 'Please specify how you heard about us',
+                    input_html: { class: 'form-control w-100' }
         = f.input :newsletter, as: :boolean, checked_value: true, unchecked_value: false
         .text-right.mb-4
           = hidden_field_tag :next_page, step2_member_path(member_type: @type)
