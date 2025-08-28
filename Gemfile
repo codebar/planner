@@ -73,6 +73,7 @@ gem 'public_activity'
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller'
+  gem 'haml_lint', require: false
   gem 'letter_opener'
   gem 'web-console', '>= 4.1.0'
   # Display performance information such as SQL time and flame graphs for each request in your browser.

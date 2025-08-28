@@ -1,0 +1,7 @@
+linters:
+  # We don't need to enforce line length in HAML files
+  LineLength:
+    enabled: false
+  # We don't need to enforce length of HAML files
+  ViewLength:
+    enabled: false
