@@ -34,7 +34,7 @@
           - if invitation.member.dietary_restrictions.present?
             %p
               - invitation.member.displayed_dietary_restrictions.each do |dr|
-                %span.badge.bg-secondary.text-wrap.mb-1.text-start= dr
+                %span.badge.bg-secondary.text-wrap.text-break.mb-1.text-start= dr
         .col-6
           - if invitation.tutorial?
             %p.mb-1 Tutorial: #{invitation.tutorial}

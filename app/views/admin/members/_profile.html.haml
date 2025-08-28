@@ -16,7 +16,7 @@
     %h5 Dietary Restrictions      
     - if @member.dietary_restrictions.present?
       - @member.displayed_dietary_restrictions.each do |dr|
-        .badge.bg-secondary.text-wrap.mb-1.text-start= dr
+        .badge.bg-secondary.text-wrap.text-break.mb-1.text-start= dr
     - else
       .text-muted None
 
