@@ -1,3 +1,8 @@
+---
+name: New issue
+about: Use this template for tracking new issues
+---
+
 ## Description of the issue 📄
 
 ## Screenshots 📷
