@@ -26,6 +26,14 @@
         %dt About
         %dd.mb-3= @member.about_you
 
+        %dt How you found us
+        - if @member.how_you_found_us.present?
+          %ul
+            - @member.how_you_found_us.each do |reason|
+              %li= reason
+        - else
+          %dd Not specified
+
         - if @member.skills.any?
           %dt Skills
           %dd.mb-3
