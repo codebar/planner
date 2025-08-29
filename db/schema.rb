@@ -391,6 +391,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_08_06_181500) do
     t.string "pronouns"
     t.datetime "accepted_toc_at", precision: nil
     t.datetime "opt_in_newsletter_at", precision: nil
+    t.text "how_you_found_us", default: [], array: true
     t.index ["email"], name: "index_members_on_email", unique: true
   end
 
