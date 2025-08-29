@@ -24,6 +24,8 @@ class MemberPresenter < BasePresenter
   end
 
   def displayed_dietary_restrictions
+    return [] if dietary_restrictions.nil?
+
     (dietary_restrictions - ['other']).map(&:humanize).tap do |drs|
       drs << other_dietary_restrictions if other_dietary_restrictions? && other_dietary_restrictions.present?
     end.map(&:upcase_first)
