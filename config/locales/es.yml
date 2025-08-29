@@ -191,13 +191,11 @@ es:
         q: "Estaré viajando. ¿Me pueden ayudar con mis gastos de viaje?"
         a: "Vamos a ofrecer algunas becas de viaje. Solo asegúrate de completar el cuestionario después de que RSVP y nos pondremos en contacto."
   coaches:
-    want_to_coach: "¿Quieres formarte en nuestros talleres?"
     read_before: "Si no ha asistido a nuestros talleres antes, asegúrate de leer nuestro"
     code_of_conduct: "código de conducta"
     policy: "Como tenemos una política de tolerancia cero y esperamos que todos se comporten de manera adecuada. También deberías pasar por nuestro"
     guide: "guía para entrenadores"
     unable_attend: "En caso de que no pueda asistir después de su RSVP, asegúrese de regresar y actualizar su asistencia a medida que confíe en los entrenadores que aparecen para que nuestros talleres se ejecuten sin problemas."
-    food: "También habrá comida en el taller. Siempre nos esforzamos en tener disponibles opciones vegetarianas, veganas y sin gluten. Si tiene otros requisitos dietéticos, envíenos un correo electrónico a"
   code_of_conduct:
     title: "Código de Conducta"
     summary:

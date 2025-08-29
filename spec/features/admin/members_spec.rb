@@ -1,5 +1,6 @@
 RSpec.describe 'Admin managing members', type: :feature do
-  let(:member) { Fabricate(:student) }
+  let(:member) { Fabricate(:student, dietary_restrictions: %w[vegan other],
+                           other_dietary_restrictions: 'peanut allergy') }
   let(:admin) { Fabricate(:chapter_organiser) }
   let(:invitation) { Fabricate(:attended_workshop_invitation, member: member) }
 
@@ -15,6 +16,9 @@ RSpec.describe 'Admin managing members', type: :feature do
       expect(page).to have_content(member.name)
       expect(page).to have_content(member.email)
       expect(page).to have_content(member.about_you)
+
+      expect(page).to have_selector('.badge', text: 'Vegan')
+      expect(page).to have_selector('.badge', text: 'Peanut allergy')
     end
 
     it 'can view a summary of member event attendances' do

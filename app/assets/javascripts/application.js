@@ -24,6 +24,7 @@
 //= require pickadate/picker.time
 //= require subscriptions-toggle
 //= require invitations
+//= require dietary-restrictions
 //= require cocoon
 //= require font_awesome5
 
