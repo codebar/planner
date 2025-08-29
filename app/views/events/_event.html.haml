@@ -9,7 +9,7 @@
           - if @user.attending?(event.__getobj__)
             %span.badge.bg-success.mb-3.mb-md-0
               = link_to 'Attending', event.path, class: 'text-light text-decoration-none'
-          - if @user.event_organiser?(event)
+          - if @user.organiser? && @user.event_organiser?(event)
             %span.badge.bg-secondary.mb-3.mb-md-0
               = link_to 'Manage', event.admin_path, class: 'text-light text-decoration-none'
       .order-md-1
