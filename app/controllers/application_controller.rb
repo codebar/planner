@@ -26,7 +26,6 @@ class ApplicationController < ActionController::Base
   helper_method :current_user
   helper_method :current_service
 
-  before_action :set_locale
   before_action :accept_terms, if: :logged_in?
 
   def render_not_found
@@ -131,11 +130,6 @@ class ApplicationController < ActionController::Base
 
   private
 
-  def set_locale
-    store_locale_to_cookie(params[:locale]) if locale
-    I18n.locale = cookies[:locale] || I18n.default_locale
-  end
-
   def user_not_authorized
     redirect_to(user_path, notice: 'You are not authorized to perform this action.')
   end
@@ -154,14 +148,5 @@ class ApplicationController < ActionController::Base
     else
       redirect_to fallback_location, **args
     end
-  end
-
-  def store_locale_to_cookie(locale)
-    cookies[:locale] = { value: locale,
-                         expires: Time.zone.now + 36_000 }
-  end
-
-  def locale
-    params[:locale] if params[:locale] && I18n.available_locales.include?(params[:locale].to_sym)
   end
 end
