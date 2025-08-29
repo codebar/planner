@@ -9,16 +9,17 @@ AllCops:
     - bin/**/*
     - vendor/bundle/**/*
 
-require:
-  - rubocop
+plugins:
+  - rubocop-performance
   - rubocop-rails
   - rubocop-rspec
-  - rubocop-performance
 
 Layout/LineLength:
   Max: 120
   Exclude:
     - "spec/**/*"
+    - "app/views/pages/*.haml"
+    - "app/views/**/*.erb"
 
 Layout/EndOfLine:
   EnforcedStyle: lf
