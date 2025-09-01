@@ -19,6 +19,6 @@
         wrapper_html: { class: class_names('mt-n3', 'd-none': !@member.other_dietary_restrictions?) }, label_html: { class: 'sr-only' }
     - if @member.coach?
       .col-12
-        = f.input :skill_list, input_html: { value: @member.skill_list.join(", ") }
+        = f.input :skill_list, label: 'Skills, enter as a comma separated list', input_html: { value: @member.skill_list.join(", ") }
     .col-12.text-right
       = f.button :button, submit_text, class: 'btn btn-primary'
