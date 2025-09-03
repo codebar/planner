@@ -45,6 +45,25 @@ RSpec.feature 'Member portal', type: :feature do
       end
     end
 
+    it 'can access and view their profile' do
+      visit profile_path
+
+      expect(page).to have_content('Details')
+      expect(page).to have_content(member.full_name)
+
+      expect(page).to have_content('Email')
+      expect(page).to have_content(member.email)
+
+      expect(page).to have_content('Phone number')
+      expect(page).to have_content(member.mobile)
+
+      expect(page).to have_content('About')
+      expect(page).to have_content(member.about_you)
+
+      expect(page).to have_content('How you found us')
+      expect(page).to have_content(member.how_you_found_us.first)
+    end
+
     it 'can access and update their profile' do
       visit profile_path
 
