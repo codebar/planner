@@ -14,6 +14,6 @@
       = f.input :about_you, as: :text, label: 'Tell us a little bit about yourself', input_html: { rows: 3 }, required: true
     - if @member.coach?
       .col-12
-        = f.input :skill_list, label: 'Skills, enter as a comma separated list', input_html: { value: @member.skill_list.join(", ") }
+        = f.input :skill_list, input_html: { value: @member.skill_list.join(", ") }
     .col-12.text-right
       = f.button :button, submit_text, class: 'btn btn-primary'
