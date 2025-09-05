@@ -1,4 +1,4 @@
-RSpec.describe Member::DetailsController, type: :controller do
+RSpec.describe Member::DetailsController do
   render_views
   let(:member) { Fabricate(:member) }
 
