@@ -59,7 +59,7 @@ gem 'stripe'
 gem 'rails-html-sanitizer', '~> 1.6.2'
 
 # Use the Puma web server [https://github.com/puma/puma]
-gem 'puma', '~> 6.6'
+gem 'puma', '~> 7.0'
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
 gem 'importmap-rails'
 # Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]

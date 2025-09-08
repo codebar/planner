@@ -355,7 +355,7 @@ GEM
       i18n (>= 0.5.0)
       railties (>= 6.1.0)
     public_suffix (6.0.2)
-    puma (6.6.1)
+    puma (7.0.1)
       nio4r (~> 2.0)
     pundit (2.5.0)
       activesupport (>= 3.0.0)
@@ -615,7 +615,7 @@ DEPENDENCIES
   pry-rails
   pry-remote
   public_activity
-  puma (~> 6.6)
+  puma (~> 7.0)
   pundit
   rack-mini-profiler (~> 4.0)
   rails (~> 7.1.5.1)
