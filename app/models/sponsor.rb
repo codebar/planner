@@ -2,7 +2,7 @@ class Sponsor < ApplicationRecord
   include Auditor::Model
   require 'uri'
 
-  enum level: {
+  enum :level, {
     hidden: 0, # hidden from the sponsors page but still visible on event pages
     standard: 1,
     bronze: 2,

@@ -1,7 +1,7 @@
 class Member < ApplicationRecord
   include Permissions
 
-  enum how_you_found_us: {
+  enum :how_you_found_us, {
     from_a_friend: 0,
     search_engine: 1,
     social_media: 2,
