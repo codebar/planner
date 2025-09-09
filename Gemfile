@@ -5,6 +5,9 @@ gem 'rails', '~> 7.1.5.1' # LOCKED: It is Rails.
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem 'sprockets-rails'
 
+gem "amazing_print" # colourful output (suggested by rails_semantic_logger)
+gem "rails_semantic_logger" # condense log lines: https://github.com/codebar/planner/issues/2339
+
 gem 'acts-as-taggable-on'
 gem 'benchmark' # LOCKED: Added because of activesupport 7.0
 gem 'bigdecimal' # LOCKED: Added because of activesupport 7.0
@@ -114,7 +117,6 @@ end
 
 group :production do
   gem 'foreman'
-  gem 'rails_12factor'
 end
 
 gem 'rollbar'
