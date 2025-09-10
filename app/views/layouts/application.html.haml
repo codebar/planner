@@ -10,7 +10,7 @@
     %meta{ property: 'og:site_name', content: 'codebar' }
     %meta{ name: 'keywords', content: 'codebar, programming, diversity, html, css, javascript, ruby, python' }
     %meta{ property: 'og:image', content: image_url('logo-square.png') }
-    %meta{ property: 'og:url', content: "https://codebar.io#{url_for(nil)}" }
+    %meta{ property: 'og:url', content: request.original_url }
     %meta{ property: 'og:title', content: 'codebar' }
     %meta{ property: 'og:description', content: 'Making tech more diverse and welcoming by bringing people together and helping teach programming skills.' }
     %meta{ name: 'description', content: 'Making tech more diverse and welcoming by bringing people together and helping teach programming skills.' }
@@ -20,16 +20,14 @@
 
     = content_for :meta_tags
 
-    %link{ rel: 'image_src', href: '/assets/logo-square.png', :alt => "codebar logo" }
+    %link{ rel: 'image_src', href: '/assets/logo-square.png', alt: 'codebar logo' }
 
-    %title
-      = retrieve_title
+    %title= retrieve_title
     = favicon_link_tag 'favicon.ico'
-    = stylesheet_link_tag 'application', media: 'all', 'data-turbo-track': 'reload'
-
-    = javascript_include_tag 'application', 'data-turbo-track': 'reload'
-    %link{ href: 'https://fonts.googleapis.com/css?family=Open+Sans:400,300', rel:'stylesheet', type:'text/css' }
-    %link{ href: 'https://fonts.googleapis.com/icon?family=Material+Icons', rel:'stylesheet', type:'text/css' }
+    = stylesheet_link_tag('application', media: 'all', data: { turbo_track: 'reload' })
+    = javascript_include_tag('application', data: { turbo_track: 'reload' })
+    %link{ href: 'https://fonts.googleapis.com/css?family=Open+Sans:400,300', rel: 'stylesheet', type: 'text/css' }
+    %link{ href: 'https://fonts.googleapis.com/icon?family=Material+Icons', rel: 'stylesheet', type: 'text/css' }
 
     // this gets any content from page templates
     = content_for :head
@@ -37,11 +35,11 @@
     = csrf_meta_tags
     = csp_meta_tag
 
-  %body.no-js{ 'class': "#{params[:controller]}-#{params[:action]}", "data-bs-no-jquery": "true"}
+  %body.no-js{ 'class': "#{params[:controller]}-#{params[:action]}", 'data-bs-no-jquery': 'true' }
     #top
-      = render partial: 'layouts/navigation'
-      = render partial: 'layouts/messages'
+      = render 'layouts/navigation'
+      = render 'layouts/messages'
     = yield
-    = render partial: 'layouts/footer'
+    = render 'layouts/footer'
 
     = content_for :page_footer
