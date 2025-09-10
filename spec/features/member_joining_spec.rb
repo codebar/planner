@@ -15,7 +15,7 @@ RSpec.feature 'A new student signs up', type: :feature do
   end
 
   scenario 'A visitor must fill in all mandatory fields in order to sign up' do
-    member = Fabricate(:member, name: nil, surname: nil, email: nil, about_you: nil)
+    member = Fabricate(:member, name: nil, surname: nil, email: nil, about_you: nil, how_you_found_us: [])
     member.update(can_log_in: true)
     login member
 
@@ -41,7 +41,7 @@ RSpec.feature 'A new student signs up', type: :feature do
     fill_in 'member_surname', with: 'Doe'
     fill_in 'member_email', with: 'jane@codebar.io'
     fill_in 'member_about_you', with: Faker::Lorem.paragraph
-    find('#how_you_found_us_from-a-friend').click
+    find('#member_how_you_found_us_from_a_friend').click
     fill_in 'member_how_you_found_us_other_reason', with: 'found on a poster', id: true
     click_on 'Next'
 
