@@ -46,5 +46,11 @@ module Planner
     config.active_record.yaml_column_permitted_classes = [Symbol, Date, Time, ActiveSupport::TimeWithZone, ActiveSupport::TimeZone, ActiveSupport::HashWithIndifferentAccess]
 
     config.active_record.belongs_to_required_by_default = true
+
+    if ENV["RAILS_LOG_TO_STDOUT"].present?
+      $stdout.sync = true
+      config.rails_semantic_logger.add_file_appender = false
+      config.semantic_logger.add_appender(io: $stdout, formatter: config.rails_semantic_logger.format)
+    end
   end
 end

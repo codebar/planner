@@ -83,6 +83,7 @@ GEM
       zeitwerk (>= 2.4, < 3.0)
     addressable (2.8.7)
       public_suffix (>= 2.0.2, < 7.0)
+    amazing_print (1.8.1)
     ast (2.4.3)
     aws-eventstream (1.4.0)
     aws-partitions (1.1137.0)
@@ -397,11 +398,10 @@ GEM
       nokogiri (>= 1.15.7, != 1.16.7, != 1.16.6, != 1.16.5, != 1.16.4, != 1.16.3, != 1.16.2, != 1.16.1, != 1.16.0.rc1, != 1.16.0)
     rails4-autocomplete (1.1.1)
       rails (>= 3.0)
-    rails_12factor (0.0.3)
-      rails_serve_static_assets
-      rails_stdout_logging
-    rails_serve_static_assets (0.0.5)
-    rails_stdout_logging (0.0.5)
+    rails_semantic_logger (4.18.0)
+      rack
+      railties (>= 5.1)
+      semantic_logger (~> 4.16)
     railties (7.1.5.1)
       actionpack (= 7.1.5.1)
       activesupport (= 7.1.5.1)
@@ -496,6 +496,8 @@ GEM
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 4.0)
       websocket (~> 1.0)
+    semantic_logger (4.17.0)
+      concurrent-ruby (~> 1.0)
     shoulda-matchers (6.5.0)
       activesupport (>= 5.2.0)
     simple_form (5.3.1)
@@ -565,6 +567,7 @@ PLATFORMS
 
 DEPENDENCIES
   acts-as-taggable-on
+  amazing_print
   benchmark
   better_errors
   bigdecimal
@@ -621,7 +624,7 @@ DEPENDENCIES
   rails (~> 7.1.5.1)
   rails-html-sanitizer (~> 1.6.2)
   rails4-autocomplete
-  rails_12factor
+  rails_semantic_logger
   reline
   rolify
   rollbar
