@@ -123,3 +123,4 @@ gem 'rollbar'
 gem 'scout_apm'
 
 gem 'carrierwave-aws', '~> 1.6'
+gem "sitemap_generator", github: "kjvarga/sitemap_generator", branch: "master" # LOCKED: When a version higher than 6.3.0 is released, drop this LOCKED.

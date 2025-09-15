@@ -1,3 +1,11 @@
+GIT
+  remote: https://github.com/kjvarga/sitemap_generator.git
+  revision: 84fb1fef9f32ae9ea6226445b35b89a509291677
+  branch: master
+  specs:
+    sitemap_generator (6.3.0)
+      builder (~> 3.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -641,6 +649,7 @@ DEPENDENCIES
   simple_form
   simplecov
   simplecov-lcov
+  sitemap_generator!
   sprockets-rails
   stimulus-rails
   stripe
