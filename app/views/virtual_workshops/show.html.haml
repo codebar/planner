@@ -18,7 +18,7 @@
         = t('workshops.virtual.lead')
       %p.lead
         = t('workshops.virtual.intro', chapter_email: @workshop.chapter.email)
-      - unless @workshop.description.blank?
+      - if @workshop.description.present?
         %p.description
           = sanitize(@workshop.description)
       = render 'workshops/actions' unless current_user&.banned?
