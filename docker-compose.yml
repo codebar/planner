@@ -1,6 +1,6 @@
 services:
   db:
-    image: postgres:17
+    image: postgres:17-bookworm
     ports:
       - 5433:5432
     volumes:
