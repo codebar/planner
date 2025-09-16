@@ -671,6 +671,7 @@ en:
         name: 'Grace'
         surname: 'Hopper'
         pronouns: 'e.g she/her/they'
+        skill_list: 'e.g. HTML, CSS, JavaScript, React, Ruby, Python, SQL'
       job:
         company: 'e.g. codebar'
         company_website: 'e.g. https://codebar.io'
@@ -686,6 +687,7 @@ en:
     hints:
       member:
         email: 'This is needed so we can email you invitations to our events'
+        skill_list: 'Enter as a comma separated list'
       workshop_invitation:
         note: 'Pairing preferences or anything else you think we should know.'
       job:
@@ -723,6 +725,7 @@ en:
         seats: Student spots
       member:
         dietary_restrictions: If you have any dietary restrictions, let us know about them here
+        skill_list: Skills
   activerecord:
     attributes:
       job:

@@ -5,6 +5,9 @@ gem 'rails', '~> 7.1.5.1' # LOCKED: It is Rails.
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem 'sprockets-rails'
 
+gem "amazing_print" # colourful output (suggested by rails_semantic_logger)
+gem "rails_semantic_logger" # condense log lines: https://github.com/codebar/planner/issues/2339
+
 gem 'acts-as-taggable-on'
 gem 'benchmark' # LOCKED: Added because of activesupport 7.0
 gem 'bigdecimal' # LOCKED: Added because of activesupport 7.0
@@ -73,6 +76,7 @@ gem 'public_activity'
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller'
+  gem 'haml_lint', require: false
   gem 'letter_opener'
   gem 'web-console', '>= 4.1.0'
   # Display performance information such as SQL time and flame graphs for each request in your browser.
@@ -113,10 +117,10 @@ end
 
 group :production do
   gem 'foreman'
-  gem 'rails_12factor'
 end
 
 gem 'rollbar'
 gem 'scout_apm'
 
 gem 'carrierwave-aws', '~> 1.6'
+gem "sitemap_generator", github: "kjvarga/sitemap_generator", branch: "master" # LOCKED: When a version higher than 6.3.0 is released, drop this LOCKED.

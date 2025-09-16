@@ -1,6 +1,6 @@
 class MemberPresenter < BasePresenter
   def organiser?
-    has_role? :organiser, :any
+    @organiser ||= has_role? :organiser, :any
   end
 
   def event_organiser?(event)
