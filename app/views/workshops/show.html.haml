@@ -16,7 +16,7 @@
     .col.col-md-9
       %p.lead
         = t('workshops.lead')
-      - unless @workshop.description.blank?
+      - if @workshop.description.present?
         %p
           = sanitize(@workshop.description)
       = render 'actions' unless current_user&.banned?
