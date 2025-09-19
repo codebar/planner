@@ -22,11 +22,8 @@ Bundler.require(*Rails.groups)
 module Planner
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 7.0
-
-    config.add_autoload_paths_to_load_path = false # false is 7.1 default, true is 7.0 default
-    # TODO: When we have deployed Rails 7.1, we can uncomment this next line.
-    # config.active_support.cache_format_version = 7.1
+    config.load_defaults 7.1
+    config.active_support.cache_format_version = 7.1
     
     config.autoload_lib(ignore: %w(assets tasks))
 
