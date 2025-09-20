@@ -164,6 +164,21 @@ RSpec.feature 'An admin managing workshops', type: :feature do
     end
   end
 
+  context 'dietary restrictions' do
+    scenario 'displays dietary restriction badges for attendees' do
+      workshop = Fabricate(:workshop)
+      attendee = Fabricate(:attending_workshop_invitation, workshop: workshop)
+      attendee.member.update(dietary_restrictions: %w[vegan gluten_free])
+      
+      visit admin_workshop_path(workshop)
+
+      member_link = find('a', exact_text: attendee.member.full_name)
+      sibling = member_link.find(:xpath, 'following-sibling::p')
+      expect(sibling).to have_text('Vegan')
+      expect(sibling).to have_text('Gluten free')
+    end
+  end
+
   context '#actions' do
     context 'sending invitations to attendees' do
       scenario 'for a workshop' do

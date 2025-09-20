@@ -40,6 +40,9 @@ RSpec.feature 'A new student signs up', type: :feature do
     fill_in 'member_surname', with: 'Doe'
     fill_in 'member_email', with: 'jane@codebar.io'
     fill_in 'member_about_you', with: Faker::Lorem.paragraph
+    check 'Vegan'
+    check 'Other'
+    fill_in 'Other dietary restrictions', with: 'peanut allergy'
     click_on 'Next'
 
     expect(page).to have_current_path(step2_member_path)
@@ -50,6 +53,8 @@ RSpec.feature 'A new student signs up', type: :feature do
     expect(page).to have_content('she')
     expect(page).to have_content('Jane Doe')
     expect(page).to have_link('jane@codebar.io')
+    expect(page).to have_selector('.badge', text: 'Vegan')
+    expect(page).to have_selector('.badge', text: 'Peanut allergy')
   end
 
   scenario 'Picking a mailing list on step 2 subscribes you to that list' do

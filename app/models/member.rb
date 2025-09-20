@@ -20,6 +20,10 @@ class Member < ApplicationRecord
   validates :email, uniqueness: true
   validates :about_you, length: { maximum: 255 }
 
+  DIETARY_RESTRICTIONS = %w[vegan vegetarian pescetarian halal gluten_free dairy_free other].freeze
+  validates_inclusion_of :dietary_restrictions, in: DIETARY_RESTRICTIONS
+  validates_presence_of :other_dietary_restrictions, if: :other_dietary_restrictions?
+
   scope :accepted_toc, -> { where.not(accepted_toc_at: nil) }
   scope :order_by_email, -> { order(:email) }
   scope :subscribers, -> { joins(:subscriptions).order('created_at desc').uniq }
@@ -116,6 +120,10 @@ class Member < ApplicationRecord
     notes_from_date = last_five_workshops.last.workshop.date_and_time - 1.day
 
     member_notes.where('created_at > ?', notes_from_date)
+  end
+
+  def other_dietary_restrictions?
+    dietary_restrictions.present? && dietary_restrictions.include?('other')
   end
 
   def self.find_members_by_name(name)

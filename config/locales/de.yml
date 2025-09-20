@@ -202,7 +202,6 @@ de:
         q: "Ich werde pendeln. Können Sie mir bei meinen Reisekosten helfen?"
         a: "Wir werden einige Reisestipendien anbieten. Bitte stellen dich sicher, dass du den Fragebogen ausfüllst, nachdem du dich angemeldet hast und wir werden uns mit dir in Verbindung setzen."
   coaches:
-    want_to_coach: "Möchtest Du in unseren Workshops coachen?"
     read_before: "Wenn Du unsere Workshops noch nicht besucht hast, lies bitte unseren"
     code_of_conduct: "Verhaltenskodex"
     policy: "da wir eine Nulltoleranzpolitik haben und von allen ein entsprechendes Verhalten erwarten. Das solltest Du lesen: Unser"
