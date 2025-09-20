@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '3.4.4'
+ruby '3.4.5'
 
 gem 'rails', '~> 7.1.5.1' # LOCKED: It is Rails.
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
