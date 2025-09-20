@@ -10,7 +10,8 @@ module MemberConcerns
 
     def member_params
       params.require(:member).permit(
-        :pronouns, :name, :surname, :email, :mobile, :about_you, :skill_list, :newsletter, :other_dietary_restrictions, :other_reason,  :how_you_found_us_other_reason, how_you_found_us: [], dietary_restrictions: [] 
+        :pronouns, :name, :surname, :email, :mobile, :about_you, :skill_list, :newsletter, :other_dietary_restrictions, :how_you_found_us,
+        :how_you_found_us_other_reason, dietary_restrictions: []
       ).tap do |params|
         # We want to keep Rails' hidden blank field in the form so that all dietary restrictions for a member can be
         # removed by submitting the form with all check boxes unticked. However, we want to remove the blank value
@@ -29,18 +30,13 @@ module MemberConcerns
       @member = current_user
     end
 
-    def how_you_found_us_selections
-      how_found = Array(member_params[:how_you_found_us]).reject(&:blank?)
-      other_reason = member_params[:how_you_found_us_other_reason]
+    def how_you_found_us_selections_valid?
+      how_found_present = member_params[:how_you_found_us].present?
+      other_reason_present = member_params[:how_you_found_us_other_reason].present?
+      return false if member_params[:how_you_found_us] == 'other' && !other_reason_present
+      return true if member_params[:how_you_found_us] == 'other' && other_reason_present
 
-      how_found << other_reason if other_reason.present?
-      how_found.uniq!
-
-      how_found
-    end
-
-    def member_params_without_how_you_found_us_other_reason
-      member_params.to_h.except(:how_you_found_us_other_reason)
+      how_found_present != other_reason_present
     end
   end
 end

@@ -13,14 +13,19 @@ class Member::DetailsController < ApplicationController
   end
 
   def update
-    if how_you_found_us_selections.blank?
-      @member.assign_attributes(member_params_without_how_you_found_us_other_reason)
-      @member.errors.add(:how_you_found_us, 'You must select at least one option')
+    attrs = member_params
+    attrs[:how_you_found_us_other_reason] = nil if attrs[:how_you_found_us] != 'other'
+
+    unless how_you_found_us_selections_valid?
+      @member.errors.add(:how_you_found_us, 'You must select one option')
       return render :edit
     end
+    attrs[:how_you_found_us] = params[:member][:how_you_found_us] if params[:member][:how_you_found_us].present?
 
-    attrs = member_params_without_how_you_found_us_other_reason
-    attrs[:how_you_found_us] = how_you_found_us_selections
+    if params[:member][:how_you_found_us_other_reason].present? && attrs[:how_you_found_us] == 'other'
+      attrs[:how_you_found_us_other_reason] =
+        params[:member][:how_you_found_us_other_reason]
+    end
 
     return render :edit unless @member.update(attrs)
 

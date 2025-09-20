@@ -397,7 +397,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_08_23_151717) do
     t.datetime "opt_in_newsletter_at", precision: nil
     t.enum "dietary_restrictions", default: [], array: true, enum_type: "dietary_restriction_enum"
     t.string "other_dietary_restrictions"
-    t.text "how_you_found_us", default: [], array: true
+    t.integer "how_you_found_us"
+    t.string "how_you_found_us_other_reason"
     t.index ["email"], name: "index_members_on_email", unique: true
   end
 

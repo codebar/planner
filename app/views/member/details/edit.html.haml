@@ -29,21 +29,20 @@
           %span.text-danger= @member.errors[:how_you_found_us].first
         .col-12.mb-3
           %fieldset
-            %legend= t('member.details.edit.how_you_found_us')
-            %span *
-
             = f.input :how_you_found_us,
-                      as: :check_boxes,
-                      collection: Member::HOW_YOU_FOUND_US_OPTIONS,
-                      item_wrapper_class: 'form-check',
+                      as: :radio_buttons,
+                      collection: Member.how_you_found_us.keys,
+                      label_method: ->(option) { t("member.details.edit.how_you_found_us_options.#{option}") },
+                      value_method: :to_s,
+                      label: t('member.details.edit.how_you_found_us_label'),
+                      item_wrapper_class: 'form-check d-flex align-items-center mb-2',
                       label_item: true,
-                      input_html: { class: 'form-check-input' },
-                      label_html: { class: 'form-check-label', style: 'margin-left: 8px;' }
+                      input_html: { class: 'form-check-input me-2', style: 'margin-top: 0;' },
+                      label_html: { class: 'form-check-label', style: 'margin-left: 0;' }
 
-          = f.input :how_you_found_us_other_reason,
-                    label: t('member.details.edit.how_you_found_us_other_reason'),
-                    placeholder: 'Please specify how you heard about us',
-                    input_html: { class: 'form-control w-100' }
+            = f.input :how_you_found_us_other_reason,
+                label: t('member.details.edit.how_you_found_us_other_reason'),
+                input_html: { class: 'form-control w-100' }
         = f.input :newsletter, as: :boolean, checked_value: true, unchecked_value: false
         .text-right.mb-4
           = hidden_field_tag :next_page, step2_member_path(member_type: @type)

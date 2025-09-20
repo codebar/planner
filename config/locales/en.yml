@@ -442,8 +442,14 @@ en:
       edit:
         title: Almost there...
         summary: We need some more details from you to finish creating your account. We use these to help run our events.
-        how_you_found_us: "How did you find out about us?"
-        how_you_found_us_other_reason: "Please specify (if Other)"
+        how_you_found_us_label: "How did you find out about us?*"
+        how_you_found_us_other_reason: "Please specify how you found us"
+        how_you_found_us_options:
+          from_a_friend: "From a friend"
+          search_engine: "Search engine (Google etc.)"
+          social_media: "Social media"
+          codebar_host_or_partner: "One of Codebar's hosts or partners"
+          other: "Other"
         coach:
           about_you: What experience do you have? What languages do you like to use? Tell us a little bit about yourself!
         student:

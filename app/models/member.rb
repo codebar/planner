@@ -1,12 +1,13 @@
 class Member < ApplicationRecord
   include Permissions
 
-  HOW_YOU_FOUND_US_OPTIONS = [
-    'From a friend',
-    'Search engine (Google etc.)',
-    'Social Media',
-    "One of Codebar's hosts or partners"
-  ].freeze
+  enum how_you_found_us: {
+    from_a_friend: 0,
+    search_engine: 1,
+    social_media: 2,
+    codebar_host_or_partner: 3,
+    other: 4
+  }
 
   has_many :attendance_warnings
   has_many :bans
@@ -52,7 +53,7 @@ class Member < ApplicationRecord
 
   acts_as_taggable_on :skills
 
-  attr_accessor :attendance, :newsletter, :how_you_found_us_other_reason
+  attr_accessor :attendance, :newsletter
 
   def banned?
     bans.active.present? || bans.permanent.present?

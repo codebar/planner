@@ -9,17 +9,18 @@ RSpec.describe Member::DetailsController do
 
   describe 'PATCH #update' do
     context 'with valid params' do
-      it 'updates how_you_found_us with checkbox options' do
+      it 'updates how_you_found_us with radio option' do
         patch :update, params: {
           id: member.id,
           member: {
-            how_you_found_us: ['Social Media', 'From a friend'],
+            how_you_found_us: 'social_media',
             newsletter: 'true'
           }
         }
 
         member.reload
-        expect(member.how_you_found_us).to contain_exactly('Social Media', 'From a friend')
+        expect(I18n.t("member.details.edit.how_you_found_us_options.#{member.how_you_found_us}")).to eq('Social media')
+        expect(member.how_you_found_us_other_reason).to eq(nil)
         expect(response).to redirect_to(step2_member_path)
       end
 
@@ -27,14 +28,15 @@ RSpec.describe Member::DetailsController do
         patch :update, params: {
           id: member.id,
           member: {
-            how_you_found_us: ['Search engine (Google etc.)'],
+            how_you_found_us: 'other',
             how_you_found_us_other_reason: 'Saw a pamphlet',
             newsletter: 'false'
           },
         }
 
         member.reload
-        expect(member.how_you_found_us).to contain_exactly('Search engine (Google etc.)', 'Saw a pamphlet')
+        expect(member.how_you_found_us).to eq('other')
+        expect(member.how_you_found_us_other_reason).to eq('Saw a pamphlet')
         expect(response).to redirect_to(step2_member_path)
       end
 
@@ -42,14 +44,15 @@ RSpec.describe Member::DetailsController do
         patch :update, params: {
           id: member.id,
           member: {
-            how_you_found_us: [],
+            how_you_found_us: 'other',
             how_you_found_us_other_reason: 'At a meetup',
             newsletter: 'true'
           },
         }
 
         member.reload
-        expect(member.how_you_found_us).to eq(['At a meetup'])
+        expect(member.how_you_found_us).to eq('other')
+        expect(member.how_you_found_us_other_reason).to eq('At a meetup')
         expect(response).to redirect_to(step2_member_path)
       end
 
@@ -57,28 +60,42 @@ RSpec.describe Member::DetailsController do
         patch :update, params: {
           id: member.id,
           member: {
-            how_you_found_us: ['From a friend', '', 'From a friend'],
-            how_you_found_us_other_reason: 'From a friend',
+            how_you_found_us: 'other',
+            how_you_found_us_other_reason: 'From a colleague',
             newsletter: 'true'
           },
         }
 
         member.reload
-        expect(member.how_you_found_us).to eq(['From a friend'])
+        expect(member.how_you_found_us).to eq('other')
+        expect(member.how_you_found_us_other_reason).to eq('From a colleague')
         expect(response).to redirect_to(step2_member_path)
       end
     end
 
     context 'when update fails (invalid data)' do
-      it 'renders the edit template' do
+      it 'error raised when no how you found us selection given' do
         patch :update, params: {
           id: member.id,
           member: {
-            how_you_found_us: []
+            how_you_found_us: 'other',
+            how_you_found_us_other_reason: nil,
           }
         }
 
-        expect(response.body).to include('You must select at least one option')
+        expect(response.body).to include('You must select one option')
+      end
+
+      it 'error raised when both how you found us fields popoulated' do
+        patch :update, params: {
+          id: member.id,
+          member: {
+            how_you_found_us: 'from_a_friend',
+            how_you_found_us_other_reason: 'something else',
+          }
+        }
+
+        expect(response.body).to include('You must select one option')
       end
     end
   end
