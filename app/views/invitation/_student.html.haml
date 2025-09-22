@@ -4,4 +4,4 @@
   %p= t('workshop.virtual.invitation.shared_intro_3_html', email_link: mail_to(@workshop.chapter.email, @workshop.chapter.email))
 - else
   %p= t('workshop.invitation.student_intro_3_html')
-  %p= t('workshop.invitation.shared_intro_4_html', email_link: mail_to(@workshop.chapter.email, @workshop.chapter.email).html_safe)
+  %p= t('workshop.invitation.shared_intro_4_html', update_your_details_link: link_to(t('members.update_your_details_lower'), edit_member_path).html_safe)

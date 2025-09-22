@@ -1,7 +1,7 @@
 class MembersController < ApplicationController
   include MemberConcerns
 
-  before_action :set_member, only: %i[edit step2 profile update]
+  before_action :set_member, only: %i[edit step2 update]
   before_action :authenticate_member!, only: %i[edit step2 profile]
   before_action :suppress_notices, only: %i[step2]
 
@@ -20,6 +20,7 @@ class MembersController < ApplicationController
   end
 
   def profile
+    @member = MemberPresenter.new(current_user)
     render :show
   end
 

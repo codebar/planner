@@ -12,6 +12,11 @@
       = f.input :mobile
     .col-12
       = f.input :about_you, as: :text, label: 'Tell us a little bit about yourself', input_html: { rows: 3 }, required: true
+    .col-12
+      = f.input :dietary_restrictions, collection: Member::DIETARY_RESTRICTIONS, as: :check_boxes,
+        label_method:  ->(r) { r.humanize.upcase_first }
+      = f.input :other_dietary_restrictions, placeholder: 'Other dietary restrictions',
+        wrapper_html: { class: class_names('mt-n3', 'd-none': !@member.other_dietary_restrictions?) }, label_html: { class: 'sr-only' }
     - if @member.coach?
       .col-12
         = f.input :skill_list, input_html: { value: @member.skill_list.join(", ") }

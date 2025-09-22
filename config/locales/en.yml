@@ -167,7 +167,7 @@ en:
       student_intro_1: 'In our workshops, you will get to go through any of our available tutorials, ask for programming advice or get help on your own projects.'
       student_intro_2: 'In case you are unable to attend after you RSVP, please make sure you come back and update your attendance. We have limited space and do a coaches request depending on the number of attending students.'
       student_intro_3_html: 'Please make sure you <b>bring your laptop</b> with you.'
-      shared_intro_4_html: 'PS: There will also be food at the workshop. We always make an effort to have vegetarian, vegan and gluten-free options available. If you have any other dietary requirements, send us an email at %{email_link}.'
+      shared_intro_4_html: 'PS: There will also be food at the workshop. If you have any specific dietary restrictions, please %{update_your_details_link} to let us know about them.'
   workshop_invitation:
     coach_skills_tooltip: Keeping your skills up-to-date enables organisers to plan ahead and makes running workshops easier.
   meeting:
@@ -302,13 +302,11 @@ en:
         q: "I will be commuting. Can you help with my travel expenses?"
         a: "We will be offering some travel grants. Just make sure you fill in the questionnaire after you RSVP and we will get in touch."
   coaches:
-    want_to_coach: "Do you want to coach at our workshops?"
     read_before: "If you have not attended our workshops before, make sure you read our"
     code_of_conduct: "code of conduct"
     policy: "as we have a zero tolerance policy and expect everyone to behave appropriately. You should also  go through our"
     guide: "coaching guide"
     unable_attend: "In case you are unable to attend after you RSVP, please make sure you come back and update your attendance as we rely on coaches showing up in order for our workshops to run smoothly."
-    food: "PS: There will also be food at the workshop. We always make an effort to have vegetarian, vegan and gluten-free options available. If you have any other dietary requirements, send us email at"
   code_of_conduct:
     title: "Code of conduct"
     summary:
@@ -336,6 +334,8 @@ en:
     sign_up_as_student_disclaimer: "* I understand and meet the eligibility criteria."
     sign_up_as_coach: "Join us as a coach"
     code_of_conduct: "code of conduct"
+    update_your_details: "Update your details"
+    update_your_details_lower: "update your details"
     new:
       intro_html: "We provide a welcoming, inclusive, and supportive learning environment, with a strict zero-tolerance policy for any form of harassment or inappropriate behavior. Please take a moment to review our <a href='%{link}'>code of conduct</a> before signing up."
       students:
@@ -724,6 +724,7 @@ en:
         number_of_coaches: Coach spots
         seats: Student spots
       member:
+        dietary_restrictions: If you have any dietary restrictions, let us know about them here
         skill_list: Skills
   activerecord:
     attributes:

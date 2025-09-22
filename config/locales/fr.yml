@@ -192,7 +192,6 @@ fr:
         q: "Je voyage de loin. Pouvez-vous m'aider avec mes frais de déplacements?"
         a: "Nous offrons des bourses de voyage. Vous devez vous assurer de remplir le questionnaire après vous être enregistrer et nous vous contacterons."
   coaches:
-    want_to_coach: "Voulez vous enseigner à nos ateliers?"
     read_before: "Si vous n'êtes jamais venu a nos ateliers, merci de lire notre"
     code_of_conduct: "code de conduite"
     policy: "vu que nous attendons que chacun se comporte correctement. Vous devriez aussi lire notre"

@@ -6,7 +6,7 @@ class Admin::MembersController < Admin::ApplicationController
   end
 
   def show
-    @member = Member.find(params[:id])
+    @member = MemberPresenter.new(Member.find(params[:id]))
     load_attendance_data(@member)
 
     @actions = admin_actions(@member).sort_by(&:created_at).reverse
