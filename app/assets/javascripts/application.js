@@ -27,6 +27,7 @@
 //= require dietary-restrictions
 //= require cocoon
 //= require font_awesome5
+//= require how-you-found-us
 
 $(function() {
   $("body").removeClass("no-js");

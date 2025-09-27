@@ -1,6 +1,14 @@
 class Member < ApplicationRecord
   include Permissions
 
+  enum how_you_found_us: {
+    from_a_friend: 0,
+    search_engine: 1,
+    social_media: 2,
+    codebar_host_or_partner: 3,
+    other: 4
+  }
+
   has_many :attendance_warnings
   has_many :bans
   has_many :eligibility_inquiries
