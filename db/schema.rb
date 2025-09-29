@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_08_20_145012) do
+ActiveRecord::Schema[7.1].define(version: 2025_08_23_151717) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -397,6 +397,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_08_20_145012) do
     t.datetime "opt_in_newsletter_at", precision: nil
     t.enum "dietary_restrictions", default: [], array: true, enum_type: "dietary_restriction_enum"
     t.string "other_dietary_restrictions"
+    t.integer "how_you_found_us"
+    t.string "how_you_found_us_other_reason"
     t.index ["email"], name: "index_members_on_email", unique: true
   end
 
