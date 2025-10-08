@@ -5,7 +5,7 @@
     .col-12.col-md-6
       = render partial: 'virtual_workshop_fields', locals: { f: f }
     .col-12.col-md-6
-      = f.input :organisers, collection: Member.all, value_method: :id, label_method: :full_name, selected: @workshop.organisers.map(&:id), input_html: { multiple: true }
+      = f.input :organisers, collection: @workshop.chapter.organisers, value_method: :id, label_method: :full_name, selected: @workshop.organisers.pluck(&:id), input_html: { multiple: true }
     .col-12
       = f.input :invitable, hint_html: { class: 'd-block ms-1' }
   .row
