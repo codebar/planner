@@ -19,6 +19,30 @@
           label_method:  ->(r) { r.humanize.upcase_first }
         = f.input :other_dietary_restrictions, placeholder: 'Other dietary restrictions',
             wrapper_html: { class: class_names('mt-n3', 'd-none': !@member.other_dietary_restrictions?) }, label_html: { class: 'sr-only' }
+        - if @member.errors.any?
+          #error_explanation
+            %h2= "#{pluralize(@member.errors.count, 'error')} prohibited this member from being saved:"
+            %ul
+              - @member.errors.full_messages.each do |msg|
+                %li= msg
+        - if @member.errors[:how_you_found_us]&.any?
+          %span.text-danger= @member.errors[:how_you_found_us].first
+        .col-12.mb-3
+          %fieldset
+            = f.input :how_you_found_us,
+                      as: :radio_buttons,
+                      collection: Member.how_you_found_us.keys,
+                      label_method: ->(option) { t("member.details.edit.how_you_found_us_options.#{option}") },
+                      value_method: :to_s,
+                      label: t('member.details.edit.how_you_found_us_label'),
+                      item_wrapper_class: 'form-check d-flex align-items-center mb-2',
+                      label_item: true,
+                      input_html: { class: 'form-check-input me-2', style: 'margin-top: 0;' },
+                      label_html: { class: 'form-check-label', style: 'margin-left: 0;' }
+
+            = f.input :how_you_found_us_other_reason,
+                label: t('member.details.edit.how_you_found_us_other_reason'),
+                input_html: { class: 'form-control w-100' }
         = f.input :newsletter, as: :boolean, checked_value: true, unchecked_value: false
         .text-right.mb-4
           = hidden_field_tag :next_page, step2_member_path(member_type: @type)
