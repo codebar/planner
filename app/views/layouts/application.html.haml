@@ -10,21 +10,12 @@
 
     - if content_for? :meta_tags
       = yield :meta_tags
-    - else 
-      %meta{ property: 'og:title', content: 'codebar' }
-      %meta{ property: 'og:type', content: 'website' }
-      %meta{ property: 'og:url', content: request.original_url }
-      %meta{ property: 'og:image', content: image_url('logo-square.png') }
-      %meta{ property: 'og:description', content: 'Making tech more diverse and welcoming by bringing people together and helping teach programming skills.' }
-      %meta{ property: 'og:site_name', content: 'codebar' }
-      %meta{ property: 'og:locale', content: 'en_GB' }
-      -# Only Twitter-specific tag needed
-      %meta{ name: 'twitter:card', content: image_url('logo-square.png') }
+    - else
+      = render partial: 'layouts/meta_tags'
 
     %link{ rel: 'icon', sizes: '196x196', href: '/Icon-196.png'}
     %link{ rel: 'icon', sizes: '128x128', href: '/Icon-128.png'}
     %link{ rel: 'apple-touch-icon', sizes: '128x128', href: '/Icon-128.png'}
-    %link{ rel: 'image_src', href: '/assets/logo-square.png', alt: 'codebar logo' }
 
     %title= retrieve_title
     = favicon_link_tag 'favicon.ico'
