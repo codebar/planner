@@ -10,7 +10,7 @@ class VirtualWorkshopInvitationMailer < ApplicationMailer
     setup(workshop, invitation, member)
     @waiting_list = waiting_list
 
-    subject = "Attendance Confirmation: #{I18n.t('workshop.virtual.title',
+    subject = "Attendance Confirmation: #{I18n.t('workshops.virtual.title_with_date',
                                                  chapter: @workshop.chapter.name,
                                                  date: humanize_date(@workshop.date_and_time))}"
 
