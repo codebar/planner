@@ -11,7 +11,7 @@
     - if content_for? :meta_tags
       = yield :meta_tags
     - else
-      = render partial: 'layouts/meta_tags'
+      = render partial: 'shared/meta_tags'
 
     %link{ rel: 'icon', sizes: '196x196', href: '/Icon-196.png'}
     %link{ rel: 'icon', sizes: '128x128', href: '/Icon-128.png'}
