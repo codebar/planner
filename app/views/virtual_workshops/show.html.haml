@@ -1,6 +1,6 @@
-- title t('workshop.virtual.title', chapter: @workshop.chapter.name, date: humanize_date(@workshop.date_and_time))
+- title t('workshops.virtual.title_with_date', chapter: @workshop.chapter.name, date: humanize_date(@workshop.date_and_time))
 
-= render partial: 'virtual_workshops/meta_tags', locals: { workshop: @workshop }
+= render partial: 'workshops/meta_tags', locals: { workshop: @workshop }
 
 .container.py-4.py-lg-5
   .row

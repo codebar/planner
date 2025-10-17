@@ -1,6 +1,0 @@
-- content_for :meta_tags do
-  - title = t('workshops.virtual.title', chapter: workshop.chapter.name)
-  - slack_description = "codebar #{workshop.chapter.name} virtual workshop"
-  %meta{ property: 'og:title', content: title }
-  %meta{ property: 'og:description', content: slack_description }
-  %meta{ property: 'og:image', content: image_url('social-summary-card-image.png') }

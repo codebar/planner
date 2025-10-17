@@ -5,22 +5,17 @@
     %meta{ name: 'viewport', content: 'width=device-width, initial-scale=1.0' }
     %meta{ name: 'robots', content: 'index, follow' }
     %meta{ property: 'fb:admins', content: '622070503' }
-    %meta{ property: 'og:type', content: 'website' }
-    %meta{ property: 'og:locale', content: 'en_GB' }
-    %meta{ property: 'og:site_name', content: 'codebar' }
     %meta{ name: 'keywords', content: 'codebar, programming, diversity, html, css, javascript, ruby, python' }
-    %meta{ property: 'og:image', content: image_url('logo-square.png') }
-    %meta{ property: 'og:url', content: request.original_url }
-    %meta{ property: 'og:title', content: 'codebar' }
-    %meta{ property: 'og:description', content: 'Making tech more diverse and welcoming by bringing people together and helping teach programming skills.' }
     %meta{ name: 'description', content: 'Making tech more diverse and welcoming by bringing people together and helping teach programming skills.' }
+
+    - if content_for? :meta_tags
+      = yield :meta_tags
+    - else
+      = render partial: 'shared/meta_tags'
+
     %link{ rel: 'icon', sizes: '196x196', href: '/Icon-196.png'}
     %link{ rel: 'icon', sizes: '128x128', href: '/Icon-128.png'}
     %link{ rel: 'apple-touch-icon', sizes: '128x128', href: '/Icon-128.png'}
-
-    = content_for :meta_tags
-
-    %link{ rel: 'image_src', href: '/assets/logo-square.png', alt: 'codebar logo' }
 
     %title= retrieve_title
     = favicon_link_tag 'favicon.ico'

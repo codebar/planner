@@ -1,6 +1,25 @@
-- content_for :meta_tags do
-  - title = "Workshop at #{workshop.host.name}"
-  - slack_description = "codebar #{workshop.chapter.name}"
+:ruby
+  title = if workshop.virtual?
+    t('workshops.virtual.title_with_date', chapter: workshop.chapter.name, date: humanize_date(workshop.date_and_time))
+  else
+    t('workshop.title', host: workshop.host.name, date: humanize_date(workshop.date_and_time))
+  end
+  url = request.original_url
+  image = workshop.host.try(:image_url).presence || image_url('codebar-social.jpg')
+  description = (workshop.virtual? ? t('workshops.virtual.lead') : t('workshops.lead'))
+
+= content_for :meta_tags do
   %meta{ property: 'og:title', content: title }
-  %meta{ property: 'og:description', content: slack_description }
-  %meta{ property: 'og:image', content: image_url('social-summary-card-image.png') }
+  %meta{ property: 'og:type', content: 'event' }
+  %meta{ property: 'og:url', content: url }
+  %meta{ property: 'og:image', content: image }
+  %meta{ property: 'og:description', content: description }
+  %meta{ property: 'og:site_name', content: 'codebar' }
+  %meta{ property: 'og:locale', content: 'en_GB' }
+
+  -# Only Twitter-specific tag needed
+  %meta{ name: 'twitter:card', content: 'summary_large_image' }
+
+  -# Event timing
+  %meta{ property: 'event:start_time', content: workshop.date_and_time }
+  %meta{ property: 'event:end_time', content: workshop.ends_at }

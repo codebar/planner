@@ -38,13 +38,13 @@ RSpec.feature 'Viewing a workshop page', type: :feature do
       describe '#details' do
         scenario 'workshop and page title' do
           expect(page)
-            .to have_title("Virtual workshop for #{workshop.chapter.name} - #{humanize_date(workshop.date_and_time)}")
+            .to have_title("Virtual workshop for #{workshop.chapter.name} 🌐 #{humanize_date(workshop.date_and_time)}")
           expect(page).to have_content("Virtual workshop for #{workshop.chapter.name}")
         end
 
         scenario 'workshop info' do
           within '*[data-test=workshop-info]' do
-            expect(page).to have_content('Participate in our workshops')
+            expect(page).to have_content('Participate in our online workshops')
             expect(page).to have_content('Our virtual workshops take place online')
 
             within '.description' do
