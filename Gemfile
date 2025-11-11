@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 ruby file: '.ruby-version'
 
-gem 'rails', '~> 7.2.2.2' # LOCKED: It is Rails.
+gem 'rails', '~> 8.0.4' # LOCKED: It is Rails.
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem 'sprockets-rails'
 
