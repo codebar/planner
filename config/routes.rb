@@ -12,13 +12,13 @@ Rails.application.routes.draw do
     get 'student-guide', action: 'participant_guide'
   end
 
-  resource :member, only: %i[new edit update patch] do
+  resource :member, only: %i[new edit update] do
     get 'step2'
   end
 
   resource :contact_preferences, only: %i[show update]
 
-  resource :terms_and_conditions, only: %i[show update patch]
+  resource :terms_and_conditions, only: %i[show update]
   resource :mailing_lists, only: %i[create destroy]
 
   namespace :member do
@@ -141,7 +141,7 @@ Rails.application.routes.draw do
 
     resources :testimonials, only: %i[index]
 
-    resources :member_search, path: 'member-search', only: [:index, :results] do
+    resources :member_search, path: 'member-search', only: [:index] do
       collection do
         get 'index'
         get 'results'
