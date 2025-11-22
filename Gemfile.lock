@@ -223,7 +223,6 @@ GEM
       rubocop (>= 1.0)
       sysexits (~> 1.1)
     hashie (5.0.0)
-    high_voltage (4.0.0)
     htmlentities (4.3.4)
     i18n (1.14.7)
       concurrent-ruby (~> 1.0)
@@ -619,7 +618,6 @@ DEPENDENCIES
   friendly_id
   haml
   haml_lint
-  high_voltage
   icalendar
   image_processing
   importmap-rails

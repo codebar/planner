@@ -21,7 +21,6 @@ gem 'font_awesome5_rails'
 gem 'bootstrap', '~> 5'
 gem 'friendly_id'
 gem 'haml'
-gem 'high_voltage'
 gem 'irb' # LOCKED: Added because of byebug
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
