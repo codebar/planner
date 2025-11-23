@@ -69,8 +69,6 @@ gem 'importmap-rails'
 gem 'turbo-rails'
 # Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
 gem 'stimulus-rails'
-# Build JSON APIs with ease [https://github.com/rails/jbuilder]
-gem 'jbuilder'
 gem 'public_activity'
 
 group :development do
