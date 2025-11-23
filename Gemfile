@@ -22,7 +22,6 @@ gem 'bootstrap', '~> 5'
 gem 'friendly_id'
 gem 'haml'
 gem 'high_voltage'
-gem 'irb' # LOCKED: Added because of byebug
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 
@@ -89,6 +88,7 @@ group :development, :test do
   gem 'dotenv-rails'
   gem 'fabrication'
   gem 'faker'
+  gem 'irb' # LOCKED: Added because of byebug
   gem 'launchy'
   gem 'pry-rails'
   gem 'pry-byebug'
