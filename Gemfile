@@ -22,7 +22,6 @@ gem 'bootstrap', '~> 5'
 gem 'friendly_id'
 gem 'haml'
 gem 'high_voltage'
-gem 'irb' # LOCKED: Added because of byebug
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 
@@ -69,8 +68,6 @@ gem 'importmap-rails'
 gem 'turbo-rails'
 # Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
 gem 'stimulus-rails'
-# Build JSON APIs with ease [https://github.com/rails/jbuilder]
-gem 'jbuilder'
 gem 'public_activity'
 
 group :development do
@@ -91,6 +88,7 @@ group :development, :test do
   gem 'dotenv-rails'
   gem 'fabrication'
   gem 'faker'
+  gem 'irb' # LOCKED: Added because of byebug
   gem 'launchy'
   gem 'pry-rails'
   gem 'pry-byebug'
