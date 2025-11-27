@@ -111,6 +111,7 @@ group :test do
   gem 'simplecov',      require: false
   gem 'simplecov-lcov', require: false
   gem 'timecop', '~> 0.9.10'
+  gem 'webmock'
 end
 
 group :production do
