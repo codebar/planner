@@ -1,6 +1,7 @@
 require 'simplecov'
 require 'simplecov-lcov'
 require 'shoulda/matchers'
+require 'webmock/rspec'
 
 # Fix incompatibility of simplecov-lcov with older versions of simplecov that are not expresses in its gemspec.
 # https://github.com/fortissimo1997/simplecov-lcov/pull/25
@@ -32,6 +33,9 @@ end
 ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../../config/environment', __FILE__)
 require 'rspec/rails'
+
+# Block all external HTTP requests in tests; allows localhost for Capybara
+WebMock.disable_net_connect!(allow_localhost: true)
 
 Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 
@@ -70,6 +74,11 @@ RSpec.configure do |config|
   end
 
   config.before(:each) do
+    # Stub all Flodesk API endpoints globally so tests don't make external requests
+    # when fabricating members (which trigger Subscription.after_create callback)
+    WebMock.stub_request(:any, %r{api\.flodesk\.com}).
+      to_return(status: 200, body: '{"status":"active","segments":[]}', headers: { 'Content-Type' => 'application/json' })
+
     DatabaseCleaner.strategy = :transaction
   end
 
