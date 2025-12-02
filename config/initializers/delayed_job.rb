@@ -1,7 +1,10 @@
 Delayed::Worker.destroy_failed_jobs = false
 Delayed::Worker.sleep_delay = 60
 Delayed::Worker.max_attempts = 3
-Delayed::Worker.max_run_time = 5.minutes
+
+# The rake jobs:workoff task in Heroku scheduler is configured to run every 10 minutes
+Delayed::Worker.max_run_time = 9.minutes 
+
 Delayed::Worker.read_ahead = 10
 Delayed::Worker.default_queue_name = 'default'
 Delayed::Worker.delay_jobs = !Rails.env.test?
