@@ -515,8 +515,8 @@ GEM
       websocket (~> 1.0)
     semantic_logger (4.17.0)
       concurrent-ruby (~> 1.0)
-    shoulda-matchers (6.5.0)
-      activesupport (>= 5.2.0)
+    shoulda-matchers (7.0.1)
+      activesupport (>= 7.1)
     simple_form (5.4.0)
       actionpack (>= 7.0)
       activemodel (>= 7.0)
@@ -663,7 +663,7 @@ DEPENDENCIES
   sassc-rails
   scout_apm
   selenium-webdriver
-  shoulda-matchers (~> 6.5)
+  shoulda-matchers (~> 7.0)
   simple_form
   simplecov
   simplecov-lcov
