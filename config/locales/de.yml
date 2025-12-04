@@ -41,11 +41,11 @@ de:
   number:
     currency:
       format:
-        unit: '£'
-        delimiter: ','
-        separator: '.'
+        unit: "£"
+        delimiter: ","
+        separator: "."
         precision: 0
-        format: '%u%n'
+        format: "%u%n"
   homepage:
     intro: "<strong>codebar</strong> is a charity that facilitates the growth of a diverse tech community by running free regular programming workshops for minority groups in tech."
     explanation: "Unser Ziel ist unterrepräsentierten Menschen zu programmieren in einer sicheren und kollaborative Umgebung lernen und erweitern ihre Karrierechancen zu ermöglichen. Um dies zu erreichen betreiben wir kostenlose regelmäßige Workshops, regelmäßige Einzelveranstaltungen und versuchen, die Möglichkeiten für unsere Schüler die Technologie und Programmierung zugänglicher zu schaffen."
@@ -94,8 +94,8 @@ de:
           subject: "Reminder: you're on the codebar waiting list (%{date_time})"
   messages:
     accepted_invitation: "Vielen Dank für die Rückmeldung, %{name}. Wir sehen uns beim Workshop!"
-    already_invited: 'You have already RSVPd or joined the waitlist for this workshop.'
-    error_blank_note: 'You must select a note'
+    already_invited: "You have already RSVPd or joined the waitlist for this workshop."
+    error_blank_note: "You must select a note"
     rejected_invitation: "Wir bedauern es sehr dass du nicht teilnehmen kannst. Vielen Dank für das Bescheid geben, %{name}."
     already_rsvped: "Du hast deine Teilnahme schon bestätigt!"
     not_attending_already: "Du hast bereits bestätigt, dass du nicht teilnehmen kannst."
@@ -103,16 +103,16 @@ de:
     feedback_saved: "Vielen Dank für dein Feedback!"
     feedback_not_found: "Sie haben bereits ein Feedback eingereicht."
     updated_note: "Aktualisierung erfolgreich."
-    invalid_session: 'Your session is invalid'
+    invalid_session: "Your session is invalid"
     invitations:
       meeting:
         cancel: "Thanks for letting us know you can't make it."
         rsvp: "Your RSVP was successful. We look forward to seeing you at the Monthly!"
       rsvped_to_other_workshop: "Du hast dich schon für einen anderen Workshop an diesem Datum angemeldet. Falls du an diesem Workshop teilnehmen möchtest, melde dich bitte zuerst von dem anderen Workshop ab."
       spot_confirmed: "Deine Teilnahme an %{event} wurde bestätigt! Wir freuen uns bereits dich dort begrüßen zu dürfen."
-      spot_not_confirmed: 'Deine Teilnahme wurde noch nicht bestätigt. Wir werden die Teilnahme bestätigen sobald du das Formular ausgefüllt hast.'
+      spot_not_confirmed: "Deine Teilnahme wurde noch nicht bestätigt. Wir werden die Teilnahme bestätigen sobald du das Formular ausgefüllt hast."
   notifications:
-    provider_already_connected: 'Sie sind bereits angemeldet!'
+    provider_already_connected: "Sie sind bereits angemeldet!"
     not_logged_in: "Du musst angemeldet sein, um auf diese Seite zugreifen zu können."
   navigation:
     dashboard: "Übersicht"
@@ -157,14 +157,14 @@ de:
       collaboration: "Arbeite mit den Lernenden zusammen. Wenn du zwei Leute betreust, solltest du mit beiden arbeiten. Widme nicht deine ganze Aufmerksamkeit einer Einzelperson."
       discussion: "Erlaube den Lernenden zunächst, Fragen eigenständig zu beantworten. Hilf ihnen mit erkenntnisleitenden Fragen. Rege eine Diskussion an."
       talk_slow: "Lass dir Zeit. Du bist der/die Lehrer/in, sie sind die Lernenden. Lege kurze Pausen zwischen Fragen ein."
-      mild_approach: "Sage nicht rabiat \"Nein\", wenn die Lernenden etwas unrichtig machen. Gehe sanft und behutsam an das Problem heran."
+      mild_approach: 'Sage nicht rabiat "Nein", wenn die Lernenden etwas unrichtig machen. Gehe sanft und behutsam an das Problem heran.'
       paper: "Benutze Stift und Papier oder ein Whiteboard! Viele der Lernenden haben keine Vorgeschichte mit der Informatik. Zeichnungen und visuelle Hilfen können sehr nützlich sein."
       stubling: "Lasse zu, dass die Lernenden auch mal stolpern. Wir lernen aus Fehlern, indem wir unseren eigenen Weg von der Frustration zur Lösung des Problems finden. Stehe den Lernenden unterstützend zur Seite, aber lass sie selbständig erkunden."
-      suggestions: "Hast du noch Vorschläge? Eröffne einen <a href='https://github.com/codebar/planner'>pull request</a> oder <a href='https://github.com/codebar/planner/issues/new'>erstelle eine issue</a>\""
+      suggestions: 'Hast du noch Vorschläge? Eröffne einen <a href=''https://github.com/codebar/planner''>pull request</a> oder <a href=''https://github.com/codebar/planner/issues/new''>erstelle eine issue</a>"'
   workshops:
-    already_wish_to_attend: 'You have already RSVPd or joined the waitlist for this workshop.'
+    already_wish_to_attend: "You have already RSVPd or joined the waitlist for this workshop."
     lead: "Attend our workshops to learn programming in a safe and supportive environment at your own pace, or to share your knowledge and coach our students."
-    registration_not_open: 'This workshop is not open for registrations'
+    registration_not_open: "This workshop is not open for registrations"
   events:
     title: "Veranstaltungen"
     past: "Vergangene"
@@ -250,7 +250,7 @@ de:
       a_p2: "die uns ihre Zeit kostenlos zur Verfügung stellen um der Gemeinschaft zu helfen."
     technologies:
       q: "Welche Technologien lehrt ihr?"
-      a: "Wir haben eine Vielfalt an Tutorien zu HTML, CSS, JavaScript und Ruby. Wenn du etwas Anderes lernen möchtest zögere nicht <a href=\"mailto:contact@codebar.io\">uns eine E-Mail zu schicken</a>, weil wir möglicherweise noch jemanden finden können der uns dabei hilft."
+      a: 'Wir haben eine Vielfalt an Tutorien zu HTML, CSS, JavaScript und Ruby. Wenn du etwas Anderes lernen möchtest zögere nicht <a href="mailto:contact@codebar.io">uns eine E-Mail zu schicken</a>, weil wir möglicherweise noch jemanden finden können der uns dabei hilft.'
     eligibility:
       q: "Ich möchte an einem Workshop teilnehmen. Bin ich berechtigt?"
       a: "Unsere Workshops sind für Frauen, LGBTQ und Menschen die in der Tech-Branche unterrepräsentiert sind geöffnet. Wenn du zu einer dieser Gruppen gehörst bist du herzlich eingeladen teilzunehmen. Wenn nicht, gibt es andere tolle Initiativen, wie <a href='https://www.meetup.com/opentechschool-london/'>Open Tech School London</a>, bei denen man in einer kollaborativen Umgebung lernen kann. Bitte lies auch unseren <a href='http://codebar.io/student-guide'>Studentenratgeber</a> für weitere Informationen."
@@ -262,7 +262,7 @@ de:
       a: "Wir versuchen einen Trainer pro für je zwei Teilnehmer_innen zu haben. Wir bilden aus den Studenten die das gleiche Tutorium bearbeiten wollen Zweiergruppen und weisen ihnen eine_n Trainer_in zu. Der Rest geschieht einfach."
     laptop:
       q: "Muss ich einen Laptop zu den Workshops mitbringen?"
-      a: "Ja, wir empfehlen, dass du einen Laptop mitbringst, weil es einfacher für dich sein wird nach den Workshops weiterzuarbeiten. Wenn du keinen besitzt, <a href=\"mailto:contact@codebar.io\">schick uns eine E-Mail</a>, dann versuchen wir dir auszuhelfen."
+      a: 'Ja, wir empfehlen, dass du einen Laptop mitbringst, weil es einfacher für dich sein wird nach den Workshops weiterzuarbeiten. Wenn du keinen besitzt, <a href="mailto:contact@codebar.io">schick uns eine E-Mail</a>, dann versuchen wir dir auszuhelfen.'
     online_resources:
       q: "Es gibt so viele Tutorien online, wieso sollte ich zu codebar gehen?"
       a: "Programmieren kann furchteinflößend sein und viele finden es schwer einen Einstieg zu finden. Dadurch dass wir dich in Kontakt mit Menschen bringen die dir helfen und dich anweisen können machen wir deine Erfahrung und deinen Lernprozess einfacher und angenehmer."
@@ -281,7 +281,7 @@ de:
       a: "Das hängt leider komplett davon ab wo der Workshop stattfindet und ob das Gebäude einen entsprechenden Zugang hat. Schick uns bitte eine E-Mail an <a href='mailto:meetings@codebar.io'>meetings[at]codebar.io</a>, dass wir uns erkundigen und dir bescheid sagen können."
     bring_codebar_to_my_city:
       q: "Ich würde codebar gerne in meine Stadt holen. Kann ich das machen?"
-      a: "Natürlich. Bei codebar geht es darum eine Gemeinschaft aus erfahrenen Entwickler_innen, die in ihrer Freizeit anderen helfen möchten, aufzubauen. Wenn du codebar dort aufbauen möchtest wo du lebst, würden wir uns gerne mit dir darüber unterhalten und sehen, wie wir dir dabei helfen können - schick uns einfach <a href=\"mailto:contact@codebar.io\">eine E-Mail</a>."
+      a: 'Natürlich. Bei codebar geht es darum eine Gemeinschaft aus erfahrenen Entwickler_innen, die in ihrer Freizeit anderen helfen möchten, aufzubauen. Wenn du codebar dort aufbauen möchtest wo du lebst, würden wir uns gerne mit dir darüber unterhalten und sehen, wie wir dir dabei helfen können - schick uns einfach <a href="mailto:contact@codebar.io">eine E-Mail</a>.'
     our_coaches:
       q: "Unsere Trainer"
       a_p1: "Du findest alle Trainer die uns bei unseren Workshops geholfen haben auf der"
@@ -316,15 +316,15 @@ de:
     no_incoming: "Aktuell sind keine Workshops geplant."
     contact: "Um das %{city}er Team zu kontaktieren kannst du einfach eine E-Mail an %{email} schicken"
   feedback_form:
-    title: 'Workshop Feedback'
+    title: "Workshop Feedback"
     description: Deine Einreichung ist komplett anonym. Wir lesen jedes Feedback und verwenden es um unsere Workshops zu verbessern.
     note: Bitte nenne keine Namen, sondern wähle deinen Trainer aus dem entsprechenden Feld aus. Das hilft uns dabei Probleme zu adressieren, aber gleichzeitig anonym Feedback mit den Trainern zu teilen. Die Privatsphäre unserer Mitglieder ist uns sehr wichtig!
     rating: Deine Gesamtbewertung des Workshops
-    coach: 'Wer war dein Trainer?'
-    select_coach: '- Trainer wählen -'
-    tutorial: 'Welches Tutorium habt ihr bearbeitet?'
-    select_tutorial: '- Tutorium wählen -'
-    request: 'Wie fandest du den Workshop?'
+    coach: "Wer war dein Trainer?"
+    select_coach: "- Trainer wählen -"
+    tutorial: "Welches Tutorium habt ihr bearbeitet?"
+    select_tutorial: "- Tutorium wählen -"
+    request: "Wie fandest du den Workshop?"
     suggestions: "Gab es etwas das dir nicht gefallen hat? Was können wir tun um uns zu verbessern?"
   member:
     jobs:
@@ -411,7 +411,7 @@ de:
         title: 1. Information we collect
         what_we_collect:
           title: 1.1 Personal data we collect from you
-          p1: 'We have set out in the table below the personal data we collect about you and how we use it, which will differ based on the capacity in which you interact with codebar:'
+          p1: "We have set out in the table below the personal data we collect about you and how we use it, which will differ based on the capacity in which you interact with codebar:"
           table:
             headers:
               h1: Who
@@ -461,7 +461,7 @@ de:
                 l2: Compliance with legal obligations
         how_we_share:
           title: 1.2 How we share your information
-          p1_html: 'When you subscribe to an event, we share your name with our host companies as we are required to provide a list with all attendee names when you subscribe to any of our events. We **do not share** your email address or any other personal information.'
+          p1_html: "When you subscribe to an event, we share your name with our host companies as we are required to provide a list with all attendee names when you subscribe to any of our events. We **do not share** your email address or any other personal information."
         legal_basis:
           title: 1.3 Legal basis for our use of your personal information
           p1: As set out in the table above, sometimes the legal basis on which we collect and process your data is because our legitimate interests make the processing necessary, and those legitimate interests are not overridden by your interests or fundamental rights and freedoms. For example, we collect and store your data in order to process event information, and to ensure the efficient running and promotion of workshops.
@@ -475,15 +475,15 @@ de:
         p2: If you wish to enquire further about these safeguards used, please contact us by email at the address below or by mail using the postal address provided below.
       your_rights:
         title: 4. Your data protection rights
-        p1: 'Data protection law provides you with rights in respect of personal data that we hold about you, including the:'
-        l1: 'Right to Access: You have the right to obtain access to your data, and certain other information (similar to that provided in this Privacy Policy).'
-        l2: 'Right to Rectification: You are entitled to have your data corrected if it is inaccurate or incomplete.'
-        l3: 'Right to Erasure: This enables you in some circumstances to request and obtain the deletion of your data where there is no legal reason for us to keep using it.'
-        l4: 'Right to Restriction of Processing: You have rights to suspend further use of your data, whereby we can still store your data but cannot use it further. This may mean we can no longer provide you with Services.'
-        l5: 'Right to Data Portability: You have rights in some circumstances to request the transfer of your data to yourself or to a third party.'
-        l6: 'Right to Objection: You have the right to object to certain types of data processing, including for direct marketing purposes.'
-        l7: 'Right to Withdrawal of Consent: Where we are relying on consent to process your data, you have the right to withdraw your consent at any time by using any opt-out links, or by contacting us at the details provided below (although if you do so, it does not mean that anything we have done with your data with your consent up to that point is unlawful and we may be able to continue to process your personal information to the extent required or otherwise permitted by law, in particular in connection with exercising and defending our legal rights or meeting our legal and regulatory obligations).'
-        l8: 'Right to Lodge a Complaint: You can lodge a complaint in relation to our use of your personal information with the local supervisory authority, the Information Commissioner (UK).'
+        p1: "Data protection law provides you with rights in respect of personal data that we hold about you, including the:"
+        l1: "Right to Access: You have the right to obtain access to your data, and certain other information (similar to that provided in this Privacy Policy)."
+        l2: "Right to Rectification: You are entitled to have your data corrected if it is inaccurate or incomplete."
+        l3: "Right to Erasure: This enables you in some circumstances to request and obtain the deletion of your data where there is no legal reason for us to keep using it."
+        l4: "Right to Restriction of Processing: You have rights to suspend further use of your data, whereby we can still store your data but cannot use it further. This may mean we can no longer provide you with Services."
+        l5: "Right to Data Portability: You have rights in some circumstances to request the transfer of your data to yourself or to a third party."
+        l6: "Right to Objection: You have the right to object to certain types of data processing, including for direct marketing purposes."
+        l7: "Right to Withdrawal of Consent: Where we are relying on consent to process your data, you have the right to withdraw your consent at any time by using any opt-out links, or by contacting us at the details provided below (although if you do so, it does not mean that anything we have done with your data with your consent up to that point is unlawful and we may be able to continue to process your personal information to the extent required or otherwise permitted by law, in particular in connection with exercising and defending our legal rights or meeting our legal and regulatory obligations)."
+        l8: "Right to Lodge a Complaint: You can lodge a complaint in relation to our use of your personal information with the local supervisory authority, the Information Commissioner (UK)."
         p2: If you would like to exercise any of these rights or if you have a complaint about how we handle your data, please contact us at the email address stated below.
       security:
         title: 5. Security
@@ -493,7 +493,7 @@ de:
         p1: We reserve the right to modify or update this Privacy Policy at any time in accordance with this provision. If we make changes to this Privacy Policy, we will post the revised Privacy Policy on the codebar website. Please regularly review https://codebar.io/privacy-policy to check for any updates or changes to our Privacy Policy. The date this Privacy Policy was last revised is identified at the top of this page.
       cookies:
         title: 7. Cookies
-        p1_html: 'We use cookies to recognise you and your location. You can control cookies through your browser settings and other tools. For more information read our [cookie policy](https://codebar.io/cookie-policy).'
+        p1_html: "We use cookies to recognise you and your location. You can control cookies through your browser settings and other tools. For more information read our [cookie policy](https://codebar.io/cookie-policy)."
       contact:
         title: 8. Contact
         p1: "If you have any questions or complaints about this Privacy Policy or our information handling practices, you may email us at company@codebar.io stating 'Data inquiry' in the subject title, or by postal mail at: codebar Ltd, International House, 101 King's Cross Road, London, WC1X 9LP."
@@ -518,7 +518,7 @@ de:
           description: Affect change as a volunteer coach with codebar - your expertise and guidance will pave the way for aspiring developers, unlocking the world of coding and creating opportunities for folks from groups under represented in the tech industry.
         volunteer:
           title: Other skills
-          description: Your unique abilities could be our missing piece in the codebar puzzle. Having a diverse range of skills in our team is necessary to enrich our community. From fundraising to event coordination to marketing, we always welcome new talent to drive our mission forward.  
+          description: Your unique abilities could be our missing piece in the codebar puzzle. Having a diverse range of skills in our team is necessary to enrich our community. From fundraising to event coordination to marketing, we always welcome new talent to drive our mission forward.
           link: Email us to become a volunteer
       fundraise:
         title: Fundraise
@@ -531,32 +531,32 @@ de:
 
   admin:
     dashboard:
-      title: 'Admin'
+      title: "Admin"
     workshop:
       manage_rsvps:
-        text: 'Studenten und Trainer zum Workshop einladen. Die Bestätigungs-E-Mail wird ausgelöst und sie werden von der Warteliste entfernt.'
+        text: "Studenten und Trainer zum Workshop einladen. Die Bestätigungs-E-Mail wird ausgelöst und sie werden von der Warteliste entfernt."
       destroy:
         success: "Werkstatt erfolgreich gelöscht"
         failure: "Workshop kann nicht gelöscht werden. Dies kann passieren weil der Workshop eingeladene Teilnehmer hat und/oder lang genug auf der Webseite aufgeführt war, dass er nicht gelöscht werden kann."
     messages:
       meeting:
-        created: 'Meeting wurde erfolgreich erstellt'
-        updated: 'Meetingdetails erfolgreich aktualisiert'
-        invitations_already_sent: 'Einladungen wurden bereits verschickt; sie werden nicht erneut versendet'
-        sending_invitations: 'Einladungen werden verschickt'
+        created: "Meeting wurde erfolgreich erstellt"
+        updated: "Meetingdetails erfolgreich aktualisiert"
+        invitations_already_sent: "Einladungen wurden bereits verschickt; sie werden nicht erneut versendet"
+        sending_invitations: "Einladungen werden verschickt"
       invitation:
         rsvp_member: "%{name} wurde erfolgreich hinzugefügt und per E-Mail benachrichtigt."
         already_on_list: "%{name} ist bereits auf der Liste!"
         rsvp_error: "Es ist etwas schief gegangen, %{name} wurde nicht hinzugefügt."
-        update_rsvp: 'Teilnahme von %{name} aktualisiert'
+        update_rsvp: "Teilnahme von %{name} aktualisiert"
   simple_form:
     placeholders:
       job:
-        company: 'e.g. codebar'
-        company_website: 'e.g. https://codebar.io'
-        title: 'e.g. Internship'
-        description: 'Use text or markdown for the job description'
-        location: 'e.g. London or Berlin'
+        company: "e.g. codebar"
+        company_website: "e.g. https://codebar.io"
+        title: "e.g. Internship"
+        description: "Use text or markdown for the job description"
+        location: "e.g. London or Berlin"
     hints:
       job:
         remote: Only check if the role is fully remote only

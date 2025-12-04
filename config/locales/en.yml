@@ -74,11 +74,11 @@ en:
   number:
     currency:
       format:
-        unit: '£'
-        delimiter: ','
-        separator: '.'
+        unit: "£"
+        delimiter: ","
+        separator: "."
         precision: 0
-        format: '%u%n'
+        format: "%u%n"
   homepage:
     title: Homepage
     intro: "<strong>codebar</strong> is a charity that facilitates the growth of a diverse tech community by running free regular programming workshops for minority groups in tech."
@@ -128,61 +128,62 @@ en:
           subject: "Reminder: you're on the codebar waiting list (%{date_time})"
   workshop:
     title: Workshop at %{host} - %{date}
-    lead: 'Join us in our in-person workshops to learn programming in a supportive and collaborative environment at your own pace, or share your knowledge and coach our students.'
+    lead: "Join us in our in-person workshops to learn programming in a supportive and collaborative environment at your own pace, or share your knowledge and coach our students."
     calendar:
       summary: codebar @ %{host_name}
-      description:  "Declining or removing this event from your calendar does not update your invitation. If you are unable to attend please follow the link found on this calendar entry and update your attendance status. Missing codebar events repeatedly will result in a suspension.\n
+      description:
+        "Declining or removing this event from your calendar does not update your invitation. If you are unable to attend please follow the link found on this calendar entry and update your attendance status. Missing codebar events repeatedly will result in a suspension.\n
 
-                     Invitation link: %{invitation_link}"
+        Invitation link: %{invitation_link}"
     virtual:
       calendar:
         location: codebar Slack (https://slack.codebar.io)
         description: "How to join\n
-                      ---------------\n
-                      1. Join the workshop's Slack channel: #%{slack_channel} (%{slack_channel_link})\n
-                      Not in codebar's Slack? Request an invitation: https://slack.codebar.io\n
-                      \n
-                      2. Accept the invitation to our discord %{discord_invitation} - this software will enable you to collaborate with a student/coach by screen sharing.\n
-                      \n
-                      Requirements\n
-                      ---------------\n
-                      Download the discord Desktop app: https://discord.com/download\n
-                      \n
-                      ---------------\n"
+          ---------------\n
+          1. Join the workshop's Slack channel: #%{slack_channel} (%{slack_channel_link})\n
+          Not in codebar's Slack? Request an invitation: https://slack.codebar.io\n
+          \n
+          2. Accept the invitation to our discord %{discord_invitation} - this software will enable you to collaborate with a student/coach by screen sharing.\n
+          \n
+          Requirements\n
+          ---------------\n
+          Download the discord Desktop app: https://discord.com/download\n
+          \n
+          ---------------\n"
       invitation:
-        shared_intro_3_html: 'PS: If you have any questions about the workshop or will not be able to attend on short notice please send us an email at %{email_link} as that will make pairing everyone up easier for us.'
+        shared_intro_3_html: "PS: If you have any questions about the workshop or will not be able to attend on short notice please send us an email at %{email_link} as that will make pairing everyone up easier for us."
         info:
           title: How to join
           begins_title: When the workshop begins
-          line_1_html: 'Sign up to the codebar Slack %{slack_link}'
-          line_2_html: 'Join %{channel}'
-          line_3_html: 'Accept the invitation and join our %{discord} server'
-          line_4_html: 'Install the discord Desktop app: %{discord_app}'
-          line_5: 'Check in with the organisers in the Slack channel and'
-          line_6: 'Follow the posted instructions'
+          line_1_html: "Sign up to the codebar Slack %{slack_link}"
+          line_2_html: "Join %{channel}"
+          line_3_html: "Accept the invitation and join our %{discord} server"
+          line_4_html: "Install the discord Desktop app: %{discord_app}"
+          line_5: "Check in with the organisers in the Slack channel and"
+          line_6: "Follow the posted instructions"
     invitation:
       title: Workshop invitation - %{date}
       info: Information about the workshop
       cant_make_it_note: "If you can't make it or plan to arrive late please let us know by sending an email to %{email}"
-      student_intro_1: 'In our workshops, you will get to go through any of our available tutorials, ask for programming advice or get help on your own projects.'
-      student_intro_2: 'In case you are unable to attend after you RSVP, please make sure you come back and update your attendance. We have limited space and do a coaches request depending on the number of attending students.'
-      student_intro_3_html: 'Please make sure you <b>bring your laptop</b> with you.'
-      shared_intro_4_html: 'PS: There will also be food at the workshop. If you have any specific dietary restrictions, please %{update_your_details_link} to let us know about them.'
+      student_intro_1: "In our workshops, you will get to go through any of our available tutorials, ask for programming advice or get help on your own projects."
+      student_intro_2: "In case you are unable to attend after you RSVP, please make sure you come back and update your attendance. We have limited space and do a coaches request depending on the number of attending students."
+      student_intro_3_html: "Please make sure you <b>bring your laptop</b> with you."
+      shared_intro_4_html: "PS: There will also be food at the workshop. If you have any specific dietary restrictions, please %{update_your_details_link} to let us know about them."
   workshop_invitation:
     coach_skills_tooltip: Keeping your skills up-to-date enables organisers to plan ahead and makes running workshops easier.
   meeting:
     title: "%{name} - %{date}"
   messages:
     accepted_invitation: "Thanks for getting back to us %{name}. See you at the workshop!"
-    already_invited: 'You have already RSVPd or joined the waitlist for this workshop.'
-    already_taken_place: 'This event has already taken place'
+    already_invited: "You have already RSVPd or joined the waitlist for this workshop."
+    already_taken_place: "This event has already taken place"
     rejected_invitation: "We are so sad you can't make it, but thanks for letting us know %{name}."
     already_rsvped: "You have already confirmed your attendance!"
     not_attending_already: "You have already confirmed you can't make it!"
     no_available_seats: "There are no more spots left for this event, but you can join the waiting list."
     feedback_saved: "Thank you for taking the time to give us feedback!"
     feedback_not_found: "You have already submitted feedback for this event."
-    invalid_session: 'Your session is invalid'
+    invalid_session: "Your session is invalid"
     invitations:
       meeting:
         cancel: "Thanks for letting us know you can't make it."
@@ -192,13 +193,13 @@ en:
       rsvped_to_other_workshop: "You have already RSVP'd to another workshop on this date. If you would prefer to attend this workshop, please cancel your other RSVP first."
       select_a_member_to_rsvp: "Select a member to RSVP"
       spot_confirmed: "Your spot has been confirmed for %{event}! We look forward to seeing you there."
-      spot_not_confirmed: 'Your spot has not yet been confirmed. We will verify your attendance after you complete the questionnaire.'
+      spot_not_confirmed: "Your spot has not yet been confirmed. We will verify your attendance after you complete the questionnaire."
       updated_details: "Invitation details successfully updated."
     invalid_format: "The requested format is invalid: %{invalid_format}"
   notifications:
-    provider_already_connected: 'You are already signed in!'
+    provider_already_connected: "You are already signed in!"
     not_logged_in: "You must be logged in to access this page."
-    signing_up: 'Thanks for signing up. Please fill in your details to complete the registration process.'
+    signing_up: "Thanks for signing up. Please fill in your details to complete the registration process."
   navigation:
     dashboard: "Dashboard"
     code_of_conduct: "Code of Conduct"
@@ -211,10 +212,10 @@ en:
     blog: "Blog"
     codebar_stories: "codebar Stories"
     stats: "Stats"
-    cookies: 'Cookies'
-    privacy-policy: 'Privacy Policy'
+    cookies: "Cookies"
+    privacy-policy: "Privacy Policy"
     contact_preferences:
-      updated: 'Contact preferences updated'
+      updated: "Contact preferences updated"
 
   dashboard:
     join_workshops_in: "Join our <i>free</i> workshops in"
@@ -253,19 +254,19 @@ en:
       suggestions: "Do you have something to suggest? Make a <a href='https://github.com/codebar/planner'>pull request</a> or <a href='https://github.com/codebar/planner/issues/new'>create an issue</a>"
   workshops:
     title: Workshop at %{host}
-    already_wish_to_attend: 'You have already RSVPd or joined the waitlist for this workshop.'
+    already_wish_to_attend: "You have already RSVPd or joined the waitlist for this workshop."
     lead: "Attend our workshops to learn programming in a safe and supportive environment at your own pace, or to share your knowledge and coach our students."
-    not_open_for_rsvp: 'This workshop is not yet open for RSVP.'
-    registration_not_open: 'This workshop is not open for registrations'
-    sign_up_to_be_invited: 'Sign up to be invited to future events.'
-    no_spaces_available: 'There are no available spots left for this workshop but you can always join the waiting list.'
-    already_attending: 'You are attending this event'
+    not_open_for_rsvp: "This workshop is not yet open for RSVP."
+    registration_not_open: "This workshop is not open for registrations"
+    sign_up_to_be_invited: "Sign up to be invited to future events."
+    no_spaces_available: "There are no available spots left for this workshop but you can always join the waiting list."
+    already_attending: "You are attending this event"
     on_waiting_list: You are on the waiting list.
     virtual:
-      title: 'Virtual workshop for %{chapter}'
-      title_with_date: 'Virtual workshop for %{chapter} 🌐 %{date}'
-      lead: 'Participate in our online workshops to learn programming in a supportive and collaborative environment at your own pace, or share your knowledge and coach our students.'
-      intro: 'Our virtual workshops take place online. Our aim is to help you get started with programming by pairing you with a coach that will be able to remotely assist and guide you through what you want to learn. Once you sign up we will email you more details about how to join the workshop and tools that we recommend to make the process easier for you. In the meantime if you have any questions, do not hesitate to send an email to %{chapter_email}.'
+      title: "Virtual workshop for %{chapter}"
+      title_with_date: "Virtual workshop for %{chapter} 🌐 %{date}"
+      lead: "Participate in our online workshops to learn programming in a supportive and collaborative environment at your own pace, or share your knowledge and coach our students."
+      intro: "Our virtual workshops take place online. Our aim is to help you get started with programming by pairing you with a coach that will be able to remotely assist and guide you through what you want to learn. Once you sign up we will email you more details about how to join the workshop and tools that we recommend to make the process easier for you. In the meantime if you have any questions, do not hesitate to send an email to %{chapter_email}."
   events:
     title: "Events"
     past: "Past"
@@ -344,12 +345,12 @@ en:
         github: "When you click the sign-up button, you'll be redirected to GitHub. After logging in with your GitHub account, you'll return to the codebar website. If you don’t have an account yet, creating one is quick and easy—and it will be useful as you begin your coding journey!"
       invitations: "Invitations are sent out periodically, so don't worry if you don't receive one as soon as you register."
   terms_and_conditions:
-    title: 'Terms and Conditions'
-    body: 'Before you can proceed you must first read our Code of Conduct and agree to abide by it.'
-    link_text: 'Read codebar''s Code of Conduct'
-    accept: 'Accept'
+    title: "Terms and Conditions"
+    body: "Before you can proceed you must first read our Code of Conduct and agree to abide by it."
+    link_text: "Read codebar's Code of Conduct"
+    accept: "Accept"
     messages:
-      notice: 'You have to accept the Terms and Conditions before you are able to proceed.'
+      notice: "You have to accept the Terms and Conditions before you are able to proceed."
   footer:
     email_us: "Send us an email at"
     contact_info: "Contact Info:"
@@ -361,7 +362,7 @@ en:
       a_p2: "give their time freely to help the community."
     technologies:
       q: "What technologies do you teach?"
-      a: "We have a variety of available tutorials in HTML, CSS, JavaScript and Ruby. If you want to learn something else don't hesitate to <a href=\"mailto:contact@codebar.io\">send us an email</a> as we might still be able to find someone to help you out."
+      a: 'We have a variety of available tutorials in HTML, CSS, JavaScript and Ruby. If you want to learn something else don''t hesitate to <a href="mailto:contact@codebar.io">send us an email</a> as we might still be able to find someone to help you out.'
     eligibility:
       q: "I want to attend a workshop. Am I eligible?"
       a: "Our workshops are available to women, LGBTQ and people who are underrepresented in the tech industry. If you belong to one of these groups, you are more than welcome to attend. If not, there are some other great initiatives like <a href='https://www.meetup.com/opentechschool-london/'>Open Tech School London</a> where you can learn in a collaborative environment. Please see our <a href='http://codebar.io/student-guide'>student guide</a> for more information."
@@ -373,7 +374,7 @@ en:
       a: "We try to have one coach for every two students. We will pair up students who want to work on the same tutorial, and assign them a coach. The rest just happens."
     laptop:
       q: "Do I need to bring a laptop with me at the workshops?"
-      a: "Yes, we suggest that you bring a laptop as it will be easier for you to carry on working on things after the workshops. It you don't have one, <a href=\"mailto:contact@codebar.io\">send us an email</a> so we can try and help out."
+      a: 'Yes, we suggest that you bring a laptop as it will be easier for you to carry on working on things after the workshops. It you don''t have one, <a href="mailto:contact@codebar.io">send us an email</a> so we can try and help out.'
     online_resources:
       q: "There are so many online resources, why should I come to codebar?"
       a: "Coding can be intimidating and a lot of people find it hard to get started. By putting you in touch with people who can help and guide you we make the experience and learning process easier and more enjoyable."
@@ -392,7 +393,7 @@ en:
       a: "Unfortunately, that depends entirely on where we are hosting our workshops and if the venue has disabled access. If you would like to attend, send us an email at <a href='mailto:meetings@codebar.io'>meetings[at]codebar.io</a> so we can enquire about it and let you know."
     bring_codebar_to_my_city:
       q: "I would like to bring codebar to my city. Can I do that?"
-      a: "Of course. codebar is about building a community of experienced developers that are able to give up some of their time to help others. If you are keen on running codebar where you live, we would love to speak to you about it and see how we can help make this happen, so send <a href=\"mailto:contact@codebar.io\">us an email</a>."
+      a: 'Of course. codebar is about building a community of experienced developers that are able to give up some of their time to help others. If you are keen on running codebar where you live, we would love to speak to you about it and see how we can help make this happen, so send <a href="mailto:contact@codebar.io">us an email</a>.'
     our_coaches:
       q: "Our coaches"
       a_p1: "You can see all the coaches have helped out in our workshops on the"
@@ -428,15 +429,15 @@ en:
     contact: "To contact the %{city} team, send an email to %{email}"
     team: Team
   feedback_form:
-    title: 'Workshop feedback'
+    title: "Workshop feedback"
     description: Your submission will be completely anonymous. We read every piece of feedback and use it to help us improve our workshops.
     note: Please do not mention any names, but instead choose your coach from the dropdown. This enables us to address issues but also to anonymously share feedback with coaches. Member privacy is very important to us!
     rating: Your overall rating of the workshop
-    coach: 'Who was your coach?'
-    select_coach: '- Select Coach -'
-    tutorial: 'What tutorial did you go through?'
-    select_tutorial: '- Select Tutorial -'
-    request: 'How did you find the workshop?'
+    coach: "Who was your coach?"
+    select_coach: "- Select Coach -"
+    tutorial: "What tutorial did you go through?"
+    select_tutorial: "- Select Tutorial -"
+    request: "How did you find the workshop?"
     suggestions: "Was there something you didn't like? What can we do to improve your experience?"
   member:
     details:
@@ -465,11 +466,11 @@ en:
       unsubscribe: Unsubscribe from newsletter
     messages:
       mailing_list:
-        subscribe: 'You have subscribed to codebar''s newsletter'
-        unsubscribe: 'You have unsubscribed from codebar''s newsletter'
+        subscribe: "You have subscribed to codebar's newsletter"
+        unsubscribe: "You have unsubscribed from codebar's newsletter"
       group:
-        subscribe: 'You have subscribed to %{chapter}''s %{role} group'
-        unsubscribe: 'You have unsubscribed from %{chapter}''s %{role} group'
+        subscribe: "You have subscribed to %{chapter}'s %{role} group"
+        unsubscribe: "You have unsubscribed from %{chapter}'s %{role} group"
 
   pages:
     cookies:
@@ -523,7 +524,7 @@ en:
         title: 1. Information we collect
         what_we_collect:
           title: 1.1 Personal data we collect from you
-          p1: 'We have set out in the table below the personal data we collect about you and how we use it, which will differ based on the capacity in which you interact with codebar:'
+          p1: "We have set out in the table below the personal data we collect about you and how we use it, which will differ based on the capacity in which you interact with codebar:"
           table:
             headers:
               h1: Who
@@ -573,7 +574,7 @@ en:
                 l2: Compliance with legal obligations
         how_we_share:
           title: 1.2 How we share your information
-          p1_html: 'When you subscribe to an event, we share your name with our host companies as we are required to provide a list with all attendee names when you subscribe to any of our events. We **do not share** your email address or any other personal information.'
+          p1_html: "When you subscribe to an event, we share your name with our host companies as we are required to provide a list with all attendee names when you subscribe to any of our events. We **do not share** your email address or any other personal information."
         legal_basis:
           title: 1.3 Legal basis for our use of your personal information
           p1: As set out in the table above, sometimes the legal basis on which we collect and process your data is because our legitimate interests make the processing necessary, and those legitimate interests are not overridden by your interests or fundamental rights and freedoms. For example, we collect and store your data in order to process event information, and to ensure the efficient running and promotion of workshops.
@@ -587,15 +588,15 @@ en:
         p2: If you wish to enquire further about these safeguards used, please contact us by email at the address below or by mail using the postal address provided below.
       your_rights:
         title: 4. Your data protection rights
-        p1: 'Data protection law provides you with rights in respect of personal data that we hold about you, including the:'
-        l1: 'Right to Access: You have the right to obtain access to your data, and certain other information (similar to that provided in this Privacy Policy).'
-        l2: 'Right to Rectification: You are entitled to have your data corrected if it is inaccurate or incomplete.'
-        l3: 'Right to Erasure: This enables you in some circumstances to request and obtain the deletion of your data where there is no legal reason for us to keep using it.'
-        l4: 'Right to Restriction of Processing: You have rights to suspend further use of your data, whereby we can still store your data but cannot use it further. This may mean we can no longer provide you with Services.'
-        l5: 'Right to Data Portability: You have rights in some circumstances to request the transfer of your data to yourself or to a third party.'
-        l6: 'Right to Objection: You have the right to object to certain types of data processing, including for direct marketing purposes.'
-        l7: 'Right to Withdrawal of Consent: Where we are relying on consent to process your data, you have the right to withdraw your consent at any time by using any opt-out links, or by contacting us at the details provided below (although if you do so, it does not mean that anything we have done with your data with your consent up to that point is unlawful and we may be able to continue to process your personal information to the extent required or otherwise permitted by law, in particular in connection with exercising and defending our legal rights or meeting our legal and regulatory obligations).'
-        l8: 'Right to Lodge a Complaint: You can lodge a complaint in relation to our use of your personal information with the local supervisory authority, the Information Commissioner (UK).'
+        p1: "Data protection law provides you with rights in respect of personal data that we hold about you, including the:"
+        l1: "Right to Access: You have the right to obtain access to your data, and certain other information (similar to that provided in this Privacy Policy)."
+        l2: "Right to Rectification: You are entitled to have your data corrected if it is inaccurate or incomplete."
+        l3: "Right to Erasure: This enables you in some circumstances to request and obtain the deletion of your data where there is no legal reason for us to keep using it."
+        l4: "Right to Restriction of Processing: You have rights to suspend further use of your data, whereby we can still store your data but cannot use it further. This may mean we can no longer provide you with Services."
+        l5: "Right to Data Portability: You have rights in some circumstances to request the transfer of your data to yourself or to a third party."
+        l6: "Right to Objection: You have the right to object to certain types of data processing, including for direct marketing purposes."
+        l7: "Right to Withdrawal of Consent: Where we are relying on consent to process your data, you have the right to withdraw your consent at any time by using any opt-out links, or by contacting us at the details provided below (although if you do so, it does not mean that anything we have done with your data with your consent up to that point is unlawful and we may be able to continue to process your personal information to the extent required or otherwise permitted by law, in particular in connection with exercising and defending our legal rights or meeting our legal and regulatory obligations)."
+        l8: "Right to Lodge a Complaint: You can lodge a complaint in relation to our use of your personal information with the local supervisory authority, the Information Commissioner (UK)."
         p2: If you would like to exercise any of these rights or if you have a complaint about how we handle your data, please contact us at the email address stated below.
       security:
         title: 5. Security
@@ -605,7 +606,7 @@ en:
         p1: We reserve the right to modify or update this Privacy Policy at any time in accordance with this provision. If we make changes to this Privacy Policy, we will post the revised Privacy Policy on the codebar website. Please regularly review https://codebar.io/privacy-policy to check for any updates or changes to our Privacy Policy. The date this Privacy Policy was last revised is identified at the top of this page.
       cookies:
         title: 7. Cookies
-        p1_html: 'We use cookies to recognise you and your location. You can control cookies through your browser settings and other tools. For more information read our [cookie policy](https://codebar.io/cookie-policy).'
+        p1_html: "We use cookies to recognise you and your location. You can control cookies through your browser settings and other tools. For more information read our [cookie policy](https://codebar.io/cookie-policy)."
       contact:
         title: 8. Contact
         p1: "If you have any questions or complaints about this Privacy Policy or our information handling practices, you may email us at company@codebar.io stating 'Data inquiry' in the subject title, or by postal mail at: codebar Ltd, International House, 101 King's Cross Road, London, WC1X 9LP."
@@ -630,7 +631,7 @@ en:
           description: Affect change as a volunteer coach with codebar - your expertise and guidance will pave the way for aspiring developers, unlocking the world of coding and creating opportunities for folks from groups under represented in the tech industry.
         volunteer:
           title: Other skills
-          description: Your unique abilities could be our missing piece in the codebar puzzle. Having a diverse range of skills in our team is necessary to enrich our community. From fundraising to event coordination to marketing, we always welcome new talent to drive our mission forward. 
+          description: Your unique abilities could be our missing piece in the codebar puzzle. Having a diverse range of skills in our team is necessary to enrich our community. From fundraising to event coordination to marketing, we always welcome new talent to drive our mission forward.
           link: Email us to become a volunteer
       fundraise:
         title: Fundraise
@@ -643,10 +644,10 @@ en:
 
   admin:
     dashboard:
-      title: 'Admin'
+      title: "Admin"
     workshop:
       manage_rsvps:
-        text: 'RSVP Students and Coaches to the workshop. The attendance confirmation email will be triggered and they will be removed from the waiting list.'
+        text: "RSVP Students and Coaches to the workshop. The attendance confirmation email will be triggered and they will be removed from the waiting list."
       destroy:
         success: "Workshop deleted successfully"
         failure: "Workshop cannot be deleted. This is because it has invitees and/or workshop information is on the website for a while long enough that it cannot be deleted."
@@ -662,43 +663,43 @@ en:
           more_html: "Have a look at the <em>Running a virtual codebar workshop</em> guide for information on how to run a virtual workshop. If you don't know where to find that, ask in the %{slack_channel} Slack channel."
     messages:
       meeting:
-        created: 'Meeting successfully created'
-        updated: 'You have successfully updated the details of this meeting'
-        invitations_already_sent: 'Invitations were previously sent; they will not be sent again'
-        sending_invitations: 'Invitations are being sent out'
+        created: "Meeting successfully created"
+        updated: "You have successfully updated the details of this meeting"
+        invitations_already_sent: "Invitations were previously sent; they will not be sent again"
+        sending_invitations: "Invitations are being sent out"
       invitation:
         rsvp_member: "%{name} has been successfully added and notified via email."
         already_on_list: "%{name} is already on the list!"
         rsvp_error: "Something went wrong, %{name} has not been added."
-        update_rsvp: 'Updated attendance of %{name}'
+        update_rsvp: "Updated attendance of %{name}"
       workshop:
-        created: 'Workshop successfully created'
-        updated: 'Workshop successfully updated'
+        created: "Workshop successfully created"
+        updated: "Workshop successfully updated"
   simple_form:
     placeholders:
       member:
-        name: 'Grace'
-        surname: 'Hopper'
-        pronouns: 'e.g she/her/they'
-        skill_list: 'e.g. HTML, CSS, JavaScript, React, Ruby, Python, SQL'
+        name: "Grace"
+        surname: "Hopper"
+        pronouns: "e.g she/her/they"
+        skill_list: "e.g. HTML, CSS, JavaScript, React, Ruby, Python, SQL"
       job:
-        company: 'e.g. codebar'
-        company_website: 'e.g. https://codebar.io'
-        title: 'e.g. Internship'
-        description: 'Use text or markdown for the job description'
-        location: 'e.g. London or Berlin'
+        company: "e.g. codebar"
+        company_website: "e.g. https://codebar.io"
+        title: "e.g. Internship"
+        description: "Use text or markdown for the job description"
+        location: "e.g. London or Berlin"
       workshop:
-        slack_channel: 'e.g. barcelona-chapter or virtual-london-2022-12-03'
-        slack_channel_link: 'e.g. https://codebar.slack.com/archives/CGLQD917T'
-        description: 'Any details you would like to add about the workshop. This will be visible on both the public workshop and invitation pages'
+        slack_channel: "e.g. barcelona-chapter or virtual-london-2022-12-03"
+        slack_channel_link: "e.g. https://codebar.slack.com/archives/CGLQD917T"
+        description: "Any details you would like to add about the workshop. This will be visible on both the public workshop and invitation pages"
       workshop_invitation:
-        note: 'e.g. I am a Junior and would prefer to not be paired on advanced projects'
+        note: "e.g. I am a Junior and would prefer to not be paired on advanced projects"
     hints:
       member:
-        email: 'This is needed so we can email you invitations to our events'
-        skill_list: 'Enter as a comma separated list'
+        email: "This is needed so we can email you invitations to our events"
+        skill_list: "Enter as a comma separated list"
       workshop_invitation:
-        note: 'Pairing preferences or anything else you think we should know.'
+        note: "Pairing preferences or anything else you think we should know."
       job:
         remote: Only check if the role is fully remote only
         salary: Annual pay before tax, without commas or decimal points
@@ -710,24 +711,24 @@ en:
         mailing_list_consent: Stay up to date with codebar's news and ways your company can help us make a difference.
       workshop:
         slack_channel: "The chapter or the workshop specific slack channel. This can be used for socialising, or sharing other details about the workshop."
-        slack_channel_link: 'Right click the Slack channel to get the link'
-        host: 'Required by physical workshops but not supported for virtual workshops'
-        description: 'Supports HTML'
+        slack_channel_link: "Right click the Slack channel to get the link"
+        host: "Required by physical workshops but not supported for virtual workshops"
+        description: "Supports HTML"
         coach_spaces: Available coach spaces
         student_spaces: Available student spaces
         invitable: When checked, it overrides the RSVP open local date and time and makes RSVPs available right away.
       ban:
         note: Only visible to admins and organisers.
-        explanation: 'Emailed to the suspended member. Do not include confidential information including information related to other codebar members.'
+        explanation: "Emailed to the suspended member. Do not include confidential information including information related to other codebar members."
 
     labels:
       terms_and_conditions_form:
-        terms: 'I have read codebar''s Code of Conduct and agree with all of its terms.'
+        terms: "I have read codebar's Code of Conduct and agree with all of its terms."
       workshop:
         description: Additional description
         virtual: Virtual workshop
       workshop_invitation:
-        note: 'Note'
+        note: "Note"
       sponsor:
         accessibility_info: Accessibility information
         number_of_coaches: Coach spots
@@ -747,10 +748,10 @@ en:
         link_to_job: Link to job post
         expiry_date: Application closing date
       member:
-        email: 'Email address'
-        name: 'First name'
-        newsletter: 'Sign up for our newsletter'
-        pronouns: 'What pronouns do you use?'
+        email: "Email address"
+        name: "First name"
+        newsletter: "Sign up for our newsletter"
+        pronouns: "What pronouns do you use?"
     errors:
       models:
         event:
@@ -766,11 +767,11 @@ en:
         workshop_invitation:
           attributes:
             tutorial:
-              blank: 'must be selected'
+              blank: "must be selected"
       messages:
-        all_invitation_details_required: 'Fill in all invitations details to make the event invitable'
-        already_sponsoring: 'already a sponsor'
-        required: 'must be set'
+        all_invitation_details_required: "Fill in all invitations details to make the event invitable"
+        already_sponsoring: "already a sponsor"
+        required: "must be set"
   social_media_links:
     slack_html: https://slack.codebar.io
     discord_invitation: https://discord.gg/Eru89Rk
