@@ -47,7 +47,7 @@
         precision: 0
         format: "%u%n"
   homepage:
-    intro: "<strong>codebar</strong> is a charity that facilitates the growth of a diverse tech community by running free regular programming workshops for minority groups in tech."
+    intro: "<strong>codebar</strong> is a charity that facilitates the growth of a diverse tech community by running free regular programming workshops for underrepresented groups in tech."
     explanation: "Our goal is to enable people from underrepresented groups to learn programming in a safe and collaborative environment and expand their career opportunities. To achieve this we run free regular workshops, regular one-off events and try to create opportunities for our students making technology and coding more accessible."
     participate:
       students_title: "Students"
