@@ -1,3 +1,6 @@
+:ruby
+  all_managers = Member.manager.sort_alphabetically
+
 = simple_form_for [:admin, @event] do |f|
   .row
     .col-12
@@ -42,7 +45,7 @@
     .col-12.col-md-6.col-lg-4
       = f.association :gold_sponsors, input_html: { data: { placeholder: 'Select gold sponsors' }}, collection: Sponsor.all
     .col-12
-      = f.input :organisers, collection: Member.all, value_method: :id, label_method: :full_name, selected: @event.organisers.map(&:id), input_html: { multiple: true }
+      = f.input :organisers, collection: all_managers, value_method: :id, label_method: :full_name, selected: @event.organisers.pluck(&:id), input_html: { multiple: true }
     .col-12
       = f.input :announce_only, as: :boolean, hint: 'Events where invitations are not handled via our application'
     .col-12

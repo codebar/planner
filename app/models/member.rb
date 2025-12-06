@@ -51,6 +51,12 @@ class Member < ApplicationRecord
 
   scope :with_skill, ->(skill_name) { tagged_with(skill_name) }
 
+  scope :admin, -> { with_role(:admin) }
+  scope :organiser, -> { with_role(:organiser, :any) }
+  scope :manager, -> { admin.or(organiser).distinct }
+
+  scope :sort_alphabetically, -> { order(:name, :surname) }
+
   acts_as_taggable_on :skills
 
   attr_accessor :attendance, :newsletter
