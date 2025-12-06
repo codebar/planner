@@ -61,6 +61,10 @@ class Member < ApplicationRecord
 
   attr_accessor :attendance, :newsletter
 
+  def manager?
+    is_admin? || has_role?(:organiser, :any)
+  end
+
   def banned?
     bans.active.present? || bans.permanent.present?
   end
