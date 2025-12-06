@@ -164,6 +164,50 @@ RSpec.describe Member do
         expect(Member.find_members_by_name('').size).to eq(0)
       end
     end
+  end
 
+  describe '.admin' do
+    it 'returns members with admin role' do
+      admin_member = Fabricate(:member)
+      admin_member.add_role :admin
+      non_admin = Fabricate(:member)
+
+      expect(described_class.admin).to include(admin_member)
+      expect(described_class.admin).not_to include(non_admin)
+    end
+  end
+
+  describe '.organiser' do
+    it 'returns members with organiser role' do
+      chapter = Fabricate(:chapter)
+      organiser = Fabricate(:member)
+      organiser.add_role :organiser, chapter
+      non_organiser = Fabricate(:member)
+
+      expect(described_class.organiser).to include(organiser)
+      expect(described_class.organiser).not_to include(non_organiser)
+    end
+  end
+
+  describe '.manager' do
+    it 'returns both admins and organisers' do
+      admin_member = Fabricate(:member)
+      admin_member.add_role :admin
+
+      chapter = Fabricate(:chapter)
+      organiser = Fabricate(:member)
+      organiser.add_role :organiser, chapter
+      # Add another role to test for duplicates
+      organiser.add_role :admin
+
+      non_manager = Fabricate(:member)
+
+      managers = described_class.manager
+
+      expect(managers).to include(admin_member, organiser)
+      expect(managers).not_to include(non_manager)
+
+      expect(managers.size).to eq(managers.distinct.size)
+    end
   end
 end
