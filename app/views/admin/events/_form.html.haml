@@ -1,3 +1,7 @@
+:ruby
+  all_sponsors = Sponsor.all
+  all_managers = Member.manager.sort_alphabetically
+
 = simple_form_for [:admin, @event] do |f|
   .row
     .col-12
@@ -34,15 +38,15 @@
       %p
         %strong Please add sponsors only to either Standard level OR Gold/Silver/Bronze levels.
     .col-12
-      = f.association :sponsors, label: 'Standard sponsors', input_html: { data: { placeholder: 'Select standard sponsors' }}, collection: Sponsor.all
+      = f.association :sponsors, label: 'Standard sponsors', input_html: { data: { placeholder: 'Select standard sponsors' }}, collection: all_sponsors
     .col-12.col-md-6.col-lg-4
-      = f.association :bronze_sponsors, input_html: { data: { placeholder: 'Select bronze sponsors' }}, collection: Sponsor.all
+      = f.association :bronze_sponsors, input_html: { data: { placeholder: 'Select bronze sponsors' }}, collection: all_sponsors
     .col-12.col-md-6.col-lg-4
-      = f.association :silver_sponsors, input_html: { data: { placeholder: 'Select silver sponsors' }}, collection: Sponsor.all
+      = f.association :silver_sponsors, input_html: { data: { placeholder: 'Select silver sponsors' }}, collection: all_sponsors
     .col-12.col-md-6.col-lg-4
-      = f.association :gold_sponsors, input_html: { data: { placeholder: 'Select gold sponsors' }}, collection: Sponsor.all
+      = f.association :gold_sponsors, input_html: { data: { placeholder: 'Select gold sponsors' }}, collection: all_sponsors
     .col-12
-      = f.input :organisers, collection: Member.all, value_method: :id, label_method: :full_name, selected: @event.organisers.map(&:id), input_html: { multiple: true }
+      = f.input :organisers, collection: all_managers, value_method: :id, label_method: :full_name, selected: @event.organisers.pluck(&:id), input_html: { multiple: true }
     .col-12
       = f.input :announce_only, as: :boolean, hint: 'Events where invitations are not handled via our application'
     .col-12
