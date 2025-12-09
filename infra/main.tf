@@ -93,7 +93,8 @@ resource "aws_iam_policy" "read_write_policy" {
           "s3:ListBucket",       # List files in bucket
           "s3:GetObject",        # Read/download files
           "s3:PutObject",        # Upload files
-          "s3:DeleteObject"      # Optional: allow deleting files
+          "s3:DeleteObject",      # Optional: allow deleting files
+          "s3:ListAllMyBuckets"  # enable user to list all buckets
         ],
         Resource = [
           aws_s3_bucket.auth_bucket.arn,
