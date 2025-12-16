@@ -51,7 +51,7 @@ gem 'pagy', '~> 43.2'
 gem 'icalendar'
 gem 'tzinfo-data'
 
-gem 'chosen-rails'
+gem 'chosen-rails', github: 'bearandgiraffe/chosen-rails', branch: 'support-rails-8'
 gem 'commonmarker'
 
 gem 'faraday'
