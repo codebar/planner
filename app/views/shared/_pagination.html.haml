@@ -1,6 +1,6 @@
 .row.align-items-center.justify-content-between
   .col-auto
     %p.mb-3
-      != pagy_info(pagy, item_name: model.pluralize(pagy.count))
+      != @pagy.info_tag(item_name: model.pluralize(@pagy.count))
   .col-auto
-    != pagy_bootstrap_nav(pagy) if pagy.pages > 1
+    != @pagy.series_nav(:bootstrap) if @pagy.pages > 1
