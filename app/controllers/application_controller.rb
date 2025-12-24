@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   include Pundit::Authorization
-  include Pagy::Backend
+  include Pagy::Method
 
   if Rails.env.production?
     rescue_from Exception do |ex|
