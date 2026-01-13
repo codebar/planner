@@ -58,3 +58,23 @@ vendor/bundle
 /yarn-error.log
 yarn-debug.log*
 .yarn-integrity
+
+# Terraform state files
+*.tfstate
+*.tfstate.backup
+
+# Terraform variable files (actual, not examples)
+*.tfvars
+*.auto.tfvars
+
+# .terraform directory
+.terraform/
+
+# Sensitive credentials
+*.pem
+*.key
+*.secret
+*.env
+
+# Plan files
+*.tfplan
