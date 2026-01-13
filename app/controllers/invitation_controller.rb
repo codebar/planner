@@ -24,11 +24,6 @@ class InvitationController < ApplicationController
     params[:workshop_invitation].present? ? params.require(:workshop_invitation).permit(:tutorial, :note) : {}
   end
 
-  def available_spaces?(workshop, invitation)
-    (invitation.role.eql?('Student') && workshop.student_spaces?) ||
-      (invitation.role.eql?('Coach') && workshop.coach_spaces?)
-  end
-
   def token
     params[:id]
   end
