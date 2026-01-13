@@ -7,7 +7,6 @@ class Group < ApplicationRecord
   has_many :group_announcements
   has_many :announcements, through: :group_announcements
 
-  scope :latest_members, -> { joins(:members).order('created_at') }
   scope :students, -> { where(name: 'Students') }
   scope :coaches, -> { where(name: 'Coaches') }
 
