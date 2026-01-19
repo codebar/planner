@@ -122,7 +122,8 @@ GEM
     bullet (8.1.0)
       activesupport (>= 3.0.0)
       uniform_notifier (~> 1.11)
-    byebug (12.0.0)
+    byebug (13.0.0)
+      reline (>= 0.6.0)
     capybara (3.40.0)
       addressable
       matrix
@@ -217,11 +218,11 @@ GEM
       activerecord (>= 4.0.0)
     globalid (1.2.1)
       activesupport (>= 6.1)
-    haml (7.1.0)
+    haml (7.2.0)
       temple (>= 0.8.2)
       thor
       tilt
-    haml_lint (0.68.0)
+    haml_lint (0.69.0)
       haml (>= 5.0)
       parallel (~> 1.10)
       rainbow
@@ -268,7 +269,8 @@ GEM
     letter_opener (1.10.0)
       launchy (>= 2.2, < 4)
     lint_roller (1.1.0)
-    listen (3.9.0)
+    listen (3.10.0)
+      logger
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
     logger (1.7.0)
@@ -332,11 +334,11 @@ GEM
       actionpack (>= 4.2)
       omniauth (~> 2.0)
     ostruct (0.6.3)
-    pagy (43.2.3)
+    pagy (43.2.6)
       json
       yaml
     parallel (1.27.0)
-    parser (3.3.10.0)
+    parser (3.3.10.1)
       ast (~> 2.4.1)
       racc
     pg (1.6.3-aarch64-linux)
@@ -357,13 +359,14 @@ GEM
       net-smtp
       premailer (~> 1.7, >= 1.7.9)
     prettyprint (0.2.0)
-    prism (1.7.0)
-    pry (0.15.2)
+    prism (1.8.0)
+    pry (0.16.0)
       coderay (~> 1.1)
       method_source (~> 1.0)
-    pry-byebug (3.11.0)
-      byebug (~> 12.0)
-      pry (>= 0.13, < 0.16)
+      reline (>= 0.6.0)
+    pry-byebug (3.12.0)
+      byebug (~> 13.0)
+      pry (>= 0.13, < 0.17)
     pry-rails (0.3.11)
       pry (>= 0.13.0)
     pry-remote (0.1.8)
@@ -372,11 +375,11 @@ GEM
     psych (5.3.1)
       date
       stringio
-    public_activity (3.0.1)
-      actionpack (>= 6.1.0)
+    public_activity (3.0.2)
+      actionpack (>= 6.1)
       activerecord (>= 6.1)
       i18n (>= 0.5.0)
-      railties (>= 6.1.0)
+      railties (>= 6.1)
     public_suffix (7.0.2)
     puma (6.6.1)
       nio4r (~> 2.0)
@@ -435,9 +438,9 @@ GEM
     rainbow (3.1.1)
     rake (13.3.1)
     rb-fsevent (0.11.2)
-    rb-inotify (0.10.1)
+    rb-inotify (0.11.1)
       ffi (~> 1.0)
-    rdoc (7.0.3)
+    rdoc (7.1.0)
       erb
       psych (>= 4.0.0)
       tsort
@@ -510,7 +513,7 @@ GEM
     scout_apm (5.8.0)
       parser
     securerandom (0.4.1)
-    selenium-webdriver (4.39.0)
+    selenium-webdriver (4.40.0)
       base64 (~> 0.2)
       logger (~> 1.4)
       rexml (~> 3.2, >= 3.2.5)
@@ -552,11 +555,11 @@ GEM
     terser (1.2.6)
       execjs (>= 0.3.0, < 3)
     thor (1.5.0)
-    tilt (2.6.1)
+    tilt (2.7.0)
     timecop (0.9.10)
     timeout (0.6.0)
     tsort (0.2.0)
-    turbo-rails (2.0.20)
+    turbo-rails (2.0.21)
       actionpack (>= 7.1.0)
       railties (>= 7.1.0)
     tzinfo (2.0.6)
@@ -634,7 +637,7 @@ DEPENDENCIES
   jquery-ui-rails
   launchy
   letter_opener
-  listen (~> 3.9)
+  listen (~> 3.10)
   mutex_m
   nokogiri
   omniauth
