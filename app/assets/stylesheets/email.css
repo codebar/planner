@@ -63,12 +63,12 @@ table.social {
 	display:block;
 	text-align:center;
 }
-a.fb { background-color: #3B5998!important; }
-a.bs { background-color: #1daced!important; }
-a.ms { background-color: #000!important; }
-a.sl { background-color: #2EB67D!important; }
-a.yt { background-color: #FF0000!important; }
-a.li { background-color: #0077B5!important; }
+.social .soc-btn.fb { background-color: #3B5998!important; }
+.social .soc-btn.bs { background-color: #1daced!important; }
+.social .soc-btn.ms { background-color: #000!important; }
+.social .soc-btn.sl { background-color: #2EB67D!important; }
+.social .soc-btn.yt { background-color: #FF0000!important; }
+.social .soc-btn.li { background-color: #0077B5!important; }
 
 .sidebar .soc-btn { 
 	display:block;
