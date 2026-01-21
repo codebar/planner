@@ -16,7 +16,7 @@
                 %p.lead
                   We’re excited to invite you to #{@event.name}. If you can come, please RSVP using the link in this email.
                 %p
-                  #{@event.description.html_safe}.
+                  #{sanitize(@event.description)}.
 
         .content
           %table{ bgcolor: '#FFFFFF' }

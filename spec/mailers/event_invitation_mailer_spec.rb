@@ -38,4 +38,28 @@ RSpec.describe EventInvitationMailer do
     expect(email.subject).to eq(email_subject)
     expect(email.body.encoded).to match('hello@codebar.io')
   end
+
+  describe 'XSS protection' do
+    let(:event_with_html) do
+      Fabricate(:event,
+        date_and_time: Time.zone.local(2017, 11, 12, 10, 0),
+        name: 'Test event',
+        description: '<script>alert("xss")</script><p>Safe content</p>')
+    end
+    let(:invitation_with_html) { Fabricate(:invitation, event: event_with_html, member: member) }
+
+    it 'sanitizes description in invite_student email' do
+      EventInvitationMailer.invite_student(event_with_html, member, invitation_with_html).deliver_now
+
+      expect(email.body.encoded).not_to include('<script>')
+      expect(email.body.encoded).to include('Safe content')
+    end
+
+    it 'sanitizes description in invite_coach email' do
+      EventInvitationMailer.invite_coach(event_with_html, member, invitation_with_html).deliver_now
+
+      expect(email.body.encoded).not_to include('<script>')
+      expect(email.body.encoded).to include('Safe content')
+    end
+  end
 end
