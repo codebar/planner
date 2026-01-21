@@ -92,7 +92,7 @@
 
   .row
     .col
-      %p.lead= @event.description.html_safe
+      %p.lead= sanitize(@event.description)
 
   - if @event.tito_url.present?
     .row

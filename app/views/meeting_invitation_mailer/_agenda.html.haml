@@ -3,4 +3,4 @@
     %tr
       %td
         %h4 Agenda
-        %p= @meeting.description.html_safe
+        %p= sanitize(@meeting.description)
