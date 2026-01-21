@@ -15,9 +15,9 @@
 
       - if @past_rsvps.any?
         %h3 Past RSVPs
-        = render partial: 'shared/pagination', locals: { pagy: @pagy, model: 'events' }
+        = render partial: 'shared/pagination', locals: { pagy: @pagy, model: 'event' }
 
         - @past_rsvps.each do |invitation|
           = render EventPresenter.decorate(invitation.event), invitation: invitation
 
-        = render partial: 'shared/pagination', locals: { pagy: @pagy, model: 'events' }
+        = render partial: 'shared/pagination', locals: { pagy: @pagy, model: 'event' }

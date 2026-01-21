@@ -15,8 +15,8 @@ class Admin::MembersController < Admin::ApplicationController
   def events
     load_attendance_data(@member)
 
-    past_rsvps = @member.past_rsvps
-    @pagy, @past_rsvps = pagy(:offset, items: past_rsvps)
+    @member = MemberPresenter.new(@member)
+    @pagy, @past_rsvps = pagy(:offset, @member.past_rsvps)
   end
 
   def update_subscriptions
