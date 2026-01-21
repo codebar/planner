@@ -6,7 +6,9 @@ class AddressPresenter < BasePresenter
                                                           .join(', ')
 
     [model.flat, model.street, city_and_postal_code, lat, lng]
-      .delete_if(&:empty?).join('<br/>').html_safe
+      .delete_if(&:empty?)
+      .map { |line| ERB::Util.html_escape(line) }
+      .join('<br/>').html_safe
   end
 
   def for_map
