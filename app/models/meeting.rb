@@ -12,7 +12,7 @@ class Meeting < ApplicationRecord
   has_many :invitations, class_name: 'MeetingInvitation'
   has_and_belongs_to_many :chapters
 
-  validates :date_and_time, :ends_at, :venue, presence: true
+  validates :date_and_time, :ends_at, presence: true
   validates :slug, uniqueness: true, if: proc { |model| model.slug.present? }
 
   before_validation :set_date_and_time, :set_end_date_and_time
