@@ -31,7 +31,7 @@ RSpec.feature 'Managing meetings', type: :feature do
 
       click_on 'Save'
 
-      expect(page).to have_content('Venue can\'t be blank')
+      expect(page).to have_content('Venue must be set')
     end
   end
 
