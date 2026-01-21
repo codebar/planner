@@ -51,7 +51,7 @@
   .row.mt-3
     .col-10
       %h4 Agenda
-      = @meeting.description.html_safe
+      = sanitize(@meeting.description)
 
 - if @invitations.any?
   .py-4.py-lg-5.bg-light
