@@ -3,11 +3,11 @@
     - name = name.eql?('notice') ? 'info' : name
     - if msg.is_a?(String)
       .alert.alert-dismissible.fade.show.mb-0{ 'data-alert': '', class: "alert-#{name}", role: 'alert' }
-        = content_tag :div, msg
+        %div= msg
         %button.btn-close{ type: 'button', 'data-bs-dismiss': 'alert', 'aria-label': 'Close' }
     - elsif msg.is_a?(Array)
       - msg.each do |message|
         .alert.alert-dismissible.fade.show.mb-0{ 'data-alert': '', class: "alert-#{name}", role: 'alert' }
-          = content_tag :span, message
+          %span= message
           %button.btn-close{ type: 'button', 'data-bs-dismiss': 'alert', 'aria-label': 'Close' }
 
