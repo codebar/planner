@@ -27,6 +27,13 @@ RSpec.describe 'Admin managing members', type: :feature do
       end
     end
 
+    it 'can view paginated list of past RSVPs' do
+      click_on 'View all RSVPS'
+
+      expect(page).to have_content('Past RSVPs')
+      expect(page).to have_content('Displaying 1 event')
+    end
+
     it 'can add a note about a member' do
       click_on 'Add note'
       fill_in 'member_note_note', with: 'Bananas and custard'
