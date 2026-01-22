@@ -13,7 +13,7 @@ class Admin::MeetingsController < Admin::ApplicationController
     if @meeting.save
       redirect_to [:admin, @meeting], notice: t('admin.messages.meeting.created')
     else
-      flash[:notice] = @meeting.errors.full_messages.join('<br/>')
+      flash[:notice] = @meeting.errors.full_messages.join(', ')
       render :new
     end
   end
@@ -33,7 +33,7 @@ class Admin::MeetingsController < Admin::ApplicationController
     if @meeting.update(meeting_params)
       redirect_to [:admin, @meeting], notice: t('admin.messages.meeting.updated')
     else
-      flash[:notice] = @meeting.errors.full_messages.join('<br/>')
+      flash[:notice] = @meeting.errors.full_messages.join(', ')
       render 'edit'
     end
   end
