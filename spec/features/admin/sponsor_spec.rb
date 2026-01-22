@@ -58,7 +58,7 @@ RSpec.feature 'Admin::Sponsors', type: :feature do
       click_on 'Filter'
 
       expect(page.all(:css, 'tbody tr', count: 0))
-      expect(page).to have_content('No sponsors found')
+      expect(page).to have_content('No sponsor found')
     end
 
     scenario 'can clear filtering form' do
