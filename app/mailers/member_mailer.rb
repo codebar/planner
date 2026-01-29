@@ -1,5 +1,16 @@
 class MemberMailer < ApplicationMailer
   include EmailHeaderHelper
+  include EmailDelivery
+
+  after_deliver :log_sent_mail , only: [:chaser]
+
+  def chaser
+    @member = params[:member]
+    subject = "It’s been a while, how are you doing? ♥️"
+    mail mail_args(@member, subject, 'hello@codebar.io', 'hello@codebar.io') do |format|
+      format.html {render 'three_month_chaser'}
+    end
+  end
 
   def welcome(member)
     if member.student?
