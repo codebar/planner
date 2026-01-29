@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_01_29_095547) do
+ActiveRecord::Schema[7.2].define(version: 2026_01_29_175110) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -380,6 +380,7 @@ ActiveRecord::Schema[7.2].define(version: 2026_01_29_095547) do
     t.text "bcc", default: [], array: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "member_type"
     t.index ["member_id"], name: "index_member_email_deliveries_on_member_id"
   end
 
