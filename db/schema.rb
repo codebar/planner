@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_08_23_151717) do
+ActiveRecord::Schema[7.2].define(version: 2026_01_29_095547) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -227,6 +227,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_08_23_151717) do
     t.string "audience"
     t.boolean "virtual", default: false, null: false
     t.string "time_zone", default: "London", null: false
+    t.index ["date_and_time"], name: "index_events_on_date_and_time"
     t.index ["slug"], name: "index_events_on_slug", unique: true
     t.index ["venue_id"], name: "index_events_on_venue_id"
   end
@@ -368,6 +369,18 @@ ActiveRecord::Schema[7.1].define(version: 2025_08_23_151717) do
     t.datetime "ends_at", precision: nil
     t.index ["slug"], name: "index_meetings_on_slug", unique: true
     t.index ["venue_id"], name: "index_meetings_on_venue_id"
+  end
+
+  create_table "member_email_deliveries", id: :serial, force: :cascade do |t|
+    t.bigint "member_id"
+    t.text "subject"
+    t.text "body"
+    t.text "to", default: [], array: true
+    t.text "cc", default: [], array: true
+    t.text "bcc", default: [], array: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["member_id"], name: "index_member_email_deliveries_on_member_id"
   end
 
   create_table "member_notes", id: :serial, force: :cascade do |t|
@@ -566,6 +579,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_08_23_151717) do
     t.string "slack_channel"
     t.string "slack_channel_link"
     t.index ["chapter_id"], name: "index_workshops_on_chapter_id"
+    t.index ["date_and_time"], name: "index_workshops_on_date_and_time"
   end
 
+  add_foreign_key "member_email_deliveries", "members"
 end
