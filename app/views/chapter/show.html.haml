@@ -21,20 +21,21 @@
         - else
           = link_to t('members.sign_up'), new_member_path, class: 'btn btn-primary'
 
-.container.py-4.py-lg-5
-  .row
-    .col-md-8.col-sm-12
-      - if @upcoming_workshops.any?
-        %h2.mb-4= t('homepage.events.upcoming')
-        - @upcoming_workshops.each do |date, workshops|
-          %h3.h5= date
-          = render workshops
-
-      - if @latest_workshops.any?
-        .pt-4
-          %h2.mb-4 Past Events
-          - @latest_workshops.each do |date, workshops|
+- if @upcoming_workshops.any? || @latest_workshops.any?
+  .container.py-4.py-lg-5
+    .row
+      .col-md-8.col-sm-12
+        - if @upcoming_workshops.any?
+          %h2.mb-4= t('homepage.events.upcoming')
+          - @upcoming_workshops.each do |date, workshops|
+            %h3.h5= date
             = render workshops
+
+        - if @latest_workshops.any?
+          .pt-4
+            %h2.mb-4 Past Events
+            - @latest_workshops.each do |date, workshops|
+              = render workshops
 
 - if @recent_sponsors.any?
   .py-4.py-lg-5.bg-light
