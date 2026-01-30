@@ -24,6 +24,16 @@ RSpec.feature 'viewing a Chapter', type: :feature do
       expect(page).to have_content('Page not found')
     end
 
+    it 'renders chapter without organisers' do
+      chapter = Fabricate(:chapter_without_organisers, name: "Empty Chapter")
+      expect(chapter.organisers.size).to eq 0
+
+      visit chapter_path(chapter.slug)
+
+      expect(page).to have_content "Empty Chapter"
+      expect(page).not_to have_content "Team"
+    end
+
     it 'renders any upcoming workshops for the chapter' do
       chapter = Fabricate(:chapter)
       workshops = 2.times.map do |n|

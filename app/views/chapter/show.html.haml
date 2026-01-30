@@ -45,7 +45,8 @@
       = render partial: 'shared/sponsors', object: @recent_sponsors
 
 .container.py-4.py-lg-5
-  = render partial: 'members/organisers_grid', locals: { members: @chapter.organisers.shuffle, show_info: false, title: t('chapters.team') }
+  - if @chapter.organisers.any?
+    = render partial: 'members/organisers_grid', locals: { members: @chapter.organisers.shuffle, show_info: false, title: t('chapters.team') }
 
   .mt-5
     .alert.alert-primary.mb-0

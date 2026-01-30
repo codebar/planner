@@ -4,6 +4,8 @@ class ChapterPresenter < BasePresenter
   end
 
   def organisers
-    @organisers ||= model.permissions.find_by(name: 'organiser').members
+    chapter = model.permissions.find_by(name: 'organiser')
+
+    @organisers ||= chapter ? chapter.members : []
   end
 end
