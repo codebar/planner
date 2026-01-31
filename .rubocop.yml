@@ -10,9 +10,11 @@ AllCops:
     - vendor/bundle/**/*
 
 plugins:
+  - rubocop-capybara
   - rubocop-performance
   - rubocop-rails
   - rubocop-rspec
+  - rubocop-rspec_rails
 
 Layout/LineLength:
   Max: 120
