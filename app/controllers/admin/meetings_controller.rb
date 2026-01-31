@@ -21,7 +21,7 @@ class Admin::MeetingsController < Admin::ApplicationController
   def show
     @invitations = @meeting.invitations.accepted.includes(:member).order(:created_at)
 
-    return render plain: @meeting.attendees_csv if request.format.csv?
+    render plain: @meeting.attendees_csv if request.format.csv?
   end
 
   def edit; end

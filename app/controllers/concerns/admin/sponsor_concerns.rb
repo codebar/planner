@@ -10,10 +10,10 @@ module Admin::SponsorConcerns
 
   module InstanceMethods
     def sponsor
-      if workshop_sponsors.save
-        flash[:notice] = 'Sponsor added successfully'
+      flash[:notice] = if workshop_sponsors.save
+        'Sponsor added successfully'
       else
-        flash[:notice] = workshop_sponsors.errors.full_messages.to_s
+        workshop_sponsors.errors.full_messages.to_s
       end
       redirect_back fallback_location: root_path
     end

@@ -18,15 +18,14 @@ class AuthServicesController < ApplicationController
                                 provider: omnihash[:provider])
       end
       redirect_to root_path
-    else
-      if current_service
-        session[:member_id]          = current_service.member.id
-        session[:service_id]         = current_service.id
-        session[:oauth_token]        = omnihash[:credentials][:token]
-        session[:oauth_token_secret] = omnihash[:credentials][:secret]
+    elsif current_service
+      session[:member_id] = current_service.member.id
+      session[:service_id]         = current_service.id
+      session[:oauth_token]        = omnihash[:credentials][:token]
+      session[:oauth_token_secret] = omnihash[:credentials][:secret]
 
-        finish_registration || redirect_to(referer_or_dashboard_path)
-      else
+      finish_registration || redirect_to(referer_or_dashboard_path)
+    else
         member = Member.find_by(email: omnihash[:info][:email])
         member ||= Member.new(email: omnihash[:info][:email])
 
@@ -48,7 +47,6 @@ class AuthServicesController < ApplicationController
         session[:oauth_token_secret] = omnihash[:credentials][:secret]
 
         redirect_to edit_member_details_path(member_type: member_type)
-      end
     end
   end
 

@@ -26,9 +26,8 @@ class ChapterController < ApplicationController
   end
 
   def event_presenters_by_date(events)
-    events.map.inject({}) do |hash, (date, value)|
+    events.map.each_with_object({}) do |(date, value), hash|
       hash[date] = EventPresenter.decorate_collection(value)
-      hash
     end
   end
 end
