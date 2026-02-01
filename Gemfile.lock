@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/kjvarga/sitemap_generator.git
-  revision: 63bf0ca495220ec7d65380b9609d8c21c24470a8
+  revision: 89ec319333aaafb2ed12f4a99ce3d664110cfc05
   branch: master
   specs:
     sitemap_generator (6.3.0)
