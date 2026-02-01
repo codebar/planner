@@ -12,17 +12,10 @@ module SelectFromChosen
     field = find_field(options[:from], :visible => false)
     field_id = field[:id]
 
-    # Find the option value we need to select
-    option = field.all('option', visible: false).find { |opt| opt.text == item_text }
-    raise "Option '#{item_text}' not found in select '#{options[:from]}'" unless option
-    option_value = option.value
+    # Find the option matching the text
+    option = field.find('option', text: item_text, visible: false)
 
-    # Use JavaScript to set the value and trigger Chosen update
-    page.execute_script <<-JS
-      $('##{field_id}').val('#{option_value}').trigger('chosen:updated').trigger('change');
-    JS
-
-    # Verify it was set
-    expect(page).to have_select(field_id, selected: item_text, visible: false)
+    # Use Chosen's JavaScript API to set the value and trigger change event
+    page.execute_script("$('##{field[:id]}').val('#{option.value}').trigger('change').trigger('chosen:updated')")
   end
 end

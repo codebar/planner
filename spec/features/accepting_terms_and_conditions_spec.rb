@@ -23,12 +23,13 @@ RSpec.feature 'Accepting Terms and Conditions', type: :feature do
 
       expect(page).to have_current_path(terms_and_conditions_path)
 
-      click_on I18n.t('terms_and_conditions.link_text')
-      page.driver.browser.switch_to.window(page.driver.browser.window_handles.last)
-
-      expect(page).to have_content(I18n.t('code_of_conduct.title'))
-      expect(page).to have_content(I18n.t('code_of_conduct.summary.title'))
-      expect(page).to have_content(I18n.t('code_of_conduct.content.title'))
+      # When clicking a link that opens a new window/tab
+      new_window = window_opened_by { click_on I18n.t('terms_and_conditions.link_text') }
+      within_window new_window do
+        expect(page).to have_content(I18n.t('code_of_conduct.title'))
+        expect(page).to have_content(I18n.t('code_of_conduct.summary.title'))
+        expect(page).to have_content(I18n.t('code_of_conduct.content.title'))
+      end
     end
 
     scenario 'they can fill in their details after they accept the ToCs' do
