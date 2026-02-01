@@ -49,17 +49,22 @@ jobs:
     - name: Run tests in parallel
       env:
         DATABASE_URL: postgres://postgres:postgres@localhost:5432
-        TEST_ENV_NUMBER: ${{ matrix.ci_node_index }}
+        CI_NODE_INDEX: ${{ matrix.ci_node_index }}
       run: |
         bundle exec parallel_rspec spec/ \
           -n ${{ matrix.ci_node_total }} \
           --only-group ${{ matrix.ci_node_index }}
 
+    - name: Preserve coverage results
+      run: |
+        # Copy resultset immediately after tests complete to prevent deletion
+        cp coverage/.resultset.json coverage/resultset-${{ matrix.ci_node_index }}.json
+
     - name: Upload coverage artifacts
       uses: actions/upload-artifact@v4
       with:
         name: coverage-${{ matrix.ci_node_index }}
-        path: coverage/.resultset.json
+        path: coverage/resultset-${{ matrix.ci_node_index }}.json
         retention-days: 1
 
   coverage:
@@ -88,7 +93,7 @@ jobs:
           require "simplecov"
 
           resultsets = {}
-          Dir["coverage-results/coverage-*/.resultset.json"].each do |file|
+          Dir["coverage-results/coverage-*/resultset-*.json"].each do |file|
             data = JSON.parse(File.read(file))
             resultsets.merge!(data)
           end
