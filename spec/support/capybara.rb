@@ -16,3 +16,6 @@ end
 
 Capybara.javascript_driver = :chrome
 Capybara.default_max_wait_time = 5
+
+# Silence Capybara server output
+Capybara.server = :puma, { Silent: true }
