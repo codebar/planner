@@ -4,5 +4,6 @@ set -e
 
 docker compose up --build --wait
 docker compose exec web bash -c "rake db:drop db:create db:migrate db:seed db:test:prepare"
+docker compose exec web bash -c "npx --yes playwright@1.58.0 install --with-deps chromium"
 
 echo "Started."
