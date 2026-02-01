@@ -28,6 +28,11 @@ SimpleCov.formatters = SimpleCov::Formatter::MultiFormatter.new(
 
 SimpleCov.start do
   add_filter 'spec/'
+
+  # Support parallel test execution
+  if ENV['TEST_ENV_NUMBER']
+    command_name "RSpec-#{ENV['TEST_ENV_NUMBER']}"
+  end
 end
 
 ENV['RAILS_ENV'] ||= 'test'

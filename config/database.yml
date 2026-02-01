@@ -9,5 +9,5 @@ development: &default
 
 test:
   <<: *default
-  database: planner_test
+  database: planner_test<%= ENV['TEST_ENV_NUMBER'] %>
   pool: 5

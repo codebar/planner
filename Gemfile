@@ -90,6 +90,7 @@ group :development, :test do
   gem 'faker'
   gem 'irb' # LOCKED: Added because of byebug
   gem 'launchy'
+  gem 'parallel_tests'
   gem 'pry-rails'
   gem 'pry-byebug'
   gem 'pry-remote'
