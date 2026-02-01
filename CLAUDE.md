@@ -124,11 +124,15 @@ See `app/models/README.md` for detailed data model documentation.
 ## Testing
 
 - **Framework**: RSpec with Capybara for feature tests
+- **JavaScript Driver**: Playwright (Chromium by default)
 - **Factories**: Fabrication (not FactoryBot)
 - **Test data**: Faker for generated data
 - **Coverage**: SimpleCov
-- **JavaScript tests**: Capybara with headless Chrome (use `CHROME_HEADLESS=false` to debug with visible browser, doesn't work in Docker)
-- Matchers: Shoulda Matchers, RSpec Collection Matchers
+- **JavaScript tests**: Capybara with Playwright driver
+  - Use `PLAYWRIGHT_HEADLESS=false` to debug with visible browser
+  - Use `PWDEBUG=1` for Playwright Inspector (step-through debugging)
+  - Use `PLAYWRIGHT_BROWSER=firefox` or `webkit` for cross-browser testing
+- **Matchers**: Shoulda Matchers, RSpec Collection Matchers
 
 Run single test: `bin/drspec spec/path/to/file_spec.rb:42`
 
