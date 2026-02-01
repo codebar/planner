@@ -5,8 +5,8 @@ gem 'rails', '~> 7.2.2.2' # LOCKED: It is Rails.
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem 'sprockets-rails'
 
-gem "amazing_print" # colourful output (suggested by rails_semantic_logger)
-gem "rails_semantic_logger" # condense log lines: https://github.com/codebar/planner/issues/2339
+gem 'amazing_print' # colourful output (suggested by rails_semantic_logger)
+gem 'rails_semantic_logger' # condense log lines: https://github.com/codebar/planner/issues/2339
 
 gem 'acts-as-taggable-on'
 gem 'benchmark' # LOCKED: Added because of activesupport 7.0
@@ -96,9 +96,11 @@ group :development, :test do
   gem 'rspec-collection_matchers'
   gem 'rspec-rails'
   gem 'rubocop', require: false
-  gem 'rubocop-rails', require: false
+  gem 'rubocop-capybara', require: false
   gem 'rubocop-performance', require: false
+  gem 'rubocop-rails', require: false
   gem 'rubocop-rspec', require: false
+  gem 'rubocop-rspec_rails', require: false
   gem 'bullet'
 end
 
@@ -122,4 +124,4 @@ gem 'rollbar'
 gem 'scout_apm'
 
 gem 'carrierwave-aws', '~> 1.6'
-gem "sitemap_generator", github: "kjvarga/sitemap_generator", branch: "master" # LOCKED: When a version higher than 6.3.0 is released, drop this LOCKED.
+gem 'sitemap_generator', github: 'kjvarga/sitemap_generator', branch: 'master' # LOCKED: When a version higher than 6.3.0 is released, drop this LOCKED.

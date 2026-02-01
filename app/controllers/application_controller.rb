@@ -85,8 +85,8 @@ class ApplicationController < ActionController::Base
   end
 
   def finish_registration
-    if current_user.requires_additional_details?
-      redirect_to edit_member_details_path unless providing_additional_details?
+    if current_user.requires_additional_details? && !providing_additional_details?
+      redirect_to edit_member_details_path
     end
   end
 
@@ -141,7 +141,7 @@ class ApplicationController < ActionController::Base
   end
 
   def user_path
-    request.referrer || root_path
+    request.referer || root_path
   end
 
   def chapters

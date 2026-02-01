@@ -1,12 +1,10 @@
-# encoding: utf-8
-
 class AvatarUploader < CarrierWave::Uploader::Base
   storage :aws if Rails.env.production?
 
   include CarrierWave::MiniMagick
 
   def content_type_allowlist
-    [/image\//]
+    [%r{image/}]
   end
 
   # Override the directory where uploaded files will be stored.

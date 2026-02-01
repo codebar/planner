@@ -42,7 +42,7 @@ class MembersController < ApplicationController
     authenticate_member!
 
     redirect_to subscriptions_path
-  rescue
+  rescue StandardError
     redirect_to root_path, notice: 'Your token is invalid. '
   end
 

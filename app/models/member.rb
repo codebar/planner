@@ -29,8 +29,8 @@ class Member < ApplicationRecord
   validates :about_you, length: { maximum: 255 }
 
   DIETARY_RESTRICTIONS = %w[vegan vegetarian pescetarian halal gluten_free dairy_free other].freeze
-  validates_inclusion_of :dietary_restrictions, in: DIETARY_RESTRICTIONS
-  validates_presence_of :other_dietary_restrictions, if: :other_dietary_restrictions?
+  validates :dietary_restrictions, inclusion: { in: DIETARY_RESTRICTIONS }
+  validates :other_dietary_restrictions, presence: { if: :other_dietary_restrictions? }
 
   scope :accepted_toc, -> { where.not(accepted_toc_at: nil) }
   scope :order_by_email, -> { order(:email) }
@@ -146,7 +146,7 @@ class Member < ApplicationRecord
 
   def self.find_members_by_name(name)
     name.strip!
-    name.eql?('') ? self.none : where("CONCAT(name, ' ', surname) ILIKE ?", "%#{name}%")
+    name.eql?('') ? none : where("CONCAT(name, ' ', surname) ILIKE ?", "%#{name}%")
   end
 
   private

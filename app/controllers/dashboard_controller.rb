@@ -9,9 +9,8 @@ class DashboardController < ApplicationController
   def show
     @chapters = Chapter.active.all.order(:created_at)
     @user = current_user ? MemberPresenter.new(current_user) : nil
-    @upcoming_workshops = upcoming_events.map.inject({}) do |hash, (key, value)|
+    @upcoming_workshops = upcoming_events.map.each_with_object({}) do |(key, value), hash|
       hash[key] = EventPresenter.decorate_collection(value)
-      hash
     end
 
     @testimonials = Testimonial.order(Arel.sql('RANDOM()')).limit(5).includes(:member)
@@ -19,9 +18,8 @@ class DashboardController < ApplicationController
 
   def dashboard
     @user = MemberPresenter.new(current_user)
-    @ordered_events = upcoming_events_for_user.map.inject({}) do |hash, (key, value)|
+    @ordered_events = upcoming_events_for_user.map.each_with_object({}) do |(key, value), hash|
       hash[key] = EventPresenter.decorate_collection(value)
-      hash
     end
     @announcements = current_user.announcements.active
   end
