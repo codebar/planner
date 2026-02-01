@@ -38,6 +38,51 @@ RSpec.feature 'member feedback', type: :feature do
 
       expect(page).to have_select('feedback_tutorial_id', with_options: [@tutorial.title])
     end
+
+    scenario 'I can see coaches who RSVPd but have not yet been marked as attended (Issue #2367)' do
+      # This reproduces the real-world scenario where:
+      # 1. Coach RSVPs to workshop (attending = true)
+      # 2. Feedback is sent the next day
+      # 3. Organizer hasn't yet marked attendance (attended = nil)
+      coach_not_yet_verified = Fabricate(:coach)
+      Fabricate(:attending_workshop_invitation,
+        workshop: feedback_request.workshop,
+        member: coach_not_yet_verified,
+        role: 'Coach',
+        attended: nil)
+
+      visit feedback_path(valid_token)
+
+      # Coach should appear in the list even though attended is nil
+      expect(page).to have_select('feedback_coach_id', with_options: [coach_not_yet_verified.full_name])
+    end
+
+    scenario 'verified coaches appear before unverified coaches in the list' do
+      # Create two coaches: one verified (attended=true), one not yet (attended=nil)
+      verified_coach = Fabricate(:coach, name: 'Alice', surname: 'Verified')
+      unverified_coach = Fabricate(:coach, name: 'Bob', surname: 'Unverified')
+
+      Fabricate(:attended_workshop_invitation,
+        workshop: feedback_request.workshop,
+        member: verified_coach,
+        role: 'Coach')
+
+      Fabricate(:attending_workshop_invitation,
+        workshop: feedback_request.workshop,
+        member: unverified_coach,
+        role: 'Coach',
+        attended: nil)
+
+      visit feedback_path(valid_token)
+
+      # Get all coach options in order
+      select_options = page.find('#feedback_coach_id').all('option').map(&:text).reject(&:blank?)
+      verified_index = select_options.index(verified_coach.full_name)
+      unverified_index = select_options.index(unverified_coach.full_name)
+
+      # Verified coach should appear before unverified coach
+      expect(verified_index).to be < unverified_index
+    end
   end
 
   context 'I get redirected to the main page' do
