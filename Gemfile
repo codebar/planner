@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 ruby file: '.ruby-version'
 
-gem 'rails', '~> 7.2.2.2' # LOCKED: It is Rails.
+gem 'rails', '~> 8.0.4' # LOCKED: It is Rails.
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem 'sprockets-rails'
 
@@ -51,7 +51,7 @@ gem 'pagy', '~> 43.2'
 gem 'icalendar'
 gem 'tzinfo-data'
 
-gem 'chosen-rails'
+gem 'chosen-rails', github: 'olleolleolle/chosen-rails', branch: 'support-rails-8'
 gem 'commonmarker'
 
 gem 'faraday'

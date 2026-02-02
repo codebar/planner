@@ -8,24 +8,9 @@ module Flodesk
     API_ENDPOINT = 'https://api.flodesk.com/v1/'.freeze
     DEFAULT_TIMEOUT = 60
 
-    class_attribute :api_key
-    class_attribute :complete_timeout
-    class_attribute :open_timeout
-
-    # Allows for setting these values in `config/initializers/flodesk.rb`
-    class << self
-      def api_key
-        @@api_key
-      end
-
-      def complete_timeout
-        @@complete_timeout
-      end
-
-      def open_timeout
-        @@open_timeout
-      end
-    end
+    cattr_accessor :api_key
+    cattr_accessor :complete_timeout
+    cattr_accessor :open_timeout
 
     attr_accessor :api_endpoint, :debug, :logger
 
