@@ -4,20 +4,26 @@ on: [ push, pull_request ]
 
 jobs:
   test:
-    name: 'Tests'
+    name: 'Tests (Group ${{ matrix.ci_node_index }})'
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        ci_node_total: [6]
+        ci_node_index: [0, 1, 2, 3, 4, 5]
 
     env:
       # prevent unnecessary log output -- https://bundler.io/man/bundle-config.1.html
       BUNDLE_IGNORE_FUNDING_REQUESTS: true
       BUNDLE_IGNORE_MESSAGES: true
+      RAILS_ENV: test
+      PARALLEL_TEST_PROCESSORS: ${{ matrix.ci_node_total }}
     services:
       postgres:
         image: postgres:17
         ports: ["5432:5432"]
         env:
           POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: test
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
@@ -34,20 +40,69 @@ jobs:
         # .ruby-version provides the Ruby version implicitly.
         bundler-cache: true
 
-    - name: Setup test database
+    - name: Setup test databases
       env:
-        DATABASE_URL: postgres://postgres:postgres@localhost:5432/test
-        RAILS_ENV: test
-      run:
-        bundle exec rake db:create db:migrate
+        DATABASE_URL: postgres://postgres:postgres@localhost:5432
+      run: |
+        bundle exec rake parallel:setup
 
-    - name: Run tests
+    - name: Run tests in parallel
       env:
-        DATABASE_URL: postgres://postgres:postgres@localhost:5432/test
-        RAILS_ENV: test
-      run: bundle exec rake spec
+        DATABASE_URL: postgres://postgres:postgres@localhost:5432
+        CI_NODE_INDEX: ${{ matrix.ci_node_index }}
+      run: |
+        bundle exec parallel_rspec spec/ \
+          -n ${{ matrix.ci_node_total }} \
+          --only-group ${{ matrix.ci_node_index }}
+
+    - name: Preserve coverage results
+      run: |
+        # Copy resultset immediately after tests complete to prevent deletion
+        cp coverage/.resultset.json coverage/resultset-${{ matrix.ci_node_index }}.json
+
+    - name: Upload coverage artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: coverage-${{ matrix.ci_node_index }}
+        path: coverage/resultset-${{ matrix.ci_node_index }}.json
+        retention-days: 1
+
+  coverage:
+    name: 'Report Coverage'
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v6
+
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        bundler-cache: true
+
+    - name: Download all coverage artifacts
+      uses: actions/download-artifact@v4
+      with:
+        path: coverage-results
+
+    - name: Merge coverage results
+      run: |
+        mkdir -p coverage
+        bundle exec ruby -e '
+          require "json"
+          require "simplecov"
+
+          resultsets = {}
+          Dir["coverage-results/coverage-*/resultset-*.json"].each do |file|
+            data = JSON.parse(File.read(file))
+            resultsets.merge!(data)
+          end
+
+          File.write("coverage/.resultset.json", JSON.generate(resultsets))
+        '
+
     - name: Report to Coveralls
-      continue-on-error: true # Don't fail the build if Coveralls fails to upload.
+      continue-on-error: true
       uses: coverallsapp/github-action@v2
       with:
         github-token: ${{ secrets.github_token }}

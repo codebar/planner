@@ -34,3 +34,8 @@ plugin :tmp_restart
 pidfile ENV["PIDFILE"] if ENV["PIDFILE"]
 worker_timeout 3600 if ENV.fetch("RAILS_ENV", "development") == "development"
 environment ENV.fetch("RAILS_ENV") { "development" }
+
+# Silence Puma output in test environment
+if ENV.fetch("RAILS_ENV", "development") == "test"
+  quiet
+end

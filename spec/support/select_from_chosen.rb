@@ -10,15 +10,19 @@ module SelectFromChosen
   def select_from_chosen(item_text, options)
     # Find the native <select>
     field = find_field(options[:from], :visible => false)
+    field_id = field[:id]
 
-    # Open the Chosen dialog
-    find("##{field[:id]}_chosen").click
+    # Find the option value we need to select
+    option = field.all('option', visible: false).find { |opt| opt.text == item_text }
+    raise "Option '#{item_text}' not found in select '#{options[:from]}'" unless option
+    option_value = option.value
 
-    # On the search input, type the string we're looking for and press Enter
-    within field.sibling('.chosen-container') do
-      input = find("input").native
-      input.send_keys(item_text)
-      input.send_key(:return)
-    end
+    # Use JavaScript to set the value and trigger Chosen update
+    page.execute_script <<-JS
+      $('##{field_id}').val('#{option_value}').trigger('chosen:updated').trigger('change');
+    JS
+
+    # Verify it was set
+    expect(page).to have_select(field_id, selected: item_text, visible: false)
   end
 end

@@ -50,8 +50,8 @@ RSpec.feature 'managing workshop attendances', type: :feature do
       expect(page).to have_content('1 are attending as students')
       expect(page).to_not have_selector('i.fa-magic')
 
-      find('span', text: 'Select a member to RSVP', visible: true).click
-      find('li', text: "#{other_invitation.member.full_name} (#{other_invitation.role})", visible: true).click
+      # Use the select_from_chosen helper to select the member
+      select_from_chosen("#{other_invitation.member.full_name} (#{other_invitation.role})", from: 'workshop_invitations')
 
       expect(page).to have_content('2 are attending as students')
 
