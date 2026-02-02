@@ -63,7 +63,7 @@ RSpec.describe 'Admin managing members', type: :feature do
       within '#subscriptions > li:first-child' do
         expect do
           accept_confirm { find('.fa-times').click }
-        end.to change { member.subscriptions.count }.by(0)
+        end.to change { member.subscriptions.count }.by(-1)
       end
 
       expect(page).to have_content "Successfully unsubscribed #{member.full_name}"

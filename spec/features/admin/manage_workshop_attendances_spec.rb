@@ -53,7 +53,7 @@ RSpec.feature 'managing workshop attendances', type: :feature do
       # Use the select_from_chosen helper to select the member
       select_from_chosen("#{other_invitation.member.full_name} (#{other_invitation.role})", from: 'workshop_invitations')
 
-      expect(page).to have_content('2 are attending as students')
+      expect(page).to have_content('2 are attending as students', wait: 5)
 
       expect(page).to have_content(I18n.l(other_invitation.reload.rsvp_time))
       expect(page).to have_css('.fa-hat-wizard')

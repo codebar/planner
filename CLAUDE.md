@@ -1,0 +1,206 @@
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
+## Project Overview
+
+codebar planner is a Rails 7.2 application for managing [codebar.io](https://codebar.io) members and events. It handles workshop/event scheduling, member registration, invitations, RSVPs, and feedback collection for coding workshops organized by codebar chapters.
+
+## Development Setup
+
+### Docker (Recommended)
+
+- **Initial setup**: `bin/dup` - builds container, sets up database with seed data
+- **Start container**: `bin/dstart` - starts existing container
+- **Start Rails server**: `bin/dserver` - runs server on http://localhost:3000
+- **Run tests**: `bin/drspec [path]` - runs RSpec tests, optionally for specific file/line
+- **Rails console**: `bin/drails console`
+- **Run rake tasks**: `bin/drake [task]`
+- **Bash shell in container**: `bin/dexec`
+- **Grant admin access**: `bin/dadmin <email>` - gives admin role to user
+- **Stop container**: `bin/dstop`
+- **Destroy container**: `bin/ddown`
+
+### Native Installation
+
+If not using Docker:
+- Setup: `bundle && rake db:create db:migrate db:seed`
+- Server: `rails server`
+- Tests: `rake` or `rspec`
+- Linting: `rubocop`
+
+### Environment Variables
+
+Required in `.env` file:
+```
+GITHUB_KEY=<your_github_oauth_client_id>
+GITHUB_SECRET=<your_github_oauth_client_secret>
+```
+
+Create GitHub OAuth app at https://github.com/settings/applications/new with callback URL `http://localhost:3000/auth/github`.
+
+## Development Workflow
+
+**IMPORTANT**: All changes to this project must be made via pull requests. Never commit directly to the `master` branch.
+
+1. Create a feature branch from `master`
+2. Make your changes and commit them to the feature branch
+3. Push the branch and create a pull request
+4. Wait for review and approval before merging
+
+## Architecture & Domain Model
+
+### Core Domain Concepts
+
+**Members**: Users of the system. Can be students, coaches, both, or neither. Authenticated via GitHub OAuth (stored in `auth_services` table). Members have roles managed by Rolify (`admin`, `organiser` for chapters/workshops).
+
+**Chapters**: Local codebar organizations (e.g., "London", "Berlin"). Chapters have organisers and host workshops/events.
+
+**Workshops**: Regular coding workshops. Belong to one chapter. Send invitations to chapter subscribers. Attendance is first-come-first-served up to venue capacity, with automatic waiting list management.
+
+**Events**: Multi-chapter events. Attendance requires admin verification/approval after RSVP.
+
+**Sponsors**: Organizations providing venue space. Have addresses and member contacts. One sponsor acts as "host" (venue) for each workshop.
+
+**Invitations**: Track member attendance status for workshops/events. Different classes:
+- `WorkshopInvitation` - for workshops (auto-accepted up to capacity)
+- `Invitation` - for events (require admin verification)
+
+**Waiting Lists**: When workshops are full, members can join waiting list (`WaitingList` model with `auto_rsvp` flag). Automatically promoted when spaces become available.
+
+### Key Model Relationships
+
+```
+Chapter
+  has_many :workshops
+  has_many :groups (for subscriptions)
+  has_many :organisers (via permissions)
+
+Workshop
+  belongs_to :chapter
+  has_many :workshop_sponsors
+  has_many :invitations (WorkshopInvitation)
+  has_one :host (sponsor where workshop_sponsors.host = true)
+
+Member
+  has_many :workshop_invitations
+  has_many :invitations (for events)
+  has_many :subscriptions
+  has_many :groups, through: :subscriptions
+  has_many :chapters, through: :groups
+  has_many :auth_services
+
+Sponsor
+  has_one :address
+  has_many :workshop_sponsors
+  has_many member_contacts
+```
+
+See `app/models/README.md` for detailed data model documentation.
+
+## Authorization & Authentication
+
+- **Authentication**: GitHub OAuth via OmniAuth. Session stores `member_id`.
+- **Authorization**: Pundit policies in `app/policies/`. Key roles:
+  - `admin` - global admin access
+  - `organiser` - per-chapter or per-workshop organiser role
+- Access checks: `current_user.is_admin?`, `current_user.manager?` (admin or organiser)
+- Policies must be called in controllers. `ApplicationController` rescues `Pundit::NotAuthorizedError`.
+
+## Frontend Stack
+
+- **CSS Framework**: Bootstrap 5
+- **JavaScript**: Stimulus controllers, Turbo for page transitions
+- **View Engine**: HAML (not ERB)
+- **Asset Pipeline**: Sprockets with importmap-rails
+- **Icons**: Font Awesome 5
+
+## Background Jobs
+
+- **Queue**: Delayed Job (database-backed)
+- Jobs defined in `app/jobs/` (inheriting from `ApplicationJob`)
+- Worker process: `bin/delayed_job start` (native) or managed by Docker
+
+## Testing
+
+- **Framework**: RSpec with Capybara for feature tests
+- **JavaScript Driver**: Playwright (Chromium by default)
+- **Factories**: Fabrication (not FactoryBot)
+- **Test data**: Faker for generated data
+- **Coverage**: SimpleCov
+- **JavaScript tests**: Capybara with Playwright driver
+  - Use `PLAYWRIGHT_HEADLESS=false` to debug with visible browser
+  - Use `PWDEBUG=1` for Playwright Inspector (step-through debugging)
+  - Use `PLAYWRIGHT_BROWSER=firefox` or `webkit` for cross-browser testing
+- **Matchers**: Shoulda Matchers, RSpec Collection Matchers
+
+Run single test: `bin/drspec spec/path/to/file_spec.rb:42`
+
+## Code Style
+
+- **Linter**: RuboCop with custom config (`.rubocop.yml`)
+- **Max line length**: 120 characters
+- **Max method length**: 10 lines (excludes tests)
+- **Hash syntax**: Modern style `{ key: value }` not `{ :key => value }`
+- **HAML linting**: `haml_lint` (config in `.haml-lint.yml`)
+- Run linter: `rubocop` or `bin/drubocop` (Docker)
+
+Key RuboCop exclusions:
+- `db/`, `spec/`, `config/`, `bin/` excluded from most cops
+- Documentation not required (`Style/Documentation: false`)
+
+## Important Patterns
+
+### Controllers
+
+- Use Pundit `authorize` to check permissions
+- Admin controllers in `app/controllers/admin/` namespace
+- Super admin controllers in `app/controllers/super_admin/`
+- Use `authenticate_admin!` or `authenticate_admin_or_organiser!` before_action for protected routes
+
+### Models
+
+- Concerns in `app/models/concerns/` (e.g., `Invitable`, `Listable`, `DateTimeConcerns`)
+- Permissions via Rolify: `member.add_role(:organiser, workshop)`
+- Scopes commonly used for filtering (e.g., `Member.not_banned`, `Workshop.students`)
+
+### Views
+
+- Use Presenters (`app/presenters/`) for complex view logic
+- Form objects in `app/form_models/` for complex forms
+- Helpers in `app/helpers/`
+
+### Services
+
+- Service objects in `app/services/` for complex business logic
+- Example: invitation management, email sending logic
+
+## Routes
+
+- Root: `dashboard#show`
+- Admin namespace: `/admin/*` - requires admin/organiser access
+- Auth: `/auth/github` (login), `/logout` (logout)
+- Key resources: `/workshops/:id`, `/events/:id`, `/meetings/:id`
+- Chapter pages: `/:id` (catch-all at end of routes)
+
+## Database
+
+- **RDBMS**: PostgreSQL
+- **Migrations**: Standard Rails migrations in `db/migrate/`
+- **Seeds**: `db/seeds.rb` creates sample data for development
+
+## Deployment
+
+This app uses Heroku. See `Makefile` for deployment commands (requires appropriate Heroku access):
+- `make deploy_production`
+- `make deploy_staging`
+
+## Additional Tools
+
+- **Email preview**: Letter Opener (development) - emails open in browser
+- **Error tracking**: Rollbar (production)
+- **Performance monitoring**: Scout APM
+- **Activity tracking**: PublicActivity gem for user action history
+- **Pagination**: Pagy
+- **File uploads**: CarrierWave (AWS S3 in production)
+- **Friendly URLs**: FriendlyId for slug generation

@@ -1,20 +1,12 @@
-Capybara.register_driver :chrome do |app|
-  options = Selenium::WebDriver::Chrome::Options.new
-
-  # Chrome won't work properly in a Docker container in sandbox mode
-  options.add_argument("no-sandbox")
-
-  # Run headless by default unless CHROME_HEADLESS specified
-  options.add_argument("headless") unless ENV['CHROME_HEADLESS'] =~ /^(false|no|0)$/i
-
-  Capybara::Selenium::Driver.new(
+Capybara.register_driver :playwright do |app|
+  Capybara::Playwright::Driver.new(
     app,
-    browser: :chrome,
-    options: options
+    headless: ENV.fetch('PLAYWRIGHT_HEADLESS', 'true') !~ /^(false|no|0)$/i,
+    browser_type: ENV.fetch('PLAYWRIGHT_BROWSER', 'chromium').to_sym
   )
 end
 
-Capybara.javascript_driver = :chrome
+Capybara.javascript_driver = :playwright
 Capybara.default_max_wait_time = 5
 
 # Silence Capybara server output

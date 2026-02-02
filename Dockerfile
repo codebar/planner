@@ -6,6 +6,9 @@ RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
 RUN apt-get update
 RUN apt-get install -y --force-yes build-essential libpq-dev nodejs chromium chromium-driver
 
+# Install Playwright browsers for testing
+RUN npx --yes playwright@1.58.0 install --with-deps chromium
+
 WORKDIR /planner
 
 COPY . ./
