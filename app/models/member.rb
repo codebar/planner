@@ -22,6 +22,7 @@ class Member < ApplicationRecord
   has_many :chapters, -> { distinct }, through: :groups
   has_many :announcements, -> { distinct }, through: :groups
   has_many :meeting_invitations
+  has_many :member_email_deliveries
 
   validates :auth_services, presence: true
   validates :name, :surname, :email, :about_you, presence: true, if: :can_log_in?
