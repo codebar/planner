@@ -57,6 +57,7 @@ Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 ActiveRecord::Migration.check_all_pending! if defined?(ActiveRecord::Migration)
 
 RSpec.configure do |config|
+  config.include ActiveJob::TestHelper
   config.include ApplicationHelper
   config.include LoginHelpers
   config.include ActiveSupport::Testing::TimeHelpers
@@ -95,6 +96,9 @@ RSpec.configure do |config|
       to_return(status: 200, body: '{"status":"active","segments":[]}', headers: { 'Content-Type' => 'application/json' })
 
     DatabaseCleaner.strategy = :transaction
+
+    clear_enqueued_jobs
+    clear_performed_jobs
   end
 
   # Driver is using an external browser with an app
