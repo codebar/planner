@@ -23,18 +23,20 @@
                   %span.badge.bg-warning.text-dark Phone no. not set
           - if current_user.is_admin?
             = link_to 'Edit organisers', admin_chapter_organisers_path(@chapter), class: 'btn btn-primary btn-sm'
-      %ul.nav.flex-column.ms-0.mb-4
-        - @groups.each do |group|
-          %li.nav-item
-            = link_to [ :admin, group ], class: 'nav-link' do
-              #{group.name} (#{group.members.count})
-          %li.nav-item
-            = link_to admin_chapter_members_path(@chapter, type: group.name.downcase), class: 'nav-link' do
-              View #{group.name} emails
-        %li.nav-item
-          = link_to 'View all sponsors', admin_sponsors_path, class: 'nav-link'
-        %li.nav-item
-          = link_to 'View all workshops', admin_chapter_workshops_path(@chapter), class: 'nav-link'
+      .card.border-info.mb-4
+        .card-body
+          %ul.nav.flex-column.ms-0.mb-0
+            - @groups.each do |group|
+              %li.nav-item
+                = link_to [ :admin, group ], class: 'nav-link' do
+                  #{group.name} (#{group.members.count})
+              %li.nav-item
+                = link_to admin_chapter_members_path(@chapter, type: group.name.downcase), class: 'nav-link' do
+                  View #{group.name} emails
+            %li.nav-item
+              = link_to 'View all sponsors', admin_sponsors_path, class: 'nav-link'
+            %li.nav-item
+              = link_to 'View all workshops', admin_chapter_workshops_path(@chapter), class: 'nav-link'
 
     .col-12.col-lg-7.offset-lg-1
       .mb-4
