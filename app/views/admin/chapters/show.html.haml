@@ -23,7 +23,7 @@
                   %span.badge.bg-warning.text-dark Phone no. not set
           - if current_user.is_admin?
             = link_to 'Edit organisers', admin_chapter_organisers_path(@chapter), class: 'btn btn-primary btn-sm'
-      .card.border-info.mb-4
+      .card.border-info.my-4.my-md-0.my-lg-4.ms-md-4.ms-lg-0
         .card-body
           %ul.nav.flex-column.ms-0.mb-0
             - @groups.each do |group|
@@ -39,7 +39,7 @@
               = link_to 'View all workshops', admin_chapter_workshops_path(@chapter), class: 'nav-link'
 
     .col-12.col-lg-7.offset-lg-1
-      .mb-4
+      .mb-4.mt-md-4.mt-lg-0
         .d-md-flex.justify-content-between.align-items-center
           %h3 Upcoming Workshops
           = link_to 'New workshop', new_admin_workshop_path, class: 'btn btn-primary btn-sm'
