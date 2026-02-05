@@ -23,6 +23,7 @@
                   %span.badge.bg-warning.text-dark Phone no. not set
           - if current_user.is_admin?
             = link_to 'Edit organisers', admin_chapter_organisers_path(@chapter), class: 'btn btn-primary btn-sm'
+
       .card.border-info.my-4.my-md-0.my-lg-4.ms-md-4.ms-lg-0
         .card-body
           %ul.nav.flex-column.ms-0.mb-0
@@ -37,6 +38,20 @@
               = link_to 'View all sponsors', admin_sponsors_path, class: 'nav-link'
             %li.nav-item
               = link_to 'View all workshops', admin_chapter_workshops_path(@chapter), class: 'nav-link'
+
+      - if @how_you_found_us.data_present?
+        .card.border-info.my-4.my-md-0.my-lg-4.ms-md-4.ms-lg-0
+          .card-body
+            %h3 How members found this chapter
+            - @how_you_found_us.by_percentage.each do |(how, percent)|
+              - label = t("member.details.edit.how_you_found_us_options.#{how}")
+              .mb-3
+                .d-flex.justify-content-between
+                  %div= label
+                  %div #{percent}%
+                .progress
+                  .progress-bar.bg-primary{ role: 'progressbar', style: "width: #{percent}%", "aria-valuenow": percent, "aria-valuemin": 0, "aria-valuemax": 100 }
+            %div.text-muted.small= "Based on #{pluralize(@how_you_found_us.total_responses, 'response')}"
 
     .col-12.col-lg-8
       .mb-4.mt-md-4.mt-lg-0

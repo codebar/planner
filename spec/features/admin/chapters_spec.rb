@@ -119,4 +119,29 @@ RSpec.feature 'Chapters', type: :feature do
       expect(page).not_to have_content(coach_email)
     end
   end
+
+  context 'how you found us card' do
+    let(:chapter) { Fabricate(:chapter) }
+    let(:group) { Fabricate(:group, chapter: chapter) }
+
+    before do
+      login_as_admin(member)
+    end
+
+    scenario 'shows the card when there are responses' do
+      member_with_response = Fabricate(:member, how_you_found_us: :from_a_friend)
+      Fabricate(:subscription, member: member_with_response, group: group)
+
+      visit admin_chapter_path(chapter)
+
+      expect(page).to have_content('How members found this chapter')
+      expect(page).to have_content('Based on 1 response')
+    end
+
+    scenario 'does not show the card when there are no responses' do
+      visit admin_chapter_path(chapter)
+
+      expect(page).not_to have_content('How members found this chapter')
+    end
+  end
 end

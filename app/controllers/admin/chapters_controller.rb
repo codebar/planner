@@ -27,6 +27,7 @@ class Admin::ChaptersController < Admin::ApplicationController
     @sponsors = @chapter.sponsors.uniq
     @groups = @chapter.groups
     @subscribers = @chapter.subscriptions.last(20).reverse
+    @how_you_found_us = HowYouFoundUsPresenter.new(@chapter)
   end
 
   def edit
