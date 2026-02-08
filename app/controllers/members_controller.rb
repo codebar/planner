@@ -5,8 +5,6 @@ class MembersController < ApplicationController
   before_action :authenticate_member!, only: %i[edit step2 profile]
   before_action :suppress_notices, only: %i[step2]
 
-  autocomplete :skill, :name, class_name: 'ActsAsTaggableOn::Tag'
-
   def new
     @page_title = 'Sign up'
   end

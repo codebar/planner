@@ -15,8 +15,6 @@
 //= require jquery
 //= require rails-ujs
 //= require activestorage
-//= require jquery-ui
-//= require autocomplete-rails
 //= require chosen-jquery
 //= require 'jsimple-star-rating.min.js'
 //= require pickadate/picker

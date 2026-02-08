@@ -23,7 +23,6 @@ gem 'friendly_id'
 gem 'haml'
 gem 'high_voltage'
 gem 'jquery-rails'
-gem 'jquery-ui-rails'
 
 # Use Active Storage variant
 gem 'image_processing'
@@ -37,7 +36,6 @@ gem 'pickadate-rails'
 gem 'premailer-rails'
 
 gem 'pundit'
-gem 'rails4-autocomplete'
 gem 'reline' # LOCKED: Added because of readline is not part of Ruby 3.5.0
 gem 'rolify'
 # Use Sass to process CSS
