@@ -25,10 +25,6 @@ Rails.application.routes.draw do
     resource :details, only: %i[edit update]
   end
 
-  resource :members do
-    get :autocomplete_skill_name, on: :collection
-  end
-
   get '/profile' => 'members#profile', as: :profile
 
   resources :subscriptions, only: %i[index create]
