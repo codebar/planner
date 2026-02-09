@@ -154,6 +154,10 @@ GEM
       logger (~> 1.5)
     cocoon (1.2.15)
     coderay (1.1.3)
+    coffee-script (2.4.1)
+      coffee-script-source
+      execjs
+    coffee-script-source (1.12.2)
     commonmarker (2.6.3-aarch64-linux)
     commonmarker (2.6.3-arm64-darwin)
     commonmarker (2.6.3-x86_64-darwin)
@@ -616,6 +620,7 @@ DEPENDENCIES
   carrierwave
   carrierwave-aws (~> 1.6)
   cocoon
+  coffee-script
   commonmarker
   csv
   database_cleaner

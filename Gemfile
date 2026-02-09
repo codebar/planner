@@ -4,6 +4,7 @@ ruby file: '.ruby-version'
 gem 'rails', '~> 8.1.2' # LOCKED: It is Rails.
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem 'sprockets-rails'
+gem 'coffee-script' # LOCKED: Added because Sprockets autoloads it when seeing .coffee files in the asset pipeline. Can be removed when that does not happen.
 
 gem 'amazing_print' # colourful output (suggested by rails_semantic_logger)
 gem 'rails_semantic_logger' # condense log lines: https://github.com/codebar/planner/issues/2339
