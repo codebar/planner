@@ -1,4 +1,25 @@
 if Rails.env.development?
+  # Check for ImageMagick before seeding
+  imagemagick_available = system('convert --version > /dev/null 2>&1') ||
+                         system('magick --version > /dev/null 2>&1')
+
+  unless imagemagick_available
+    Rails.logger.error "=" * 80
+    Rails.logger.error "ERROR: ImageMagick is required to run db:seed"
+    Rails.logger.error "=" * 80
+    Rails.logger.error ""
+    Rails.logger.error "The seed task processes sponsor logo images, which requires ImageMagick."
+    Rails.logger.error ""
+    Rails.logger.error "Install ImageMagick:"
+    Rails.logger.error "  macOS:         brew install imagemagick"
+    Rails.logger.error "  Ubuntu/Debian: apt-get install imagemagick"
+    Rails.logger.error "  Windows:       https://imagemagick.org/script/download.php"
+    Rails.logger.error ""
+    Rails.logger.error "See native-installation-instructions.md for details."
+    Rails.logger.error "=" * 80
+    exit 1
+  end
+
   begin
     Rails.logger.info 'Running migrations...'
     Rails.application.config.log_level = :info

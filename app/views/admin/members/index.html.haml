@@ -4,7 +4,7 @@
       %h1 Members Directory
   .row.mb-4
     .col-12.col-md-6
-      = select_tag 'member_lookup_id', options_for_select(@members.collect{ |u| ["#{u.full_name} (#{u.email})", u.id] }), { class: 'chosen-select' }
+      = select_tag 'member_lookup_id', options_for_select([['Select a member...', '']] + @members.collect{ |u| ["#{u.full_name} (#{u.email})", u.id] }), { class: 'chosen-select' }
   .row
     .col
       = link_to 'View Profile', '#', { class: 'btn btn-primary', id: 'view_profile' }

@@ -10,12 +10,12 @@
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
 //
+//= require jquery
 //= require popper
 //= require bootstrap
-//= require jquery
 //= require rails-ujs
 //= require activestorage
-//= require chosen-jquery
+//= require chosen.jquery
 //= require 'jsimple-star-rating.min.js'
 //= require pickadate/picker
 //= require pickadate/picker.date
@@ -57,12 +57,12 @@ $(function() {
     }).show();
   });
 
-  $('select').chosen(function(){
-    allow_single_deselect: true
+  $('select').chosen({
+    allow_single_deselect: true,
     no_results_text: 'No results matched'
   });
 
-  $('#member_lookup_id').chosen().change(function(e) {
+  $('#member_lookup_id').change(function(e) {
     $('#view_profile').attr('href', '/admin/members/' + $(this).val())
   });
 

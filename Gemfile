@@ -49,7 +49,8 @@ gem 'pagy', '~> 43.2'
 gem 'icalendar'
 gem 'tzinfo-data'
 
-gem 'chosen-rails', github: 'olleolleolle/chosen-rails', branch: 'support-rails-8'
+# Chosen JavaScript and CSS loaded from vendor/assets/ instead of gem
+# The chosen-rails gem has broken CoffeeScript compilation on Rails 8.1
 gem 'commonmarker'
 
 gem 'faraday'
