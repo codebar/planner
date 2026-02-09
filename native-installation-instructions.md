@@ -47,7 +47,7 @@ brew install postgresql
 brew services start postgresql
 ```
 
-Install other dependencies:
+Install required dependencies:
 ```
 brew install imagemagick
 ```

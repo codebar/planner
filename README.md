@@ -68,6 +68,8 @@ Before you start, you will need to have Docker installed and running. You can [d
 
 Run `bin/dup` to build and create the docker container. This will also set up the Rails application within the container and start the container. You will only have to run this command once. After initial setup, use `bin/dstart` to start an existing container - using `bin/dup` will recreate an existing container and reset the database.
 
+**Note:** The Docker setup includes ImageMagick automatically. If you're using native installation, you must install ImageMagick separately (see [native-installation-instructions.md](./native-installation-instructions.md)).
+
 ### 4. Start the app
 
 Run `bin/dserver` to start the Rails server.
