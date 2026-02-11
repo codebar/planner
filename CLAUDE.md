@@ -6,6 +6,23 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 codebar planner is a Rails 8.1 application for managing [codebar.io](https://codebar.io) members and events. It handles workshop/event scheduling, member registration, invitations, RSVPs, and feedback collection for coding workshops organized by codebar chapters.
 
+## Development Workflow
+
+**CRITICAL**: Never work directly on the `master` branch. All changes must be made via pull requests from feature branches.
+
+### Branching Strategy
+
+1. **Create a feature branch** from `master`: `git checkout -b feature/descriptive-name`
+2. **Make your changes** and commit them to the feature branch
+3. **Push the branch** to the remote repository
+4. **Create a pull request** for review
+5. **Wait for approval** before merging to `master`
+
+**Never:**
+- Commit directly to `master`
+- Push directly to `master`
+- Merge without review
+
 ## Development Setup
 
 **IMPORTANT**: Always use native installation with `bundle exec` commands. Never use Docker or `bin/d*` commands.
@@ -32,15 +49,6 @@ GITHUB_SECRET=<your_github_oauth_client_secret>
 ```
 
 Create GitHub OAuth app at https://github.com/settings/applications/new with callback URL `http://localhost:3000/auth/github`.
-
-## Development Workflow
-
-**IMPORTANT**: All changes to this project must be made via pull requests. Never commit directly to the `master` branch.
-
-1. Create a feature branch from `master`
-2. Make your changes and commit them to the feature branch
-3. Push the branch and create a pull request
-4. Wait for review and approval before merging
 
 ## Architecture & Domain Model
 
