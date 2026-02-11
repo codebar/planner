@@ -103,6 +103,7 @@ es:
   notifications:
     provider_already_connected: '¡Ya has iniciado sesión!'
     not_logged_in: "Debes iniciar sesión para acceder a esta página."
+    authentication_error: "Error de autenticación. Por favor, inténtalo de nuevo."
   navigation:
     dashboard: "Tablero"
     code_of_conduct: "Código de Conducta"

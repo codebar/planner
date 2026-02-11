@@ -114,6 +114,7 @@ de:
   notifications:
     provider_already_connected: "Sie sind bereits angemeldet!"
     not_logged_in: "Du musst angemeldet sein, um auf diese Seite zugreifen zu können."
+    authentication_error: "Authentifizierung fehlgeschlagen. Bitte versuchen Sie es erneut."
   navigation:
     dashboard: "Übersicht"
     code_of_conduct: "Verhaltensregeln"
