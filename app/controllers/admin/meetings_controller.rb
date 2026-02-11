@@ -62,10 +62,10 @@ class Admin::MeetingsController < Admin::ApplicationController
   end
 
   def meeting_params
-    params.require(:meeting).permit(
+    params.expect(meeting: [
       :name, :description, :slug, :date_and_time, :local_date, :local_time, :local_end_time,
       :invitable, :spaces, :venue_id, :sponsor_id, :chapters
-    )
+    ])
   end
 
   def organiser_ids

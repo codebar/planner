@@ -58,7 +58,7 @@ class Admin::ChaptersController < Admin::ApplicationController
   private
 
   def chapter_params
-    params.require(:chapter).permit(:name, :email, :city, :time_zone, :description, :image)
+    params.expect(chapter: [:name, :email, :city, :time_zone, :description, :image])
   end
 
   def set_chapter

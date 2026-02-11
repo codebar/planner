@@ -36,6 +36,6 @@ class Admin::AnnouncementsController < SuperAdmin::ApplicationController
   end
 
   def announcement_params
-    params.require(:announcement).permit(:all_groups, :message, :expires_at, group_ids: [])
+    params.expect(announcement: [:all_groups, :message, :expires_at, { group_ids: [] }])
   end
 end
