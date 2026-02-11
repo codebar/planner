@@ -104,6 +104,7 @@ fr:
   notifications:
     provider_already_connected: "Vous êtes déjà connecter!"
     not_logged_in: "Vous devez être connecter pour accéder à cette page."
+    authentication_error: "Échec de l'authentification. Veuillez réessayer."
   navigation:
     dashboard: "Dashboard"
     code_of_conduct: "Code de Conduite"

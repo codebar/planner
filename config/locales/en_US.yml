@@ -105,6 +105,7 @@ en-US:
   notifications:
     provider_already_connected: "You are already signed in!"
     not_logged_in: "You must be logged in to access this page."
+    authentication_error: "Authentication failed. Please try again."
   navigation:
     dashboard: "Dashboard"
     code_of_conduct: "Code of Conduct"
