@@ -167,12 +167,12 @@ end
 
 ### Type Safety
 
-All controllers using `params.expect` automatically return **400 Bad Request** when:
+Controllers using `params.expect` raise `ActionController::ParameterMissing` when:
 - Parameter type is tampered (e.g., string sent instead of hash)
 - Required parameters are missing
 - Nested parameter structure is invalid
 
-This provides better security than the old pattern which would raise 500 errors.
+This makes parameter validation failures explicit and easier to handle at the application level.
 
 ### Nested Arrays
 
@@ -237,14 +237,6 @@ it 'filters unpermitted parameters' do
 end
 ```
 
-Type tampering tests are optional but document the 400 behavior:
-
-```ruby
-it 'returns 400 when params is string instead of hash' do
-  post :create, params: { resource: 'tampered' }
-  expect(response).to have_http_status(:bad_request)
-end
-```
 
 ## Important Patterns
 

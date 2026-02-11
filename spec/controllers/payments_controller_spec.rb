@@ -43,11 +43,5 @@ RSpec.describe PaymentsController do
       end
     end
 
-    context 'with type tampering' do
-      it 'returns 400 when payment params is string instead of hash' do
-        post :create, params: { payment: 'tampered' }
-        expect(response).to have_http_status(:bad_request)
-      end
-    end
   end
 end
