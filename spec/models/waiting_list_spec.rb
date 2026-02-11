@@ -32,6 +32,25 @@ RSpec.describe WaitingList do
 
       expect(WaitingList.by_workshop(workshop).map(&:invitation)).to eq([invitation])
     end
+
+    it 'is idempotent - returns existing record when called twice' do
+      invitation = Fabricate(:workshop_invitation, workshop: workshop)
+
+      first_call = WaitingList.add(invitation)
+      second_call = WaitingList.add(invitation)
+
+      expect(first_call.id).to eq(second_call.id)
+      expect(WaitingList.by_workshop(workshop).count).to eq(1)
+    end
+
+    it 'does not change auto_rsvp on subsequent calls' do
+      invitation = Fabricate(:workshop_invitation, workshop: workshop)
+
+      WaitingList.add(invitation, true)
+      second_entry = WaitingList.add(invitation, false)
+
+      expect(second_entry.reload.auto_rsvp).to be(true)
+    end
   end
 
   context '#coaches_for' do

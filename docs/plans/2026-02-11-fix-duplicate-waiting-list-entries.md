@@ -19,7 +19,7 @@
 
 **Step 1: Write failing test for idempotent behavior**
 
-Add after the existing `#add` test context (around line 28):
+Add in the existing `context '#add'` block:
 
 ```ruby
 it 'is idempotent - returns existing record when called twice' do
@@ -50,9 +50,9 @@ end
 
 **Step 3: Run tests to verify they fail**
 
-Run: `bundle exec rspec spec/models/waiting_list_spec.rb:32 spec/models/waiting_list_spec.rb:41`
+Run: `bundle exec rspec spec/models/waiting_list_spec.rb`
 
-Expected: 2 failures - "expected 1, got 2" and similar
+Expected: 2 new failures in the `#add` context - "expected 1, got 2" and similar
 
 **Step 4: Commit failing tests**
 
@@ -110,9 +110,9 @@ Refs #2479"
 
 Run: `ls spec/controllers/waiting_lists_controller_spec.rb`
 
-If not found: Create file with basic structure
+If not found, create it. Otherwise, add to existing file.
 
-**Step 2: Write test for idempotent controller action**
+**Step 2: Write comprehensive test for idempotent controller action**
 
 If file doesn't exist, create with:
 
@@ -125,9 +125,20 @@ RSpec.describe WaitingListsController, type: :controller do
 
   describe 'POST #create' do
     it 'is idempotent when called multiple times' do
-      post :create, params: { invitation_id: invitation.token }
-      post :create, params: { invitation_id: invitation.token }
+      expect {
+        post :create, params: { invitation_id: invitation.token }
+      }.to change { WaitingList.count }.by(1)
 
+      expect(response).to have_http_status(:redirect)
+      expect(flash[:notice]).to eq('You have been added to the waiting list')
+
+      # Second call should not create duplicate
+      expect {
+        post :create, params: { invitation_id: invitation.token }
+      }.not_to change { WaitingList.count }
+
+      expect(response).to have_http_status(:redirect)
+      expect(flash[:notice]).to eq('You have been added to the waiting list')
       expect(WaitingList.where(invitation: invitation).count).to eq(1)
     end
   end
@@ -162,27 +173,42 @@ Run: `bundle exec rails generate migration AddUniqueIndexToWaitingListsInvitatio
 
 This creates a timestamped file in `db/migrate/`
 
-**Step 2: Write migration to clean duplicates**
+**Step 2: Write migration to clean duplicates safely**
 
 Edit the generated migration file:
 
 ```ruby
 class AddUniqueIndexToWaitingListsInvitationId < ActiveRecord::Migration[8.0]
   def up
-    # Find and clean up duplicate waiting list entries
-    duplicate_invitation_ids = WaitingList
-      .group(:invitation_id)
-      .having('COUNT(*) > 1')
-      .pluck(:invitation_id)
+    say_with_time "Cleaning up duplicate waiting list entries" do
+      # Find invitation_ids with duplicates
+      duplicates = WaitingList
+        .select('invitation_id, COUNT(*) as duplicate_count')
+        .group(:invitation_id)
+        .having('COUNT(*) > 1')
 
-    # For each duplicate set, keep the oldest and delete the rest
-    duplicate_invitation_ids.each do |invitation_id|
-      waiting_list_entries = WaitingList
-        .where(invitation_id: invitation_id)
-        .order(:created_at)
+      duplicate_count = duplicates.count
+      say "Found #{duplicate_count} invitation_ids with duplicates"
 
-      # Keep first (oldest), destroy the rest
-      waiting_list_entries[1..].each(&:destroy)
+      return if duplicate_count.zero?
+
+      # For each duplicate set, keep oldest and delete the rest
+      duplicates.each do |dup|
+        entries = WaitingList
+          .where(invitation_id: dup.invitation_id)
+          .order(:created_at)
+
+        # Get IDs to delete (all except first/oldest)
+        ids_to_delete = entries[1..].map(&:id)
+        deleted_count = ids_to_delete.size
+
+        say "  Invitation #{dup.invitation_id}: deleting #{deleted_count} duplicate(s), keeping entry ##{entries.first.id}"
+
+        # Use delete_all for performance and to avoid callbacks
+        WaitingList.where(id: ids_to_delete).delete_all
+      end
+
+      duplicate_count
     end
 
     # Add unique constraint
@@ -191,15 +217,20 @@ class AddUniqueIndexToWaitingListsInvitationId < ActiveRecord::Migration[8.0]
 
   def down
     remove_index :waiting_lists, :invitation_id
+    # Note: Cannot restore deleted duplicate entries
   end
 end
 ```
 
-**Step 3: Run migration**
+**Step 3: Run migration and verify output**
 
 Run: `bundle exec rake db:migrate`
 
-Expected: Migration runs successfully
+Expected output should show:
+- "Cleaning up duplicate waiting list entries"
+- Count of duplicate invitation_ids found
+- For each duplicate: which entries are being deleted
+- "add_index(:waiting_lists, :invitation_id)"
 
 **Step 4: Verify schema updated**
 
@@ -207,7 +238,13 @@ Run: `grep -A 5 'create_table "waiting_lists"' db/schema.rb`
 
 Expected: Shows `index ["invitation_id"], name: "index_waiting_lists_on_invitation_id", unique: true`
 
-**Step 5: Commit migration**
+**Step 5: Verify no duplicates remain**
+
+Run: `bundle exec rails runner 'puts WaitingList.group(:invitation_id).having("COUNT(*) > 1").count'`
+
+Expected: Returns `0` (no duplicates)
+
+**Step 6: Commit migration**
 
 ```bash
 git add db/migrate/*_add_unique_index_to_waiting_lists_invitation_id.rb db/schema.rb
@@ -221,7 +258,7 @@ Refs #2479"
 
 ---
 
-## Task 5: Run Full Test Suite
+## Task 5: Run Full Test Suite and Verify Linting
 
 **Files:**
 - None (verification only)
@@ -244,24 +281,15 @@ Run: `bundle exec rspec spec/support/shared_examples/behaves_like_an_invitation_
 
 Expected: All tests pass
 
----
+**Step 4: Run RuboCop on changed files**
 
-## Task 6: Verify Linting
-
-**Files:**
-- None (verification only)
-
-**Step 1: Run RuboCop on changed files**
-
-Run: `bundle exec rubocop app/models/waiting_list.rb spec/models/waiting_list_spec.rb`
+Run: `bundle exec rubocop app/models/waiting_list.rb spec/models/waiting_list_spec.rb spec/controllers/waiting_lists_controller_spec.rb`
 
 Expected: No offenses detected
 
-**Step 2: Fix any linting issues if found**
+**Step 5: Fix any linting issues if found**
 
-If RuboCop reports issues, fix them and re-run.
-
-**Step 3: Commit linting fixes if needed**
+If RuboCop reports issues, fix them and commit:
 
 ```bash
 git add <files>
@@ -270,7 +298,7 @@ git commit -m "style: fix rubocop offenses"
 
 ---
 
-## Task 7: Manual Verification (Optional)
+## Task 6: Manual Verification
 
 **Files:**
 - None (manual testing)
@@ -279,24 +307,37 @@ git commit -m "style: fix rubocop offenses"
 
 Run: `bundle exec rails console`
 
-**Step 2: Test idempotency in console**
+**Step 2: Verify idempotency in console**
 
 ```ruby
+# Test idempotency
 workshop = Workshop.first || Fabricate(:workshop)
 invitation = WorkshopInvitation.first || Fabricate(:workshop_invitation, workshop: workshop)
 
-# Add to waiting list twice
 wl1 = WaitingList.add(invitation)
 wl2 = WaitingList.add(invitation)
 
-# Verify same record
-wl1.id == wl2.id  # => true
-WaitingList.where(invitation: invitation).count  # => 1
+puts "Same record? #{wl1.id == wl2.id}"  # Should be true
+puts "Count: #{WaitingList.where(invitation: invitation).count}"  # Should be 1
 ```
 
-Expected: Returns true and 1
+Expected: Both checks pass
 
-**Step 3: Exit console**
+**Step 3: Verify unique constraint prevents duplicates**
+
+```ruby
+# Try to create duplicate directly (should fail)
+begin
+  WaitingList.create!(invitation: invitation, auto_rsvp: true)
+  puts "ERROR: Duplicate was created!"
+rescue ActiveRecord::RecordNotUnique => e
+  puts "GOOD: Unique constraint prevented duplicate"
+end
+```
+
+Expected: "GOOD: Unique constraint prevented duplicate"
+
+**Step 4: Exit console**
 
 Type: `exit`
 
@@ -307,10 +348,11 @@ Type: `exit`
 After completing all tasks, you should have:
 
 - ✅ Model tests verifying idempotency (2 new tests)
-- ✅ Controller test verifying double-submission protection (1 new test)
-- ✅ Migration that cleans duplicates and adds unique constraint
+- ✅ Controller test verifying double-submission protection with full response checks (1 new test)
+- ✅ Migration that safely cleans duplicates with logging and adds unique constraint
 - ✅ All existing tests still passing
 - ✅ RuboCop clean
+- ✅ Manual verification that constraints work
 
 ## Next Steps
 
@@ -320,9 +362,28 @@ After implementation is complete:
 2. Create pull request following project conventions
 3. Reference issue #2479 in PR description
 
+## Production Deployment Notes
+
+**Pre-deployment:**
+- Review migration output in staging first
+- Migration is safe to run - uses `delete_all` for performance and logs all deletions
+- Expected downtime: None (migration is fast, <1 second for typical data)
+
+**Post-deployment:**
+- Monitor logs for any `ActiveRecord::RecordNotUnique` exceptions (shouldn't occur but worth checking)
+- Verify waiting list functionality works correctly in production
+- Check Rollbar/error tracking for any unexpected issues
+
+**Rollback plan:**
+- Code rollback: Safe - old code will continue working (no duplicates can be created anymore)
+- Database rollback: Run `rake db:rollback` to remove unique index
+- Note: Deleted duplicate entries cannot be restored (acceptable - they were bugs)
+
 ## Notes
 
 - The unique constraint provides defense-in-depth at the database level
-- `find_or_create_by` handles race conditions gracefully
-- First call wins for `auto_rsvp` setting (won't be overwritten)
+- `find_or_create_by` handles race conditions gracefully by rescuing `RecordNotUnique` and retrying
+- First call wins for `auto_rsvp` setting (won't be overwritten on subsequent calls)
 - Migration keeps oldest entry when cleaning duplicates (fairest for waiting list position)
+- Migration uses `delete_all` instead of `destroy` for performance (avoids callbacks)
+- Migration logs all deletions for audit trail
