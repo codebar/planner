@@ -4,12 +4,14 @@ class PaymentsController < ApplicationController
   def new; end
 
   def create
-    @amount = params[:amount]
+    payment_params = params.permit(:amount, :name, data: [:email, :id])
+
+    @amount = payment_params[:amount]
 
     customer = Stripe::Customer.create(
-      email: params[:data][:email],
-      description: params[:name],
-      source: params[:data][:id]
+      email: payment_params[:data][:email],
+      description: payment_params[:name],
+      source: payment_params[:data][:id]
     )
 
     charge_customer(customer, @amount)
