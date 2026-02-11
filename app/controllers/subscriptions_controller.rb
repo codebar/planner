@@ -37,7 +37,7 @@ class SubscriptionsController < ApplicationController
   private
 
   def group_id
-    params.require(:subscription).permit(:group_id)[:group_id]
+    params.expect(subscription: [:group_id])[:group_id]
   end
 
   def send_welcome_email(member, subscription)

@@ -22,6 +22,6 @@ class TermsAndConditionsController < ApplicationController
   private
 
   def terms_params
-    params.require(:terms_and_conditions_form).permit(:terms)
+    params.expect(terms_and_conditions_form: [:terms])
   end
 end
