@@ -27,6 +27,6 @@ class Admin::GroupsController < Admin::ApplicationController
   private
 
   def group_params
-    params.require(:group).permit(:name, :description, :chapter_id)
+    params.expect(group: [:name, :description, :chapter_id])
   end
 end

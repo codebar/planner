@@ -1,9 +1,15 @@
 class Admin::MemberSearchController < Admin::ApplicationController
   def index
-    member_params = params[:member_search] || {}
-    name = member_params[:name]
+    search_params = if params.key?(:member_search)
+                      params.expect(member_search: [:name, :callback_url])
+                    else
+                      {}
+                    end
+
+    callback_url = search_params[:callback_url] || params[:callback_url] || results_admin_member_search_index_path
+    name = search_params[:name]
     members = name.blank? ? Member.none : Member.find_members_by_name(name).select(:id, :name, :surname, :pronouns)
-    callback_url = member_params[:callback_url] || params[:callback_url] || results_admin_member_search_index_path
+
     if members.size == 1
       query = { member_pick: { members: [members.first.id] } }
       query_string = query.to_query
@@ -15,7 +21,8 @@ class Admin::MemberSearchController < Admin::ApplicationController
   end
 
   def results
-    members = Member.find(params[:member_pick][:members])
+    pick_params = params.expect(member_pick: { members: [] })
+    members = Member.find(pick_params[:members])
     render 'show', locals: { members: members }
   end
 end

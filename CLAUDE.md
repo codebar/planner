@@ -4,30 +4,24 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-codebar planner is a Rails 7.2 application for managing [codebar.io](https://codebar.io) members and events. It handles workshop/event scheduling, member registration, invitations, RSVPs, and feedback collection for coding workshops organized by codebar chapters.
+codebar planner is a Rails 8.1 application for managing [codebar.io](https://codebar.io) members and events. It handles workshop/event scheduling, member registration, invitations, RSVPs, and feedback collection for coding workshops organized by codebar chapters.
 
 ## Development Setup
 
-### Docker (Recommended)
-
-- **Initial setup**: `bin/dup` - builds container, sets up database with seed data
-- **Start container**: `bin/dstart` - starts existing container
-- **Start Rails server**: `bin/dserver` - runs server on http://localhost:3000
-- **Run tests**: `bin/drspec [path]` - runs RSpec tests, optionally for specific file/line
-- **Rails console**: `bin/drails console`
-- **Run rake tasks**: `bin/drake [task]`
-- **Bash shell in container**: `bin/dexec`
-- **Grant admin access**: `bin/dadmin <email>` - gives admin role to user
-- **Stop container**: `bin/dstop`
-- **Destroy container**: `bin/ddown`
+**IMPORTANT**: Always use native installation with `bundle exec` commands. Never use Docker or `bin/d*` commands.
 
 ### Native Installation
 
-If not using Docker:
-- Setup: `bundle && rake db:create db:migrate db:seed`
-- Server: `rails server`
-- Tests: `rake` or `rspec`
-- Linting: `rubocop`
+- **Setup**: `bundle && rake db:create db:migrate db:seed`
+- **Server**: `bundle exec rails server`
+- **Tests**: `bundle exec rspec [path]` - runs RSpec tests, optionally for specific file/line
+- **Rails console**: `bundle exec rails console`
+- **Run rake tasks**: `bundle exec rake [task]`
+- **Linting**: `bundle exec rubocop`
+
+### Docker Setup (Not Used)
+
+Docker setup exists in this repository (`bin/d*` commands) but is **not used** for development work with Claude Code.
 
 ### Environment Variables
 
@@ -148,6 +142,95 @@ Run single test: `bin/drspec spec/path/to/file_spec.rb:42`
 Key RuboCop exclusions:
 - `db/`, `spec/`, `config/`, `bin/` excluded from most cops
 - Documentation not required (`Style/Documentation: false`)
+
+## Parameter Handling
+
+This application uses Rails 8.0 `params.expect` for parameter filtering and validation.
+
+### Basic Pattern
+
+Use `params.expect` instead of `params.require().permit()`:
+
+```ruby
+def resource_params
+  params.expect(resource: [
+    :field1, :field2, :field3
+  ])
+end
+```
+
+### Type Safety
+
+Controllers using `params.expect` raise `ActionController::ParameterMissing` when:
+- Parameter type is tampered (e.g., string sent instead of hash)
+- Required parameters are missing
+- Nested parameter structure is invalid
+
+This makes parameter validation failures explicit and easier to handle at the application level.
+
+### Nested Arrays
+
+Use hash syntax for array parameters:
+
+```ruby
+params.expect(workshop: [
+  :name, :date,
+  { sponsor_ids: [] }
+])
+```
+
+### Nested Attributes
+
+**IMPORTANT:** `params.expect` does NOT work with `accepts_nested_attributes_for`.
+
+Rails forms with nested attributes send hash-with-numeric-keys like `{'0' => {...}, '1' => {...}}`, which params.expect cannot handle. For controllers using `accepts_nested_attributes_for`, continue using the old syntax:
+
+```ruby
+# Use require().permit() for nested attributes
+params.require(:sponsor).permit(
+  :name, :website,
+  address_attributes: [:id, :street, :city, :postal_code],
+  contacts_attributes: [:id, :name, :email, :_destroy]
+)
+```
+
+Note: `_destroy` is permitted like any other field for deletion.
+
+### Conditional Parameters
+
+When parameters are optional:
+
+```ruby
+def index
+  search_params = if params.key?(:member_search)
+                    params.expect(member_search: [:name, :callback_url])
+                  else
+                    {}
+                  end
+  # use search_params
+end
+```
+
+### Return Value
+
+`params.expect(key: [...])` returns the **inner permitted parameters**, not wrapped:
+
+```ruby
+result = params.expect(member: [:name, :email])
+# Access as: result[:name], NOT result[:member][:name]
+```
+
+### Testing
+
+Controller specs should verify parameter filtering works:
+
+```ruby
+it 'filters unpermitted parameters' do
+  post :create, params: { resource: valid_attrs, hacker_field: 'malicious' }
+  expect(response).to be_successful # hacker_field is filtered out
+end
+```
+
 
 ## Important Patterns
 

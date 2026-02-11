@@ -9,6 +9,6 @@ class Admin::MemberNotesController < Admin::ApplicationController
   end
 
   def member_note_params
-    params.require(:member_note).permit(:note, :member_id)
+    params.expect(member_note: [:note, :member_id])
   end
 end
