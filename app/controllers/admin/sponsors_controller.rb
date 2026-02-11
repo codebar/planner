@@ -63,6 +63,9 @@ class Admin::SponsorsController < Admin::ApplicationController
   private
 
   def sponsor_params
+    # Uses require().permit() instead of params.expect because Sponsor model
+    # uses accepts_nested_attributes_for, which sends hash-with-numeric-keys
+    # that params.expect cannot handle (e.g., {'0' => {...}, '1' => {...}})
     params.require(:sponsor).permit(
       :name, :avatar, :website, :seats, :accessibility_info,
       :number_of_coaches, :level, :description,
