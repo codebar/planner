@@ -8,26 +8,20 @@ codebar planner is a Rails 8.1 application for managing [codebar.io](https://cod
 
 ## Development Setup
 
-### Docker (Recommended)
-
-- **Initial setup**: `bin/dup` - builds container, sets up database with seed data
-- **Start container**: `bin/dstart` - starts existing container
-- **Start Rails server**: `bin/dserver` - runs server on http://localhost:3000
-- **Run tests**: `bin/drspec [path]` - runs RSpec tests, optionally for specific file/line
-- **Rails console**: `bin/drails console`
-- **Run rake tasks**: `bin/drake [task]`
-- **Bash shell in container**: `bin/dexec`
-- **Grant admin access**: `bin/dadmin <email>` - gives admin role to user
-- **Stop container**: `bin/dstop`
-- **Destroy container**: `bin/ddown`
+**IMPORTANT**: Always use native installation with `bundle exec` commands. Never use Docker or `bin/d*` commands.
 
 ### Native Installation
 
-If not using Docker:
-- Setup: `bundle && rake db:create db:migrate db:seed`
-- Server: `rails server`
-- Tests: `rake` or `rspec`
-- Linting: `rubocop`
+- **Setup**: `bundle && rake db:create db:migrate db:seed`
+- **Server**: `bundle exec rails server`
+- **Tests**: `bundle exec rspec [path]` - runs RSpec tests, optionally for specific file/line
+- **Rails console**: `bundle exec rails console`
+- **Run rake tasks**: `bundle exec rake [task]`
+- **Linting**: `bundle exec rubocop`
+
+### Docker Setup (Not Used)
+
+Docker setup exists in this repository (`bin/d*` commands) but is **not used** for development work with Claude Code.
 
 ### Environment Variables
 
