@@ -16,16 +16,37 @@ RSpec.describe PaymentsController do
           source: 'tok_123'
         ).and_return(double(id: 'cus_123'))
 
-        post :create, params: { amount: '1000', name: 'John Doe', data: { email: 'john@example.com', id: 'tok_123' } }
+        post :create, params: {
+          payment: {
+            amount: '1000',
+            name: 'John Doe',
+            stripe_email: 'john@example.com',
+            stripe_token_id: 'tok_123'
+          }
+        }
         expect(response).to be_successful
       end
     end
 
     context 'with parameter filtering' do
       it 'filters unpermitted parameters' do
-        # params.permit now filters the payment parameters
-        post :create, params: { amount: '1000', name: 'John', data: { email: 'john@example.com', id: 'tok_123' }, hacker_field: 'malicious' }
+        post :create, params: {
+          payment: {
+            amount: '1000',
+            name: 'John',
+            stripe_email: 'john@example.com',
+            stripe_token_id: 'tok_123'
+          },
+          hacker_field: 'malicious'
+        }
         expect(response).to be_successful
+      end
+    end
+
+    context 'with type tampering' do
+      it 'returns 400 when payment params is string instead of hash' do
+        post :create, params: { payment: 'tampered' }
+        expect(response).to have_http_status(:bad_request)
       end
     end
   end

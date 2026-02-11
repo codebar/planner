@@ -217,15 +217,6 @@ def index
 end
 ```
 
-### Root-Level Parameters
-
-For parameters without a wrapper key (less common):
-
-```ruby
-# Use params.permit for root-level params
-payment_params = params.permit(:amount, :name, data: [:email, :id])
-```
-
 ### Return Value
 
 `params.expect(key: [...])` returns the **inner permitted parameters**, not wrapped:

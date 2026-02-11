@@ -9,7 +9,14 @@ $(function() {
      $.ajax({
        type: "POST",
        url: '/payments',
-       data: { amount: amount*100, name: name, data: token }
+       data: {
+         payment: {
+           amount: amount*100,
+           name: name,
+           stripe_email: token.email,
+           stripe_token_id: token.id
+         }
+       }
      }).done(function(response) {
        $('.payment-container').html(response);
      }).fail(function(xhr, status,  e){
