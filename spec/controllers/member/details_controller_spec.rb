@@ -97,6 +97,32 @@ RSpec.describe Member::DetailsController do
 
         expect(response.body).to include('You must select one option')
       end
+
+      it 'validates efficiently by calling member_params only once' do
+        # This test verifies the fix for the performance issue where member_params
+        # was called multiple times (previously 6 times!):
+        # - Old: Line 16 called member_params, line 19 validation called it again, line 32 called it again
+        # - New: Line 16 calls member_params once, passes result to validation
+
+        # Mock to track how many times member_params is called
+        call_count = 0
+        allow(controller).to receive(:member_params).and_wrap_original do |method|
+          call_count += 1
+          method.call
+        end
+
+        patch :update, params: {
+          id: member.id,
+          member: {
+            how_you_found_us: 'social_media',
+            how_you_found_us_other_reason: '', # Empty is OK
+            newsletter: 'true'
+          }
+        }
+
+        # After fix: member_params is called only once
+        expect(call_count).to eq(1)
+      end
     end
   end
 end

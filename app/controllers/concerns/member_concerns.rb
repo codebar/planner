@@ -30,11 +30,11 @@ module MemberConcerns
       @member = current_user
     end
 
-    def how_you_found_us_selections_valid?
-      how_found_present = member_params[:how_you_found_us].present?
-      other_reason_present = member_params[:how_you_found_us_other_reason].present?
-      return false if member_params[:how_you_found_us] == 'other' && !other_reason_present
-      return true if member_params[:how_you_found_us] == 'other' && other_reason_present
+    def how_you_found_us_selections_valid?(attrs)
+      how_found_present = attrs[:how_you_found_us].present?
+      other_reason_present = attrs[:how_you_found_us_other_reason].present?
+      return false if attrs[:how_you_found_us] == 'other' && !other_reason_present
+      return true if attrs[:how_you_found_us] == 'other' && other_reason_present
 
       how_found_present != other_reason_present
     end

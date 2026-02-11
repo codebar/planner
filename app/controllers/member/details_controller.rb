@@ -14,22 +14,17 @@ class Member::DetailsController < ApplicationController
 
   def update
     attrs = member_params
-    attrs[:how_you_found_us_other_reason] = nil if attrs[:how_you_found_us] != 'other'
 
-    unless how_you_found_us_selections_valid?
+    unless how_you_found_us_selections_valid?(attrs)
       @member.errors.add(:how_you_found_us, 'You must select one option')
       return render :edit
     end
-    attrs[:how_you_found_us] = params[:member][:how_you_found_us] if params[:member][:how_you_found_us].present?
 
-    if params[:member][:how_you_found_us_other_reason].present? && attrs[:how_you_found_us] == 'other'
-      attrs[:how_you_found_us_other_reason] =
-        params[:member][:how_you_found_us_other_reason]
-    end
+    attrs[:how_you_found_us_other_reason] = nil if attrs[:how_you_found_us] != 'other'
 
     return render :edit unless @member.update(attrs)
 
-    member_params[:newsletter] ? subscribe_to_newsletter(@member) : unsubscribe_from_newsletter(@member)
+    attrs[:newsletter] ? subscribe_to_newsletter(@member) : unsubscribe_from_newsletter(@member)
     redirect_to step2_member_path
   end
 end
