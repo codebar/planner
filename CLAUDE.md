@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-codebar planner is a Rails 7.2 application for managing [codebar.io](https://codebar.io) members and events. It handles workshop/event scheduling, member registration, invitations, RSVPs, and feedback collection for coding workshops organized by codebar chapters.
+codebar planner is a Rails 8.1 application for managing [codebar.io](https://codebar.io) members and events. It handles workshop/event scheduling, member registration, invitations, RSVPs, and feedback collection for coding workshops organized by codebar chapters.
 
 ## Development Setup
 
@@ -148,6 +148,112 @@ Run single test: `bin/drspec spec/path/to/file_spec.rb:42`
 Key RuboCop exclusions:
 - `db/`, `spec/`, `config/`, `bin/` excluded from most cops
 - Documentation not required (`Style/Documentation: false`)
+
+## Parameter Handling
+
+This application uses Rails 8.0 `params.expect` for parameter filtering and validation.
+
+### Basic Pattern
+
+Use `params.expect` instead of `params.require().permit()`:
+
+```ruby
+def resource_params
+  params.expect(resource: [
+    :field1, :field2, :field3
+  ])
+end
+```
+
+### Type Safety
+
+All controllers using `params.expect` automatically return **400 Bad Request** when:
+- Parameter type is tampered (e.g., string sent instead of hash)
+- Required parameters are missing
+- Nested parameter structure is invalid
+
+This provides better security than the old pattern which would raise 500 errors.
+
+### Nested Arrays
+
+Use hash syntax for array parameters:
+
+```ruby
+params.expect(workshop: [
+  :name, :date,
+  { sponsor_ids: [] }
+])
+```
+
+### Nested Attributes
+
+**IMPORTANT:** `params.expect` does NOT work with `accepts_nested_attributes_for`.
+
+Rails forms with nested attributes send hash-with-numeric-keys like `{'0' => {...}, '1' => {...}}`, which params.expect cannot handle. For controllers using `accepts_nested_attributes_for`, continue using the old syntax:
+
+```ruby
+# Use require().permit() for nested attributes
+params.require(:sponsor).permit(
+  :name, :website,
+  address_attributes: [:id, :street, :city, :postal_code],
+  contacts_attributes: [:id, :name, :email, :_destroy]
+)
+```
+
+Note: `_destroy` is permitted like any other field for deletion.
+
+### Conditional Parameters
+
+When parameters are optional:
+
+```ruby
+def index
+  search_params = if params.key?(:member_search)
+                    params.expect(member_search: [:name, :callback_url])
+                  else
+                    {}
+                  end
+  # use search_params
+end
+```
+
+### Root-Level Parameters
+
+For parameters without a wrapper key (less common):
+
+```ruby
+# Use params.permit for root-level params
+payment_params = params.permit(:amount, :name, data: [:email, :id])
+```
+
+### Return Value
+
+`params.expect(key: [...])` returns the **inner permitted parameters**, not wrapped:
+
+```ruby
+result = params.expect(member: [:name, :email])
+# Access as: result[:name], NOT result[:member][:name]
+```
+
+### Testing
+
+Controller specs should verify parameter filtering works:
+
+```ruby
+it 'filters unpermitted parameters' do
+  post :create, params: { resource: valid_attrs, hacker_field: 'malicious' }
+  expect(response).to be_successful # hacker_field is filtered out
+end
+```
+
+Type tampering tests are optional but document the 400 behavior:
+
+```ruby
+it 'returns 400 when params is string instead of hash' do
+  post :create, params: { resource: 'tampered' }
+  expect(response).to have_http_status(:bad_request)
+end
+```
 
 ## Important Patterns
 
