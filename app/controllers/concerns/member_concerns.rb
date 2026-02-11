@@ -9,16 +9,18 @@ module MemberConcerns
     private
 
     def member_params
-      params.require(:member).permit(
+      params.expect(member: [
         :pronouns, :name, :surname, :email, :mobile, :about_you, :skill_list, :newsletter, :other_dietary_restrictions, :how_you_found_us,
-        :how_you_found_us_other_reason, dietary_restrictions: []
-      ).tap do |params|
+        :how_you_found_us_other_reason, { dietary_restrictions: [] }
+      ]).tap do |permitted_params|
         # We want to keep Rails' hidden blank field in the form so that all dietary restrictions for a member can be
         # removed by submitting the form with all check boxes unticked. However, we want to remove the blank value
         # before setting the dietary restrictions attribute on the model.
         # See Gotcha section here:
         # https://api.rubyonrails.org/v7.1/classes/ActionView/Helpers/FormOptionsHelper.html#method-i-collection_check_boxes
-        params[:dietary_restrictions] = params[:dietary_restrictions].reject(&:blank?) if params[:dietary_restrictions]
+        if permitted_params[:dietary_restrictions]
+          permitted_params[:dietary_restrictions] = permitted_params[:dietary_restrictions].reject(&:blank?)
+        end
       end
     end
 
