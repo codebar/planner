@@ -23,7 +23,7 @@ class ContactPreferencesController < ApplicationController
   end
 
   def contact_preferences
-    params.require(:contact).permit(:token, :mailing_list_consent)
+    params.expect(contact: [:token, :mailing_list_consent])
   end
 
   def mailing_list_consent

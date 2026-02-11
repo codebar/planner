@@ -11,7 +11,11 @@ module WorkshopInvitationConcerns
     private
 
     def invitation_params
-      params[:workshop_invitation].present? ? params.require(:workshop_invitation).permit(:tutorial, :note) : {}
+      if params.key?(:workshop_invitation)
+        params.expect(workshop_invitation: [:tutorial, :note])
+      else
+        {}
+      end
     end
 
     def back_with_message(message)
