@@ -27,14 +27,14 @@ module Admin::SponsorConcerns
     def host
       set_sponsor
       @workshop_sponsor = WorkshopSponsor.find_or_create_by(workshop: @workshop, sponsor: @sponsor)
-      @workshop_sponsor.update_attribute(:host, true)
+      @workshop_sponsor.set_as_host!
       flash[:notice] = 'Host set successfully'
 
       redirect_back fallback_location: root_path
     end
 
     def destroy_host
-      @workshop.workshop_sponsors.find_by(host: true).update_attribute(:host, false)
+      @workshop.workshop_sponsors.find_by(host: true)&.remove_as_host!
 
       redirect_back fallback_location: root_path
     end
