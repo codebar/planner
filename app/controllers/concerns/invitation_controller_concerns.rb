@@ -35,26 +35,25 @@ module InvitationControllerConcerns
     def reject
       @workshop = WorkshopPresenter.decorate(@invitation.workshop)
       if @invitation.workshop.date_and_time - 3.5.hours >= Time.zone.now
-
         if @invitation.attending.eql? false
           redirect_back(fallback_location: invitation_path(@invitation),
                         notice: t('messages.not_attending_already'))
         else
-          @invitation.update_attribute(:attending, false)
-
-          next_spot = WaitingList.next_spot(@invitation.workshop, @invitation.role)
-
-          if next_spot.present?
-            invitation = next_spot.invitation
-            next_spot.destroy
-            invitation.update(attending: true, rsvp_time: Time.zone.now, automated_rsvp: true)
-            @workshop.send_attending_email(invitation, true)
+          begin
+            WorkshopInvitation.transaction do
+              @invitation.decline!
+              promote_from_waitlist(@invitation.workshop, @invitation.role)
+            end
+            redirect_back(
+              fallback_location: invitation_path(@invitation),
+              notice: t('messages.rejected_invitation', name: @invitation.member.name)
+            )
+          rescue ActiveRecord::RecordInvalid
+            redirect_back(
+              fallback_location: invitation_path(@invitation),
+              alert: 'Unable to process cancellation. Please try again.'
+            )
           end
-
-          redirect_back(
-            fallback_location: invitation_path(@invitation),
-            notice: t('messages.rejected_invitation', name: @invitation.member.name)
-          )
         end
       else
         redirect_back(
@@ -65,6 +64,16 @@ module InvitationControllerConcerns
     end
 
     private
+
+    def promote_from_waitlist(workshop, role)
+      next_spot = WaitingList.next_spot(workshop, role)
+      return unless next_spot
+
+      invitation = next_spot.invitation
+      next_spot.destroy!
+      invitation.accept!(rsvp_time: Time.zone.now, automated_rsvp: true)
+      WorkshopPresenter.decorate(workshop).send_attending_email(invitation, true)
+    end
 
     def attending_or_waitlisted?(workshop, user)
       workshop.attendee?(user) || workshop.waitlisted?(user)

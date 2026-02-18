@@ -11,4 +11,12 @@ class MeetingInvitation < ApplicationRecord
   scope :attended, -> { where(attended: true) }
 
   alias event meeting
+
+  def accept!
+    update!(attending: true)
+  end
+
+  def decline!
+    update!(attending: false)
+  end
 end

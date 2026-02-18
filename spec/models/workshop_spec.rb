@@ -1,12 +1,13 @@
 RSpec.describe Workshop do
   subject(:workshop) { Fabricate(:workshop) }
-  include_examples "Invitable", :workshop_invitation, :workshop
+
+  include_examples 'Invitable', :workshop_invitation, :workshop
   include_examples DateTimeConcerns, :workshop
 
   context 'validates' do
     it { is_expected.to validate_presence_of(:chapter_id) }
 
-    context "#date_and_time" do
+    describe '#date_and_time' do
       it 'does not validate if chapter_id blank' do
         workshop.chapter_id = nil
         workshop.date_and_time = nil
@@ -22,7 +23,7 @@ RSpec.describe Workshop do
       end
     end
 
-    context '#end_at' do
+    describe '#end_at' do
       it 'does not validate if chapter_id blank' do
         workshop.chapter_id = nil
         workshop.ends_at = nil
@@ -40,6 +41,7 @@ RSpec.describe Workshop do
 
     context 'if virtual' do
       before { allow(subject).to receive(:virtual?).and_return(true) }
+
       it { is_expected.to validate_presence_of(:slack_channel) }
       it { is_expected.to validate_presence_of(:slack_channel_link) }
       it { is_expected.to validate_numericality_of(:student_spaces).is_greater_than(0) }
@@ -63,7 +65,8 @@ RSpec.describe Workshop do
       end
 
       it 'retrieves the local time from the saved UTC value' do
-        workshop.update_attribute(:date_and_time, utc_time)
+        workshop.assign_attributes(date_and_time: utc_time)
+        workshop.save!(validate: false)
 
         expect(workshop.date_and_time).to eq(pacific_time)
         expect(workshop.date_and_time.zone).to eq('PDT')
@@ -81,7 +84,8 @@ RSpec.describe Workshop do
       end
 
       it 'retrieves the local time from the saved UTC value' do
-        workshop.update_attribute(:rsvp_opens_at, utc_time)
+        workshop.assign_attributes(rsvp_opens_at: utc_time)
+        workshop.save!(validate: false)
 
         expect(workshop.rsvp_opens_at).to eq(pacific_time)
         expect(workshop.rsvp_opens_at.zone).to eq('PDT')
@@ -89,7 +93,7 @@ RSpec.describe Workshop do
     end
   end
 
-  context '#rsvp_available?' do
+  describe '#rsvp_available?' do
     context 'rsvp is available' do
       it 'when the event is in the future' do
         workshop.date_and_time = 1.day.from_now
@@ -119,7 +123,7 @@ RSpec.describe Workshop do
     end
   end
 
-  context '#to_s' do
+  describe '#to_s' do
     it 'when physical workshop' do
       expect(workshop.to_s).to eq('Workshop')
     end
@@ -130,7 +134,7 @@ RSpec.describe Workshop do
     end
   end
 
-  context '#scopes' do
+  describe '#scopes' do
     describe '#host' do
       it 'includes workshops with sponsored hosts' do
         workshop_sponsor = Fabricate(:workshop_sponsor, host: true)
@@ -189,7 +193,7 @@ RSpec.describe Workshop do
     end
   end
 
-  context '#invitable_yet?' do
+  describe '#invitable_yet?' do
     it 'is invitable if invitable set to true, no RSVP open time/date set' do
       workshop = Fabricate.build(:workshop, invitable: true)
       expect(workshop.invitable_yet?).to be true

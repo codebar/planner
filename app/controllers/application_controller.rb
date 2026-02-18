@@ -19,6 +19,12 @@ class ApplicationController < ActionController::Base
   rescue_from ActionController::RoutingError, with: :render_not_found
   rescue_from ActiveRecord::RecordNotFound, with: :render_not_found
 
+  rescue_from ActiveRecord::RecordInvalid do |exception|
+    Rails.logger.error("Validation failed: #{exception.message}")
+    redirect_back(fallback_location: root_path,
+                  alert: 'Unable to complete action. Please check your input and try again.')
+  end
+
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
   rescue_from Pundit::AuthorizationNotPerformedError, with: :user_not_authorized
 

@@ -24,4 +24,16 @@ class Invitation < ApplicationRecord
   def to_param
     token
   end
+
+  def accept!(verified: false)
+    update!(attending: true, verified: verified)
+  end
+
+  def verify!
+    update!(verified: true)
+  end
+
+  def decline!
+    update!(attending: false)
+  end
 end

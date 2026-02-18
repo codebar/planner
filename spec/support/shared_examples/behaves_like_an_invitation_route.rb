@@ -17,7 +17,7 @@ RSpec.shared_examples 'invitation route' do
 
       expect(page).to have_link 'I can no longer attend'
       expect(page).to have_content("Thanks for getting back to us #{invitation.member.name}.")
-      expect(page.current_path).to eq(invitation_route)
+      expect(page).to have_current_path(invitation_route, ignore_query: true)
 
       # admin view
       login_as_admin(member)
@@ -25,7 +25,7 @@ RSpec.shared_examples 'invitation route' do
       within 'div.row.attendee.mt-3' do
         expect(page).to have_content(member.full_name)
         expect(page).to have_selector('i.fa-history')
-        expect(page).to_not have_selector('i.fa-magic')
+        expect(page).not_to have_selector('i.fa-magic')
       end
     end
 
@@ -34,7 +34,7 @@ RSpec.shared_examples 'invitation route' do
         invitation.update(role: 'Student', attending: nil, tutorial: nil)
         visit accept_invitation_route
 
-        expect(page).to_not have_link 'I can no longer attend'
+        expect(page).not_to have_link 'I can no longer attend'
         expect(page).to have_content('Tutorial must be selected')
       end
 
@@ -43,13 +43,13 @@ RSpec.shared_examples 'invitation route' do
         visit accept_invitation_route
 
         expect(page).to have_link 'I can no longer attend'
-        expect(page.current_path).to eq(invitation_route)
+        expect(page).to have_current_path(invitation_route, ignore_query: true)
         expect(page).to have_content(I18n.t('messages.accepted_invitation', name: member.name))
       end
     end
 
     scenario 'when they have already RSVPed and are attempting to re-accept through the invitation link' do
-      invitation.update_attribute(:attending, true)
+      invitation.accept!
       visit accept_invitation_route
 
       expect(current_url).to eq(invitation_url(invitation))
@@ -75,7 +75,7 @@ RSpec.shared_examples 'invitation route' do
 
   context 'unable to attend' do
     scenario 'when they are successful' do
-      invitation.update_attribute(:attending, true)
+      invitation.accept!
       visit invitation_route
 
       click_on 'I can no longer attend'
@@ -85,7 +85,7 @@ RSpec.shared_examples 'invitation route' do
     scenario 'when they are successful and there is someone else on the waiting list' do
       waitinglisted = Fabricate(:workshop_invitation, workshop: invitation.workshop, role: invitation.role)
       WaitingList.add(waitinglisted)
-      invitation.update_attribute(:attending, true)
+      invitation.accept!
       visit invitation_route
       expect(WaitingList.next_spot(invitation.workshop, invitation.role).present?).to eq(true)
 
@@ -93,32 +93,32 @@ RSpec.shared_examples 'invitation route' do
 
       expect(page).to have_content(I18n.t('messages.rejected_invitation', name: invitation.member.name))
       expect(waitinglisted.reload.automated_rsvp).to eq(true)
-      expect(waitinglisted.reload.rsvp_time).to_not be_nil
+      expect(waitinglisted.reload.rsvp_time).not_to be_nil
       expect(WaitingList.next_spot(invitation.workshop, invitation.role).present?).to eq(false)
     end
 
     scenario 'when they are successful by accessing the link directly' do
-      invitation.update_attribute(:attending, true)
+      invitation.accept!
       visit reject_invitation_route
 
       expect(page).to have_content(I18n.t('messages.rejected_invitation', name: invitation.member.name))
-      expect(page.current_path).to eq(invitation_route)
+      expect(page).to have_current_path(invitation_route, ignore_query: true)
     end
 
     scenario 'when already confirmed they are not attending' do
-      invitation.update_attribute(:attending, false)
+      invitation.decline!
       visit invitation_route
 
       expect(page).to have_selector(:link_or_button, 'Attend')
-      expect(page).to_not have_content 'I can no longer attend'
+      expect(page).not_to have_content 'I can no longer attend'
     end
 
     scenario 'when already confirmed they are not attending and reject by accessing the link directly' do
-      invitation.update_attribute(:attending, false)
+      invitation.decline!
       visit reject_invitation_route
 
       expect(page).to have_content(I18n.t('messages.not_attending_already'))
-      expect(page.current_path).to eq(invitation_route)
+      expect(page).to have_current_path(invitation_route, ignore_query: true)
     end
 
     scenario 'when already RSVPd to another event on same evening' do
@@ -145,19 +145,19 @@ RSpec.shared_examples 'invitation route' do
     end
 
     scenario 'when the event is less than 3.5 hours from now' do
-      invitation.workshop.update_attribute(:date_and_time, Time.zone.now + 3.hours)
+      invitation.workshop.update_column(:date_and_time, Time.zone.now + 3.hours)
       visit reject_invitation_route
 
       expect(page).to have_content('You can only change your RSVP status up to 3.5 hours before the workshop')
-      expect(page.current_path).to eq(invitation_route)
+      expect(page).to have_current_path(invitation_route, ignore_query: true)
     end
 
     scenario 'when the event is less than 3.5 hours from now and tje reject by accessing the link directly' do
-      invitation.workshop.update_attribute(:date_and_time, Time.zone.now + 3.hours)
+      invitation.workshop.update_column(:date_and_time, Time.zone.now + 3.hours)
       visit reject_invitation_route
 
       expect(page).to have_content('You can only change your RSVP status up to 3.5 hours before the workshop')
-      expect(page.current_path).to eq(invitation_route)
+      expect(page).to have_current_path(invitation_route, ignore_query: true)
     end
   end
 

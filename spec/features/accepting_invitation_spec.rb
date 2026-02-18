@@ -1,18 +1,18 @@
 RSpec.feature 'Accepting a workshop invitation', type: :feature do
-  context '#workshop' do
+  describe '#workshop' do
     let(:member) { Fabricate(:member) }
     let(:invitation) { Fabricate(:workshop_invitation, member: member, tutorial: tutorial.title) }
     let(:invitation_route) { invitation_path(invitation) }
     let(:accept_invitation_route) { accept_invitation_path(invitation) }
     let(:reject_invitation_route) { reject_invitation_path(invitation) }
-    let(:set_no_available_slots) { invitation.workshop.host.update_attribute(:seats, 0) }
+    let(:set_no_available_slots) { invitation.workshop.host.update_column(:seats, 0) }
     let!(:tutorial) { Fabricate(:tutorial) }
 
     it_behaves_like 'invitation route'
 
     context 'amend invitation details' do
       context 'a student' do
-        scenario 'cannot accept an invitation  without a tutorial' do
+        scenario 'cannot accept an invitation without a tutorial' do
           invitation.update(attending: nil, tutorial: nil)
           visit invitation_route
 
@@ -22,7 +22,7 @@ RSpec.feature 'Accepting a workshop invitation', type: :feature do
         end
 
         scenario 'with an accepted invitation can edit the tutorial' do
-          invitation.update_attribute(:attending, true)
+          invitation.accept!
           visit invitation_route
 
           select tutorial.title, from: :workshop_invitation_tutorial
@@ -66,7 +66,7 @@ RSpec.feature 'Accepting a workshop invitation', type: :feature do
           click_on 'Update note'
 
           expect(page).to have_field('workshop_invitation_note', with: note)
-          expect(page).to have_content("Invitation details successfully updated.")
+          expect(page).to have_content('Invitation details successfully updated.')
         end
       end
     end

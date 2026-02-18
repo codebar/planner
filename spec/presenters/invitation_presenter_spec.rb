@@ -6,9 +6,9 @@ RSpec.describe InvitationPresenter do
     expect(invitation_presenter.member).to eq(invitation.member)
   end
 
-  context '#attendance_status' do
+  describe '#attendance_status' do
     it 'returns Attending when attending' do
-      invitation.update_attribute(:attending, true)
+      invitation.accept!
 
       expect(invitation_presenter.attendance_status).to eq('Attending')
     end
