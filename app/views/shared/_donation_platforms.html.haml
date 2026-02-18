@@ -12,7 +12,7 @@
         .bg-white.rounded-top.p-3.d-flex.align-items-center
           = image_tag("logo.png", alt:t("donation_platforms.donation_form.image_alt"), class: "mw-100")
       .card-body
-        %h3.h6= link_to(t("donation_platforms.donation_form.title"), new_donation_path)
+        %h3.h6= link_to(t("donation_platforms.donation_form.title"), "https://codebar.enthuse.com/donate/")
         %p.card-text= t("donation_platforms.donation_form.text")
   .d-flex.col-sm-12.col-md-6.col-lg-3
     .card.mt-3.mt-lg-0.shadow
@@ -41,4 +41,4 @@
 
 - if local_assigns[:with_button]
   .d-flex.justify-content-center.mt-4
-    = link_to t("donation_platforms.link"), how_to_support_us_path, class: "btn btn-primary btn-lg my-4"
+    = link_to t("donation_platforms.link"), donate_path, class: "btn btn-primary btn-lg my-4"

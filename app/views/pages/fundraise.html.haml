@@ -1,0 +1,29 @@
+.py-4.py-lg-5.bg-primary
+  .container
+    .row.align-items-center
+      .col-12.col-md-6
+        %h1.display-2.text-white.lh-1.mb-4
+          Fundraise
+          %br
+          for codebar
+        %p.text-white.lead.mb-4
+          Join our team at a physical challenge event and help keep our workshops running.
+      .col-12.col-md-6
+        = image_tag 'how-to-support-us/hackney-half.jpeg', alt: t('pages.how_to_support_us.fundraise.image_alt'), class: 'mw-100 rounded'
+
+.py-4.py-lg-5
+  .container
+    .row.mb-5
+      .col-12.col-lg-8
+        %p.lead
+          = t('pages.how_to_support_us.fundraise.description_html', email: 'hello@codebar.io')
+    .row
+      .col-12.col-lg-4
+        .ratio.shadow{style: '--bs-aspect-ratio: 150%;'}
+          %iframe{title: 'Royal Parks Half Marathon', src: '//runforcharity.com/codebar/royal-parks-half-marathon/registration'}
+      .col-12.col-lg-4
+        .ratio.shadow{style: '--bs-aspect-ratio: 150%;'}
+          %iframe{title: 'Brighton Marathon April 2026', src: '//runforcharity.com/codebar/the-brighton-marathon/1744707816740.9279'}
+      .col-12.col-lg-4
+        .ratio.shadow{style: '--bs-aspect-ratio: 150%;'}
+          %iframe{title: 'Hackney Half May 2026', src: '//runforcharity.com/codebar/hackney-half/1747652084027971'}
