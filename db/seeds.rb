@@ -1,114 +1,124 @@
 if Rails.env.development?
   # Check for ImageMagick before seeding
   imagemagick_available = system('convert --version > /dev/null 2>&1') ||
-                         system('magick --version > /dev/null 2>&1')
+                          system('magick --version > /dev/null 2>&1')
 
   unless imagemagick_available
-    Rails.logger.error "=" * 80
-    Rails.logger.error "ERROR: ImageMagick is required to run db:seed"
-    Rails.logger.error "=" * 80
-    Rails.logger.error ""
-    Rails.logger.error "The seed task processes sponsor logo images, which requires ImageMagick."
-    Rails.logger.error ""
-    Rails.logger.error "Install ImageMagick:"
-    Rails.logger.error "  macOS:         brew install imagemagick"
-    Rails.logger.error "  Ubuntu/Debian: apt-get install imagemagick"
-    Rails.logger.error "  Windows:       https://imagemagick.org/script/download.php"
-    Rails.logger.error ""
-    Rails.logger.error "See native-installation-instructions.md for details."
-    Rails.logger.error "=" * 80
+    Rails.logger.error '=' * 80
+    Rails.logger.error 'ERROR: ImageMagick is required to run db:seed'
+    Rails.logger.error '=' * 80
+    Rails.logger.error ''
+    Rails.logger.error 'The seed task processes sponsor logo images, which requires ImageMagick.'
+    Rails.logger.error ''
+    Rails.logger.error 'Install ImageMagick:'
+    Rails.logger.error '  macOS:         brew install imagemagick'
+    Rails.logger.error '  Ubuntu/Debian: apt-get install imagemagick'
+    Rails.logger.error '  Windows:       https://imagemagick.org/script/download.php'
+    Rails.logger.error ''
+    Rails.logger.error 'See native-installation-instructions.md for details.'
+    Rails.logger.error '=' * 80
     exit 1
   end
 
   begin
     Rails.logger.info 'Running migrations...'
     Rails.application.config.log_level = :info
-    Rails.logger.info "Creating chapters..."
-    chapters = ['London', 'Brighton', 'Cambridge', 'Barcelona', 'Paris', 'Merlbourne', 'Berlin', 'New York'].map do |name|
+    Rails.logger.info 'Creating chapters...'
+    chapters = ['London', 'Brighton', 'Cambridge', 'Barcelona', 'Paris', 'Merlbourne', 'Berlin',
+                'New York'].map do |name|
       Fabricate(:chapter_with_groups, name: name)
     end
 
-    Rails.logger.info "Creating workshops..."
-    workshops = 6.times.map do |n|
-      start = Time.zone.now + 1.month - n.weeks
-      ends_at = start + 3.hours
-      Fabricate(:workshop, title: 'Workshop',
+    Rails.logger.info 'Creating workshops...'
+
+    Rails.logger.info 'Creating 1000 past workshops...'
+    past_workshops = []
+    1000.times do
+      months_ago = rand(0..60)
+      start = Time.zone.now - months_ago.months + rand(0..28).days + rand(0..23).hours
+      workshop = Fabricate(:workshop,
+                           title: 'Workshop',
                            chapter: chapters.sample,
                            date_and_time: start,
-                           ends_at: ends_at)
+                           ends_at: start + 3.hours)
+      past_workshops << workshop
     end
 
-    workshops.concat Fabricate.times(2, :workshop, title: 'Workshop', chapter: chapters.sample)
-
-    Rails.logger.info "Creating a lot of old workshops..."
-    past_workshops_since_n_months = 5 * 12
-    past_workshops_one_per_n_months = 6
-    past_workshops_count = past_workshops_since_n_months/past_workshops_one_per_n_months
-    
-    past_workshops = past_workshops_count.times.map do |n|
-      Fabricate(:workshop, title: 'Workshop',
+    Rails.logger.info 'Creating 100 future workshops...'
+    future_workshops = []
+    100.times do
+      months_ahead = rand(1..12)
+      start = Time.zone.now + months_ahead.months + rand(0..28).days + rand(0..23).hours
+      workshop = Fabricate(:workshop,
+                           title: 'Workshop',
                            chapter: chapters.sample,
-                           date_and_time:  Time.zone.now - past_workshops_since_n_months.months + (past_workshops_one_per_n_months * n).months)
+                           date_and_time: start,
+                           ends_at: start + 3.hours)
+      future_workshops << workshop
     end
 
-    Rails.logger.info "Creating events..."
+    future_workshops.first(10)
+
+    Rails.logger.info 'Creating events...'
     events = 20.times.map do |n|
       Fabricate(:event, name: 'Event',
                         chapters: chapters.sample(4),
                         date_and_time: Time.zone.now + 2.months - n.months)
     end
 
-    Rails.logger.info "Creating meetings..."
+    Rails.logger.info 'Creating meetings...'
 
     20.times.map do |n|
       Fabricate(:meeting, name: 'Meeting',
                           date_and_time: Time.zone.now + 1.month - n.months)
     end
 
-    Rails.logger.info "Creating coaches..."
-    coaches = 50.times.map { Fabricate(:coach, groups: Group.coaches.order('RANDOM()').limit(2)) }
+    Rails.logger.info 'Creating coaches...'
+    coaches_group = Group.coaches.to_a
+    students_group = Group.students.to_a
+    coaches = 500.times.map { Fabricate(:coach, groups: coaches_group.sample(2)) }
     tutorials = Fabricate.times(20, :tutorial)
     30.times { Fabricate(:feedback_request, workshop: past_workshops.sample) }
     20.times { Fabricate(:feedback, tutorial: tutorials.sample, coach: coaches.sample) }
     10.times { Fabricate(:testimonial, member: coaches.sample) }
 
-    job_titles = [
-      'Software Engineer',
-      'Software Developer',
-      'Front-end Developer',
-      'Back-end Developer',
-      'Full-stack Developer'
-    ]
+    Rails.logger.info 'Creating students...'
+    students = 500.times.map { Fabricate(:student, groups: students_group.sample(2)) }
 
-    job_companies = %w[
-      ACME
-      Globex
-      Soylent
-      Initech
-      Umbrella
-      Wonka
-    ]
-
-    Rails.logger.info "Creating students..."
-    students = 50.times.map { Fabricate(:student, groups: Group.students.order('RANDOM()').limit(2)) }
-
-    Rails.logger.info "Creating event invitations..."
-    10.times do |n|
+    Rails.logger.info 'Creating event invitations...'
+    10.times do |_n|
       Fabricate(:invitation, member: students.sample, event: events.sample)
       Fabricate(:coach_invitation, member: coaches.sample, event: events.sample)
     end
 
-    Rails.logger.info "Creating attended by coach workshop invitations..."
-    coaches.sample(15).each do |coach|
-      past_workshops.sample(3).each do |workshop|
-        Fabricate(:attended_coach, workshop: workshop, member: coach)
+    Rails.logger.info 'Creating workshop invitations for past workshops...'
+    past_workshops.each do |workshop|
+      invitation_count = rand(8..15)
+      invitation_count.times do
+          Fabricate(:coach_workshop_invitation, member: coaches.sample, workshop: workshop)
+      rescue StandardError
+          nil
+      end
+      invitation_count.times do
+          Fabricate(:student_workshop_invitation, member: students.sample, workshop: workshop)
+      rescue StandardError
+          nil
       end
     end
 
-    Rails.logger.info "Creating workshop invitations..."
-    30.times do |n|
-      Fabricate(:coach_workshop_invitation, member: coaches.sample, workshop: workshops.sample) rescue nil
-      Fabricate(:student_workshop_invitation, member: students.sample, workshop: workshops.sample) rescue nil
+    Rails.logger.info 'Creating workshop invitations for future workshops...'
+    future_workshops.each do |workshop|
+      invitation_count = rand(10..20)
+      invitation_count.times do
+          Fabricate(:coach_workshop_invitation, member: coaches.sample, workshop: workshop)
+      rescue StandardError
+          nil
+      end
+      invitation_count.times do
+          Fabricate(:student_workshop_invitation, member: students.sample, workshop: workshop)
+      rescue StandardError
+          nil
+      end
     end
     Rails.logger.info '..done!'
   rescue Exception => e
