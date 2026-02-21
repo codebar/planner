@@ -57,8 +57,10 @@ class DashboardController < ApplicationController
   end
 
   def upcoming_events
-    workshops = Workshop.upcoming.includes(:chapter, :sponsors, :organisers)
+    workshops = Workshop.eager_load(:chapter, :sponsors, :organisers, :permissions)
+                        .upcoming
                         .limit(MAX_WORKSHOP_QUERY)
+                        .to_a
     sorted_events = all_events(workshops).sort_by(&:date_and_time)
 
     limited_events = []
@@ -77,20 +79,19 @@ class DashboardController < ApplicationController
   end
 
   def total_upcoming_events_count
-    workshops = Workshop.upcoming.includes(:chapter, :sponsors, :organisers)
-    all_events(workshops).count
+    workshops = Workshop.eager_load(:chapter, :sponsors, :organisers, :permissions)
+    all_events(workshops.to_a).count
   end
 
   def upcoming_events_for_user
-    chapter_workshops = Workshop.upcoming
+    chapter_workshops = Workshop.eager_load(:chapter, :sponsors, :organisers, :permissions)
                                 .where(chapter: current_user.chapters)
-                                .includes(:chapter, :sponsors, :organisers)
                                 .to_a
 
     accepted_workshops = current_user.workshop_invitations.accepted
                                      .joins(:workshop)
                                      .merge(Workshop.upcoming)
-                                     .includes(workshop: %i[chapter sponsors organisers])
+                                     .eager_load(workshop: %i[chapter sponsors organisers permissions])
                                      .map(&:workshop)
 
     all_events(chapter_workshops + accepted_workshops)
@@ -99,8 +100,9 @@ class DashboardController < ApplicationController
   end
 
   def all_events(workshops)
-    meeting = Meeting.includes(:venue, :organisers).next
-    events = Event.includes(:venue, :sponsors, :organisers).upcoming.take(DEFAULT_UPCOMING_EVENTS)
+    meeting = Meeting.eager_load(:venue, :organisers, :permissions).next
+    events = Event.eager_load(:venue, :sponsors, :sponsorships, :permissions,
+                              :organisers).upcoming.take(DEFAULT_UPCOMING_EVENTS)
 
     [*workshops, *events, meeting].uniq.compact
   end
