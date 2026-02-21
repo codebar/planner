@@ -82,6 +82,27 @@ if Rails.env.development?
     20.times { Fabricate(:feedback, tutorial: tutorials.sample, coach: coaches.sample) }
     10.times { Fabricate(:testimonial, member: coaches.sample) }
 
+    # Add skills to some coaches using acts_as_taggable_on
+    skill_lists = [
+      'javascript, ruby, rails',
+      'python, django, sql',
+      'react, typescript, node',
+      'java, spring, kotlin',
+      'css, html, bootstrap',
+      'go, kubernetes, docker',
+      'c++, rust, systems',
+      'swift, ios, android',
+      'php, laravel, mysql',
+      'git, linux, devops'
+    ]
+
+    coaches.each do |coach|
+      next if rand > 0.7 # 70% of coaches get skills
+
+      coach.tag_list.add(skill_lists.sample(rand(1..4)))
+      coach.save(validate: false)
+    end
+
     Rails.logger.info 'Creating students...'
     students = 500.times.map { Fabricate(:student, groups: students_group.sample(2)) }
 
