@@ -13,6 +13,8 @@ class Invitation < ApplicationRecord
   scope :coaches, -> { where(role: 'Coach') }
   scope :verified, -> { where(verified: true).order(:updated_at) }
 
+  after_save :clear_member_cache, if: :saved_change_to_attending?
+
   def student_spaces?
     for_student? && event.student_spaces?
   end
@@ -23,5 +25,11 @@ class Invitation < ApplicationRecord
 
   def to_param
     token
+  end
+
+  private
+
+  def clear_member_cache
+    member.clear_attending_event_ids_cache!
   end
 end
