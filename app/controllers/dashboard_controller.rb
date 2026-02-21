@@ -3,6 +3,7 @@ class DashboardController < ApplicationController
   skip_before_action :accept_terms, except: %i[dashboard show]
 
   DEFAULT_UPCOMING_EVENTS = 5
+  MAX_WORKSHOP_QUERY = 10
 
   helper_method :year_param
 
@@ -12,6 +13,7 @@ class DashboardController < ApplicationController
     @upcoming_workshops = upcoming_events.map.each_with_object({}) do |(key, value), hash|
       hash[key] = EventPresenter.decorate_collection(value)
     end
+    @has_more_events = total_upcoming_events_count > DEFAULT_UPCOMING_EVENTS
 
     @testimonials = Testimonial.order(Arel.sql('RANDOM()')).limit(5).includes(:member)
   end
@@ -56,7 +58,27 @@ class DashboardController < ApplicationController
 
   def upcoming_events
     workshops = Workshop.upcoming.includes(:chapter, :sponsors, :organisers)
-    all_events(workshops).sort_by(&:date_and_time).group_by(&:date)
+                        .limit(MAX_WORKSHOP_QUERY)
+    sorted_events = all_events(workshops).sort_by(&:date_and_time)
+
+    limited_events = []
+    dates_shown = 0
+    prev_date = nil
+
+    sorted_events.each do |event|
+      dates_shown += 1 if event.date != prev_date
+      prev_date = event.date
+      break if dates_shown > 3 || limited_events.size >= DEFAULT_UPCOMING_EVENTS
+
+      limited_events << event
+    end
+
+    limited_events.group_by(&:date)
+  end
+
+  def total_upcoming_events_count
+    workshops = Workshop.upcoming.includes(:chapter, :sponsors, :organisers)
+    all_events(workshops).count
   end
 
   def upcoming_events_for_user
