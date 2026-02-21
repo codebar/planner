@@ -99,7 +99,7 @@ if Rails.env.development?
     coaches.each do |coach|
       next if rand > 0.7 # 70% of coaches get skills
 
-      coach.tag_list.add(skill_lists.sample(rand(1..4)))
+      coach.skill_list.add(skill_lists.sample(rand(1..4)).split(', '))
       coach.save(validate: false)
     end
 
@@ -127,8 +127,15 @@ if Rails.env.development?
       end
 
       # Create some attended invitations so coaches appear on wall_of_fame
+      # Track which coaches already have invitations to avoid duplicates
+      existing_invitees = WorkshopInvitation.where(workshop: workshop, role: 'Coach').pluck(:member_id)
+      available_coaches = coaches.reject { |c| existing_invitees.include?(c.id) }
       rand(3..8).times do
-        Fabricate(:attended_coach, member: coaches.sample, workshop: workshop)
+        break if available_coaches.empty?
+
+        coach = available_coaches.sample
+        available_coaches.delete(coach)
+        Fabricate(:attended_coach, member: coach, workshop: workshop)
       rescue StandardError
         nil
       end
