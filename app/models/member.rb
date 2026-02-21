@@ -121,6 +121,19 @@ class Member < ApplicationRecord
     @past_rsvps ||= rsvps(period: :past).reverse
   end
 
+  def attending_event_ids
+    @attending_event_ids ||= begin
+      event_ids     = invitations.accepted.pluck(:event_id)
+      workshop_ids  = workshop_invitations.accepted.pluck(:workshop_id)
+      meeting_ids   = meeting_invitations.accepted.pluck(:meeting_id)
+      (event_ids + workshop_ids + meeting_ids).to_set
+    end
+  end
+
+  def clear_attending_event_ids_cache!
+    @attending_event_ids = nil
+  end
+
   def flag_to_organisers?
     multiple_no_shows? && attendance_warnings.last_six_months.length >= 2
   end
