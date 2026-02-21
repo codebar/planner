@@ -104,6 +104,13 @@ if Rails.env.development?
       rescue StandardError
           nil
       end
+
+      # Create some attended invitations so coaches appear on wall_of_fame
+      rand(3..8).times do
+        Fabricate(:attended_coach, member: coaches.sample, workshop: workshop)
+      rescue StandardError
+        nil
+      end
     end
 
     Rails.logger.info 'Creating workshop invitations for future workshops...'
