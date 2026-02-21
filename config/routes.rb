@@ -158,7 +158,10 @@ Rails.application.routes.draw do
   get 'cookie-policy' => 'pages#show', id: 'cookie-policy'
   get 'privacy-policy' => 'pages#show', id: 'privacy-policy'
   get 'breach-code-of-conduct' => 'pages#show', id: 'breach-code-of-conduct'
-  get 'how-to-support-us' => 'pages#show', id: 'how-to-support-us'
+  get 'how-to-support-us' => redirect('/volunteer')
+  get 'volunteer' => 'pages#show', id: 'volunteer'
+  get 'fundraise' => 'pages#show', id: 'fundraise'
+  get 'donate' => 'pages#show', id: 'donate'
   get 'codebar-stories-podcast' => 'pages#show', id: 'codebar-stories-podcast'
 
   get ':id' => 'chapter#show', as: :chapter

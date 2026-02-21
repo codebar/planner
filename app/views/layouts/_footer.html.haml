@@ -28,9 +28,14 @@
           %li= link_to t("navigation.coaches"), coaches_path
           %li= link_to t("navigation.sponsors"), sponsors_path
           %li= link_to t("navigation.events"), events_path
-          %li= link_to t("navigation.jobs"), "https://jobs.codebar.io/"
-          %li.active= link_to t("navigation.donate"), new_donation_path
-          %li= link_to "Buy us a coffee", "https://buymeacoffee.com/codebarhq", target: '_blank', rel: 'noopener noreferrer'
+          %li= link_to "Job Board", "https://jobs.codebar.io/"
+          %li= link_to "Volunteer", volunteer_path
+          %li= link_to "Fundraise", fundraise_path
+          %li.active= link_to t("navigation.donate"), donate_path
+          %li
+            = link_to 'https://buymeacoffee.com/codebarhq', target: '_blank', rel: 'noopener noreferrer' do
+              %i.fas.fa-coffee.me-2
+              Buy us a coffee
 
       .col-sm-12.col-md-6.col-lg-3
         = render partial: 'shared/social_media'
