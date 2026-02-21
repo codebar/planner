@@ -138,7 +138,14 @@ class ApplicationController < ActionController::Base
 
   def set_locale
     store_locale_to_cookie(params[:locale]) if locale
-    I18n.locale = cookies[:locale] || I18n.default_locale
+    I18n.locale = locale_value
+  end
+
+  def locale_value
+    return I18n.default_locale unless cookies[:locale].present?
+    return I18n.default_locale unless I18n.available_locales.include?(cookies[:locale].to_sym)
+
+    cookies[:locale]
   end
 
   def user_not_authorized
