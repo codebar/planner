@@ -47,7 +47,7 @@ if Rails.env.development?
     Rails.logger.info 'Creating 100 future workshops...'
     future_workshops = []
     100.times do
-      months_ahead = rand(1..12)
+      months_ahead = rand(1..3)
       start = Time.zone.now + months_ahead.months + rand(0..28).days + rand(0..23).hours
       workshop = Fabricate(:workshop,
                            title: 'Workshop',
