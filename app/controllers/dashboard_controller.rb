@@ -33,7 +33,7 @@ class DashboardController < ApplicationController
   def wall_of_fame
     @coaches_count = top_coach_query.length
     coaches = Member.where(id: top_coach_query
-                    .year(year_param))
+                               .year(year_param))
                     .includes(:skills)
     @pagy, @coaches = pagy(coaches, items: 80)
   end
@@ -55,20 +55,20 @@ class DashboardController < ApplicationController
   end
 
   def upcoming_events
-    workshops = Workshop.upcoming.includes(:chapter, :sponsors)
+    workshops = Workshop.upcoming.includes(:chapter, :sponsors, :organisers)
     all_events(workshops).sort_by(&:date_and_time).group_by(&:date)
   end
 
   def upcoming_events_for_user
     chapter_workshops = Workshop.upcoming
                                 .where(chapter: current_user.chapters)
-                                .includes(:chapter, :sponsors)
+                                .includes(:chapter, :sponsors, :organisers)
                                 .to_a
 
     accepted_workshops = current_user.workshop_invitations.accepted
                                      .joins(:workshop)
                                      .merge(Workshop.upcoming)
-                                     .includes(workshop: %i[chapter sponsors])
+                                     .includes(workshop: %i[chapter sponsors organisers])
                                      .map(&:workshop)
 
     all_events(chapter_workshops + accepted_workshops)
@@ -77,8 +77,8 @@ class DashboardController < ApplicationController
   end
 
   def all_events(workshops)
-    meeting = Meeting.includes(:venue).next
-    events = Event.includes(:venue, :sponsors).upcoming.take(DEFAULT_UPCOMING_EVENTS)
+    meeting = Meeting.includes(:venue, :organisers).next
+    events = Event.includes(:venue, :sponsors, :organisers).upcoming.take(DEFAULT_UPCOMING_EVENTS)
 
     [*workshops, *events, meeting].uniq.compact
   end
