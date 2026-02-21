@@ -2,7 +2,7 @@
   title = if workshop.virtual?
     t('workshops.virtual.title_with_date', chapter: workshop.chapter.name, date: humanize_date(workshop.date_and_time))
   else
-    t('workshop.title', host: workshop.host.name, date: humanize_date(workshop.date_and_time))
+    t('workshop.title', host: workshop.host&.name || 'codebar', date: humanize_date(workshop.date_and_time))
   end
   url = request.original_url
   image = workshop.host.try(:image_url).presence || image_url('codebar-social.jpg')
