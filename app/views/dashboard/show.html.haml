@@ -73,6 +73,9 @@
           %h3.h5= date
           = render workshops
 
+        - if @has_more_events
+          = link_to 'Explore all events →', events_path, class: 'btn btn-outline-primary mt-3'
+
     .col-lg-4.pl-lg-5
       %h3
         = t('homepage.chapters.title')
