@@ -10,7 +10,7 @@
 
     - if content_for? :meta_tags
       = yield :meta_tags
-    - else
+    - elsif !admin_namespace?
       = render partial: 'shared/meta_tags'
 
     %link{ rel: 'icon', sizes: '196x196', href: '/Icon-196.png'}

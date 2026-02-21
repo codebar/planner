@@ -117,6 +117,7 @@ class ApplicationController < ActionController::Base
   end
 
   helper_method :manager?
+  helper_method :admin_namespace?
 
   def is_logged_in?
     unless logged_in?
@@ -127,6 +128,10 @@ class ApplicationController < ActionController::Base
 
   def has_access?
     is_logged_in?
+  end
+
+  def admin_namespace?
+    controller_path.start_with?('admin/', 'super_admin/')
   end
 
   private
