@@ -47,4 +47,12 @@ class WorkshopInvitation < ApplicationRecord
   def not_attending?
     attending == false
   end
+
+  def accept!(rsvp_time: Time.zone.now, automated_rsvp: false)
+    update!(attending: true, rsvp_time: rsvp_time, automated_rsvp: automated_rsvp)
+  end
+
+  def decline!
+    update!(attending: false)
+  end
 end

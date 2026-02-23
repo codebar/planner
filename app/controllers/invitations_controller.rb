@@ -27,12 +27,12 @@ class InvitationsController < ApplicationController
     return redirect_back fallback_location: root_path, notice: t('messages.already_rsvped') if @invitation.attending?
 
     if @invitation.student_spaces? || @invitation.coach_spaces?
-      @invitation.update_attribute(:attending, true)
+      @invitation.accept!
 
       notice = t('messages.invitations.spot_confirmed', event: @invitation.event.name)
 
       unless event.confirmation_required || event.surveys_required
-        @invitation.update_attribute(:verified, true)
+        @invitation.verify!
         EventInvitationMailer.attending(@invitation.event, @invitation.member, @invitation).deliver_now
       end
       notice = t('messages.invitations.spot_not_confirmed') if event.surveys_required
@@ -54,7 +54,7 @@ class InvitationsController < ApplicationController
       )
     end
 
-    @invitation.update_attribute(:attending, false)
+    @invitation.decline!
     redirect_back(
       fallback_location: root_path,
       notice: t('messages.rejected_invitation', name: @invitation.member.name)
@@ -79,7 +79,7 @@ class InvitationsController < ApplicationController
   def cancel_meeting
     @invitation = MeetingInvitation.find_by(token: params[:token])
 
-    @invitation.update_attribute(:attending, false)
+    @invitation.decline!
 
     redirect_back fallback_location: root_path, notice: t('messages.invitations.meeting.cancel')
   end

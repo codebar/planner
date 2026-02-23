@@ -1,5 +1,6 @@
 RSpec.describe WorkshopInvitation do
   subject(:workshop_invitation) { Fabricate(:workshop_invitation) }
+
   it_behaves_like InvitationConcerns, :workshop_invitation, :workshop
 
   context 'defaults' do
@@ -14,13 +15,14 @@ RSpec.describe WorkshopInvitation do
 
     context 'if Student invitation' do
       before { allow(subject).to receive(:student_attending?).and_return(true) }
+
       it { is_expected.to validate_presence_of(:tutorial) }
       it { is_expected.to validate_presence_of(:tutorial).on(:waitinglist) }
     end
   end
 
   context 'scopes' do
-    context '#attended' do
+    describe '#attended' do
       it 'ignores when attended nil' do
         Fabricate(:workshop_invitation, attended: nil)
 
@@ -40,7 +42,7 @@ RSpec.describe WorkshopInvitation do
       end
     end
 
-    context '#accepted_or_attended' do
+    describe '#accepted_or_attended' do
       it 'ignores when attending nil and attended nil' do
         Fabricate(:workshop_invitation, attending: nil, attended: nil)
 
@@ -83,7 +85,7 @@ RSpec.describe WorkshopInvitation do
       expect(WorkshopInvitation.year((Time.zone.now - 2.years).year).count).to eq(1)
     end
 
-    context '#not_reminded' do
+    describe '#not_reminded' do
       it 'includes invitations without reminders' do
         not_reminded = Fabricate(:student_workshop_invitation, reminded_at: nil)
 
@@ -102,6 +104,50 @@ RSpec.describe WorkshopInvitation do
       waiting_list = Fabricate.times(2, :waitinglist_invitation)
 
       expect(WorkshopInvitation.on_waiting_list).to eq(waiting_list)
+    end
+  end
+
+  describe '#accept!' do
+    let(:invitation) { Fabricate(:workshop_invitation, attending: false) }
+
+    it 'sets attending to true' do
+      invitation.accept!
+      expect(invitation.reload.attending).to be true
+    end
+
+    it 'sets rsvp_time to current time by default' do
+      invitation.accept!
+      expect(invitation.reload.rsvp_time).to be_within(1.second).of(Time.zone.now)
+    end
+
+    it 'allows custom rsvp_time' do
+      custom_time = 1.day.ago
+      invitation.accept!(rsvp_time: custom_time)
+      expect(invitation.reload.rsvp_time).to be_within(1.second).of(custom_time)
+    end
+
+    it 'allows automated_rsvp flag' do
+      invitation.accept!(automated_rsvp: true)
+      expect(invitation.reload.automated_rsvp).to be true
+    end
+
+    it 'raises RecordInvalid on validation failure' do
+      allow(invitation).to receive(:valid?).and_return(false)
+      expect { invitation.accept! }.to raise_error(ActiveRecord::RecordInvalid)
+    end
+  end
+
+  describe '#decline!' do
+    let(:invitation) { Fabricate(:workshop_invitation, attending: true) }
+
+    it 'sets attending to false' do
+      invitation.decline!
+      expect(invitation.reload.attending).to be false
+    end
+
+    it 'raises RecordInvalid on validation failure' do
+      allow(invitation).to receive(:valid?).and_return(false)
+      expect { invitation.decline! }.to raise_error(ActiveRecord::RecordInvalid)
     end
   end
 end
