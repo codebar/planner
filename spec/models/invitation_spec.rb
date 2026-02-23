@@ -12,7 +12,7 @@ RSpec.describe Invitation do
     it { is_expected.to validate_inclusion_of(:role).in_array(%w[Student Coach]) }
   end
 
-  context '#student_spaces?' do
+  describe '#student_spaces?' do
     it 'checks if there are any available spaces for students at the event' do
       student_invitation = Fabricate(:invitation)
 
@@ -20,11 +20,22 @@ RSpec.describe Invitation do
     end
   end
 
-  context '#coach_spaces?' do
+  describe '#coach_spaces?' do
     it 'checks if there are any available spaces for coaches at the event' do
       coach_invitation = Fabricate(:coach_invitation)
 
       expect(coach_invitation.coach_spaces?).to eq(true)
+    end
+  end
+
+  describe 'cache invalidation' do
+    let(:member) { Fabricate(:member) }
+    let(:event) { Fabricate(:event) }
+
+    it 'clears member cache when attending changes' do
+      invitation = Fabricate(:invitation, member: member, event: event, attending: false)
+      expect(member).to receive(:clear_attending_event_ids_cache!)
+      invitation.update!(attending: true)
     end
   end
 end
