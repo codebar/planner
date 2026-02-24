@@ -30,7 +30,7 @@ class EventPresenter < BasePresenter
   end
 
   def organisers
-    @organisers ||= model.permissions.find_by(name: 'organiser')&.members || []
+    @organisers ||= model.organisers.to_a
   end
 
   def month
