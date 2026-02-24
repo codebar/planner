@@ -33,6 +33,9 @@ module Planner
 
     config.active_record.belongs_to_required_by_default = true
 
+    # let's start using Active Job!
+    config.active_job.queue_adapter = :delayed_job
+
     if ENV["RAILS_LOG_TO_STDOUT"].present?
       $stdout.sync = true
       config.rails_semantic_logger.add_file_appender = false
