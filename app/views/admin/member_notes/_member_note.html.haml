@@ -1,10 +1,14 @@
 .row.d-flex.align-items-start.note
   .col-2.col-md-1
-    %span.fa-stack.text-primary
-      %i.fas.fa-circle.fa-stack-2x
-      %i.fas.fa-pencil-alt.fa-stack-1x.fa-inverse
+    = link_to '#', class: "btn btn-sm p-0 me-2", turbo: false, 'data-bs-toggle': 'modal', 'data-bs-target': "#edit-note-modal-#{action.id}" do
+      %span.fa-stack.text-primary
+        %i.fas.fa-circle.fa-stack-2x
+        %i.fas.fa-pencil-alt.fa-stack-1x.fa-inverse
   .col-9.col-md-11
     %strong Note added by #{link_to(action.author.full_name, admin_member_path(action.author))}
     %blockquote.blockquote.mb-0=action.note
-    .date
+    .d-flex.align-items-center.justify-content-between
       = l(action.created_at, format: :website_format)
+      = link_to admin_member_note_path(action), method: :delete, data: { confirm: "Are you sure you want to delete this note?" }, class: "btn btn-sm btn-outline-danger" do
+        %i.fas.fa-trash
+      = render partial: 'note', locals: { note: action, member: @member }
