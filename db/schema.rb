@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_11_140256) do
+ActiveRecord::Schema[8.1].define(version: 2026_02_24_120000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -298,7 +298,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_11_140256) do
     t.datetime "updated_at", precision: nil
     t.boolean "verified"
     t.integer "verified_by_id"
+    t.index ["event_id", "attending"], name: "index_invitations_event_attending"
     t.index ["event_id"], name: "index_invitations_on_event_id"
+    t.index ["member_id", "attending"], name: "index_invitations_member_attending"
     t.index ["member_id"], name: "index_invitations_on_member_id"
     t.index ["verified_by_id"], name: "index_invitations_on_verified_by_id"
   end
@@ -338,7 +340,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_11_140256) do
     t.string "role"
     t.string "token"
     t.datetime "updated_at", precision: nil
+    t.index ["meeting_id", "attending"], name: "index_meeting_invitations_meeting_attending"
     t.index ["meeting_id"], name: "index_meeting_invitations_on_meeting_id"
+    t.index ["member_id", "attending"], name: "index_meeting_invitations_member_attending"
     t.index ["member_id"], name: "index_meeting_invitations_on_member_id"
   end
 
@@ -547,8 +551,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_11_140256) do
     t.text "tutorial"
     t.datetime "updated_at", precision: nil
     t.integer "workshop_id"
+    t.index ["member_id", "attending"], name: "index_workshop_invitations_member_attending"
     t.index ["member_id"], name: "index_workshop_invitations_on_member_id"
     t.index ["token"], name: "index_workshop_invitations_on_token", unique: true
+    t.index ["workshop_id", "attending"], name: "index_workshop_invitations_workshop_attending"
     t.index ["workshop_id"], name: "index_workshop_invitations_on_workshop_id"
   end
 

@@ -79,8 +79,11 @@ class DashboardController < ApplicationController
   end
 
   def total_upcoming_events_count
-    workshops = Workshop.eager_load(:chapter, :sponsors, :organisers, :permissions)
-    all_events(workshops.to_a).count
+    workshop_count = Workshop.upcoming.count
+    event_count = Event.upcoming.count
+    meeting_exists = Meeting.next.present? ? 1 : 0
+
+    workshop_count + event_count + meeting_exists
   end
 
   def upcoming_events_for_user
