@@ -1,0 +1,13 @@
+- title 'Past Events'
+
+.container{'data-test': 'past-events'}
+  .row
+    .col
+      - if @past_events.any?
+        %h3.mb-4 Past Events
+
+        = render partial: 'events', locals: { grouped_events: @past_events }
+
+- if @pagy
+  .container.mt-4
+    = render partial: 'shared/pagination', locals: { pagy: @pagy, model: 'event' }
