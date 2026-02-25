@@ -50,6 +50,10 @@ Rails.application.routes.draw do
   end
 
   resources :events, only: %i[index show] do
+    collection do
+      get :upcoming
+      get :past
+    end
     post 'rsvp'
     get 'student', as: :student_rsvp
     get 'coach', as: :coach_rsvp
