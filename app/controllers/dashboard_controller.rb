@@ -58,7 +58,7 @@ class DashboardController < ApplicationController
 
   def upcoming_events
     workshops = Workshop.eager_load(:chapter, :sponsors, :organisers, :permissions)
-                        .upcoming
+                        .today_and_upcoming
                         .limit(MAX_WORKSHOP_QUERY)
                         .to_a
     sorted_events = all_events(workshops).sort_by(&:date_and_time)
