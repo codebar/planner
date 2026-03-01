@@ -87,7 +87,8 @@ class DashboardController < ApplicationController
   end
 
   def upcoming_events_for_user
-    chapter_workshops = Workshop.eager_load(:chapter, :sponsors, :organisers, :permissions)
+    chapter_workshops = Workshop.upcoming
+                                .eager_load(:chapter, :sponsors, :organisers, :permissions)
                                 .where(chapter: current_user.chapters)
                                 .to_a
 
