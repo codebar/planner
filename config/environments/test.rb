@@ -1,5 +1,6 @@
 require "active_support/core_ext/integer/time"
 require "timecop"
+require "active_job/test_helper"
 
 # The test environment is used exclusively to run your application's
 # test suite. You never need to work with it otherwise. Remember that
@@ -54,6 +55,8 @@ Rails.application.configure do
 
   # Raise error when a before_action's only/except options reference missing actions.
   config.action_controller.raise_on_missing_callback_actions = true
+
+  config.active_job.queue_adapter = :test
 
   # Fake omniauth for testing
   OmniAuth.config.test_mode = true
