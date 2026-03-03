@@ -87,7 +87,7 @@ Rails.application.routes.draw do
       resources :bans, only: %i[index new create]
     end
 
-    resources :member_notes, only: [:create]
+    resources :member_notes, only: [:create, :destroy, :edit, :update]
 
     resources :chapters, only: %i[index new create show edit update] do
       get :members
