@@ -10,6 +10,10 @@ class Workshop < ApplicationRecord
   has_many :invitations, class_name: 'WorkshopInvitation'
   has_many :workshop_sponsors
   has_many :sponsors, through: :workshop_sponsors
+  has_one :workshop_host, -> { where(workshop_sponsors: { host: true }) },
+          class_name: 'WorkshopSponsor',
+          inverse_of: :workshop
+  has_one :host, through: :workshop_host, source: :sponsor
   has_many :organisers, -> { where('permissions.name' => 'organiser') }, through: :permissions, source: :members
   has_many :feedbacks
 
@@ -31,18 +35,7 @@ class Workshop < ApplicationRecord
   before_validation :set_opens_at
 
   def host
-    sql = <<~SQL
-      SELECT sponsors.*
-      FROM sponsors
-      LEFT JOIN workshop_sponsors ON workshop_sponsors.sponsor_id = sponsors.id
-      WHERE workshop_sponsors.workshop_id = ?
-        AND workshop_sponsors.host = TRUE
-        AND sponsors.id = workshop_sponsors.sponsor_id
-      ORDER BY sponsors.updated_at DESC, workshop_sponsors.id ASC
-      LIMIT 1
-    SQL
-
-    Sponsor.find_by_sql([sql, id]).first
+    workshop_host&.sponsor
   end
 
   def waiting_list

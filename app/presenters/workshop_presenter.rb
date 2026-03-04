@@ -28,7 +28,7 @@ class WorkshopPresenter < EventPresenter
   end
 
   def venue
-    model.host
+    @venue ||= model.host
   end
 
   def organisers

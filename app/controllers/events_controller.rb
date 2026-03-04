@@ -8,19 +8,25 @@ class EventsController < ApplicationController
   def index
     fresh_when(latest_model_updated, etag: latest_model_updated)
 
-    events = [Workshop.past.includes(:chapter,
-                                     :sponsors).joins(:chapter).merge(Chapter.active).limit(RECENT_EVENTS_DISPLAY_LIMIT)]
-    events << Meeting.past.includes(:venue).limit(RECENT_EVENTS_DISPLAY_LIMIT)
-    events << Event.past.includes(:venue, :sponsors, :sponsorships).limit(RECENT_EVENTS_DISPLAY_LIMIT)
+    events = [Workshop.past
+                      .includes(:chapter, :sponsors, :host, :permissions)
+                      .joins(:chapter)
+                      .merge(Chapter.active)
+                      .limit(RECENT_EVENTS_DISPLAY_LIMIT)]
+    events << Meeting.past.includes(:venue, :permissions).limit(RECENT_EVENTS_DISPLAY_LIMIT)
+    events << Event.past.includes(:venue, :sponsors, :sponsorships, :permissions).limit(RECENT_EVENTS_DISPLAY_LIMIT)
     events = events.compact.flatten.sort_by(&:date_and_time).reverse.first(RECENT_EVENTS_DISPLAY_LIMIT)
     events_hash_grouped_by_date = events.group_by(&:date)
     @past_events = events_hash_grouped_by_date.map.each_with_object({}) do |(key, value), hash|
       hash[key] = EventPresenter.decorate_collection(value)
     end
 
-    events = [Workshop.includes(:chapter, :sponsors).upcoming.joins(:chapter).merge(Chapter.active)]
-    events << Meeting.upcoming.all
-    events << Event.upcoming.includes(:venue, :sponsors, :sponsorships).all
+    events = [Workshop.upcoming
+                      .includes(:chapter, :sponsors, :host, :permissions)
+                      .joins(:chapter)
+                      .merge(Chapter.active)]
+    events << Meeting.upcoming.includes(:venue, :permissions).all
+    events << Event.upcoming.includes(:venue, :sponsors, :sponsorships, :permissions).all
     events = events.compact.flatten.sort_by(&:date_and_time).group_by(&:date)
     @events = events.map.each_with_object({}) do |(key, value), hash|
  hash[key] = EventPresenter.decorate_collection(value)
