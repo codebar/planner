@@ -3,34 +3,20 @@ require 'services/ticket'
 class EventsController < ApplicationController
   before_action :is_logged_in?, only: %i[student coach]
 
-  RECENT_EVENTS_DISPLAY_LIMIT = 40
-
   def index
+    redirect_to upcoming_events_path
+  end
+
+  def upcoming
     fresh_when(latest_model_updated, etag: latest_model_updated)
 
-    events = [Workshop.past
-                      .includes(:chapter, :sponsors, :host, :permissions)
-                      .joins(:chapter)
-                      .merge(Chapter.active)
-                      .limit(RECENT_EVENTS_DISPLAY_LIMIT)]
-    events << Meeting.past.includes(:venue, :permissions).limit(RECENT_EVENTS_DISPLAY_LIMIT)
-    events << Event.past.includes(:venue, :sponsors, :sponsorships, :permissions).limit(RECENT_EVENTS_DISPLAY_LIMIT)
-    events = events.compact.flatten.sort_by(&:date_and_time).reverse.first(RECENT_EVENTS_DISPLAY_LIMIT)
-    events_hash_grouped_by_date = events.group_by(&:date)
-    @past_events = events_hash_grouped_by_date.map.each_with_object({}) do |(key, value), hash|
-      hash[key] = EventPresenter.decorate_collection(value)
-    end
+    @events, @pagy = fetch_upcoming_events
+  end
 
-    events = [Workshop.upcoming
-                      .includes(:chapter, :sponsors, :host, :permissions)
-                      .joins(:chapter)
-                      .merge(Chapter.active)]
-    events << Meeting.upcoming.includes(:venue, :permissions).all
-    events << Event.upcoming.includes(:venue, :sponsors, :sponsorships, :permissions).all
-    events = events.compact.flatten.sort_by(&:date_and_time).group_by(&:date)
-    @events = events.map.each_with_object({}) do |(key, value), hash|
- hash[key] = EventPresenter.decorate_collection(value)
-    end
+  def past
+    fresh_when(latest_model_updated, etag: latest_model_updated)
+
+    @past_events, @pagy = fetch_past_events
   end
 
   def show
@@ -57,7 +43,7 @@ class EventsController < ApplicationController
     set_event
     ticket = Services::Ticket.new(request, params)
     member = Member.find_by(email: ticket.email)
-    invitation = member.invitations.where(event: @event, role: 'Student').try(:first)
+    invitation = member.invitations.where(event: @event, role: 'Student').first
     invitation ||= Invitation.create(event: @event, member: member, role: 'Student')
 
     invitation.update(attending: true)
@@ -83,5 +69,43 @@ class EventsController < ApplicationController
 
   def set_event
     @event = Event.find_by(slug: params[:event_id])
+  end
+
+  def fetch_upcoming_events
+    events = [
+      Workshop.includes(:chapter, :sponsors, :host, :permissions)
+              .upcoming
+              .joins(:chapter)
+              .merge(Chapter.active)
+    ]
+    events << Meeting.upcoming.includes(:venue, :permissions).all
+    events << Event.upcoming.includes(:venue, :sponsors, :sponsorships, :permissions).all
+
+    sorted = events.compact.flatten.sort_by(&:date_and_time)
+    pagy, paginated = pagy(sorted, items: 20)
+
+    grouped = paginated.group_by(&:date)
+    decorated = grouped.transform_values { |items| EventPresenter.decorate_collection(items) }
+
+    [decorated, pagy]
+  end
+
+  def fetch_past_events
+    events = [
+      Workshop.includes(:chapter, :sponsors, :host, :permissions)
+              .past
+              .joins(:chapter)
+              .merge(Chapter.active)
+    ]
+    events << Meeting.past.includes(:venue, :permissions).all
+    events << Event.past.includes(:venue, :sponsors, :sponsorships, :permissions).all
+
+    sorted = events.compact.flatten.sort_by(&:date_and_time).reverse
+    pagy, paginated = pagy(sorted, items: 20)
+
+    grouped = paginated.group_by(&:date)
+    decorated = grouped.transform_values { |items| EventPresenter.decorate_collection(items) }
+
+    [decorated, pagy]
   end
 end
