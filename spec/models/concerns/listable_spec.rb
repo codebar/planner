@@ -15,6 +15,15 @@ RSpec.describe Listable do
           expect(Workshop.today_and_upcoming).to match_array(future_workshops)
         end
       end
+
+      it 'returns workshops ordered by date_and_time ascending (soonest first)' do
+        Fabricate.times(2, :past_workshop)
+        workshop_in_3_days = Fabricate(:workshop, date_and_time: 3.days.from_now)
+        workshop_tomorrow = Fabricate(:workshop, date_and_time: 1.day.from_now)
+        workshop_in_5_days = Fabricate(:workshop, date_and_time: 5.days.from_now)
+
+        expect(Workshop.today_and_upcoming).to eq([workshop_tomorrow, workshop_in_3_days, workshop_in_5_days])
+      end
     end
 
     context '#upcoming' do
@@ -23,6 +32,15 @@ RSpec.describe Listable do
         future_workshops = Fabricate.times(1, :workshop)
 
         expect(Workshop.upcoming).to match_array(future_workshops)
+      end
+
+      it 'returns workshops ordered by date_and_time ascending (soonest first)' do
+        Fabricate.times(2, :past_workshop)
+        workshop_in_3_days = Fabricate(:workshop, date_and_time: 3.days.from_now)
+        workshop_tomorrow = Fabricate(:workshop, date_and_time: 1.day.from_now)
+        workshop_in_5_days = Fabricate(:workshop, date_and_time: 5.days.from_now)
+
+        expect(Workshop.upcoming).to eq([workshop_tomorrow, workshop_in_3_days, workshop_in_5_days])
       end
     end
 
