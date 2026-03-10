@@ -2,7 +2,7 @@ class MemberMailer < ApplicationMailer
   include EmailHeaderHelper
   include EmailDelivery
 
-  after_deliver :log_sent_mail , only: [:chaser]
+  after_deliver :log_sent_email, only: [:chaser]
 
   def chaser
     @member = params[:member]
