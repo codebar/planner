@@ -88,6 +88,7 @@ class InvitationsController < ApplicationController
 
   def set_invitation
     @invitation = Invitation.find_by(token: params[:token])
+    head :not_found unless @invitation
   end
 
   def load_invitation
