@@ -5,7 +5,7 @@ require 'shoulda/matchers'
 # Fix incompatibility of simplecov-lcov with older versions of simplecov that are not expresses in its gemspec.
 # https://github.com/fortissimo1997/simplecov-lcov/pull/25
 
-if !SimpleCov.respond_to?(:branch_coverage)
+unless SimpleCov.respond_to?(:branch_coverage)
   module SimpleCov
     def self.branch_coverage?
       false
@@ -21,7 +21,7 @@ end
 SimpleCov.formatters = SimpleCov::Formatter::MultiFormatter.new(
   [
     SimpleCov::Formatter::HTMLFormatter,
-    SimpleCov::Formatter::LcovFormatter,
+    SimpleCov::Formatter::LcovFormatter
   ]
 )
 
@@ -30,7 +30,7 @@ SimpleCov.start do
 end
 
 ENV['RAILS_ENV'] ||= 'test'
-require File.expand_path('../../config/environment', __FILE__)
+require File.expand_path('../config/environment', __dir__)
 require 'rspec/rails'
 
 Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
@@ -43,6 +43,8 @@ RSpec.configure do |config|
   config.include ActiveSupport::Testing::TimeHelpers
   config.include SelectFromChosen, type: :feature
   config.use_transactional_fixtures = false
+  config.fixture_paths = ["#{Rails.root.join('spec/fixtures')}"]
+  config.infer_spec_type_from_file_location!
   config.infer_base_class_for_anonymous_controllers = false
   config.order = 'random'
   config.expect_with :rspec do |c|
@@ -68,7 +70,7 @@ RSpec.configure do |config|
     DatabaseCleaner.strategy = :deletion
   end
 
-  config.before(:each) do
+  config.before do
     DatabaseCleaner.strategy = :transaction
   end
 
@@ -76,20 +78,19 @@ RSpec.configure do |config|
   # under test that does *not* share a database connection with the
   # specs, so use truncation strategy. This config is order dependent
   # and must be BELOW the main `config.before(:each)` configuration
-  config.before(:each, js: true) do
+  config.before(:each, :js) do
     DatabaseCleaner.strategy = :truncation
   end
 
   # This block must be here, do not combine with the other `config.before(:each)` block.
   # This makes it so Capybara can see the database.
-  config.before(:each) do
+  config.before do
     DatabaseCleaner.start
   end
 
-  config.after(:each) do
+  config.after do
     DatabaseCleaner.clean
   end
-
 
   config.after do |example|
     # Take a screenshot if the example failed and JavaScript is enabled
@@ -109,7 +110,7 @@ RSpec.configure do |config|
   config.example_status_persistence_file_path = 'tmp/spec_failures'
 
   if Bullet.enable?
-    config.around(:each) do |example|
+    config.around do |example|
       Bullet.start_request
       example.run
       Bullet.perform_out_of_channel_notifications if Bullet.notification?
