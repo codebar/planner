@@ -16,6 +16,9 @@ class Chapter < ApplicationRecord
   has_many :feedbacks, through: :workshops
 
   before_save :set_slug
+  after_update_commit :expire_chapters_sidebar_cache
+  after_create_commit :expire_chapters_sidebar_cache
+  after_destroy_commit :expire_chapters_sidebar_cache
 
   scope :active, -> { where(active: true) }
 
@@ -42,6 +45,10 @@ class Chapter < ApplicationRecord
   end
 
   private
+
+  def expire_chapters_sidebar_cache
+    Rails.cache.delete('chapters-sidebar')
+  end
 
   def time_zone_exists
     return unless time_zone && ActiveSupport::TimeZone[time_zone].nil?

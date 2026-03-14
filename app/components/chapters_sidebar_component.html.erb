@@ -1,0 +1,12 @@
+<% cache "chapters-sidebar" do %>
+  <% if title %>
+    <h3><%= title %></h3>
+  <% end %>
+  <ul class="list-unstyled ms-0">
+    <% chapters.each do |chapter| %>
+      <li>
+        <%= link_to chapter.name, chapter_path(chapter.slug) %>
+      </li>
+    <% end %>
+  </ul>
+<% end %>

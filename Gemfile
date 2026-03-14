@@ -69,6 +69,7 @@ gem 'turbo-rails'
 # Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
 gem 'stimulus-rails'
 gem 'public_activity'
+gem 'view_component'
 
 group :development do
   gem 'better_errors'
