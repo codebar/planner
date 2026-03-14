@@ -77,12 +77,7 @@
           = link_to 'Explore all events →', upcoming_events_path, class: 'btn btn-outline-primary mt-3'
 
     .col-lg-4.pl-lg-5
-      %h3
-        = t('homepage.chapters.title')
-      %ul.list-unstyled.ms-0
-        - @chapters.each do |chapter|
-          %li
-            = link_to chapter.name, chapter_path(chapter.slug)
+      = render ChaptersSidebarComponent.new(chapters: @chapters, title: t('homepage.chapters.title'))
 
 - if @testimonials.any?
   .py-4.py-lg-5.bg-light
