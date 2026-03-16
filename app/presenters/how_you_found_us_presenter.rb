@@ -1,5 +1,4 @@
 class HowYouFoundUsPresenter
-
   def initialize(chapter)
     @chapter = chapter
   end
