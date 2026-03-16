@@ -67,8 +67,15 @@ class Admin::ChaptersController < Admin::ApplicationController
   end
 
   def member_emails(chapter, type)
-    return chapter.send(type).map(&:email).join("\n") if %w[students coaches].include?(type)
-
-    chapter.members.pluck(:email).uniq.join("\n")
+    members =
+      case type
+      when "students"
+        chapter.students
+      when "coaches"
+        chapter.coaches
+      else
+        chapter.members
+      end
+    members.distinct.pluck(:email).join("\n")
   end
 end
