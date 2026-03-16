@@ -34,11 +34,15 @@ class Chapter < ApplicationRecord
   end
 
   def students
-    members.select(&:student?)
+    Member.joins(:groups)
+          .merge(Group.students)
+          .distinct
   end
 
   def coaches
-    members.select(&:coach?)
+    Member.joins(:groups)
+          .merge(Group.coaches)
+          .distinct
   end
 
   private
