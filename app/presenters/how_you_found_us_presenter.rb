@@ -14,7 +14,7 @@ class HowYouFoundUsPresenter
       exact = (count / total_responses.to_f) * 100
       percentage_value = exact.floor
       remainder = exact - percentage_value
-      { how: how, percentage_value: percentage_value, remainder: remainder }
+      { how:, percentage_value:, remainder: }
     end
 
     allocated_so_far = entries.sum { |entry| entry[:percentage_value] }
