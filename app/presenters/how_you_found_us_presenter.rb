@@ -1,5 +1,4 @@
 class HowYouFoundUsPresenter
-
   def initialize(chapter)
     @chapter = chapter
   end
@@ -15,7 +14,7 @@ class HowYouFoundUsPresenter
       exact = (count / total_responses.to_f) * 100
       percentage_value = exact.floor
       remainder = exact - percentage_value
-      { how: how, percentage_value: percentage_value, remainder: remainder }
+      { how:, percentage_value:, remainder: }
     end
 
     allocated_so_far = entries.sum { |entry| entry[:percentage_value] }
@@ -40,7 +39,7 @@ class HowYouFoundUsPresenter
   private
 
   def raw_stats
-    @stats ||= @chapter.members.where.not(how_you_found_us: nil).group(:how_you_found_us).count
+    @raw_stats ||= @chapter.members.where.not(how_you_found_us: nil).group(:how_you_found_us).count
   end
 
   def how_values
