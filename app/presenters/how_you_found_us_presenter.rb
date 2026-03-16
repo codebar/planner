@@ -39,7 +39,7 @@ class HowYouFoundUsPresenter
   private
 
   def raw_stats
-    @stats ||= @chapter.members.where.not(how_you_found_us: nil).group(:how_you_found_us).count
+    @raw_stats ||= @chapter.members.where.not(how_you_found_us: nil).group(:how_you_found_us).count
   end
 
   def how_values
