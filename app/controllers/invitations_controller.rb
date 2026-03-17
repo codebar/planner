@@ -77,7 +77,7 @@ class InvitationsController < ApplicationController
   end
 
   def cancel_meeting
-    @invitation = MeetingInvitation.find_by(token: params[:token])
+    @invitation = MeetingInvitation.find_by!(token: params[:token])
 
     @invitation.update_attribute(:attending, false)
 
