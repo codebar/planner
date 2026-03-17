@@ -17,6 +17,13 @@ RSpec.describe ThreeMonthEmailService, type: :service do
     let!(:eligible_student) do
       member = Fabricate(:member)
       Fabricate(:subscription, member: member, group: students_group)
+      Fabricate(
+        :workshop_invitation,
+        member: member,
+        workshop: Fabricate(:workshop, chapter: chapter, date_and_time: 6.months.ago),
+        role: "Student",
+        attended: true
+      )
       member
     end
 
@@ -71,6 +78,19 @@ RSpec.describe ThreeMonthEmailService, type: :service do
       member
     end
 
+    let!(:student_with_very_old_attendance) do
+      member = Fabricate(:member)
+      Fabricate(:subscription, member: member, group: students_group)
+      Fabricate(
+        :workshop_invitation,
+        member: member,
+        workshop: Fabricate(:workshop, chapter: chapter, date_and_time: 14.months.ago),
+        role: "Student",
+        attended: true
+      )
+      member
+    end
+
     it "emails only students who have not attended in the last 3 months and were not emailed before" do
       expect { perform_enqueued_jobs { call } }.to change(MemberEmailDelivery, :count).by(2)
 
@@ -102,12 +122,25 @@ RSpec.describe ThreeMonthEmailService, type: :service do
       expect(MemberEmailDelivery.where(member: student_without_toc)).to be_empty
     end
 
+    it "does not email students who have not attended in the past year" do
+      perform_enqueued_jobs { call }
+
+      expect(MemberEmailDelivery.where(member: student_with_very_old_attendance)).to be_empty
+    end
+
     it "sends only one chaser for a member with multiple student subscriptions" do
       member = Fabricate(:member)
       other_chapter = Fabricate(:chapter)
       other_students_group = Fabricate(:group, name: "Students", chapter: other_chapter)
       Fabricate(:subscription, member: member, group: students_group)
       Fabricate(:subscription, member: member, group: other_students_group)
+      Fabricate(
+        :workshop_invitation,
+        member: member,
+        workshop: Fabricate(:workshop, chapter: chapter, date_and_time: 6.months.ago),
+        role: "Student",
+        attended: true
+      )
 
       perform_enqueued_jobs { call }
 
@@ -159,6 +192,13 @@ RSpec.describe ThreeMonthEmailService, type: :service do
     it "emails a student member who has recent attendance only as a coach" do
       member = Fabricate(:member)
       Fabricate(:subscription, member: member, group: students_group)
+      Fabricate(
+        :workshop_invitation,
+        member: member,
+        workshop: Fabricate(:workshop, chapter: chapter, date_and_time: 6.months.ago),
+        role: "Student",
+        attended: true
+      )
       Fabricate(
         :workshop_invitation,
         member: member,
