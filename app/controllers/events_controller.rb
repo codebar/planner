@@ -68,7 +68,7 @@ class EventsController < ApplicationController
   end
 
   def set_event
-    @event = Event.find_by(slug: params[:event_id])
+    @event = Event.find_by!(slug: params[:event_id])
   end
 
   def fetch_upcoming_events
