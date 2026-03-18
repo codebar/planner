@@ -45,7 +45,7 @@ gem 'simple_form'
 
 gem 'terser'
 
-gem 'pagy', '~> 43.3'
+gem 'pagy', '~> 43.4'
 
 gem 'icalendar'
 gem 'tzinfo-data'
@@ -58,7 +58,7 @@ gem 'faraday'
 
 gem 'stripe'
 
-gem 'rails-html-sanitizer', '~> 1.6.2'
+gem 'rails-html-sanitizer', '~> 1.7.0'
 
 # Use the Puma web server [https://github.com/puma/puma]
 gem 'puma', '~> 7.2'
