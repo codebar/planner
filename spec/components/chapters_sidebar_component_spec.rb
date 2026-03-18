@@ -1,7 +1,7 @@
 require 'rails_helper'
 require 'view_component/test_helpers'
 
-RSpec.describe ChaptersSidebarComponent, type: :component do
+RSpec.describe ChaptersSidebarComponent do
   include ViewComponent::TestHelpers
   include Rails.application.routes.url_helpers
 

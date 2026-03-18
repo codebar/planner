@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class ChaptersSidebarComponent < ViewComponent::Base
-  def initialize(chapters:, title: nil)
-    super()
+  # ViewComponent::Base does not define initialize, so super is not needed
+  def initialize(chapters:, title: nil) # rubocop:disable Lint/MissingSuper
     @chapters = chapters
     @title = title
   end
