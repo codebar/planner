@@ -30,7 +30,10 @@ class ApplicationController < ActionController::Base
   before_action :accept_terms, if: :logged_in?
 
   def render_not_found
-    render template: 'errors/not_found', layout: false, status: :not_found
+    respond_to do |format|
+      format.html { render template: 'errors/not_found', layout: false, status: :not_found }
+      format.all { head :not_found }
+    end
   end
 
   protected
