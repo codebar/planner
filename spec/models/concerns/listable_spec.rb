@@ -2,7 +2,7 @@ RSpec.describe Listable do
   subject(:workshop) { Fabricate(:workshop) }
 
   context 'scopes' do
-    context '#today_and_upcoming' do
+    describe '#today_and_upcoming' do
       it 'returns a list of all today and upcoming workshops' do
         Timecop.travel(Time.now.utc) do
           Fabricate.times(2, :past_workshop)
@@ -26,12 +26,14 @@ RSpec.describe Listable do
       end
     end
 
-    context '#upcoming' do
+    describe '#upcoming' do
       it 'returns a list of all upcoming workshops' do
-        Fabricate.times(2, :past_workshop)
-        future_workshops = Fabricate.times(1, :workshop)
+        Timecop.travel(Time.now.utc) do
+          Fabricate.times(2, :past_workshop)
+          future_workshops = Fabricate.times(1, :workshop)
 
-        expect(Workshop.upcoming).to match_array(future_workshops)
+          expect(Workshop.upcoming).to match_array(future_workshops)
+        end
       end
 
       it 'returns workshops ordered by date_and_time ascending (soonest first)' do
@@ -44,16 +46,18 @@ RSpec.describe Listable do
       end
     end
 
-    context '#past' do
+    describe '#past' do
       it 'returns a list of all upcoming workshops' do
-        past_workshops = Fabricate.times(2, :past_workshop)
-        Fabricate.times(1, :workshop)
+        Timecop.travel(Time.now.utc) do
+          past_workshops = Fabricate.times(2, :past_workshop)
+          Fabricate.times(1, :workshop)
 
-        expect(Workshop.past).to match_array(past_workshops)
+          expect(Workshop.past).to match_array(past_workshops)
+        end
       end
     end
 
-    context '#recent' do
+    describe '#recent' do
       it 'returns a list of the last 10 workshops' do
         Fabricate.times(1, :past_workshop)
         Fabricate.times(2, :workshop)
@@ -65,7 +69,7 @@ RSpec.describe Listable do
       end
     end
 
-    context '#completed_since_yesterday' do
+    describe '#completed_since_yesterday' do
       it 'returns a list of yesterday\'s events' do
         Fabricate(:workshop, date_and_time: 24.hours.ago)
         Fabricate(:workshop, date_and_time: 25.hours.ago)
@@ -78,7 +82,7 @@ RSpec.describe Listable do
     end
   end
 
-  context '#next' do
+  describe '#next' do
     it 'returns the next workshop to take place' do
       next_workshop = Fabricate(:workshop, date_and_time: Time.zone.now + 24.hours)
       Fabricate(:workshop, date_and_time: Time.zone.now + 29.hours)
