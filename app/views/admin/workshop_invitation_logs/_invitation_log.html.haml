@@ -1,0 +1,42 @@
+.card.mb-3
+  .card-body
+    .d-flex.justify-content-between.align-items-start
+      %div
+        %h5.card-title.mb-1
+          Batch ##{invitation_log.id}
+          %span.badge.bg-secondary= invitation_log.status
+        %p.mb-1
+          %strong> Action:
+          = invitation_log.action.humanize
+          %strong.ms-2 Audience:
+          = invitation_log.audience.humanize
+          %strong.ms-2 By:
+          = invitation_log.initiator&.full_name || 'System'
+          %strong.ms-2 Started:
+          = l(invitation_log.started_at, format: :short) if invitation_log.started_at
+        .mt-2
+          %span.badge.bg-success= "#{invitation_log.success_count} sent"
+          - if invitation_log.failure_count.positive?
+            %span.badge.bg-danger= "#{invitation_log.failure_count} failed"
+          - if invitation_log.skipped_count.positive?
+            %span.badge.bg-warning.text-dark= "#{invitation_log.skipped_count} skipped"
+          %span.badge.bg-secondary= "#{invitation_log.total_invitees} total"
+      %div
+        = link_to admin_workshop_invitation_log_path(@workshop, invitation_log),
+                  class: 'btn btn-sm btn-outline-primary' do
+          Details
+          - if invitation_log.failure_count.positive?
+            = "(#{invitation_log.failure_count} failures)"
+
+    - if invitation_log.entries.failed.any?
+      .mt-3
+        %button.btn.btn-sm.btn-outline-danger{ data: { bs_toggle: 'collapse', bs_target: "#failures-#{invitation_log.id}" } }
+          %i.fas.fa-exclamation-triangle
+          Show #{invitation_log.failure_count} failures
+        .collapse.mt-2{ id: "failures-#{invitation_log.id}" }
+          .list-group
+            - invitation_log.entries.failed.each do |entry|
+              .list-group-item.list-group-item-danger
+                .d-flex.justify-content-between
+                  %strong= entry.member.full_name
+                  %small= entry.failure_reason

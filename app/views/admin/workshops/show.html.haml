@@ -97,3 +97,24 @@
   .py-4.py-lg-5.bg-light
     .container#invitations
       = render partial: 'invitation_management'
+
+  .py-4.py-lg-5
+    .container
+      %h3 Invitation Logs
+      %p
+        = link_to 'View Invitation Logs', admin_workshop_invitation_logs_path(@workshop), class: 'btn btn-sm btn-secondary'
+
+      - logs = @workshop.invitation_logs.order(created_at: :desc).limit(3)
+      - if logs.any?
+        - logs.each do |log|
+          .card.mb-2
+            .card-body.py-2
+              .d-flex.justify-content-between.align-items-center
+                %div
+                  %strong= log.action.humanize
+                  %span.badge.bg-secondary= log.audience.humanize
+                  %small.text-muted.ms-2 by #{log.initiator&.full_name || 'System'}
+                .text-end
+                  %span.badge.bg-success= "#{log.success_count} sent"
+                  - if log.failure_count.positive?
+                    %span.badge.bg-danger= "#{log.failure_count} failed"
