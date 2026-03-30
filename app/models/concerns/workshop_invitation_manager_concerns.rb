@@ -51,8 +51,19 @@ module WorkshopInvitationManagerConcerns
     private
 
     def create_invitation(workshop, member, role)
-      invitation = WorkshopInvitation.create(workshop: workshop, member: member, role: role)
-      invitation.persisted? ? invitation : nil
+      WorkshopInvitation.find_or_create_by(workshop: workshop, member: member, role: role)
+    rescue StandardError => e
+      log_invitation_failure(workshop, member, role, e)
+      nil
+    end
+
+    def log_invitation_failure(workshop, member, role, error)
+      Rails.logger.error(
+        '[InvitationManager] Failed to create invitation: ' \
+        "workshop_id=#{workshop.id}, chapter_id=#{workshop.chapter_id}, " \
+        "member_id=#{member.id}, role=#{role}, " \
+        "error=#{error.class.name}: #{error.message}"
+      )
     end
 
     def invite_coaches_to_virtual_workshop(workshop)
