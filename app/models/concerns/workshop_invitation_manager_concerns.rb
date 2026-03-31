@@ -117,14 +117,7 @@ module WorkshopInvitationManagerConcerns
         next unless invitation
 
         count += 1
-        if logger
-          begin
-            VirtualWorkshopInvitationMailer.invite_coach(workshop, coach, invitation).deliver_now
-            logger.log_success(coach, invitation)
-          rescue StandardError => e
-            logger.log_failure(coach, invitation, e)
-          end
-        else
+        send_email_with_logging(logger, coach, invitation) do
           VirtualWorkshopInvitationMailer.invite_coach(workshop, coach, invitation).deliver_now
         end
       end
@@ -138,14 +131,7 @@ module WorkshopInvitationManagerConcerns
         next unless invitation
 
         count += 1
-        if logger
-          begin
-            WorkshopInvitationMailer.invite_coach(workshop, coach, invitation).deliver_now
-            logger.log_success(coach, invitation)
-          rescue StandardError => e
-            logger.log_failure(coach, invitation, e)
-          end
-        else
+        send_email_with_logging(logger, coach, invitation) do
           WorkshopInvitationMailer.invite_coach(workshop, coach, invitation).deliver_now
         end
       end
@@ -159,14 +145,7 @@ module WorkshopInvitationManagerConcerns
         next unless invitation
 
         count += 1
-        if logger
-          begin
-            VirtualWorkshopInvitationMailer.invite_student(workshop, student, invitation).deliver_now
-            logger.log_success(student, invitation)
-          rescue StandardError => e
-            logger.log_failure(student, invitation, e)
-          end
-        else
+        send_email_with_logging(logger, student, invitation) do
           VirtualWorkshopInvitationMailer.invite_student(workshop, student, invitation).deliver_now
         end
       end
@@ -180,18 +159,24 @@ module WorkshopInvitationManagerConcerns
         next unless invitation
 
         count += 1
-        if logger
-          begin
-            WorkshopInvitationMailer.invite_student(workshop, student, invitation).deliver_now
-            logger.log_success(student, invitation)
-          rescue StandardError => e
-            logger.log_failure(student, invitation, e)
-          end
-        else
+        send_email_with_logging(logger, student, invitation) do
           WorkshopInvitationMailer.invite_student(workshop, student, invitation).deliver_now
         end
       end
       count
+    end
+
+    def send_email_with_logging(logger, member, invitation)
+      if logger
+        begin
+          yield
+          logger.log_success(member, invitation)
+        rescue StandardError => e
+          logger.log_failure(member, invitation, e)
+        end
+      else
+        yield
+      end
     end
 
     def retrieve_and_notify_waitlisted(workshop, role:)
