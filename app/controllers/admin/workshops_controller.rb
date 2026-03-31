@@ -118,12 +118,12 @@ class Admin::WorkshopsController < Admin::ApplicationController
 
   def workshop_params
     params.expect(workshop: [
-                    :local_date, :local_time, :local_end_time, :chapter_id,
-                    :invitable, :seats, :virtual, :slack_channel, :slack_channel_link,
-                    :rsvp_open_local_date, :rsvp_open_local_time, :description,
-                    :coach_spaces, :student_spaces,
-                    { sponsor_ids: [] }
-                  ])
+      :local_date, :local_time, :local_end_time, :chapter_id,
+      :invitable, :seats, :virtual, :slack_channel, :slack_channel_link,
+      :rsvp_open_local_date, :rsvp_open_local_time, :description,
+      :coach_spaces, :student_spaces,
+      { sponsor_ids: [] }
+    ])
   end
 
   def chapter_id
