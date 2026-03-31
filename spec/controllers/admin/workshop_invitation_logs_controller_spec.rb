@@ -1,4 +1,4 @@
-RSpec.describe Admin::WorkshopInvitationLogsController, type: :controller do
+RSpec.describe Admin::WorkshopInvitationLogsController do
   let(:workshop) { Fabricate(:workshop) }
   let(:admin) { Fabricate(:member).tap { |m| m.add_role(:admin) } }
   let(:regular_member) { Fabricate(:member) }
