@@ -156,6 +156,145 @@ if Rails.env.development?
       end
     end
     Rails.logger.info '..done!'
+
+    Rails.logger.info 'Creating invitation logs...'
+
+    # Get organizers as initiators (or create one if none exist)
+    organisers = Member.joins(:roles).where(roles: { name: 'organiser' }).to_a
+    if organisers.empty?
+      organisers << Fabricate(:member, name: 'Chapter', surname: 'Organiser')
+    end
+
+    realistic_failure_reasons = [
+      'SMTP connection timeout',
+      'Invalid email format: malformed address',
+      'Rate limit exceeded: too many recipients',
+      'Recipient mailbox full',
+      'Connection refused by mail server',
+      'DNS lookup failed for recipient domain'
+    ].freeze
+
+    # Filter to recent past workshops (last 3 months)
+    recent_past_workshops = past_workshops.select do |w|
+      w.date_and_time > 3.months.ago
+    end
+
+    # Create logs for ~25 recent workshops
+    recent_past_workshops.sample(25).each do |workshop|
+      initiator = organisers.sample
+      audience = %w[students coaches everyone].sample
+
+      # Determine invitee pool based on audience
+      potential_invitees = case audience
+                           when 'students' then students
+                           when 'coaches' then coaches
+                           else students + coaches
+      end.sample(50)
+
+      # Simulate realistic distribution
+      total_to_invite = rand(15..potential_invitees.length)
+      skipped_count = rand(0..(total_to_invite * 0.1).to_i)
+      actual_sent = total_to_invite - skipped_count
+      success_count = rand((actual_sent * 0.85).to_i..actual_sent)
+      failure_count = actual_sent - success_count
+
+      log = InvitationLog.create!(
+        loggable: workshop,
+        initiator: initiator,
+        chapter: workshop.chapter,
+        audience: audience,
+        action: 'invite',
+        status: 'completed',
+        total_invitees: total_to_invite,
+        success_count: success_count,
+        failure_count: failure_count,
+        skipped_count: skipped_count,
+        started_at: workshop.date_and_time - 2.hours,
+        completed_at: workshop.date_and_time - 1.hour + rand(0..30).minutes,
+        expires_at: 180.days.from_now
+      )
+
+      # Get actual members for entries
+      invitees = potential_invitees.sample(total_to_invite)
+      skipped_members = invitees.shift(skipped_count)
+      sent_members = invitees
+
+      # Create skipped entries
+      skipped_members.each do |member|
+        InvitationLogEntry.create!(
+          invitation_log: log,
+          member: member,
+          status: 'skipped',
+          failure_reason: 'Invitation already exists',
+          processed_at: log.started_at + rand(1..10).seconds
+        )
+      end
+
+      # Create success entries
+      success_members = sent_members.sample(success_count)
+      success_members.each do |member|
+        invitation = WorkshopInvitation.where(workshop: workshop, member: member).first
+        InvitationLogEntry.create!(
+          invitation_log: log,
+          member: member,
+          invitation: invitation,
+          status: 'success',
+          processed_at: log.started_at + rand(10..120).seconds
+        )
+      end
+
+      # Create failure entries
+      failure_members = sent_members - success_members
+      failure_members.each do |member|
+        InvitationLogEntry.create!(
+          invitation_log: log,
+          member: member,
+          status: 'failed',
+          failure_reason: realistic_failure_reasons.sample,
+          processed_at: log.started_at + rand(10..120).seconds
+        )
+      end
+    end
+
+    # Create 2 running (in-progress) logs for future workshops
+    future_workshops.sample(2).each do |workshop|
+      initiator = organisers.sample
+      audience = %w[students coaches everyone].sample
+
+      log = InvitationLog.create!(
+        loggable: workshop,
+        initiator: initiator,
+        chapter: workshop.chapter,
+        audience: audience,
+        action: 'invite',
+        status: 'running',
+        total_invitees: 0,
+        success_count: 0,
+        failure_count: 0,
+        skipped_count: 0,
+        started_at: Time.current - rand(5..30).minutes,
+        expires_at: 180.days.from_now
+      )
+
+      # Create a few in-progress entries
+      potential_invitees = case audience
+                           when 'students' then students
+                           when 'coaches' then coaches
+                           else students + coaches
+      end.sample(20)
+
+      potential_invitees.sample(rand(3..8)).each do |member|
+        InvitationLogEntry.create!(
+          invitation_log: log,
+          member: member,
+          status: 'success',
+          processed_at: log.started_at + rand(60..300).seconds
+        )
+        log.update_column(:success_count, log.success_count + 1)
+      end
+    end
+
+    Rails.logger.info '..done creating invitation logs!'
   rescue Exception => e
     Rails.logger.error 'Something went wrong. Try running `bundle exec rake db:drop db:create db:migrate` first'
     Rails.logger.error e.message

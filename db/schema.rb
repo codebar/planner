@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_24_130000) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_30_193245) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -285,6 +285,51 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_24_130000) do
     t.string "name"
     t.datetime "updated_at", precision: nil
     t.index ["chapter_id"], name: "index_groups_on_chapter_id"
+  end
+
+  create_table "invitation_log_entries", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.text "failure_reason"
+    t.bigint "invitation_id"
+    t.bigint "invitation_log_id", null: false
+    t.string "invitation_type"
+    t.bigint "member_id", null: false
+    t.datetime "processed_at"
+    t.string "status", default: "success", null: false
+    t.datetime "updated_at", null: false
+    t.index ["invitation_log_id", "status"], name: "index_invitation_log_entries_on_invitation_log_id_and_status"
+    t.index ["invitation_log_id"], name: "index_invitation_log_entries_on_invitation_log_id"
+    t.index ["invitation_type", "invitation_id"], name: "idx_on_invitation_type_invitation_id_6d6ef495e6", unique: true
+    t.index ["invitation_type", "invitation_id"], name: "index_invitation_log_entries_on_invitation"
+    t.index ["member_id", "processed_at"], name: "index_invitation_log_entries_on_member_id_and_processed_at"
+    t.index ["member_id"], name: "index_invitation_log_entries_on_member_id"
+  end
+
+  create_table "invitation_logs", force: :cascade do |t|
+    t.string "action", default: "invite", null: false
+    t.string "audience", null: false
+    t.bigint "chapter_id"
+    t.datetime "completed_at"
+    t.datetime "created_at", null: false
+    t.text "error_message"
+    t.datetime "expires_at"
+    t.integer "failure_count", default: 0
+    t.bigint "initiator_id"
+    t.bigint "loggable_id"
+    t.string "loggable_type"
+    t.integer "skipped_count", default: 0
+    t.datetime "started_at"
+    t.string "status", default: "running", null: false
+    t.integer "success_count", default: 0
+    t.integer "total_invitees", default: 0
+    t.datetime "updated_at", null: false
+    t.index ["chapter_id"], name: "index_invitation_logs_on_chapter_id"
+    t.index ["created_at"], name: "index_invitation_logs_on_created_at"
+    t.index ["expires_at"], name: "index_invitation_logs_on_expires_at"
+    t.index ["initiator_id"], name: "index_invitation_logs_on_initiator_id"
+    t.index ["loggable_type", "loggable_id", "audience", "action", "status"], name: "index_invitation_logs_unique_active", unique: true, where: "((status)::text = 'running'::text)"
+    t.index ["loggable_type", "loggable_id"], name: "index_invitation_logs_on_loggable"
+    t.index ["status"], name: "index_invitation_logs_on_status"
   end
 
   create_table "invitations", id: :serial, force: :cascade do |t|
@@ -590,5 +635,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_24_130000) do
     t.index ["date_and_time"], name: "index_workshops_on_date_and_time"
   end
 
+  add_foreign_key "invitation_log_entries", "invitation_logs"
+  add_foreign_key "invitation_logs", "members", column: "initiator_id"
   add_foreign_key "member_email_deliveries", "members"
 end

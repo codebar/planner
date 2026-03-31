@@ -149,6 +149,7 @@ Rails.application.routes.draw do
 
       resource :invitations, only: [:update]
       resources :invitations, only: [:update]
+      resources :invitation_logs, only: %i[index show], controller: 'workshop_invitation_logs'
     end
 
     resources :testimonials, only: %i[index]

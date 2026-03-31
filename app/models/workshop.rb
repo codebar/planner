@@ -16,6 +16,7 @@ class Workshop < ApplicationRecord
   has_one :host, through: :workshop_host, source: :sponsor
   has_many :organisers, -> { where('permissions.name' => 'organiser') }, through: :permissions, source: :members
   has_many :feedbacks
+  has_many :invitation_logs, as: :loggable
 
   belongs_to :chapter
 
