@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.describe InvitationLogPolicy do
   subject { described_class.new(user, invitation_log) }
 
