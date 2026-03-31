@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.describe InvitationLogEntry do
   describe 'associations' do
     it { is_expected.to belong_to(:invitation_log) }
