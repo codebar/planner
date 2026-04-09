@@ -62,10 +62,10 @@ class InvitationManager
   end
 
   def chapter_students(chapter)
-    Member.in_group(chapter.groups.students)
+    Member.in_group(chapter.groups.students).distinct
   end
 
   def chapter_coaches(chapter)
-    Member.in_group(chapter.groups.coaches)
+    Member.in_group(chapter.groups.coaches).distinct
   end
 end
