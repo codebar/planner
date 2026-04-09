@@ -79,9 +79,9 @@ class InvitationLogger
 
   def find_or_build_entry(member, invitation, status)
     @log.entries.find_or_initialize_by(
-      member: member,
-      invitation: invitation,
-      status: status
+      member:,
+      invitation:,
+      status:
     )
   end
 
