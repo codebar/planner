@@ -46,6 +46,14 @@ RSpec.describe InvitationLogger do
       expect(entry.invitation).to eq invitation
       expect(log.reload.success_count).to eq 1
     end
+
+    it 'does not create duplicate entry on retry' do
+      entry1 = logger.log_success(member, invitation)
+      entry2 = logger.log_success(member, invitation)
+
+      expect(entry2).to eq entry1
+      expect(log.reload.success_count).to eq 1
+    end
   end
 
   describe '#log_failure' do
@@ -60,6 +68,15 @@ RSpec.describe InvitationLogger do
       expect(entry.failure_reason).to eq 'SMTP error'
       expect(log.reload.failure_count).to eq 1
     end
+
+    it 'does not create duplicate entry on retry' do
+      error = StandardError.new('SMTP error')
+      entry1 = logger.log_failure(member, invitation, error)
+      entry2 = logger.log_failure(member, invitation, error)
+
+      expect(entry2).to eq entry1
+      expect(log.reload.failure_count).to eq 1
+    end
   end
 
   describe '#log_skipped' do
@@ -71,6 +88,14 @@ RSpec.describe InvitationLogger do
 
       expect(entry.status).to eq 'skipped'
       expect(entry.failure_reason).to eq 'Already invited'
+      expect(log.reload.skipped_count).to eq 1
+    end
+
+    it 'does not create duplicate entry on retry' do
+      entry1 = logger.log_skipped(member, invitation, 'Already invited')
+      entry2 = logger.log_skipped(member, invitation, 'Already invited')
+
+      expect(entry2).to eq entry1
       expect(log.reload.skipped_count).to eq 1
     end
   end
