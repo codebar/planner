@@ -52,8 +52,10 @@ User types (≥3 chars) → TomSelect queries /admin/members/search?q=term
    - Custom renderer showing name + email inline
 
 3. **Assets: TomSelect library**
-   - Download to `vendor/assets/javascripts/tom-select.complete.min.js`
-   - Download Bootstrap 5 theme to `vendor/assets/stylesheets/tom-select.bootstrap5.min.css`
+   - Download JS: `https://cdn.jsdelivr.net/npm/tom-select@2.4.3/dist/js/tom-select.complete.min.js`
+     - Save to `vendor/assets/javascripts/tom-select.complete.min.js`
+   - Download CSS: `https://cdn.jsdelivr.net/npm/tom-select@2.4.3/dist/css/tom-select.bootstrap5.min.css`
+     - Save to `vendor/assets/stylesheets/tom-select.bootstrap5.min.css`
 
 ## Implementation Details
 
@@ -102,13 +104,24 @@ end
       %h1 Members Directory
   .row.mb-4
     .col-12.col-md-6
-      = select_tag 'member_lookup_id', nil, placeholder: 'Type to search members...', class: 'form-control'
+      = select_tag 'member_lookup_id', nil, class: 'form-control'
   .row
     .col
       = link_to 'View Profile', '#', class: 'btn btn-primary', id: 'view_profile'
 ```
 
-Simplify controller index action - remove `@members = Member.all` since data is loaded dynamically.
+**Note:** Placeholder text is configured in TomSelect JS options, not as an HTML attribute on `<select>`.
+
+### Controller Index Action
+
+Remove `@members = Member.all` from the index action since members are now loaded dynamically via the search endpoint:
+
+```ruby
+# app/controllers/admin/members_controller.rb
+def index
+  # @members = Member.all  # REMOVED - no longer needed
+end
+```
 
 ### JavaScript
 
@@ -123,6 +136,7 @@ $(function() {
   // TomSelect for admin member lookup
   if ($('#member_lookup_id').length) {
     new TomSelect('#member_lookup_id', {
+      placeholder: 'Type to search members...',
       valueField: 'id',
       labelField: 'full_name',
       searchField: ['full_name', 'email'],
@@ -170,10 +184,13 @@ $(function() {
 
 ### Stylesheet
 
-```css
-/* app/assets/stylesheets/application.css */
-/* //= require tom-select.bootstrap5.min */
+```scss
+// app/assets/stylesheets/application.scss
+// Add after existing requires:
+//*= require tom-select.bootstrap5.min
 ```
+
+**Note:** The require must come after `*= require chosen` and before `@import` statements to match the existing manifest structure.
 
 ## Testing
 
