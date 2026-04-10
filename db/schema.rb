@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_08_220120) do
+ActiveRecord::Schema[8.1].define(version: 2026_04_10_174346) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -297,9 +297,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_08_220120) do
     t.datetime "processed_at"
     t.string "status", default: "success", null: false
     t.datetime "updated_at", null: false
+    t.index ["invitation_log_id", "invitation_type", "invitation_id"], name: "index_invitation_log_entries_on_batch_and_invitation"
     t.index ["invitation_log_id", "status"], name: "index_invitation_log_entries_on_invitation_log_id_and_status"
     t.index ["invitation_log_id"], name: "index_invitation_log_entries_on_invitation_log_id"
-    t.index ["invitation_type", "invitation_id"], name: "idx_on_invitation_type_invitation_id_6d6ef495e6", unique: true
     t.index ["invitation_type", "invitation_id"], name: "index_invitation_log_entries_on_invitation"
     t.index ["member_id", "processed_at"], name: "index_invitation_log_entries_on_member_id_and_processed_at"
     t.index ["member_id"], name: "index_invitation_log_entries_on_member_id"
