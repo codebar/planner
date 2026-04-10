@@ -6,7 +6,7 @@ class InvitationLog < ApplicationRecord
   belongs_to :loggable, polymorphic: true
   belongs_to :initiator, class_name: 'Member', optional: true
   belongs_to :chapter, optional: true
-  has_many :entries, class_name: 'InvitationLogEntry', dependent: :destroy
+  has_many :entries, class_name: 'InvitationLogEntry', dependent: :destroy, autosave: false
 
   before_create :set_expires_at
 

@@ -129,4 +129,32 @@ RSpec.describe InvitationLogger do
       expect(log.completed_at).to be_present
     end
   end
+
+  describe 'cross-status retry (PR #2558 fix)' do
+    let(:logger) { described_class.new(workshop, initiator, 'students', :invite) }
+    let!(:log) { logger.start_batch }
+
+    it 'returns existing failure entry when logging success for same member+invitation' do
+      error = StandardError.new('SMTP error')
+      failure_entry = logger.log_failure(member, invitation, error)
+
+      success_entry = logger.log_success(member, invitation)
+
+      expect(success_entry).to eq failure_entry
+      expect(success_entry.status).to eq 'failed'
+      expect(log.reload.success_count).to eq 0
+      expect(log.reload.failure_count).to eq 1
+    end
+
+    it 'returns existing success entry when logging failure for same member+invitation' do
+      logger.log_success(member, invitation)
+
+      error = StandardError.new('SMTP error')
+      failure_entry = logger.log_failure(member, invitation, error)
+
+      expect(failure_entry.status).to eq 'success'
+      expect(log.reload.success_count).to eq 1
+      expect(log.reload.failure_count).to eq 0
+    end
+  end
 end

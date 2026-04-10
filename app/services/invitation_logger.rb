@@ -23,7 +23,7 @@ class InvitationLogger
     return unless @log
 
     entry = find_or_build_entry(member, invitation, :success)
-    return entry if entry.persisted?
+    return entry if entry.processed_at
 
     entry.assign_attributes(processed_at: Time.current)
     save_entry(entry, :success_count)
@@ -33,7 +33,7 @@ class InvitationLogger
     return unless @log
 
     entry = find_or_build_entry(member, invitation, :failed)
-    return entry if entry.persisted?
+    return entry if entry.processed_at
 
     entry.assign_attributes(
       failure_reason: error.message,
@@ -46,7 +46,7 @@ class InvitationLogger
     return unless @log
 
     entry = find_or_build_entry(member, invitation, :skipped)
-    return entry if entry.persisted?
+    return entry if entry.processed_at
 
     entry.assign_attributes(
       failure_reason: reason,
@@ -78,11 +78,9 @@ class InvitationLogger
   private
 
   def find_or_build_entry(member, invitation, status)
-    @log.entries.find_or_initialize_by(
-      member:,
-      invitation:,
-      status:
-    )
+    @log.entries.find_or_create_by(member: member, invitation: invitation) do |entry|
+      entry.status = status
+    end
   end
 
   def save_entry(entry, counter)
