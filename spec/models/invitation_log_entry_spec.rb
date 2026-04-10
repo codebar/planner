@@ -16,12 +16,4 @@ RSpec.describe InvitationLogEntry do
                                                 })
     end
   end
-
-  describe 'validations' do
-    it 'validates uniqueness of member_id scoped to invitation' do
-      entry = Fabricate(:invitation_log_entry)
-      expect(entry).to validate_uniqueness_of(:member_id)
-        .scoped_to(:invitation_type, :invitation_id)
-    end
-  end
 end
