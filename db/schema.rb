@@ -297,7 +297,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_10_174346) do
     t.datetime "processed_at"
     t.string "status", default: "success", null: false
     t.datetime "updated_at", null: false
-    t.index ["invitation_log_id", "invitation_type", "invitation_id"], name: "index_invitation_log_entries_on_batch_and_invitation"
     t.index ["invitation_log_id", "status"], name: "index_invitation_log_entries_on_invitation_log_id_and_status"
     t.index ["invitation_log_id"], name: "index_invitation_log_entries_on_invitation_log_id"
     t.index ["invitation_type", "invitation_id"], name: "index_invitation_log_entries_on_invitation"
