@@ -22,7 +22,7 @@
 | `vendor/assets/javascripts/tom-select.complete.min.js` | Create | TomSelect JS library |
 | `vendor/assets/stylesheets/tom-select.bootstrap5.min.css` | Create | TomSelect Bootstrap 5 theme |
 | `spec/controllers/admin/members_controller_spec.rb` | Create | Controller tests for search action |
-| `spec/features/admin/member_search_spec.rb` | Create | Feature test for TomSelect behavior |
+| `spec/features/admin/tom_select_member_lookup_spec.rb` | Create | Feature test for TomSelect behavior |
 
 ---
 
@@ -119,7 +119,10 @@ RSpec.describe Admin::MembersController, type: :controller do
     let!(:member_jane) { Fabricate(:member, name: 'Jane', surname: 'Doe', email: 'jane@example.com') }
     let!(:member_john) { Fabricate(:member, name: 'John', surname: 'Smith', email: 'john@test.com') }
 
-    before { sign_in admin }
+    before do
+      admin.add_role(:admin)
+      login_as_admin(admin)
+    end
 
     context 'with query less than 3 characters' do
       it 'returns empty array' do
@@ -168,7 +171,7 @@ RSpec.describe Admin::MembersController, type: :controller do
     end
 
     context 'when not authenticated' do
-      before { sign_out admin }
+      before { login(Fabricate(:member)) }
 
       it 'redirects to login' do
         get :search, params: { q: 'test' }, format: :json
@@ -179,6 +182,8 @@ RSpec.describe Admin::MembersController, type: :controller do
   end
 end
 ```
+
+**Note:** Uses `login_as_admin(admin)` helper defined in `spec/support/helpers/login_helpers.rb`.
 
 - [ ] **Step 2: Run tests to verify they fail**
 
@@ -499,22 +504,24 @@ git commit -m "feat: initialize TomSelect for member lookup, exclude from Chosen
 ## Task 9: Feature Test for TomSelect
 
 **Files:**
-- Create: `spec/features/admin/member_search_spec.rb`
+- Create: `spec/features/admin/tom_select_member_lookup_spec.rb`
+
+**Note:** Named `tom_select_member_lookup_spec.rb` to avoid collision with existing `member_search_spec.rb`.
 
 - [ ] **Step 1: Create feature spec**
 
 ```ruby
-# spec/features/admin/member_search_spec.rb
+# spec/features/admin/tom_select_member_lookup_spec.rb
 require 'rails_helper'
 
-RSpec.feature 'Admin Member Search', type: :feature, js: true do
+RSpec.describe 'Admin TomSelect Member Lookup', type: :feature, js: true do
   let(:admin) { Fabricate(:member) }
   let!(:member_jane) { Fabricate(:member, name: 'Jane', surname: 'Doe', email: 'jane@example.com') }
   let!(:member_john) { Fabricate(:member, name: 'John', surname: 'Smith', email: 'john@test.com') }
 
   before do
     admin.add_role(:admin)
-    sign_in admin
+    login_as_admin(admin)
   end
 
   scenario 'searching for members with TomSelect' do
@@ -531,7 +538,7 @@ RSpec.feature 'Admin Member Search', type: :feature, js: true do
     sleep 0.5
     
     # Type 3+ characters to trigger search
-    find('.ts-input').send_keys('ne'
+    find('.ts-input').send_keys('ne')
     
     # Wait for results to load
     expect(page).to have_css('.ts-dropdown .option', wait: 5)
@@ -548,7 +555,7 @@ RSpec.feature 'Admin Member Search', type: :feature, js: true do
     visit admin_members_path
 
     find('.ts-input').click
-    find('.ts-input').send_keys('Jane Doi
+    find('.ts-input').send_keys('Jane Doe')
     
     # Wait for results
     expect(page).to have_css('.ts-dropdown .option', wait: 5)
@@ -562,10 +569,12 @@ RSpec.feature 'Admin Member Search', type: :feature, js: true do
 end
 ```
 
+**Note:** Uses `login_as_admin(admin)` helper from `spec/support/helpers/login_helpers.rb`. The helper mocks `current_user` on ApplicationController, which works with Playwright JS tests.
+
 - [ ] **Step 2: Run feature test to verify behavior**
 
 ```bash
-bundle exec rspec spec/features/admin/member_search_spec.rb
+bundle exec rspec spec/features/admin/tom_select_member_lookup_spec.rb
 ```
 
 Expected: Tests pass (may need debugging for browser timing).
@@ -573,8 +582,8 @@ Expected: Tests pass (may need debugging for browser timing).
 - [ ] **Step 3: Commit**
 
 ```bash
-git add spec/features/admin/member_search_spec.rb
-git commit -m "test: add feature test for TomSelect member search"
+git add spec/features/admin/tom_select_member_lookup_spec.rb
+git commit -m "test: add feature test for TomSelect member lookup"
 ```
 
 ---
