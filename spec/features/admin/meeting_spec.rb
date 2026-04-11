@@ -21,8 +21,8 @@ RSpec.feature 'Managing meetings', type: :feature do
       click_on 'Save'
 
       expect(page).to have_content('Meeting successfully created')
-      expect(page.current_path)
-        .to eq(admin_meeting_path("#{I18n.l(today, format: :year_month).downcase}-august-meeting-1"))
+      expect(page)
+        .to have_current_path(admin_meeting_path("#{I18n.l(today, format: :year_month).downcase}-august-meeting-1"), ignore_query: true)
       expect(page).to have_content 'Invite'
     end
 
@@ -48,18 +48,30 @@ RSpec.feature 'Managing meetings', type: :feature do
       expect(page).to have_content('Slug has already been taken')
     end
 
-    scenario 'successfully' do
+    scenario 'successfully', :js do
       permissions = Fabricate(:permission, resource: meeting, name: 'organiser')
 
       visit edit_admin_meeting_path(meeting)
-      fill_in 'Name', with: "March Meeting"
-      unselect permissions.members.first.full_name
+      fill_in 'Name', with: 'March Meeting'
+      remove_from_tom_select(permissions.members.first.full_name)
 
       click_on 'Save'
 
       expect(page).to have_content('You have successfully updated the details of this meeting')
       expect(page).to have_css(%(span[title="#{permissions.members.last.full_name}"]))
-      expect(page).to_not have_css(%(span[title="#{permissions.members.first.full_name}"]))
+      expect(page).not_to have_css(%(span[title="#{permissions.members.first.full_name}"]))
+    end
+
+    scenario 'adding an organiser', :js do
+      meeting = Fabricate(:meeting)
+      new_organiser = Fabricate(:member)
+
+      visit edit_admin_meeting_path(meeting)
+      select_from_tom_select(new_organiser.full_name, from: 'meeting_organisers')
+
+      click_on 'Save'
+
+      expect(page).to have_css(%(span[title="#{new_organiser.full_name}"]))
     end
   end
 
@@ -78,7 +90,7 @@ RSpec.feature 'Managing meetings', type: :feature do
     scenario 'when no format is used then it redirects to the meeting page' do
       visit attendees_emails_admin_meeting_path(meeting)
 
-      expect(page.current_path).to eq(admin_meeting_path(meeting))
+      expect(page).to have_current_path(admin_meeting_path(meeting), ignore_query: true)
     end
   end
 
@@ -88,7 +100,7 @@ RSpec.feature 'Managing meetings', type: :feature do
       meeting = Fabricate(:meeting, chapters: [chapter])
 
       visit invite_admin_meeting_path(meeting)
-      expect(page).to have_content("Invitations are being sent out")
+      expect(page).to have_content('Invitations are being sent out')
     end
 
     scenario 'does not send the invitations to banned members' do

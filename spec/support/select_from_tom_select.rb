@@ -29,6 +29,14 @@ module SelectFromTomSelect
     # Click the matching option
     find('.ts-dropdown .option', text: item_text, match: :prefer_exact).click
   end
+
+  # Remove an item from a TomSelect multi-select
+  # @param item_text [String] The text of the item to remove (must match exactly)
+  def remove_from_tom_select(item_text)
+    within '.ts-wrapper' do
+      find('.item', text: item_text, match: :prefer_exact).find('.remove').click
+    end
+  end
 end
 
 RSpec.configure do |config|

@@ -1,3 +1,7 @@
+- content_for :head do
+  %link{ href: 'https://cdn.jsdelivr.net/npm/tom-select@2.4.3/dist/css/tom-select.bootstrap5.min.css', rel: 'stylesheet', type: 'text/css' }
+  %script{ src: 'https://cdn.jsdelivr.net/npm/tom-select@2.4.3/dist/js/tom-select.complete.min.js' }
+
 = simple_form_for [:admin, @meeting] do |f|
   .row
     .col-12
@@ -17,7 +21,11 @@
     .col-12
       = f.association :venue, input_html: { data: { placeholder: 'Select venue' }}, required: true
     .col-12
-      = f.input :organisers, collection: Member.all, label_method: :full_name, value_method: :id, selected: @meeting.organisers.map(&:id), input_html: { multiple: true }
+      = f.label :organisers
+      = f.select :organisers,
+                 options_for_select(@meeting.organisers.map { |o| [o.full_name, o.id] }, @meeting.organisers.map(&:id)),
+                 { include_blank: false },
+                 { multiple: true, class: 'tom-select', data: { placeholder: 'Type to search members...' } }
     .col-12
       = f.input :chapters, collection: Chapter.all, label_method: :name, value_method: :id, selected: @meeting.chapters.map(&:id), input_html: { multiple: true }
     .col-12
