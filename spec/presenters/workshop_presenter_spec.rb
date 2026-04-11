@@ -10,7 +10,7 @@ RSpec.describe WorkshopPresenter do
                       attending_students: double(:attending_students, count: attending_students))
   end
 
-  context '#decorate' do
+  describe '#decorate' do
     it 'returns a workshop decorated with the WorkshopPresenter' do
       workshop = double(:workshop, virtual?: false)
       presenter = WorkshopPresenter.decorate(workshop)
@@ -24,13 +24,13 @@ RSpec.describe WorkshopPresenter do
     end
   end
 
-  context '#address' do
+  describe '#address' do
     it 'returns the decorated address of the workshop\'s venue' do
       expect(presenter.address.to_html).to eq(AddressPresenter.new(host.address).to_html)
     end
   end
 
-  context '#attending_and_available_student_spots' do
+  describe '#attending_and_available_student_spots' do
     let(:workshop) { double_workshop(attending_coaches: 3, attending_students: 4) }
 
     it 'returns the attending students count over the available workshop spots' do
@@ -38,7 +38,7 @@ RSpec.describe WorkshopPresenter do
     end
   end
 
-  context '#attending_and_available_coach_spots' do
+  describe '#attending_and_available_coach_spots' do
     let(:workshop) { double_workshop(attending_coaches: 3, attending_students: 4) }
 
     it 'returns the attending coaches count over the available workshop spots' do
@@ -46,7 +46,7 @@ RSpec.describe WorkshopPresenter do
     end
   end
 
-  context '#title' do
+  describe '#title' do
     it 'returns the title of a workshop' do
       expect(presenter.title).to eq("Workshop at #{host.name}")
     end
@@ -65,7 +65,7 @@ RSpec.describe WorkshopPresenter do
       workshop = Fabricate(:workshop, chapter: Fabricate(:chapter_without_organisers))
       presenter = WorkshopPresenter.new(workshop)
 
-      expect(presenter.organisers).to match_array([])
+      expect(presenter.organisers).to be_empty
     end
 
     it 'when there are organisers' do
@@ -80,18 +80,18 @@ RSpec.describe WorkshopPresenter do
   end
 
   context 'time formatting' do
-    let(:workshop) { double(:workshop, date_and_time: Time.zone.now, ends_at: 1.hour.from_now) }
+    it '#start_time and #end_time' do
+      travel_to(Time.current) do
+        workshop = double(:workshop, date_and_time: Time.current, ends_at: 1.hour.from_now)
+        presenter = WorkshopPresenter.new(workshop)
 
-    it '#start_time' do
-      expect(presenter.start_time).to eq(I18n.l(workshop.date_and_time, format: :time))
-    end
-
-    it '#end_time' do
-      expect(presenter.end_time).to eq(I18n.l(workshop.ends_at, format: :time))
+        expect(presenter.start_time).to eq(I18n.l(workshop.date_and_time, format: :time))
+        expect(presenter.end_time).to eq(I18n.l(workshop.ends_at, format: :time))
+      end
     end
   end
 
-  context '#attendees_csv' do
+  describe '#attendees_csv' do
     let(:invitations) do
       [Fabricate.times(2, :student_workshop_invitation), Fabricate.times(2, :coach_workshop_invitation)].flatten
     end
@@ -111,14 +111,14 @@ RSpec.describe WorkshopPresenter do
     end
   end
 
-  context '#pairing_csv' do
+  describe '#pairing_csv' do
     let(:workshop) { double(:workshop, attendances: [invitation]) }
     let(:student) { Fabricate(:student) }
     let(:invitation) { Fabricate(:workshop_invitation, member: student, note: 'Note') }
 
     it 'returns a csv with all the details required to enable organisers to pair the participants' do
       student_pairing_array = [true, student.full_name, 'Student', invitation.tutorial, invitation.note, 'N/A']
-      student_presenter = MemberPresenter.new(student)
+      MemberPresenter.new(student)
 
       expect(presenter.pairing_csv)
         .to eq(WorkshopPresenter::PAIRING_HEADINGS.join(',') + "\n" +
@@ -131,14 +131,17 @@ RSpec.describe WorkshopPresenter do
     presenter = WorkshopPresenter.new(workshop)
     members = Fabricate.times(2, :member)
     members.each_with_index do |member, index|
-      index % 2 == 0 ? Fabricate(:attending_workshop_invitation, member: member, workshop: workshop) :
-        Fabricate(:attending_workshop_invitation, member: member, workshop: workshop, role: 'Coach')
+      if index.even?
+  Fabricate(:attending_workshop_invitation, member: member, workshop: workshop)
+      else
+  Fabricate(:attending_workshop_invitation, member: member, workshop: workshop, role: 'Coach')
+      end
     end
 
     expect(presenter.attendees_emails.split(', ')).to match_array(members.map(&:email))
   end
 
-  context '#coach_spaces' do
+  describe '#coach_spaces' do
     it 'returns the available coach_spots' do
       expect(host).to receive(:coach_spots)
 
@@ -146,7 +149,7 @@ RSpec.describe WorkshopPresenter do
     end
   end
 
-  context '#student_spaces' do
+  describe '#student_spaces' do
     it 'returns the available coach_spots' do
       expect(host).to receive(:seats)
 
@@ -154,7 +157,7 @@ RSpec.describe WorkshopPresenter do
     end
   end
 
-  context '#spaces?' do
+  describe '#spaces?' do
     let(:sponsor) { double(:sponsor, coach_spots: 3, seats: 5, chapter: chapter) }
 
     def double_workshop(attending_coaches:, attending_students:)
@@ -166,7 +169,7 @@ RSpec.describe WorkshopPresenter do
     context 'when the host has more available spots' do
       let(:workshop) { double_workshop(attending_coaches: 2, attending_students: 3) }
 
-      it 'it returns true' do
+      it 'returns true' do
         expect(presenter.spaces?).to eq(true)
       end
     end
@@ -174,13 +177,13 @@ RSpec.describe WorkshopPresenter do
     context 'when the host has no more available spots' do
       let(:workshop) { double_workshop(attending_coaches: 3, attending_students: 5) }
 
-      it 'it returns false' do
+      it 'returns false' do
         expect(presenter.spaces?).to eq(false)
       end
     end
   end
 
-  context '#send_attending_email' do
+  describe '#send_attending_email' do
     it 'send an attending email to the invitation user' do
       workshop_invitation_mailer = double(:workshop_invitation_mailed, deliver_now: true)
       invitation = double(:invitation, member: double(:member))
