@@ -70,13 +70,72 @@ $(function() {
     });
   }
 
-  // Chosen for all other selects (exclude #member_lookup_id)
+  // TomSelect for meeting invitation member lookup
+  if ($('#meeting_invitations_member').length) {
+    new TomSelect('#meeting_invitations_member', {
+      placeholder: 'Type to search members...',
+      valueField: 'id',
+      labelField: 'full_name',
+      searchField: ['full_name', 'email'],
+      create: false,
+      loadThrottle: 300,
+      shouldLoad: function(query) {
+        return query.length >= 3;
+      },
+      load: function(query, callback) {
+        fetch('/admin/members/search?q=' + encodeURIComponent(query))
+          .then(response => response.json())
+          .then(json => callback(json))
+          .catch(() => callback());
+      },
+      render: {
+        option: function(item, escape) {
+          return '<div>' + escape(item.full_name) + ' <small class="text-muted">' + escape(item.email) + '</small></div>';
+        },
+        no_results: function(data, escape) {
+          return '<div class="no-results">No members found</div>';
+        }
+      }
+    });
+  }
+
+  // TomSelect for meeting organisers (multi-select)
+  if ($('#meeting_organisers').length) {
+    new TomSelect('#meeting_organisers', {
+      plugins: ['remove_button'],
+      placeholder: 'Type to search members...',
+      valueField: 'id',
+      labelField: 'full_name',
+      searchField: ['full_name', 'email'],
+      create: false,
+      loadThrottle: 300,
+      shouldLoad: function(query) {
+        return query.length >= 3;
+      },
+      load: function(query, callback) {
+        fetch('/admin/members/search?q=' + encodeURIComponent(query))
+          .then(response => response.json())
+          .then(json => callback(json))
+          .catch(() => callback());
+      },
+      render: {
+        option: function(item, escape) {
+          return '<div>' + escape(item.full_name) + ' <small class="text-muted">' + escape(item.email) + '</small></div>';
+        },
+        no_results: function(data, escape) {
+          return '<div class="no-results">No members found</div>';
+        }
+      }
+    });
+  }
+
+  // Chosen for all other selects (exclude TomSelect fields)
   // Chosen hides inputs and selects, which becomes problematic when they are
   // required: browser validation doesn't get shown to the user.
   // This fix places "the original input behind the Chosen input, matching the
   // height and width so that the warning appears in the correct position."
   // https://github.com/harvesthq/chosen/issues/515#issuecomment-474588057
-  $('select').not('#member_lookup_id').on('chosen:ready', function () {
+  $('select').not('#member_lookup_id, #meeting_invitations_member, #meeting_organisers').on('chosen:ready', function () {
     var height = $(this).next('.chosen-container').height();
     var width = $(this).next('.chosen-container').width();
 
@@ -88,7 +147,7 @@ $(function() {
     }).show();
   });
 
-  $('select').not('#member_lookup_id').chosen({
+  $('select').not('#member_lookup_id, #meeting_invitations_member, #meeting_organisers').chosen({
     allow_single_deselect: true,
     no_results_text: 'No results matched'
   });
