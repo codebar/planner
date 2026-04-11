@@ -20,10 +20,12 @@ RSpec.describe AttendanceWarning do
     describe '.scopes' do
       describe 'last_six_months' do
         it 'returns all attendance warnings issues in the last six months' do
-          Fabricate(:attendance_warning, member: member, created_at: 7.months.ago)
-          warnings = Fabricate.times(2, :attendance_warning, member: member, created_at: 5.months.ago)
+          travel_to(Time.current) do
+            Fabricate(:attendance_warning, member: member, created_at: 7.months.ago)
+            warnings = Fabricate.times(2, :attendance_warning, member: member, created_at: 5.months.ago)
 
-          expect(member.attendance_warnings.last_six_months).to contain_exactly(*warnings)
+            expect(member.attendance_warnings.last_six_months).to match_array(warnings)
+          end
         end
       end
     end

@@ -5,21 +5,25 @@ RSpec.feature 'event listing', type: :feature do
     let!(:event) { Fabricate(:event) }
 
     scenario 'displays upcoming events page' do
-      visit upcoming_events_path
-      expect(page).to have_content 'Upcoming Events'
-      expect(page).to have_content event.name
+      travel_to(Time.current) do
+        visit upcoming_events_path
+        expect(page).to have_content 'Upcoming Events'
+        expect(page).to have_content event.name
+      end
     end
   end
 
   describe 'I can see past events' do
     let!(:chapter) { Fabricate(:chapter, active: true) }
-    let!(:past_event) { Fabricate(:event, date_and_time: Time.zone.now - 2.weeks) }
-    let!(:past_workshop) { Fabricate(:workshop, date_and_time: Time.zone.now - 1.week, chapter: chapter) }
+    let!(:past_event) { Fabricate(:event, date_and_time: 2.weeks.ago) }
+    let!(:past_workshop) { Fabricate(:workshop, date_and_time: 1.week.ago, chapter: chapter) }
 
     scenario 'displays past events page' do
-      visit past_events_path
-      expect(page).to have_content 'Past Events'
-      expect(page).to have_content past_event.name
+      travel_to(Time.current) do
+        visit past_events_path
+        expect(page).to have_content 'Past Events'
+        expect(page).to have_content past_event.name
+      end
     end
   end
 
@@ -33,26 +37,32 @@ RSpec.feature 'event listing', type: :feature do
 
   context 'pagination' do
     scenario 'past events paginates at 20 per page' do
-      chapter = Fabricate(:chapter, active: true)
-      Fabricate.times(22, :event, date_and_time: 2.weeks.ago)
-      Fabricate(:workshop, date_and_time: 3.weeks.ago, chapter: chapter)
+      travel_to(Time.current) do
+        chapter = Fabricate(:chapter, active: true)
+        Fabricate.times(22, :event, date_and_time: 2.weeks.ago)
+        Fabricate(:workshop, date_and_time: 3.weeks.ago, chapter: chapter)
 
-      visit past_events_path
-      expect(page).to have_selector('.card', count: 20)
+        visit past_events_path
+        expect(page).to have_selector('.card', count: 20)
+      end
     end
 
     scenario 'past meetings paginate at 20 per page' do
-      Fabricate.times(22, :meeting, date_and_time: 2.weeks.ago)
+      travel_to(Time.current) do
+        Fabricate.times(22, :meeting, date_and_time: 2.weeks.ago)
 
-      visit past_events_path
-      expect(page).to have_selector('.card', count: 20)
+        visit past_events_path
+        expect(page).to have_selector('.card', count: 20)
+      end
     end
 
     scenario 'upcoming meetings paginate at 20 per page' do
-      Fabricate.times(22, :meeting, date_and_time: 2.weeks.from_now)
+      travel_to(Time.current) do
+        Fabricate.times(22, :meeting, date_and_time: 2.weeks.from_now)
 
-      visit upcoming_events_path
-      expect(page).to have_selector('.card', count: 20)
+        visit upcoming_events_path
+        expect(page).to have_selector('.card', count: 20)
+      end
     end
   end
 end

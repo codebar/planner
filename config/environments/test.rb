@@ -1,5 +1,4 @@
-require "active_support/core_ext/integer/time"
-require "timecop"
+require 'active_support/core_ext/integer/time'
 
 # The test environment is used exclusively to run your application's
 # test suite. You never need to work with it otherwise. Remember that
@@ -16,10 +15,10 @@ Rails.application.configure do
   # this is usually not necessary, and can slow down your test suite. However, it's
   # recommended that you enable it in continuous integration systems to ensure eager
   # loading is working properly before deploying your code.
-  config.eager_load = ENV["CI"].present?
+  config.eager_load = ENV['CI'].present?
 
   # Configure public file server for tests with cache-control for performance.
-  config.public_file_server.headers = { "cache-control" => "public, max-age=#{1.hour.to_i}" }
+  config.public_file_server.headers = { 'cache-control' => "public, max-age=#{1.hour.to_i}" }
 
   # Show full error reports.
   config.consider_all_requests_local = true
@@ -41,7 +40,7 @@ Rails.application.configure do
   config.action_mailer.delivery_method = :test
 
   # Set host to be used by links generated in mailer templates.
-  config.action_mailer.default_url_options = { host: "localhost:3000" }
+  config.action_mailer.default_url_options = { host: 'localhost:3000' }
 
   # Print deprecation notices to the stderr.
   config.active_support.deprecation = :stderr
@@ -63,7 +62,4 @@ Rails.application.configure do
     Bullet.bullet_logger = true
     Bullet.raise = false # raise an error if n+1 query occurs
   end
-
-  # https://github.com/travisjeffery/timecop#timecopsafe_mode
-  Timecop.safe_mode = true
 end
