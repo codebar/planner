@@ -2,7 +2,25 @@ class Admin::MembersController < Admin::ApplicationController
   before_action :set_member, only: %i[events update_subscriptions send_attendance_email send_eligibility_email]
 
   def index
-    @members = Member.all
+    # @members = Member.all removed - members loaded dynamically via search
+  end
+
+  def search
+    query = params[:q].to_s.strip
+
+    members = if query.length >= 3
+      Member.where(
+        "CONCAT(name, ' ', surname) ILIKE :q OR email ILIKE :q",
+        q: "%#{query}%"
+      ).select(:id, :name, :surname, :email, :pronouns).limit(50)
+    else
+      []
+    end
+
+    render json: members.as_json(
+      only: %i[id name surname email],
+      methods: [:full_name]
+    )
   end
 
   def show
