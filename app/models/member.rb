@@ -23,9 +23,12 @@ class Member < ApplicationRecord
   has_many :announcements, -> { distinct }, through: :groups
   has_many :meeting_invitations
 
+  EMAIL_REGEX = /\A[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\z/
+
   validates :auth_services, presence: true
   validates :name, :surname, :email, :about_you, presence: true, if: :can_log_in?
   validates :email, uniqueness: true
+  validates :email, format: { with: EMAIL_REGEX }, if: :can_log_in?
   validates :about_you, length: { maximum: 255 }
 
   DIETARY_RESTRICTIONS = %w[vegan vegetarian pescetarian halal gluten_free dairy_free other].freeze
