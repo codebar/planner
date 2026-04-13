@@ -1,6 +1,4 @@
 module EmailHeaderHelper
-  EMAIL_REGEX = /\A[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\z/
-
   private
 
   def mail_args(member, subject, from_email = 'meetings@codebar.io', cc = '', bcc = '')
@@ -14,7 +12,7 @@ module EmailHeaderHelper
   end
 
   def invalid_email?(email, member_id)
-    return false if email.present? && email.match?(EMAIL_REGEX)
+    return false if EmailValidator.valid?(email, mode: :strict)
 
     Rails.logger.warn("[EmailHeaderHelper] Invalid email for member_id=#{member_id}: #{email}")
     true

@@ -18,6 +18,7 @@ gem 'csv' # LOCKED: csv was loaded from the standard library, but is not part of
 gem 'delayed_job'
 gem 'delayed_job_active_record'
 gem 'drb' # LOCKED: Added because of pry-remote
+gem 'email_validator'
 gem 'font_awesome5_rails'
 gem 'bootstrap', '~> 5'
 gem 'friendly_id'
