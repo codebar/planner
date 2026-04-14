@@ -1,22 +1,27 @@
 RSpec.describe 'rake reminders:workshop', type: :task do
-  let!(:workshop) { Fabricate(:workshop, date_and_time: Time.zone.now + 29.hours) }
-
-  it "preloads the Rails environment" do
-    expect(task.prerequisites).to include "environment"
+  it 'preloads the Rails environment' do
+    expect(task.prerequisites).to include 'environment'
   end
 
-  it 'should gracefully run' do
-    expect { task.invoke }.to_not raise_error
+  it 'gracefullies run' do
+    travel_to(Time.current) do
+      Fabricate(:workshop, date_and_time: 29.hours.from_now)
+      expect { task.invoke }.not_to raise_error
+    end
   end
 
   it 'sends out reminders' do
-    invitation_manager = InvitationManager.new
-    expect(InvitationManager).to receive(:new).and_return(invitation_manager)
-    expect(invitation_manager).to receive(:send_workshop_attendance_reminders).with(workshop)
+    travel_to(Time.current) do
+      workshop = Fabricate(:workshop, date_and_time: 29.hours.from_now)
 
-    expect(InvitationManager).to receive(:new).and_return(invitation_manager)
-    expect(invitation_manager).to receive(:send_workshop_waiting_list_reminders).with(workshop)
+      invitation_manager = InvitationManager.new
+      expect(InvitationManager).to receive(:new).and_return(invitation_manager)
+      expect(invitation_manager).to receive(:send_workshop_attendance_reminders).with(workshop)
 
-    task.execute
+      expect(InvitationManager).to receive(:new).and_return(invitation_manager)
+      expect(invitation_manager).to receive(:send_workshop_waiting_list_reminders).with(workshop)
+
+      task.execute
+    end
   end
 end

@@ -567,7 +567,6 @@ GEM
       execjs (>= 0.3.0, < 3)
     thor (1.5.0)
     tilt (2.7.0)
-    timecop (0.9.10)
     timeout (0.6.0)
     tsort (0.2.0)
     turbo-rails (2.0.23)
@@ -694,7 +693,6 @@ DEPENDENCIES
   stimulus-rails
   stripe
   terser
-  timecop (~> 0.9.10)
   turbo-rails
   tzinfo-data
   view_component
