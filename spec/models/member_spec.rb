@@ -14,6 +14,37 @@ RSpec.describe Member do
         it { expect(member).to validate_presence_of(:surname) }
         it { expect(member).to validate_presence_of(:email) }
         it { expect(member).to validate_presence_of(:about_you) }
+
+        it 'accepts valid email format' do
+          member.email = 'valid@example.com'
+          expect(member).to be_valid
+        end
+
+        it 'rejects invalid email format' do
+          member.email = 'invalid-email'
+          expect(member).not_to be_valid
+          expect(member.errors[:email]).to include('is invalid')
+        end
+
+        it 'rejects email missing @ symbol' do
+          member.email = 'invalidexample.com'
+          expect(member).not_to be_valid
+        end
+
+        it 'rejects email missing TLD' do
+          member.email = 'invalid@example'
+          expect(member).not_to be_valid
+        end
+
+        it 'accepts email with valid subdomains' do
+          member.email = 'user@mail.example.com'
+          expect(member).to be_valid
+        end
+
+        it 'accepts email with plus addressing' do
+          member.email = 'user+tag@example.com'
+          expect(member).to be_valid
+        end
       end
     end
 

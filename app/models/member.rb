@@ -26,6 +26,7 @@ class Member < ApplicationRecord
   validates :auth_services, presence: true
   validates :name, :surname, :email, :about_you, presence: true, if: :can_log_in?
   validates :email, uniqueness: true
+  validates :email, email: { mode: :strict }, if: :can_log_in?
   validates :about_you, length: { maximum: 255 }
 
   DIETARY_RESTRICTIONS = %w[vegan vegetarian pescetarian halal gluten_free dairy_free other].freeze

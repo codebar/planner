@@ -193,6 +193,8 @@ GEM
       dotenv (= 3.2.0)
       railties (>= 6.1)
     drb (2.2.3)
+    email_validator (2.2.4)
+      activemodel
     erb (6.0.2)
     erubi (1.13.1)
     execjs (2.10.1)
@@ -634,6 +636,7 @@ DEPENDENCIES
   delayed_job_active_record
   dotenv-rails
   drb
+  email_validator
   fabrication
   faker
   faraday
