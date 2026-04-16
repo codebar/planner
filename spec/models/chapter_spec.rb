@@ -1,9 +1,9 @@
 RSpec.describe Chapter do
-  it { should validate_presence_of(:city) }
-  it { should validate_length_of(:description).is_at_most(280) }
+  it { is_expected.to validate_presence_of(:city) }
+  it { is_expected.to validate_length_of(:description).is_at_most(280) }
 
   context 'validations' do
-    context '#slug' do
+    describe '#slug' do
       it 'a chapter must have a slug set' do
         chapter = Chapter.new(name: 'London', city: 'London', email: 'london@codebar.io')
         chapter.save
@@ -19,7 +19,7 @@ RSpec.describe Chapter do
       end
     end
 
-    context '#time_zone' do
+    describe '#time_zone' do
       it 'requires a time zone' do
         chapter = Fabricate(:chapter)
         expect(chapter).to be_valid
@@ -32,7 +32,7 @@ RSpec.describe Chapter do
   end
 
   context 'scopes' do
-    context '#active' do
+    describe '#active' do
       it 'only returns active Chapters' do
         1.times { Fabricate(:chapter) }
         2.times { Fabricate(:chapter, active: false) }
@@ -63,6 +63,42 @@ RSpec.describe Chapter do
       chapter = Fabricate(:chapter)
       chapter.destroy
       expect(Rails.cache.read(cache_key)).to be_nil
+    end
+  end
+
+  describe '#eligible_students' do
+    let(:chapter) { Fabricate(:chapter) }
+    let(:student_group) { Fabricate(:group, chapter: chapter, name: 'Students') }
+
+    it 'includes only students with accepted TOC who are not banned' do
+      eligible_student = Fabricate(:member, groups: [student_group], accepted_toc_at: Time.zone.now)
+      _ineligible_no_toc = Fabricate(:member, groups: [student_group], accepted_toc_at: nil)
+      _ineligible_banned = Fabricate(:banned_member, groups: [student_group], accepted_toc_at: Time.zone.now)
+
+      expect(chapter.eligible_students).to contain_exactly(eligible_student)
+    end
+
+    it 'returns empty relation when no eligible students' do
+      Fabricate(:member, groups: [student_group], accepted_toc_at: nil)
+      expect(chapter.eligible_students).to be_empty
+    end
+  end
+
+  describe '#eligible_coaches' do
+    let(:chapter) { Fabricate(:chapter) }
+    let(:coach_group) { Fabricate(:group, chapter: chapter, name: 'Coaches') }
+
+    it 'includes only coaches with accepted TOC who are not banned' do
+      eligible_coach = Fabricate(:member, groups: [coach_group], accepted_toc_at: Time.zone.now)
+      _ineligible_no_toc = Fabricate(:member, groups: [coach_group], accepted_toc_at: nil)
+      _ineligible_banned = Fabricate(:banned_member, groups: [coach_group], accepted_toc_at: Time.zone.now)
+
+      expect(chapter.eligible_coaches).to contain_exactly(eligible_coach)
+    end
+
+    it 'returns empty relation when no eligible coaches' do
+      Fabricate(:member, groups: [coach_group], accepted_toc_at: nil)
+      expect(chapter.eligible_coaches).to be_empty
     end
   end
 end
