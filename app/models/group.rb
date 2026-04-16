@@ -20,4 +20,8 @@ class Group < ApplicationRecord
   def to_s
     "#{name} #{chapter.name}"
   end
+
+  def eligible_members
+    members.not_banned.accepted_toc.distinct
+  end
 end
