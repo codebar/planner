@@ -23,7 +23,7 @@ module WorkshopInvitationConcerns
     end
 
     def set_invitation
-      @invitation = WorkshopInvitation.find_by(token: token)
+      @invitation = WorkshopInvitation.find_by!(token: token)
     end
   end
 end

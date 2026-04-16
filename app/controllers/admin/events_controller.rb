@@ -67,7 +67,7 @@ class Admin::EventsController < Admin::ApplicationController
   private
 
   def set_event
-    @original_event = Event.find_by(slug: params[:id])
+    @original_event = Event.find_by!(slug: params[:id])
     @event = EventPresenter.new(@original_event)
   end
 

@@ -34,7 +34,7 @@ class Admin::MeetingInvitationsController < Admin::ApplicationController
   private
 
   def set_invitation
-    @invitation = MeetingInvitation.find_by(token: id)
+    @invitation = MeetingInvitation.find_by!(token: id)
   end
 
   def id

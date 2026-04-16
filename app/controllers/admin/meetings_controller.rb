@@ -54,7 +54,7 @@ class Admin::MeetingsController < Admin::ApplicationController
   private
 
   def set_meeting
-    @meeting = Meeting.find_by(slug: slug)
+    @meeting = Meeting.find_by!(slug: slug)
   end
 
   def slug
