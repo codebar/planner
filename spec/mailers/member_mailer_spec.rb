@@ -115,4 +115,21 @@ RSpec.describe MemberMailer do
       end.to change { ActionMailer::Base.deliveries.count }.by 1
     end
   end
+
+  describe "#chaser" do
+    it "logs the sent email" do
+      expect do
+        MemberMailer
+          .with(member: member)
+          .chaser
+          .deliver_now
+        end.to change(MemberEmailDelivery, :count).by(1)
+
+      log = MemberEmailDelivery.last!
+
+      expect(log.member).to eq(member)
+      expect(log.subject).to eq("It’s been a while, how are you doing? ♥️")
+      expect(log.to).to eq([member.email])
+    end
+  end
 end
