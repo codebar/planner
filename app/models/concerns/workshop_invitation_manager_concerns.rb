@@ -95,7 +95,9 @@ module WorkshopInvitationManagerConcerns
     private
 
     def create_invitation(workshop, member, role)
-      WorkshopInvitation.find_or_create_by(workshop: workshop, member: member, role: role)
+      invitation = WorkshopInvitation.find_or_initialize_by(workshop: workshop, member: member, role: role)
+      invitation.save! if invitation.new_record?
+      invitation
     rescue StandardError => e
       log_invitation_failure(workshop, member, role, e)
       nil
@@ -111,56 +113,42 @@ module WorkshopInvitationManagerConcerns
     end
 
     def invite_coaches_to_virtual_workshop(workshop, logger = nil)
-      count = 0
-      chapter_coaches(workshop.chapter).shuffle.each do |coach|
-        invitation = create_invitation(workshop, coach, 'Coach')
-        next unless invitation
-
-        count += 1
-        send_email_with_logging(logger, coach, invitation) do
-          VirtualWorkshopInvitationMailer.invite_coach(workshop, coach, invitation).deliver_now
-        end
+      invite_members(workshop, logger, chapter_coaches(workshop.chapter)) do |coach, invitation|
+        VirtualWorkshopInvitationMailer.invite_coach(workshop, coach, invitation).deliver_now
       end
-      count
     end
 
     def invite_coaches_to_workshop(workshop, logger = nil)
-      count = 0
-      chapter_coaches(workshop.chapter).shuffle.each do |coach|
-        invitation = create_invitation(workshop, coach, 'Coach')
-        next unless invitation
-
-        count += 1
-        send_email_with_logging(logger, coach, invitation) do
-          WorkshopInvitationMailer.invite_coach(workshop, coach, invitation).deliver_now
-        end
+      invite_members(workshop, logger, chapter_coaches(workshop.chapter)) do |coach, invitation|
+        WorkshopInvitationMailer.invite_coach(workshop, coach, invitation).deliver_now
       end
-      count
     end
 
     def invite_students_to_virtual_workshop(workshop, logger = nil)
-      count = 0
-      chapter_students(workshop.chapter).shuffle.each do |student|
-        invitation = create_invitation(workshop, student, 'Student')
-        next unless invitation
-
-        count += 1
-        send_email_with_logging(logger, student, invitation) do
-          VirtualWorkshopInvitationMailer.invite_student(workshop, student, invitation).deliver_now
-        end
+      invite_members(workshop, logger, chapter_students(workshop.chapter), 'Student') do |student, invitation|
+        VirtualWorkshopInvitationMailer.invite_student(workshop, student, invitation).deliver_now
       end
-      count
     end
 
     def invite_students_to_workshop(workshop, logger = nil)
+      invite_members(workshop, logger, chapter_students(workshop.chapter), 'Student') do |member, invitation|
+        WorkshopInvitationMailer.invite_student(workshop, member, invitation).deliver_now
+      end
+    end
+
+    def invite_members(workshop, logger, members, role = 'Coach')
       count = 0
-      chapter_students(workshop.chapter).shuffle.each do |student|
-        invitation = create_invitation(workshop, student, 'Student')
+      members.shuffle.each do |member|
+        invitation = create_invitation(workshop, member, role)
         next unless invitation
 
-        count += 1
-        send_email_with_logging(logger, student, invitation) do
-          WorkshopInvitationMailer.invite_student(workshop, student, invitation).deliver_now
+        if invitation.previously_new_record?
+          count += 1
+          send_email_with_logging(logger, member, invitation) do
+            yield member, invitation
+          end
+        else
+          logger&.log_skipped(member, invitation, 'Already invited to this workshop')
         end
       end
       count
