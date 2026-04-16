@@ -30,7 +30,7 @@
             - @groups.each do |group|
               %li.nav-item
                 = link_to [ :admin, group ], class: 'nav-link' do
-                  #{group.name} (#{group.members.count})
+                  #{group.name} (#{group.eligible_members.count} eligible, #{group.members.count} total)
               %li.nav-item
                 = link_to admin_chapter_members_path(@chapter, type: group.name.downcase), class: 'nav-link' do
                   View #{group.name} emails
