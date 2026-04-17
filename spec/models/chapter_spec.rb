@@ -65,4 +65,32 @@ RSpec.describe Chapter do
       expect(Rails.cache.read(cache_key)).to be_nil
     end
   end
+
+  describe "helper methods return only that chapter's coaches/students" do
+    RSpec.shared_examples 'group-scoped members' do |group_name, method_name|
+      let(:this_chapter) { Fabricate(:chapter) }
+      let(:that_chapter) { Fabricate(:chapter) }
+
+      let!(:this_group)  { Fabricate(:group, chapter: this_chapter, name: group_name) }
+      let!(:that_group)  { Fabricate(:group, chapter: that_chapter, name: group_name) }
+
+      let!(:this_member) { Fabricate(:member) }
+      let!(:that_member) { Fabricate(:member) }
+
+      before do
+        Fabricate(:subscription, group: this_group, member: this_member)
+        Fabricate(:subscription, group: that_group, member: that_member)
+      end
+
+      it "returns only #{group_name.downcase} for the chapter" do
+        expect(this_chapter.public_send(method_name))
+          .to contain_exactly(this_member)
+      end
+
+      it "does not include #{group_name.downcase} from another chapter" do
+        expect(this_chapter.public_send(method_name))
+          .not_to include(that_member)
+      end
+    end
+  end
 end
