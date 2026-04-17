@@ -40,6 +40,13 @@ is only accessed via the `Permission` class and Rolify.
 A `chapter` represents a local organisation. It primarily serves to
 collate things by location and organisers.
 
+`Chapter` exposes two tiers of member access methods. The raw methods
+(`#students`, `#coaches`) return all members subscribed to that group
+regardless of eligibility. The filtered methods (`#eligible_students`,
+`#eligible_coaches`) exclude banned members and those who have not
+accepted the terms of conduct, and should be preferred when building
+workshop invitation lists.
+
 ## Sponsor
 
 A `sponsor` represents a location and organisation. Sponsors have a
