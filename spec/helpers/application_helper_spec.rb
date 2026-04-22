@@ -12,13 +12,13 @@ RSpec.describe ApplicationHelper do
 
   describe '#number_to_currency' do
     it 'correctly formats a number to British pounds' do
-      expect(helper.number_to_currency(20100)).to eq('£20,100')
+      expect(helper.number_to_currency(20_100)).to eq('£20,100')
     end
   end
 
   describe '#title and #get_title' do
     it 'sets page title with the given title name' do
-      helper.title("Homapage")
+      helper.title('Homapage')
 
       expect(helper.retrieve_title).to eq('Homapage | codebar.io')
     end
@@ -58,6 +58,24 @@ RSpec.describe ApplicationHelper do
     it 'returns custom title for community level' do
       title = helper.sponsorship_level_title('community')
       expect(title).to eq('Community partners')
+    end
+  end
+
+  describe '#md5_of' do
+    it 'returns MD5 hash of lowercase string' do
+      expect(helper.md5_of('Test@Example.COM')).to eq(Digest::MD5.hexdigest('test@example.com'))
+    end
+
+    it 'handles nil gracefully' do
+      expect(helper.md5_of(nil)).to eq('')
+    end
+
+    it 'converts integer to string' do
+      expect(helper.md5_of(123)).to eq(Digest::MD5.hexdigest('123'))
+    end
+
+    it 'strips whitespace' do
+      expect(helper.md5_of('  spaces@example.com  ')).to eq(Digest::MD5.hexdigest('spaces@example.com'))
     end
   end
 end
