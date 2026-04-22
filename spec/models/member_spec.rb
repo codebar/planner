@@ -58,6 +58,15 @@ RSpec.describe Member do
         expect(member.avatar).to eq("https://secure.gravatar.com/avatar/#{encrypted_email}?size=100&default=identicon")
       end
 
+      describe '#avatar' do
+        let(:member) { Fabricate.build(:member, email: nil) }
+
+        it 'falls back to member ID based email' do
+          encrypted_email = Digest::MD5.hexdigest("member-#{member.id}@example.com")
+          expect(member.avatar).to eq("https://secure.gravatar.com/avatar/#{encrypted_email}?size=100&default=identicon")
+        end
+      end
+
       describe '#recent_notes' do
         it 'returns no notes when member attented no workshops' do
           expect(member.workshop_invitations.attended.length).to eq(0)
