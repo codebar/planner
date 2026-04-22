@@ -7,7 +7,7 @@
 
   .row
     .col
-      %h3.mb-3 Members (#{@group.members.count})
+      %h3.mb-3 Members (#{@group.eligible_members.count} eligible, #{@group.members.count} total)
       %table.table.table-striped.table-hover
         %tbody
           - @group.members.each do |member|
