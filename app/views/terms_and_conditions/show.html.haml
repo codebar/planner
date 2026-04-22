@@ -2,13 +2,30 @@
   .row.justify-content-md-center
     .col-md-10.col-lg-8
       %h1= t('terms_and_conditions.title')
-      %p
-        = t('terms_and_conditions.body')
-        %br
-        = link_to t('terms_and_conditions.link_text'), code_of_conduct_path, target: '_blank'
+      - if logged_in?
+        - if current_user.accepted_toc_at?
+          %p
+            = t('terms_and_conditions.already_accepted_html', date: current_user.accepted_toc_at.strftime('%d %B %Y'))
+        - else
+          %p
+            = t('terms_and_conditions.body')
+            %br
+            = link_to t('terms_and_conditions.link_text'), code_of_conduct_path, target: '_blank', rel: 'noopener'
+      - else
+        %p
+          = t('terms_and_conditions.login_required_html')
+          %br
+          = link_to t('terms_and_conditions.login_link_text'), '/auth/github'
 
-  = simple_form_for @terms_and_conditions_form, url: terms_and_conditions_path, method: :patch do |f|
-    .row.justify-content-md-center
-      .col-md-10.col-lg-8
-        = f.input :terms, as: :boolean
-        = f.button :button, t('terms_and_conditions.accept'), class: 'btn btn-primary mb-0'
+  - if logged_in? && !current_user.accepted_toc_at?
+    = simple_form_for @terms_and_conditions_form, url: terms_and_conditions_path, method: :patch do |f|
+      .row.justify-content-md-center
+        .col-md-10.col-lg-8
+          = f.input :terms, as: :boolean
+          = f.button :button, t('terms_and_conditions.accept'), class: 'btn btn-primary mb-0'
+  - elsif !logged_in?
+    = simple_form_for @terms_and_conditions_form, url: terms_and_conditions_path, method: :patch, html: { style: 'opacity: 0.6; pointer-events: none;' } do |f|
+      .row.justify-content-md-center
+        .col-md-10.col-lg-8
+          = f.input :terms, as: :boolean, disabled: true
+          = f.button :button, t('terms_and_conditions.accept'), class: 'btn btn-primary mb-0', disabled: true

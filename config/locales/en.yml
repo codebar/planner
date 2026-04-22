@@ -350,6 +350,9 @@ en:
     body: "Before you can proceed you must first read our Code of Conduct and agree to abide by it."
     link_text: "Read codebar's Code of Conduct"
     accept: "Accept"
+    already_accepted_html: "You have already accepted our Code of Conduct on %{date}."
+    login_required_html: "Please log in to accept our Code of Conduct."
+    login_link_text: "Log in with GitHub"
     messages:
       notice: "You have to accept the Terms and Conditions before you are able to proceed."
   footer:
