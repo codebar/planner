@@ -1,5 +1,8 @@
 class TermsAndConditionsController < ApplicationController
-  before_action :logged_in?
+  # Skip accept_terms (from ApplicationController) to avoid an infinite redirect loop:
+  # - If user hasn't accepted T&C, ApplicationController already redirects here
+  # - If user has accepted, there's no reason to redirect away from this page
+  # The view handles both cases (needs to accept vs already accepted)
   skip_before_action :accept_terms
 
   def show
@@ -7,6 +10,13 @@ class TermsAndConditionsController < ApplicationController
   end
 
   def update
+    # The show action skips accept_terms, but unauthenticated users can still
+    # POST directly to update. Redirect to login to avoid NoMethodError on nil.
+    unless logged_in?
+      redirect_to '/auth/github'
+      return
+    end
+
     @terms_and_conditions_form = TermsAndConditionsForm.new(terms_params)
     if @terms_and_conditions_form.valid?
       member = current_user
