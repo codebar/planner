@@ -22,11 +22,15 @@ class Admin::GroupsController < Admin::ApplicationController
   def show
     @group = Group.find(params[:id])
     authorize @group
+
+    @eligible_count = @group.eligible_members.count
+    @total_count = @group.members.count
+    @pagy, @members = pagy(Group.members_by_recent_rsvp(@group), items: 20)
   end
 
   private
 
   def group_params
-    params.expect(group: [:name, :description, :chapter_id])
+    params.expect(group: %i[name description chapter_id])
   end
 end
