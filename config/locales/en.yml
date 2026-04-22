@@ -201,6 +201,7 @@ en:
     not_logged_in: "You must be logged in to access this page."
     signing_up: "Thanks for signing up. Please fill in your details to complete the registration process."
     authentication_error: "Authentication failed. Please try again."
+    email_missing_from_provider: "We could not retrieve your email address from GitHub. Please make sure your GitHub account has a public email address and try again."
   navigation:
     dashboard: "Dashboard"
     code_of_conduct: "Code of Conduct"
