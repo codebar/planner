@@ -36,19 +36,21 @@ class Chapter < ApplicationRecord
     @organisers ||= Member.with_role(:organiser, self)
   end
 
+
   def students
-    Member.joins(:groups)
-          .merge(Group.students)
-          .distinct
+    members_for_group('Students')
   end
 
   def coaches
-    Member.joins(:groups)
-          .merge(Group.coaches)
-          .distinct
+    members_for_group('Coaches')
   end
 
+
   private
+
+  def members_for_group(name)
+    members.where(groups: { name: name }).distinct
+  end
 
   def expire_chapters_sidebar_cache
     Rails.cache.delete('chapters-sidebar')
