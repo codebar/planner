@@ -1,5 +1,8 @@
 class TermsAndConditionsController < ApplicationController
-  before_action :logged_in?
+  # Skip accept_terms (from ApplicationController) to avoid an infinite redirect loop:
+  # - If user hasn't accepted T&C, ApplicationController already redirects here
+  # - If user has accepted, there's no reason to redirect away from this page
+  # The view handles both cases (needs to accept vs already accepted)
   skip_before_action :accept_terms
 
   def show
