@@ -11,7 +11,12 @@
 
   .row
     .col
-      %h3.mb-3 Members (#{@eligible_count} eligible, #{@total_count} total)
+      %h3.mb-3
+        Members
+        %small (#{@eligible_count} eligible, #{@total_count} total)
+      .alert.alert-info.mt-2
+        %strong= t('admin.groups.eligible_title')
+        = simple_format(t('admin.groups.eligible_help'))
 
   .row.mb-4
     .col-12.col-md-6

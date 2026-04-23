@@ -26,7 +26,7 @@
 
       .card.border-info.my-4.my-md-0.my-lg-4.ms-md-4.ms-lg-0
         .card-body
-          %ul.nav.flex-column.ms-0.mb-0
+          %ul.nav.flex-column.ms-0.mb-2
             - @groups.each do |group|
               %li.nav-item
                 = link_to [ :admin, group ], class: 'nav-link' do
@@ -34,10 +34,14 @@
               %li.nav-item
                 = link_to admin_chapter_members_path(@chapter, type: group.name.downcase), class: 'nav-link' do
                   View #{group.name} emails
+          %ul.nav.flex-column.ms-0.mb-0
             %li.nav-item
               = link_to 'View all sponsors', admin_sponsors_path, class: 'nav-link'
             %li.nav-item
               = link_to 'View all workshops', admin_chapter_workshops_path(@chapter), class: 'nav-link'
+          .alert.alert-info.mt-2.mb-0
+            %strong= t('admin.groups.eligible_title')
+            = simple_format(t('admin.groups.eligible_help'))
 
       - if @how_you_found_us.data_present?
         .card.border-info.my-4.my-md-0.my-lg-4.ms-md-4.ms-lg-0
