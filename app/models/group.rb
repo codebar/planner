@@ -11,6 +11,15 @@ class Group < ApplicationRecord
   scope :students, -> { where(name: 'Students') }
   scope :coaches, -> { where(name: 'Coaches') }
 
+  def self.members_by_recent_rsvp(group)
+    group.members
+         .joins('LEFT JOIN workshop_invitations ON workshop_invitations.member_id = members.id')
+         .joins('LEFT JOIN workshops ON workshops.id = workshop_invitations.workshop_id')
+         .select('members.*, MAX(workshops.date_and_time) as last_rsvp_at')
+         .group('members.id')
+         .order('MAX(workshops.date_and_time) DESC NULLS LAST')
+  end
+
   validates :name, presence: true, inclusion: { in: NAMES, message: 'Invalid name for Group' }
 
   alias city chapter

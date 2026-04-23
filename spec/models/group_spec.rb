@@ -27,4 +27,26 @@ RSpec.describe Group do
       expect(group.eligible_members).to be_empty
     end
   end
+
+  describe '.members_by_recent_rsvp' do
+    let(:group) { Fabricate(:group, name: 'Students') }
+    let(:chapter) { group.chapter }
+
+    it 'orders members by most recent workshop RSVP' do
+      old_workshop = Fabricate(:workshop, chapter: chapter, date_and_time: 1.month.ago)
+      new_workshop = Fabricate(:workshop, chapter: chapter, date_and_time: 1.week.ago)
+
+      member_old = Fabricate(:member, groups: [group])
+      member_new = Fabricate(:member, groups: [group])
+      _member_no_rsvp = Fabricate(:member, groups: [group])
+
+      Fabricate(:workshop_invitation, workshop: old_workshop, member: member_old, attending: true)
+      Fabricate(:workshop_invitation, workshop: new_workshop, member: member_new, attending: true)
+
+      results = Group.members_by_recent_rsvp(group).to_a
+
+      expect(results.first).to eq(member_new)
+      expect(results.last).to eq(_member_no_rsvp)
+    end
+  end
 end
