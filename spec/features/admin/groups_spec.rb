@@ -17,4 +17,21 @@ RSpec.feature 'admin groups', type: :feature do
       expect(page).to have_content('Group Students for chapter Brighton has been successfully created')
     end
   end
+
+  context '#show page' do
+    let(:member) { Fabricate(:member) }
+    let(:chapter) { Fabricate(:chapter, name: 'Brighton') }
+    let(:group) { Fabricate(:group, chapter: chapter, name: 'Students') }
+
+    before do
+      login_as_admin(member)
+    end
+
+    scenario 'shows explanation for eligible members' do
+      visit admin_group_path(group)
+
+      expect(page).to have_content('What is "eligible"?')
+      expect(page).to have_content(/Are not banned/i)
+    end
+  end
 end
