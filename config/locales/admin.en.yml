@@ -1,5 +1,8 @@
 en:
   admin:
+    groups:
+      eligible_explanation: "Members who have accepted the Terms & Conditions and are not banned"
+
     shared:
       workshops: Workshops
       events: Events

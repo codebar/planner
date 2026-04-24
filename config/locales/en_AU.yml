@@ -118,6 +118,12 @@ en-AU:
     blog: "Blog"
     codebar_stories: "codebar Stories"
     stats: "Stats"
+    how_to_support_us: "How to support us"
+    volunteer: "Volunteer"
+    fundraise: "Fundraise"
+    donate: "Donate"
+    buy_us_a_coffee: "Buy us a coffee"
+    job_board: "Job Board"
   dashboard:
     join_workshops_in: "Join our <i>free</i> workshops in"
     workshops_goal: "to get to grips with the basics of programming and web development."
