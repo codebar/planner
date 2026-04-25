@@ -29,7 +29,12 @@ threads_count = ENV.fetch("RAILS_MAX_THREADS", 3)
 threads threads_count, threads_count
 
 # Specifies the `port` that Puma will listen on to receive requests; default is 3000.
-port ENV.fetch("PORT", 3000)
+# On Heroku with nginx buildpack, bind to Unix socket instead of port
+if ENV["DYNO"]
+  bind "unix:///tmp/nginx.socket?umask=0077"  # Restrict socket permissions to owner only
+else
+  port ENV.fetch("PORT", 3000)
+end
 
 # Allow puma to be restarted by `bin/rails restart` command.
 plugin :tmp_restart

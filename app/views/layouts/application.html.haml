@@ -31,10 +31,10 @@
     = csp_meta_tag
 
     <!-- Privacy-friendly analytics by Plausible -->
-    %script{ async: true, src: 'https://plausible.io/js/pa-PFruVsE_br97UUCRXE_6f.js' }
+    %script{ async: true, src: '/js/script.js' }
     %script
       window.plausible = window.plausible || function() { (plausible.q = plausible.q || []).push(arguments) }, plausible.init = plausible.init || function(i) { plausible.o = i || {} };
-      plausible.init()
+      plausible.init({ endpoint: '/api/event' })
 
   %body.no-js{ 'class': "#{params[:controller]}-#{params[:action]}", 'data-bs-no-jquery': 'true' }
     #top
