@@ -364,4 +364,80 @@ RSpec.describe InvitationManager do
       expect(log.skipped_count).to eq(students.count)
     end
   end
+
+  describe '#send_workshop_emails async behavior' do
+    let!(:chapter) { Fabricate(:chapter, id: 1) }
+
+    context 'when chapter is in ASYNC_EMAIL_CHAPTER_IDS' do
+      before { Rails.application.config.async_email_chapter_ids = [1] }
+
+      it 'sends invitation emails' do
+        Fabricate(:students, chapter: chapter, members: students)
+        Fabricate(:coaches, chapter: chapter, members: coaches)
+
+        expect(WorkshopInvitationMailer).to receive(:invite_student).at_least(:once).and_call_original
+        expect(WorkshopInvitationMailer).to receive(:invite_coach).at_least(:once).and_call_original
+
+        manager.send_workshop_emails(workshop, 'everyone')
+      end
+    end
+
+    context 'when chapter is NOT in ASYNC_EMAIL_CHAPTER_IDS' do
+      before { Rails.application.config.async_email_chapter_ids = [99] }
+
+      it 'sends emails synchronously' do
+        Fabricate(:students, chapter: chapter, members: students)
+        Fabricate(:coaches, chapter: chapter, members: coaches)
+
+        expect do
+          manager.send_workshop_emails(workshop, 'everyone')
+        end.to change { ActionMailer::Base.deliveries.count }.by(students.count + coaches.count)
+
+        expect(Delayed::Job.count).to eq(0)
+      end
+    end
+
+    context 'when ASYNC_EMAIL_CHAPTER_IDS is empty' do
+      before { Rails.application.config.async_email_chapter_ids = [] }
+
+      it 'sends emails synchronously' do
+        Fabricate(:students, chapter: chapter, members: students)
+        Fabricate(:coaches, chapter: chapter, members: coaches)
+
+        expect do
+          manager.send_workshop_emails(workshop, 'everyone')
+        end.to change { ActionMailer::Base.deliveries.count }.by(students.count + coaches.count)
+
+        expect(Delayed::Job.count).to eq(0)
+      end
+    end
+  end
+
+  describe '#send_workshop_attendance_reminders async behavior' do
+    let!(:chapter) { Fabricate(:chapter, id: 1) }
+
+    context 'when chapter is in ASYNC_EMAIL_CHAPTER_IDS' do
+      before { Rails.application.config.async_email_chapter_ids = [1] }
+
+      it 'sends attendance reminder emails' do
+        invitation = Fabricate(:attending_workshop_invitation, workshop: workshop)
+
+        expect(WorkshopInvitationMailer).to receive(:attending_reminder).at_least(:once).and_call_original
+
+        manager.send_workshop_attendance_reminders(workshop)
+      end
+    end
+
+    context 'when chapter is NOT in ASYNC_EMAIL_CHAPTER_IDS' do
+      before { Rails.application.config.async_email_chapter_ids = [99] }
+
+      it 'uses deliver_now' do
+        invitation = Fabricate(:attending_workshop_invitation, workshop: workshop)
+
+        expect do
+          manager.send_workshop_attendance_reminders(workshop)
+        end.to change { ActionMailer::Base.deliveries.count }.by(1)
+      end
+    end
+  end
 end
