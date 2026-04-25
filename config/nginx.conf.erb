@@ -1,0 +1,84 @@
+daemon off;
+worker_processes auto;
+
+events {
+  worker_connections 1024;
+}
+
+http {
+  charset utf-8;
+  server_tokens off;
+
+  # Security headers (set at http level to apply to all responses)
+  add_header X-Frame-Options "SAMEORIGIN" always;
+  add_header X-Content-Type-Options "nosniff" always;
+  add_header X-XSS-Protection "1; mode=block" always;
+  add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+
+  # Logs to stdout/stderr for Heroku
+  log_format custom '$http_x_forwarded_for - $remote_user [$time_local] '
+                    '"$request" $status $body_bytes_sent '
+                    '"$http_referer" "$http_user_agent"';
+  access_log /dev/stdout custom;
+  error_log /dev/stderr;
+
+  # Plausible endpoints
+  set $plausible_script_url https://plausible.io/js/pa-PFruVsE_br97UUCRXE_6f.js;
+  set $plausible_event_url https://plausible.io/api/event;
+
+  # Proxy settings
+  proxy_http_version 1.1;
+  proxy_buffering on;
+  proxy_connect_timeout 5s;
+  proxy_send_timeout 5s;
+  proxy_read_timeout 10s;
+
+  upstream app_server {
+    server unix:/tmp/nginx.socket fail_timeout=0;
+  }
+
+  server {
+    listen <%= ENV["PORT"] %>;
+    server_name _;
+    keepalive_timeout 5;
+    client_max_body_size 10m;
+
+    # Security: Block known bad user agents
+    if ($http_user_agent ~* (nikto|sqlmap|nessus|acunetix|masscan|zgrab|gobuster|dirbuster)) {
+      return 444;
+    }
+
+    # Security: Block common attack paths
+    location ~ ^/(\.env|\.git|\.htaccess|\.htpasswd|config\.js|wp-admin|wp-login|xmlrpc\.php|administrator|phpmyadmin|shell|cmd|backdoor|cgi-bin) {
+      return 444;
+    }
+
+    # Plausible: Proxy script.js
+    location = /js/script.js {
+      proxy_pass $plausible_script_url;
+      proxy_set_header Host plausible.io;
+      proxy_pass_header Cache-Control;
+      proxy_buffering on;
+    }
+
+    # Plausible: Proxy event API
+    location = /api/event {
+      client_max_body_size 1m;  # Analytics events are tiny
+      proxy_pass $plausible_event_url;
+      proxy_set_header Host plausible.io;
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_set_header X-Forwarded-Proto $http_x_forwarded_proto;
+      proxy_set_header X-Forwarded-Host $host;
+      proxy_buffering on;
+    }
+
+    # Rails: All other requests
+    location / {
+      proxy_pass http://app_server;
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_set_header X-Forwarded-Proto $http_x_forwarded_proto;
+      proxy_set_header Host $http_host;
+      proxy_redirect off;
+    }
+  }
+}
