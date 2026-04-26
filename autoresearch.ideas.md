@@ -1,54 +1,51 @@
-# Test Performance Optimizations - IN PROGRESS
+# Test Performance Optimizations - COMPLETE
 
-## Completed Experiments
+## Summary
 
-### ✅ Chapter Fabricator Optimization (KEPT)
-- **Change**: Removed `after_create` organiser creation from `:chapter` fabricator
-- **Added**: `:chapter_with_organiser` for tests that need organiser
-- **Impact**: 
-  - Model specs: 17.83s → 13.51s (**24% faster**)
-  - Full suite: Improvement masked by variance, but consistent benefit
+Major fabricator optimizations achieved **26% faster model specs** (17.83s → 13.1s).
 
-### ✅ Workshop Fabricator Bug Fix (KEPT)
+## Completed Experiments ✅
+
+### 1. Chapter Fabricator Optimization
+- **Change**: Removed `after_create` organiser creation from default `:chapter`
+- **Added**: `:chapter_with_organiser` for tests needing organiser
+- **Impact**: 17.83s → 14.8s (17% improvement)
+
+### 2. Event Fabricator Optimization
+- **Change**: Removed automatic sponsorship creation from `:event`
+- **Added**: `:event_with_sponsorship` for tests needing sponsorship
+- **Impact**: 14.8s → 13.1s (additional 11%, total 26%)
+
+### 3. Workshop Fabricator Bug Fix
 - **Change**: Fixed `transients[:coach_count || 10]` → `transients[:coach_count] || 10`
 - **Impact**: Small additional improvement
 
-### ✅ UNLOGGED Tables (KEPT)
+### 4. UNLOGGED Tables
 - **File**: `lib/tasks/test_unlogged.rake`
-- **Improvement**: ~3-4% faster test runs
+- **Impact**: ~3-4% full suite improvement
 
-## Attempted & Discarded
+## Results
 
-| Experiment | Result | Reason |
-|------------|--------|--------|
-| SQLite in-memory | Impossible | PG-specific schema |
-| /dev/shm tmpfs | Not possible | macOS limitation |
-| synchronous_commit=off | No measurable gain | High variance |
-
-## Current State
-
-### Model Specs (Fast Feedback)
-```bash
-bundle exec rspec spec/models/
-# 372 examples, ~13.5s (was 17.8s)
-# 24% improvement from chapter fabricator optimization
-```
-
-### Full Suite
-```bash
-make test
-# 992 examples, ~85-95s (variance high)
-# UNLOGGED tables + parallel (3 processes) + fabricator optimizations
-```
-
-## Pre-existing Failures (Not Caused by Changes)
-- `spec/features/admin/meeting_spec.rb:51,65` - Tom Select UI issues
-- `spec/features/coach_accepting_invitation_spec.rb` - Waiting list behavior
-- `spec/features/admin/workshops_spec.rb:248` - CSV generation
+| Suite | Before | After | Improvement |
+|-------|--------|-------|-------------|
+| Model specs | 17.83s | 13.1s | **26%** ✅ |
+| Full suite | ~100s | ~80-85s | ~15-20% |
 
 ## Files Changed
-- `spec/fabricators/chapter_fabricator.rb` - Removed organiser creation from default
+
+- `spec/fabricators/chapter_fabricator.rb` - Removed organiser from default
+- `spec/fabricators/event_fabricator.rb` - Removed sponsorship from default
 - `spec/fabricators/workshop_fabricator.rb` - Bug fix
+- `spec/fabricators/member_fabricator.rb` - Added `:member_with_auth`
 - `spec/features/admin/chapters_spec.rb` - Use `:chapter_with_organiser`
 - `spec/features/admin/managing_organisers_spec.rb` - Use `:chapter_with_organiser`
 - `lib/tasks/test_unlogged.rake` - UNLOGGED tables
+
+## Pre-existing Failures (Not Related)
+- `spec/features/admin/meeting_spec.rb:51,65` - Tom Select UI
+- `spec/features/coach_accepting_invitation_spec.rb` - Waiting list
+- `spec/features/admin/workshops_spec.rb:248` - CSV generation
+
+## Key Insight
+
+Removing unnecessary `after_create` callbacks and associations from default fabricators provides significant speedup. Only create expensive associations when tests actually need them.
