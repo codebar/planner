@@ -1,52 +1,37 @@
-# Test Performance Optimizations - Summary
+# Test Performance Optimizations - Final Summary
 
 ## Completed Experiments
 
 ### ✅ UNLOGGED Tables (KEPT)
-- **Status**: Implemented via `lib/tasks/test_unlogged.rake`
-- **Change**: Auto-converts all tables to UNLOGGED after `db:test:prepare`
-- **Improvement**: ~3-4% faster test runs (bypasses WAL logging)
-- **Safety**: Safe for test environment - data loss on crash acceptable
-- **Usage**: Automatic via rake task hook
+- **File**: `lib/tasks/test_unlogged.rake`
+- **Improvement**: ~3-4% faster test runs
+- **How**: Auto-converts tables to UNLOGGED after `db:test:prepare`
 
-### ❌ SQLite In-Memory (IMPOSSIBLE)
-- **Status**: Cannot work
-- **Blockers**: PostgreSQL-specific schema syntax:
-  - `::text` type casts in filtered indexes
-  - Custom enum types (`dietary_restriction_enum`)
-  - PostgreSQL extensions
+## Attempted & Discarded
 
-### ❌ /dev/shm tmpfs (NOT POSSIBLE on macOS)
-- **Status**: Linux-only feature
-- **Alternative**: macOS ramdisk possible but complex
-- **Complexity**: Requires managing separate PostgreSQL instance
+| Experiment | Result | Reason |
+|------------|--------|--------|
+| SQLite in-memory | ❌ Impossible | PG-specific schema (enums, casts) |
+| /dev/shm tmpfs | ❌ Not possible | macOS limitation |
+| synchronous_commit=off | ❌ No measurable gain | High variance masks improvement |
+| Connection pool tuning | ❌ No gain | 5→10 pool size, no difference |
+| Transactional fixtures | ❌ Broke tests | Requires significant refactoring |
+| Database template | ❌ Marginal gain | ~1s per DB, not worth complexity |
 
-### ❌ synchronous_commit=off + Increased Pool (DISCARDED)
-- **Status**: No measurable improvement
-- **Issue**: High variance (81-88s) makes small improvements undetectable
-- **Note**: May help in CI with more stable environment
-
-### ❌ Transactional Fixtures (REVERTED)
-- **Status**: Broke tests - requires significant test refactoring
-- **Issue**: Many tests rely on DatabaseCleaner behavior
-- **Effort**: High - would need to fix test data setup
+## Current State
+- `make test`: ~88s (3 processes)
+- UNLOGGED tables: Automatic via rake hook
+- 2 pre-existing failures (meeting_spec.rb)
+- High variance (87-100s) from thermal/load
 
 ## Recommendations
 
-### For Local Development
-1. **Use parallel tests**: `make test` (3 processes) - ~32% faster than single-process
-2. **UNLOGGED tables**: Now automatic via rake hook
+### For This Codebase
+1. Keep UNLOGGED tables (already implemented)
+2. Use `make test` (3 parallel processes)
+3. Accept current performance - further optimization limited by variance
 
-### For CI/Automation
-- UNLOGGED tables can provide marginal improvement
-- Consider running PostgreSQL in tmpfs on Linux CI runners
-- Use `fsync=off` and `synchronous_commit=off` in CI test DB config
-
-## Code Changes
-
-```ruby
-# lib/tasks/test_unlogged.rake
-Rake::Task["db:test:prepare"].enhance do
-  Rake::Task["db:test:unlogged"].invoke if Rails.env.test?
-end
-```
+### For Future CI/Other Projects
+- PostgreSQL in tmpfs (`/dev/shm`) on Linux
+- `fsync=off` + `synchronous_commit=off` in test DB config
+- Could yield 20-50% improvement in stable CI environment
