@@ -146,7 +146,7 @@ RSpec.feature 'Chapters', type: :feature do
   end
 
   context 'eligible members tooltip' do
-    let(:chapter) { Fabricate(:chapter_with_groups) }
+    let(:chapter) { Fabricate(:chapter) }
 
     before do
       login_as_admin(member)

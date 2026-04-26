@@ -96,7 +96,7 @@ RSpec.feature 'Managing meetings', type: :feature do
 
   context 'sending invitations' do
     scenario 'sends the invitations' do
-      chapter = Fabricate(:chapter_with_groups)
+      chapter = Fabricate(:chapter)
       meeting = Fabricate(:meeting, chapters: [chapter])
 
       visit invite_admin_meeting_path(meeting)
