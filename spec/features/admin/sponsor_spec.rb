@@ -6,8 +6,8 @@ RSpec.feature 'Admin::Sponsors', type: :feature do
   end
 
   context 'Sponsors list' do
-    let(:sponsor) { Fabricate(:sponsor_with_contacts) }
-    let(:sponsor2) { Fabricate(:sponsor_with_contacts) }
+    let(:sponsor) { Fabricate(:sponsor) }
+    let(:sponsor2) { Fabricate(:sponsor) }
 
     scenario 'can filter by chapter' do
       sponsored_workshop = Fabricate(:workshop_sponsor, sponsor: sponsor).workshop

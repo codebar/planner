@@ -58,8 +58,8 @@ Rails.application.configure do
   OmniAuth.config.test_mode = true
 
   config.after_initialize do
-    Bullet.enable = true
-    Bullet.bullet_logger = true
+    Bullet.enable = false
+    Bullet.bullet_logger = false
     Bullet.raise = false # raise an error if n+1 query occurs
   end
 end
