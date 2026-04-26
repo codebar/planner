@@ -9,6 +9,9 @@ http {
   charset utf-8;
   server_tokens off;
 
+  # Proxy cache using /dev/shm (tmpfs, survives dyno restarts)
+  proxy_cache_path /dev/shm/jscache levels=1:2 keys_zone=jscache:1m inactive=30d use_temp_path=off max_size=1m;
+
   # Security headers (set at http level to apply to all responses)
   add_header X-Frame-Options "SAMEORIGIN" always;
   add_header X-Content-Type-Options "nosniff" always;
@@ -53,12 +56,18 @@ http {
       return 444;
     }
 
-    # Plausible: Proxy script.js
+    # Plausible: Proxy script.js (with caching)
     location = /js/script.js {
       proxy_pass $plausible_script_url;
       proxy_set_header Host plausible.io;
       proxy_pass_header Cache-Control;
       proxy_buffering on;
+
+      # Cache for 5 minutes
+      proxy_cache jscache;
+      proxy_cache_valid 200 5m;
+      proxy_cache_use_stale updating error timeout invalid_header http_500;
+      add_header X-Cache $upstream_cache_status;
     }
 
     # Plausible: Proxy event API
