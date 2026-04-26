@@ -6,7 +6,7 @@ RSpec.feature 'a Coach can', type: :feature do
     let(:reject_invitation_route) { reject_invitation_path(invitation) }
     let(:accept_invitation_route) { accept_invitation_path(invitation) }
 
-    let(:set_no_available_slots) { invitation.workshop.host.update_attribute(:seats, 0) }
+    let(:set_no_available_slots) { invitation.workshop.update_attribute(:coach_spaces, 0) }
 
     before(:each) do
       login(member)
