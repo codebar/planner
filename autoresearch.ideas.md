@@ -21,6 +21,16 @@
 - **Alternative**: macOS ramdisk possible but complex
 - **Complexity**: Requires managing separate PostgreSQL instance
 
+### ❌ synchronous_commit=off + Increased Pool (DISCARDED)
+- **Status**: No measurable improvement
+- **Issue**: High variance (81-88s) makes small improvements undetectable
+- **Note**: May help in CI with more stable environment
+
+### ❌ Transactional Fixtures (REVERTED)
+- **Status**: Broke tests - requires significant test refactoring
+- **Issue**: Many tests rely on DatabaseCleaner behavior
+- **Effort**: High - would need to fix test data setup
+
 ## Recommendations
 
 ### For Local Development
@@ -30,6 +40,7 @@
 ### For CI/Automation
 - UNLOGGED tables can provide marginal improvement
 - Consider running PostgreSQL in tmpfs on Linux CI runners
+- Use `fsync=off` and `synchronous_commit=off` in CI test DB config
 
 ## Code Changes
 
