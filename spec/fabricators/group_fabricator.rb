@@ -6,10 +6,10 @@ end
 
 Fabricator(:students, from: :group) do
   name 'Students'
-  members(count: 5)
+  members(count: 2)
 end
 
 Fabricator(:coaches, from: :group) do
   name 'Coaches'
-  members(count: 5)
+  members(count: 2)
 end
