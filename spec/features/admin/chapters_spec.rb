@@ -31,7 +31,7 @@ RSpec.feature 'Chapters', type: :feature do
   end
 
   context '#editing a chapter' do
-    let(:chapter) { Fabricate(:chapter) }
+    let(:chapter) { Fabricate(:chapter_with_organiser) }
 
     context 'organiser editing their chapter' do
       before do

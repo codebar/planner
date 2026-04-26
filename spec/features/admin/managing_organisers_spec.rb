@@ -1,6 +1,6 @@
 RSpec.feature 'Managing organisers', type: :feature do
   let(:member) { Fabricate(:member) }
-  let(:chapter) { Fabricate(:chapter) }
+  let(:chapter) { Fabricate(:chapter_with_organiser) }
 
   scenario 'non admin cannot manage organisers' do
     login(member)
