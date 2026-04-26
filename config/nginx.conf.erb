@@ -1,0 +1,77 @@
+daemon off;
+worker_processes auto;
+
+events {
+  worker_connections 1024;
+}
+
+http {
+  charset utf-8;
+  server_tokens off;
+
+  # DNS resolver for proxy_pass
+  resolver 9.9.9.9 valid=30s;
+
+  # Proxy cache in /dev/shm (tmpfs, persists across dyno restarts)
+  proxy_cache_path /dev/shm/nginx_cache levels=1:2 keys_zone=plausible_cache:1m max_size=100m inactive=5m use_temp_path=off;
+
+  # Security headers
+  add_header X-Frame-Options "SAMEORIGIN" always;
+  add_header X-Content-Type-Options "nosniff" always;
+  add_header X-XSS-Protection "1; mode=block" always;
+  add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+
+  # Logs to stdout/stderr for Heroku
+  access_log /dev/stdout;
+  error_log /dev/stderr;
+
+  # Proxy settings
+  proxy_http_version 1.1;
+  proxy_buffering on;
+
+  upstream app_server {
+    server unix:/tmp/nginx.socket fail_timeout=0;
+  }
+
+  server {
+    listen <%= ENV["PORT"] %>;
+    server_name _;
+    keepalive_timeout 5;
+
+    # Plausible endpoints (set inside server context)
+    set $plausible_script_url https://plausible.io/js/pa-PFruVsE_br97UUCRXE_6f.js;
+    set $plausible_event_url https://plausible.io/api/event;
+
+    # Plausible: Proxy script.js (cached)
+    location = /js/script.js {
+      proxy_cache plausible_cache;
+      proxy_cache_valid 200 5m;
+      proxy_cache_key "$host$uri";
+      proxy_pass $plausible_script_url;
+      proxy_set_header Host plausible.io;
+      proxy_buffering on;
+
+      # Cache response headers
+      add_header X-Cache $upstream_cache_status;
+    }
+
+    # Plausible: Proxy event API
+    location = /api/event {
+      proxy_pass $plausible_event_url;
+      proxy_set_header Host plausible.io;
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_set_header X-Forwarded-Proto $http_x_forwarded_proto;
+      proxy_set_header X-Forwarded-Host $host;
+      proxy_buffering on;
+    }
+
+    # Rails: All other requests
+    location / {
+      proxy_pass http://app_server;
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_set_header X-Forwarded-Proto $http_x_forwarded_proto;
+      proxy_set_header Host $http_host;
+      proxy_redirect off;
+    }
+  }
+}
