@@ -22,3 +22,6 @@ deploy_staging:
 	heroku maintenance:off --app=codebar-staging
 serve:
 	rm -f ./tmp/pids/server.pid && bundle exec rails server --binding=0.0.0.0 --port=3000
+
+test:
+	bundle exec parallel_rspec spec/ -n 3
