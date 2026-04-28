@@ -18,6 +18,7 @@ class ApplicationController < ActionController::Base
 
   rescue_from ActionController::RoutingError, with: :render_not_found
   rescue_from ActiveRecord::RecordNotFound, with: :render_not_found
+  rescue_from ActionController::UnknownFormat, with: :render_not_acceptable
 
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
   rescue_from Pundit::AuthorizationNotPerformedError, with: :user_not_authorized
@@ -33,6 +34,13 @@ class ApplicationController < ActionController::Base
     respond_to do |format|
       format.html { render template: 'errors/not_found', layout: false, status: :not_found }
       format.all { head :not_found }
+    end
+  end
+
+  def render_not_acceptable
+    respond_to do |format|
+      format.html { render template: 'errors/not_acceptable', layout: false, status: :not_acceptable }
+      format.all { head :not_acceptable }
     end
   end
 
