@@ -15,12 +15,6 @@ http {
   # Proxy cache in /dev/shm (tmpfs, persists across dyno restarts)
   proxy_cache_path /dev/shm/nginx_cache levels=1:2 keys_zone=plausible_cache:1m max_size=100m inactive=5m use_temp_path=off;
 
-  # Security headers
-  add_header X-Frame-Options "SAMEORIGIN" always;
-  add_header X-Content-Type-Options "nosniff" always;
-  add_header X-XSS-Protection "1; mode=block" always;
-  add_header Referrer-Policy "strict-origin-when-cross-origin" always;
-
   # Logs to stdout/stderr for Heroku
   access_log /dev/stdout;
   error_log /dev/stderr;
