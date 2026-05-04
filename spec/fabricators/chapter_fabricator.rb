@@ -5,7 +5,9 @@ Fabricator(:chapter) do
   city { Faker::Lorem.word }
   email { Faker::Internet.email }
   time_zone { 'London' }
+end
 
+Fabricator(:chapter_with_organiser, from: :chapter) do
   after_create do |chapter|
     member = Fabricate(:member)
     member.add_role :organiser, chapter
@@ -13,11 +15,6 @@ Fabricator(:chapter) do
 end
 
 Fabricator(:chapter_with_groups, from: :chapter) do
-  name { Fabricate.sequence(:name) }
-  city { Faker::Lorem.word }
-  email { Faker::Internet.email }
-  time_zone { 'London' }
-
   after_create do |chapter|
     Fabricate(:students, chapter: chapter)
     Fabricate(:coaches, chapter: chapter)
