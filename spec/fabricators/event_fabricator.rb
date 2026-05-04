@@ -16,6 +16,9 @@ Fabricator(:event) do
   slug { Fabricate.sequence(:slug) }
   info Faker::Lorem.sentence
   chapters { [Fabricate(:chapter)] }
+end
+
+Fabricator(:event_with_sponsorship, from: :event) do
   after_build do |event|
     Fabricate(:sponsorship, event: event, sponsor: Fabricate(:sponsor))
   end
