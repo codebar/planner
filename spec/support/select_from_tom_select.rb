@@ -8,10 +8,13 @@ module SelectFromTomSelect
   # @param from [String, Symbol] The field ID (for documentation purposes)
   def select_from_tom_select(item_text, from: nil)
     # Ensure TomSelect is initialized (workaround for pages where it doesn't auto-init)
-    ensure_tom_select_initialized('meeting_organisers')
+    # Use the 'from' parameter as the element ID, fallback to 'meeting_organisers' for backwards compatibility
+    element_id = from || 'meeting_organisers'
+    ensure_tom_select_initialized(element_id)
 
     # Wait for TomSelect to initialize - give extra time for page to fully load JS
-    expect(page).to have_css('.ts-wrapper', wait: 10)
+    # Lightpanda may need longer for JavaScript execution
+    expect(page).to have_css('.ts-wrapper', wait: 15)
 
     # Open dropdown and type search query
     find('.ts-control').click
@@ -42,7 +45,8 @@ module SelectFromTomSelect
     ensure_tom_select_initialized('meeting_organisers')
 
     # Wait for TomSelect to initialize and items to be present
-    expect(page).to have_css('.ts-wrapper', wait: 10)
+    # Lightpanda may need longer for JavaScript execution
+    expect(page).to have_css('.ts-wrapper', wait: 15)
     expect(page).to have_css('.ts-wrapper .item', text: item_text, wait: 5)
 
     within '.ts-wrapper' do
@@ -53,8 +57,9 @@ module SelectFromTomSelect
   private
 
   def ensure_tom_select_initialized(element_id)
-    # Check if TomSelect is already initialized
-    return if page.has_css?('.ts-wrapper', wait: 2)
+    # Check if TomSelect is already initialized with longer wait for Lightpanda
+    wait_time = ENV['LIGHTPANDA'] == 'true' ? 5 : 2
+    return if page.has_css?('.ts-wrapper', wait: wait_time)
 
     # Try to initialize TomSelect manually if the element exists
     # Note: This is a minimal initialization for tests where TomSelect doesn't auto-init
@@ -83,8 +88,9 @@ module SelectFromTomSelect
     JS
     page.execute_script(script)
 
-    # Wait for initialization
-    expect(page).to have_css('.ts-wrapper', wait: 5)
+    # Wait for initialization with longer timeout for Lightpanda
+    init_wait = ENV['LIGHTPANDA'] == 'true' ? 10 : 5
+    expect(page).to have_css('.ts-wrapper', wait: init_wait)
   end
 end
 
