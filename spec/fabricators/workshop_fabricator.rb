@@ -2,12 +2,14 @@ Fabricator(:workshop) do
   date_and_time Time.zone.now + 2.days
   ends_at { |attrs| attrs[:date_and_time] + 2.hours }
   chapter
+  student_spaces { |transients| transients[:student_count] || 10 }
+  coach_spaces { |transients| transients[:coach_count] || 10 }
   after_build do |workshop, transients|
     Fabricate(:workshop_sponsor,
               workshop: workshop,
               sponsor: Fabricate(:sponsor,
                                  seats: transients[:student_count] || 10,
-                                 number_of_coaches: transients[:coach_count || 10]),
+                                 number_of_coaches: transients[:coach_count] || 10),
               host: true)
   end
 

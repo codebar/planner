@@ -5,7 +5,7 @@ RSpec.feature 'Accepting a workshop invitation', type: :feature do
     let(:invitation_route) { invitation_path(invitation) }
     let(:accept_invitation_route) { accept_invitation_path(invitation) }
     let(:reject_invitation_route) { reject_invitation_path(invitation) }
-    let(:set_no_available_slots) { invitation.workshop.host.update_attribute(:seats, 0) }
+    let(:set_no_available_slots) { invitation.workshop.update_attribute(:student_spaces, 0) }
     let!(:tutorial) { Fabricate(:tutorial) }
 
     it_behaves_like 'invitation route'
