@@ -19,6 +19,7 @@ jobs:
       RAILS_ENV: test
       COVERAGE: true
       PARALLEL_TEST_PROCESSORS: ${{ matrix.ci_node_total }}
+      LIGHTPANDA: true
     services:
       postgres:
         image: postgres:17
@@ -41,20 +42,23 @@ jobs:
         # .ruby-version provides the Ruby version implicitly.
         bundler-cache: true
 
-    - name: Cache Playwright browsers
+    - name: Cache Lightpanda binary
       uses: actions/cache@v5
-      id: playwright-cache
+      id: lightpanda-cache
       with:
-        path: ~/.cache/ms-playwright
-        key: playwright-${{ runner.os }}-1.59.0
+        path: ~/.cache/lightpanda
+        key: lightpanda-${{ runner.os }}-nightly
 
-    - name: Install Playwright browsers (cache miss)
-      if: steps.playwright-cache.outputs.cache-hit != 'true'
-      run: npx --yes playwright@1.59.0 install --with-deps chromium
+    - name: Download Lightpanda binary (cache miss)
+      if: steps.lightpanda-cache.outputs.cache-hit != 'true'
+      run: |
+        mkdir -p ~/.cache/lightpanda
+        curl -L -o ~/.cache/lightpanda/lightpanda https://github.com/lightpanda-io/browser/releases/download/nightly/lightpanda-x86_64-linux
+        chmod +x ~/.cache/lightpanda/lightpanda
 
-    - name: Install Playwright system deps (cache hit)
-      if: steps.playwright-cache.outputs.cache-hit == 'true'
-      run: npx --yes playwright@1.59.0 install-deps chromium
+    - name: Verify Lightpanda
+      run: |
+        ~/.cache/lightpanda/lightpanda version
 
     - name: Setup test databases
       env:
@@ -67,7 +71,7 @@ jobs:
         DATABASE_URL: postgres://postgres:postgres@localhost:5432
         CI_NODE_INDEX: ${{ matrix.ci_node_index }}
         RAILS_ENV: test
-        PLAYWRIGHT_HEADLESS: true    
+        LIGHTPANDA_PATH: ~/.cache/lightpanda/lightpanda
       run: |
         bundle exec parallel_rspec spec/ \
           -n ${{ matrix.ci_node_total }} \

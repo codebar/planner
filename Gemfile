@@ -111,6 +111,7 @@ group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem 'capybara'
   gem 'capybara-playwright-driver'
+  gem 'capybara-lightpanda', '~> 0.2.0'
   gem 'database_cleaner'
   gem 'shoulda-matchers', '~> 7.0'
   gem 'simplecov',      require: false
@@ -127,3 +128,5 @@ gem 'scout_apm'
 
 gem 'carrierwave-aws', '~> 1.6'
 gem 'sitemap_generator', '~> 7.0'
+
+
