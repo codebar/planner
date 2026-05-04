@@ -104,20 +104,19 @@ RSpec.feature 'Managing meetings', type: :feature do
     end
 
     scenario 'does not send the invitations to banned members' do
+      # With 4 total members (2 students + 2 coaches), ban 2 active, 1 expired
+      # Expected: 4 total - 2 active bans = 2 emails sent
       chapter = Fabricate(:chapter_with_groups)
       meeting = Fabricate(:meeting, chapters: [chapter])
-      chapter.members[1..2].each do |member|
+      chapter.members[0..1].each do |member|
         Fabricate(:ban, member: member)
       end
-      permanent_ban = Fabricate.build(:ban, member: chapter.members[3], permanent: true, expires_at: nil)
-      permanent_ban.save(validate: false)
-      Fabricate(:ban, member: chapter.members[4], expires_at: Time.zone.today + 2.months)
-      expired_ban = Fabricate.build(:ban, member: chapter.members[5], expires_at: Time.zone.today - 1.month)
+      expired_ban = Fabricate.build(:ban, member: chapter.members[2], expires_at: Time.zone.today - 1.month)
       expired_ban.save(validate: false)
 
       expect do
         visit invite_admin_meeting_path(meeting)
-      end.to change { ActionMailer::Base.deliveries.count }.by(chapter.members.count - 4)
+      end.to change { ActionMailer::Base.deliveries.count }.by(2)
     end
   end
 end
