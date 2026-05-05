@@ -9,6 +9,10 @@ AllCops:
     - bin/**/*
     - vendor/bundle/**/*
 
+Lint/Syntax:
+  Exclude:
+    - app/views/**/*.haml
+
 plugins:
   - rubocop-capybara
   - rubocop-performance

@@ -4,7 +4,7 @@ RSpec.describe Listable do
   context 'scopes' do
     describe '#today_and_upcoming' do
       it 'returns a list of all today and upcoming workshops' do
-        Timecop.travel(Time.now.utc) do
+        travel_to(Time.current) do
           Fabricate.times(2, :past_workshop)
           future_workshops = Fabricate.times(1, :workshop)
 
@@ -28,7 +28,7 @@ RSpec.describe Listable do
 
     describe '#upcoming' do
       it 'returns a list of all upcoming workshops' do
-        Timecop.travel(Time.now.utc) do
+        travel_to(Time.current) do
           Fabricate.times(2, :past_workshop)
           future_workshops = Fabricate.times(1, :workshop)
 
@@ -48,7 +48,7 @@ RSpec.describe Listable do
 
     describe '#past' do
       it 'returns a list of all upcoming workshops' do
-        Timecop.travel(Time.now.utc) do
+        travel_to(Time.current) do
           past_workshops = Fabricate.times(2, :past_workshop)
           Fabricate.times(1, :workshop)
 
@@ -71,33 +71,39 @@ RSpec.describe Listable do
 
     describe '#completed_since_yesterday' do
       it 'returns a list of yesterday\'s events' do
-        Fabricate(:workshop, date_and_time: 24.hours.ago)
-        Fabricate(:workshop, date_and_time: 25.hours.ago)
-        latest = [Fabricate(:workshop, date_and_time: 3.hours.ago),
-                  Fabricate(:workshop, date_and_time: 12.hours.ago),
-                  Fabricate(:workshop, date_and_time: 23.hours.ago)]
+        travel_to(Time.current) do
+          Fabricate(:workshop, date_and_time: 24.hours.ago)
+          Fabricate(:workshop, date_and_time: 25.hours.ago)
+          latest = [Fabricate(:workshop, date_and_time: 3.hours.ago),
+                    Fabricate(:workshop, date_and_time: 12.hours.ago),
+                    Fabricate(:workshop, date_and_time: 23.hours.ago)]
 
-        expect(Workshop.completed_since_yesterday).to eq(latest)
+          expect(Workshop.completed_since_yesterday).to eq(latest)
+        end
       end
     end
   end
 
   describe '#next' do
     it 'returns the next workshop to take place' do
-      next_workshop = Fabricate(:workshop, date_and_time: Time.zone.now + 24.hours)
-      Fabricate(:workshop, date_and_time: Time.zone.now + 29.hours)
+      travel_to(Time.current) do
+        next_workshop = Fabricate(:workshop, date_and_time: Time.current + 24.hours)
+        Fabricate(:workshop, date_and_time: Time.current + 29.hours)
 
-      expect(Workshop.next).to eq(next_workshop)
+        expect(Workshop.next).to eq(next_workshop)
+      end
     end
 
     it 'returns the latest workshop to have taken place' do
-      past_most_recent_workshop = Fabricate(:workshop, date_and_time: 2.hours.ago)
-      Fabricate(:workshop, date_and_time: 5.hours.ago)
-      Fabricate(:workshop, date_and_time: 2.days.ago)
+      travel_to(Time.current) do
+        past_most_recent_workshop = Fabricate(:workshop, date_and_time: 2.hours.ago)
+        Fabricate(:workshop, date_and_time: 5.hours.ago)
+        Fabricate(:workshop, date_and_time: 2.days.ago)
 
-      most_recent = Workshop.most_recent
-      expect(most_recent).to eq(past_most_recent_workshop)
-      expect(most_recent.sponsors).to eq(past_most_recent_workshop.sponsors)
+        most_recent = Workshop.most_recent
+        expect(most_recent).to eq(past_most_recent_workshop)
+        expect(most_recent.sponsors).to eq(past_most_recent_workshop.sponsors)
+      end
     end
   end
 end

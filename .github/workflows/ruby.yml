@@ -17,6 +17,7 @@ jobs:
       BUNDLE_IGNORE_FUNDING_REQUESTS: true
       BUNDLE_IGNORE_MESSAGES: true
       RAILS_ENV: test
+      COVERAGE: true
       PARALLEL_TEST_PROCESSORS: ${{ matrix.ci_node_total }}
     services:
       postgres:

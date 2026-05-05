@@ -241,11 +241,44 @@ RSpec.describe InvitationManager do
     end
   end
 
+  describe '#create_invitation' do
+    let(:member) { Fabricate(:member) }
+
+    it 'creates a new invitation and returns it with previously_new_record? as true' do
+      invitation = manager.send(:create_invitation, workshop, member, 'Student')
+
+      expect(invitation).to be_a(WorkshopInvitation)
+      expect(invitation).to be_persisted
+      expect(invitation.previously_new_record?).to be true
+      expect(invitation.workshop).to eq(workshop)
+      expect(invitation.member).to eq(member)
+      expect(invitation.role).to eq('Student')
+    end
+
+    it 'returns existing invitation with previously_new_record? as false on duplicate call' do
+      # First call creates the invitation
+      invitation1 = manager.send(:create_invitation, workshop, member, 'Student')
+      expect(invitation1.previously_new_record?).to be true
+
+      # Second call finds the existing invitation
+      invitation2 = manager.send(:create_invitation, workshop, member, 'Student')
+      expect(invitation2.previously_new_record?).to be false
+      expect(invitation2.id).to eq(invitation1.id)
+    end
+
+    it 'does not create duplicate records in database' do
+      expect do
+        # Multiple calls should not create duplicates
+        3.times { manager.send(:create_invitation, workshop, member, 'Student') }
+      end.to change(WorkshopInvitation, :count).by(1)
+    end
+  end
+
   describe '#create_invitation resilience' do
     let(:member) { Fabricate(:member) }
 
-    it 'returns nil when find_or_create_by raises an exception' do
-      allow(WorkshopInvitation).to receive(:find_or_create_by)
+    it 'returns nil when find_or_initialize_by raises an exception' do
+      allow(WorkshopInvitation).to receive(:find_or_initialize_by)
         .and_raise(StandardError.new('database error'))
 
       result = manager.send(:create_invitation, workshop, member, 'Student')
@@ -254,7 +287,7 @@ RSpec.describe InvitationManager do
     end
 
     it 'logs error with member_id and workshop_id but no PII' do
-      allow(WorkshopInvitation).to receive(:find_or_create_by)
+      allow(WorkshopInvitation).to receive(:find_or_initialize_by)
         .and_raise(StandardError.new('database error'))
 
       expect(Rails.logger).to receive(:error) do |message|
@@ -272,7 +305,7 @@ RSpec.describe InvitationManager do
       Fabricate(:students, chapter: chapter, members: students)
       call_count = 0
 
-      allow(WorkshopInvitation).to receive(:find_or_create_by) do
+      allow(WorkshopInvitation).to receive(:find_or_initialize_by) do
         call_count += 1
         if call_count == 1
           raise StandardError.new('database error')
@@ -284,6 +317,127 @@ RSpec.describe InvitationManager do
       expect do
         manager.send_workshop_emails(workshop, 'students')
       end.not_to raise_error
+    end
+  end
+
+  describe 'duplicate invitation prevention' do
+    let(:initiator) { Fabricate(:member) }
+
+    before do
+      Fabricate(:students, chapter: chapter, members: students)
+    end
+
+    it 'logs skipped entries for already invited members when re-running batch' do
+      # First invitation round
+      manager.send_workshop_emails(workshop, 'students', initiator.id)
+
+      # Get the first log
+      first_log = InvitationLog.where(loggable: workshop, audience: 'students').order(:created_at).first
+      expect(first_log.success_count).to eq(students.count)
+      expect(first_log.skipped_count).to eq(0)
+
+      # Second invitation round
+      manager.send_workshop_emails(workshop, 'students', initiator.id)
+
+      # Get the second log
+      second_log = InvitationLog.where(loggable: workshop, audience: 'students').order(:created_at).last
+      expect(second_log.success_count).to eq(0)
+      expect(second_log.skipped_count).to eq(students.count)
+    end
+
+    it 'only sends emails to newly eligible members when batch is re-run' do
+      # First invitation round
+      manager.send_workshop_emails(workshop, 'students', initiator.id)
+      ActionMailer::Base.deliveries.clear
+
+      # Add a new student
+      new_student = Fabricate(:member)
+      Fabricate(:students, chapter: chapter, members: [new_student])
+
+      # Second invitation round - should only email the new student
+      expect do
+        manager.send_workshop_emails(workshop, 'students', initiator.id)
+      end.to change { ActionMailer::Base.deliveries.count }.by(1)
+
+      log = InvitationLog.where(loggable: workshop, audience: 'students').order(:created_at).last
+      expect(log.success_count).to eq(1)
+      expect(log.skipped_count).to eq(students.count)
+    end
+  end
+
+  describe '#send_workshop_emails async behavior' do
+    let!(:chapter) { Fabricate(:chapter, id: 1) }
+
+    context 'when chapter is in ASYNC_EMAIL_CHAPTER_IDS' do
+      before { Rails.application.config.async_email_chapter_ids = [1] }
+
+      it 'sends invitation emails' do
+        Fabricate(:students, chapter: chapter, members: students)
+        Fabricate(:coaches, chapter: chapter, members: coaches)
+
+        expect(WorkshopInvitationMailer).to receive(:invite_student).at_least(:once).and_call_original
+        expect(WorkshopInvitationMailer).to receive(:invite_coach).at_least(:once).and_call_original
+
+        manager.send_workshop_emails(workshop, 'everyone')
+      end
+    end
+
+    context 'when chapter is NOT in ASYNC_EMAIL_CHAPTER_IDS' do
+      before { Rails.application.config.async_email_chapter_ids = [99] }
+
+      it 'sends emails synchronously' do
+        Fabricate(:students, chapter: chapter, members: students)
+        Fabricate(:coaches, chapter: chapter, members: coaches)
+
+        expect do
+          manager.send_workshop_emails(workshop, 'everyone')
+        end.to change { ActionMailer::Base.deliveries.count }.by(students.count + coaches.count)
+
+        expect(Delayed::Job.count).to eq(0)
+      end
+    end
+
+    context 'when ASYNC_EMAIL_CHAPTER_IDS is empty' do
+      before { Rails.application.config.async_email_chapter_ids = [] }
+
+      it 'sends emails synchronously' do
+        Fabricate(:students, chapter: chapter, members: students)
+        Fabricate(:coaches, chapter: chapter, members: coaches)
+
+        expect do
+          manager.send_workshop_emails(workshop, 'everyone')
+        end.to change { ActionMailer::Base.deliveries.count }.by(students.count + coaches.count)
+
+        expect(Delayed::Job.count).to eq(0)
+      end
+    end
+  end
+
+  describe '#send_workshop_attendance_reminders async behavior' do
+    let!(:chapter) { Fabricate(:chapter, id: 1) }
+
+    context 'when chapter is in ASYNC_EMAIL_CHAPTER_IDS' do
+      before { Rails.application.config.async_email_chapter_ids = [1] }
+
+      it 'sends attendance reminder emails' do
+        invitation = Fabricate(:attending_workshop_invitation, workshop: workshop)
+
+        expect(WorkshopInvitationMailer).to receive(:attending_reminder).at_least(:once).and_call_original
+
+        manager.send_workshop_attendance_reminders(workshop)
+      end
+    end
+
+    context 'when chapter is NOT in ASYNC_EMAIL_CHAPTER_IDS' do
+      before { Rails.application.config.async_email_chapter_ids = [99] }
+
+      it 'uses deliver_now' do
+        invitation = Fabricate(:attending_workshop_invitation, workshop: workshop)
+
+        expect do
+          manager.send_workshop_attendance_reminders(workshop)
+        end.to change { ActionMailer::Base.deliveries.count }.by(1)
+      end
     end
   end
 end

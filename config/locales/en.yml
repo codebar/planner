@@ -201,6 +201,7 @@ en:
     not_logged_in: "You must be logged in to access this page."
     signing_up: "Thanks for signing up. Please fill in your details to complete the registration process."
     authentication_error: "Authentication failed. Please try again."
+    email_missing_from_provider: "We could not retrieve your email address from GitHub. Please make sure your GitHub account has a public email address and try again."
   navigation:
     dashboard: "Dashboard"
     code_of_conduct: "Code of Conduct"
@@ -356,6 +357,9 @@ en:
     body: "Before you can proceed you must first read our Code of Conduct and agree to abide by it."
     link_text: "Read codebar's Code of Conduct"
     accept: "Accept"
+    already_accepted_html: "You have already accepted our Code of Conduct on %{date}."
+    login_required_html: "Please log in to accept our Code of Conduct."
+    login_link_text: "Log in with GitHub"
     messages:
       notice: "You have to accept the Terms and Conditions before you are able to proceed."
   footer:

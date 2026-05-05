@@ -52,18 +52,18 @@ RSpec.describe InvitationManager do
       coaches_group.members << member_in_both_groups
     end
 
-    it 'sends one invitation per role when audience is everyone' do
-      expect(WorkshopInvitation).to receive(:find_or_create_by)
-        .with(workshop: workshop, member: member_in_both_groups, role: 'Student')
-        .and_call_original
-        .once
+    it 'creates one invitation per role when audience is everyone' do
+      expect do
+        manager.send_workshop_emails(workshop, 'everyone')
+      end.to change(WorkshopInvitation, :count).by(2)
 
-      expect(WorkshopInvitation).to receive(:find_or_create_by)
-        .with(workshop: workshop, member: member_in_both_groups, role: 'Coach')
-        .and_call_original
-        .once
+      # Verify the member has one invitation per role
+      student_invitation = WorkshopInvitation.find_by(workshop: workshop, member: member_in_both_groups, role: 'Student')
+      coach_invitation = WorkshopInvitation.find_by(workshop: workshop, member: member_in_both_groups, role: 'Coach')
 
-      manager.send_workshop_emails(workshop, 'everyone')
+      expect(student_invitation).to be_present
+      expect(coach_invitation).to be_present
+      expect(student_invitation.id).not_to eq(coach_invitation.id)
     end
   end
 end

@@ -18,6 +18,7 @@ gem 'csv' # LOCKED: csv was loaded from the standard library, but is not part of
 gem 'delayed_job'
 gem 'delayed_job_active_record'
 gem 'drb' # LOCKED: Added because of pry-remote
+gem 'email_validator'
 gem 'font_awesome5_rails'
 gem 'bootstrap', '~> 5'
 gem 'friendly_id'
@@ -61,7 +62,7 @@ gem 'stripe'
 gem 'rails-html-sanitizer', '~> 1.7.0'
 
 # Use the Puma web server [https://github.com/puma/puma]
-gem 'puma', '~> 7.2'
+gem 'puma', '~> 8.0'
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
 gem 'importmap-rails'
 # Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
@@ -114,7 +115,6 @@ group :test do
   gem 'shoulda-matchers', '~> 7.0'
   gem 'simplecov',      require: false
   gem 'simplecov-lcov', require: false
-  gem 'timecop', '~> 0.9.10'
   gem 'webmock'
 end
 
@@ -126,4 +126,4 @@ gem 'rollbar'
 gem 'scout_apm'
 
 gem 'carrierwave-aws', '~> 1.6'
-gem 'sitemap_generator', github: 'kjvarga/sitemap_generator', branch: 'master' # LOCKED: When a version higher than 6.3.0 is released, drop this LOCKED.
+gem 'sitemap_generator', '~> 7.0'

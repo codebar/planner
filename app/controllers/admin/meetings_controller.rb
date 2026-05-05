@@ -7,10 +7,10 @@ class Admin::MeetingsController < Admin::ApplicationController
 
   def create
     @meeting = Meeting.new(meeting_params)
-    set_organisers(organiser_ids)
-    set_chapters(chapter_ids)
 
     if @meeting.save
+      set_organisers(organiser_ids)
+      set_chapters(chapter_ids)
       redirect_to [:admin, @meeting], notice: t('admin.messages.meeting.created')
     else
       flash[:notice] = @meeting.errors.full_messages.join(', ')
@@ -54,7 +54,7 @@ class Admin::MeetingsController < Admin::ApplicationController
   private
 
   def set_meeting
-    @meeting = Meeting.find_by(slug: slug)
+    @meeting = Meeting.find_by!(slug: slug)
   end
 
   def slug
@@ -62,10 +62,10 @@ class Admin::MeetingsController < Admin::ApplicationController
   end
 
   def meeting_params
-    params.expect(meeting: [
-      :name, :description, :slug, :date_and_time, :local_date, :local_time, :local_end_time,
-      :invitable, :spaces, :venue_id, :sponsor_id, :chapters
-    ])
+    params.expect(meeting: %i[
+                    name description slug date_and_time local_date local_time local_end_time
+                    invitable spaces venue_id sponsor_id chapters
+                  ])
   end
 
   def organiser_ids

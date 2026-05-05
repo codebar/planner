@@ -19,7 +19,7 @@ class FeedbackController < ApplicationController
 
       redirect_to root_path
     else
-      feedback_request = FeedbackRequest.find_by(token: params[:id], submited: false)
+      feedback_request = FeedbackRequest.find_by!(token: params[:id], submited: false)
       set_coaches(feedback_request.workshop)
 
       @workshop = feedback_request.workshop

@@ -3,11 +3,13 @@ RSpec.describe ChapterPresenter do
   let(:presenter) { ChapterPresenter.new(chapter) }
 
   it '#upcoming_workshops' do
-    Fabricate.times(2, :past_workshop, chapter: chapter)
-    workshops = Fabricate.times(3, :workshop, chapter: chapter,
-                                              date_and_time: Time.zone.now + 1.week)
+    travel_to(Time.current) do
+      Fabricate.times(2, :past_workshop, chapter: chapter)
+      workshops = Fabricate.times(3, :workshop, chapter: chapter,
+                                                date_and_time: 1.week.from_now)
 
-    expect(presenter.upcoming_workshops).to match_array(workshops)
+      expect(presenter.upcoming_workshops).to match_array(workshops)
+    end
   end
 
   it '#organisers' do

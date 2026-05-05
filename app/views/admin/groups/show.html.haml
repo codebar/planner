@@ -1,18 +1,89 @@
+- content_for :head do
+  %link{ href: 'https://cdn.jsdelivr.net/npm/tom-select@2.4.3/dist/css/tom-select.bootstrap5.min.css', rel: 'stylesheet', type: 'text/css' }
+  %script{ src: 'https://cdn.jsdelivr.net/npm/tom-select@2.4.3/dist/js/tom-select.complete.min.js' }
+
 .container.py-4.py-lg-5
   .row.mb-4
     .col
       %h1
         = @group.name
-        %small.text-muted #{@group.chapter.name}
+        %small.text-muted= @group.chapter.name
 
   .row
     .col
-      %h3.mb-3 Members (#{@group.members.count})
+      %h3.mb-3
+        Members
+        %small (#{@eligible_count} eligible, #{@total_count} total)
+      .alert.alert-info.mt-2
+        %strong= t('admin.groups.eligible_title')
+        = simple_format(t('admin.groups.eligible_help'))
+
+  .row.mb-4
+    .col-12.col-md-6
+      = select_tag 'member_lookup_id', nil, class: 'form-control', placeholder: 'Search members by name or email...'
+    .col-auto
+      = link_to 'View Profile', '#', { class: 'btn btn-primary', id: 'view_profile' }
+
+  .row
+    .col
       %table.table.table-striped.table-hover
+        %thead
+          %tr
+            %th Avatar
+            %th Name
+            %th Email
+            %th Mobile
+            %th T&C
         %tbody
-          - @group.members.each do |member|
+          - @members.each do |member|
             %tr
               %td= image_tag(member.avatar(32), class: 'rounded-circle', title: member.full_name, alt: member.full_name)
               %td= link_to member.full_name, admin_member_path(member)
               %td= mail_to member.email, member.email
               %td= member.mobile
+              %td
+                - if member.accepted_toc_at
+                  %i.fa.fa-check.text-success{ title: "Accepted on #{member.accepted_toc_at.to_date}" }
+                - else
+                  %i.fa.fa-times.text-danger{ title: 'Not accepted' }
+
+  .row
+    .col
+      = render partial: 'shared/pagination', locals: { pagy: @pagy, model: 'member' }
+
+-# TomSelect initialization
+:javascript
+  document.addEventListener('DOMContentLoaded', function() {
+    var control = document.getElementById('member_lookup_id');
+    var viewLink = document.getElementById('view_profile');
+
+    var ts = new TomSelect(control, {
+      create: false,
+      maxItems: 1,
+      placeholder: 'Search members by name or email...',
+      valueField: 'id',
+      labelField: 'full_name',
+      searchField: ['full_name', 'email'],
+      load: function(query, callback) {
+        if (query.length < 3) {
+          callback();
+          return;
+        }
+
+        var url = '/admin/members/search?q=' + encodeURIComponent(query);
+        fetch(url)
+          .then(function(response) { return response.json(); })
+          .then(function(data) { callback(data); })
+          .catch(function() { callback(); });
+      },
+      onChange: function(value) {
+        if (value) {
+          viewLink.href = '/admin/members/' + value;
+          viewLink.classList.remove('disabled');
+        } else {
+          viewLink.href = '#';
+          viewLink.classList.add('disabled');
+        }
+      }
+    });
+  });

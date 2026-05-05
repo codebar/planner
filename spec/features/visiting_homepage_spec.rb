@@ -2,7 +2,7 @@ RSpec.feature 'when visiting the homepage', type: :feature do
   let!(:next_workshop) { Fabricate(:workshop) }
   let!(:events) { Fabricate.times(3, :event) }
 
-  before(:each) do
+  before do
     visit root_path
   end
 
@@ -11,11 +11,15 @@ RSpec.feature 'when visiting the homepage', type: :feature do
   end
 
   scenario 'i can view the next workshop' do
-    expect(page).to have_content "Workshop at #{next_workshop.host.name}"
+    travel_to(Time.current) do
+      expect(page).to have_content "Workshop at #{next_workshop.host.name}"
+    end
   end
 
   scenario 'i can view the next 5 upcoming events' do
-    events.take(5).each { |event| expect(page).to have_content "#{event.name} at #{event.venue.name}" }
+    travel_to(Time.current) do
+      events.take(5).each { |event| expect(page).to have_content "#{event.name} at #{event.venue.name}" }
+    end
   end
 
   scenario 'i can access the code of conduct' do
@@ -37,7 +41,7 @@ RSpec.feature 'when visiting the homepage', type: :feature do
     end
 
     inactive_chapters.each do |chapter|
-      expect(page).to_not have_content(chapter.name)
+      expect(page).not_to have_content(chapter.name)
     end
   end
 

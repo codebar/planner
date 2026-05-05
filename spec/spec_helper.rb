@@ -1,47 +1,49 @@
-require 'simplecov'
-require 'simplecov-lcov'
+require 'simplecov' if ENV['COVERAGE'] == 'true'
+require 'simplecov-lcov' if ENV['COVERAGE'] == 'true'
 require 'shoulda/matchers'
 require 'webmock/rspec'
 
-# Fix incompatibility of simplecov-lcov with older versions of simplecov that are not expresses in its gemspec.
-# https://github.com/fortissimo1997/simplecov-lcov/pull/25
+if ENV['COVERAGE'] == 'true'
+  # Fix incompatibility of simplecov-lcov with older versions of simplecov that are not expresses in its gemspec.
+  # https://github.com/fortissimo1997/simplecov-lcov/pull/25
 
-if !SimpleCov.respond_to?(:branch_coverage)
-  module SimpleCov
-    def self.branch_coverage?
-      false
+  if !SimpleCov.respond_to?(:branch_coverage)
+    module SimpleCov
+      def self.branch_coverage?
+        false
+      end
     end
   end
-end
 
-SimpleCov::Formatter::LcovFormatter.config do |c|
-  c.report_with_single_file = true
-  c.single_report_path = 'coverage/lcov.info'
-end
+  SimpleCov::Formatter::LcovFormatter.config do |c|
+    c.report_with_single_file = true
+    c.single_report_path = 'coverage/lcov.info'
+  end
 
-SimpleCov.formatters = SimpleCov::Formatter::MultiFormatter.new(
-  [
-    SimpleCov::Formatter::HTMLFormatter,
-    SimpleCov::Formatter::LcovFormatter,
-  ]
-)
+  SimpleCov.formatters = SimpleCov::Formatter::MultiFormatter.new(
+    [
+      SimpleCov::Formatter::HTMLFormatter,
+      SimpleCov::Formatter::LcovFormatter,
+    ]
+  )
 
-SimpleCov.start do
-  add_filter 'spec/'
+  SimpleCov.start do
+    add_filter 'spec/'
 
-  # Support parallel test execution
-  # In CI: Use CI_NODE_INDEX (0, 1, 2, 3) set by GitHub Actions matrix
-  # Locally: Use TEST_ENV_NUMBER ('', '2', '3', '4') set by parallel_tests
-  if ENV['CI_NODE_INDEX']
-    command_name "RSpec-#{ENV['CI_NODE_INDEX']}"
-    use_merging true
-    merge_timeout 3600
-  elsif ENV.key?('TEST_ENV_NUMBER')
-    # TEST_ENV_NUMBER is '' for first process, '2', '3', etc. for others
-    suffix = ENV['TEST_ENV_NUMBER'].empty? ? '1' : ENV['TEST_ENV_NUMBER']
-    command_name "RSpec-#{suffix}"
-    use_merging true
-    merge_timeout 3600
+    # Support parallel test execution
+    # In CI: Use CI_NODE_INDEX (0, 1, 2, 3) set by GitHub Actions matrix
+    # Locally: Use TEST_ENV_NUMBER ('', '2', '3', '4') set by parallel_tests
+    if ENV['CI_NODE_INDEX']
+      command_name "RSpec-#{ENV['CI_NODE_INDEX']}"
+      use_merging true
+      merge_timeout 3600
+    elsif ENV.key?('TEST_ENV_NUMBER')
+      # TEST_ENV_NUMBER is '' for first process, '2', '3', etc. for others
+      suffix = ENV['TEST_ENV_NUMBER'].empty? ? '1' : ENV['TEST_ENV_NUMBER']
+      command_name "RSpec-#{suffix}"
+      use_merging true
+      merge_timeout 3600
+    end
   end
 end
 

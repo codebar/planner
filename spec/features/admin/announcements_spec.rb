@@ -15,7 +15,7 @@ RSpec.feature 'Announcements', type: :feature do
         click_on 'announcement[create]'
 
         expect(page).to have_content('Announcement successfully created')
-        expect(page.current_path).to eq(admin_announcements_path)
+        expect(page).to have_current_path(admin_announcements_path, ignore_query: true)
       end
     end
 
@@ -37,18 +37,20 @@ RSpec.feature 'Announcements', type: :feature do
 
         expect(page).to have_content('Announcement successfully updated')
         expect(page).to have_content('New event coming up soon! Stay tuned.')
-        expect(page.current_path).to eq(admin_announcements_path)
+        expect(page).to have_current_path(admin_announcements_path, ignore_query: true)
       end
     end
 
     scenario 'can view all announcements' do
-      announcement = Fabricate(:announcement)
-      old_announcement = Fabricate(:announcement, expires_at: Time.zone.now - 1.week)
+      travel_to(Time.current) do
+        announcement = Fabricate(:announcement)
+        old_announcement = Fabricate(:announcement, expires_at: 1.week.ago)
 
-      visit admin_announcements_path
+        visit admin_announcements_path
 
-      expect(page).to have_content(announcement.message)
-      expect(page).to have_content(old_announcement.message)
+        expect(page).to have_content(announcement.message)
+        expect(page).to have_content(old_announcement.message)
+      end
     end
 
     scenario 'can successfully send a new announcement to every group' do
@@ -60,7 +62,7 @@ RSpec.feature 'Announcements', type: :feature do
       expect(page).to have_content('An announcement to every group')
       expect(page).to have_content("Coaches #{chapter.name}")
       expect(page).to have_content("Students #{chapter.name}")
-      expect(page.current_path).to eq(admin_announcements_path)
+      expect(page).to have_current_path(admin_announcements_path, ignore_query: true)
     end
 
     scenario 'can successfully send a new announcement to selected groups' do
@@ -71,8 +73,8 @@ RSpec.feature 'Announcements', type: :feature do
 
       expect(page).to have_content('An announcement to selected groups')
       expect(page).to have_content("Coaches #{chapter.name}")
-      expect(page).to_not have_content("Students #{chapter.name}")
-      expect(page.current_path).to eq(admin_announcements_path)
+      expect(page).not_to have_content("Students #{chapter.name}")
+      expect(page).to have_current_path(admin_announcements_path, ignore_query: true)
     end
   end
 end

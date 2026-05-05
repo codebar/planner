@@ -1,5 +1,6 @@
 class Member < ApplicationRecord
   include Permissions
+  include DigestHelper
 
   enum :how_you_found_us, {
     from_a_friend: 0,
@@ -26,6 +27,7 @@ class Member < ApplicationRecord
   validates :auth_services, presence: true
   validates :name, :surname, :email, :about_you, presence: true, if: :can_log_in?
   validates :email, uniqueness: true
+  validates :email, email: { mode: :strict }, if: :can_log_in?
   validates :about_you, length: { maximum: 255 }
 
   DIETARY_RESTRICTIONS = %w[vegan vegetarian pescetarian halal gluten_free dairy_free other].freeze
@@ -98,7 +100,8 @@ class Member < ApplicationRecord
   end
 
   def avatar(size = 100)
-    "https://secure.gravatar.com/avatar/#{md5_email}?size=#{size}&default=identicon"
+    identifier = email.presence || "member-#{id}@example.com"
+    "https://secure.gravatar.com/avatar/#{md5_of(identifier)}?size=#{size}&default=identicon"
   end
 
   def requires_additional_details?
@@ -169,10 +172,6 @@ class Member < ApplicationRecord
       .joins(:workshop)
       .where('workshops.date_and_time BETWEEN ? AND ?', date.beginning_of_day, date.end_of_day)
       .where(attending: true)
-  end
-
-  def md5_email
-    Digest::MD5.hexdigest(email.strip.downcase)
   end
 
   def rsvps(period:)

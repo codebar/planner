@@ -144,4 +144,19 @@ RSpec.feature 'Chapters', type: :feature do
       expect(page).not_to have_content('How members found this chapter')
     end
   end
+
+  context 'eligible members tooltip' do
+    let(:chapter) { Fabricate(:chapter_with_groups) }
+
+    before do
+      login_as_admin(member)
+    end
+
+    scenario 'shows explanation for eligible members' do
+      visit admin_chapter_path(chapter)
+
+      expect(page).to have_content('What is "eligible"?')
+      expect(page).to have_content(/Are not banned/i)
+    end
+  end
 end

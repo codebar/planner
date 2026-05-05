@@ -26,8 +26,15 @@ class AuthServicesController < ApplicationController
 
       finish_registration || redirect_to(referer_or_dashboard_path)
     else
-        member = Member.find_by(email: omnihash[:info][:email])
-        member ||= Member.new(email: omnihash[:info][:email])
+        email = omnihash[:info][:email].to_s.strip
+
+        if email.blank?
+          flash[:error] = I18n.t('notifications.email_missing_from_provider')
+          return redirect_to root_url
+        end
+
+        member = Member.find_by(email:)
+        member ||= Member.new(email:)
 
         member.name    ||= omnihash[:info][:name]&.split(' ')&.first || ''
         member.surname ||= omnihash[:info][:name]&.split(' ')&.drop(1)&.join(' ') || ''

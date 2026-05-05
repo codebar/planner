@@ -48,6 +48,14 @@ class Chapter < ApplicationRecord
           .distinct
   end
 
+  def eligible_students
+    Member.in_group(groups.students).distinct
+  end
+
+  def eligible_coaches
+    Member.in_group(groups.coaches).distinct
+  end
+
   private
 
   def expire_chapters_sidebar_cache

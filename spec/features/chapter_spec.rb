@@ -9,11 +9,13 @@ RSpec.feature 'viewing a Chapter', type: :feature do
     end
 
     it 'a visitor to the website can access inactive chapter events' do
-      past_workshop = Fabricate(:workshop, chapter: inactive_chapter, date_and_time: Time.zone.today - 2.weeks)
+      travel_to(Time.current) do
+        past_workshop = Fabricate(:workshop, chapter: inactive_chapter, date_and_time: 2.weeks.ago)
 
-      visit workshop_path(past_workshop)
+        visit workshop_path(past_workshop)
 
-      expect(page).to have_content "Workshop at #{past_workshop.host.name}"
+        expect(page).to have_content "Workshop at #{past_workshop.host.name}"
+      end
     end
   end
 
@@ -25,59 +27,67 @@ RSpec.feature 'viewing a Chapter', type: :feature do
     end
 
     it 'renders chapter without organisers' do
-      chapter = Fabricate(:chapter_without_organisers, name: "Empty Chapter")
+      chapter = Fabricate(:chapter_without_organisers, name: 'Empty Chapter')
       expect(chapter.organisers.size).to eq 0
 
       visit chapter_path(chapter.slug)
 
-      expect(page).to have_content "Empty Chapter"
-      expect(page).not_to have_content "Team"
+      expect(page).to have_content 'Empty Chapter'
+      expect(page).not_to have_content 'Team'
     end
 
     it 'renders any upcoming workshops for the chapter' do
-      chapter = Fabricate(:chapter)
-      workshops = 2.times.map do |n|
-        Fabricate(:workshop, chapter: chapter, date_and_time: Time.zone.now + 9.days - n.weeks)
-      end
+      travel_to(Time.current) do
+        chapter = Fabricate(:chapter)
+        workshops = 2.times.map do |n|
+          Fabricate(:workshop, chapter: chapter, date_and_time: 9.days.from_now - n.weeks)
+        end
 
-      visit chapter_path(chapter.slug)
-      workshops.each do |workshop|
-        expect(page).to have_content "Workshop at #{workshop.host.name}"
+        visit chapter_path(chapter.slug)
+        workshops.each do |workshop|
+          expect(page).to have_content "Workshop at #{workshop.host.name}"
+        end
       end
     end
 
     it 'renders any upcoming events for the chapter' do
-      chapter = Fabricate(:chapter)
-      2.times.map do |n|
-        Fabricate(:event, name: "Event #{n + 1}",
-                          chapters: [chapter],
-                          date_and_time: Time.zone.now + 2.months - n.months)
-      end
+      travel_to(Time.current) do
+        chapter = Fabricate(:chapter)
+        2.times.map do |n|
+          Fabricate(:event, name: "Event #{n + 1}",
+                            chapters: [chapter],
+                            date_and_time: 2.months.from_now - n.months)
+        end
 
-      visit chapter_path(chapter.slug)
-      expect(page).to have_content 'Event 1'
-      expect(page).to have_content 'Event 2'
+        visit chapter_path(chapter.slug)
+        expect(page).to have_content 'Event 1'
+        expect(page).to have_content 'Event 2'
+      end
     end
 
     it 'renders the most recent past workshop for the chapter' do
-      chapter = Fabricate(:chapter)
-      past_workshop = Fabricate(:workshop, chapter: chapter, date_and_time: Time.zone.today - 2.weeks)
-      recent_past_workshop = Fabricate(:workshop, chapter: chapter, date_and_time: Time.zone.today - 1.week)
+      travel_to(Time.current) do
+        chapter = Fabricate(:chapter)
+        past_workshop = Fabricate(:workshop, chapter: chapter, date_and_time: 2.weeks.ago)
+        recent_past_workshop = Fabricate(:workshop, chapter: chapter, date_and_time: 1.week.ago)
 
-      visit chapter_path(chapter.slug)
-      expect(page).to have_content "Workshop at #{recent_past_workshop.host.name}"
-      expect(page).to_not have_content "Workshop at #{past_workshop.host.name}"
+        visit chapter_path(chapter.slug)
+        expect(page).to have_content "Workshop at #{recent_past_workshop.host.name}"
+        expect(page).not_to have_content "Workshop at #{past_workshop.host.name}"
+      end
     end
 
     it 'renders the 6 most recent sponsors for the chapter' do
-      chapter = Fabricate(:chapter)
-      workshops = 2.times.map do |n|
-        Fabricate(:workshop, chapter: chapter, date_and_time: Time.zone.now - n.weeks)
-      end
+      travel_to(Time.current) do
+        chapter = Fabricate(:chapter)
+        workshops = 2.times.map do |n|
+          Fabricate(:workshop, chapter: chapter, date_and_time: n.weeks.ago)
+        end
 
-      visit chapter_path(chapter.slug)
-      workshops.each do |workshop|
-        expect(page).to have_link(workshop.sponsors.name)
+        visit chapter_path(chapter.slug)
+        workshops.each do |workshop|
+          expect(page).to have_link(workshop.sponsors.name)
+        end
       end
     end
   end

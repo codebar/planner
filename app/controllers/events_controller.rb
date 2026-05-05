@@ -68,7 +68,7 @@ class EventsController < ApplicationController
   end
 
   def set_event
-    @event = Event.find_by(slug: params[:event_id])
+    @event = Event.find_by!(slug: params[:event_id])
   end
 
   def fetch_upcoming_events
@@ -82,7 +82,10 @@ class EventsController < ApplicationController
     events << Event.upcoming.includes(:venue, :sponsors, :sponsorships, :permissions).all
 
     sorted = events.compact.flatten.sort_by(&:date_and_time)
+    return [{}, nil] if sorted.empty?
+
     pagy, paginated = pagy(sorted, items: 20)
+    paginated ||= []
 
     grouped = paginated.group_by(&:date)
     decorated = grouped.transform_values { |items| EventPresenter.decorate_collection(items) }
@@ -101,7 +104,10 @@ class EventsController < ApplicationController
     events << Event.past.includes(:venue, :sponsors, :sponsorships, :permissions).all
 
     sorted = events.compact.flatten.sort_by(&:date_and_time).reverse
+    return [{}, nil] if sorted.empty?
+
     pagy, paginated = pagy(sorted, items: 20)
+    paginated ||= []
 
     grouped = paginated.group_by(&:date)
     decorated = grouped.transform_values { |items| EventPresenter.decorate_collection(items) }

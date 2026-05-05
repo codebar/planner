@@ -1,7 +1,9 @@
 # This configuration file will be evaluated by Puma. The top-level methods that
 # are invoked here are part of Puma's configuration DSL. For more information
 # about methods provided by the DSL, see https://puma.io/puma/Puma/DSL.html.
-#
+
+require 'fileutils'
+
 # Puma starts a configurable number of processes (workers) and each process
 # serves each request in a thread from an internal thread pool.
 #
@@ -29,7 +31,16 @@ threads_count = ENV.fetch("RAILS_MAX_THREADS", 3)
 threads threads_count, threads_count
 
 # Specifies the `port` that Puma will listen on to receive requests; default is 3000.
-port ENV.fetch("PORT", 3000)
+# Use Unix socket when nginx config exists (from heroku-community/nginx buildpack)
+# Falls back to port if nginx config not present
+if File.exist?("config/nginx.conf.erb")
+  bind "unix:///tmp/nginx.socket?umask=0077"  # Restrict socket permissions to owner only
+  
+  # Signal to nginx buildpack that app is ready (required for nginx to start)
+  FileUtils.touch("/tmp/app-initialized")
+else
+  port ENV.fetch("PORT", 3000)
+end
 
 # Allow puma to be restarted by `bin/rails restart` command.
 plugin :tmp_restart

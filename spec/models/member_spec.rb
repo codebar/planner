@@ -14,6 +14,37 @@ RSpec.describe Member do
         it { expect(member).to validate_presence_of(:surname) }
         it { expect(member).to validate_presence_of(:email) }
         it { expect(member).to validate_presence_of(:about_you) }
+
+        it 'accepts valid email format' do
+          member.email = 'valid@example.com'
+          expect(member).to be_valid
+        end
+
+        it 'rejects invalid email format' do
+          member.email = 'invalid-email'
+          expect(member).not_to be_valid
+          expect(member.errors[:email]).to include('is invalid')
+        end
+
+        it 'rejects email missing @ symbol' do
+          member.email = 'invalidexample.com'
+          expect(member).not_to be_valid
+        end
+
+        it 'rejects email missing TLD' do
+          member.email = 'invalid@example'
+          expect(member).not_to be_valid
+        end
+
+        it 'accepts email with valid subdomains' do
+          member.email = 'user@mail.example.com'
+          expect(member).to be_valid
+        end
+
+        it 'accepts email with plus addressing' do
+          member.email = 'user+tag@example.com'
+          expect(member).to be_valid
+        end
       end
     end
 
@@ -25,6 +56,15 @@ RSpec.describe Member do
       it '#avatar' do
         encrypted_email = Digest::MD5.hexdigest(member.email.strip.downcase)
         expect(member.avatar).to eq("https://secure.gravatar.com/avatar/#{encrypted_email}?size=100&default=identicon")
+      end
+
+      describe '#avatar' do
+        let(:member) { Fabricate.build(:member, email: nil) }
+
+        it 'falls back to member ID based email' do
+          encrypted_email = Digest::MD5.hexdigest("member-#{member.id}@example.com")
+          expect(member.avatar).to eq("https://secure.gravatar.com/avatar/#{encrypted_email}?size=100&default=identicon")
+        end
       end
 
       describe '#recent_notes' do

@@ -4,7 +4,7 @@ RSpec.feature 'Accepting Terms and Conditions', type: :feature do
       mock_github_auth
     end
 
-    scenario 'they can''t proceed unless they accept the ToCs' do
+    scenario "they can't proceed unless they accept the ToCs" do
       visit root_path
       click_on 'Join us as a student'
       click_on 'Join us as a student'
@@ -16,7 +16,7 @@ RSpec.feature 'Accepting Terms and Conditions', type: :feature do
       expect(page).to have_content('You have to accept the Terms and Conditions before you are able to proceed.')
     end
 
-    scenario 'they can read the Code of Conduct before accepting the ToCs', js: true do
+    scenario 'they can read the Code of Conduct before accepting the ToCs', :js do
       visit root_path
       click_on 'Join us as a student'
       click_on 'Join us as a student'
@@ -47,7 +47,7 @@ RSpec.feature 'Accepting Terms and Conditions', type: :feature do
   end
 
   context 'When an existing member logs in' do
-    context 'and they have not yet accepted codebar''s ToCs' do
+    context "and they have not yet accepted codebar's ToCs" do
       scenario 'they have to accept before continuing to the page they want to get' do
         member = Fabricate(:member_without_toc)
         login(member)
@@ -59,7 +59,7 @@ RSpec.feature 'Accepting Terms and Conditions', type: :feature do
       end
     end
 
-    context 'and they have already accepted codebar''s ToCs' do
+    context "and they have already accepted codebar's ToCs" do
       scenario 'they will be redirected to the link they were trying to access' do
         member = Fabricate(:member)
         login(member)
@@ -67,6 +67,32 @@ RSpec.feature 'Accepting Terms and Conditions', type: :feature do
         visit dashboard_path
         expect(page).to have_current_path(dashboard_path)
       end
+
+      scenario 'they see a message that they have already accepted on the T&C page' do
+        member = Fabricate(:member)
+        login(member)
+
+        visit terms_and_conditions_path
+        expect(page).to have_current_path(terms_and_conditions_path)
+        expect(page).to have_content(/already accepted.*#{member.accepted_toc_at.strftime('%d %B %Y')}/)
+        expect(page).not_to have_button('Accept')
+      end
+    end
+  end
+
+  context 'When a guest user (not logged in) visits the page' do
+    scenario 'they see a login prompt and cannot accept the ToCs' do
+      visit terms_and_conditions_path
+
+      expect(page).to have_content('Please log in to accept our Code of Conduct.')
+      expect(page).to have_link('Log in with GitHub')
+    end
+
+    scenario 'they see a disabled form' do
+      visit terms_and_conditions_path
+
+      expect(page).to have_field('terms_and_conditions_form_terms', disabled: true)
+      expect(page).to have_button('Accept', disabled: true)
     end
   end
 end

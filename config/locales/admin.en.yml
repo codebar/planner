@@ -1,7 +1,13 @@
 en:
   admin:
     groups:
-      eligible_explanation: "Members who have accepted the Terms & Conditions and are not banned"
+      eligible_title: "What is \"eligible\"?"
+      eligible_help: |
+        Eligible members are those who:
+        1. Have accepted the codebar Terms & Conditions
+        2. Are not banned from the platform
+
+        Members who haven't accepted T&C or are banned do not receive invitations and cannot RSVP to workshops.
 
     shared:
       workshops: Workshops

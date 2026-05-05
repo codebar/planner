@@ -31,7 +31,8 @@ codebar planner is a Rails 8.1 application for managing [codebar.io](https://cod
 
 - **Setup**: `bundle && rake db:create db:migrate db:seed`
 - **Server**: `bundle exec rails server`
-- **Tests**: `bundle exec rspec [path]` - runs RSpec tests, optionally for specific file/line
+- **Tests**: `make test` or `bundle exec parallel_rspec spec/ -n 3` - runs RSpec tests in parallel (3 processes is optimal)
+- **Single test**: `bundle exec rspec spec/path/to/file_spec.rb:42`
 - **Rails console**: `bundle exec rails console`
 - **Run rake tasks**: `bundle exec rake [task]`
 - **Linting**: `bundle exec rubocop`
@@ -129,14 +130,15 @@ See `app/models/README.md` for detailed data model documentation.
 - **JavaScript Driver**: Playwright (Chromium by default)
 - **Factories**: Fabrication (not FactoryBot)
 - **Test data**: Faker for generated data
-- **Coverage**: SimpleCov
+- **Coverage**: SimpleCov (runs in CI when COVERAGE=true)
+- **Parallel testing**: Use `make test` or `bundle exec parallel_rspec spec/ -n 3` for ~45% faster test runs
 - **JavaScript tests**: Capybara with Playwright driver
   - Use `PLAYWRIGHT_HEADLESS=false` to debug with visible browser
   - Use `PWDEBUG=1` for Playwright Inspector (step-through debugging)
   - Use `PLAYWRIGHT_BROWSER=firefox` or `webkit` for cross-browser testing
 - **Matchers**: Shoulda Matchers, RSpec Collection Matchers
 
-Run single test: `bin/drspec spec/path/to/file_spec.rb:42`
+Run single test: `bundle exec rspec spec/path/to/file_spec.rb:42`
 
 ## Code Style
 
