@@ -20,7 +20,7 @@ RSpec.describe InvitationManager do
     include_examples 'sending workshop emails'
   end
 
-  context '#send_event_emails' do
+  describe '#send_event_emails' do
     let!(:student_group) { Fabricate(:students, chapter: chapter, members: students) }
     let!(:coaches_group) { Fabricate(:coaches, chapter: chapter, members: coaches) }
 
@@ -31,7 +31,7 @@ RSpec.describe InvitationManager do
       end
 
       coaches.each do |student|
-        expect(Invitation).to_not receive(:new).with(event: event, member: student, role: 'Coach').and_call_original
+        expect(Invitation).not_to receive(:new).with(event: event, member: student, role: 'Coach').and_call_original
       end
 
       manager.send_event_emails(event, chapter)
@@ -41,7 +41,7 @@ RSpec.describe InvitationManager do
       event = Fabricate(:event, chapters: [chapter], audience: 'Coaches')
 
       students.each do |student|
-        expect(Invitation).to_not receive(:new).with(event: event, member: student, role: 'Student').and_call_original
+        expect(Invitation).not_to receive(:new).with(event: event, member: student, role: 'Student').and_call_original
       end
 
       coaches.each do |student|
@@ -71,17 +71,17 @@ RSpec.describe InvitationManager do
       first_student, *other_students = students
       first_student.update(accepted_toc_at: nil)
 
-      expect(Invitation).to_not(
-        receive(:new).
-        with(event: event, member: first_student, role: 'Student').
-        and_call_original
+      expect(Invitation).not_to(
+        receive(:new)
+        .with(event: event, member: first_student, role: 'Student')
+        .and_call_original
       )
 
       other_students.each do |other_student|
         expect(Invitation).to(
-          receive(:new).
-          with(event: event, member: other_student, role: 'Student').
-          and_call_original
+          receive(:new)
+          .with(event: event, member: other_student, role: 'Student')
+          .and_call_original
         )
       end
 
@@ -94,17 +94,17 @@ RSpec.describe InvitationManager do
       first_coach, *other_coaches = coaches
       first_coach.update(accepted_toc_at: nil)
 
-      expect(Invitation).to_not(
-        receive(:new).
-        with(event: event, member: first_coach, role: 'Coach').
-        and_call_original
+      expect(Invitation).not_to(
+        receive(:new)
+        .with(event: event, member: first_coach, role: 'Coach')
+        .and_call_original
       )
 
       other_coaches.each do |other_coach|
         expect(Invitation).to(
-          receive(:new).
-          with(event: event, member: other_coach, role: 'Coach').
-          and_call_original
+          receive(:new)
+          .with(event: event, member: other_coach, role: 'Coach')
+          .and_call_original
         )
       end
 
@@ -112,7 +112,7 @@ RSpec.describe InvitationManager do
     end
   end
 
-  describe '#send_monthly_attendance_reminder_emails', wip: true do
+  describe '#send_monthly_attendance_reminder_emails', :wip do
     it 'emails all attending members' do
       meeting = Fabricate(:meeting)
       attendees = Fabricate.times(2, :attending_meeting_invitation, meeting: meeting).map(&:member)
@@ -137,11 +137,11 @@ RSpec.describe InvitationManager do
       end
 
       manager.send_workshop_attendance_reminders(workshop)
-      invitations.each { |invitation| expect(invitation.reload.reminded_at).to_not be_nil }
+      invitations.each { |invitation| expect(invitation.reload.reminded_at).not_to be_nil }
     end
   end
 
-  describe '#send_workshop_waiting_list_reminders', wip: true do
+  describe '#send_workshop_waiting_list_reminders', :wip do
     it 'emails everyone that hasn\'t already been reminded from the workshop\'s waitinglist' do
       workshop = Fabricate(:workshop)
       invitations = Fabricate.times(2, :waitinglist_invitation, workshop: workshop)
@@ -154,12 +154,12 @@ RSpec.describe InvitationManager do
       end
 
       reminded_invitations.each do |invitation|
-        expect(WorkshopInvitationMailer).to_not receive(:waiting_list_reminder)
+        expect(WorkshopInvitationMailer).not_to receive(:waiting_list_reminder)
           .with(workshop, invitation.member, invitation)
       end
 
       manager.send_workshop_waiting_list_reminders(workshop)
-      invitations.each { |invitation| expect(invitation.reload.reminded_at).to_not be_nil }
+      invitations.each { |invitation| expect(invitation.reload.reminded_at).not_to be_nil }
     end
   end
 
@@ -238,6 +238,52 @@ RSpec.describe InvitationManager do
         .and_call_original
 
       manager.send_meeting_emails(meeting)
+    end
+  end
+
+  describe '#create_invitation resilience' do
+    let(:member) { Fabricate(:member) }
+
+    it 'returns nil when find_or_create_by raises an exception' do
+      allow(WorkshopInvitation).to receive(:find_or_create_by)
+        .and_raise(StandardError.new('database error'))
+
+      result = manager.send(:create_invitation, workshop, member, 'Student')
+
+      expect(result).to be_nil
+    end
+
+    it 'logs error with member_id and workshop_id but no PII' do
+      allow(WorkshopInvitation).to receive(:find_or_create_by)
+        .and_raise(StandardError.new('database error'))
+
+      expect(Rails.logger).to receive(:error) do |message|
+        expect(message).to include("member_id=#{member.id}")
+        expect(message).to include("workshop_id=#{workshop.id}")
+        expect(message).to include('role=Student')
+        expect(message).not_to include(member.email)
+        expect(message).not_to include(member.name)
+      end
+
+      manager.send(:create_invitation, workshop, member, 'Student')
+    end
+
+    it 'continues processing when invitation creation fails for one member' do
+      Fabricate(:students, chapter: chapter, members: students)
+      call_count = 0
+
+      allow(WorkshopInvitation).to receive(:find_or_create_by) do
+        call_count += 1
+        if call_count == 1
+          raise StandardError.new('database error')
+        end
+
+        WorkshopInvitation.new(persisted?: true)
+      end
+
+      expect do
+        manager.send_workshop_emails(workshop, 'students')
+      end.not_to raise_error
     end
   end
 end

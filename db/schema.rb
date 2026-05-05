@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_02_11_140256) do
+ActiveRecord::Schema[8.1].define(version: 2026_04_10_174346) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -287,6 +287,50 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_11_140256) do
     t.index ["chapter_id"], name: "index_groups_on_chapter_id"
   end
 
+  create_table "invitation_log_entries", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.text "failure_reason"
+    t.bigint "invitation_id"
+    t.bigint "invitation_log_id", null: false
+    t.string "invitation_type"
+    t.bigint "member_id", null: false
+    t.datetime "processed_at"
+    t.string "status", default: "success", null: false
+    t.datetime "updated_at", null: false
+    t.index ["invitation_log_id", "status"], name: "index_invitation_log_entries_on_invitation_log_id_and_status"
+    t.index ["invitation_log_id"], name: "index_invitation_log_entries_on_invitation_log_id"
+    t.index ["invitation_type", "invitation_id"], name: "index_invitation_log_entries_on_invitation"
+    t.index ["member_id", "processed_at"], name: "index_invitation_log_entries_on_member_id_and_processed_at"
+    t.index ["member_id"], name: "index_invitation_log_entries_on_member_id"
+  end
+
+  create_table "invitation_logs", force: :cascade do |t|
+    t.string "action", default: "invite", null: false
+    t.string "audience", null: false
+    t.bigint "chapter_id"
+    t.datetime "completed_at"
+    t.datetime "created_at", null: false
+    t.text "error_message"
+    t.datetime "expires_at"
+    t.integer "failure_count", default: 0
+    t.bigint "initiator_id"
+    t.bigint "loggable_id"
+    t.string "loggable_type"
+    t.integer "skipped_count", default: 0
+    t.datetime "started_at"
+    t.string "status", default: "running", null: false
+    t.integer "success_count", default: 0
+    t.integer "total_invitees", default: 0
+    t.datetime "updated_at", null: false
+    t.index ["chapter_id"], name: "index_invitation_logs_on_chapter_id"
+    t.index ["created_at"], name: "index_invitation_logs_on_created_at"
+    t.index ["expires_at"], name: "index_invitation_logs_on_expires_at"
+    t.index ["initiator_id"], name: "index_invitation_logs_on_initiator_id"
+    t.index ["loggable_type", "loggable_id", "audience", "action", "status"], name: "index_invitation_logs_unique_active", unique: true, where: "((status)::text = 'running'::text)"
+    t.index ["loggable_type", "loggable_id"], name: "index_invitation_logs_on_loggable"
+    t.index ["status"], name: "index_invitation_logs_on_status"
+  end
+
   create_table "invitations", id: :serial, force: :cascade do |t|
     t.boolean "attending"
     t.datetime "created_at", precision: nil
@@ -298,7 +342,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_11_140256) do
     t.datetime "updated_at", precision: nil
     t.boolean "verified"
     t.integer "verified_by_id"
+    t.index ["event_id", "attending"], name: "index_invitations_event_attending"
     t.index ["event_id"], name: "index_invitations_on_event_id"
+    t.index ["member_id", "attending"], name: "index_invitations_member_attending"
     t.index ["member_id"], name: "index_invitations_on_member_id"
     t.index ["verified_by_id"], name: "index_invitations_on_verified_by_id"
   end
@@ -338,7 +384,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_11_140256) do
     t.string "role"
     t.string "token"
     t.datetime "updated_at", precision: nil
+    t.index ["meeting_id", "attending"], name: "index_meeting_invitations_meeting_attending"
     t.index ["meeting_id"], name: "index_meeting_invitations_on_meeting_id"
+    t.index ["member_id", "attending"], name: "index_meeting_invitations_member_attending"
     t.index ["member_id"], name: "index_meeting_invitations_on_member_id"
   end
 
@@ -476,6 +524,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_11_140256) do
     t.integer "member_id"
     t.datetime "updated_at", precision: nil
     t.index ["group_id"], name: "index_subscriptions_on_group_id"
+    t.index ["member_id", "group_id"], name: "index_subscriptions_on_member_id_group_id", unique: true
     t.index ["member_id"], name: "index_subscriptions_on_member_id"
   end
 
@@ -547,8 +596,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_11_140256) do
     t.text "tutorial"
     t.datetime "updated_at", precision: nil
     t.integer "workshop_id"
+    t.index ["member_id", "attending"], name: "index_workshop_invitations_member_attending"
     t.index ["member_id"], name: "index_workshop_invitations_on_member_id"
     t.index ["token"], name: "index_workshop_invitations_on_token", unique: true
+    t.index ["workshop_id", "attending"], name: "index_workshop_invitations_workshop_attending"
     t.index ["workshop_id"], name: "index_workshop_invitations_on_workshop_id"
   end
 
@@ -559,6 +610,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_11_140256) do
     t.datetime "updated_at", precision: nil
     t.integer "workshop_id"
     t.index ["sponsor_id"], name: "index_workshop_sponsors_on_sponsor_id"
+    t.index ["workshop_id", "host"], name: "index_workshop_sponsors_on_workshop_id_and_host"
     t.index ["workshop_id"], name: "index_workshop_sponsors_on_workshop_id"
   end
 
@@ -583,5 +635,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_02_11_140256) do
     t.index ["date_and_time"], name: "index_workshops_on_date_and_time"
   end
 
+  add_foreign_key "invitation_log_entries", "invitation_logs"
+  add_foreign_key "invitation_logs", "members", column: "initiator_id"
   add_foreign_key "member_email_deliveries", "members"
 end

@@ -89,7 +89,7 @@
                     = f.input :note, required: false, input_html: { rows: 3, maxlength: 100 }
                     = f.button :button, 'Attend', class: 'btn btn-primary w-100 mb-0'
                 - else
-                  = render partial: 'invitation/waiting_list', locals: { invitation: @invitation }
+                  = render partial: 'workshop_invitation/waiting_list', locals: { invitation: @invitation }
               - else
                 - if @workshop.student_spaces?
                   = simple_form_for @invitation, url: :accept_invitation, method: :post do |f|
@@ -97,7 +97,7 @@
                     = f.input :note, required: false, input_html: { rows: 3, maxlength: 100 }, hint: 'Anything else we should know?', placeholder: 'e.g. I need help understanding selectors'
                     = f.button :button, 'Attend', class: 'btn btn-primary w-100 mb-0'
                 - else
-                  = render partial: 'invitation/waiting_list', locals: { invitation: @invitation }
+                  = render partial: 'workshop_invitation/waiting_list', locals: { invitation: @invitation }
           .card-footer.bg-transparent
             Read our #{link_to "attendance policy", attendance_policy_path}.
 

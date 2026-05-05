@@ -44,7 +44,7 @@ RSpec.describe Member do
           outside_deadline = latest_workshops.last.workshop.date_and_time
           within_deadline = latest_workshops.fifth.workshop.date_and_time
 
-          old_note = Fabricate.create(:member_note, member: member, created_at: outside_deadline)
+          Fabricate.create(:member_note, member: member, created_at: outside_deadline)
           new_note = Fabricate.create(:member_note, member: member, created_at: within_deadline)
 
           expect(member.recent_notes.to_a).to eq([new_note])
@@ -208,6 +208,49 @@ RSpec.describe Member do
       expect(managers).not_to include(non_manager)
 
       expect(managers.size).to eq(managers.distinct.size)
+    end
+  end
+
+  describe '#attending_event_ids' do
+    let(:member) { Fabricate(:member) }
+
+    it 'returns event IDs where member has accepted invitation' do
+      event = Fabricate(:event)
+      Fabricate(:invitation, member: member, event: event, attending: true)
+      expect(member.attending_event_ids).to include(event.id)
+    end
+
+    it 'does not include events where invitation is not accepted' do
+      event = Fabricate(:event)
+      Fabricate(:invitation, member: member, event: event, attending: false)
+      expect(member.attending_event_ids).not_to include(event.id)
+    end
+
+    it 'includes workshop IDs' do
+      workshop = Fabricate(:workshop)
+      Fabricate(:workshop_invitation, member: member, workshop: workshop, attending: true)
+      expect(member.attending_event_ids).to include(workshop.id)
+    end
+
+    it 'includes meeting IDs' do
+      meeting = Fabricate(:meeting)
+      Fabricate(:meeting_invitation, member: member, meeting: meeting, attending: true)
+      expect(member.attending_event_ids).to include(meeting.id)
+    end
+
+    it 'caches result in instance variable' do
+      event = Fabricate(:event)
+      Fabricate(:invitation, member: member, event: event, attending: true)
+      first_call = member.attending_event_ids
+      expect(member.attending_event_ids).to equal(first_call)
+    end
+
+    it 'can be cleared and re-queries on next call' do
+      event = Fabricate(:event)
+      Fabricate(:invitation, member: member, event: event, attending: true)
+      member.attending_event_ids
+      member.clear_attending_event_ids_cache!
+      expect(member.attending_event_ids).to include(event.id)
     end
   end
 end

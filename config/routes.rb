@@ -32,7 +32,19 @@ Rails.application.routes.draw do
 
   get 'unsubscribe/:token' => 'members#unsubscribe', as: :unsubscribe
 
-  resources :invitation, only: [:show, :update] do
+  # Old route - kept for backwards compatibility (existing invitation links in emails)
+  resources :invitation, only: %i[show update], controller: 'workshop_invitation' do
+    member do
+      post 'accept'
+      get 'accept'
+      get 'reject'
+    end
+
+    resource :waiting_list, only: %i[create destroy]
+  end
+
+  # New route - cleaner URLs
+  resources :workshop_invitation, only: %i[show update] do
     member do
       post 'accept'
       get 'accept'
@@ -50,6 +62,10 @@ Rails.application.routes.draw do
   end
 
   resources :events, only: %i[index show] do
+    collection do
+      get :upcoming
+      get :past
+    end
     post 'rsvp'
     get 'student', as: :student_rsvp
     get 'coach', as: :coach_rsvp
@@ -80,6 +96,7 @@ Rails.application.routes.draw do
     resources :announcements, only: %i[new index create edit update]
 
     resources :members, only: %i[show index] do
+      get :search, on: :collection
       get :events
       get :send_eligibility_email
       get :send_attendance_email
@@ -133,6 +150,7 @@ Rails.application.routes.draw do
 
       resource :invitations, only: [:update]
       resources :invitations, only: [:update]
+      resources :invitation_logs, only: %i[index show], controller: 'workshop_invitation_logs'
     end
 
     resources :testimonials, only: %i[index]

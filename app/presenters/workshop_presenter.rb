@@ -28,11 +28,14 @@ class WorkshopPresenter < EventPresenter
   end
 
   def venue
-    model.host
+    @venue ||= model.host
   end
 
   def organisers
-    @organisers ||= model.permissions.find_by(name: 'organiser')&.members || chapter_organisers
+    @organisers ||= begin
+      orgs = model.organisers.to_a
+      orgs.any? ? orgs : chapter_organisers
+    end
   end
 
   def attendees_checklist

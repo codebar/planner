@@ -32,7 +32,7 @@ class ApplicationController < ActionController::Base
   def render_not_found
     respond_to do |format|
       format.html { render template: 'errors/not_found', layout: false, status: :not_found }
-      format.all  { head :not_found }
+      format.all { head :not_found }
     end
   end
 
@@ -117,6 +117,7 @@ class ApplicationController < ActionController::Base
   end
 
   helper_method :manager?
+  helper_method :admin_namespace?
 
   def is_logged_in?
     unless logged_in?
@@ -129,11 +130,22 @@ class ApplicationController < ActionController::Base
     is_logged_in?
   end
 
+  def admin_namespace?
+    controller_path.start_with?('admin/', 'super_admin/')
+  end
+
   private
 
   def set_locale
     store_locale_to_cookie(params[:locale]) if locale
-    I18n.locale = cookies[:locale] || I18n.default_locale
+    I18n.locale = locale_value
+  end
+
+  def locale_value
+    return I18n.default_locale unless cookies[:locale].present?
+    return I18n.default_locale unless I18n.available_locales.include?(cookies[:locale].to_sym)
+
+    cookies[:locale]
   end
 
   def user_not_authorized

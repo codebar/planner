@@ -45,15 +45,15 @@ jobs:
       id: playwright-cache
       with:
         path: ~/.cache/ms-playwright
-        key: playwright-${{ runner.os }}-1.58.0
+        key: playwright-${{ runner.os }}-1.59.0
 
     - name: Install Playwright browsers (cache miss)
       if: steps.playwright-cache.outputs.cache-hit != 'true'
-      run: npx --yes playwright@1.58.0 install --with-deps chromium
+      run: npx --yes playwright@1.59.0 install --with-deps chromium
 
     - name: Install Playwright system deps (cache hit)
       if: steps.playwright-cache.outputs.cache-hit == 'true'
-      run: npx --yes playwright@1.58.0 install-deps chromium
+      run: npx --yes playwright@1.59.0 install-deps chromium
 
     - name: Setup test databases
       env:
@@ -78,7 +78,7 @@ jobs:
         cp coverage/.resultset.json coverage/resultset-${{ matrix.ci_node_index }}.json
 
     - name: Upload coverage artifacts
-      uses: actions/upload-artifact@v6
+      uses: actions/upload-artifact@v7
       with:
         name: coverage-${{ matrix.ci_node_index }}
         path: coverage/resultset-${{ matrix.ci_node_index }}.json
@@ -98,7 +98,7 @@ jobs:
         bundler-cache: true
 
     - name: Download all coverage artifacts
-      uses: actions/download-artifact@v7
+      uses: actions/download-artifact@v8
       with:
         path: coverage-results
 

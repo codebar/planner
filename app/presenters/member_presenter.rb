@@ -12,7 +12,7 @@ class MemberPresenter < BasePresenter
   end
 
   def attending?(event)
-    event.invitations.accepted.where(member: model).exists?
+    model.attending_event_ids.include?(event.id)
   end
 
   def subscribed_to_newsletter?

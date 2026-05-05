@@ -1,0 +1,70 @@
+- content_for :title, "Invitation Log ##{@log.id}"
+
+.container.py-4
+  %nav{ 'aria-label': 'breadcrumb' }
+    %ol.breadcrumb
+      %li.breadcrumb-item= link_to @workshop.title, admin_workshop_path(@workshop)
+      %li.breadcrumb-item= link_to 'Invitation Logs', admin_workshop_invitation_logs_path(@workshop)
+      %li.breadcrumb-item.active Batch ##{@log.id}
+
+  %h1 Invitation Log ##{@log.id}
+
+  .card.mb-3
+    .card-body
+      .row
+        .col-md-6
+          %p
+            %strong Status:
+            %span.badge.bg-secondary= @log.status
+          %p
+            %strong Action:
+            = @log.action.humanize
+          %p
+            %strong Audience:
+            = @log.audience.humanize
+          %p
+            %strong Initiated by:
+            = @log.initiator&.full_name || 'System'
+        .col-md-6
+          %p
+            %strong Started:
+            = l(@log.started_at, format: :long) if @log.started_at
+          %p
+            %strong Completed:
+            = @log.completed_at ? l(@log.completed_at, format: :long) : 'In progress'
+          %p
+            %strong Total invitees:
+            = @log.total_invitees
+          - if @log.error_message.present?
+            %p
+              %strong Error:
+              .text-danger= @log.error_message
+
+  .row.mb-3
+    .col
+      %span.badge.bg-success= "#{@log.success_count} sent"
+    - if @log.failure_count.positive?
+      .col
+        %span.badge.bg-danger= "#{@log.failure_count} failed"
+    - if @log.skipped_count.positive?
+      .col
+        %span.badge.bg-warning.text-dark= "#{@log.skipped_count} skipped"
+
+  %h3 Entries
+
+  %table.table.table-sm
+    %thead
+      %tr
+        %th Member
+        %th Status
+        %th Reason
+        %th Processed
+    %tbody
+      - @entries.each do |entry|
+        %tr
+          %td= entry.member.full_name
+          %td
+            %span{ class: entry.success? ? 'badge bg-success' : entry.failed? ? 'badge bg-danger' : 'badge bg-warning' }
+              = entry.status.humanize
+          %td= entry.failure_reason
+          %td= l(entry.processed_at, format: :short) if entry.processed_at

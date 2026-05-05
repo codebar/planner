@@ -1,0 +1,12 @@
+- content_for :title, "Invitation Logs - #{@workshop.title}"
+
+.container.py-4
+  %h1 Invitation Logs
+  %p.lead #{@workshop.title}
+
+  - if @logs.empty?
+    %p.text-muted No invitation logs yet.
+  - else
+    = render partial: 'invitation_log', collection: @logs
+
+    = pagy_bootstrap_nav(@pagy) if @pagy.pages > 1

@@ -87,7 +87,7 @@ class InvitationsController < ApplicationController
   private
 
   def set_invitation
-    @invitation = Invitation.find_by(token: params[:token])
+    @invitation = Invitation.find_by!(token: params[:token])
   end
 
   def load_invitation
