@@ -75,11 +75,11 @@ class WorkshopPresenter < EventPresenter
   end
 
   def event_student_spaces?
-    model.student_spaces > attending_students.length
+    student_spaces > attending_students.length
   end
 
   def event_coach_spaces?
-    model.coach_spaces > attending_coaches.length
+    coach_spaces > attending_coaches.length
   end
 
   def pairing_csv
