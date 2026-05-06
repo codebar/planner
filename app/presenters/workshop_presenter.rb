@@ -74,6 +74,14 @@ class WorkshopPresenter < EventPresenter
     venue.seats
   end
 
+  def event_student_spaces?
+    model.student_spaces > attending_students.length
+  end
+
+  def event_coach_spaces?
+    model.coach_spaces > attending_coaches.length
+  end
+
   def pairing_csv
     pairing_details = model.attendances.inject([PAIRING_HEADINGS]) do |content, invitation|
       member = MemberPresenter.new(invitation.member)
