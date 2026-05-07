@@ -247,6 +247,10 @@ RSpec.feature 'An admin managing workshops', type: :feature do
     context 'Labels' do
       it 'returns a CSV with all workshop participants that can be used to generate the labels' do
         workshop = Fabricate(:workshop)
+        # Add an organiser to ensure ORGANISER appears in the CSV
+        organiser = Fabricate(:member)
+        organiser.add_role :organiser, workshop.chapter
+
         visit admin_workshop_path(workshop)
         click_on 'Labels'
 

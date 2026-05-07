@@ -1,6 +1,6 @@
 RSpec.feature 'Event creation', type: :feature do
   let(:member) { Fabricate(:member) }
-  let(:chapter) { Fabricate(:chapter_with_groups) }
+  let(:chapter) { Fabricate(:chapter) }
 
   describe 'an authorised member' do
     before do

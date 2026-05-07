@@ -1,6 +1,6 @@
 RSpec.feature 'Managing events', type: :feature do
   let(:member) { Fabricate(:member) }
-  let!(:chapter) { Fabricate(:chapter_with_groups) }
+  let!(:chapter) { Fabricate(:chapter) }
   let!(:event) { Fabricate(:event, confirmation_required: true) }
 
   before do
