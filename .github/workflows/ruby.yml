@@ -46,15 +46,15 @@ jobs:
       id: playwright-cache
       with:
         path: ~/.cache/ms-playwright
-        key: playwright-${{ runner.os }}-1.59.0
+        key: playwright-${{ runner.os }}-chromium-headless-shell-1.59.0
 
-    - name: Install Playwright browsers (cache miss)
+    - name: Install Playwright Chromium Headless Shell (cache miss)
       if: steps.playwright-cache.outputs.cache-hit != 'true'
-      run: npx --yes playwright@1.59.0 install --with-deps chromium
+      run: npx --yes playwright@1.59.0 install chromium-headless-shell
 
     - name: Install Playwright system deps (cache hit)
       if: steps.playwright-cache.outputs.cache-hit == 'true'
-      run: npx --yes playwright@1.59.0 install-deps chromium
+      run: npx --yes playwright@1.59.0 install-deps chromium-headless-shell
 
     - name: Setup test databases
       env:
