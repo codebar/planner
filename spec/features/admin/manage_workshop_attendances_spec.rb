@@ -24,6 +24,7 @@ RSpec.feature 'managing workshop attendances', type: :feature do
 
     scenario 'can remove a member from the attendee list' do
       visit admin_workshop_path(workshop)
+      expect(page).to have_css('.cancel_attendance', wait: 5)
       find('.cancel_attendance').click
 
       expect(page).to have_content('0 are attending as students')
