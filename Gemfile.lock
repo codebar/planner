@@ -160,7 +160,7 @@ GEM
       bigdecimal
       rexml
     crass (1.0.6)
-    css_parser (1.14.0)
+    css_parser (2.1.0)
       addressable
     csv (3.3.5)
     database_cleaner (2.1.0)
