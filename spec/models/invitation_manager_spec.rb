@@ -370,10 +370,9 @@ RSpec.describe InvitationManager do
         Fabricate(:students, chapter: chapter, members: students)
         Fabricate(:coaches, chapter: chapter, members: coaches)
 
-        expect(WorkshopInvitationMailer).to receive(:invite_student).at_least(:once).and_call_original
-        expect(WorkshopInvitationMailer).to receive(:invite_coach).at_least(:once).and_call_original
-
-        manager.send_workshop_emails(workshop, 'everyone')
+        expect {
+          manager.send_workshop_emails_without_delay(workshop, 'everyone')
+        }.to change { ActionMailer::Base.deliveries.count }.by(students.count + coaches.count)
       end
     end
 
@@ -417,9 +416,11 @@ RSpec.describe InvitationManager do
       it 'sends attendance reminder emails' do
         invitation = Fabricate(:attending_workshop_invitation, workshop: workshop)
 
-        expect(WorkshopInvitationMailer).to receive(:attending_reminder).at_least(:once).and_call_original
+        expect {
+          manager.send_workshop_attendance_reminders_without_delay(workshop)
+        }.to change { ActionMailer::Base.deliveries.count }.by(1)
 
-        manager.send_workshop_attendance_reminders(workshop)
+        expect(invitation.reload.reminded_at).not_to be_nil
       end
     end
 
