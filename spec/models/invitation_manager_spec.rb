@@ -167,43 +167,41 @@ RSpec.describe InvitationManager do
     it 'emails coaches when there are free coach spots' do
       waitinglist_invitation = Fabricate(:waitinglist_invitation, workshop: workshop, role: 'Coach')
 
-      expect(WorkshopInvitationMailer).to receive(:notify_waiting_list).once
-                                                                       .with(waitinglist_invitation)
-                                                                       .and_call_original
+      expect {
+        manager.send_waiting_list_emails(workshop)
+      }.to change { ActionMailer::Base.deliveries.count }.by(1)
 
-      manager.send_waiting_list_emails(workshop)
+      email = ActionMailer::Base.deliveries.last
+      expect(email.to).to include(waitinglist_invitation.member.email)
     end
 
     it 'does not email coaches when no coach spots are available' do
       workshop = Fabricate(:workshop, coach_count: 0)
-      waitinglist_invitation = Fabricate(:waitinglist_invitation, workshop: workshop, role: 'Coach')
+      Fabricate(:waitinglist_invitation, workshop: workshop, role: 'Coach')
 
-      expect(WorkshopInvitationMailer).not_to receive(:notify_waiting_list)
-        .with(waitinglist_invitation)
-        .and_call_original
-
-      manager.send_waiting_list_emails(workshop)
+      expect {
+        manager.send_waiting_list_emails(workshop)
+      }.not_to(change { ActionMailer::Base.deliveries.count })
     end
 
     it 'emails students when there are free student spots' do
       waitinglist_invitation = Fabricate(:waitinglist_invitation, workshop: workshop, role: 'Student')
 
-      expect(WorkshopInvitationMailer).to receive(:notify_waiting_list).once
-                                                                       .with(waitinglist_invitation)
-                                                                       .and_call_original
+      expect {
+        manager.send_waiting_list_emails(workshop)
+      }.to change { ActionMailer::Base.deliveries.count }.by(1)
 
-      manager.send_waiting_list_emails(workshop)
+      email = ActionMailer::Base.deliveries.last
+      expect(email.to).to include(waitinglist_invitation.member.email)
     end
 
     it 'does not email students when no student spots are available' do
       workshop = Fabricate(:workshop, student_count: 0)
-      waitinglist_invitation = Fabricate(:waitinglist_invitation, workshop: workshop, role: 'Student')
+      Fabricate(:waitinglist_invitation, workshop: workshop, role: 'Student')
 
-      expect(WorkshopInvitationMailer).not_to receive(:notify_waiting_list)
-        .with(waitinglist_invitation)
-        .and_call_original
-
-      manager.send_waiting_list_emails(workshop)
+      expect {
+        manager.send_waiting_list_emails(workshop)
+      }.not_to(change { ActionMailer::Base.deliveries.count })
     end
   end
 
