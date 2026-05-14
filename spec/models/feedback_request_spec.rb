@@ -25,18 +25,13 @@ RSpec.describe FeedbackRequest do
   end
 
   context 'after create hook' do
-    it '#email' do
-      feedback_request = Fabricate.build(:feedback_request)
-      allow(feedback_request).to receive(:email)
-      allow(feedback_request).to receive(:member_id).and_return(:member_id)
-      feedback_request.save
-      expect(feedback_request).to have_received(:email)
-    end
-
     it 'sends request feedback email' do
-      allow(FeedbackRequestMailer).to receive(:request_feedback) { double('feedback_request_mailer').as_null_object }
-      Fabricate(:feedback_request)
-      expect(FeedbackRequestMailer).to have_received(:request_feedback)
+      expect {
+        Fabricate(:feedback_request)
+      }.to change { ActionMailer::Base.deliveries.count }.by(1)
+
+      email = ActionMailer::Base.deliveries.last
+      expect(email.subject).to include('Feedback')
     end
   end
 end
