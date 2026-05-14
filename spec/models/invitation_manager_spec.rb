@@ -113,15 +113,19 @@ RSpec.describe InvitationManager do
   end
 
   describe '#send_monthly_attendance_reminder_emails', :wip do
+    # Note: This test is WIP because the method is async and doesn't currently
+    # call .deliver_now or .deliver_later on the mailer
     it 'emails all attending members' do
       meeting = Fabricate(:meeting)
       attendees = Fabricate.times(2, :attending_meeting_invitation, meeting: meeting).map(&:member)
 
-      attendees.each do |attendee|
-        expect(MeetingInvitationMailer).to receive(:attendance_reminder).with(meeting, attendee)
-      end
+      expect {
+        manager.send_monthly_attendance_reminder_emails_without_delay(meeting)
+      }.to change { ActionMailer::Base.deliveries.count }.by(attendees.count)
 
-      manager.send_monthly_attendance_reminder_emails(meeting)
+      emails = ActionMailer::Base.deliveries.last(attendees.count)
+      attendee_emails = attendees.map(&:email)
+      expect(emails.map(&:to).flatten).to match_array(attendee_emails)
     end
   end
 
@@ -130,36 +134,35 @@ RSpec.describe InvitationManager do
       workshop = Fabricate(:workshop)
       invitations = Fabricate.times(2, :attending_workshop_invitation, workshop: workshop)
 
-      invitations.each do |invitation|
-        expect(WorkshopInvitationMailer).to receive(:attending_reminder)
-          .with(workshop, invitation.member, invitation)
-          .and_call_original
-      end
+      expect {
+        manager.send_workshop_attendance_reminders_without_delay(workshop)
+      }.to change { ActionMailer::Base.deliveries.count }.by(invitations.count)
 
-      manager.send_workshop_attendance_reminders(workshop)
       invitations.each { |invitation| expect(invitation.reload.reminded_at).not_to be_nil }
+
+      emails = ActionMailer::Base.deliveries.last(invitations.count)
+      invitation_emails = invitations.map { |i| i.member.email }
+      expect(emails.map(&:to).flatten).to match_array(invitation_emails)
     end
   end
 
   describe '#send_workshop_waiting_list_reminders', :wip do
+    # Note: This test is WIP because the method is async
     it 'emails everyone that hasn\'t already been reminded from the workshop\'s waitinglist' do
       workshop = Fabricate(:workshop)
       invitations = Fabricate.times(2, :waitinglist_invitation, workshop: workshop)
       reminded_invitations = Fabricate.times(2, :waitinglist_invitation_reminded, workshop: workshop)
 
-      invitations.each do |invitation|
-        expect(WorkshopInvitationMailer).to receive(:waiting_list_reminder)
-          .with(workshop, invitation.member, invitation)
-          .and_call_original
-      end
+      expect {
+        manager.send_workshop_waiting_list_reminders_without_delay(workshop)
+      }.to change { ActionMailer::Base.deliveries.count }.by(invitations.count)
 
-      reminded_invitations.each do |invitation|
-        expect(WorkshopInvitationMailer).not_to receive(:waiting_list_reminder)
-          .with(workshop, invitation.member, invitation)
-      end
-
-      manager.send_workshop_waiting_list_reminders(workshop)
       invitations.each { |invitation| expect(invitation.reload.reminded_at).not_to be_nil }
+      reminded_invitations.each { |invitation| expect(invitation.reload.reminded_at).to be_nil }
+
+      emails = ActionMailer::Base.deliveries.last(invitations.count)
+      invitation_emails = invitations.map { |i| i.member.email }
+      expect(emails.map(&:to).flatten).to match_array(invitation_emails)
     end
   end
 
