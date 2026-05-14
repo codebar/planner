@@ -10,11 +10,10 @@ RSpec.describe AttendanceWarning do
     end
 
     it 'sends an attendance warning email' do
-      allow(MemberMailer).to receive(:attendance_warning).with(member, member.email).and_call_original
-
       described_class.create(member: member, issued_by: admin)
 
-      expect(MemberMailer).to have_received(:attendance_warning).with(member, member.email)
+      email = ActionMailer::Base.deliveries.find { |e| e.to.include?(member.email) && e.subject.include?('Attendance') }
+      expect(email).not_to be_nil
     end
 
     describe '.scopes' do
