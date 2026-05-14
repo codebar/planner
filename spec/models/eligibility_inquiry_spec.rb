@@ -9,12 +9,14 @@ RSpec.describe EligibilityInquiry do
       expect(eligibility_inquiry.issued_by).to eq(admin)
     end
 
-    it 'sends an attendance warning email' do
-      allow(MemberMailer).to receive(:eligibility_check).with(member, member.email).and_call_original
+    it 'sends an eligibility check email' do
+      expect {
+        described_class.create(member: member, issued_by: admin)
+      }.to change { ActionMailer::Base.deliveries.count }.by(1)
 
-      described_class.create(member: member, issued_by: admin)
-
-      expect(MemberMailer).to have_received(:eligibility_check).with(member, member.email)
+      email = ActionMailer::Base.deliveries.last
+      expect(email.to).to include(member.email)
+      expect(email.subject).to include('Eligibility')
     end
   end
 end
