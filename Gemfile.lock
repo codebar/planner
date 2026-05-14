@@ -160,7 +160,7 @@ GEM
       bigdecimal
       rexml
     crass (1.0.6)
-    css_parser (1.22.0)
+    css_parser (2.2.0)
       addressable
     csv (3.3.5)
     database_cleaner (2.1.0)
@@ -225,7 +225,7 @@ GEM
     hashdiff (1.2.1)
     hashie (5.0.0)
     high_voltage (5.0.0)
-    htmlentities (4.3.4)
+    htmlentities (4.4.2)
     i18n (1.14.8)
       concurrent-ruby (~> 1.0)
     icalendar (2.12.2)
@@ -356,9 +356,9 @@ GEM
     popper_js (2.11.8)
     pp (0.6.3)
       prettyprint
-    premailer (1.21.0)
+    premailer (1.29.0)
       addressable
-      css_parser (>= 1.12.0)
+      css_parser (>= 1.19.0)
       htmlentities (>= 4.0.0)
     premailer-rails (1.12.0)
       actionmailer (>= 3)
