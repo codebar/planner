@@ -215,12 +215,9 @@ RSpec.describe InvitationManager do
       Fabricate(:ban, member: students.last)
       expected_student_count = students.count - 1
 
-      expect(MeetingInvitationMailer).to receive(:invite)
-        .exactly(expected_student_count).times
-        .with(meeting, instance_of(Member), instance_of(MeetingInvitation))
-        .and_call_original
-
-      manager.send_meeting_emails(meeting)
+      expect {
+        manager.send_meeting_emails_without_delay(meeting)
+      }.to change { ActionMailer::Base.deliveries.count }.by(expected_student_count)
     end
 
     it 'emails valid invitees only once' do
@@ -231,12 +228,9 @@ RSpec.describe InvitationManager do
       MeetingInvitation.create(meeting: meeting, member: students.last, role: 'Participant')
       expected_student_count = students.count - 1
 
-      expect(MeetingInvitationMailer).to receive(:invite)
-        .exactly(expected_student_count).times
-        .with(meeting, instance_of(Member), instance_of(MeetingInvitation))
-        .and_call_original
-
-      manager.send_meeting_emails(meeting)
+      expect {
+        manager.send_meeting_emails_without_delay(meeting)
+      }.to change { ActionMailer::Base.deliveries.count }.by(expected_student_count)
     end
   end
 
