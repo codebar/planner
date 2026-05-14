@@ -81,24 +81,27 @@ RSpec.describe MemberMailer do
     it 'sends the coach welcome email to coaches' do
       member = Fabricate(:coach)
 
-      expect_any_instance_of(MemberMailer).to receive(:welcome_coach)
-      expect_any_instance_of(MemberMailer).not_to receive(:welcome_student)
-      MemberMailer.welcome(member).deliver_now
+      mail = MemberMailer.welcome(member).deliver_now
+
+      expect(mail.body.encoded).to match('depends on coaches attending')
     end
 
     it 'sends the student welcome email to students' do
       member = Fabricate(:student)
-      expect_any_instance_of(MemberMailer).not_to receive(:welcome_coach)
-      expect_any_instance_of(MemberMailer).to receive(:welcome_student)
-      MemberMailer.welcome(member).deliver_now
+
+      mail = MemberMailer.welcome(member).deliver_now
+
+      expect(mail.body.encoded).to match('Spots are limited')
     end
 
     it 'sends a ban email to a member' do
       member = Fabricate(:member)
       ban = Fabricate(:ban)
-      expect_any_instance_of(MemberMailer).to receive(:ban).with(member, ban)
 
-      MemberMailer.ban(member, ban).deliver_now
+      mail = MemberMailer.ban(member, ban).deliver_now
+
+      expect(mail.to).to eq([member.email])
+      expect(mail.body.encoded).to match('your account has been suspended')
     end
 
     it 'actually sends a coach email' do
