@@ -24,62 +24,76 @@ RSpec.feature 'Managing subscriptions', type: :feature do
   end
 
   context 'a member receives a welcome email' do
+    before do
+      ActionMailer::Base.deliveries.clear
+    end
+
     scenario 'Subscribing to a coach mailing list for the first time sends a coach email to the user' do
       coach_group = Fabricate(:coaches)
-      expect_any_instance_of(MemberMailer).to receive(:welcome_coach)
-      expect_any_instance_of(MemberMailer).not_to receive(:welcome_students)
 
       visit subscriptions_path
       click_on "#{coach_group.chapter.name}-coaches"
+
+      welcome_emails = ActionMailer::Base.deliveries.select { |e| e.to.include?(member.email) }
+      expect(welcome_emails.count).to eq(1)
+      expect(welcome_emails.first.body.encoded).to include('coach')
     end
 
     scenario 'Subscribing to a student mailing list for the first time sends a student email to the user' do
-      expect_any_instance_of(MemberMailer).to receive(:welcome_student)
-      expect_any_instance_of(MemberMailer).not_to receive(:welcome_coach)
-
       visit subscriptions_path
       click_on "#{group.chapter.name}-students"
+
+      welcome_emails = ActionMailer::Base.deliveries.select { |e| e.to.include?(member.email) }
+      expect(welcome_emails.count).to eq(1)
+      expect(welcome_emails.first.body.encoded).to include('student')
     end
 
     scenario "Subscribing to a second coach mailing list doesn't send another mail" do
       coach_groups = Fabricate.times(2, :coaches)
-      expect_any_instance_of(MemberMailer).to receive(:welcome_coach).once
-      expect_any_instance_of(MemberMailer).not_to receive(:welcome_students)
 
       visit subscriptions_path
       click_on "#{coach_groups[0].chapter.name}-coaches"
+      ActionMailer::Base.deliveries.clear
       click_on "#{coach_groups[1].chapter.name}-coaches"
+
+      welcome_emails = ActionMailer::Base.deliveries.select { |e| e.to.include?(member.email) }
+      expect(welcome_emails.count).to eq(0)
     end
 
     scenario "Subscribing to a second student mailing list doesn't send another mail" do
-      expect_any_instance_of(MemberMailer).to receive(:welcome_student).once
-      expect_any_instance_of(MemberMailer).not_to receive(:welcome_coach)
       extra_student_group = Fabricate(:students)
 
       visit subscriptions_path
       click_on "#{group.chapter.name}-students"
+      ActionMailer::Base.deliveries.clear
       click_on "#{extra_student_group.chapter.name}-students"
+
+      welcome_emails = ActionMailer::Base.deliveries.select { |e| e.to.include?(member.email) }
+      expect(welcome_emails.count).to eq(0)
     end
 
     scenario "Unsubscribing and re-subscribing doesn't send a second mail to a coach" do
       coach_group = Fabricate(:coaches)
-      expect_any_instance_of(MemberMailer).to receive(:welcome_coach).once
-      expect_any_instance_of(MemberMailer).not_to receive(:welcome_students)
 
       visit subscriptions_path
       click_on "#{coach_group.chapter.name}-coaches"
+      ActionMailer::Base.deliveries.clear
       click_on "#{coach_group.chapter.name}-coaches"
       click_on "#{coach_group.chapter.name}-coaches"
+
+      welcome_emails = ActionMailer::Base.deliveries.select { |e| e.to.include?(member.email) }
+      expect(welcome_emails.count).to eq(0)
     end
 
     scenario "Unsubscribing and re-subscribing doesn't send a second mail to a student" do
-      expect_any_instance_of(MemberMailer).to receive(:welcome_student).once
-      expect_any_instance_of(MemberMailer).not_to receive(:welcome_coach)
-
       visit subscriptions_path
       click_on "#{group.chapter.name}-students"
+      ActionMailer::Base.deliveries.clear
       click_on "#{group.chapter.name}-students"
       click_on "#{group.chapter.name}-students"
+
+      welcome_emails = ActionMailer::Base.deliveries.select { |e| e.to.include?(member.email) }
+      expect(welcome_emails.count).to eq(0)
     end
   end
 end
