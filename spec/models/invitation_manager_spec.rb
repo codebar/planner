@@ -156,7 +156,9 @@ RSpec.describe InvitationManager do
       }.to change { ActionMailer::Base.deliveries.count }.by(invitations.count)
 
       invitations.each { |invitation| expect(invitation.reload.reminded_at).not_to be_nil }
-      reminded_invitations.each { |invitation| expect(invitation.reload.reminded_at).to be_nil }
+      reminded_invitations.each do |invitation|
+        expect(invitation.reload.reminded_at).to be_within(1.second).of(2.days.ago)
+      end
 
       emails = ActionMailer::Base.deliveries.last(invitations.count)
       invitation_emails = invitations.map { |i| i.member.email }
