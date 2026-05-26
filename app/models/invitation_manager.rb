@@ -12,7 +12,7 @@ class InvitationManager
   def send_monthly_attendance_reminder_emails(monthly)
     invitees = Member.attending_meeting(monthly)
     invitees.each do |member|
-      MeetingInvitationMailer.attendance_reminder(monthly, member)
+      MeetingInvitationMailer.attendance_reminder(monthly, member).deliver_now
     end
   end
   handle_asynchronously :send_monthly_attendance_reminder_emails

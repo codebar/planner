@@ -112,16 +112,18 @@ RSpec.describe InvitationManager do
     end
   end
 
-  describe '#send_monthly_attendance_reminder_emails', :wip do
+  describe '#send_monthly_attendance_reminder_emails' do
     it 'emails all attending members' do
       meeting = Fabricate(:meeting)
       attendees = Fabricate.times(2, :attending_meeting_invitation, meeting: meeting).map(&:member)
 
-      attendees.each do |attendee|
-        expect(MeetingInvitationMailer).to receive(:attendance_reminder).with(meeting, attendee)
-      end
+      expect {
+        manager.send_monthly_attendance_reminder_emails(meeting)
+      }.to change { ActionMailer::Base.deliveries.count }.by(attendees.count)
 
-      manager.send_monthly_attendance_reminder_emails(meeting)
+      emails = ActionMailer::Base.deliveries.last(attendees.count)
+      attendee_emails = attendees.map(&:email)
+      expect(emails.map(&:to).flatten).to match_array(attendee_emails)
     end
   end
 
