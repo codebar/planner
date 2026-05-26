@@ -127,6 +127,12 @@ de:
     blog: "Blog"
     codebar_stories: "codebar Stories"
     stats: "Stats"
+    how_to_support_us: "Uns unterstützen"
+    volunteer: "Ehrenamtlich"
+    fundraise: "Spenden sammeln"
+    donate: "Spenden"
+    buy_us_a_coffee: "Buy us a coffee"
+    job_board: "Jobbörse"
   dashboard:
     join_workshops_in: "Komm zu unseren <i>kostenlosen</i> Workshops in"
     workshops_goal: "um sich mit den Programmier- und Webentwicklungsgrundlagen vertraut zu machen."

@@ -1,0 +1,16 @@
+.py-4.py-lg-5.bg-primary
+  .container
+    .row.align-items-center
+      .col-12.col-md-6
+        %h1.display-2.text-white.lh-1.mb-4
+          Donate
+          %br
+          to codebar
+        %p.text-white.lead.mb-4
+          Your donation helps us continue running free coding workshops for people from underrepresented groups in tech.
+      .col-12.col-md-6
+        = image_tag 'how-to-support-us/codebar-festival-2023.jpg', alt: '', class: 'mw-100 rounded'
+
+.py-4.py-lg-5
+  .container
+    = render partial: 'shared/donation_platforms'

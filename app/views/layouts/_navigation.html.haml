@@ -18,6 +18,7 @@
           = link_to '#', {'role': 'button', 'aria-expanded': 'false', 'data-bs-toggle': 'dropdown', class: 'nav-link border-0 dropdown-toggle', id: 'navbarDropdownMenuLinkCommunity'} do
             Community
           %ul.dropdown-menu{'aria-labelledby': 'navbarDropdownMenuLinkCommunity'}
+            %li= link_to 'Sponsors', sponsors_path, class: 'dropdown-item'
             %li= link_to 'Coaches', coaches_path, class: 'dropdown-item'
             %li= link_to 'Impact Report', 'https://impact-report.codebar.io/', class: 'dropdown-item'
             %li= link_to 'codebar Stories Podcast', codebar_stories_podcast_path, class: 'dropdown-item'
@@ -28,9 +29,13 @@
         %li.nav-item
           = link_to sponsors_path, class: 'nav-link border-0' do
             Sponsors
-        %li.nav-item
-          = link_to how_to_support_us_path, class: 'nav-link border-0' do
+        %li.nav-item.dropdown
+          = link_to '#', {'role': 'button', 'aria-expanded': 'false', 'data-bs-toggle': 'dropdown', class: 'nav-link border-0 dropdown-toggle', id: 'navbarDropdownMenuLinkSupport'} do
             How to support us
+          %ul.dropdown-menu{'aria-labelledby': 'navbarDropdownMenuLinkSupport'}
+            %li= link_to 'Volunteer', volunteer_path, class: 'dropdown-item'
+            %li= link_to 'Fundraise', fundraise_path, class: 'dropdown-item'
+            %li= link_to 'Donate', 'https://enthuse.com/@codebar/donate', class: 'dropdown-item', target: '_blank', rel: 'noopener noreferrer'
         %li.nav-item
           = link_to "http://jobs.codebar.io/", class: 'nav-link border-0' do
             Job Board
@@ -54,8 +59,5 @@
             = render 'layouts/member_menu'
         %li.nav-item.d-flex.align-items-center
           %div.nav-link.d-flex.gap-2.py-0
-            = link_to new_donation_path, class: 'btn btn-sm fs-6 fw-semibold btn-primary' do
+            = link_to 'https://enthuse.com/@codebar/donate', class: 'btn btn-sm fs-6 fw-semibold btn-primary', target: '_blank', rel: 'noopener noreferrer' do
               Donate
-            = link_to 'https://buymeacoffee.com/codebarhq', class: 'btn btn-sm fs-6 fw-semibold btn-secondary', target: '_blank', rel: 'noopener noreferrer' do
-              %i.fas.fa-coffee.me-1
-              Buy us a coffee
