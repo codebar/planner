@@ -35,7 +35,7 @@
           %ul.dropdown-menu{'aria-labelledby': 'navbarDropdownMenuLinkSupport'}
             %li= link_to 'Volunteer', volunteer_path, class: 'dropdown-item'
             %li= link_to 'Fundraise', fundraise_path, class: 'dropdown-item'
-            %li= link_to 'Donate', 'https://enthuse.com/@codebar/donate', class: 'dropdown-item', target: '_blank', rel: 'noopener noreferrer'
+            %li= link_to 'Donate', 'https://codebar.enthuse.com/donate#!/', class: 'dropdown-item', target: '_blank', rel: 'noopener noreferrer'
         %li.nav-item
           = link_to "http://jobs.codebar.io/", class: 'nav-link border-0' do
             Job Board
@@ -59,5 +59,5 @@
             = render 'layouts/member_menu'
         %li.nav-item.d-flex.align-items-center
           %div.nav-link.d-flex.gap-2.py-0
-            = link_to 'https://enthuse.com/@codebar/donate', class: 'btn btn-sm fs-6 fw-semibold btn-primary', target: '_blank', rel: 'noopener noreferrer' do
+            = link_to 'https://codebar.enthuse.com/donate#!/', class: 'btn btn-sm fs-6 fw-semibold btn-primary', target: '_blank', rel: 'noopener noreferrer' do
               Donate
