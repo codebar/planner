@@ -123,6 +123,8 @@ fr:
     donate: "Donner"
     buy_us_a_coffee: "Buy us a coffee"
     job_board: "Offres d'emploi"
+    codebar_courses: "codebar Courses"
+
   dashboard:
     join_workshops_in: "Rejoignez nos ateliers <i>gratuit</i>"
     workshops_goal: "pour apprendre les bases de la programmation et du développement web."
