@@ -132,36 +132,37 @@ RSpec.describe InvitationManager do
       workshop = Fabricate(:workshop)
       invitations = Fabricate.times(2, :attending_workshop_invitation, workshop: workshop)
 
-      invitations.each do |invitation|
-        expect(WorkshopInvitationMailer).to receive(:attending_reminder)
-          .with(workshop, invitation.member, invitation)
-          .and_call_original
-      end
+      expect {
+        manager.send_workshop_attendance_reminders_without_delay(workshop)
+      }.to change { ActionMailer::Base.deliveries.count }.by(invitations.count)
 
-      manager.send_workshop_attendance_reminders(workshop)
       invitations.each { |invitation| expect(invitation.reload.reminded_at).not_to be_nil }
+
+      emails = ActionMailer::Base.deliveries.last(invitations.count)
+      invitation_emails = invitations.map { |i| i.member.email }
+      expect(emails.map(&:to).flatten).to match_array(invitation_emails)
     end
   end
 
   describe '#send_workshop_waiting_list_reminders', :wip do
+    # Note: This test is WIP because the method is async
     it 'emails everyone that hasn\'t already been reminded from the workshop\'s waitinglist' do
       workshop = Fabricate(:workshop)
       invitations = Fabricate.times(2, :waitinglist_invitation, workshop: workshop)
       reminded_invitations = Fabricate.times(2, :waitinglist_invitation_reminded, workshop: workshop)
 
-      invitations.each do |invitation|
-        expect(WorkshopInvitationMailer).to receive(:waiting_list_reminder)
-          .with(workshop, invitation.member, invitation)
-          .and_call_original
-      end
+      expect {
+        manager.send_workshop_waiting_list_reminders_without_delay(workshop)
+      }.to change { ActionMailer::Base.deliveries.count }.by(invitations.count)
 
-      reminded_invitations.each do |invitation|
-        expect(WorkshopInvitationMailer).not_to receive(:waiting_list_reminder)
-          .with(workshop, invitation.member, invitation)
-      end
-
-      manager.send_workshop_waiting_list_reminders(workshop)
       invitations.each { |invitation| expect(invitation.reload.reminded_at).not_to be_nil }
+      reminded_invitations.each do |invitation|
+        expect(invitation.reload.reminded_at).to be_within(1.second).of(2.days.ago)
+      end
+
+      emails = ActionMailer::Base.deliveries.last(invitations.count)
+      invitation_emails = invitations.map { |i| i.member.email }
+      expect(emails.map(&:to).flatten).to match_array(invitation_emails)
     end
   end
 
@@ -169,43 +170,41 @@ RSpec.describe InvitationManager do
     it 'emails coaches when there are free coach spots' do
       waitinglist_invitation = Fabricate(:waitinglist_invitation, workshop: workshop, role: 'Coach')
 
-      expect(WorkshopInvitationMailer).to receive(:notify_waiting_list).once
-                                                                       .with(waitinglist_invitation)
-                                                                       .and_call_original
+      expect {
+        manager.send_waiting_list_emails(workshop)
+      }.to change { ActionMailer::Base.deliveries.count }.by(1)
 
-      manager.send_waiting_list_emails(workshop)
+      email = ActionMailer::Base.deliveries.last
+      expect(email.to).to include(waitinglist_invitation.member.email)
     end
 
     it 'does not email coaches when no coach spots are available' do
       workshop = Fabricate(:workshop, coach_count: 0)
-      waitinglist_invitation = Fabricate(:waitinglist_invitation, workshop: workshop, role: 'Coach')
+      Fabricate(:waitinglist_invitation, workshop: workshop, role: 'Coach')
 
-      expect(WorkshopInvitationMailer).not_to receive(:notify_waiting_list)
-        .with(waitinglist_invitation)
-        .and_call_original
-
-      manager.send_waiting_list_emails(workshop)
+      expect {
+        manager.send_waiting_list_emails(workshop)
+      }.not_to(change { ActionMailer::Base.deliveries.count })
     end
 
     it 'emails students when there are free student spots' do
       waitinglist_invitation = Fabricate(:waitinglist_invitation, workshop: workshop, role: 'Student')
 
-      expect(WorkshopInvitationMailer).to receive(:notify_waiting_list).once
-                                                                       .with(waitinglist_invitation)
-                                                                       .and_call_original
+      expect {
+        manager.send_waiting_list_emails(workshop)
+      }.to change { ActionMailer::Base.deliveries.count }.by(1)
 
-      manager.send_waiting_list_emails(workshop)
+      email = ActionMailer::Base.deliveries.last
+      expect(email.to).to include(waitinglist_invitation.member.email)
     end
 
     it 'does not email students when no student spots are available' do
       workshop = Fabricate(:workshop, student_count: 0)
-      waitinglist_invitation = Fabricate(:waitinglist_invitation, workshop: workshop, role: 'Student')
+      Fabricate(:waitinglist_invitation, workshop: workshop, role: 'Student')
 
-      expect(WorkshopInvitationMailer).not_to receive(:notify_waiting_list)
-        .with(waitinglist_invitation)
-        .and_call_original
-
-      manager.send_waiting_list_emails(workshop)
+      expect {
+        manager.send_waiting_list_emails(workshop)
+      }.not_to(change { ActionMailer::Base.deliveries.count })
     end
   end
 
@@ -218,12 +217,9 @@ RSpec.describe InvitationManager do
       Fabricate(:ban, member: students.last)
       expected_student_count = students.count - 1
 
-      expect(MeetingInvitationMailer).to receive(:invite)
-        .exactly(expected_student_count).times
-        .with(meeting, instance_of(Member), instance_of(MeetingInvitation))
-        .and_call_original
-
-      manager.send_meeting_emails(meeting)
+      expect {
+        manager.send_meeting_emails_without_delay(meeting)
+      }.to change { ActionMailer::Base.deliveries.count }.by(expected_student_count)
     end
 
     it 'emails valid invitees only once' do
@@ -234,12 +230,9 @@ RSpec.describe InvitationManager do
       MeetingInvitation.create(meeting: meeting, member: students.last, role: 'Participant')
       expected_student_count = students.count - 1
 
-      expect(MeetingInvitationMailer).to receive(:invite)
-        .exactly(expected_student_count).times
-        .with(meeting, instance_of(Member), instance_of(MeetingInvitation))
-        .and_call_original
-
-      manager.send_meeting_emails(meeting)
+      expect {
+        manager.send_meeting_emails_without_delay(meeting)
+      }.to change { ActionMailer::Base.deliveries.count }.by(expected_student_count)
     end
   end
 
@@ -377,10 +370,9 @@ RSpec.describe InvitationManager do
         Fabricate(:students, chapter: chapter, members: students)
         Fabricate(:coaches, chapter: chapter, members: coaches)
 
-        expect(WorkshopInvitationMailer).to receive(:invite_student).at_least(:once).and_call_original
-        expect(WorkshopInvitationMailer).to receive(:invite_coach).at_least(:once).and_call_original
-
-        manager.send_workshop_emails(workshop, 'everyone')
+        expect {
+          manager.send_workshop_emails_without_delay(workshop, 'everyone')
+        }.to change { ActionMailer::Base.deliveries.count }.by(students.count + coaches.count)
       end
     end
 
@@ -424,9 +416,11 @@ RSpec.describe InvitationManager do
       it 'sends attendance reminder emails' do
         invitation = Fabricate(:attending_workshop_invitation, workshop: workshop)
 
-        expect(WorkshopInvitationMailer).to receive(:attending_reminder).at_least(:once).and_call_original
+        expect {
+          manager.send_workshop_attendance_reminders_without_delay(workshop)
+        }.to change { ActionMailer::Base.deliveries.count }.by(1)
 
-        manager.send_workshop_attendance_reminders(workshop)
+        expect(invitation.reload.reminded_at).not_to be_nil
       end
     end
 

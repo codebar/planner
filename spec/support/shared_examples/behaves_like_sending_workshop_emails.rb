@@ -1,24 +1,38 @@
 RSpec.shared_examples 'sending workshop emails' do
-  it 'creates an invitation for each student' do
+  it 'creates an invitation for each student and sends emails' do
     Fabricate(:students, chapter: chapter, members: students)
 
     students.each do |student|
       expect(WorkshopInvitation).to receive(:find_or_initialize_by).with(workshop: workshop, member: student, role: 'Student').and_call_original
-      expect(mailer).to receive(:invite_student).and_call_original
     end
 
-    manager.send(send_email, workshop, 'students')
+    expect {
+      manager.send(send_email, workshop, 'students')
+    }.to change { ActionMailer::Base.deliveries.count }.by(students.count)
+     .and change { WorkshopInvitation.where(workshop: workshop, role: 'Student').count }.by(students.count)
+
+    # Verify emails were sent to the right recipients
+    emails = ActionMailer::Base.deliveries.last(students.count)
+    student_emails = students.map(&:email)
+    expect(emails.map(&:to).flatten).to match_array(student_emails)
   end
 
-  it 'creates an invitation for each coach' do
+  it 'creates an invitation for each coach and sends emails' do
     Fabricate(:coaches, chapter: chapter, members: coaches)
 
     coaches.each do |coach|
       expect(WorkshopInvitation).to receive(:find_or_initialize_by).with(workshop: workshop, member: coach, role: 'Coach').and_call_original
-      expect(mailer).to receive(:invite_coach).and_call_original
     end
 
-    manager.send(send_email, workshop, 'coaches')
+    expect {
+      manager.send(send_email, workshop, 'coaches')
+    }.to change { ActionMailer::Base.deliveries.count }.by(coaches.count)
+     .and change { WorkshopInvitation.where(workshop: workshop, role: 'Coach').count }.by(coaches.count)
+
+    # Verify emails were sent to the right recipients
+    emails = ActionMailer::Base.deliveries.last(coaches.count)
+    coach_emails = coaches.map(&:email)
+    expect(emails.map(&:to).flatten).to match_array(coach_emails)
   end
 
   it 'does not invite banned coaches' do
