@@ -10,11 +10,11 @@
           Use your skills to help people from groups underrepresented in tech break into the industry.
         %ul.list-inline
           %li.list-inline-item
-            = link_to t('pages.how_to_support_us.volunteer.become_a_coach.title'), '#become-a-coach', class: 'btn btn-light'
+            = link_to t('pages.how_to_support_us.volunteer.become_a_coach.title'), '#become-a-coach', class: 'btn btn-lg btn-light'
           %li.list-inline-item
-            = link_to t('pages.how_to_support_us.volunteer.become_an_organiser.title'), '#become-an-organiser', class: 'btn btn-light'
+            = mail_to 'hello@codebar.io', t('pages.how_to_support_us.volunteer.become_an_organiser.title'), subject: "I'd like to become a codebar organiser", class: 'btn btn-light btn-lg text-decoration-none'
       .col-12.col-md-6
-        = image_tag 'how-to-support-us/become-a-coach.jpg', alt: '', class: 'mw-100 rounded'
+        = image_tag 'how-to-support-us/scotland-team.jpg', alt: 'A photo of the Scotland team at uncodebar - 8 people together laughing and pulling funny faces.', class: 'mw-100 rounded'
 
 .py-4.py-lg-5#become-a-coach
   .container
@@ -40,7 +40,7 @@
         %p.lead.text-center.mb-5
           = t('pages.how_to_support_us.volunteer.become_an_organiser.description')
         .text-center
-          = mail_to 'hello@codebar.io', t('pages.how_to_support_us.volunteer.become_an_organiser.link'), subject: "I'd like to become a codebar organiser for [city] chapter", class: 'btn btn-primary btn-lg text-decoration-none'
+          = mail_to 'hello@codebar.io', t('pages.how_to_support_us.volunteer.become_an_organiser.link'), subject: "I'd like to become a codebar organiser", class: 'btn btn-primary btn-lg text-decoration-none'
 
 .py-4.py-lg-5#other-skills
   .container
