@@ -35,9 +35,12 @@ threads threads_count, threads_count
 # Falls back to port if nginx config not present
 if File.exist?("config/nginx.conf.erb")
   bind "unix:///tmp/nginx.socket?umask=0077"  # Restrict socket permissions to owner only
-  
-  # Signal to nginx buildpack that app is ready (required for nginx to start)
-  FileUtils.touch("/tmp/app-initialized")
+
+  # Signal to nginx buildpack that app is ready only after Puma has bound the socket.
+  # Using on_booted prevents 502 errors caused by nginx starting before the socket exists.
+  on_booted do
+    FileUtils.touch("/tmp/app-initialized")
+  end
 else
   port ENV.fetch("PORT", 3000)
 end
