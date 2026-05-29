@@ -36,12 +36,6 @@ config.active_record.belongs_to_required_by_default = true
 # ActiveJob adapter for async email delivery
 config.active_job.queue_adapter = :delayed_job
 
-# Feature flag: chapters that use async email delivery
-# Empty = no chapters use async (all sync)
-# "1" = only chapter 1 uses async
-# "1,7" = chapters 1 and 7 use async
-config.async_email_chapter_ids = ENV['ASYNC_EMAIL_CHAPTER_IDS']&.split(',')&.map(&:to_i) || []
-
 if ENV["RAILS_LOG_TO_STDOUT"].present?
       $stdout.sync = true
       config.rails_semantic_logger.add_file_appender = false
