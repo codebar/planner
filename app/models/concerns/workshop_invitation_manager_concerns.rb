@@ -2,7 +2,6 @@ module WorkshopInvitationManagerConcerns
   extend ActiveSupport::Concern
 
   included do
-    include AsyncEmailConcern
     include InstanceMethods
   end
 
@@ -10,8 +9,7 @@ module WorkshopInvitationManagerConcerns
     def send_workshop_attendance_reminders(workshop)
       workshop_mailer = workshop.virtual? ? VirtualWorkshopInvitationMailer : WorkshopInvitationMailer
       workshop.attendances.not_reminded.each do |invitation|
-        deliver_method = async_email_enabled?(workshop.chapter) ? :deliver_later : :deliver_now
-        workshop_mailer.send(:attending_reminder, workshop, invitation.member, invitation).public_send(deliver_method)
+        workshop_mailer.send(:attending_reminder, workshop, invitation.member, invitation).deliver_later
         invitation.update(reminded_at: Time.zone.now)
       end
     end
@@ -88,8 +86,7 @@ module WorkshopInvitationManagerConcerns
     def send_workshop_waiting_list_reminders(workshop)
       workshop_mailer = workshop.virtual? ? VirtualWorkshopInvitationMailer : WorkshopInvitationMailer
       workshop.invitations.on_waiting_list.not_reminded.each do |invitation|
-        deliver_method = async_email_enabled?(workshop.chapter) ? :deliver_later : :deliver_now
-        workshop_mailer.send(:waiting_list_reminder, workshop, invitation.member, invitation).public_send(deliver_method)
+        workshop_mailer.send(:waiting_list_reminder, workshop, invitation.member, invitation).deliver_later
         invitation.update(reminded_at: Time.zone.now)
       end
     end
@@ -116,30 +113,26 @@ module WorkshopInvitationManagerConcerns
     end
 
     def invite_coaches_to_virtual_workshop(workshop, logger = nil)
-      deliver_method = async_email_enabled?(workshop.chapter) ? :deliver_later : :deliver_now
       invite_members(workshop, logger, chapter_coaches(workshop.chapter)) do |coach, invitation|
-        VirtualWorkshopInvitationMailer.invite_coach(workshop, coach, invitation).public_send(deliver_method)
+        VirtualWorkshopInvitationMailer.invite_coach(workshop, coach, invitation).deliver_later
       end
     end
 
     def invite_coaches_to_workshop(workshop, logger = nil)
-      deliver_method = async_email_enabled?(workshop.chapter) ? :deliver_later : :deliver_now
       invite_members(workshop, logger, chapter_coaches(workshop.chapter)) do |coach, invitation|
-        WorkshopInvitationMailer.invite_coach(workshop, coach, invitation).public_send(deliver_method)
+        WorkshopInvitationMailer.invite_coach(workshop, coach, invitation).deliver_later
       end
     end
 
     def invite_students_to_virtual_workshop(workshop, logger = nil)
-      deliver_method = async_email_enabled?(workshop.chapter) ? :deliver_later : :deliver_now
       invite_members(workshop, logger, chapter_students(workshop.chapter), 'Student') do |student, invitation|
-        VirtualWorkshopInvitationMailer.invite_student(workshop, student, invitation).public_send(deliver_method)
+        VirtualWorkshopInvitationMailer.invite_student(workshop, student, invitation).deliver_later
       end
     end
 
     def invite_students_to_workshop(workshop, logger = nil)
-      deliver_method = async_email_enabled?(workshop.chapter) ? :deliver_later : :deliver_now
       invite_members(workshop, logger, chapter_students(workshop.chapter), 'Student') do |member, invitation|
-        WorkshopInvitationMailer.invite_student(workshop, member, invitation).public_send(deliver_method)
+        WorkshopInvitationMailer.invite_student(workshop, member, invitation).deliver_later
       end
     end
 
@@ -176,8 +169,7 @@ module WorkshopInvitationManagerConcerns
 
     def retrieve_and_notify_waitlisted(workshop, role:)
       WaitingList.by_workshop(workshop).where_role(role).each do |waiting_list|
-        deliver_method = async_email_enabled?(waiting_list.invitation.workshop.chapter) ? :deliver_later : :deliver_now
-        WorkshopInvitationMailer.notify_waiting_list(waiting_list.invitation).public_send(deliver_method)
+        WorkshopInvitationMailer.notify_waiting_list(waiting_list.invitation).deliver_later
         waiting_list.destroy
       end
     end
