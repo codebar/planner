@@ -1,5 +1,5 @@
 Fabricator(:workshop) do
-  date_and_time Time.zone.now + 2.days
+  date_and_time { Time.zone.now + 2.days }
   ends_at { |attrs| attrs[:date_and_time] + 2.hours }
   chapter
   student_spaces { |transients| transients[:student_count] || 10 }
@@ -18,27 +18,27 @@ Fabricator(:workshop) do
 end
 
 Fabricator(:workshop_no_sponsor, class_name: :workshop) do
-  date_and_time Time.zone.now + 2.days
+  date_and_time { Time.zone.now + 2.days }
   ends_at { |attrs| attrs[:date_and_time] + 2.hours }
   chapter
 end
 
 Fabricator(:workshop_auto_rsvp_in_past, from: :workshop) do
-  rsvp_opens_at Time.zone.now - 1.day
+  rsvp_opens_at { Time.zone.now - 1.day }
   invitable false
 end
 
 Fabricator(:workshop_auto_rsvp_in_future, from: :workshop) do
-  rsvp_opens_at Time.zone.now + 1.day
+  rsvp_opens_at { Time.zone.now + 1.day }
   invitable false
 end
 
 Fabricator(:past_workshop, from: :workshop) do
-  date_and_time 3.months.ago
+  date_and_time { 3.months.ago }
 end
 
 Fabricator(:virtual_workshop, class_name: :workshop) do
-  date_and_time Time.zone.now + 2.days
+  date_and_time { Time.zone.now + 2.days }
   ends_at { |attrs| attrs[:date_and_time] + 2.hours }
   chapter
   virtual true
@@ -49,11 +49,11 @@ Fabricator(:virtual_workshop, class_name: :workshop) do
 end
 
 Fabricator(:virtual_workshop_auto_rsvp_in_past, from: :virtual_workshop) do
-  rsvp_opens_at Time.zone.now - 1.day
+  rsvp_opens_at { Time.zone.now - 1.day }
 end
 
 Fabricator(:virtual_workshop_auto_rsvp_in_future, from: :virtual_workshop) do
-  rsvp_opens_at Time.zone.now + 1.day
+  rsvp_opens_at { Time.zone.now + 1.day }
   invitable false
 end
 
