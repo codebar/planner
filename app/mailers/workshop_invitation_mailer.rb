@@ -18,7 +18,7 @@ class WorkshopInvitationMailer < ApplicationMailer
     attachments['codebar.ics'] = { mime_type: 'text/calendar',
                                    content: WorkshopCalendar.new(workshop, invitation_url(invitation)).ical }
 
-    mail(mail_args(member, subject, @workshop.chapter.email), &:html)
+    mail_to_member(member, subject, @workshop.chapter.email, &:html)
   end
 
   def attending_reminder(workshop, member, invitation)
@@ -35,7 +35,7 @@ class WorkshopInvitationMailer < ApplicationMailer
     subject = t('mailer.workshop_invitation.invite_coach.subject',
                 date_time: humanize_date(@workshop.date_and_time, with_time: true))
 
-    mail(mail_args(member, subject, 'no-reply@codebar.io'), &:html)
+    mail_to_member(member, subject, 'no-reply@codebar.io', &:html)
   end
 
   def invite_student(workshop, member, invitation)
@@ -46,7 +46,7 @@ class WorkshopInvitationMailer < ApplicationMailer
     subject = t('mailer.workshop_invitation.invite_student.subject',
                 date_time: humanize_date(@workshop.date_and_time, with_time: true))
 
-    mail(mail_args(member, subject, 'no-reply@codebar.io'), &:html)
+    mail_to_member(member, subject, 'no-reply@codebar.io', &:html)
   end
 
   def notify_waiting_list(invitation)
@@ -56,7 +56,7 @@ class WorkshopInvitationMailer < ApplicationMailer
 
     subject = t('mailer.workshop_invitation.notify_waiting_list.subject')
 
-    mail(mail_args(@member, subject, @workshop.chapter.email), &:html)
+    mail_to_member(@member, subject, @workshop.chapter.email, &:html)
   end
 
   def waiting_list_reminder(workshop, member, invitation)
@@ -72,6 +72,6 @@ class WorkshopInvitationMailer < ApplicationMailer
     @member = member
     @invitation = invitation
 
-    mail(mail_args(member, subject, @workshop.chapter.email), &:html)
+    mail_to_member(member, subject, @workshop.chapter.email, &:html)
   end
 end

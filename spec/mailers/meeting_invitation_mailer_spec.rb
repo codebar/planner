@@ -3,6 +3,41 @@ RSpec.describe MeetingInvitationMailer do
   let(:member) { Fabricate(:member) }
   let(:invitation) { Fabricate(:meeting_invitation, meeting: meeting, member: member) }
 
+  context 'when the member has an invalid email' do
+    let(:bad_member) { Fabricate(:member) }
+    let(:bad_invitation) { Fabricate(:meeting_invitation, meeting: meeting, member: bad_member) }
+
+    before { allow(bad_member).to receive(:email).and_return('invalid-email') }
+
+    it '#invite skips delivery without crashing' do
+      expect {
+        MeetingInvitationMailer.invite(meeting, bad_member, bad_invitation).deliver_now
+      }.not_to raise_error
+      expect(ActionMailer::Base.deliveries).to be_empty
+    end
+
+    it '#attending skips delivery without crashing' do
+      expect {
+        MeetingInvitationMailer.attending(meeting, bad_member).deliver_now
+      }.not_to raise_error
+      expect(ActionMailer::Base.deliveries).to be_empty
+    end
+
+    it '#approve_from_waitlist skips delivery without crashing' do
+      expect {
+        MeetingInvitationMailer.approve_from_waitlist(meeting, bad_member).deliver_now
+      }.not_to raise_error
+      expect(ActionMailer::Base.deliveries).to be_empty
+    end
+
+    it '#attendance_reminder skips delivery without crashing' do
+      expect {
+        MeetingInvitationMailer.attendance_reminder(meeting, bad_member).deliver_now
+      }.not_to raise_error
+      expect(ActionMailer::Base.deliveries).to be_empty
+    end
+  end
+
   describe '#invite' do
     let(:mail) { MeetingInvitationMailer.invite(meeting, member, invitation).deliver_now }
 

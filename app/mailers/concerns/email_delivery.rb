@@ -6,6 +6,7 @@ module EmailDelivery
   def log_sent_email
     member = params[:member]
     return unless member
+    return unless @_mail_was_called
 
     MemberEmailDelivery.create!(
       member: member,
