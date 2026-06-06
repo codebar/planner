@@ -12,7 +12,7 @@ class EventInvitationMailer < ApplicationMailer
 
     subject = "Invitation: #{@event.name}"
 
-    mail(mail_args(member, subject), &:html)
+    mail_to_member(member, subject, &:html)
   end
 
   def invite_coach(event, member, invitation)
@@ -22,8 +22,8 @@ class EventInvitationMailer < ApplicationMailer
     @host_address = AddressPresenter.new(@event.venue.address) if @event.venue.present?
     @everyone_is_invited = !event.audience
 
-    mail(mail_args(member, @everyone_is_invited ? "Invitation: #{@event.name}" : "Coach Invitation: #{@event.name}"),
-         &:html)
+    mail_to_member(member, @everyone_is_invited ? "Invitation: #{@event.name}" : "Coach Invitation: #{@event.name}",
+                   &:html)
   end
 
   def attending(event, member, invitation)
@@ -38,7 +38,7 @@ class EventInvitationMailer < ApplicationMailer
 
     subject = "Your spot to #{@event.name} has been confirmed."
 
-    mail(mail_args(member, subject), &:html)
+    mail_to_member(member, subject, &:html)
   end
 
   private

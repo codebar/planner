@@ -9,6 +9,6 @@ class ContactMailer < ApplicationMailer
 
     subject = "You have been added to codebar's sponsors mailing list"
 
-    mail(mail_args(contact, subject, 'no-reply@codebar.io'), &:html)
+    mail_to_member(contact, subject, 'no-reply@codebar.io', &:html)
   end
 end

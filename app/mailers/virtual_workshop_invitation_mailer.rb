@@ -17,7 +17,7 @@ class VirtualWorkshopInvitationMailer < ApplicationMailer
     attachments['codebar.ics'] = { mime_type: 'text/calendar',
                                    content: WorkshopCalendar.new(workshop, invitation_url(invitation)).ical }
 
-    mail(mail_args(member, subject, @workshop.chapter.email), &:html)
+    mail_to_member(member, subject, @workshop.chapter.email, &:html)
   end
 
   def attending_reminder(workshop, member, invitation)
@@ -25,7 +25,7 @@ class VirtualWorkshopInvitationMailer < ApplicationMailer
     subject = t('mailer.workshop_invitation.virtual.attending_reminder.subject',
                 date_time: humanize_date(workshop.date_and_time, with_time: true))
 
-    mail(mail_args(member, subject, @workshop.chapter.email), &:html)
+    mail_to_member(member, subject, @workshop.chapter.email, &:html)
   end
 
   def invite_coach(workshop, member, invitation)
@@ -33,7 +33,7 @@ class VirtualWorkshopInvitationMailer < ApplicationMailer
     subject = t('mailer.workshop_invitation.virtual.invite_coach.subject',
                 date_time: humanize_date(@workshop.date_and_time, with_time: true))
 
-    mail(mail_args(member, subject, 'no-reply@codebar.io'), &:html)
+    mail_to_member(member, subject, 'no-reply@codebar.io', &:html)
   end
 
   def invite_student(workshop, member, invitation)
@@ -41,7 +41,7 @@ class VirtualWorkshopInvitationMailer < ApplicationMailer
     subject = t('mailer.workshop_invitation.virtual.invite_student.subject',
                 date_time: humanize_date(@workshop.date_and_time, with_time: true))
 
-    mail(mail_args(member, subject, 'no-reply@codebar.io'), &:html)
+    mail_to_member(member, subject, 'no-reply@codebar.io', &:html)
   end
 
   def waiting_list_reminder(workshop, member, invitation)
@@ -49,7 +49,7 @@ class VirtualWorkshopInvitationMailer < ApplicationMailer
     subject = t('mailer.workshop_invitation.waiting_list_reminder.subject',
                 date_time: humanize_date(workshop.date_and_time, with_time: true))
 
-    mail(mail_args(member, subject, @workshop.chapter.email), &:html)
+    mail_to_member(member, subject, @workshop.chapter.email, &:html)
   end
 
   private

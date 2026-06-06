@@ -4,6 +4,48 @@ RSpec.describe VirtualWorkshopInvitationMailer do
   let(:member) { Fabricate(:member) }
   let(:invitation) { Fabricate(:workshop_invitation, workshop: workshop, member: member) }
 
+  context 'when the member has an invalid email' do
+    let(:bad_member) { Fabricate(:member) }
+    let(:bad_invitation) { Fabricate(:workshop_invitation, workshop: workshop, member: bad_member) }
+
+    before { allow(bad_member).to receive(:email).and_return('invalid-email') }
+
+    it '#attending skips delivery without crashing' do
+      expect {
+        VirtualWorkshopInvitationMailer.attending(workshop, bad_member, bad_invitation).deliver_now
+      }.not_to raise_error
+      expect(ActionMailer::Base.deliveries).to be_empty
+    end
+
+    it '#attending_reminder skips delivery without crashing' do
+      expect {
+        VirtualWorkshopInvitationMailer.attending_reminder(workshop, bad_member, bad_invitation).deliver_now
+      }.not_to raise_error
+      expect(ActionMailer::Base.deliveries).to be_empty
+    end
+
+    it '#invite_coach skips delivery without crashing' do
+      expect {
+        VirtualWorkshopInvitationMailer.invite_coach(workshop, bad_member, bad_invitation).deliver_now
+      }.not_to raise_error
+      expect(ActionMailer::Base.deliveries).to be_empty
+    end
+
+    it '#invite_student skips delivery without crashing' do
+      expect {
+        VirtualWorkshopInvitationMailer.invite_student(workshop, bad_member, bad_invitation).deliver_now
+      }.not_to raise_error
+      expect(ActionMailer::Base.deliveries).to be_empty
+    end
+
+    it '#waiting_list_reminder skips delivery without crashing' do
+      expect {
+        VirtualWorkshopInvitationMailer.waiting_list_reminder(workshop, bad_member, bad_invitation).deliver_now
+      }.not_to raise_error
+      expect(ActionMailer::Base.deliveries).to be_empty
+    end
+  end
+
   it '#attending' do
     email_subject = "Attendance Confirmation: Virtual workshop for #{workshop.chapter.name} " \
                     "🌐 #{humanize_date(workshop.date_and_time)}"

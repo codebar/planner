@@ -5,6 +5,34 @@ RSpec.describe EventInvitationMailer do
   let(:member) { Fabricate(:member) }
   let(:invitation) { Fabricate(:invitation, event: event, member: member) }
 
+  context 'when the member has an invalid email' do
+    let(:bad_member) { Fabricate(:member) }
+    let(:bad_invitation) { Fabricate(:invitation, event: event, member: bad_member) }
+
+    before { allow(bad_member).to receive(:email).and_return('invalid-email') }
+
+    it '#invite_student skips delivery without crashing' do
+      expect {
+        EventInvitationMailer.invite_student(event, bad_member, bad_invitation).deliver_now
+      }.not_to raise_error
+      expect(ActionMailer::Base.deliveries).to be_empty
+    end
+
+    it '#invite_coach skips delivery without crashing' do
+      expect {
+        EventInvitationMailer.invite_coach(event, bad_member, bad_invitation).deliver_now
+      }.not_to raise_error
+      expect(ActionMailer::Base.deliveries).to be_empty
+    end
+
+    it '#attending skips delivery without crashing' do
+      expect {
+        EventInvitationMailer.attending(event, bad_member, bad_invitation).deliver_now
+      }.not_to raise_error
+      expect(ActionMailer::Base.deliveries).to be_empty
+    end
+  end
+
   it '#invite_student' do
     email_subject = "Invitation: #{event.name}"
     EventInvitationMailer.invite_student(event, member, invitation).deliver_now

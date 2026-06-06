@@ -12,7 +12,7 @@ class MeetingInvitationMailer < ApplicationMailer
     @rsvp_url = meeting_url(@meeting, token: @invitation.token)
 
     subject = "You are invited to codebar's #{@meeting.name} on #{humanize_date(@meeting.date_and_time)}"
-    mail(mail_args(@member, subject), &:html)
+    mail_to_member(@member, subject, &:html)
   end
 
   def attending(meeting, member)
@@ -22,7 +22,7 @@ class MeetingInvitationMailer < ApplicationMailer
     @cancellation_url = meeting_url(@meeting)
 
     subject = "See you at #{@meeting.name} on #{humanize_date(@meeting.date_and_time)}"
-    mail(mail_args(@member, subject), &:html)
+    mail_to_member(@member, subject, &:html)
   end
 
   def approve_from_waitlist(meeting, member)
@@ -32,7 +32,7 @@ class MeetingInvitationMailer < ApplicationMailer
     @cancellation_url = meeting_url(@meeting)
 
     subject = "A spot has opened up for #{@meeting.name} on #{humanize_date(@meeting.date_and_time)}"
-    mail(mail_args(@member, subject), &:html)
+    mail_to_member(@member, subject, &:html)
   end
 
   def attendance_reminder(meeting, member)
@@ -42,7 +42,7 @@ class MeetingInvitationMailer < ApplicationMailer
     @cancellation_url = meeting_url(@meeting)
 
     subject = "Reminder: You have a spot for #{@meeting.name} on #{humanize_date(@meeting.date_and_time)}"
-    mail(mail_args(@member, subject), &:html)
+    mail_to_member(@member, subject, &:html)
   end
 
   private

@@ -7,7 +7,7 @@ class MemberMailer < ApplicationMailer
   def chaser
     @member = params[:member]
     subject = "It’s been a while, how are you doing? ♥️"
-    mail mail_args(@member, subject, 'hello@codebar.io', 'hello@codebar.io') do |format|
+    mail_to_member(@member, subject, 'hello@codebar.io', 'hello@codebar.io') do |format|
       format.html {render 'three_month_chaser'}
     end
   end
@@ -36,7 +36,7 @@ class MemberMailer < ApplicationMailer
     @member = member
     subject = 'How codebar works'
 
-    mail(mail_args(member, subject, 'hello@codebar.io')) do |format|
+    mail_to_member(member, subject, 'hello@codebar.io') do |format|
       format.html { render 'welcome_student' }
     end
   end
@@ -45,7 +45,7 @@ class MemberMailer < ApplicationMailer
     @member = member
     subject = 'How codebar works'
 
-    mail(mail_args(member, subject, 'hello@codebar.io')) do |format|
+    mail_to_member(member, subject, 'hello@codebar.io') do |format|
       format.html { render 'welcome_coach' }
     end
   end
@@ -54,7 +54,7 @@ class MemberMailer < ApplicationMailer
     @member = member
     subject = 'Eligibility confirmation'
 
-    mail(mail_args(member, subject, 'hello@codebar.io', 'hello@codebar.io', sender)) do |format|
+    mail_to_member(member, subject, 'hello@codebar.io', 'hello@codebar.io', sender) do |format|
       format.html { render 'eligibility_check' }
     end
   end
@@ -63,7 +63,8 @@ class MemberMailer < ApplicationMailer
     @member = member
     subject = 'Attendance warning'
 
-    mail(mail_args(member, subject, 'hello@codebar.io', 'hello@codebar.io', sender)) do |format|
+    # TODO: .deliver here causes double-delivery because callers also call .deliver_now
+    mail_to_member(member, subject, 'hello@codebar.io', 'hello@codebar.io', sender) do |format|
       format.html { render 'attendance_warning' }
     end.deliver
   end
@@ -74,7 +75,8 @@ class MemberMailer < ApplicationMailer
     @expiry_date = I18n.l(ban.expires_at, format: :default)
     @ban = ban
 
-    mail(mail_args(member, @reason, 'hello@codebar.io', 'hello@codebar.io')) do |format|
+    # TODO: .deliver here causes double-delivery because callers also call .deliver_now
+    mail_to_member(member, @reason, 'hello@codebar.io', 'hello@codebar.io') do |format|
       format.html { render 'ban' }
     end.deliver
   end

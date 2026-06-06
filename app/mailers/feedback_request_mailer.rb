@@ -10,7 +10,7 @@ class FeedbackRequestMailer < ApplicationMailer
 
     subject = "#{@workshop} Feedback for #{l(@workshop.date_and_time, format: :email_title)}"
 
-    mail(mail_args(member, subject), &:html)
+    mail_to_member(member, subject, &:html)
   end
 
   helper do
