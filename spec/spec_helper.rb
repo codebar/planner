@@ -103,6 +103,7 @@ RSpec.configure do |config|
 
   config.after(:each) do
     DatabaseCleaner.clean
+    Capybara.reset_sessions! if defined?(Capybara)
   end
 
   config.after do |example|
