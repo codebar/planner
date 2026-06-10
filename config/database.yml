@@ -6,6 +6,7 @@ development: &default
   username: <%= ENV['DB_USER'] || ''  %>
   password: <%= ENV['POSTGRES_PASSWORD'] || '' %>
   host: <%= (ENV['DB_HOST'] || 'localhost').to_json %>
+  port: <%= ENV['DB_PORT'] || 5432 %>
 
 test:
   <<: *default
