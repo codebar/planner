@@ -87,7 +87,6 @@ group :development do
 end
 
 group :development, :test do
-
   gem 'fabrication'
   gem 'faker'
   gem 'irb' # LOCKED: Added because of byebug
