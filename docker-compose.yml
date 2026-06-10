@@ -8,12 +8,13 @@ services:
     environment:
       POSTGRES_PASSWORD: password
   web:
-    env_file:
-      - docker-compose.env
     build: .
     command: tail -f /dev/null
     environment:
       DB_HOST: db
+      DB_PORT: 5432
+      DB_USER: postgres
+      POSTGRES_PASSWORD: password
     volumes:
       - .:/planner
       - gem_cache:/usr/local/bundle/gems
