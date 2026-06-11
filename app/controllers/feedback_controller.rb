@@ -1,4 +1,6 @@
 class FeedbackController < ApplicationController
+  skip_forgery_protection only: :submit
+
   def show
     feedback_request = FeedbackRequest.find_by(token: params[:id], submited: false)
 
