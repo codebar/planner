@@ -15,7 +15,7 @@ if Rails.env.development?
     Rails.logger.error '  Ubuntu/Debian: apt-get install imagemagick'
     Rails.logger.error '  Windows:       https://imagemagick.org/script/download.php'
     Rails.logger.error ''
-    Rails.logger.error 'See native-installation-instructions.md for details.'
+    Rails.logger.error 'See docs/development-setup.md for details.'
     Rails.logger.error '=' * 80
     exit 1
   end
