@@ -33,6 +33,9 @@
 
 TAGS
 .env
+mise.local.toml
+docker-compose.override.yml
+docker-compose.env
 .DS_Store
 
 .byebug_history

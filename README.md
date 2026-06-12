@@ -42,23 +42,26 @@ Visit [https://github.com/settings/applications/new](https://github.com/settings
 
 #### Add your application details to your environment variables
 
-##### Mac/Linux:
-1. Run `touch .env` to create a file named `.env` in the root of the application folder.
-2. Open this .env file in a text editor, and add the GitHub key (Client ID) and secret (Client Secret) like so:
+**Native installation (recommended):** Copy `mise.local.toml.example` to `mise.local.toml`
+and fill in your GitHub key and secret:
+
 ```
-    GITHUB_KEY=YOUR_KEY
-    GITHUB_SECRET=YOUR_SECRET
+cp mise.local.toml.example mise.local.toml
+# Edit mise.local.toml with your values
 ```
 
-##### Windows:
-Windows doesn't like creating a file named `.env`, so run the following
-from a command prompt in your project folder:
+Environment variables are managed by [mise](https://mise.jdx.dev). Install it
+with `brew install mise` and enable `mise activate` in your shell profile.
+
+**Docker installation:** Copy `docker-compose.override.yml.example` to
+`docker-compose.override.yml` and fill in your GitHub key and secret:
+
 ```
-    echo GITHUB_KEY=YOUR_KEY >> .env
-    echo GITHUB_SECRET=YOUR_SECRET >> .env
+cp docker-compose.override.yml.example docker-compose.override.yml
+# Edit docker-compose.override.yml with your values
 ```
 
-**Note:** If when starting the application with Docker you get the error `UnicodeDecodeError: 'utf-8' codec can't decode byte 0xff in position 0: invalid start byte` this may be because you created the `.env`-file using PowerShell. This can be solved by deleting that file and creating a new one using a bash shell (for example Git Bash).
+Docker Compose automatically merges this file — no extra configuration needed.
 
 ### 3. Install and set up the environment using docker
 

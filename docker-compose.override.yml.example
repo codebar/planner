@@ -1,0 +1,5 @@
+services:
+  web:
+    environment:
+      GITHUB_KEY: your_github_oauth_client_id
+      GITHUB_SECRET: your_github_oauth_client_secret

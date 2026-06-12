@@ -27,9 +27,21 @@ codebar planner is a Rails 8.1 application for managing [codebar.io](https://cod
 
 **IMPORTANT**: Always use native installation with `bundle exec` commands. Never use Docker or `bin/d*` commands.
 
+### Prerequisites
+
+- **mise** — install via `brew install mise`, then enable `mise activate` in your shell profile (see [mise docs](https://mise.jdx.dev/getting-started.html)). Alternatively, use `mise exec` to run commands with project env vars without shell activation.
+- PostgreSQL running locally (default port 5432, or configure via `DB_PORT`)
+
 ### Native Installation
 
-- **Setup**: `bundle && rake db:create db:migrate db:seed`
+```
+cp mise.local.toml.example mise.local.toml
+# Edit mise.local.toml with your GitHub OAuth credentials
+# Optionally delete .env if it exists from a prior setup:
+rm .env
+bundle && rake db:create db:migrate db:seed
+```
+
 - **Server**: `bundle exec rails server`
 - **Tests**: `make test` or `bundle exec parallel_rspec spec/ -n 3` - runs RSpec tests in parallel (3 processes is optimal)
 - **Single test**: `bundle exec rspec spec/path/to/file_spec.rb:42`
@@ -37,19 +49,24 @@ codebar planner is a Rails 8.1 application for managing [codebar.io](https://cod
 - **Run rake tasks**: `bundle exec rake [task]`
 - **Linting**: `bundle exec rubocop`
 
+### Environment Variables
+
+Managed by `mise` via `mise.toml` (shared, committed) and `mise.local.toml` (secrets, gitignored). Automatically loaded when you enter the project directory (requires `mise activate`).
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `DB_HOST` | `localhost` | Postgres host |
+| `DB_PORT` | `5432` | Postgres port |
+| `DB_USER` | (empty) | Postgres user |
+| `POSTGRES_PASSWORD` | (empty) | Postgres password |
+| `GITHUB_KEY` | — | GitHub OAuth client ID (set in `mise.local.toml`) |
+| `GITHUB_SECRET` | — | GitHub OAuth client secret (set in `mise.local.toml`) |
+
+Create GitHub OAuth app at https://github.com/settings/applications/new with callback URL `http://localhost:3000/auth/github`.
+
 ### Docker Setup (Not Used)
 
 Docker setup exists in this repository (`bin/d*` commands) but is **not used** for development work with Claude Code, OpenCode, etc.
-
-### Environment Variables
-
-Required in `.env` file:
-```
-GITHUB_KEY=<your_github_oauth_client_id>
-GITHUB_SECRET=<your_github_oauth_client_secret>
-```
-
-Create GitHub OAuth app at https://github.com/settings/applications/new with callback URL `http://localhost:3000/auth/github`.
 
 ## Architecture & Domain Model
 
