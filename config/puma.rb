@@ -31,9 +31,9 @@ threads_count = ENV.fetch("RAILS_MAX_THREADS", 3)
 threads threads_count, threads_count
 
 # Specifies the `port` that Puma will listen on to receive requests; default is 3000.
-# Use Unix socket when nginx config exists (from heroku-community/nginx buildpack)
-# Falls back to port if nginx config not present
-if File.exist?("config/nginx.conf.erb")
+# Use Unix socket when running on Heroku with nginx buildpack (ENV["DYNO"] is set by Heroku)
+# Falls back to port if not on Heroku or nginx config not present
+if ENV["DYNO"] && File.exist?("config/nginx.conf.erb")
   bind "unix:///tmp/nginx.socket?umask=0077"  # Restrict socket permissions to owner only
 
   # Signal to nginx buildpack that app is ready only after Puma has bound the socket.
