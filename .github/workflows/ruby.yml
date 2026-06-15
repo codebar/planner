@@ -83,6 +83,21 @@ jobs:
         path: coverage/resultset-${{ matrix.ci_node_index }}.json
         retention-days: 1
 
+  security-audit:
+    name: 'Security Audit'
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v6
+
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        bundler-cache: true
+
+    - name: Run bundler-audit
+      run: bundle exec bundler-audit check
+
   coverage:
     name: 'Report Coverage'
     runs-on: ubuntu-latest
