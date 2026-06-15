@@ -39,7 +39,7 @@ RSpec.describe Admin::SponsorsController, type: :controller do
         expect do
           post :create, params: {
             sponsor: {
-              name: 'name', website: 'https://example.com', seats: 40,
+              name: 'name', website: 'https://example.com', seats: 40, number_of_coaches: 10,
               address: address, avatar: avatar
             }
           }
@@ -53,7 +53,7 @@ RSpec.describe Admin::SponsorsController, type: :controller do
         expect do
           post :create, params: {
             sponsor: {
-              name: 'name', website: 'https://example.com', seats: 40,
+              name: 'name', website: 'https://example.com', seats: 40, number_of_coaches: 10,
               address: address, avatar: avatar, contact_ids: [member.id, member1.id]
             }
           }
@@ -67,7 +67,7 @@ RSpec.describe Admin::SponsorsController, type: :controller do
         expect do
           post :create, params: {
             sponsor: {
-              name: 'name', website: 'https://example.com', seats: 40,
+              name: 'name', website: 'https://example.com', seats: 40, number_of_coaches: 10,
               address: address, avatar: avatar, contact_ids: [member.id, member1.id]
             }
           }
@@ -81,7 +81,7 @@ RSpec.describe Admin::SponsorsController, type: :controller do
         expect do
           post :create, params: {
             sponsor: {
-              name: 'name', website: 'https://example.com', seats: 40,
+              name: 'name', website: 'https://example.com', seats: 40, number_of_coaches: 10,
               address: Fabricate(:address, latitude: '54.47474', longitude: '-0.12345'),
               avatar: avatar, members: []
             }

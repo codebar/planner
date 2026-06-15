@@ -1,4 +1,4 @@
-= simple_form_for [:admin, @sponsor], :html => {:multipart => true, novalidate: true } do |f|
+= simple_form_for [:admin, @sponsor], html: { multipart: true, novalidate: false } do |f|
   .row
     .col-12.col-md-6
       = f.input :name
@@ -27,9 +27,9 @@
           %p Only required for hosts.
           .row
             .col-6
-              = f.input :seats
+              = f.input :seats, input_html: { required: true, min: 0 }
             .col-6
-              = f.input :number_of_coaches
+              = f.input :number_of_coaches, input_html: { required: true, min: 0 }
           = f.input :accessibility_info, input_html: { rows: 3 },
             hint: raw(t('admin.shared.markdown_hint', link: link_to(t('admin.shared.markdown'), 'https://commonmark.org/help/')))
           %p

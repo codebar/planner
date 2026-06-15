@@ -10,6 +10,8 @@ Fabricator(:sponsor) do
   website { "http://#{Faker::Internet.domain_name}" }
   avatar { Rack::Test::UploadedFile.new(Rails.root.join('app', 'assets', 'images', 'sponsors', sponsor_image), 'image/png') }
   address
+  seats { Faker::Number.between(from: 1, to: 50) }
+  number_of_coaches { Faker::Number.between(from: 1, to: 50) }
 end
 
 Fabricator(:sponsor_full, from: :sponsor) do
