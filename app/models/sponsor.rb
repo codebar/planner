@@ -32,6 +32,8 @@ class Sponsor < ApplicationRecord
 
   validates :level, inclusion: { in: Sponsor.levels.keys }
   validates :name, :address, :avatar, :website, :level, presence: true
+  validates :number_of_coaches, presence: true, numericality: { greater_than_or_equal_to: 0, only_integer: true }
+  validates :seats, presence: true, numericality: { greater_than_or_equal_to: 0, only_integer: true }
   validate :website_is_url, if: :website?
 
   default_scope -> { order('updated_at desc') }

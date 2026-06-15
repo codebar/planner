@@ -7,6 +7,10 @@ RSpec.describe Sponsor do
     it { is_expected.to validate_presence_of(:avatar) }
     it { is_expected.to validate_presence_of(:website) }
     it { is_expected.to validate_presence_of(:level) }
+    it { is_expected.to validate_presence_of(:number_of_coaches) }
+    it { is_expected.to validate_presence_of(:seats) }
+    it { is_expected.to validate_numericality_of(:number_of_coaches).is_greater_than_or_equal_to(0).only_integer }
+    it { is_expected.to validate_numericality_of(:seats).is_greater_than_or_equal_to(0).only_integer }
 
     context 'scopes' do
       describe 'searching by_name' do
