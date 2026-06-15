@@ -112,7 +112,7 @@ group :test do
   gem 'capybara'
   gem 'capybara-playwright-driver'
   gem 'database_cleaner'
-  gem 'shoulda-matchers', '~> 7.0'
+  gem 'shoulda-matchers', '~> 8.0'
   gem 'simplecov',      require: false
   gem 'simplecov-lcov', require: false
   gem 'webmock'
