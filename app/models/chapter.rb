@@ -36,27 +36,33 @@ class Chapter < ApplicationRecord
     @organisers ||= Member.with_role(:organiser, self)
   end
 
+  # All members subscribed to this chapter's Students group, regardless of ban or TOC status.
+  # Use #eligible_students when building invitation lists.
   def students
-    Member.joins(:groups)
-          .merge(Group.students)
-          .distinct
+    members_for_group('Students')
   end
 
+  # All members subscribed to this chapter's Coaches group, regardless of ban or TOC status.
+  # Use #eligible_coaches when building invitation lists.
   def coaches
-    Member.joins(:groups)
-          .merge(Group.coaches)
-          .distinct
+    members_for_group('Coaches')
   end
 
+  # Chapter students who are not banned and have accepted the TOC — safe to invite to workshops.
   def eligible_students
     Member.in_group(groups.students).distinct
   end
 
+  # Chapter coaches who are not banned and have accepted the TOC — safe to invite to workshops.
   def eligible_coaches
     Member.in_group(groups.coaches).distinct
   end
 
   private
+
+  def members_for_group(name)
+    members.where(groups: { name: name }).distinct
+  end
 
   def expire_chapters_sidebar_cache
     Rails.cache.delete('chapters-sidebar')

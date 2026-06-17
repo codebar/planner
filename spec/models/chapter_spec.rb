@@ -66,6 +66,34 @@ RSpec.describe Chapter do
     end
   end
 
+  describe '#students' do
+    let(:chapter) { Fabricate(:chapter) }
+    let(:student_group) { Fabricate(:group, chapter: chapter, name: 'Students') }
+
+    it 'returns only students from this chapter' do
+      other_chapter = Fabricate(:chapter)
+      other_group = Fabricate(:group, chapter: other_chapter, name: 'Students')
+      this_student = Fabricate(:member, groups: [student_group])
+      _other_student = Fabricate(:member, groups: [other_group])
+
+      expect(chapter.students).to contain_exactly(this_student)
+    end
+  end
+
+  describe '#coaches' do
+    let(:chapter) { Fabricate(:chapter) }
+    let(:coach_group) { Fabricate(:group, chapter: chapter, name: 'Coaches') }
+
+    it 'returns only coaches from this chapter' do
+      other_chapter = Fabricate(:chapter)
+      other_group = Fabricate(:group, chapter: other_chapter, name: 'Coaches')
+      this_coach = Fabricate(:member, groups: [coach_group])
+      _other_coach = Fabricate(:member, groups: [other_group])
+
+      expect(chapter.coaches).to contain_exactly(this_coach)
+    end
+  end
+
   describe '#eligible_students' do
     let(:chapter) { Fabricate(:chapter) }
     let(:student_group) { Fabricate(:group, chapter: chapter, name: 'Students') }
