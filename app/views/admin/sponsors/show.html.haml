@@ -58,6 +58,9 @@
                 %li.mt-1
                   = mail_to(contact.email, contact.full_name)
                   %i.fas{ class: contact.mailing_list_subscription_class }
+                  - if contact.comment.present?
+                    %br
+                    %small.text-muted= contact.comment
 
     .col-12.col-lg-9
       %h2.h3.mb-3= t('.map_preview')

@@ -100,12 +100,14 @@ RSpec.feature 'Managing sponsors', type: :feature do
           fill_in 'Name', with: 'Jane'
           fill_in 'Surname', with: 'Doe'
           fill_in 'Email', with: 'jane@codebar.io'
+          fill_in 'Contact comment', with: 'Main contact - Office manager'
         end
 
         click_on 'Save changes'
 
         within '#contacts' do
           expect(page).to have_content 'Jane Doe'
+          expect(page).to have_content 'Main contact - Office manager'
         end
       end
     end

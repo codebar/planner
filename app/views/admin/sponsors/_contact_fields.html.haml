@@ -5,4 +5,5 @@
     = f.input :name
     = f.input :surname
     = f.input :email
+    = f.input :comment, as: :text, input_html: { rows: 5 }, label: 'Contact comment'
     = f.input :mailing_list_consent, as: :boolean, hint_html: { class: 'd-block ms-1' }
