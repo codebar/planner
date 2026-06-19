@@ -22,7 +22,7 @@ RSpec.describe Admin::MembersController, type: :controller do
 
     context 'with query 3 or more characters' do
       it 'returns matching members by name' do
-        get :search, params: { q: 'Jan' }, format: :json
+        get :search, params: { q: 'Jane Doe' }, format: :json
 
         expect(response).to have_http_status(:ok)
         results = JSON.parse(response.body)
@@ -32,7 +32,7 @@ RSpec.describe Admin::MembersController, type: :controller do
       end
 
       it 'returns matching members by email' do
-        get :search, params: { q: 'john@tes' }, format: :json
+        get :search, params: { q: 'john@test.com' }, format: :json
 
         expect(response).to have_http_status(:ok)
         results = JSON.parse(response.body)
@@ -41,7 +41,7 @@ RSpec.describe Admin::MembersController, type: :controller do
       end
 
       it 'returns JSON with correct shape' do
-        get :search, params: { q: 'Jan' }, format: :json
+        get :search, params: { q: 'Jane Doe' }, format: :json
 
         results = JSON.parse(response.body)
         expect(results.first.keys).to contain_exactly('id', 'name', 'surname', 'email', 'full_name')
