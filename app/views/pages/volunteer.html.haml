@@ -52,4 +52,5 @@
         %p.lead.text-center.mb-5
           = t('pages.how_to_support_us.volunteer.volunteer.description')
         .text-center
-          = mail_to 'hello@codebar.io', t('pages.how_to_support_us.volunteer.volunteer.link'), subject: "I'd like to volunteer with codebar", class: 'btn btn-primary btn-lg text-decoration-none'
+          = link_to "https://docs.google.com/document/d/1mA8_XL6zjGK2omyvSIwpl2Wyvdnd3519itd1tY94Y5w/edit?usp=sharing", class: 'btn btn-primary btn-lg text-decoration-none' do
+            = t('pages.how_to_support_us.volunteer.volunteer.link')

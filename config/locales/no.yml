@@ -484,8 +484,8 @@
           description: Affect change as a volunteer coach with codebar - your expertise and guidance will pave the way for aspiring developers, unlocking the world of coding and creating opportunities for folks from groups under represented in the tech industry.
         volunteer:
           title: Other skills
-          description: Your unique abilities could be our missing piece in the codebar puzzle. Having a diverse range of skills in our team is necessary to enrich our community. From fundraising to event coordination to marketing, we always welcome new talent to drive our mission forward.
-          link: Email us to become a volunteer
+          description: Your skills could be the missing piece in the codebar puzzle. Having a diverse range of skills, and extra help, in our team is necessary to enrich our community. From fundraising and event coordination to marketing, we always welcome extra help to support our community members.
+          link: Take a look at our Volunteer Opportunities here
       fundraise:
         title: Fundraise
         description_html: "Join the codebar team with a physical challenge event. Whether you are a runner, swimmer, or cyclist, sign up with our registration form for your desired event and raise vital funds to help keep our events running. If your event does not appear below, feel free to <a href='mailto:%{email}'>drop us an email</a> and we would be happy to coordinate with you."
