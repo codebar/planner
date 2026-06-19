@@ -25,9 +25,12 @@ module SelectFromTomSelect
     # Type the rest if item_text is longer than 3 characters
     input.send_keys(item_text[3..]) if item_text.length > 3
 
+    # Wait for debounce (300ms) and network request after final keystrokes
+    sleep 0.5
+
     # Wait for results (includes debounce + network)
     # Uses a generous timeout for CI environments where AJAX may be slower
-    expect(page).to have_css('.ts-dropdown .option', wait: 10)
+    expect(page).to have_css('.ts-dropdown .option', wait: 15)
 
     # Click the matching option
     # Use JavaScript click to avoid element interception issues
