@@ -34,3 +34,7 @@
 .py-4.py-lg-5.bg-light
   .container
     = render partial: 'members/organisers_grid', locals: { members: @workshop.organisers, show_info: false }
+
+.py-4.py-lg-5
+  .container
+    = render partial: 'shared/newsletter'
