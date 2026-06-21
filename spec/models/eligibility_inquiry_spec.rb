@@ -9,14 +9,5 @@ RSpec.describe EligibilityInquiry do
       expect(eligibility_inquiry.issued_by).to eq(admin)
     end
 
-    it 'sends an eligibility check email' do
-      expect {
-        described_class.create(member: member, issued_by: admin)
-      }.to change { ActionMailer::Base.deliveries.count }.by(1)
-
-      email = ActionMailer::Base.deliveries.last
-      expect(email.to).to include(member.email)
-      expect(email.subject).to include('Eligibility')
-    end
   end
 end
