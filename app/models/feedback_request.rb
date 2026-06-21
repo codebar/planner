@@ -8,7 +8,6 @@ class FeedbackRequest < ApplicationRecord
   validates :submited, inclusion: { in: [true, false] }
 
   before_validation :set_token
-  after_create :email
 
   private
 
@@ -19,7 +18,4 @@ class FeedbackRequest < ApplicationRecord
     end
   end
 
-  def email
-    FeedbackRequestMailer.request_feedback(workshop, member, self).deliver_now
-  end
 end
