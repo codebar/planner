@@ -67,4 +67,45 @@ RSpec.describe Admin::MembersController, type: :controller do
       end
     end
   end
+
+  describe 'GET #send_attendance_email' do
+    let(:member) { Fabricate(:member) }
+    let(:admin) { Fabricate(:member) }
+
+    before do
+      admin.add_role(:admin)
+      login_as_admin(admin)
+    end
+
+    it 'creates an attendance warning' do
+      expect {
+        get :send_attendance_email, params: { member_id: member.id }
+      }.to change(AttendanceWarning, :count).by(1)
+    end
+
+    it 'sends an attendance warning email' do
+      mailer = double(deliver_now: true)
+      expect(MemberMailer).to receive(:attendance_warning)
+        .with(member, member.email)
+        .and_return(mailer)
+
+      get :send_attendance_email, params: { member_id: member.id }
+    end
+
+    it 'redirects to the member page' do
+      get :send_attendance_email, params: { member_id: member.id }
+
+      expect(response).to redirect_to([:admin, member])
+    end
+
+    context 'when not authenticated' do
+      before { login(Fabricate(:member)) }
+
+      it 'redirects to login' do
+        get :send_attendance_email, params: { member_id: member.id }
+
+        expect(response).to have_http_status(:found)
+      end
+    end
+  end
 end

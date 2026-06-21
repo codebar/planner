@@ -54,6 +54,7 @@ class Admin::MembersController < Admin::ApplicationController
 
   def send_attendance_email
     @member.attendance_warnings.create!(issued_by: current_user)
+    MemberMailer.attendance_warning(@member, @member.email).deliver_now
 
     redirect_to [:admin, @member], notice: t('.success')
   end
