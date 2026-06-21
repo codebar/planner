@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_06_18_152101) do
+ActiveRecord::Schema[8.1].define(version: 2026_06_21_050948) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -389,18 +389,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_18_152101) do
     t.index ["meeting_id"], name: "index_meeting_invitations_on_meeting_id"
     t.index ["member_id", "attending"], name: "index_meeting_invitations_member_attending"
     t.index ["member_id"], name: "index_meeting_invitations_on_member_id"
-  end
-
-  create_table "meeting_talks", id: :serial, force: :cascade do |t|
-    t.text "abstract"
-    t.datetime "created_at", precision: nil
-    t.string "description"
-    t.integer "meeting_id"
-    t.integer "speaker_id"
-    t.string "title"
-    t.datetime "updated_at", precision: nil
-    t.index ["meeting_id"], name: "index_meeting_talks_on_meeting_id"
-    t.index ["speaker_id"], name: "index_meeting_talks_on_speaker_id"
   end
 
   create_table "meetings", id: :serial, force: :cascade do |t|
