@@ -1,25 +1,9 @@
-require 'services/mailing_list'
 class Contact < ApplicationRecord
   belongs_to :sponsor, optional: true
 
   validates :name, :surname, :email, presence: true
 
   before_create :set_token
-  after_commit :unsubscribe_from_mailing_list, if: proc { |c| !c.mailing_list_consent }
-  after_commit :subscribe_to_mailing_list, if: proc { |c| c.mailing_list_consent }
-
-  def subscribe_to_mailing_list
-    mailing_list.subscribe(email, name, surname)
-    ContactMailer.subscription_notification(self).deliver
-  end
-
-  def unsubscribe_from_mailing_list
-    mailing_list.unsubscribe(email)
-  end
-
-  def mailing_list
-    @mailing_list ||= Services::MailingList.new(ENV['SPONSOR_NEWSLETTER_ID'])
-  end
 
   private
 
