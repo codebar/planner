@@ -11,16 +11,20 @@ RSpec.describe 'rake feedback:request', type: :task do
       end
     end
 
-    it 'generates a FeedbackRequest' do
+    it 'generates a FeedbackRequest and sends the feedback email' do
       travel_to(Time.current) do
         workshop = Fabricate(:workshop, date_and_time: 23.hours.ago)
         student = Fabricate(:member)
         Fabricate(:attending_workshop_invitation, role: 'Student', member: student, workshop: workshop)
 
         expect(Workshop).to receive(:completed_since_yesterday).and_return([workshop])
-        expect(FeedbackRequest).to receive(:create).with(member: student, workshop: workshop, submited: false)
 
-        task.execute
+        mailer = double(deliver_now: true)
+        expect(FeedbackRequestMailer).to receive(:request_feedback)
+          .with(workshop, student, an_instance_of(FeedbackRequest))
+          .and_return(mailer)
+
+        expect { task.execute }.to change(FeedbackRequest, :count).by(1)
       end
     end
 

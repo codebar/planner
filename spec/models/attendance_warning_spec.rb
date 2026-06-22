@@ -9,13 +9,6 @@ RSpec.describe AttendanceWarning do
       expect(attendance_warning.issued_by).to eq(admin)
     end
 
-    it 'sends an attendance warning email' do
-      described_class.create(member: member, issued_by: admin)
-
-      email = ActionMailer::Base.deliveries.find { |e| e.to.include?(member.email) && e.subject.include?('Attendance') }
-      expect(email).not_to be_nil
-    end
-
     describe '.scopes' do
       describe 'last_six_months' do
         it 'returns all attendance warnings issues in the last six months' do

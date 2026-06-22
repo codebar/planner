@@ -48,12 +48,14 @@ class Admin::MembersController < Admin::ApplicationController
 
   def send_eligibility_email
     @member.eligibility_inquiries.create!(issued_by: current_user)
+    MemberMailer.eligibility_check(@member, @member.email).deliver_now
 
     redirect_to [:admin, @member], notice: t('.success')
   end
 
   def send_attendance_email
     @member.attendance_warnings.create!(issued_by: current_user)
+    MemberMailer.attendance_warning(@member, @member.email).deliver_now
 
     redirect_to [:admin, @member], notice: t('.success')
   end

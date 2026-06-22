@@ -24,14 +24,4 @@ RSpec.describe FeedbackRequest do
     end
   end
 
-  context 'after create hook' do
-    it 'sends request feedback email' do
-      expect {
-        Fabricate(:feedback_request)
-      }.to change { ActionMailer::Base.deliveries.count }.by(1)
-
-      email = ActionMailer::Base.deliveries.last
-      expect(email.subject).to include('Feedback')
-    end
-  end
 end
