@@ -33,5 +33,17 @@ RSpec.describe ContactMailingListService do
         expect(ContactMailer).not_to have_received(:subscription_notification)
       end
     end
+
+    context 'when consent is nil' do
+      let(:consent) { nil }
+
+      it 'does nothing' do
+        service.sync(contact)
+
+        expect(mailing_list).not_to have_received(:subscribe)
+        expect(mailing_list).not_to have_received(:unsubscribe)
+        expect(ContactMailer).not_to have_received(:subscription_notification)
+      end
+    end
   end
 end

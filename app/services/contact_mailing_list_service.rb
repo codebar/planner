@@ -4,10 +4,9 @@ class ContactMailingListService
   end
 
   def sync(contact)
-    if contact.mailing_list_consent
-      subscribe(contact)
-    else
-      unsubscribe(contact)
+    case contact.mailing_list_consent
+    when true then subscribe(contact)
+    when false then unsubscribe(contact)
     end
   end
 
