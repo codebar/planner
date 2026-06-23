@@ -8,15 +8,15 @@ class SubscriptionsController < ApplicationController
   end
 
   def create
-    @subscription = Subscription.new(group_id: group_id, member: current_user)
+    subscription = Subscription.new(group_id: group_id, member: current_user)
 
-    if @subscription.save
-      SubscriptionMailingListService.subscribe(@subscription)
-      send_welcome_email(current_user, @subscription)
-      flash[:notice] = I18n.t('subscriptions.messages.group.subscribe', chapter: @subscription.group.chapter.city,
-                                                                        role: @subscription.group.name)
+    if subscription.save
+      SubscriptionMailingListService.subscribe(subscription)
+      send_welcome_email(current_user, subscription)
+      flash[:notice] = I18n.t('subscriptions.messages.group.subscribe', chapter: subscription.group.chapter.city,
+                                                                        role: subscription.group.name)
     else
-      flash[:notice] = @subscription.errors.inspect
+      flash[:notice] = subscription.errors.inspect
     end
     redirect_back fallback_location: root_path
   end
