@@ -38,7 +38,8 @@ class Admin::MembersController < Admin::ApplicationController
   end
 
   def update_subscriptions
-    subscription = @member.subscriptions.find_by(group_id: params[:group])
+    subscription = @member.subscriptions.find_by!(group_id: params[:group])
+    SubscriptionMailingListService.unsubscribe(subscription)
     flash[:notice] = t('.unsubscribe', member: @member.full_name,
                                        chapter: subscription.group.chapter.city,
                                        group: subscription.group.name)
