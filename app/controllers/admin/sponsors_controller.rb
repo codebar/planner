@@ -30,6 +30,7 @@ class Admin::SponsorsController < Admin::ApplicationController
     authorize @sponsor
 
     if @sponsor.valid? && @sponsor.save
+      @sponsor.contacts.each { ContactMailingListService.sync(it) }
       return redirect_to [:admin, @sponsor], notice: "Sponsor #{@sponsor.name} created"
     end
 
@@ -49,6 +50,7 @@ class Admin::SponsorsController < Admin::ApplicationController
 
     if @sponsor.valid? && @sponsor.save
       @sponsor.contacts.each do |contact|
+        ContactMailingListService.sync(contact)
         audit_contact_subscription(contact)
       end
 

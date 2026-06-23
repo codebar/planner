@@ -10,6 +10,7 @@ class ContactPreferencesController < ApplicationController
   def update
     contact = Contact.find_by!(token: contact_preferences[:token])
     contact.update(mailing_list_consent: mailing_list_consent)
+    ContactMailingListService.sync(contact)
     audit_contact_subscription(contact)
 
     redirect_to contact_preferences_path(token: contact_preferences[:token],
