@@ -56,6 +56,7 @@ gem 'tzinfo-data'
 gem 'commonmarker'
 
 gem 'faraday'
+gem 'msgpack'
 
 gem 'stripe'
 
