@@ -1,0 +1,21 @@
+<% content_for :title, "Chapter Status — last #{@months} months" %>
+
+<div class="container py-4 py-lg-5">
+  <h1>Chapter Status</h1>
+
+  <p class="lead">Chapter activity overview (including workshops scheduled up to 3 months ahead). "Eligible" means subscribed, not banned, and accepted terms.</p>
+
+  <%= form_tag status_admin_chapters_path, method: :get, class: 'd-inline-block mb-4' do %>
+    <div class="btn-group" role="group">
+      <% active_class = ->(m) { @months == m ? ' active' : '' } %>
+      <%= button_tag '6 months', name: 'months', value: 6, class: "btn btn-outline-primary#{active_class.call(6)}", data: { disable_with: '6 months' } %>
+      <%= button_tag '12 months', name: 'months', value: 12, class: "btn btn-outline-primary#{active_class.call(12)}", data: { disable_with: '12 months' } %>
+    </div>
+  <% end %>
+
+  <%= render Admin::ChapterStatus::TableComponent.new(label: 'Active', rows: @active, months: @months, at_risk_ids: @at_risk_ids) %>
+
+  <%= render Admin::ChapterStatus::TableComponent.new(label: 'Dormant', rows: @dormant, months: @months) %>
+
+  <%= render Admin::ChapterStatus::TableComponent.new(label: 'Inactive', rows: @inactive, months: @months) %>
+</div>

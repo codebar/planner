@@ -1,0 +1,45 @@
+<% if rows.any? %>
+  <section class="mb-5">
+    <h2 class="mb-1"><%= label %> (<%= rows.size %>)</h2>
+    <details class="mb-3">
+      <summary class="small text-muted">What does this mean?</summary>
+      <div class="small text-muted">
+        <% if label == 'Active' %>
+          Chapters with ≥1 workshop in this window. The <span class="badge bg-warning text-dark">At Risk</span> badge marks chapters with no workshops in the last <%= months - 1 %> months — they may be winding down.
+        <% elsif label == 'Dormant' %>
+          Chapters that are enabled but haven't run any workshops in this window.
+        <% else %>
+          Chapters that have been disabled.
+        <% end %>
+      </div>
+    </details>
+    <div class="table-responsive">
+      <table class="table table-sm">
+        <thead>
+          <tr>
+            <th>Chapter</th>
+            <th>Workshops</th>
+            <th>Eligible Students</th>
+            <th>Eligible Coaches</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% rows.each do |row| %>
+            <% at_risk = at_risk_ids&.include?(row[:chapter].id) %>
+            <tr class="<%= 'table-warning' if at_risk %>">
+              <td>
+                <%= link_to row[:chapter].name, [:admin, row[:chapter]] %>
+                <% if at_risk %>
+                  <span class="badge bg-warning text-dark ms-2" title="No workshops in the last <%= months - 1 %> months">At Risk</span>
+                <% end %>
+              </td>
+              <td><%= row[:workshops] %></td>
+              <td><%= row[:eligible_students] %></td>
+              <td><%= row[:eligible_coaches] %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </section>
+<% end %>

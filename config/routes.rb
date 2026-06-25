@@ -108,6 +108,7 @@ Rails.application.routes.draw do
 
     resources :chapters, only: %i[index new create show edit update] do
       get :members
+      get :status, on: :collection
       resources :workshops, only: [:index]
       resources :feedback, only: [:index], controller: 'chapters/feedback'
       resources :organisers, only: %i[index create destroy], controller: 'chapters/organisers'
