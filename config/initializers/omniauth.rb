@@ -1,3 +1,5 @@
+require 'omniauth/strategies/codebar'
+
 Rails.application.config.middleware.use OmniAuth::Builder do
   if ENV['GITHUB_KEY'].blank? || ENV['GITHUB_SECRET'].blank?
     warn '*' * 80
@@ -10,6 +12,10 @@ Rails.application.config.middleware.use OmniAuth::Builder do
   else
     provider :github, ENV['GITHUB_KEY'], ENV['GITHUB_SECRET'], scope: 'user:email'
   end
+
+  provider :codebar,
+    auth_url: ENV.fetch('CODEBAR_AUTH_URL', 'http://localhost:3001'),
+    audience: ENV.fetch('CODEBAR_AUDIENCE', 'planner')
 end
 
 OmniAuth.config.allowed_request_methods = [:post, :get]
