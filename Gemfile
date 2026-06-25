@@ -25,6 +25,7 @@ gem 'friendly_id'
 gem 'haml'
 gem 'high_voltage'
 gem 'jquery-rails'
+gem 'jwt'
 
 # Use Active Storage variant
 gem 'image_processing'
