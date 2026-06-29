@@ -110,13 +110,14 @@ RSpec.describe WorkshopInvitationMailer do
     expect(email.body.encoded).to match(workshop.chapter.email)
   end
 
-  it '#attending includes the workshop description' do
-    description = "This is a test workshop description."
+  it '#attending renders workshop description as HTML, not escaped' do
+    description = '<strong>Important notice:</strong> Please bring a laptop.'
     workshop = Fabricate(:workshop, description: description)
     invitation = Fabricate(:workshop_invitation, workshop: workshop, member: member)
 
     WorkshopInvitationMailer.attending(workshop, member, invitation).deliver_now
 
-    expect(email.body.encoded).to include(description)
+    expect(email.body.encoded).to include('Please bring a laptop.')
+    expect(email.body.encoded).not_to include('&lt;strong&gt;Important')
   end
 end

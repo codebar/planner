@@ -35,7 +35,7 @@
                 - if @workshop.description.present?
                   %p{ style: 'margin-top: 10px;' }
                     %strong Description:
-                    = @workshop.description
+                    = sanitize(@workshop.description)
 
         .content
           %table
