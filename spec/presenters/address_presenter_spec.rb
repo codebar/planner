@@ -4,7 +4,8 @@ RSpec.describe AddressPresenter do
 
   describe '#to_html' do
     it 'returns the address in HTML with lines separated with <br/> tags' do
-      html_address = "#{address.flat}<br/>#{address.street}<br/>#{address.city}, #{address.postal_code}"
+      escape = ERB::Util.method(:html_escape)
+      html_address = "#{escape.call(address.flat)}<br/>#{escape.call(address.street)}<br/>#{escape.call(address.city)}, #{escape.call(address.postal_code)}"
 
       expect(presenter.to_html).to eq(html_address)
     end
