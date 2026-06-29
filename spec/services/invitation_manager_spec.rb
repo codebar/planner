@@ -290,7 +290,7 @@ RSpec.describe InvitationManager do
         expect(message).to include("workshop_id=#{workshop.id}")
         expect(message).to include('role=Student')
         expect(message).not_to include(member.email)
-        expect(message).not_to include(member.name)
+        expect(message).not_to match(/#{Regexp.escape(member.name)}/)
       end
 
       manager.send(:create_invitation, workshop, member, 'Student')
