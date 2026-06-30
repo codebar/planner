@@ -29,6 +29,27 @@ if Rails.env.development?
       Fabricate(:chapter_with_groups, name: name)
     end
 
+    # Chapters for the status page: inactive, dormant, and at-risk
+    bournemouth = Chapter.find_or_initialize_by(name: 'Bournemouth').tap do |ch|
+      ch.assign_attributes(active: false, city: 'Bournemouth', email: 'bournemouth@codebar.io', time_zone: 'London')
+      ch.save!(validate: false)
+    end
+    Fabricate(:workshop, chapter: bournemouth, date_and_time: 5.years.ago)
+
+    south_london = Chapter.find_or_initialize_by(name: 'South London').tap do |ch|
+      ch.assign_attributes(active: true, city: 'London', email: 'south-london@codebar.io', time_zone: 'London')
+      ch.save!(validate: false)
+    end
+    Fabricate(:workshop, chapter: south_london, date_and_time: 3.years.ago)
+
+    edinburgh = Chapter.find_or_initialize_by(name: 'Edinburgh').tap do |ch|
+      ch.assign_attributes(active: true, city: 'Edinburgh', email: 'edinburgh@codebar.io', time_zone: 'London')
+      ch.save!(validate: false)
+    end
+    Fabricate(:workshop, chapter: edinburgh, date_and_time: 6.months.ago + 1.week)
+
+    chapters += [bournemouth, south_london, edinburgh]
+
     Rails.logger.info 'Creating workshops...'
 
     Rails.logger.info 'Creating 1000 past workshops...'
