@@ -654,6 +654,7 @@ DEPENDENCIES
   importmap-rails
   irb
   jquery-rails
+  jwt
   launchy
   letter_opener
   listen (~> 3.10)
