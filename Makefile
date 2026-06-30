@@ -26,3 +26,6 @@ serve:
 test:
 	bundle exec rake parallel:setup
 	bundle exec parallel_rspec spec/ -n 3
+
+check:
+	bundle exec rake setup:check
