@@ -78,8 +78,8 @@ class EventsController < ApplicationController
               .joins(:chapter)
               .merge(Chapter.active)
     ]
-    events << Meeting.upcoming.includes(:venue, :organisers).all
-    events << Event.upcoming.includes(:venue, :sponsors, :sponsorships, :permissions, :organisers).all
+    events << Meeting.upcoming.includes(:venue).all
+    events << Event.upcoming.includes(:venue, :sponsors, :sponsorships, :permissions).all
 
     sorted = events.compact.flatten.sort_by(&:date_and_time)
     return [{}, nil] if sorted.empty?
@@ -100,8 +100,8 @@ class EventsController < ApplicationController
               .joins(:chapter)
               .merge(Chapter.active)
     ]
-    events << Meeting.past.includes(:venue, :organisers).all
-    events << Event.past.includes(:venue, :sponsors, :sponsorships, :permissions, :organisers).all
+    events << Meeting.past.includes(:venue).all
+    events << Event.past.includes(:venue, :sponsors, :sponsorships, :permissions).all
 
     sorted = events.compact.flatten.sort_by(&:date_and_time).reverse
     return [{}, nil] if sorted.empty?
