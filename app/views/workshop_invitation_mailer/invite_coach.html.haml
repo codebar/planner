@@ -41,7 +41,7 @@
                 - if @workshop.description.present?
                   %p{ style: 'margin-top: 15px;' }
                     %strong Description:
-                    = @workshop.description
+                    = sanitize(@workshop.description)
               %td{ width: '40%', style: 'vertical-align: top;'}
                 %h4
                   Venue
