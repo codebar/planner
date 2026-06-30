@@ -73,13 +73,13 @@ class EventsController < ApplicationController
 
   def fetch_upcoming_events
     events = [
-      Workshop.includes(:chapter, :sponsors, :host, :permissions)
+      Workshop.includes(:chapter, :sponsors, :host, :permissions, :organisers)
               .upcoming
               .joins(:chapter)
               .merge(Chapter.active)
     ]
-    events << Meeting.upcoming.includes(:venue, :permissions).all
-    events << Event.upcoming.includes(:venue, :sponsors, :sponsorships, :permissions).all
+    events << Meeting.upcoming.includes(:venue).all
+    events << Event.upcoming.includes(:venue, :sponsors, :sponsorships, :permissions, :organisers).all
 
     sorted = events.compact.flatten.sort_by(&:date_and_time)
     return [{}, nil] if sorted.empty?
@@ -95,13 +95,13 @@ class EventsController < ApplicationController
 
   def fetch_past_events
     events = [
-      Workshop.includes(:chapter, :sponsors, :host, :permissions)
+      Workshop.includes(:chapter, :sponsors, :host, :permissions, :organisers)
               .past
               .joins(:chapter)
               .merge(Chapter.active)
     ]
-    events << Meeting.past.includes(:venue, :permissions).all
-    events << Event.past.includes(:venue, :sponsors, :sponsorships, :permissions).all
+    events << Meeting.past.includes(:venue).all
+    events << Event.past.includes(:venue, :sponsors, :sponsorships, :permissions, :organisers).all
 
     sorted = events.compact.flatten.sort_by(&:date_and_time).reverse
     return [{}, nil] if sorted.empty?
