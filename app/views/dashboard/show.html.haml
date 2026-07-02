@@ -71,7 +71,7 @@
         %h2.h3.mb-4= t('homepage.events.upcoming')
         - @upcoming_workshops.each do |date, workshops|
           %h3.h5= date
-          = render workshops
+          = render EventCardComponent.with_collection(workshops, user: current_user)
 
         - if @has_more_events
           = link_to 'Explore all events →', upcoming_events_path, class: 'btn btn-outline-primary mt-3'
