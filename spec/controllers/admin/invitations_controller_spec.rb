@@ -43,4 +43,24 @@ RSpec.describe Admin::InvitationsController, type: :controller do
       expect(invitation.last_overridden_by_id).to be admin.id
     end
   end
+
+  describe "PUT #update with attended param" do
+    let(:workshop) { Fabricate(:workshop, date_and_time: Time.zone.now - 1.day) }
+    let(:invitation) { Fabricate(:workshop_invitation, workshop: workshop, attending: true) }
+    let(:admin) { Fabricate(:chapter_organiser) }
+
+    before do
+      admin.add_role(:organiser, workshop.chapter)
+      login admin
+      request.env["HTTP_REFERER"] = "/admin/workshop/#{workshop.id}"
+    end
+
+    it "renders the attendance row partial via XHR when verifying" do
+      put :update, params: { id: invitation.token, workshop_id: workshop.id, attended: true }, xhr: true
+
+      expect(response).to have_http_status(:success)
+      expect(response.media_type).to eq('text/html')
+      expect(invitation.reload.attended).to be true
+    end
+  end
 end

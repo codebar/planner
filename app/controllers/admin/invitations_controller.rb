@@ -9,8 +9,12 @@ class Admin::InvitationsController < Admin::ApplicationController
     message = update_attendance(attending: params[:attending], attended: params[:attended])
 
     if request.xhr?
-      set_admin_workshop_data
-      render partial: 'admin/workshops/invitation_management'
+      if params[:attended] == 'true'
+        render partial: 'admin/workshop/attendance_row', locals: { invitation: InvitationPresenter.new(@invitation), workshop: @workshop }
+      else
+        set_admin_workshop_data
+        render partial: 'admin/workshops/invitation_management'
+      end
     else
       redirect_back fallback_location: root_path, notice: message
     end
