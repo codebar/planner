@@ -155,7 +155,7 @@ class EventsController < ApplicationController
       (hash[row["event_type"]] ||= []) << row["id"].to_i
     end
 
-    workshops = Workshop.includes(:chapter, :sponsors, :host, :permissions, :organisers)
+    workshops = Workshop.includes(:chapter, :sponsors, :host, :permissions)
                         .where(id: grouped["Workshop"])
                         .to_a.index_by(&:id)
     meetings = Meeting.includes(:venue).where(id: grouped["Meeting"])
