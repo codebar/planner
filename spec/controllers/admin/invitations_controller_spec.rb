@@ -62,5 +62,15 @@ RSpec.describe Admin::InvitationsController, type: :controller do
       expect(response.media_type).to eq('text/html')
       expect(invitation.reload.attended).to be true
     end
+
+    it "renders the attendance row partial via XHR when unverifying" do
+      invitation.update!(attended: true)
+
+      put :update, params: { id: invitation.token, workshop_id: workshop.id, attended: false }, xhr: true
+
+      expect(response).to have_http_status(:success)
+      expect(response.media_type).to eq('text/html')
+      expect(invitation.reload.attended).to be_nil
+    end
   end
 end

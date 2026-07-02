@@ -7,7 +7,10 @@
           data: { disable_with: "<i class='fa fa-spinner spin'></i>" } do
           %i.far.fa-square
       - else
-        %i.far.fa-check-square
+        = link_to admin_workshop_invitation_path(workshop, invitation, attended: false),
+          class: 'verify_attendance', title: 'Unverify attendance', method: :put, remote: true,
+          data: { disable_with: "<i class='fa fa-spinner spin'></i>" } do
+          %i.far.fa-check-square
     - else
       = link_to admin_workshop_invitation_path(workshop, invitation, attending: false), class: 'cancel_attendance float-right', title: 'Cancel RSVP', data: { confirm: "Are you sure you want to remove #{invitation.member.full_name} from the list of attendees?" }, method: :put, remote: true do
         %i.far.fa-minus-square
