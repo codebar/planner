@@ -23,7 +23,7 @@ class WorkshopInvitation < ApplicationRecord
   scope :last_six_months, -> { joins(:workshop).where(workshops: { date_and_time: 6.months.ago...Time.zone.now }) }
   scope :not_reminded, -> { where(reminded_at: nil) }
   scope :on_waiting_list, -> { joins(:waiting_list) }
-  scope :with_notes_and_their_authors, -> { includes(member: { member_notes: :author }) }
+  scope :with_notes_and_their_authors, -> { includes(member: [{ member_notes: :author }, :attendance_warnings]).includes(:overrider) }
 
   after_save :clear_member_cache, if: :saved_change_to_attending?
 
