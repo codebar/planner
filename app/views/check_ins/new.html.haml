@@ -4,6 +4,14 @@
   %h1= @parent.to_s
   %p.lead= humanize_date(@parent.date_and_time)
 
+  - if @parent.respond_to?(:venue) && @parent.venue.present?
+    %p
+      %strong= @parent.venue.name
+  - if @parent.respond_to?(:chapters) && @parent.chapters.any?
+    %p.text-muted Organized by #{@parent.chapters.map(&:name).to_sentence}
+  - elsif @parent.respond_to?(:chapter) && @parent.chapter.present?
+    %p.text-muted Organized by #{@parent.chapter.name}
+
   - if @already_checked_in
     .text-center.py-4
       %h2.text-success ✓ Already checked in!
