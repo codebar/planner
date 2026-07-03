@@ -6,9 +6,9 @@ class CheckInPdf
   end
 
   def render
-    Prawn::Document.new(page_layout: :landscape, page_size: "A4", margin: [40, 20, 20, 20]) do |pdf|
+    Prawn::Document.new(page_layout: :landscape, page_size: "A4", margin: 10) do |pdf|
       draw_logo(pdf)
-      pdf.move_down 12
+      pdf.move_down 24
 
       pdf.text @parent.to_s, size: 28, style: :bold
       pdf.move_down 4
@@ -53,9 +53,9 @@ class CheckInPdf
       svg_content = File.read(svg_path)
       mark_size = 120
       x_start = (pdf.bounds.width - mark_size) / 2.0
-      bottom_y = pdf.cursor - mark_size
-      pdf.svg svg_content, width: mark_size, at: [x_start, bottom_y], enable_web_requests: false
-      pdf.move_down mark_size + 4
+      pdf.bounding_box([x_start, pdf.cursor], width: mark_size, height: mark_size) do
+        pdf.svg svg_content, width: mark_size, at: [0, 0], enable_web_requests: false
+      end
     else
       pdf.text "codebar", size: 24, style: :bold, align: :center
     end
