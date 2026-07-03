@@ -44,7 +44,7 @@ class EventsController < ApplicationController
     ticket = Services::Ticket.new(request, params)
     member = Member.find_by(email: ticket.email)
     invitation = member.invitations.where(event: @event, role: 'Student').first
-    invitation ||= Invitation.create(event: @event, member: member, role: 'Student')
+    invitation ||= Invitation.create(event: @event, member: member, role: 'Student', source: 'email')
 
     invitation.update(attending: true)
     head :ok
@@ -63,7 +63,7 @@ class EventsController < ApplicationController
 
   def find_invitation_and_redirect_to_event(role)
     set_event
-    @invitation = Invitation.find_or_create_by(event: @event, member: current_user, role: role)
+    @invitation = Invitation.find_or_create_by(event: @event, member: current_user, role: role, source: 'email')
     redirect_to event_invitation_path(@event, @invitation)
   end
 

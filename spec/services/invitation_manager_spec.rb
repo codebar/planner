@@ -27,11 +27,11 @@ RSpec.describe InvitationManager do
     it 'can email only students' do
       event = Fabricate(:event, chapters: [chapter], audience: 'Students')
       students.each do |student|
-        expect(Invitation).to receive(:new).with(event: event, member: student, role: 'Student').and_call_original
+        expect(Invitation).to receive(:new).with(event: event, member: student, role: 'Student', source: 'email').and_call_original
       end
 
       coaches.each do |student|
-        expect(Invitation).not_to receive(:new).with(event: event, member: student, role: 'Coach').and_call_original
+        expect(Invitation).not_to receive(:new).with(event: event, member: student, role: 'Coach', source: 'email').and_call_original
       end
 
       manager.send_event_emails(event, chapter)
@@ -41,11 +41,11 @@ RSpec.describe InvitationManager do
       event = Fabricate(:event, chapters: [chapter], audience: 'Coaches')
 
       students.each do |student|
-        expect(Invitation).not_to receive(:new).with(event: event, member: student, role: 'Student').and_call_original
+        expect(Invitation).not_to receive(:new).with(event: event, member: student, role: 'Student', source: 'email').and_call_original
       end
 
       coaches.each do |student|
-        expect(Invitation).to receive(:new).with(event: event, member: student, role: 'Coach').and_call_original
+        expect(Invitation).to receive(:new).with(event: event, member: student, role: 'Coach', source: 'email').and_call_original
       end
 
       manager.send_event_emails(event, chapter)
@@ -55,11 +55,11 @@ RSpec.describe InvitationManager do
       event = Fabricate(:event, chapters: [chapter])
 
       students.each do |student|
-        expect(Invitation).to receive(:new).with(event: event, member: student, role: 'Student').and_call_original
+        expect(Invitation).to receive(:new).with(event: event, member: student, role: 'Student', source: 'email').and_call_original
       end
 
       coaches.each do |student|
-        expect(Invitation).to receive(:new).with(event: event, member: student, role: 'Coach').and_call_original
+        expect(Invitation).to receive(:new).with(event: event, member: student, role: 'Coach', source: 'email').and_call_original
       end
 
       manager.send_event_emails(event, chapter)
@@ -73,14 +73,14 @@ RSpec.describe InvitationManager do
 
       expect(Invitation).not_to(
         receive(:new)
-        .with(event: event, member: first_student, role: 'Student')
+        .with(event: event, member: first_student, role: 'Student', source: 'email')
         .and_call_original
       )
 
       other_students.each do |other_student|
         expect(Invitation).to(
           receive(:new)
-          .with(event: event, member: other_student, role: 'Student')
+          .with(event: event, member: other_student, role: 'Student', source: 'email')
           .and_call_original
         )
       end
@@ -96,14 +96,14 @@ RSpec.describe InvitationManager do
 
       expect(Invitation).not_to(
         receive(:new)
-        .with(event: event, member: first_coach, role: 'Coach')
+        .with(event: event, member: first_coach, role: 'Coach', source: 'email')
         .and_call_original
       )
 
       other_coaches.each do |other_coach|
         expect(Invitation).to(
           receive(:new)
-          .with(event: event, member: other_coach, role: 'Coach')
+          .with(event: event, member: other_coach, role: 'Coach', source: 'email')
           .and_call_original
         )
       end

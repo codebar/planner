@@ -117,7 +117,7 @@ class InvitationManager
 
   def invite_students_to_event(event, chapter)
     chapter_students(chapter).each do |student|
-      invitation = Invitation.new(event: event, member: student, role: 'Student')
+      invitation = Invitation.new(event: event, member: student, role: 'Student', source: 'email')
       next unless invitation.save
 
       EventInvitationMailer.invite_student(event, student, invitation).deliver_now
@@ -128,7 +128,7 @@ class InvitationManager
 
   def invite_coaches_to_event(event, chapter)
     chapter_coaches(chapter).each do |coach|
-      invitation = Invitation.new(event: event, member: coach, role: 'Coach')
+      invitation = Invitation.new(event: event, member: coach, role: 'Coach', source: 'email')
       next unless invitation.save
 
       EventInvitationMailer.invite_coach(event, coach, invitation).deliver_now
@@ -154,7 +154,7 @@ class InvitationManager
   end
 
   def create_invitation(workshop, member, role)
-    invitation = WorkshopInvitation.find_or_initialize_by(workshop: workshop, member: member, role: role)
+    invitation = WorkshopInvitation.find_or_initialize_by(workshop: workshop, member: member, role: role, source: 'email')
     invitation.save! if invitation.new_record?
     invitation
   rescue StandardError => e

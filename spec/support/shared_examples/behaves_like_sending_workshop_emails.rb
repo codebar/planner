@@ -3,7 +3,7 @@ RSpec.shared_examples 'sending workshop emails' do
     Fabricate(:students, chapter: chapter, members: students)
 
     students.each do |student|
-      expect(WorkshopInvitation).to receive(:find_or_initialize_by).with(workshop: workshop, member: student, role: 'Student').and_call_original
+      expect(WorkshopInvitation).to receive(:find_or_initialize_by).with(workshop: workshop, member: student, role: 'Student', source: 'email').and_call_original
     end
 
     expect {
@@ -21,7 +21,7 @@ RSpec.shared_examples 'sending workshop emails' do
     Fabricate(:coaches, chapter: chapter, members: coaches)
 
     coaches.each do |coach|
-      expect(WorkshopInvitation).to receive(:find_or_initialize_by).with(workshop: workshop, member: coach, role: 'Coach').and_call_original
+      expect(WorkshopInvitation).to receive(:find_or_initialize_by).with(workshop: workshop, member: coach, role: 'Coach', source: 'email').and_call_original
     end
 
     expect {
@@ -40,9 +40,9 @@ RSpec.shared_examples 'sending workshop emails' do
     Fabricate(:coaches, chapter: chapter, members: coaches + [banned_coach])
 
     coaches.each do |coach|
-      expect(WorkshopInvitation).to receive(:find_or_initialize_by).with(workshop: workshop, member: coach, role: 'Coach').and_call_original
+      expect(WorkshopInvitation).to receive(:find_or_initialize_by).with(workshop: workshop, member: coach, role: 'Coach', source: 'email').and_call_original
     end
-    expect(WorkshopInvitation).not_to receive(:find_or_initialize_by).with(workshop: workshop, member: banned_coach, role: 'Coach')
+    expect(WorkshopInvitation).not_to receive(:find_or_initialize_by).with(workshop: workshop, member: banned_coach, role: 'Coach', source: 'email')
 
     manager.send(send_email, workshop, 'coaches')
   end

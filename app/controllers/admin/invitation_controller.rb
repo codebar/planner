@@ -5,7 +5,7 @@ class Admin::InvitationController < Admin::ApplicationController
 
   def update
     invitation = Invitation.find_by(token: params[:invitation][:id])
-    invitation.update(attending: true, verified: true, verified_by: current_user)
+    invitation.update(attending: true, verified: true, verified_by: current_user, source: "admin")
 
     EventInvitationMailer.attending(invitation.event, invitation.member, invitation).deliver_now
 
@@ -17,7 +17,7 @@ class Admin::InvitationController < Admin::ApplicationController
 
   def verify
     invitation = Invitation.find_by(token: params[:invitation_id])
-    invitation.update(verified: true, verified_by_id: current_user.id)
+    invitation.update(verified: true, verified_by_id: current_user.id, source: "admin")
 
     EventInvitationMailer.attending(invitation.event, invitation.member, invitation).deliver_now
 

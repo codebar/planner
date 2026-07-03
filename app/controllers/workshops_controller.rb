@@ -46,7 +46,8 @@ class WorkshopsController < ApplicationController
   def find_or_create_invitation(workshop, user, role)
     WorkshopInvitation.find_or_create_by(workshop: workshop,
                                          member: user,
-                                         role: role)
+                                         role: role,
+                                         source: 'email')
   end
 
   def user_attending_or_waitlisted?(workshop, user)
