@@ -2,6 +2,7 @@ class Event < ApplicationRecord
   include DateTimeConcerns
   include Listable
   include Invitable
+  include CheckInCode
   include EventHelper
 
   attr_accessor :local_date, :local_time, :local_end_time

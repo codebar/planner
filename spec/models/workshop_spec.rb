@@ -210,4 +210,17 @@ RSpec.describe Workshop do
       expect(workshop.invitable_yet?).to be false
     end
   end
+
+  describe 'check_in_code' do
+    it 'generates a check_in_code on create' do
+      workshop = Fabricate(:workshop)
+      expect(workshop.check_in_code).to be_present
+      expect(workshop.check_in_code.split('-').length).to eq(3)
+    end
+
+    it 'generates a unique check_in_code' do
+      codes = 3.times.map { Fabricate(:workshop).check_in_code }
+      expect(codes.uniq.length).to eq(3)
+    end
+  end
 end

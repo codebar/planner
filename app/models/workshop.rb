@@ -1,6 +1,7 @@
 class Workshop < ApplicationRecord
   include DateTimeConcerns
   include Invitable
+  include CheckInCode
   include Listable
 
   attr_accessor :local_date, :local_time, :local_end_time, :rsvp_open_local_date, :rsvp_open_local_time
