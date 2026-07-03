@@ -1,0 +1,31 @@
+-# app/views/admin/check_ins/show.html.haml
+
+%h2 Check-in for #{@parent.to_s}
+
+.alert.alert-info
+  %p.mb-0
+    Let attendees mark themselves as attended by scanning the QR code on the PDF.
+    Once scanned, they sign in with GitHub and confirm their role.
+    You'll see their attendance update in the event admin page.
+
+.card.mb-4
+  .card-body
+    %h5.card-title Check-in URL
+    %p.lead.mb-1= @parent.check_in_code
+    %p.text-muted.small= @parent.check_in_url
+    %p.text-muted.small Share this URL with anyone who can't scan the QR code.
+
+.card.mb-4
+  .card-body
+    %h5.card-title How to use
+    %ol
+      %li Download the PDF below.
+      %li Print it or display it on a screen at the venue entrance.
+      %li Attendees scan the QR code with their phone.
+      %li They sign in with GitHub and select their role (Student/Coach).
+      %li They're checked in! You can see attendance on the event/workshop admin page.
+
+= link_to url_for([:admin, @parent, :check_in, format: :pdf]),
+          class: 'btn btn-primary btn-lg' do
+  %i.fas.fa-download
+  Download PDF
