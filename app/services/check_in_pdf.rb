@@ -33,15 +33,14 @@ class CheckInPdf
       png = qrcode.as_png(module_size: 6)
       qr_width = 160
 
-      pdf.bounding_box([(pdf.bounds.width - qr_width) / 2.0, pdf.cursor],
-                       width: qr_width, height: pdf.cursor - 20) do
-        pdf.image StringIO.new(png.to_blob), width: qr_width, position: :center
-        pdf.move_down 4
-        pdf.text "Scan to check in", size: 11, align: :center, color: "999999"
-        pdf.move_down 2
-        pdf.text @parent.check_in_url.sub(%r{^https?://}, ""),
-                 size: 10, align: :center, color: "999999"
-      end
+      pdf.image StringIO.new(png.to_blob),
+                width: qr_width,
+                position: :center
+      pdf.move_down 4
+      pdf.text "Scan to check in", size: 11, align: :center, color: "999999"
+      pdf.move_down 2
+      pdf.text @parent.check_in_url,
+               size: 10, align: :center, color: "999999"
     end.render
   end
 
