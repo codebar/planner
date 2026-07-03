@@ -40,7 +40,8 @@ class FeedbackController < ApplicationController
   end
 
   def set_coaches(workshop)
-    @coaches = workshop.invitations.to_coaches.accepted_or_attended
+    @coaches = workshop.invitations.to_coaches
+      .where('attending IS NULL OR attending = ? OR attended = ?', true, true)
       .order(Arel.sql('attended DESC NULLS LAST'))
       .map(&:member)
   end

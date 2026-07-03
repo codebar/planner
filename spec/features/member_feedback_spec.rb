@@ -57,6 +57,25 @@ RSpec.feature 'member feedback', type: :feature do
       expect(page).to have_select('feedback_coach_id', with_options: [coach_not_yet_verified.full_name])
     end
 
+    scenario 'I can see coaches who were invited but never RSVPed (Issue #2633)' do
+      # This reproduces the real-world scenario where:
+      # 1. Coach is invited to workshop but never responds (attending = nil)
+      # 2. Coach shows up anyway
+      # 3. Organizer hasn't yet marked attendance (attended = nil)
+      # 4. Student receives feedback form and should still be able to select the coach
+      walk_in_coach = Fabricate(:coach)
+      Fabricate(:coach_workshop_invitation,
+        workshop: feedback_request.workshop,
+        member: walk_in_coach,
+        attending: nil,
+        attended: nil)
+
+      visit feedback_path(valid_token)
+
+      # Coach should appear in the list even though they never RSVPed
+      expect(page).to have_select('feedback_coach_id', with_options: [walk_in_coach.full_name])
+    end
+
     scenario 'verified coaches appear before unverified coaches in the list' do
       # Create two coaches: one verified (attended=true), one not yet (attended=nil)
       verified_coach = Fabricate(:coach, name: 'Alice', surname: 'Verified')
