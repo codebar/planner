@@ -20,6 +20,9 @@
   = link_to admin_event_path(@event, format: 'csv'), class: 'btn btn-primary py-3 rounded-0', title: 'CSV for labels' do
     %i.fas.fa-users
     %label.text-white Labels
+  = link_to admin_event_check_in_path(@event), class: 'btn btn-primary py-3' do
+    %i.fas.fa-qrcode
+    %label.text-white Check-in
 
 .container.py-4.py-lg-5
   .row.mb-4
