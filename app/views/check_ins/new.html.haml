@@ -2,9 +2,11 @@
 
 .container.py-4.py-lg-5
   %h1= @parent.to_s
-  %p.lead= @parent.date_and_time.strftime("%A, %B %d, %Y at %H:%M")
-  - if @parent.respond_to?(:ends_at) && @parent.ends_at.present?
-    %p.text-muted until #{@parent.ends_at.strftime("%H:%M")}
+  %p.lead
+    - if @parent.respond_to?(:ends_at) && @parent.ends_at.present?
+      = "#{@parent.date_and_time.strftime('%A, %B %d, %Y from %H:%M')} until #{@parent.ends_at.strftime('%H:%M')}"
+    - else
+      = @parent.date_and_time.strftime('%A, %B %d, %Y at %H:%M')
 
   - if @parent.respond_to?(:venue) && @parent.venue.present?
     %p
