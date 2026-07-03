@@ -90,5 +90,7 @@ Rails.application.configure do
     Bullet.bullet_logger = true
     Bullet.console = true
     Bullet.rails_logger = true
+
+    Rails.application.routes.default_url_options = { host: "localhost", port: 3000 }
   end
 end
