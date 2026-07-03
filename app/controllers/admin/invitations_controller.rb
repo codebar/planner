@@ -39,14 +39,10 @@ class Admin::InvitationsController < Admin::ApplicationController
 
   def update_to_attended
     @invitation.update(attended: true)
-
-    "You have verified #{@invitation.member.full_name}’s attendace."
   end
 
   def update_to_unattended
     @invitation.update(attended: nil)
-
-    "You have unverified #{@invitation.member.full_name}’s attendace."
   end
 
   def update_to_attending
