@@ -6,10 +6,10 @@ class CheckInPdf
   end
 
   def render
-    Prawn::Document.new(page_layout: :landscape, page_size: "A4", margin: 20) do |pdf|
+    Prawn::Document.new(page_layout: :landscape, page_size: "A4", margin: [40, 20, 20, 20]) do |pdf|
       logo_path = Rails.root.join("app/assets/images/check_in/logo.png")
       if File.exist?(logo_path)
-        pdf.image logo_path, width: 250, position: :center
+        pdf.image logo_path, width: 350, position: :center
       else
         pdf.text "codebar", size: 24, style: :bold, align: :center
       end
