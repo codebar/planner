@@ -19,7 +19,7 @@ class CheckInPdf
         venue = @parent.venue
         pdf.text venue.name, size: 14, color: "555555"
         if venue.respond_to?(:address) && venue.address.present?
-          pdf.text venue.address.to_s, size: 12, color: "777777"
+          pdf.text AddressPresenter.new(venue.address).to_s, size: 12, color: "777777"
         end
         pdf.move_down 4
       end
