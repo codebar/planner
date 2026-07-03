@@ -7,12 +7,7 @@ class CheckInPdf
 
   def render
     Prawn::Document.new(page_layout: :landscape, page_size: "A4", margin: [40, 20, 20, 20]) do |pdf|
-      logo_path = Rails.root.join("app/assets/images/check_in/logo.png")
-      if File.exist?(logo_path)
-        pdf.image logo_path, width: 350, position: :center
-      else
-        pdf.text "codebar", size: 24, style: :bold, align: :center
-      end
+      draw_logo(pdf)
       pdf.move_down 12
 
       pdf.text @parent.to_s, size: 28, style: :bold
@@ -50,6 +45,23 @@ class CheckInPdf
   end
 
   private
+
+  def draw_logo(pdf)
+    svg_path = Rails.root.join("app/assets/images/check_in/logo.svg")
+
+    if File.exist?(svg_path)
+      svg_content = File.read(svg_path)
+      mark_size = 60
+      label_size = 28
+
+      pdf.bounding_box([0, pdf.cursor], width: pdf.bounds.width, height: mark_size + 4) do
+        pdf.svg svg_content, width: mark_size, at: [0, mark_size], enable_web_requests: false
+        pdf.draw_text "codebar", at: [mark_size + 10, mark_size - 16], size: label_size
+      end
+    else
+      pdf.text "codebar", size: 24, style: :bold, align: :center
+    end
+  end
 
   def formatted_date
     dt = @parent.date_and_time
