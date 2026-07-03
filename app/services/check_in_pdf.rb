@@ -52,18 +52,10 @@ class CheckInPdf
     if File.exist?(svg_path)
       svg_content = File.read(svg_path)
       mark_size = 120
-      label_size = 48
-      spacing = 16
-      text_width = pdf.width_of("codebar", size: label_size)
-      total_width = mark_size + spacing + text_width
-      x_start = (pdf.bounds.width - total_width) / 2.0
-
-      pdf.bounding_box([x_start, pdf.cursor], width: total_width, height: mark_size + 4) do
-        mark_y = mark_size
-        pdf.svg svg_content, width: mark_size, at: [0, mark_y], enable_web_requests: false
-        text_y = mark_y - (mark_size - label_size) / 2.0 - label_size * 0.25
-        pdf.draw_text "codebar", at: [mark_size + spacing, text_y], size: label_size
-      end
+      x_start = (pdf.bounds.width - mark_size) / 2.0
+      bottom_y = pdf.cursor - mark_size
+      pdf.svg svg_content, width: mark_size, at: [x_start, bottom_y], enable_web_requests: false
+      pdf.move_down mark_size + 4
     else
       pdf.text "codebar", size: 24, style: :bold, align: :center
     end
