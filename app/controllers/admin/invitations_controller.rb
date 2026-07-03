@@ -9,8 +9,12 @@ class Admin::InvitationsController < Admin::ApplicationController
     message = update_attendance(attending: params[:attending], attended: params[:attended])
 
     if request.xhr?
-      set_admin_workshop_data
-      render partial: 'admin/workshops/invitation_management'
+      if params[:attended].present?
+        render partial: 'admin/workshop/attendance_row', locals: { invitation: InvitationPresenter.new(@invitation), workshop: @workshop }
+      else
+        set_admin_workshop_data
+        render partial: 'admin/workshops/invitation_management'
+      end
     else
       redirect_back fallback_location: root_path, notice: message
     end
@@ -19,7 +23,8 @@ class Admin::InvitationsController < Admin::ApplicationController
   private
 
   def update_attendance(attending:, attended:)
-    return update_to_attended if attended
+    return update_to_attended if attended.to_s == 'true'
+    return update_to_unattended if attended.to_s == 'false'
 
     result = attending.eql?('true') ? update_to_attending : update_to_not_attending
     message, error = result.values_at(:message, :error)
@@ -34,8 +39,10 @@ class Admin::InvitationsController < Admin::ApplicationController
 
   def update_to_attended
     @invitation.update(attended: true)
+  end
 
-    "You have verified #{@invitation.member.full_name}’s attendace."
+  def update_to_unattended
+    @invitation.update(attended: nil)
   end
 
   def update_to_attending
