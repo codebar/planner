@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_06_21_050948) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_03_083051) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -201,6 +201,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_21_050948) do
   create_table "events", id: :serial, force: :cascade do |t|
     t.boolean "announce_only"
     t.string "audience"
+    t.string "check_in_code"
     t.text "coach_description"
     t.string "coach_questionnaire"
     t.integer "coach_spaces"
@@ -228,6 +229,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_21_050948) do
     t.string "url"
     t.integer "venue_id"
     t.boolean "virtual", default: false, null: false
+    t.index ["check_in_code"], name: "index_events_on_check_in_code", unique: true
     t.index ["date_and_time"], name: "index_events_on_date_and_time"
     t.index ["slug"], name: "index_events_on_slug", unique: true
     t.index ["venue_id"], name: "index_events_on_venue_id"
@@ -339,6 +341,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_21_050948) do
     t.integer "member_id"
     t.text "note"
     t.string "role"
+    t.string "source"
     t.string "token"
     t.datetime "updated_at", precision: nil
     t.boolean "verified"
@@ -483,6 +486,17 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_21_050948) do
     t.datetime "updated_at", precision: nil
   end
 
+  create_table "solid_cache_entries", force: :cascade do |t|
+    t.integer "byte_size", null: false
+    t.datetime "created_at", null: false
+    t.binary "key", null: false
+    t.bigint "key_hash", null: false
+    t.binary "value", null: false
+    t.index ["byte_size"], name: "index_solid_cache_entries_on_byte_size"
+    t.index ["key_hash", "byte_size"], name: "index_solid_cache_entries_on_key_hash_and_byte_size"
+    t.index ["key_hash"], name: "index_solid_cache_entries_on_key_hash", unique: true
+  end
+
   create_table "sponsors", id: :serial, force: :cascade do |t|
     t.text "accessibility_info"
     t.string "avatar"
@@ -581,6 +595,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_21_050948) do
     t.datetime "reminded_at", precision: nil
     t.string "role"
     t.datetime "rsvp_time", precision: nil
+    t.string "source"
     t.string "token"
     t.text "tutorial"
     t.datetime "updated_at", precision: nil
@@ -605,6 +620,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_21_050948) do
 
   create_table "workshops", id: :serial, force: :cascade do |t|
     t.integer "chapter_id"
+    t.string "check_in_code"
     t.integer "coach_spaces", default: 0
     t.datetime "created_at", precision: nil
     t.datetime "date_and_time", precision: nil
@@ -621,6 +637,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_21_050948) do
     t.datetime "updated_at", precision: nil
     t.boolean "virtual", default: false
     t.index ["chapter_id"], name: "index_workshops_on_chapter_id"
+    t.index ["check_in_code"], name: "index_workshops_on_check_in_code", unique: true
     t.index ["date_and_time"], name: "index_workshops_on_date_and_time"
   end
 
