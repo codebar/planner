@@ -6,7 +6,7 @@ class CheckInPdf
   end
 
   def render
-    Prawn::Document.new(page_layout: :landscape, page_size: "A4", margin: 10) do |pdf|
+    Prawn::Document.new(page_layout: :landscape, page_size: "A4", margin: 0) do |pdf|
       draw_logo(pdf)
       pdf.move_down 24
 
@@ -51,7 +51,7 @@ class CheckInPdf
 
     if File.exist?(svg_path)
       svg_content = File.read(svg_path)
-      mark_size = 120
+      mark_size = 240
       x_start = (pdf.bounds.width - mark_size) / 2.0
       pdf.bounding_box([x_start, pdf.cursor], width: mark_size, height: mark_size) do
         pdf.svg svg_content, width: mark_size, at: [0, 0], enable_web_requests: false
