@@ -126,6 +126,8 @@ end
 
 gem 'rollbar'
 gem 'scout_apm'
+gem 'rqrcode'
+gem 'prawn'
 
 gem 'carrierwave-aws', '~> 1.6'
 gem 'sitemap_generator', '~> 7.0'

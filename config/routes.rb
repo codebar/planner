@@ -162,6 +162,14 @@ Rails.application.routes.draw do
         get 'results'
       end
     end
+
+    resources :events, only: [] do
+      resource :check_in, only: [:show], controller: "check_ins"
+    end
+
+    resources :workshops, only: [] do
+      resource :check_in, only: [:show], controller: "check_ins"
+    end
   end
 
   get   '/login', to: 'auth_services#new'
@@ -173,6 +181,14 @@ Rails.application.routes.draw do
   resources :sponsors, only: [:index]
   resources :donations, only: %i[new]
   resources :payments, only: %i[new create]
+
+  # Public check-in routes
+  get  "check-in/e/:code" => "check_ins#new", as: :check_in_e
+  post "check-in/e/:code" => "check_ins#create"
+  get  "check-in/e/:code/confirm" => "check_ins#confirm", as: :check_in_e_confirm
+  get  "check-in/w/:code" => "check_ins#new", as: :check_in_w
+  post "check-in/w/:code" => "check_ins#create"
+  get  "check-in/w/:code/confirm" => "check_ins#confirm", as: :check_in_w_confirm
 
   get 'cookie-policy' => 'pages#show', id: 'cookie-policy'
   get 'privacy-policy' => 'pages#show', id: 'privacy-policy'
