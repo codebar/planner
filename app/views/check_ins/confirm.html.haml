@@ -4,5 +4,5 @@
   .text-center.py-5
     %h1.text-success ✓ You're checked in!
     %p.lead As a #{@invitation.role} at #{@parent.to_s}
-    %p.text-muted= humanize_date(@parent.date_and_time)
+    %p.text-muted= @parent.date_and_time.strftime("%A, %B %d, %Y at %H:%M")
     = link_to "Back to Dashboard", dashboard_path, class: "btn btn-primary mt-4"
