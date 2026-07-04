@@ -154,7 +154,7 @@ namespace :setup do
       
         ActiveRecord::Base.connection.execute('SELECT 1')
         ok('Database connection', 'can connect to PostgreSQL')
-      rescue StandardError => e
+    rescue StandardError => e
         error('Database connection', "cannot connect (#{e.class}: #{e.message})",
               'Check PostgreSQL is running and credentials in config/database.yml are correct.')
       
@@ -169,7 +169,7 @@ namespace :setup do
           error('Development database', 'planner_development does not exist',
                 'Run: bundle exec rake db:create')
         end
-      rescue StandardError => e
+    rescue StandardError => e
         error('Development database', "cannot check (#{e.class}: #{e.message})",
               'Run: bundle exec rake db:create')
       
@@ -188,7 +188,7 @@ namespace :setup do
                   'Run: bundle exec rake db:migrate')
           end
         end
-      rescue StandardError => e
+    rescue StandardError => e
         error('Database migrations', "cannot check (#{e.class}: #{e.message})",
               'Run: bundle exec rake db:migrate')
       
