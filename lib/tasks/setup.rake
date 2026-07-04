@@ -9,18 +9,18 @@ namespace :setup do
   end
 
   class SetupChecker
-    CHECKS = [
-      :check_ruby_version,
-      :check_bundler,
-      :check_mise,
-      :check_postgresql,
-      :check_imagemagick,
-      :check_github_credentials,
-      :check_bundle,
-      :check_database_connection,
-      :check_database_exists,
-      :check_database_migrated,
-      :check_test_database
+    CHECKS = %i[
+      check_ruby_version
+      check_bundler
+      check_mise
+      check_postgresql
+      check_imagemagick
+      check_github_credentials
+      check_bundle
+      check_database_connection
+      check_database_exists
+      check_database_migrated
+      check_test_database
     ].freeze
 
     def initialize
