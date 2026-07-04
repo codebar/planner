@@ -216,7 +216,6 @@ namespace :setup do
       puts
       errors = @results.count { |r| r[:status] == :error }
       warnings = @results.count { |r| r[:status] == :warn }
-      ok_count = @results.count { |r| r[:status] == :ok }
 
       if errors.zero? && warnings.zero?
         puts "✅ All checks passed! Your environment is ready for development."
