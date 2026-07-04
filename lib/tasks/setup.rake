@@ -151,17 +151,17 @@ namespace :setup do
     end
 
     def check_database_connection
-      begin
+      
         ActiveRecord::Base.connection.execute('SELECT 1')
         ok('Database connection', 'can connect to PostgreSQL')
       rescue StandardError => e
         error('Database connection', "cannot connect (#{e.class}: #{e.message})",
               'Check PostgreSQL is running and credentials in config/database.yml are correct.')
-      end
+      
     end
 
     def check_database_exists
-      begin
+      
         ActiveRecord::Base.connection.execute('SELECT 1')
         if ActiveRecord::Base.connection.execute("SELECT 1 FROM pg_database WHERE datname = 'planner_development'").any?
           ok('Development database', 'planner_development exists')
@@ -172,11 +172,11 @@ namespace :setup do
       rescue StandardError => e
         error('Development database', "cannot check (#{e.class}: #{e.message})",
               'Run: bundle exec rake db:create')
-      end
+      
     end
 
     def check_database_migrated
-      begin
+      
         if ActiveRecord::Base.connection.execute("SELECT 1 FROM schema_migrations LIMIT 1")
           latest = ActiveRecord::Base.connection.execute(
             "SELECT version FROM schema_migrations ORDER BY version DESC LIMIT 1"
@@ -191,7 +191,7 @@ namespace :setup do
       rescue StandardError => e
         error('Database migrations', "cannot check (#{e.class}: #{e.message})",
               'Run: bundle exec rake db:migrate')
-      end
+      
     end
 
     def check_test_database
