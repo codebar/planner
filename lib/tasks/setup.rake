@@ -177,9 +177,9 @@ namespace :setup do
 
     def check_database_migrated
       
-        if ActiveRecord::Base.connection.execute("SELECT 1 FROM schema_migrations LIMIT 1")
+        if ActiveRecord::Base.connection.execute('SELECT 1 FROM schema_migrations LIMIT 1')
           latest = ActiveRecord::Base.connection.execute(
-            "SELECT version FROM schema_migrations ORDER BY version DESC LIMIT 1"
+            'SELECT version FROM schema_migrations ORDER BY version DESC LIMIT 1'
           ).first
           if latest
             ok('Database migrations', "up to date (latest: #{latest['version']})")
@@ -218,12 +218,12 @@ namespace :setup do
       warnings = @results.count { |r| r[:status] == :warn }
 
       if errors.zero? && warnings.zero?
-        puts "✅ All checks passed! Your environment is ready for development."
+        puts '✅ All checks passed! Your environment is ready for development.'
         puts
-        puts "Next steps:"
-        puts "  bundle exec rails server       # Start the app"
-        puts "  bundle exec rspec              # Run the test suite"
-        puts "  bundle exec rake db:seed       # (Optional) Add sample data"
+        puts 'Next steps:'
+        puts '  bundle exec rails server       # Start the app'
+        puts '  bundle exec rspec              # Run the test suite'
+        puts '  bundle exec rake db:seed       # (Optional) Add sample data'
       elsif errors.zero?
         puts "⚠️  #{warnings} warning(s). You can probably start developing, but review the warnings above."
       else
