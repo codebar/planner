@@ -27,6 +27,7 @@ class WorkshopInvitationController < ApplicationController
     user = current_user || @invitation.member
     workshop = @invitation.workshop
     return back_with_message(t('messages.already_rsvped')) if @invitation.attending?
+    return back_with_message(t('messages.invitations.closed')) unless workshop.rsvp_available?
 
     @invitation.assign_attributes(invitation_params.merge!(attending: true, rsvp_time: Time.zone.now))
     return back_with_message(@invitation.errors.full_messages) unless @invitation.valid?

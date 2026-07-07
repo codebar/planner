@@ -22,6 +22,18 @@ RSpec.feature 'Accepting a workshop invitation', type: :feature do
 
     it_behaves_like 'invitation route'
 
+    context 'when RSVPs are closed' do
+      scenario 'cannot accept an invitation after the close time' do
+        invitation.workshop.update(rsvp_closes_at: 1.hour.ago)
+
+        visit invitation_route
+        click_on 'Attend'
+
+        expect(page).to have_content('RSVPs for this workshop are now closed.')
+        expect(invitation.reload.attending).not_to be(true)
+      end
+    end
+
     context 'amend invitation details' do
       context 'a student' do
         scenario 'cannot accept an invitation  without a tutorial' do

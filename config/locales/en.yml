@@ -195,6 +195,7 @@ en:
       spot_confirmed: "Your spot has been confirmed for %{event}! We look forward to seeing you there."
       spot_not_confirmed: "Your spot has not yet been confirmed. We will verify your attendance after you complete the questionnaire."
       updated_details: "Invitation details successfully updated."
+      closed: "RSVPs for this workshop are now closed."
     invalid_format: "The requested format is invalid: %{invalid_format}"
   notifications:
     provider_already_connected: "You are already signed in!"
