@@ -3,7 +3,8 @@ class Workshop < ApplicationRecord
   include Invitable
   include Listable
 
-  attr_accessor :local_date, :local_time, :local_end_time, :rsvp_open_local_date, :rsvp_open_local_time
+  attr_accessor :local_date, :local_time, :local_end_time, :rsvp_open_local_date, :rsvp_open_local_time,
+              :rsvp_close_local_date, :rsvp_close_local_time
 
   resourcify :permissions, role_cname: 'Permission', role_table_name: :permission
 
@@ -34,6 +35,8 @@ class Workshop < ApplicationRecord
 
   before_validation :set_date_and_time, :set_end_date_and_time, if: proc { |model| model.chapter_id.present? }
   before_validation :set_opens_at
+  before_validation :set_closes_at
+  validate :rsvp_close_before_workshop_start
 
   def host
     workshop_host&.sponsor
@@ -78,7 +81,7 @@ class Workshop < ApplicationRecord
   end
 
   def available_for_rsvp?
-    invitable_yet? && date_and_time.future?
+    invitable_yet? && rsvp_available?
   end
 
   # Is this person attending this event?
@@ -117,10 +120,27 @@ class Workshop < ApplicationRecord
     super.in_time_zone(time_zone)
   end
 
+  def rsvp_closes_at
+    return nil unless super
+
+    super.in_time_zone(time_zone)
+  end
+
   private
 
   def set_opens_at
     new_opens_at = datetime_from_fields(rsvp_open_local_date, rsvp_open_local_time)
     self.rsvp_opens_at = new_opens_at if new_opens_at
+  end
+
+  def set_closes_at
+    new_closes_at = datetime_from_fields(rsvp_close_local_date, rsvp_close_local_time)
+    self.rsvp_closes_at = new_closes_at if new_closes_at
+  end
+
+  def rsvp_close_before_workshop_start
+    return unless rsvp_closes_at && date_and_time
+    return if rsvp_closes_at < date_and_time
+    errors.add(:rsvp_close_local_date, "must be before the workshop start time")
   end
 end
