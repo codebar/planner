@@ -9,18 +9,18 @@ namespace :setup do
   end
 
   class SetupChecker
-    CHECKS = [
-      :check_ruby_version,
-      :check_bundler,
-      :check_mise,
-      :check_postgresql,
-      :check_imagemagick,
-      :check_github_credentials,
-      :check_bundle,
-      :check_database_connection,
-      :check_database_exists,
-      :check_database_migrated,
-      :check_test_database
+    CHECKS = %i[
+      check_ruby_version
+      check_bundler
+      check_mise
+      check_postgresql
+      check_imagemagick
+      check_github_credentials
+      check_bundle
+      check_database_connection
+      check_database_exists
+      check_database_migrated
+      check_test_database
     ].freeze
 
     def initialize
@@ -151,17 +151,14 @@ namespace :setup do
     end
 
     def check_database_connection
-      begin
         ActiveRecord::Base.connection.execute('SELECT 1')
         ok('Database connection', 'can connect to PostgreSQL')
-      rescue StandardError => e
+    rescue StandardError => e
         error('Database connection', "cannot connect (#{e.class}: #{e.message})",
               'Check PostgreSQL is running and credentials in config/database.yml are correct.')
-      end
     end
 
     def check_database_exists
-      begin
         ActiveRecord::Base.connection.execute('SELECT 1')
         if ActiveRecord::Base.connection.execute("SELECT 1 FROM pg_database WHERE datname = 'planner_development'").any?
           ok('Development database', 'planner_development exists')
@@ -169,17 +166,15 @@ namespace :setup do
           error('Development database', 'planner_development does not exist',
                 'Run: bundle exec rake db:create')
         end
-      rescue StandardError => e
+    rescue StandardError => e
         error('Development database', "cannot check (#{e.class}: #{e.message})",
               'Run: bundle exec rake db:create')
-      end
     end
 
     def check_database_migrated
-      begin
-        if ActiveRecord::Base.connection.execute("SELECT 1 FROM schema_migrations LIMIT 1")
+        if ActiveRecord::Base.connection.execute('SELECT 1 FROM schema_migrations LIMIT 1')
           latest = ActiveRecord::Base.connection.execute(
-            "SELECT version FROM schema_migrations ORDER BY version DESC LIMIT 1"
+            'SELECT version FROM schema_migrations ORDER BY version DESC LIMIT 1'
           ).first
           if latest
             ok('Database migrations', "up to date (latest: #{latest['version']})")
@@ -188,10 +183,9 @@ namespace :setup do
                   'Run: bundle exec rake db:migrate')
           end
         end
-      rescue StandardError => e
+    rescue StandardError => e
         error('Database migrations', "cannot check (#{e.class}: #{e.message})",
               'Run: bundle exec rake db:migrate')
-      end
     end
 
     def check_test_database
@@ -216,15 +210,14 @@ namespace :setup do
       puts
       errors = @results.count { |r| r[:status] == :error }
       warnings = @results.count { |r| r[:status] == :warn }
-      ok_count = @results.count { |r| r[:status] == :ok }
 
       if errors.zero? && warnings.zero?
-        puts "✅ All checks passed! Your environment is ready for development."
+        puts '✅ All checks passed! Your environment is ready for development.'
         puts
-        puts "Next steps:"
-        puts "  bundle exec rails server       # Start the app"
-        puts "  bundle exec rspec              # Run the test suite"
-        puts "  bundle exec rake db:seed       # (Optional) Add sample data"
+        puts 'Next steps:'
+        puts '  bundle exec rails server       # Start the app'
+        puts '  bundle exec rspec              # Run the test suite'
+        puts '  bundle exec rake db:seed       # (Optional) Add sample data'
       elsif errors.zero?
         puts "⚠️  #{warnings} warning(s). You can probably start developing, but review the warnings above."
       else
