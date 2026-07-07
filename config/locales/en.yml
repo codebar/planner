@@ -665,7 +665,7 @@ en:
         failure: "Workshop cannot be deleted. This is because it has invitees and/or workshop information is on the website for a while long enough that it cannot be deleted."
       form:
         virtual_info: To create a virtual workshop you must check the box and fill in the below fields. The slack channel will be available on the invitation page for anyone who successfuly RSVPs.
-        rsvp_details: Fill out these fields if you want RSVPs to open automatically at a future time. Leave blank if you'll handle it manually later.
+        rsvp_details: Set a date and time (in the chapter's timezone) for RSVPs to open and close automatically. Leave blank to handle manually.
       not_invitable: "The workshop is not invitable"
       virtual:
         details:

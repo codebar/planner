@@ -20,6 +20,10 @@
   .col-12
     .card.bg-light.border-info.mb-3
       .card-body
-        %p= t('admin.workshop.form.rsvp_details')
-        = f.input :rsvp_open_local_date, as: :string, input_html: { data: { value: @workshop.rsvp_opens_at.try(:strftime, '%d/%m/%Y') } }
-        = f.input :rsvp_open_local_time, as: :string, input_html: { data: { value: @workshop.rsvp_opens_at.try(:time).try(:strftime, '%H:%M') } }
+        %h6.card-title RSVP Timing
+        %p.small.text-muted= t('admin.workshop.form.rsvp_details')
+        .row
+          .col-12.col-md-6
+            = f.input :rsvp_open_local_date, label: 'Open date', as: :string, input_html: { data: { value: @workshop.rsvp_opens_at.try(:strftime, '%d/%m/%Y') } }
+          .col-12.col-md-6
+            = f.input :rsvp_open_local_time, label: 'Open time', as: :string, input_html: { data: { value: @workshop.rsvp_opens_at.try(:time).try(:strftime, '%H:%M') } }
