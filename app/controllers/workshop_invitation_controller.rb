@@ -52,7 +52,9 @@ class WorkshopInvitationController < ApplicationController
   # Inline reject from InvitationControllerConcerns
   def reject
     @workshop = WorkshopPresenter.decorate(@invitation.workshop)
-    if @invitation.workshop.date_and_time - 3.5.hours >= Time.zone.now
+    closes_at = @invitation.workshop.rsvp_closes_at
+    rsvp_deadline = [@invitation.workshop.date_and_time - 3.5.hours, closes_at].compact.min
+    if rsvp_deadline >= Time.zone.now
       if @invitation.attending.eql? false
         redirect_back(fallback_location: invitation_path(@invitation),
                       notice: t('messages.not_attending_already'))
