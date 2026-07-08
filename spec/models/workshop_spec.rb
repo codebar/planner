@@ -46,6 +46,75 @@ RSpec.describe Workshop do
       it { is_expected.to validate_numericality_of(:coach_spaces).is_greater_than(0) }
     end
 
+    context '#rsvp_date_time_fields_must_be_paired' do
+      shared_examples_for 'date_time_fields_must_be_paired' do |prefix|
+        let(:date_field) { :"#{prefix}_local_date" }
+        let(:time_field) { :"#{prefix}_local_time" }
+
+        context 'when both fields are blank' do
+          before do
+            workshop.public_send(:"#{prefix}_local_date=", nil)
+            workshop.public_send(:"#{prefix}_local_time=", nil)
+          end
+
+          it 'is valid' do
+            workshop.valid?
+            expect(workshop.errors[date_field]).to be_empty
+            expect(workshop.errors[time_field]).to be_empty
+          end
+        end
+
+        context 'when both fields are present' do
+          before do
+            workshop.public_send(:"#{prefix}_local_date=", '12/06/2015')
+            workshop.public_send(:"#{prefix}_local_time=", '18:30')
+          end
+
+          it 'is valid' do
+            workshop.valid?
+            expect(workshop.errors[date_field]).to be_empty
+            expect(workshop.errors[time_field]).to be_empty
+          end
+        end
+
+        context 'when only date is missing' do
+          before do
+            workshop.public_send(:"#{prefix}_local_date=", nil)
+            workshop.public_send(:"#{prefix}_local_time=", '18:30')
+          end
+
+          it 'is invalid' do
+            workshop.valid?
+            expect(workshop.errors[date_field]).to include(
+              "must be provided together with #{prefix.humanize.downcase} time"
+            )
+          end
+        end
+
+        context 'when only time is missing' do
+          before do
+            workshop.public_send(:"#{prefix}_local_date=", '12/06/2015')
+            workshop.public_send(:"#{prefix}_local_time=", nil)
+          end
+
+          it 'is invalid' do
+            workshop.valid?
+            expect(workshop.errors[time_field]).to include(
+              "must be provided together with #{prefix.humanize.downcase} date"
+            )
+          end
+        end
+      end
+
+      context 'with rsvp_open' do
+        it_should_behave_like 'date_time_fields_must_be_paired', 'rsvp_open'
+      end
+
+      context 'with rsvp_close' do
+        it_should_behave_like 'date_time_fields_must_be_paired', 'rsvp_close'
+      end
+    end
+
     context '#rsvp_closes_at' do
       it 'must be before the workshop start time' do
         workshop.date_and_time = Time.zone.now + 1.hour

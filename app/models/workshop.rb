@@ -36,6 +36,7 @@ class Workshop < ApplicationRecord
   before_validation :set_date_and_time, :set_end_date_and_time, if: proc { |model| model.chapter_id.present? }
   before_validation :set_opens_at
   before_validation :set_closes_at
+  validate :rsvp_date_time_fields_must_be_paired
   validate :rsvp_close_before_workshop_start
 
   def host
@@ -136,6 +137,24 @@ class Workshop < ApplicationRecord
   def set_closes_at
     new_closes_at = datetime_from_fields(rsvp_close_local_date, rsvp_close_local_time)
     self.rsvp_closes_at = new_closes_at if new_closes_at
+  end
+
+  def rsvp_date_time_fields_must_be_paired
+    %i[rsvp_open rsvp_close].each do |prefix|
+      date_field = :"#{prefix}_local_date"
+      time_field = :"#{prefix}_local_time"
+      date_val = send(date_field)
+      time_val = send(time_field)
+
+      next if date_val.blank? && time_val.blank?
+      next if date_val.present? && time_val.present?
+
+      if date_val.blank?
+        errors.add(date_field, "must be provided together with #{prefix.to_s.humanize.downcase} time")
+      else
+        errors.add(time_field, "must be provided together with #{prefix.to_s.humanize.downcase} date")
+      end
+    end
   end
 
   def rsvp_close_before_workshop_start
