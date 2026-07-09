@@ -15,6 +15,14 @@ RSpec.describe Admin::WorkshopsController, type: :controller do
     end
   end
 
+  describe 'POST #create' do
+    it 'permits rsvp_close_local_date and rsvp_close_local_time' do
+      expect do
+        post :create, params: { workshop: { rsvp_close_local_date: '01/12/2020', rsvp_close_local_time: '15:00', host: '' } }
+      end.not_to raise_error
+    end
+  end
+
   describe 'DELETE #destroy' do
     context 'workshop invitations have been sent' do
       before do

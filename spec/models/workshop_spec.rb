@@ -45,6 +45,97 @@ RSpec.describe Workshop do
       it { is_expected.to validate_numericality_of(:student_spaces).is_greater_than(0) }
       it { is_expected.to validate_numericality_of(:coach_spaces).is_greater_than(0) }
     end
+
+    context '#rsvp_date_time_fields_must_be_paired' do
+      shared_examples_for 'date_time_fields_must_be_paired' do |prefix|
+        let(:date_field) { :"#{prefix}_local_date" }
+        let(:time_field) { :"#{prefix}_local_time" }
+
+        context 'when both fields are blank' do
+          before do
+            workshop.public_send(:"#{prefix}_local_date=", nil)
+            workshop.public_send(:"#{prefix}_local_time=", nil)
+          end
+
+          it 'is valid' do
+            workshop.valid?
+            expect(workshop.errors[date_field]).to be_empty
+            expect(workshop.errors[time_field]).to be_empty
+          end
+        end
+
+        context 'when both fields are present' do
+          before do
+            workshop.public_send(:"#{prefix}_local_date=", '12/06/2015')
+            workshop.public_send(:"#{prefix}_local_time=", '18:30')
+          end
+
+          it 'is valid' do
+            workshop.valid?
+            expect(workshop.errors[date_field]).to be_empty
+            expect(workshop.errors[time_field]).to be_empty
+          end
+        end
+
+        context 'when only date is missing' do
+          before do
+            workshop.public_send(:"#{prefix}_local_date=", nil)
+            workshop.public_send(:"#{prefix}_local_time=", '18:30')
+          end
+
+          it 'is invalid' do
+            workshop.valid?
+            expect(workshop.errors[date_field]).to include(
+              "must be provided together with #{prefix.humanize.downcase} time"
+            )
+          end
+        end
+
+        context 'when only time is missing' do
+          before do
+            workshop.public_send(:"#{prefix}_local_date=", '12/06/2015')
+            workshop.public_send(:"#{prefix}_local_time=", nil)
+          end
+
+          it 'is invalid' do
+            workshop.valid?
+            expect(workshop.errors[time_field]).to include(
+              "must be provided together with #{prefix.humanize.downcase} date"
+            )
+          end
+        end
+      end
+
+      context 'with rsvp_open' do
+        it_should_behave_like 'date_time_fields_must_be_paired', 'rsvp_open'
+      end
+
+      context 'with rsvp_close' do
+        it_should_behave_like 'date_time_fields_must_be_paired', 'rsvp_close'
+      end
+    end
+
+    context '#rsvp_closes_at' do
+      it 'must be before the workshop start time' do
+        workshop.date_and_time = Time.zone.now + 1.hour
+        workshop.rsvp_closes_at = Time.zone.now + 2.hours
+
+        workshop.valid?
+        expect(workshop.errors[:rsvp_close_local_date]).to include("must be before the workshop start time")
+      end
+
+      it 'is valid when close time is before workshop start' do
+        workshop.date_and_time = Time.zone.now + 2.hours
+        workshop.rsvp_closes_at = Time.zone.now + 1.hour
+
+        expect(workshop.valid?).to be(true)
+      end
+
+      it 'is valid when no close time is set' do
+        workshop.rsvp_closes_at = nil
+        expect(workshop.valid?).to be(true)
+      end
+    end
   end
 
   context 'time zone fields' do
@@ -85,6 +176,24 @@ RSpec.describe Workshop do
 
         expect(workshop.rsvp_opens_at).to eq(pacific_time)
         expect(workshop.rsvp_opens_at.zone).to eq('PDT')
+      end
+    end
+
+    context 'rsvp_closes_at' do
+      it 'saves the local time in UTC' do
+        workshop.update!(
+          rsvp_close_local_date: '12/06/2015',
+          rsvp_close_local_time: '18:30'
+        )
+
+        expect(workshop.read_attribute(:rsvp_closes_at)).to eq(utc_time)
+      end
+
+      it 'retrieves the local time from the saved UTC value' do
+        workshop.update_attribute(:rsvp_closes_at, utc_time)
+
+        expect(workshop.rsvp_closes_at).to eq(pacific_time)
+        expect(workshop.rsvp_closes_at.zone).to eq('PDT')
       end
     end
   end

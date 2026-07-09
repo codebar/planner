@@ -30,12 +30,12 @@
 $(function() {
   $("body").removeClass("no-js");
 
-  $('#event_local_date, #meeting_local_date, #workshop_local_date, #workshop_rsvp_open_local_date').pickadate({
+  $('#event_local_date, #meeting_local_date, #workshop_local_date, #workshop_rsvp_open_local_date, #workshop_rsvp_close_local_date').pickadate({
     format: 'dd/mm/yyyy'
   });
   $('#announcement_expires_at, #ban_expires_at').pickadate();
   $(
-    "#meeting_local_time, #meeting_local_end_time, #event_local_time, #event_local_end_time, #workshop_local_time, #workshop_local_end_time, #workshop_rsvp_open_local_time"
+    "#meeting_local_time, #meeting_local_end_time, #event_local_time, #event_local_end_time, #workshop_local_time, #workshop_local_end_time, #workshop_rsvp_open_local_time, #workshop_rsvp_close_local_time"
   ).pickatime({
     format: "HH:i",
   });
