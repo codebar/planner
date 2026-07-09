@@ -143,8 +143,8 @@ class Workshop < ApplicationRecord
     %i[rsvp_open rsvp_close].each do |prefix|
       date_field = :"#{prefix}_local_date"
       time_field = :"#{prefix}_local_time"
-      date_val = send(date_field)
-      time_val = send(time_field)
+      date_val = public_send(date_field)
+      time_val = public_send(time_field)
 
       next if date_val.blank? && time_val.blank?
       next if date_val.present? && time_val.present?
