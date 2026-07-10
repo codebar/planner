@@ -8,17 +8,31 @@ RSpec.describe SponsorsSearch do
     end
   end
 
-  describe 'when search is called' do
-    it 'searches by_name if a name is specified' do
-      expect(Sponsor).to receive(:by_name)
+  describe '#call' do
+    it 'returns all sponsors when no filter is specified' do
+      Fabricate.times(3, :sponsor)
 
-      described_class.new(name: 'Acme', chapter: 'London').call
+      results = described_class.new(name: nil, chapter: nil).call
+
+      expect(results.size).to eq(3)
+      expect(results).to all(be_a(Sponsor))
     end
 
-    it 'returns all sponsors when no filter is specified' do
-      expect(Sponsor).to_not receive(:by_name)
+    it 'filters by name' do
+      matching = Fabricate(:sponsor, name: 'Zebra Technologies')
+      Fabricate(:sponsor, name: 'Apple Inc')
 
-      described_class.new(name: nil, chapter: nil).call
+      results = described_class.new(name: 'Zebra', chapter: nil).call
+
+      expect(results).to contain_exactly(matching)
+    end
+
+    it 'returns an empty relation when nothing matches' do
+      Fabricate(:sponsor, name: 'Apple Inc')
+
+      results = described_class.new(name: 'Nonexistent', chapter: nil).call
+
+      expect(results).to be_empty
     end
   end
 end
