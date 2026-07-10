@@ -25,8 +25,6 @@ class WorkshopInvitation < ApplicationRecord
   scope :on_waiting_list, -> { joins(:waiting_list) }
   scope :with_notes_and_their_authors, -> { includes(member: [{ member_notes: :author }, :attendance_warnings]).includes(:overrider) }
 
-  after_save :clear_member_cache, if: :saved_change_to_attending?
-
   def waiting_list_position
     @waiting_list_position ||= WaitingList.by_workshop(workshop)
                                           .where_role(role)
@@ -48,11 +46,5 @@ class WorkshopInvitation < ApplicationRecord
 
   def not_attending?
     attending == false
-  end
-
-  private
-
-  def clear_member_cache
-    member.clear_attending_event_ids_cache!
   end
 end
