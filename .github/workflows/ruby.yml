@@ -53,7 +53,10 @@ jobs:
       id: playwright-cache
       with:
         path: ~/.cache/ms-playwright
-        key: playwright-${{ runner.os }}-chromium-headless-shell-1.59.0-${{ matrix.ci_node_index }}
+        # All groups use the same key — the binary is identical across parallel runners.
+        # Without this, each group writes its own cache entry for the same ~150MB blob
+        # (6× storage, 6× uploads for no benefit).
+        key: playwright-${{ runner.os }}-chromium-headless-shell-1.59.0
 
     - name: Install Playwright Chromium Headless Shell
       run: npx --yes playwright@1.59.0 install chromium-headless-shell
