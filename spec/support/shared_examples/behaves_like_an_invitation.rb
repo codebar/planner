@@ -6,6 +6,13 @@ RSpec.shared_examples InvitationConcerns do |invitation_type, event_type|
     expect(invitation.token).not_to be_nil
   end
 
+  describe 'cache invalidation' do
+    it 'clears member cache when attending changes' do
+      expect(invitation.member).to receive(:clear_attending_event_ids_cache!)
+      invitation.update!(attending: !invitation.attending)
+    end
+  end
+
   describe '#scopes' do
     describe '#not_accepted' do
       it 'selects when attended nil' do

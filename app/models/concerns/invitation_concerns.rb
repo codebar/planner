@@ -15,6 +15,7 @@ module InvitationConcerns
     scope :taken_place, -> { where('date_and_time < ?', Time.zone.now) }
 
     before_create :set_token
+    after_save :clear_member_cache, if: :saved_change_to_attending?
   end
 
   module InstanceMethods
@@ -35,6 +36,10 @@ module InvitationConcerns
     end
 
     private
+
+    def clear_member_cache
+      member.clear_attending_event_ids_cache!
+    end
 
     def set_token
       self.token = loop do
