@@ -61,9 +61,11 @@ jobs:
     - name: Install Playwright Chromium Headless Shell
       run: npx --yes playwright@1.59.0 install chromium-headless-shell
 
-    - name: Install Playwright system dependencies
-      run: npx --yes playwright@1.59.0 install-deps chromium-headless-shell
-
+    # Playwright install-deps is intentionally skipped: ubuntu-24.04 ships all required
+    # system libraries. install-deps would only add 9 font packages (CJK + X11, ~21MB)
+    # that are not needed for headless-shell rendering in CI. If a Playwright version
+    # introduces a new system library dependency, re-add:
+    #   run: npx --yes playwright@1.59.0 install-deps chromium-headless-shell
     - name: Setup test databases
       env:
         DATABASE_URL: postgres://postgres:postgres@localhost:5432
