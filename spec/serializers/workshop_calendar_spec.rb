@@ -1,9 +1,40 @@
 RSpec.describe WorkshopCalendar do
   let(:invitation_url) { Faker::Internet.url }
-  let(:calendar) { WorkshopCalendar.new(workshop, invitation_url).calendar }
+
+  describe '.new' do
+    it 'calls setup during initialization' do
+      workshop = Fabricate(:workshop)
+      calendar = described_class.new(workshop, invitation_url)
+
+      expect(calendar.calendar.events.count).to eq(1)
+    end
+  end
+
+  describe '#ical' do
+    it 'returns an iCalendar string' do
+      workshop = Fabricate(:workshop)
+      cal = described_class.new(workshop, invitation_url)
+
+      result = cal.ical
+
+      expect(result).to start_with("BEGIN:VCALENDAR\r\n")
+      expect(result).to include("BEGIN:VEVENT\r\n")
+      expect(result).to include("END:VEVENT\r\n")
+      expect(result).to include("END:VCALENDAR\r\n")
+    end
+
+    it 'includes the invitation URL in the event description' do
+      workshop = Fabricate(:workshop)
+      cal = described_class.new(workshop, invitation_url)
+
+      expect(cal.ical).to include(invitation_url)
+    end
+  end
 
   describe 'workshop calendar entry' do
     let(:workshop) { Fabricate(:workshop) }
+    let(:calendar) { described_class.new(workshop, invitation_url).calendar }
+
     it 'has an event associated with it' do
       expect(calendar.events.count).to eq(1)
     end
