@@ -6,6 +6,13 @@ RSpec.describe SponsorsSearch do
       expect(search.name).to eq('Acme')
       expect(search.chapter).to eq('London')
     end
+
+    it 'handles nil params' do
+      search = described_class.new(name: nil, chapter: nil)
+
+      expect(search.name).to be_nil
+      expect(search.chapter).to be_nil
+    end
   end
 
   describe '#call' do
@@ -23,6 +30,39 @@ RSpec.describe SponsorsSearch do
       Fabricate(:sponsor, name: 'Apple Inc')
 
       results = described_class.new(name: 'Zebra', chapter: nil).call
+
+      expect(results).to contain_exactly(matching)
+    end
+
+    it 'is case insensitive when filtering by name' do
+      matching = Fabricate(:sponsor, name: 'Zebra Technologies')
+
+      results = described_class.new(name: 'zebra', chapter: nil).call
+      expect(results).to contain_exactly(matching)
+
+      results = described_class.new(name: 'ZEBRA', chapter: nil).call
+      expect(results).to contain_exactly(matching)
+    end
+
+    it 'filters by chapter' do
+      chapter = Fabricate(:chapter)
+      matching = Fabricate(:sponsor)
+      Fabricate(:workshop_sponsor, workshop: Fabricate(:workshop_no_sponsor, chapter: chapter), sponsor: matching)
+      Fabricate(:sponsor)
+
+      results = described_class.new(name: nil, chapter: chapter.id.to_s).call
+
+      expect(results).to contain_exactly(matching)
+    end
+
+    it 'filters by name and chapter combined' do
+      chapter = Fabricate(:chapter)
+      matching = Fabricate(:sponsor, name: 'Zebra Technologies')
+      Fabricate(:workshop_sponsor, workshop: Fabricate(:workshop_no_sponsor, chapter: chapter), sponsor: matching)
+      Fabricate(:sponsor, name: 'Zebra Technologies')
+      Fabricate(:sponsor, name: 'Apple Inc')
+
+      results = described_class.new(name: 'Zebra', chapter: chapter.id.to_s).call
 
       expect(results).to contain_exactly(matching)
     end
