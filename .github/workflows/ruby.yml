@@ -68,7 +68,16 @@ jobs:
         key: playwright-${{ runner.os }}-chromium-headless-shell-1.59.0
 
     - name: Install Playwright Chromium Headless Shell
+      if: steps.playwright-cache.outputs.cache-hit != 'true'
       run: npx --yes playwright@1.59.0 install chromium-headless-shell
+
+    - name: Verify Playwright binary (cache restore)
+      if: steps.playwright-cache.outputs.cache-hit == 'true'
+      run: |
+        # Quick validation that the cached binary is intact.
+        # Falls through to a full install if the expected path is missing.
+        ls ~/.cache/ms-playwright/chromium-headless-shell-*/chrome-linux/chrome > /dev/null 2>&1 || \
+          npx --yes playwright@1.59.0 install chromium-headless-shell
 
     # Playwright install-deps is intentionally skipped: ubuntu-24.04 ships all required
     # system libraries. install-deps would only add 9 font packages (CJK + X11, ~21MB)
