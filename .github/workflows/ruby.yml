@@ -48,6 +48,15 @@ jobs:
         # .ruby-version provides the Ruby version implicitly.
         bundler-cache: true
 
+    - name: Cache npx packages
+      uses: actions/cache@v6
+      id: npx-cache
+      with:
+        path: ~/.npm
+        # npx downloads the playwright npm package (~30MB) fresh every time without
+        # this cache. The key includes the Playwright version so a bump invalidates it.
+        key: npx-playwright-${{ runner.os }}-1.59.0
+
     - name: Cache Playwright browsers
       uses: actions/cache@v6
       id: playwright-cache
