@@ -90,7 +90,7 @@ class Workshop < ApplicationRecord
     return false if person.nil?
     raise ArgumentError, "Person should be a Member, not a #{person.class}" unless person.is_a? Member
 
-    attending_students.map(&:member).include?(person) || attending_coaches.map(&:member).include?(person)
+    invitations.accepted.exists?(member_id: person.id)
   end
 
   # Is this person on the waiting list for this event?
@@ -98,7 +98,7 @@ class Workshop < ApplicationRecord
     return false if person.nil?
     raise ArgumentError, 'Person should be a Member' unless person.is_a?(Member)
 
-    WaitingList.students(self).include?(person) || WaitingList.coaches(self).include?(person)
+    WaitingList.by_workshop(self).joins(:invitation).where(workshop_invitations: { member_id: person.id }).exists?
   end
 
   def to_s
