@@ -184,26 +184,32 @@ RSpec.describe WorkshopPresenter do
   end
 
   describe '#send_attending_email' do
-    it 'send an attending email to the invitation user' do
-      workshop_invitation_mailer = double(:workshop_invitation_mailed, deliver_now: true)
+    it 'enqueues an attending email to the invitation user' do
       invitation = double(:invitation, member: double(:member))
-      expect(WorkshopInvitationMailer)
+      mailer_double = double(:mailer)
+      allow(WorkshopInvitationMailer)
         .to receive(:attending)
         .with(workshop, invitation.member, invitation, false)
-        .and_return(workshop_invitation_mailer)
+        .and_return(mailer_double)
+      allow(mailer_double).to receive(:deliver_later)
 
       presenter.send_attending_email(invitation)
+
+      expect(mailer_double).to have_received(:deliver_later)
     end
 
-    it 'send a waiting list email to the invitation user' do
-      workshop_invitation_mailer = double(:workshop_invitation_mailed, deliver_now: true)
+    it 'enqueues a waiting list email to the invitation user' do
       invitation = double(:invitation, member: double(:member))
-      expect(WorkshopInvitationMailer)
+      mailer_double = double(:mailer)
+      allow(WorkshopInvitationMailer)
         .to receive(:attending)
         .with(workshop, invitation.member, invitation, true)
-        .and_return(workshop_invitation_mailer)
+        .and_return(mailer_double)
+      allow(mailer_double).to receive(:deliver_later)
 
       presenter.send_attending_email(invitation, true)
+
+      expect(mailer_double).to have_received(:deliver_later)
     end
   end
 end
