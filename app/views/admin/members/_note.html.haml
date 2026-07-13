@@ -1,11 +1,12 @@
-#note-modal.modal.fade{ 'aria-labelledby': 'modal-title', 'aria-hidden': 'true', role: 'dialog' }
+.modal.fade{ id: "#{note.persisted? ? "edit-note-modal-#{note.id}" : 'note-modal'}", 'aria-labelledby': 'modal-title', 'aria-hidden': 'true', role: 'dialog' }
   .modal-dialog
     .modal-content
       .modal-header
-        %h5.modal-title#modal-title Add a note for #{@member.full_name}
+        %h5.modal-title#modal-title
+          = note.persisted? ? "Update note for #{member.full_name}" : "Add a note for #{member.full_name}"
         %button.btn-close{ type: 'button', 'data-bs-dismiss': 'modal', 'aria-label': 'Close' }
       .modal-body
-        = simple_form_for [:admin, MemberNote.new], html: { class: 'form-inline' } do |f|
+        = simple_form_for [:admin, note], html: { class: 'form-inline' } do |f|
           = f.input :note, label: false, input_html: { rows: 3 }, placeholder: 'e.g. very enthusiastic student.'
           = f.hidden_field :member_id, value: @member.id
           .text-right
