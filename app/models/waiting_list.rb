@@ -6,7 +6,7 @@ class WaitingList < ApplicationRecord
 
   scope :by_workshop, ->(workshop) { joins(:invitation).where('workshop_invitations.workshop_id = ?', workshop.id) }
   scope :where_role, ->(role) { where('workshop_invitations.role = ?', role) }
-  scope :with_notes_and_their_authors, -> { includes(member: { member_notes: :author }) }
+  scope :with_notes_and_their_authors, -> { includes(member: [{ member_notes: :author }, :attendance_warnings]) }
 
   def self.add(invitation, auto_rsvp = true)
     find_or_create_by(invitation: invitation) do |waiting_list|

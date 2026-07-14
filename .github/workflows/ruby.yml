@@ -48,19 +48,46 @@ jobs:
         # .ruby-version provides the Ruby version implicitly.
         bundler-cache: true
 
+    - name: Resolve Playwright version from gem
+      id: pw-version
+      run: echo "version=$(bundle exec ruby -rplaywright -e 'print Playwright::COMPATIBLE_PLAYWRIGHT_VERSION')" >> $GITHUB_OUTPUT
+
+    - name: Cache npx packages
+      uses: actions/cache@v6
+      id: npx-cache
+      with:
+        path: ~/.npm
+        # npx downloads the playwright npm package (~30MB) fresh every time without
+        # this cache. The key includes the Playwright version so a bump invalidates it.
+        key: npx-playwright-${{ runner.os }}-${{ steps.pw-version.outputs.version }}
+
     - name: Cache Playwright browsers
       uses: actions/cache@v6
       id: playwright-cache
       with:
         path: ~/.cache/ms-playwright
-        key: playwright-${{ runner.os }}-chromium-headless-shell-1.59.0-${{ matrix.ci_node_index }}
+        # All groups use the same key — the binary is identical across parallel runners.
+        # Without this, each group writes its own cache entry for the same ~150MB blob
+        # (6× storage, 6× uploads for no benefit).
+        key: playwright-${{ runner.os }}-chromium-headless-shell-${{ steps.pw-version.outputs.version }}
 
     - name: Install Playwright Chromium Headless Shell
-      run: npx --yes playwright@1.59.0 install chromium-headless-shell
+      if: steps.playwright-cache.outputs.cache-hit != 'true'
+      run: npx --yes playwright@${{ steps.pw-version.outputs.version }} install chromium-headless-shell
 
-    - name: Install Playwright system dependencies
-      run: npx --yes playwright@1.59.0 install-deps chromium-headless-shell
+    - name: Verify Playwright binary (cache restore)
+      if: steps.playwright-cache.outputs.cache-hit == 'true'
+      run: |
+        # Quick validation that the cached binary is intact.
+        # Falls through to a full install if the expected path is missing.
+        ls ~/.cache/ms-playwright/chromium-headless-shell-*/chrome-linux/chrome > /dev/null 2>&1 || \
+          npx --yes playwright@${{ steps.pw-version.outputs.version }} install chromium-headless-shell
 
+    # Playwright install-deps is intentionally skipped: ubuntu-24.04 ships all required
+    # system libraries. install-deps would only add 9 font packages (CJK + X11, ~21MB)
+    # that are not needed for headless-shell rendering in CI. If a Playwright version
+    # introduces a new system library dependency, re-add:
+    #   run: npx --yes playwright@${{ steps.pw-version.outputs.version }} install-deps chromium-headless-shell
     - name: Setup test databases
       env:
         DATABASE_URL: postgres://postgres:postgres@localhost:5432

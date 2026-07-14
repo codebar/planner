@@ -15,11 +15,11 @@ class WorkshopInvitationController < ApplicationController
   end
 
   def update
-    @invitation.assign_attributes(invitation_params.merge!(attending: true, rsvp_time: Time.zone.now))
-    return back_with_message(@invitation.errors.full_messages) unless @invitation.valid?
-
-    @invitation.update(invitation_params)
-    back_with_message(t('messages.invitations.updated_details'))
+    if @invitation.update(invitation_params)
+      back_with_message(t('messages.invitations.updated_details'))
+    else
+      back_with_message(@invitation.errors.full_messages)
+    end
   end
 
   # Inline accept from InvitationControllerConcerns
@@ -27,9 +27,7 @@ class WorkshopInvitationController < ApplicationController
     user = current_user || @invitation.member
     workshop = @invitation.workshop
     return back_with_message(t('messages.already_rsvped')) if @invitation.attending?
-
-    @invitation.assign_attributes(invitation_params.merge!(attending: true, rsvp_time: Time.zone.now))
-    return back_with_message(@invitation.errors.full_messages) unless @invitation.valid?
+    return back_with_message(t('messages.invitations.closed')) unless workshop.rsvp_available?
 
     if user.has_existing_RSVP_on(workshop.date_and_time)
       return back_with_message(t('messages.invitations.rsvped_to_other_workshop'))
@@ -38,20 +36,22 @@ class WorkshopInvitationController < ApplicationController
     return back_with_message(t('messages.already_invited')) if attending_or_waitlisted?(workshop, user)
 
     @workshop = WorkshopPresenter.decorate(@invitation.workshop)
-    if available_spaces?(@workshop, @invitation)
-      @invitation.update(invitation_params.merge!(attending: true, rsvp_time: Time.zone.now))
-      @workshop.send_attending_email(@invitation)
+    return back_with_message(t('messages.no_available_seats')) unless available_spaces?(@workshop, @invitation)
 
+    if @invitation.update(invitation_params.merge!(attending: true, rsvp_time: Time.zone.now))
+      @workshop.send_attending_email(@invitation)
       back_with_message(t('messages.accepted_invitation', name: @invitation.member.name))
     else
-      back_with_message(t('messages.no_available_seats'))
+      back_with_message(@invitation.errors.full_messages)
     end
   end
 
   # Inline reject from InvitationControllerConcerns
   def reject
     @workshop = WorkshopPresenter.decorate(@invitation.workshop)
-    if @invitation.workshop.date_and_time - 3.5.hours >= Time.zone.now
+    closes_at = @invitation.workshop.rsvp_closes_at
+    rsvp_deadline = [@invitation.workshop.date_and_time - 3.5.hours, closes_at].compact.min
+    if rsvp_deadline >= Time.zone.now
       if @invitation.attending.eql? false
         redirect_back(fallback_location: invitation_path(@invitation),
                       notice: t('messages.not_attending_already'))

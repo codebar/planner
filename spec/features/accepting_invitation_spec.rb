@@ -22,6 +22,30 @@ RSpec.feature 'Accepting a workshop invitation', type: :feature do
 
     it_behaves_like 'invitation route'
 
+    context 'when workshop is full' do
+      scenario 'shows waiting list option when there are no available seats' do
+        set_no_available_slots
+
+        visit invitation_route
+
+        expect(page).to have_content('The workshop is full')
+        expect(page).to have_button('Join the waiting list')
+        expect(page).not_to have_button('Attend')
+      end
+    end
+
+    context 'when RSVPs are closed' do
+      scenario 'cannot accept an invitation after the close time' do
+        invitation.workshop.update(rsvp_closes_at: 1.hour.ago)
+
+        visit invitation_route
+        click_on 'Attend'
+
+        expect(page).to have_content('RSVPs for this workshop are now closed.')
+        expect(invitation.reload.attending).not_to be(true)
+      end
+    end
+
     context 'amend invitation details' do
       context 'a student' do
         scenario 'cannot accept an invitation  without a tutorial' do

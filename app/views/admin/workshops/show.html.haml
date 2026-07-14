@@ -46,6 +46,10 @@
           - else
             RSVPs will open at
           = @workshop.rsvp_opens_at.strftime('%H:%M on %d/%m/%Y.')
+      - if @workshop.rsvp_closes_at
+        %div.mb-2
+          RSVPs will close at
+          = @workshop.rsvp_closes_at.strftime('%H:%M on %d/%m/%Y.')
       - if @workshop.venue.present? || @workshop.virtual?
         %span.badge.bg-info #{@workshop.student_spaces} student spots, #{@workshop.coach_spaces} coach spots
         - unless @workshop.spaces?

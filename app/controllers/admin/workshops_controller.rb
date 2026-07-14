@@ -121,6 +121,7 @@ class Admin::WorkshopsController < Admin::ApplicationController
       :local_date, :local_time, :local_end_time, :chapter_id,
       :invitable, :seats, :virtual, :slack_channel, :slack_channel_link,
       :rsvp_open_local_date, :rsvp_open_local_time, :description,
+      :rsvp_close_local_date, :rsvp_close_local_time,
       :coach_spaces, :student_spaces,
       { sponsor_ids: [] }
     ])

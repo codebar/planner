@@ -20,6 +20,27 @@ RSpec.feature 'managing workshop attendances', type: :feature do
 
         expect(page).to have_css('.fa-check-square')
       end
+
+      scenario 'verifies and unverifies attendance with targeted row replacement', js: true do
+        second_invitation = Fabricate(:workshop_invitation, workshop: workshop, attending: true)
+
+        visit admin_workshop_path(workshop)
+
+        # Capture the ID of the second row before clicking
+        second_row_id = "attendee-row-#{second_invitation.id}"
+        expect(page).to have_selector("##{second_row_id}")
+
+        # Verify first attendee
+        first('.verify_attendance').click
+        expect(page).to have_css('.fa-check-square', count: 1, wait: 5)
+
+        # Unverify the same attendee
+        first('.verify_attendance').click
+        expect(page).to have_css('.fa-check-square', count: 0, wait: 5)
+
+        # The unclicked row should still exist with its original ID, proving targeted replacement
+        expect(page).to have_selector("##{second_row_id}")
+      end
     end
 
     scenario 'can remove a member from the attendee list' do

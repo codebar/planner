@@ -1,14 +1,22 @@
 $(document).ready(function() {
   $(document).on("ajax:success", "#invitations [data-remote]", function(e) {
     var xhr = e.detail[2];
-    var $invitations = $("#invitations");
+    var $link = $(e.currentTarget);
 
-    $invitations.html(xhr.responseText);
+    if ($link.hasClass('verify_attendance')) {
+      var $row = $link.closest('.row.attendee');
+      var rowId = $row.attr('id');
+      $row.replaceWith(xhr.responseText);
+      $(".row.attendee[id='" + rowId + "']").find('[data-bs-toggle="tooltip"]').tooltip();
+    } else {
+      var $invitations = $("#invitations");
+      $invitations.html(xhr.responseText);
 
-    $invitations.find('select').chosen(function () {
-      allow_single_deselect: true
-      no_results_text: 'No results matched'
-    });
+      $invitations.find('select').chosen({
+        allow_single_deselect: true,
+        no_results_text: 'No results matched'
+      });
+    }
   });
   
   $(document).on('change','#workshop_invitations ',function() {

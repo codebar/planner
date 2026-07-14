@@ -6,6 +6,23 @@ RSpec.describe Admin::WorkshopsController, type: :controller do
     login_as_organiser(admin, workshop.chapter)
   end
 
+  describe 'GET #show' do
+    it 'loads the workshop attendance page with attendees' do
+      Fabricate(:workshop_invitation, workshop: workshop, attending: true)
+      get :show, params: { id: workshop.id }
+
+      expect(response).to have_http_status(:success)
+    end
+  end
+
+  describe 'POST #create' do
+    it 'permits rsvp_close_local_date and rsvp_close_local_time' do
+      expect do
+        post :create, params: { workshop: { rsvp_close_local_date: '01/12/2020', rsvp_close_local_time: '15:00', host: '' } }
+      end.not_to raise_error
+    end
+  end
+
   describe 'DELETE #destroy' do
     context 'workshop invitations have been sent' do
       before do
