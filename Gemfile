@@ -40,6 +40,7 @@ gem 'premailer-rails'
 
 gem 'pundit'
 gem 'reline' # LOCKED: Added because of readline is not part of Ruby 3.5.0
+gem 'readline' # LOCKED: readline was loaded from the standard library, but is not part of the default gems starting from Ruby 4.0.0.
 gem 'rolify'
 # Use Sass to process CSS
 gem 'sassc-rails'
