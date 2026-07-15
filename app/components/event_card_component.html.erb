@@ -1,0 +1,75 @@
+<% cache @event.cache_key_with_version do %>
+  <div class="card mb-4" data-test="event">
+    <div class="card-body">
+      <div class="d-md-flex justify-content-md-between">
+        <div class="order-md-2">
+          <% if @event.chapter %>
+            <span class="badge bg-primary mb-3 mb-md-0">
+              <%= link_to @event.chapter.name, @event.chapter.slug, class: "text-light text-decoration-none" %>
+            </span>
+          <% end %>
+          <% if user_presenter %>
+            <% if user_presenter.attending?(@event) %>
+              <span class="badge bg-success mb-3 mb-md-0">
+                <%= link_to "Attending", @event.path, class: "text-light text-decoration-none" %>
+              </span>
+            <% end %>
+            <% if user_presenter.organiser? && user_presenter.event_organiser?(@event) %>
+              <span class="badge bg-secondary mb-3 mb-md-0">
+                <%= link_to "Manage", @event.admin_path, class: "text-light text-decoration-none" %>
+              </span>
+            <% end %>
+          <% end %>
+        </div>
+        <div class="order-md-1">
+          <h3 class="h5">
+            <%= link_to @event.to_s, @event.path %>
+            <% if @event.venue.present? %>
+              at
+              <%= link_to @event.venue.name, @event.venue.website %>
+            <% end %>
+          </h3>
+        </div>
+      </div>
+
+      <div class="mt-3">
+        <p class="mb-0">
+          <i class="far fa-calendar"></i>
+          <%= @event.date %>
+        </p>
+        <p>
+          <i class="far fa-clock"></i>
+          <%= @event.time %>
+        </p>
+      </div>
+
+        <div class="d-md-flex justify-content-md-between align-items-md-center">
+          <% if @event.organisers.any? %>
+            <div class="mb-3 mb-md-0">
+              <% @event.organisers.each do |organiser| %>
+                <%= image_tag(organiser.avatar(26), class: "rounded-circle", title: organiser.full_name, alt: organiser.full_name) %>
+              <% end %>
+            </div>
+          <% end %>
+
+          <% if @event.sponsors.any? %>
+            <div class="ms-auto">
+              <% @event.sponsors.each do |sponsor| %>
+                <%= link_to sponsor.website, class: "d-inline-block" do %>
+                  <%= image_tag(sponsor.avatar.thumb.url, class: "sponsor-sm mx-1", alt: sponsor.name) %>
+                <% end %>
+              <% end %>
+            </div>
+          <% end %>
+
+          <% if @event.is_a?(MeetingPresenter) && @event.venue.present? %>
+            <div class="ms-auto">
+              <%= link_to @event.venue.website, class: "d-inline-block" do %>
+                <%= image_tag(@event.venue.avatar.url, class: "sponsor-sm", alt: @event.venue.name) %>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+    </div>
+  </div>
+<% end %>

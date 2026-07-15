@@ -1,4 +1,4 @@
-RSpec.describe Permissions do
+RSpec.describe Member do
   subject(:member) { Fabricate(:member) }
 
   let(:chapter) { Fabricate(:chapter) }

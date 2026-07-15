@@ -1,7 +1,7 @@
-- grouped_events.each do |date, workshops|
+- grouped_events.each do |date, events|
   .row
     .col-12
       %h3.h5= date
   .row
     .col-md-8
-      = render workshops
+      = render EventCardComponent.with_collection(events)
