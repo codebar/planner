@@ -13,15 +13,14 @@ RSpec.describe 'Admin TomSelect Member Lookup', :js, type: :feature do
   scenario 'searching for members with TomSelect' do
     visit admin_members_path
 
-    expect(page).to have_css('.ts-wrapper', wait: 5)
+    expect(page).to have_css('.ts-wrapper', wait: 15)
 
     find('.ts-control').click
+    # Type in chunks to match shouldLoad (requires >= 3 chars).
     find('.ts-control input').send_keys('Ja')
-    sleep 0.5
-
     find('.ts-control input').send_keys('ne')
 
-    expect(page).to have_css('.ts-dropdown .option', wait: 5)
+    expect(page).to have_css('.ts-dropdown .option', wait: 15)
 
     expect(page).to have_content('Jane Doe')
     expect(page).to have_content('jane@example.com')
@@ -32,12 +31,12 @@ RSpec.describe 'Admin TomSelect Member Lookup', :js, type: :feature do
   scenario 'selecting a member updates view profile link' do
     visit admin_members_path
 
-    expect(page).to have_css('.ts-wrapper', wait: 5)
+    expect(page).to have_css('.ts-wrapper', wait: 15)
 
     find('.ts-control').click
     find('.ts-control input').send_keys('Jane Doe')
 
-    expect(page).to have_css('.ts-dropdown .option', wait: 5)
+    expect(page).to have_css('.ts-dropdown .option', wait: 15)
 
     find('.ts-dropdown .option', text: 'Jane Doe').click
 
