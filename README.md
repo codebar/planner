@@ -124,6 +124,26 @@ If you prefer Docker, see the commands in `bin/d*`:
 
 We use Bootstrap 5. Documentation: https://getbootstrap.com/docs/5.2/getting-started/introduction/
 
+## Architectural approach
+
+This project follows layered architecture principles as described in *[Layered Design for Ruby on Rails Applications](https://www.packtpub.com/en-us/product/layered-design-for-ruby-on-rails-applications-9781806114221)* by Vladimir Dementyev. The goal is to organise code into four layers with strict unidirectional dependencies:
+
+| Layer | Responsibility | Key directories |
+|-------|---------------|-----------------|
+| **Presentation** | HTTP/WebSocket concerns | `app/controllers/`, `app/views/`, `app/mailers/` |
+| **Application** | Orchestration, coordination | `app/services/`, `app/form_models/`, `app/policies/` |
+| **Domain** | Business logic, rules | `app/models/`, `app/models/concerns/` |
+| **Infrastructure** | Persistence, external APIs | Active Record models, external service clients |
+
+**Guidelines for contributors:**
+- Keep controllers thin — they should only handle HTTP concerns (params, session, response format)
+- Put business logic in domain models, not services (services orchestrate, they don't own logic)
+- Don't reference `Current` attributes from models — pass values explicitly
+- Extract reusable queries into query objects, complex view logic into presenters
+- Use form objects for multi-model forms or complex validation
+
+AGENTS.md also references these patterns in its *For planning agents* section.
+
 ## Finding something to work on
 
 You can pick one of the open [issues](https://github.com/codebar/planner/issues), fix a bug, improve the interface, refactor the code or improve test coverage!
