@@ -40,7 +40,7 @@ RSpec.describe EventCardComponent, type: :component do
 
     it "renders venue image for meetings" do
       render_inline(described_class.new(event_card: presenter))
-      expect(page).to have_css("img[alt='#{meeting.venue.name}']")
+      expect(page).to have_css(%(img[alt="#{meeting.venue.name}"]))
     end
 
     it "does not render sponsor logos for meetings" do
@@ -64,7 +64,7 @@ RSpec.describe EventCardComponent, type: :component do
       sponsor = Fabricate(:sponsor)
       event.sponsors << sponsor
       render_inline(described_class.new(event_card: presenter))
-      expect(page).to have_css("img[alt='#{sponsor.name}']")
+      expect(page).to have_css(%(img[alt="#{sponsor.name}"]))
     end
   end
 
