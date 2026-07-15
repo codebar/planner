@@ -63,7 +63,7 @@ class WorkshopPresenter < EventPresenter
   end
 
   def send_attending_email(invitation, waitinglist = false)
-    WorkshopInvitationMailer.attending(model, invitation.member, invitation, waitinglist).deliver_now
+    WorkshopInvitationMailer.attending(model, invitation.member, invitation, waitinglist).deliver_later
   end
 
   def coach_spaces
