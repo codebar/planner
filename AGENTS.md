@@ -259,6 +259,14 @@ end
 ```
 
 
+### For planning agents
+
+When planning new features or architectural changes, use the `layered-rails` skill for analysis:
+- `/layered-rails:plan` — plan incremental adoption of layered patterns
+- `/layered-rails:analyze` — full codebase architecture analysis
+- `/layered-rails:review` — review code from a layered architecture perspective
+- `/layered-rails:spec-test` — apply the specification test to evaluate layer placement
+
 ## Important Patterns
 
 ### Controllers
