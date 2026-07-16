@@ -2,6 +2,7 @@ class Contact < ApplicationRecord
   belongs_to :sponsor, optional: true
 
   validates :name, :surname, :email, presence: true
+  validates :email, uniqueness: { scope: :sponsor_id }
 
   before_create :set_token
 
