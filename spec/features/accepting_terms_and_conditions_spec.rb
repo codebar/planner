@@ -1,7 +1,7 @@
 RSpec.feature 'Accepting Terms and Conditions', type: :feature do
   context 'When a user signs up to codebar' do
     before do
-      mock_github_auth
+      mock_codebar_auth
     end
 
     scenario "they can't proceed unless they accept the ToCs" do
@@ -85,7 +85,7 @@ RSpec.feature 'Accepting Terms and Conditions', type: :feature do
       visit terms_and_conditions_path
 
       expect(page).to have_content('Please log in to accept our Code of Conduct.')
-      expect(page).to have_link('Log in with GitHub')
+      expect(page).to have_link('Log in with codebar')
     end
 
     scenario 'they see a disabled form' do

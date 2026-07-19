@@ -3,7 +3,7 @@ RSpec.feature 'Member logging in', type: :feature do
 
   describe 'Sign up' do
     describe 'when not all required details are set' do
-      it 'handles the registration when a user does not have a name set on github' do
+      it 'handles the registration when a user does not have a name set' do
         mock_auth_hash(name: nil)
 
         visit root_path

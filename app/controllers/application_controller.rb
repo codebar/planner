@@ -109,7 +109,7 @@ class ApplicationController < ActionController::Base
 
   helper_method :redirect_path
   def redirect_path
-    '/auth/github'
+    '/auth/codebar'
   end
 
   def authenticate_admin!

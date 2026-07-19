@@ -1,4 +1,4 @@
 Fabricator(:auth_service) do
-  provider { Faker::Company.name }
+  provider 'codebar'
   uid { Fabricate.sequence(:uid) { |n| "sq#{n}" } }
 end
