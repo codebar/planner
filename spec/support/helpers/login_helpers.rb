@@ -19,8 +19,8 @@ module LoginHelpers
     login(member)
   end
 
-  def mock_github_auth
-    mock_auth_hash
+  def mock_codebar_auth
+    mock_auth_hash(provider: 'codebar')
   end
 
   def accept_toc

@@ -13,7 +13,7 @@ class TermsAndConditionsController < ApplicationController
     # The show action skips accept_terms, but unauthenticated users can still
     # POST directly to update. Redirect to login to avoid NoMethodError on nil.
     unless logged_in?
-      redirect_to '/auth/github'
+      redirect_to '/auth/codebar'
       return
     end
 

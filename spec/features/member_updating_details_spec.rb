@@ -1,6 +1,6 @@
 RSpec.feature 'Update your details', type: :feature do
   before do
-    mock_github_auth
+    mock_codebar_auth
   end
 
   scenario 'A member adds a dietary restriction' do

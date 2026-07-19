@@ -5,7 +5,7 @@ RSpec.describe AuthServicesController do
       request.env["HTTP_REFERER"] = expected_referer_path
 
       get :new
-      expect(response).to redirect_to("/auth/github")
+      expect(response).to redirect_to("/auth/codebar")
       expect(session[:referer_path]).to eq(expected_referer_path)
     end
 
@@ -14,7 +14,7 @@ RSpec.describe AuthServicesController do
       request.env["HTTP_REFERER"] = expected_referer_path
 
       get :new
-      expect(response).to redirect_to("/auth/github")
+      expect(response).to redirect_to("/auth/codebar")
       expect(session[:referer_path]).to eq(expected_referer_path)
     end
   end

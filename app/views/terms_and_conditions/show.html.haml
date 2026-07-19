@@ -15,7 +15,7 @@
         %p
           = t('terms_and_conditions.login_required_html')
           %br
-          = link_to t('terms_and_conditions.login_link_text'), '/auth/github'
+          = link_to t('terms_and_conditions.login_link_text'), redirect_path
 
   - if logged_in? && !current_user.accepted_toc_at?
     = simple_form_for @terms_and_conditions_form, url: terms_and_conditions_path, method: :patch do |f|

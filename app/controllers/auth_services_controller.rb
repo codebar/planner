@@ -4,7 +4,7 @@ class AuthServicesController < ApplicationController
     if Rails.application.routes.recognize_path(referer_path)[:controller].in?(%w[workshops events meetings])
       session[:referer_path] = referer_path
     end
-    redirect_to '/auth/github'
+    redirect_to '/auth/codebar'
   end
 
   def create

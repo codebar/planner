@@ -1,6 +1,6 @@
 RSpec.feature 'A new student signs up', type: :feature do
   before do
-    mock_github_auth
+    mock_codebar_auth
   end
 
   scenario 'A visitor can access signups through the landing page' do
