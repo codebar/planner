@@ -17,6 +17,20 @@ RSpec.feature 'Managing events', type: :feature do
     expect(page).to have_text event.venue.name
   end
 
+  scenario 'adding all chapters to an event with one click', :js do
+    Fabricate.times(2, :chapter)
+    visit edit_admin_event_path(event)
+
+    find_by_id('event_chapter_ids_chosen').click
+    find('.add-all-chapters', text: 'Add to all').click
+    expect(page).to have_no_css('#event_chapter_ids_chosen.chosen-with-drop')
+
+    click_on 'Save'
+
+    expect(page).to have_text('You have just updated the event')
+    expect(event.reload.chapter_ids).to match_array(Chapter.ids)
+  end
+
   scenario 'verifying an attendance' do
     invitation = Fabricate(:invitation, event: event, attending: true)
     visit admin_event_path(event)
@@ -34,7 +48,7 @@ RSpec.feature 'Managing events', type: :feature do
     click_on 'Cancel'
 
     expect(page).to have_text "You have cancelled #{invitation.member.full_name}'s attendance."
-    expect(invitation.reload.attending).to eq(false)
+    expect(invitation.reload.attending).to be(false)
   end
 
   scenario 'accessing a list of attendee emails' do

@@ -21,6 +21,7 @@
 //= require pickadate/picker.date
 //= require pickadate/picker.time
 //= require subscriptions-toggle
+//= require add-all-chapters
 //= require invitations
 //= require dietary-restrictions
 //= require cocoon
