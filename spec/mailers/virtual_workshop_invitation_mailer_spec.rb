@@ -100,6 +100,12 @@ RSpec.describe VirtualWorkshopInvitationMailer do
     expect(email.body.encoded).to match(workshop.chapter.email)
   end
 
+  it_behaves_like 'email with social link colours' do
+    def send_email
+      described_class.invite_student(workshop, member, invitation).deliver_now
+    end
+  end
+
   it '#waitlist_reminder' do
     email_subject = "Reminder: you're on the codebar waiting list " \
                     "(#{humanize_date(workshop.date_and_time, with_time: true)})"

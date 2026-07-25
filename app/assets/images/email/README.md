@@ -16,6 +16,7 @@ the mailer view to reference the new file. Never mutate an existing file.
 
 ## Email stylesheet
 
-The email CSS lives at `app/assets/stylesheets/email.css` — not in this
-folder — but it's referenced by mailer layouts via the pipeline path
-`email.css`.
+The email CSS is embedded directly in the email `<head>` via
+`app/views/shared_mailers/_header.html.haml`. It is no longer loaded from the
+asset pipeline, so there is no external stylesheet URL to go stale or change
+after an email is sent.

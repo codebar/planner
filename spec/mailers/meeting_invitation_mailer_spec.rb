@@ -101,4 +101,10 @@ RSpec.describe MeetingInvitationMailer do
       expect(mail.body.encoded).to match('hello@codebar.io')
     end
   end
+
+  it_behaves_like 'email with social link colours' do
+    def send_email
+      described_class.invite(meeting, member, invitation).deliver_now
+    end
+  end
 end

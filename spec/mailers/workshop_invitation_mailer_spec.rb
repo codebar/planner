@@ -110,14 +110,9 @@ RSpec.describe WorkshopInvitationMailer do
     expect(email.body.encoded).to match(workshop.chapter.email)
   end
 
-  it '#invite_student renders social links with inline background colours' do
-    # asserts on the template output before premailer runs, so the colours
-    # don't depend on email.css being resolved (see issue #2634)
-    mail = described_class.invite_student(workshop, member, invitation)
-
-    html = mail.body.decoded
-    ['#2EB67D', '#0077B5', '#3B5998', '#1daced', '#FF0000'].each do |colour|
-      expect(html).to include("background-color: #{colour}")
+  it_behaves_like 'email with social link colours' do
+    def send_email
+      described_class.invite_student(workshop, member, invitation).deliver_now
     end
   end
 
