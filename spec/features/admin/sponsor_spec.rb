@@ -189,7 +189,6 @@ RSpec.feature 'Admin::Sponsors', type: :feature do
     it 'can set contact information' do
       visit edit_admin_sponsor_path(sponsor)
 
-
       click_on 'Add contact'
       fill_in 'sponsor_contacts_attributes_0_name', with: 'Jane'
       fill_in 'sponsor_contacts_attributes_0_surname', with: 'Doe'
