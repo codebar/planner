@@ -175,7 +175,7 @@ RSpec.describe MemberMailer do
           .with(member: member)
           .chaser
           .deliver_now
-        end.to change(MemberEmailDelivery, :count).by(1)
+      end.to change(MemberEmailDelivery, :count).by(1)
 
       log = MemberEmailDelivery.last!
 
