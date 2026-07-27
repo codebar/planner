@@ -1,5 +1,6 @@
 RSpec.describe 'Admin managing members', type: :feature do
-  let(:member) { Fabricate(:student, dietary_restrictions: %w[vegan other],
+  let(:member) {
+    Fabricate(:student, dietary_restrictions: %w[vegan other],
                            other_dietary_restrictions: 'peanut allergy')
   }
   let(:admin) { Fabricate(:chapter_organiser) }

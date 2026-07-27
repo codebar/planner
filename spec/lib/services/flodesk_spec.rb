@@ -62,17 +62,18 @@ RSpec.describe Flodesk do
         segment_ids: ["segment_id"],
       }
 
-      stub.get("/subscribers/#{payload[:email]}") { [200, {}, {
-        "id": "123456789",
-        "status": "active",
-        "email": "email",
-        "segments": [
-          {
-            "id": "segment_id",
-            "name": "codebar"
-          }
-        ]
-      }]
+      stub.get("/subscribers/#{payload[:email]}") {
+        [200, {}, {
+          "id": "123456789",
+          "status": "active",
+          "email": "email",
+          "segments": [
+            {
+              "id": "segment_id",
+              "name": "codebar"
+            }
+          ]
+        }]
       }
 
       expect(client.subscribed?(**payload)).to be true
@@ -86,17 +87,18 @@ RSpec.describe Flodesk do
         segment_ids: ["segment_id"],
       }
 
-      stub.get("/subscribers/#{payload[:email]}") { [200, {}, {
-        "id": "123456789",
-        "status": "active",
-        "email": "email",
-        "segments": [
-          {
-            "id": "some_other_segment_id",
-            "name": "not codebar"
-          }
-        ]
-      }]
+      stub.get("/subscribers/#{payload[:email]}") {
+        [200, {}, {
+          "id": "123456789",
+          "status": "active",
+          "email": "email",
+          "segments": [
+            {
+              "id": "some_other_segment_id",
+              "name": "not codebar"
+            }
+          ]
+        }]
       }
 
       expect(client.subscribed?(**payload)).to be false
@@ -110,17 +112,18 @@ RSpec.describe Flodesk do
         segment_ids: ["segment_id"],
       }
 
-      stub.get("/subscribers/#{payload[:email]}") { [200, {}, {
-        "id": "123456789",
-        "status": "unsubscribed",
-        "email": "email",
-        "segments": [
-          {
-            "id": "segment_id",
-            "name": "codebar"
-          }
-        ]
-      }]
+      stub.get("/subscribers/#{payload[:email]}") {
+        [200, {}, {
+          "id": "123456789",
+          "status": "unsubscribed",
+          "email": "email",
+          "segments": [
+            {
+              "id": "segment_id",
+              "name": "codebar"
+            }
+          ]
+        }]
       }
 
       expect(client.subscribed?(**payload)).to be false
