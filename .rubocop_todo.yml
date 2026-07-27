@@ -177,14 +177,6 @@ Layout/EmptyLineBetweenDefs:
   Exclude:
     - 'spec/mailers/previews/member_mailer_preview.rb'
 
-# Offense count: 3
-# This cop supports safe autocorrection (--autocorrect).
-Layout/EmptyLines:
-  Exclude:
-    - 'spec/features/admin/member_search_spec.rb'
-    - 'spec/features/admin/sponsor_spec.rb'
-    - 'spec/helpers/email_header_helper_spec.rb'
-
 # Offense count: 9
 # This cop supports safe autocorrection (--autocorrect).
 # Configuration parameters: EnforcedStyle.

@@ -74,5 +74,4 @@ RSpec.describe EmailHeaderHelper, type: :helper do
     end
   end
 
-
 end
