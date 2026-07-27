@@ -12,9 +12,11 @@ module SelectFromTomSelect
     # CDN script (loaded in the page head) defines the TomSelect global.
     expect(page).to have_css('.ts-wrapper', wait: 15)
 
-    # Open dropdown and type search query
+    # Open dropdown and focus the input. The click on .ts-control opens the
+    # dropdown; a second click on the input guarantees focus before typing.
     find('.ts-control').click
     input = find('.ts-control input')
+    input.click
 
     # Type first 3 characters to trigger search (shouldLoad requires >= 3)
     input.send_keys(item_text[0, 3])
