@@ -10,6 +10,21 @@ on:
   workflow_dispatch:
 
 jobs:
+  rubocop:
+    name: 'RuboCop'
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        bundler-cache: true
+
+    - name: Run RuboCop
+      run: bundle exec rubocop
+
   test:
     name: 'Tests (Group ${{ matrix.ci_node_index }})'
     runs-on: ubuntu-latest
