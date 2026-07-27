@@ -1,6 +1,6 @@
 RSpec.describe ChapterPresenter do
   let(:chapter) { Fabricate(:chapter_without_organisers) }
-  let(:presenter) { ChapterPresenter.new(chapter) }
+  let(:presenter) { described_class.new(chapter) }
 
   it '#upcoming_workshops' do
     travel_to(Time.current) do

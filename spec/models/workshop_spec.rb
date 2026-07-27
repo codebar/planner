@@ -234,7 +234,7 @@ RSpec.describe Workshop do
     end
 
     it 'when virtual workshop' do
-      workshop = Workshop.new(virtual: true)
+      workshop = described_class.new(virtual: true)
       expect(workshop.to_s).to eq('Virtual Workshop')
     end
   end

@@ -1,6 +1,6 @@
 RSpec.describe MeetingPresenter do
   let(:meeting) { Fabricate(:meeting) }
-  let(:event) { MeetingPresenter.new(meeting) }
+  let(:event) { described_class.new(meeting) }
 
   it '#sponsors' do
     expect(event.sponsors).to eq([])

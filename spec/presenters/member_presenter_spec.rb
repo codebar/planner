@@ -1,6 +1,6 @@
 RSpec.describe MemberPresenter do
   let(:member) { Fabricate(:member, skill_list: 'java, ruby') }
-  let(:member_presenter) { MemberPresenter.new(member) }
+  let(:member_presenter) { described_class.new(member) }
 
   it '#organiser?' do
     expect(member).to receive(:has_role?).with(:organiser, :any)
@@ -46,7 +46,7 @@ RSpec.describe MemberPresenter do
     it 'returns true when user is admin' do
       admin = Fabricate(:member)
       admin.add_role(:admin)
-      presenter = MemberPresenter.new(admin)
+      presenter = described_class.new(admin)
 
       expect(presenter.event_organiser?(workshop)).to be true
     end
@@ -60,14 +60,14 @@ RSpec.describe MemberPresenter do
     it 'returns true when user is organiser of the event chapter' do
       organiser = Fabricate(:member)
       organiser.add_role(:organiser, chapter)
-      presenter = MemberPresenter.new(organiser)
+      presenter = described_class.new(organiser)
 
       expect(presenter.event_organiser?(workshop)).to be true
     end
 
     it 'returns false for a regular member' do
       regular = Fabricate(:member)
-      presenter = MemberPresenter.new(regular)
+      presenter = described_class.new(regular)
 
       expect(presenter.event_organiser?(workshop)).to be false
     end
@@ -77,7 +77,7 @@ RSpec.describe MemberPresenter do
       other_workshop = Fabricate(:workshop_no_sponsor, chapter: other_chapter)
       organiser = Fabricate(:member)
       organiser.add_role(:organiser, other_chapter)
-      presenter = MemberPresenter.new(organiser)
+      presenter = described_class.new(organiser)
 
       expect(presenter.event_organiser?(workshop)).to be false
     end
@@ -87,7 +87,7 @@ RSpec.describe MemberPresenter do
       meeting_presenter = MeetingPresenter.new(meeting)
       admin = Fabricate(:member)
       admin.add_role(:admin)
-      presenter = MemberPresenter.new(admin)
+      presenter = described_class.new(admin)
 
       expect(presenter.event_organiser?(meeting_presenter)).to be true
     end

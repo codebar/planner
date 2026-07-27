@@ -8,11 +8,11 @@ RSpec.describe InvitationLog do
 
   describe 'enums' do
     it 'defines action enum with string values' do
-      expect(InvitationLog.actions).to eq({ 'invite' => 'invite', 'reminder' => 'reminder', 'waiting_list_notification' => 'waiting_list_notification' })
+      expect(described_class.actions).to eq({ 'invite' => 'invite', 'reminder' => 'reminder', 'waiting_list_notification' => 'waiting_list_notification' })
     end
 
     it 'defines status enum with string values' do
-      expect(InvitationLog.statuses).to eq({ 'running' => 'running', 'completed' => 'completed', 'failed' => 'failed' })
+      expect(described_class.statuses).to eq({ 'running' => 'running', 'completed' => 'completed', 'failed' => 'failed' })
     end
   end
 

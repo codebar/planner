@@ -20,13 +20,13 @@ RSpec.describe Sponsor do
         end
 
         it 'matches on any part of the name' do
-          results = Sponsor.by_name('debar')
+          results = described_class.by_name('debar')
 
           expect(results.count).to eq(1)
         end
 
         it 'is not case sensitive' do
-          results = Sponsor.by_name('CODEBAR')
+          results = described_class.by_name('CODEBAR')
 
           expect(results.count).to eq(1)
         end

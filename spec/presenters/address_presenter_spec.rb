@@ -1,6 +1,6 @@
 RSpec.describe AddressPresenter do
   let(:address) { Fabricate.build(:address) }
-  let(:presenter) { AddressPresenter.new(address) }
+  let(:presenter) { described_class.new(address) }
 
   describe '#to_html' do
     it 'returns the address in HTML with lines separated with <br/> tags' do

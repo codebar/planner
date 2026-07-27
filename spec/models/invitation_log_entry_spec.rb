@@ -9,11 +9,11 @@ RSpec.describe InvitationLogEntry do
 
   describe 'enums' do
     it 'defines status enum with string values' do
-      expect(InvitationLogEntry.statuses).to eq({
-                                                  'success' => 'success',
-                                                  'failed' => 'failed',
-                                                  'skipped' => 'skipped'
-                                                })
+      expect(described_class.statuses).to eq({
+                                               'success' => 'success',
+                                               'failed' => 'failed',
+                                               'skipped' => 'skipped'
+                                             })
     end
   end
 end

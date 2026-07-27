@@ -7,7 +7,7 @@ RSpec.describe VirtualWorkshopPresenter do
 
   let(:chapter) { Fabricate(:chapter) }
   let(:workshop) { double_workshop(attending_coaches: 3, attending_students: 4) }
-  let(:presenter) { VirtualWorkshopPresenter.new(workshop) }
+  let(:presenter) { described_class.new(workshop) }
 
   context '#title' do
     it 'returns the title of a virtual workshop' do

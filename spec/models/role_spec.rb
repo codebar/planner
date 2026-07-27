@@ -6,7 +6,7 @@ RSpec.describe Role do
     before { Fabricate(:admin_role) }
 
     describe '#no_admins' do
-      it { expect(Role.no_admins).to eq([student_role, coach_role]) }
+      it { expect(described_class.no_admins).to eq([student_role, coach_role]) }
     end
   end
 end

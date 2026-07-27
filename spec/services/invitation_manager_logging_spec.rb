@@ -1,5 +1,5 @@
 RSpec.describe InvitationManager, :invitation_logging do
-  subject(:manager) { InvitationManager.new }
+  subject(:manager) { described_class.new }
 
   let(:chapter) { Fabricate(:chapter) }
   let(:workshop) { Fabricate(:workshop, chapter: chapter) }

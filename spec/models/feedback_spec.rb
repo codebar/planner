@@ -20,21 +20,21 @@ RSpec.describe Feedback do
     context 'with valid token' do
       it 'is  submitted valid params' do
         expect do
-          Feedback.submit_feedback(params, feedback_request.token)
-        end.to change { Feedback.count }.by(1)
+          described_class.submit_feedback(params, feedback_request.token)
+        end.to change { described_class.count }.by(1)
       end
 
       it 'is not submitted invalid params' do
         expect do
-          Feedback.submit_feedback(params.except(:rating), feedback_request.token)
-        end.to_not change { Feedback.count }
+          described_class.submit_feedback(params.except(:rating), feedback_request.token)
+        end.to_not change { described_class.count }
       end
     end
 
     it 'is not submitted with invalid token' do
       expect do
-        Feedback.submit_feedback(params, 'invalid_token')
-      end.to_not change { Feedback.count }
+        described_class.submit_feedback(params, 'invalid_token')
+      end.to_not change { described_class.count }
     end
   end
 end
