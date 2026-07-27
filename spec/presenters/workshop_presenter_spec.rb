@@ -2,7 +2,7 @@ RSpec.describe WorkshopPresenter do
   let(:chapter) { Fabricate(:chapter) }
   let(:host) { Fabricate(:sponsor, seats: 5, number_of_coaches: 15) }
   let(:workshop) { double(:workshop, host: host, chapter: chapter) }
-  let(:presenter) { WorkshopPresenter.new(workshop) }
+  let(:presenter) { described_class.new(workshop) }
 
   def double_workshop(attending_coaches:, attending_students:)
     double(:workshop, host: host, chapter: chapter,
@@ -13,13 +13,13 @@ RSpec.describe WorkshopPresenter do
   describe '#decorate' do
     it 'returns a workshop decorated with the WorkshopPresenter' do
       workshop = double(:workshop, virtual?: false)
-      presenter = WorkshopPresenter.decorate(workshop)
-      expect(presenter).to be_a(WorkshopPresenter)
+      presenter = described_class.decorate(workshop)
+      expect(presenter).to be_a(described_class)
     end
 
     it 'returns a virtual workshop decorated with the VirtualWorkshopPresenter' do
       workshop = double(:workshop, virtual?: true)
-      presenter = WorkshopPresenter.decorate(workshop)
+      presenter = described_class.decorate(workshop)
       expect(presenter).to be_a(VirtualWorkshopPresenter)
     end
   end
@@ -63,7 +63,7 @@ RSpec.describe WorkshopPresenter do
 
     it 'when there are no organisers' do
       workshop = Fabricate(:workshop, chapter: Fabricate(:chapter_without_organisers))
-      presenter = WorkshopPresenter.new(workshop)
+      presenter = described_class.new(workshop)
 
       expect(presenter.organisers).to be_empty
     end
@@ -83,7 +83,7 @@ RSpec.describe WorkshopPresenter do
     it '#start_time and #end_time' do
       travel_to(Time.current) do
         workshop = double(:workshop, date_and_time: Time.current, ends_at: 1.hour.from_now)
-        presenter = WorkshopPresenter.new(workshop)
+        presenter = described_class.new(workshop)
 
         expect(presenter.start_time).to eq(I18n.l(workshop.date_and_time, format: :time))
         expect(presenter.end_time).to eq(I18n.l(workshop.ends_at, format: :time))
@@ -128,7 +128,7 @@ RSpec.describe WorkshopPresenter do
 
   it '#attendees_emails' do
     workshop = Fabricate(:workshop)
-    presenter = WorkshopPresenter.new(workshop)
+    presenter = described_class.new(workshop)
     members = Fabricate.times(2, :member)
     members.each_with_index do |member, index|
       if index.even?

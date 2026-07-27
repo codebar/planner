@@ -1,5 +1,5 @@
 RSpec.describe ContactPresenter do
-  let(:contact_presenter) { ContactPresenter.new(contact) }
+  let(:contact_presenter) { described_class.new(contact) }
   let(:contact) { Fabricate(:contact) }
 
   context '#full_name' do

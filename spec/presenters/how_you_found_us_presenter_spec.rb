@@ -13,7 +13,7 @@ RSpec.describe HowYouFoundUsPresenter do
 
   let(:chapter) { Fabricate(:chapter_without_organisers) }
   let(:group) { Fabricate(:group, chapter: chapter) }
-  let(:presenter) { HowYouFoundUsPresenter.new(chapter) }
+  let(:presenter) { described_class.new(chapter) }
 
   describe '#by_percentage' do
     it 'returns integer percentages for all enum values in enum order using largest remainder rounding' do

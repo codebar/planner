@@ -1,14 +1,14 @@
 RSpec.describe SponsorPresenter do
-  let(:sponsor_presenter) { SponsorPresenter.new(sponsor) }
+  let(:sponsor_presenter) { described_class.new(sponsor) }
   let(:sponsor) { Fabricate(:sponsor, contacts: contacts) }
   let(:contact) { Fabricate(:contact) }
   let(:contacts) { [contact] }
 
   context '#decorate_collection' do
     it 'decorates a collection of Sponsors' do
-      expect(SponsorPresenter).to receive(:new).with(sponsor)
+      expect(described_class).to receive(:new).with(sponsor)
 
-      SponsorPresenter.decorate_collection([sponsor])
+      described_class.decorate_collection([sponsor])
     end
   end
 

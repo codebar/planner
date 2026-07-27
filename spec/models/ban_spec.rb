@@ -24,13 +24,13 @@ RSpec.describe Ban do
     context 'active' do
       it 'includes bans expiring in the future' do
         ban = Fabricate(:ban, expires_at: Time.zone.now + 1.minute)
-        expect(Ban.active).to include(ban)
+        expect(described_class.active).to include(ban)
       end
 
       it 'excludes expired bans' do
         ban = Fabricate(:ban, expires_at: Time.zone.now + 1.minute)
         travel 5.minutes do
-          expect(Ban.active).to_not include(ban)
+          expect(described_class.active).to_not include(ban)
         end
       end
     end

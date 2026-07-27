@@ -13,21 +13,21 @@ RSpec.describe EventInvitationMailer do
 
     it '#invite_student skips delivery without crashing' do
       expect {
-        EventInvitationMailer.invite_student(event, bad_member, bad_invitation).deliver_now
+        described_class.invite_student(event, bad_member, bad_invitation).deliver_now
       }.not_to raise_error
       expect(ActionMailer::Base.deliveries).to be_empty
     end
 
     it '#invite_coach skips delivery without crashing' do
       expect {
-        EventInvitationMailer.invite_coach(event, bad_member, bad_invitation).deliver_now
+        described_class.invite_coach(event, bad_member, bad_invitation).deliver_now
       }.not_to raise_error
       expect(ActionMailer::Base.deliveries).to be_empty
     end
 
     it '#attending skips delivery without crashing' do
       expect {
-        EventInvitationMailer.attending(event, bad_member, bad_invitation).deliver_now
+        described_class.attending(event, bad_member, bad_invitation).deliver_now
       }.not_to raise_error
       expect(ActionMailer::Base.deliveries).to be_empty
     end
@@ -35,7 +35,7 @@ RSpec.describe EventInvitationMailer do
 
   it '#invite_student' do
     email_subject = "Invitation: #{event.name}"
-    EventInvitationMailer.invite_student(event, member, invitation).deliver_now
+    described_class.invite_student(event, member, invitation).deliver_now
 
     expect(email.subject).to eq(email_subject)
     expect(email.body.encoded).to match('hello@codebar.io')
@@ -44,7 +44,7 @@ RSpec.describe EventInvitationMailer do
   describe '#invite_coach' do
     it 'sends a generic invitation if the event has no audiencce' do
       email_subject = "Invitation: #{event.name}"
-      EventInvitationMailer.invite_coach(event, member, invitation).deliver_now
+      described_class.invite_coach(event, member, invitation).deliver_now
 
       expect(email.subject).to eq(email_subject)
       expect(email.body.encoded).to match('hello@codebar.io')
@@ -52,7 +52,7 @@ RSpec.describe EventInvitationMailer do
 
     it 'sends a coach invitation of the event is for coaches' do
       email_subject = "Coach Invitation: #{event.name}"
-      EventInvitationMailer.invite_coach(coach_event, member, invitation).deliver_now
+      described_class.invite_coach(coach_event, member, invitation).deliver_now
 
       expect(email.subject).to eq(email_subject)
       expect(email.body.encoded).to match('hello@codebar.io')
@@ -61,7 +61,7 @@ RSpec.describe EventInvitationMailer do
 
   it '#attending' do
     email_subject = "Your spot to #{event.name} has been confirmed."
-    EventInvitationMailer.attending(event, member, invitation).deliver_now
+    described_class.attending(event, member, invitation).deliver_now
 
     expect(email.subject).to eq(email_subject)
     expect(email.body.encoded).to match('hello@codebar.io')
@@ -77,14 +77,14 @@ RSpec.describe EventInvitationMailer do
     let(:invitation_with_html) { Fabricate(:invitation, event: event_with_html, member: member) }
 
     it 'sanitizes description in invite_student email' do
-      EventInvitationMailer.invite_student(event_with_html, member, invitation_with_html).deliver_now
+      described_class.invite_student(event_with_html, member, invitation_with_html).deliver_now
 
       expect(email.body.encoded).not_to include('<script>')
       expect(email.body.encoded).to include('Safe content')
     end
 
     it 'sanitizes description in invite_coach email' do
-      EventInvitationMailer.invite_coach(event_with_html, member, invitation_with_html).deliver_now
+      described_class.invite_coach(event_with_html, member, invitation_with_html).deliver_now
 
       expect(email.body.encoded).not_to include('<script>')
       expect(email.body.encoded).to include('Safe content')
