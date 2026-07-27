@@ -72,7 +72,8 @@ RSpec.describe Flodesk do
             "name": "codebar"
           }
         ]
-      }] }
+      }]
+      }
 
       expect(client.subscribed?(**payload)).to be true
 
@@ -95,7 +96,8 @@ RSpec.describe Flodesk do
             "name": "not codebar"
           }
         ]
-      }] }
+      }]
+      }
 
       expect(client.subscribed?(**payload)).to be false
 
@@ -118,7 +120,8 @@ RSpec.describe Flodesk do
             "name": "codebar"
           }
         ]
-      }] }
+      }]
+      }
 
       expect(client.subscribed?(**payload)).to be false
 
