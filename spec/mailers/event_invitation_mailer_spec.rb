@@ -70,9 +70,9 @@ RSpec.describe EventInvitationMailer do
   describe 'XSS protection' do
     let(:event_with_html) do
       Fabricate(:event,
-        date_and_time: Time.zone.local(2017, 11, 12, 10, 0),
-        name: 'Test event',
-        description: '<script>alert("xss")</script><p>Safe content</p>')
+                date_and_time: Time.zone.local(2017, 11, 12, 10, 0),
+                name: 'Test event',
+                description: '<script>alert("xss")</script><p>Safe content</p>')
     end
     let(:invitation_with_html) { Fabricate(:invitation, event: event_with_html, member: member) }
 
