@@ -1,5 +1,5 @@
 RSpec.describe ChapterPolicy do
-  subject { described_class.new(user, chapter) }
+  subject(:policy) { described_class.new(user, chapter) }
 
   let(:chapter) { Fabricate(:chapter) }
   let(:admin) { Fabricate(:member).tap { |m| m.add_role(:admin) } }
@@ -10,7 +10,7 @@ RSpec.describe ChapterPolicy do
       let(:user) { admin }
 
       it 'permits access' do
-        expect(subject.index?).to be true
+        expect(policy.index?).to be true
       end
     end
 
@@ -18,7 +18,7 @@ RSpec.describe ChapterPolicy do
       let(:user) { regular_member }
 
       it 'denies access' do
-        expect(subject.index?).to be false
+        expect(policy.index?).to be false
       end
     end
   end
@@ -28,7 +28,7 @@ RSpec.describe ChapterPolicy do
       let(:user) { admin }
 
       it 'permits access' do
-        expect(subject.create?).to be true
+        expect(policy.create?).to be true
       end
     end
 
@@ -36,7 +36,7 @@ RSpec.describe ChapterPolicy do
       let(:user) { regular_member }
 
       it 'denies access' do
-        expect(subject.create?).to be false
+        expect(policy.create?).to be false
       end
     end
   end
@@ -46,7 +46,7 @@ RSpec.describe ChapterPolicy do
       let(:user) { admin }
 
       it 'permits access' do
-        expect(subject.show?).to be true
+        expect(policy.show?).to be true
       end
     end
 
@@ -54,7 +54,7 @@ RSpec.describe ChapterPolicy do
       let(:user) { regular_member }
 
       it 'denies access' do
-        expect(subject.show?).to be false
+        expect(policy.show?).to be false
       end
     end
   end
@@ -64,7 +64,7 @@ RSpec.describe ChapterPolicy do
       let(:user) { admin }
 
       it 'permits access' do
-        expect(subject.edit?).to be true
+        expect(policy.edit?).to be true
       end
     end
 
@@ -72,7 +72,7 @@ RSpec.describe ChapterPolicy do
       let(:user) { regular_member }
 
       it 'denies access' do
-        expect(subject.edit?).to be false
+        expect(policy.edit?).to be false
       end
     end
   end
@@ -82,7 +82,7 @@ RSpec.describe ChapterPolicy do
       let(:user) { admin }
 
       it 'permits access' do
-        expect(subject.update?).to be true
+        expect(policy.update?).to be true
       end
     end
 
@@ -90,7 +90,7 @@ RSpec.describe ChapterPolicy do
       let(:user) { regular_member }
 
       it 'denies access' do
-        expect(subject.update?).to be false
+        expect(policy.update?).to be false
       end
     end
   end
@@ -100,7 +100,7 @@ RSpec.describe ChapterPolicy do
       let(:user) { admin }
 
       it 'permits access' do
-        expect(subject.members?).to be true
+        expect(policy.members?).to be true
       end
     end
 
@@ -108,7 +108,7 @@ RSpec.describe ChapterPolicy do
       let(:user) { regular_member }
 
       it 'denies access' do
-        expect(subject.members?).to be false
+        expect(policy.members?).to be false
       end
     end
   end

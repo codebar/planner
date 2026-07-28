@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe InvitationLogPolicy do
-  subject { described_class.new(user, invitation_log) }
+  subject(:policy) { described_class.new(user, invitation_log) }
 
   let(:workshop) { Fabricate(:workshop) }
   let(:invitation_log) { Fabricate(:invitation_log, loggable: workshop) }
@@ -18,7 +18,7 @@ RSpec.describe InvitationLogPolicy do
       let(:user) { admin }
 
       it 'permits access' do
-        expect(subject.index?).to be true
+        expect(policy.index?).to be true
       end
     end
 
@@ -26,7 +26,7 @@ RSpec.describe InvitationLogPolicy do
       let(:user) { chapter_organiser }
 
       it 'permits access' do
-        expect(subject.index?).to be true
+        expect(policy.index?).to be true
       end
     end
 
@@ -34,7 +34,7 @@ RSpec.describe InvitationLogPolicy do
       let(:user) { regular_member }
 
       it 'denies access' do
-        expect(subject.index?).to be false
+        expect(policy.index?).to be false
       end
     end
   end
@@ -44,7 +44,7 @@ RSpec.describe InvitationLogPolicy do
       let(:user) { admin }
 
       it 'permits access' do
-        expect(subject.show?).to be true
+        expect(policy.show?).to be true
       end
     end
 
@@ -52,7 +52,7 @@ RSpec.describe InvitationLogPolicy do
       let(:user) { chapter_organiser }
 
       it 'permits access' do
-        expect(subject.show?).to be true
+        expect(policy.show?).to be true
       end
     end
 
@@ -60,7 +60,7 @@ RSpec.describe InvitationLogPolicy do
       let(:user) { regular_member }
 
       it 'denies access' do
-        expect(subject.show?).to be false
+        expect(policy.show?).to be false
       end
     end
   end

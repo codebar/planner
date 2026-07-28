@@ -40,7 +40,7 @@ RSpec.describe Workshop do
     end
 
     context 'if virtual' do
-      before { allow(subject).to receive(:virtual?).and_return(true) }
+      before { allow(workshop).to receive(:virtual?).and_return(true) }
 
       it { is_expected.to validate_presence_of(:slack_channel) }
       it { is_expected.to validate_presence_of(:slack_channel_link) }

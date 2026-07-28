@@ -457,27 +457,6 @@ RSpec/MultipleMemoizedHelpers:
     - 'spec/services/invitation_manager_spec.rb'
     - 'spec/services/three_month_email_service_spec.rb'
 
-# Offense count: 73
-# Configuration parameters: EnforcedStyle, IgnoreSharedExamples.
-# SupportedStyles: always, named_only
-RSpec/NamedSubject:
-  Exclude:
-    - 'spec/models/group_spec.rb'
-    - 'spec/models/workshop_invitation_spec.rb'
-    - 'spec/models/workshop_spec.rb'
-    - 'spec/policies/admin_portal_policy_spec.rb'
-    - 'spec/policies/application_policy_spec.rb'
-    - 'spec/policies/chapter_policy_spec.rb'
-    - 'spec/policies/contact_policy_spec.rb'
-    - 'spec/policies/event_policy_spec.rb'
-    - 'spec/policies/group_policy_spec.rb'
-    - 'spec/policies/invitation_log_policy_spec.rb'
-    - 'spec/policies/member_note_policy_spec.rb'
-    - 'spec/policies/organiser_policy_spec.rb'
-    - 'spec/policies/sponsor_policy_spec.rb'
-    - 'spec/policies/testimonial_policy_spec.rb'
-    - 'spec/policies/workshop_policy_spec.rb'
-
 # Offense count: 4
 RSpec/RepeatedExample:
   Exclude:

@@ -61,7 +61,7 @@ RSpec.describe Sponsor do
     end
 
     it 'defines enum level' do
-      is_expected.to define_enum_for(:level)
+      expect(sponsor).to define_enum_for(:level)
         .with_values(%i[hidden standard bronze silver gold community])
     end
   end
