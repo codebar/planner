@@ -37,7 +37,7 @@ if ENV['COVERAGE'] == 'true'
 end
 
 ENV['RAILS_ENV'] ||= 'test'
-require File.expand_path('../../config/environment', __FILE__)
+require File.expand_path('../config/environment', __dir__)
 require 'rspec/rails'
 
 # Block all external HTTP requests in tests; allows localhost for Capybara
