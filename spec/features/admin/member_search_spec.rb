@@ -13,5 +13,4 @@ RSpec.feature 'admin member search', type: :feature do
 
     expect(page).to have_text('Juliet Capulet')
   end
-
 end

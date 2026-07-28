@@ -18,5 +18,4 @@ RSpec.feature 'A visitor to the website', type: :feature do
 
     expect(page).to have_text('Page not found')
   end
-
 end

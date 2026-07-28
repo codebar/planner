@@ -86,5 +86,4 @@ RSpec.describe EventCardComponent, type: :component do
       expect(page).to have_text('Attending')
     end
   end
-
 end

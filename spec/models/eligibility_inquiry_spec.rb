@@ -8,6 +8,5 @@ RSpec.describe EligibilityInquiry do
 
       expect(eligibility_inquiry.issued_by).to eq(admin)
     end
-
   end
 end
