@@ -133,8 +133,8 @@ RSpec.describe OmniAuth::Strategies::Codebar do
 
     it 'sends a custom User-Agent on token exchange requests' do
       stub = stub_request(:post, token_url)
-        .with(headers: { 'User-Agent' => 'Codebar Planner/1.0' })
-        .to_return(status: 400, body: '{"error":"invalid_grant"}')
+             .with(headers: { 'User-Agent' => 'Codebar Planner/1.0' })
+             .to_return(status: 400, body: '{"error":"invalid_grant"}')
 
       env = build_env('/auth/codebar/callback',
         query: 'code=abc&state=some-state',
