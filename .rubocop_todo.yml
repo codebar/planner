@@ -21,11 +21,6 @@ Capybara/RSpec/VisibilityMatcher:
     - 'spec/controllers/admin/member_notes_controller_spec.rb'
     - 'spec/services/three_month_email_service_spec.rb'
 
-# Offense count: 2
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: AllowSafeAssignment.
-Lint/AssignmentInCondition:
-  Exclude:
     - 'app/controllers/application_controller.rb'
     - 'app/models/feedback.rb'
 
