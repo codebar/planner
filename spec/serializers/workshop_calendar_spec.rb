@@ -46,7 +46,7 @@ RSpec.describe WorkshopCalendar do
         expect(event.summary).to eq("codebar @ #{workshop.host.name}")
         expect(event.location.to_s).to eq(AddressPresenter.new(workshop.host.address).to_s)
         expect(event.url.to_s).to eq(invitation_url)
-        expect(event.description).to include("Declining or removing this event from your calendar does not update your invitation")
+        expect(event.description).to include('Declining or removing this event from your calendar does not update your invitation')
         expect(event.description).to include(invitation_url)
       end
     end

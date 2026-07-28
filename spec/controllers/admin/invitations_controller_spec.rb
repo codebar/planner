@@ -3,48 +3,48 @@ RSpec.describe Admin::InvitationsController, type: :controller do
   let(:workshop) { invitation.workshop }
   let(:admin) { Fabricate(:chapter_organiser) }
 
-  describe "PUT #update" do
+  describe 'PUT #update' do
     before do
       admin.add_role(:organiser, workshop.chapter)
 
       login admin
-      request.env["HTTP_REFERER"] = "/admin/member/3"
+      request.env['HTTP_REFERER'] = '/admin/member/3'
     end
 
-    it "Successfuly updates an invitation" do
+    it 'Successfuly updates an invitation' do
       expect(invitation.attending).to be_nil
 
-      put :update, params: { id: invitation.token, workshop_id: workshop.id, attending: "true" }
+      put :update, params: { id: invitation.token, workshop_id: workshop.id, attending: 'true' }
 
       expect(invitation.reload.attending).to be true
-      expect(flash[:notice]).to match("You have added")
+      expect(flash[:notice]).to match('You have added')
     end
 
     # While similar to the previous test, this specifically tests that organisers
     # have the ability to manually add a student to the workshop that has not
     # selected a tutorial. This is helpful for when a student shows up for a
     # workshop they have not have a spot — this happens from time to time.
-    it "Successfuly adds a user as attenting, even without a tutorial" do
+    it 'Successfuly adds a user as attenting, even without a tutorial' do
       invitation.update_attribute(:tutorial, nil)
       expect(invitation.automated_rsvp).to be_nil
 
-      put :update, params: { id: invitation.token, workshop_id: workshop.id, attending: "true" }
+      put :update, params: { id: invitation.token, workshop_id: workshop.id, attending: 'true' }
       invitation.reload
 
       expect(invitation.attending).to be true
       expect(invitation.automated_rsvp).to be true
-      expect(flash[:notice]).to match("You have added")
+      expect(flash[:notice]).to match('You have added')
     end
 
-    it "Records the organiser ID that overrides an invitations" do
-      put :update, params: { id: invitation.token, workshop_id: workshop.id, attending: "true" }
+    it 'Records the organiser ID that overrides an invitations' do
+      put :update, params: { id: invitation.token, workshop_id: workshop.id, attending: 'true' }
       invitation.reload
 
       expect(invitation.last_overridden_by_id).to be admin.id
     end
   end
 
-  describe "PUT #update with attended param" do
+  describe 'PUT #update with attended param' do
     let(:workshop) { Fabricate(:workshop, date_and_time: Time.zone.now - 1.day) }
     let(:invitation) { Fabricate(:workshop_invitation, workshop: workshop, attending: true) }
     let(:admin) { Fabricate(:chapter_organiser) }
@@ -52,10 +52,10 @@ RSpec.describe Admin::InvitationsController, type: :controller do
     before do
       admin.add_role(:organiser, workshop.chapter)
       login admin
-      request.env["HTTP_REFERER"] = "/admin/workshop/#{workshop.id}"
+      request.env['HTTP_REFERER'] = "/admin/workshop/#{workshop.id}"
     end
 
-    it "renders the attendance row partial via XHR when verifying" do
+    it 'renders the attendance row partial via XHR when verifying' do
       put :update, params: { id: invitation.token, workshop_id: workshop.id, attended: true }, xhr: true
 
       expect(response).to have_http_status(:success)
@@ -63,7 +63,7 @@ RSpec.describe Admin::InvitationsController, type: :controller do
       expect(invitation.reload.attended).to be true
     end
 
-    it "renders the attendance row partial via XHR when unverifying" do
+    it 'renders the attendance row partial via XHR when unverifying' do
       invitation.update!(attended: true)
 
       put :update, params: { id: invitation.token, workshop_id: workshop.id, attended: false }, xhr: true

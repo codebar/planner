@@ -102,7 +102,7 @@ RSpec.feature 'Accepting a workshop invitation', type: :feature do
           click_on 'Update note'
 
           expect(page).to have_field('workshop_invitation_note', with: note)
-          expect(page).to have_text("Invitation details successfully updated.")
+          expect(page).to have_text('Invitation details successfully updated.')
         end
       end
     end

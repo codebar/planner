@@ -2,7 +2,7 @@ RSpec.shared_examples 'member viewing workshop' do |workshop_type, member_type, 
   context workshop_type do
     let(:workshop) { Fabricate(workshop_type) }
 
-    scenario "allowed can manage" do
+    scenario 'allowed can manage' do
       member = Fabricate(member_type)
       login(member)
       visit workshop_path(workshop)

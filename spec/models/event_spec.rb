@@ -1,7 +1,7 @@
 RSpec.describe Event do
   subject(:event) { Fabricate(:event) }
 
-  include_examples "Invitable", :invitation, :event
+  include_examples 'Invitable', :invitation, :event
   include_examples DateTimeConcerns, :event
 
   context 'validates' do
@@ -16,7 +16,7 @@ RSpec.describe Event do
     it { is_expected.to validate_numericality_of(:coach_spaces) }
     it { is_expected.to validate_numericality_of(:student_spaces) }
 
-    context "#invitablility" do
+    context '#invitablility' do
       it 'does not validate if invitable false' do
         event.invitable = false
         event.coach_spaces = nil

@@ -41,7 +41,7 @@ module SelectFromTomSelect
     # Click the matching option
     # Use JavaScript click to avoid element interception issues
     option = wrapper.find('.ts-dropdown .option', text: item_text, match: :prefer_exact)
-    page.execute_script("arguments[0].click();", option.native)
+    page.execute_script('arguments[0].click();', option.native)
   end
 
   # Remove an item from a TomSelect multi-select
