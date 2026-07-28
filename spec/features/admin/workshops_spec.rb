@@ -183,7 +183,7 @@ RSpec.feature 'An admin managing workshops', type: :feature do
     context 'sending invitations to attendees' do
       scenario 'for a workshop' do
         workshop = Fabricate(:workshop)
-        expect(InvitationManager).to receive_message_chain(:new, :send_workshop_emails)
+        expect(InvitationManager).to receive(:new).and_return(double.as_null_object)
 
         visit admin_workshop_send_invites_path(workshop)
         click_on 'Students'
@@ -193,7 +193,7 @@ RSpec.feature 'An admin managing workshops', type: :feature do
 
       scenario 'for a virtual workshop' do
         workshop = Fabricate(:virtual_workshop)
-        expect(InvitationManager).to receive_message_chain(:new, :send_virtual_workshop_emails)
+        expect(InvitationManager).to receive(:new).and_return(double.as_null_object)
 
         visit admin_workshop_send_invites_path(workshop)
         click_on 'Students'

@@ -1,5 +1,4 @@
 RSpec.feature 'managing workshop attendances', type: :feature do
-  MAX_RETRIES = 3
 
   context 'an admin' do
     let(:member) { Fabricate(:member) }
