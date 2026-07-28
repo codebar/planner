@@ -218,7 +218,6 @@ module OmniAuth
         Rails.logger.warn "Codebar auth: JWKS fetch failed: #{e.class}: #{e.message}"
         nil
       end
-
     end
   end
 end
