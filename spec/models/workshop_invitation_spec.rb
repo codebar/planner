@@ -79,7 +79,7 @@ RSpec.describe WorkshopInvitation do
       old_workshop = Fabricate(:workshop, date_and_time: Time.zone.now - 2.years)
 
       2.times { Fabricate(:attended_coach, workshop: new_workshop) }
-      1.times { Fabricate(:attended_coach, workshop: old_workshop) }
+      Fabricate(:attended_coach, workshop: old_workshop)
 
       expect(described_class.year(Time.zone.now.year).count).to eq(2)
       expect(described_class.year((Time.zone.now - 2.years).year).count).to eq(1)

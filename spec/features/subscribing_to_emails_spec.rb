@@ -15,7 +15,7 @@ RSpec.feature 'Managing subscriptions', type: :feature do
     end
 
     scenario '#unsubscribe' do
-      subscription = Fabricate.create(:subscription, member: member, group: group)
+      Fabricate.create(:subscription, member: member, group: group)
       visit subscriptions_path
 
       click_on 'Subscribed'

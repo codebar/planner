@@ -7,7 +7,7 @@ RSpec.describe Admin::MemberNotesController, type: :controller do
     it "Doesn't allow anonymous users to create notes" do
       expect do
         post :create, params: { member_note: { note: member_note.note, member_id: member.id } }
-      end.not_to change { MemberNote.all.count }
+      end.not_to(change { MemberNote.all.count })
     end
 
     it "Doesn't allow regular users to create notes" do
@@ -15,7 +15,7 @@ RSpec.describe Admin::MemberNotesController, type: :controller do
 
       expect do
         post :create, params: { member_note: { note: member_note.note, member_id: member.id } }
-      end.not_to change { MemberNote.all.count }
+      end.not_to(change { MemberNote.all.count })
     end
 
     it 'Allows chapter organisers to create notes' do
@@ -30,7 +30,7 @@ RSpec.describe Admin::MemberNotesController, type: :controller do
     it "Doesn't allow blank notes to be created" do
       expect do
         post :create, params: { member_note: { note: ' ', member_id: member.id } }
-      end.not_to change { MemberNote.all.count }
+      end.not_to(change { MemberNote.all.count })
     end
   end
 end
