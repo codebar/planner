@@ -1,7 +1,7 @@
 RSpec.describe 'Add a user to an existing workshop', js: true, type: :feature do
   let(:member) {Fabricate(:member)}
 
-  let!(:juliet) {Fabricate(:member, name: 'Juliet',  surname: 'Capulet')}
+  let!(:juliet) {Fabricate(:member, name: 'Juliet', surname: 'Capulet')}
   let!(:romeo) { Fabricate(:member, name: 'Romeo', surname: 'Montague') }
   let(:workshop) {Fabricate(:workshop)}
 
