@@ -17,5 +17,4 @@ class FeedbackRequest < ApplicationRecord
       break random_token unless self.class.where(token: random_token).exists?
     end
   end
-
 end

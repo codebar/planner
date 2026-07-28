@@ -106,6 +106,7 @@ module OmniAuth
         call_app!
       rescue StandardError => e
         return if env['omniauth.error']
+
         return fail!(:unknown_error, e)
       end
 
@@ -217,7 +218,6 @@ module OmniAuth
         Rails.logger.warn "Codebar auth: JWKS fetch failed: #{e.class}: #{e.message}"
         nil
       end
-
     end
   end
 end
