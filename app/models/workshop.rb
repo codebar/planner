@@ -160,6 +160,7 @@ class Workshop < ApplicationRecord
   def rsvp_close_before_workshop_start
     return unless rsvp_closes_at && date_and_time
     return if rsvp_closes_at < date_and_time
+
     errors.add(:rsvp_close_local_date, "must be before the workshop start time")
   end
 end
