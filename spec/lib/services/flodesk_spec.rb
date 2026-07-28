@@ -2,7 +2,7 @@ require 'json'
 require 'flodesk'
 
 RSpec.describe Flodesk do
-  let(:stub)  { Faraday::Adapter::Test::Stubs.new }
+  let(:stub) { Faraday::Adapter::Test::Stubs.new }
   let(:conn)   { Faraday.new { |b| b.adapter(:test, stub) } }
   let(:client) { Flodesk::Client.new }
 

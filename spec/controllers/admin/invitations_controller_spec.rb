@@ -15,7 +15,7 @@ RSpec.describe Admin::InvitationsController, type: :controller do
 
     it "Successfuly updates an invitation" do
       put :update, params: { id: invitation.token, workshop_id: workshop.id, attending: "true" }
-      
+
       expect(invitation.reload.attending).to be true
       expect(flash[:notice]).to match("You have added")
     end
@@ -39,7 +39,7 @@ RSpec.describe Admin::InvitationsController, type: :controller do
     it "Records the organiser ID that overrides an invitations" do
       put :update, params: { id: invitation.token, workshop_id: workshop.id, attending: "true" }
       invitation.reload
-      
+
       expect(invitation.last_overridden_by_id).to be admin.id
     end
   end
