@@ -11,9 +11,9 @@ RSpec.describe FeedbackRequestMailer do
     before { allow(bad_member).to receive(:email).and_return('invalid-email') }
 
     it '#request_feedback skips delivery without crashing' do
-      expect {
+      expect do
         described_class.request_feedback(workshop, bad_member, bad_feedback_request).deliver_now
-      }.not_to raise_error
+      end.not_to raise_error
       expect(ActionMailer::Base.deliveries).to be_empty
     end
   end

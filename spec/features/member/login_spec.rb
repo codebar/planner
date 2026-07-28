@@ -19,9 +19,9 @@ RSpec.feature 'Member logging in', type: :feature do
     it 'registers a user that does not have an account' do
       mock_auth_hash
       visit root_path
-      expect {
+      expect do
         click_link 'Sign in'
-      }.to change { Member.count }.by(1)
+      end.to change { Member.count }.by(1)
     end
   end
 end

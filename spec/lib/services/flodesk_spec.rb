@@ -62,7 +62,7 @@ RSpec.describe Flodesk do
         segment_ids: ["segment_id"]
       }
 
-      stub.get("/subscribers/#{payload[:email]}") {
+      stub.get("/subscribers/#{payload[:email]}") do
         [200, {}, {
           "id": "123456789",
           "status": "active",
@@ -74,7 +74,7 @@ RSpec.describe Flodesk do
             }
           ]
         }]
-      }
+      end
 
       expect(client.subscribed?(**payload)).to be true
 
@@ -87,7 +87,7 @@ RSpec.describe Flodesk do
         segment_ids: ["segment_id"]
       }
 
-      stub.get("/subscribers/#{payload[:email]}") {
+      stub.get("/subscribers/#{payload[:email]}") do
         [200, {}, {
           "id": "123456789",
           "status": "active",
@@ -99,7 +99,7 @@ RSpec.describe Flodesk do
             }
           ]
         }]
-      }
+      end
 
       expect(client.subscribed?(**payload)).to be false
 
@@ -112,7 +112,7 @@ RSpec.describe Flodesk do
         segment_ids: ["segment_id"]
       }
 
-      stub.get("/subscribers/#{payload[:email]}") {
+      stub.get("/subscribers/#{payload[:email]}") do
         [200, {}, {
           "id": "123456789",
           "status": "unsubscribed",
@@ -124,7 +124,7 @@ RSpec.describe Flodesk do
             }
           ]
         }]
-      }
+      end
 
       expect(client.subscribed?(**payload)).to be false
 
