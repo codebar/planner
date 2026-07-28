@@ -26,6 +26,16 @@ form .hint {
   margin-bottom: 1.14286rem;
 }
 
+.add-all-chapters {
+  cursor: pointer;
+  font-weight: bold;
+  padding: 8px 6px 4px;
+}
+
+.add-all-chapters:hover {
+  color: #1e90ff;
+}
+
 .small-image {
   max-height: 100px;
 }
