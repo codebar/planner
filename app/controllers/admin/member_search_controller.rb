@@ -4,7 +4,7 @@ class Admin::MemberSearchController < Admin::ApplicationController
                       params.expect(member_search: [:name, :callback_url])
     else
                       {}
-                    end
+    end
 
     callback_url = search_params[:callback_url] || params[:callback_url] || results_admin_member_search_index_path
     name = search_params[:name]
