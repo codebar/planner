@@ -78,6 +78,7 @@ RSpec.feature 'Managing sponsors', type: :feature do
         expect(page).to have_content 'Office is located on the third floor.'
       end
     end
+
     context 'with existing avatar' do
       it 'shows the current avatar on the edit page' do
         sponsor = Fabricate(:sponsor)
