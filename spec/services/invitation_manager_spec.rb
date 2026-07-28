@@ -149,6 +149,7 @@ RSpec.describe InvitationManager do
     it 'emails everyone that hasn\'t already been reminded from the workshop\'s waitinglist' do
       workshop = Fabricate(:workshop)
       invitations = Fabricate.times(2, :waitinglist_invitation, workshop: workshop)
+      reminded_at = 2.days.ago
       reminded_invitations = Fabricate.times(2, :waitinglist_invitation_reminded, workshop: workshop)
 
       expect {
@@ -157,7 +158,7 @@ RSpec.describe InvitationManager do
 
       invitations.each { |invitation| expect(invitation.reload.reminded_at).not_to be_nil }
       reminded_invitations.each do |invitation|
-        expect(invitation.reload.reminded_at).to be_within(1.second).of(2.days.ago)
+        expect(invitation.reload.reminded_at).to be_within(1.second).of(reminded_at)
       end
 
       emails = ActionMailer::Base.deliveries.last(invitations.count)
