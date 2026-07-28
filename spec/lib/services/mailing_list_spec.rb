@@ -19,9 +19,9 @@ RSpec.describe Services::MailingList do
       expect(client).to receive(:subscribe)
         .with({
                 email: :email,
-          first_name: :first_name,
-          last_name: :last_name,
-          segment_ids: [:list_id]
+                first_name: :first_name,
+                last_name: :last_name,
+                segment_ids: [:list_id]
               })
 
       mailing_list.subscribe(:email, :first_name, :last_name)
