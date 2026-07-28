@@ -16,7 +16,7 @@ RSpec.describe Invitation do
     it 'checks if there are any available spaces for students at the event' do
       student_invitation = Fabricate(:invitation)
 
-      expect(student_invitation.student_spaces?).to eq(true)
+      expect(student_invitation.student_spaces?).to be(true)
     end
   end
 
@@ -24,7 +24,7 @@ RSpec.describe Invitation do
     it 'checks if there are any available spaces for coaches at the event' do
       coach_invitation = Fabricate(:coach_invitation)
 
-      expect(coach_invitation.coach_spaces?).to eq(true)
+      expect(coach_invitation.coach_spaces?).to be(true)
     end
   end
 end

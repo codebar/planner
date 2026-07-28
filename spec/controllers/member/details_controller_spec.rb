@@ -20,7 +20,7 @@ RSpec.describe Member::DetailsController do
 
         member.reload
         expect(I18n.t("member.details.edit.how_you_found_us_options.#{member.how_you_found_us}")).to eq('Social media')
-        expect(member.how_you_found_us_other_reason).to eq(nil)
+        expect(member.how_you_found_us_other_reason).to be_nil
         expect(response).to redirect_to(step2_member_path)
       end
 

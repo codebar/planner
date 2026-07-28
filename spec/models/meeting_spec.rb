@@ -54,14 +54,14 @@ RSpec.describe Meeting do
       meeting = Fabricate(:meeting)
       Fabricate(:attending_meeting_invitation, meeting: meeting)
 
-      expect(meeting.not_full).to eq(true)
+      expect(meeting.not_full).to be(true)
     end
 
     it 'returns false if meeting is full' do
       meeting = Fabricate(:meeting)
       Fabricate.times(21, :attending_meeting_invitation, meeting: meeting)
 
-      expect(meeting.not_full).to eq(false)
+      expect(meeting.not_full).to be(false)
     end
   end
 

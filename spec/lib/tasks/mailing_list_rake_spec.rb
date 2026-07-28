@@ -34,6 +34,6 @@ RSpec.describe 'rake mailing_list:subscribe_active_members', type: :task do
 
     task.execute
 
-    subscribed.each { |subscriber| expect(subscriber.reload.opt_in_newsletter_at).not_to eq(nil) }
+    subscribed.each { |subscriber| expect(subscriber.reload.opt_in_newsletter_at).not_to be_nil }
   end
 end

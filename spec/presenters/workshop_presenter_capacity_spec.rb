@@ -17,7 +17,7 @@ RSpec.describe 'WorkshopPresenter capacity checks', type: :model do
       it 'returns false when no spaces are available' do
         expect(workshop.attending_students.count).to eq(2)
         expect(workshop.student_spaces).to eq(2)
-        expect(presenter.event_student_spaces?).to eq(false),
+        expect(presenter.event_student_spaces?).to be(false),
                                                    'Expected event_student_spaces? to be false when at capacity (2/2), but got true'
       end
     end
@@ -32,7 +32,7 @@ RSpec.describe 'WorkshopPresenter capacity checks', type: :model do
       it 'returns true when spaces are available' do
         expect(workshop.attending_students.count).to eq(1)
         expect(workshop.student_spaces).to eq(2)
-        expect(presenter.event_student_spaces?).to eq(true),
+        expect(presenter.event_student_spaces?).to be(true),
                                                    'Expected event_student_spaces? to be true when spaces available (1/2), but got false'
       end
     end
@@ -56,7 +56,7 @@ RSpec.describe 'WorkshopPresenter capacity checks', type: :model do
         expect(workshop_with_zero_spaces.attending_students.count).to eq(1)
         expect(workshop_with_zero_spaces.student_spaces).to eq(0)
         expect(presenter_zero_spaces.student_spaces).to eq(20), 'Capacity should come from sponsor'
-        expect(presenter_zero_spaces.event_student_spaces?).to eq(true),
+        expect(presenter_zero_spaces.event_student_spaces?).to be(true),
                                                                'Expected event_student_spaces? to be true when sponsor has capacity (1/20), but got false'
       end
     end
@@ -77,7 +77,7 @@ RSpec.describe 'WorkshopPresenter capacity checks', type: :model do
 
       it 'returns false when no coach spaces are available' do
         expect(workshop.attending_coaches.count).to eq(2)
-        expect(presenter.event_coach_spaces?).to eq(false),
+        expect(presenter.event_coach_spaces?).to be(false),
                                                  'Expected event_coach_spaces? to be false when at capacity (2/2), but got true'
       end
     end
@@ -91,7 +91,7 @@ RSpec.describe 'WorkshopPresenter capacity checks', type: :model do
 
       it 'returns true when coach spaces are available' do
         expect(workshop.attending_coaches.count).to eq(1)
-        expect(presenter.event_coach_spaces?).to eq(true),
+        expect(presenter.event_coach_spaces?).to be(true),
                                                  'Expected event_coach_spaces? to be true when spaces available (1/2), but got false'
       end
     end
@@ -115,7 +115,7 @@ RSpec.describe 'WorkshopPresenter capacity checks', type: :model do
         expect(workshop_with_zero_spaces.attending_coaches.count).to eq(1)
         expect(workshop_with_zero_spaces.coach_spaces).to eq(0)
         expect(presenter_zero_spaces.coach_spaces).to eq(10), 'Capacity should come from sponsor'
-        expect(presenter_zero_spaces.event_coach_spaces?).to eq(true),
+        expect(presenter_zero_spaces.event_coach_spaces?).to be(true),
                                                              'Expected event_coach_spaces? to be true when sponsor has capacity (1/10), but got false'
       end
     end
