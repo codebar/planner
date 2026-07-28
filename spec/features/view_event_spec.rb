@@ -53,7 +53,7 @@ RSpec.feature 'viewing an event', type: :feature do
           expect(page).to have_content('Your spot has not yet been confirmed. We will verify your attendance after you complete the questionnaire.')
         end
       end
-      
+
       context 'can not RSVP to an event' do
         it 'that is now in the past' do
           expect(current_path).to eq(event_path(closed_event))
@@ -61,7 +61,7 @@ RSpec.feature 'viewing an event', type: :feature do
           travel_into_the_future = Time.zone.now + 3.days
           allow(Time).to receive(:now).and_return(travel_into_the_future)
           visit event_path(closed_event)
-          
+
           expect(page).to have_content('This event has already occurred.')
           expect(page).not_to have_button('Attend as a coach')
           expect(page).not_to have_button('Attend as a student')
