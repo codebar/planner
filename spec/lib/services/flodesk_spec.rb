@@ -42,7 +42,7 @@ RSpec.describe Flodesk do
         segment_ids: [:segment_id],
       }
 
-      check = ->(request_body) do
+      check = lambda do |request_body|
         request_body == payload.slice(:segment_ids)
       end
 

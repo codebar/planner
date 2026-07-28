@@ -165,7 +165,7 @@ module OmniAuth
         jwks = fetch_jwks
         return nil unless jwks
 
-        decode = ->(jwks) {
+        decode = lambda { |jwks|
           JWT.decode(token, nil, true, {
                        algorithms: %w[RS256],
             jwks: jwks,
