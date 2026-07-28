@@ -152,5 +152,7 @@ $(function() {
     no_results_text: 'No results matched'
   });
 
-  $('[data-bs-toggle="tooltip"]').tooltip();
+  document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach((el) => {
+    new bootstrap.Tooltip(el);
+  });
 });

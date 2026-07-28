@@ -58,8 +58,8 @@ RSpec.feature 'Managing meetings', type: :feature do
       click_on 'Save'
 
       expect(page).to have_text('You have successfully updated the details of this meeting')
-      expect(page).to have_css(%(span[title="#{permissions.members.last.full_name}"]))
-      expect(page).to have_no_css(%(span[title="#{permissions.members.first.full_name}"]))
+      expect(page).to have_css(%(img[alt="#{permissions.members.last.full_name}"]))
+      expect(page).to have_no_css(%(img[alt="#{permissions.members.first.full_name}"]))
     end
 
     scenario 'adding an organiser', :js do
@@ -71,7 +71,7 @@ RSpec.feature 'Managing meetings', type: :feature do
 
       click_on 'Save'
 
-      expect(page).to have_css(%(span[title="#{new_organiser.full_name}"]))
+      expect(page).to have_css(%(img[alt="#{new_organiser.full_name}"]))
     end
   end
 
