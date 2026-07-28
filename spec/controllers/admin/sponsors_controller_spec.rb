@@ -3,7 +3,7 @@ RSpec.describe Admin::SponsorsController, type: :controller do
   let(:member1) { Fabricate(:member) }
   let(:address) { Fabricate(:address) }
   let(:admin) { Fabricate(:chapter_organiser) }
-  let(:avatar) { Rack::Test::UploadedFile.new(Rails.root.join('app', 'assets', 'images', 'logo.png'), 'image/png') }
+  let(:avatar) { Rack::Test::UploadedFile.new(Rails.root.join('app/assets/images/logo.png'), 'image/png') }
   let(:sponsor) { Fabricate(:sponsor) }
 
   describe 'POST #create' do
@@ -15,7 +15,7 @@ RSpec.describe Admin::SponsorsController, type: :controller do
             address: address, avatar: avatar, members: [1, 2]
           }
         }
-      end.to change(Sponsor, :count).by(0)
+      end.not_to change(Sponsor, :count)
     end
 
     it "Doesn't allow regular users to create sponsors" do
@@ -28,7 +28,7 @@ RSpec.describe Admin::SponsorsController, type: :controller do
             address: address, avatar: avatar
           }
         }
-      end.to change(Sponsor, :count).by(0)
+      end.not_to change(Sponsor, :count)
     end
 
     context 'Allows chapter organisers to create sponsors with' do
@@ -98,7 +98,7 @@ RSpec.describe Admin::SponsorsController, type: :controller do
             address: '', avatar: '', members: []
           }
         }
-      end.to change(Sponsor, :count).by(0)
+      end.not_to change(Sponsor, :count)
     end
   end
 

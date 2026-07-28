@@ -109,11 +109,11 @@ RSpec.describe Workshop do
       end
 
       context 'with rsvp_open' do
-        it_should_behave_like 'date_time_fields_must_be_paired', 'rsvp_open'
+        it_behaves_like 'date_time_fields_must_be_paired', 'rsvp_open'
       end
 
       context 'with rsvp_close' do
-        it_should_behave_like 'date_time_fields_must_be_paired', 'rsvp_close'
+        it_behaves_like 'date_time_fields_must_be_paired', 'rsvp_close'
       end
     end
 

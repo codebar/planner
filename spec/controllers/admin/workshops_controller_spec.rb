@@ -73,7 +73,7 @@ RSpec.describe Admin::WorkshopsController, type: :controller do
         it 'should successfully delete the workshop' do
           expect do
             delete :destroy, params: { id: workshop.id }
-          end.to change { Workshop.count }.by -1
+          end.to change { Workshop.count }.by(-1)
         end
 
         it 'should display workshop deleted successfully related flash message' do

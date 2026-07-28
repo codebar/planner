@@ -136,7 +136,7 @@ RSpec.feature 'Admin::Sponsors', type: :feature do
 
         within '#sponsorships' do
           expect(page).to have_text('Events')
-          expect(page).to have_text("#{gold_event.to_s} - GOLD")
+          expect(page).to have_text("#{gold_event} - GOLD")
           expect(page).to have_text("#{silver_event} - SILVER")
           expect(page).to have_text("#{standard_event} - Standard")
         end

@@ -40,7 +40,7 @@ RSpec.feature 'An admin managing workshops', type: :feature do
   context '#creation' do
     context 'creating a workshop' do
       around do |example|
-        travel_to Time.zone.local(2020, 12, 01, 0, 0, 0)
+        travel_to Time.zone.local(2020, 12, 0o1, 0, 0, 0)
         example.run
         travel_back
       end
