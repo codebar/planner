@@ -58,10 +58,6 @@ Lint/MissingSuper:
   Exclude:
     - 'app/components/event_card_component.rb'
 
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-Lint/RedundantStringCoercion:
-  Exclude:
     - 'spec/features/admin/sponsor_spec.rb'
 
 # Offense count: 1
