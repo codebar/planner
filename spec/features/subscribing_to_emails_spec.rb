@@ -11,7 +11,7 @@ RSpec.feature 'Managing subscriptions', type: :feature do
       visit subscriptions_path
 
       click_on 'Subscribe'
-      expect(page).to have_content("You have subscribed to #{group.chapter.city}'s #{group.name} group")
+      expect(page).to have_text("You have subscribed to #{group.chapter.city}'s #{group.name} group")
     end
 
     scenario '#unsubscribe' do
@@ -19,7 +19,7 @@ RSpec.feature 'Managing subscriptions', type: :feature do
       visit subscriptions_path
 
       click_on 'Subscribed'
-      expect(page).to have_content("You have unsubscribed from #{group.chapter.city}'s #{group.name} group")
+      expect(page).to have_text("You have unsubscribed from #{group.chapter.city}'s #{group.name} group")
     end
   end
 

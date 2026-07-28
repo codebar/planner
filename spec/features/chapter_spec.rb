@@ -5,7 +5,7 @@ RSpec.feature 'viewing a Chapter', type: :feature do
     it 'a visitor to the website cannot access non active chapters' do
       visit chapter_path(inactive_chapter.slug)
 
-      expect(page).to have_content('Page not found')
+      expect(page).to have_text('Page not found')
     end
 
     it 'a visitor to the website can access inactive chapter events' do
@@ -14,7 +14,7 @@ RSpec.feature 'viewing a Chapter', type: :feature do
 
         visit workshop_path(past_workshop)
 
-        expect(page).to have_content "Workshop at #{past_workshop.host.name}"
+        expect(page).to have_text "Workshop at #{past_workshop.host.name}"
       end
     end
   end
@@ -23,7 +23,7 @@ RSpec.feature 'viewing a Chapter', type: :feature do
     it 'a visitor to the website cannot access non existing chapter pages' do
       visit chapter_path('test')
 
-      expect(page).to have_content('Page not found')
+      expect(page).to have_text('Page not found')
     end
 
     it 'renders chapter without organisers' do
@@ -32,8 +32,8 @@ RSpec.feature 'viewing a Chapter', type: :feature do
 
       visit chapter_path(chapter.slug)
 
-      expect(page).to have_content 'Empty Chapter'
-      expect(page).not_to have_content 'Team'
+      expect(page).to have_text 'Empty Chapter'
+      expect(page).to have_no_text 'Team'
     end
 
     it 'renders any upcoming workshops for the chapter' do
@@ -45,7 +45,7 @@ RSpec.feature 'viewing a Chapter', type: :feature do
 
         visit chapter_path(chapter.slug)
         workshops.each do |workshop|
-          expect(page).to have_content "Workshop at #{workshop.host.name}"
+          expect(page).to have_text "Workshop at #{workshop.host.name}"
         end
       end
     end
@@ -60,8 +60,8 @@ RSpec.feature 'viewing a Chapter', type: :feature do
         end
 
         visit chapter_path(chapter.slug)
-        expect(page).to have_content 'Event 1'
-        expect(page).to have_content 'Event 2'
+        expect(page).to have_text 'Event 1'
+        expect(page).to have_text 'Event 2'
       end
     end
 
@@ -72,8 +72,8 @@ RSpec.feature 'viewing a Chapter', type: :feature do
         recent_past_workshop = Fabricate(:workshop, chapter: chapter, date_and_time: 1.week.ago)
 
         visit chapter_path(chapter.slug)
-        expect(page).to have_content "Workshop at #{recent_past_workshop.host.name}"
-        expect(page).not_to have_content "Workshop at #{past_workshop.host.name}"
+        expect(page).to have_text "Workshop at #{recent_past_workshop.host.name}"
+        expect(page).to have_no_text "Workshop at #{past_workshop.host.name}"
       end
     end
 

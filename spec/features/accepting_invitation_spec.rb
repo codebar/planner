@@ -28,9 +28,9 @@ RSpec.feature 'Accepting a workshop invitation', type: :feature do
 
         visit invitation_route
 
-        expect(page).to have_content('The workshop is full')
+        expect(page).to have_text('The workshop is full')
         expect(page).to have_button('Join the waiting list')
-        expect(page).not_to have_button('Attend')
+        expect(page).to have_no_button('Attend')
       end
     end
 
@@ -41,7 +41,7 @@ RSpec.feature 'Accepting a workshop invitation', type: :feature do
         visit invitation_route
         click_on 'Attend'
 
-        expect(page).to have_content('RSVPs for this workshop are now closed.')
+        expect(page).to have_text('RSVPs for this workshop are now closed.')
         expect(invitation.reload.attending).not_to be(true)
       end
     end
@@ -54,7 +54,7 @@ RSpec.feature 'Accepting a workshop invitation', type: :feature do
 
           click_on 'Attend'
 
-          expect(page).to have_content('Tutorial must be selected')
+          expect(page).to have_text('Tutorial must be selected')
         end
 
         scenario 'with an accepted invitation can edit the tutorial' do
@@ -64,7 +64,7 @@ RSpec.feature 'Accepting a workshop invitation', type: :feature do
           select tutorial.title, from: :workshop_invitation_tutorial
           click_on 'Update'
 
-          expect(page).to have_content('Invitation details successfully updated.')
+          expect(page).to have_text('Invitation details successfully updated.')
         end
       end
 
@@ -77,7 +77,7 @@ RSpec.feature 'Accepting a workshop invitation', type: :feature do
 
           click_on 'Attend'
 
-          expect(page).to have_content("Thanks for getting back to us #{member.name}. See you at the workshop!")
+          expect(page).to have_text("Thanks for getting back to us #{member.name}. See you at the workshop!")
           expect(page).to have_field('workshop_invitation_note', with: '')
         end
 
@@ -87,7 +87,7 @@ RSpec.feature 'Accepting a workshop invitation', type: :feature do
           fill_in 'Note', with: note
           click_on 'Attend'
 
-          expect(page).to have_content("Thanks for getting back to us #{member.name}. See you at the workshop!")
+          expect(page).to have_text("Thanks for getting back to us #{member.name}. See you at the workshop!")
           expect(page).to have_field('workshop_invitation_note', with: note)
         end
 
@@ -102,7 +102,7 @@ RSpec.feature 'Accepting a workshop invitation', type: :feature do
           click_on 'Update note'
 
           expect(page).to have_field('workshop_invitation_note', with: note)
-          expect(page).to have_content("Invitation details successfully updated.")
+          expect(page).to have_text("Invitation details successfully updated.")
         end
       end
     end

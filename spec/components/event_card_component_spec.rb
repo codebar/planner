@@ -13,13 +13,13 @@ RSpec.describe EventCardComponent, type: :component do
       render_inline(described_class.new(event_card: presenter))
       expect(page).to have_css("[data-test='event']")
       expect(page).to have_link(presenter.to_s)
-      expect(page).to have_content(presenter.date)
+      expect(page).to have_text(presenter.date)
     end
 
     it "does not render user-specific badges without a user" do
       render_inline(described_class.new(event_card: presenter))
-      expect(page).not_to have_text("Attending")
-      expect(page).not_to have_text("Manage")
+      expect(page).to have_no_text("Attending")
+      expect(page).to have_no_text("Manage")
     end
 
     it "renders chapter badge" do
@@ -46,7 +46,7 @@ RSpec.describe EventCardComponent, type: :component do
     it "does not render sponsor logos for meetings" do
       render_inline(described_class.new(event_card: presenter))
       # Venue image has sponsor-sm class, so check for mx-1 spacing (used only by sponsors)
-      expect(page).not_to have_css(".mx-1")
+      expect(page).to have_no_css(".mx-1")
     end
   end
 

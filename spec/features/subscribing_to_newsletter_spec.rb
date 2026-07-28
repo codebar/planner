@@ -27,7 +27,7 @@ RSpec.feature 'Subscribing to the newsletter', type: :feature do
       fill_in 'member_surname', with: 'Doe'
       fill_in 'member_email', with: 'jane@codebar.io'
       fill_in 'member_about_you', with: Faker::Lorem.paragraph
-      find('#member_how_you_found_us_from_a_friend').click
+      find_by_id('member_how_you_found_us_from_a_friend').click
 
       click_on 'Next'
     end
@@ -47,7 +47,7 @@ RSpec.feature 'Subscribing to the newsletter', type: :feature do
       fill_in 'member_surname', with: 'Doe'
       fill_in 'member_email', with: 'jane@codebar.io'
       fill_in 'member_about_you', with: Faker::Lorem.paragraph
-      find('#member_how_you_found_us_other').click
+      find_by_id('member_how_you_found_us_other').click
       fill_in 'member_how_you_found_us_other_reason', with: Faker::Lorem.paragraph, id: true
 
       uncheck 'newsletter'
@@ -69,7 +69,7 @@ RSpec.feature 'Subscribing to the newsletter', type: :feature do
       visit subscriptions_path
       click_on 'Subscribe to newsletter'
 
-      expect(page).to have_content('You have subscribed to codebar\'s newsletter')
+      expect(page).to have_text('You have subscribed to codebar\'s newsletter')
     end
 
     scenario 'can unsubscribe if they are subscribed' do
@@ -84,7 +84,7 @@ RSpec.feature 'Subscribing to the newsletter', type: :feature do
       visit subscriptions_path
       click_on 'Unsubscribe from newsletter'
 
-      expect(page).to have_content('You have unsubscribed from codebar\'s newsletter')
+      expect(page).to have_text('You have unsubscribed from codebar\'s newsletter')
     end
 
     scenario 'can subscribe and then unsubscribe' do
@@ -99,14 +99,14 @@ RSpec.feature 'Subscribing to the newsletter', type: :feature do
       visit subscriptions_path
       click_on 'Subscribe to newsletter'
 
-      expect(page).to have_content('You have subscribed to codebar\'s newsletter')
+      expect(page).to have_text('You have subscribed to codebar\'s newsletter')
 
       expect(Services::MailingList).to receive(:new).and_return(mailing_list)
       expect(mailing_list).to receive(:unsubscribe)
 
       click_on 'Unsubscribe from newsletter'
 
-      expect(page).to have_content('You have unsubscribed from codebar\'s newsletter')
+      expect(page).to have_text('You have unsubscribed from codebar\'s newsletter')
     end
   end
 end

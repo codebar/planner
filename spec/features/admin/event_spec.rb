@@ -27,18 +27,18 @@ RSpec.feature 'Event creation', type: :feature do
         select sponsor.name, from: 'Venue'
         click_on 'Save'
 
-        expect(page).to have_content('Event successfully created')
+        expect(page).to have_text('Event successfully created')
 
-        expect(page).to have_content('A test event')
-        expect(page).to have_content(humanize_date(date))
-        expect(page).to have_content('A test event description')
-        expect(page).to have_content('25 student spots, 19 coach spots')
-        expect(page).to have_content('9:00 Sign up & breakfast 9:30 kick off')
+        expect(page).to have_text('A test event')
+        expect(page).to have_text(humanize_date(date))
+        expect(page).to have_text('A test event description')
+        expect(page).to have_text('25 student spots, 19 coach spots')
+        expect(page).to have_text('9:00 Sign up & breakfast 9:30 kick off')
 
         within '#host' do
-          expect(page).to have_content sponsor.name
-          expect(page).to have_content sponsor.address.street
-          expect(page).to have_content sponsor.address.city
+          expect(page).to have_text sponsor.name
+          expect(page).to have_text sponsor.address.street
+          expect(page).to have_text sponsor.address.city
         end
       end
     end
@@ -62,16 +62,16 @@ RSpec.feature 'Event creation', type: :feature do
         check 'This is a virtual event'
         click_on 'Save'
 
-        expect(page).to have_content('Event successfully created')
+        expect(page).to have_text('Event successfully created')
 
-        expect(page).to have_content('A test virtual event')
-        expect(page).to have_content(humanize_date(date))
-        expect(page).to have_content('A test virtual event description')
-        expect(page).to have_content('25 student spots, 19 coach spots')
-        expect(page).to have_content('9:00 Sign up & breakfast 9:30 kick off')
+        expect(page).to have_text('A test virtual event')
+        expect(page).to have_text(humanize_date(date))
+        expect(page).to have_text('A test virtual event description')
+        expect(page).to have_text('25 student spots, 19 coach spots')
+        expect(page).to have_text('9:00 Sign up & breakfast 9:30 kick off')
 
         within '#host' do
-          expect(page).to have_content('This is a virtual event.')
+          expect(page).to have_text('This is a virtual event.')
         end
       end
     end
@@ -82,7 +82,7 @@ RSpec.feature 'Event creation', type: :feature do
 
         click_on 'Save'
 
-        expect(page).to have_content('Make sure you fill in all mandatory fields')
+        expect(page).to have_text('Make sure you fill in all mandatory fields')
       end
     end
   end

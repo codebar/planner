@@ -10,7 +10,7 @@ RSpec.feature 'Sponsors', type: :feature do
 
       expect(page).to have_css("img[src*='#{gold_sponsor.avatar.url}']")
       expect(page).to have_css("img[src*='#{standard_sponsor.avatar.url}']")
-      expect(page).to_not have_css("img[src*='#{hidden_sponsor.avatar.url}']")
+      expect(page).to have_no_css("img[src*='#{hidden_sponsor.avatar.url}']")
     end
   end
 end

@@ -6,7 +6,7 @@ RSpec.feature 'Managing testimonials', type: :feature do
 
     visit admin_testimonials_path
     expect(current_url).to eq(root_url)
-    expect(page).to have_content("You can't be here")
+    expect(page).to have_text("You can't be here")
   end
 
   context 'an admin member' do
@@ -19,8 +19,8 @@ RSpec.feature 'Managing testimonials', type: :feature do
 
       visit admin_testimonials_path
 
-      expect(page).to have_content('Testimonials')
-      expect(page).to have_content(testimonial.text)
+      expect(page).to have_text('Testimonials')
+      expect(page).to have_text(testimonial.text)
     end
   end
 end

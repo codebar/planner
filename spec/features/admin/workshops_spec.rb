@@ -14,7 +14,7 @@ RSpec.feature 'An admin managing workshops', type: :feature do
       visit admin_chapter_workshops_path(chapter)
 
       workshops.each do |workshop|
-        expect(page).to have_content(humanize_date(workshop.date_and_time, with_time: true, with_year: true))
+        expect(page).to have_text(humanize_date(workshop.date_and_time, with_time: true, with_year: true))
       end
     end
 
@@ -26,13 +26,13 @@ RSpec.feature 'An admin managing workshops', type: :feature do
       end
 
       scenario 'displays details specific to a virtual workshop' do
-        expect(page).to have_content('Virtual workshop details')
-        expect(page).to have_content("Slack channel: ##{workshop.slack_channel}")
-        expect(page).to have_content('codebar Discord')
+        expect(page).to have_text('Virtual workshop details')
+        expect(page).to have_text("Slack channel: ##{workshop.slack_channel}")
+        expect(page).to have_text('codebar Discord')
       end
 
       scenario 'displays the available student coach workshop spots' do
-        expect(page).to have_content("#{workshop.student_spaces} student spots, #{workshop.coach_spaces} coach spots")
+        expect(page).to have_text("#{workshop.student_spaces} student spots, #{workshop.coach_spaces} coach spots")
       end
     end
   end
@@ -59,9 +59,9 @@ RSpec.feature 'An admin managing workshops', type: :feature do
 
         click_on 'Save'
 
-        expect(page).to have_content('Workshop successfully created')
-        expect(page).to have_content '11:30 - 12:45 GMT (GMT+00:00)'
-        expect(page).to have_content 'Invite'
+        expect(page).to have_text('Workshop successfully created')
+        expect(page).to have_text '11:30 - 12:45 GMT (GMT+00:00)'
+        expect(page).to have_text 'Invite'
       end
 
       scenario 'must have a chapter set' do
@@ -76,7 +76,7 @@ RSpec.feature 'An admin managing workshops', type: :feature do
 
         click_on 'Save'
 
-        expect(page).to have_content('Chapter can\'t be blank')
+        expect(page).to have_text('Chapter can\'t be blank')
       end
 
       scenario 'must have a host set' do
@@ -88,7 +88,7 @@ RSpec.feature 'An admin managing workshops', type: :feature do
 
         click_on 'Save'
 
-        expect(page).to have_content("Host can't be blank")
+        expect(page).to have_text("Host can't be blank")
       end
 
       scenario 'can have sponsors assigned' do
@@ -100,7 +100,7 @@ RSpec.feature 'An admin managing workshops', type: :feature do
         click_on 'Save'
 
         within '#sponsors' do
-          expect(page).to have_content sponsor.name
+          expect(page).to have_text sponsor.name
         end
       end
 
@@ -119,8 +119,8 @@ RSpec.feature 'An admin managing workshops', type: :feature do
 
         click_on 'Save'
 
-        expect(page).to have_content('Workshop successfully created')
-        expect(page).to have_content '18:30 - 20:45 CET (GMT+01:00)'
+        expect(page).to have_text('Workshop successfully created')
+        expect(page).to have_text '18:30 - 20:45 CET (GMT+01:00)'
       end
     end
 
@@ -136,10 +136,10 @@ RSpec.feature 'An admin managing workshops', type: :feature do
 
         click_on 'Save'
 
-        expect(page).to have_content("Slack channel can't be blank")
-        expect(page).to have_content("Slack channel link can't be blank")
-        expect(page).to have_content('Student spaces must be greater than 0')
-        expect(page).to have_content('Coach spaces must be greater than 0')
+        expect(page).to have_text("Slack channel can't be blank")
+        expect(page).to have_text("Slack channel link can't be blank")
+        expect(page).to have_text('Student spaces must be greater than 0')
+        expect(page).to have_text('Coach spaces must be greater than 0')
       end
 
       scenario 'does not require a host to be set' do
@@ -158,8 +158,8 @@ RSpec.feature 'An admin managing workshops', type: :feature do
 
         click_on 'Save'
 
-        expect(page).to have_content('Workshop successfully created')
-        expect(page).to have_content 'Invite'
+        expect(page).to have_text('Workshop successfully created')
+        expect(page).to have_text 'Invite'
       end
     end
   end
@@ -188,7 +188,7 @@ RSpec.feature 'An admin managing workshops', type: :feature do
         visit admin_workshop_send_invites_path(workshop)
         click_on 'Students'
 
-        expect(page).to have_content('Invitations to students are being emailed out')
+        expect(page).to have_text('Invitations to students are being emailed out')
       end
 
       scenario 'for a virtual workshop' do
@@ -198,7 +198,7 @@ RSpec.feature 'An admin managing workshops', type: :feature do
         visit admin_workshop_send_invites_path(workshop)
         click_on 'Students'
 
-        expect(page).to have_content('Invitations to students are being emailed out')
+        expect(page).to have_text('Invitations to students are being emailed out')
       end
     end
 
@@ -209,7 +209,7 @@ RSpec.feature 'An admin managing workshops', type: :feature do
       visit admin_workshop_attendees_emails_path(workshop, format: :text)
 
       attendees_emails.each do |email|
-        expect(page).to have_content(email)
+        expect(page).to have_text(email)
       end
     end
 
@@ -219,7 +219,7 @@ RSpec.feature 'An admin managing workshops', type: :feature do
         attendees = Fabricate.times(2, :attending_workshop_invitation, workshop: workshop)
         visit admin_workshop_attendees_checklist_path(workshop, format: :text)
         attendees.map(&:member).map(&:full_name).each do |name|
-          expect(page).to have_content(name)
+          expect(page).to have_text(name)
         end
       end
 
@@ -227,8 +227,8 @@ RSpec.feature 'An admin managing workshops', type: :feature do
         workshop = Fabricate(:workshop)
         visit admin_workshop_attendees_checklist_path(workshop)
 
-        expect(page.current_path).to eq(admin_workshop_path(workshop))
-        expect(page).to have_content('The requested format is invalid: text/html')
+        expect(page).to have_current_path(admin_workshop_path(workshop), ignore_query: true)
+        expect(page).to have_text('The requested format is invalid: text/html')
       end
     end
 
@@ -238,9 +238,9 @@ RSpec.feature 'An admin managing workshops', type: :feature do
         visit admin_workshop_path(workshop)
         click_on 'Pairing CSV'
 
-        expect(page.current_path).to eq(admin_workshop_path(workshop, format: 'csv'))
-        expect(page).to have_content(WorkshopPresenter::PAIRING_HEADINGS.join(','))
-        expect(page).not_to have_content('ORGANISER')
+        expect(page).to have_current_path(admin_workshop_path(workshop, format: 'csv'), ignore_query: true)
+        expect(page).to have_text(WorkshopPresenter::PAIRING_HEADINGS.join(','))
+        expect(page).to have_no_text('ORGANISER')
       end
     end
 
@@ -254,9 +254,9 @@ RSpec.feature 'An admin managing workshops', type: :feature do
         visit admin_workshop_path(workshop)
         click_on 'Labels'
 
-        expect(page.current_path).to eq(admin_workshop_path(workshop, format: 'csv'))
-        expect(page).to have_content('ORGANISER')
-        expect(page).not_to have_content(WorkshopPresenter::PAIRING_HEADINGS.join(','))
+        expect(page).to have_current_path(admin_workshop_path(workshop, format: 'csv'), ignore_query: true)
+        expect(page).to have_text('ORGANISER')
+        expect(page).to have_no_text(WorkshopPresenter::PAIRING_HEADINGS.join(','))
       end
     end
   end

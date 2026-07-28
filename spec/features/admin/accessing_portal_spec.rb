@@ -20,11 +20,11 @@ RSpec.feature 'admin portal', type: :feature do
       visit admin_root_path
 
       chapter.groups.each do |group|
-        expect(page).to have_content(group.to_s)
+        expect(page).to have_text(group.to_s)
       end
 
       inactive_chapter.groups.each do |group|
-        expect(page).to_not have_content(group.to_s)
+        expect(page).to have_no_text(group.to_s)
       end
     end
 
@@ -32,8 +32,8 @@ RSpec.feature 'admin portal', type: :feature do
       visit admin_root_path
       click_on 'Sponsor contacts'
 
-      expect(page).to have_content('Contacts')
-      expect(page).to have_content('Sponsor Contact name Contact email Mailing list')
+      expect(page).to have_text('Contacts')
+      expect(page).to have_text('Sponsor Contact name Contact email Mailing list')
     end
   end
 end

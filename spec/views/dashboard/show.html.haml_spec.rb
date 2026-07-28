@@ -14,7 +14,7 @@ RSpec.describe 'dashboard/show.html.haml', type: :view do
   end
 
   it 'renders the chapters sidebar component' do
-    expect(rendered).to have_selector('.col-lg-4.pl-lg-5')
+    expect(rendered).to have_css('.col-lg-4.pl-lg-5')
     chapters.each do |chapter|
       expect(rendered).to have_link(chapter.name, href: chapter_path(chapter.slug))
     end

@@ -17,13 +17,13 @@ RSpec.feature 'member feedback', type: :feature do
     scenario 'I can access the feedback form when the token is valid' do
       visit feedback_path(valid_token)
 
-      expect(page).to have_content('Your submission will be completely anonymous')
-      expect(page).to have_content('Please do not mention any names')
+      expect(page).to have_text('Your submission will be completely anonymous')
+      expect(page).to have_text('Please do not mention any names')
       expect(page).to have_select 'feedback_coach_id'
       expect(page).to have_select 'feedback_tutorial_id'
       expect(page).to have_field 'feedback_request'
       expect(page).to have_field 'feedback_suggestions'
-      expect(page).to have_selector '//div.rating'
+      expect(page).to have_css '//div.rating'
       expect(page).to have_button 'Submit feedback'
     end
 
@@ -76,7 +76,7 @@ RSpec.feature 'member feedback', type: :feature do
       visit feedback_path(valid_token)
 
       # Get all coach options in order
-      select_options = page.find('#feedback_coach_id').all('option').map(&:text).reject(&:blank?)
+      select_options = page.find_by_id('feedback_coach_id').all('option').map(&:text).reject(&:blank?)
       verified_index = select_options.index(verified_coach.full_name)
       unverified_index = select_options.index(unverified_coach.full_name)
 
@@ -90,14 +90,14 @@ RSpec.feature 'member feedback', type: :feature do
       visit feedback_path(invalid_token)
 
       expect(current_url).to eq(root_url)
-      expect(page).to have_content('You have already submitted feedback for this event.')
+      expect(page).to have_text('You have already submitted feedback for this event.')
     end
 
     scenario 'when feedback has been already submitted' do
       visit feedback_path(submited_token)
 
       expect(current_url).to eq(root_url)
-      expect(page).to have_content('You have already submitted feedback for this event.')
+      expect(page).to have_text('You have already submitted feedback for this event.')
     end
   end
 
@@ -116,7 +116,7 @@ RSpec.feature 'member feedback', type: :feature do
 
       expect(page).to have_current_path(root_path)
 
-      expect(page).to have_content(feedback_submited_message)
+      expect(page).to have_text(feedback_submited_message)
     end
 
     scenario 'renders an error message when not all mandatory fields have been completed' do
@@ -127,8 +127,8 @@ RSpec.feature 'member feedback', type: :feature do
 
       click_button('Submit feedback')
 
-      expect(page.current_path).to eq(submit_feedback_path(valid_token))
-      expect(page).to have_content("Rating can't be blank")
+      expect(page).to have_current_path(submit_feedback_path(valid_token), ignore_query: true)
+      expect(page).to have_text("Rating can't be blank")
     end
   end
 end

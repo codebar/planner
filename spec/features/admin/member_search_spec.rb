@@ -11,7 +11,7 @@ RSpec.feature 'admin member search', type: :feature do
 
     expect(page).to have_current_path(results_admin_member_search_index_path, ignore_query: true)
 
-    expect(page).to have_content('Juliet Capulet')
+    expect(page).to have_text('Juliet Capulet')
   end
 
 end

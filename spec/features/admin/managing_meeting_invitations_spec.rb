@@ -17,7 +17,7 @@ RSpec.feature 'Managing meeting invitations', type: :feature do
       select_from_tom_select(member.full_name, from: 'meeting_invitations_member')
       click_on 'Add'
 
-      expect(page).to have_content("#{member.full_name} has been successfully added and notified via email")
+      expect(page).to have_text("#{member.full_name} has been successfully added and notified via email")
     end
 
     scenario 'for a member that is already attending', :js do
@@ -31,7 +31,7 @@ RSpec.feature 'Managing meeting invitations', type: :feature do
       select_from_tom_select(attending_member.full_name, from: 'meeting_invitations_member')
       click_on 'Add'
 
-      expect(page).to have_content("#{attending_member.full_name} is already on the list!")
+      expect(page).to have_text("#{attending_member.full_name} is already on the list!")
     end
   end
 
@@ -42,6 +42,6 @@ RSpec.feature 'Managing meeting invitations', type: :feature do
     visit admin_meeting_path(meeting)
     find('.verify-attendance').click
 
-    expect(page).to have_content('Updated attendance')
+    expect(page).to have_text('Updated attendance')
   end
 end

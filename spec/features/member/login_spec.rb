@@ -12,7 +12,7 @@ RSpec.feature 'Member logging in', type: :feature do
         check 'terms_and_conditions_form_terms'
         click_on 'Accept'
 
-        expect(page).to have_content('Almost there...')
+        expect(page).to have_text('Almost there...')
       end
     end
 
