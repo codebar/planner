@@ -314,13 +314,6 @@ RSpec/ExampleLength:
     - 'spec/support/shared_examples/behaves_like_an_invitation_route.rb'
     - 'spec/support/shared_examples/behaves_like_sending_workshop_emails.rb'
 
-# Offense count: 9
-# Configuration parameters: AssignmentOnly.
-RSpec/InstanceVariable:
-  Exclude:
-    - 'spec/features/admin/add_user_to_workshop_spec.rb'
-    - 'spec/features/member_feedback_spec.rb'
-
 # Offense count: 1
 RSpec/LeakyConstantDeclaration:
   Exclude:
