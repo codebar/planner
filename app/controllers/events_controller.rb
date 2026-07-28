@@ -101,7 +101,7 @@ class EventsController < ApplicationController
   def paginated_events(upcoming:)
     now = Time.zone.now
     page = (params[:page] || 1).to_i
-    direction = upcoming ? "ASC" : "DESC"
+    direction = upcoming ? 'ASC' : 'DESC'
     comparator = upcoming ? :gteq : :lt
 
     # Pure Arel subqueries — no ActiveRecord relation bind params to leak
@@ -128,7 +128,7 @@ class EventsController < ApplicationController
 
     # COUNT at DB level — single query
     count_query = Arel::SelectManager.new
-    count_query.from(union.as("events"))
+    count_query.from(union.as('events'))
     count_query.project(Arel.star.count)
     total = ActiveRecord::Base.connection.select_value(count_query.to_sql).to_i
     return nil if total.zero?
@@ -139,7 +139,7 @@ class EventsController < ApplicationController
 
     # Only 20 rows leave the database
     pagination_query = Arel::SelectManager.new
-    pagination_query.from(union.as("events"))
+    pagination_query.from(union.as('events'))
     pagination_query.project(:id, :event_type)
     pagination_query.order(Arel.sql("date_and_time #{direction}"))
     pagination_query.skip(pagy.offset).take(pagy.limit)
@@ -152,23 +152,23 @@ class EventsController < ApplicationController
   # with eager loading, preserving the UNION order.
   def load_events(rows)
     grouped = rows.each_with_object({}) do |row, hash|
-      (hash[row["event_type"]] ||= []) << row["id"].to_i
+      (hash[row['event_type']] ||= []) << row['id'].to_i
     end
 
     workshops = Workshop.includes(:chapter, :sponsors, :host, :permissions)
-                        .where(id: grouped["Workshop"])
+                        .where(id: grouped['Workshop'])
                         .to_a.index_by(&:id)
-    meetings = Meeting.includes(:venue).where(id: grouped["Meeting"])
+    meetings = Meeting.includes(:venue).where(id: grouped['Meeting'])
                       .to_a.index_by(&:id)
     events = Event.includes(:venue, :sponsors, :sponsorships, :permissions)
-                  .where(id: grouped["Event"])
+                  .where(id: grouped['Event'])
                   .to_a.index_by(&:id)
 
     rows.filter_map do |row|
-      case row["event_type"]
-      when "Workshop" then workshops[row["id"].to_i]
-      when "Meeting" then meetings[row["id"].to_i]
-      when "Event" then events[row["id"].to_i]
+      case row['event_type']
+      when 'Workshop' then workshops[row['id'].to_i]
+      when 'Meeting' then meetings[row['id'].to_i]
+      when 'Event' then events[row['id'].to_i]
       end
     end
   end

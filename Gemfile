@@ -4,7 +4,9 @@ ruby file: '.ruby-version'
 gem 'rails', '~> 8.1.2' # LOCKED: It is Rails.
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem 'sprockets-rails'
-gem 'coffee-script' # LOCKED: Added because Sprockets autoloads it when seeing .coffee files in the asset pipeline. Can be removed when that does not happen.
+# LOCKED: Added because Sprockets autoloads it when seeing .coffee files in the
+# asset pipeline. Can be removed when that does not happen.
+gem 'coffee-script'
 
 gem 'amazing_print' # colourful output (suggested by rails_semantic_logger)
 gem 'rails_semantic_logger' # condense log lines: https://github.com/codebar/planner/issues/2339
@@ -14,7 +16,9 @@ gem 'benchmark' # LOCKED: Added because of activesupport 7.0
 gem 'bigdecimal' # LOCKED: Added because of activesupport 7.0
 gem 'carrierwave'
 gem 'cocoon'
-gem 'csv' # LOCKED: csv was loaded from the standard library, but is not part of the default gems starting from Ruby 3.4.0. Due to config/application.rb
+# LOCKED: csv was loaded from the standard library, but is not part of the default
+# gems starting from Ruby 3.4.0. Due to config/application.rb
+gem 'csv'
 gem 'delayed_job'
 gem 'delayed_job_active_record'
 gem 'drb' # LOCKED: Added because of pry-remote
@@ -40,7 +44,9 @@ gem 'premailer-rails'
 
 gem 'pundit'
 gem 'reline' # LOCKED: Added because of readline is not part of Ruby 3.5.0
-gem 'readline' # LOCKED: readline was loaded from the standard library, but is not part of the default gems starting from Ruby 4.0.0.
+# LOCKED: readline was loaded from the standard library, but is not part of the
+# default gems starting from Ruby 4.0.0.
+gem 'readline'
 gem 'rolify'
 # Use Sass to process CSS
 gem 'sassc-rails'
@@ -48,7 +54,7 @@ gem 'simple_form'
 
 gem 'terser'
 
-gem 'pagy', '~> 43.5'
+gem 'pagy', '~> 43.6'
 
 gem 'icalendar'
 gem 'tzinfo-data'
@@ -62,7 +68,7 @@ gem 'msgpack'
 
 gem 'stripe'
 
-gem 'rails-html-sanitizer', '~> 1.7.0'
+gem 'rails-html-sanitizer', '~> 1.7.1'
 
 # Use the Puma web server [https://github.com/puma/puma]
 gem 'puma', '~> 8.0'
@@ -85,6 +91,7 @@ group :development do
   # Can be configured to work on production as well see: https://github.com/MiniProfiler/rack-mini-profiler/blob/master/README.md
   gem 'rack-mini-profiler', '~> 4.0'
   gem 'listen', '~> 3.10'
+  gem 'overcommit', require: false
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   # gem 'spring'
 end
@@ -131,4 +138,4 @@ gem 'scout_apm'
 gem 'carrierwave-aws', '~> 1.6'
 gem 'sitemap_generator', '~> 7.1'
 
-gem "solid_cache", "~> 1.0"
+gem 'solid_cache', '~> 1.0'

@@ -78,9 +78,9 @@ RSpec.describe Admin::MembersController, type: :controller do
     end
 
     it 'creates an attendance warning' do
-      expect {
+      expect do
         get :send_attendance_email, params: { member_id: member.id }
-      }.to change(AttendanceWarning, :count).by(1)
+      end.to change(AttendanceWarning, :count).by(1)
     end
 
     it 'sends an attendance warning email' do
@@ -119,9 +119,9 @@ RSpec.describe Admin::MembersController, type: :controller do
     end
 
     it 'creates an eligibility inquiry' do
-      expect {
+      expect do
         get :send_eligibility_email, params: { member_id: member.id }
-      }.to change(EligibilityInquiry, :count).by(1)
+      end.to change(EligibilityInquiry, :count).by(1)
     end
 
     it 'sends an eligibility check email' do

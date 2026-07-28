@@ -17,11 +17,11 @@ RSpec.feature 'Managing sponsors', type: :feature do
         attach_file('Avatar', Rails.root + 'spec/support/codebar-logo.png')
         fill_in 'Student spots', with: 20
         fill_in 'Coach spots', with: 10
-        select "Bronze", from: "Level"
+        select 'Bronze', from: 'Level'
 
         click_on 'Create sponsor'
 
-        expect(page).to have_content 'Sponsor Sponsor name created'
+        expect(page).to have_text 'Sponsor Sponsor name created'
       end
     end
 
@@ -37,7 +37,7 @@ RSpec.feature 'Managing sponsors', type: :feature do
 
         click_on 'Create sponsor'
 
-        expect(page).to have_content 'Name can\'t be blank'
+        expect(page).to have_text 'Name can\'t be blank'
       end
     end
 
@@ -73,11 +73,12 @@ RSpec.feature 'Managing sponsors', type: :feature do
 
         click_on 'Save changes'
 
-        expect(page).to have_content 'This venue is fully accessible to wheelchair users.'
-        expect(page).to have_content 'This sponsor has great WiFi.'
-        expect(page).to have_content 'Office is located on the third floor.'
+        expect(page).to have_text 'This venue is fully accessible to wheelchair users.'
+        expect(page).to have_text 'This sponsor has great WiFi.'
+        expect(page).to have_text 'Office is located on the third floor.'
       end
     end
+
     context 'with existing avatar' do
       it 'shows the current avatar on the edit page' do
         sponsor = Fabricate(:sponsor)
@@ -106,8 +107,8 @@ RSpec.feature 'Managing sponsors', type: :feature do
         click_on 'Save changes'
 
         within '#contacts' do
-          expect(page).to have_content 'Jane Doe'
-          expect(page).to have_content 'Main contact - Office manager'
+          expect(page).to have_text 'Jane Doe'
+          expect(page).to have_text 'Main contact - Office manager'
         end
       end
     end

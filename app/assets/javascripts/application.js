@@ -21,6 +21,7 @@
 //= require pickadate/picker.date
 //= require pickadate/picker.time
 //= require subscriptions-toggle
+//= require add-all-chapters
 //= require invitations
 //= require dietary-restrictions
 //= require cocoon
@@ -63,5 +64,7 @@ $(function() {
     no_results_text: 'No results matched'
   });
 
-  $('[data-bs-toggle="tooltip"]').tooltip();
+  document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach((el) => {
+    new bootstrap.Tooltip(el);
+  });
 });

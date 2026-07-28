@@ -1,9 +1,10 @@
 RSpec.describe Meeting do
-  include_examples "Invitable", :meeting_invitation, :meeting
+  include_examples 'Invitable', :meeting_invitation, :meeting
   include_examples DateTimeConcerns, :meeting
 
   context 'validations' do
     subject(:meeting) { Fabricate(:meeting) }
+
     it { is_expected.to validate_presence_of(:date_and_time) }
     it { is_expected.to validate_presence_of(:ends_at) }
     it { should belong_to(:venue) }
@@ -32,7 +33,7 @@ RSpec.describe Meeting do
   end
 
   context '#title' do
-    subject(:meeting) { Meeting.new(date_and_time: Time.zone.local(2014, 8, 20, 18, 30)) }
+    subject(:meeting) { described_class.new(date_and_time: Time.zone.local(2014, 8, 20, 18, 30)) }
 
     it 'is formatted correctly' do
       expect(meeting.title).to eq('August Meeting')

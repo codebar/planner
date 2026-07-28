@@ -2,7 +2,7 @@ require 'json'
 require 'flodesk'
 
 RSpec.describe Flodesk do
-  let(:stub)  { Faraday::Adapter::Test::Stubs.new }
+  let(:stub) { Faraday::Adapter::Test::Stubs.new }
   let(:conn)   { Faraday.new { |b| b.adapter(:test, stub) } }
   let(:client) { Flodesk::Client.new }
 
@@ -23,13 +23,13 @@ RSpec.describe Flodesk do
         first_name: :first_name,
         last_name: :last_name,
         segment_ids: [:segment_id],
-        double_optin: true,
+        double_optin: true
       }
 
       check = ->(request_body) { request_body == payload }
       stub.post('/subscribers', check) { [200, {}, '{}'] }
 
-      client.subscribe(**payload)
+      expect(client.subscribe(**payload)).to include(status: 200)
 
       stub.verify_stubbed_calls
     end
@@ -39,17 +39,17 @@ RSpec.describe Flodesk do
     it 'removes a user from segments' do
       payload = {
         email: :email,
-        segment_ids: [:segment_id],
+        segment_ids: [:segment_id]
       }
 
-      check = ->(request_body) do
+      check = lambda do |request_body|
         request_body == payload.slice(:segment_ids)
       end
 
       # Faraday's `stub.delete` does not accept body at the time of writing
       stub.send(:new_stub, :delete, "/subscribers/#{payload[:email]}/segments", {}, check) { [200, {}, '{}'] }
 
-      client.unsubscribe(**payload)
+      expect(client.unsubscribe(**payload)).to include(status: 200)
 
       stub.verify_stubbed_calls
     end
@@ -59,20 +59,22 @@ RSpec.describe Flodesk do
     it 'confirms that a user is active and subscribed to a segment' do
       payload = {
         email: :email,
-        segment_ids: ["segment_id"],
+        segment_ids: ['segment_id']
       }
 
-      stub.get("/subscribers/#{payload[:email]}") { [200, {}, {
-        "id": "123456789",
-        "status": "active",
-        "email": "email",
-        "segments": [
-          {
-            "id": "segment_id",
-            "name": "codebar"
-          }
-        ]
-      }] }
+      stub.get("/subscribers/#{payload[:email]}") do
+        [200, {}, {
+          "id": '123456789',
+          "status": 'active',
+          "email": 'email',
+          "segments": [
+            {
+              "id": 'segment_id',
+              "name": 'codebar'
+            }
+          ]
+        }]
+      end
 
       expect(client.subscribed?(**payload)).to be true
 
@@ -82,20 +84,22 @@ RSpec.describe Flodesk do
     it 'confirms that a user is active but not subscribed to a segment' do
       payload = {
         email: :email,
-        segment_ids: ["segment_id"],
+        segment_ids: ['segment_id']
       }
 
-      stub.get("/subscribers/#{payload[:email]}") { [200, {}, {
-        "id": "123456789",
-        "status": "active",
-        "email": "email",
-        "segments": [
-          {
-            "id": "some_other_segment_id",
-            "name": "not codebar"
-          }
-        ]
-      }] }
+      stub.get("/subscribers/#{payload[:email]}") do
+        [200, {}, {
+          "id": '123456789',
+          "status": 'active',
+          "email": 'email',
+          "segments": [
+            {
+              "id": 'some_other_segment_id',
+              "name": 'not codebar'
+            }
+          ]
+        }]
+      end
 
       expect(client.subscribed?(**payload)).to be false
 
@@ -105,20 +109,22 @@ RSpec.describe Flodesk do
     it 'confirms that a user is not active' do
       payload = {
         email: :email,
-        segment_ids: ["segment_id"],
+        segment_ids: ['segment_id']
       }
 
-      stub.get("/subscribers/#{payload[:email]}") { [200, {}, {
-        "id": "123456789",
-        "status": "unsubscribed",
-        "email": "email",
-        "segments": [
-          {
-            "id": "segment_id",
-            "name": "codebar"
-          }
-        ]
-      }] }
+      stub.get("/subscribers/#{payload[:email]}") do
+        [200, {}, {
+          "id": '123456789',
+          "status": 'unsubscribed',
+          "email": 'email',
+          "segments": [
+            {
+              "id": 'segment_id',
+              "name": 'codebar'
+            }
+          ]
+        }]
+      end
 
       expect(client.subscribed?(**payload)).to be false
 

@@ -1,17 +1,18 @@
 RSpec.describe 'rake member:delete', type: :task do
   let!(:member) { Fabricate.create(:member) }
+
   before do
     allow($stdout).to receive(:puts)
   end
 
-  it "preloads the Rails environment" do
-    expect(task.prerequisites).to include "environment"
+  it 'preloads the Rails environment' do
+    expect(task.prerequisites).to include 'environment'
   end
 
   it 'when no email is provided' do
     regexed_msg = Regexp.quote("You have to provide an email address. Usage: rake member:delete'[email@address.com]'")
     expect { task.invoke }.to output(/#{regexed_msg}\s*/).to_stderr
-      .and raise_error(SystemExit)
+                                                         .and raise_error(SystemExit)
   end
 
   it 'anonymises member information' do

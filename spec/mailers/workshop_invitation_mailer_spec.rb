@@ -12,44 +12,44 @@ RSpec.describe WorkshopInvitationMailer do
     before { allow(bad_member).to receive(:email).and_return('invalid-email') }
 
     it '#attending skips delivery without crashing' do
-      expect {
-        WorkshopInvitationMailer.attending(workshop, bad_member, bad_invitation).deliver_now
-      }.not_to raise_error
+      expect do
+        described_class.attending(workshop, bad_member, bad_invitation).deliver_now
+      end.not_to raise_error
       expect(ActionMailer::Base.deliveries).to be_empty
     end
 
     it '#attending_reminder skips delivery without crashing' do
-      expect {
-        WorkshopInvitationMailer.attending_reminder(workshop, bad_member, bad_invitation).deliver_now
-      }.not_to raise_error
+      expect do
+        described_class.attending_reminder(workshop, bad_member, bad_invitation).deliver_now
+      end.not_to raise_error
       expect(ActionMailer::Base.deliveries).to be_empty
     end
 
     it '#invite_coach skips delivery without crashing' do
-      expect {
-        WorkshopInvitationMailer.invite_coach(workshop, bad_member, bad_invitation).deliver_now
-      }.not_to raise_error
+      expect do
+        described_class.invite_coach(workshop, bad_member, bad_invitation).deliver_now
+      end.not_to raise_error
       expect(ActionMailer::Base.deliveries).to be_empty
     end
 
     it '#invite_student skips delivery without crashing' do
-      expect {
-        WorkshopInvitationMailer.invite_student(workshop, bad_member, bad_invitation).deliver_now
-      }.not_to raise_error
+      expect do
+        described_class.invite_student(workshop, bad_member, bad_invitation).deliver_now
+      end.not_to raise_error
       expect(ActionMailer::Base.deliveries).to be_empty
     end
 
     it '#notify_waiting_list skips delivery without crashing' do
-      expect {
-        WorkshopInvitationMailer.notify_waiting_list(bad_invitation).deliver_now
-      }.not_to raise_error
+      expect do
+        described_class.notify_waiting_list(bad_invitation).deliver_now
+      end.not_to raise_error
       expect(ActionMailer::Base.deliveries).to be_empty
     end
 
     it '#waiting_list_reminder skips delivery without crashing' do
-      expect {
-        WorkshopInvitationMailer.waiting_list_reminder(workshop, bad_member, bad_invitation).deliver_now
-      }.not_to raise_error
+      expect do
+        described_class.waiting_list_reminder(workshop, bad_member, bad_invitation).deliver_now
+      end.not_to raise_error
       expect(ActionMailer::Base.deliveries).to be_empty
     end
   end
@@ -57,7 +57,7 @@ RSpec.describe WorkshopInvitationMailer do
   it '#attending' do
     email_subject = "Attendance Confirmation for #{humanize_date(workshop.date_and_time, with_time: true)}"
 
-    WorkshopInvitationMailer.attending(workshop, member, invitation).deliver_now
+    described_class.attending(workshop, member, invitation).deliver_now
 
     expect(email.subject).to eq(email_subject)
     expect(email.body.encoded).to match(workshop.chapter.email)
@@ -66,7 +66,7 @@ RSpec.describe WorkshopInvitationMailer do
   it '#attending_reminder' do
     email_subject = "Workshop Reminder #{humanize_date(workshop.date_and_time, with_time: true)}"
 
-    WorkshopInvitationMailer.attending_reminder(workshop, member, invitation).deliver_now
+    described_class.attending_reminder(workshop, member, invitation).deliver_now
 
     expect(email.subject).to eq(email_subject)
     expect(email.body.encoded).to match(workshop.chapter.email)
@@ -75,7 +75,7 @@ RSpec.describe WorkshopInvitationMailer do
   it '#invite_coach' do
     email_subject = "Workshop Coach Invitation #{humanize_date(workshop.date_and_time, with_time: true)}"
 
-    WorkshopInvitationMailer.invite_coach(workshop, member, invitation).deliver_now
+    described_class.invite_coach(workshop, member, invitation).deliver_now
 
     expect(email.subject).to eq(email_subject)
     expect(email.body.encoded).to match(workshop.chapter.email)
@@ -84,14 +84,14 @@ RSpec.describe WorkshopInvitationMailer do
   it '#invite_student' do
     email_subject = "Workshop Invitation #{humanize_date(workshop.date_and_time, with_time: true)}"
 
-    WorkshopInvitationMailer.invite_student(workshop, member, invitation).deliver_now
+    described_class.invite_student(workshop, member, invitation).deliver_now
 
     expect(email.subject).to eq(email_subject)
     expect(email.body.encoded).to match(workshop.chapter.email)
   end
 
   it '#notify_waiting_list' do
-    WorkshopInvitationMailer.notify_waiting_list(invitation).deliver_now
+    described_class.notify_waiting_list(invitation).deliver_now
 
     expect(email.subject).to eq('A spot just became available')
     expect(email.from).to eq([workshop.chapter.email])
@@ -102,7 +102,7 @@ RSpec.describe WorkshopInvitationMailer do
     email_subject = "Reminder: you're on the codebar waiting list " \
                     "(#{humanize_date(workshop.date_and_time, with_time: true)})"
 
-    WorkshopInvitationMailer.waiting_list_reminder(workshop, member, invitation).deliver_now
+    described_class.waiting_list_reminder(workshop, member, invitation).deliver_now
 
     expect(email.subject).to eq(email_subject)
     expect(email.from).to eq([workshop.chapter.email])
@@ -110,12 +110,23 @@ RSpec.describe WorkshopInvitationMailer do
     expect(email.body.encoded).to match(workshop.chapter.email)
   end
 
+  it '#invite_student renders social links with inline background colours' do
+    # asserts on the template output before premailer runs, so the colours
+    # don't depend on email.css being resolved (see issue #2634)
+    mail = described_class.invite_student(workshop, member, invitation)
+
+    html = mail.body.decoded
+    ['#2EB67D', '#0077B5', '#3B5998', '#1daced', '#FF0000'].each do |colour|
+      expect(html).to include("background-color: #{colour}")
+    end
+  end
+
   it '#attending renders workshop description as HTML, not escaped' do
     description = '<strong>Important notice:</strong> Please bring a laptop.'
     workshop = Fabricate(:workshop, description: description)
     invitation = Fabricate(:workshop_invitation, workshop: workshop, member: member)
 
-    WorkshopInvitationMailer.attending(workshop, member, invitation).deliver_now
+    described_class.attending(workshop, member, invitation).deliver_now
 
     expect(email.body.encoded).to include('Please bring a laptop.')
     expect(email.body.encoded).not_to include('&lt;strong&gt;Important')

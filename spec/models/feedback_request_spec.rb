@@ -23,5 +23,4 @@ RSpec.describe FeedbackRequest do
       end
     end
   end
-
 end

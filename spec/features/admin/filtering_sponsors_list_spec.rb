@@ -22,7 +22,7 @@ RSpec.feature 'Admin filtering sponsors list', type: :feature do
         click_on 'Filter'
 
         expect(page).to have_css('.sponsor', count: 1)
-        expect(page).to have_content(sponsors.first.name)
+        expect(page).to have_text(sponsors.first.name)
       end
     end
   end

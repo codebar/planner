@@ -14,7 +14,7 @@ RSpec.feature 'Announcements', type: :feature do
         fill_in 'Message', with: 'An announcement'
         click_on 'announcement[create]'
 
-        expect(page).to have_content('Announcement successfully created')
+        expect(page).to have_text('Announcement successfully created')
         expect(page).to have_current_path(admin_announcements_path, ignore_query: true)
       end
     end
@@ -24,7 +24,7 @@ RSpec.feature 'Announcements', type: :feature do
         visit new_admin_announcement_path
         click_on 'announcement[create]'
 
-        expect(page).to have_content('Please make sure you fill in all mandatory fields')
+        expect(page).to have_text('Please make sure you fill in all mandatory fields')
       end
     end
 
@@ -35,8 +35,8 @@ RSpec.feature 'Announcements', type: :feature do
         fill_in 'Message', with: 'New event coming up soon! Stay tuned.'
         click_on 'announcement[update]'
 
-        expect(page).to have_content('Announcement successfully updated')
-        expect(page).to have_content('New event coming up soon! Stay tuned.')
+        expect(page).to have_text('Announcement successfully updated')
+        expect(page).to have_text('New event coming up soon! Stay tuned.')
         expect(page).to have_current_path(admin_announcements_path, ignore_query: true)
       end
     end
@@ -48,8 +48,8 @@ RSpec.feature 'Announcements', type: :feature do
 
         visit admin_announcements_path
 
-        expect(page).to have_content(announcement.message)
-        expect(page).to have_content(old_announcement.message)
+        expect(page).to have_text(announcement.message)
+        expect(page).to have_text(old_announcement.message)
       end
     end
 
@@ -59,9 +59,9 @@ RSpec.feature 'Announcements', type: :feature do
       check 'Send to all groups'
       click_on 'announcement[create]'
 
-      expect(page).to have_content('An announcement to every group')
-      expect(page).to have_content("Coaches #{chapter.name}")
-      expect(page).to have_content("Students #{chapter.name}")
+      expect(page).to have_text('An announcement to every group')
+      expect(page).to have_text("Coaches #{chapter.name}")
+      expect(page).to have_text("Students #{chapter.name}")
       expect(page).to have_current_path(admin_announcements_path, ignore_query: true)
     end
 
@@ -71,9 +71,9 @@ RSpec.feature 'Announcements', type: :feature do
       select "Coaches #{chapter.name}", from: 'Select group'
       click_on 'announcement[create]'
 
-      expect(page).to have_content('An announcement to selected groups')
-      expect(page).to have_content("Coaches #{chapter.name}")
-      expect(page).not_to have_content("Students #{chapter.name}")
+      expect(page).to have_text('An announcement to selected groups')
+      expect(page).to have_text("Coaches #{chapter.name}")
+      expect(page).to have_no_text("Students #{chapter.name}")
       expect(page).to have_current_path(admin_announcements_path, ignore_query: true)
     end
   end

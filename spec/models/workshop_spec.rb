@@ -1,12 +1,13 @@
 RSpec.describe Workshop do
   subject(:workshop) { Fabricate(:workshop) }
-  include_examples "Invitable", :workshop_invitation, :workshop
+
+  include_examples 'Invitable', :workshop_invitation, :workshop
   include_examples DateTimeConcerns, :workshop
 
   context 'validates' do
     it { is_expected.to validate_presence_of(:chapter_id) }
 
-    context "#date_and_time" do
+    context '#date_and_time' do
       it 'does not validate if chapter_id blank' do
         workshop.chapter_id = nil
         workshop.date_and_time = nil
@@ -40,6 +41,7 @@ RSpec.describe Workshop do
 
     context 'if virtual' do
       before { allow(subject).to receive(:virtual?).and_return(true) }
+
       it { is_expected.to validate_presence_of(:slack_channel) }
       it { is_expected.to validate_presence_of(:slack_channel_link) }
       it { is_expected.to validate_numericality_of(:student_spaces).is_greater_than(0) }
@@ -121,7 +123,7 @@ RSpec.describe Workshop do
         workshop.rsvp_closes_at = Time.zone.now + 2.hours
 
         workshop.valid?
-        expect(workshop.errors[:rsvp_close_local_date]).to include("must be before the workshop start time")
+        expect(workshop.errors[:rsvp_close_local_date]).to include('must be before the workshop start time')
       end
 
       it 'is valid when close time is before workshop start' do
@@ -234,7 +236,7 @@ RSpec.describe Workshop do
     end
 
     it 'when virtual workshop' do
-      workshop = Workshop.new(virtual: true)
+      workshop = described_class.new(virtual: true)
       expect(workshop.to_s).to eq('Virtual Workshop')
     end
   end

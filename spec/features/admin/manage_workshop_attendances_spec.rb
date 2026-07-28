@@ -28,7 +28,7 @@ RSpec.feature 'managing workshop attendances', type: :feature do
 
         # Capture the ID of the second row before clicking
         second_row_id = "attendee-row-#{second_invitation.id}"
-        expect(page).to have_selector("##{second_row_id}")
+        expect(page).to have_css("##{second_row_id}")
 
         # Verify first attendee
         first('.verify_attendance').click
@@ -39,7 +39,7 @@ RSpec.feature 'managing workshop attendances', type: :feature do
         expect(page).to have_css('.fa-check-square', count: 0, wait: 5)
 
         # The unclicked row should still exist with its original ID, proving targeted replacement
-        expect(page).to have_selector("##{second_row_id}")
+        expect(page).to have_css("##{second_row_id}")
       end
     end
 
@@ -48,7 +48,7 @@ RSpec.feature 'managing workshop attendances', type: :feature do
       expect(page).to have_css('.cancel_attendance', wait: 5)
       find('.cancel_attendance').click
 
-      expect(page).to have_content('0 are attending as students')
+      expect(page).to have_text('0 are attending as students')
     end
 
     scenario 'can move a member from the waiting list to the attendee list' do
@@ -58,9 +58,9 @@ RSpec.feature 'managing workshop attendances', type: :feature do
       visit admin_workshop_path(workshop)
       find('.waiting_list').click
 
-      expect(page).to have_content('2 are attending as students')
-      expect(page).to have_content(I18n.l(other_invitation.reload.rsvp_time))
-      expect(page).to have_selector('i.fa-hat-wizard')
+      expect(page).to have_text('2 are attending as students')
+      expect(page).to have_text(I18n.l(other_invitation.reload.rsvp_time))
+      expect(page).to have_css('i.fa-hat-wizard')
     end
 
     scenario 'can rsvp an invited student to the workshop', js: true do
@@ -69,15 +69,15 @@ RSpec.feature 'managing workshop attendances', type: :feature do
       other_invitation = Fabricate(:workshop_invitation, workshop: workshop, attending: nil)
 
       visit admin_workshop_path(workshop)
-      expect(page).to have_content('1 are attending as students')
-      expect(page).to_not have_selector('i.fa-magic')
+      expect(page).to have_text('1 are attending as students')
+      expect(page).to have_no_css('i.fa-magic')
 
       # Use the select_from_chosen helper to select the member
       select_from_chosen("#{other_invitation.member.full_name} (#{other_invitation.role})", from: 'workshop_invitations')
 
-      expect(page).to have_content('2 are attending as students', wait: 5)
+      expect(page).to have_text('2 are attending as students', wait: 5)
 
-      expect(page).to have_content(I18n.l(other_invitation.reload.rsvp_time))
+      expect(page).to have_text(I18n.l(other_invitation.reload.rsvp_time))
       expect(page).to have_css('.fa-hat-wizard')
     end
 
@@ -86,8 +86,8 @@ RSpec.feature 'managing workshop attendances', type: :feature do
       login_as_admin(member)
 
       visit admin_workshop_path(workshop)
-      expect(page).to have_content(invitation.note)
-      expect(page).to have_content(invitation.tutorial)
+      expect(page).to have_text(invitation.note)
+      expect(page).to have_text(invitation.tutorial)
     end
 
     context '#changes' do

@@ -10,7 +10,8 @@ class Admin::InvitationsController < Admin::ApplicationController
 
     if request.xhr?
       if params[:attended].present?
-        render partial: 'admin/workshop/attendance_row', locals: { invitation: InvitationPresenter.new(@invitation), workshop: @workshop }
+        render partial: 'admin/workshop/attendance_row', 
+locals: { invitation: InvitationPresenter.new(@invitation), workshop: @workshop }
       else
         set_admin_workshop_data
         render partial: 'admin/workshops/invitation_management'

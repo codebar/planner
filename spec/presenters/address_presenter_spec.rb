@@ -1,6 +1,6 @@
 RSpec.describe AddressPresenter do
   let(:address) { Fabricate.build(:address) }
-  let(:presenter) { AddressPresenter.new(address) }
+  let(:presenter) { described_class.new(address) }
 
   describe '#to_html' do
     it 'returns the address in HTML with lines separated with <br/> tags' do
@@ -14,7 +14,7 @@ RSpec.describe AddressPresenter do
       address.street = '<script>alert("XSS");</script>'
       escape = ERB::Util.method(:html_escape)
       html_address = "#{escape.call(address.flat)}<br/>&lt;script&gt;alert(&quot;XSS&quot;);&lt;/script&gt;<br/>" +
-        "#{escape.call(address.city)}, #{escape.call(address.postal_code)}"
+                     "#{escape.call(address.city)}, #{escape.call(address.postal_code)}"
 
       expect(presenter.to_html).to eq(html_address)
     end

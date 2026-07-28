@@ -9,10 +9,10 @@ RSpec.shared_examples 'viewing workshop details' do
 
   scenario 'organisers' do
     within '#organisers' do
-      expect(page).to have_content('Organisers')
+      expect(page).to have_text('Organisers')
 
       workshop.organisers.each do |organiser|
-        expect(page).to have_content(organiser.full_name)
+        expect(page).to have_text(organiser.full_name)
       end
     end
   end

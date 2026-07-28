@@ -6,9 +6,9 @@ class MemberMailer < ApplicationMailer
 
   def chaser
     @member = params[:member]
-    subject = "It’s been a while, how are you doing? ♥️"
+    subject = 'It’s been a while, how are you doing? ♥️'
     mail_to_member(@member, subject, 'hello@codebar.io', 'hello@codebar.io') do |format|
-      format.html {render 'three_month_chaser'}
+      format.html { render 'three_month_chaser' }
     end
   end
 

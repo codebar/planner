@@ -21,7 +21,7 @@ RSpec.describe OmniAuth::Strategies::Codebar do
       'REQUEST_METHOD' => 'GET',
       'SERVER_NAME' => 'localhost',
       'SERVER_PORT' => '3000',
-      'rack.url_scheme' => 'http',
+      'rack.url_scheme' => 'http'
     }
   end
 
@@ -38,7 +38,7 @@ RSpec.describe OmniAuth::Strategies::Codebar do
     base_env.merge(
       'PATH_INFO' => path,
       'QUERY_STRING' => query,
-      'rack.session' => session,
+      'rack.session' => session
     )
   end
 
@@ -84,8 +84,8 @@ RSpec.describe OmniAuth::Strategies::Codebar do
 
     it 'fails with csrf_detected when state does not match' do
       env = build_env('/auth/codebar/callback',
-        query: 'code=abc&state=wrong-state',
-        session: { 'omniauth.codebar.state' => 'correct-state' })
+                      query: 'code=abc&state=wrong-state',
+                      session: { 'omniauth.codebar.state' => 'correct-state' })
       strategy.call!(env)
       expect(env['omniauth.error']).to be_a(StandardError)
       expect(env['omniauth.error.type']).to eq(:csrf_detected)
@@ -93,8 +93,8 @@ RSpec.describe OmniAuth::Strategies::Codebar do
 
     it 'fails with missing_code when code is absent' do
       env = build_env('/auth/codebar/callback',
-        query: 'state=some-state',
-        session: { 'omniauth.codebar.state' => 'some-state' })
+                      query: 'state=some-state',
+                      session: { 'omniauth.codebar.state' => 'some-state' })
       strategy.call!(env)
       expect(env['omniauth.error']).to be_a(StandardError)
       expect(env['omniauth.error.type']).to eq(:missing_code)
@@ -102,8 +102,8 @@ RSpec.describe OmniAuth::Strategies::Codebar do
 
     it 'fails with missing_code when code is empty' do
       env = build_env('/auth/codebar/callback',
-        query: 'code=&state=some-state',
-        session: { 'omniauth.codebar.state' => 'some-state' })
+                      query: 'code=&state=some-state',
+                      session: { 'omniauth.codebar.state' => 'some-state' })
       strategy.call!(env)
       expect(env['omniauth.error']).to be_a(StandardError)
       expect(env['omniauth.error.type']).to eq(:missing_code)
@@ -111,8 +111,8 @@ RSpec.describe OmniAuth::Strategies::Codebar do
 
     it 'fails with missing_pkce when code_verifier is missing' do
       env = build_env('/auth/codebar/callback',
-        query: 'code=abc&state=some-state',
-        session: { 'omniauth.codebar.state' => 'some-state' })
+                      query: 'code=abc&state=some-state',
+                      session: { 'omniauth.codebar.state' => 'some-state' })
       strategy.call!(env)
       expect(env['omniauth.error']).to be_a(StandardError)
       expect(env['omniauth.error.type']).to eq(:missing_pkce)
@@ -124,8 +124,8 @@ RSpec.describe OmniAuth::Strategies::Codebar do
         .to_return(status: 400, body: '{"error":"invalid_grant"}')
 
       env = build_env('/auth/codebar/callback',
-        query: 'code=abc&state=some-state',
-        session: { 'omniauth.codebar.state' => 'some-state', 'omniauth.codebar.code_verifier' => 'verifier', 'omniauth.codebar.redirect_uri' => 'http://localhost:3000/auth/codebar/callback' })
+                      query: 'code=abc&state=some-state',
+                      session: { 'omniauth.codebar.state' => 'some-state', 'omniauth.codebar.code_verifier' => 'verifier', 'omniauth.codebar.redirect_uri' => 'http://localhost:3000/auth/codebar/callback' })
       strategy.call!(env)
       expect(env['omniauth.error']).to be_a(StandardError)
       expect(env['omniauth.error.type']).to eq(:exchange_failed)
@@ -133,12 +133,12 @@ RSpec.describe OmniAuth::Strategies::Codebar do
 
     it 'sends a custom User-Agent on token exchange requests' do
       stub = stub_request(:post, token_url)
-        .with(headers: { 'User-Agent' => 'Codebar Planner/1.0' })
-        .to_return(status: 400, body: '{"error":"invalid_grant"}')
+             .with(headers: { 'User-Agent' => 'Codebar Planner/1.0' })
+             .to_return(status: 400, body: '{"error":"invalid_grant"}')
 
       env = build_env('/auth/codebar/callback',
-        query: 'code=abc&state=some-state',
-        session: { 'omniauth.codebar.state' => 'some-state', 'omniauth.codebar.code_verifier' => 'verifier', 'omniauth.codebar.redirect_uri' => 'http://localhost:3000/auth/codebar/callback' })
+                      query: 'code=abc&state=some-state',
+                      session: { 'omniauth.codebar.state' => 'some-state', 'omniauth.codebar.code_verifier' => 'verifier', 'omniauth.codebar.redirect_uri' => 'http://localhost:3000/auth/codebar/callback' })
       strategy.call!(env)
 
       expect(stub).to have_been_requested
@@ -149,8 +149,8 @@ RSpec.describe OmniAuth::Strategies::Codebar do
         .to_return(status: 200, body: { access_token: 'foo' }.to_json, headers: { 'Content-Type' => 'application/json' })
 
       env = build_env('/auth/codebar/callback',
-        query: 'code=abc&state=some-state',
-        session: { 'omniauth.codebar.state' => 'some-state', 'omniauth.codebar.code_verifier' => 'verifier', 'omniauth.codebar.redirect_uri' => 'http://localhost:3000/auth/codebar/callback' })
+                      query: 'code=abc&state=some-state',
+                      session: { 'omniauth.codebar.state' => 'some-state', 'omniauth.codebar.code_verifier' => 'verifier', 'omniauth.codebar.redirect_uri' => 'http://localhost:3000/auth/codebar/callback' })
       strategy.call!(env)
       expect(env['omniauth.error']).to be_a(StandardError)
       expect(env['omniauth.error.type']).to eq(:missing_id_token)
@@ -166,8 +166,8 @@ RSpec.describe OmniAuth::Strategies::Codebar do
         .to_return(status: 200, body: { keys: [{ kty: 'RSA', kid: 'test', n: 'abc', e: 'AQAB' }] }.to_json)
 
       env = build_env('/auth/codebar/callback',
-        query: 'code=abc&state=some-state',
-        session: { 'omniauth.codebar.state' => 'some-state', 'omniauth.codebar.code_verifier' => 'verifier', 'omniauth.codebar.redirect_uri' => 'http://localhost:3000/auth/codebar/callback' })
+                      query: 'code=abc&state=some-state',
+                      session: { 'omniauth.codebar.state' => 'some-state', 'omniauth.codebar.code_verifier' => 'verifier', 'omniauth.codebar.redirect_uri' => 'http://localhost:3000/auth/codebar/callback' })
       strategy.call!(env)
       expect(env['omniauth.error']).to be_a(StandardError)
       expect(env['omniauth.error.type']).to eq(:invalid_jwt)
@@ -203,8 +203,8 @@ RSpec.describe OmniAuth::Strategies::Codebar do
 
     it 'builds the auth hash with correct data' do
       env = build_env('/auth/codebar/callback',
-        query: 'code=abc&state=some-state',
-        session: { 'omniauth.codebar.state' => 'some-state', 'omniauth.codebar.code_verifier' => 'verifier', 'omniauth.codebar.redirect_uri' => 'http://localhost:3000/auth/codebar/callback' })
+                      query: 'code=abc&state=some-state',
+                      session: { 'omniauth.codebar.state' => 'some-state', 'omniauth.codebar.code_verifier' => 'verifier', 'omniauth.codebar.redirect_uri' => 'http://localhost:3000/auth/codebar/callback' })
       strategy.call!(env)
 
       auth_hash = env['omniauth.auth']
@@ -232,8 +232,8 @@ RSpec.describe OmniAuth::Strategies::Codebar do
         .to_return(status: 400, body: '{"error":"invalid_grant"}')
 
       env = build_env('/auth/codebar/callback',
-        query: 'code=abc&state=test-state',
-        session: { 'omniauth.codebar.state' => 'test-state', 'omniauth.codebar.code_verifier' => 'verifier', 'omniauth.codebar.redirect_uri' => 'http://localhost:3000/auth/codebar/callback' })
+                      query: 'code=abc&state=test-state',
+                      session: { 'omniauth.codebar.state' => 'test-state', 'omniauth.codebar.code_verifier' => 'verifier', 'omniauth.codebar.redirect_uri' => 'http://localhost:3000/auth/codebar/callback' })
       strategy.call!(env)
       expect(env['omniauth.error']).to be_present
       expect(env['omniauth.error.type']).to eq(:exchange_failed)

@@ -1,7 +1,7 @@
 RSpec.feature 'admin member search', type: :feature do
   scenario 'search returns single member to requesting service' do
-    Fabricate(:member, :name => 'Romeo', :surname => 'Montague')
-    Fabricate(:member, :name => 'Juliet', :surname => 'Capulet')
+    Fabricate(:member, name: 'Romeo', surname: 'Montague')
+    Fabricate(:member, name: 'Juliet', surname: 'Capulet')
     member = Fabricate(:member)
     login_as_admin(member)
     visit admin_member_search_index_path(callback_url: results_admin_member_search_index_path)
@@ -11,8 +11,6 @@ RSpec.feature 'admin member search', type: :feature do
 
     expect(page).to have_current_path(results_admin_member_search_index_path, ignore_query: true)
 
-    expect(page).to have_content('Juliet Capulet')
+    expect(page).to have_text('Juliet Capulet')
   end
-
-
 end

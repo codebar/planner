@@ -2,7 +2,7 @@ RSpec.shared_examples 'member viewing workshop' do |workshop_type, member_type, 
   context workshop_type do
     let(:workshop) { Fabricate(workshop_type) }
 
-    scenario "allowed can manage" do
+    scenario 'allowed can manage' do
       member = Fabricate(member_type)
       login(member)
       visit workshop_path(workshop)
@@ -15,7 +15,7 @@ RSpec.shared_examples 'member viewing workshop' do |workshop_type, member_type, 
       login(banned_member)
       visit workshop_path(workshop)
 
-      expect(page).to_not have_button("Attend as a #{member_type.downcase}")
+      expect(page).to have_no_button("Attend as a #{member_type.downcase}")
     end
   end
 end

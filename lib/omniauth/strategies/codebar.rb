@@ -87,25 +87,26 @@ module OmniAuth
         # Build omniauth.auth hash
         email = payload['email'] || payload['sub']
         @env['omniauth.auth'] = AuthHash.new({
-          provider: name,
-          uid: email,
-          info: {
+                                               provider: name,
+                                               uid: email,
+                                               info: {
             email: email,
             name: payload['name'] || email
           },
-          credentials: {
+                                               credentials: {
             token: tokens['access_token'],
             expires: tokens['expires_at'],
             refresh_token: tokens['refresh_token']
           },
-          extra: {
+                                               extra: {
             raw_info: payload
           }
-        })
+                                             })
 
         call_app!
       rescue StandardError => e
         return if env['omniauth.error']
+
         return fail!(:unknown_error, e)
       end
 
@@ -139,12 +140,13 @@ module OmniAuth
         request['Content-Type'] = 'application/x-www-form-urlencoded'
         request['User-Agent'] = 'Codebar Planner/1.0'
         request.body = URI.encode_www_form({
-          grant_type: 'authorization_code',
-          code: code,
-          client_id: 'planner',
-          redirect_uri: session.delete('omniauth.codebar.redirect_uri') || callback_url,
-          code_verifier: code_verifier
-        })
+                                             grant_type: 'authorization_code',
+                                             code: code,
+                                             client_id: 'planner',
+                                             redirect_uri: session.delete('omniauth.codebar.redirect_uri') ||
+                                               callback_url,
+                                             code_verifier: code_verifier
+                                           })
 
         response = http_for(uri).request(request)
 
@@ -164,15 +166,15 @@ module OmniAuth
         jwks = fetch_jwks
         return nil unless jwks
 
-        decode = ->(jwks) {
+        decode = lambda { |jwks|
           JWT.decode(token, nil, true, {
-            algorithms: %w[RS256],
-            jwks: jwks,
-            iss: options.auth_url,
-            aud: options.audience,
-            verify_iss: true,
-            verify_aud: true
-          }).first
+                       algorithms: %w[RS256],
+                       jwks: jwks,
+                       iss: options.auth_url,
+                       aud: options.audience,
+                       verify_iss: true,
+                       verify_aud: true
+                     }).first
         }
 
         decode.call(jwks)
@@ -186,7 +188,7 @@ module OmniAuth
           nil
         end
       rescue JWT::ExpiredSignature
-        Rails.logger.warn "Codebar auth: JWT expired"
+        Rails.logger.warn 'Codebar auth: JWT expired'
         nil
       end
 
@@ -217,7 +219,6 @@ module OmniAuth
         Rails.logger.warn "Codebar auth: JWKS fetch failed: #{e.class}: #{e.message}"
         nil
       end
-
     end
   end
 end

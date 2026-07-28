@@ -1,17 +1,17 @@
 #!/usr/bin/env ruby
 # Run: DB_NAME=codebar_dump bundle exec ruby script/benchmark_events.rb
-ENV["RAILS_ENV"] ||= "development"
-require_relative "../config/environment"
-require "benchmark"
+ENV['RAILS_ENV'] ||= 'development'
+require_relative '../config/environment'
+require 'benchmark'
 
 session = ActionDispatch::Integration::Session.new(Rails.application)
-session.host = "localhost"
+session.host = 'localhost'
 
 def measure(session, path)
   qc = 0
   cb = ->(*, **) { qc += 1 }
   time = nil
-  ActiveSupport::Notifications.subscribed(cb, "sql.active_record") do
+  ActiveSupport::Notifications.subscribed(cb, 'sql.active_record') do
     time = Benchmark.measure { session.get(path) }
   end
   [time.real, qc]

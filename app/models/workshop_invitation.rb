@@ -23,7 +23,8 @@ class WorkshopInvitation < ApplicationRecord
   scope :last_six_months, -> { joins(:workshop).where(workshops: { date_and_time: 6.months.ago...Time.zone.now }) }
   scope :not_reminded, -> { where(reminded_at: nil) }
   scope :on_waiting_list, -> { joins(:waiting_list) }
-  scope :with_notes_and_their_authors, -> { includes(member: [{ member_notes: :author }, :attendance_warnings]).includes(:overrider) }
+  scope :with_notes_and_their_authors, -> {
+ includes(member: [{ member_notes: :author }, :attendance_warnings]).includes(:overrider) }
 
   def waiting_list_position
     @waiting_list_position ||= WaitingList.by_workshop(workshop)

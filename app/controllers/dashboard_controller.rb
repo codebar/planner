@@ -17,7 +17,8 @@ class DashboardController < ApplicationController
 
   def dashboard
     @user = MemberPresenter.new(current_user)
-    @ordered_events = DashboardQuery.upcoming_events_for_user(current_user).map.each_with_object({}) do |(key, value), hash|
+    @ordered_events = DashboardQuery.upcoming_events_for_user(current_user)
+                       .map.each_with_object({}) do |(key, value), hash|
       hash[key] = EventPresenter.decorate_collection(value)
     end
     @announcements = current_user.announcements.active

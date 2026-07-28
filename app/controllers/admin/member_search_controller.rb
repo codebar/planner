@@ -2,9 +2,9 @@ class Admin::MemberSearchController < Admin::ApplicationController
   def index
     search_params = if params.key?(:member_search)
                       params.expect(member_search: [:name, :callback_url])
-                    else
+    else
                       {}
-                    end
+    end
 
     callback_url = search_params[:callback_url] || params[:callback_url] || results_admin_member_search_index_path
     name = search_params[:name]

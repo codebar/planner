@@ -43,7 +43,7 @@ RSpec.describe Group do
       Fabricate(:workshop_invitation, workshop: old_workshop, member: member_old, attending: true)
       Fabricate(:workshop_invitation, workshop: new_workshop, member: member_new, attending: true)
 
-      results = Group.members_by_recent_rsvp(group).to_a
+      results = described_class.members_by_recent_rsvp(group).to_a
 
       expect(results.first).to eq(member_new)
       expect(results.last).to eq(_member_no_rsvp)

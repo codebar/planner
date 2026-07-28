@@ -4,7 +4,7 @@ class Workshop < ApplicationRecord
   include Listable
 
   attr_accessor :local_date, :local_time, :local_end_time, :rsvp_open_local_date, :rsvp_open_local_time,
-              :rsvp_close_local_date, :rsvp_close_local_time
+                :rsvp_close_local_date, :rsvp_close_local_time
 
   resourcify :permissions, role_cname: 'Permission', role_table_name: :permission
 
@@ -160,6 +160,7 @@ class Workshop < ApplicationRecord
   def rsvp_close_before_workshop_start
     return unless rsvp_closes_at && date_and_time
     return if rsvp_closes_at < date_and_time
-    errors.add(:rsvp_close_local_date, "must be before the workshop start time")
+
+    errors.add(:rsvp_close_local_date, 'must be before the workshop start time')
   end
 end

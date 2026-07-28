@@ -10,30 +10,30 @@ RSpec.feature 'Viewing a workshop invitation', type: :feature, wip: true do
 
     scenario 'workshop and page title' do
       expect(page).to have_title("Workshop invitation - #{humanize_date(workshop.date_and_time)}")
-      expect(page).to have_content("Workshop at #{workshop.host.name}")
+      expect(page).to have_text("Workshop at #{workshop.host.name}")
     end
 
     context '#introduction' do
       context 'student' do
         scenario 'displays information for a physical workshop' do
-          expect(page).to have_content('Please make sure you bring your laptop')
+          expect(page).to have_text('Please make sure you bring your laptop')
         end
       end
 
       context 'coach' do
         scenario 'displays information for a physical workshop' do
-          expect(page).to have_content('PS: There will also be food at the workshop.')
+          expect(page).to have_text('PS: There will also be food at the workshop.')
         end
       end
     end
 
     scenario 'venue name and address' do
       within '#venue' do
-        expect(page).to have_content(workshop.host.name)
+        expect(page).to have_text(workshop.host.name)
 
         within '#address' do
-          expect(page).to have_content(workshop.host.address.street)
-          expect(page).to have_content(workshop.host.address.city)
+          expect(page).to have_text(workshop.host.address.street)
+          expect(page).to have_text(workshop.host.address.city)
         end
       end
     end
@@ -43,14 +43,14 @@ RSpec.feature 'Viewing a workshop invitation', type: :feature, wip: true do
 
       it 'contains details about the workshop and renders user defined HTML' do
         within '#info' do
-          expect(page).to have_content('Information about the workshop')
+          expect(page).to have_text('Information about the workshop')
           expect(page).to have_link('Follow link', href: 'http://a.link.com')
-          expect(page).to_not have_content('How to join')
+          expect(page).to have_no_text('How to join')
         end
       end
     end
 
-    include_examples "viewing workshop details"
+    include_examples 'viewing workshop details'
   end
 
   context 'virtual workshop' do
@@ -58,19 +58,19 @@ RSpec.feature 'Viewing a workshop invitation', type: :feature, wip: true do
 
     scenario 'workshop and page title' do
       expect(page).to have_title("Workshop invitation - #{humanize_date(workshop.date_and_time)}")
-      expect(page).to have_content("Virtual workshop for #{workshop.chapter.name}")
+      expect(page).to have_text("Virtual workshop for #{workshop.chapter.name}")
     end
 
     context '#introduction' do
       context 'student' do
         scenario 'does not display information about the physical workshop' do
-          expect(page).to_not have_content('Please make sure you bring your laptop')
+          expect(page).to have_no_text('Please make sure you bring your laptop')
         end
       end
 
       context 'coach' do
         scenario 'does not displays information about the physical workshop' do
-          expect(page).to_not have_content('PS: There will also be food at the workshop.')
+          expect(page).to have_no_text('PS: There will also be food at the workshop.')
         end
       end
     end
@@ -81,20 +81,20 @@ RSpec.feature 'Viewing a workshop invitation', type: :feature, wip: true do
 
         it 'contains details about the workshop' do
           within '#info' do
-            expect(page).to have_content('Information about the workshop')
+            expect(page).to have_text('Information about the workshop')
           end
         end
 
         it 'contains details about how to join the workshop' do
-          expect(page).to have_content('How to join')
+          expect(page).to have_text('How to join')
           within '#join-info' do
-            expect(page).to have_content("Join ##{workshop.slack_channel}")
+            expect(page).to have_text("Join ##{workshop.slack_channel}")
             expect(page).to have_link(href: I18n.t('social_media_links.slack_html'))
           end
         end
       end
     end
 
-    include_examples "viewing workshop details"
+    include_examples 'viewing workshop details'
   end
 end

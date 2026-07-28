@@ -7,51 +7,51 @@ RSpec.describe MemberMailer do
     before { allow(bad_member).to receive(:email).and_return('invalid-email') }
 
     it '#welcome_student skips delivery without crashing' do
-      expect {
-        MemberMailer.welcome_student(bad_member).deliver_now
-      }.not_to raise_error
+      expect do
+        described_class.welcome_student(bad_member).deliver_now
+      end.not_to raise_error
       expect(ActionMailer::Base.deliveries).to be_empty
     end
 
     it '#welcome_coach skips delivery without crashing' do
-      expect {
-        MemberMailer.welcome_coach(bad_member).deliver_now
-      }.not_to raise_error
+      expect do
+        described_class.welcome_coach(bad_member).deliver_now
+      end.not_to raise_error
       expect(ActionMailer::Base.deliveries).to be_empty
     end
 
     it '#eligibility_check skips delivery without crashing' do
-      expect {
-        MemberMailer.eligibility_check(bad_member).deliver_now
-      }.not_to raise_error
+      expect do
+        described_class.eligibility_check(bad_member).deliver_now
+      end.not_to raise_error
       expect(ActionMailer::Base.deliveries).to be_empty
     end
 
     it '#attendance_warning skips delivery without crashing' do
-      expect {
-        MemberMailer.attendance_warning(bad_member).deliver_now
-      }.not_to raise_error
+      expect do
+        described_class.attendance_warning(bad_member).deliver_now
+      end.not_to raise_error
       expect(ActionMailer::Base.deliveries).to be_empty
     end
 
     it '#ban skips delivery without crashing' do
       ban = Fabricate(:ban, member: bad_member)
-      expect {
-        MemberMailer.ban(bad_member, ban).deliver_now
-      }.not_to raise_error
+      expect do
+        described_class.ban(bad_member, ban).deliver_now
+      end.not_to raise_error
       expect(ActionMailer::Base.deliveries).to be_empty
     end
 
     it '#chaser skips delivery without crashing' do
-      expect {
-        MemberMailer.with(member: bad_member).chaser.deliver_now
-      }.not_to raise_error
+      expect do
+        described_class.with(member: bad_member).chaser.deliver_now
+      end.not_to raise_error
       expect(ActionMailer::Base.deliveries).to be_empty
     end
   end
 
   describe 'welcome_student' do
-    let(:mail) { MemberMailer.welcome_student(member).deliver_now }
+    let(:mail) { described_class.welcome_student(member).deliver_now }
 
     it 'renders the headers' do
       expect(mail.subject).to eq('How codebar works')
@@ -66,7 +66,7 @@ RSpec.describe MemberMailer do
   end
 
   describe 'welcome_coach' do
-    let(:mail) { MemberMailer.welcome_coach(member).deliver_now }
+    let(:mail) { described_class.welcome_coach(member).deliver_now }
 
     it 'renders the headers' do
       expect(mail.subject).to eq('How codebar works')
@@ -81,7 +81,7 @@ RSpec.describe MemberMailer do
   end
 
   describe 'eligibility check' do
-    let(:mail) { MemberMailer.eligibility_check(member).deliver_now }
+    let(:mail) { described_class.eligibility_check(member).deliver_now }
 
     it 'renders the headers' do
       expect(mail.subject).to eq('Eligibility confirmation')
@@ -96,7 +96,7 @@ RSpec.describe MemberMailer do
   end
 
   describe 'attendance warning' do
-    let(:mail) { MemberMailer.attendance_warning(member).deliver_now }
+    let(:mail) { described_class.attendance_warning(member).deliver_now }
 
     it 'renders the headers' do
       expect(mail.subject).to eq('Attendance warning')
@@ -112,7 +112,7 @@ RSpec.describe MemberMailer do
 
   describe 'ban email' do
     let(:ban) { Fabricate(:ban, reason: 'Attendance violation') }
-    let(:mail) { MemberMailer.ban(member, ban).deliver_now }
+    let(:mail) { described_class.ban(member, ban).deliver_now }
 
     it 'renders the headers' do
       expect(mail.subject).to eq('Attendance violation')
@@ -130,7 +130,7 @@ RSpec.describe MemberMailer do
     it 'sends the coach welcome email to coaches' do
       member = Fabricate(:coach)
 
-      mail = MemberMailer.welcome(member).deliver_now
+      mail = described_class.welcome(member).deliver_now
 
       expect(mail.body.encoded).to match('depends on coaches attending')
     end
@@ -138,7 +138,7 @@ RSpec.describe MemberMailer do
     it 'sends the student welcome email to students' do
       member = Fabricate(:student)
 
-      mail = MemberMailer.welcome(member).deliver_now
+      mail = described_class.welcome(member).deliver_now
 
       expect(mail.body.encoded).to match('Spots are limited')
     end
@@ -147,7 +147,7 @@ RSpec.describe MemberMailer do
       member = Fabricate(:member)
       ban = Fabricate(:ban)
 
-      mail = MemberMailer.ban(member, ban).deliver_now
+      mail = described_class.ban(member, ban).deliver_now
 
       expect(mail.to).to eq([member.email])
       expect(mail.body.encoded).to match('your account has been suspended')
@@ -156,31 +156,31 @@ RSpec.describe MemberMailer do
     it 'actually sends a coach email' do
       member = Fabricate(:coach)
       expect do
-        MemberMailer.welcome(member).deliver_now
+        described_class.welcome(member).deliver_now
       end.to change { ActionMailer::Base.deliveries.count }.by 1
     end
 
     it 'actually sends a student email' do
       member = Fabricate(:student)
       expect do
-        MemberMailer.welcome(member).deliver_now
+        described_class.welcome(member).deliver_now
       end.to change { ActionMailer::Base.deliveries.count }.by 1
     end
   end
 
-  describe "#chaser" do
-    it "logs the sent email" do
+  describe '#chaser' do
+    it 'logs the sent email' do
       expect do
-        MemberMailer
+        described_class
           .with(member: member)
           .chaser
           .deliver_now
-        end.to change(MemberEmailDelivery, :count).by(1)
+      end.to change(MemberEmailDelivery, :count).by(1)
 
       log = MemberEmailDelivery.last!
 
       expect(log.member).to eq(member)
-      expect(log.subject).to eq("It’s been a while, how are you doing? ♥️")
+      expect(log.subject).to eq('It’s been a while, how are you doing? ♥️')
       expect(log.to).to eq([member.email])
     end
   end

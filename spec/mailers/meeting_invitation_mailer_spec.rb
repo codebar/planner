@@ -10,36 +10,36 @@ RSpec.describe MeetingInvitationMailer do
     before { allow(bad_member).to receive(:email).and_return('invalid-email') }
 
     it '#invite skips delivery without crashing' do
-      expect {
-        MeetingInvitationMailer.invite(meeting, bad_member, bad_invitation).deliver_now
-      }.not_to raise_error
+      expect do
+        described_class.invite(meeting, bad_member, bad_invitation).deliver_now
+      end.not_to raise_error
       expect(ActionMailer::Base.deliveries).to be_empty
     end
 
     it '#attending skips delivery without crashing' do
-      expect {
-        MeetingInvitationMailer.attending(meeting, bad_member).deliver_now
-      }.not_to raise_error
+      expect do
+        described_class.attending(meeting, bad_member).deliver_now
+      end.not_to raise_error
       expect(ActionMailer::Base.deliveries).to be_empty
     end
 
     it '#approve_from_waitlist skips delivery without crashing' do
-      expect {
-        MeetingInvitationMailer.approve_from_waitlist(meeting, bad_member).deliver_now
-      }.not_to raise_error
+      expect do
+        described_class.approve_from_waitlist(meeting, bad_member).deliver_now
+      end.not_to raise_error
       expect(ActionMailer::Base.deliveries).to be_empty
     end
 
     it '#attendance_reminder skips delivery without crashing' do
-      expect {
-        MeetingInvitationMailer.attendance_reminder(meeting, bad_member).deliver_now
-      }.not_to raise_error
+      expect do
+        described_class.attendance_reminder(meeting, bad_member).deliver_now
+      end.not_to raise_error
       expect(ActionMailer::Base.deliveries).to be_empty
     end
   end
 
   describe '#invite' do
-    let(:mail) { MeetingInvitationMailer.invite(meeting, member, invitation).deliver_now }
+    let(:mail) { described_class.invite(meeting, member, invitation).deliver_now }
 
     it 'renders the headers' do
       expect(mail.subject).to eq("You are invited to codebar\'s #{meeting.name} on #{humanize_date(meeting.date_and_time)}")
@@ -55,7 +55,7 @@ RSpec.describe MeetingInvitationMailer do
   end
 
   describe '#attending' do
-    let(:mail) { MeetingInvitationMailer.attending(meeting, member).deliver_now }
+    let(:mail) { described_class.attending(meeting, member).deliver_now }
 
     it 'renders the headers' do
       expect(mail.subject).to eq("See you at #{meeting.name} on #{humanize_date(meeting.date_and_time)}")
@@ -71,7 +71,7 @@ RSpec.describe MeetingInvitationMailer do
   end
 
   describe '#approve_from_waitlist' do
-    let(:mail) { MeetingInvitationMailer.approve_from_waitlist(meeting, member).deliver_now }
+    let(:mail) { described_class.approve_from_waitlist(meeting, member).deliver_now }
 
     it 'renders the headers' do
       expect(mail.subject).to eq("A spot has opened up for #{meeting.name} on #{humanize_date(meeting.date_and_time)}")
@@ -87,7 +87,7 @@ RSpec.describe MeetingInvitationMailer do
   end
 
   describe '#attendance_reminder' do
-    let(:mail) { MeetingInvitationMailer.attendance_reminder(meeting, member).deliver_now }
+    let(:mail) { described_class.attendance_reminder(meeting, member).deliver_now }
 
     it 'renders the headers' do
       expect(mail.subject).to eq("Reminder: You have a spot for #{meeting.name} on #{humanize_date(meeting.date_and_time)}")

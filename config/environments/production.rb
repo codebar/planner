@@ -68,6 +68,9 @@ Rails.application.configure do
   # Set host to be used by links generated in mailer templates.
   config.action_mailer.default_url_options = { host: 'codebar.io' }
 
+  # Host for absolute asset URLs in emails. Override for staging via ASSET_HOST env var.
+  config.action_mailer.asset_host = ENV.fetch('ASSET_HOST', 'https://codebar.io')
+
   # Specify outgoing SMTP server. Remember to add smtp/* credentials via rails credentials:edit.
   config.action_mailer.smtp_settings = {
      port: '587',

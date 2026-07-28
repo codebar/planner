@@ -9,21 +9,21 @@ RSpec.feature 'viewing an event', type: :feature do
 
     context 'a non authenticated user' do
       scenario 'a user can view an event' do
-        expect(page).to have_content(closed_event.name)
-        expect(page).to have_content(closed_event.description)
-        expect(page).to have_content(closed_event.schedule)
+        expect(page).to have_text(closed_event.name)
+        expect(page).to have_text(closed_event.description)
+        expect(page).to have_text(closed_event.schedule)
       end
 
       scenario 'a student cannot RSVP if they are not logged in' do
         expect(page).to have_link('Log in')
         expect(page).to have_link('Join our community')
-        expect(page).to_not have_link('Attend as a student')
+        expect(page).to have_no_link('Attend as a student')
       end
 
       scenario 'a coach cannot RSVP if they are not logged in' do
         expect(page).to have_link('Log in')
         expect(page).to have_link('Join our community')
-        expect(page).to_not have_link('Attend as a coach')
+        expect(page).to have_no_link('Attend as a coach')
       end
     end
 
@@ -36,35 +36,35 @@ RSpec.feature 'viewing an event', type: :feature do
 
       context 'can RSVP to an event' do
         scenario 'as a Coach' do
-          expect(current_path).to eq(event_path(closed_event))
+          expect(page).to have_current_path(event_path(closed_event), ignore_query: true)
 
           click_on 'Attend as a coach'
           click_on 'RSVP'
 
-          expect(page).to have_content('Your spot has not yet been confirmed. We will verify your attendance after you complete the questionnaire.')
+          expect(page).to have_text('Your spot has not yet been confirmed. We will verify your attendance after you complete the questionnaire.')
         end
 
         scenario 'as a Student' do
-          expect(current_path).to eq(event_path(closed_event))
+          expect(page).to have_current_path(event_path(closed_event), ignore_query: true)
 
           click_on 'Attend as a student'
           click_on 'RSVP'
 
-          expect(page).to have_content('Your spot has not yet been confirmed. We will verify your attendance after you complete the questionnaire.')
+          expect(page).to have_text('Your spot has not yet been confirmed. We will verify your attendance after you complete the questionnaire.')
         end
       end
-      
+
       context 'can not RSVP to an event' do
         it 'that is now in the past' do
-          expect(current_path).to eq(event_path(closed_event))
+          expect(page).to have_current_path(event_path(closed_event), ignore_query: true)
 
           travel_into_the_future = Time.zone.now + 3.days
           allow(Time).to receive(:now).and_return(travel_into_the_future)
           visit event_path(closed_event)
-          
-          expect(page).to have_content('This event has already occurred.')
-          expect(page).not_to have_button('Attend as a coach')
-          expect(page).not_to have_button('Attend as a student')
+
+          expect(page).to have_text('This event has already occurred.')
+          expect(page).to have_no_button('Attend as a coach')
+          expect(page).to have_no_button('Attend as a student')
         end
       end
     end
@@ -84,37 +84,37 @@ RSpec.feature 'viewing an event', type: :feature do
 
       context 'can RSVP to an event' do
         scenario 'as a Coach' do
-          expect(current_path).to eq(event_path(open_event))
+          expect(page).to have_current_path(event_path(open_event), ignore_query: true)
 
           click_on 'Attend as a coach'
           click_on 'RSVP'
 
-          expect(page).to have_content("Your spot has been confirmed for #{open_event.name}! We look forward to seeing you there")
-          expect(page).not_to have_content('We will verify your attendance after you complete the questionnaire!')
+          expect(page).to have_text("Your spot has been confirmed for #{open_event.name}! We look forward to seeing you there")
+          expect(page).to have_no_text('We will verify your attendance after you complete the questionnaire!')
         end
 
         scenario 'as a Student' do
-          expect(current_path).to eq(event_path(open_event))
+          expect(page).to have_current_path(event_path(open_event), ignore_query: true)
 
           click_on 'Attend as a student'
           click_on 'RSVP'
 
-          expect(page).to have_content("Your spot has been confirmed for #{open_event.name}! We look forward to seeing you there")
-          expect(page).not_to have_content('We will verify your attendance after you complete the questionnaire!')
+          expect(page).to have_text("Your spot has been confirmed for #{open_event.name}! We look forward to seeing you there")
+          expect(page).to have_no_text('We will verify your attendance after you complete the questionnaire!')
         end
       end
 
       context 'can not RSVP to an event' do
         it 'that is now in the past' do
-          expect(current_path).to eq(event_path(open_event))
+          expect(page).to have_current_path(event_path(open_event), ignore_query: true)
 
           travel_into_the_future = Time.zone.now + 3.days
           allow(Time).to receive(:now).and_return(travel_into_the_future)
           visit event_path(open_event)
 
-          expect(page).to have_content('This event has already occurred.')
-          expect(page).not_to have_button('Attend as a coach')
-          expect(page).not_to have_button('Attend as a student')
+          expect(page).to have_text('This event has already occurred.')
+          expect(page).to have_no_button('Attend as a coach')
+          expect(page).to have_no_button('Attend as a student')
         end
       end
 
@@ -122,7 +122,7 @@ RSpec.feature 'viewing an event', type: :feature do
         invitation = Fabricate(:attending_event_invitation, event: open_event, member: member)
         visit event_path(open_event)
 
-        expect(current_path).to eq(event_invitation_path(open_event, invitation.token))
+        expect(page).to have_current_path(event_invitation_path(open_event, invitation.token), ignore_query: true)
       end
     end
   end

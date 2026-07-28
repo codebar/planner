@@ -16,14 +16,14 @@ RSpec.shared_examples 'managing workshop attendance' do
             select tutorial.title, from: :workshop_invitation_tutorial
             click_on 'Attend'
 
-            expect(page).to have_content('See you at the workshop')
+            expect(page).to have_text('See you at the workshop')
 
             visit workshop_path(workshop)
             expect(page).to have_button('Manage your invitation')
           end
 
           it 'cannot RSVP as a coach' do
-            expect(page).not_to have_content('Attend as a coach')
+            expect(page).to have_no_text('Attend as a coach')
           end
         end
 
@@ -37,14 +37,14 @@ RSpec.shared_examples 'managing workshop attendance' do
             click_on 'Attend as a coach'
             click_on 'Attend'
 
-            expect(page).to have_content('See you at the workshop')
+            expect(page).to have_text('See you at the workshop')
 
             visit workshop_path(workshop)
             expect(page).to have_button('Manage your invitation')
           end
 
           it 'cannot RSVP as a student' do
-            expect(page).not_to have_content('Attend as a student')
+            expect(page).to have_no_text('Attend as a student')
           end
         end
 
@@ -63,7 +63,7 @@ RSpec.shared_examples 'managing workshop attendance' do
             select tutorial.title, from: :workshop_invitation_tutorial
             click_on 'Attend'
 
-            expect(page).to have_content('See you at the workshop')
+            expect(page).to have_text('See you at the workshop')
 
             visit workshop_path(workshop)
             expect(page).to have_button('Manage your invitation')
@@ -73,7 +73,7 @@ RSpec.shared_examples 'managing workshop attendance' do
             click_on 'Attend as a coach'
             click_on 'Attend'
 
-            expect(page).to have_content('See you at the workshop')
+            expect(page).to have_text('See you at the workshop')
 
             visit workshop_path(workshop)
             expect(page).to have_button('Manage your invitation')
@@ -98,8 +98,8 @@ RSpec.shared_examples 'managing workshop attendance' do
             visit workshop_path(workshop)
 
             click_on 'Manage your invitation'
-            expect(page).to have_content("Hi #{student.name}")
-            expect(page).to have_content('You should also go through our coaching guide')
+            expect(page).to have_text("Hi #{student.name}")
+            expect(page).to have_text('You should also go through our coaching guide')
           end
         end
 
@@ -111,15 +111,15 @@ RSpec.shared_examples 'managing workshop attendance' do
           end
 
           it 'will be prompted to manage their subscriptions' do
-            expect(page).to have_content('Please tell us whether you want to attend as a student or coach.')
+            expect(page).to have_text('Please tell us whether you want to attend as a student or coach.')
 
             click_link 'Please tell us whether you want to attend as a student or coach.'
             expect(page).to have_current_path(subscriptions_path)
           end
 
           it 'cannot access RSVP as a student or coach' do
-            expect(page).not_to have_content('Attend as a student')
-            expect(page).not_to have_content('Attend as a coach')
+            expect(page).to have_no_text('Attend as a student')
+            expect(page).to have_no_text('Attend as a coach')
           end
         end
       end
@@ -137,10 +137,8 @@ RSpec.shared_examples 'managing workshop attendance' do
             click_on 'Attend as a coach'
             click_on 'Attend'
 
-            expect(page).to have_content('See you at the workshop')
-          end
+            expect(page).to have_text('See you at the workshop')
 
-          after do
             visit workshop_path(workshop_auto_rsvp_in_past)
             expect(page).to have_button('Manage your invitation')
           end
@@ -150,7 +148,7 @@ RSpec.shared_examples 'managing workshop attendance' do
           it 'cannot access RSVP as a student or coach' do
             visit workshop_path(workshop_auto_rsvp_in_future)
 
-            expect(page).to have_content('This workshop is not yet open for RSVP.')
+            expect(page).to have_text('This workshop is not yet open for RSVP.')
           end
         end
 
@@ -163,8 +161,8 @@ RSpec.shared_examples 'managing workshop attendance' do
             visit workshop_path(workshop)
 
             expect(page).to have_button('Manage your invitation')
-            expect(page).not_to have_button('Attend as a student')
-            expect(page).not_to have_button('Attend as a coach')
+            expect(page).to have_no_button('Attend as a student')
+            expect(page).to have_no_button('Attend as a coach')
           end
         end
 
@@ -172,11 +170,11 @@ RSpec.shared_examples 'managing workshop attendance' do
           it 'can not rsvp to workshop that is now in the past' do
             travel_into_the_future = Time.zone.now + 3.days
             allow(Time).to receive(:now).and_return(travel_into_the_future)
-      
+
             click_on 'Attend as a coach'
-            expect(page).to have_content('This event has already taken place')
-            expect(page).not_to have_button('Attend as a coach')
-          end    
+            expect(page).to have_text('This event has already taken place')
+            expect(page).to have_no_button('Attend as a coach')
+          end
         end
       end
     end
@@ -186,7 +184,7 @@ RSpec.shared_examples 'managing workshop attendance' do
 
       scenario 'cannot interact with a past event' do
         visit workshop_path(workshop)
-        expect(page).to have_content('has already taken place')
+        expect(page).to have_text('has already taken place')
       end
     end
   end

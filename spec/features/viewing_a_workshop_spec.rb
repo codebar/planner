@@ -10,25 +10,25 @@ RSpec.feature 'Viewing a workshop page', type: :feature do
       describe '#details' do
         scenario 'workshop and page title' do
           expect(page).to have_title("Workshop at #{workshop.host.name} - #{humanize_date(workshop.date_and_time)}")
-          expect(page).to have_content("Workshop at #{workshop.host.name}")
+          expect(page).to have_text("Workshop at #{workshop.host.name}")
         end
 
         scenario 'venue name and address' do
           within '#venue' do
-            expect(page).to have_content(workshop.host.name)
+            expect(page).to have_text(workshop.host.name)
 
             within '#address' do
-              expect(page).to have_content(workshop.host.address.street)
-              expect(page).to have_content(workshop.host.address.city)
+              expect(page).to have_text(workshop.host.address.street)
+              expect(page).to have_text(workshop.host.address.city)
             end
           end
         end
 
-        include_examples "viewing workshop details"
+        include_examples 'viewing workshop details'
       end
 
       describe '#actions' do
-        include_examples "viewing workshop actions"
+        include_examples 'viewing workshop actions'
       end
     end
 
@@ -39,25 +39,25 @@ RSpec.feature 'Viewing a workshop page', type: :feature do
         scenario 'workshop and page title' do
           expect(page)
             .to have_title("Virtual workshop for #{workshop.chapter.name} 🌐 #{humanize_date(workshop.date_and_time)}")
-          expect(page).to have_content("Virtual workshop for #{workshop.chapter.name}")
+          expect(page).to have_text("Virtual workshop for #{workshop.chapter.name}")
         end
 
         scenario 'workshop info' do
           within '*[data-test=workshop-info]' do
-            expect(page).to have_content('Participate in our online workshops')
-            expect(page).to have_content('Our virtual workshops take place online')
+            expect(page).to have_text('Participate in our online workshops')
+            expect(page).to have_text('Our virtual workshops take place online')
 
             within '.description' do
-              expect(page).to have_content(workshop.description)
+              expect(page).to have_text(workshop.description)
             end
           end
         end
 
-        include_examples "viewing workshop details"
+        include_examples 'viewing workshop details'
       end
 
       describe '#actions' do
-        include_examples "viewing workshop actions"
+        include_examples 'viewing workshop actions'
       end
     end
   end

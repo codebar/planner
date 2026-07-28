@@ -8,7 +8,7 @@ RSpec.describe ChaptersSidebarComponent do
   let(:chapters) { Fabricate.times(3, :chapter) }
 
   it 'renders chapter names as links' do
-    render_inline ChaptersSidebarComponent.new(chapters: chapters)
+    render_inline described_class.new(chapters: chapters)
 
     chapters.each do |chapter|
       expect(page).to have_link(chapter.name, href: chapter_path(chapter.slug))
@@ -16,7 +16,7 @@ RSpec.describe ChaptersSidebarComponent do
   end
 
   it 'renders nothing when no chapters' do
-    render_inline ChaptersSidebarComponent.new(chapters: [])
+    render_inline described_class.new(chapters: [])
 
     expect(page).to have_css('ul.list-unstyled.ms-0', visible: true)
     expect(page).to have_no_css('li')

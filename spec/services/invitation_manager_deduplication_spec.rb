@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe InvitationManager do
-  subject(:manager) { InvitationManager.new }
+  subject(:manager) { described_class.new }
 
   let(:chapter) { Fabricate(:chapter) }
   let(:member_in_both_groups) { Fabricate(:member, accepted_toc_at: Time.zone.now) }

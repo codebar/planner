@@ -12,22 +12,22 @@ RSpec.feature 'when visiting the homepage', type: :feature do
 
   scenario 'i can view the next workshop' do
     travel_to(Time.current) do
-      expect(page).to have_content "Workshop at #{next_workshop.host.name}"
+      expect(page).to have_text "Workshop at #{next_workshop.host.name}"
     end
   end
 
   scenario 'i can view the next 5 upcoming events' do
     travel_to(Time.current) do
-      events.take(5).each { |event| expect(page).to have_content "#{event.name} at #{event.venue.name}" }
+      events.take(5).each { |event| expect(page).to have_text "#{event.name} at #{event.venue.name}" }
     end
   end
 
   scenario 'i can access the code of conduct' do
     click_on 'Code of Conduct'
 
-    expect(page).to have_content 'Code of conduct'
-    expect(page).to have_content 'The Quick Version'
-    expect(page).to have_content 'The Long Version'
+    expect(page).to have_text 'Code of conduct'
+    expect(page).to have_text 'The Quick Version'
+    expect(page).to have_text 'The Long Version'
   end
 
   scenario 'I can only view active chapters' do
@@ -37,31 +37,31 @@ RSpec.feature 'when visiting the homepage', type: :feature do
     visit root_path
 
     active_chapters.each do |chapter|
-      expect(page).to have_content(chapter.name)
+      expect(page).to have_text(chapter.name)
     end
 
     inactive_chapters.each do |chapter|
-      expect(page).not_to have_content(chapter.name)
+      expect(page).to have_no_text(chapter.name)
     end
   end
 
   scenario 'i can sign in' do
     visit root_path
 
-    expect(page).to have_content 'Sign in'
+    expect(page).to have_text 'Sign in'
   end
 
   context 'signing up' do
     scenario 'i can sign up as a student' do
       visit root_path
 
-      expect(page).to have_content 'Join us as a student'
+      expect(page).to have_text 'Join us as a student'
     end
 
     scenario 'i can sign up as a coach' do
       visit root_path
 
-      expect(page).to have_content 'Join us as a coach'
+      expect(page).to have_text 'Join us as a coach'
     end
   end
 end

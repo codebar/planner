@@ -11,9 +11,9 @@ RSpec.describe FeedbackRequestMailer do
     before { allow(bad_member).to receive(:email).and_return('invalid-email') }
 
     it '#request_feedback skips delivery without crashing' do
-      expect {
-        FeedbackRequestMailer.request_feedback(workshop, bad_member, bad_feedback_request).deliver_now
-      }.not_to raise_error
+      expect do
+        described_class.request_feedback(workshop, bad_member, bad_feedback_request).deliver_now
+      end.not_to raise_error
       expect(ActionMailer::Base.deliveries).to be_empty
     end
   end
@@ -24,7 +24,7 @@ RSpec.describe FeedbackRequestMailer do
     it '#request_feedback' do
       email_subject = "Workshop Feedback for #{I18n.l(workshop.date_and_time, format: :email_title)}"
 
-      FeedbackRequestMailer.request_feedback(workshop, member, feedback_request).deliver_now
+      described_class.request_feedback(workshop, member, feedback_request).deliver_now
 
       expect(email.subject).to eq(email_subject)
       expect(email.from).to eq(['meetings@codebar.io'])
@@ -37,7 +37,7 @@ RSpec.describe FeedbackRequestMailer do
     it '#request_feedback' do
       email_subject = "Virtual Workshop Feedback for #{I18n.l(workshop.date_and_time, format: :email_title)}"
 
-      FeedbackRequestMailer.request_feedback(workshop, member, feedback_request).deliver_now
+      described_class.request_feedback(workshop, member, feedback_request).deliver_now
 
       expect(email.subject).to eq(email_subject)
       expect(email.from).to eq(['meetings@codebar.io'])

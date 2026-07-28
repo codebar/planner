@@ -2,7 +2,7 @@ require 'json'
 require 'services/mailing_list'
 
 RSpec.describe Services::MailingList do
-  let(:mailing_list) { Services::MailingList.new(:list_id) }
+  let(:mailing_list) { described_class.new(:list_id) }
   let(:client) { double(:flodesk) }
 
   before do
@@ -11,18 +11,18 @@ RSpec.describe Services::MailingList do
     allow(ENV).to receive(:[]).and_call_original
     allow(ENV).to receive(:[]).with('FLODESK_KEY').and_return('test')
     allow(mailing_list).to receive(:client).and_return(client)
-    allow(Rails).to receive(:env).and_return("production".inquiry)
+    allow(Rails).to receive(:env).and_return('production'.inquiry)
   end
 
   context '#subscribe' do
     it 'adds a user to the mailing list' do
       expect(client).to receive(:subscribe)
         .with({
-          email: :email,
-          first_name: :first_name,
-          last_name: :last_name,
-          segment_ids: [:list_id]
-        })
+                email: :email,
+                first_name: :first_name,
+                last_name: :last_name,
+                segment_ids: [:list_id]
+              })
 
       mailing_list.subscribe(:email, :first_name, :last_name)
     end

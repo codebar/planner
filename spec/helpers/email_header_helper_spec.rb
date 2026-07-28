@@ -73,6 +73,4 @@ RSpec.describe EmailHeaderHelper, type: :helper do
       helper.mail_to_member(member, 'Test Subject', 'from@codebar.io', 'cc@codebar.io', 'bcc@codebar.io')
     end
   end
-
-
 end
