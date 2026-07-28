@@ -46,7 +46,7 @@ RSpec.feature 'Managing organisers', type: :feature do
       click_on 'Remove'
 
       within '.organisers' do
-        expect(page).to_not have_content(organiser_name)
+        expect(page).to have_no_content(organiser_name)
       end
     end
   end

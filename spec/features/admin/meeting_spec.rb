@@ -59,7 +59,7 @@ RSpec.feature 'Managing meetings', type: :feature do
 
       expect(page).to have_content('You have successfully updated the details of this meeting')
       expect(page).to have_css(%(span[title="#{permissions.members.last.full_name}"]))
-      expect(page).not_to have_css(%(span[title="#{permissions.members.first.full_name}"]))
+      expect(page).to have_no_css(%(span[title="#{permissions.members.first.full_name}"]))
     end
 
     scenario 'adding an organiser', :js do

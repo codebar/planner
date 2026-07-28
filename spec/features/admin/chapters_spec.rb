@@ -116,7 +116,7 @@ RSpec.feature 'Chapters', type: :feature do
         expect(page).to have_content(email)
       end
 
-      expect(page).not_to have_content(coach_email)
+      expect(page).to have_no_content(coach_email)
     end
   end
 

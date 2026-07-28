@@ -25,7 +25,7 @@ RSpec.shared_examples 'invitation route' do
       within 'div.row.attendee.mt-3' do
         expect(page).to have_content(member.full_name)
         expect(page).to have_css('i.fa-history')
-        expect(page).to_not have_css('i.fa-magic')
+        expect(page).to have_no_css('i.fa-magic')
       end
     end
 
@@ -34,7 +34,7 @@ RSpec.shared_examples 'invitation route' do
         invitation.update(role: 'Student', attending: nil, tutorial: nil)
         visit accept_invitation_route
 
-        expect(page).to_not have_link 'I can no longer attend'
+        expect(page).to have_no_link 'I can no longer attend'
         expect(page).to have_content('Tutorial must be selected')
       end
 
@@ -110,7 +110,7 @@ RSpec.shared_examples 'invitation route' do
       visit invitation_route
 
       expect(page).to have_selector(:link_or_button, 'Attend')
-      expect(page).to_not have_content 'I can no longer attend'
+      expect(page).to have_no_content 'I can no longer attend'
     end
 
     scenario 'when already confirmed they are not attending and reject by accessing the link directly' do

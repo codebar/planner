@@ -14,7 +14,7 @@ RSpec.feature 'Chapter workshop feedback', type: :feature do
     click_on "#{chapter.name} feedback"
 
     feedbacks.each { |feedback| expect(page).to have_content(feedback.request) }
-    other_feedbacks.each { |feedback| expect(page).to_not have_content(feedback.request) }
+    other_feedbacks.each { |feedback| expect(page).to have_no_content(feedback.request) }
   end
 
   it 'displays a message if no feedback has been submitted yet' do

@@ -109,9 +109,9 @@ RSpec.feature 'Admin::Sponsors', type: :feature do
       scenario 'when no sponsorships' do
         within '#sponsorships' do
           expect(page).to have_content('No sponsorships')
-          expect(page).to_not have_content('Workshops')
-          expect(page).to_not have_content('Events')
-          expect(page).to_not have_content('Meetings')
+          expect(page).to have_no_content('Workshops')
+          expect(page).to have_no_content('Events')
+          expect(page).to have_no_content('Meetings')
         end
       end
 
@@ -177,7 +177,7 @@ RSpec.feature 'Admin::Sponsors', type: :feature do
         visit admin_sponsor_path(sponsor)
 
         within '#activities' do
-          expect(page).to_not have_content("#{manager.full_name} subscribed #{contact.name} #{contact.surname} with email #{contact.email} to the Sponsor newsletter")
+          expect(page).to have_no_content("#{manager.full_name} subscribed #{contact.name} #{contact.surname} with email #{contact.email} to the Sponsor newsletter")
         end
       end
     end
@@ -231,7 +231,7 @@ RSpec.feature 'Admin::Sponsors', type: :feature do
 
       expect(page).to have_content(sponsor.name)
       expect(page).to have_content(sponsor.contacts.first.name)
-      expect(page).to_not have_content(sponsor_no_contacts.name)
+      expect(page).to have_no_content(sponsor_no_contacts.name)
     end
   end
 end

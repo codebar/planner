@@ -24,7 +24,7 @@ RSpec.feature 'admin portal', type: :feature do
       end
 
       inactive_chapter.groups.each do |group|
-        expect(page).to_not have_content(group.to_s)
+        expect(page).to have_no_content(group.to_s)
       end
     end
 

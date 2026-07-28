@@ -17,13 +17,13 @@ RSpec.feature 'viewing an event', type: :feature do
       scenario 'a student cannot RSVP if they are not logged in' do
         expect(page).to have_link('Log in')
         expect(page).to have_link('Join our community')
-        expect(page).to_not have_link('Attend as a student')
+        expect(page).to have_no_link('Attend as a student')
       end
 
       scenario 'a coach cannot RSVP if they are not logged in' do
         expect(page).to have_link('Log in')
         expect(page).to have_link('Join our community')
-        expect(page).to_not have_link('Attend as a coach')
+        expect(page).to have_no_link('Attend as a coach')
       end
     end
 
@@ -63,8 +63,8 @@ RSpec.feature 'viewing an event', type: :feature do
           visit event_path(closed_event)
 
           expect(page).to have_content('This event has already occurred.')
-          expect(page).not_to have_button('Attend as a coach')
-          expect(page).not_to have_button('Attend as a student')
+          expect(page).to have_no_button('Attend as a coach')
+          expect(page).to have_no_button('Attend as a student')
         end
       end
     end
@@ -90,7 +90,7 @@ RSpec.feature 'viewing an event', type: :feature do
           click_on 'RSVP'
 
           expect(page).to have_content("Your spot has been confirmed for #{open_event.name}! We look forward to seeing you there")
-          expect(page).not_to have_content('We will verify your attendance after you complete the questionnaire!')
+          expect(page).to have_no_content('We will verify your attendance after you complete the questionnaire!')
         end
 
         scenario 'as a Student' do
@@ -100,7 +100,7 @@ RSpec.feature 'viewing an event', type: :feature do
           click_on 'RSVP'
 
           expect(page).to have_content("Your spot has been confirmed for #{open_event.name}! We look forward to seeing you there")
-          expect(page).not_to have_content('We will verify your attendance after you complete the questionnaire!')
+          expect(page).to have_no_content('We will verify your attendance after you complete the questionnaire!')
         end
       end
 
@@ -113,8 +113,8 @@ RSpec.feature 'viewing an event', type: :feature do
           visit event_path(open_event)
 
           expect(page).to have_content('This event has already occurred.')
-          expect(page).not_to have_button('Attend as a coach')
-          expect(page).not_to have_button('Attend as a student')
+          expect(page).to have_no_button('Attend as a coach')
+          expect(page).to have_no_button('Attend as a student')
         end
       end
 

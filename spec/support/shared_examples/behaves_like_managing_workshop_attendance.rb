@@ -23,7 +23,7 @@ RSpec.shared_examples 'managing workshop attendance' do
           end
 
           it 'cannot RSVP as a coach' do
-            expect(page).not_to have_content('Attend as a coach')
+            expect(page).to have_no_content('Attend as a coach')
           end
         end
 
@@ -44,7 +44,7 @@ RSpec.shared_examples 'managing workshop attendance' do
           end
 
           it 'cannot RSVP as a student' do
-            expect(page).not_to have_content('Attend as a student')
+            expect(page).to have_no_content('Attend as a student')
           end
         end
 
@@ -118,8 +118,8 @@ RSpec.shared_examples 'managing workshop attendance' do
           end
 
           it 'cannot access RSVP as a student or coach' do
-            expect(page).not_to have_content('Attend as a student')
-            expect(page).not_to have_content('Attend as a coach')
+            expect(page).to have_no_content('Attend as a student')
+            expect(page).to have_no_content('Attend as a coach')
           end
         end
       end
@@ -161,8 +161,8 @@ RSpec.shared_examples 'managing workshop attendance' do
             visit workshop_path(workshop)
 
             expect(page).to have_button('Manage your invitation')
-            expect(page).not_to have_button('Attend as a student')
-            expect(page).not_to have_button('Attend as a coach')
+            expect(page).to have_no_button('Attend as a student')
+            expect(page).to have_no_button('Attend as a coach')
           end
         end
 
@@ -173,7 +173,7 @@ RSpec.shared_examples 'managing workshop attendance' do
 
             click_on 'Attend as a coach'
             expect(page).to have_content('This event has already taken place')
-            expect(page).not_to have_button('Attend as a coach')
+            expect(page).to have_no_button('Attend as a coach')
           end
         end
       end

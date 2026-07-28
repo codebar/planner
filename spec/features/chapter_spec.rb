@@ -33,7 +33,7 @@ RSpec.feature 'viewing a Chapter', type: :feature do
       visit chapter_path(chapter.slug)
 
       expect(page).to have_content 'Empty Chapter'
-      expect(page).not_to have_content 'Team'
+      expect(page).to have_no_content 'Team'
     end
 
     it 'renders any upcoming workshops for the chapter' do
@@ -73,7 +73,7 @@ RSpec.feature 'viewing a Chapter', type: :feature do
 
         visit chapter_path(chapter.slug)
         expect(page).to have_content "Workshop at #{recent_past_workshop.host.name}"
-        expect(page).not_to have_content "Workshop at #{past_workshop.host.name}"
+        expect(page).to have_no_content "Workshop at #{past_workshop.host.name}"
       end
     end
 

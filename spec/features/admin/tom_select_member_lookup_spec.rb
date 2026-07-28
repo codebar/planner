@@ -25,7 +25,7 @@ RSpec.describe 'Admin TomSelect Member Lookup', :js, type: :feature do
     expect(page).to have_content('Jane Doe')
     expect(page).to have_content('jane@example.com')
 
-    expect(page).not_to have_content('John Smith')
+    expect(page).to have_no_content('John Smith')
   end
 
   scenario 'selecting a member updates view profile link' do

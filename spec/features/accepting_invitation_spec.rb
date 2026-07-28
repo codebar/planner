@@ -30,7 +30,7 @@ RSpec.feature 'Accepting a workshop invitation', type: :feature do
 
         expect(page).to have_content('The workshop is full')
         expect(page).to have_button('Join the waiting list')
-        expect(page).not_to have_button('Attend')
+        expect(page).to have_no_button('Attend')
       end
     end
 

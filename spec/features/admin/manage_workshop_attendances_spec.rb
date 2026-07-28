@@ -70,7 +70,7 @@ RSpec.feature 'managing workshop attendances', type: :feature do
 
       visit admin_workshop_path(workshop)
       expect(page).to have_content('1 are attending as students')
-      expect(page).to_not have_css('i.fa-magic')
+      expect(page).to have_no_css('i.fa-magic')
 
       # Use the select_from_chosen helper to select the member
       select_from_chosen("#{other_invitation.member.full_name} (#{other_invitation.role})", from: 'workshop_invitations')

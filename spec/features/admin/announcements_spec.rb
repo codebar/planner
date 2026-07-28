@@ -73,7 +73,7 @@ RSpec.feature 'Announcements', type: :feature do
 
       expect(page).to have_content('An announcement to selected groups')
       expect(page).to have_content("Coaches #{chapter.name}")
-      expect(page).not_to have_content("Students #{chapter.name}")
+      expect(page).to have_no_content("Students #{chapter.name}")
       expect(page).to have_current_path(admin_announcements_path, ignore_query: true)
     end
   end

@@ -240,7 +240,7 @@ RSpec.feature 'An admin managing workshops', type: :feature do
 
         expect(page).to have_current_path(admin_workshop_path(workshop, format: 'csv'), ignore_query: true)
         expect(page).to have_content(WorkshopPresenter::PAIRING_HEADINGS.join(','))
-        expect(page).not_to have_content('ORGANISER')
+        expect(page).to have_no_content('ORGANISER')
       end
     end
 
@@ -256,7 +256,7 @@ RSpec.feature 'An admin managing workshops', type: :feature do
 
         expect(page).to have_current_path(admin_workshop_path(workshop, format: 'csv'), ignore_query: true)
         expect(page).to have_content('ORGANISER')
-        expect(page).not_to have_content(WorkshopPresenter::PAIRING_HEADINGS.join(','))
+        expect(page).to have_no_content(WorkshopPresenter::PAIRING_HEADINGS.join(','))
       end
     end
   end

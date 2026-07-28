@@ -45,7 +45,7 @@ RSpec.feature 'Viewing a workshop invitation', type: :feature, wip: true do
         within '#info' do
           expect(page).to have_content('Information about the workshop')
           expect(page).to have_link('Follow link', href: 'http://a.link.com')
-          expect(page).to_not have_content('How to join')
+          expect(page).to have_no_content('How to join')
         end
       end
     end
@@ -64,13 +64,13 @@ RSpec.feature 'Viewing a workshop invitation', type: :feature, wip: true do
     context '#introduction' do
       context 'student' do
         scenario 'does not display information about the physical workshop' do
-          expect(page).to_not have_content('Please make sure you bring your laptop')
+          expect(page).to have_no_content('Please make sure you bring your laptop')
         end
       end
 
       context 'coach' do
         scenario 'does not displays information about the physical workshop' do
-          expect(page).to_not have_content('PS: There will also be food at the workshop.')
+          expect(page).to have_no_content('PS: There will also be food at the workshop.')
         end
       end
     end

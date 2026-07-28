@@ -75,7 +75,7 @@ RSpec.feature 'Accepting Terms and Conditions', type: :feature do
         visit terms_and_conditions_path
         expect(page).to have_current_path(terms_and_conditions_path)
         expect(page).to have_content(/already accepted.*#{member.accepted_toc_at.strftime('%d %B %Y')}/)
-        expect(page).not_to have_button('Accept')
+        expect(page).to have_no_button('Accept')
       end
     end
   end

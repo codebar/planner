@@ -41,7 +41,7 @@ RSpec.feature 'when visiting the homepage', type: :feature do
     end
 
     inactive_chapters.each do |chapter|
-      expect(page).not_to have_content(chapter.name)
+      expect(page).to have_no_content(chapter.name)
     end
   end
 
