@@ -102,7 +102,7 @@ RSpec.feature 'member feedback', type: :feature do
   end
 
   context 'Submitting a feedback request' do
-    scenario 'I can see success page with message and link to homepage when valid data is given', js: true do
+    scenario 'I can see success page with message and link to homepage when valid data is given', :js do
       visit feedback_path(valid_token)
 
       # Wait for Chosen dropdowns to initialize

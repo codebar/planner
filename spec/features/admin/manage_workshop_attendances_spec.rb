@@ -21,7 +21,7 @@ RSpec.feature 'managing workshop attendances', type: :feature do
         expect(page).to have_css('.fa-check-square')
       end
 
-      scenario 'verifies and unverifies attendance with targeted row replacement', js: true do
+      scenario 'verifies and unverifies attendance with targeted row replacement', :js do
         second_invitation = Fabricate(:workshop_invitation, workshop: workshop, attending: true)
 
         visit admin_workshop_path(workshop)
@@ -63,7 +63,7 @@ RSpec.feature 'managing workshop attendances', type: :feature do
       expect(page).to have_css('i.fa-hat-wizard')
     end
 
-    scenario 'can rsvp an invited student to the workshop', js: true do
+    scenario 'can rsvp an invited student to the workshop', :js do
       login_as_admin(member)
 
       other_invitation = Fabricate(:workshop_invitation, workshop: workshop, attending: nil)

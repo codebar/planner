@@ -1,4 +1,4 @@
-RSpec.describe 'Add a user to an existing workshop', js: true, type: :feature do
+RSpec.describe 'Add a user to an existing workshop', :js, type: :feature do
   let(:member) { Fabricate(:member) }
 
   let!(:juliet) { Fabricate(:member, name: 'Juliet', surname: 'Capulet') }

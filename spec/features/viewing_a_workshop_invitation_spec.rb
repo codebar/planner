@@ -1,4 +1,4 @@
-RSpec.feature 'Viewing a workshop invitation', type: :feature, wip: true do
+RSpec.feature 'Viewing a workshop invitation', :wip, type: :feature do
   let(:invitation) { Fabricate(:workshop_invitation, workshop: workshop) }
 
   before do

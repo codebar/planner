@@ -13,7 +13,7 @@ RSpec.feature 'A visitor to the website', type: :feature do
     expect(page).to have_text('Your privacy means a lot to us')
   end
 
-  scenario 'can access page not found', js: true do
+  scenario 'can access page not found', :js do
     visit '/does_not_exist'
 
     expect(page).to have_text('Page not found')

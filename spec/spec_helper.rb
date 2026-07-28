@@ -80,7 +80,7 @@ RSpec.configure do |config|
   # under test that does *not* share a database connection with the
   # specs, so use truncation strategy. This config is order dependent
   # and must be BELOW the main `config.before(:each)` configuration
-  config.before(:each, js: true) do
+  config.before(:each, :js) do
     DatabaseCleaner.strategy = :truncation
   end
 

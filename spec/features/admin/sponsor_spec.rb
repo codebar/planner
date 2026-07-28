@@ -211,7 +211,7 @@ RSpec.feature 'Admin::Sponsors', type: :feature do
       expect(page).to have_text("#{manager.full_name} subscribed Jane Doe with email jane@codebar.io to the Sponsor newsletter")
     end
 
-    it 'can unsubscribe a contact to the sponsor newsletter', wip: true do
+    it 'can unsubscribe a contact to the sponsor newsletter', :wip do
       contact = Fabricate(:contact, sponsor: sponsor, mailing_list_consent: true)
       visit edit_admin_sponsor_path(sponsor)
 

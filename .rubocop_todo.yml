@@ -534,12 +534,6 @@ RSpec/MessageSpies:
     - 'spec/support/shared_examples/behaves_like_an_invitation.rb'
     - 'spec/support/shared_examples/behaves_like_sending_workshop_emails.rb'
 
-# Offense count: 9
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: hash, symbol
-RSpec/MetadataStyle:
-  Exclude:
     - 'spec/features/admin/add_user_to_workshop_spec.rb'
     - 'spec/features/admin/manage_workshop_attendances_spec.rb'
     - 'spec/features/admin/members_spec.rb'

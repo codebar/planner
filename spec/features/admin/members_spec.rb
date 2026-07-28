@@ -61,7 +61,7 @@ RSpec.describe 'Admin managing members', type: :feature do
       end
     end
 
-    it 'can unsubscribe a member from group', js: true do
+    it 'can unsubscribe a member from group', :js do
       within '#subscriptions > li:first-child' do
         expect do
           accept_confirm { find('.fa-times').click }
