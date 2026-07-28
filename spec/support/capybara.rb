@@ -11,7 +11,7 @@ Capybara.register_driver :playwright do |app|
   cache_dir = File.expand_path('~/.cache/ms-playwright')
   patterns = [
     'chromium_headless_shell-*/**/headless_shell',         # Linux
-    'chromium_headless_shell-*/**/chrome-headless-shell',  # Mac
+    'chromium_headless_shell-*/**/chrome-headless-shell'  # Mac
   ]
 
   headless_shell = patterns.map do |pattern|

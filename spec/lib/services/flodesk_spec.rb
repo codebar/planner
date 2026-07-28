@@ -23,7 +23,7 @@ RSpec.describe Flodesk do
         first_name: :first_name,
         last_name: :last_name,
         segment_ids: [:segment_id],
-        double_optin: true,
+        double_optin: true
       }
 
       check = ->(request_body) { request_body == payload }
@@ -39,10 +39,10 @@ RSpec.describe Flodesk do
     it 'removes a user from segments' do
       payload = {
         email: :email,
-        segment_ids: [:segment_id],
+        segment_ids: [:segment_id]
       }
 
-      check = ->(request_body) do
+      check = lambda do |request_body|
         request_body == payload.slice(:segment_ids)
       end
 
@@ -59,10 +59,10 @@ RSpec.describe Flodesk do
     it 'confirms that a user is active and subscribed to a segment' do
       payload = {
         email: :email,
-        segment_ids: ["segment_id"],
+        segment_ids: ["segment_id"]
       }
 
-      stub.get("/subscribers/#{payload[:email]}") {
+      stub.get("/subscribers/#{payload[:email]}") do
         [200, {}, {
           "id": "123456789",
           "status": "active",
@@ -74,7 +74,7 @@ RSpec.describe Flodesk do
             }
           ]
         }]
-      }
+      end
 
       expect(client.subscribed?(**payload)).to be true
 
@@ -84,10 +84,10 @@ RSpec.describe Flodesk do
     it 'confirms that a user is active but not subscribed to a segment' do
       payload = {
         email: :email,
-        segment_ids: ["segment_id"],
+        segment_ids: ["segment_id"]
       }
 
-      stub.get("/subscribers/#{payload[:email]}") {
+      stub.get("/subscribers/#{payload[:email]}") do
         [200, {}, {
           "id": "123456789",
           "status": "active",
@@ -99,7 +99,7 @@ RSpec.describe Flodesk do
             }
           ]
         }]
-      }
+      end
 
       expect(client.subscribed?(**payload)).to be false
 
@@ -109,10 +109,10 @@ RSpec.describe Flodesk do
     it 'confirms that a user is not active' do
       payload = {
         email: :email,
-        segment_ids: ["segment_id"],
+        segment_ids: ["segment_id"]
       }
 
-      stub.get("/subscribers/#{payload[:email]}") {
+      stub.get("/subscribers/#{payload[:email]}") do
         [200, {}, {
           "id": "123456789",
           "status": "unsubscribed",
@@ -124,7 +124,7 @@ RSpec.describe Flodesk do
             }
           ]
         }]
-      }
+      end
 
       expect(client.subscribed?(**payload)).to be false
 

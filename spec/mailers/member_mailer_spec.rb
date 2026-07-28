@@ -7,45 +7,45 @@ RSpec.describe MemberMailer do
     before { allow(bad_member).to receive(:email).and_return('invalid-email') }
 
     it '#welcome_student skips delivery without crashing' do
-      expect {
+      expect do
         described_class.welcome_student(bad_member).deliver_now
-      }.not_to raise_error
+      end.not_to raise_error
       expect(ActionMailer::Base.deliveries).to be_empty
     end
 
     it '#welcome_coach skips delivery without crashing' do
-      expect {
+      expect do
         described_class.welcome_coach(bad_member).deliver_now
-      }.not_to raise_error
+      end.not_to raise_error
       expect(ActionMailer::Base.deliveries).to be_empty
     end
 
     it '#eligibility_check skips delivery without crashing' do
-      expect {
+      expect do
         described_class.eligibility_check(bad_member).deliver_now
-      }.not_to raise_error
+      end.not_to raise_error
       expect(ActionMailer::Base.deliveries).to be_empty
     end
 
     it '#attendance_warning skips delivery without crashing' do
-      expect {
+      expect do
         described_class.attendance_warning(bad_member).deliver_now
-      }.not_to raise_error
+      end.not_to raise_error
       expect(ActionMailer::Base.deliveries).to be_empty
     end
 
     it '#ban skips delivery without crashing' do
       ban = Fabricate(:ban, member: bad_member)
-      expect {
+      expect do
         described_class.ban(bad_member, ban).deliver_now
-      }.not_to raise_error
+      end.not_to raise_error
       expect(ActionMailer::Base.deliveries).to be_empty
     end
 
     it '#chaser skips delivery without crashing' do
-      expect {
+      expect do
         described_class.with(member: bad_member).chaser.deliver_now
-      }.not_to raise_error
+      end.not_to raise_error
       expect(ActionMailer::Base.deliveries).to be_empty
     end
   end

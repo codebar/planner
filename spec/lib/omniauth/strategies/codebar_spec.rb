@@ -21,7 +21,7 @@ RSpec.describe OmniAuth::Strategies::Codebar do
       'REQUEST_METHOD' => 'GET',
       'SERVER_NAME' => 'localhost',
       'SERVER_PORT' => '3000',
-      'rack.url_scheme' => 'http',
+      'rack.url_scheme' => 'http'
     }
   end
 
@@ -38,7 +38,7 @@ RSpec.describe OmniAuth::Strategies::Codebar do
     base_env.merge(
       'PATH_INFO' => path,
       'QUERY_STRING' => query,
-      'rack.session' => session,
+      'rack.session' => session
     )
   end
 

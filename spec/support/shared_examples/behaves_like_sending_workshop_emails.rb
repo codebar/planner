@@ -6,9 +6,9 @@ RSpec.shared_examples 'sending workshop emails' do
       expect(WorkshopInvitation).to receive(:find_or_initialize_by).with(workshop: workshop, member: student, role: 'Student').and_call_original
     end
 
-    expect {
+    expect do
       manager.send(send_email, workshop, 'students')
-    }.to change { ActionMailer::Base.deliveries.count }.by(students.count)
+    end.to change { ActionMailer::Base.deliveries.count }.by(students.count)
      .and change { WorkshopInvitation.where(workshop: workshop, role: 'Student').count }.by(students.count)
 
     # Verify emails were sent to the right recipients
@@ -24,9 +24,9 @@ RSpec.shared_examples 'sending workshop emails' do
       expect(WorkshopInvitation).to receive(:find_or_initialize_by).with(workshop: workshop, member: coach, role: 'Coach').and_call_original
     end
 
-    expect {
+    expect do
       manager.send(send_email, workshop, 'coaches')
-    }.to change { ActionMailer::Base.deliveries.count }.by(coaches.count)
+    end.to change { ActionMailer::Base.deliveries.count }.by(coaches.count)
      .and change { WorkshopInvitation.where(workshop: workshop, role: 'Coach').count }.by(coaches.count)
 
     # Verify emails were sent to the right recipients

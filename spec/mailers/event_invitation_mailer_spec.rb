@@ -12,23 +12,23 @@ RSpec.describe EventInvitationMailer do
     before { allow(bad_member).to receive(:email).and_return('invalid-email') }
 
     it '#invite_student skips delivery without crashing' do
-      expect {
+      expect do
         described_class.invite_student(event, bad_member, bad_invitation).deliver_now
-      }.not_to raise_error
+      end.not_to raise_error
       expect(ActionMailer::Base.deliveries).to be_empty
     end
 
     it '#invite_coach skips delivery without crashing' do
-      expect {
+      expect do
         described_class.invite_coach(event, bad_member, bad_invitation).deliver_now
-      }.not_to raise_error
+      end.not_to raise_error
       expect(ActionMailer::Base.deliveries).to be_empty
     end
 
     it '#attending skips delivery without crashing' do
-      expect {
+      expect do
         described_class.attending(event, bad_member, bad_invitation).deliver_now
-      }.not_to raise_error
+      end.not_to raise_error
       expect(ActionMailer::Base.deliveries).to be_empty
     end
   end

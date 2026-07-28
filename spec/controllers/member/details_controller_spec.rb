@@ -31,7 +31,7 @@ RSpec.describe Member::DetailsController do
             how_you_found_us: 'other',
             how_you_found_us_other_reason: 'Saw a pamphlet',
             newsletter: 'false'
-          },
+          }
         }
 
         member.reload
@@ -47,7 +47,7 @@ RSpec.describe Member::DetailsController do
             how_you_found_us: 'other',
             how_you_found_us_other_reason: 'At a meetup',
             newsletter: 'true'
-          },
+          }
         }
 
         member.reload
@@ -63,7 +63,7 @@ RSpec.describe Member::DetailsController do
             how_you_found_us: 'other',
             how_you_found_us_other_reason: 'From a colleague',
             newsletter: 'true'
-          },
+          }
         }
 
         member.reload
@@ -79,7 +79,7 @@ RSpec.describe Member::DetailsController do
           id: member.id,
           member: {
             how_you_found_us: 'other',
-            how_you_found_us_other_reason: nil,
+            how_you_found_us_other_reason: nil
           }
         }
 
@@ -91,7 +91,7 @@ RSpec.describe Member::DetailsController do
           id: member.id,
           member: {
             how_you_found_us: 'from_a_friend',
-            how_you_found_us_other_reason: 'something else',
+            how_you_found_us_other_reason: 'something else'
           }
         }
 

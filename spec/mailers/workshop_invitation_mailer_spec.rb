@@ -12,44 +12,44 @@ RSpec.describe WorkshopInvitationMailer do
     before { allow(bad_member).to receive(:email).and_return('invalid-email') }
 
     it '#attending skips delivery without crashing' do
-      expect {
+      expect do
         described_class.attending(workshop, bad_member, bad_invitation).deliver_now
-      }.not_to raise_error
+      end.not_to raise_error
       expect(ActionMailer::Base.deliveries).to be_empty
     end
 
     it '#attending_reminder skips delivery without crashing' do
-      expect {
+      expect do
         described_class.attending_reminder(workshop, bad_member, bad_invitation).deliver_now
-      }.not_to raise_error
+      end.not_to raise_error
       expect(ActionMailer::Base.deliveries).to be_empty
     end
 
     it '#invite_coach skips delivery without crashing' do
-      expect {
+      expect do
         described_class.invite_coach(workshop, bad_member, bad_invitation).deliver_now
-      }.not_to raise_error
+      end.not_to raise_error
       expect(ActionMailer::Base.deliveries).to be_empty
     end
 
     it '#invite_student skips delivery without crashing' do
-      expect {
+      expect do
         described_class.invite_student(workshop, bad_member, bad_invitation).deliver_now
-      }.not_to raise_error
+      end.not_to raise_error
       expect(ActionMailer::Base.deliveries).to be_empty
     end
 
     it '#notify_waiting_list skips delivery without crashing' do
-      expect {
+      expect do
         described_class.notify_waiting_list(bad_invitation).deliver_now
-      }.not_to raise_error
+      end.not_to raise_error
       expect(ActionMailer::Base.deliveries).to be_empty
     end
 
     it '#waiting_list_reminder skips delivery without crashing' do
-      expect {
+      expect do
         described_class.waiting_list_reminder(workshop, bad_member, bad_invitation).deliver_now
-      }.not_to raise_error
+      end.not_to raise_error
       expect(ActionMailer::Base.deliveries).to be_empty
     end
   end

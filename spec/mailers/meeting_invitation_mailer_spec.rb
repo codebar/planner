@@ -10,30 +10,30 @@ RSpec.describe MeetingInvitationMailer do
     before { allow(bad_member).to receive(:email).and_return('invalid-email') }
 
     it '#invite skips delivery without crashing' do
-      expect {
+      expect do
         described_class.invite(meeting, bad_member, bad_invitation).deliver_now
-      }.not_to raise_error
+      end.not_to raise_error
       expect(ActionMailer::Base.deliveries).to be_empty
     end
 
     it '#attending skips delivery without crashing' do
-      expect {
+      expect do
         described_class.attending(meeting, bad_member).deliver_now
-      }.not_to raise_error
+      end.not_to raise_error
       expect(ActionMailer::Base.deliveries).to be_empty
     end
 
     it '#approve_from_waitlist skips delivery without crashing' do
-      expect {
+      expect do
         described_class.approve_from_waitlist(meeting, bad_member).deliver_now
-      }.not_to raise_error
+      end.not_to raise_error
       expect(ActionMailer::Base.deliveries).to be_empty
     end
 
     it '#attendance_reminder skips delivery without crashing' do
-      expect {
+      expect do
         described_class.attendance_reminder(meeting, bad_member).deliver_now
-      }.not_to raise_error
+      end.not_to raise_error
       expect(ActionMailer::Base.deliveries).to be_empty
     end
   end
