@@ -7,7 +7,7 @@ RSpec.describe Meeting do
 
     it { is_expected.to validate_presence_of(:date_and_time) }
     it { is_expected.to validate_presence_of(:ends_at) }
-    it { should belong_to(:venue) }
+    it { is_expected.to belong_to(:venue) }
 
     context '#slug' do
       it 'fails when slug not present' do

@@ -1,10 +1,10 @@
 RSpec.describe FeedbackRequest do
   subject { Fabricate(:feedback_request) }
 
-  it { should respond_to(:member) }
-  it { should respond_to(:workshop) }
-  it { should respond_to(:token) }
-  it { should respond_to(:submited) }
+  it { is_expected.to respond_to(:member) }
+  it { is_expected.to respond_to(:workshop) }
+  it { is_expected.to respond_to(:token) }
+  it { is_expected.to respond_to(:submited) }
 
   context 'validations' do
     context 'presence' do

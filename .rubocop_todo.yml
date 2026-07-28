@@ -447,12 +447,6 @@ RSpec/ExpectChange:
     - 'spec/presenters/sponsor_presenter_spec.rb'
     - 'spec/spec_helper.rb'
 
-# Offense count: 9
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: is_expected, should
-RSpec/ImplicitExpect:
-  Exclude:
     - 'spec/models/feedback_request_spec.rb'
     - 'spec/models/meeting_spec.rb'
     - 'spec/models/tutorial_spec.rb'
