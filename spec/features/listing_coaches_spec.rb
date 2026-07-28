@@ -27,7 +27,7 @@ RSpec.feature 'when visiting the coaches page', type: :feature do
       current_workshop = Fabricate(:workshop, date_and_time: Time.current)
       latest_workshop = Fabricate(:workshop, date_and_time: 1.year.ago)
       old_workshop = Fabricate(:workshop, date_and_time: 3.years.ago)
-      1.times { Fabricate(:attended_coach, workshop: current_workshop) }
+      Fabricate(:attended_coach, workshop: current_workshop)
       3.times { Fabricate(:attended_coach, workshop: latest_workshop) }
       2.times { Fabricate(:attended_coach, workshop: old_workshop) }
 

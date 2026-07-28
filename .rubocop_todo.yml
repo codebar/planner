@@ -61,10 +61,6 @@ Lint/UnderscorePrefixedVariableName:
     - 'spec/presenters/member_presenter_spec.rb'
     - 'spec/support/select_from_chosen.rb'
 
-# Offense count: 8
-# This cop supports unsafe autocorrection (--autocorrect-all).
-Lint/UselessTimes:
-  Exclude:
     - 'spec/features/listing_coaches_spec.rb'
     - 'spec/models/chapter_spec.rb'
     - 'spec/models/event_spec.rb'
