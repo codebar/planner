@@ -1,5 +1,5 @@
 RSpec.feature 'admin groups', type: :feature do
-  context '#creating a new group' do
+  describe '#creating a new group' do
     let(:member) { Fabricate(:member) }
     let!(:chapter) { Fabricate(:chapter, name: 'Brighton') }
 
@@ -18,7 +18,7 @@ RSpec.feature 'admin groups', type: :feature do
     end
   end
 
-  context '#show page' do
+  describe '#show page' do
     let(:member) { Fabricate(:member) }
     let(:chapter) { Fabricate(:chapter, name: 'Brighton') }
     let(:group) { Fabricate(:group, chapter: chapter, name: 'Students') }

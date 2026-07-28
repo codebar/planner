@@ -34,7 +34,7 @@ RSpec.describe Sponsor do
       end
     end
 
-    context '#website_is_url format' do
+    describe '#website_is_url format' do
       it 'allows full URLs' do
         sponsor.website = 'http://google.com'
 

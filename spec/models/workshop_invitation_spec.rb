@@ -22,7 +22,7 @@ RSpec.describe WorkshopInvitation do
   end
 
   context 'scopes' do
-    context '#attended' do
+    describe '#attended' do
       it 'ignores when attended nil' do
         Fabricate(:workshop_invitation, attended: nil)
 
@@ -42,7 +42,7 @@ RSpec.describe WorkshopInvitation do
       end
     end
 
-    context '#accepted_or_attended' do
+    describe '#accepted_or_attended' do
       it 'ignores when attending nil and attended nil' do
         Fabricate(:workshop_invitation, attending: nil, attended: nil)
 
@@ -85,7 +85,7 @@ RSpec.describe WorkshopInvitation do
       expect(described_class.year((Time.zone.now - 2.years).year).count).to eq(1)
     end
 
-    context '#not_reminded' do
+    describe '#not_reminded' do
       it 'includes invitations without reminders' do
         not_reminded = Fabricate(:student_workshop_invitation, reminded_at: nil)
 

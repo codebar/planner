@@ -12,7 +12,7 @@ RSpec.feature 'Chapters', type: :feature do
     end
   end
 
-  context '#creating a new chapter' do
+  describe '#creating a new chapter' do
     before do
       login_as_admin(member)
     end
@@ -30,7 +30,7 @@ RSpec.feature 'Chapters', type: :feature do
     end
   end
 
-  context '#editing a chapter' do
+  describe '#editing a chapter' do
     let(:chapter) { Fabricate(:chapter_with_organiser) }
 
     context 'organiser editing their chapter' do

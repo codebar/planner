@@ -1,5 +1,5 @@
 RSpec.feature 'Accepting a workshop invitation', type: :feature do
-  context '#workshop' do
+  describe '#workshop' do
     let(:member) { Fabricate(:member) }
     let(:invitation) { Fabricate(:workshop_invitation, member: member, tutorial: tutorial.title) }
     let(:invitation_route) { invitation_path(invitation) }

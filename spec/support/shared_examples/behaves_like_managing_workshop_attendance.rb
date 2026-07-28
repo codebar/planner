@@ -1,6 +1,6 @@
 RSpec.shared_examples 'managing workshop attendance' do
   context 'a logged in member' do
-    context '#upcoming workshop' do
+    describe '#upcoming workshop' do
       context 'via the workshop page' do
         let!(:tutorial) { Fabricate(:tutorial) }
 
@@ -179,7 +179,7 @@ RSpec.shared_examples 'managing workshop attendance' do
       end
     end
 
-    context '#past workshop' do
+    describe '#past workshop' do
       let(:workshop) { Fabricate(:workshop, date_and_time: 2.weeks.ago) }
 
       scenario 'cannot interact with a past event' do

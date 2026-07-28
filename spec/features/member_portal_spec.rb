@@ -8,7 +8,7 @@ RSpec.feature 'Member portal', type: :feature do
       login(member)
     end
 
-    context '#dashboard' do
+    describe '#dashboard' do
       it 'can access the member dashboard' do
         visit dashboard_path
 

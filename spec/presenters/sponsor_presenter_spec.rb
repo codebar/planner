@@ -4,7 +4,7 @@ RSpec.describe SponsorPresenter do
   let(:contact) { Fabricate(:contact) }
   let(:contacts) { [contact] }
 
-  context '#decorate_collection' do
+  describe '#decorate_collection' do
     it 'decorates a collection of Sponsors' do
       expect(described_class).to receive(:new).with(sponsor)
 
@@ -12,7 +12,7 @@ RSpec.describe SponsorPresenter do
     end
   end
 
-  context '#address' do
+  describe '#address' do
     it 'decorates the sponsor address' do
       expect(AddressPresenter).to receive(:new).with(sponsor.address)
 
@@ -20,7 +20,7 @@ RSpec.describe SponsorPresenter do
     end
   end
 
-  context '#contacts' do
+  describe '#contacts' do
     it 'decorates the sponsor contacts' do
       expect(ContactPresenter).to receive(:decorate_collection).with(contacts)
 
@@ -28,7 +28,7 @@ RSpec.describe SponsorPresenter do
     end
   end
 
-  context '#sponsorships_count' do
+  describe '#sponsorships_count' do
     before do
       Fabricate(:workshop_sponsor, sponsor: sponsor)
       Fabricate.times(2, :sponsorship, sponsor: sponsor)

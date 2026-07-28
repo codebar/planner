@@ -9,7 +9,7 @@ RSpec.describe Meeting do
     it { is_expected.to validate_presence_of(:ends_at) }
     it { is_expected.to belong_to(:venue) }
 
-    context '#slug' do
+    describe '#slug' do
       it 'fails when slug not present' do
         meeting = Fabricate(:meeting, slug: 'meeting')
         new_meeting = Fabricate.build(:meeting, slug: 'meeting')
@@ -32,7 +32,7 @@ RSpec.describe Meeting do
     end
   end
 
-  context '#title' do
+  describe '#title' do
     subject(:meeting) { described_class.new(date_and_time: Time.zone.local(2014, 8, 20, 18, 30)) }
 
     it 'is formatted correctly' do
@@ -40,7 +40,7 @@ RSpec.describe Meeting do
     end
   end
 
-  context '#set_slug' do
+  describe '#set_slug' do
     it 'loops until it finds an available slug' do
       Fabricate.times(4, :meeting, name: 'monthly')
       meeting = Fabricate(:meeting, name: 'monthly')
@@ -49,7 +49,7 @@ RSpec.describe Meeting do
     end
   end
 
-  context '#not_full' do
+  describe '#not_full' do
     it 'returns true if meeting is not full' do
       meeting = Fabricate(:meeting)
       Fabricate(:attending_meeting_invitation, meeting: meeting)
@@ -65,7 +65,7 @@ RSpec.describe Meeting do
     end
   end
 
-  context '#attendees_csv' do
+  describe '#attendees_csv' do
     it 'generates a csv of attendees' do
       meeting = Fabricate(:meeting)
       invitations = Fabricate.times(2, :attending_meeting_invitation, meeting: meeting)

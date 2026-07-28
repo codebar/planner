@@ -16,7 +16,7 @@ RSpec.describe Event do
     it { is_expected.to validate_numericality_of(:coach_spaces) }
     it { is_expected.to validate_numericality_of(:student_spaces) }
 
-    context '#invitablility' do
+    describe '#invitablility' do
       it 'does not validate if invitable false' do
         event.invitable = false
         event.coach_spaces = nil
@@ -83,7 +83,7 @@ RSpec.describe Event do
     end
   end
 
-  context '#verified_students' do
+  describe '#verified_students' do
     it 'returns all students who have verified their attendance' do
       event = Fabricate(:event)
       1.times.map { Fabricate(:invitation, event: event, attending: true) }

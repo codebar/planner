@@ -276,10 +276,6 @@ RSpec/BeEq:
     - 'spec/presenters/workshop_presenter_spec.rb'
     - 'spec/support/shared_examples/behaves_like_an_invitation_route.rb'
 
-# Offense count: 67
-# This cop supports safe autocorrection (--autocorrect).
-RSpec/ContextMethod:
-  Exclude:
     - 'spec/features/accepting_invitation_spec.rb'
     - 'spec/features/admin/chapters_spec.rb'
     - 'spec/features/admin/groups_spec.rb'

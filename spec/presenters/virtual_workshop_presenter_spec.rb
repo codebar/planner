@@ -9,13 +9,13 @@ RSpec.describe VirtualWorkshopPresenter do
   let(:workshop) { double_workshop(attending_coaches: 3, attending_students: 4) }
   let(:presenter) { described_class.new(workshop) }
 
-  context '#title' do
+  describe '#title' do
     it 'returns the title of a virtual workshop' do
       expect(presenter.title).to eq("Virtual workshop for #{chapter.name}")
     end
   end
 
-  context '#coach_spaces' do
+  describe '#coach_spaces' do
     it 'returns the workshop\'s coach_spaces' do
       expect(workshop).to receive(:coach_spaces)
 
@@ -23,7 +23,7 @@ RSpec.describe VirtualWorkshopPresenter do
     end
   end
 
-  context '#student_spaces' do
+  describe '#student_spaces' do
     it 'returns the workshop\'s student spaces' do
       expect(workshop).to receive(:student_spaces)
 
@@ -31,19 +31,19 @@ RSpec.describe VirtualWorkshopPresenter do
     end
   end
 
-  context '#student_spaces?' do
+  describe '#student_spaces?' do
     it 'checks if there are any more available student spots' do
       expect(presenter.student_spaces?).to eq(true)
     end
   end
 
-  context '#coach_spaces?' do
+  describe '#coach_spaces?' do
     it 'checks if there are any more available coach spots' do
       expect(presenter.coach_spaces?).to eq(false)
     end
   end
 
-  context '#spaces?' do
+  describe '#spaces?' do
     context 'when there are more available spots' do
       let(:workshop) { double_workshop(attending_coaches: 2, attending_students: 5) }
 
@@ -61,7 +61,7 @@ RSpec.describe VirtualWorkshopPresenter do
     end
   end
 
-  context '#send_attending_email' do
+  describe '#send_attending_email' do
     it 'enqueues an attending email to the invitation user' do
       invitation = double(:invitation, member: double(:member))
       mailer_double = double(:mailer)

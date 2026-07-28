@@ -2,13 +2,13 @@ RSpec.describe ContactPresenter do
   let(:contact_presenter) { described_class.new(contact) }
   let(:contact) { Fabricate(:contact) }
 
-  context '#full_name' do
+  describe '#full_name' do
     it 'returns the contact\'s full name' do
       expect(contact_presenter.full_name).to eq("#{contact.name} #{contact.surname}")
     end
   end
 
-  context '#mailing_list_subscription_class' do
+  describe '#mailing_list_subscription_class' do
     it 'when subscribed to the Sponsors mailing list it returns the correct css class' do
       contact.mailing_list_consent = true
 

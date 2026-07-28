@@ -1,7 +1,7 @@
 RSpec.shared_examples 'Invitable' do |invitation_type, invitable_type|
   let(:invitable) { Fabricate(invitable_type) }
 
-  context '#attendances' do
+  describe '#attendances' do
     it 'permits accepted' do
       invitation = Fabricate(invitation_type,
                              invitable_type => invitable,
@@ -28,7 +28,7 @@ RSpec.shared_examples 'Invitable' do |invitation_type, invitable_type|
     end
   end
 
-  context '#attending_students' do
+  describe '#attending_students' do
     it 'accepts attending students' do
       invitation_to_student = Fabricate(invitation_type,
                                         role: 'Student',
@@ -58,7 +58,7 @@ RSpec.shared_examples 'Invitable' do |invitation_type, invitable_type|
     end
   end
 
-  context '#attending_coaches' do
+  describe '#attending_coaches' do
     it 'accepts attending coaches' do
       invitation_to_coach = Fabricate(invitation_type,
                                       role: 'Coach',
