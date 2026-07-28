@@ -1,8 +1,8 @@
 RSpec.feature 'Managing sponsors', type: :feature do
   let(:member) { Fabricate(:member) }
-  let!(:chapter) { Fabricate(:chapter) }
 
   before do
+    Fabricate(:chapter)
     login_as_admin(member)
     member.add_role(:organiser, Chapter)
   end

@@ -154,7 +154,10 @@ RSpec.shared_examples 'managing workshop attendance' do
 
         context 'when invitations have been sent out' do
           let(:member) { Fabricate(:member) }
-          let!(:invitation) { Fabricate(:attending_workshop_invitation, member: member, workshop: workshop) }
+
+          before do
+            Fabricate(:attending_workshop_invitation, member: member, workshop: workshop)
+          end
 
           it 'can manage details if they are already attending' do
             login(member)

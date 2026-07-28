@@ -9,6 +9,7 @@ RSpec.feature 'managing workshop attendances', type: :feature do
 
     before do
       login_as_admin(member)
+      invitation
     end
 
     describe '#verify_attendance' do
