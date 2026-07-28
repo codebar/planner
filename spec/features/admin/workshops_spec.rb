@@ -227,7 +227,7 @@ RSpec.feature 'An admin managing workshops', type: :feature do
         workshop = Fabricate(:workshop)
         visit admin_workshop_attendees_checklist_path(workshop)
 
-        expect(page.current_path).to eq(admin_workshop_path(workshop))
+        expect(page).to have_current_path(admin_workshop_path(workshop), ignore_query: true)
         expect(page).to have_content('The requested format is invalid: text/html')
       end
     end
@@ -238,7 +238,7 @@ RSpec.feature 'An admin managing workshops', type: :feature do
         visit admin_workshop_path(workshop)
         click_on 'Pairing CSV'
 
-        expect(page.current_path).to eq(admin_workshop_path(workshop, format: 'csv'))
+        expect(page).to have_current_path(admin_workshop_path(workshop, format: 'csv'), ignore_query: true)
         expect(page).to have_content(WorkshopPresenter::PAIRING_HEADINGS.join(','))
         expect(page).not_to have_content('ORGANISER')
       end
@@ -254,7 +254,7 @@ RSpec.feature 'An admin managing workshops', type: :feature do
         visit admin_workshop_path(workshop)
         click_on 'Labels'
 
-        expect(page.current_path).to eq(admin_workshop_path(workshop, format: 'csv'))
+        expect(page).to have_current_path(admin_workshop_path(workshop, format: 'csv'), ignore_query: true)
         expect(page).to have_content('ORGANISER')
         expect(page).not_to have_content(WorkshopPresenter::PAIRING_HEADINGS.join(','))
       end
