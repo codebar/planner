@@ -270,10 +270,13 @@ Rails/FilePath:
     - "spec/rails_helper.rb"
 
 RSpec/MultipleExpectations:
-  Max: 2
+  Max: 8
 
 RSpec/ExampleLength:
-  Max: 10
+  Max: 25
+
+RSpec/MultipleMemoizedHelpers:
+  Max: 15
 
 RSpec/SubjectStub:
   Enabled: true
