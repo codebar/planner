@@ -18,7 +18,7 @@ RSpec.describe Feedback do
     end
 
     context 'with valid token' do
-      it 'is  submitted valid params' do
+      it 'is submitted valid params' do
         expect do
           described_class.submit_feedback(params, feedback_request.token)
         end.to change { described_class.count }.by(1)

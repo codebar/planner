@@ -15,7 +15,7 @@ RSpec.describe ContactPresenter do
       expect(contact_presenter.mailing_list_subscription_class).to eq('fa-bell')
     end
 
-    it 'when not  subscribed to the Sponsors mailing list it returns the correct css class' do
+    it 'when not subscribed to the Sponsors mailing list it returns the correct css class' do
       contact.mailing_list_consent = false
 
       expect(contact_presenter.mailing_list_subscription_class).to eq('fa-bell-slash')

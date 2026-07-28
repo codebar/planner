@@ -424,10 +424,6 @@ RSpec/ExampleWording:
     - 'spec/presenters/virtual_workshop_presenter_spec.rb'
     - 'spec/support/shared_examples/behaves_like_managing_workshop_attendance.rb'
 
-# Offense count: 4
-# This cop supports safe autocorrection (--autocorrect).
-RSpec/ExcessiveDocstringSpacing:
-  Exclude:
     - 'spec/features/accepting_invitation_spec.rb'
     - 'spec/features/admin/manage_workshop_attendances_spec.rb'
     - 'spec/models/feedback_spec.rb'

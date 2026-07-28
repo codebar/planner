@@ -48,7 +48,7 @@ RSpec.feature 'Accepting a workshop invitation', type: :feature do
 
     context 'amend invitation details' do
       context 'a student' do
-        scenario 'cannot accept an invitation  without a tutorial' do
+        scenario 'cannot accept an invitation without a tutorial' do
           invitation.update(attending: nil, tutorial: nil)
           visit invitation_route
 
