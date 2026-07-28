@@ -38,7 +38,7 @@ RSpec.describe OmniAuth::Strategies::Codebar do
     base_env.merge(
       'PATH_INFO' => path,
       'QUERY_STRING' => query,
-      'rack.session' => session,
+      'rack.session' => session
     )
   end
 
