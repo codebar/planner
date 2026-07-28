@@ -44,9 +44,9 @@ RSpec.feature 'A new student signs up', type: :feature do
     check 'Vegan'
     check 'Other'
     fill_in 'Other dietary restrictions', with: 'peanut allergy'
-    find('#member_how_you_found_us_from_a_friend').click
+    find_by_id('member_how_you_found_us_from_a_friend').click
 
-    find('#member_how_you_found_us_other').click
+    find_by_id('member_how_you_found_us_other').click
     expect(page).to have_content('Please specify how you found us')
     fill_in 'member_how_you_found_us_other_reason', with: 'found on a poster', id: true
     click_on 'Next'

@@ -40,6 +40,6 @@ RSpec.describe 'Admin TomSelect Member Lookup', :js, type: :feature do
 
     find('.ts-dropdown .option', text: 'Jane Doe').click
 
-    expect(find('#view_profile')[:href]).to include(admin_member_path(member_jane))
+    expect(find_by_id('view_profile')[:href]).to include(admin_member_path(member_jane))
   end
 end

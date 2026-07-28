@@ -76,7 +76,7 @@ RSpec.feature 'member feedback', type: :feature do
       visit feedback_path(valid_token)
 
       # Get all coach options in order
-      select_options = page.find('#feedback_coach_id').all('option').map(&:text).reject(&:blank?)
+      select_options = page.find_by_id('feedback_coach_id').all('option').map(&:text).reject(&:blank?)
       verified_index = select_options.index(verified_coach.full_name)
       unverified_index = select_options.index(unverified_coach.full_name)
 
