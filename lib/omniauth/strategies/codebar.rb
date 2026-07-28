@@ -90,17 +90,17 @@ module OmniAuth
                                                provider: name,
                                                uid: email,
                                                info: {
-            email: email,
-            name: payload['name'] || email
-          },
+                                                 email: email,
+                                                 name: payload['name'] || email
+                                               },
                                                credentials: {
-            token: tokens['access_token'],
-            expires: tokens['expires_at'],
-            refresh_token: tokens['refresh_token']
-          },
+                                                 token: tokens['access_token'],
+                                                 expires: tokens['expires_at'],
+                                                 refresh_token: tokens['refresh_token']
+                                               },
                                                extra: {
-            raw_info: payload
-          }
+                                                 raw_info: payload
+                                               }
                                              })
 
         call_app!

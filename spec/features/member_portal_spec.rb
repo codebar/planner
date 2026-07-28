@@ -39,9 +39,9 @@ RSpec.feature 'Member portal', type: :feature do
         visit dashboard_path
 
         expect(page).to have_text("#{c1_workshop_presenter} at #{c1_workshop_presenter.venue.name}",
-                                     count: 1)
+                                  count: 1)
         expect(page).to have_text("#{c2_workshop_presenter} at #{c2_workshop_presenter.venue.name}",
-                                     count: 1)
+                                  count: 1)
       end
     end
 
