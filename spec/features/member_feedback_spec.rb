@@ -23,7 +23,7 @@ RSpec.feature 'member feedback', type: :feature do
       expect(page).to have_select 'feedback_tutorial_id'
       expect(page).to have_field 'feedback_request'
       expect(page).to have_field 'feedback_suggestions'
-      expect(page).to have_selector '//div.rating'
+      expect(page).to have_css '//div.rating'
       expect(page).to have_button 'Submit feedback'
     end
 

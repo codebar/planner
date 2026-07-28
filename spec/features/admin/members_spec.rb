@@ -19,8 +19,8 @@ RSpec.describe 'Admin managing members', type: :feature do
       expect(page).to have_content(member.email)
       expect(page).to have_content(member.about_you)
 
-      expect(page).to have_selector('.badge', text: 'Vegan')
-      expect(page).to have_selector('.badge', text: 'Peanut allergy')
+      expect(page).to have_css('.badge', text: 'Vegan')
+      expect(page).to have_css('.badge', text: 'Peanut allergy')
     end
 
     it 'can view a summary of member event attendances' do
@@ -81,9 +81,9 @@ RSpec.describe 'Admin managing members', type: :feature do
     end
 
     it 'can send an attendance warning to a member' do
-      expect(page).to have_selector("a[data-confirm='Clicking OK will send an automated email to this user now to warn them about missing too many workshops. This cannot be undone. Are you sure?']")
+      expect(page).to have_css("a[data-confirm='Clicking OK will send an automated email to this user now to warn them about missing too many workshops. This cannot be undone. Are you sure?']")
       click_on 'Send attendance warning'
-      expect(page).to have_selector("a[data-confirm='#{member.name} has already received a warning about missing too many workshops on #{member.attendance_warnings.last.created_at.strftime('%Y-%m-%d at %H:%M')}. Are you sure you want to proceed with sending another one?']")
+      expect(page).to have_css("a[data-confirm='#{member.name} has already received a warning about missing too many workshops on #{member.attendance_warnings.last.created_at.strftime('%Y-%m-%d at %H:%M')}. Are you sure you want to proceed with sending another one?']")
 
       expect(page).to have_content 'Attendance warning email sent.'
       within '.attendance-warning' do

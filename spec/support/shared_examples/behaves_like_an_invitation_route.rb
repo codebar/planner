@@ -24,8 +24,8 @@ RSpec.shared_examples 'invitation route' do
       visit admin_workshop_path(invitation.workshop)
       within 'div.row.attendee.mt-3' do
         expect(page).to have_content(member.full_name)
-        expect(page).to have_selector('i.fa-history')
-        expect(page).to_not have_selector('i.fa-magic')
+        expect(page).to have_css('i.fa-history')
+        expect(page).to_not have_css('i.fa-magic')
       end
     end
 

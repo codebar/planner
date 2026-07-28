@@ -28,7 +28,7 @@ RSpec.feature 'managing workshop attendances', type: :feature do
 
         # Capture the ID of the second row before clicking
         second_row_id = "attendee-row-#{second_invitation.id}"
-        expect(page).to have_selector("##{second_row_id}")
+        expect(page).to have_css("##{second_row_id}")
 
         # Verify first attendee
         first('.verify_attendance').click
@@ -39,7 +39,7 @@ RSpec.feature 'managing workshop attendances', type: :feature do
         expect(page).to have_css('.fa-check-square', count: 0, wait: 5)
 
         # The unclicked row should still exist with its original ID, proving targeted replacement
-        expect(page).to have_selector("##{second_row_id}")
+        expect(page).to have_css("##{second_row_id}")
       end
     end
 
@@ -60,7 +60,7 @@ RSpec.feature 'managing workshop attendances', type: :feature do
 
       expect(page).to have_content('2 are attending as students')
       expect(page).to have_content(I18n.l(other_invitation.reload.rsvp_time))
-      expect(page).to have_selector('i.fa-hat-wizard')
+      expect(page).to have_css('i.fa-hat-wizard')
     end
 
     scenario 'can rsvp an invited student to the workshop', js: true do
@@ -70,7 +70,7 @@ RSpec.feature 'managing workshop attendances', type: :feature do
 
       visit admin_workshop_path(workshop)
       expect(page).to have_content('1 are attending as students')
-      expect(page).to_not have_selector('i.fa-magic')
+      expect(page).to_not have_css('i.fa-magic')
 
       # Use the select_from_chosen helper to select the member
       select_from_chosen("#{other_invitation.member.full_name} (#{other_invitation.role})", from: 'workshop_invitations')

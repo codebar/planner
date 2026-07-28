@@ -59,8 +59,8 @@ RSpec.feature 'A new student signs up', type: :feature do
     expect(page).to have_content('she')
     expect(page).to have_content('Jane Doe')
     expect(page).to have_link('jane@codebar.io')
-    expect(page).to have_selector('.badge', text: 'Vegan')
-    expect(page).to have_selector('.badge', text: 'Peanut allergy')
+    expect(page).to have_css('.badge', text: 'Vegan')
+    expect(page).to have_css('.badge', text: 'Peanut allergy')
   end
 
   scenario 'Picking a mailing list on step 2 subscribes you to that list' do
