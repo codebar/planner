@@ -506,11 +506,6 @@ RSpec/VerifiedDoubles:
     - 'spec/presenters/virtual_workshop_presenter_spec.rb'
     - 'spec/presenters/workshop_presenter_spec.rb'
 
-# Offense count: 8
-RSpec/VoidExpect:
-  Exclude:
-    - 'spec/features/admin/sponsor_spec.rb'
-
 # Offense count: 4
 # This cop supports unsafe autocorrection (--autocorrect-all).
 # Configuration parameters: NilOrEmpty, NotPresent, UnlessPresent.
