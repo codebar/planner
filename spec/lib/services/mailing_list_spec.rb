@@ -18,11 +18,11 @@ RSpec.describe Services::MailingList do
     it 'adds a user to the mailing list' do
       expect(client).to receive(:subscribe)
         .with({
-          email: :email,
+                email: :email,
           first_name: :first_name,
           last_name: :last_name,
           segment_ids: [:list_id]
-        })
+              })
 
       mailing_list.subscribe(:email, :first_name, :last_name)
     end
