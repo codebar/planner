@@ -8,7 +8,7 @@ RSpec.feature 'Chapters', type: :feature do
       visit new_admin_chapter_path
 
       expect(page).to have_current_path('/')
-      expect(page).to have_content "You can't be here"
+      expect(page).to have_text "You can't be here"
     end
   end
 
@@ -26,7 +26,7 @@ RSpec.feature 'Chapters', type: :feature do
 
       click_on 'Create chapter'
 
-      expect(page).to have_content('Chapter codebar Brighton has been successfully created')
+      expect(page).to have_text('Chapter codebar Brighton has been successfully created')
     end
   end
 
@@ -49,7 +49,7 @@ RSpec.feature 'Chapters', type: :feature do
 
         click_on 'Update chapter'
 
-        expect(page).to have_content('Chapter codebar Brighton has been successfully updated')
+        expect(page).to have_text('Chapter codebar Brighton has been successfully updated')
       end
     end
 
@@ -64,7 +64,7 @@ RSpec.feature 'Chapters', type: :feature do
         visit edit_admin_chapter_path(chapter)
 
         expect(page).to have_current_path('/')
-        expect(page).to have_content('You are not authorized to perform this action.')
+        expect(page).to have_text('You are not authorized to perform this action.')
       end
     end
 
@@ -84,7 +84,7 @@ RSpec.feature 'Chapters', type: :feature do
 
         click_on 'Update chapter'
 
-        expect(page).to have_content('Chapter codebar Brighton has been successfully updated')
+        expect(page).to have_text('Chapter codebar Brighton has been successfully updated')
       end
     end
   end
@@ -102,7 +102,7 @@ RSpec.feature 'Chapters', type: :feature do
       members_emails = chapter.members.map(&:email)
 
       members_emails.each do |email|
-        expect(page).to have_content(email)
+        expect(page).to have_text(email)
       end
     end
 
@@ -113,10 +113,10 @@ RSpec.feature 'Chapters', type: :feature do
       coach_email = chapter.coaches.first.email
 
       students_emails.each do |email|
-        expect(page).to have_content(email)
+        expect(page).to have_text(email)
       end
 
-      expect(page).to have_no_content(coach_email)
+      expect(page).to have_no_text(coach_email)
     end
   end
 
@@ -134,15 +134,15 @@ RSpec.feature 'Chapters', type: :feature do
 
       visit admin_chapter_path(chapter)
 
-      expect(page).to have_content('How members found this chapter')
-      expect(page).to have_content('Based on 1 response')
+      expect(page).to have_text('How members found this chapter')
+      expect(page).to have_text('Based on 1 response')
     end
 
     scenario 'does not show the card when there are no responses' do
       visit admin_chapter_path(chapter)
 
       expect(page).to have_css('body')
-      expect(page).to have_no_content('How members found this chapter')
+      expect(page).to have_no_text('How members found this chapter')
     end
   end
 
@@ -156,8 +156,8 @@ RSpec.feature 'Chapters', type: :feature do
     scenario 'shows explanation for eligible members' do
       visit admin_chapter_path(chapter)
 
-      expect(page).to have_content('What is "eligible"?')
-      expect(page).to have_content(/Are not banned/i)
+      expect(page).to have_text('What is "eligible"?')
+      expect(page).to have_text(/Are not banned/i)
     end
   end
 end

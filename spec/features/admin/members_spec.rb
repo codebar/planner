@@ -15,9 +15,9 @@ RSpec.describe 'Admin managing members', type: :feature do
 
   describe 'Admin managing members' do
     it 'can view member information' do
-      expect(page).to have_content(member.name)
-      expect(page).to have_content(member.email)
-      expect(page).to have_content(member.about_you)
+      expect(page).to have_text(member.name)
+      expect(page).to have_text(member.email)
+      expect(page).to have_text(member.about_you)
 
       expect(page).to have_css('.badge', text: 'Vegan')
       expect(page).to have_css('.badge', text: 'Peanut allergy')
@@ -25,15 +25,15 @@ RSpec.describe 'Admin managing members', type: :feature do
 
     it 'can view a summary of member event attendances' do
       within '.attendance-summary' do
-        expect(page).to have_content('1 workshops', normalize_ws: true)
+        expect(page).to have_text('1 workshops', normalize_ws: true)
       end
     end
 
     it 'can view paginated list of past RSVPs' do
       click_on 'View all RSVPS'
 
-      expect(page).to have_content('Past RSVPs')
-      expect(page).to have_content('Displaying 1 event')
+      expect(page).to have_text('Past RSVPs')
+      expect(page).to have_text('Displaying 1 event')
     end
 
     it 'can add a note about a member' do
@@ -42,8 +42,8 @@ RSpec.describe 'Admin managing members', type: :feature do
       click_on 'Save'
 
       within '.note' do
-        expect(page).to have_content 'Bananas and custard'
-        expect(page).to have_content "Note added by #{admin.full_name}"
+        expect(page).to have_text 'Bananas and custard'
+        expect(page).to have_text "Note added by #{admin.full_name}"
       end
     end
 
@@ -55,9 +55,9 @@ RSpec.describe 'Admin managing members', type: :feature do
       fill_in 'ban_expires_at', with: Time.zone.today + 1.month
       click_on 'Suspend member'
 
-      expect(page).to have_content 'Member marked as supended and suspension email sent.'
+      expect(page).to have_text 'Member marked as supended and suspension email sent.'
       within '.suspension' do
-        expect(page).to have_content "Suspended until #{I18n.l(Time.zone.today + 1.month)} by #{admin.full_name}"
+        expect(page).to have_text "Suspended until #{I18n.l(Time.zone.today + 1.month)} by #{admin.full_name}"
       end
     end
 
@@ -68,15 +68,15 @@ RSpec.describe 'Admin managing members', type: :feature do
         end.to change { member.subscriptions.count }.by(-1)
       end
 
-      expect(page).to have_content "Successfully unsubscribed #{member.full_name}"
+      expect(page).to have_text "Successfully unsubscribed #{member.full_name}"
     end
 
     it 'can send an eligibility email to a member' do
       click_on 'Send eligibility inquiry'
 
-      expect(page).to have_content 'Eligibility inquiry email sent.'
+      expect(page).to have_text 'Eligibility inquiry email sent.'
       within '.eligibility-inquiry' do
-        expect(page).to have_content "Sent eligibility inquiry email by #{admin.full_name}"
+        expect(page).to have_text "Sent eligibility inquiry email by #{admin.full_name}"
       end
     end
 
@@ -85,9 +85,9 @@ RSpec.describe 'Admin managing members', type: :feature do
       click_on 'Send attendance warning'
       expect(page).to have_css("a[data-confirm='#{member.name} has already received a warning about missing too many workshops on #{member.attendance_warnings.last.created_at.strftime('%Y-%m-%d at %H:%M')}. Are you sure you want to proceed with sending another one?']")
 
-      expect(page).to have_content 'Attendance warning email sent.'
+      expect(page).to have_text 'Attendance warning email sent.'
       within '.attendance-warning' do
-        expect(page).to have_content "Sent attendance warning email by #{admin.full_name}"
+        expect(page).to have_text "Sent attendance warning email by #{admin.full_name}"
       end
     end
   end

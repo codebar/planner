@@ -4,7 +4,7 @@ RSpec.feature 'when visiting the coaches page', type: :feature do
     workshop = Fabricate(:workshop, date_and_time: Time.zone.today.beginning_of_year + 1.month)
     coach = Fabricate(:attended_coach, workshop: workshop).member
     visit coaches_path
-    expect(page).to have_content(coach.name, wait: 5)
+    expect(page).to have_text(coach.name, wait: 5)
   end
 
   scenario 'I can see the top coaches by year' do

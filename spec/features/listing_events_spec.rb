@@ -7,8 +7,8 @@ RSpec.feature 'event listing', type: :feature do
     scenario 'displays upcoming events page' do
       travel_to(Time.current) do
         visit upcoming_events_path
-        expect(page).to have_content 'Upcoming Events'
-        expect(page).to have_content event.name
+        expect(page).to have_text 'Upcoming Events'
+        expect(page).to have_text event.name
       end
     end
   end
@@ -21,8 +21,8 @@ RSpec.feature 'event listing', type: :feature do
     scenario 'displays past events page' do
       travel_to(Time.current) do
         visit past_events_path
-        expect(page).to have_content 'Past Events'
-        expect(page).to have_content past_event.name
+        expect(page).to have_text 'Past Events'
+        expect(page).to have_text past_event.name
       end
     end
   end
@@ -30,7 +30,7 @@ RSpec.feature 'event listing', type: :feature do
   describe 'root /events redirects to /events/upcoming' do
     scenario 'redirects to upcoming events' do
       visit events_path
-      expect(page).to have_content 'Upcoming Events'
+      expect(page).to have_text 'Upcoming Events'
       expect(page).to have_current_path '/events/upcoming', ignore_query: true
     end
   end

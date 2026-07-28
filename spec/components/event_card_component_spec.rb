@@ -13,7 +13,7 @@ RSpec.describe EventCardComponent, type: :component do
       render_inline(described_class.new(event_card: presenter))
       expect(page).to have_css("[data-test='event']")
       expect(page).to have_link(presenter.to_s)
-      expect(page).to have_content(presenter.date)
+      expect(page).to have_text(presenter.date)
     end
 
     it "does not render user-specific badges without a user" do

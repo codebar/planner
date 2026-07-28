@@ -15,13 +15,13 @@ RSpec.feature 'Admin::Sponsors', type: :feature do
 
       visit admin_sponsors_path
 
-      expect(page).to have_content(sponsor.name)
-      expect(page).to have_content(sponsor2.name)
+      expect(page).to have_text(sponsor.name)
+      expect(page).to have_text(sponsor2.name)
 
       expect(page.all(:css, 'tbody tr', count: 2))
 
-      expect(page).to have_content(hosted_workshop.chapter.name)
-      expect(page).to have_content(sponsored_workshop.chapter.name)
+      expect(page).to have_text(hosted_workshop.chapter.name)
+      expect(page).to have_text(sponsored_workshop.chapter.name)
 
       select sponsored_workshop.chapter.name, from: 'sponsors_search[chapter]'
       click_on 'Filter'
@@ -40,8 +40,8 @@ RSpec.feature 'Admin::Sponsors', type: :feature do
 
       visit admin_sponsors_path
 
-      expect(page).to have_content(sponsor.name)
-      expect(page).to have_content(sponsor2.name)
+      expect(page).to have_text(sponsor.name)
+      expect(page).to have_text(sponsor2.name)
 
       expect(page.all(:css, 'tbody tr', count: 2))
 
@@ -58,7 +58,7 @@ RSpec.feature 'Admin::Sponsors', type: :feature do
       click_on 'Filter'
 
       expect(page.all(:css, 'tbody tr', count: 0))
-      expect(page).to have_content('No sponsor found')
+      expect(page).to have_text('No sponsor found')
     end
 
     scenario 'can clear filtering form' do
@@ -67,13 +67,13 @@ RSpec.feature 'Admin::Sponsors', type: :feature do
 
       visit admin_sponsors_path
 
-      expect(page).to have_content(sponsor.name)
-      expect(page).to have_content(sponsor2.name)
+      expect(page).to have_text(sponsor.name)
+      expect(page).to have_text(sponsor2.name)
 
       expect(page.all(:css, 'tbody tr', count: 2))
 
-      expect(page).to have_content(hosted_workshop.chapter.name)
-      expect(page).to have_content(sponsored_workshop.chapter.name)
+      expect(page).to have_text(hosted_workshop.chapter.name)
+      expect(page).to have_text(sponsored_workshop.chapter.name)
 
       select sponsored_workshop.chapter.name, from: 'sponsors_search[chapter]'
       click_on 'Filter'
@@ -93,25 +93,25 @@ RSpec.feature 'Admin::Sponsors', type: :feature do
     end
 
     scenario 'displays all sponsor details' do
-      expect(page).to have_content(sponsor.name)
-      expect(page).to have_content(sponsor.description)
+      expect(page).to have_text(sponsor.name)
+      expect(page).to have_text(sponsor.description)
       expect(page).to have_link(sponsor.website, href: sponsor.website)
-      expect(page).to have_content(sponsor.level)
-      expect(page).to have_content(ContactPresenter.new(sponsor.contacts.first).full_name)
+      expect(page).to have_text(sponsor.level)
+      expect(page).to have_text(ContactPresenter.new(sponsor.contacts.first).full_name)
 
-      expect(page).to have_content(sponsor.seats)
-      expect(page).to have_content(sponsor.coach_spots)
-      expect(page).to have_content(sponsor.accessibility_info)
-      expect(page).to have_content(sponsor.address.street)
+      expect(page).to have_text(sponsor.seats)
+      expect(page).to have_text(sponsor.coach_spots)
+      expect(page).to have_text(sponsor.accessibility_info)
+      expect(page).to have_text(sponsor.address.street)
     end
 
     context 'sponsorships' do
       scenario 'when no sponsorships' do
         within '#sponsorships' do
-          expect(page).to have_content('No sponsorships')
-          expect(page).to have_no_content('Workshops')
-          expect(page).to have_no_content('Events')
-          expect(page).to have_no_content('Meetings')
+          expect(page).to have_text('No sponsorships')
+          expect(page).to have_no_text('Workshops')
+          expect(page).to have_no_text('Events')
+          expect(page).to have_no_text('Meetings')
         end
       end
 
@@ -121,9 +121,9 @@ RSpec.feature 'Admin::Sponsors', type: :feature do
         visit admin_sponsor_path(sponsor)
 
         within '#sponsorships' do
-          expect(page).to have_content('Workshops')
-          expect(page).to have_content("#{sponsored_workshop.chapter.name}")
-          expect(page).to have_content("#{hosted_workshop.chapter.name} (host)")
+          expect(page).to have_text('Workshops')
+          expect(page).to have_text("#{sponsored_workshop.chapter.name}")
+          expect(page).to have_text("#{hosted_workshop.chapter.name} (host)")
         end
       end
 
@@ -135,10 +135,10 @@ RSpec.feature 'Admin::Sponsors', type: :feature do
         visit admin_sponsor_path(sponsor)
 
         within '#sponsorships' do
-          expect(page).to have_content('Events')
-          expect(page).to have_content("#{gold_event.to_s} - GOLD")
-          expect(page).to have_content("#{silver_event} - SILVER")
-          expect(page).to have_content("#{standard_event} - Standard")
+          expect(page).to have_text('Events')
+          expect(page).to have_text("#{gold_event.to_s} - GOLD")
+          expect(page).to have_text("#{silver_event} - SILVER")
+          expect(page).to have_text("#{standard_event} - Standard")
         end
       end
 
@@ -148,8 +148,8 @@ RSpec.feature 'Admin::Sponsors', type: :feature do
         visit admin_sponsor_path(sponsor)
 
         within '#sponsorships' do
-          expect(page).to have_content('Meetings')
-          expect(page).to have_content(meeting.title)
+          expect(page).to have_text('Meetings')
+          expect(page).to have_text(meeting.title)
         end
       end
     end
@@ -163,7 +163,7 @@ RSpec.feature 'Admin::Sponsors', type: :feature do
         visit admin_sponsor_path(sponsor)
 
         within '#activities' do
-          expect(page).to have_content("#{manager.full_name} subscribed #{contact.name} #{contact.surname} with email #{contact.email} to the Sponsor newsletter")
+          expect(page).to have_text("#{manager.full_name} subscribed #{contact.name} #{contact.surname} with email #{contact.email} to the Sponsor newsletter")
         end
       end
 
@@ -177,7 +177,7 @@ RSpec.feature 'Admin::Sponsors', type: :feature do
         visit admin_sponsor_path(sponsor)
 
         within '#activities' do
-          expect(page).to have_no_content("#{manager.full_name} subscribed #{contact.name} #{contact.surname} with email #{contact.email} to the Sponsor newsletter")
+          expect(page).to have_no_text("#{manager.full_name} subscribed #{contact.name} #{contact.surname} with email #{contact.email} to the Sponsor newsletter")
         end
       end
     end
@@ -208,7 +208,7 @@ RSpec.feature 'Admin::Sponsors', type: :feature do
       check 'sponsor_contacts_attributes_0_mailing_list_consent'
 
       click_on 'Save changes'
-      expect(page).to have_content("#{manager.full_name} subscribed Jane Doe with email jane@codebar.io to the Sponsor newsletter")
+      expect(page).to have_text("#{manager.full_name} subscribed Jane Doe with email jane@codebar.io to the Sponsor newsletter")
     end
 
     it 'can unsubscribe a contact to the sponsor newsletter', wip: true do
@@ -218,7 +218,7 @@ RSpec.feature 'Admin::Sponsors', type: :feature do
       uncheck 'sponsor_contacts_attributes_0_mailing_list_consent'
       click_on 'Save changes'
 
-      expect(page).to have_content("#{manager.full_name} unsubscribed #{contact.name} #{contact.surname} with email #{contact.email} from the Sponsor newsletter")
+      expect(page).to have_text("#{manager.full_name} unsubscribed #{contact.name} #{contact.surname} with email #{contact.email} from the Sponsor newsletter")
     end
   end
 
@@ -229,9 +229,9 @@ RSpec.feature 'Admin::Sponsors', type: :feature do
     scenario 'displays all sponsor contacts' do
       visit admin_contacts_path
 
-      expect(page).to have_content(sponsor.name)
-      expect(page).to have_content(sponsor.contacts.first.name)
-      expect(page).to have_no_content(sponsor_no_contacts.name)
+      expect(page).to have_text(sponsor.name)
+      expect(page).to have_text(sponsor.contacts.first.name)
+      expect(page).to have_no_text(sponsor_no_contacts.name)
     end
   end
 end

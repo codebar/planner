@@ -10,7 +10,7 @@ RSpec.feature 'Viewing feedback', type: :feature do
       feedbacks = Fabricate.times(2, :feedback)
 
       visit admin_feedback_index_path
-      feedbacks.each { |feedback| expect(page).to have_content(feedback.request) }
+      feedbacks.each { |feedback| expect(page).to have_text(feedback.request) }
     end
   end
 
@@ -22,7 +22,7 @@ RSpec.feature 'Viewing feedback', type: :feature do
     it 'can not access the feedback page' do
       visit admin_feedback_index_path
 
-      expect(page).to have_content('You can\'t be here')
+      expect(page).to have_text('You can\'t be here')
     end
   end
 end

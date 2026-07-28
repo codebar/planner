@@ -14,7 +14,7 @@ RSpec.feature 'admin groups', type: :feature do
       select 'Brighton', from: 'group[chapter_id]'
       click_on 'Create group'
 
-      expect(page).to have_content('Group Students for chapter Brighton has been successfully created')
+      expect(page).to have_text('Group Students for chapter Brighton has been successfully created')
     end
   end
 
@@ -30,8 +30,8 @@ RSpec.feature 'admin groups', type: :feature do
     scenario 'shows explanation for eligible members' do
       visit admin_group_path(group)
 
-      expect(page).to have_content('What is "eligible"?')
-      expect(page).to have_content(/Are not banned/i)
+      expect(page).to have_text('What is "eligible"?')
+      expect(page).to have_text(/Are not banned/i)
     end
   end
 end

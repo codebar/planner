@@ -16,14 +16,14 @@ RSpec.shared_examples 'invitation route' do
       click_on 'Attend'
 
       expect(page).to have_link 'I can no longer attend'
-      expect(page).to have_content("Thanks for getting back to us #{invitation.member.name}.")
+      expect(page).to have_text("Thanks for getting back to us #{invitation.member.name}.")
       expect(page).to have_current_path(invitation_route, ignore_query: true)
 
       # admin view
       login_as_admin(member)
       visit admin_workshop_path(invitation.workshop)
       within 'div.row.attendee.mt-3' do
-        expect(page).to have_content(member.full_name)
+        expect(page).to have_text(member.full_name)
         expect(page).to have_css('i.fa-history')
         expect(page).to have_no_css('i.fa-magic')
       end
@@ -35,7 +35,7 @@ RSpec.shared_examples 'invitation route' do
         visit accept_invitation_route
 
         expect(page).to have_no_link 'I can no longer attend'
-        expect(page).to have_content('Tutorial must be selected')
+        expect(page).to have_text('Tutorial must be selected')
       end
 
       scenario 'a Coach must can RSVP diredctly' do
@@ -44,7 +44,7 @@ RSpec.shared_examples 'invitation route' do
 
         expect(page).to have_link 'I can no longer attend'
         expect(page).to have_current_path(invitation_route, ignore_query: true)
-        expect(page).to have_content(I18n.t('messages.accepted_invitation', name: member.name))
+        expect(page).to have_text(I18n.t('messages.accepted_invitation', name: member.name))
       end
     end
 
@@ -53,7 +53,7 @@ RSpec.shared_examples 'invitation route' do
       visit accept_invitation_route
 
       expect(current_url).to eq(invitation_url(invitation))
-      expect(page).to have_content(I18n.t('messages.already_rsvped'))
+      expect(page).to have_text(I18n.t('messages.already_rsvped'))
     end
 
     scenario 'when there are no available spots' do
@@ -61,7 +61,7 @@ RSpec.shared_examples 'invitation route' do
       visit invitation_route
 
       expect(current_url).to eq(invitation_url(invitation))
-      expect(page).to have_content('The workshop is full')
+      expect(page).to have_text('The workshop is full')
     end
 
     scenario 'when there are no available spots and they accept through the invitation link' do
@@ -69,7 +69,7 @@ RSpec.shared_examples 'invitation route' do
       visit accept_invitation_route
 
       expect(current_url).to eq(invitation_url(invitation))
-      expect(page).to have_content('The workshop is full')
+      expect(page).to have_text('The workshop is full')
     end
   end
 
@@ -79,7 +79,7 @@ RSpec.shared_examples 'invitation route' do
       visit invitation_route
 
       click_on 'I can no longer attend'
-      expect(page).to have_content(I18n.t('messages.rejected_invitation', name: invitation.member.name))
+      expect(page).to have_text(I18n.t('messages.rejected_invitation', name: invitation.member.name))
     end
 
     scenario 'when they are successful and there is someone else on the waiting list' do
@@ -91,7 +91,7 @@ RSpec.shared_examples 'invitation route' do
 
       click_on 'I can no longer attend'
 
-      expect(page).to have_content(I18n.t('messages.rejected_invitation', name: invitation.member.name))
+      expect(page).to have_text(I18n.t('messages.rejected_invitation', name: invitation.member.name))
       expect(waitinglisted.reload.automated_rsvp).to eq(true)
       expect(waitinglisted.reload.rsvp_time).to_not be_nil
       expect(WaitingList.next_spot(invitation.workshop, invitation.role).present?).to eq(false)
@@ -101,7 +101,7 @@ RSpec.shared_examples 'invitation route' do
       invitation.update_attribute(:attending, true)
       visit reject_invitation_route
 
-      expect(page).to have_content(I18n.t('messages.rejected_invitation', name: invitation.member.name))
+      expect(page).to have_text(I18n.t('messages.rejected_invitation', name: invitation.member.name))
       expect(page).to have_current_path(invitation_route, ignore_query: true)
     end
 
@@ -110,14 +110,14 @@ RSpec.shared_examples 'invitation route' do
       visit invitation_route
 
       expect(page).to have_selector(:link_or_button, 'Attend')
-      expect(page).to have_no_content 'I can no longer attend'
+      expect(page).to have_no_text 'I can no longer attend'
     end
 
     scenario 'when already confirmed they are not attending and reject by accessing the link directly' do
       invitation.update_attribute(:attending, false)
       visit reject_invitation_route
 
-      expect(page).to have_content(I18n.t('messages.not_attending_already'))
+      expect(page).to have_text(I18n.t('messages.not_attending_already'))
       expect(page).to have_current_path(invitation_route, ignore_query: true)
     end
 
@@ -130,7 +130,7 @@ RSpec.shared_examples 'invitation route' do
       visit invitation2_route
       click_on 'Attend'
 
-      expect(page).to have_content(I18n.t('messages.invitations.rsvped_to_other_workshop'))
+      expect(page).to have_text(I18n.t('messages.invitations.rsvped_to_other_workshop'))
       expect(page).to have_selector(:link_or_button, 'Attend')
     end
 
@@ -141,14 +141,14 @@ RSpec.shared_examples 'invitation route' do
 
       visit accept_invitation_path(invitation2)
 
-      expect(page).to have_content(I18n.t('messages.invitations.rsvped_to_other_workshop'))
+      expect(page).to have_text(I18n.t('messages.invitations.rsvped_to_other_workshop'))
     end
 
     scenario 'when the event is less than 3.5 hours from now' do
       invitation.workshop.update_attribute(:date_and_time, Time.zone.now + 3.hours)
       visit reject_invitation_route
 
-      expect(page).to have_content('You can only change your RSVP status up to 3.5 hours before the workshop')
+      expect(page).to have_text('You can only change your RSVP status up to 3.5 hours before the workshop')
       expect(page).to have_current_path(invitation_route, ignore_query: true)
     end
 
@@ -156,7 +156,7 @@ RSpec.shared_examples 'invitation route' do
       invitation.workshop.update_attribute(:date_and_time, Time.zone.now + 3.hours)
       visit reject_invitation_route
 
-      expect(page).to have_content('You can only change your RSVP status up to 3.5 hours before the workshop')
+      expect(page).to have_text('You can only change your RSVP status up to 3.5 hours before the workshop')
       expect(page).to have_current_path(invitation_route, ignore_query: true)
     end
   end
@@ -167,10 +167,10 @@ RSpec.shared_examples 'invitation route' do
       visit invitation_route
 
       click_on 'Join the waiting list'
-      expect(page).to have_content('You have been added to the waiting list')
+      expect(page).to have_text('You have been added to the waiting list')
 
       click_on 'Remove from the waiting list'
-      expect(page).to have_content('You have been removed from the waiting list')
+      expect(page).to have_text('You have been removed from the waiting list')
     end
   end
 end

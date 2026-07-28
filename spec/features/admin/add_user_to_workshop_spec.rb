@@ -29,7 +29,7 @@ RSpec.describe 'Add a user to an existing workshop', js: true, type: :feature do
     click_on 'Search'
     expect(page).to have_current_path('/admin/member-search/index', ignore_query: true)
 
-    expect(page).to have_content('Romeo Montague')
+    expect(page).to have_text('Romeo Montague')
     expect(page).to have_unchecked_field('Romeo Montague')
     check('Romeo Montague')
     click_button 'Take me back'

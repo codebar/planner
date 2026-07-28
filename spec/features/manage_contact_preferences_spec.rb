@@ -14,7 +14,7 @@ RSpec.feature 'Managing contact preferences', type: :feature do
         login_as_admin(manager)
         visit admin_sponsor_path(contact.sponsor)
 
-        expect(page).to have_content("#{contact.name} #{contact.surname} with email #{contact.email} subscribed to the Sponsor newsletter")
+        expect(page).to have_text("#{contact.name} #{contact.surname} with email #{contact.email} subscribed to the Sponsor newsletter")
       end
     end
 
@@ -29,7 +29,7 @@ RSpec.feature 'Managing contact preferences', type: :feature do
         login_as_admin(manager)
         visit admin_sponsor_path(contact.sponsor)
 
-        expect(page).to have_content("#{contact.name} #{contact.surname} with email #{contact.email} unsubscribed from the Sponsor newsletter")
+        expect(page).to have_text("#{contact.name} #{contact.surname} with email #{contact.email} unsubscribed from the Sponsor newsletter")
       end
     end
   end

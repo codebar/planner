@@ -13,7 +13,7 @@ RSpec.feature 'Accepting Terms and Conditions', type: :feature do
 
       click_on 'Accept'
       expect(page).to have_current_path(terms_and_conditions_path)
-      expect(page).to have_content('You have to accept the Terms and Conditions before you are able to proceed.')
+      expect(page).to have_text('You have to accept the Terms and Conditions before you are able to proceed.')
     end
 
     scenario 'they can read the Code of Conduct before accepting the ToCs', :js do
@@ -26,9 +26,9 @@ RSpec.feature 'Accepting Terms and Conditions', type: :feature do
       # When clicking a link that opens a new window/tab
       new_window = window_opened_by { click_on I18n.t('terms_and_conditions.link_text') }
       within_window new_window do
-        expect(page).to have_content(I18n.t('code_of_conduct.title'))
-        expect(page).to have_content(I18n.t('code_of_conduct.summary.title'))
-        expect(page).to have_content(I18n.t('code_of_conduct.content.title'))
+        expect(page).to have_text(I18n.t('code_of_conduct.title'))
+        expect(page).to have_text(I18n.t('code_of_conduct.summary.title'))
+        expect(page).to have_text(I18n.t('code_of_conduct.content.title'))
       end
     end
 
@@ -74,7 +74,7 @@ RSpec.feature 'Accepting Terms and Conditions', type: :feature do
 
         visit terms_and_conditions_path
         expect(page).to have_current_path(terms_and_conditions_path)
-        expect(page).to have_content(/already accepted.*#{member.accepted_toc_at.strftime('%d %B %Y')}/)
+        expect(page).to have_text(/already accepted.*#{member.accepted_toc_at.strftime('%d %B %Y')}/)
         expect(page).to have_no_button('Accept')
       end
     end
@@ -84,7 +84,7 @@ RSpec.feature 'Accepting Terms and Conditions', type: :feature do
     scenario 'they see a login prompt and cannot accept the ToCs' do
       visit terms_and_conditions_path
 
-      expect(page).to have_content('Please log in to accept our Code of Conduct.')
+      expect(page).to have_text('Please log in to accept our Code of Conduct.')
       expect(page).to have_link('Log in with GitHub')
     end
 

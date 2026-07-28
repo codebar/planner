@@ -10,7 +10,7 @@ RSpec.feature 'A new student signs up', type: :feature do
 
     accept_toc
 
-    expect(page).to have_content('Thanks for signing up. Please fill in your details to complete the registration process.')
+    expect(page).to have_text('Thanks for signing up. Please fill in your details to complete the registration process.')
     expect(page).to have_current_path(edit_member_details_path(member_type: 'student'))
   end
 
@@ -23,11 +23,11 @@ RSpec.feature 'A new student signs up', type: :feature do
 
     click_on 'Next'
 
-    expect(page).to have_content "First name can't be blank"
-    expect(page).to have_content "Surname can't be blank"
-    expect(page).to have_content "Email address can't be blank"
-    expect(page).to have_content "About you can't be blank"
-    expect(page).to have_content "You must select one option"
+    expect(page).to have_text "First name can't be blank"
+    expect(page).to have_text "Surname can't be blank"
+    expect(page).to have_text "Email address can't be blank"
+    expect(page).to have_text "About you can't be blank"
+    expect(page).to have_text "You must select one option"
   end
 
   scenario 'A new member details are successfully captured' do
@@ -47,7 +47,7 @@ RSpec.feature 'A new student signs up', type: :feature do
     find_by_id('member_how_you_found_us_from_a_friend').click
 
     find_by_id('member_how_you_found_us_other').click
-    expect(page).to have_content('Please specify how you found us')
+    expect(page).to have_text('Please specify how you found us')
     fill_in 'member_how_you_found_us_other_reason', with: 'found on a poster', id: true
     click_on 'Next'
 
@@ -55,9 +55,9 @@ RSpec.feature 'A new student signs up', type: :feature do
 
     click_on 'Done'
 
-    expect(page).to have_content('Pronouns')
-    expect(page).to have_content('she')
-    expect(page).to have_content('Jane Doe')
+    expect(page).to have_text('Pronouns')
+    expect(page).to have_text('she')
+    expect(page).to have_text('Jane Doe')
     expect(page).to have_link('jane@codebar.io')
     expect(page).to have_css('.badge', text: 'Vegan')
     expect(page).to have_css('.badge', text: 'Peanut allergy')

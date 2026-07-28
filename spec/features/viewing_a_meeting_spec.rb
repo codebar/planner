@@ -11,8 +11,8 @@ RSpec.feature 'viewing a meeting', type: :feature do
     end
 
     scenario "can view a meeting's information" do
-      expect(page).to have_content meeting.name
-      expect(page).to have_content meeting.venue.name
+      expect(page).to have_text meeting.name
+      expect(page).to have_text meeting.venue.name
     end
   end
 
@@ -25,11 +25,11 @@ RSpec.feature 'viewing a meeting', type: :feature do
 
       click_on 'RSVP here'
 
-      expect(page).to have_content('Your RSVP was successful. We look forward to seeing you at the Monthly!')
+      expect(page).to have_text('Your RSVP was successful. We look forward to seeing you at the Monthly!')
 
       click_on "Can't make it anymore? Click here to cancel your spot."
 
-      expect(page).to have_content("Thanks for letting us know you can't make it")
+      expect(page).to have_text("Thanks for letting us know you can't make it")
     end
   end
 end

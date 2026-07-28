@@ -21,7 +21,7 @@ RSpec.feature 'Managing organisers', type: :feature do
       visit admin_chapter_organisers_path(chapter)
 
       chapter.organisers.each do |organiser|
-        expect(page).to have_content(organiser.full_name)
+        expect(page).to have_text(organiser.full_name)
       end
     end
 
@@ -35,7 +35,7 @@ RSpec.feature 'Managing organisers', type: :feature do
       click_on 'Add organiser'
 
       within '.organisers' do
-        expect(page).to have_content(chapter_subscriber.full_name)
+        expect(page).to have_text(chapter_subscriber.full_name)
       end
     end
 
@@ -46,7 +46,7 @@ RSpec.feature 'Managing organisers', type: :feature do
       click_on 'Remove'
 
       within '.organisers' do
-        expect(page).to have_no_content(organiser_name)
+        expect(page).to have_no_text(organiser_name)
       end
     end
   end

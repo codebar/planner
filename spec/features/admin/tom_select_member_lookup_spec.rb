@@ -22,10 +22,10 @@ RSpec.describe 'Admin TomSelect Member Lookup', :js, type: :feature do
 
     expect(page).to have_css('.ts-dropdown .option', wait: 15)
 
-    expect(page).to have_content('Jane Doe')
-    expect(page).to have_content('jane@example.com')
+    expect(page).to have_text('Jane Doe')
+    expect(page).to have_text('jane@example.com')
 
-    expect(page).to have_no_content('John Smith')
+    expect(page).to have_no_text('John Smith')
   end
 
   scenario 'selecting a member updates view profile link' do

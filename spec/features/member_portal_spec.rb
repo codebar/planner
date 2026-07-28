@@ -12,8 +12,8 @@ RSpec.feature 'Member portal', type: :feature do
       it 'can access the member dashboard' do
         visit dashboard_path
 
-        expect(page).to have_content('Dashboard')
-        expect(page).to have_content(member.full_name)
+        expect(page).to have_text('Dashboard')
+        expect(page).to have_text(member.full_name)
       end
 
       it 'can view attending workshops' do
@@ -24,7 +24,7 @@ RSpec.feature 'Member portal', type: :feature do
         presenter = WorkshopPresenter.new(workshop)
         visit dashboard_path
 
-        expect(page).to have_content("#{presenter} at #{presenter.venue.name}", count: 1)
+        expect(page).to have_text("#{presenter} at #{presenter.venue.name}", count: 1)
       end
 
       it 'can view upcoming workshops for their chapters' do
@@ -38,9 +38,9 @@ RSpec.feature 'Member portal', type: :feature do
 
         visit dashboard_path
 
-        expect(page).to have_content("#{c1_workshop_presenter} at #{c1_workshop_presenter.venue.name}",
+        expect(page).to have_text("#{c1_workshop_presenter} at #{c1_workshop_presenter.venue.name}",
                                      count: 1)
-        expect(page).to have_content("#{c2_workshop_presenter} at #{c2_workshop_presenter.venue.name}",
+        expect(page).to have_text("#{c2_workshop_presenter} at #{c2_workshop_presenter.venue.name}",
                                      count: 1)
       end
     end
@@ -56,7 +56,7 @@ RSpec.feature 'Member portal', type: :feature do
       fill_in 'member_surname', with: 'Doe'
       click_button 'Save'
 
-      expect(page).to have_content('Jane Doe')
+      expect(page).to have_text('Jane Doe')
     end
 
     it 'can subscribe to groups' do
@@ -74,10 +74,10 @@ RSpec.feature 'Member portal', type: :feature do
       invitations = 2.times.map { Fabricate(:attending_workshop_invitation, member: member) }
       visit invitations_path
 
-      expect(page).to have_content('Invitations')
+      expect(page).to have_text('Invitations')
       invitations.each do |invitation|
-        expect(page).to have_content(invitation.parent.to_s)
-        expect(page).to have_content(invitation.parent.chapter.name)
+        expect(page).to have_text(invitation.parent.to_s)
+        expect(page).to have_text(invitation.parent.chapter.name)
       end
     end
   end

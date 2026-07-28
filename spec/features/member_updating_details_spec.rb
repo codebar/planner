@@ -11,7 +11,7 @@ RSpec.feature 'Update your details', type: :feature do
     check 'Vegetarian'
     click_on 'Save'
 
-    expect(page).to have_content('Your details have been updated.')
+    expect(page).to have_text('Your details have been updated.')
     expect(page).to have_css(".badge", text: "Vegetarian")
   end
 
@@ -24,7 +24,7 @@ RSpec.feature 'Update your details', type: :feature do
     fill_in 'Other dietary restrictions', with: 'peanut allergy'
     click_on 'Save'
 
-    expect(page).to have_content('Your details have been updated.')
+    expect(page).to have_text('Your details have been updated.')
     expect(page).to have_css(".badge", text: 'Peanut allergy')
     member.reload
     expect(member.dietary_restrictions).to eq(['other'])
@@ -39,7 +39,7 @@ RSpec.feature 'Update your details', type: :feature do
     uncheck 'Vegetarian'
     click_on 'Save'
 
-    expect(page).to have_content('Your details have been updated.')
+    expect(page).to have_text('Your details have been updated.')
     member.reload
     expect(member.dietary_restrictions).to be_empty
   end

@@ -13,8 +13,8 @@ RSpec.feature 'Chapter workshop feedback', type: :feature do
     visit root_path
     click_on "#{chapter.name} feedback"
 
-    feedbacks.each { |feedback| expect(page).to have_content(feedback.request) }
-    other_feedbacks.each { |feedback| expect(page).to have_no_content(feedback.request) }
+    feedbacks.each { |feedback| expect(page).to have_text(feedback.request) }
+    other_feedbacks.each { |feedback| expect(page).to have_no_text(feedback.request) }
   end
 
   it 'displays a message if no feedback has been submitted yet' do
@@ -25,6 +25,6 @@ RSpec.feature 'Chapter workshop feedback', type: :feature do
     visit root_path
     click_on "#{chapter.name} feedback"
 
-    expect(page).to have_content("No feedback has been submitted for #{chapter.name} workshops yet.")
+    expect(page).to have_text("No feedback has been submitted for #{chapter.name} workshops yet.")
   end
 end
