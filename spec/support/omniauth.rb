@@ -7,7 +7,7 @@ module OmniauthMacros
       uid: uid,
       info: {
         name: name,
-        email: email,
+        email: email
       },
       credentials: {
         token: 'mock_token',
