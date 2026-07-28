@@ -9,7 +9,7 @@ RSpec.shared_examples 'sending workshop emails' do
     expect do
       manager.send(send_email, workshop, 'students')
     end.to change { ActionMailer::Base.deliveries.count }.by(students.count)
-     .and change { WorkshopInvitation.where(workshop: workshop, role: 'Student').count }.by(students.count)
+                                                         .and change { WorkshopInvitation.where(workshop: workshop, role: 'Student').count }.by(students.count)
 
     # Verify emails were sent to the right recipients
     emails = ActionMailer::Base.deliveries.last(students.count)
@@ -27,7 +27,7 @@ RSpec.shared_examples 'sending workshop emails' do
     expect do
       manager.send(send_email, workshop, 'coaches')
     end.to change { ActionMailer::Base.deliveries.count }.by(coaches.count)
-     .and change { WorkshopInvitation.where(workshop: workshop, role: 'Coach').count }.by(coaches.count)
+                                                         .and change { WorkshopInvitation.where(workshop: workshop, role: 'Coach').count }.by(coaches.count)
 
     # Verify emails were sent to the right recipients
     emails = ActionMailer::Base.deliveries.last(coaches.count)
