@@ -73,7 +73,7 @@ class Admin::EventsController < Admin::ApplicationController
 
   def event_params
     params.expect(event: [
-      :virtual, :name, :slug, :date_and_time, :local_date, :local_time, :local_end_time, :description,
+                    :virtual, :name, :slug, :date_and_time, :local_date, :local_time, :local_end_time, :description,
       :info, :schedule, :venue_id, :external_url, :coach_spaces, :student_spaces, :email, :announce_only,
       :tito_url, :invitable, :time_zone, :student_questionnaire, :confirmation_required, :surveys_required,
       :audience, :coach_questionnaire, :show_faq, :display_coaches, :display_students,
@@ -82,7 +82,7 @@ class Admin::EventsController < Admin::ApplicationController
       { gold_sponsor_ids: [] },
       { sponsor_ids: [] },
       { chapter_ids: [] }
-    ])
+                  ])
   end
 
   def organiser_ids

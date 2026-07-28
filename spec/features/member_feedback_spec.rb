@@ -46,10 +46,10 @@ RSpec.feature 'member feedback', type: :feature do
       # 3. Organizer hasn't yet marked attendance (attended = nil)
       coach_not_yet_verified = Fabricate(:coach)
       Fabricate(:attending_workshop_invitation,
-        workshop: feedback_request.workshop,
-        member: coach_not_yet_verified,
-        role: 'Coach',
-        attended: nil)
+                workshop: feedback_request.workshop,
+                member: coach_not_yet_verified,
+                role: 'Coach',
+                attended: nil)
 
       visit feedback_path(valid_token)
 
@@ -63,15 +63,15 @@ RSpec.feature 'member feedback', type: :feature do
       unverified_coach = Fabricate(:coach, name: 'Bob', surname: 'Unverified')
 
       Fabricate(:attended_workshop_invitation,
-        workshop: feedback_request.workshop,
-        member: verified_coach,
-        role: 'Coach')
+                workshop: feedback_request.workshop,
+                member: verified_coach,
+                role: 'Coach')
 
       Fabricate(:attending_workshop_invitation,
-        workshop: feedback_request.workshop,
-        member: unverified_coach,
-        role: 'Coach',
-        attended: nil)
+                workshop: feedback_request.workshop,
+                member: unverified_coach,
+                role: 'Coach',
+                attended: nil)
 
       visit feedback_path(valid_token)
 

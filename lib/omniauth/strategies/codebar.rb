@@ -87,7 +87,7 @@ module OmniAuth
         # Build omniauth.auth hash
         email = payload['email'] || payload['sub']
         @env['omniauth.auth'] = AuthHash.new({
-          provider: name,
+                                               provider: name,
           uid: email,
           info: {
             email: email,
@@ -101,7 +101,7 @@ module OmniAuth
           extra: {
             raw_info: payload
           }
-        })
+                                             })
 
         call_app!
       rescue StandardError => e
@@ -140,12 +140,12 @@ module OmniAuth
         request['Content-Type'] = 'application/x-www-form-urlencoded'
         request['User-Agent'] = 'Codebar Planner/1.0'
         request.body = URI.encode_www_form({
-          grant_type: 'authorization_code',
+                                             grant_type: 'authorization_code',
           code: code,
           client_id: 'planner',
           redirect_uri: session.delete('omniauth.codebar.redirect_uri') || callback_url,
           code_verifier: code_verifier
-        })
+                                           })
 
         response = http_for(uri).request(request)
 
@@ -167,13 +167,13 @@ module OmniAuth
 
         decode = ->(jwks) {
           JWT.decode(token, nil, true, {
-            algorithms: %w[RS256],
+                       algorithms: %w[RS256],
             jwks: jwks,
             iss: options.auth_url,
             aud: options.audience,
             verify_iss: true,
             verify_aud: true
-          }).first
+                     }).first
         }
 
         decode.call(jwks)

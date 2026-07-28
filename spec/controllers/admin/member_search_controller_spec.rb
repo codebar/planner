@@ -42,14 +42,14 @@ RSpec.describe Admin::MemberSearchController, type: :controller do
       context "and when an admin user searches and there are multiple results" do
       let(:fake_romeo) { double('Member', id: 2, name: 'Romeo', surname: 'Capulet') }
 
-        before do
-          allow(Member).to receive(:find_members_by_name).with('e').and_return(fake_relation)
-          allow(fake_relation).to receive(:select).with(any_args).and_return([fake_juliet, fake_romeo])
-          get :index, params: { member_search: { name: 'e', callback_url: root_path } }
-        end
-        it "presents the found members on the index page" do
-          expect(response).to have_http_status(:ok)
-        end
+      before do
+        allow(Member).to receive(:find_members_by_name).with('e').and_return(fake_relation)
+        allow(fake_relation).to receive(:select).with(any_args).and_return([fake_juliet, fake_romeo])
+        get :index, params: { member_search: { name: 'e', callback_url: root_path } }
+      end
+      it "presents the found members on the index page" do
+        expect(response).to have_http_status(:ok)
+      end
       end
     end
   end

@@ -41,7 +41,7 @@ class FeedbackController < ApplicationController
 
   def set_coaches(workshop)
     @coaches = workshop.invitations.to_coaches.accepted_or_attended
-      .order(Arel.sql('attended DESC NULLS LAST'))
-      .map(&:member)
+                       .order(Arel.sql('attended DESC NULLS LAST'))
+                       .map(&:member)
   end
 end
