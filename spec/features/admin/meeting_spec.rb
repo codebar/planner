@@ -53,7 +53,7 @@ RSpec.feature 'Managing meetings', type: :feature do
 
       visit edit_admin_meeting_path(meeting)
       fill_in 'Name', with: 'March Meeting'
-      remove_from_tom_select(permissions.members.first.full_name)
+      remove_from_tom_select(permissions.members.first.full_name, from: 'meeting_organisers')
 
       click_on 'Save'
 
