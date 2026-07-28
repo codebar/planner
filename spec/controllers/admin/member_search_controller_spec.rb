@@ -1,5 +1,5 @@
 RSpec.describe Admin::MemberSearchController, type: :controller do
-  let(:member) {Fabricate.build(:member)}
+  let(:member) { Fabricate.build(:member) }
 
   describe 'GET #index' do
     context "when user is not logged in" do
@@ -40,7 +40,7 @@ RSpec.describe Admin::MemberSearchController, type: :controller do
       end
 
       context "and when an admin user searches and there are multiple results" do
-      let(:fake_romeo) { double('Member', id: 2, name: 'Romeo', surname: 'Capulet')}
+      let(:fake_romeo) { double('Member', id: 2, name: 'Romeo', surname: 'Capulet') }
 
         before do
           allow(Member).to receive(:find_members_by_name).with('e').and_return(fake_relation)
