@@ -110,10 +110,6 @@ Capybara/RSpec/NegationMatcher:
     - 'spec/support/shared_examples/behaves_like_managing_workshop_attendance.rb'
     - 'spec/support/shared_examples/behaves_link_member_viewing_workshop.rb'
 
-# Offense count: 1
-Capybara/RSpec/VisibilityMatcher:
-  Exclude:
-    - 'spec/components/chapters_sidebar_component_spec.rb'
 
 # Offense count: 6
 # This cop supports safe autocorrection (--autocorrect).
