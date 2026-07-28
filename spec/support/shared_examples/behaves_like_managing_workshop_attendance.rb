@@ -138,9 +138,7 @@ RSpec.shared_examples 'managing workshop attendance' do
             click_on 'Attend'
 
             expect(page).to have_content('See you at the workshop')
-          end
 
-          after do
             visit workshop_path(workshop_auto_rsvp_in_past)
             expect(page).to have_button('Manage your invitation')
           end
