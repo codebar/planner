@@ -671,10 +671,6 @@ RSpec/SubjectStub:
     - 'spec/models/workshop_invitation_spec.rb'
     - 'spec/models/workshop_spec.rb'
 
-# Offense count: 2
-# This cop supports unsafe autocorrection (--autocorrect-all).
-RSpec/VerifiedDoubleReference:
-  Exclude:
     - 'spec/controllers/admin/member_search_controller_spec.rb'
 
 # Offense count: 38

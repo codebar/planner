@@ -13,8 +13,8 @@ RSpec.describe Admin::MemberSearchController, type: :controller do
     end
 
     context 'when user is an admin' do
-      let(:fake_relation) { instance_double('ActiveRecord::Relation') }
-      let(:fake_juliet) { instance_double('Member', id: 1, name: 'Juliet', surname: 'Montague') }
+      let(:fake_relation) { instance_double(ActiveRecord::Relation) }
+      let(:fake_juliet) { instance_double(Member, id: 1, name: 'Juliet', surname: 'Montague') }
 
       before do
         login_as_admin(member)
