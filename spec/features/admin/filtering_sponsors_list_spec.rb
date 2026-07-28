@@ -8,7 +8,7 @@ RSpec.feature 'Admin filtering sponsors list', type: :feature do
   describe 'when visiting the sponsors page' do
     let!(:sponsors) { Fabricate.times(2, :sponsor) }
 
-    before(:each) do
+    before do
       visit admin_sponsors_path
     end
 

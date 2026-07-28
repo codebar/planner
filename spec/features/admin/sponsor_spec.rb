@@ -88,7 +88,7 @@ RSpec.feature 'Admin::Sponsors', type: :feature do
   context 'Sponsor page' do
     let(:sponsor) { Fabricate(:sponsor_with_contacts) }
 
-    before(:each) do
+    before do
       visit admin_sponsor_path(sponsor)
     end
 

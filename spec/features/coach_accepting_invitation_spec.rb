@@ -20,7 +20,7 @@ RSpec.feature 'a Coach can', type: :feature do
       end
     end
 
-    before(:each) do
+    before do
       login(member)
     end
 

@@ -29,7 +29,7 @@ RSpec.describe SponsorPresenter do
   end
 
   context '#sponsorships_count' do
-    before(:each) do
+    before do
       Fabricate(:workshop_sponsor, sponsor: sponsor)
       Fabricate.times(2, :sponsorship, sponsor: sponsor)
     end

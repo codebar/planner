@@ -67,7 +67,7 @@ RSpec.configure do |config|
     DatabaseCleaner.strategy = :deletion
   end
 
-  config.before(:each) do
+  config.before do
     # Stub all Flodesk API endpoints globally so tests don't make external requests
     # when fabricating members (which trigger Subscription.after_create callback)
     WebMock.stub_request(:any, /api\.flodesk\.com/)
@@ -86,11 +86,11 @@ RSpec.configure do |config|
 
   # This block must be here, do not combine with the other `config.before(:each)` block.
   # This makes it so Capybara can see the database.
-  config.before(:each) do
+  config.before do
     DatabaseCleaner.start
   end
 
-  config.after(:each) do
+  config.after do
     DatabaseCleaner.clean
     Capybara.reset_sessions! if defined?(Capybara)
   end
@@ -113,7 +113,7 @@ RSpec.configure do |config|
   config.example_status_persistence_file_path = 'tmp/spec_failures'
 
   if Bullet.enable?
-    config.around(:each) do |example|
+    config.around do |example|
       Bullet.start_request
       example.run
       Bullet.perform_out_of_channel_notifications if Bullet.notification?

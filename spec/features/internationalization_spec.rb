@@ -1,5 +1,5 @@
 RSpec.feature 'Internationalization', type: :feature do
-  after(:each) do
+  after do
     I18n.locale = :en
   end
 
