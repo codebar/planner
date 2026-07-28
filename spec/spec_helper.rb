@@ -70,8 +70,8 @@ RSpec.configure do |config|
   config.before(:each) do
     # Stub all Flodesk API endpoints globally so tests don't make external requests
     # when fabricating members (which trigger Subscription.after_create callback)
-    WebMock.stub_request(:any, %r{api\.flodesk\.com}).
-      to_return(status: 200, body: '{"status":"active","segments":[]}', headers: { 'Content-Type' => 'application/json' })
+    WebMock.stub_request(:any, %r{api\.flodesk\.com})
+           .to_return(status: 200, body: '{"status":"active","segments":[]}', headers: { 'Content-Type' => 'application/json' })
 
     DatabaseCleaner.strategy = :transaction
   end
