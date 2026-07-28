@@ -10,7 +10,8 @@ module MemberConcerns
 
     def member_params
       params.expect(member: [
-                      :pronouns, :name, :surname, :email, :mobile, :about_you, :skill_list, :newsletter, :other_dietary_restrictions, :how_you_found_us,
+                      :pronouns, :name, :surname, :email, :mobile, :about_you, :skill_list,
+                      :newsletter, :other_dietary_restrictions, :how_you_found_us,
                       :how_you_found_us_other_reason, { dietary_restrictions: [] }
                     ]).tap do |permitted_params|
         # We want to keep Rails' hidden blank field in the form so that all dietary restrictions for a member can be

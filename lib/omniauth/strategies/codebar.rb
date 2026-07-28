@@ -143,7 +143,8 @@ module OmniAuth
                                              grant_type: 'authorization_code',
                                              code: code,
                                              client_id: 'planner',
-                                             redirect_uri: session.delete('omniauth.codebar.redirect_uri') || callback_url,
+                                             redirect_uri: session.delete('omniauth.codebar.redirect_uri') ||
+                                               callback_url,
                                              code_verifier: code_verifier
                                            })
 

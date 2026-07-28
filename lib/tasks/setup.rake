@@ -95,7 +95,8 @@ namespace :setup do
     def check_postgresql
       if !system('which psql > /dev/null 2>&1')
         error('PostgreSQL', 'psql not found',
-              'Install: brew install postgresql && brew services start postgresql (macOS) or see docs/development-setup.md')
+              'Install: brew install postgresql && brew services start postgresql (macOS)' \
+              ' or see docs/development-setup.md')
         return
       end
 
@@ -112,7 +113,8 @@ namespace :setup do
         ok('PostgreSQL', "running and accepting connections on #{host}:#{port}")
       else
         error('PostgreSQL', "not accepting connections on #{host}:#{port}",
-              'Start PostgreSQL: brew services start postgresql (macOS). Check credentials in config/database.yml or env vars.')
+              'Start PostgreSQL: brew services start postgresql (macOS).' \
+              ' Check credentials in config/database.yml or env vars.')
       end
     end
 
