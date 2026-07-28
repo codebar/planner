@@ -843,10 +843,6 @@ Rails/UniqueValidationWithoutIndex:
 
     - 'spec/services/invitation_manager_spec.rb'
 
-# Offense count: 4
-# This cop supports safe autocorrection (--autocorrect).
-Style/DefWithParentheses:
-  Exclude:
     - 'app/helpers/email_header_helper.rb'
 
 # Offense count: 1
