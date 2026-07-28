@@ -15,7 +15,7 @@ RSpec.shared_examples 'Invitable' do |invitation_type, invitable_type|
                              invitable_type => invitable,
                              attending: false)
 
-      expect(invitable.reload.attendances).to_not include(invitation)
+      expect(invitable.reload.attendances).not_to include(invitation)
     end
 
     it 'rejects banned accepted' do
@@ -24,7 +24,7 @@ RSpec.shared_examples 'Invitable' do |invitation_type, invitable_type|
                              invitable_type => invitable,
                              attending: true)
 
-      expect(invitable.reload.attendances).to_not include(invitation)
+      expect(invitable.reload.attendances).not_to include(invitation)
     end
   end
 
@@ -44,7 +44,7 @@ RSpec.shared_examples 'Invitable' do |invitation_type, invitable_type|
                                         invitable_type => invitable,
                                         attending: false)
 
-      expect(invitable.reload.attending_students).to_not include(invitation_to_student)
+      expect(invitable.reload.attending_students).not_to include(invitation_to_student)
     end
 
     it 'rejects banned attending students' do
@@ -54,7 +54,7 @@ RSpec.shared_examples 'Invitable' do |invitation_type, invitable_type|
                                                invitable_type => invitable,
                                                attending: true)
 
-      expect(invitable.reload.attending_students).to_not include(invitation_to_banned_student)
+      expect(invitable.reload.attending_students).not_to include(invitation_to_banned_student)
     end
   end
 
@@ -74,7 +74,7 @@ RSpec.shared_examples 'Invitable' do |invitation_type, invitable_type|
                                       invitable_type => invitable,
                                       attending: false)
 
-      expect(invitable.reload.attending_coaches).to_not include(invitation_to_coach)
+      expect(invitable.reload.attending_coaches).not_to include(invitation_to_coach)
     end
 
     it 'rejects banned attending coaches' do
@@ -84,7 +84,7 @@ RSpec.shared_examples 'Invitable' do |invitation_type, invitable_type|
                                                invitable_type => invitable,
                                                attending: true)
 
-      expect(invitable.reload.attending_students).to_not include(invitation_to_banned_student)
+      expect(invitable.reload.attending_students).not_to include(invitation_to_banned_student)
     end
   end
 end

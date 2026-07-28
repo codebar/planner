@@ -11,14 +11,14 @@ RSpec.describe FeedbackRequest do
       it '#workshop should not be blank' do
         feedback_request = Fabricate.build(:feedback_request, workshop: nil)
 
-        expect(feedback_request).to_not be_valid
+        expect(feedback_request).not_to be_valid
         expect(feedback_request).to have(1).error_on(:workshop)
       end
 
       it '#submitted should not be blank' do
         feedback_request = Fabricate.build(:feedback_request, submited: nil)
 
-        expect(feedback_request).to_not be_valid
+        expect(feedback_request).not_to be_valid
         expect(feedback_request).to have(1).error_on(:submited)
       end
     end

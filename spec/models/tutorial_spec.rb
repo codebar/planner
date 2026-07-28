@@ -10,7 +10,7 @@ RSpec.describe Tutorial do
     it '#title' do
       tutorial = Fabricate.build(:tutorial, title: nil)
 
-      expect(tutorial).to_not be_valid
+      expect(tutorial).not_to be_valid
       expect(tutorial).to have(1).error_on(:title)
     end
   end

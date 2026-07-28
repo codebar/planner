@@ -40,7 +40,7 @@ RSpec.describe Sponsor do
 
         sponsor.valid?
 
-        expect(sponsor.errors[:website]).to_not include('must be a full, valid URL')
+        expect(sponsor.errors[:website]).not_to include('must be a full, valid URL')
       end
 
       it 'does not allow nonsense' do

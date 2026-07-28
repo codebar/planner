@@ -93,7 +93,7 @@ RSpec.shared_examples 'invitation route' do
 
       expect(page).to have_text(I18n.t('messages.rejected_invitation', name: invitation.member.name))
       expect(waitinglisted.reload.automated_rsvp).to eq(true)
-      expect(waitinglisted.reload.rsvp_time).to_not be_nil
+      expect(waitinglisted.reload.rsvp_time).not_to be_nil
       expect(WaitingList.next_spot(invitation.workshop, invitation.role).present?).to eq(false)
     end
 

@@ -7,7 +7,7 @@ RSpec.describe 'rake mailing_list:subscribe_active_members', type: :task do
     # See https://stackoverflow.com/questions/23146353/rspec-3-0-how-to-mock-a-method-replacing-the-parameter-but-with-no-return-value
     allow(ENV).to receive(:[]).and_call_original
     allow(ENV).to receive(:[]).with('NEWSLETTER_ID').and_return('newsletterid')
-    expect { task.invoke }.to_not raise_error
+    expect { task.invoke }.not_to raise_error
   end
 
   it 'subscribes all active members to the newsletter mailing list' do
@@ -27,13 +27,13 @@ RSpec.describe 'rake mailing_list:subscribe_active_members', type: :task do
     end
 
     non_subscribed.each do |inactive_subscriber|
-      expect(newslettter).to_not receive(:subscribe).with(inactive_subscriber.email,
+      expect(newslettter).not_to receive(:subscribe).with(inactive_subscriber.email,
                                                           inactive_subscriber.name,
                                                           inactive_subscriber.surname)
     end
 
     task.execute
 
-    subscribed.each { |subscriber| expect(subscriber.reload.opt_in_newsletter_at).to_not eq(nil) }
+    subscribed.each { |subscriber| expect(subscriber.reload.opt_in_newsletter_at).not_to eq(nil) }
   end
 end

@@ -27,14 +27,14 @@ RSpec.describe Feedback do
       it 'is not submitted invalid params' do
         expect do
           described_class.submit_feedback(params.except(:rating), feedback_request.token)
-        end.to_not change { described_class.count }
+        end.not_to change { described_class.count }
       end
     end
 
     it 'is not submitted with invalid token' do
       expect do
         described_class.submit_feedback(params, 'invalid_token')
-      end.to_not change { described_class.count }
+      end.not_to change { described_class.count }
     end
   end
 end
