@@ -145,7 +145,7 @@ RSpec.describe InvitationManager do
   end
 
   describe '#send_workshop_waiting_list_reminders', :wip do
-    # Note: This test is WIP because the method is async
+    # NOTE: This test is WIP because the method is async
     it 'emails everyone that hasn\'t already been reminded from the workshop\'s waitinglist' do
       workshop = Fabricate(:workshop)
       invitations = Fabricate.times(2, :waitinglist_invitation, workshop: workshop)
