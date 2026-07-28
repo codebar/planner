@@ -750,12 +750,6 @@ Rails/Blank:
     - 'app/controllers/application_controller.rb'
     - 'lib/omniauth/strategies/codebar.rb'
 
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: slashes, arguments
-Rails/FilePath:
-  Exclude:
     - 'spec/controllers/admin/sponsors_controller_spec.rb'
 
 # Offense count: 1
