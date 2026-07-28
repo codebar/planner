@@ -1,5 +1,6 @@
 RSpec.describe Workshop do
   subject(:workshop) { Fabricate(:workshop) }
+
   include_examples "Invitable", :workshop_invitation, :workshop
   include_examples DateTimeConcerns, :workshop
 

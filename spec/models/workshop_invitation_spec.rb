@@ -1,5 +1,6 @@
 RSpec.describe WorkshopInvitation do
   subject(:workshop_invitation) { Fabricate(:workshop_invitation) }
+
   it_behaves_like InvitationConcerns, :workshop_invitation, :workshop
 
   context 'defaults' do
