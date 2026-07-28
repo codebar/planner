@@ -1,9 +1,9 @@
 RSpec.feature 'admin groups', type: :feature do
   describe '#creating a new group' do
     let(:member) { Fabricate(:member) }
-    let!(:chapter) { Fabricate(:chapter, name: 'Brighton') }
 
     before do
+      Fabricate(:chapter, name: 'Brighton')
       login_as_admin(member)
     end
 

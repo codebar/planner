@@ -5,7 +5,7 @@ RSpec.describe Group do
     it { is_expected.to validate_presence_of(:name) }
 
     it do
-      expect(subject).to validate_inclusion_of(:name)
+      expect(group).to validate_inclusion_of(:name)
         .in_array(%w[Coaches Students])
         .with_message('Invalid name for Group')
     end

@@ -1,5 +1,5 @@
 RSpec.describe ApplicationPolicy do
-  subject { described_class.new(user, record) }
+  subject(:policy) { described_class.new(user, record) }
 
   let(:record) { double('record') }
   let(:admin) { Fabricate(:member).tap { |m| m.add_role(:admin) } }
@@ -9,7 +9,7 @@ RSpec.describe ApplicationPolicy do
     let(:user) { admin }
 
     it 'denies access by default' do
-      expect(subject.index?).to be false
+      expect(policy.index?).to be false
     end
   end
 
@@ -17,7 +17,7 @@ RSpec.describe ApplicationPolicy do
     let(:user) { admin }
 
     it 'denies access by default' do
-      expect(subject.create?).to be false
+      expect(policy.create?).to be false
     end
   end
 
@@ -25,7 +25,7 @@ RSpec.describe ApplicationPolicy do
     let(:user) { admin }
 
     it 'delegates to create?' do
-      expect(subject.new?).to eq(subject.create?)
+      expect(policy.new?).to eq(policy.create?)
     end
   end
 
@@ -33,7 +33,7 @@ RSpec.describe ApplicationPolicy do
     let(:user) { admin }
 
     it 'denies access by default' do
-      expect(subject.update?).to be false
+      expect(policy.update?).to be false
     end
   end
 
@@ -41,7 +41,7 @@ RSpec.describe ApplicationPolicy do
     let(:user) { admin }
 
     it 'delegates to update?' do
-      expect(subject.edit?).to eq(subject.update?)
+      expect(policy.edit?).to eq(policy.update?)
     end
   end
 
@@ -49,7 +49,7 @@ RSpec.describe ApplicationPolicy do
     let(:user) { admin }
 
     it 'denies access by default' do
-      expect(subject.destroy?).to be false
+      expect(policy.destroy?).to be false
     end
   end
 end

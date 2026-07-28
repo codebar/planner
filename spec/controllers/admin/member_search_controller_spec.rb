@@ -60,15 +60,15 @@ RSpec.describe Admin::MemberSearchController, type: :controller do
 
   describe 'GET #results' do
     context 'when user is an admin' do
-      let(:member1) { Fabricate(:member, name: 'Alice') }
-      let(:member2) { Fabricate(:member, name: 'Bob') }
+      let(:alice) { Fabricate(:member, name: 'Alice') }
+      let(:bob) { Fabricate(:member, name: 'Bob') }
 
       before do
         login_as_admin(member)
       end
 
       it 'finds members by ids using params.expect' do
-        get :results, params: { member_pick: { members: [member1.id, member2.id] } }
+        get :results, params: { member_pick: { members: [alice.id, bob.id] } }
         expect(response).to have_http_status(:ok)
       end
     end

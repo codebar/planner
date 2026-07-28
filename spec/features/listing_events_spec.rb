@@ -1,8 +1,11 @@
 RSpec.feature 'event listing', type: :feature do
   describe 'I can see upcoming events' do
     let!(:chapter) { Fabricate(:chapter, active: true) }
-    let!(:upcoming_workshop) { Fabricate(:workshop, chapter: chapter) }
     let!(:event) { Fabricate(:event) }
+
+    before do
+      Fabricate(:workshop, chapter: chapter)
+    end
 
     scenario 'displays upcoming events page' do
       travel_to(Time.current) do
@@ -16,7 +19,10 @@ RSpec.feature 'event listing', type: :feature do
   describe 'I can see past events' do
     let!(:chapter) { Fabricate(:chapter, active: true) }
     let!(:past_event) { Fabricate(:event, date_and_time: 2.weeks.ago) }
-    let!(:past_workshop) { Fabricate(:workshop, date_and_time: 1.week.ago, chapter: chapter) }
+
+    before do
+      Fabricate(:workshop, date_and_time: 1.week.ago, chapter: chapter)
+    end
 
     scenario 'displays past events page' do
       travel_to(Time.current) do

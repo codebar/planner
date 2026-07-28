@@ -151,14 +151,6 @@ RSpec.shared_examples 'invitation route' do
       expect(page).to have_text('You can only change your RSVP status up to 3.5 hours before the workshop')
       expect(page).to have_current_path(invitation_route, ignore_query: true)
     end
-
-    scenario 'when the event is less than 3.5 hours from now and tje reject by accessing the link directly' do
-      invitation.workshop.update_attribute(:date_and_time, Time.zone.now + 3.hours)
-      visit reject_invitation_route
-
-      expect(page).to have_text('You can only change your RSVP status up to 3.5 hours before the workshop')
-      expect(page).to have_current_path(invitation_route, ignore_query: true)
-    end
   end
 
   context 'waiting list' do

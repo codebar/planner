@@ -14,9 +14,8 @@ RSpec.describe Sponsor do
 
     context 'scopes' do
       describe 'searching by_name' do
-        let!(:search_sponsor) { Fabricate(:sponsor, name: 'codebar') }
-
         before do
+          Fabricate(:sponsor, name: 'codebar')
           Fabricate.times(2, :sponsor)
         end
 
@@ -61,7 +60,7 @@ RSpec.describe Sponsor do
     end
 
     it 'defines enum level' do
-      is_expected.to define_enum_for(:level)
+      expect(sponsor).to define_enum_for(:level)
         .with_values(%i[hidden standard bronze silver gold community])
     end
   end

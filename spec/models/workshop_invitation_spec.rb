@@ -14,7 +14,7 @@ RSpec.describe WorkshopInvitation do
     it { is_expected.to validate_inclusion_of(:role).in_array(%w[Student Coach]) }
 
     context 'if Student invitation' do
-      before { allow(subject).to receive(:student_attending?).and_return(true) }
+      before { allow(workshop_invitation).to receive(:student_attending?).and_return(true) }
 
       it { is_expected.to validate_presence_of(:tutorial) }
       it { is_expected.to validate_presence_of(:tutorial).on(:waitinglist) }

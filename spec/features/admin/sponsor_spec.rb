@@ -18,7 +18,7 @@ RSpec.feature 'Admin::Sponsors', type: :feature do
       expect(page).to have_text(sponsor.name)
       expect(page).to have_text(sponsor2.name)
 
-      expect(page.all(:css, 'tbody tr', count: 2))
+      expect(page).to have_css('tbody tr', count: 2)
 
       expect(page).to have_text(hosted_workshop.chapter.name)
       expect(page).to have_text(sponsored_workshop.chapter.name)
@@ -26,7 +26,7 @@ RSpec.feature 'Admin::Sponsors', type: :feature do
       select sponsored_workshop.chapter.name, from: 'sponsors_search[chapter]'
       click_on 'Filter'
 
-      expect(page.all(:css, 'tbody tr', count: 1))
+      expect(page).to have_css('tbody tr', count: 1)
     end
 
     scenario 'can filter by sponsor' do
@@ -43,21 +43,21 @@ RSpec.feature 'Admin::Sponsors', type: :feature do
       expect(page).to have_text(sponsor.name)
       expect(page).to have_text(sponsor2.name)
 
-      expect(page.all(:css, 'tbody tr', count: 2))
+      expect(page).to have_css('tbody tr', count: 2)
 
       # Make sure both sponsors can be filtered by
       [sponsor.name, sponsor2.name].each do |name|
         fill_in 'sponsors_search[name]', with: name
         click_on 'Filter'
 
-        expect(page.all(:css, 'tbody tr', count: 1))
+        expect(page).to have_css('tbody tr', count: 1)
       end
 
       # Invalid sponsor name should return no results
       fill_in 'sponsors_search[name]', with: 'this-sponsor-does-not-exist'
       click_on 'Filter'
 
-      expect(page.all(:css, 'tbody tr', count: 0))
+      expect(page).to have_css('tbody tr', count: 0)
       expect(page).to have_text('No sponsor found')
     end
 
@@ -70,7 +70,7 @@ RSpec.feature 'Admin::Sponsors', type: :feature do
       expect(page).to have_text(sponsor.name)
       expect(page).to have_text(sponsor2.name)
 
-      expect(page.all(:css, 'tbody tr', count: 2))
+      expect(page).to have_css('tbody tr', count: 2)
 
       expect(page).to have_text(hosted_workshop.chapter.name)
       expect(page).to have_text(sponsored_workshop.chapter.name)
@@ -78,10 +78,10 @@ RSpec.feature 'Admin::Sponsors', type: :feature do
       select sponsored_workshop.chapter.name, from: 'sponsors_search[chapter]'
       click_on 'Filter'
 
-      expect(page.all(:css, 'tbody tr', count: 1))
+      expect(page).to have_css('tbody tr', count: 1)
 
       click_on 'Reset form'
-      expect(page.all(:css, 'tbody tr', count: 2))
+      expect(page).to have_css('tbody tr', count: 2)
     end
   end
 

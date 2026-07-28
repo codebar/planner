@@ -3,9 +3,9 @@ require 'rails_helper'
 RSpec.describe 'Admin TomSelect Member Lookup', :js, type: :feature do
   let(:admin) { Fabricate(:member) }
   let!(:member_jane) { Fabricate(:member, name: 'Jane', surname: 'Doe', email: 'jane@example.com') }
-  let!(:member_john) { Fabricate(:member, name: 'John', surname: 'Smith', email: 'john@test.com') }
 
   before do
+    Fabricate(:member, name: 'John', surname: 'Smith', email: 'john@test.com')
     admin.add_role(:admin)
     login_as_admin(admin)
   end

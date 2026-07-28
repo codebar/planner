@@ -1,5 +1,5 @@
 RSpec.describe EventPolicy do
-  subject { described_class.new(user, event) }
+  subject(:policy) { described_class.new(user, event) }
 
   let(:event) { Fabricate(:event) }
   let(:admin) { Fabricate(:member).tap { |m| m.add_role(:admin) } }
@@ -10,7 +10,7 @@ RSpec.describe EventPolicy do
       let(:user) { admin }
 
       it 'permits access' do
-        expect(subject.invite?).to be true
+        expect(policy.invite?).to be true
       end
     end
 
@@ -18,7 +18,7 @@ RSpec.describe EventPolicy do
       let(:user) { regular_member }
 
       it 'denies access' do
-        expect(subject.invite?).to be false
+        expect(policy.invite?).to be false
       end
     end
   end
@@ -28,7 +28,7 @@ RSpec.describe EventPolicy do
       let(:user) { admin }
 
       it 'permits access' do
-        expect(subject.show?).to be true
+        expect(policy.show?).to be true
       end
     end
 
@@ -36,7 +36,7 @@ RSpec.describe EventPolicy do
       let(:user) { regular_member }
 
       it 'denies access' do
-        expect(subject.show?).to be false
+        expect(policy.show?).to be false
       end
     end
   end

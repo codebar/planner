@@ -21,8 +21,10 @@ RSpec.describe InvitationManager do
   end
 
   describe '#send_event_emails' do
-    let!(:student_group) { Fabricate(:students, chapter: chapter, members: students) }
-    let!(:coaches_group) { Fabricate(:coaches, chapter: chapter, members: coaches) }
+    before do
+      Fabricate(:students, chapter: chapter, members: students)
+      Fabricate(:coaches, chapter: chapter, members: coaches)
+    end
 
     it 'can email only students' do
       event = Fabricate(:event, chapters: [chapter], audience: 'Students')

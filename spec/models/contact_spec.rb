@@ -8,7 +8,7 @@ RSpec.describe Contact do
 
     it do
       Fabricate(:contact)
-      is_expected.to validate_uniqueness_of(:email).scoped_to(:sponsor_id)
+      expect(contact).to validate_uniqueness_of(:email).scoped_to(:sponsor_id)
     end
   end
 end

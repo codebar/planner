@@ -1,5 +1,4 @@
 RSpec.feature 'managing workshop attendances', type: :feature do
-  MAX_RETRIES = 3
 
   context 'an admin' do
     let(:member) { Fabricate(:member) }
@@ -9,6 +8,7 @@ RSpec.feature 'managing workshop attendances', type: :feature do
 
     before do
       login_as_admin(member)
+      invitation
     end
 
     describe '#verify_attendance' do

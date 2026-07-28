@@ -1,9 +1,9 @@
 RSpec.feature 'Managing events', type: :feature do
   let(:member) { Fabricate(:member) }
-  let!(:chapter) { Fabricate(:chapter) }
   let!(:event) { Fabricate(:event, confirmation_required: true) }
 
   before do
+    Fabricate(:chapter)
     login_as_admin(member)
     member.add_role(:organiser, event)
   end
