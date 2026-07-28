@@ -866,12 +866,6 @@ Style/LineEndConcatenation:
 
     - 'lib/tasks/setup.rake'
 
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedOctalStyle.
-# SupportedOctalStyles: zero_with_o, zero_only
-Style/NumericLiteralPrefix:
-  Exclude:
     - 'spec/features/admin/workshops_spec.rb'
 
 # Offense count: 3
