@@ -314,12 +314,6 @@ RSpec/ExampleLength:
     - 'spec/support/shared_examples/behaves_like_an_invitation_route.rb'
     - 'spec/support/shared_examples/behaves_like_sending_workshop_emails.rb'
 
-# Offense count: 2
-# Configuration parameters: Max, AllowedIdentifiers, AllowedPatterns.
-RSpec/IndexedLet:
-  Exclude:
-    - 'spec/controllers/admin/member_search_controller_spec.rb'
-
 # Offense count: 9
 # Configuration parameters: AssignmentOnly.
 RSpec/InstanceVariable:
