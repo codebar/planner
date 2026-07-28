@@ -1,5 +1,6 @@
 RSpec.describe WorkshopInvitation do
   subject(:workshop_invitation) { Fabricate(:workshop_invitation) }
+
   it_behaves_like InvitationConcerns, :workshop_invitation, :workshop
 
   context 'defaults' do
@@ -14,6 +15,7 @@ RSpec.describe WorkshopInvitation do
 
     context 'if Student invitation' do
       before { allow(subject).to receive(:student_attending?).and_return(true) }
+
       it { is_expected.to validate_presence_of(:tutorial) }
       it { is_expected.to validate_presence_of(:tutorial).on(:waitinglist) }
     end

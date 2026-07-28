@@ -15,6 +15,7 @@ RSpec.describe Sponsor do
     context 'scopes' do
       describe 'searching by_name' do
         let!(:search_sponsor) { Fabricate(:sponsor, name: 'codebar') }
+
         before do
           Fabricate.times(2, :sponsor)
         end

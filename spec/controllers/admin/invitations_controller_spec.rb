@@ -9,11 +9,11 @@ RSpec.describe Admin::InvitationsController, type: :controller do
 
       login admin
       request.env["HTTP_REFERER"] = "/admin/member/3"
-
-      expect(invitation.attending).to be_nil
     end
 
     it "Successfuly updates an invitation" do
+      expect(invitation.attending).to be_nil
+
       put :update, params: { id: invitation.token, workshop_id: workshop.id, attending: "true" }
 
       expect(invitation.reload.attending).to be true

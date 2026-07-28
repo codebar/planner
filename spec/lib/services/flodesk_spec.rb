@@ -29,7 +29,7 @@ RSpec.describe Flodesk do
       check = ->(request_body) { request_body == payload }
       stub.post('/subscribers', check) { [200, {}, '{}'] }
 
-      client.subscribe(**payload)
+      expect(client.subscribe(**payload)).to include(status: 200)
 
       stub.verify_stubbed_calls
     end
@@ -49,7 +49,7 @@ RSpec.describe Flodesk do
       # Faraday's `stub.delete` does not accept body at the time of writing
       stub.send(:new_stub, :delete, "/subscribers/#{payload[:email]}/segments", {}, check) { [200, {}, '{}'] }
 
-      client.unsubscribe(**payload)
+      expect(client.unsubscribe(**payload)).to include(status: 200)
 
       stub.verify_stubbed_calls
     end

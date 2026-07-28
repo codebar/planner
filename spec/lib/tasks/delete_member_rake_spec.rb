@@ -1,5 +1,6 @@
 RSpec.describe 'rake member:delete', type: :task do
   let!(:member) { Fabricate.create(:member) }
+
   before do
     allow($stdout).to receive(:puts)
   end
