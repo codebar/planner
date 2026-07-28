@@ -17,5 +17,10 @@ the mailer view to reference the new file. Never mutate an existing file.
 ## Email stylesheet
 
 The email CSS lives at `app/assets/stylesheets/email.css` — not in this
-folder — but it's referenced by mailer layouts via the pipeline path
-`email.css`.
+folder. It's linked from mailer layouts via the pipeline path `email.css`,
+and `premailer-rails` inlines the rules at delivery time using the
+`:filesystem` and `:asset_pipeline` strategies (see
+`config/initializers/premailer.rb`).
+
+⚠️ Never add a `<link>` that resolves at open time — premailer handles
+inlining, and external CSS requests are unreliable in email clients.

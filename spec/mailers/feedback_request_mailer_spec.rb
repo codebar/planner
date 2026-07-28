@@ -42,5 +42,11 @@ RSpec.describe FeedbackRequestMailer do
       expect(email.subject).to eq(email_subject)
       expect(email.from).to eq(['meetings@codebar.io'])
     end
+
+    it_behaves_like 'email with social link colours' do
+      def send_email
+        described_class.request_feedback(workshop, member, feedback_request).deliver_now
+      end
+    end
   end
 end

@@ -90,4 +90,10 @@ RSpec.describe EventInvitationMailer do
       expect(email.body.encoded).to include('Safe content')
     end
   end
+
+  it_behaves_like 'email with social link colours' do
+    def send_email
+      described_class.invite_student(event, member, invitation).deliver_now
+    end
+  end
 end
