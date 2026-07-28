@@ -20,7 +20,7 @@ RSpec.feature 'Member portal', type: :feature do
         workshop = Fabricate(:workshop, chapter: Fabricate(:chapter_with_groups))
         Fabricate(:subscription, member: member, group: workshop.chapter.groups.first)
         Fabricate(:attending_workshop_invitation, member: member,
-                                                               workshop: workshop)
+                                                  workshop: workshop)
         presenter = WorkshopPresenter.new(workshop)
         visit dashboard_path
 
