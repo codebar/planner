@@ -4,7 +4,9 @@ ruby file: '.ruby-version'
 gem 'rails', '~> 8.1.2' # LOCKED: It is Rails.
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem 'sprockets-rails'
-gem 'coffee-script' # LOCKED: Added because Sprockets autoloads it when seeing .coffee files in the asset pipeline. Can be removed when that does not happen.
+# LOCKED: Added because Sprockets autoloads it when seeing .coffee files in the
+# asset pipeline. Can be removed when that does not happen.
+gem 'coffee-script'
 
 gem 'amazing_print' # colourful output (suggested by rails_semantic_logger)
 gem 'rails_semantic_logger' # condense log lines: https://github.com/codebar/planner/issues/2339
@@ -14,7 +16,9 @@ gem 'benchmark' # LOCKED: Added because of activesupport 7.0
 gem 'bigdecimal' # LOCKED: Added because of activesupport 7.0
 gem 'carrierwave'
 gem 'cocoon'
-gem 'csv' # LOCKED: csv was loaded from the standard library, but is not part of the default gems starting from Ruby 3.4.0. Due to config/application.rb
+# LOCKED: csv was loaded from the standard library, but is not part of the default
+# gems starting from Ruby 3.4.0. Due to config/application.rb
+gem 'csv'
 gem 'delayed_job'
 gem 'delayed_job_active_record'
 gem 'drb' # LOCKED: Added because of pry-remote
@@ -40,7 +44,9 @@ gem 'premailer-rails'
 
 gem 'pundit'
 gem 'reline' # LOCKED: Added because of readline is not part of Ruby 3.5.0
-gem 'readline' # LOCKED: readline was loaded from the standard library, but is not part of the default gems starting from Ruby 4.0.0.
+# LOCKED: readline was loaded from the standard library, but is not part of the
+# default gems starting from Ruby 4.0.0.
+gem 'readline'
 gem 'rolify'
 # Use Sass to process CSS
 gem 'sassc-rails'

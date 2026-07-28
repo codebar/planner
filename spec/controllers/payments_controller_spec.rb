@@ -42,6 +42,5 @@ RSpec.describe PaymentsController do
         expect(response).to be_successful
       end
     end
-
   end
 end

@@ -97,7 +97,6 @@ RSpec.describe Member::DetailsController do
 
         expect(response.body).to include('You must select one option')
       end
-
     end
   end
 end

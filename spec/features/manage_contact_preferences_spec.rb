@@ -1,5 +1,4 @@
 RSpec.feature 'Managing contact preferences', type: :feature do
-
   context 'A sponsor contact can manage their contact preferences' do
     let(:manager) { Fabricate(:member) }
 

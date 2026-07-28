@@ -88,17 +88,17 @@ module OmniAuth
         email = payload['email'] || payload['sub']
         @env['omniauth.auth'] = AuthHash.new({
                                                provider: name,
-          uid: email,
-          info: {
+                                               uid: email,
+                                               info: {
             email: email,
             name: payload['name'] || email
           },
-          credentials: {
+                                               credentials: {
             token: tokens['access_token'],
             expires: tokens['expires_at'],
             refresh_token: tokens['refresh_token']
           },
-          extra: {
+                                               extra: {
             raw_info: payload
           }
                                              })
@@ -141,10 +141,11 @@ module OmniAuth
         request['User-Agent'] = 'Codebar Planner/1.0'
         request.body = URI.encode_www_form({
                                              grant_type: 'authorization_code',
-          code: code,
-          client_id: 'planner',
-          redirect_uri: session.delete('omniauth.codebar.redirect_uri') || callback_url,
-          code_verifier: code_verifier
+                                             code: code,
+                                             client_id: 'planner',
+                                             redirect_uri: session.delete('omniauth.codebar.redirect_uri') ||
+                                               callback_url,
+                                             code_verifier: code_verifier
                                            })
 
         response = http_for(uri).request(request)
@@ -168,11 +169,11 @@ module OmniAuth
         decode = lambda { |jwks|
           JWT.decode(token, nil, true, {
                        algorithms: %w[RS256],
-            jwks: jwks,
-            iss: options.auth_url,
-            aud: options.audience,
-            verify_iss: true,
-            verify_aud: true
+                       jwks: jwks,
+                       iss: options.auth_url,
+                       aud: options.audience,
+                       verify_iss: true,
+                       verify_aud: true
                      }).first
         }
 
