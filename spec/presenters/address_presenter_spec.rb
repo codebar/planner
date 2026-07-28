@@ -14,7 +14,7 @@ RSpec.describe AddressPresenter do
       address.street = '<script>alert("XSS");</script>'
       escape = ERB::Util.method(:html_escape)
       html_address = "#{escape.call(address.flat)}<br/>&lt;script&gt;alert(&quot;XSS&quot;);&lt;/script&gt;<br/>" +
-        "#{escape.call(address.city)}, #{escape.call(address.postal_code)}"
+                     "#{escape.call(address.city)}, #{escape.call(address.postal_code)}"
 
       expect(presenter.to_html).to eq(html_address)
     end
