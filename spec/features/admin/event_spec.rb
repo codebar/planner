@@ -45,7 +45,7 @@ RSpec.feature 'Event creation', type: :feature do
 
     describe 'can successfully create a virtual event' do
       scenario 'when they fill in all mandatory fields' do
-        sponsor = Fabricate(:sponsor)
+        Fabricate(:sponsor)
         date = Time.zone.today + 2.days
         visit new_admin_event_path
 

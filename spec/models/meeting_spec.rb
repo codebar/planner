@@ -11,7 +11,7 @@ RSpec.describe Meeting do
 
     describe '#slug' do
       it 'fails when slug not present' do
-        meeting = Fabricate(:meeting, slug: 'meeting')
+        Fabricate(:meeting, slug: 'meeting')
         new_meeting = Fabricate.build(:meeting, slug: 'meeting')
         new_meeting.slug = ''
         new_meeting.valid?
@@ -20,7 +20,7 @@ RSpec.describe Meeting do
       end
 
       it 'passes if slug present' do
-        meeting = Fabricate(:meeting, slug: 'meeting')
+        Fabricate(:meeting, slug: 'meeting')
         new_meeting = Fabricate.build(:meeting, slug: 'meeting')
         new_meeting.date_and_time = nil
         new_meeting.slug = 'meeting'

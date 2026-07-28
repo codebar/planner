@@ -53,10 +53,6 @@ Lint/UnderscorePrefixedVariableName:
     - 'spec/fabricators/member_fabricator.rb'
     - 'spec/fabricators/sponsor_fabricator.rb'
 
-# Offense count: 9
-# This cop supports safe autocorrection (--autocorrect).
-Lint/UselessAssignment:
-  Exclude:
     - 'spec/features/admin/event_spec.rb'
     - 'spec/features/subscribing_to_emails_spec.rb'
     - 'spec/lib/tasks/delete_member_rake_spec.rb'

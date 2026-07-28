@@ -16,8 +16,8 @@ RSpec.describe Tutorial do
   end
 
   it 'gets all titles' do
-    tutorial_1 = described_class.create(title: 'title1')
-    tutorial_2 = described_class.create(title: 'title2')
+    described_class.create(title: 'title1')
+    described_class.create(title: 'title2')
 
     expect(described_class.all_titles).to match_array(%w[title1 title2])
   end
