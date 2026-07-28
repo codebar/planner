@@ -141,7 +141,8 @@ RSpec.feature 'Chapters', type: :feature do
     scenario 'does not show the card when there are no responses' do
       visit admin_chapter_path(chapter)
 
-      expect(page).not_to have_content('How members found this chapter')
+      expect(page).to have_css('body')
+      expect(page).to have_no_content('How members found this chapter')
     end
   end
 
