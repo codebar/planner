@@ -47,7 +47,7 @@ RSpec.describe VirtualWorkshopPresenter do
     context 'when there are more available spots' do
       let(:workshop) { double_workshop(attending_coaches: 2, attending_students: 5) }
 
-      it 'it returns true' do
+      it 'returns true' do
         expect(presenter.spaces?).to eq(true)
       end
     end
@@ -55,7 +55,7 @@ RSpec.describe VirtualWorkshopPresenter do
     context 'when there are no more available spots' do
       let(:workshop) { double_workshop(attending_coaches: 3, attending_students: 5) }
 
-      it 'it returns false' do
+      it 'returns false' do
         expect(presenter.spaces?).to eq(false)
       end
     end

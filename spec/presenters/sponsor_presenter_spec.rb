@@ -13,7 +13,7 @@ RSpec.describe SponsorPresenter do
   end
 
   context '#address' do
-    it 'should decorate the sponsor address' do
+    it 'decorates the sponsor address' do
       expect(AddressPresenter).to receive(:new).with(sponsor.address)
 
       sponsor_presenter.address
@@ -21,7 +21,7 @@ RSpec.describe SponsorPresenter do
   end
 
   context '#contacts' do
-    it 'should decorate the sponsor contacts' do
+    it 'decorates the sponsor contacts' do
       expect(ContactPresenter).to receive(:decorate_collection).with(contacts)
 
       sponsor_presenter.contacts

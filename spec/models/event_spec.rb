@@ -47,7 +47,7 @@ RSpec.describe Event do
           expect(event.errors[:student_spaces]).to include('must be set')
         end
 
-        it 'it does not validates invitable if student spaces and coach spaces present' do
+        it 'does not validates invitable if student spaces and coach spaces present' do
           event.invitable = true
           event.coach_spaces = 1
           event.student_spaces = 1
@@ -58,7 +58,7 @@ RSpec.describe Event do
             .to_not include('Fill in all invitations details to make the event invitable')
         end
 
-        it 'it validates invitable if student spaces or coach spaces missing' do
+        it 'validates invitable if student spaces or coach spaces missing' do
           event.invitable = true
           event.coach_spaces = 1
           event.student_spaces = nil

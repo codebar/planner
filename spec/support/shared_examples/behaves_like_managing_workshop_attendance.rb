@@ -110,7 +110,7 @@ RSpec.shared_examples 'managing workshop attendance' do
             visit workshop_path(workshop)
           end
 
-          it 'will be prompted to manage their subscriptions' do
+          it 'is prompted to manage their subscriptions' do
             expect(page).to have_text('Please tell us whether you want to attend as a student or coach.')
 
             click_link 'Please tell us whether you want to attend as a student or coach.'
