@@ -107,7 +107,7 @@ module OmniAuth
       rescue StandardError => e
         return if env['omniauth.error']
 
-        return fail!(:unknown_error, e)
+        fail!(:unknown_error, e)
       end
 
       private

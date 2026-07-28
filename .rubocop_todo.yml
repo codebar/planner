@@ -891,11 +891,6 @@ Style/RedundantInterpolation:
     - 'script/benchmark_events.rb'
     - 'spec/features/admin/sponsor_spec.rb'
 
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: AllowMultipleReturnValues.
-Style/RedundantReturn:
-  Exclude:
     - 'lib/omniauth/strategies/codebar.rb'
 
 # Offense count: 1
