@@ -28,10 +28,6 @@ Lint/AmbiguousBlockAssociation:
     - 'spec/models/feedback_spec.rb'
     - 'spec/services/three_month_email_service_spec.rb'
 
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-Lint/AmbiguousOperator:
-  Exclude:
     - 'spec/controllers/admin/workshops_controller_spec.rb'
 
 # Offense count: 2
