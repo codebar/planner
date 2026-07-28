@@ -93,7 +93,7 @@ namespace :setup do
     end
 
     def check_postgresql
-      if !system('which psql > /dev/null 2>&1')
+      unless system('which psql > /dev/null 2>&1')
         error('PostgreSQL', 'psql not found',
               'Install: brew install postgresql && brew services start postgresql (macOS)' \
               ' or see docs/development-setup.md')
@@ -128,7 +128,7 @@ namespace :setup do
     end
 
     def check_github_credentials
-      if !File.exist?('mise.local.toml')
+      unless File.exist?('mise.local.toml')
         error('GitHub OAuth', 'mise.local.toml not found',
               'Copy: cp mise.local.toml.example mise.local.toml, then edit with your GitHub app credentials.')
         return
