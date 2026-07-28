@@ -419,12 +419,6 @@ RSpec/ExampleLength:
     - 'spec/models/feedback_spec.rb'
     - 'spec/presenters/contact_presenter_spec.rb'
 
-# Offense count: 8
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: EnforcedStyle, NegatedMatcher.
-# SupportedStyles: method_call, block
-RSpec/ExpectChange:
-  Exclude:
     - 'spec/controllers/admin/workshops_controller_spec.rb'
     - 'spec/features/member/login_spec.rb'
     - 'spec/models/feedback_spec.rb'

@@ -21,7 +21,7 @@ RSpec.feature 'Member logging in', type: :feature do
       visit root_path
       expect do
         click_link 'Sign in'
-      end.to change { Member.count }.by(1)
+      end.to change(Member, :count).by(1)
     end
   end
 end

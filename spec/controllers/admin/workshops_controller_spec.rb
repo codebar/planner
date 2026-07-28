@@ -33,7 +33,7 @@ RSpec.describe Admin::WorkshopsController, type: :controller do
         it 'does not delete the workshop' do
           expect do
             delete :destroy, params: { id: workshop.id }
-          end.not_to change { Workshop.count }
+          end.not_to change(Workshop, :count)
         end
 
         it "displays workshop can't be deleted related flash message" do
@@ -51,7 +51,7 @@ RSpec.describe Admin::WorkshopsController, type: :controller do
           travel new_current_time do
             expect do
               delete :destroy, params: { id: workshop.id }
-            end.not_to change { Workshop.count }
+            end.not_to change(Workshop, :count)
           end
         end
 
@@ -73,7 +73,7 @@ RSpec.describe Admin::WorkshopsController, type: :controller do
         it 'successfully deletes the workshop' do
           expect do
             delete :destroy, params: { id: workshop.id }
-          end.to change { Workshop.count }.by(-1)
+          end.to change(Workshop, :count).by(-1)
         end
 
         it 'displays workshop deleted successfully related flash message' do
@@ -91,7 +91,7 @@ RSpec.describe Admin::WorkshopsController, type: :controller do
           travel new_current_time do
             expect do
               delete :destroy, params: { id: workshop.id }
-            end.not_to change { Workshop.count }
+            end.not_to change(Workshop, :count)
           end
         end
 
