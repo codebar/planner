@@ -1,6 +1,6 @@
 RSpec.shared_examples 'managing workshop attendance' do
   context 'a logged in member' do
-    context '#upcoming workshop' do
+    describe '#upcoming workshop' do
       context 'via the workshop page' do
         let!(:tutorial) { Fabricate(:tutorial) }
 
@@ -110,7 +110,7 @@ RSpec.shared_examples 'managing workshop attendance' do
             visit workshop_path(workshop)
           end
 
-          it 'will be prompted to manage their subscriptions' do
+          it 'is prompted to manage their subscriptions' do
             expect(page).to have_text('Please tell us whether you want to attend as a student or coach.')
 
             click_link 'Please tell us whether you want to attend as a student or coach.'
@@ -179,7 +179,7 @@ RSpec.shared_examples 'managing workshop attendance' do
       end
     end
 
-    context '#past workshop' do
+    describe '#past workshop' do
       let(:workshop) { Fabricate(:workshop, date_and_time: 2.weeks.ago) }
 
       scenario 'cannot interact with a past event' do

@@ -14,7 +14,7 @@ RSpec.describe Services::MailingList do
     allow(Rails).to receive(:env).and_return('production'.inquiry)
   end
 
-  context '#subscribe' do
+  describe '#subscribe' do
     it 'adds a user to the mailing list' do
       expect(client).to receive(:subscribe)
         .with({
@@ -28,7 +28,7 @@ RSpec.describe Services::MailingList do
     end
   end
 
-  context '#unsubscribe' do
+  describe '#unsubscribe' do
     it 'removes a user from the mailing list' do
       expect(client).to receive(:unsubscribe)
         .with({ email: :email, segment_ids: [:list_id] })
@@ -37,7 +37,7 @@ RSpec.describe Services::MailingList do
     end
   end
 
-  context '#subscribed?' do
+  describe '#subscribed?' do
     it 'checks if a user is already subscribed to the mailing list' do
       expect(client).to receive(:subscribed?)
         .with({ email: :email, segment_ids: [:list_id] })

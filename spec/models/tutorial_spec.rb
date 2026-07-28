@@ -1,16 +1,16 @@
 RSpec.describe Tutorial do
   subject(:tutorial) { Fabricate.build(:tutorial) }
 
-  it { should respond_to(:title) }
-  it { should respond_to(:description) }
-  it { should respond_to(:url) }
-  it { should respond_to(:workshop) }
+  it { is_expected.to respond_to(:title) }
+  it { is_expected.to respond_to(:description) }
+  it { is_expected.to respond_to(:url) }
+  it { is_expected.to respond_to(:workshop) }
 
   context 'validations' do
     it '#title' do
       tutorial = Fabricate.build(:tutorial, title: nil)
 
-      expect(tutorial).to_not be_valid
+      expect(tutorial).not_to be_valid
       expect(tutorial).to have(1).error_on(:title)
     end
   end

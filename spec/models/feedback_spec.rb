@@ -2,7 +2,7 @@ RSpec.describe Feedback do
   subject(:feedback) { Fabricate.build(:feedback) }
 
   context 'validations' do
-    context '#rating' do
+    describe '#rating' do
       it { is_expected.to validate_presence_of(:rating) }
       it { is_expected.to validate_inclusion_of(:rating).in_range(1..5).with_message(/can't be blank/) }
     end
@@ -10,7 +10,7 @@ RSpec.describe Feedback do
     it { is_expected.to validate_presence_of(:tutorial) }
   end
 
-  context '#submit_feedback' do
+  describe '#submit_feedback' do
     let(:feedback_request) { Fabricate(:feedback_request) }
 
     let(:params) do
@@ -18,23 +18,23 @@ RSpec.describe Feedback do
     end
 
     context 'with valid token' do
-      it 'is  submitted valid params' do
+      it 'is submitted valid params' do
         expect do
           described_class.submit_feedback(params, feedback_request.token)
-        end.to change { described_class.count }.by(1)
+        end.to change(described_class, :count).by(1)
       end
 
       it 'is not submitted invalid params' do
         expect do
           described_class.submit_feedback(params.except(:rating), feedback_request.token)
-        end.to_not change { described_class.count }
+        end.not_to change(described_class, :count)
       end
     end
 
     it 'is not submitted with invalid token' do
       expect do
         described_class.submit_feedback(params, 'invalid_token')
-      end.to_not change { described_class.count }
+      end.not_to change(described_class, :count)
     end
   end
 end

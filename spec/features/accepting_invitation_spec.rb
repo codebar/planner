@@ -1,5 +1,5 @@
 RSpec.feature 'Accepting a workshop invitation', type: :feature do
-  context '#workshop' do
+  describe '#workshop' do
     let(:member) { Fabricate(:member) }
     let(:invitation) { Fabricate(:workshop_invitation, member: member, tutorial: tutorial.title) }
     let(:invitation_route) { invitation_path(invitation) }
@@ -48,7 +48,7 @@ RSpec.feature 'Accepting a workshop invitation', type: :feature do
 
     context 'amend invitation details' do
       context 'a student' do
-        scenario 'cannot accept an invitation  without a tutorial' do
+        scenario 'cannot accept an invitation without a tutorial' do
           invitation.update(attending: nil, tutorial: nil)
           visit invitation_route
 

@@ -46,11 +46,11 @@ RSpec.describe 'rake feedback:request', type: :task do
         task.execute
 
         past_workshops.each do |workshop|
-          expect(FeedbackRequest.where(member: student, workshop: workshop, submited: false).exists?).to eq(false)
+          expect(FeedbackRequest.where(member: student, workshop: workshop, submited: false).exists?).to be(false)
         end
 
         yesterdays_workshops.each do |workshop|
-          expect(FeedbackRequest.where(member: student, workshop: workshop, submited: false).exists?).to eq(true)
+          expect(FeedbackRequest.where(member: student, workshop: workshop, submited: false).exists?).to be(true)
         end
       end
     end

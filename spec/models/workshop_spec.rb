@@ -7,7 +7,7 @@ RSpec.describe Workshop do
   context 'validates' do
     it { is_expected.to validate_presence_of(:chapter_id) }
 
-    context '#date_and_time' do
+    describe '#date_and_time' do
       it 'does not validate if chapter_id blank' do
         workshop.chapter_id = nil
         workshop.date_and_time = nil
@@ -23,7 +23,7 @@ RSpec.describe Workshop do
       end
     end
 
-    context '#end_at' do
+    describe '#end_at' do
       it 'does not validate if chapter_id blank' do
         workshop.chapter_id = nil
         workshop.ends_at = nil
@@ -48,7 +48,7 @@ RSpec.describe Workshop do
       it { is_expected.to validate_numericality_of(:coach_spaces).is_greater_than(0) }
     end
 
-    context '#rsvp_date_time_fields_must_be_paired' do
+    describe '#rsvp_date_time_fields_must_be_paired' do
       shared_examples_for 'date_time_fields_must_be_paired' do |prefix|
         let(:date_field) { :"#{prefix}_local_date" }
         let(:time_field) { :"#{prefix}_local_time" }
@@ -117,7 +117,7 @@ RSpec.describe Workshop do
       end
     end
 
-    context '#rsvp_closes_at' do
+    describe '#rsvp_closes_at' do
       it 'must be before the workshop start time' do
         workshop.date_and_time = Time.zone.now + 1.hour
         workshop.rsvp_closes_at = Time.zone.now + 2.hours
@@ -200,7 +200,7 @@ RSpec.describe Workshop do
     end
   end
 
-  context '#rsvp_available?' do
+  describe '#rsvp_available?' do
     context 'rsvp is available' do
       it 'when the event is in the future' do
         workshop.date_and_time = 1.day.from_now
@@ -230,7 +230,7 @@ RSpec.describe Workshop do
     end
   end
 
-  context '#to_s' do
+  describe '#to_s' do
     it 'when physical workshop' do
       expect(workshop.to_s).to eq('Workshop')
     end
@@ -241,7 +241,7 @@ RSpec.describe Workshop do
     end
   end
 
-  context '#scopes' do
+  describe '#scopes' do
     describe '#host' do
       it 'includes workshops with sponsored hosts' do
         workshop_sponsor = Fabricate(:workshop_sponsor, host: true)
@@ -300,7 +300,7 @@ RSpec.describe Workshop do
     end
   end
 
-  context '#invitable_yet?' do
+  describe '#invitable_yet?' do
     it 'is invitable if invitable set to true, no RSVP open time/date set' do
       workshop = Fabricate.build(:workshop, invitable: true)
       expect(workshop.invitable_yet?).to be true

@@ -170,7 +170,7 @@ RSpec.describe WorkshopPresenter do
       let(:workshop) { double_workshop(attending_coaches: 2, attending_students: 3) }
 
       it 'returns true' do
-        expect(presenter.spaces?).to eq(true)
+        expect(presenter.spaces?).to be(true)
       end
     end
 
@@ -178,7 +178,7 @@ RSpec.describe WorkshopPresenter do
       let(:workshop) { double_workshop(attending_coaches: 3, attending_students: 5) }
 
       it 'returns false' do
-        expect(presenter.spaces?).to eq(false)
+        expect(presenter.spaces?).to be(false)
       end
     end
   end

@@ -11,7 +11,7 @@ RSpec.feature 'managing workshop attendances', type: :feature do
       login_as_admin(member)
     end
 
-    context ' #verify_attendance' do
+    describe '#verify_attendance' do
       let(:workshop) { Fabricate(:workshop, chapter: chapter, date_and_time: Time.zone.now - 1.day) }
 
       scenario 'can verify that a member has attended the workshop' do
@@ -21,7 +21,7 @@ RSpec.feature 'managing workshop attendances', type: :feature do
         expect(page).to have_css('.fa-check-square')
       end
 
-      scenario 'verifies and unverifies attendance with targeted row replacement', js: true do
+      scenario 'verifies and unverifies attendance with targeted row replacement', :js do
         second_invitation = Fabricate(:workshop_invitation, workshop: workshop, attending: true)
 
         visit admin_workshop_path(workshop)
@@ -63,7 +63,7 @@ RSpec.feature 'managing workshop attendances', type: :feature do
       expect(page).to have_css('i.fa-hat-wizard')
     end
 
-    scenario 'can rsvp an invited student to the workshop', js: true do
+    scenario 'can rsvp an invited student to the workshop', :js do
       login_as_admin(member)
 
       other_invitation = Fabricate(:workshop_invitation, workshop: workshop, attending: nil)
@@ -90,7 +90,7 @@ RSpec.feature 'managing workshop attendances', type: :feature do
       expect(page).to have_text(invitation.tutorial)
     end
 
-    context '#changes' do
+    describe '#changes' do
       before do
         # Workshop invitations without `attending` status
         Fabricate(:workshop_invitation, workshop: workshop, role: 'Coach')

@@ -2,7 +2,7 @@ RSpec.feature 'viewing a meeting', type: :feature do
   let!(:meeting) { Fabricate(:meeting) }
 
   context 'a visitor' do
-    before(:each) do
+    before do
       visit meeting_path(meeting)
     end
 

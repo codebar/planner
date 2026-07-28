@@ -87,14 +87,14 @@ RSpec.shared_examples 'invitation route' do
       WaitingList.add(waitinglisted)
       invitation.update_attribute(:attending, true)
       visit invitation_route
-      expect(WaitingList.next_spot(invitation.workshop, invitation.role).present?).to eq(true)
+      expect(WaitingList.next_spot(invitation.workshop, invitation.role).present?).to be(true)
 
       click_on 'I can no longer attend'
 
       expect(page).to have_text(I18n.t('messages.rejected_invitation', name: invitation.member.name))
-      expect(waitinglisted.reload.automated_rsvp).to eq(true)
-      expect(waitinglisted.reload.rsvp_time).to_not be_nil
-      expect(WaitingList.next_spot(invitation.workshop, invitation.role).present?).to eq(false)
+      expect(waitinglisted.reload.automated_rsvp).to be(true)
+      expect(waitinglisted.reload.rsvp_time).not_to be_nil
+      expect(WaitingList.next_spot(invitation.workshop, invitation.role).present?).to be(false)
     end
 
     scenario 'when they are successful by accessing the link directly' do

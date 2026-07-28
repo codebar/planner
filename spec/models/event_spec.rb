@@ -16,7 +16,7 @@ RSpec.describe Event do
     it { is_expected.to validate_numericality_of(:coach_spaces) }
     it { is_expected.to validate_numericality_of(:student_spaces) }
 
-    context '#invitablility' do
+    describe '#invitablility' do
       it 'does not validate if invitable false' do
         event.invitable = false
         event.coach_spaces = nil
@@ -24,8 +24,8 @@ RSpec.describe Event do
 
         event.valid?
 
-        expect(event.errors[:coach_spaces]).to_not include('must be set')
-        expect(event.errors[:student_spaces]).to_not include('must be set')
+        expect(event.errors[:coach_spaces]).not_to include('must be set')
+        expect(event.errors[:student_spaces]).not_to include('must be set')
       end
 
       context 'with invitable true' do
@@ -47,7 +47,7 @@ RSpec.describe Event do
           expect(event.errors[:student_spaces]).to include('must be set')
         end
 
-        it 'it does not validates invitable if student spaces and coach spaces present' do
+        it 'does not validates invitable if student spaces and coach spaces present' do
           event.invitable = true
           event.coach_spaces = 1
           event.student_spaces = 1
@@ -55,10 +55,10 @@ RSpec.describe Event do
           event.valid?
 
           expect(event.errors[:invitable])
-            .to_not include('Fill in all invitations details to make the event invitable')
+            .not_to include('Fill in all invitations details to make the event invitable')
         end
 
-        it 'it validates invitable if student spaces or coach spaces missing' do
+        it 'validates invitable if student spaces or coach spaces missing' do
           event.invitable = true
           event.coach_spaces = 1
           event.student_spaces = nil
@@ -83,7 +83,7 @@ RSpec.describe Event do
     end
   end
 
-  context '#verified_students' do
+  describe '#verified_students' do
     it 'returns all students who have verified their attendance' do
       event = Fabricate(:event)
       1.times.map { Fabricate(:invitation, event: event, attending: true) }

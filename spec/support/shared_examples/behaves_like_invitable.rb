@@ -1,7 +1,7 @@
 RSpec.shared_examples 'Invitable' do |invitation_type, invitable_type|
   let(:invitable) { Fabricate(invitable_type) }
 
-  context '#attendances' do
+  describe '#attendances' do
     it 'permits accepted' do
       invitation = Fabricate(invitation_type,
                              invitable_type => invitable,
@@ -15,7 +15,7 @@ RSpec.shared_examples 'Invitable' do |invitation_type, invitable_type|
                              invitable_type => invitable,
                              attending: false)
 
-      expect(invitable.reload.attendances).to_not include(invitation)
+      expect(invitable.reload.attendances).not_to include(invitation)
     end
 
     it 'rejects banned accepted' do
@@ -24,11 +24,11 @@ RSpec.shared_examples 'Invitable' do |invitation_type, invitable_type|
                              invitable_type => invitable,
                              attending: true)
 
-      expect(invitable.reload.attendances).to_not include(invitation)
+      expect(invitable.reload.attendances).not_to include(invitation)
     end
   end
 
-  context '#attending_students' do
+  describe '#attending_students' do
     it 'accepts attending students' do
       invitation_to_student = Fabricate(invitation_type,
                                         role: 'Student',
@@ -44,7 +44,7 @@ RSpec.shared_examples 'Invitable' do |invitation_type, invitable_type|
                                         invitable_type => invitable,
                                         attending: false)
 
-      expect(invitable.reload.attending_students).to_not include(invitation_to_student)
+      expect(invitable.reload.attending_students).not_to include(invitation_to_student)
     end
 
     it 'rejects banned attending students' do
@@ -54,11 +54,11 @@ RSpec.shared_examples 'Invitable' do |invitation_type, invitable_type|
                                                invitable_type => invitable,
                                                attending: true)
 
-      expect(invitable.reload.attending_students).to_not include(invitation_to_banned_student)
+      expect(invitable.reload.attending_students).not_to include(invitation_to_banned_student)
     end
   end
 
-  context '#attending_coaches' do
+  describe '#attending_coaches' do
     it 'accepts attending coaches' do
       invitation_to_coach = Fabricate(invitation_type,
                                       role: 'Coach',
@@ -74,7 +74,7 @@ RSpec.shared_examples 'Invitable' do |invitation_type, invitable_type|
                                       invitable_type => invitable,
                                       attending: false)
 
-      expect(invitable.reload.attending_coaches).to_not include(invitation_to_coach)
+      expect(invitable.reload.attending_coaches).not_to include(invitation_to_coach)
     end
 
     it 'rejects banned attending coaches' do
@@ -84,7 +84,7 @@ RSpec.shared_examples 'Invitable' do |invitation_type, invitable_type|
                                                invitable_type => invitable,
                                                attending: true)
 
-      expect(invitable.reload.attending_students).to_not include(invitation_to_banned_student)
+      expect(invitable.reload.attending_students).not_to include(invitation_to_banned_student)
     end
   end
 end

@@ -62,11 +62,11 @@ RSpec.describe HowYouFoundUsPresenter do
     it 'returns true when there are responses' do
       add_member(group, :from_a_friend)
 
-      expect(presenter.data_present?).to eq(true)
+      expect(presenter.data_present?).to be(true)
     end
 
     it 'returns false when there are no responses' do
-      expect(presenter.data_present?).to eq(false)
+      expect(presenter.data_present?).to be(false)
     end
   end
 end

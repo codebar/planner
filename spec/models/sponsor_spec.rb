@@ -34,13 +34,13 @@ RSpec.describe Sponsor do
       end
     end
 
-    context '#website_is_url format' do
+    describe '#website_is_url format' do
       it 'allows full URLs' do
         sponsor.website = 'http://google.com'
 
         sponsor.valid?
 
-        expect(sponsor.errors[:website]).to_not include('must be a full, valid URL')
+        expect(sponsor.errors[:website]).not_to include('must be a full, valid URL')
       end
 
       it 'does not allow nonsense' do

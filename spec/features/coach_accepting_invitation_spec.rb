@@ -1,5 +1,5 @@
 RSpec.feature 'a Coach can', type: :feature do
-  context '#workshop' do
+  describe '#workshop' do
     let(:member) { Fabricate(:member) }
     let(:invitation) { Fabricate(:coach_workshop_invitation, member: member) }
     let(:invitation_route) { invitation_path(invitation) }
@@ -20,7 +20,7 @@ RSpec.feature 'a Coach can', type: :feature do
       end
     end
 
-    before(:each) do
+    before do
       login(member)
     end
 
