@@ -25,7 +25,7 @@ RSpec.feature 'Managing sponsors', type: :feature do
       end
     end
 
-    context 'with invalid input' do
+    context 'with invalid input showing error message' do
       it 'shows an error message' do
         visit new_admin_sponsor_path
 
@@ -41,7 +41,7 @@ RSpec.feature 'Managing sponsors', type: :feature do
       end
     end
 
-    context 'with invalid input' do
+    context 'with invalid input showing create button' do
       it 'renders new and shows create button' do
         visit new_admin_sponsor_path
 

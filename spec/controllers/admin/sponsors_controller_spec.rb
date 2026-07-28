@@ -46,21 +46,7 @@ RSpec.describe Admin::SponsorsController, type: :controller do
         end.to change(Sponsor, :count).by(1)
       end
 
-      it 'members as contacts and contact info' do
-        login admin
-        request.env['HTTP_REFERER'] = '/admin/member/3'
-
-        expect do
-          post :create, params: {
-            sponsor: {
-              name: 'name', website: 'https://example.com', seats: 40, number_of_coaches: 10,
-              address: address, avatar: avatar, contact_ids: [member.id, member1.id]
-            }
-          }
-        end.to change(Sponsor, :count).by(1)
-      end
-
-      it 'only members as contacts' do
+      it 'includes members as contacts' do
         login admin
         request.env['HTTP_REFERER'] = '/admin/member/3'
 

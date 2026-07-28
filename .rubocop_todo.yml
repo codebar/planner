@@ -319,12 +319,6 @@ RSpec/LeakyConstantDeclaration:
   Exclude:
     - 'spec/features/admin/manage_workshop_attendances_spec.rb'
 
-# Offense count: 3
-RSpec/MessageChain:
-  Exclude:
-    - 'spec/features/admin/workshops_spec.rb'
-    - 'spec/services/contact_mailing_list_service_spec.rb'
-
 # Offense count: 66
 # Configuration parameters: EnforcedStyle.
 # SupportedStyles: have_received, receive
@@ -347,6 +341,12 @@ RSpec/MessageSpies:
     - 'spec/services/invitation_manager_spec.rb'
     - 'spec/support/shared_examples/behaves_like_an_invitation.rb'
     - 'spec/support/shared_examples/behaves_like_sending_workshop_emails.rb'
+
+# Offense count: 3
+RSpec/MessageChain:
+  Exclude:
+    - 'spec/features/admin/workshops_spec.rb'
+    - 'spec/services/contact_mailing_list_service_spec.rb'
 
 # Offense count: 136
 # Configuration parameters: Max.
@@ -429,17 +429,6 @@ RSpec/MultipleMemoizedHelpers:
     - 'spec/services/invitation_logger_spec.rb'
     - 'spec/services/invitation_manager_spec.rb'
     - 'spec/services/three_month_email_service_spec.rb'
-
-# Offense count: 4
-RSpec/RepeatedExample:
-  Exclude:
-    - 'spec/controllers/admin/sponsors_controller_spec.rb'
-    - 'spec/support/shared_examples/behaves_like_an_invitation_route.rb'
-
-# Offense count: 2
-RSpec/RepeatedExampleGroupDescription:
-  Exclude:
-    - 'spec/features/admin/manage_sponsor_spec.rb'
 
 # Offense count: 1
 # Configuration parameters: CustomTransform, IgnoreMethods, IgnoreMetadata, InflectorPath, EnforcedInflector.
