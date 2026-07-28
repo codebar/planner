@@ -13,7 +13,7 @@ RSpec.describe 'Add a user to an existing workshop', js: true, type: :feature do
   scenario 'An admin searches and gets an exact match' do
     visit @start_page
 
-    params = {callback_url: @start_page.to_s}.to_query
+    params = { callback_url: @start_page.to_s }.to_query
     visit "/admin/member-search?#{params}"
     fill_in 'Member Name', with: juliet.name_and_surname
     click_on 'Search'
@@ -23,7 +23,7 @@ RSpec.describe 'Add a user to an existing workshop', js: true, type: :feature do
   scenario 'An admin adds a member to a workshop' do
     visit @start_page
 
-    params = {callback_url: @start_page.to_s}.to_query
+    params = { callback_url: @start_page.to_s }.to_query
     visit "/admin/member-search?#{params}"
     fill_in 'Member Name', with: 'e'
     click_on 'Search'

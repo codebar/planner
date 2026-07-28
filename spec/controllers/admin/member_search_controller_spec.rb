@@ -27,7 +27,7 @@ RSpec.describe Admin::MemberSearchController, type: :controller do
         before do
           allow(Member).to receive(:find_members_by_name).with('Juliet').and_return(fake_relation)
           allow(fake_relation).to receive(:select).with(any_args).and_return([fake_juliet])
-          get :index, params: {member_search: {name: "Juliet", callback_url: root_path}}
+          get :index, params: { member_search: { name: "Juliet", callback_url: root_path } }
         end
         it "redirects to the calling service" do
           expect(response).to have_http_status(:found)
@@ -45,7 +45,7 @@ RSpec.describe Admin::MemberSearchController, type: :controller do
         before do
           allow(Member).to receive(:find_members_by_name).with('e').and_return(fake_relation)
           allow(fake_relation).to receive(:select).with(any_args).and_return([fake_juliet, fake_romeo])
-          get :index, params: {member_search: {name: 'e', callback_url: root_path}}
+          get :index, params: { member_search: { name: 'e', callback_url: root_path } }
         end
         it "presents the found members on the index page" do
           expect(response).to have_http_status(:ok)
