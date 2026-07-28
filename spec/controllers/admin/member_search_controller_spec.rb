@@ -6,6 +6,7 @@ RSpec.describe Admin::MemberSearchController, type: :controller do
       before do
         get :index
       end
+
       it "redirects to the home page" do
         expect(response).to redirect_to(root_path)
       end
@@ -19,6 +20,7 @@ RSpec.describe Admin::MemberSearchController, type: :controller do
         login_as_admin(member)
         get :index
       end
+
       it "shows user the search page" do
         expect(response).to have_http_status(:ok)
       end
@@ -29,6 +31,7 @@ RSpec.describe Admin::MemberSearchController, type: :controller do
           allow(fake_relation).to receive(:select).with(any_args).and_return([fake_juliet])
           get :index, params: { member_search: { name: "Juliet", callback_url: root_path } }
         end
+
         it "redirects to the calling service" do
           expect(response).to have_http_status(:found)
 
@@ -47,6 +50,7 @@ RSpec.describe Admin::MemberSearchController, type: :controller do
         allow(fake_relation).to receive(:select).with(any_args).and_return([fake_juliet, fake_romeo])
         get :index, params: { member_search: { name: 'e', callback_url: root_path } }
       end
+
       it "presents the found members on the index page" do
         expect(response).to have_http_status(:ok)
       end
