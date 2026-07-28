@@ -27,7 +27,7 @@ RSpec.feature 'A new student signs up', type: :feature do
     expect(page).to have_text "Surname can't be blank"
     expect(page).to have_text "Email address can't be blank"
     expect(page).to have_text "About you can't be blank"
-    expect(page).to have_text "You must select one option"
+    expect(page).to have_text 'You must select one option'
   end
 
   scenario 'A new member details are successfully captured' do

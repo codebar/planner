@@ -11,7 +11,7 @@ RSpec.describe Services::MailingList do
     allow(ENV).to receive(:[]).and_call_original
     allow(ENV).to receive(:[]).with('FLODESK_KEY').and_return('test')
     allow(mailing_list).to receive(:client).and_return(client)
-    allow(Rails).to receive(:env).and_return("production".inquiry)
+    allow(Rails).to receive(:env).and_return('production'.inquiry)
   end
 
   context '#subscribe' do

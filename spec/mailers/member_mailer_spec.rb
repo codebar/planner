@@ -168,8 +168,8 @@ RSpec.describe MemberMailer do
     end
   end
 
-  describe "#chaser" do
-    it "logs the sent email" do
+  describe '#chaser' do
+    it 'logs the sent email' do
       expect do
         described_class
           .with(member: member)
@@ -180,7 +180,7 @@ RSpec.describe MemberMailer do
       log = MemberEmailDelivery.last!
 
       expect(log.member).to eq(member)
-      expect(log.subject).to eq("It’s been a while, how are you doing? ♥️")
+      expect(log.subject).to eq('It’s been a while, how are you doing? ♥️')
       expect(log.to).to eq([member.email])
     end
   end

@@ -5,8 +5,8 @@ RSpec.describe 'rake member:delete', type: :task do
     allow($stdout).to receive(:puts)
   end
 
-  it "preloads the Rails environment" do
-    expect(task.prerequisites).to include "environment"
+  it 'preloads the Rails environment' do
+    expect(task.prerequisites).to include 'environment'
   end
 
   it 'when no email is provided' do

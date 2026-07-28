@@ -187,7 +187,7 @@ module OmniAuth
           nil
         end
       rescue JWT::ExpiredSignature
-        Rails.logger.warn "Codebar auth: JWT expired"
+        Rails.logger.warn 'Codebar auth: JWT expired'
         nil
       end
 

@@ -114,9 +114,9 @@ class Admin::ChaptersController < Admin::ApplicationController
   def member_emails(chapter, type)
     members =
       case type
-      when "students"
+      when 'students'
         chapter.students
-      when "coaches"
+      when 'coaches'
         chapter.coaches
       else
         chapter.members

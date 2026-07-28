@@ -59,18 +59,18 @@ RSpec.describe Flodesk do
     it 'confirms that a user is active and subscribed to a segment' do
       payload = {
         email: :email,
-        segment_ids: ["segment_id"]
+        segment_ids: ['segment_id']
       }
 
       stub.get("/subscribers/#{payload[:email]}") do
         [200, {}, {
-          "id": "123456789",
-          "status": "active",
-          "email": "email",
+          "id": '123456789',
+          "status": 'active',
+          "email": 'email',
           "segments": [
             {
-              "id": "segment_id",
-              "name": "codebar"
+              "id": 'segment_id',
+              "name": 'codebar'
             }
           ]
         }]
@@ -84,18 +84,18 @@ RSpec.describe Flodesk do
     it 'confirms that a user is active but not subscribed to a segment' do
       payload = {
         email: :email,
-        segment_ids: ["segment_id"]
+        segment_ids: ['segment_id']
       }
 
       stub.get("/subscribers/#{payload[:email]}") do
         [200, {}, {
-          "id": "123456789",
-          "status": "active",
-          "email": "email",
+          "id": '123456789',
+          "status": 'active',
+          "email": 'email',
           "segments": [
             {
-              "id": "some_other_segment_id",
-              "name": "not codebar"
+              "id": 'some_other_segment_id',
+              "name": 'not codebar'
             }
           ]
         }]
@@ -109,18 +109,18 @@ RSpec.describe Flodesk do
     it 'confirms that a user is not active' do
       payload = {
         email: :email,
-        segment_ids: ["segment_id"]
+        segment_ids: ['segment_id']
       }
 
       stub.get("/subscribers/#{payload[:email]}") do
         [200, {}, {
-          "id": "123456789",
-          "status": "unsubscribed",
-          "email": "email",
+          "id": '123456789',
+          "status": 'unsubscribed',
+          "email": 'email',
           "segments": [
             {
-              "id": "segment_id",
-              "name": "codebar"
+              "id": 'segment_id',
+              "name": 'codebar'
             }
           ]
         }]
