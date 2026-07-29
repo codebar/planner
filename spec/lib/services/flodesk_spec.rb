@@ -16,7 +16,7 @@ RSpec.describe Flodesk do
     stub.strict_mode = true
   end
 
-  context '#subscribe' do
+  describe '#subscribe' do
     it 'adds a user to segments' do
       payload = {
         email: :email,
@@ -35,7 +35,7 @@ RSpec.describe Flodesk do
     end
   end
 
-  context '#unsubscribe' do
+  describe '#unsubscribe' do
     it 'removes a user from segments' do
       payload = {
         email: :email,
@@ -55,7 +55,7 @@ RSpec.describe Flodesk do
     end
   end
 
-  context '#subscribed?' do
+  describe '#subscribed?' do
     it 'confirms that a user is active and subscribed to a segment' do
       payload = {
         email: :email,

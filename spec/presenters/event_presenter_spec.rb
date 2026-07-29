@@ -30,7 +30,7 @@ RSpec.describe EventPresenter do
 
   describe '#organisers' do
     it 'when there are no organisers' do
-      expect(event.organisers).to match_array([])
+      expect(event.organisers).to be_empty
     end
 
     it 'when there are organisers' do

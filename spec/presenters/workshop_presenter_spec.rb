@@ -79,7 +79,7 @@ RSpec.describe WorkshopPresenter do
     end
   end
 
-  context 'time formatting' do
+  context 'with time formatting' do
     it '#start_time and #end_time' do
       travel_to(Time.current) do
         workshop = double(:workshop, date_and_time: Time.current, ends_at: 1.hour.from_now)
@@ -121,8 +121,7 @@ RSpec.describe WorkshopPresenter do
       MemberPresenter.new(student)
 
       expect(presenter.pairing_csv)
-        .to eq(WorkshopPresenter::PAIRING_HEADINGS.join(',') + "\n" +
-               student_pairing_array.join(',') + "\n")
+        .to eq("#{WorkshopPresenter::PAIRING_HEADINGS.join(',')}\n#{student_pairing_array.join(',')}\n")
     end
   end
 
@@ -170,7 +169,7 @@ RSpec.describe WorkshopPresenter do
       let(:workshop) { double_workshop(attending_coaches: 2, attending_students: 3) }
 
       it 'returns true' do
-        expect(presenter.spaces?).to eq(true)
+        expect(presenter.spaces?).to be(true)
       end
     end
 
@@ -178,7 +177,7 @@ RSpec.describe WorkshopPresenter do
       let(:workshop) { double_workshop(attending_coaches: 3, attending_students: 5) }
 
       it 'returns false' do
-        expect(presenter.spaces?).to eq(false)
+        expect(presenter.spaces?).to be(false)
       end
     end
   end

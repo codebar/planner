@@ -1,7 +1,7 @@
 RSpec.feature 'Chapters', type: :feature do
   let(:member) { Fabricate(:member) }
 
-  context 'Authorization smoke test' do
+  context 'with authorization smoke test' do
     scenario 'Non-admins should be redirected' do
       login(member)
 
@@ -12,7 +12,7 @@ RSpec.feature 'Chapters', type: :feature do
     end
   end
 
-  context '#creating a new chapter' do
+  describe '#creating a new chapter' do
     before do
       login_as_admin(member)
     end
@@ -30,10 +30,10 @@ RSpec.feature 'Chapters', type: :feature do
     end
   end
 
-  context '#editing a chapter' do
+  describe '#editing a chapter' do
     let(:chapter) { Fabricate(:chapter_with_organiser) }
 
-    context 'organiser editing their chapter' do
+    context 'when an organiser editing their chapter' do
       before do
         login(chapter.organisers.first)
       end
@@ -45,7 +45,7 @@ RSpec.feature 'Chapters', type: :feature do
         fill_in 'Email', with: 'brighton@codebar.io'
         fill_in 'City', with: 'Brighton'
         fill_in 'Description', with: 'Description for Brighton chapter'
-        attach_file('Image', Rails.root + 'spec/support/chapter-image.png')
+        attach_file('Image', Rails.root.join('spec/support/chapter-image.png'))
 
         click_on 'Update chapter'
 
@@ -53,7 +53,7 @@ RSpec.feature 'Chapters', type: :feature do
       end
     end
 
-    context 'organiser editing a chapter they do not organise' do
+    context 'when an organiser editing a chapter they do not organise' do
       let(:chapter_organiser) { Fabricate(:chapter_organiser) }
 
       before do
@@ -68,7 +68,7 @@ RSpec.feature 'Chapters', type: :feature do
       end
     end
 
-    context 'admin editing a chapter they do not organise' do
+    context 'when an admin is editing a chapter they do not organise' do
       let(:member) { Fabricate(:member) }
 
       before do
@@ -89,7 +89,7 @@ RSpec.feature 'Chapters', type: :feature do
     end
   end
 
-  context 'viewing #members emails' do
+  context 'when viewing #members emails' do
     let(:chapter) { Fabricate(:chapter_with_groups) }
 
     before do
@@ -120,7 +120,7 @@ RSpec.feature 'Chapters', type: :feature do
     end
   end
 
-  context 'how you found us card' do
+  context 'when viewing the how you found us card' do
     let(:chapter) { Fabricate(:chapter) }
     let(:group) { Fabricate(:group, chapter: chapter) }
 
@@ -146,7 +146,7 @@ RSpec.feature 'Chapters', type: :feature do
     end
   end
 
-  context 'eligible members tooltip' do
+  context 'when eligible members tooltip' do
     let(:chapter) { Fabricate(:chapter) }
 
     before do

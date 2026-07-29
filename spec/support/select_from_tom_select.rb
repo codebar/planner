@@ -15,17 +15,18 @@ module SelectFromTomSelect
     wrapper = select.find(:xpath, '..')
     expect(wrapper).to have_css('.ts-control', wait: 15)
 
-    # Open dropdown and focus the input. The click on .ts-control opens the
-    # dropdown; a second click on the input focuses it, and the explicit JS
-    # focus call guards against headless CI drivers where Capybara's click alone
-    # does not reliably focus the field before keys are sent.
+    # Open the dropdown by clicking the control
     wrapper.find('.ts-control').click
     input = wrapper.find('.ts-control input')
-    input.click
-    page.execute_script('arguments[0].focus();', input.native)
 
-    # Type first 3 characters to trigger search (shouldLoad requires >= 3)
-    input.send_keys(item_text[0, 3])
+    # Type first 3 characters to trigger search (shouldLoad requires >= 3).
+    # Use JS to set the value and dispatch an input event directly, instead of
+    # send_keys (which can race with TomSelect's debounce timer in headless CI
+    # when multiple parallel processes contend for CPU).
+    page.execute_script(
+      "arguments[0].value = arguments[1]; arguments[0].dispatchEvent(new Event('input', { bubbles: true }));",
+      input.native, item_text[0, 3]
+    )
 
     # Wait for the initial search results to load after the debounce and AJAX.
     # Uses Capybara's adaptive wait instead of a blind sleep so slow CI environments
@@ -33,7 +34,12 @@ module SelectFromTomSelect
     expect(wrapper).to have_css('.ts-dropdown .option', wait: 15)
 
     # Type the rest if item_text is longer than 3 characters
-    input.send_keys(item_text[3..]) if item_text.length > 3
+    if item_text.length > 3
+      page.execute_script(
+        "arguments[0].value = arguments[1]; arguments[0].dispatchEvent(new Event('input', { bubbles: true }));",
+        input.native, item_text[3..]
+      )
+    end
 
     # Wait for updated results after the refined search
     expect(wrapper).to have_css('.ts-dropdown .option', text: item_text, wait: 10)

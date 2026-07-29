@@ -5,15 +5,15 @@ RSpec.feature 'member feedback', type: :feature do
   let(:invalid_token) { 'feedback_invalid_token' }
   let(:feedback_submited_message) { I18n.t('messages.feedback_saved') }
   let(:coach) { Fabricate(:coach) }
+  let!(:tutorial) { Fabricate(:tutorial, title: 'tutorial title') }
 
   before do
     Fabricate(:feedback, coach: coach)
 
-    @tutorial = Fabricate(:tutorial, title: 'tutorial title')
     Fabricate(:attended_workshop_invitation, workshop: feedback_request.workshop, member: coach, role: 'Coach')
   end
 
-  context 'Feedback form' do
+  context 'when viewing the feedback form' do
     scenario 'I can access the feedback form when the token is valid' do
       visit feedback_path(valid_token)
 
@@ -36,7 +36,7 @@ RSpec.feature 'member feedback', type: :feature do
     scenario 'I can select an entry from tutorials list' do
       visit feedback_path(valid_token)
 
-      expect(page).to have_select('feedback_tutorial_id', with_options: [@tutorial.title])
+      expect(page).to have_select('feedback_tutorial_id', with_options: [tutorial.title])
     end
 
     scenario 'I can see coaches who RSVPd but have not yet been marked as attended (Issue #2367)' do
@@ -85,7 +85,7 @@ RSpec.feature 'member feedback', type: :feature do
     end
   end
 
-  context 'I get redirected to the main page' do
+  context 'when I get redirected to the main page' do
     scenario 'when invalid token given' do
       visit feedback_path(invalid_token)
 
@@ -101,8 +101,8 @@ RSpec.feature 'member feedback', type: :feature do
     end
   end
 
-  context 'Submitting a feedback request' do
-    scenario 'I can see success page with message and link to homepage when valid data is given', js: true do
+  context 'when submitting a feedback request' do
+    scenario 'I can see success page with message and link to homepage when valid data is given', :js do
       visit feedback_path(valid_token)
 
       # Wait for Chosen dropdowns to initialize
@@ -111,7 +111,7 @@ RSpec.feature 'member feedback', type: :feature do
 
       within('.rating') { all('li').at(3).click }
       select_from_chosen(coach.full_name, from: 'feedback_coach_id')
-      select_from_chosen(@tutorial.title, from: 'feedback_tutorial_id')
+      select_from_chosen(tutorial.title, from: 'feedback_tutorial_id')
       click_button('Submit feedback')
 
       expect(page).to have_current_path(root_path)
@@ -123,7 +123,7 @@ RSpec.feature 'member feedback', type: :feature do
       visit feedback_path(valid_token)
 
       select(coach.full_name, from: 'feedback_coach_id')
-      select(@tutorial.title, from: 'feedback_tutorial_id')
+      select(tutorial.title, from: 'feedback_tutorial_id')
 
       click_button('Submit feedback')
 

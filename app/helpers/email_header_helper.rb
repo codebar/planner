@@ -1,9 +1,9 @@
 module EmailHeaderHelper
   class SkippedEmail
-    def deliver_now() = self
-    def deliver_later() = self
-    def deliver() = self
-    def deliver!() = self
+    def deliver_now = self
+    def deliver_later = self
+    def deliver = self
+    def deliver! = self
   end
 
   private

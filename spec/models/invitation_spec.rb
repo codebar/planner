@@ -1,11 +1,11 @@
 RSpec.describe Invitation do
   it_behaves_like InvitationConcerns, :invitation, :event
 
-  context 'defaults' do
+  context 'with defaults' do
     it { is_expected.to have_attributes(attending: nil) }
   end
 
-  context 'validations' do
+  context 'with validations' do
     it { is_expected.to validate_presence_of(:event) }
     it { is_expected.to validate_presence_of(:member) }
     it { is_expected.to validate_uniqueness_of(:member_id).scoped_to(:event_id, :role) }
@@ -16,7 +16,7 @@ RSpec.describe Invitation do
     it 'checks if there are any available spaces for students at the event' do
       student_invitation = Fabricate(:invitation)
 
-      expect(student_invitation.student_spaces?).to eq(true)
+      expect(student_invitation.student_spaces?).to be(true)
     end
   end
 
@@ -24,7 +24,7 @@ RSpec.describe Invitation do
     it 'checks if there are any available spaces for coaches at the event' do
       coach_invitation = Fabricate(:coach_invitation)
 
-      expect(coach_invitation.coach_spaces?).to eq(true)
+      expect(coach_invitation.coach_spaces?).to be(true)
     end
   end
 end

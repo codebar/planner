@@ -1,11 +1,11 @@
-RSpec.feature 'Viewing a workshop invitation', type: :feature, wip: true do
+RSpec.feature 'Viewing a workshop invitation', :wip, type: :feature do
   let(:invitation) { Fabricate(:workshop_invitation, workshop: workshop) }
 
   before do
     visit invitation_path(invitation)
   end
 
-  context 'physical workshop' do
+  context 'with a physical workshop' do
     let(:workshop) { Fabricate(:workshop) }
 
     scenario 'workshop and page title' do
@@ -13,14 +13,14 @@ RSpec.feature 'Viewing a workshop invitation', type: :feature, wip: true do
       expect(page).to have_text("Workshop at #{workshop.host.name}")
     end
 
-    context '#introduction' do
-      context 'student' do
+    describe '#introduction' do
+      context 'when a student' do
         scenario 'displays information for a physical workshop' do
           expect(page).to have_text('Please make sure you bring your laptop')
         end
       end
 
-      context 'coach' do
+      context 'when a coach' do
         scenario 'displays information for a physical workshop' do
           expect(page).to have_text('PS: There will also be food at the workshop.')
         end
@@ -38,7 +38,7 @@ RSpec.feature 'Viewing a workshop invitation', type: :feature, wip: true do
       end
     end
 
-    context '#description' do
+    describe '#description' do
       let(:workshop) { Fabricate(:workshop, description: "<a href='http://a.link.com'> Follow link </a>") }
 
       it 'contains details about the workshop and renders user defined HTML' do
@@ -53,7 +53,7 @@ RSpec.feature 'Viewing a workshop invitation', type: :feature, wip: true do
     include_examples 'viewing workshop details'
   end
 
-  context 'virtual workshop' do
+  context 'with a virtual workshop' do
     let(:workshop) { Fabricate(:virtual_workshop_sponsored) }
 
     scenario 'workshop and page title' do
@@ -61,21 +61,21 @@ RSpec.feature 'Viewing a workshop invitation', type: :feature, wip: true do
       expect(page).to have_text("Virtual workshop for #{workshop.chapter.name}")
     end
 
-    context '#introduction' do
-      context 'student' do
+    describe '#introduction' do
+      context 'when a student' do
         scenario 'does not display information about the physical workshop' do
           expect(page).to have_no_text('Please make sure you bring your laptop')
         end
       end
 
-      context 'coach' do
+      context 'when a coach' do
         scenario 'does not displays information about the physical workshop' do
           expect(page).to have_no_text('PS: There will also be food at the workshop.')
         end
       end
     end
 
-    context '#description' do
+    describe '#description' do
       context 'when RSVPed' do
         let(:invitation) { Fabricate(:attending_workshop_invitation, workshop: workshop) }
 

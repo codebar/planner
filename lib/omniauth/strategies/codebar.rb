@@ -58,12 +58,12 @@ module OmniAuth
         end
 
         code = request.params['code']
-        if code.nil? || code.empty?
+        if code.blank?
           return fail!(:missing_code, StandardError.new('Missing authorization code'))
         end
 
         code_verifier = session.delete('omniauth.codebar.code_verifier')
-        if code_verifier.nil? || code_verifier.empty?
+        if code_verifier.blank?
           return fail!(:missing_pkce, StandardError.new('Missing PKCE verifier'))
         end
 
@@ -74,7 +74,7 @@ module OmniAuth
         end
 
         id_token = tokens['id_token']
-        if id_token.nil? || id_token.empty?
+        if id_token.blank?
           return fail!(:missing_id_token, StandardError.new('Missing id_token in token response'))
         end
 
@@ -90,24 +90,24 @@ module OmniAuth
                                                provider: name,
                                                uid: email,
                                                info: {
-            email: email,
-            name: payload['name'] || email
-          },
+                                                 email: email,
+                                                 name: payload['name'] || email
+                                               },
                                                credentials: {
-            token: tokens['access_token'],
-            expires: tokens['expires_at'],
-            refresh_token: tokens['refresh_token']
-          },
+                                                 token: tokens['access_token'],
+                                                 expires: tokens['expires_at'],
+                                                 refresh_token: tokens['refresh_token']
+                                               },
                                                extra: {
-            raw_info: payload
-          }
+                                                 raw_info: payload
+                                               }
                                              })
 
         call_app!
       rescue StandardError => e
         return if env['omniauth.error']
 
-        return fail!(:unknown_error, e)
+        fail!(:unknown_error, e)
       end
 
       private

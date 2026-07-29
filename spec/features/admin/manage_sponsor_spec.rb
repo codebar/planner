@@ -1,8 +1,8 @@
 RSpec.feature 'Managing sponsors', type: :feature do
   let(:member) { Fabricate(:member) }
-  let!(:chapter) { Fabricate(:chapter) }
 
   before do
+    Fabricate(:chapter)
     login_as_admin(member)
     member.add_role(:organiser, Chapter)
   end
@@ -14,7 +14,7 @@ RSpec.feature 'Managing sponsors', type: :feature do
 
         fill_in 'sponsor_name', with: 'Sponsor name'
         fill_in 'Website', with: 'https://www.sponsorname.com/'
-        attach_file('Avatar', Rails.root + 'spec/support/codebar-logo.png')
+        attach_file('Avatar', Rails.root.join('spec/support/codebar-logo.png'))
         fill_in 'Student spots', with: 20
         fill_in 'Coach spots', with: 10
         select 'Bronze', from: 'Level'
@@ -25,13 +25,13 @@ RSpec.feature 'Managing sponsors', type: :feature do
       end
     end
 
-    context 'with invalid input' do
+    context 'with invalid input showing error message' do
       it 'shows an error message' do
         visit new_admin_sponsor_path
 
         fill_in 'sponsor_name', with: ''
         fill_in 'Website', with: 'https://www.sponsorname.com/'
-        attach_file('Avatar', Rails.root + 'spec/support/codebar-logo.png')
+        attach_file('Avatar', Rails.root.join('spec/support/codebar-logo.png'))
         fill_in 'Student spots', with: 20
         fill_in 'Coach spots', with: 10
 
@@ -41,13 +41,13 @@ RSpec.feature 'Managing sponsors', type: :feature do
       end
     end
 
-    context 'with invalid input' do
+    context 'with invalid input showing create button' do
       it 'renders new and shows create button' do
         visit new_admin_sponsor_path
 
         fill_in 'sponsor_name', with: ''
         fill_in 'Website', with: 'https://www.sponsorname.com/'
-        attach_file('Avatar', Rails.root + 'spec/support/codebar-logo.png')
+        attach_file('Avatar', Rails.root.join('spec/support/codebar-logo.png'))
         fill_in 'Student spots', with: 20
         fill_in 'Coach spots', with: 10
 
@@ -93,7 +93,7 @@ RSpec.feature 'Managing sponsors', type: :feature do
   describe 'adding contact information to a sponsor' do
     let(:sponsor) { Fabricate(:sponsor) }
 
-    context 'adding contact details' do
+    context 'when adding contact details' do
       it 'adds a new contact entry' do
         visit edit_admin_sponsor_path(sponsor)
 

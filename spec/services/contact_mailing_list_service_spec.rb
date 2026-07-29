@@ -8,7 +8,7 @@ RSpec.describe ContactMailingListService do
 
   before do
     allow(Services::MailingList).to receive(:new).and_return(mailing_list)
-    allow(ContactMailer).to receive_message_chain(:subscription_notification, :deliver_now)
+    allow(ContactMailer).to receive(:subscription_notification).and_return(double(deliver_now: true))
   end
 
   describe '#sync' do

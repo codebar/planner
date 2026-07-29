@@ -3,12 +3,12 @@ RSpec.feature 'Member portal', type: :feature do
 
   let(:member) { Fabricate(:member) }
 
-  context 'A signed in member' do
+  context 'when a signed in member' do
     before do
       login(member)
     end
 
-    context '#dashboard' do
+    describe '#dashboard' do
       it 'can access the member dashboard' do
         visit dashboard_path
 
@@ -39,9 +39,9 @@ RSpec.feature 'Member portal', type: :feature do
         visit dashboard_path
 
         expect(page).to have_text("#{c1_workshop_presenter} at #{c1_workshop_presenter.venue.name}",
-                                     count: 1)
+                                  count: 1)
         expect(page).to have_text("#{c2_workshop_presenter} at #{c2_workshop_presenter.venue.name}",
-                                     count: 1)
+                                  count: 1)
       end
     end
 
@@ -71,7 +71,7 @@ RSpec.feature 'Member portal', type: :feature do
     end
 
     it 'can view the invitations they RSVPed to' do
-      invitations = 2.times.map { Fabricate(:attending_workshop_invitation, member: member) }
+      invitations = Array.new(2) { Fabricate(:attending_workshop_invitation, member: member) }
       visit invitations_path
 
       expect(page).to have_text('Invitations')
@@ -82,7 +82,7 @@ RSpec.feature 'Member portal', type: :feature do
     end
   end
 
-  context 'A non authenticated visitor to the page' do
+  context 'when a non authenticated visitor to the page' do
     it 'can not access the member portal' do
       visit dashboard_path
 

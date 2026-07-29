@@ -19,7 +19,7 @@ class Sponsor < ApplicationRecord
            class_name: 'Sponsorship', inverse_of: :sponsor
   has_many :events, through: :event_sponsorships
   has_many :workshop_sponsors, lambda {
-    includes([workshop: :chapter])
+    includes([{ workshop: :chapter }])
       .joins(:workshop)
       .order('workshops.date_and_time desc')
   },

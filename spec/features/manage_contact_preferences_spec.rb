@@ -1,8 +1,8 @@
 RSpec.feature 'Managing contact preferences', type: :feature do
-  context 'A sponsor contact can manage their contact preferences' do
+  context 'when a sponsor contact can manage their contact preferences' do
     let(:manager) { Fabricate(:member) }
 
-    context 'they can subscribe' do
+    context 'when they can subscribe' do
       let!(:contact) { Fabricate(:contact, mailing_list_consent: false) }
 
       scenario 'when they are not subscribed to the Sponsors mailing list' do
@@ -17,7 +17,7 @@ RSpec.feature 'Managing contact preferences', type: :feature do
       end
     end
 
-    context 'they can unsubscribe' do
+    context 'when they can unsubscribe' do
       let!(:contact) { Fabricate(:contact) }
 
       scenario 'when they are subscribed to the Sponsors mailing list' do

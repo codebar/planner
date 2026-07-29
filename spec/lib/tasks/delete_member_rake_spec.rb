@@ -19,7 +19,7 @@ RSpec.describe 'rake member:delete', type: :task do
     invitations = Fabricate.times(2, :workshop_invitation, member: member)
     tokens = invitations.map(&:token)
 
-    subscriptions = Fabricate.times(1, :subscription, member: member)
+    Fabricate.times(1, :subscription, member: member)
 
     allow($stdin).to receive(:getch)
 

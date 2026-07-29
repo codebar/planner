@@ -37,14 +37,14 @@ class MemberPresenter < BasePresenter
   private
 
   def organising_events
-    @organised_events ||= roles.where(name: 'organiser')
-                               .pluck(:resource_type, :resource_id)
-                               .group_by(&:first)
-                               .transform_values { |pairs| pairs.map(&:last) }
+    @organising_events ||= roles.where(name: 'organiser')
+                                .pluck(:resource_type, :resource_id)
+                                .group_by(&:first)
+                                .transform_values { |pairs| pairs.map(&:last) }
   end
 
   def admin?
-    @is_admin ||= has_role?(:admin)
+    @admin ||= has_role?(:admin)
   end
 
   def coach_pairing_details(note)

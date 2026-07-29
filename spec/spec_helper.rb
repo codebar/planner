@@ -37,7 +37,7 @@ if ENV['COVERAGE'] == 'true'
 end
 
 ENV['RAILS_ENV'] ||= 'test'
-require File.expand_path('../../config/environment', __FILE__)
+require File.expand_path('../config/environment', __dir__)
 require 'rspec/rails'
 
 # Block all external HTTP requests in tests; allows localhost for Capybara
@@ -67,10 +67,10 @@ RSpec.configure do |config|
     DatabaseCleaner.strategy = :deletion
   end
 
-  config.before(:each) do
+  config.before do
     # Stub all Flodesk API endpoints globally so tests don't make external requests
     # when fabricating members (which trigger Subscription.after_create callback)
-    WebMock.stub_request(:any, %r{api\.flodesk\.com})
+    WebMock.stub_request(:any, /api\.flodesk\.com/)
            .to_return(status: 200, body: '{"status":"active","segments":[]}', headers: { 'Content-Type' => 'application/json' })
 
     DatabaseCleaner.strategy = :transaction
@@ -80,17 +80,17 @@ RSpec.configure do |config|
   # under test that does *not* share a database connection with the
   # specs, so use truncation strategy. This config is order dependent
   # and must be BELOW the main `config.before(:each)` configuration
-  config.before(:each, js: true) do
+  config.before(:each, :js) do
     DatabaseCleaner.strategy = :truncation
   end
 
   # This block must be here, do not combine with the other `config.before(:each)` block.
   # This makes it so Capybara can see the database.
-  config.before(:each) do
+  config.before do
     DatabaseCleaner.start
   end
 
-  config.after(:each) do
+  config.after do
     DatabaseCleaner.clean
     Capybara.reset_sessions! if defined?(Capybara)
   end
@@ -113,7 +113,7 @@ RSpec.configure do |config|
   config.example_status_persistence_file_path = 'tmp/spec_failures'
 
   if Bullet.enable?
-    config.around(:each) do |example|
+    config.around do |example|
       Bullet.start_request
       example.run
       Bullet.perform_out_of_channel_notifications if Bullet.notification?

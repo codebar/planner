@@ -13,8 +13,8 @@ RSpec.describe Admin::MemberSearchController, type: :controller do
     end
 
     context 'when user is an admin' do
-      let(:fake_relation) { instance_double('ActiveRecord::Relation') }
-      let(:fake_juliet) { instance_double('Member', id: 1, name: 'Juliet', surname: 'Montague') }
+      let(:fake_relation) { instance_double(ActiveRecord::Relation) }
+      let(:fake_juliet) { instance_double(Member, id: 1, name: 'Juliet', surname: 'Montague') }
 
       before do
         login_as_admin(member)
@@ -25,7 +25,7 @@ RSpec.describe Admin::MemberSearchController, type: :controller do
         expect(response).to have_http_status(:ok)
       end
 
-      context 'and when admin user searches for a single existing user' do
+      context 'when an admin user searches for a single existing user' do
         before do
           allow(Member).to receive(:find_members_by_name).with('Juliet').and_return(fake_relation)
           allow(fake_relation).to receive(:select).with(any_args).and_return([fake_juliet])
@@ -42,7 +42,7 @@ RSpec.describe Admin::MemberSearchController, type: :controller do
         end
       end
 
-      context 'and when an admin user searches and there are multiple results' do
+      context 'when an admin user searches and there are multiple results' do
       let(:fake_romeo) { double('Member', id: 2, name: 'Romeo', surname: 'Capulet') }
 
       before do
@@ -60,15 +60,15 @@ RSpec.describe Admin::MemberSearchController, type: :controller do
 
   describe 'GET #results' do
     context 'when user is an admin' do
-      let(:member1) { Fabricate(:member, name: 'Alice') }
-      let(:member2) { Fabricate(:member, name: 'Bob') }
+      let(:alice) { Fabricate(:member, name: 'Alice') }
+      let(:bob) { Fabricate(:member, name: 'Bob') }
 
       before do
         login_as_admin(member)
       end
 
       it 'finds members by ids using params.expect' do
-        get :results, params: { member_pick: { members: [member1.id, member2.id] } }
+        get :results, params: { member_pick: { members: [alice.id, bob.id] } }
         expect(response).to have_http_status(:ok)
       end
     end

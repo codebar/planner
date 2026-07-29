@@ -4,7 +4,7 @@ class PaymentsController < ApplicationController
   def new; end
 
   def create
-    payment_params = params.expect(payment: [:amount, :name, :stripe_email, :stripe_token_id])
+    payment_params = params.expect(payment: %i[amount name stripe_email stripe_token_id])
 
     @amount = payment_params[:amount]
 

@@ -5,7 +5,7 @@ RSpec.feature 'Admin::Sponsors', type: :feature do
     login_as_admin(manager)
   end
 
-  context 'Sponsors list' do
+  context 'when viewing the sponsors list' do
     let(:sponsor) { Fabricate(:sponsor) }
     let(:sponsor2) { Fabricate(:sponsor) }
 
@@ -18,7 +18,7 @@ RSpec.feature 'Admin::Sponsors', type: :feature do
       expect(page).to have_text(sponsor.name)
       expect(page).to have_text(sponsor2.name)
 
-      expect(page.all(:css, 'tbody tr', count: 2))
+      expect(page).to have_css('tbody tr', count: 2)
 
       expect(page).to have_text(hosted_workshop.chapter.name)
       expect(page).to have_text(sponsored_workshop.chapter.name)
@@ -26,7 +26,7 @@ RSpec.feature 'Admin::Sponsors', type: :feature do
       select sponsored_workshop.chapter.name, from: 'sponsors_search[chapter]'
       click_on 'Filter'
 
-      expect(page.all(:css, 'tbody tr', count: 1))
+      expect(page).to have_css('tbody tr', count: 1)
     end
 
     scenario 'can filter by sponsor' do
@@ -43,21 +43,21 @@ RSpec.feature 'Admin::Sponsors', type: :feature do
       expect(page).to have_text(sponsor.name)
       expect(page).to have_text(sponsor2.name)
 
-      expect(page.all(:css, 'tbody tr', count: 2))
+      expect(page).to have_css('tbody tr', count: 2)
 
       # Make sure both sponsors can be filtered by
       [sponsor.name, sponsor2.name].each do |name|
         fill_in 'sponsors_search[name]', with: name
         click_on 'Filter'
 
-        expect(page.all(:css, 'tbody tr', count: 1))
+        expect(page).to have_css('tbody tr', count: 1)
       end
 
       # Invalid sponsor name should return no results
       fill_in 'sponsors_search[name]', with: 'this-sponsor-does-not-exist'
       click_on 'Filter'
 
-      expect(page.all(:css, 'tbody tr', count: 0))
+      expect(page).to have_css('tbody tr', count: 0)
       expect(page).to have_text('No sponsor found')
     end
 
@@ -70,7 +70,7 @@ RSpec.feature 'Admin::Sponsors', type: :feature do
       expect(page).to have_text(sponsor.name)
       expect(page).to have_text(sponsor2.name)
 
-      expect(page.all(:css, 'tbody tr', count: 2))
+      expect(page).to have_css('tbody tr', count: 2)
 
       expect(page).to have_text(hosted_workshop.chapter.name)
       expect(page).to have_text(sponsored_workshop.chapter.name)
@@ -78,17 +78,17 @@ RSpec.feature 'Admin::Sponsors', type: :feature do
       select sponsored_workshop.chapter.name, from: 'sponsors_search[chapter]'
       click_on 'Filter'
 
-      expect(page.all(:css, 'tbody tr', count: 1))
+      expect(page).to have_css('tbody tr', count: 1)
 
       click_on 'Reset form'
-      expect(page.all(:css, 'tbody tr', count: 2))
+      expect(page).to have_css('tbody tr', count: 2)
     end
   end
 
-  context 'Sponsor page' do
+  context 'when viewing the sponsor page' do
     let(:sponsor) { Fabricate(:sponsor_with_contacts) }
 
-    before(:each) do
+    before do
       visit admin_sponsor_path(sponsor)
     end
 
@@ -105,7 +105,7 @@ RSpec.feature 'Admin::Sponsors', type: :feature do
       expect(page).to have_text(sponsor.address.street)
     end
 
-    context 'sponsorships' do
+    context 'with sponsorships' do
       scenario 'when no sponsorships' do
         within '#sponsorships' do
           expect(page).to have_text('No sponsorships')
@@ -122,7 +122,7 @@ RSpec.feature 'Admin::Sponsors', type: :feature do
 
         within '#sponsorships' do
           expect(page).to have_text('Workshops')
-          expect(page).to have_text("#{sponsored_workshop.chapter.name}")
+          expect(page).to have_text(sponsored_workshop.chapter.name.to_s)
           expect(page).to have_text("#{hosted_workshop.chapter.name} (host)")
         end
       end
@@ -136,7 +136,7 @@ RSpec.feature 'Admin::Sponsors', type: :feature do
 
         within '#sponsorships' do
           expect(page).to have_text('Events')
-          expect(page).to have_text("#{gold_event.to_s} - GOLD")
+          expect(page).to have_text("#{gold_event} - GOLD")
           expect(page).to have_text("#{silver_event} - SILVER")
           expect(page).to have_text("#{standard_event} - Standard")
         end
@@ -154,7 +154,7 @@ RSpec.feature 'Admin::Sponsors', type: :feature do
       end
     end
 
-    context 'activities' do
+    context 'with activities' do
       scenario 'when there are activities' do
         contact = sponsor.contacts.first
         audit = Auditor::Audit.new(sponsor, 'sponsor.admin_contact_subscribe', manager, contact)
@@ -183,7 +183,7 @@ RSpec.feature 'Admin::Sponsors', type: :feature do
     end
   end
 
-  context 'Editing a sponsor' do
+  context 'when editing a sponsor' do
     let(:sponsor) { Fabricate(:sponsor_full) }
 
     it 'can set contact information' do
@@ -211,7 +211,7 @@ RSpec.feature 'Admin::Sponsors', type: :feature do
       expect(page).to have_text("#{manager.full_name} subscribed Jane Doe with email jane@codebar.io to the Sponsor newsletter")
     end
 
-    it 'can unsubscribe a contact to the sponsor newsletter', wip: true do
+    it 'can unsubscribe a contact to the sponsor newsletter', :wip do
       contact = Fabricate(:contact, sponsor: sponsor, mailing_list_consent: true)
       visit edit_admin_sponsor_path(sponsor)
 
@@ -222,7 +222,7 @@ RSpec.feature 'Admin::Sponsors', type: :feature do
     end
   end
 
-  context 'Sponsor contacts page' do
+  context 'when viewing the sponsor contacts page' do
     let!(:sponsor) { Fabricate(:sponsor_with_contacts) }
     let!(:sponsor_no_contacts) { Fabricate(:sponsor) }
 

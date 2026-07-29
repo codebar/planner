@@ -3,26 +3,26 @@ RSpec.describe WorkshopInvitation do
 
   it_behaves_like InvitationConcerns, :workshop_invitation, :workshop
 
-  context 'defaults' do
+  context 'with defaults' do
     it { is_expected.to have_attributes(attending: nil) }
     it { is_expected.to have_attributes(attended: nil) }
   end
 
-  context 'validates' do
+  context 'with validates' do
     it { is_expected.to validate_presence_of(:workshop) }
     it { is_expected.to validate_uniqueness_of(:member_id).scoped_to(:workshop_id, :role) }
     it { is_expected.to validate_inclusion_of(:role).in_array(%w[Student Coach]) }
 
-    context 'if Student invitation' do
-      before { allow(subject).to receive(:student_attending?).and_return(true) }
+    context 'when Student invitation' do
+      before { allow(workshop_invitation).to receive(:student_attending?).and_return(true) }
 
       it { is_expected.to validate_presence_of(:tutorial) }
       it { is_expected.to validate_presence_of(:tutorial).on(:waitinglist) }
     end
   end
 
-  context 'scopes' do
-    context '#attended' do
+  context 'with scopes' do
+    describe '#attended' do
       it 'ignores when attended nil' do
         Fabricate(:workshop_invitation, attended: nil)
 
@@ -42,7 +42,7 @@ RSpec.describe WorkshopInvitation do
       end
     end
 
-    context '#accepted_or_attended' do
+    describe '#accepted_or_attended' do
       it 'ignores when attending nil and attended nil' do
         Fabricate(:workshop_invitation, attending: nil, attended: nil)
 
@@ -79,13 +79,13 @@ RSpec.describe WorkshopInvitation do
       old_workshop = Fabricate(:workshop, date_and_time: Time.zone.now - 2.years)
 
       2.times { Fabricate(:attended_coach, workshop: new_workshop) }
-      1.times { Fabricate(:attended_coach, workshop: old_workshop) }
+      Fabricate(:attended_coach, workshop: old_workshop)
 
       expect(described_class.year(Time.zone.now.year).count).to eq(2)
       expect(described_class.year((Time.zone.now - 2.years).year).count).to eq(1)
     end
 
-    context '#not_reminded' do
+    describe '#not_reminded' do
       it 'includes invitations without reminders' do
         not_reminded = Fabricate(:student_workshop_invitation, reminded_at: nil)
 

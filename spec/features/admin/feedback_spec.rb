@@ -1,7 +1,7 @@
 RSpec.feature 'Viewing feedback', type: :feature do
   let(:member) { Fabricate(:member) }
 
-  context 'an admin' do
+  context 'when an admin' do
     before do
       login_as_admin(member)
     end
@@ -14,7 +14,7 @@ RSpec.feature 'Viewing feedback', type: :feature do
     end
   end
 
-  context 'an organiser' do
+  context 'when an organiser' do
     before do
       login_as_organiser(member, Fabricate(:chapter))
     end

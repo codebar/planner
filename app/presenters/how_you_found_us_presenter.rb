@@ -4,7 +4,7 @@ class HowYouFoundUsPresenter
   end
 
   def by_percentage
-    return how_values.to_h { |how| [how, 0] } unless data_present?
+    return how_values.index_with { |_how| 0 } unless data_present?
 
     # use the largest remainder algorithm so that percentages are whole
     # numbers but always add up to 100

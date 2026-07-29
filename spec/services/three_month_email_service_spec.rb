@@ -100,12 +100,12 @@ RSpec.describe ThreeMonthEmailService, type: :service do
 
     it 'does not email a member already present in member_email_deliveries' do
       expect { perform_enqueued_jobs { call } }
-        .not_to change { MemberEmailDelivery.where(member: already_emailed_student).count }
+        .not_to(change { MemberEmailDelivery.where(member: already_emailed_student).count })
     end
 
     it 'does not email students with a recent attended workshop' do
       expect { perform_enqueued_jobs { call } }
-        .not_to change { MemberEmailDelivery.where(member: student_with_recent_attendance).count }
+        .not_to(change { MemberEmailDelivery.where(member: student_with_recent_attendance).count })
     end
 
     it 'does not email members without a student subscription' do

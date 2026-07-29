@@ -1,7 +1,7 @@
 RSpec.shared_examples 'managing workshop attendance' do
-  context 'a logged in member' do
-    context '#upcoming workshop' do
-      context 'via the workshop page' do
+  context 'when a logged in member' do
+    describe '#upcoming workshop' do
+      context 'when accessing via the workshop page' do
         let!(:tutorial) { Fabricate(:tutorial) }
 
         context 'with only student subscriptions' do
@@ -80,7 +80,7 @@ RSpec.shared_examples 'managing workshop attendance' do
           end
         end
 
-        context 'who has already RSVPed' do
+        context 'when a member has already RSVPed' do
           let(:student) { Fabricate(:student) }
 
           before do
@@ -110,7 +110,7 @@ RSpec.shared_examples 'managing workshop attendance' do
             visit workshop_path(workshop)
           end
 
-          it 'will be prompted to manage their subscriptions' do
+          it 'is prompted to manage their subscriptions' do
             expect(page).to have_text('Please tell us whether you want to attend as a student or coach.')
 
             click_link 'Please tell us whether you want to attend as a student or coach.'
@@ -124,7 +124,7 @@ RSpec.shared_examples 'managing workshop attendance' do
         end
       end
 
-      context 'managing invitations' do
+      context 'when managing invitations' do
         before do
           login(coach)
           visit workshop_path(workshop)
@@ -154,7 +154,10 @@ RSpec.shared_examples 'managing workshop attendance' do
 
         context 'when invitations have been sent out' do
           let(:member) { Fabricate(:member) }
-          let!(:invitation) { Fabricate(:attending_workshop_invitation, member: member, workshop: workshop) }
+
+          before do
+            Fabricate(:attending_workshop_invitation, member: member, workshop: workshop)
+          end
 
           it 'can manage details if they are already attending' do
             login(member)
@@ -179,7 +182,7 @@ RSpec.shared_examples 'managing workshop attendance' do
       end
     end
 
-    context '#past workshop' do
+    describe '#past workshop' do
       let(:workshop) { Fabricate(:workshop, date_and_time: 2.weeks.ago) }
 
       scenario 'cannot interact with a past event' do

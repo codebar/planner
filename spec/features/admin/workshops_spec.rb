@@ -8,7 +8,7 @@ RSpec.feature 'An admin managing workshops', type: :feature do
     member.add_role(:organiser, Chapter)
   end
 
-  context '#views' do
+  describe '#views' do
     scenario 'list of all chapter workshops' do
       workshops = Fabricate.times(2, :workshop, chapter: chapter)
       visit admin_chapter_workshops_path(chapter)
@@ -18,7 +18,7 @@ RSpec.feature 'An admin managing workshops', type: :feature do
       end
     end
 
-    context 'virtual workshop' do
+    context 'with a virtual workshop' do
       let(:workshop) { Fabricate(:virtual_workshop) }
 
       before do
@@ -37,10 +37,10 @@ RSpec.feature 'An admin managing workshops', type: :feature do
     end
   end
 
-  context '#creation' do
-    context 'creating a workshop' do
+  describe '#creation' do
+    context 'when creating a workshop' do
       around do |example|
-        travel_to Time.zone.local(2020, 12, 01, 0, 0, 0)
+        travel_to Time.zone.local(2020, 12, 0o1, 0, 0, 0)
         example.run
         travel_back
       end
@@ -124,7 +124,7 @@ RSpec.feature 'An admin managing workshops', type: :feature do
       end
     end
 
-    context 'creating a virtual workshop' do
+    context 'when creating a virtual workshop' do
       scenario 'must have all the required details set' do
         visit new_admin_workshop_path
 
@@ -164,7 +164,7 @@ RSpec.feature 'An admin managing workshops', type: :feature do
     end
   end
 
-  context 'dietary restrictions' do
+  context 'with dietary restrictions' do
     scenario 'displays dietary restriction badges for attendees' do
       workshop = Fabricate(:workshop)
       attendee = Fabricate(:attending_workshop_invitation, workshop: workshop)
@@ -179,11 +179,11 @@ RSpec.feature 'An admin managing workshops', type: :feature do
     end
   end
 
-  context '#actions' do
-    context 'sending invitations to attendees' do
+  describe '#actions' do
+    context 'when sending invitations to attendees' do
       scenario 'for a workshop' do
         workshop = Fabricate(:workshop)
-        expect(InvitationManager).to receive_message_chain(:new, :send_workshop_emails)
+        expect(InvitationManager).to receive(:new).and_return(double.as_null_object)
 
         visit admin_workshop_send_invites_path(workshop)
         click_on 'Students'
@@ -193,7 +193,7 @@ RSpec.feature 'An admin managing workshops', type: :feature do
 
       scenario 'for a virtual workshop' do
         workshop = Fabricate(:virtual_workshop)
-        expect(InvitationManager).to receive_message_chain(:new, :send_virtual_workshop_emails)
+        expect(InvitationManager).to receive(:new).and_return(double.as_null_object)
 
         visit admin_workshop_send_invites_path(workshop)
         click_on 'Students'
@@ -213,7 +213,7 @@ RSpec.feature 'An admin managing workshops', type: :feature do
       end
     end
 
-    context 'attendee names list' do
+    context 'when viewing the attendee names list' do
       scenario 'viewing a text file with all names' do
         workshop = Fabricate(:workshop)
         attendees = Fabricate.times(2, :attending_workshop_invitation, workshop: workshop)
@@ -232,7 +232,7 @@ RSpec.feature 'An admin managing workshops', type: :feature do
       end
     end
 
-    context 'attendee CSV' do
+    context 'when viewing the attendee CSV' do
       it 'returns a CSV with all workshop attendees' do
         workshop = Fabricate(:workshop)
         visit admin_workshop_path(workshop)
@@ -244,7 +244,7 @@ RSpec.feature 'An admin managing workshops', type: :feature do
       end
     end
 
-    context 'Labels' do
+    context 'with labels' do
       it 'returns a CSV with all workshop participants that can be used to generate the labels' do
         workshop = Fabricate(:workshop)
         # Add an organiser to ensure ORGANISER appears in the CSV

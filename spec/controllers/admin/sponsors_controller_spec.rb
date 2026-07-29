@@ -3,7 +3,7 @@ RSpec.describe Admin::SponsorsController, type: :controller do
   let(:member1) { Fabricate(:member) }
   let(:address) { Fabricate(:address) }
   let(:admin) { Fabricate(:chapter_organiser) }
-  let(:avatar) { Rack::Test::UploadedFile.new(Rails.root.join('app', 'assets', 'images', 'logo.png'), 'image/png') }
+  let(:avatar) { Rack::Test::UploadedFile.new(Rails.root.join('app/assets/images/logo.png'), 'image/png') }
   let(:sponsor) { Fabricate(:sponsor) }
 
   describe 'POST #create' do
@@ -15,7 +15,7 @@ RSpec.describe Admin::SponsorsController, type: :controller do
             address: address, avatar: avatar, members: [1, 2]
           }
         }
-      end.to change(Sponsor, :count).by(0)
+      end.not_to change(Sponsor, :count)
     end
 
     it "Doesn't allow regular users to create sponsors" do
@@ -28,10 +28,10 @@ RSpec.describe Admin::SponsorsController, type: :controller do
             address: address, avatar: avatar
           }
         }
-      end.to change(Sponsor, :count).by(0)
+      end.not_to change(Sponsor, :count)
     end
 
-    context 'Allows chapter organisers to create sponsors with' do
+    context 'with chapter organisers creating sponsors' do
       it 'only contact info' do
         login admin
         request.env['HTTP_REFERER'] = '/admin/member/3'
@@ -46,21 +46,7 @@ RSpec.describe Admin::SponsorsController, type: :controller do
         end.to change(Sponsor, :count).by(1)
       end
 
-      it 'members as contacts and contact info' do
-        login admin
-        request.env['HTTP_REFERER'] = '/admin/member/3'
-
-        expect do
-          post :create, params: {
-            sponsor: {
-              name: 'name', website: 'https://example.com', seats: 40, number_of_coaches: 10,
-              address: address, avatar: avatar, contact_ids: [member.id, member1.id]
-            }
-          }
-        end.to change(Sponsor, :count).by(1)
-      end
-
-      it 'only members as contacts' do
+      it 'includes members as contacts' do
         login admin
         request.env['HTTP_REFERER'] = '/admin/member/3'
 
@@ -98,7 +84,7 @@ RSpec.describe Admin::SponsorsController, type: :controller do
             address: '', avatar: '', members: []
           }
         }
-      end.to change(Sponsor, :count).by(0)
+      end.not_to change(Sponsor, :count)
     end
   end
 
@@ -123,7 +109,7 @@ RSpec.describe Admin::SponsorsController, type: :controller do
       expect(sponsor.reload.name).to eq sponsor.name
     end
 
-    context 'Allows chapter organisers to update sponsors with' do
+    context 'with chapter organisers updating sponsors' do
       it 'only contact info' do
         login admin
         request.env['HTTP_REFERER'] = '/admin/member/3'

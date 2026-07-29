@@ -16,7 +16,7 @@ RSpec.shared_examples DateTimeConcerns do |date_time_type|
     expect(date_time_able.date).to eq('Wed, 22 Aug 2018')
   end
 
-  context '#time' do
+  describe '#time' do
     it 'returns nil if not available' do
       travel_to Time.zone.local(2010, 12, 31, 23, 59, 42) do
         date_time_able = Fabricate.build(date_time_type)
@@ -40,7 +40,7 @@ RSpec.shared_examples DateTimeConcerns do |date_time_type|
     end
   end
 
-  context '#past?' do
+  describe '#past?' do
     it 'returns true for object with datetime before today' do
       travel_to Time.zone.local(2010, 12, 31, 23, 59, 42) do
         date_time_able = Fabricate(date_time_type,

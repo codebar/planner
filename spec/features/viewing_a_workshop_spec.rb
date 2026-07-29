@@ -1,10 +1,10 @@
 RSpec.feature 'Viewing a workshop page', type: :feature do
-  context 'visitor' do
+  context 'when a visitor' do
     before do
       visit workshop_path(workshop)
     end
 
-    context 'workshop' do
+    context 'when workshop' do
       let(:workshop) { Fabricate(:workshop) }
 
       describe '#details' do
@@ -32,7 +32,7 @@ RSpec.feature 'Viewing a workshop page', type: :feature do
       end
     end
 
-    context 'virtual workshop' do
+    context 'with a virtual workshop' do
       let(:workshop) { Fabricate(:virtual_workshop_sponsored, description: Faker::Lorem.sentence) }
 
       describe '#details' do
@@ -62,7 +62,7 @@ RSpec.feature 'Viewing a workshop page', type: :feature do
     end
   end
 
-  context 'member' do
+  context 'when member' do
     include_examples 'member viewing workshop', :workshop, :student, :banned_student
     include_examples 'member viewing workshop', :virtual_workshop, :student, :banned_student
   end

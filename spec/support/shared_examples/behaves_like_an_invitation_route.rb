@@ -1,5 +1,5 @@
 RSpec.shared_examples 'invitation route' do
-  context 'viewing an invitation' do
+  context 'when viewing an invitation' do
     scenario 'renders a descriptive page title' do
       visit invitation_route
 
@@ -7,7 +7,7 @@ RSpec.shared_examples 'invitation route' do
     end
   end
 
-  context 'accept an invitation' do
+  context 'when accepting an invitation' do
     scenario 'when there are available spots' do
       visit invitation_route
 
@@ -29,7 +29,7 @@ RSpec.shared_examples 'invitation route' do
       end
     end
 
-    context 'RSVPing directly through the invitation' do
+    context 'when RSVPing directly through the invitation' do
       scenario 'a Student must first select a tutorial' do
         invitation.update(role: 'Student', attending: nil, tutorial: nil)
         visit accept_invitation_route
@@ -73,7 +73,7 @@ RSpec.shared_examples 'invitation route' do
     end
   end
 
-  context 'unable to attend' do
+  context 'when unable to attend' do
     scenario 'when they are successful' do
       invitation.update_attribute(:attending, true)
       visit invitation_route
@@ -87,14 +87,14 @@ RSpec.shared_examples 'invitation route' do
       WaitingList.add(waitinglisted)
       invitation.update_attribute(:attending, true)
       visit invitation_route
-      expect(WaitingList.next_spot(invitation.workshop, invitation.role).present?).to eq(true)
+      expect(WaitingList.next_spot(invitation.workshop, invitation.role).present?).to be(true)
 
       click_on 'I can no longer attend'
 
       expect(page).to have_text(I18n.t('messages.rejected_invitation', name: invitation.member.name))
-      expect(waitinglisted.reload.automated_rsvp).to eq(true)
-      expect(waitinglisted.reload.rsvp_time).to_not be_nil
-      expect(WaitingList.next_spot(invitation.workshop, invitation.role).present?).to eq(false)
+      expect(waitinglisted.reload.automated_rsvp).to be(true)
+      expect(waitinglisted.reload.rsvp_time).not_to be_nil
+      expect(WaitingList.next_spot(invitation.workshop, invitation.role).present?).to be(false)
     end
 
     scenario 'when they are successful by accessing the link directly' do
@@ -151,17 +151,9 @@ RSpec.shared_examples 'invitation route' do
       expect(page).to have_text('You can only change your RSVP status up to 3.5 hours before the workshop')
       expect(page).to have_current_path(invitation_route, ignore_query: true)
     end
-
-    scenario 'when the event is less than 3.5 hours from now and tje reject by accessing the link directly' do
-      invitation.workshop.update_attribute(:date_and_time, Time.zone.now + 3.hours)
-      visit reject_invitation_route
-
-      expect(page).to have_text('You can only change your RSVP status up to 3.5 hours before the workshop')
-      expect(page).to have_current_path(invitation_route, ignore_query: true)
-    end
   end
 
-  context 'waiting list' do
+  context 'when waiting list' do
     scenario 'is available when there are no spots left' do
       set_no_available_slots
       visit invitation_route

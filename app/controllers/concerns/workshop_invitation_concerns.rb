@@ -12,7 +12,7 @@ module WorkshopInvitationConcerns
 
     def invitation_params
       if params.key?(:workshop_invitation)
-        params.expect(workshop_invitation: [:tutorial, :note])
+        params.expect(workshop_invitation: %i[tutorial note])
       else
         {}
       end

@@ -6,7 +6,7 @@ RSpec.feature 'Managing subscriptions', type: :feature do
     login(member)
   end
 
-  context 'a member can manage its subscriptions' do
+  context 'when a member can manage its subscriptions' do
     scenario '#subscribe' do
       visit subscriptions_path
 
@@ -15,7 +15,7 @@ RSpec.feature 'Managing subscriptions', type: :feature do
     end
 
     scenario '#unsubscribe' do
-      subscription = Fabricate.create(:subscription, member: member, group: group)
+      Fabricate.create(:subscription, member: member, group: group)
       visit subscriptions_path
 
       click_on 'Subscribed'
@@ -23,7 +23,7 @@ RSpec.feature 'Managing subscriptions', type: :feature do
     end
   end
 
-  context 'a member receives a welcome email' do
+  context 'when a member receives a welcome email' do
     before do
       ActionMailer::Base.deliveries.clear
     end

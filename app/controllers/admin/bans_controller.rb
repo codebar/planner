@@ -20,7 +20,7 @@ class Admin::BansController < Admin::ApplicationController
   private
 
   def ban_params
-    params.expect(ban: [:note, :reason, :permanent, :expires_at, :explanation])
+    params.expect(ban: %i[note reason permanent expires_at explanation])
   end
 
   def set_member

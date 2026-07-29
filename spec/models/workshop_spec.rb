@@ -4,10 +4,10 @@ RSpec.describe Workshop do
   include_examples 'Invitable', :workshop_invitation, :workshop
   include_examples DateTimeConcerns, :workshop
 
-  context 'validates' do
+  context 'with validates' do
     it { is_expected.to validate_presence_of(:chapter_id) }
 
-    context '#date_and_time' do
+    describe '#date_and_time' do
       it 'does not validate if chapter_id blank' do
         workshop.chapter_id = nil
         workshop.date_and_time = nil
@@ -23,7 +23,7 @@ RSpec.describe Workshop do
       end
     end
 
-    context '#end_at' do
+    describe '#end_at' do
       it 'does not validate if chapter_id blank' do
         workshop.chapter_id = nil
         workshop.ends_at = nil
@@ -39,8 +39,8 @@ RSpec.describe Workshop do
       end
     end
 
-    context 'if virtual' do
-      before { allow(subject).to receive(:virtual?).and_return(true) }
+    context 'when virtual' do
+      before { allow(workshop).to receive(:virtual?).and_return(true) }
 
       it { is_expected.to validate_presence_of(:slack_channel) }
       it { is_expected.to validate_presence_of(:slack_channel_link) }
@@ -48,7 +48,7 @@ RSpec.describe Workshop do
       it { is_expected.to validate_numericality_of(:coach_spaces).is_greater_than(0) }
     end
 
-    context '#rsvp_date_time_fields_must_be_paired' do
+    describe '#rsvp_date_time_fields_must_be_paired' do
       shared_examples_for 'date_time_fields_must_be_paired' do |prefix|
         let(:date_field) { :"#{prefix}_local_date" }
         let(:time_field) { :"#{prefix}_local_time" }
@@ -109,15 +109,15 @@ RSpec.describe Workshop do
       end
 
       context 'with rsvp_open' do
-        it_should_behave_like 'date_time_fields_must_be_paired', 'rsvp_open'
+        it_behaves_like 'date_time_fields_must_be_paired', 'rsvp_open'
       end
 
       context 'with rsvp_close' do
-        it_should_behave_like 'date_time_fields_must_be_paired', 'rsvp_close'
+        it_behaves_like 'date_time_fields_must_be_paired', 'rsvp_close'
       end
     end
 
-    context '#rsvp_closes_at' do
+    describe '#rsvp_closes_at' do
       it 'must be before the workshop start time' do
         workshop.date_and_time = Time.zone.now + 1.hour
         workshop.rsvp_closes_at = Time.zone.now + 2.hours
@@ -140,12 +140,12 @@ RSpec.describe Workshop do
     end
   end
 
-  context 'time zone fields' do
+  context 'with time zone fields' do
     let(:workshop) { Fabricate.build(:workshop, chapter: Fabricate(:chapter, time_zone: 'Pacific Time (US & Canada)')) }
     let(:pacific_time) { ActiveSupport::TimeZone['Pacific Time (US & Canada)'].local(2015, 6, 12, 18, 30) }
     let(:utc_time) { pacific_time.in_time_zone('UTC') }
 
-    context 'date_and_time' do
+    context 'with date_and_time' do
       it 'saves the local time in UTC' do
         workshop.update!(
           local_date: '12/06/2015',
@@ -163,7 +163,7 @@ RSpec.describe Workshop do
       end
     end
 
-    context 'rsvp_opens_at' do
+    context 'when rsvp_opens_at' do
       it 'saves the local time in UTC' do
         workshop.update!(
           rsvp_open_local_date: '12/06/2015',
@@ -181,7 +181,7 @@ RSpec.describe Workshop do
       end
     end
 
-    context 'rsvp_closes_at' do
+    context 'when rsvp_closes_at' do
       it 'saves the local time in UTC' do
         workshop.update!(
           rsvp_close_local_date: '12/06/2015',
@@ -200,8 +200,8 @@ RSpec.describe Workshop do
     end
   end
 
-  context '#rsvp_available?' do
-    context 'rsvp is available' do
+  describe '#rsvp_available?' do
+    context 'when rsvp is available' do
       it 'when the event is in the future' do
         workshop.date_and_time = 1.day.from_now
 
@@ -221,7 +221,7 @@ RSpec.describe Workshop do
       end
     end
 
-    context 'rsvp is not available' do
+    context 'when rsvp is not available' do
       it 'when rsvp_closes_at is in the past' do
         workshop.rsvp_closes_at = 2.hours.ago
 
@@ -230,7 +230,7 @@ RSpec.describe Workshop do
     end
   end
 
-  context '#to_s' do
+  describe '#to_s' do
     it 'when physical workshop' do
       expect(workshop.to_s).to eq('Workshop')
     end
@@ -241,7 +241,7 @@ RSpec.describe Workshop do
     end
   end
 
-  context '#scopes' do
+  describe '#scopes' do
     describe '#host' do
       it 'includes workshops with sponsored hosts' do
         workshop_sponsor = Fabricate(:workshop_sponsor, host: true)
@@ -261,38 +261,38 @@ RSpec.describe Workshop do
       end
     end
 
-    context 'attendances' do
+    context 'with attendances' do
       it '#attendee? for students' do
-        attendee_invites = 1.times.collect { Fabricate(:workshop_invitation, workshop: workshop, attending: true) }
-        nonattendee_invites = 2.times.collect { Fabricate(:workshop_invitation, workshop: workshop, attending: false) }
+        attendee_invites = Array.new(1) { Fabricate(:workshop_invitation, workshop: workshop, attending: true) }
+        nonattendee_invites = Array.new(2) { Fabricate(:workshop_invitation, workshop: workshop, attending: false) }
 
         attendee_invites.each { |a| expect(workshop.attendee?(a.member)).to be true }
         nonattendee_invites.each { |a| expect(workshop.attendee?(a.member)).to be false }
       end
 
       it '#attendee? for coaches' do
-        attendee_invites = 1.times.collect { Fabricate(:coach_workshop_invitation, workshop: workshop, attending: true) }
-        nonattendee_invites = 2.times.collect { Fabricate(:coach_workshop_invitation, workshop: workshop, attending: false) }
+        attendee_invites = Array.new(1) { Fabricate(:coach_workshop_invitation, workshop: workshop, attending: true) }
+        nonattendee_invites = Array.new(2) { Fabricate(:coach_workshop_invitation, workshop: workshop, attending: false) }
 
         attendee_invites.each { |a| expect(workshop.attendee?(a.member)).to be true }
         nonattendee_invites.each { |a| expect(workshop.attendee?(a.member)).to be false }
       end
     end
 
-    context 'Waitlist attendance' do
+    context 'when waitlist attendance' do
       it '#waitlisted? for students' do
-        invitations = 2.times.collect { Fabricate(:workshop_invitation, workshop: workshop) }
+        invitations = Array.new(2) { Fabricate(:workshop_invitation, workshop: workshop) }
         invitations.each { |invitation| WaitingList.add(invitation) }
-        attendee_invites = 1.times.collect { Fabricate(:workshop_invitation, workshop: workshop, attending: true) }
+        attendee_invites = Array.new(1) { Fabricate(:workshop_invitation, workshop: workshop, attending: true) }
 
         invitations.each { |a| expect(workshop.waitlisted?(a.member)).to be true }
         attendee_invites.each { |a| expect(workshop.waitlisted?(a.member)).to be false }
       end
 
       it '#waitlisted? for coaches' do
-        invitations = 2.times.collect { Fabricate(:coach_workshop_invitation, workshop: workshop) }
+        invitations = Array.new(2) { Fabricate(:coach_workshop_invitation, workshop: workshop) }
         invitations.each { |invitation| WaitingList.add(invitation) }
-        attendee_invites = 1.times.collect { Fabricate(:coach_workshop_invitation, workshop: workshop, attending: true) }
+        attendee_invites = Array.new(1) { Fabricate(:coach_workshop_invitation, workshop: workshop, attending: true) }
 
         invitations.each { |a| expect(workshop.waitlisted?(a.member)).to be true }
         attendee_invites.each { |a| expect(workshop.waitlisted?(a.member)).to be false }
@@ -300,7 +300,7 @@ RSpec.describe Workshop do
     end
   end
 
-  context '#invitable_yet?' do
+  describe '#invitable_yet?' do
     it 'is invitable if invitable set to true, no RSVP open time/date set' do
       workshop = Fabricate.build(:workshop, invitable: true)
       expect(workshop.invitable_yet?).to be true

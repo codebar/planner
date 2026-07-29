@@ -74,7 +74,7 @@ RSpec.describe MemberPresenter do
 
     it 'returns false for organiser of a different chapter' do
       other_chapter = Fabricate(:chapter)
-      other_workshop = Fabricate(:workshop_no_sponsor, chapter: other_chapter)
+      Fabricate(:workshop_no_sponsor, chapter: other_chapter)
       organiser = Fabricate(:member)
       organiser.add_role(:organiser, other_chapter)
       presenter = described_class.new(organiser)

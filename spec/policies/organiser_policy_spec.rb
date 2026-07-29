@@ -1,5 +1,5 @@
 RSpec.describe OrganiserPolicy do
-  subject { described_class.new(user, organiser) }
+  subject(:policy) { described_class.new(user, organiser) }
 
   let(:organiser) { Fabricate(:member) }
   let(:admin) { Fabricate(:member).tap { |m| m.add_role(:admin) } }
@@ -10,7 +10,7 @@ RSpec.describe OrganiserPolicy do
       let(:user) { admin }
 
       it 'permits access' do
-        expect(subject.index?).to be true
+        expect(policy.index?).to be true
       end
     end
 
@@ -18,7 +18,7 @@ RSpec.describe OrganiserPolicy do
       let(:user) { regular_member }
 
       it 'denies access' do
-        expect(subject.index?).to be false
+        expect(policy.index?).to be false
       end
     end
   end
@@ -28,7 +28,7 @@ RSpec.describe OrganiserPolicy do
       let(:user) { admin }
 
       it 'permits access' do
-        expect(subject.create?).to be true
+        expect(policy.create?).to be true
       end
     end
 
@@ -36,7 +36,7 @@ RSpec.describe OrganiserPolicy do
       let(:user) { regular_member }
 
       it 'denies access' do
-        expect(subject.create?).to be false
+        expect(policy.create?).to be false
       end
     end
   end
@@ -46,7 +46,7 @@ RSpec.describe OrganiserPolicy do
       let(:user) { admin }
 
       it 'permits access' do
-        expect(subject.destroy?).to be true
+        expect(policy.destroy?).to be true
       end
     end
 
@@ -54,7 +54,7 @@ RSpec.describe OrganiserPolicy do
       let(:user) { regular_member }
 
       it 'denies access' do
-        expect(subject.destroy?).to be false
+        expect(policy.destroy?).to be false
       end
     end
   end

@@ -2,7 +2,7 @@ RSpec.describe Chapter do
   it { is_expected.to validate_presence_of(:city) }
   it { is_expected.to validate_length_of(:description).is_at_most(280) }
 
-  context 'validations' do
+  context 'with validations' do
     describe '#slug' do
       it 'a chapter must have a slug set' do
         chapter = described_class.new(name: 'London', city: 'London', email: 'london@codebar.io')
@@ -31,10 +31,10 @@ RSpec.describe Chapter do
     end
   end
 
-  context 'scopes' do
+  context 'with scopes' do
     describe '#active' do
       it 'only returns active Chapters' do
-        1.times { Fabricate(:chapter) }
+        Fabricate(:chapter)
         2.times { Fabricate(:chapter, active: false) }
 
         expect(described_class.active.all.count).to eq(1)
@@ -42,7 +42,7 @@ RSpec.describe Chapter do
     end
   end
 
-  context 'cache expiration' do
+  context 'with cache expiration' do
     let(:cache_key) { 'chapters-sidebar' }
 
     it 'expires cache when chapter is created' do

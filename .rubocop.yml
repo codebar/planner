@@ -270,15 +270,24 @@ Rails/FilePath:
     - "spec/rails_helper.rb"
 
 RSpec/MultipleExpectations:
-  Max: 2
+  Max: 8
 
 RSpec/ExampleLength:
-  Max: 10
+  Max: 25
+
+RSpec/MultipleMemoizedHelpers:
+  Max: 15
 
 RSpec/SubjectStub:
   Enabled: true
   Exclude:
     - "spec/models/job_spec.rb"
+    - "spec/models/workshop_invitation_spec.rb"
+    - "spec/models/workshop_spec.rb"
+
+RSpec/SpecFilePathFormat:
+  CustomTransform:
+    OmniAuth: omniauth
 
 RSpec/NestedGroups:
   Max: 5

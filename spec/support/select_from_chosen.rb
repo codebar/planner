@@ -10,7 +10,7 @@ module SelectFromChosen
   def select_from_chosen(item_text, options)
     # Find the native <select>
     field = find_field(options[:from], visible: false)
-    field_id = field[:id]
+    field[:id]
 
     # Find the option matching the text
     option = field.find('option', text: item_text, visible: false)

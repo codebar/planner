@@ -1,7 +1,7 @@
 RSpec.describe Sponsor do
   subject(:sponsor) { Fabricate.build(:sponsor) }
 
-  context 'validations' do
+  context 'with validations' do
     it { is_expected.to validate_presence_of(:name) }
     it { is_expected.to validate_presence_of(:address) }
     it { is_expected.to validate_presence_of(:avatar) }
@@ -12,11 +12,10 @@ RSpec.describe Sponsor do
     it { is_expected.to validate_numericality_of(:number_of_coaches).is_greater_than_or_equal_to(0).only_integer }
     it { is_expected.to validate_numericality_of(:seats).is_greater_than_or_equal_to(0).only_integer }
 
-    context 'scopes' do
+    context 'with scopes' do
       describe 'searching by_name' do
-        let!(:search_sponsor) { Fabricate(:sponsor, name: 'codebar') }
-
         before do
+          Fabricate(:sponsor, name: 'codebar')
           Fabricate.times(2, :sponsor)
         end
 
@@ -34,13 +33,13 @@ RSpec.describe Sponsor do
       end
     end
 
-    context '#website_is_url format' do
+    describe '#website_is_url format' do
       it 'allows full URLs' do
         sponsor.website = 'http://google.com'
 
         sponsor.valid?
 
-        expect(sponsor.errors[:website]).to_not include('must be a full, valid URL')
+        expect(sponsor.errors[:website]).not_to include('must be a full, valid URL')
       end
 
       it 'does not allow nonsense' do
@@ -61,7 +60,7 @@ RSpec.describe Sponsor do
     end
 
     it 'defines enum level' do
-      is_expected.to define_enum_for(:level)
+      expect(sponsor).to define_enum_for(:level)
         .with_values(%i[hidden standard bronze silver gold community])
     end
   end

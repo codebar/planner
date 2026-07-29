@@ -21,8 +21,10 @@ RSpec.describe InvitationManager do
   end
 
   describe '#send_event_emails' do
-    let!(:student_group) { Fabricate(:students, chapter: chapter, members: students) }
-    let!(:coaches_group) { Fabricate(:coaches, chapter: chapter, members: coaches) }
+    before do
+      Fabricate(:students, chapter: chapter, members: students)
+      Fabricate(:coaches, chapter: chapter, members: coaches)
+    end
 
     it 'can email only students' do
       event = Fabricate(:event, chapters: [chapter], audience: 'Students')
@@ -145,7 +147,7 @@ RSpec.describe InvitationManager do
   end
 
   describe '#send_workshop_waiting_list_reminders', :wip do
-    # Note: This test is WIP because the method is async
+    # NOTE: This test is WIP because the method is async
     it 'emails everyone that hasn\'t already been reminded from the workshop\'s waitinglist' do
       workshop = Fabricate(:workshop)
       invitations = Fabricate.times(2, :waitinglist_invitation, workshop: workshop)
@@ -304,7 +306,7 @@ RSpec.describe InvitationManager do
       allow(WorkshopInvitation).to receive(:find_or_initialize_by) do
         call_count += 1
         if call_count == 1
-          raise StandardError.new('database error')
+          raise StandardError, 'database error'
         end
 
         WorkshopInvitation.new(persisted?: true)
@@ -381,6 +383,70 @@ RSpec.describe InvitationManager do
       end.to change { ActionMailer::Base.deliveries.count }.by(1)
 
       expect(invitation.reload.reminded_at).not_to be_nil
+    end
+  end
+
+  describe 'handling deduplication' do
+    let(:member_in_both_groups) { Fabricate(:member, accepted_toc_at: Time.zone.now) }
+
+    describe '#chapter_students' do
+      context 'when a member has multiple subscriptions to the same group type' do
+        before do
+          students_group1 = Fabricate(:group, name: 'Students', chapter: chapter)
+          students_group2 = Fabricate(:group, name: 'Students', chapter: chapter)
+          students_group1.members << member_in_both_groups
+          students_group2.members << member_in_both_groups
+        end
+
+        it 'returns unique members' do
+          result = manager.send(:chapter_students, chapter)
+
+          expect(result.count).to eq(1)
+          expect(result).to contain_exactly(member_in_both_groups)
+        end
+      end
+    end
+
+    describe '#chapter_coaches' do
+      context 'when a member has multiple subscriptions to the same group type' do
+        before do
+          coaches_group1 = Fabricate(:group, name: 'Coaches', chapter: chapter)
+          coaches_group2 = Fabricate(:group, name: 'Coaches', chapter: chapter)
+          coaches_group1.members << member_in_both_groups
+          coaches_group2.members << member_in_both_groups
+        end
+
+        it 'returns unique members' do
+          result = manager.send(:chapter_coaches, chapter)
+
+          expect(result.count).to eq(1)
+          expect(result).to contain_exactly(member_in_both_groups)
+        end
+      end
+    end
+
+    describe 'sending invitations to members in both students and coaches groups' do
+      let(:workshop) { Fabricate(:workshop, chapter: chapter) }
+      let(:students_group) { Fabricate(:group, name: 'Students', chapter: chapter) }
+      let(:coaches_group) { Fabricate(:group, name: 'Coaches', chapter: chapter) }
+
+      before do
+        students_group.members << member_in_both_groups
+        coaches_group.members << member_in_both_groups
+      end
+
+      it 'creates one invitation per role when audience is everyone' do
+        expect do
+          manager.send_workshop_emails(workshop, 'everyone')
+        end.to change(WorkshopInvitation, :count).by(2)
+
+        student_invitation = WorkshopInvitation.find_by(workshop: workshop, member: member_in_both_groups, role: 'Student')
+        coach_invitation = WorkshopInvitation.find_by(workshop: workshop, member: member_in_both_groups, role: 'Coach')
+
+        expect(student_invitation).to be_present
+        expect(coach_invitation).to be_present
+        expect(student_invitation.id).not_to eq(coach_invitation.id)
+      end
     end
   end
 end
