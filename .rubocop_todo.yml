@@ -18,13 +18,6 @@ Capybara/RSpec/VisibilityMatcher:
   Exclude:
     - 'spec/components/chapters_sidebar_component_spec.rb'
 
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: empty_lines, no_empty_lines
-Layout/EmptyLinesAroundBlockBody:
-  Exclude:
-    - 'spec/features/admin/manage_workshop_attendances_spec.rb'
 
 # Offense count: 2
 # This cop supports unsafe autocorrection (--autocorrect-all).
