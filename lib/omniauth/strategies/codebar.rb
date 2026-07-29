@@ -58,12 +58,12 @@ module OmniAuth
         end
 
         code = request.params['code']
-        if code.nil? || code.empty?
+        if code.blank?
           return fail!(:missing_code, StandardError.new('Missing authorization code'))
         end
 
         code_verifier = session.delete('omniauth.codebar.code_verifier')
-        if code_verifier.nil? || code_verifier.empty?
+        if code_verifier.blank?
           return fail!(:missing_pkce, StandardError.new('Missing PKCE verifier'))
         end
 
@@ -74,7 +74,7 @@ module OmniAuth
         end
 
         id_token = tokens['id_token']
-        if id_token.nil? || id_token.empty?
+        if id_token.blank?
           return fail!(:missing_id_token, StandardError.new('Missing id_token in token response'))
         end
 

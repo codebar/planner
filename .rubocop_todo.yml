@@ -272,13 +272,6 @@ RSpec/VerifiedDoubles:
     - 'spec/presenters/virtual_workshop_presenter_spec.rb'
     - 'spec/presenters/workshop_presenter_spec.rb'
 
-# Offense count: 4
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: NilOrEmpty, NotPresent, UnlessPresent.
-Rails/Blank:
-  Exclude:
-    - 'app/controllers/application_controller.rb'
-    - 'lib/omniauth/strategies/codebar.rb'
 
 # Offense count: 1
 # This cop supports unsafe autocorrection (--autocorrect-all).
