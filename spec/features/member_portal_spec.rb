@@ -3,7 +3,7 @@ RSpec.feature 'Member portal', type: :feature do
 
   let(:member) { Fabricate(:member) }
 
-  context 'A signed in member' do
+  context 'when a signed in member' do
     before do
       login(member)
     end
@@ -82,7 +82,7 @@ RSpec.feature 'Member portal', type: :feature do
     end
   end
 
-  context 'A non authenticated visitor to the page' do
+  context 'when a non authenticated visitor to the page' do
     it 'can not access the member portal' do
       visit dashboard_path
 

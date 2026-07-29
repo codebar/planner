@@ -41,7 +41,7 @@ RSpec.feature 'event listing', type: :feature do
     end
   end
 
-  context 'pagination' do
+  context 'when pagination' do
     scenario 'past events paginates at 20 per page' do
       travel_to(Time.current) do
         chapter = Fabricate(:chapter, active: true)

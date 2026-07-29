@@ -1,7 +1,7 @@
 RSpec.feature 'viewing a meeting', type: :feature do
   let!(:meeting) { Fabricate(:meeting) }
 
-  context 'a visitor' do
+  context 'when a visitor' do
     before do
       visit meeting_path(meeting)
     end
@@ -16,7 +16,7 @@ RSpec.feature 'viewing a meeting', type: :feature do
     end
   end
 
-  context 'an authenticated user' do
+  context 'when an authenticated user' do
     let(:member) { Fabricate(:member) }
 
     scenario 'can toggle attendance' do

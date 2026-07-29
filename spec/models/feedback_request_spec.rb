@@ -6,8 +6,8 @@ RSpec.describe FeedbackRequest do
   it { is_expected.to respond_to(:token) }
   it { is_expected.to respond_to(:submited) }
 
-  context 'validations' do
-    context 'presence' do
+  context 'with validations' do
+    context 'with presence' do
       it '#workshop should not be blank' do
         feedback_request = Fabricate.build(:feedback_request, workshop: nil)
 

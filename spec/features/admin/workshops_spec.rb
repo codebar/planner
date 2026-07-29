@@ -18,7 +18,7 @@ RSpec.feature 'An admin managing workshops', type: :feature do
       end
     end
 
-    context 'virtual workshop' do
+    context 'with a virtual workshop' do
       let(:workshop) { Fabricate(:virtual_workshop) }
 
       before do
@@ -38,7 +38,7 @@ RSpec.feature 'An admin managing workshops', type: :feature do
   end
 
   describe '#creation' do
-    context 'creating a workshop' do
+    context 'when creating a workshop' do
       around do |example|
         travel_to Time.zone.local(2020, 12, 0o1, 0, 0, 0)
         example.run
@@ -124,7 +124,7 @@ RSpec.feature 'An admin managing workshops', type: :feature do
       end
     end
 
-    context 'creating a virtual workshop' do
+    context 'when creating a virtual workshop' do
       scenario 'must have all the required details set' do
         visit new_admin_workshop_path
 
@@ -164,7 +164,7 @@ RSpec.feature 'An admin managing workshops', type: :feature do
     end
   end
 
-  context 'dietary restrictions' do
+  context 'with dietary restrictions' do
     scenario 'displays dietary restriction badges for attendees' do
       workshop = Fabricate(:workshop)
       attendee = Fabricate(:attending_workshop_invitation, workshop: workshop)
@@ -180,7 +180,7 @@ RSpec.feature 'An admin managing workshops', type: :feature do
   end
 
   describe '#actions' do
-    context 'sending invitations to attendees' do
+    context 'when sending invitations to attendees' do
       scenario 'for a workshop' do
         workshop = Fabricate(:workshop)
         expect(InvitationManager).to receive(:new).and_return(double.as_null_object)
@@ -213,7 +213,7 @@ RSpec.feature 'An admin managing workshops', type: :feature do
       end
     end
 
-    context 'attendee names list' do
+    context 'when viewing the attendee names list' do
       scenario 'viewing a text file with all names' do
         workshop = Fabricate(:workshop)
         attendees = Fabricate.times(2, :attending_workshop_invitation, workshop: workshop)
@@ -232,7 +232,7 @@ RSpec.feature 'An admin managing workshops', type: :feature do
       end
     end
 
-    context 'attendee CSV' do
+    context 'when viewing the attendee CSV' do
       it 'returns a CSV with all workshop attendees' do
         workshop = Fabricate(:workshop)
         visit admin_workshop_path(workshop)
@@ -244,7 +244,7 @@ RSpec.feature 'An admin managing workshops', type: :feature do
       end
     end
 
-    context 'Labels' do
+    context 'with labels' do
       it 'returns a CSV with all workshop participants that can be used to generate the labels' do
         workshop = Fabricate(:workshop)
         # Add an organiser to ensure ORGANISER appears in the CSV

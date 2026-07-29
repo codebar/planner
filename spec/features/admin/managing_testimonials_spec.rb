@@ -9,7 +9,7 @@ RSpec.feature 'Managing testimonials', type: :feature do
     expect(page).to have_text("You can't be here")
   end
 
-  context 'an admin member' do
+  context 'when an admin member' do
     before do
       login_as_admin(member)
     end

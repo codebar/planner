@@ -9,7 +9,7 @@ RSpec.feature 'Managing organisers', type: :feature do
     expect(current_url).to eq(root_url)
   end
 
-  context 'an admin' do
+  context 'when an admin' do
     before do
       login_as_admin(member)
     end

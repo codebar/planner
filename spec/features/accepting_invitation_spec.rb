@@ -46,8 +46,8 @@ RSpec.feature 'Accepting a workshop invitation', type: :feature do
       end
     end
 
-    context 'amend invitation details' do
-      context 'a student' do
+    context 'when amending invitation details' do
+      context 'when a student' do
         scenario 'cannot accept an invitation without a tutorial' do
           invitation.update(attending: nil, tutorial: nil)
           visit invitation_route
@@ -68,7 +68,7 @@ RSpec.feature 'Accepting a workshop invitation', type: :feature do
         end
       end
 
-      context 'a coach' do
+      context 'when a coach' do
         let(:invitation) { Fabricate(:coach_workshop_invitation, member: member) }
         let(:note) { 'I am most comfortable with being paired in JavaScript' }
 

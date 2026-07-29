@@ -9,7 +9,7 @@ RSpec.feature 'Managing meetings', type: :feature do
     member.add_role(:organiser, Meeting)
   end
 
-  context 'creating a new meeting' do
+  context 'when creating a new meeting' do
     scenario 'successfully' do
       visit new_admin_meeting_path
 
@@ -35,7 +35,7 @@ RSpec.feature 'Managing meetings', type: :feature do
     end
   end
 
-  context 'updating an existing meeting' do
+  context 'when updating an existing meeting' do
     let(:meeting) { Fabricate(:meeting, name: 'August Meeting') }
 
     scenario 'renders an error when no chapter has been selected' do
@@ -75,7 +75,7 @@ RSpec.feature 'Managing meetings', type: :feature do
     end
   end
 
-  context 'retrieving the attendee emails' do
+  context 'when retrieving the attendee emails' do
     let(:meeting) { Fabricate(:meeting) }
 
     scenario 'when format: :text' do
@@ -94,7 +94,7 @@ RSpec.feature 'Managing meetings', type: :feature do
     end
   end
 
-  context 'sending invitations' do
+  context 'when sending invitations' do
     scenario 'sends the invitations' do
       chapter = Fabricate(:chapter_with_groups)
       meeting = Fabricate(:meeting, chapters: [chapter])

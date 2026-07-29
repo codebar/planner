@@ -1,7 +1,7 @@
 RSpec.shared_examples 'managing workshop attendance' do
-  context 'a logged in member' do
+  context 'when a logged in member' do
     describe '#upcoming workshop' do
-      context 'via the workshop page' do
+      context 'when accessing via the workshop page' do
         let!(:tutorial) { Fabricate(:tutorial) }
 
         context 'with only student subscriptions' do
@@ -80,7 +80,7 @@ RSpec.shared_examples 'managing workshop attendance' do
           end
         end
 
-        context 'who has already RSVPed' do
+        context 'when a member has already RSVPed' do
           let(:student) { Fabricate(:student) }
 
           before do
@@ -124,7 +124,7 @@ RSpec.shared_examples 'managing workshop attendance' do
         end
       end
 
-      context 'managing invitations' do
+      context 'when managing invitations' do
         before do
           login(coach)
           visit workshop_path(workshop)

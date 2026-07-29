@@ -51,7 +51,7 @@ RSpec.feature 'when visiting the homepage', type: :feature do
     expect(page).to have_text 'Sign in'
   end
 
-  context 'signing up' do
+  context 'when signing up' do
     scenario 'i can sign up as a student' do
       visit root_path
 

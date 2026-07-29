@@ -1,5 +1,5 @@
 RSpec.describe Role do
-  context 'scopes' do
+  context 'with scopes' do
     let(:student_role) { Fabricate(:student_role) }
     let(:coach_role) { Fabricate(:coach_role) }
 

@@ -25,7 +25,7 @@ RSpec.describe Admin::MemberSearchController, type: :controller do
         expect(response).to have_http_status(:ok)
       end
 
-      context 'and when admin user searches for a single existing user' do
+      context 'when an admin user searches for a single existing user' do
         before do
           allow(Member).to receive(:find_members_by_name).with('Juliet').and_return(fake_relation)
           allow(fake_relation).to receive(:select).with(any_args).and_return([fake_juliet])
@@ -42,7 +42,7 @@ RSpec.describe Admin::MemberSearchController, type: :controller do
         end
       end
 
-      context 'and when an admin user searches and there are multiple results' do
+      context 'when an admin user searches and there are multiple results' do
       let(:fake_romeo) { double('Member', id: 2, name: 'Romeo', surname: 'Capulet') }
 
       before do

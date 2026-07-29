@@ -1,7 +1,7 @@
 RSpec.describe Contact do
   subject(:contact) { Fabricate.build(:contact) }
 
-  context 'validations' do
+  context 'with validations' do
     it { is_expected.to validate_presence_of(:name) }
     it { is_expected.to validate_presence_of(:surname) }
     it { is_expected.to validate_presence_of(:email) }

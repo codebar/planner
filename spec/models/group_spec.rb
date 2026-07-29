@@ -1,7 +1,7 @@
 RSpec.describe Group do
   subject(:group) { Fabricate.build(:group) }
 
-  context 'validations' do
+  context 'with validations' do
     it { is_expected.to validate_presence_of(:name) }
 
     it do

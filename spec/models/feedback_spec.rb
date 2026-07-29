@@ -1,7 +1,7 @@
 RSpec.describe Feedback do
   subject(:feedback) { Fabricate.build(:feedback) }
 
-  context 'validations' do
+  context 'with validations' do
     describe '#rating' do
       it { is_expected.to validate_presence_of(:rating) }
       it { is_expected.to validate_inclusion_of(:rating).in_range(1..5).with_message(/can't be blank/) }

@@ -39,7 +39,7 @@ RSpec.describe WorkshopCalendar do
       expect(calendar.events.count).to eq(1)
     end
 
-    context 'physical workshop' do
+    context 'with a physical workshop' do
       it 'all required details are set' do
         event = calendar.events.first
         expect(event.organizer.to_s).to eq(workshop.chapter.email)
@@ -51,7 +51,7 @@ RSpec.describe WorkshopCalendar do
       end
     end
 
-    context 'virtual workshop' do
+    context 'with a virtual workshop' do
       let(:workshop) { Fabricate(:virtual_workshop) }
 
       it 'all required details are set' do

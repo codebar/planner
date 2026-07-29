@@ -4,7 +4,7 @@ RSpec.describe Workshop do
   include_examples 'Invitable', :workshop_invitation, :workshop
   include_examples DateTimeConcerns, :workshop
 
-  context 'validates' do
+  context 'with validates' do
     it { is_expected.to validate_presence_of(:chapter_id) }
 
     describe '#date_and_time' do
@@ -39,7 +39,7 @@ RSpec.describe Workshop do
       end
     end
 
-    context 'if virtual' do
+    context 'when virtual' do
       before { allow(workshop).to receive(:virtual?).and_return(true) }
 
       it { is_expected.to validate_presence_of(:slack_channel) }
@@ -140,12 +140,12 @@ RSpec.describe Workshop do
     end
   end
 
-  context 'time zone fields' do
+  context 'with time zone fields' do
     let(:workshop) { Fabricate.build(:workshop, chapter: Fabricate(:chapter, time_zone: 'Pacific Time (US & Canada)')) }
     let(:pacific_time) { ActiveSupport::TimeZone['Pacific Time (US & Canada)'].local(2015, 6, 12, 18, 30) }
     let(:utc_time) { pacific_time.in_time_zone('UTC') }
 
-    context 'date_and_time' do
+    context 'with date_and_time' do
       it 'saves the local time in UTC' do
         workshop.update!(
           local_date: '12/06/2015',
@@ -163,7 +163,7 @@ RSpec.describe Workshop do
       end
     end
 
-    context 'rsvp_opens_at' do
+    context 'when rsvp_opens_at' do
       it 'saves the local time in UTC' do
         workshop.update!(
           rsvp_open_local_date: '12/06/2015',
@@ -181,7 +181,7 @@ RSpec.describe Workshop do
       end
     end
 
-    context 'rsvp_closes_at' do
+    context 'when rsvp_closes_at' do
       it 'saves the local time in UTC' do
         workshop.update!(
           rsvp_close_local_date: '12/06/2015',
@@ -201,7 +201,7 @@ RSpec.describe Workshop do
   end
 
   describe '#rsvp_available?' do
-    context 'rsvp is available' do
+    context 'when rsvp is available' do
       it 'when the event is in the future' do
         workshop.date_and_time = 1.day.from_now
 
@@ -221,7 +221,7 @@ RSpec.describe Workshop do
       end
     end
 
-    context 'rsvp is not available' do
+    context 'when rsvp is not available' do
       it 'when rsvp_closes_at is in the past' do
         workshop.rsvp_closes_at = 2.hours.ago
 
@@ -261,7 +261,7 @@ RSpec.describe Workshop do
       end
     end
 
-    context 'attendances' do
+    context 'with attendances' do
       it '#attendee? for students' do
         attendee_invites = 1.times.collect { Fabricate(:workshop_invitation, workshop: workshop, attending: true) }
         nonattendee_invites = 2.times.collect { Fabricate(:workshop_invitation, workshop: workshop, attending: false) }
@@ -279,7 +279,7 @@ RSpec.describe Workshop do
       end
     end
 
-    context 'Waitlist attendance' do
+    context 'when waitlist attendance' do
       it '#waitlisted? for students' do
         invitations = 2.times.collect { Fabricate(:workshop_invitation, workshop: workshop) }
         invitations.each { |invitation| WaitingList.add(invitation) }

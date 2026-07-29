@@ -5,7 +5,7 @@ RSpec.feature 'Admin::Sponsors', type: :feature do
     login_as_admin(manager)
   end
 
-  context 'Sponsors list' do
+  context 'when viewing the sponsors list' do
     let(:sponsor) { Fabricate(:sponsor) }
     let(:sponsor2) { Fabricate(:sponsor) }
 
@@ -85,7 +85,7 @@ RSpec.feature 'Admin::Sponsors', type: :feature do
     end
   end
 
-  context 'Sponsor page' do
+  context 'when viewing the sponsor page' do
     let(:sponsor) { Fabricate(:sponsor_with_contacts) }
 
     before do
@@ -105,7 +105,7 @@ RSpec.feature 'Admin::Sponsors', type: :feature do
       expect(page).to have_text(sponsor.address.street)
     end
 
-    context 'sponsorships' do
+    context 'with sponsorships' do
       scenario 'when no sponsorships' do
         within '#sponsorships' do
           expect(page).to have_text('No sponsorships')
@@ -154,7 +154,7 @@ RSpec.feature 'Admin::Sponsors', type: :feature do
       end
     end
 
-    context 'activities' do
+    context 'with activities' do
       scenario 'when there are activities' do
         contact = sponsor.contacts.first
         audit = Auditor::Audit.new(sponsor, 'sponsor.admin_contact_subscribe', manager, contact)
@@ -183,7 +183,7 @@ RSpec.feature 'Admin::Sponsors', type: :feature do
     end
   end
 
-  context 'Editing a sponsor' do
+  context 'when editing a sponsor' do
     let(:sponsor) { Fabricate(:sponsor_full) }
 
     it 'can set contact information' do
@@ -222,7 +222,7 @@ RSpec.feature 'Admin::Sponsors', type: :feature do
     end
   end
 
-  context 'Sponsor contacts page' do
+  context 'when viewing the sponsor contacts page' do
     let!(:sponsor) { Fabricate(:sponsor_with_contacts) }
     let!(:sponsor_no_contacts) { Fabricate(:sponsor) }
 

@@ -4,7 +4,7 @@ RSpec.describe Event do
   include_examples 'Invitable', :invitation, :event
   include_examples DateTimeConcerns, :event
 
-  context 'validates' do
+  context 'with validates' do
     it { is_expected.to validate_presence_of(:name) }
     it { is_expected.to validate_presence_of(:slug) }
     it { is_expected.to validate_presence_of(:info) }
