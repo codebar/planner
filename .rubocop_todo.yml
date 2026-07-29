@@ -164,13 +164,6 @@ Naming/AccessorMethodName:
     - 'app/controllers/admin/workshops_controller.rb'
     - 'app/controllers/feedback_controller.rb'
 
-# Offense count: 2
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: EnforcedStyleForLeadingUnderscores.
-# SupportedStylesForLeadingUnderscores: disallowed, required, optional
-Naming/MemoizedInstanceVariableName:
-  Exclude:
-    - 'app/presenters/member_presenter.rb'
 
 # Offense count: 1
 # Configuration parameters: EnforcedStyle, AllowedPatterns, ForbiddenIdentifiers, ForbiddenPatterns.
