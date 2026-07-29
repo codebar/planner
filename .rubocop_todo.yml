@@ -196,12 +196,6 @@ Naming/PredicatePrefix:
     - 'app/policies/event_policy.rb'
     - 'app/policies/workshop_policy.rb'
 
-# Offense count: 1
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: SafeMultiline.
-Performance/DeletePrefix:
-  Exclude:
-    - 'spec/support/rake_tasks.rb'
 
 # Offense count: 16
 # This cop supports unsafe autocorrection (--autocorrect-all).
