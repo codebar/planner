@@ -85,7 +85,7 @@ class Admin::ChaptersController < Admin::ApplicationController
     @dormant = rows.select { |r| r[:workshops] == 0 && r[:chapter].active? }
                    .sort_by { |r| -(r[:eligible_students] + r[:eligible_coaches]) }
 
-    @inactive = rows.select { |r| !r[:chapter].active? }
+    @inactive = rows.reject { |r| r[:chapter].active? }
                     .sort_by { |r| -(r[:eligible_students] + r[:eligible_coaches]) }
 
     @at_risk_ids = @active.select { |r| r[:recent_workshops] == 0 }.map { |r| r[:chapter].id }.to_set

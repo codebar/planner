@@ -382,12 +382,6 @@ Rails/UniqueValidationWithoutIndex:
     - 'app/models/workshop_invitation.rb'
     - 'app/models/workshop_sponsor.rb'
 
-# Offense count: 1
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: InverseMethods, InverseBlocks.
-Style/InverseMethods:
-  Exclude:
-    - 'app/controllers/admin/chapters_controller.rb'
 
 # Offense count: 1
 # This cop supports unsafe autocorrection (--autocorrect-all).
