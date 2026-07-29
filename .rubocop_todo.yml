@@ -386,12 +386,6 @@ Rails/UniqueValidationWithoutIndex:
 
 
 
-# Offense count: 2
-# This cop supports unsafe autocorrection (--autocorrect-all).
-Style/RedundantInterpolation:
-  Exclude:
-    - 'script/benchmark_events.rb'
-    - 'spec/features/admin/sponsor_spec.rb'
 
 # Offense count: 1
 # This cop supports unsafe autocorrection (--autocorrect-all).

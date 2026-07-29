@@ -26,7 +26,7 @@ puts "=== Database: #{ActiveRecord::Base.connection_db_config.database} ===\n\n"
   cold_t, cold_q = measure(session, path)
   warm = 3.times.map { measure(session, path).first }
 
-  puts "#{path}"
+  puts path.to_s
   puts "  cold: #{cold_t.round(3)}s | #{cold_q} queries"
   puts "  warm: #{warm.sort[1].round(3)}s (min #{warm.min.round(3)}, max #{warm.max.round(3)})"
   puts
