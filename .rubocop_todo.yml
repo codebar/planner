@@ -273,13 +273,6 @@ RSpec/VerifiedDoubles:
     - 'spec/presenters/workshop_presenter_spec.rb'
 
 
-# Offense count: 1
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: AllowedMethods, AllowedPatterns.
-# AllowedMethods: order, limit, select, lock
-Rails/FindEach:
-  Exclude:
-    - 'lib/tasks/feedback.rake'
 
 # Offense count: 5
 Rails/HasAndBelongsToMany:
