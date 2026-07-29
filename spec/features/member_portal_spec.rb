@@ -71,7 +71,7 @@ RSpec.feature 'Member portal', type: :feature do
     end
 
     it 'can view the invitations they RSVPed to' do
-      invitations = 2.times.map { Fabricate(:attending_workshop_invitation, member: member) }
+      invitations = Array.new(2) { Fabricate(:attending_workshop_invitation, member: member) }
       visit invitations_path
 
       expect(page).to have_text('Invitations')

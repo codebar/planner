@@ -36,7 +36,7 @@ class FeedbackController < ApplicationController
   private
 
   def feedback_params
-    params.expect(feedback: [:coach_id, :tutorial_id, :request, :rating, :suggestions])
+    params.expect(feedback: %i[coach_id tutorial_id request rating suggestions])
   end
 
   def set_coaches(workshop)

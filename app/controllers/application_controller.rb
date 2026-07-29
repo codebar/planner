@@ -150,7 +150,7 @@ class ApplicationController < ActionController::Base
   end
 
   def locale_value
-    return I18n.default_locale unless cookies[:locale].present?
+    return I18n.default_locale if cookies[:locale].blank?
     return I18n.default_locale unless I18n.available_locales.include?(cookies[:locale].to_sym)
 
     cookies[:locale]

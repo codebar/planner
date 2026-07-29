@@ -18,13 +18,6 @@ Capybara/RSpec/VisibilityMatcher:
   Exclude:
     - 'spec/components/chapters_sidebar_component_spec.rb'
 
-# Offense count: 1
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: empty_lines, no_empty_lines
-Layout/EmptyLinesAroundBlockBody:
-  Exclude:
-    - 'spec/features/admin/manage_workshop_attendances_spec.rb'
 
 # Offense count: 2
 # This cop supports unsafe autocorrection (--autocorrect-all).
@@ -171,13 +164,6 @@ Naming/AccessorMethodName:
     - 'app/controllers/admin/workshops_controller.rb'
     - 'app/controllers/feedback_controller.rb'
 
-# Offense count: 2
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: EnforcedStyleForLeadingUnderscores.
-# SupportedStylesForLeadingUnderscores: disallowed, required, optional
-Naming/MemoizedInstanceVariableName:
-  Exclude:
-    - 'app/presenters/member_presenter.rb'
 
 # Offense count: 1
 # Configuration parameters: EnforcedStyle, AllowedPatterns, ForbiddenIdentifiers, ForbiddenPatterns.
@@ -203,23 +189,7 @@ Naming/PredicatePrefix:
     - 'app/policies/event_policy.rb'
     - 'app/policies/workshop_policy.rb'
 
-# Offense count: 1
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: SafeMultiline.
-Performance/DeletePrefix:
-  Exclude:
-    - 'spec/support/rake_tasks.rb'
 
-# Offense count: 16
-# This cop supports unsafe autocorrection (--autocorrect-all).
-Performance/TimesMap:
-  Exclude:
-    - 'script/benchmark_events.rb'
-    - 'spec/features/chapter_spec.rb'
-    - 'spec/features/member_portal_spec.rb'
-    - 'spec/models/concerns/listable_spec.rb'
-    - 'spec/models/event_spec.rb'
-    - 'spec/models/workshop_spec.rb'
 
 # Offense count: 2
 RSpec/AnyInstance:
@@ -292,21 +262,7 @@ RSpec/VerifiedDoubles:
     - 'spec/presenters/virtual_workshop_presenter_spec.rb'
     - 'spec/presenters/workshop_presenter_spec.rb'
 
-# Offense count: 4
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: NilOrEmpty, NotPresent, UnlessPresent.
-Rails/Blank:
-  Exclude:
-    - 'app/controllers/application_controller.rb'
-    - 'lib/omniauth/strategies/codebar.rb'
 
-# Offense count: 1
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: AllowedMethods, AllowedPatterns.
-# AllowedMethods: order, limit, select, lock
-Rails/FindEach:
-  Exclude:
-    - 'lib/tasks/feedback.rake'
 
 # Offense count: 5
 Rails/HasAndBelongsToMany:
@@ -335,11 +291,6 @@ Rails/HelperInstanceVariable:
   Exclude:
     - 'app/helpers/email_helper.rb'
 
-# Offense count: 1
-# This cop supports unsafe autocorrection (--autocorrect-all).
-Rails/IndexWith:
-  Exclude:
-    - 'app/presenters/how_you_found_us_presenter.rb'
 
 # Offense count: 2
 # Configuration parameters: IgnoreScopes.
@@ -370,13 +321,6 @@ Rails/SkipsModelValidations:
     - 'app/controllers/workshop_invitation_controller.rb'
     - 'app/services/invitation_logger.rb'
 
-# Offense count: 1
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: strict, flexible
-Rails/TimeZone:
-  Exclude:
-    - 'spec/models/member_spec.rb'
 
 # Offense count: 8
 Rails/UniqueValidationWithoutIndex:
@@ -389,82 +333,11 @@ Rails/UniqueValidationWithoutIndex:
     - 'app/models/workshop_invitation.rb'
     - 'app/models/workshop_sponsor.rb'
 
-# Offense count: 1
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: InverseMethods, InverseBlocks.
-Style/InverseMethods:
-  Exclude:
-    - 'app/controllers/admin/chapters_controller.rb'
 
-# Offense count: 1
-# This cop supports unsafe autocorrection (--autocorrect-all).
-Style/LineEndConcatenation:
-  Exclude:
-    - 'spec/presenters/address_presenter_spec.rb'
 
-# Offense count: 3
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: EnforcedStyle, AllowedMethods, AllowedPatterns.
-# SupportedStyles: predicate, comparison
-Style/NumericPredicate:
-  Exclude:
-    - 'app/controllers/admin/chapters_controller.rb'
 
-# Offense count: 1
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: EnforcedStyle, AllowedCompactTypes.
-# SupportedStyles: compact, exploded
-Style/RaiseArgs:
-  Exclude:
-    - 'spec/services/invitation_manager_spec.rb'
 
-# Offense count: 2
-# This cop supports unsafe autocorrection (--autocorrect-all).
-Style/RedundantInterpolation:
-  Exclude:
-    - 'script/benchmark_events.rb'
-    - 'spec/features/admin/sponsor_spec.rb'
 
-# Offense count: 1
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: ConvertCodeThatCanStartToReturnNil, AllowedMethods, MaxChainLength.
-# AllowedMethods: present?, blank?, presence, try, try!
-Style/SafeNavigation:
-  Exclude:
-    - 'script/benchmark_events.rb'
 
-# Offense count: 8
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: Mode.
-Style/StringConcatenation:
-  Exclude:
-    - 'app/controllers/admin/events_controller.rb'
-    - 'app/helpers/application_helper.rb'
-    - 'app/presenters/workshop_presenter.rb'
-    - 'spec/features/admin/chapters_spec.rb'
-    - 'spec/features/admin/manage_sponsor_spec.rb'
-    - 'spec/presenters/workshop_presenter_spec.rb'
 
-# Offense count: 10
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle, MinSize.
-# SupportedStyles: percent, brackets
-Style/SymbolArray:
-  Exclude:
-    - 'app/controllers/admin/bans_controller.rb'
-    - 'app/controllers/admin/chapters_controller.rb'
-    - 'app/controllers/admin/member_notes_controller.rb'
-    - 'app/controllers/admin/member_search_controller.rb'
-    - 'app/controllers/admin/sponsors_controller.rb'
-    - 'app/controllers/concerns/workshop_invitation_concerns.rb'
-    - 'app/controllers/contact_preferences_controller.rb'
-    - 'app/controllers/feedback_controller.rb'
-    - 'app/controllers/payments_controller.rb'
 
-# Offense count: 1
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: AllowMethodsWithArguments, AllowedMethods, AllowedPatterns, AllowComments.
-# AllowedMethods: define_method, mail, respond_to
-Style/SymbolProc:
-  Exclude:
-    - 'spec/helpers/email_header_helper_spec.rb'

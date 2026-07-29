@@ -121,8 +121,7 @@ RSpec.describe WorkshopPresenter do
       MemberPresenter.new(student)
 
       expect(presenter.pairing_csv)
-        .to eq(WorkshopPresenter::PAIRING_HEADINGS.join(',') + "\n" +
-               student_pairing_array.join(',') + "\n")
+        .to eq("#{WorkshopPresenter::PAIRING_HEADINGS.join(',')}\n#{student_pairing_array.join(',')}\n")
     end
   end
 

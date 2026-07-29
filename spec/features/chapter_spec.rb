@@ -39,7 +39,7 @@ RSpec.feature 'viewing a Chapter', type: :feature do
     it 'renders any upcoming workshops for the chapter' do
       travel_to(Time.current) do
         chapter = Fabricate(:chapter)
-        workshops = 2.times.map do |n|
+        workshops = Array.new(2) do |n|
           Fabricate(:workshop, chapter: chapter, date_and_time: 9.days.from_now - n.weeks)
         end
 
@@ -53,7 +53,7 @@ RSpec.feature 'viewing a Chapter', type: :feature do
     it 'renders any upcoming events for the chapter' do
       travel_to(Time.current) do
         chapter = Fabricate(:chapter)
-        2.times.map do |n|
+        Array.new(2) do |n|
           Fabricate(:event, name: "Event #{n + 1}",
                             chapters: [chapter],
                             date_and_time: 2.months.from_now - n.months)
@@ -80,7 +80,7 @@ RSpec.feature 'viewing a Chapter', type: :feature do
     it 'renders the 6 most recent sponsors for the chapter' do
       travel_to(Time.current) do
         chapter = Fabricate(:chapter)
-        workshops = 2.times.map do |n|
+        workshops = Array.new(2) do |n|
           Fabricate(:workshop, chapter: chapter, date_and_time: n.weeks.ago)
         end
 

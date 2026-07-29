@@ -122,7 +122,7 @@ RSpec.feature 'Admin::Sponsors', type: :feature do
 
         within '#sponsorships' do
           expect(page).to have_text('Workshops')
-          expect(page).to have_text("#{sponsored_workshop.chapter.name}")
+          expect(page).to have_text(sponsored_workshop.chapter.name.to_s)
           expect(page).to have_text("#{hosted_workshop.chapter.name} (host)")
         end
       end

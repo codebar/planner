@@ -22,7 +22,7 @@ RSpec.describe EmailHeaderHelper, type: :helper do
         expect(kwargs).to include(from: 'codebar.io <meetings@codebar.io>')
         expect(block).to be_a(Proc)
       end
-      helper.mail_to_member(member, 'Test Subject') { |format| format.html }
+      helper.mail_to_member(member, 'Test Subject', &:html)
     end
 
     it 'returns SkippedEmail for nil email' do

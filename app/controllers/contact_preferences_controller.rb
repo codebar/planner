@@ -24,7 +24,7 @@ class ContactPreferencesController < ApplicationController
   end
 
   def contact_preferences
-    params.expect(contact: [:token, :mailing_list_consent])
+    params.expect(contact: %i[token mailing_list_consent])
   end
 
   def mailing_list_consent

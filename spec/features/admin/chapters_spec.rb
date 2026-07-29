@@ -45,7 +45,7 @@ RSpec.feature 'Chapters', type: :feature do
         fill_in 'Email', with: 'brighton@codebar.io'
         fill_in 'City', with: 'Brighton'
         fill_in 'Description', with: 'Description for Brighton chapter'
-        attach_file('Image', Rails.root + 'spec/support/chapter-image.png')
+        attach_file('Image', Rails.root.join('spec/support/chapter-image.png'))
 
         click_on 'Update chapter'
 

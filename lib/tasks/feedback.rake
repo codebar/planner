@@ -4,7 +4,7 @@ namespace :feedback do
     workshops = Workshop.completed_since_yesterday
     Rails.logger.info 'Sending Feedback request emails' if workshops.any?
     workshops.each do |workshop|
-      WorkshopInvitation.accepted.where(workshop: workshop, role: 'Student').each do |invitation|
+      WorkshopInvitation.accepted.where(workshop: workshop, role: 'Student').find_each do |invitation|
         feedback_request = FeedbackRequest.create(member: invitation.member, workshop: workshop, submited: false)
         FeedbackRequestMailer.request_feedback(workshop, invitation.member, feedback_request).deliver_now
       end

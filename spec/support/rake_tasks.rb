@@ -4,7 +4,7 @@ module TaskExampleGroup
   extend ActiveSupport::Concern
 
   included do
-    let(:task_name) { self.class.top_level_description.sub(/\Arake /, '') }
+    let(:task_name) { self.class.top_level_description.delete_prefix('rake ') }
     let(:tasks) { Rake::Task }
 
     subject(:task) { tasks[task_name] }
