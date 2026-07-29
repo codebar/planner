@@ -21,7 +21,7 @@ puts "=== Database: #{ActiveRecord::Base.connection_db_config.database} ===\n\n"
 
 %w[/events/upcoming /events/past /events/past?page=2].each do |path|
   ActiveRecord::Base.connection.query_cache.clear
-  Rails.cache.clear if Rails.cache
+  Rails.cache&.clear
 
   cold_t, cold_q = measure(session, path)
   warm = 3.times.map { measure(session, path).first }

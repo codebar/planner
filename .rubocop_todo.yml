@@ -387,13 +387,6 @@ Rails/UniqueValidationWithoutIndex:
 
 
 
-# Offense count: 1
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: ConvertCodeThatCanStartToReturnNil, AllowedMethods, MaxChainLength.
-# AllowedMethods: present?, blank?, presence, try, try!
-Style/SafeNavigation:
-  Exclude:
-    - 'script/benchmark_events.rb'
 
 # Offense count: 8
 # This cop supports unsafe autocorrection (--autocorrect-all).
