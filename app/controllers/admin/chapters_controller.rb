@@ -79,16 +79,16 @@ class Admin::ChaptersController < Admin::ApplicationController
       }
     end
 
-    @active = rows.select { |r| r[:workshops] > 0 }
+    @active = rows.select { |r| r[:workshops].positive? }
                   .sort_by { |r| [-r[:workshops], -(r[:eligible_students] + r[:eligible_coaches])] }
 
-    @dormant = rows.select { |r| r[:workshops] == 0 && r[:chapter].active? }
+    @dormant = rows.select { |r| r[:workshops].zero? && r[:chapter].active? }
                    .sort_by { |r| -(r[:eligible_students] + r[:eligible_coaches]) }
 
     @inactive = rows.reject { |r| r[:chapter].active? }
                     .sort_by { |r| -(r[:eligible_students] + r[:eligible_coaches]) }
 
-    @at_risk_ids = @active.select { |r| r[:recent_workshops] == 0 }.map { |r| r[:chapter].id }.to_set
+    @at_risk_ids = @active.select { |r| r[:recent_workshops].zero? }.map { |r| r[:chapter].id }.to_set
   end
 
   def members
