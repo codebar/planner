@@ -349,16 +349,5 @@ Rails/UniqueValidationWithoutIndex:
 
 
 
-# Offense count: 8
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: Mode.
-Style/StringConcatenation:
-  Exclude:
-    - 'app/controllers/admin/events_controller.rb'
-    - 'app/helpers/application_helper.rb'
-    - 'app/presenters/workshop_presenter.rb'
-    - 'spec/features/admin/chapters_spec.rb'
-    - 'spec/features/admin/manage_sponsor_spec.rb'
-    - 'spec/presenters/workshop_presenter_spec.rb'
 
 

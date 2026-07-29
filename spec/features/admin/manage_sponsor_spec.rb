@@ -14,7 +14,7 @@ RSpec.feature 'Managing sponsors', type: :feature do
 
         fill_in 'sponsor_name', with: 'Sponsor name'
         fill_in 'Website', with: 'https://www.sponsorname.com/'
-        attach_file('Avatar', Rails.root + 'spec/support/codebar-logo.png')
+        attach_file('Avatar', "#{Rails.root}spec/support/codebar-logo.png")
         fill_in 'Student spots', with: 20
         fill_in 'Coach spots', with: 10
         select 'Bronze', from: 'Level'
@@ -31,7 +31,7 @@ RSpec.feature 'Managing sponsors', type: :feature do
 
         fill_in 'sponsor_name', with: ''
         fill_in 'Website', with: 'https://www.sponsorname.com/'
-        attach_file('Avatar', Rails.root + 'spec/support/codebar-logo.png')
+        attach_file('Avatar', "#{Rails.root}spec/support/codebar-logo.png")
         fill_in 'Student spots', with: 20
         fill_in 'Coach spots', with: 10
 
@@ -47,7 +47,7 @@ RSpec.feature 'Managing sponsors', type: :feature do
 
         fill_in 'sponsor_name', with: ''
         fill_in 'Website', with: 'https://www.sponsorname.com/'
-        attach_file('Avatar', Rails.root + 'spec/support/codebar-logo.png')
+        attach_file('Avatar', "#{Rails.root}spec/support/codebar-logo.png")
         fill_in 'Student spots', with: 20
         fill_in 'Coach spots', with: 10
 

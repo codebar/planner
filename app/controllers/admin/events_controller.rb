@@ -57,7 +57,7 @@ class Admin::EventsController < Admin::ApplicationController
     students = event.student_emails.join(', ')
     coaches = event.coach_emails.join(', ')
 
-    @list = "STUDENTS\n\n" + students + "\n\nCOACHES\n\n" + coaches
+    @list = "STUDENTS\n\n#{students}\n\nCOACHES\n\n#{coaches}"
 
     return render plain: @list if request.format.text?
 

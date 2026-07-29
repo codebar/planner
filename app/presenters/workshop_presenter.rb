@@ -39,7 +39,7 @@ class WorkshopPresenter < EventPresenter
   end
 
   def attendees_checklist
-    "Students\n\n" + students_checklist + "\n\n\n\nCoaches\n\n" + coaches_checklist
+    "Students\n\n#{students_checklist}\n\n\n\nCoaches\n\n#{coaches_checklist}"
   end
 
   def attendees_emails
