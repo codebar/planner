@@ -1,7 +1,7 @@
 class Admin::MemberSearchController < Admin::ApplicationController
   def index
     search_params = if params.key?(:member_search)
-                      params.expect(member_search: [:name, :callback_url])
+                      params.expect(member_search: %i[name callback_url])
     else
                       {}
     end

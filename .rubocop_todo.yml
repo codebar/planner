@@ -438,21 +438,6 @@ Style/StringConcatenation:
     - 'spec/features/admin/manage_sponsor_spec.rb'
     - 'spec/presenters/workshop_presenter_spec.rb'
 
-# Offense count: 10
-# This cop supports safe autocorrection (--autocorrect).
-# Configuration parameters: EnforcedStyle, MinSize.
-# SupportedStyles: percent, brackets
-Style/SymbolArray:
-  Exclude:
-    - 'app/controllers/admin/bans_controller.rb'
-    - 'app/controllers/admin/chapters_controller.rb'
-    - 'app/controllers/admin/member_notes_controller.rb'
-    - 'app/controllers/admin/member_search_controller.rb'
-    - 'app/controllers/admin/sponsors_controller.rb'
-    - 'app/controllers/concerns/workshop_invitation_concerns.rb'
-    - 'app/controllers/contact_preferences_controller.rb'
-    - 'app/controllers/feedback_controller.rb'
-    - 'app/controllers/payments_controller.rb'
 
 # Offense count: 1
 # This cop supports unsafe autocorrection (--autocorrect-all).

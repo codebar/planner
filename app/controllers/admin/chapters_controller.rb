@@ -104,7 +104,7 @@ class Admin::ChaptersController < Admin::ApplicationController
   private
 
   def chapter_params
-    params.expect(chapter: [:name, :email, :city, :time_zone, :description, :image])
+    params.expect(chapter: %i[name email city time_zone description image])
   end
 
   def set_chapter
