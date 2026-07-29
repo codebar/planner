@@ -1,5 +1,4 @@
 RSpec.shared_examples 'email with social link colours' do
-  # rubocop:disable RSpec/MultipleExpectations
   it 'inlines social link background colours from the stylesheet' do
     send_email
 
@@ -12,5 +11,4 @@ RSpec.shared_examples 'email with social link colours' do
     expect(html).to match(/background-color: (red|#FF0000)/i)
     expect(html).not_to include('/assets/email.css')
   end
-  # rubocop:enable RSpec/MultipleExpectations
 end
