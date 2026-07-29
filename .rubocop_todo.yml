@@ -383,11 +383,6 @@ Rails/UniqueValidationWithoutIndex:
     - 'app/models/workshop_sponsor.rb'
 
 
-# Offense count: 1
-# This cop supports unsafe autocorrection (--autocorrect-all).
-Style/LineEndConcatenation:
-  Exclude:
-    - 'spec/presenters/address_presenter_spec.rb'
 
 # Offense count: 3
 # This cop supports unsafe autocorrection (--autocorrect-all).
