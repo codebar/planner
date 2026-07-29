@@ -18,7 +18,7 @@ RSpec.describe FeedbackRequestMailer do
     end
   end
 
-  context 'workshop' do
+  context 'when workshop' do
     let(:workshop) { Fabricate(:workshop, title: 'HTML & CSS') }
 
     it '#request_feedback' do
@@ -31,7 +31,7 @@ RSpec.describe FeedbackRequestMailer do
     end
   end
 
-  context 'virtual workshop' do
+  context 'with a virtual workshop' do
     let(:workshop) { Fabricate(:virtual_workshop) }
 
     it '#request_feedback' do

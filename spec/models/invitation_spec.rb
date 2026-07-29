@@ -1,11 +1,11 @@
 RSpec.describe Invitation do
   it_behaves_like InvitationConcerns, :invitation, :event
 
-  context 'defaults' do
+  context 'with defaults' do
     it { is_expected.to have_attributes(attending: nil) }
   end
 
-  context 'validations' do
+  context 'with validations' do
     it { is_expected.to validate_presence_of(:event) }
     it { is_expected.to validate_presence_of(:member) }
     it { is_expected.to validate_uniqueness_of(:member_id).scoped_to(:event_id, :role) }

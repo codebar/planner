@@ -3,17 +3,17 @@ RSpec.describe WorkshopInvitation do
 
   it_behaves_like InvitationConcerns, :workshop_invitation, :workshop
 
-  context 'defaults' do
+  context 'with defaults' do
     it { is_expected.to have_attributes(attending: nil) }
     it { is_expected.to have_attributes(attended: nil) }
   end
 
-  context 'validates' do
+  context 'with validates' do
     it { is_expected.to validate_presence_of(:workshop) }
     it { is_expected.to validate_uniqueness_of(:member_id).scoped_to(:workshop_id, :role) }
     it { is_expected.to validate_inclusion_of(:role).in_array(%w[Student Coach]) }
 
-    context 'if Student invitation' do
+    context 'when Student invitation' do
       before { allow(workshop_invitation).to receive(:student_attending?).and_return(true) }
 
       it { is_expected.to validate_presence_of(:tutorial) }
@@ -21,7 +21,7 @@ RSpec.describe WorkshopInvitation do
     end
   end
 
-  context 'scopes' do
+  context 'with scopes' do
     describe '#attended' do
       it 'ignores when attended nil' do
         Fabricate(:workshop_invitation, attended: nil)

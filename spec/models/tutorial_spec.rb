@@ -6,7 +6,7 @@ RSpec.describe Tutorial do
   it { is_expected.to respond_to(:url) }
   it { is_expected.to respond_to(:workshop) }
 
-  context 'validations' do
+  context 'with validations' do
     it '#title' do
       tutorial = Fabricate.build(:tutorial, title: nil)
 

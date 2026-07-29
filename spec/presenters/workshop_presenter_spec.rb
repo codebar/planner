@@ -79,7 +79,7 @@ RSpec.describe WorkshopPresenter do
     end
   end
 
-  context 'time formatting' do
+  context 'with time formatting' do
     it '#start_time and #end_time' do
       travel_to(Time.current) do
         workshop = double(:workshop, date_and_time: Time.current, ends_at: 1.hour.from_now)

@@ -11,7 +11,7 @@ RSpec.feature 'Subscribing to the newsletter', type: :feature do
     )
   end
 
-  context 'A new member' do
+  context 'when a new member' do
     scenario 'is subscribed to the newsletter by default' do
       mailing_list = double(:mailing_list)
       expect(Services::MailingList).to receive(:new).and_return(mailing_list)
@@ -56,7 +56,7 @@ RSpec.feature 'Subscribing to the newsletter', type: :feature do
     end
   end
 
-  context 'An existing member can manage its newsletter subscription from the subscriptions page' do
+  context 'when an existing member can manage its newsletter subscription from the subscriptions page' do
     scenario 'can subscribe' do
       member = Fabricate(:member)
 

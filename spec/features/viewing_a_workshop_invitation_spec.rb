@@ -5,7 +5,7 @@ RSpec.feature 'Viewing a workshop invitation', :wip, type: :feature do
     visit invitation_path(invitation)
   end
 
-  context 'physical workshop' do
+  context 'with a physical workshop' do
     let(:workshop) { Fabricate(:workshop) }
 
     scenario 'workshop and page title' do
@@ -14,13 +14,13 @@ RSpec.feature 'Viewing a workshop invitation', :wip, type: :feature do
     end
 
     describe '#introduction' do
-      context 'student' do
+      context 'when a student' do
         scenario 'displays information for a physical workshop' do
           expect(page).to have_text('Please make sure you bring your laptop')
         end
       end
 
-      context 'coach' do
+      context 'when a coach' do
         scenario 'displays information for a physical workshop' do
           expect(page).to have_text('PS: There will also be food at the workshop.')
         end
@@ -53,7 +53,7 @@ RSpec.feature 'Viewing a workshop invitation', :wip, type: :feature do
     include_examples 'viewing workshop details'
   end
 
-  context 'virtual workshop' do
+  context 'with a virtual workshop' do
     let(:workshop) { Fabricate(:virtual_workshop_sponsored) }
 
     scenario 'workshop and page title' do
@@ -62,13 +62,13 @@ RSpec.feature 'Viewing a workshop invitation', :wip, type: :feature do
     end
 
     describe '#introduction' do
-      context 'student' do
+      context 'when a student' do
         scenario 'does not display information about the physical workshop' do
           expect(page).to have_no_text('Please make sure you bring your laptop')
         end
       end
 
-      context 'coach' do
+      context 'when a coach' do
         scenario 'does not displays information about the physical workshop' do
           expect(page).to have_no_text('PS: There will also be food at the workshop.')
         end

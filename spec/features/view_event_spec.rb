@@ -2,12 +2,12 @@ RSpec.feature 'viewing an event', type: :feature do
   let(:closed_event) { Fabricate(:event, confirmation_required: true, surveys_required: true) }
   let(:open_event) { Fabricate(:event, confirmation_required: false, surveys_required: false) }
 
-  context 'that requires a survey and verification of spot' do
+  context 'with a survey and verification of spot' do
     before do
       visit event_path(closed_event)
     end
 
-    context 'a non authenticated user' do
+    context 'when a non authenticated user' do
       scenario 'a user can view an event' do
         expect(page).to have_text(closed_event.name)
         expect(page).to have_text(closed_event.description)
@@ -27,14 +27,14 @@ RSpec.feature 'viewing an event', type: :feature do
       end
     end
 
-    context 'an authenticated user' do
+    context 'when an authenticated user' do
       let(:member) { Fabricate(:member) }
 
       before do
         login_mock_omniauth(member, 'Log in')
       end
 
-      context 'can RSVP to an event' do
+      context 'when user can RSVP to an event' do
         scenario 'as a Coach' do
           expect(page).to have_current_path(event_path(closed_event), ignore_query: true)
 
@@ -54,7 +54,7 @@ RSpec.feature 'viewing an event', type: :feature do
         end
       end
 
-      context 'can not RSVP to an event' do
+      context 'when user can not RSVP to an event' do
         it 'that is now in the past' do
           expect(page).to have_current_path(event_path(closed_event), ignore_query: true)
 
@@ -70,19 +70,19 @@ RSpec.feature 'viewing an event', type: :feature do
     end
   end
 
-  context 'that does not require survey or spot verification' do
+  context 'without a survey or spot verification' do
     before do
       visit event_path(open_event)
     end
 
-    context 'an authenticated user' do
+    context 'when an authenticated user' do
       let(:member) { Fabricate(:member) }
 
       before do
         login_mock_omniauth(member, 'Log in')
       end
 
-      context 'can RSVP to an event' do
+      context 'when user can RSVP to an event' do
         scenario 'as a Coach' do
           expect(page).to have_current_path(event_path(open_event), ignore_query: true)
 
@@ -104,7 +104,7 @@ RSpec.feature 'viewing an event', type: :feature do
         end
       end
 
-      context 'can not RSVP to an event' do
+      context 'when user can not RSVP to an event' do
         it 'that is now in the past' do
           expect(page).to have_current_path(event_path(open_event), ignore_query: true)
 

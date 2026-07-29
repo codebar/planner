@@ -93,7 +93,7 @@ RSpec.feature 'Managing sponsors', type: :feature do
   describe 'adding contact information to a sponsor' do
     let(:sponsor) { Fabricate(:sponsor) }
 
-    context 'adding contact details' do
+    context 'when adding contact details' do
       it 'adds a new contact entry' do
         visit edit_admin_sponsor_path(sponsor)
 

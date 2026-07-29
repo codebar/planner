@@ -1,5 +1,5 @@
 RSpec.shared_examples 'invitation route' do
-  context 'viewing an invitation' do
+  context 'when viewing an invitation' do
     scenario 'renders a descriptive page title' do
       visit invitation_route
 
@@ -7,7 +7,7 @@ RSpec.shared_examples 'invitation route' do
     end
   end
 
-  context 'accept an invitation' do
+  context 'when accepting an invitation' do
     scenario 'when there are available spots' do
       visit invitation_route
 
@@ -29,7 +29,7 @@ RSpec.shared_examples 'invitation route' do
       end
     end
 
-    context 'RSVPing directly through the invitation' do
+    context 'when RSVPing directly through the invitation' do
       scenario 'a Student must first select a tutorial' do
         invitation.update(role: 'Student', attending: nil, tutorial: nil)
         visit accept_invitation_route
@@ -73,7 +73,7 @@ RSpec.shared_examples 'invitation route' do
     end
   end
 
-  context 'unable to attend' do
+  context 'when unable to attend' do
     scenario 'when they are successful' do
       invitation.update_attribute(:attending, true)
       visit invitation_route
@@ -153,7 +153,7 @@ RSpec.shared_examples 'invitation route' do
     end
   end
 
-  context 'waiting list' do
+  context 'when waiting list' do
     scenario 'is available when there are no spots left' do
       set_no_available_slots
       visit invitation_route

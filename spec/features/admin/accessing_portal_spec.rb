@@ -7,7 +7,7 @@ RSpec.feature 'admin portal', type: :feature do
     expect(current_url).to eq(root_url)
   end
 
-  context 'an admin user' do
+  context 'when an admin user' do
     let(:member) { Fabricate(:member) }
 
     before do

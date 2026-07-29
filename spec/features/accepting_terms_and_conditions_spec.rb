@@ -1,5 +1,5 @@
 RSpec.feature 'Accepting Terms and Conditions', type: :feature do
-  context 'When a user signs up to codebar' do
+  context 'when a user signs up to codebar' do
     before do
       mock_github_auth
     end
@@ -46,8 +46,8 @@ RSpec.feature 'Accepting Terms and Conditions', type: :feature do
     end
   end
 
-  context 'When an existing member logs in' do
-    context "and they have not yet accepted codebar's ToCs" do
+  context 'when an existing member logs in' do
+    context "when they have not yet accepted codebar's ToCs" do
       scenario 'they have to accept before continuing to the page they want to get' do
         member = Fabricate(:member_without_toc)
         login(member)
@@ -59,7 +59,7 @@ RSpec.feature 'Accepting Terms and Conditions', type: :feature do
       end
     end
 
-    context "and they have already accepted codebar's ToCs" do
+    context "when they have already accepted codebar's ToCs" do
       scenario 'they will be redirected to the link they were trying to access' do
         member = Fabricate(:member)
         login(member)
@@ -80,7 +80,7 @@ RSpec.feature 'Accepting Terms and Conditions', type: :feature do
     end
   end
 
-  context 'When a guest user (not logged in) visits the page' do
+  context 'when a guest user (not logged in) visits the page' do
     scenario 'they see a login prompt and cannot accept the ToCs' do
       visit terms_and_conditions_path
 

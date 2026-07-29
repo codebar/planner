@@ -2,7 +2,7 @@ RSpec.describe Meeting do
   include_examples 'Invitable', :meeting_invitation, :meeting
   include_examples DateTimeConcerns, :meeting
 
-  context 'validations' do
+  context 'with validations' do
     subject(:meeting) { Fabricate(:meeting) }
 
     it { is_expected.to validate_presence_of(:date_and_time) }

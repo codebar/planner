@@ -31,7 +31,7 @@ RSpec.describe Admin::SponsorsController, type: :controller do
       end.not_to change(Sponsor, :count)
     end
 
-    context 'Allows chapter organisers to create sponsors with' do
+    context 'with chapter organisers creating sponsors' do
       it 'only contact info' do
         login admin
         request.env['HTTP_REFERER'] = '/admin/member/3'
@@ -109,7 +109,7 @@ RSpec.describe Admin::SponsorsController, type: :controller do
       expect(sponsor.reload.name).to eq sponsor.name
     end
 
-    context 'Allows chapter organisers to update sponsors with' do
+    context 'with chapter organisers updating sponsors' do
       it 'only contact info' do
         login admin
         request.env['HTTP_REFERER'] = '/admin/member/3'

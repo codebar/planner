@@ -1,5 +1,5 @@
 RSpec.describe Ban do
-  context 'validates' do
+  context 'with validates' do
     it { is_expected.to validate_presence_of(:expires_at) }
     it { is_expected.to validate_presence_of(:reason) }
     it { is_expected.to validate_presence_of(:note) }
@@ -20,8 +20,8 @@ RSpec.describe Ban do
     end
   end
 
-  context 'scope' do
-    context 'active' do
+  context 'with scope' do
+    context 'when active' do
       it 'includes bans expiring in the future' do
         ban = Fabricate(:ban, expires_at: Time.zone.now + 1.minute)
         expect(described_class.active).to include(ban)

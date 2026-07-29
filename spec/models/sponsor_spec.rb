@@ -1,7 +1,7 @@
 RSpec.describe Sponsor do
   subject(:sponsor) { Fabricate.build(:sponsor) }
 
-  context 'validations' do
+  context 'with validations' do
     it { is_expected.to validate_presence_of(:name) }
     it { is_expected.to validate_presence_of(:address) }
     it { is_expected.to validate_presence_of(:avatar) }
@@ -12,7 +12,7 @@ RSpec.describe Sponsor do
     it { is_expected.to validate_numericality_of(:number_of_coaches).is_greater_than_or_equal_to(0).only_integer }
     it { is_expected.to validate_numericality_of(:seats).is_greater_than_or_equal_to(0).only_integer }
 
-    context 'scopes' do
+    context 'with scopes' do
       describe 'searching by_name' do
         before do
           Fabricate(:sponsor, name: 'codebar')

@@ -13,7 +13,7 @@ RSpec.feature 'member feedback', type: :feature do
     Fabricate(:attended_workshop_invitation, workshop: feedback_request.workshop, member: coach, role: 'Coach')
   end
 
-  context 'Feedback form' do
+  context 'when viewing the feedback form' do
     scenario 'I can access the feedback form when the token is valid' do
       visit feedback_path(valid_token)
 
@@ -85,7 +85,7 @@ RSpec.feature 'member feedback', type: :feature do
     end
   end
 
-  context 'I get redirected to the main page' do
+  context 'when I get redirected to the main page' do
     scenario 'when invalid token given' do
       visit feedback_path(invalid_token)
 
@@ -101,7 +101,7 @@ RSpec.feature 'member feedback', type: :feature do
     end
   end
 
-  context 'Submitting a feedback request' do
+  context 'when submitting a feedback request' do
     scenario 'I can see success page with message and link to homepage when valid data is given', :js do
       visit feedback_path(valid_token)
 

@@ -1,6 +1,6 @@
 RSpec.feature 'managing workshop attendances', type: :feature do
 
-  context 'an admin' do
+  context 'when an admin' do
     let(:member) { Fabricate(:member) }
     let(:chapter) { Fabricate(:chapter) }
     let(:workshop) { Fabricate(:workshop, chapter: chapter) }

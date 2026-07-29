@@ -1,5 +1,5 @@
 RSpec.feature 'viewing a Chapter', type: :feature do
-  context 'non active chapters' do
+  context 'with non-active chapters' do
     let(:inactive_chapter) { Fabricate(:chapter, active: false) }
 
     it 'a visitor to the website cannot access non active chapters' do
@@ -19,7 +19,7 @@ RSpec.feature 'viewing a Chapter', type: :feature do
     end
   end
 
-  context 'active chapters' do
+  context 'with active chapters' do
     it 'a visitor to the website cannot access non existing chapter pages' do
       visit chapter_path('test')
 
