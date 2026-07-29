@@ -301,11 +301,6 @@ Rails/HelperInstanceVariable:
   Exclude:
     - 'app/helpers/email_helper.rb'
 
-# Offense count: 1
-# This cop supports unsafe autocorrection (--autocorrect-all).
-Rails/IndexWith:
-  Exclude:
-    - 'app/presenters/how_you_found_us_presenter.rb'
 
 # Offense count: 2
 # Configuration parameters: IgnoreScopes.
