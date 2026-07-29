@@ -4,6 +4,9 @@ class InvitationManager
 
     invite_coaches_to_event(event, chapter) unless event.audience.eql?('Students')
     invite_students_to_event(event, chapter) unless event.audience.eql?('Coaches')
+  rescue StandardError => e
+    Rollbar.error(e, event_id: event.id, chapter_id: chapter.id)
+    raise
   end
   handle_asynchronously :send_event_emails
 
@@ -120,7 +123,7 @@ class InvitationManager
       invitation = Invitation.new(event: event, member: student, role: 'Student')
       next unless invitation.save
 
-      EventInvitationMailer.invite_student(event, student, invitation).deliver_now
+      EventInvitationMailer.invite_student(event, student, invitation).deliver_later
     rescue StandardError => e
       log_event_meeting_invitation_failure("event_id=#{event.id}", student, e)
     end
@@ -131,7 +134,7 @@ class InvitationManager
       invitation = Invitation.new(event: event, member: coach, role: 'Coach')
       next unless invitation.save
 
-      EventInvitationMailer.invite_coach(event, coach, invitation).deliver_now
+      EventInvitationMailer.invite_coach(event, coach, invitation).deliver_later
     rescue StandardError => e
       log_event_meeting_invitation_failure("event_id=#{event.id}", coach, e)
     end
