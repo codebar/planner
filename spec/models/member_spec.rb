@@ -76,7 +76,7 @@ RSpec.describe Member do
         it 'returns notes for the most recent five workshops' do
           latest_workshops = (1..6).map do |time_ago|
             Fabricate.create(:workshop_invitation, member: member) do
-              workshop { Fabricate(:workshop, date_and_time: Time.now - (7 * time_ago).days) }
+              workshop { Fabricate(:workshop, date_and_time: Time.zone.now - (7 * time_ago).days) }
               attended { true }
             end
           end
