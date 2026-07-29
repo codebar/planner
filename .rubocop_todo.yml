@@ -401,10 +401,3 @@ Style/StringConcatenation:
     - 'spec/presenters/workshop_presenter_spec.rb'
 
 
-# Offense count: 1
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: AllowMethodsWithArguments, AllowedMethods, AllowedPatterns, AllowComments.
-# AllowedMethods: define_method, mail, respond_to
-Style/SymbolProc:
-  Exclude:
-    - 'spec/helpers/email_header_helper_spec.rb'
