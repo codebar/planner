@@ -306,7 +306,7 @@ RSpec.describe InvitationManager do
       allow(WorkshopInvitation).to receive(:find_or_initialize_by) do
         call_count += 1
         if call_count == 1
-          raise StandardError.new('database error')
+          raise StandardError, 'database error'
         end
 
         WorkshopInvitation.new(persisted?: true)
