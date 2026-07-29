@@ -190,16 +190,6 @@ Naming/PredicatePrefix:
     - 'app/policies/workshop_policy.rb'
 
 
-# Offense count: 16
-# This cop supports unsafe autocorrection (--autocorrect-all).
-Performance/TimesMap:
-  Exclude:
-    - 'script/benchmark_events.rb'
-    - 'spec/features/chapter_spec.rb'
-    - 'spec/features/member_portal_spec.rb'
-    - 'spec/models/concerns/listable_spec.rb'
-    - 'spec/models/event_spec.rb'
-    - 'spec/models/workshop_spec.rb'
 
 # Offense count: 2
 RSpec/AnyInstance:

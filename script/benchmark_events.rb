@@ -24,7 +24,7 @@ puts "=== Database: #{ActiveRecord::Base.connection_db_config.database} ===\n\n"
   Rails.cache&.clear
 
   cold_t, cold_q = measure(session, path)
-  warm = 3.times.map { measure(session, path).first }
+  warm = Array.new(3) { measure(session, path).first }
 
   puts path
   puts "  cold: #{cold_t.round(3)}s | #{cold_q} queries"

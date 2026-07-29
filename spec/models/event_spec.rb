@@ -86,8 +86,8 @@ RSpec.describe Event do
   describe '#verified_students' do
     it 'returns all students who have verified their attendance' do
       event = Fabricate(:event)
-      1.times.map { Fabricate(:invitation, event: event, attending: true) }
-      2.times.map { Fabricate(:invitation, event: event, attending: true, verified: true) }
+      Array.new(1) { Fabricate(:invitation, event: event, attending: true) }
+      Array.new(2) { Fabricate(:invitation, event: event, attending: true, verified: true) }
 
       expect(event.verified_students.count).to eq(2)
     end

@@ -61,7 +61,7 @@ RSpec.describe Listable do
       it 'returns a list of the last 10 workshops' do
         Fabricate.times(1, :past_workshop)
         Fabricate.times(2, :workshop)
-        recent_workshops = 10.times.map do |n|
+        recent_workshops = Array.new(10) do |n|
           Fabricate(:workshop, date_and_time: n.days.ago)
         end
 
