@@ -183,21 +183,23 @@ RSpec.feature 'An admin managing workshops', type: :feature do
     context 'when sending invitations to attendees' do
       scenario 'for a workshop' do
         workshop = Fabricate(:workshop)
-        expect(InvitationManager).to receive(:new).and_return(double.as_null_object)
+        allow(InvitationManager).to receive(:new).and_return(double.as_null_object)
 
         visit admin_workshop_send_invites_path(workshop)
         click_on 'Students'
 
+        expect(InvitationManager).to have_received(:new)
         expect(page).to have_text('Invitations to students are being emailed out')
       end
 
       scenario 'for a virtual workshop' do
         workshop = Fabricate(:virtual_workshop)
-        expect(InvitationManager).to receive(:new).and_return(double.as_null_object)
+        allow(InvitationManager).to receive(:new).and_return(double.as_null_object)
 
         visit admin_workshop_send_invites_path(workshop)
         click_on 'Students'
 
+        expect(InvitationManager).to have_received(:new)
         expect(page).to have_text('Invitations to students are being emailed out')
       end
     end

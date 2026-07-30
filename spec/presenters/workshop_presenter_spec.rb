@@ -53,9 +53,11 @@ RSpec.describe WorkshopPresenter do
   end
 
   it '#venue' do
-    expect(workshop).to receive(:host)
+    allow(workshop).to receive(:host)
 
     presenter.venue
+
+    expect(workshop).to have_received(:host)
   end
 
   describe '#organisers' do
@@ -98,7 +100,7 @@ RSpec.describe WorkshopPresenter do
     let(:workshop) { instance_double(Workshop, attendances: invitations) }
 
     it 'correctly returns the formatted list of workshop participants' do
-      expect(presenter).to receive(:organisers).at_least(:once).and_return [invitations.last.member]
+      allow(presenter).to receive(:organisers).and_return [invitations.last.member]
       expect(presenter.attendees_csv).not_to be_blank
 
       invitations.each do |invitation|
@@ -108,6 +110,8 @@ RSpec.describe WorkshopPresenter do
       expect(presenter.attendees_csv).to include('ORGANISER')
       expect(presenter.attendees_csv).to include('STUDENT')
       expect(presenter.attendees_csv).to include('COACH')
+
+      expect(presenter).to have_received(:organisers).at_least(:once)
     end
   end
 
@@ -142,17 +146,21 @@ RSpec.describe WorkshopPresenter do
 
   describe '#coach_spaces' do
     it 'returns the available coach_spots' do
-      expect(host).to receive(:coach_spots)
+      allow(host).to receive(:coach_spots)
 
       presenter.coach_spaces
+
+      expect(host).to have_received(:coach_spots)
     end
   end
 
   describe '#student_spaces' do
     it 'returns the available coach_spots' do
-      expect(host).to receive(:seats)
+      allow(host).to receive(:seats)
 
       presenter.student_spaces
+
+      expect(host).to have_received(:seats)
     end
   end
 

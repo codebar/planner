@@ -14,8 +14,8 @@ RSpec.feature 'Subscribing to the newsletter', type: :feature do
   context 'when a new member' do
     scenario 'is subscribed to the newsletter by default' do
       mailing_list = instance_double(Services::MailingList)
-      expect(Services::MailingList).to receive(:new).and_return(mailing_list)
-      expect(mailing_list).to receive(:subscribe).with('jane@codebar.io', 'Jane', 'Doe')
+      allow(Services::MailingList).to receive(:new).and_return(mailing_list)
+      allow(mailing_list).to receive(:subscribe).with('jane@codebar.io', 'Jane', 'Doe')
 
       visit new_member_path
       click_on 'Join us as a coach'
@@ -30,12 +30,14 @@ RSpec.feature 'Subscribing to the newsletter', type: :feature do
       find_by_id('member_how_you_found_us_from_a_friend').click
 
       click_on 'Next'
+
+      expect(mailing_list).to have_received(:subscribe).with('jane@codebar.io', 'Jane', 'Doe')
     end
 
     scenario 'can opt out of the newsletter' do
       mailing_list = instance_double(Services::MailingList)
-      expect(Services::MailingList).to receive(:new).and_return(mailing_list)
-      expect(mailing_list).to receive(:unsubscribe).with('jane@codebar.io')
+      allow(Services::MailingList).to receive(:new).and_return(mailing_list)
+      allow(mailing_list).to receive(:unsubscribe).with('jane@codebar.io')
 
       visit new_member_path
       click_on 'Join us as a coach'
@@ -53,6 +55,8 @@ RSpec.feature 'Subscribing to the newsletter', type: :feature do
       uncheck 'newsletter'
 
       click_on 'Next'
+
+      expect(mailing_list).to have_received(:unsubscribe).with('jane@codebar.io')
     end
   end
 
@@ -63,12 +67,13 @@ RSpec.feature 'Subscribing to the newsletter', type: :feature do
       login member
 
       mailing_list = instance_double(Services::MailingList)
-      expect(Services::MailingList).to receive(:new).and_return(mailing_list)
-      expect(mailing_list).to receive(:subscribe)
+      allow(Services::MailingList).to receive(:new).and_return(mailing_list)
+      allow(mailing_list).to receive(:subscribe)
 
       visit subscriptions_path
       click_on 'Subscribe to newsletter'
 
+      expect(mailing_list).to have_received(:subscribe)
       expect(page).to have_text('You have subscribed to codebar\'s newsletter')
     end
 
@@ -78,12 +83,13 @@ RSpec.feature 'Subscribing to the newsletter', type: :feature do
       login member
 
       mailing_list = instance_double(Services::MailingList)
-      expect(Services::MailingList).to receive(:new).and_return(mailing_list)
-      expect(mailing_list).to receive(:unsubscribe)
+      allow(Services::MailingList).to receive(:new).and_return(mailing_list)
+      allow(mailing_list).to receive(:unsubscribe)
 
       visit subscriptions_path
       click_on 'Unsubscribe from newsletter'
 
+      expect(mailing_list).to have_received(:unsubscribe)
       expect(page).to have_text('You have unsubscribed from codebar\'s newsletter')
     end
 
@@ -93,19 +99,19 @@ RSpec.feature 'Subscribing to the newsletter', type: :feature do
       login member
 
       mailing_list = instance_double(Services::MailingList)
-      expect(Services::MailingList).to receive(:new).and_return(mailing_list)
-      expect(mailing_list).to receive(:subscribe)
+      allow(Services::MailingList).to receive(:new).and_return(mailing_list)
+      allow(mailing_list).to receive(:subscribe)
+      allow(mailing_list).to receive(:unsubscribe)
 
       visit subscriptions_path
       click_on 'Subscribe to newsletter'
 
+      expect(mailing_list).to have_received(:subscribe)
       expect(page).to have_text('You have subscribed to codebar\'s newsletter')
-
-      expect(Services::MailingList).to receive(:new).and_return(mailing_list)
-      expect(mailing_list).to receive(:unsubscribe)
 
       click_on 'Unsubscribe from newsletter'
 
+      expect(mailing_list).to have_received(:unsubscribe)
       expect(page).to have_text('You have unsubscribed from codebar\'s newsletter')
     end
   end

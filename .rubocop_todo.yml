@@ -204,30 +204,6 @@ RSpec/ExampleLength:
   Exclude:
     - 'spec/features/admin/event_spec.rb'
 
-# Offense count: 68
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: have_received, receive
-RSpec/MessageSpies:
-  Exclude:
-    - 'spec/controllers/admin/members_controller_spec.rb'
-    - 'spec/controllers/payments_controller_spec.rb'
-    - 'spec/features/admin/workshops_spec.rb'
-    - 'spec/features/subscribing_to_newsletter_spec.rb'
-    - 'spec/helpers/email_header_helper_spec.rb'
-    - 'spec/lib/services/mailing_list_spec.rb'
-    - 'spec/lib/tasks/feedback_rake_spec.rb'
-    - 'spec/lib/tasks/mailing_list_rake_spec.rb'
-    - 'spec/lib/tasks/reminders_meeting_rake_spec.rb'
-    - 'spec/lib/tasks/reminders_workshop_rake_spec.rb'
-    - 'spec/presenters/meeting_presenter_spec.rb'
-    - 'spec/presenters/member_presenter_spec.rb'
-    - 'spec/presenters/sponsor_presenter_spec.rb'
-    - 'spec/presenters/virtual_workshop_presenter_spec.rb'
-    - 'spec/presenters/workshop_presenter_spec.rb'
-    - 'spec/services/invitation_manager_spec.rb'
-    - 'spec/support/shared_examples/behaves_like_an_invitation.rb'
-    - 'spec/support/shared_examples/behaves_like_sending_workshop_emails.rb'
-
 # Offense count: 3
 # Configuration parameters: Max.
 RSpec/MultipleExpectations:

@@ -18,21 +18,29 @@ RSpec.describe 'rake mailing_list:subscribe_active_members', type: :task do
     subscribed[0...3].each { |member| Fabricate(:subscription, member: member) }
 
     newslettter = Services::MailingList.new(:id)
-    expect(Services::MailingList).to receive(:new).and_return(newslettter)
+    allow(Services::MailingList).to receive(:new).and_return(newslettter)
 
     subscribed.each do |subscriber|
-      expect(newslettter).to receive(:subscribe).with(subscriber.email,
-                                                      subscriber.name,
-                                                      subscriber.surname).once
-    end
-
-    non_subscribed.each do |inactive_subscriber|
-      expect(newslettter).not_to receive(:subscribe).with(inactive_subscriber.email,
-                                                          inactive_subscriber.name,
-                                                          inactive_subscriber.surname)
+      allow(newslettter).to receive(:subscribe).with(subscriber.email,
+                                                     subscriber.name,
+                                                     subscriber.surname).once
     end
 
     task.execute
+
+    expect(Services::MailingList).to have_received(:new)
+
+    subscribed.each do |subscriber|
+      expect(newslettter).to have_received(:subscribe).with(subscriber.email,
+                                                            subscriber.name,
+                                                            subscriber.surname).once
+    end
+
+    non_subscribed.each do |inactive_subscriber|
+      expect(newslettter).not_to have_received(:subscribe).with(inactive_subscriber.email,
+                                                                inactive_subscriber.name,
+                                                                inactive_subscriber.surname)
+    end
 
     subscribed.each { |subscriber| expect(subscriber.reload.opt_in_newsletter_at).not_to be_nil }
   end
