@@ -18,14 +18,6 @@ Capybara/RSpec/VisibilityMatcher:
   Exclude:
     - 'spec/components/chapters_sidebar_component_spec.rb'
 
-# Offense count: 2
-# This cop supports unsafe autocorrection (--autocorrect-all).
-# Configuration parameters: AllowSafeAssignment.
-Lint/AssignmentInCondition:
-  Exclude:
-    - 'app/controllers/application_controller.rb'
-    - 'app/models/feedback.rb'
-
 # Offense count: 1
 # Configuration parameters: AllowedMethods.
 # AllowedMethods: enums

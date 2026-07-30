@@ -169,7 +169,8 @@ class ApplicationController < ActionController::Base
   end
 
   def redirect_back(fallback_location:, **args)
-    if referer = request.headers['Referer']
+    referer = request.headers['Referer']
+    if referer
       redirect_to referer, **args
     else
       redirect_to fallback_location, **args
