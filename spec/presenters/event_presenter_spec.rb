@@ -49,7 +49,6 @@ RSpec.describe EventPresenter do
   describe '#time' do
     it 'when no end_time is set it only returns the start_time' do
       event = double(:event, date_and_time: Time.zone.now,
-                             start_time: Time.zone.now,
                              ends_at: nil)
       presenter = described_class.new(event)
 
@@ -58,7 +57,6 @@ RSpec.describe EventPresenter do
 
     it 'when a start and an end_time are set it returns a formatted start and end_time' do
       event = double(:event, date_and_time: Time.zone.now,
-                             start_time: Time.zone.now,
                              ends_at: 1.hour.from_now)
       presenter = described_class.new(event)
 

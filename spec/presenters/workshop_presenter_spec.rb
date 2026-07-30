@@ -157,7 +157,7 @@ RSpec.describe WorkshopPresenter do
   end
 
   describe '#spaces?' do
-    let(:sponsor) { double(:sponsor, coach_spots: 3, seats: 5, chapter: chapter) }
+    let(:sponsor) { double(:sponsor, coach_spots: 3, seats: 5) }
 
     def double_workshop(attending_coaches:, attending_students:)
       double(:workshop, coach_spaces: 0, student_spaces: 0, host: sponsor,
