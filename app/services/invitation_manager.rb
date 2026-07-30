@@ -1,12 +1,23 @@
 class InvitationManager
-  def send_event_emails(event, chapter)
+  def send_event_emails(event, chapter, initiator_id = nil) # rubocop:disable Metrics/AbcSize
     return 'The event is not invitable' unless event.invitable?
 
-    invite_coaches_to_event(event, chapter) unless event.audience.eql?('Students')
-    invite_students_to_event(event, chapter) unless event.audience.eql?('Coaches')
-  rescue StandardError => e
-    Rollbar.error(e, event_id: event.id, chapter_id: chapter.id)
-    raise
+    audience = event_audience(event)
+    logger = invitation_logger(event, initiator_id, audience, chapter.id)
+
+    result = start_invitation_batch(logger)
+    return result if result.is_a?(String)
+
+    total = 0
+    begin
+      total += invite_coaches_to_event(event, chapter, logger) unless event.audience.eql?('Students')
+      total += invite_students_to_event(event, chapter, logger) unless event.audience.eql?('Coaches')
+      logger&.finish_batch(total)
+    rescue StandardError => e
+      Rollbar.error(e, event_id: event.id, chapter_id: chapter.id)
+      logger&.fail_batch(e)
+      raise
+    end
   end
   handle_asynchronously :send_event_emails
 
@@ -42,25 +53,14 @@ class InvitationManager
   def send_workshop_emails(workshop, audience, initiator_id = nil)
     return 'The workshop is not invitable' unless workshop.invitable?
 
-    initiator = initiator_id ? Member.find_by(id: initiator_id) : nil
-    logger = initiator ? InvitationLogger.new(workshop, initiator, audience, :invite) : nil
-
-    if logger
-      begin
-        logger.start_batch
-      rescue ActiveRecord::RecordNotUnique
-        return 'A batch is already running for this workshop and audience'
-      end
-    end
+    logger = invitation_logger(workshop, initiator_id, audience, workshop.chapter_id)
+    result = start_invitation_batch(logger)
+    return result if result.is_a?(String)
 
     total = 0
     begin
-      if audience.in?(%w[students everyone])
-        total += invite_students_to_workshop(workshop, logger)
-      end
-      if audience.in?(%w[coaches everyone])
-        total += invite_coaches_to_workshop(workshop, logger)
-      end
+      total += invite_students_to_workshop(workshop, logger) if audience.in?(%w[students everyone])
+      total += invite_coaches_to_workshop(workshop, logger) if audience.in?(%w[coaches everyone])
       logger&.finish_batch(total)
     rescue StandardError => e
       logger&.fail_batch(e)
@@ -72,25 +72,14 @@ class InvitationManager
   def send_virtual_workshop_emails(workshop, audience, initiator_id = nil)
     return 'The workshop is not invitable' unless workshop.invitable?
 
-    initiator = initiator_id ? Member.find_by(id: initiator_id) : nil
-    logger = initiator ? InvitationLogger.new(workshop, initiator, audience, :invite) : nil
-
-    if logger
-      begin
-        logger.start_batch
-      rescue ActiveRecord::RecordNotUnique
-        return 'A batch is already running for this workshop and audience'
-      end
-    end
+    logger = invitation_logger(workshop, initiator_id, audience, workshop.chapter_id)
+    result = start_invitation_batch(logger)
+    return result if result.is_a?(String)
 
     total = 0
     begin
-      if audience.in?(%w[students everyone])
-        total += invite_students_to_virtual_workshop(workshop, logger)
-      end
-      if audience.in?(%w[coaches everyone])
-        total += invite_coaches_to_virtual_workshop(workshop, logger)
-      end
+      total += invite_students_to_virtual_workshop(workshop, logger) if audience.in?(%w[students everyone])
+      total += invite_coaches_to_virtual_workshop(workshop, logger) if audience.in?(%w[coaches everyone])
       logger&.finish_batch(total)
     rescue StandardError => e
       logger&.fail_batch(e)
@@ -98,14 +87,6 @@ class InvitationManager
     end
   end
   handle_asynchronously :send_virtual_workshop_emails
-
-  def send_waiting_list_emails(workshop)
-    workshop = WorkshopPresenter.decorate(workshop)
-
-    retrieve_and_notify_waitlisted(workshop, role: 'Coach') if workshop.coach_spaces?
-    retrieve_and_notify_waitlisted(workshop, role: 'Student') if workshop.student_spaces?
-  end
-  handle_asynchronously :send_waiting_list_emails
 
   def send_workshop_waiting_list_reminders(workshop)
     workshop_mailer = workshop.virtual? ? VirtualWorkshopInvitationMailer : WorkshopInvitationMailer
@@ -116,28 +97,54 @@ class InvitationManager
   end
   handle_asynchronously :send_workshop_waiting_list_reminders
 
+  def send_waiting_list_emails(workshop)
+    workshop = WorkshopPresenter.decorate(workshop)
+
+    retrieve_and_notify_waitlisted(workshop, role: 'Coach') if workshop.coach_spaces?
+    retrieve_and_notify_waitlisted(workshop, role: 'Student') if workshop.student_spaces?
+  end
+  handle_asynchronously :send_waiting_list_emails
+
   private
 
-  def invite_students_to_event(event, chapter)
+  def invite_students_to_event(event, chapter, logger = nil)
+    count = 0
     chapter_students(chapter).each do |student|
-      invitation = Invitation.new(event: event, member: student, role: 'Student')
-      next unless invitation.save
+      invitation = create_event_invitation(event, student, 'Student')
+      next unless invitation
 
-      EventInvitationMailer.invite_student(event, student, invitation).deliver_later
+      if invitation.previously_new_record?
+        count += 1
+        send_email_with_logging(logger, student, invitation) do
+          EventInvitationMailer.invite_student(event, student, invitation).deliver_later
+        end
+      else
+        logger&.log_skipped(student, invitation, 'Already invited to this event')
+      end
     rescue StandardError => e
       log_event_meeting_invitation_failure("event_id=#{event.id}", student, e)
     end
+    count
   end
 
-  def invite_coaches_to_event(event, chapter)
+  def invite_coaches_to_event(event, chapter, logger = nil)
+    count = 0
     chapter_coaches(chapter).each do |coach|
-      invitation = Invitation.new(event: event, member: coach, role: 'Coach')
-      next unless invitation.save
+      invitation = create_event_invitation(event, coach, 'Coach')
+      next unless invitation
 
-      EventInvitationMailer.invite_coach(event, coach, invitation).deliver_later
+      if invitation.previously_new_record?
+        count += 1
+        send_email_with_logging(logger, coach, invitation) do
+          EventInvitationMailer.invite_coach(event, coach, invitation).deliver_later
+        end
+      else
+        logger&.log_skipped(coach, invitation, 'Already invited to this event')
+      end
     rescue StandardError => e
       log_event_meeting_invitation_failure("event_id=#{event.id}", coach, e)
     end
+    count
   end
 
   def log_event_meeting_invitation_failure(context, member, error)
@@ -157,11 +164,16 @@ class InvitationManager
   end
 
   def create_invitation(workshop, member, role)
-    invitation = WorkshopInvitation.find_or_initialize_by(workshop: workshop, member: member, role: role)
-    invitation.save! if invitation.new_record?
-    invitation
+    WorkshopInvitation.find_or_create_by!(workshop: workshop, member: member, role: role)
   rescue StandardError => e
     log_invitation_failure(workshop, member, role, e)
+    nil
+  end
+
+  def create_event_invitation(event, member, role)
+    Invitation.find_or_create_by!(event: event, member: member, role: role)
+  rescue StandardError => e
+    log_event_meeting_invitation_failure("event_id=#{event.id}", member, e)
     nil
   end
 
@@ -216,6 +228,13 @@ class InvitationManager
     count
   end
 
+  def retrieve_and_notify_waitlisted(workshop, role:)
+    WaitingList.by_workshop(workshop).where_role(role).each do |waiting_list|
+      WorkshopInvitationMailer.notify_waiting_list(waiting_list.invitation).deliver_later
+      waiting_list.destroy
+    end
+  end
+
   def send_email_with_logging(logger, member, invitation)
     if logger
       begin
@@ -229,10 +248,28 @@ class InvitationManager
     end
   end
 
-  def retrieve_and_notify_waitlisted(workshop, role:)
-    WaitingList.by_workshop(workshop).where_role(role).each do |waiting_list|
-      WorkshopInvitationMailer.notify_waiting_list(waiting_list.invitation).deliver_later
-      waiting_list.destroy
+  def event_audience(event)
+    case event.audience
+    when 'Students' then 'students'
+    when 'Coaches' then 'coaches'
+    else 'everyone'
+    end
+  end
+
+  def invitation_logger(loggable, initiator_id, audience, chapter_id)
+    initiator = Member.find_by(id: initiator_id)
+    return nil unless initiator
+
+    InvitationLogger.new(loggable, initiator, audience, :invite, chapter_id: chapter_id)
+  end
+
+  def start_invitation_batch(logger)
+    return unless logger
+
+    begin
+      logger.start_batch
+    rescue ActiveRecord::RecordNotUnique
+      'A batch is already running for this loggable and audience'
     end
   end
 end
