@@ -86,6 +86,7 @@ RSpec.feature 'Member portal', type: :feature do
     it 'can not access the member portal' do
       visit dashboard_path
 
+      expect(page).to have_current_path(root_path)
       expect(page).to have_no_css('#profile')
     end
 
@@ -93,6 +94,7 @@ RSpec.feature 'Member portal', type: :feature do
       mock_github_auth
       visit profile_path
 
+      expect(page).to have_current_path(terms_and_conditions_path)
       expect(page).to have_no_css('#member_profile')
     end
   end
