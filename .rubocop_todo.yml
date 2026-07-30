@@ -31,12 +31,6 @@ Lint/Debugger:
   Exclude:
     - 'spec/spec_helper.rb'
 
-# Offense count: 1
-# Configuration parameters: AllowedParentClasses.
-Lint/MissingSuper:
-  Exclude:
-    - 'app/components/event_card_component.rb'
-
 # Offense count: 32
 # Configuration parameters: AllowedMethods, AllowedPatterns, CountRepeatedAttributes, Max.
 Metrics/AbcSize:
