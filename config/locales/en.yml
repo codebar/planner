@@ -709,7 +709,7 @@ en:
         note: "e.g. I am a Junior and would prefer to not be paired on advanced projects"
     hints:
       member:
-        email: "This is needed so we can email you invitations to our events"
+        email: "This is needed so we can email you invitations to our events. codebar uses Gravatar for profile pictures — if you change your email, add your new email to your Gravatar account to keep your photo."
         skill_list: "Enter as a comma separated list"
       workshop_invitation:
         note: "Pairing preferences or anything else you think we should know."
