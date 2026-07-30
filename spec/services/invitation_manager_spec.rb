@@ -112,6 +112,27 @@ RSpec.describe InvitationManager do
 
       manager.send_event_emails(event, chapter)
     end
+
+    it 'sends invitation emails for all eligible members' do
+      event = Fabricate(:event, chapters: [chapter])
+
+      expect do
+        manager.send_event_emails(event, chapter)
+      end.to change { ActionMailer::Base.deliveries.count }.by(students.count + coaches.count)
+    end
+
+    it 'reports batch-level failures to Rollbar' do
+      event = Fabricate(:event, chapters: [chapter])
+      allow(event).to receive(:invitable?).and_raise(StandardError.new('DB connection error'))
+
+      expect(Rollbar).to receive(:error).with(
+        an_instance_of(StandardError),
+        event_id: event.id,
+        chapter_id: chapter.id
+      )
+
+      expect { manager.send_event_emails(event, chapter) }.to raise_error(StandardError, 'DB connection error')
+    end
   end
 
   describe '#send_monthly_attendance_reminder_emails' do
