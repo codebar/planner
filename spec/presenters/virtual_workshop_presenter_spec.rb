@@ -1,8 +1,8 @@
 RSpec.describe VirtualWorkshopPresenter do
   def double_workshop(attending_coaches:, attending_students:)
-    double(:workshop, coach_spaces: 3, student_spaces: 5, chapter: chapter,
-                      attending_coaches: double(:attending_coaches, length: attending_coaches),
-                      attending_students: double(:attending_students, length: attending_students))
+    instance_double(Workshop, coach_spaces: 3, student_spaces: 5, chapter: chapter,
+                              attending_coaches: instance_double(Array, length: attending_coaches),
+                              attending_students: instance_double(Array, length: attending_students))
   end
 
   let(:chapter) { Fabricate(:chapter) }
@@ -63,8 +63,8 @@ RSpec.describe VirtualWorkshopPresenter do
 
   describe '#send_attending_email' do
     it 'enqueues an attending email to the invitation user' do
-      invitation = double(:invitation, member: double(:member))
-      mailer_double = double(:mailer)
+      invitation = instance_double(WorkshopInvitation, member: instance_double(Member))
+      mailer_double = instance_double(ActionMailer::MessageDelivery)
       allow(VirtualWorkshopInvitationMailer)
         .to receive(:attending)
         .with(workshop, invitation.member, invitation, false)
@@ -77,8 +77,8 @@ RSpec.describe VirtualWorkshopPresenter do
     end
 
     it 'enqueues a waiting list email to the invitation user' do
-      invitation = double(:invitation, member: double(:member))
-      mailer_double = double(:mailer)
+      invitation = instance_double(WorkshopInvitation, member: instance_double(Member))
+      mailer_double = instance_double(ActionMailer::MessageDelivery)
       allow(VirtualWorkshopInvitationMailer)
         .to receive(:attending)
         .with(workshop, invitation.member, invitation, true)

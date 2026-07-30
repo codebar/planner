@@ -250,18 +250,6 @@ RSpec/StubbedMock:
     - 'spec/lib/tasks/reminders_workshop_rake_spec.rb'
     - 'spec/presenters/meeting_presenter_spec.rb'
 
-# Offense count: 38
-# Configuration parameters: IgnoreNameless, IgnoreSymbolicNames.
-RSpec/VerifiedDoubles:
-  Exclude:
-    - 'spec/controllers/admin/member_search_controller_spec.rb'
-    - 'spec/features/subscribing_to_newsletter_spec.rb'
-    - 'spec/lib/services/mailing_list_spec.rb'
-    - 'spec/policies/application_policy_spec.rb'
-    - 'spec/presenters/event_presenter_spec.rb'
-    - 'spec/presenters/virtual_workshop_presenter_spec.rb'
-    - 'spec/presenters/workshop_presenter_spec.rb'
-
 
 
 # Offense count: 5

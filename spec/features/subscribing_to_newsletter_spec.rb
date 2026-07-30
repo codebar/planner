@@ -13,7 +13,7 @@ RSpec.feature 'Subscribing to the newsletter', type: :feature do
 
   context 'when a new member' do
     scenario 'is subscribed to the newsletter by default' do
-      mailing_list = double(:mailing_list)
+      mailing_list = instance_double(Services::MailingList)
       expect(Services::MailingList).to receive(:new).and_return(mailing_list)
       expect(mailing_list).to receive(:subscribe).with('jane@codebar.io', 'Jane', 'Doe')
 
@@ -33,7 +33,7 @@ RSpec.feature 'Subscribing to the newsletter', type: :feature do
     end
 
     scenario 'can opt out of the newsletter' do
-      mailing_list = double(:mailing_list)
+      mailing_list = instance_double(Services::MailingList)
       expect(Services::MailingList).to receive(:new).and_return(mailing_list)
       expect(mailing_list).to receive(:unsubscribe).with('jane@codebar.io')
 
@@ -62,7 +62,7 @@ RSpec.feature 'Subscribing to the newsletter', type: :feature do
 
       login member
 
-      mailing_list = double(:mailing_list)
+      mailing_list = instance_double(Services::MailingList)
       expect(Services::MailingList).to receive(:new).and_return(mailing_list)
       expect(mailing_list).to receive(:subscribe)
 
@@ -77,7 +77,7 @@ RSpec.feature 'Subscribing to the newsletter', type: :feature do
 
       login member
 
-      mailing_list = double(:mailing_list)
+      mailing_list = instance_double(Services::MailingList)
       expect(Services::MailingList).to receive(:new).and_return(mailing_list)
       expect(mailing_list).to receive(:unsubscribe)
 
@@ -92,7 +92,7 @@ RSpec.feature 'Subscribing to the newsletter', type: :feature do
 
       login member
 
-      mailing_list = double(:mailing_list)
+      mailing_list = instance_double(Services::MailingList)
       expect(Services::MailingList).to receive(:new).and_return(mailing_list)
       expect(mailing_list).to receive(:subscribe)
 

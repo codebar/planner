@@ -3,7 +3,7 @@ require 'services/mailing_list'
 
 RSpec.describe Services::MailingList do
   let(:mailing_list) { described_class.new(:list_id) }
-  let(:client) { double(:flodesk) }
+  let(:client) { instance_double(Flodesk::Client) }
 
   before do
     allow(client).to receive(:disabled?).and_return(false)

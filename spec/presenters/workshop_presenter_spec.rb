@@ -1,24 +1,24 @@
 RSpec.describe WorkshopPresenter do
   let(:chapter) { Fabricate(:chapter) }
   let(:host) { Fabricate(:sponsor, seats: 5, number_of_coaches: 15) }
-  let(:workshop) { double(:workshop, host: host, chapter: chapter) }
+  let(:workshop) { instance_double(Workshop, host: host, chapter: chapter) }
   let(:presenter) { described_class.new(workshop) }
 
   def double_workshop(attending_coaches:, attending_students:)
-    double(:workshop, host: host, chapter: chapter,
-                      attending_coaches: double(:attending_coaches, count: attending_coaches),
-                      attending_students: double(:attending_students, count: attending_students))
+    instance_double(Workshop, host: host, chapter: chapter,
+                              attending_coaches: instance_double(Array, count: attending_coaches),
+                              attending_students: instance_double(Array, count: attending_students))
   end
 
   describe '#decorate' do
     it 'returns a workshop decorated with the WorkshopPresenter' do
-      workshop = double(:workshop, virtual?: false)
+      workshop = instance_double(Workshop, virtual?: false)
       presenter = described_class.decorate(workshop)
       expect(presenter).to be_a(described_class)
     end
 
     it 'returns a virtual workshop decorated with the VirtualWorkshopPresenter' do
-      workshop = double(:workshop, virtual?: true)
+      workshop = instance_double(Workshop, virtual?: true)
       presenter = described_class.decorate(workshop)
       expect(presenter).to be_a(VirtualWorkshopPresenter)
     end
@@ -82,7 +82,7 @@ RSpec.describe WorkshopPresenter do
   context 'with time formatting' do
     it '#start_time and #end_time' do
       travel_to(Time.current) do
-        workshop = double(:workshop, date_and_time: Time.current, ends_at: 1.hour.from_now)
+        workshop = instance_double(Workshop, date_and_time: Time.current, ends_at: 1.hour.from_now)
         presenter = described_class.new(workshop)
 
         expect(presenter.start_time).to eq(I18n.l(workshop.date_and_time, format: :time))
@@ -95,7 +95,7 @@ RSpec.describe WorkshopPresenter do
     let(:invitations) do
       [Fabricate.times(2, :student_workshop_invitation), Fabricate.times(2, :coach_workshop_invitation)].flatten
     end
-    let(:workshop) { double(:workshop, attendances: invitations) }
+    let(:workshop) { instance_double(Workshop, attendances: invitations) }
 
     it 'correctly returns the formatted list of workshop participants' do
       expect(presenter).to receive(:organisers).at_least(:once).and_return [invitations.last.member]
@@ -112,7 +112,7 @@ RSpec.describe WorkshopPresenter do
   end
 
   describe '#pairing_csv' do
-    let(:workshop) { double(:workshop, attendances: [invitation]) }
+    let(:workshop) { instance_double(Workshop, attendances: [invitation]) }
     let(:student) { Fabricate(:student) }
     let(:invitation) { Fabricate(:workshop_invitation, member: student, note: 'Note') }
 
@@ -157,12 +157,12 @@ RSpec.describe WorkshopPresenter do
   end
 
   describe '#spaces?' do
-    let(:sponsor) { double(:sponsor, coach_spots: 3, seats: 5) }
+    let(:sponsor) { instance_double(Sponsor, coach_spots: 3, seats: 5) }
 
     def double_workshop(attending_coaches:, attending_students:)
-      double(:workshop, coach_spaces: 0, student_spaces: 0, host: sponsor,
-                        attending_coaches: double(:attending_coaches, length: attending_coaches),
-                        attending_students: double(:attending_students, length: attending_students))
+      instance_double(Workshop, coach_spaces: 0, student_spaces: 0, host: sponsor,
+                                attending_coaches: instance_double(Array, length: attending_coaches),
+                                attending_students: instance_double(Array, length: attending_students))
     end
 
     context 'when the host has more available spots' do
@@ -184,8 +184,8 @@ RSpec.describe WorkshopPresenter do
 
   describe '#send_attending_email' do
     it 'enqueues an attending email to the invitation user' do
-      invitation = double(:invitation, member: double(:member))
-      mailer_double = double(:mailer)
+      invitation = instance_double(WorkshopInvitation, member: instance_double(Member))
+      mailer_double = instance_double(ActionMailer::MessageDelivery)
       allow(WorkshopInvitationMailer)
         .to receive(:attending)
         .with(workshop, invitation.member, invitation, false)
@@ -198,8 +198,8 @@ RSpec.describe WorkshopPresenter do
     end
 
     it 'enqueues a waiting list email to the invitation user' do
-      invitation = double(:invitation, member: double(:member))
-      mailer_double = double(:mailer)
+      invitation = instance_double(WorkshopInvitation, member: instance_double(Member))
+      mailer_double = instance_double(ActionMailer::MessageDelivery)
       allow(WorkshopInvitationMailer)
         .to receive(:attending)
         .with(workshop, invitation.member, invitation, true)
