@@ -93,16 +93,18 @@ RSpec.feature 'Admin::Sponsors', type: :feature do
     end
 
     scenario 'displays all sponsor details' do
-      expect(page).to have_text(sponsor.name)
-      expect(page).to have_text(sponsor.description)
-      expect(page).to have_link(sponsor.website, href: sponsor.website)
-      expect(page).to have_text(sponsor.level)
-      expect(page).to have_text(ContactPresenter.new(sponsor.contacts.first).full_name)
+      aggregate_failures do
+        expect(page).to have_text(sponsor.name)
+        expect(page).to have_text(sponsor.description)
+        expect(page).to have_link(sponsor.website, href: sponsor.website)
+        expect(page).to have_text(sponsor.level)
+        expect(page).to have_text(ContactPresenter.new(sponsor.contacts.first).full_name)
 
-      expect(page).to have_text(sponsor.seats)
-      expect(page).to have_text(sponsor.coach_spots)
-      expect(page).to have_text(sponsor.accessibility_info)
-      expect(page).to have_text(sponsor.address.street)
+        expect(page).to have_text(sponsor.seats)
+        expect(page).to have_text(sponsor.coach_spots)
+        expect(page).to have_text(sponsor.accessibility_info)
+        expect(page).to have_text(sponsor.address.street)
+      end
     end
 
     context 'with sponsorships' do

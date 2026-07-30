@@ -27,18 +27,20 @@ RSpec.feature 'Event creation', type: :feature do
         select sponsor.name, from: 'Venue'
         click_on 'Save'
 
-        expect(page).to have_text('Event successfully created')
+        aggregate_failures do
+          expect(page).to have_text('Event successfully created')
 
-        expect(page).to have_text('A test event')
-        expect(page).to have_text(humanize_date(date))
-        expect(page).to have_text('A test event description')
-        expect(page).to have_text('25 student spots, 19 coach spots')
-        expect(page).to have_text('9:00 Sign up & breakfast 9:30 kick off')
+          expect(page).to have_text('A test event')
+          expect(page).to have_text(humanize_date(date))
+          expect(page).to have_text('A test event description')
+          expect(page).to have_text('25 student spots, 19 coach spots')
+          expect(page).to have_text('9:00 Sign up & breakfast 9:30 kick off')
 
-        within '#host' do
-          expect(page).to have_text sponsor.name
-          expect(page).to have_text sponsor.address.street
-          expect(page).to have_text sponsor.address.city
+          within '#host' do
+            expect(page).to have_text sponsor.name
+            expect(page).to have_text sponsor.address.street
+            expect(page).to have_text sponsor.address.city
+          end
         end
       end
     end

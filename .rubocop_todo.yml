@@ -151,14 +151,6 @@ RSpec/ExampleLength:
   Exclude:
     - 'spec/features/admin/event_spec.rb'
 
-# Offense count: 3
-# Configuration parameters: Max.
-RSpec/MultipleExpectations:
-  Exclude:
-    - 'spec/features/admin/event_spec.rb'
-    - 'spec/features/admin/sponsor_spec.rb'
-    - 'spec/lib/omniauth/strategies/codebar_spec.rb'
-
 # Offense count: 5
 Rails/HasAndBelongsToMany:
   Exclude:
