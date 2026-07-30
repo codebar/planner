@@ -37,12 +37,6 @@ Lint/MissingSuper:
   Exclude:
     - 'app/components/event_card_component.rb'
 
-# Offense count: 1
-# Configuration parameters: AllowKeywordBlockArguments.
-Lint/UnderscorePrefixedVariableName:
-  Exclude:
-    - 'spec/models/group_spec.rb'
-
 # Offense count: 32
 # Configuration parameters: AllowedMethods, AllowedPatterns, CountRepeatedAttributes, Max.
 Metrics/AbcSize:
