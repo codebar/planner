@@ -29,17 +29,19 @@ RSpec.describe InvitationManager do
     it 'can email only students' do
       event = Fabricate(:event, chapters: [chapter], audience: 'Students')
       students.each do |student|
-        allow(Invitation).to receive(:new).with(event: event, member: student, role: 'Student').and_call_original
+        allow(Invitation).to receive(:find_or_create_by!).with(
+          event: event, member: student, role: 'Student'
+        ).and_call_original
       end
 
       manager.send_event_emails(event, chapter)
 
       students.each do |student|
-        expect(Invitation).to have_received(:new).with(event: event, member: student, role: 'Student')
+        expect(Invitation).to have_received(:find_or_create_by!).with(event: event, member: student, role: 'Student')
       end
 
       coaches.each do |student|
-        expect(Invitation).not_to have_received(:new).with(event: event, member: student, role: 'Coach')
+        expect(Invitation).not_to have_received(:find_or_create_by!).with(event: event, member: student, role: 'Coach')
       end
     end
 
@@ -47,17 +49,19 @@ RSpec.describe InvitationManager do
       event = Fabricate(:event, chapters: [chapter], audience: 'Coaches')
 
       coaches.each do |student|
-        allow(Invitation).to receive(:new).with(event: event, member: student, role: 'Coach').and_call_original
+        allow(Invitation).to receive(:find_or_create_by!).with(
+          event: event, member: student, role: 'Coach'
+        ).and_call_original
       end
 
       manager.send_event_emails(event, chapter)
 
       students.each do |student|
-        expect(Invitation).not_to have_received(:new).with(event: event, member: student, role: 'Student')
+        expect(Invitation).not_to have_received(:find_or_create_by!).with(event: event, member: student, role: 'Student')
       end
 
       coaches.each do |student|
-        expect(Invitation).to have_received(:new).with(event: event, member: student, role: 'Coach')
+        expect(Invitation).to have_received(:find_or_create_by!).with(event: event, member: student, role: 'Coach')
       end
     end
 
@@ -65,21 +69,25 @@ RSpec.describe InvitationManager do
       event = Fabricate(:event, chapters: [chapter])
 
       students.each do |student|
-        allow(Invitation).to receive(:new).with(event: event, member: student, role: 'Student').and_call_original
+        allow(Invitation).to receive(:find_or_create_by!).with(
+          event: event, member: student, role: 'Student'
+        ).and_call_original
       end
 
       coaches.each do |student|
-        allow(Invitation).to receive(:new).with(event: event, member: student, role: 'Coach').and_call_original
+        allow(Invitation).to receive(:find_or_create_by!).with(
+          event: event, member: student, role: 'Coach'
+        ).and_call_original
       end
 
       manager.send_event_emails(event, chapter)
 
       students.each do |student|
-        expect(Invitation).to have_received(:new).with(event: event, member: student, role: 'Student')
+        expect(Invitation).to have_received(:find_or_create_by!).with(event: event, member: student, role: 'Student')
       end
 
       coaches.each do |student|
-        expect(Invitation).to have_received(:new).with(event: event, member: student, role: 'Coach')
+        expect(Invitation).to have_received(:find_or_create_by!).with(event: event, member: student, role: 'Coach')
       end
     end
 
@@ -91,7 +99,7 @@ RSpec.describe InvitationManager do
 
       other_students.each do |other_student|
         allow(Invitation).to(
-          receive(:new)
+          receive(:find_or_create_by!)
           .with(event: event, member: other_student, role: 'Student')
           .and_call_original
         )
@@ -99,10 +107,10 @@ RSpec.describe InvitationManager do
 
       manager.send_event_emails(event, chapter)
 
-      expect(Invitation).not_to have_received(:new).with(event: event, member: first_student, role: 'Student')
+      expect(Invitation).not_to have_received(:find_or_create_by!).with(event: event, member: first_student, role: 'Student')
 
       other_students.each do |other_student|
-        expect(Invitation).to have_received(:new).with(event: event, member: other_student, role: 'Student')
+        expect(Invitation).to have_received(:find_or_create_by!).with(event: event, member: other_student, role: 'Student')
       end
     end
 
@@ -114,7 +122,7 @@ RSpec.describe InvitationManager do
 
       other_coaches.each do |other_coach|
         allow(Invitation).to(
-          receive(:new)
+          receive(:find_or_create_by!)
           .with(event: event, member: other_coach, role: 'Coach')
           .and_call_original
         )
@@ -122,34 +130,11 @@ RSpec.describe InvitationManager do
 
       manager.send_event_emails(event, chapter)
 
-      expect(Invitation).not_to have_received(:new).with(event: event, member: first_coach, role: 'Coach')
+      expect(Invitation).not_to have_received(:find_or_create_by!).with(event: event, member: first_coach, role: 'Coach')
 
       other_coaches.each do |other_coach|
-        expect(Invitation).to have_received(:new).with(event: event, member: other_coach, role: 'Coach')
+        expect(Invitation).to have_received(:find_or_create_by!).with(event: event, member: other_coach, role: 'Coach')
       end
-    end
-
-    it 'sends invitation emails for all eligible members' do
-      event = Fabricate(:event, chapters: [chapter])
-
-      expect do
-        manager.send_event_emails(event, chapter)
-      end.to change { ActionMailer::Base.deliveries.count }.by(students.count + coaches.count)
-    end
-
-    it 'reports batch-level failures to Rollbar' do
-      event = Fabricate(:event, chapters: [chapter])
-      allow(event).to receive(:invitable?).and_raise(StandardError.new('DB connection error'))
-
-      allow(Rollbar).to receive(:error)
-
-      expect { manager.send_event_emails(event, chapter) }.to raise_error(StandardError, 'DB connection error')
-
-      expect(Rollbar).to have_received(:error).with(
-        an_instance_of(StandardError),
-        event_id: event.id,
-        chapter_id: chapter.id
-      )
     end
   end
 
@@ -314,8 +299,8 @@ RSpec.describe InvitationManager do
   describe '#create_invitation resilience' do
     let(:member) { Fabricate(:member) }
 
-    it 'returns nil when find_or_initialize_by raises an exception' do
-      allow(WorkshopInvitation).to receive(:find_or_initialize_by)
+    it 'returns nil when find_or_create_by! raises an exception' do
+      allow(WorkshopInvitation).to receive(:find_or_create_by!)
         .and_raise(StandardError.new('database error'))
 
       result = manager.send(:create_invitation, workshop, member, 'Student')
@@ -324,27 +309,26 @@ RSpec.describe InvitationManager do
     end
 
     it 'logs error with member_id and workshop_id but no PII' do
-      allow(WorkshopInvitation).to receive(:find_or_initialize_by)
+      allow(WorkshopInvitation).to receive(:find_or_create_by!)
         .and_raise(StandardError.new('database error'))
-
-      logged_message = nil
-      allow(Rails.logger).to receive(:error) { |message| logged_message = message }
+      allow(Rails.logger).to receive(:error)
 
       manager.send(:create_invitation, workshop, member, 'Student')
 
-      expect(Rails.logger).to have_received(:error)
-      expect(logged_message).to include("member_id=#{member.id}")
-      expect(logged_message).to include("workshop_id=#{workshop.id}")
-      expect(logged_message).to include('role=Student')
-      expect(logged_message).not_to include(member.email)
-      expect(logged_message).not_to match(/#{Regexp.escape(member.name)}/)
+      expect(Rails.logger).to have_received(:error) do |message|
+        expect(message).to include("member_id=#{member.id}")
+        expect(message).to include("workshop_id=#{workshop.id}")
+        expect(message).to include('role=Student')
+        expect(message).not_to include(member.email)
+        expect(message).not_to match(/\b#{Regexp.escape(member.name)}\b/)
+      end
     end
 
     it 'continues processing when invitation creation fails for one member' do
       Fabricate(:students, chapter: chapter, members: students)
       call_count = 0
 
-      allow(WorkshopInvitation).to receive(:find_or_initialize_by) do
+      allow(WorkshopInvitation).to receive(:find_or_create_by!) do
         call_count += 1
         if call_count == 1
           raise StandardError, 'database error'

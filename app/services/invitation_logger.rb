@@ -1,9 +1,10 @@
 class InvitationLogger
-  def initialize(loggable, initiator, audience, action)
+  def initialize(loggable, initiator, audience, action, chapter_id: nil)
     @loggable = loggable
     @initiator = initiator
     @audience = audience
     @action = action
+    @chapter_id = chapter_id
     @log = nil
   end
 
@@ -11,7 +12,7 @@ class InvitationLogger
     @log = InvitationLog.create!(
       loggable: @loggable,
       initiator: @initiator,
-      chapter_id: @loggable.try(:chapter_id),
+      chapter_id: resolved_chapter_id,
       audience: @audience,
       action: @action,
       started_at: Time.current,
@@ -76,6 +77,10 @@ class InvitationLogger
   end
 
   private
+
+  def resolved_chapter_id
+    @chapter_id || @loggable.try(:chapter_id) || raise(ArgumentError, 'chapter_id is required')
+  end
 
   def find_or_build_entry(member, invitation, status)
     @log.entries.find_or_create_by(member: member, invitation: invitation) do |entry|

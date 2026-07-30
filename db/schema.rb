@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_02_102700) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_29_151201) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -201,6 +201,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_02_102700) do
   create_table "events", id: :serial, force: :cascade do |t|
     t.boolean "announce_only"
     t.string "audience"
+    t.string "check_in_code"
     t.text "coach_description"
     t.string "coach_questionnaire"
     t.integer "coach_spaces"
@@ -228,6 +229,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_02_102700) do
     t.string "url"
     t.integer "venue_id"
     t.boolean "virtual", default: false, null: false
+    t.index ["check_in_code"], name: "index_events_on_check_in_code", unique: true
     t.index ["date_and_time"], name: "index_events_on_date_and_time"
     t.index ["slug"], name: "index_events_on_slug", unique: true
     t.index ["venue_id"], name: "index_events_on_venue_id"
@@ -327,7 +329,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_02_102700) do
     t.index ["created_at"], name: "index_invitation_logs_on_created_at"
     t.index ["expires_at"], name: "index_invitation_logs_on_expires_at"
     t.index ["initiator_id"], name: "index_invitation_logs_on_initiator_id"
-    t.index ["loggable_type", "loggable_id", "audience", "action", "status"], name: "index_invitation_logs_unique_active", unique: true, where: "((status)::text = 'running'::text)"
+    t.index ["loggable_type", "loggable_id", "chapter_id", "audience", "action", "status"], name: "index_invitation_logs_unique_active", unique: true, where: "((status)::text = 'running'::text)"
     t.index ["loggable_type", "loggable_id"], name: "index_invitation_logs_on_loggable"
     t.index ["status"], name: "index_invitation_logs_on_status"
   end
@@ -339,6 +341,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_02_102700) do
     t.integer "member_id"
     t.text "note"
     t.string "role"
+    t.string "source"
     t.string "token"
     t.datetime "updated_at", precision: nil
     t.boolean "verified"
@@ -592,6 +595,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_02_102700) do
     t.datetime "reminded_at", precision: nil
     t.string "role"
     t.datetime "rsvp_time", precision: nil
+    t.string "source"
     t.string "token"
     t.text "tutorial"
     t.datetime "updated_at", precision: nil
@@ -616,6 +620,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_02_102700) do
 
   create_table "workshops", id: :serial, force: :cascade do |t|
     t.integer "chapter_id"
+    t.string "check_in_code"
     t.integer "coach_spaces", default: 0
     t.datetime "created_at", precision: nil
     t.datetime "date_and_time", precision: nil
@@ -632,6 +637,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_02_102700) do
     t.datetime "updated_at", precision: nil
     t.boolean "virtual", default: false
     t.index ["chapter_id"], name: "index_workshops_on_chapter_id"
+    t.index ["check_in_code"], name: "index_workshops_on_check_in_code", unique: true
     t.index ["date_and_time"], name: "index_workshops_on_date_and_time"
   end
 

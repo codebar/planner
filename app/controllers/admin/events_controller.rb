@@ -45,7 +45,7 @@ class Admin::EventsController < Admin::ApplicationController
     authorize @event
 
     @event.chapters.each do |chapter|
-      InvitationManager.new.send_event_emails(@event, chapter)
+      InvitationManager.new.send_event_emails(@event, chapter, current_user.id)
     end
 
     redirect_to admin_event_path(@event), notice: 'Invitations will be emailed out soon.'

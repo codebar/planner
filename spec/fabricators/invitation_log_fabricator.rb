@@ -4,4 +4,5 @@ Fabricator(:invitation_log) do
   audience 'students'
   action 'invite'
   status 'running'
+  chapter_id { |attrs| attrs[:loggable].try(:chapter_id) }
 end
