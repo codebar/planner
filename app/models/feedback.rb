@@ -8,7 +8,8 @@ class Feedback < ApplicationRecord
   validates :tutorial, presence: true
 
   def self.submit_feedback(params, token)
-    return false unless feedback_request = FeedbackRequest.find_by(token: token)
+    feedback_request = FeedbackRequest.find_by(token: token)
+    return false unless feedback_request
 
     feedback = Feedback.new(params)
     feedback.workshop = feedback_request.workshop

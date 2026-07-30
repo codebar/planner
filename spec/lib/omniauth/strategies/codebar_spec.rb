@@ -47,18 +47,20 @@ RSpec.describe OmniAuth::Strategies::Codebar do
       env = build_env('/auth/codebar')
       status, headers, _body = strategy.call(env)
 
-      expect(status).to eq(302)
-      expect(env['rack.session']['omniauth.codebar.state']).to be_present
-      expect(env['rack.session']['omniauth.codebar.code_verifier']).to be_present
+      aggregate_failures do
+        expect(status).to eq(302)
+        expect(env['rack.session']['omniauth.codebar.state']).to be_present
+        expect(env['rack.session']['omniauth.codebar.code_verifier']).to be_present
 
-      location = headers['Location']
-      expect(location).to include('/api/auth/oauth2/authorize')
-      expect(location).to include('client_id=planner')
-      expect(location).to include('response_type=code')
-      expect(location).to include('code_challenge=')
-      expect(location).to include('code_challenge_method=S256')
-      expect(location).to include('scope=openid+profile+email')
-      expect(env['rack.session']['omniauth.codebar.redirect_uri']).to eq('http://localhost:3000/auth/codebar/callback')
+        location = headers['Location']
+        expect(location).to include('/api/auth/oauth2/authorize')
+        expect(location).to include('client_id=planner')
+        expect(location).to include('response_type=code')
+        expect(location).to include('code_challenge=')
+        expect(location).to include('code_challenge_method=S256')
+        expect(location).to include('scope=openid+profile+email')
+        expect(env['rack.session']['omniauth.codebar.redirect_uri']).to eq('http://localhost:3000/auth/codebar/callback')
+      end
     end
 
     it 'generates unique state per request' do

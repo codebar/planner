@@ -18,7 +18,7 @@ RSpec.describe ChaptersSidebarComponent do
   it 'renders nothing when no chapters' do
     render_inline described_class.new(chapters: [])
 
-    expect(page).to have_css('ul.list-unstyled.ms-0', visible: true)
+    expect(page).to have_css('ul.list-unstyled.ms-0', visible: :visible)
     expect(page).to have_no_css('li')
   end
 end

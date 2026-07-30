@@ -1,5 +1,6 @@
 class EventCardComponent < ViewComponent::Base
   def initialize(event_card:, user: nil)
+    super()
     @event = event_card
     @user = user
   end

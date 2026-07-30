@@ -24,7 +24,7 @@ class Admin::WorkshopsController < Admin::ApplicationController
 
     if workshop_type_valid? && @workshop.save
       grant_organiser_access(@workshop.chapter.organisers.pluck(:id))
-      set_host(host_id)
+      assign_host(host_id)
 
       redirect_to admin_workshop_path(@workshop), notice: I18n.t('admin.messages.workshop.created')
     else
@@ -144,7 +144,7 @@ class Admin::WorkshopsController < Admin::ApplicationController
     params.permit(:workshop_id)[:workshop_id]
   end
 
-  def set_host(host_id)
+  def assign_host(host_id)
     return unless host_id
 
     host = @workshop.workshop_sponsors.find_or_initialize_by(sponsor_id: host_id)
@@ -154,7 +154,7 @@ class Admin::WorkshopsController < Admin::ApplicationController
     host.update(host: true)
   end
 
-  def set_organisers(organiser_ids)
+  def assign_organisers(organiser_ids)
     organiser_ids.reject!(&:empty?)
     grant_organiser_access(organiser_ids)
     revoke_organiser_access(organiser_ids)
@@ -199,7 +199,7 @@ class Admin::WorkshopsController < Admin::ApplicationController
   end
 
   def update_workshop_details
-    set_organisers(organiser_ids)
-    set_host(host_id)
+    assign_organisers(organiser_ids)
+    assign_host(host_id)
   end
 end

@@ -1,10 +1,12 @@
 RSpec.describe Member::DetailsController do
   render_views
   let(:member) { Fabricate(:member) }
+  let(:mailing_list) { instance_double(Services::MailingList) }
 
   before do
     allow(controller).to receive(:current_user).and_return(member)
-    allow_any_instance_of(Services::MailingList).to receive(:subscribe).and_return(true)
+    allow(Services::MailingList).to receive(:new).and_return(mailing_list)
+    allow(mailing_list).to receive_messages(subscribe: true, unsubscribe: true)
   end
 
   describe 'PATCH #update' do

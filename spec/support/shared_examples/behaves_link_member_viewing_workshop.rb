@@ -15,6 +15,7 @@ RSpec.shared_examples 'member viewing workshop' do |workshop_type, member_type, 
       login(banned_member)
       visit workshop_path(workshop)
 
+      expect(page).to have_css('h1')
       expect(page).to have_no_button("Attend as a #{member_type.downcase}")
     end
   end

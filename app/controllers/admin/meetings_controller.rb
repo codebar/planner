@@ -9,8 +9,8 @@ class Admin::MeetingsController < Admin::ApplicationController
     @meeting = Meeting.new(meeting_params)
 
     if @meeting.save
-      set_organisers(organiser_ids)
-      set_chapters(chapter_ids)
+      assign_organisers(organiser_ids)
+      assign_chapters(chapter_ids)
       redirect_to [:admin, @meeting], notice: t('admin.messages.meeting.created')
     else
       flash[:notice] = @meeting.errors.full_messages.join(', ')
@@ -27,8 +27,8 @@ class Admin::MeetingsController < Admin::ApplicationController
   def edit; end
 
   def update
-    set_organisers(organiser_ids)
-    set_chapters(chapter_ids)
+    assign_organisers(organiser_ids)
+    assign_chapters(chapter_ids)
 
     if @meeting.update(meeting_params)
       redirect_to [:admin, @meeting], notice: t('admin.messages.meeting.updated')
@@ -86,13 +86,13 @@ class Admin::MeetingsController < Admin::ApplicationController
     end
   end
 
-  def set_organisers(organiser_ids)
+  def assign_organisers(organiser_ids)
     organiser_ids.reject!(&:empty?)
     grant_organiser_access(organiser_ids)
     revoke_organiser_access(organiser_ids)
   end
 
-  def set_chapters(chapter_ids)
+  def assign_chapters(chapter_ids)
     chapter_ids.reject!(&:empty?)
     @meeting.chapters = chapter_ids.map { |id| Chapter.find(id) }
   end

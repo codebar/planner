@@ -34,8 +34,8 @@ RSpec.shared_examples 'invitation route' do
         invitation.update(role: 'Student', attending: nil, tutorial: nil)
         visit accept_invitation_route
 
-        expect(page).to have_no_link 'I can no longer attend'
         expect(page).to have_text('Tutorial must be selected')
+        expect(page).to have_no_link 'I can no longer attend'
       end
 
       scenario 'a Coach must can RSVP diredctly' do
