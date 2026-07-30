@@ -2,6 +2,21 @@ RSpec.feature 'Event creation', type: :feature do
   let(:member) { Fabricate(:member) }
   let(:chapter) { Fabricate(:chapter) }
 
+  def fill_in_mandatory_event_fields(name:, slug:, description:, date:, sponsor:)
+    fill_in 'Event Name', with: name
+    fill_in 'Slug', with: slug
+    fill_in 'Date', with: date
+    fill_in 'Starts at', with: '16:00'
+    fill_in 'Ends at', with: '18:00'
+    fill_in 'Description', with: description
+    fill_in 'RSVP instructions', with: 'Some instructions'
+    fill_in 'Schedule', with: '9:00 Sign up & breakfast <br/> 9:30 kick off'
+    fill_in 'Coach spaces', with: '19'
+    fill_in 'Student spaces', with: '25'
+    select sponsor.name, from: 'Venue'
+    click_on 'Save'
+  end
+
   describe 'an authorised member' do
     before do
       member.add_role(:organiser, chapter)
@@ -14,22 +29,11 @@ RSpec.feature 'Event creation', type: :feature do
         date = Time.zone.today + 2.days
         visit new_admin_event_path
 
-        fill_in 'Event Name', with: 'A test event'
-        fill_in 'Slug', with: 'a-test-event'
-        fill_in 'Date', with: date
-        fill_in 'Starts at', with: '16:00'
-        fill_in 'Ends at', with: '18:00'
-        fill_in 'Description', with: 'A test event description'
-        fill_in 'RSVP instructions', with: 'Some instructions'
-        fill_in 'Schedule', with: '9:00 Sign up & breakfast <br/> 9:30 kick off'
-        fill_in 'Coach spaces', with: '19'
-        fill_in 'Student spaces', with: '25'
-        select sponsor.name, from: 'Venue'
-        click_on 'Save'
+        fill_in_mandatory_event_fields(name: 'A test event', slug: 'a-test-event',
+                                       description: 'A test event description', date: date, sponsor: sponsor)
 
         aggregate_failures do
           expect(page).to have_text('Event successfully created')
-
           expect(page).to have_text('A test event')
           expect(page).to have_text(humanize_date(date))
           expect(page).to have_text('A test event description')

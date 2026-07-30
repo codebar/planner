@@ -145,12 +145,6 @@ RSpec/AnyInstance:
   Exclude:
     - 'spec/support/helpers/login_helpers.rb'
 
-# Offense count: 1
-# Configuration parameters: Max, CountAsOne.
-RSpec/ExampleLength:
-  Exclude:
-    - 'spec/features/admin/event_spec.rb'
-
 # Offense count: 5
 Rails/HasAndBelongsToMany:
   Exclude:
