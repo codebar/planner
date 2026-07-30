@@ -19,13 +19,6 @@ Capybara/RSpec/VisibilityMatcher:
     - 'spec/components/chapters_sidebar_component_spec.rb'
 
 # Offense count: 1
-# Configuration parameters: AllowedMethods.
-# AllowedMethods: enums
-Lint/ConstantDefinitionInBlock:
-  Exclude:
-    - 'lib/tasks/setup.rake'
-
-# Offense count: 1
 # Configuration parameters: DebuggerMethods, DebuggerRequires.
 Lint/Debugger:
   Exclude:
