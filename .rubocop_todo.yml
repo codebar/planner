@@ -108,14 +108,6 @@ Metrics/PerceivedComplexity:
     - 'app/services/invitation_manager.rb'
     - 'lib/omniauth/strategies/codebar.rb'
 
-# Offense count: 1
-# Configuration parameters: EnforcedStyle, AllowedPatterns, ForbiddenIdentifiers, ForbiddenPatterns.
-# SupportedStyles: snake_case, camelCase
-# ForbiddenIdentifiers: __id__, __send__
-Naming/MethodName:
-  Exclude:
-    - 'app/models/member.rb'
-
 # Offense count: 10
 # Configuration parameters: NamePrefix, ForbiddenPrefixes, AllowedMethods, MethodDefinitionMacros, UseSorbetSigs.
 # NamePrefix: is_, has_, have_, does_

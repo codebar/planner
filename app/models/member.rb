@@ -126,7 +126,7 @@ class Member < ApplicationRecord
     can_log_in? && !valid?
   end
 
-  def has_existing_RSVP_on(date)
+  def existing_rsvp_on?(date)
     invitations_on(date).any?
   end
 

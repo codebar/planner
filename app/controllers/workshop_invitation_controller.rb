@@ -29,7 +29,7 @@ class WorkshopInvitationController < ApplicationController
     return back_with_message(t('messages.already_rsvped')) if @invitation.attending?
     return back_with_message(t('messages.invitations.closed')) unless workshop.rsvp_available?
 
-    if user.has_existing_RSVP_on(workshop.date_and_time)
+    if user.existing_rsvp_on?(workshop.date_and_time)
       return back_with_message(t('messages.invitations.rsvped_to_other_workshop'))
     end
 
