@@ -143,7 +143,6 @@ Naming/PredicatePrefix:
 # Offense count: 2
 RSpec/AnyInstance:
   Exclude:
-    - 'spec/controllers/member/details_controller_spec.rb'
     - 'spec/support/helpers/login_helpers.rb'
 
 # Offense count: 1
