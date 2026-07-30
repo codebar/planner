@@ -3,15 +3,19 @@ RSpec.describe MemberPresenter do
   let(:member_presenter) { described_class.new(member) }
 
   it '#organiser?' do
-    expect(member).to receive(:has_role?).with(:organiser, :any)
+    allow(member).to receive(:has_role?).with(:organiser, :any)
 
     member_presenter.organiser?
+
+    expect(member).to have_received(:has_role?).with(:organiser, :any)
   end
 
   it '#subscribed_to_newsletter?' do
-    expect(member).to receive(:opt_in_newsletter_at)
+    allow(member).to receive(:opt_in_newsletter_at)
 
     member_presenter.subscribed_to_newsletter?
+
+    expect(member).to have_received(:opt_in_newsletter_at)
   end
 
   describe '#pairing_details_array' do
@@ -95,11 +99,13 @@ RSpec.describe MemberPresenter do
     it 'memoizes private methods across calls' do
       member.add_role(:admin)
 
-      expect(member).to receive(:has_role?).with(:admin).once.and_call_original
+      allow(member).to receive(:has_role?).with(:admin).once.and_call_original
       # First call loads and caches
       member_presenter.event_organiser?(workshop)
       # Second call uses cache
       member_presenter.event_organiser?(workshop)
+
+      expect(member).to have_received(:has_role?).with(:admin).once
     end
   end
 end

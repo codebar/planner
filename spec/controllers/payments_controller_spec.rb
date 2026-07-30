@@ -10,7 +10,7 @@ RSpec.describe PaymentsController do
   describe 'POST #create' do
     context 'with valid parameters' do
       it 'creates a Stripe customer and charge' do
-        expect(Stripe::Customer).to receive(:create).with(
+        allow(Stripe::Customer).to receive(:create).with(
           email: 'john@example.com',
           description: 'John Doe',
           source: 'tok_123'
@@ -25,6 +25,11 @@ RSpec.describe PaymentsController do
           }
         }
         expect(response).to be_successful
+        expect(Stripe::Customer).to have_received(:create).with(
+          email: 'john@example.com',
+          description: 'John Doe',
+          source: 'tok_123'
+        )
       end
     end
 

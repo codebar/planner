@@ -3,13 +3,17 @@ RSpec.shared_examples 'sending workshop emails' do
     Fabricate(:students, chapter: chapter, members: students)
 
     students.each do |student|
-      expect(WorkshopInvitation).to receive(:find_or_initialize_by).with(workshop: workshop, member: student, role: 'Student').and_call_original
+      allow(WorkshopInvitation).to receive(:find_or_initialize_by).with(workshop: workshop, member: student, role: 'Student').and_call_original
     end
 
     expect do
       manager.send(send_email, workshop, 'students')
     end.to change { ActionMailer::Base.deliveries.count }.by(students.count)
                                                          .and change { WorkshopInvitation.where(workshop: workshop, role: 'Student').count }.by(students.count)
+
+    students.each do |student|
+      expect(WorkshopInvitation).to have_received(:find_or_initialize_by).with(workshop: workshop, member: student, role: 'Student')
+    end
 
     # Verify emails were sent to the right recipients
     emails = ActionMailer::Base.deliveries.last(students.count)
@@ -21,13 +25,17 @@ RSpec.shared_examples 'sending workshop emails' do
     Fabricate(:coaches, chapter: chapter, members: coaches)
 
     coaches.each do |coach|
-      expect(WorkshopInvitation).to receive(:find_or_initialize_by).with(workshop: workshop, member: coach, role: 'Coach').and_call_original
+      allow(WorkshopInvitation).to receive(:find_or_initialize_by).with(workshop: workshop, member: coach, role: 'Coach').and_call_original
     end
 
     expect do
       manager.send(send_email, workshop, 'coaches')
     end.to change { ActionMailer::Base.deliveries.count }.by(coaches.count)
                                                          .and change { WorkshopInvitation.where(workshop: workshop, role: 'Coach').count }.by(coaches.count)
+
+    coaches.each do |coach|
+      expect(WorkshopInvitation).to have_received(:find_or_initialize_by).with(workshop: workshop, member: coach, role: 'Coach')
+    end
 
     # Verify emails were sent to the right recipients
     emails = ActionMailer::Base.deliveries.last(coaches.count)
@@ -40,11 +48,15 @@ RSpec.shared_examples 'sending workshop emails' do
     Fabricate(:coaches, chapter: chapter, members: coaches + [banned_coach])
 
     coaches.each do |coach|
-      expect(WorkshopInvitation).to receive(:find_or_initialize_by).with(workshop: workshop, member: coach, role: 'Coach').and_call_original
+      allow(WorkshopInvitation).to receive(:find_or_initialize_by).with(workshop: workshop, member: coach, role: 'Coach').and_call_original
     end
-    expect(WorkshopInvitation).not_to receive(:find_or_initialize_by).with(workshop: workshop, member: banned_coach, role: 'Coach')
 
     manager.send(send_email, workshop, 'coaches')
+
+    coaches.each do |coach|
+      expect(WorkshopInvitation).to have_received(:find_or_initialize_by).with(workshop: workshop, member: coach, role: 'Coach')
+    end
+    expect(WorkshopInvitation).not_to have_received(:find_or_initialize_by).with(workshop: workshop, member: banned_coach, role: 'Coach')
   end
 
   it 'sends emails when a WorkshopInvitation is created' do
@@ -59,11 +71,13 @@ RSpec.shared_examples 'sending workshop emails' do
   it 'does not send emails when invitation creation returns nil' do
     Fabricate(:students, chapter: chapter, members: students)
 
-    expect(WorkshopInvitation).to receive(:find_or_initialize_by).and_return(nil).exactly(students.count)
+    allow(WorkshopInvitation).to receive(:find_or_initialize_by).and_return(nil).exactly(students.count)
 
     expect do
       manager.send(send_email, workshop, 'students')
     end.not_to(change { ActionMailer::Base.deliveries.count })
+
+    expect(WorkshopInvitation).to have_received(:find_or_initialize_by).exactly(students.count).times
   end
 
   it 'does not send duplicate emails when members are already invited' do

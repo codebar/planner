@@ -17,14 +17,17 @@ RSpec.describe 'rake feedback:request', type: :task do
         student = Fabricate(:member)
         Fabricate(:attending_workshop_invitation, role: 'Student', member: student, workshop: workshop)
 
-        expect(Workshop).to receive(:completed_since_yesterday).and_return([workshop])
-
         mailer = double(deliver_now: true)
-        expect(FeedbackRequestMailer).to receive(:request_feedback)
+        allow(Workshop).to receive(:completed_since_yesterday).and_return([workshop])
+        allow(FeedbackRequestMailer).to receive(:request_feedback)
           .with(workshop, student, an_instance_of(FeedbackRequest))
           .and_return(mailer)
 
         expect { task.execute }.to change(FeedbackRequest, :count).by(1)
+
+        expect(Workshop).to have_received(:completed_since_yesterday)
+        expect(FeedbackRequestMailer).to have_received(:request_feedback)
+          .with(workshop, student, an_instance_of(FeedbackRequest))
       end
     end
 

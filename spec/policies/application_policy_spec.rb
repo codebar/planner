@@ -1,7 +1,7 @@
 RSpec.describe ApplicationPolicy do
   subject(:policy) { described_class.new(user, record) }
 
-  let(:record) { double('record') }
+  let(:record) { instance_double(ApplicationRecord) }
   let(:admin) { Fabricate(:member).tap { |m| m.add_role(:admin) } }
   let(:regular_member) { Fabricate(:member) }
 

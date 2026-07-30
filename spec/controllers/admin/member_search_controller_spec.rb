@@ -43,7 +43,7 @@ RSpec.describe Admin::MemberSearchController, type: :controller do
       end
 
       context 'when an admin user searches and there are multiple results' do
-      let(:fake_romeo) { double('Member', id: 2, name: 'Romeo', surname: 'Capulet') }
+      let(:fake_romeo) { instance_double(Member, id: 2, name: 'Romeo', surname: 'Capulet') }
 
       before do
         allow(Member).to receive(:find_members_by_name).with('e').and_return(fake_relation)

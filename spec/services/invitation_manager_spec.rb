@@ -29,42 +29,58 @@ RSpec.describe InvitationManager do
     it 'can email only students' do
       event = Fabricate(:event, chapters: [chapter], audience: 'Students')
       students.each do |student|
-        expect(Invitation).to receive(:new).with(event: event, member: student, role: 'Student').and_call_original
-      end
-
-      coaches.each do |student|
-        expect(Invitation).not_to receive(:new).with(event: event, member: student, role: 'Coach').and_call_original
+        allow(Invitation).to receive(:new).with(event: event, member: student, role: 'Student').and_call_original
       end
 
       manager.send_event_emails(event, chapter)
+
+      students.each do |student|
+        expect(Invitation).to have_received(:new).with(event: event, member: student, role: 'Student')
+      end
+
+      coaches.each do |student|
+        expect(Invitation).not_to have_received(:new).with(event: event, member: student, role: 'Coach')
+      end
     end
 
     it 'can email only coaches' do
       event = Fabricate(:event, chapters: [chapter], audience: 'Coaches')
 
-      students.each do |student|
-        expect(Invitation).not_to receive(:new).with(event: event, member: student, role: 'Student').and_call_original
-      end
-
       coaches.each do |student|
-        expect(Invitation).to receive(:new).with(event: event, member: student, role: 'Coach').and_call_original
+        allow(Invitation).to receive(:new).with(event: event, member: student, role: 'Coach').and_call_original
       end
 
       manager.send_event_emails(event, chapter)
+
+      students.each do |student|
+        expect(Invitation).not_to have_received(:new).with(event: event, member: student, role: 'Student')
+      end
+
+      coaches.each do |student|
+        expect(Invitation).to have_received(:new).with(event: event, member: student, role: 'Coach')
+      end
     end
 
     it 'can email both students and coaches' do
       event = Fabricate(:event, chapters: [chapter])
 
       students.each do |student|
-        expect(Invitation).to receive(:new).with(event: event, member: student, role: 'Student').and_call_original
+        allow(Invitation).to receive(:new).with(event: event, member: student, role: 'Student').and_call_original
       end
 
       coaches.each do |student|
-        expect(Invitation).to receive(:new).with(event: event, member: student, role: 'Coach').and_call_original
+        allow(Invitation).to receive(:new).with(event: event, member: student, role: 'Coach').and_call_original
       end
 
       manager.send_event_emails(event, chapter)
+
+      students.each do |student|
+        expect(Invitation).to have_received(:new).with(event: event, member: student, role: 'Student')
+      end
+
+      coaches.each do |student|
+        expect(Invitation).to have_received(:new).with(event: event, member: student, role: 'Coach')
+      end
     end
 
     it 'emails only students that accepted toc' do
@@ -73,14 +89,8 @@ RSpec.describe InvitationManager do
       first_student, *other_students = students
       first_student.update(accepted_toc_at: nil)
 
-      expect(Invitation).not_to(
-        receive(:new)
-        .with(event: event, member: first_student, role: 'Student')
-        .and_call_original
-      )
-
       other_students.each do |other_student|
-        expect(Invitation).to(
+        allow(Invitation).to(
           receive(:new)
           .with(event: event, member: other_student, role: 'Student')
           .and_call_original
@@ -88,6 +98,12 @@ RSpec.describe InvitationManager do
       end
 
       manager.send_event_emails(event, chapter)
+
+      expect(Invitation).not_to have_received(:new).with(event: event, member: first_student, role: 'Student')
+
+      other_students.each do |other_student|
+        expect(Invitation).to have_received(:new).with(event: event, member: other_student, role: 'Student')
+      end
     end
 
     it 'emails only coaches that accepted toc' do
@@ -96,14 +112,8 @@ RSpec.describe InvitationManager do
       first_coach, *other_coaches = coaches
       first_coach.update(accepted_toc_at: nil)
 
-      expect(Invitation).not_to(
-        receive(:new)
-        .with(event: event, member: first_coach, role: 'Coach')
-        .and_call_original
-      )
-
       other_coaches.each do |other_coach|
-        expect(Invitation).to(
+        allow(Invitation).to(
           receive(:new)
           .with(event: event, member: other_coach, role: 'Coach')
           .and_call_original
@@ -111,6 +121,12 @@ RSpec.describe InvitationManager do
       end
 
       manager.send_event_emails(event, chapter)
+
+      expect(Invitation).not_to have_received(:new).with(event: event, member: first_coach, role: 'Coach')
+
+      other_coaches.each do |other_coach|
+        expect(Invitation).to have_received(:new).with(event: event, member: other_coach, role: 'Coach')
+      end
     end
 
     it 'sends invitation emails for all eligible members' do
@@ -125,13 +141,15 @@ RSpec.describe InvitationManager do
       event = Fabricate(:event, chapters: [chapter])
       allow(event).to receive(:invitable?).and_raise(StandardError.new('DB connection error'))
 
-      expect(Rollbar).to receive(:error).with(
+      allow(Rollbar).to receive(:error)
+
+      expect { manager.send_event_emails(event, chapter) }.to raise_error(StandardError, 'DB connection error')
+
+      expect(Rollbar).to have_received(:error).with(
         an_instance_of(StandardError),
         event_id: event.id,
         chapter_id: chapter.id
       )
-
-      expect { manager.send_event_emails(event, chapter) }.to raise_error(StandardError, 'DB connection error')
     end
   end
 
@@ -309,15 +327,17 @@ RSpec.describe InvitationManager do
       allow(WorkshopInvitation).to receive(:find_or_initialize_by)
         .and_raise(StandardError.new('database error'))
 
-      expect(Rails.logger).to receive(:error) do |message|
-        expect(message).to include("member_id=#{member.id}")
-        expect(message).to include("workshop_id=#{workshop.id}")
-        expect(message).to include('role=Student')
-        expect(message).not_to include(member.email)
-        expect(message).not_to match(/#{Regexp.escape(member.name)}/)
-      end
+      logged_message = nil
+      allow(Rails.logger).to receive(:error) { |message| logged_message = message }
 
       manager.send(:create_invitation, workshop, member, 'Student')
+
+      expect(Rails.logger).to have_received(:error)
+      expect(logged_message).to include("member_id=#{member.id}")
+      expect(logged_message).to include("workshop_id=#{workshop.id}")
+      expect(logged_message).to include('role=Student')
+      expect(logged_message).not_to include(member.email)
+      expect(logged_message).not_to match(/#{Regexp.escape(member.name)}/)
     end
 
     it 'continues processing when invitation creation fails for one member' do

@@ -85,11 +85,14 @@ RSpec.describe Admin::MembersController, type: :controller do
 
     it 'sends an attendance warning email' do
       mailer = double(deliver_now: true)
-      expect(MemberMailer).to receive(:attendance_warning)
+      allow(MemberMailer).to receive(:attendance_warning)
         .with(member, member.email)
         .and_return(mailer)
 
       get :send_attendance_email, params: { member_id: member.id }
+
+      expect(MemberMailer).to have_received(:attendance_warning)
+        .with(member, member.email)
     end
 
     it 'redirects to the member page' do
@@ -126,11 +129,14 @@ RSpec.describe Admin::MembersController, type: :controller do
 
     it 'sends an eligibility check email' do
       mailer = double(deliver_now: true)
-      expect(MemberMailer).to receive(:eligibility_check)
+      allow(MemberMailer).to receive(:eligibility_check)
         .with(member, member.email)
         .and_return(mailer)
 
       get :send_eligibility_email, params: { member_id: member.id }
+
+      expect(MemberMailer).to have_received(:eligibility_check)
+        .with(member, member.email)
     end
 
     it 'redirects to the member page' do

@@ -8,8 +8,10 @@ RSpec.shared_examples InvitationConcerns do |invitation_type, event_type|
 
   describe 'cache invalidation' do
     it 'clears member cache when attending changes' do
-      expect(invitation.member).to receive(:clear_attending_event_ids_cache!)
+      allow(invitation.member).to receive(:clear_attending_event_ids_cache!)
       invitation.update!(attending: !invitation.attending)
+
+      expect(invitation.member).to have_received(:clear_attending_event_ids_cache!)
     end
   end
 

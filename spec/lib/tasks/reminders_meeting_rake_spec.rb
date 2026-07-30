@@ -17,12 +17,15 @@ RSpec.describe 'rake reminders:meeting', type: :task do
       past_meeting = Fabricate(:meeting, date_and_time: 1.day.ago)
 
       invitation_manager = InvitationManager.new
-      expect(InvitationManager).to receive(:new).and_return(invitation_manager)
-      expect(invitation_manager).to receive(:send_monthly_attendance_reminder_emails).with(meeting)
-      expect(invitation_manager).not_to receive(:send_monthly_attendance_reminder_emails).with(past_meeting)
-      expect(invitation_manager).not_to receive(:send_monthly_attendance_reminder_emails).with(just_now_meeting)
+      allow(InvitationManager).to receive(:new).and_return(invitation_manager)
+      allow(invitation_manager).to receive(:send_monthly_attendance_reminder_emails).with(meeting)
 
       task.execute
+
+      expect(InvitationManager).to have_received(:new)
+      expect(invitation_manager).to have_received(:send_monthly_attendance_reminder_emails).with(meeting)
+      expect(invitation_manager).not_to have_received(:send_monthly_attendance_reminder_emails).with(past_meeting)
+      expect(invitation_manager).not_to have_received(:send_monthly_attendance_reminder_emails).with(just_now_meeting)
     end
   end
 end

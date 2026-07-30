@@ -3,7 +3,7 @@ require 'services/mailing_list'
 
 RSpec.describe Services::MailingList do
   let(:mailing_list) { described_class.new(:list_id) }
-  let(:client) { double(:flodesk) }
+  let(:client) { instance_double(Flodesk::Client) }
 
   before do
     allow(client).to receive(:disabled?).and_return(false)
@@ -16,7 +16,7 @@ RSpec.describe Services::MailingList do
 
   describe '#subscribe' do
     it 'adds a user to the mailing list' do
-      expect(client).to receive(:subscribe)
+      allow(client).to receive(:subscribe)
         .with({
                 email: :email,
                 first_name: :first_name,
@@ -25,24 +25,40 @@ RSpec.describe Services::MailingList do
               })
 
       mailing_list.subscribe(:email, :first_name, :last_name)
+
+      expect(client).to have_received(:subscribe)
+        .with({
+                email: :email,
+                first_name: :first_name,
+                last_name: :last_name,
+                segment_ids: [:list_id]
+              })
     end
   end
 
   describe '#unsubscribe' do
     it 'removes a user from the mailing list' do
-      expect(client).to receive(:unsubscribe)
+      allow(client).to receive(:unsubscribe)
         .with({ email: :email, segment_ids: [:list_id] })
 
       mailing_list.unsubscribe(:email)
+
+      expect(client).to have_received(:unsubscribe)
+        .with({ email: :email, segment_ids: [:list_id] })
     end
   end
 
   describe '#subscribed?' do
     it 'checks if a user is already subscribed to the mailing list' do
-      expect(client).to receive(:subscribed?)
+      allow(client).to receive(:subscribed?)
         .with({ email: :email, segment_ids: [:list_id] })
         .and_return(true)
-      expect(mailing_list.subscribed?(:email)).to be true
+
+      result = mailing_list.subscribed?(:email)
+
+      expect(client).to have_received(:subscribed?)
+        .with({ email: :email, segment_ids: [:list_id] })
+      expect(result).to be true
     end
   end
 end

@@ -23,9 +23,11 @@ RSpec.describe MeetingPresenter do
   end
 
   it '#time' do
-    expect(meeting).to receive(:date_and_time).and_return(Time.zone.now)
+    allow(meeting).to receive(:date_and_time).and_return(Time.zone.now)
 
     event.time
+
+    expect(meeting).to have_received(:date_and_time)
   end
 
   it '#to_s' do
