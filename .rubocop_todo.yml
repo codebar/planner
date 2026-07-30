@@ -108,14 +108,6 @@ Metrics/PerceivedComplexity:
     - 'app/services/invitation_manager.rb'
     - 'lib/omniauth/strategies/codebar.rb'
 
-# Offense count: 6
-Naming/AccessorMethodName:
-  Exclude:
-    - 'app/controllers/admin/events_controller.rb'
-    - 'app/controllers/admin/meetings_controller.rb'
-    - 'app/controllers/admin/workshops_controller.rb'
-    - 'app/controllers/feedback_controller.rb'
-
 # Offense count: 1
 # Configuration parameters: EnforcedStyle, AllowedPatterns, ForbiddenIdentifiers, ForbiddenPatterns.
 # SupportedStyles: snake_case, camelCase

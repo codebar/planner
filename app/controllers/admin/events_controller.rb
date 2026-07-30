@@ -8,7 +8,7 @@ class Admin::EventsController < Admin::ApplicationController
 
   def create
     @event = Event.new(event_params)
-    set_organisers(organiser_ids)
+    assign_organisers(organiser_ids)
 
     if @event.save
       redirect_to [:admin, @event], notice: 'Event successfully created.'
@@ -31,7 +31,7 @@ class Admin::EventsController < Admin::ApplicationController
   end
 
   def update
-    set_organisers(organiser_ids)
+    assign_organisers(organiser_ids)
 
     if @event.update(event_params)
       redirect_to [:admin, @event], notice: 'You have just updated the event'
@@ -94,7 +94,7 @@ class Admin::EventsController < Admin::ApplicationController
     organiser_ids.each { |id| Member.find(id).add_role(:organiser, @event) }
   end
 
-  def set_organisers(organiser_ids)
+  def assign_organisers(organiser_ids)
     organiser_ids.reject!(&:empty?)
     grant_organiser_access(organiser_ids)
     revoke_organiser_access(organiser_ids)
