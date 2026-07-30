@@ -117,7 +117,6 @@ Metrics/PerceivedComplexity:
 Naming/PredicatePrefix:
   Exclude:
     - 'app/controllers/application_controller.rb'
-    - 'app/models/member.rb'
     - 'app/models/workshop.rb'
     - 'app/policies/application_policy.rb'
     - 'app/policies/chapter_policy.rb'
