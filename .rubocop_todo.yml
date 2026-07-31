@@ -150,11 +150,6 @@ Rails/HasManyOrHasOneDependent:
     - 'app/models/workshop.rb'
     - 'app/models/workshop_invitation.rb'
 
-# Offense count: 1
-Rails/HelperInstanceVariable:
-  Exclude:
-    - 'app/helpers/email_helper.rb'
-
 # Offense count: 2
 # Configuration parameters: IgnoreScopes.
 Rails/InverseOf:

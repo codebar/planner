@@ -1,10 +1,8 @@
 class WorkshopInvitationMailer < ApplicationMailer
-  include EmailHelper
   include EmailHeaderHelper
   include ApplicationHelper
 
   helper ApplicationHelper
-  helper EmailHelper
 
   def attending(workshop, member, invitation, waiting_list = false)
     @workshop = WorkshopPresenter.new(workshop)

@@ -12,10 +12,4 @@ class FeedbackRequestMailer < ApplicationMailer
 
     mail_to_member(member, subject, &:html)
   end
-
-  helper do
-    def full_url_for(path)
-      "#{@host}#{path}"
-    end
-  end
 end
