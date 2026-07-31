@@ -102,21 +102,6 @@ Metrics/PerceivedComplexity:
     - 'app/services/invitation_manager.rb'
     - 'lib/omniauth/strategies/codebar.rb'
 
-# Offense count: 10
-# Configuration parameters: NamePrefix, ForbiddenPrefixes, AllowedMethods, MethodDefinitionMacros, UseSorbetSigs.
-# NamePrefix: is_, has_, have_, does_
-# ForbiddenPrefixes: is_, has_, have_, does_
-# AllowedMethods: is_a?
-# MethodDefinitionMacros: define_method, define_singleton_method
-Naming/PredicatePrefix:
-  Exclude:
-    - 'app/controllers/application_controller.rb'
-    - 'app/models/workshop.rb'
-    - 'app/policies/application_policy.rb'
-    - 'app/policies/chapter_policy.rb'
-    - 'app/policies/event_policy.rb'
-    - 'app/policies/workshop_policy.rb'
-
 # Offense count: 2
 RSpec/AnyInstance:
   Exclude:

@@ -1,5 +1,5 @@
 class PaymentsController < ApplicationController
-  before_action :is_logged_in?
+  before_action :require_login
 
   def new; end
 

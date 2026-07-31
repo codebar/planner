@@ -1,5 +1,5 @@
 class SubscriptionsController < ApplicationController
-  before_action :has_access?
+  before_action :require_access
 
   def index
     @mailing_list = MailingListForm.new

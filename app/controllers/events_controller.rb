@@ -1,7 +1,7 @@
 require 'services/ticket'
 
 class EventsController < ApplicationController
-  before_action :is_logged_in?, only: %i[student coach]
+  before_action :require_login, only: %i[student coach]
 
   def index
     redirect_to upcoming_events_path

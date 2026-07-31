@@ -4,6 +4,6 @@ class GroupPolicy < ApplicationPolicy
   end
 
   def show?
-    is_admin_or_chapter_organiser?
+    admin_or_chapter_organiser?
   end
 end
