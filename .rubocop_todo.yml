@@ -163,11 +163,6 @@ Rails/InverseOf:
     - 'app/models/workshop_invitation.rb'
 
 # Offense count: 2
-Rails/LexicallyScopedActionFilter:
-  Exclude:
-    - 'app/controllers/concerns/admin/sponsor_concerns.rb'
-
-# Offense count: 2
 Rails/OutputSafety:
   Exclude:
     - 'app/helpers/application_helper.rb'
