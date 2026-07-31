@@ -127,15 +127,15 @@ class ApplicationController < ActionController::Base
   helper_method :manager?
   helper_method :admin_namespace?
 
-  def is_logged_in?
+  def require_login
     unless logged_in?
       flash[:notice] = t('notifications.not_logged_in')
       redirect_to root_path
     end
   end
 
-  def has_access?
-    is_logged_in?
+  def require_access
+    require_login
   end
 
   def admin_namespace?

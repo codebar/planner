@@ -6,7 +6,7 @@
     = link_to '#', class: 'btn btn-primary py-3 disabled', title: t('messages.already_taken_place') do
       %i.fas.fa-paper-plane
       %label.text-white Invite
-  - elsif (@workshop.has_valid_host? || @workshop.virtual?) and @workshop.invitable?
+  - elsif (@workshop.valid_host? || @workshop.virtual?) and @workshop.invitable?
     = link_to admin_workshop_send_invites_path(@workshop), class: 'btn btn-primary py-3' do
       %i.fas.fa-paper-plane
       %label.text-white Invite
