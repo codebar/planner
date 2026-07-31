@@ -1,7 +1,7 @@
 class MailingListsController < ApplicationController
   include MailingListConcerns
 
-  before_action :has_access?
+  before_action :require_access
 
   def create
     subscribe_to_newsletter(current_user)

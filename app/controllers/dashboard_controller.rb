@@ -1,5 +1,5 @@
 class DashboardController < ApplicationController
-  before_action :is_logged_in?, only: %i[dashboard]
+  before_action :require_login, only: %i[dashboard]
   skip_before_action :accept_terms, except: %i[dashboard show]
 
   helper_method :year_param

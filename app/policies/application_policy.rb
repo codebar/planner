@@ -40,13 +40,13 @@ class ApplicationPolicy
 
   private
 
-  def is_admin_or_chapter_organiser?
+  def admin_or_chapter_organiser?
     return false unless user
 
-    user.is_admin? || user.has_role?(:organiser) || is_chapter_organiser?
+    user.is_admin? || user.has_role?(:organiser) || chapter_organiser?
   end
 
-  def is_chapter_organiser?
+  def chapter_organiser?
     Chapter.find_roles(:organiser, user).any?
   end
 end

@@ -1,5 +1,5 @@
 class InvitationsController < ApplicationController
-  before_action :is_logged_in?, only: [:index]
+  before_action :require_login, only: [:index]
   before_action :set_invitation, only: %i[show attend reject]
 
   def index
