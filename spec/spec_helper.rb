@@ -106,7 +106,9 @@ RSpec.configure do |config|
       screenshot_filename = "#{filename}:#{line_number}.png"
 
       # Save the screenshot using the custom filename
+      # rubocop:disable Lint/Debugger
       page.save_screenshot(screenshot_filename)
+      # rubocop:enable Lint/Debugger
     end
   end
 
