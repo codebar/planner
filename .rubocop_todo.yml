@@ -102,11 +102,6 @@ Metrics/PerceivedComplexity:
     - 'app/services/invitation_manager.rb'
     - 'lib/omniauth/strategies/codebar.rb'
 
-# Offense count: 2
-RSpec/AnyInstance:
-  Exclude:
-    - 'spec/support/helpers/login_helpers.rb'
-
 # Offense count: 5
 Rails/HasAndBelongsToMany:
   Exclude:
