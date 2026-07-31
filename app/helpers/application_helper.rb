@@ -20,7 +20,10 @@ module ApplicationHelper
   end
 
   def dot_markdown(text)
+    # Commonmarker sanitises raw HTML; `.html_safe` prevents Rails double-escaping the result
+    # rubocop:disable Rails/OutputSafety
     Commonmarker.to_html(text).html_safe
+    # rubocop:enable Rails/OutputSafety
   end
 
   def belongs_to_group?(group)
