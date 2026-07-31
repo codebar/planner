@@ -40,12 +40,4 @@ class EventInvitationMailer < ApplicationMailer
 
     mail_to_member(member, subject, &:html)
   end
-
-  private
-
-  helper do
-    def full_url_for(path)
-      "#{@host}#{path}"
-    end
-  end
 end

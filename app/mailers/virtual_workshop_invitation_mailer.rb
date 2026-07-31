@@ -1,10 +1,8 @@
 class VirtualWorkshopInvitationMailer < ApplicationMailer
-  include EmailHelper
   include EmailHeaderHelper
   include ApplicationHelper
 
   helper ApplicationHelper
-  helper EmailHelper
 
   def attending(workshop, member, invitation, waiting_list = false)
     setup(workshop, invitation, member)

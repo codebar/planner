@@ -31,7 +31,7 @@
                   Workshop
                   %br
                   %p #{humanize_date(@workshop.date_and_time, @workshop.ends_at, with_time: true)}
-                = link_to 'Update your attendance', full_url_for(invitation_url(@invitation)), class: 'btn'
+                = link_to 'Update your attendance', invitation_url(@invitation), class: 'btn'
                 - if @workshop.description.present?
                   %p{ style: 'margin-top: 10px;' }
                     %strong Description:
