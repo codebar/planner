@@ -17,7 +17,7 @@ class Member < ApplicationRecord
   has_many :workshop_invitations
   has_many :invitations
   has_many :auth_services
-  has_many :feedbacks, foreign_key: :coach_id
+  has_many :feedbacks, foreign_key: :coach_id, inverse_of: :coach
   has_many :subscriptions
   has_many :groups, through: :subscriptions
   has_many :member_notes

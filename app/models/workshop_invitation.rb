@@ -4,7 +4,7 @@ class WorkshopInvitation < ApplicationRecord
   belongs_to :workshop
   belongs_to :member
   belongs_to :overrider, foreign_key: :last_overridden_by_id, class_name: 'Member', inverse_of: false, optional: true
-  has_one :waiting_list, foreign_key: :invitation_id
+  has_one :waiting_list, foreign_key: :invitation_id, inverse_of: :invitation
 
   validates :workshop, :member, presence: true
   validates :member_id, uniqueness: { scope: %i[workshop_id role] }

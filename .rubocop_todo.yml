@@ -156,13 +156,6 @@ Rails/HelperInstanceVariable:
     - 'app/helpers/email_helper.rb'
 
 # Offense count: 2
-# Configuration parameters: IgnoreScopes.
-Rails/InverseOf:
-  Exclude:
-    - 'app/models/member.rb'
-    - 'app/models/workshop_invitation.rb'
-
-# Offense count: 2
 Rails/OutputSafety:
   Exclude:
     - 'app/helpers/application_helper.rb'
