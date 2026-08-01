@@ -129,24 +129,6 @@ Rails/HasManyOrHasOneDependent:
     - 'app/models/workshop.rb'
     - 'app/models/workshop_invitation.rb'
 
-# Offense count: 2
-# Configuration parameters: IgnoreScopes.
-Rails/InverseOf:
-  Exclude:
-    - 'app/models/member.rb'
-    - 'app/models/workshop_invitation.rb'
-
-# Offense count: 2
-Rails/LexicallyScopedActionFilter:
-  Exclude:
-    - 'app/controllers/concerns/admin/sponsor_concerns.rb'
-
-# Offense count: 2
-Rails/OutputSafety:
-  Exclude:
-    - 'app/helpers/application_helper.rb'
-    - 'app/presenters/address_presenter.rb'
-
 # Offense count: 9
 # Configuration parameters: ForbiddenMethods, AllowedMethods.
 # ForbiddenMethods: decrement!, decrement_counter, increment!, increment_counter, insert, insert!, insert_all, insert_all!, toggle!, touch, touch_all, update_all, update_attribute, update_column, update_columns, update_counters, upsert, upsert_all

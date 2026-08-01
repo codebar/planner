@@ -5,10 +5,13 @@ class AddressPresenter < BasePresenter
     city_and_postal_code = [model.city, model.postal_code].delete_if(&:empty?)
                                                           .join(', ')
 
+    # Every element is html_escape'd; `.html_safe` prevents Rails double-escaping the joined string
+    # rubocop:disable Rails/OutputSafety
     [model.flat, model.street, city_and_postal_code, lat, lng]
       .delete_if(&:empty?)
       .map { |line| ERB::Util.html_escape(line) }
       .join('<br/>').html_safe
+    # rubocop:enable Rails/OutputSafety
   end
 
   def for_map

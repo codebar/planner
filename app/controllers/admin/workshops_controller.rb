@@ -1,9 +1,10 @@
 class Admin::WorkshopsController < Admin::ApplicationController
-  include  Admin::SponsorConcerns
-  include  Admin::WorkshopConcerns
+  include Admin::WorkshopConcerns
 
   before_action :set_workshop_by_id, only: %i[show edit destroy update]
   before_action :set_and_decorate_workshop, only: %i[attendees_checklist attendees_emails send_invites changes]
+  before_action :set_workshop, only: %i[sponsor destroy_sponsor host destroy_host]
+  before_action :set_sponsor, only: %i[sponsor host]
 
   WORKSHOP_DELETION_TIME_FRAME_SINCE_CREATION = 4.hours
 
@@ -114,6 +115,36 @@ class Admin::WorkshopsController < Admin::ApplicationController
     @student_invitations = invitations.to_students
   end
 
+  def sponsor
+    flash[:notice] = if workshop_sponsors.save
+      'Sponsor added successfully'
+    else
+      workshop_sponsors.errors.full_messages.to_s
+    end
+    redirect_back fallback_location: root_path
+  end
+
+  def destroy_sponsor
+    @sponsor = Sponsor.find(params[:sponsor_id])
+    @workshop.workshop_sponsors.find_by(sponsor: @sponsor).destroy
+    redirect_back fallback_location: root_path
+  end
+
+  def host
+    set_sponsor
+    @workshop_sponsor = WorkshopSponsor.find_or_create_by(workshop: @workshop, sponsor: @sponsor)
+    @workshop_sponsor.update(host: true)
+    flash[:notice] = 'Host set successfully'
+
+    redirect_back fallback_location: root_path
+  end
+
+  def destroy_host
+    @workshop.workshop_sponsors.find_by(host: true).update(host: false)
+
+    redirect_back fallback_location: root_path
+  end
+
   private
 
   def workshop_params
@@ -201,5 +232,13 @@ class Admin::WorkshopsController < Admin::ApplicationController
   def update_workshop_details
     assign_organisers(organiser_ids)
     assign_host(host_id)
+  end
+
+  def set_sponsor
+    @sponsor = Sponsor.find(params[:workshop][:sponsor_ids])
+  end
+
+  def workshop_sponsor(host = false)
+    @workshop_sponsor ||= WorkshopSponsor.new(workshop: @workshop, sponsor: @sponsor, host: host)
   end
 end
