@@ -2,7 +2,6 @@ class ContactMailer < ApplicationMailer
   include EmailHeaderHelper
 
   helper ApplicationHelper
-  helper EmailHelper
 
   def subscription_notification(contact)
     @contact = contact

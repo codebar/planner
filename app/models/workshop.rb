@@ -59,12 +59,12 @@ class Workshop < ApplicationRecord
     waiting_list.select(&:for_coach?)
   end
 
-  def has_host?
+  def host?
     WorkshopSponsor.exists?(host: true, workshop: self)
   end
 
-  def has_valid_host?
-    has_host? && host.address.present?
+  def valid_host?
+    host? && host.address.present?
   end
 
   def rsvp_available?

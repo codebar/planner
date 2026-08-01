@@ -44,12 +44,4 @@ class MeetingInvitationMailer < ApplicationMailer
     subject = "Reminder: You have a spot for #{@meeting.name} on #{humanize_date(@meeting.date_and_time)}"
     mail_to_member(@member, subject, &:html)
   end
-
-  private
-
-  helper do
-    def full_url_for(path)
-      "#{@host}#{path}"
-    end
-  end
 end

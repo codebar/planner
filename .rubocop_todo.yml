@@ -6,12 +6,6 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 1
-# Configuration parameters: DebuggerMethods, DebuggerRequires.
-Lint/Debugger:
-  Exclude:
-    - 'spec/spec_helper.rb'
-
 # Offense count: 32
 # Configuration parameters: AllowedMethods, AllowedPatterns, CountRepeatedAttributes, Max.
 Metrics/AbcSize:
@@ -108,21 +102,6 @@ Metrics/PerceivedComplexity:
     - 'app/services/invitation_manager.rb'
     - 'lib/omniauth/strategies/codebar.rb'
 
-# Offense count: 10
-# Configuration parameters: NamePrefix, ForbiddenPrefixes, AllowedMethods, MethodDefinitionMacros, UseSorbetSigs.
-# NamePrefix: is_, has_, have_, does_
-# ForbiddenPrefixes: is_, has_, have_, does_
-# AllowedMethods: is_a?
-# MethodDefinitionMacros: define_method, define_singleton_method
-Naming/PredicatePrefix:
-  Exclude:
-    - 'app/controllers/application_controller.rb'
-    - 'app/models/workshop.rb'
-    - 'app/policies/application_policy.rb'
-    - 'app/policies/chapter_policy.rb'
-    - 'app/policies/event_policy.rb'
-    - 'app/policies/workshop_policy.rb'
-
 # Offense count: 2
 RSpec/AnyInstance:
   Exclude:
@@ -149,11 +128,6 @@ Rails/HasManyOrHasOneDependent:
     - 'app/models/sponsor.rb'
     - 'app/models/workshop.rb'
     - 'app/models/workshop_invitation.rb'
-
-# Offense count: 1
-Rails/HelperInstanceVariable:
-  Exclude:
-    - 'app/helpers/email_helper.rb'
 
 # Offense count: 9
 # Configuration parameters: ForbiddenMethods, AllowedMethods.
