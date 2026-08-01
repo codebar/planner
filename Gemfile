@@ -10,6 +10,7 @@ gem 'coffee-script'
 
 gem 'amazing_print' # colourful output (suggested by rails_semantic_logger)
 gem 'rails_semantic_logger' # condense log lines: https://github.com/codebar/planner/issues/2339
+gem 'strong_migrations'
 
 gem 'acts-as-taggable-on'
 gem 'benchmark' # LOCKED: Added because of activesupport 7.0

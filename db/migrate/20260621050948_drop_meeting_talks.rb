@@ -1,6 +1,8 @@
 class DropMeetingTalks < ActiveRecord::Migration[8.1]
   def up
-    drop_table :meeting_talks
+    safety_assured do
+      drop_table :meeting_talks
+    end
   end
 
   def down
