@@ -39,7 +39,7 @@ cp mise.local.toml.example mise.local.toml
 # Edit mise.local.toml with your GitHub OAuth credentials
 # Optionally delete .env if it exists from a prior setup:
 rm .env
-bundle && rake db:create db:migrate db:seed
+bundle && rake db:create db:prepare db:seed
 ```
 
 - **Server**: `bundle exec rails server`
@@ -305,6 +305,7 @@ When planning new features or architectural changes, use the `layered-rails` ski
 
 - **RDBMS**: PostgreSQL
 - **Migrations**: Standard Rails migrations in `db/migrate/`
+- **Historical migrations**: All pre-2026 migrations were removed. New databases are bootstrapped from `db/schema.rb` via `db:prepare`. The 13 migrations from 2026 onwards remain and are audited by strong_migrations.
 - **Seeds**: `db/seeds.rb` creates sample data for development
 
 ## Deployment

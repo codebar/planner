@@ -222,12 +222,12 @@ This step may take a few minutes the first time.
 ## Set up the database
 
 ```bash
-bundle exec rake db:create db:migrate db:test:prepare
+bundle exec rake db:create db:prepare db:test:prepare
 ```
 
 This command does three things:
 - `db:create` — creates the development and test databases in PostgreSQL
-- `db:migrate` — runs database migrations (sets up tables, columns, indexes)
+- `db:prepare` — loads `db/schema.rb` if the database is empty, or runs pending migrations if it already exists
 - `db:test:prepare` — makes sure the test database is ready for running tests
 
 ---
@@ -343,7 +343,7 @@ PostgreSQL is not running. Start it:
 
 ### "FATAL: database 'planner_development' does not exist"
 
-Run `bundle exec rake db:create db:migrate`.
+Run `bundle exec rake db:create db:prepare`.
 
 ### "Bundler::GemNotFound" or "Could not find gem"
 

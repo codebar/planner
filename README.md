@@ -52,7 +52,7 @@ We recommend **native installation** for local development. A full step-by-step 
    ```bash
    gem install bundler
    bundle install
-   bundle exec rake db:create db:migrate db:test:prepare
+   bundle exec rake db:create db:prepare db:test:prepare
    ```
 
 6. **Check your environment**:
