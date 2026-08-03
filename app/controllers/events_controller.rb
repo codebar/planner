@@ -100,7 +100,8 @@ class EventsController < ApplicationController
   # for the current page. Only the 20 visible rows come back from the DB.
   def paginated_events(upcoming:)
     now = Time.zone.now
-    page = (params[:page] || 1).to_i
+    # Clamp to >= 1 (mirrors Pagy's own resolve_page); .to_s also handles array params
+    page = [1, params[:page].to_s.to_i].max
     direction = upcoming ? 'ASC' : 'DESC'
     comparator = upcoming ? :gteq : :lt
 
