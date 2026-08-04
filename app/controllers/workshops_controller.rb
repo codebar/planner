@@ -44,7 +44,7 @@ class WorkshopsController < ApplicationController
   end
 
   def find_or_create_invitation(workshop, user, role)
-    WorkshopInvitation.find_or_create_by(workshop: workshop,
+    WorkshopInvitation.create_or_find_by(workshop: workshop,
                                          member: user,
                                          role: role)
   end
