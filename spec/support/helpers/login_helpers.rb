@@ -1,6 +1,24 @@
 module LoginHelpers
+  module LoginStub
+    cattr_accessor :current_user
+
+    def current_user
+      return LoginStub.current_user if LoginStub.current_user
+
+      super
+    end
+  end
+
   def login(member)
-    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(member)
+    if respond_to?(:visit)
+      visit '/logout'
+      mock_auth_hash(provider: member.auth_services.first.provider,
+                     uid: member.auth_services.first.uid)
+      visit '/auth/github'
+    else
+      ApplicationController.prepend(LoginStub) unless ApplicationController < LoginStub
+      LoginStub.current_user = member
+    end
   end
 
   def login_mock_omniauth(member, login_link = 'Sign in')
@@ -31,4 +49,8 @@ end
 
 RSpec.configure do |config|
   config.include LoginHelpers, type: %i[feature controller]
+
+  config.after do
+    LoginHelpers::LoginStub.current_user = nil
+  end
 end

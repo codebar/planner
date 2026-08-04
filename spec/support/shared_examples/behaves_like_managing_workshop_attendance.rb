@@ -174,7 +174,10 @@ RSpec.shared_examples 'managing workshop attendance' do
             travel_into_the_future = Time.zone.now + 3.days
             allow(Time).to receive(:now).and_return(travel_into_the_future)
 
-            click_on 'Attend as a coach'
+            # The stubbed future Time expires the 24h session cookie, so log in again
+            login(coach)
+            visit workshop_path(workshop)
+
             expect(page).to have_text('This event has already taken place')
             expect(page).to have_no_button('Attend as a coach')
           end
