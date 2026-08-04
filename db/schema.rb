@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_29_151201) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_31_104506) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -75,6 +75,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_29_151201) do
     t.string "uid"
     t.datetime "updated_at", precision: nil
     t.index ["member_id"], name: "index_auth_services_on_member_id"
+    t.index ["uid", "provider"], name: "index_auth_services_on_uid_and_provider", unique: true
   end
 
   create_table "bans", id: :serial, force: :cascade do |t|
@@ -102,6 +103,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_29_151201) do
     t.string "slug"
     t.string "time_zone", default: "London", null: false
     t.datetime "updated_at", precision: nil
+    t.index ["email"], name: "index_chapters_on_email", unique: true
+    t.index ["name"], name: "index_chapters_on_name", unique: true
   end
 
   create_table "chapters_events", id: :serial, force: :cascade do |t|
@@ -242,6 +245,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_29_151201) do
     t.integer "workshop_id"
     t.index ["member_id"], name: "index_feedback_requests_on_member_id"
     t.index ["workshop_id"], name: "index_feedback_requests_on_workshop_id"
+    t.index ["member_id", "workshop_id"], name: "index_feedback_requests_on_member_id_and_workshop_id", unique: true
+    t.index ["token"], name: "index_feedback_requests_on_token", unique: true
   end
 
   create_table "feedbacks", id: :serial, force: :cascade do |t|
@@ -348,6 +353,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_29_151201) do
     t.index ["member_id", "attending"], name: "index_invitations_member_attending"
     t.index ["member_id"], name: "index_invitations_on_member_id"
     t.index ["verified_by_id"], name: "index_invitations_on_verified_by_id"
+    t.index ["member_id", "event_id", "role"], name: "index_invitations_on_member_id_and_event_id_and_role", unique: true
   end
 
   create_table "jobs", id: :serial, force: :cascade do |t|
@@ -389,6 +395,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_29_151201) do
     t.index ["meeting_id"], name: "index_meeting_invitations_on_meeting_id"
     t.index ["member_id", "attending"], name: "index_meeting_invitations_member_attending"
     t.index ["member_id"], name: "index_meeting_invitations_on_member_id"
+    t.index ["member_id", "meeting_id"], name: "index_meeting_invitations_on_member_id_and_meeting_id", unique: true
   end
 
   create_table "meetings", id: :serial, force: :cascade do |t|
@@ -599,6 +606,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_29_151201) do
     t.index ["member_id", "attending"], name: "index_workshop_invitations_member_attending"
     t.index ["member_id"], name: "index_workshop_invitations_on_member_id"
     t.index ["token"], name: "index_workshop_invitations_on_token", unique: true
+    t.index ["member_id", "workshop_id", "role"], name: "idx_on_member_id_workshop_id_role_e3cea6bbfd", unique: true
     t.index ["workshop_id", "attending"], name: "index_workshop_invitations_workshop_attending"
     t.index ["workshop_id"], name: "index_workshop_invitations_on_workshop_id"
   end
@@ -612,6 +620,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_29_151201) do
     t.index ["sponsor_id"], name: "index_workshop_sponsors_on_sponsor_id"
     t.index ["workshop_id", "host"], name: "index_workshop_sponsors_on_workshop_id_and_host"
     t.index ["workshop_id"], name: "index_workshop_sponsors_on_workshop_id"
+    t.index ["sponsor_id", "workshop_id"], name: "index_workshop_sponsors_on_sponsor_id_and_workshop_id", unique: true
   end
 
   create_table "workshops", id: :serial, force: :cascade do |t|

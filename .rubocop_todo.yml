@@ -135,13 +135,4 @@ Rails/SkipsModelValidations:
     - 'app/controllers/workshop_invitation_controller.rb'
     - 'app/services/invitation_logger.rb'
 
-# Offense count: 8
-Rails/UniqueValidationWithoutIndex:
-  Exclude:
-    - 'app/models/auth_service.rb'
-    - 'app/models/chapter.rb'
-    - 'app/models/feedback_request.rb'
-    - 'app/models/invitation.rb'
-    - 'app/models/meeting_invitation.rb'
-    - 'app/models/workshop_invitation.rb'
-    - 'app/models/workshop_sponsor.rb'
+
