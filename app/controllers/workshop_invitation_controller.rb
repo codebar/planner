@@ -56,7 +56,7 @@ class WorkshopInvitationController < ApplicationController
         redirect_back(fallback_location: invitation_path(@invitation),
                       notice: t('messages.not_attending_already'))
       else
-        @invitation.update_attribute(:attending, false)
+        @invitation.update!(attending: false)
 
         next_spot = WaitingList.next_spot(@invitation.workshop, @invitation.role)
 

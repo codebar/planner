@@ -90,7 +90,7 @@ class InvitationLogger
 
   def save_entry(entry, counter)
     entry.save!
-    @log.increment!(counter)
+    @log.increment(counter).save!
     entry
   end
 
