@@ -3,7 +3,7 @@ class DashboardQuery
   MAX_WORKSHOP_QUERY = 10
 
   def self.upcoming_events
-    workshops = Workshop.eager_load(:chapter, :sponsors, :organisers, :permissions)
+    workshops = Workshop.eager_load(:chapter, :sponsors, :organisers, :permissions, :workshop_host)
                         .today_and_upcoming
                         .limit(MAX_WORKSHOP_QUERY)
                         .to_a
