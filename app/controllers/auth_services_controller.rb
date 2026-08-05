@@ -46,7 +46,11 @@ class AuthServicesController < ApplicationController
 
         member.save!
 
-        member.toggle!(:can_log_in)
+        # Set, not Toggle: toggling would flip can_log_in off for a member who
+        # links a second auth service. Skip the conditional profile validations
+        # here on purpose — a brand-new member completes name/about_you on the
+        # next (details) page, and running them now aborts the signup callback.
+        member.update_column(:can_log_in, true) # rubocop:disable Rails/SkipsModelValidations
 
         session[:member_id]          = member.id
         session[:service_id]         = member_service.id
