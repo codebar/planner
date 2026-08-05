@@ -16,7 +16,6 @@ RSpec.feature 'A new student signs up', type: :feature do
 
   scenario 'A visitor must fill in all mandatory fields in order to sign up' do
     member = Fabricate(:member, name: nil, surname: nil, email: nil, about_you: nil, how_you_found_us: nil, how_you_found_us_other_reason: nil)
-    member.update_attribute(:can_log_in, true)
     login member
 
     visit edit_member_details_path
@@ -68,7 +67,6 @@ RSpec.feature 'A new student signs up', type: :feature do
     group = Fabricate(:group)
 
     login member
-    member.update(can_log_in: true)
 
     visit step2_member_path
     expect(page).to have_current_path(step2_member_path)

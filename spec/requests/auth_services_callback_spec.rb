@@ -17,10 +17,45 @@ RSpec.describe 'AuthServices callback' do
 
     expect { post '/auth/github/callback' }.not_to raise_error
 
-    expect(response).to redirect_to(edit_member_details_path)
+    # The winner is a complete member, so the losing callback must not bounce
+    # them back to the details page — they go to the dashboard instead.
+    expect(response).to redirect_to(dashboard_path)
     expect(session[:member_id]).to eq(winner.id)
     expect(session[:service_id]).to eq(winner_service.id)
-    # the losing callback must not flip the winner's can_log_in flag back
-    expect(winner.reload.can_log_in).to be(false)
+    expect(winner.reload.active?).to be(true)
+  end
+
+  it 'sends a complete member who links a second provider to the dashboard, not details' do
+    complete = Fabricate(:member, email: 'existing@example.com')
+    mock_auth_hash(provider: 'github', uid: 'second-uid',
+                   email: 'existing@example.com')
+
+    post '/auth/github/callback'
+
+    expect(response).to redirect_to(dashboard_path)
+    expect(session[:member_id]).to eq(complete.id)
+  end
+
+  it 'sends a complete member who links a second provider to a stored referer' do
+    complete = Fabricate(:member, email: 'referer@example.com')
+    mock_auth_hash(provider: 'github', uid: 'second-uid-referer',
+                   email: 'referer@example.com')
+
+    # AuthServicesController#new (GET /login) stores a workshop/event/meeting
+    # referer in the session; a complete member then follows it instead of
+    # being bounced to the details page.
+    get '/login', headers: { 'HTTP_REFERER' => '/workshops/1' }
+    post '/auth/github/callback'
+
+    expect(response).to redirect_to('/workshops/1')
+    expect(session[:member_id]).to eq(complete.id)
+  end
+
+  it 'sends a brand-new member to complete their profile details' do
+    mock_auth_hash(provider: 'github', uid: 'new-uid', email: 'new@example.com')
+
+    post '/auth/github/callback'
+
+    expect(response).to redirect_to(edit_member_details_path)
   end
 end

@@ -44,10 +44,8 @@ class AuthServicesController < ApplicationController
           uid: omnihash[:uid]
         )
 
-        created = false
         begin
           member.save!
-          created = true
         rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotUnique
           # Concurrent OAuth callback for the same account: another request just
           # created this member/auth_service (both email and (uid, provider) are
@@ -59,18 +57,16 @@ class AuthServicesController < ApplicationController
           member = member_service.member
         end
 
-        # Set, not Toggle: toggling would flip can_log_in off for a member who
-        # links a second auth service. Skip the conditional profile validations
-        # here on purpose — a brand-new member completes name/about_you on the
-        # next (details) page, and running them now aborts the signup callback.
-        member.update_column(:can_log_in, true) if created # rubocop:disable Rails/SkipsModelValidations
-
         session[:member_id]          = member.id
         session[:service_id]         = member_service.id
         session[:oauth_token]        = omnihash[:credentials][:token]
         session[:oauth_token_secret] = omnihash[:credentials][:secret]
 
-        redirect_to edit_member_details_path(member_type: member_type)
+        if member.requires_additional_details?
+          redirect_to edit_member_details_path(member_type: member_type)
+        else
+          redirect_to referer_or_dashboard_path
+        end
     end
   end
 
