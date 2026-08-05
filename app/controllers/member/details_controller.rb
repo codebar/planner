@@ -21,7 +21,7 @@ class Member::DetailsController < ApplicationController
 
     return render :edit unless @member.update(attrs)
 
-    attrs[:newsletter] ? subscribe_to_newsletter(@member) : unsubscribe_from_newsletter(@member)
+    @member.newsletter ? subscribe_to_newsletter(@member) : unsubscribe_from_newsletter(@member)
     redirect_to step2_member_path
   end
 

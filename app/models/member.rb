@@ -63,7 +63,9 @@ class Member < ApplicationRecord
 
   acts_as_taggable_on :skills
 
-  attr_accessor :attendance, :newsletter
+  attr_accessor :attendance
+
+  attribute :newsletter, :boolean
 
   def organiser?
     organised_chapters.present?

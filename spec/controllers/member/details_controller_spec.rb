@@ -73,6 +73,54 @@ RSpec.describe Member::DetailsController do
         expect(member.how_you_found_us_other_reason).to eq('From a colleague')
         expect(response).to redirect_to(step2_member_path)
       end
+
+      it 'subscribes to the newsletter when checked' do
+        patch :update, params: {
+          id: member.id,
+          member: {
+            how_you_found_us: 'social_media',
+            newsletter: 'true'
+          }
+        }
+
+        expect(mailing_list).to have_received(:subscribe)
+        expect(mailing_list).not_to have_received(:unsubscribe)
+      end
+
+      it 'unsubscribes from the newsletter when unchecked' do
+        patch :update, params: {
+          id: member.id,
+          member: {
+            how_you_found_us: 'social_media',
+            newsletter: 'false'
+          }
+        }
+
+        expect(mailing_list).to have_received(:unsubscribe)
+        expect(mailing_list).not_to have_received(:subscribe)
+      end
+    end
+
+    context 'with a validation failure' do
+      it 'keeps the newsletter checkbox checked when it was checked' do
+        patch :update, params: {
+          id: member.id,
+          member: { newsletter: 'true' }
+        }
+
+        expect(response.body).to include('You must select one option')
+        expect(response.body).to have_css('input#member_newsletter[checked]')
+      end
+
+      it 'keeps the newsletter checkbox unchecked when it was unchecked' do
+        patch :update, params: {
+          id: member.id,
+          member: { newsletter: 'false' }
+        }
+
+        expect(response.body).to include('You must select one option')
+        expect(response.body).to have_no_css('input#member_newsletter[checked]')
+      end
     end
 
     context 'when update fails (invalid data)' do
