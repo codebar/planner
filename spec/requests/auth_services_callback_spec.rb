@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'AuthServices callback', type: :request do
+RSpec.describe 'AuthServices callback' do
   it 'reuses the winner when a concurrent callback just created the same auth service' do
     winner = Fabricate(:member, email: 'winner@example.com')
     winner_service = Fabricate(:auth_service, member: winner,
