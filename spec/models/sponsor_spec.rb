@@ -64,4 +64,24 @@ RSpec.describe Sponsor do
         .with_values(%i[hidden standard bronze silver gold community])
     end
   end
+
+  describe '#coach_spots' do
+    it 'returns number_of_coaches when present' do
+      sponsor = Fabricate.build(:sponsor, number_of_coaches: 4, seats: 10)
+
+      expect(sponsor.coach_spots).to eq(4)
+    end
+
+    it 'falls back to half the seats rounded' do
+      sponsor = Fabricate.build(:sponsor, number_of_coaches: nil, seats: 15)
+
+      expect(sponsor.coach_spots).to eq(8)
+    end
+
+    it 'does not raise when both seats and number_of_coaches are missing' do
+      sponsor = Fabricate.build(:sponsor, number_of_coaches: nil, seats: nil)
+
+      expect(sponsor.coach_spots).to be_nil
+    end
+  end
 end

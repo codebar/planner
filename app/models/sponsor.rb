@@ -53,7 +53,9 @@ class Sponsor < ApplicationRecord
   mount_uploader(:avatar, AvatarUploader)
 
   def coach_spots
-    number_of_coaches || (seats / 2.0).round
+    return number_of_coaches if number_of_coaches.present?
+
+    seats.present? ? (seats / 2.0).round : nil
   end
 
   def self.latest
