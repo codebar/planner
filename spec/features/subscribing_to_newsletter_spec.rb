@@ -1,7 +1,7 @@
 RSpec.feature 'Subscribing to the newsletter', type: :feature do
   before do
-    OmniAuth.config.mock_auth[:github] = OmniAuth::AuthHash.new(
-      provider: 'github',
+    OmniAuth.config.mock_auth[:codebar] = OmniAuth::AuthHash.new(
+      provider: 'codebar',
       uid: '42',
       credentials: { token: 'Fake token' },
       info: {
