@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_31_104506) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_06_000000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -441,7 +441,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_31_104506) do
   create_table "members", id: :serial, force: :cascade do |t|
     t.string "about_you"
     t.datetime "accepted_toc_at", precision: nil
-    t.boolean "can_log_in", default: false, null: false
     t.datetime "created_at", precision: nil
     t.enum "dietary_restrictions", default: [], array: true, enum_type: "dietary_restriction_enum"
     t.string "email"

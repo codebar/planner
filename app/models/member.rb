@@ -1,4 +1,6 @@
 class Member < ApplicationRecord
+  self.ignored_columns += ['can_log_in']
+
   include DigestHelper
 
   rolify role_cname: 'Permission', role_table_name: :permission, role_join_table_name: :members_permissions
@@ -27,9 +29,9 @@ class Member < ApplicationRecord
   has_many :member_email_deliveries
 
   validates :auth_services, presence: true
-  validates :name, :surname, :email, :about_you, presence: true, if: :can_log_in?
+  validates :name, :surname, :email, :about_you, presence: true, if: :active?
   validates :email, uniqueness: true
-  validates :email, email: { mode: :strict }, if: :can_log_in?
+  validates :email, email: { mode: :strict }, if: :active?
   validates :about_you, length: { maximum: 255 }
 
   DIETARY_RESTRICTIONS = %w[vegan vegetarian pescetarian halal gluten_free dairy_free other].freeze
@@ -125,7 +127,11 @@ class Member < ApplicationRecord
   end
 
   def requires_additional_details?
-    can_log_in? && !valid?
+    active? && !valid?
+  end
+
+  def active?
+    auth_services.exists?
   end
 
   def existing_rsvp_on?(date)

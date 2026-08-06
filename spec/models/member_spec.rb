@@ -7,8 +7,10 @@ RSpec.describe Member do
       it { is_expected.to validate_length_of(:about_you).is_at_most(255) }
       it { is_expected.to validate_uniqueness_of(:email) }
 
-      describe 'can_log_in' do
-        let(:member) { Fabricate.build(:member, can_log_in: true) }
+      describe 'active' do
+        # Fabricated members have a persisted auth service, so #active? is true
+        # and the profile presence/email validations run.
+        let(:member) { Fabricate(:member) }
 
         it { expect(member).to validate_presence_of(:name) }
         it { expect(member).to validate_presence_of(:surname) }
@@ -44,6 +46,32 @@ RSpec.describe Member do
         it 'accepts email with plus addressing' do
           member.email = 'user+tag@example.com'
           expect(member).to be_valid
+        end
+
+        context 'when the member has no auth service' do
+          let(:member) do
+            member = Fabricate(:member)
+            member.auth_services.delete_all
+            member.name = nil
+            member.surname = nil
+            member.about_you = nil
+            member
+          end
+
+          it 'is not active' do
+            expect(member.active?).to be(false)
+          end
+
+          it 'skips the gated profile presence validations' do
+            member.valid?
+            expect(member.errors[:name]).to be_empty
+            expect(member.errors[:surname]).to be_empty
+            expect(member.errors[:about_you]).to be_empty
+          end
+
+          it 'does not require additional details' do
+            expect(member.requires_additional_details?).to be(false)
+          end
         end
       end
     end
