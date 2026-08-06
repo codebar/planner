@@ -63,7 +63,7 @@ class AuthServicesController < ApplicationController
         session[:oauth_token_secret] = omnihash[:credentials][:secret]
 
         if member.requires_additional_details?
-          redirect_to edit_member_details_path(member_type: member_type)
+          redirect_to edit_member_details_path(member_type:)
         else
           redirect_to referer_or_dashboard_path
         end
