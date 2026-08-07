@@ -1,4 +1,11 @@
-backup_production:
+.DEFAULT_GOAL := help
+
+.PHONY: help
+help: ## List available targets
+	@grep -E '^[a-zA-Z_-]+:.*?## ' $(MAKEFILE_LIST) | sort | \
+		awk 'BEGIN {FS = ":.*?## "}; {printf "  \033[36m%-25s\033[0m %s\n", $$1, $$2}'
+
+backup_production: ## Capture and download a production database backup
 	heroku pgbackups:capture --app=codebar-production
 	curl -o pg-production-latest.dump `heroku pgbackups:url --app=codebar-production`
 	bzip2 pg-production-latest.dump
@@ -33,7 +40,7 @@ backup_production:
 DUMP_APP := codebar-production
 DUMP_DB  := codebar_production_dump
 
-dump_production:
+dump_production: ## Restore a fresh copy of production data locally
 	@command -v heroku   >/dev/null || { echo "error: Heroku CLI not installed"; exit 1; }
 	@command -v pg_dump  >/dev/null || { echo "error: pg_dump not found on PATH"; exit 1; }
 	@command -v psql     >/dev/null || { echo "error: psql not found on PATH"; exit 1; }
@@ -58,30 +65,30 @@ dump_production:
 	  rm -f "$$DUMP_FILE"; \
 	  echo "Done: production copy restored into '$(DUMP_DB)'."
 
-deploy_production:
+deploy_production: ## Deploy master to production
 	heroku maintenance:on --app=codebar-production
 	git tag production_release_`date +"%Y%m%d-%H%M%S"`
 	git push upstream --tags
 	git push production master
 	heroku run rake db:migrate --app=codebar-production
 	heroku maintenance:off --app=codebar-production
-backup_staging:
+backup_staging: ## Capture and download a staging database backup
 	heroku pgbackups:capture --app=codebar-staging
 	curl -o pg-staging-latest.dump `heroku pgbackups:url --app=codebar-staging`
 	bzip2 pg-staging-latest.dump
-deploy_staging:
+deploy_staging: ## Deploy master to staging
 	heroku maintenance:on --app=codebar-staging
 	git tag staging_release_`date +"%Y%m%d-%H%M%S"`
 	git push upstream --tags
 	git push staging master
 	heroku run rake db:migrate --app=codebar-staging
 	heroku maintenance:off --app=codebar-staging
-serve:
+serve: ## Run the Rails dev server
 	rm -f ./tmp/pids/server.pid && bundle exec rails server --binding=0.0.0.0 --port=3000
 
-test:
+test: ## Run the test suite in parallel
 	bundle exec rake parallel:setup
 	bundle exec parallel_rspec spec/ -n 3
 
-check:
+check: ## Run setup checks
 	bundle exec rake setup:check
