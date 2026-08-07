@@ -57,5 +57,21 @@ RSpec.describe 'AuthServices callback' do
     post '/auth/github/callback'
 
     expect(response).to redirect_to(edit_member_details_path)
+    expect(session[:new_member]).to be(true)
+  end
+
+  it 'does not mark an existing incomplete member as a new signup when they return to complete their profile' do
+    returning = Fabricate(:member, name: nil, surname: nil, about_you: nil,
+                                   email: 'returning@example.com')
+    returning.auth_services.delete_all
+    svc = Fabricate(:auth_service, member: returning,
+                                   provider: 'github', uid: 'returning-github-uid')
+    mock_auth_hash(provider: 'github', uid: svc.uid,
+                   email: 'returning@example.com', name: nil)
+
+    post '/auth/github/callback'
+
+    expect(response).to redirect_to(edit_member_details_path)
+    expect(session[:new_member]).to be_nil
   end
 end

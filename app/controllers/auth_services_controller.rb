@@ -35,6 +35,7 @@ class AuthServicesController < ApplicationController
 
         member = Member.find_by(email:)
         member ||= Member.new(email:)
+        new_member = member.new_record?
 
         member.name    ||= omnihash[:info][:name]&.split(' ')&.first || ''
         member.surname ||= omnihash[:info][:name]&.split(' ')&.drop(1)&.join(' ') || ''
@@ -55,6 +56,7 @@ class AuthServicesController < ApplicationController
           member_service = AuthService.find_by!(provider: omnihash[:provider],
                                                 uid: omnihash[:uid])
           member = member_service.member
+          new_member = false
         end
 
         session[:member_id]          = member.id
@@ -63,6 +65,7 @@ class AuthServicesController < ApplicationController
         session[:oauth_token_secret] = omnihash[:credentials][:secret]
 
         if member.requires_additional_details?
+          session[:new_member] = new_member
           redirect_to edit_member_details_path(member_type:)
         else
           redirect_to referer_or_dashboard_path
