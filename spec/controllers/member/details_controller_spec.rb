@@ -9,6 +9,28 @@ RSpec.describe Member::DetailsController do
     allow(mailing_list).to receive_messages(subscribe: true, unsubscribe: true)
   end
 
+  describe 'GET #edit' do
+    context 'when a brand-new member' do
+      it 'shows the signing up message' do
+        session[:new_member] = true
+
+        get :edit
+
+        expect(response.body).to include(I18n.t('notifications.signing_up'))
+      end
+    end
+
+    context 'when an existing member' do
+      it 'does not show the signing up message' do
+        session[:new_member] = false
+
+        get :edit
+
+        expect(response.body).not_to include(I18n.t('notifications.signing_up'))
+      end
+    end
+  end
+
   describe 'PATCH #update' do
     context 'with valid params' do
       it 'updates how_you_found_us with radio option' do
