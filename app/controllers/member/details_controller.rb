@@ -8,7 +8,9 @@ class Member::DetailsController < ApplicationController
 
   def edit
     accept_terms
-    flash[notice] = I18n.t('notifications.signing_up')
+    if session.delete(:new_member)
+      flash[notice] = I18n.t('notifications.signing_up')
+    end
     @member.newsletter ||= true
   end
 
