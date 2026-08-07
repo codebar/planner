@@ -1,4 +1,4 @@
-RSpec.describe WorkshopsController, type: :controller do
+RSpec.describe WorkshopsController do
   let(:member) { Fabricate(:member) }
   let(:workshop) { Fabricate(:workshop) }
 
