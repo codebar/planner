@@ -63,8 +63,9 @@ class EventsController < ApplicationController
 
   def find_invitation_and_redirect_to_event(role)
     set_event
-    @invitation = Invitation.create_or_find_by(event: @event, member: current_user, role: role)
-    redirect_to event_invitation_path(@event, @invitation)
+    invitation = Invitation.create_or_find_by(event: @event, member: current_user, role: role)
+    invitation = Invitation.find_by(event: @event, member: current_user, role: role) unless invitation.persisted?
+    redirect_to event_invitation_path(@event, invitation)
   end
 
   def set_event
