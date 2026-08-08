@@ -6,12 +6,36 @@ RSpec.describe Admin::WorkshopsController, type: :controller do
     login_as_organiser(admin, workshop.chapter)
   end
 
+  def count_queries(&block)
+    n = 0
+    callback = ->(*) { n += 1 }
+    ActiveSupport::Notifications.subscribed(callback, 'sql.active_record', &block)
+    n
+  end
+
   describe 'GET #show' do
     it 'loads the workshop attendance page with attendees' do
       Fabricate(:workshop_invitation, workshop: workshop, attending: true)
       get :show, params: { id: workshop.id }
 
       expect(response).to have_http_status(:success)
+    end
+
+    it 'loads the attendance page in a bounded number of queries, regardless of attendee count' do
+      attendee = Fabricate(:member)
+      4.times { Fabricate(:past_attending_workshop_invitation, member: attendee) }
+      2.times { Fabricate(:attendance_warning, member: attendee) }
+      Fabricate(:member_note, member: attendee, created_at: 1.day.ago)
+      Fabricate(:workshop_invitation, workshop: workshop, member: attendee, attending: true, role: 'Student')
+      Fabricate(:workshop_invitation, workshop: workshop, attending: true, role: 'Coach')
+
+      # adds a second attendee to catch per-row scaling
+      Fabricate(:workshop_invitation, workshop: workshop, attending: true, role: 'Student')
+
+      count = count_queries { get :show, params: { id: workshop.id } }
+
+      expect(response).to have_http_status(:success)
+      expect(count).to be < 50
     end
   end
 

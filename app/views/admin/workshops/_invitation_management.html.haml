@@ -15,11 +15,14 @@
 = simple_form_for :workshop, url: admin_workshop_invitations_path(@workshop, attending: true), remote: true, method: :put do |f|
   .row.mb-4
     .col-auto
+      - recent_invites = @workshop.invitations.includes(:member).not_accepted.order(created_at: :desc).limit(100)
       = f.select :invitations,
-                  @workshop.invitations.includes(:member).not_accepted.all.map { |u| [ "#{u.member.full_name} (#{u.role})", u.token] },
+                  recent_invites.map { |u| [ "#{u.member.full_name} (#{u.role})", u.token] },
                   { include_blank: true },
                   { class: 'chosen-select', required: true,
                   data: { placeholder: t('messages.invitations.select_a_member_to_rsvp') } }
+      %p.small.text-muted.mb-0
+        Showing the #{recent_invites.size} most recent of #{@workshop.invitations.not_accepted.count} outstanding invitations
     .col-auto
       %span{'data-bs-toggle': 'tooltip', 'data-bs-placement': 'bottom', title: t('admin.workshop.manage_rsvps.text')}
         %i.fas.fa-info-circle

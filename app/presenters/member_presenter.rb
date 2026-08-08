@@ -11,6 +11,8 @@ class MemberPresenter < BasePresenter
   end
 
   def newbie?
+    return model.admin_workshop_flags[:newbie] if model.admin_workshop_flags
+
     !workshop_invitations.attended.exists?
   end
 
