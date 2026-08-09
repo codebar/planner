@@ -61,5 +61,8 @@ Rails.application.configure do
     Bullet.enable = true
     Bullet.bullet_logger = true
     Bullet.raise = false # raise an error if n+1 query occurs
+
+    # Ensure route url_helpers (e.g. CheckInCode#check_in_url) work in service specs
+    Rails.application.routes.default_url_options = { host: 'localhost:3000' }
   end
 end
