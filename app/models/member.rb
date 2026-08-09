@@ -201,7 +201,13 @@ class Member < ApplicationRecord
 
   def self.find_members_by_name(name)
     name.strip!
-    name.eql?('') ? none : where("CONCAT(name, ' ', surname) ILIKE ?", "%#{name}%")
+    return none if name.eql?('')
+
+    # ILIKE metacharacters (% _ \) are escaped so search terms are treated literally:
+    # a bare '%' matches everything and a trailing backslash raises 'LIKE pattern must
+    # not end with escape character'.
+    escaped = name.gsub(/[%_\\]/) { |char| "\\#{char}" }
+    where("CONCAT(name, ' ', surname) ILIKE ?", "%#{escaped}%")
   end
 
   private

@@ -232,6 +232,19 @@ RSpec.describe Member do
         expect(described_class.find_members_by_name('').size).to eq(0)
       end
     end
+
+    describe 'wildcard characters are treated literally' do
+      it 'does not treat % as a wildcard' do
+        Fabricate(:member, name: 'Per', surname: 'Cent')
+        expect(described_class.find_members_by_name('%').size).to eq(0)
+      end
+
+      it 'accepts a search term ending in a backslash without raising' do
+        Fabricate(:member, name: 'Slash', surname: 'Back\\')
+        result = described_class.find_members_by_name('back\\')
+        expect(result.map(&:surname)).to include('Back\\')
+      end
+    end
   end
 
   describe '.admin' do
