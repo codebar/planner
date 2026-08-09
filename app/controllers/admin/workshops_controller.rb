@@ -94,6 +94,20 @@ class Admin::WorkshopsController < Admin::ApplicationController
     redirect_to admin_workshop_path(@workshop), notice: "Invitations to #{audience} are being emailed out."
   end
 
+  def rsvp
+    @workshop = Workshop.find(params[:workshop_id])
+    authorize @workshop, :update?
+
+    @eligible_count = @workshop.invitations
+                               .joins(:member)
+                               .merge(Member.not_banned)
+                               .count
+
+    return if params[:q].blank?
+
+    @pagy, @invitations = paginate_matching_invitations(params[:q])
+  end
+
   def destroy
     authorize(@workshop)
 
@@ -146,6 +160,16 @@ class Admin::WorkshopsController < Admin::ApplicationController
   end
 
   private
+
+  def paginate_matching_invitations(query)
+    eligible = @workshop.invitations
+                        .joins(:member)
+                        .merge(Member.not_banned)
+    invitations = eligible.merge(Member.find_members_by_name(query))
+                          .includes(:member)
+                          .order('members.name, members.surname')
+    pagy(invitations, items: 20)
+  end
 
   def workshop_params
     params.expect(workshop: [

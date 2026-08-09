@@ -13,6 +13,10 @@ RSpec.describe Admin::WorkshopsController, type: :controller do
     n
   end
 
+  def assigns(symbol)
+    controller.instance_variable_get("@#{symbol}")
+  end
+
   describe 'GET #show' do
     it 'loads the workshop attendance page with attendees' do
       Fabricate(:workshop_invitation, workshop: workshop, attending: true)
@@ -36,6 +40,122 @@ RSpec.describe Admin::WorkshopsController, type: :controller do
 
       expect(response).to have_http_status(:success)
       expect(count).to be < 50
+    end
+
+    context 'when rendering the page' do
+      render_views
+
+      it 'links to the RSVP members page instead of rendering an invitations select' do
+        Fabricate(:workshop_invitation, workshop: workshop, attending: nil)
+        get :show, params: { id: workshop.id }
+
+        expect(response.body).to include(admin_workshop_rsvp_path(workshop))
+        expect(response.body).not_to include('chosen-select')
+        expect(response.body).not_to include('outstanding invitations')
+      end
+    end
+  end
+
+  describe 'GET #rsvp' do
+    render_views
+
+    let(:member) { Fabricate(:member, name: 'Zoe', surname: 'Searchable') }
+    let!(:matching) { Fabricate(:workshop_invitation, workshop: workshop, member: member, attending: nil) }
+
+    before do
+      Fabricate(:ban, member: Fabricate(:member, name: 'Bob', surname: 'Banned'))
+      Fabricate(:workshop_invitation, workshop: workshop, attending: true) # an already-attending member (counts toward eligible)
+      Fabricate(:workshop_invitation, member: member) # an invite for a DIFFERENT workshop
+    end
+
+    it 'is not accessible without organiser rights' do
+      allow(controller).to receive(:manager?).and_return(false)
+      get :rsvp, params: { workshop_id: workshop.id }
+
+      expect(response).to redirect_to(root_path)
+    end
+
+    it 'assigns the eligible count and no invitations when no search term is given' do
+      get :rsvp, params: { workshop_id: workshop.id }
+
+      expect(assigns(:eligible_count)).to eq(2) # matching + other; banned is excluded from the count
+      expect(assigns(:invitations)).to be_nil
+      expect(response).to have_http_status(:success)
+    end
+
+    it 'returns only matching invited members for the workshop, excluding banned members' do
+      get :rsvp, params: { workshop_id: workshop.id, q: 'Zoe' }
+
+      expect(assigns(:invitations).map(&:id)).to eq([matching.id])
+    end
+
+    it 'excludes banned members from search results' do
+      get :rsvp, params: { workshop_id: workshop.id, q: 'Banned' }
+
+      expect(assigns(:invitations)).to be_empty
+      expect(response.body).to include('No members found')
+    end
+
+    it 'filters by member name case-insensitively across first and surname' do
+      get :rsvp, params: { workshop_id: workshop.id, q: 'SEARCHA' }
+
+      expect(assigns(:invitations).map(&:id)).to eq([matching.id])
+    end
+
+    it 'eager loads member so rendering does not query per row' do
+      3.times { Fabricate(:workshop_invitation, workshop: workshop, member: Fabricate(:member, name: 'Eager', surname: 'Load'), attending: nil) }
+
+      get :rsvp, params: { workshop_id: workshop.id, q: 'Eager' }
+
+      expect(assigns(:invitations).all? { |i| i.association(:member).loaded? }).to be(true)
+    end
+
+    it 'paginates results at 20 per page and preserves the search term across pages' do
+      21.times do |i|
+        Fabricate(:workshop_invitation, workshop: workshop, member: Fabricate(:member, name: "Page#{i}", surname: 'User'), attending: nil)
+      end
+
+      get :rsvp, params: { workshop_id: workshop.id, q: 'Page' }
+
+      expect(assigns(:pagy).pages).to eq(2)
+      expect(assigns(:invitations).size).to eq(20)
+      expect(response.body).to include('page=2')
+
+      get :rsvp, params: { workshop_id: workshop.id, q: 'Page', page: 2 }
+
+      expect(assigns(:invitations).size).to eq(1)
+      expect(assigns(:invitations).first.member.name).to start_with('Page')
+    end
+
+    it 'renders the not-attending badge and RSVP toggle for a declined member' do
+      declined = Fabricate(:member, name: 'Declined', surname: 'Member')
+      Fabricate(:workshop_invitation, workshop: workshop, member: declined, attending: false)
+
+      get :rsvp, params: { workshop_id: workshop.id, q: 'Declined' }
+
+      expect(response.body).to include('Not attending')
+      expect(response.body).to include('RSVP')
+      expect(response.body).not_to include('Mark as not attending')
+    end
+
+    it 'renders the eligible count, search box, back link and toggle forms' do
+      get :rsvp, params: { workshop_id: workshop.id, q: 'Zoe' }
+
+      expect(response.body).to include('invited members')
+      expect(response.body).to include('Search')
+      expect(response.body).to include('Back to')
+      # q: 'Zoe' only returns `matching` (attending: nil) -> its button says 'RSVP'
+      expect(response.body).to include('RSVP')
+      expect(response.body).not_to include('Mark as not attending')
+    end
+
+    it 'renders the not-attending toggle for an already-attending result' do
+      attending_member = Fabricate(:member, name: 'Aaron', surname: 'Other')
+      Fabricate(:workshop_invitation, workshop: workshop, member: attending_member, attending: true)
+
+      get :rsvp, params: { workshop_id: workshop.id, q: 'Aaron' }
+
+      expect(response.body).to include('Mark as not attending')
     end
   end
 
