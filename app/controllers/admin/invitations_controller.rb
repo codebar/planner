@@ -39,7 +39,7 @@ class Admin::InvitationsController < Admin::ApplicationController
   end
 
   def update_to_attended
-    @invitation.update(attended: true)
+    @invitation.update(attended: true, source: Invitation::SOURCE_ADMIN)
   end
 
   def update_to_unattended
@@ -51,7 +51,8 @@ class Admin::InvitationsController < Admin::ApplicationController
       attending: true,
       rsvp_time: Time.zone.now,
       automated_rsvp: true,
-      last_overridden_by_id: current_user.id
+      last_overridden_by_id: current_user.id,
+      source: Invitation::SOURCE_ADMIN
     )
 
     {
