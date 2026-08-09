@@ -15,6 +15,78 @@ RSpec.describe EventsController do
     end
   end
 
+  describe 'GET #student' do
+    let(:member) { Fabricate(:member) }
+    let(:event) { Fabricate(:event) }
+
+    before { login(member) }
+
+    context 'when the member already has an invitation for the event and role with attending nil' do
+      let!(:invitation) do
+        Fabricate(:invitation, event: event, member: member, role: 'Student', attending: nil)
+      end
+
+      it 'redirects to the existing invitation page' do
+        get :student, params: { event_id: event.slug }
+
+        expect(response).to redirect_to(event_invitation_path(event, invitation))
+      end
+
+      it 'does not create a new invitation' do
+        expect do
+          get :student, params: { event_id: event.slug }
+        end.not_to change(Invitation, :count)
+      end
+    end
+
+    context 'when the member does not have an invitation for the event and role' do
+      it 'creates a new invitation and redirects' do
+        expect do
+          get :student, params: { event_id: event.slug }
+        end.to change(Invitation, :count).by(1)
+
+        invitation = Invitation.last
+        expect(response).to redirect_to(event_invitation_path(event, invitation))
+      end
+    end
+  end
+
+  describe 'GET #coach' do
+    let(:member) { Fabricate(:member) }
+    let(:event) { Fabricate(:event) }
+
+    before { login(member) }
+
+    context 'when the member already has a coach invitation for the event with attending nil' do
+      let!(:invitation) do
+        Fabricate(:coach_invitation, event: event, member: member, attending: nil)
+      end
+
+      it 'redirects to the existing invitation page' do
+        get :coach, params: { event_id: event.slug }
+
+        expect(response).to redirect_to(event_invitation_path(event, invitation))
+      end
+
+      it 'does not create a new invitation' do
+        expect do
+          get :coach, params: { event_id: event.slug }
+        end.not_to change(Invitation, :count)
+      end
+    end
+
+    context 'when the member does not have a coach invitation for the event' do
+      it 'creates a new coach invitation and redirects' do
+        expect do
+          get :coach, params: { event_id: event.slug }
+        end.to change(Invitation, :count).by(1)
+
+        invitation = Invitation.last
+        expect(response).to redirect_to(event_invitation_path(event, invitation))
+      end
+    end
+  end
+
   describe '#past' do
     before { Fabricate(:event, date_and_time: 2.weeks.ago) }
 
