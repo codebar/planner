@@ -61,7 +61,7 @@
       .mb-4.mt-md-4.mt-lg-0
         .d-md-flex.justify-content-between.align-items-center
           %h3 Upcoming Workshops
-          = link_to 'New workshop', new_admin_workshop_path, class: 'btn btn-primary btn-sm'
+          = link_to 'New workshop', new_admin_workshop_path(chapter_id: @chapter.id), class: 'btn btn-primary btn-sm'
         - if @workshops.any?
           %ul.list-unstyled.ms-0.mb-0
             - @workshops.each do |workshop|
