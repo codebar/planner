@@ -147,6 +147,7 @@ Rails.application.routes.draw do
       get 'attendees_checklist'
       get 'attendees_emails'
       get 'send_invites'
+      get 'rsvp'
       get 'changes'
 
       resource :invitations, only: [:update]

@@ -73,4 +73,39 @@ RSpec.describe Admin::InvitationsController, type: :controller do
       expect(invitation.reload.attended).to be_nil
     end
   end
+
+  describe 'PUT #update (RSVP page toggle)' do
+    before do
+      admin.add_role(:organiser, workshop.chapter)
+      login admin
+    end
+
+    it 'toggles attending on and redirects back to the rsvp page' do
+      request.env['HTTP_REFERER'] = admin_workshop_rsvp_url(workshop)
+
+      put :update, params: { workshop_id: workshop.id, id: invitation.token, attending: 'true' }
+
+      expect(invitation.reload.attending).to be(true)
+      expect(response).to redirect_to(admin_workshop_rsvp_url(workshop))
+    end
+
+    it 'toggles an attending invitation back to not attending' do
+      invitation.update!(attending: true)
+      request.env['HTTP_REFERER'] = admin_workshop_rsvp_url(workshop)
+
+      put :update, params: { workshop_id: workshop.id, id: invitation.token, attending: 'false' }
+
+      expect(invitation.reload.attending).to be(false)
+      expect(response).to redirect_to(admin_workshop_rsvp_url(workshop))
+    end
+
+    it 'redirects back preserving the search term and page' do
+      request.env['HTTP_REFERER'] = admin_workshop_rsvp_url(workshop, q: 'Zoe', page: 2)
+
+      put :update, params: { workshop_id: workshop.id, id: invitation.token, attending: 'true' }
+
+      expect(invitation.reload.attending).to be(true)
+      expect(response).to redirect_to(admin_workshop_rsvp_path(workshop, q: 'Zoe', page: 2))
+    end
+  end
 end

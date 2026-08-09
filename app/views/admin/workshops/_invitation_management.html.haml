@@ -12,17 +12,7 @@
             %br
             = link_to 'See all invitations’ statuses', admin_workshop_changes_path(@workshop)
 
-= simple_form_for :workshop, url: admin_workshop_invitations_path(@workshop, attending: true), remote: true, method: :put do |f|
-  .row.mb-4
-    .col-auto
-      = f.select :invitations,
-                  @workshop.invitations.includes(:member).not_accepted.all.map { |u| [ "#{u.member.full_name} (#{u.role})", u.token] },
-                  { include_blank: true },
-                  { class: 'chosen-select', required: true,
-                  data: { placeholder: t('messages.invitations.select_a_member_to_rsvp') } }
-    .col-auto
-      %span{'data-bs-toggle': 'tooltip', 'data-bs-placement': 'bottom', title: t('admin.workshop.manage_rsvps.text')}
-        %i.fas.fa-info-circle
+= link_to 'RSVP a member', admin_workshop_rsvp_path(@workshop), class: 'btn btn-primary mb-4'
 
 .row
   .col-12.col-md-6

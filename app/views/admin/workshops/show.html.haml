@@ -1,3 +1,4 @@
+- content_for :title, "Workshop ##{@workshop.id}"
 .container-fluid.btn-group.p-0{ role: 'group' }
   = link_to edit_admin_workshop_path(@workshop), class: 'btn btn-primary py-3 rounded-0' do
     %i.fas.fa-pencil-alt

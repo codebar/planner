@@ -66,16 +66,22 @@ RSpec.feature 'managing workshop attendances', type: :feature do
       login_as_admin(member)
 
       other_invitation = Fabricate(:workshop_invitation, workshop: workshop, attending: nil)
+      student = other_invitation.member
 
       visit admin_workshop_path(workshop)
       expect(page).to have_text('1 are attending as students')
       expect(page).to have_no_css('i.fa-magic')
 
-      # Use the select_from_chosen helper to select the member
-      select_from_chosen("#{other_invitation.member.full_name} (#{other_invitation.role})", from: 'workshop_invitations')
+      click_link 'RSVP a member'
+      fill_in 'q', with: "#{student.name} #{student.surname}"
+      click_button 'Search'
 
+      expect(page).to have_text('No response')
+      click_button 'RSVP'
+      expect(page).to have_text('Attending', wait: 5)
+
+      visit admin_workshop_path(workshop)
       expect(page).to have_text('2 are attending as students', wait: 5)
-
       expect(page).to have_text(I18n.l(other_invitation.reload.rsvp_time))
       expect(page).to have_css('.fa-hat-wizard')
     end

@@ -1,0 +1,78 @@
+- content_for :title, "RSVP members - Workshop ##{@workshop.id}"
+.container.py-4.py-lg-5
+  .row.mb-1
+    .col
+      = link_to "Back to workshop ##{@workshop.id}", admin_workshop_path(@workshop), class: 'text-muted'
+      %h2.mt-2 RSVP members
+      %p.text-muted
+        #{number_with_delimiter(@eligible_count)} invited members (total)
+
+  .row.mb-4
+    .col.col-md-10.col-lg-8
+      %dl.row.mb-0.small
+        %dt.col-sm-2 Workshop
+        %dd.col-sm-10 ##{@workshop.id}
+        %dt.col-sm-2 Date &amp; time
+        %dd.col-sm-10= humanize_date(@workshop.date_and_time, @workshop.ends_at, with_time: true)
+        %dt.col-sm-2 Venue
+        %dd.col-sm-10
+          - if @workshop.host
+            - venue = @workshop.host.name
+            - venue = "#{venue}, #{@workshop.host.address.city}" if @workshop.host.address.present?
+            = venue
+          - elsif @workshop.virtual?
+            Virtual
+          - else
+            TBC
+        %dt.col-sm-2 Spots
+        %dd.col-sm-10 #{@workshop.student_spaces} students / #{@workshop.coach_spaces} coaches
+
+  .row.mb-4
+    .col.col-md-10.col-lg-8
+      %p.text-muted.mb-0
+        Use this page to manage individual RSVPs for this workshop. Search for an invited member, then use the button in their row to mark them as attending or not attending.
+
+  .row.mb-4
+    .col.col-md-10.col-lg-8
+      = form_tag admin_workshop_rsvp_path(@workshop), method: :get, class: 'row g-3 align-items-end' do
+        .col-auto.col-md-6
+          = label_tag :q, 'Member name', class: 'form-label'
+          = text_field_tag :q, params[:q], placeholder: 'Enter member name', class: 'form-control'
+        .col-auto
+          = submit_tag 'Search', class: 'btn btn-primary'
+
+  - if params[:q].present?
+    .row
+      .col.col-md-10.col-lg-8
+        - if @invitations.empty?
+          %p.text-muted No members found for "#{params[:q]}".
+        - else
+          %table.table.table-hover
+            %thead
+              %tr
+                %th Member
+                %th Role
+                %th Status
+                %th
+            %tbody
+              - @invitations.each do |invitation|
+                %tr
+                  %td
+                    = link_to invitation.member.full_name, admin_member_path(invitation.member)
+                    %br
+                    %small.text-muted= invitation.member.email
+                  %td= invitation.role
+                  %td
+                    - if invitation.attending?
+                      %span.badge.bg-success Attending
+                    - elsif invitation.attending == false
+                      %span.badge.bg-secondary Not attending
+                    - else
+                      %span.badge.bg-warning No response
+                  %td
+                    = form_tag admin_workshop_invitation_path(@workshop, invitation), method: :put, class: 'd-inline' do
+                      = hidden_field_tag :attending, invitation.attending? ? 'false' : 'true'
+                      = submit_tag(invitation.attending? ? 'Mark as not attending' : 'RSVP', class: 'btn btn-sm btn-outline-primary', aria: { label: "#{invitation.member.full_name} — #{invitation.attending? ? 'mark as not attending' : 'RSVP'}" })
+          = render partial: 'shared/pagination', locals: { pagy: @pagy, model: 'invitation' } if @pagy&.pages&.positive?
+  - else
+    %p.text-muted Search for a member to manage their RSVP.
