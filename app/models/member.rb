@@ -1,4 +1,6 @@
 class Member < ApplicationRecord
+  self.ignored_columns += ['can_log_in']
+
   include DigestHelper
 
   rolify role_cname: 'Permission', role_table_name: :permission, role_join_table_name: :members_permissions
@@ -23,13 +25,19 @@ class Member < ApplicationRecord
   has_many :member_notes
   has_many :chapters, -> { distinct }, through: :groups
   has_many :announcements, -> { distinct }, through: :groups
+
+  # Per-request aggregate results for the admin workshop attendance page, set by
+  # set_admin_workshop_data. When present, the flag helpers below avoid issuing
+  # one query per attending row. nil elsewhere -> fall back to live queries.
+  attr_accessor :admin_workshop_flags
+
   has_many :meeting_invitations
   has_many :member_email_deliveries
 
   validates :auth_services, presence: true
-  validates :name, :surname, :email, :about_you, presence: true, if: :can_log_in?
+  validates :name, :surname, :email, :about_you, presence: true, if: :active?
   validates :email, uniqueness: true
-  validates :email, email: { mode: :strict }, if: :can_log_in?
+  validates :email, email: { mode: :strict }, if: :active?
   validates :about_you, length: { maximum: 255 }
 
   DIETARY_RESTRICTIONS = %w[vegan vegetarian pescetarian halal gluten_free dairy_free other].freeze
@@ -125,7 +133,11 @@ class Member < ApplicationRecord
   end
 
   def requires_additional_details?
-    can_log_in? && !valid?
+    active? && !valid?
+  end
+
+  def active?
+    auth_services.exists?
   end
 
   def existing_rsvp_on?(date)
@@ -158,6 +170,8 @@ class Member < ApplicationRecord
   end
 
   def flag_to_organisers?
+    return admin_workshop_flags[:flag_to_organisers] if admin_workshop_flags
+
     multiple_no_shows? && attendance_warnings.last_six_months.length >= 2
   end
 
@@ -167,6 +181,11 @@ class Member < ApplicationRecord
   end
 
   def recent_notes
+    if admin_workshop_flags
+      # Only used as recent_notes.any? on the attendance rows
+      return (admin_workshop_flags[:recent_notes] ? [:note] : [])
+    end
+
     last_five_workshops = workshop_invitations.order_by_latest.attended.take(5)
     return [] if last_five_workshops.empty?
 
