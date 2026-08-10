@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_06_000000) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_10_091618) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -512,6 +512,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_06_000000) do
     t.integer "seats", default: 15
     t.datetime "updated_at", precision: nil
     t.string "website"
+    t.index "lower((name)::text)", name: "index_sponsors_on_lower_name"
+    t.index ["updated_at"], name: "index_sponsors_on_updated_at", order: :desc, where: "(level <> 0)"
   end
 
   create_table "sponsorships", id: :serial, force: :cascade do |t|
