@@ -15,7 +15,12 @@ class Admin::WorkshopsController < Admin::ApplicationController
   end
 
   def new
-    @workshop = Workshop.new
+    chapter_id = params[:chapter_id]
+    @workshop = if chapter_id.present? && Chapter.exists?(chapter_id)
+      Workshop.new(chapter_id: chapter_id)
+    else
+      Workshop.new
+    end
     authorize @workshop
   end
 
@@ -24,7 +29,7 @@ class Admin::WorkshopsController < Admin::ApplicationController
     authorize(@workshop)
 
     if workshop_type_valid? && @workshop.save
-      grant_organiser_access(@workshop.chapter.organisers.pluck(:id))
+      assign_organisers_or_default
       assign_host(host_id)
 
       redirect_to admin_workshop_path(@workshop), notice: I18n.t('admin.messages.workshop.created')
@@ -213,6 +218,14 @@ class Admin::WorkshopsController < Admin::ApplicationController
     organiser_ids.reject!(&:empty?)
     grant_organiser_access(organiser_ids)
     revoke_organiser_access(organiser_ids)
+  end
+
+  def assign_organisers_or_default
+    if organiser_ids.present?
+      assign_organisers(organiser_ids)
+    else
+      grant_organiser_access(@workshop.chapter.organisers.pluck(:id))
+    end
   end
 
   def host_id
