@@ -118,7 +118,7 @@ module MergeDuplicateMembers
                  .transform_values { |matches| best_match(matches) }
 
       apply_manual_overrides(detected)
-      detected.values.reject { |m| already_merged?(m) }.sort_by { |m| -m.dup_member.id }
+      detected.values.reject { |m| already_merged?(m) }.sort_by { |m| m.original_member.id }
     end
 
     private
@@ -250,6 +250,7 @@ module MergeDuplicateMembers
                     dup.id, MergeDuplicateMembers.truncate(name, 25), MergeDuplicateMembers.truncate(dup.email, 35),
                     orig.id, MergeDuplicateMembers.truncate(orig.email, 35), m.merge_strategies)
       end
+      puts "\n#{@matches.size} duplicate member(s) detected."
     end
   end
 
