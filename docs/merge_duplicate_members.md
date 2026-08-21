@@ -69,7 +69,7 @@ The tool also applies hard-coded manual overrides for edge cases the heuristics 
 - **Dry run by default** — must pass `APPLY=1` to change data.
 - **Idempotent** — re-running after a successful merge reports no duplicates.
 - **Deactivates, not deletes** — duplicates are renamed to `duplicate.<id>.merged-into.<id>@codebar.io`, with all auth services and roles removed. Audit history is preserved in a `MemberNote`.
-- **Logs every execution** — merge results written to a new per-run JSON file, even on failure.
+- **Logs every execution** — merge results written to a new per-run JSON file, even on failure. The log contains only opaque member IDs (`dup_id`, `orig_id`), strategies, and status. No names, emails, UIDs, or other PII. Safe to share or attach to PRs.
 
 ## Running in production
 
