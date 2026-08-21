@@ -1,6 +1,9 @@
 module InvitationConcerns
   extend ActiveSupport::Concern
 
+  SOURCE_ADMIN = 'admin'.freeze
+  SOURCE_CHECK_IN = 'check_in'.freeze
+
   included do
     include InstanceMethods
 

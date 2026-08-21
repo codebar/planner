@@ -83,6 +83,19 @@ RSpec.describe Event do
     end
   end
 
+  describe 'check_in_code' do
+    it 'generates a check_in_code on create' do
+      event = Fabricate(:event)
+      expect(event.check_in_code).to be_present
+      expect(event.check_in_code.split('-').length).to eq(3)
+    end
+
+    it 'generates a unique check_in_code' do
+      codes = Array.new(3) { Fabricate(:event).check_in_code }
+      expect(codes.uniq.length).to eq(3)
+    end
+  end
+
   describe '#verified_students' do
     it 'returns all students who have verified their attendance' do
       event = Fabricate(:event)
