@@ -90,5 +90,14 @@ test: ## Run the test suite in parallel
 	bundle exec rake parallel:setup
 	bundle exec parallel_rspec spec/ -n 3
 
+detect_duplicate_members: ## Detect members duplicated by the codebar auth flow
+	DB_NAME=$(DUMP_DB) bundle exec rake member:duplicates:detect
+
+fix_duplicate_members: ## Dry-run merge of duplicate members (set APPLY=1 to execute)
+	DB_NAME=$(DUMP_DB) bundle exec rake member:duplicates:fix
+
+verify_duplicate_members: ## Verify no codebar-auth duplicate members remain
+	DB_NAME=$(DUMP_DB) bundle exec rake member:duplicates:verify
+
 check: ## Run setup checks
 	bundle exec rake setup:check
