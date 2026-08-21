@@ -73,6 +73,23 @@ The tool also applies hard-coded manual overrides for edge cases the heuristics 
 
 ## Running in production
 
+### Option A: local execution (no deploy required)
+
+You can run the tool locally and connect directly to the Heroku production database using a connection string:
+
+```bash
+make detect_duplicate_members_production     # lists duplicates from production
+make fix_duplicate_members_production        # dry-run against production
+make fix_duplicate_members_production APPLY=1 # execute on production
+make verify_duplicate_members_production     # verify production
+```
+
+These targets fetch a fresh `DATABASE_URL` from Heroku each time and pass it via `DB_URL`. A confirmation prompt guards the detect and fix targets. A loud `WARNING: Connecting to REMOTE database …` message is printed when `DB_URL` points to a non-localhost host.
+
+### Option B: run on Heroku dyno
+
+Deploy the branch first, then run on Heroku:
+
 ```bash
 heroku run rake member:duplicates:detect --app codebar-production
 heroku run rake member:duplicates:fix APPLY=1 --app codebar-production
