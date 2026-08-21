@@ -94,16 +94,22 @@ module MergeDuplicateMembers
 
   class << self
     def establish_connection!
-      return unless ENV['DB_NAME'].present?
-
-      ActiveRecord::Base.establish_connection(
-        adapter: 'postgresql',
-        host: ENV.fetch('DB_HOST', 'localhost'),
-        port: ENV.fetch('DB_PORT', 5432),
-        database: ENV.fetch('DB_NAME'),
-        username: ENV.fetch('DB_USER', ''),
-        password: ENV.fetch('POSTGRES_PASSWORD', '')
-      )
+      if ENV['DB_URL'].present?
+        url = URI.parse(ENV['DB_URL'])
+        unless %w[localhost 127.0.0.1].include?(url.host)
+          puts "WARNING: Connecting to REMOTE database #{url.host}"
+        end
+        ActiveRecord::Base.establish_connection(ENV['DB_URL'])
+      elsif ENV['DB_NAME'].present?
+        ActiveRecord::Base.establish_connection(
+          adapter: 'postgresql',
+          host: ENV.fetch('DB_HOST', 'localhost'),
+          port: ENV.fetch('DB_PORT', 5432),
+          database: ENV.fetch('DB_NAME'),
+          username: ENV.fetch('DB_USER', ''),
+          password: ENV.fetch('POSTGRES_PASSWORD', '')
+        )
+      end
     end
 
     def truncate(string, max_length)
