@@ -64,3 +64,4 @@ yarn-debug.log*
 
 # Worktrees
 .worktrees/
+/log/merge_duplicate_members/

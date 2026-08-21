@@ -40,12 +40,22 @@ namespace :member do
       puts dry_run ? 'DRY RUN — no changes will be made.' : 'APPLYING merges...'
       puts
 
+      logger = MergeDuplicateMembers::RunLogger.new(dry_run: dry_run)
+
       duplicates.each do |pair|
-        MergeDuplicateMembers::Merger.new(pair, dry_run: dry_run).call
+        begin
+          MergeDuplicateMembers::Merger.new(pair, dry_run: dry_run).call
+          logger.record_merge(dup_id: pair.dup_member_id, orig_id: pair.original_member_id, strategies: pair.merge_strategies, status: 'success')
+        rescue StandardError => e
+          logger.record_error(e)
+          raise
+        end
         puts
       end
 
+      log_path = logger.flush
       puts dry_run ? "Run with APPLY=1 to execute these #{duplicates.size} merges." : 'Done.'
+      puts "Log: #{log_path}" if log_path
     end
 
     desc 'Verify no duplicate members remain after merging'
@@ -95,6 +105,10 @@ module MergeDuplicateMembers
         password: ENV.fetch('POSTGRES_PASSWORD', '')
       )
     end
+
+    def truncate(string, max_length)
+      string.length > max_length ? "#{string[0...max_length - 1]}…" : string
+    end
   end
 
   class Detector
@@ -142,6 +156,7 @@ module MergeDuplicateMembers
       codebar_members
         .joins('JOIN members originals ON LOWER(TRIM(members.email)) = LOWER(TRIM(originals.email)) AND originals.id != members.id')
         .joins("JOIN auth_services original_auth ON original_auth.member_id = originals.id AND original_auth.provider = 'github'")
+        .where('originals.created_at < members.created_at')
         .select("members.id AS dup_member_id, originals.id AS original_member_id, 'email' AS strategy")
         .map { |r| Match.new(r.dup_member_id, r.original_member_id, r.strategy) }
     end
@@ -232,9 +247,53 @@ module MergeDuplicateMembers
         orig = m.original_member
         name = [dup.name, dup.surname].compact.join(' ')
         puts format('%-10s %-25s %-35s %-10s %-35s %-25s',
-                    dup.id, name.truncate(25), dup.email.truncate(35),
-                    orig.id, orig.email.truncate(35), m.merge_strategies)
+                    dup.id, MergeDuplicateMembers.truncate(name, 25), MergeDuplicateMembers.truncate(dup.email, 35),
+                    orig.id, MergeDuplicateMembers.truncate(orig.email, 35), m.merge_strategies)
       end
+    end
+  end
+
+  class RunLogger
+    LOG_DIR = Rails.root.join('log', 'merge_duplicate_members').freeze
+
+    def initialize(dry_run:)
+      @dry_run = dry_run
+      @started_at = Time.now.iso8601
+      @merges = []
+      @errors = []
+    end
+
+    def log_path
+      @log_path ||= LOG_DIR.join("run_#{Time.now.utc.strftime('%Y%m%dT%H%M%SZ')}.json")
+    end
+
+    def record_merge(dup_id:, orig_id:, strategies:, status:)
+      return if @dry_run
+
+      @merges << { dup_id: dup_id, orig_id: orig_id, strategies: strategies, status: status }
+    end
+
+    def record_error(error)
+      return if @dry_run
+
+      @errors << { message: error.message, backtrace: error.backtrace.first(5) }
+    end
+
+    def flush
+      return if @dry_run || (@merges.empty? && @errors.empty?)
+
+      entry = {
+        timestamp: @started_at,
+        dry_run: @dry_run,
+        environment: Rails.env,
+        merges: @merges,
+        errors: @errors,
+        total_merges: @merges.size
+      }
+
+      FileUtils.mkdir_p(LOG_DIR)
+      File.write(log_path, JSON.pretty_generate(entry))
+      log_path
     end
   end
 
@@ -405,12 +464,6 @@ module MergeDuplicateMembers
       note = "Duplicate of member #{orig.id} (#{orig.email}). Merged #{Time.zone.now.iso8601}. Login disabled."
       dup.member_notes.create!(note: note, author_id: orig.id)
     end
-  end
-end
-
-class String
-  def truncate(max_length)
-    length > max_length ? "#{self[0...max_length - 1]}…" : self
   end
 end
 
