@@ -13,11 +13,16 @@ module SelectFromTomSelect
     # global.
     select = find("##{from}", visible: false)
     wrapper = select.find(:xpath, '..')
+    expect(wrapper).to have_css('.ts-wrapper', wait: 15)
     expect(wrapper).to have_css('.ts-control', wait: 15)
 
     # Open the dropdown by clicking the control
     wrapper.find('.ts-control').click
     input = wrapper.find('.ts-control input')
+
+    # Focus the input explicitly; in headless CI the click above does not always
+    # move focus to the textbox before we dispatch the input event.
+    page.execute_script('arguments[0].focus();', input.native)
 
     # Type first 3 characters to trigger search (shouldLoad requires >= 3).
     # Use JS to set the value and dispatch an input event directly, instead of
