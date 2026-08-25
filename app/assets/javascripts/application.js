@@ -16,7 +16,7 @@
 //= require rails-ujs
 //= require activestorage
 //= require chosen.jquery
-//= require 'jsimple-star-rating.min.js'
+//= require feedback-rating
 //= require pickadate/picker
 //= require pickadate/picker.date
 //= require pickadate/picker.time
