@@ -15,9 +15,9 @@ class Admin::WorkshopsController < Admin::ApplicationController
   end
 
   def new
-    chapter_id = params[:chapter_id]
-    @workshop = if chapter_id.present? && Chapter.exists?(chapter_id)
-      Workshop.new(chapter_id: chapter_id)
+    chapter_id = params[:chapter_id].presence
+    @workshop = if chapter_id && Chapter.exists?(chapter_id)
+      Workshop.new(chapter_id:)
     else
       Workshop.new
     end
