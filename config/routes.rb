@@ -173,7 +173,6 @@ Rails.application.routes.draw do
 
   resources :sponsors, only: [:index]
   resources :donations, only: %i[new]
-  resources :payments, only: %i[new create]
 
   get 'cookie-policy' => 'pages#show', id: 'cookie-policy'
   get 'privacy-policy' => 'pages#show', id: 'privacy-policy'
