@@ -36,7 +36,6 @@ gem 'omniauth'
 gem 'omniauth-github'
 gem 'omniauth-rails_csrf_protection'
 gem 'pg'
-gem 'pickadate-rails'
 gem 'premailer-rails'
 
 gem 'pundit'
