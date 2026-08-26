@@ -33,7 +33,7 @@ class AuthServicesController < ApplicationController
           return redirect_to root_url
         end
 
-        member = Member.find_by(email:)
+        member = member_from_github_id || Member.find_by(email:)
         member ||= Member.new(email:)
         new_member = member.new_record?
 
@@ -88,6 +88,15 @@ class AuthServicesController < ApplicationController
   end
 
   private
+
+  def member_from_github_id
+    return unless omnihash[:provider] == 'codebar'
+
+    github_id = omnihash.dig(:extra, :raw_info, 'github_id')
+    return if github_id.blank?
+
+    AuthService.find_by(provider: 'github', uid: github_id.to_s)&.member
+  end
 
   def referer_or_dashboard_path
     session[:referer_path] || dashboard_path
