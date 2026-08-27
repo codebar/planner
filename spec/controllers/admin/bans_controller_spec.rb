@@ -1,4 +1,4 @@
-RSpec.describe Admin::BansController, type: :controller do
+RSpec.describe Admin::BansController do
   let(:member) { Fabricate(:member) }
   let(:admin) { Fabricate(:member) }
 
