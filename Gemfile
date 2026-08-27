@@ -63,8 +63,6 @@ gem 'commonmarker'
 gem 'faraday'
 gem 'msgpack'
 
-gem 'stripe'
-
 gem 'rails-html-sanitizer', '~> 1.7.1'
 
 # Use the Puma web server [https://github.com/puma/puma]
