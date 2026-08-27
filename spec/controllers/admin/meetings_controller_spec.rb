@@ -1,4 +1,4 @@
-RSpec.describe Admin::MeetingsController, type: :controller do
+RSpec.describe Admin::MeetingsController do
   let(:member) { Fabricate(:member) }
   let(:meeting) { Fabricate(:meeting) }
 
