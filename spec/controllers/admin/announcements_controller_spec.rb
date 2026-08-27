@@ -1,4 +1,4 @@
-RSpec.describe Admin::AnnouncementsController, type: :controller do
+RSpec.describe Admin::AnnouncementsController do
   let(:member) { Fabricate(:member) }
   let(:announcement) { Fabricate(:announcement) }
 
