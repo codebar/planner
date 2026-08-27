@@ -109,7 +109,7 @@ RSpec.feature 'member feedback', type: :feature do
       expect(page).to have_css('#feedback_coach_id_chosen')
       expect(page).to have_css('#feedback_tutorial_id_chosen')
 
-      within('.rating') { all('li').at(3).click }
+      within('.rating') { find("label[for='feedback_rating_4']").click }
       select_from_chosen(coach.full_name, from: 'feedback_coach_id')
       select_from_chosen(tutorial.title, from: 'feedback_tutorial_id')
       click_button('Submit feedback')
@@ -117,6 +117,10 @@ RSpec.feature 'member feedback', type: :feature do
       expect(page).to have_current_path(root_path)
 
       expect(page).to have_text(feedback_submited_message)
+
+      feedback = Feedback.find_by(workshop: feedback_request.workshop, coach: coach, tutorial: tutorial)
+      expect(feedback).to be_present
+      expect(feedback.rating).to eq(4)
     end
 
     scenario 'renders an error message when not all mandatory fields have been completed' do
