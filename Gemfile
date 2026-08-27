@@ -4,10 +4,6 @@ ruby file: '.ruby-version'
 gem 'rails', '~> 8.1.3' # LOCKED: It is Rails.
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem 'sprockets-rails'
-# LOCKED: Added because Sprockets autoloads it when seeing .coffee files in the
-# asset pipeline. Can be removed when that does not happen.
-gem 'coffee-script'
-
 gem 'amazing_print' # colourful output (suggested by rails_semantic_logger)
 gem 'rails_semantic_logger' # condense log lines: https://github.com/codebar/planner/issues/2339
 gem 'strong_migrations'
@@ -67,14 +63,10 @@ gem 'commonmarker'
 gem 'faraday'
 gem 'msgpack'
 
-gem 'stripe'
-
 gem 'rails-html-sanitizer', '~> 1.7.1'
 
 # Use the Puma web server [https://github.com/puma/puma]
 gem 'puma', '~> 8.0'
-# Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
-gem 'importmap-rails'
 # Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
 gem 'turbo-rails'
 # Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
