@@ -29,9 +29,12 @@ class SponsorsSearch
     return if chapter.blank?
 
     chapter_id = chapter.to_s.match?(/\A\d+\z/) ? chapter : lookup_chapter_id
-    return unless chapter_id
-
-    @sponsors = sponsors.joins(:workshops).where('workshops.chapter_id' => chapter_id).group('sponsors.id')
+    if chapter_id
+      @sponsors = sponsors.joins(:workshops).where('workshops.chapter_id' => chapter_id).group('sponsors.id')
+    else
+      errors.add(:chapter, :not_found, message: 'no chapter with that name')
+      @sponsors = Sponsor.none
+    end
   end
 
   def lookup_chapter_id

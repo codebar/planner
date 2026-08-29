@@ -90,6 +90,16 @@ RSpec.describe SponsorsSearch do
       expect(results).to contain_exactly(matching)
     end
 
+    it 'returns an empty relation when chapter does not exist' do
+      Fabricate(:sponsor)
+      search = described_class.new(name: nil, chapter: 'Nonexistent')
+
+      results = search.call
+
+      expect(results).to be_empty
+      expect(search.errors[:chapter]).to include('no chapter with that name')
+    end
+
     it 'returns an empty relation when nothing matches' do
       Fabricate(:sponsor, name: 'Apple Inc')
 
