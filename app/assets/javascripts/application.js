@@ -16,7 +16,6 @@
 //= require rails-ujs
 //= require activestorage
 //= require chosen.jquery
-//= require 'jsimple-star-rating.min.js'
 //= require subscriptions-toggle
 //= require add-all-chapters
 //= require invitations
