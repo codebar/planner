@@ -1,20 +1,32 @@
+- title 'Sponsors'
+%style= ".form-control::placeholder { opacity: 0.7; }"
+
 .container.py-4.py-lg-5
   .row.mb-4
     .col-12
       %nav{'aria-label': 'breadcrumb'}
         %ol.breadcrumb.ms-0
-          %li.breadcrumb-item.active= t('admin.shared.sponsors')
+          %li.breadcrumb-item= link_to 'Admin', admin_root_path
+          %li.breadcrumb-item.active Sponsors
+
+    .col-12
+      %h1.mb-3 Sponsors
 
     .col-12
       .row.row-cols-md-auto.align-items-center
-        = simple_form_for @sponsors_search, url: admin_sponsors_path, method: :get, wrapper: :inline_form, html: { class: 'row row-cols-1 row-cols-md-auto align-items-center' } do |f|
-          = f.input :chapter, as: :string, required: false, label: false, placeholder: 'Filter by chapter', input_html: { list: 'chapter-options', class: 'my-2 my-md-0' }
+        = form_with model: @sponsors_search, url: admin_sponsors_path, method: :get, class: 'row row-cols-1 row-cols-md-auto align-items-end gap-1' do |f|
+          .col
+            = f.label :chapter, 'Chapter', class: 'form-label'
+            = f.text_field :chapter, list: 'chapter-options', placeholder: 'ex: London', class: 'form-control w-auto'
           %datalist#chapter-options
             - @chapters.each do |chapter|
               %option{ value: chapter.name }
-          = f.input :name, required: false, label: false, placeholder: 'Filter by sponsor name', input_html: { class: 'my-2 my-md-0' }
-          = f.button :button, 'Filter', class: 'btn btn-primary'
-        = link_to 'Reset form', admin_sponsors_path
+          .col
+            = f.label :name, 'Sponsor name', class: 'form-label'
+            = f.text_field :name, placeholder: 'ex: Google', class: 'form-control w-auto'
+          .col
+            = f.button 'Filter', class: 'btn btn-primary'
+            = link_to 'Reset form', admin_sponsors_path
 
   = render partial: 'shared/pagination', locals: { pagy: @pagy, model: 'sponsor' }
 
@@ -43,5 +55,3 @@
                   = link_to chapter.name, admin_chapter_path(chapter)
               %td
                 = sponsor.sponsorships_count
-
-  = render partial: 'shared/pagination', locals: { pagy: @pagy, model: 'sponsor' }
