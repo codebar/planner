@@ -252,4 +252,45 @@ RSpec.describe Admin::WorkshopsController, type: :controller do
       end
     end
   end
+
+  describe 'GET #new' do
+    render_views
+
+    it 'renders with native date and time inputs for main and RSVP fields' do
+      get :new
+
+      expect(response.body).to include('type="date"')
+      expect(response.body).to include('type="time"')
+      expect(response.body.scan('type="date"').size).to be >= 3 # main date + RSVP open + RSVP close
+      expect(response.body.scan('type="time"').size).to be >= 3 # main time + RSVP open + RSVP close
+    end
+  end
+
+  describe 'GET #edit' do
+    render_views
+
+    it 'pre-fills main date and time values in ISO format' do
+      get :edit, params: { id: workshop.id }
+
+      expect(response.body).to include("value=\"#{workshop.date_and_time.strftime('%Y-%m-%d')}\"")
+      expect(response.body).to include("value=\"#{workshop.time.strftime('%H:%M')}\"")
+    end
+
+    context 'with RSVP windows set' do
+      let(:workshop) do
+        Fabricate(:workshop,
+                  rsvp_opens_at: 1.day.from_now,
+                  rsvp_closes_at: 2.days.from_now)
+      end
+
+      it 'pre-fills RSVP date and time values in ISO format' do
+        get :edit, params: { id: workshop.id }
+
+        expect(response.body).to include("value=\"#{workshop.rsvp_opens_at.strftime('%Y-%m-%d')}\"")
+        expect(response.body).to include("value=\"#{workshop.rsvp_opens_at.strftime('%H:%M')}\"")
+        expect(response.body).to include("value=\"#{workshop.rsvp_closes_at.strftime('%Y-%m-%d')}\"")
+        expect(response.body).to include("value=\"#{workshop.rsvp_closes_at.strftime('%H:%M')}\"")
+      end
+    end
+  end
 end

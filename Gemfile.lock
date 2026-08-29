@@ -352,8 +352,6 @@ GEM
     pg (1.6.3-arm64-darwin)
     pg (1.6.3-x86_64-darwin)
     pg (1.6.3-x86_64-linux)
-    pickadate-rails (3.5.6.1)
-      railties (>= 3.1.0)
     playwright-ruby-client (1.61.0)
       base64
       concurrent-ruby (>= 1.1.6)
@@ -666,7 +664,6 @@ DEPENDENCIES
   pagy (~> 43.6)
   parallel_tests
   pg
-  pickadate-rails
   premailer-rails
   pry-byebug
   pry-rails
@@ -847,7 +844,6 @@ CHECKSUMS
   pg (1.6.3-arm64-darwin) sha256=7240330b572e6355d7c75a7de535edb5dfcbd6295d9c7777df4d9dddfb8c0e5f
   pg (1.6.3-x86_64-darwin) sha256=ee2e04a17c0627225054ffeb43e31a95be9d7e93abda2737ea3ce4a62f2729d6
   pg (1.6.3-x86_64-linux) sha256=5d9e188c8f7a0295d162b7b88a768d8452a899977d44f3274d1946d67920ae8d
-  pickadate-rails (3.5.6.1) sha256=b10a91fe2c2c2695d15593fc4927068aba779cdea30537350a75da98f45f169d
   playwright-ruby-client (1.61.0) sha256=1f5c5f0307a2f6bd70b4fa797020a30eef5680caf8d5bd9ccc8d3937f6666e08
   popper_js (2.11.8) sha256=f4b0be717fc0d50bdb3dbbc55788525a9e0e8f640b76c9971fc34ee609eadbd2
   pp (0.6.4) sha256=dfcb0fce700c41456265922884f9fe195d7fbb0674a3578e6c0f69588e82b570
