@@ -1,9 +1,15 @@
+- title 'Sponsors'
+
 .container.py-4.py-lg-5
   .row.mb-4
     .col-12
       %nav{'aria-label': 'breadcrumb'}
         %ol.breadcrumb.ms-0
-          %li.breadcrumb-item.active= t('admin.shared.sponsors')
+          %li.breadcrumb-item= link_to 'Admin', admin_root_path
+          %li.breadcrumb-item.active Sponsors
+
+    .col-12
+      %h1.mb-3 Sponsors
 
     .col-12
       .row.row-cols-md-auto.align-items-center
