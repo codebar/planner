@@ -16,6 +16,7 @@
 //= require rails-ujs
 //= require activestorage
 //= require chosen.jquery
+//= require feedback-rating
 //= require subscriptions-toggle
 //= require add-all-chapters
 //= require invitations
