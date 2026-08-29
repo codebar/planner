@@ -8,7 +8,10 @@
     .col-12
       .row.row-cols-md-auto.align-items-center
         = simple_form_for @sponsors_search, url: admin_sponsors_path, method: :get, wrapper: :inline_form, html: { class: 'row row-cols-1 row-cols-md-auto align-items-center' } do |f|
-          = f.collection_select :chapter, @chapters, :id, :name, { include_blank: true, prompt: 'Select a chapter' }, { class: 'chosen-select'}
+          = f.input :chapter, as: :string, required: false, label: false, placeholder: 'Filter by chapter', input_html: { list: 'chapter-options', class: 'my-2 my-md-0' }
+          %datalist#chapter-options
+            - @chapters.each do |chapter|
+              %option{ value: chapter.name }
           = f.input :name, required: false, label: false, placeholder: 'Filter by sponsor name', input_html: { class: 'my-2 my-md-0' }
           = f.button :button, 'Filter', class: 'btn btn-primary'
         = link_to 'Reset form', admin_sponsors_path
