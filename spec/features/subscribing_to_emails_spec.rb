@@ -21,6 +21,16 @@ RSpec.feature 'Managing subscriptions', type: :feature do
       click_on 'Subscribed'
       expect(page).to have_text("You have unsubscribed from #{group.chapter.city}'s #{group.name} group")
     end
+
+    scenario 'groups belonging to inactive chapters are not shown' do
+      inactive_chapter = Fabricate(:chapter, active: false)
+      Fabricate(:group, chapter: inactive_chapter)
+
+      visit subscriptions_path
+
+      expect(page).to have_text(group.chapter.name)
+      expect(page).to have_no_text(inactive_chapter.name)
+    end
   end
 
   context 'when a member receives a welcome email' do
