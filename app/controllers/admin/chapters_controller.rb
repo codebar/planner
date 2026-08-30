@@ -9,9 +9,12 @@ class Admin::ChaptersController < Admin::ApplicationController
 
   def create
     @chapter = Chapter.new(chapter_params)
-    authorize(@chapter)
+    authorize @chapter
 
-    if @chapter.save
+    result = ChapterCreationService.call(chapter_params)
+    @chapter = result.chapter
+
+    if result.success
       flash[:notice] = "Chapter #{@chapter.name} has been successfully created"
       redirect_to [:admin, @chapter]
     else

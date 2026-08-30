@@ -40,6 +40,7 @@ Metrics/AbcSize:
 # Configuration parameters: CountComments, Max, CountAsOne.
 Metrics/ClassLength:
   Exclude:
+    - 'app/controllers/admin/chapters_controller.rb'
     - 'app/controllers/admin/workshops_controller.rb'
     - 'app/controllers/application_controller.rb'
     - 'app/controllers/events_controller.rb'
