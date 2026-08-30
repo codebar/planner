@@ -133,7 +133,7 @@ Rails.application.routes.draw do
     end
 
     resources :meeting_invitations, only: %i[create update]
-    resources :groups, only: %i[index new create show]
+    resources :groups, only: %i[show]
     resources :sponsors, except: [:destroy]
     resources :feedback, only: [:index]
     resources :contacts
