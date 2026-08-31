@@ -11,7 +11,7 @@ module EmailDelivery
     return unless member
     return unless @_mail_was_called
 
-    MemberEmailDelivery.find_or_create_by!(member: member, email_type: action_name) do |delivery|
+    MemberEmailDelivery.find_or_create_by!(member:, email_type: action_name) do |delivery|
       delivery.subject = mail.subject
       delivery.body = mail.html_part ? mail.html_part.body.to_s : mail.body.to_s
       delivery.to = Array(mail.to)
