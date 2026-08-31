@@ -209,7 +209,7 @@ RSpec.describe ThreeMonthEmailService, type: :service do
       Fabricate(
         :workshop_invitation,
         member: student_with_other_email_logged,
-        workshop: Fabricate(:workshop, chapter: chapter, date_and_time: 1.month.ago),
+        workshop: Fabricate(:workshop, chapter:, date_and_time: 1.month.ago),
         role: 'Student',
         attended: true
       )
