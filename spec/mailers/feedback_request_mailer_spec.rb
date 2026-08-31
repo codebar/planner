@@ -1,12 +1,12 @@
 RSpec.describe FeedbackRequestMailer do
   let(:email) { ActionMailer::Base.deliveries.last }
   let(:member) { Fabricate(:member) }
-  let(:feedback_request) { Fabricate(:feedback_request, workshop: workshop, member: member) }
+  let(:feedback_request) { Fabricate(:feedback_request, workshop:, member:) }
 
   context 'when the member has an invalid email' do
     let(:workshop) { Fabricate(:workshop) }
     let(:bad_member) { Fabricate(:member) }
-    let(:bad_feedback_request) { Fabricate(:feedback_request, workshop: workshop, member: bad_member) }
+    let(:bad_feedback_request) { Fabricate(:feedback_request, workshop:, member: bad_member) }
 
     before { allow(bad_member).to receive(:email).and_return('invalid-email') }
 

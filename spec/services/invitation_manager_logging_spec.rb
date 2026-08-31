@@ -2,14 +2,14 @@ RSpec.describe InvitationManager, :invitation_logging do
   subject(:manager) { described_class.new }
 
   let(:chapter) { Fabricate(:chapter) }
-  let(:workshop) { Fabricate(:workshop, chapter: chapter) }
+  let(:workshop) { Fabricate(:workshop, chapter:) }
   let(:initiator) { Fabricate(:member) }
   let(:students) { Fabricate.times(2, :member) }
   let(:coaches) { Fabricate.times(2, :member) }
 
   before do
-    Fabricate(:students, chapter: chapter, members: students)
-    Fabricate(:coaches, chapter: chapter, members: coaches)
+    Fabricate(:students, chapter:, members: students)
+    Fabricate(:coaches, chapter:, members: coaches)
   end
 
   describe '#send_workshop_emails with logging' do
@@ -97,7 +97,7 @@ RSpec.describe InvitationManager, :invitation_logging do
   end
 
   describe '#send_virtual_workshop_emails with logging' do
-    let(:workshop) { Fabricate(:virtual_workshop, chapter: chapter) }
+    let(:workshop) { Fabricate(:virtual_workshop, chapter:) }
 
     it 'creates an InvitationLog when initiator_id is provided' do
       expect do

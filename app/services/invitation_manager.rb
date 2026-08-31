@@ -31,7 +31,7 @@ class InvitationManager
 
   def send_meeting_emails(meeting)
     meeting.invitees.not_banned.each do |invitee|
-      invitation = MeetingInvitation.new(meeting: meeting, member: invitee, role: 'Participant')
+      invitation = MeetingInvitation.new(meeting:, member: invitee, role: 'Participant')
       next unless invitation.save
 
       MeetingInvitationMailer.invite(meeting, invitee, invitation).deliver_now
@@ -164,14 +164,14 @@ class InvitationManager
   end
 
   def create_invitation(workshop, member, role)
-    WorkshopInvitation.find_or_create_by!(workshop: workshop, member: member, role: role)
+    WorkshopInvitation.find_or_create_by!(workshop:, member:, role:)
   rescue StandardError => e
     log_invitation_failure(workshop, member, role, e)
     nil
   end
 
   def create_event_invitation(event, member, role)
-    Invitation.find_or_create_by!(event: event, member: member, role: role)
+    Invitation.find_or_create_by!(event:, member:, role:)
   rescue StandardError => e
     log_event_meeting_invitation_failure("event_id=#{event.id}", member, e)
     nil
@@ -260,7 +260,7 @@ class InvitationManager
     initiator = Member.find_by(id: initiator_id)
     return nil unless initiator
 
-    InvitationLogger.new(loggable, initiator, audience, :invite, chapter_id: chapter_id)
+    InvitationLogger.new(loggable, initiator, audience, :invite, chapter_id:)
   end
 
   def start_invitation_batch(logger)

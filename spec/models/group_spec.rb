@@ -33,8 +33,8 @@ RSpec.describe Group do
     let(:chapter) { group.chapter }
 
     it 'orders members by most recent workshop RSVP' do
-      old_workshop = Fabricate(:workshop, chapter: chapter, date_and_time: 1.month.ago)
-      new_workshop = Fabricate(:workshop, chapter: chapter, date_and_time: 1.week.ago)
+      old_workshop = Fabricate(:workshop, chapter:, date_and_time: 1.month.ago)
+      new_workshop = Fabricate(:workshop, chapter:, date_and_time: 1.week.ago)
 
       member_old = Fabricate(:member, groups: [group])
       member_new = Fabricate(:member, groups: [group])

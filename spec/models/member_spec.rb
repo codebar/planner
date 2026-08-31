@@ -103,7 +103,7 @@ RSpec.describe Member do
 
         it 'returns notes for the most recent five workshops' do
           latest_workshops = (1..6).map do |time_ago|
-            Fabricate.create(:workshop_invitation, member: member) do
+            Fabricate.create(:workshop_invitation, member:) do
               workshop { Fabricate(:workshop, date_and_time: Time.zone.now - (7 * time_ago).days) }
               attended { true }
             end
@@ -112,8 +112,8 @@ RSpec.describe Member do
           outside_deadline = latest_workshops.last.workshop.date_and_time
           within_deadline = latest_workshops.fifth.workshop.date_and_time
 
-          Fabricate.create(:member_note, member: member, created_at: outside_deadline)
-          new_note = Fabricate.create(:member_note, member: member, created_at: within_deadline)
+          Fabricate.create(:member_note, member:, created_at: outside_deadline)
+          new_note = Fabricate.create(:member_note, member:, created_at: within_deadline)
 
           expect(member.recent_notes.to_a).to eq([new_note])
         end
@@ -148,7 +148,7 @@ RSpec.describe Member do
     describe '#in_group' do
       it 'includes members in group' do
         chapter = Fabricate(:chapter)
-        group = Fabricate(:group, chapter: chapter, members: [Fabricate(:member)])
+        group = Fabricate(:group, chapter:, members: [Fabricate(:member)])
 
         expect(described_class.in_group(chapter.groups)).to eq(group.members)
       end
@@ -163,7 +163,7 @@ RSpec.describe Member do
 
       it 'excludes banned members in group' do
         chapter = Fabricate(:chapter)
-        group = Fabricate(:group, chapter: chapter, members: [Fabricate(:banned_member)])
+        group = Fabricate(:group, chapter:, members: [Fabricate(:banned_member)])
 
         expect(described_class.in_group(chapter.groups)).not_to eq(group.members)
       end
@@ -172,13 +172,13 @@ RSpec.describe Member do
 
   describe '.multiple_no_shows?' do
     it 'returns true when a member has missed more than three workshop in the last six months' do
-      Fabricate.times(6, :past_attending_workshop_invitation, member: member)
+      Fabricate.times(6, :past_attending_workshop_invitation, member:)
 
       expect(member.multiple_no_shows?).to be true
     end
 
     it 'returns false when a member has not missed more than three workshop in the last six months' do
-      Fabricate.times(3, :past_attending_workshop_invitation, attended: true, member: member)
+      Fabricate.times(3, :past_attending_workshop_invitation, attended: true, member:)
 
       expect(member.multiple_no_shows?).to be false
     end
@@ -186,21 +186,21 @@ RSpec.describe Member do
 
   describe '.flag_to_organisers' do
     it 'returns false when a member does not have multiple_no_shows?' do
-      Fabricate.times(2, :attendance_warning, member: member)
+      Fabricate.times(2, :attendance_warning, member:)
 
       expect(member.flag_to_organisers?).to be false
     end
 
     it 'returns false when a member does not have at least two two attendance warnings' do
-      Fabricate.times(6, :past_attending_workshop_invitation, member: member)
-      Fabricate(:attendance_warning, member: member)
+      Fabricate.times(6, :past_attending_workshop_invitation, member:)
+      Fabricate(:attendance_warning, member:)
 
       expect(member.flag_to_organisers?).to be false
     end
 
     it 'returns true when a member has multiple_no_shows? and has received at least two attendance warning emails' do
-      Fabricate.times(6, :past_attending_workshop_invitation, member: member)
-      Fabricate.times(2, :attendance_warning, member: member)
+      Fabricate.times(6, :past_attending_workshop_invitation, member:)
+      Fabricate.times(2, :attendance_warning, member:)
 
       expect(member.flag_to_organisers?).to be true
     end
@@ -297,38 +297,38 @@ RSpec.describe Member do
 
     it 'returns event IDs where member has accepted invitation' do
       event = Fabricate(:event)
-      Fabricate(:invitation, member: member, event: event, attending: true)
+      Fabricate(:invitation, member:, event:, attending: true)
       expect(member.attending_event_ids).to include(event.id)
     end
 
     it 'does not include events where invitation is not accepted' do
       event = Fabricate(:event)
-      Fabricate(:invitation, member: member, event: event, attending: false)
+      Fabricate(:invitation, member:, event:, attending: false)
       expect(member.attending_event_ids).not_to include(event.id)
     end
 
     it 'includes workshop IDs' do
       workshop = Fabricate(:workshop)
-      Fabricate(:workshop_invitation, member: member, workshop: workshop, attending: true)
+      Fabricate(:workshop_invitation, member:, workshop:, attending: true)
       expect(member.attending_event_ids).to include(workshop.id)
     end
 
     it 'includes meeting IDs' do
       meeting = Fabricate(:meeting)
-      Fabricate(:meeting_invitation, member: member, meeting: meeting, attending: true)
+      Fabricate(:meeting_invitation, member:, meeting:, attending: true)
       expect(member.attending_event_ids).to include(meeting.id)
     end
 
     it 'caches result in instance variable' do
       event = Fabricate(:event)
-      Fabricate(:invitation, member: member, event: event, attending: true)
+      Fabricate(:invitation, member:, event:, attending: true)
       first_call = member.attending_event_ids
       expect(member.attending_event_ids).to equal(first_call)
     end
 
     it 'can be cleared and re-queries on next call' do
       event = Fabricate(:event)
-      Fabricate(:invitation, member: member, event: event, attending: true)
+      Fabricate(:invitation, member:, event:, attending: true)
       member.attending_event_ids
       member.clear_attending_event_ids_cache!
       expect(member.attending_event_ids).to include(event.id)

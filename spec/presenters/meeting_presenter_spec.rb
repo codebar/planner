@@ -15,7 +15,7 @@ RSpec.describe MeetingPresenter do
   end
 
   it '#attendees_emails' do
-    attendees = Fabricate.times(4, :attending_meeting_invitation, meeting: meeting)
+    attendees = Fabricate.times(4, :attending_meeting_invitation, meeting:)
     emails = attendees.map(&:member).map(&:email)
     emails.each do |email|
       expect(event.attendees_emails).to include(email)

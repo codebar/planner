@@ -4,8 +4,8 @@ RSpec.describe ChapterPresenter do
 
   it '#upcoming_workshops' do
     travel_to(Time.current) do
-      Fabricate.times(2, :past_workshop, chapter: chapter)
-      workshops = Fabricate.times(3, :workshop, chapter: chapter,
+      Fabricate.times(2, :past_workshop, chapter:)
+      workshops = Fabricate.times(3, :workshop, chapter:,
                                                 date_and_time: 1.week.from_now)
 
       expect(presenter.upcoming_workshops).to match_array(workshops)

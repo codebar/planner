@@ -32,7 +32,7 @@ RSpec.feature 'Managing events', type: :feature do
   end
 
   scenario 'verifying an attendance' do
-    invitation = Fabricate(:invitation, event: event, attending: true)
+    invitation = Fabricate(:invitation, event:, attending: true)
     visit admin_event_path(event)
 
     click_on 'Verify'
@@ -42,7 +42,7 @@ RSpec.feature 'Managing events', type: :feature do
   end
 
   scenario 'cancelling an attendance' do
-    invitation = Fabricate(:invitation, event: event, attending: true)
+    invitation = Fabricate(:invitation, event:, attending: true)
     visit admin_event_path(event)
 
     click_on 'Cancel'
@@ -52,8 +52,8 @@ RSpec.feature 'Managing events', type: :feature do
   end
 
   scenario 'accessing a list of attendee emails' do
-    student_invitation = Fabricate(:invitation, event: event, attending: true)
-    coach_invitation = Fabricate(:coach_invitation, event: event, attending: true)
+    student_invitation = Fabricate(:invitation, event:, attending: true)
+    coach_invitation = Fabricate(:coach_invitation, event:, attending: true)
     visit admin_event_path(event)
 
     click_on 'Emails'

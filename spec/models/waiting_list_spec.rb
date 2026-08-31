@@ -8,7 +8,7 @@ RSpec.describe WaitingList do
       end
 
       it 'is returns the waiting list entries when there are any' do
-        invitations = Array.new(2) { Fabricate(:workshop_invitation, workshop: workshop) }
+        invitations = Array.new(2) { Fabricate(:workshop_invitation, workshop:) }
         invitations.each { |invitation| described_class.add(invitation) }
 
         expect(described_class.by_workshop(workshop).map(&:invitation)).to match_array(invitations)
@@ -17,7 +17,7 @@ RSpec.describe WaitingList do
 
     describe '#next_spot' do
       it 'returns the next spot to be allocated' do
-        invitation = Fabricate(:workshop_invitation, workshop: workshop)
+        invitation = Fabricate(:workshop_invitation, workshop:)
         described_class.add(invitation)
 
         expect(described_class.next_spot(workshop, 'Student').invitation).to eq(invitation)
@@ -27,14 +27,14 @@ RSpec.describe WaitingList do
 
   describe '#add' do
     it 'is adds an invitation to the waiting list' do
-      invitation = Fabricate(:workshop_invitation, workshop: workshop)
+      invitation = Fabricate(:workshop_invitation, workshop:)
       described_class.add(invitation)
 
       expect(described_class.by_workshop(workshop).map(&:invitation)).to eq([invitation])
     end
 
     it 'is idempotent - returns existing record when called twice' do
-      invitation = Fabricate(:workshop_invitation, workshop: workshop)
+      invitation = Fabricate(:workshop_invitation, workshop:)
 
       first_call = described_class.add(invitation)
       second_call = described_class.add(invitation)
@@ -44,7 +44,7 @@ RSpec.describe WaitingList do
     end
 
     it 'does not change auto_rsvp on subsequent calls' do
-      invitation = Fabricate(:workshop_invitation, workshop: workshop)
+      invitation = Fabricate(:workshop_invitation, workshop:)
 
       described_class.add(invitation, true)
       second_entry = described_class.add(invitation, false)
@@ -57,7 +57,7 @@ RSpec.describe WaitingList do
     it 'returns waitlisted coaches for a specific workshop' do
       coach = Fabricate(:coach)
 
-      invitation = Fabricate(:coach_workshop_invitation, workshop: workshop, member: coach)
+      invitation = Fabricate(:coach_workshop_invitation, workshop:, member: coach)
       coach_invitation = described_class.add(invitation)
 
       expect(described_class.coaches_for(workshop)).to eq([coach_invitation])
@@ -66,7 +66,7 @@ RSpec.describe WaitingList do
     it 'returns waitlisted students for a specific workshop' do
       student = Fabricate(:student)
 
-      invitation = Fabricate(:student_workshop_invitation, workshop: workshop, member: student)
+      invitation = Fabricate(:student_workshop_invitation, workshop:, member: student)
       student_invitation = described_class.add(invitation)
 
       expect(described_class.students_for(workshop)).to eq([student_invitation])

@@ -52,14 +52,14 @@ RSpec.describe Meeting do
   describe '#not_full' do
     it 'returns true if meeting is not full' do
       meeting = Fabricate(:meeting)
-      Fabricate(:attending_meeting_invitation, meeting: meeting)
+      Fabricate(:attending_meeting_invitation, meeting:)
 
       expect(meeting.not_full).to be(true)
     end
 
     it 'returns false if meeting is full' do
       meeting = Fabricate(:meeting)
-      Fabricate.times(21, :attending_meeting_invitation, meeting: meeting)
+      Fabricate.times(21, :attending_meeting_invitation, meeting:)
 
       expect(meeting.not_full).to be(false)
     end
@@ -68,7 +68,7 @@ RSpec.describe Meeting do
   describe '#attendees_csv' do
     it 'generates a csv of attendees' do
       meeting = Fabricate(:meeting)
-      invitations = Fabricate.times(2, :attending_meeting_invitation, meeting: meeting)
+      invitations = Fabricate.times(2, :attending_meeting_invitation, meeting:)
 
       expect(meeting.attendees_csv).not_to be_blank
       invitations.each do |invitation|

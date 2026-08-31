@@ -11,16 +11,16 @@ RSpec.describe ThreeMonthEmailService, type: :service do
     end
 
     let(:chapter) { Fabricate(:chapter) }
-    let(:students_group) { Fabricate(:group, name: 'Students', chapter: chapter) }
-    let(:coaches_group) { Fabricate(:group, name: 'Coaches', chapter: chapter) }
+    let(:students_group) { Fabricate(:group, name: 'Students', chapter:) }
+    let(:coaches_group) { Fabricate(:group, name: 'Coaches', chapter:) }
 
     let!(:eligible_student) do
       member = Fabricate(:member)
-      Fabricate(:subscription, member: member, group: students_group)
+      Fabricate(:subscription, member:, group: students_group)
       Fabricate(
         :workshop_invitation,
-        member: member,
-        workshop: Fabricate(:workshop, chapter: chapter, date_and_time: 6.months.ago),
+        member:,
+        workshop: Fabricate(:workshop, chapter:, date_and_time: 6.months.ago),
         role: 'Student',
         attended: true
       )
@@ -29,8 +29,8 @@ RSpec.describe ThreeMonthEmailService, type: :service do
 
     let!(:already_emailed_student) do
       member = Fabricate(:member)
-      Fabricate(:subscription, member: member, group: students_group)
-      Fabricate(:member_email_delivery, member: member)
+      Fabricate(:subscription, member:, group: students_group)
+      Fabricate(:member_email_delivery, member:)
       member
     end
 
@@ -39,7 +39,7 @@ RSpec.describe ThreeMonthEmailService, type: :service do
       Fabricate(:subscription, member:, group: students_group)
       Fabricate(
         :workshop_invitation,
-        member: member,
+        member:,
         workshop: Fabricate(:workshop, chapter:, date_and_time: 6.months.ago),
         role: 'Student',
         attended: true
@@ -50,11 +50,11 @@ RSpec.describe ThreeMonthEmailService, type: :service do
 
     let!(:student_with_recent_attendance) do
       member = Fabricate(:member)
-      Fabricate(:subscription, member: member, group: students_group)
+      Fabricate(:subscription, member:, group: students_group)
       Fabricate(
         :workshop_invitation,
-        member: member,
-        workshop: Fabricate(:workshop, chapter: chapter, date_and_time: 1.month.ago),
+        member:,
+        workshop: Fabricate(:workshop, chapter:, date_and_time: 1.month.ago),
         role: 'Student',
         attended: true
       )
@@ -63,11 +63,11 @@ RSpec.describe ThreeMonthEmailService, type: :service do
 
     let!(:student_with_old_attendance) do
       member = Fabricate(:member)
-      Fabricate(:subscription, member: member, group: students_group)
+      Fabricate(:subscription, member:, group: students_group)
       Fabricate(
         :workshop_invitation,
-        member: member,
-        workshop: Fabricate(:workshop, chapter: chapter, date_and_time: 4.months.ago),
+        member:,
+        workshop: Fabricate(:workshop, chapter:, date_and_time: 4.months.ago),
         role: 'Student',
         attended: true
       )
@@ -76,29 +76,29 @@ RSpec.describe ThreeMonthEmailService, type: :service do
 
     let!(:coach_member) do
       member = Fabricate(:member)
-      Fabricate(:subscription, member: member, group: coaches_group)
+      Fabricate(:subscription, member:, group: coaches_group)
       member
     end
 
     let!(:unsubscribed_member) { Fabricate(:member) }
     let!(:banned_student) do
       member = Fabricate(:banned_member)
-      Fabricate(:subscription, member: member, group: students_group)
+      Fabricate(:subscription, member:, group: students_group)
       member
     end
     let!(:student_without_toc) do
       member = Fabricate(:member_without_toc)
-      Fabricate(:subscription, member: member, group: students_group)
+      Fabricate(:subscription, member:, group: students_group)
       member
     end
 
     let!(:student_with_very_old_attendance) do
       member = Fabricate(:member)
-      Fabricate(:subscription, member: member, group: students_group)
+      Fabricate(:subscription, member:, group: students_group)
       Fabricate(
         :workshop_invitation,
-        member: member,
-        workshop: Fabricate(:workshop, chapter: chapter, date_and_time: 14.months.ago),
+        member:,
+        workshop: Fabricate(:workshop, chapter:, date_and_time: 14.months.ago),
         role: 'Student',
         attended: true
       )
@@ -153,56 +153,56 @@ RSpec.describe ThreeMonthEmailService, type: :service do
       member = Fabricate(:member)
       other_chapter = Fabricate(:chapter)
       other_students_group = Fabricate(:group, name: 'Students', chapter: other_chapter)
-      Fabricate(:subscription, member: member, group: students_group)
-      Fabricate(:subscription, member: member, group: other_students_group)
+      Fabricate(:subscription, member:, group: students_group)
+      Fabricate(:subscription, member:, group: other_students_group)
       Fabricate(
         :workshop_invitation,
-        member: member,
-        workshop: Fabricate(:workshop, chapter: chapter, date_and_time: 6.months.ago),
+        member:,
+        workshop: Fabricate(:workshop, chapter:, date_and_time: 6.months.ago),
         role: 'Student',
         attended: true
       )
 
       perform_enqueued_jobs { call }
 
-      expect(MemberEmailDelivery.where(member: member).count).to eq(1)
+      expect(MemberEmailDelivery.where(member:).count).to eq(1)
     end
 
     it 'sends only one chaser for a member with multiple qualifying old attendances' do
       member = Fabricate(:member)
-      Fabricate(:subscription, member: member, group: students_group)
+      Fabricate(:subscription, member:, group: students_group)
       Fabricate(
         :workshop_invitation,
-        member: member,
-        workshop: Fabricate(:workshop, chapter: chapter, date_and_time: 5.months.ago),
+        member:,
+        workshop: Fabricate(:workshop, chapter:, date_and_time: 5.months.ago),
         role: 'Student',
         attended: true
       )
       Fabricate(
         :workshop_invitation,
-        member: member,
-        workshop: Fabricate(:workshop, chapter: chapter, date_and_time: 4.months.ago),
+        member:,
+        workshop: Fabricate(:workshop, chapter:, date_and_time: 4.months.ago),
         role: 'Student',
         attended: true
       )
 
       perform_enqueued_jobs { call }
 
-      expect(MemberEmailDelivery.where(member: member).count).to eq(1)
+      expect(MemberEmailDelivery.where(member:).count).to eq(1)
     end
 
     it 'does not send chasers when there are no eligible members' do
       Fabricate(
         :workshop_invitation,
         member: eligible_student,
-        workshop: Fabricate(:workshop, chapter: chapter, date_and_time: 1.month.ago),
+        workshop: Fabricate(:workshop, chapter:, date_and_time: 1.month.ago),
         role: 'Student',
         attended: true
       )
       Fabricate(
         :workshop_invitation,
         member: student_with_old_attendance,
-        workshop: Fabricate(:workshop, chapter: chapter, date_and_time: 1.month.ago),
+        workshop: Fabricate(:workshop, chapter:, date_and_time: 1.month.ago),
         role: 'Student',
         attended: true
       )
@@ -219,25 +219,25 @@ RSpec.describe ThreeMonthEmailService, type: :service do
 
     it 'emails a student member who has recent attendance only as a coach' do
       member = Fabricate(:member)
-      Fabricate(:subscription, member: member, group: students_group)
+      Fabricate(:subscription, member:, group: students_group)
       Fabricate(
         :workshop_invitation,
-        member: member,
-        workshop: Fabricate(:workshop, chapter: chapter, date_and_time: 6.months.ago),
+        member:,
+        workshop: Fabricate(:workshop, chapter:, date_and_time: 6.months.ago),
         role: 'Student',
         attended: true
       )
       Fabricate(
         :workshop_invitation,
-        member: member,
-        workshop: Fabricate(:workshop, chapter: chapter, date_and_time: 1.month.ago),
+        member:,
+        workshop: Fabricate(:workshop, chapter:, date_and_time: 1.month.ago),
         role: 'Coach',
         attended: true
       )
 
       perform_enqueued_jobs { call }
 
-      expect(MemberEmailDelivery.where(member: member)).to exist
+      expect(MemberEmailDelivery.where(member:)).to exist
     end
   end
 end

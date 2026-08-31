@@ -139,7 +139,7 @@ RSpec.feature 'Chapters', type: :feature do
 
   context 'when viewing the how you found us card' do
     let(:chapter) { Fabricate(:chapter) }
-    let(:group) { Fabricate(:group, chapter: chapter) }
+    let(:group) { Fabricate(:group, chapter:) }
 
     before do
       login_as_admin(member)
@@ -147,7 +147,7 @@ RSpec.feature 'Chapters', type: :feature do
 
     scenario 'shows the card when there are responses' do
       member_with_response = Fabricate(:member, how_you_found_us: :from_a_friend)
-      Fabricate(:subscription, member: member_with_response, group: group)
+      Fabricate(:subscription, member: member_with_response, group:)
 
       visit admin_chapter_path(chapter)
 

@@ -9,7 +9,7 @@ class WaitingList < ApplicationRecord
   scope :with_notes_and_their_authors, -> { includes(member: [{ member_notes: :author }, :attendance_warnings]) }
 
   def self.add(invitation, auto_rsvp = true)
-    find_or_create_by(invitation: invitation) do |waiting_list|
+    find_or_create_by(invitation:) do |waiting_list|
       waiting_list.auto_rsvp = auto_rsvp
     end
   end

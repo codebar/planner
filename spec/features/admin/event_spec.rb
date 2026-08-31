@@ -30,7 +30,7 @@ RSpec.feature 'Event creation', type: :feature do
         visit new_admin_event_path
 
         fill_in_mandatory_event_fields(name: 'A test event', slug: 'a-test-event',
-                                       description: 'A test event description', date: date, sponsor: sponsor)
+                                       description: 'A test event description', date:, sponsor:)
 
         aggregate_failures do
           expect(page).to have_text('Event successfully created')

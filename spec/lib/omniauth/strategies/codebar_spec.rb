@@ -4,7 +4,7 @@ require 'webmock/rspec'
 require 'jwt'
 
 RSpec.describe OmniAuth::Strategies::Codebar do
-  subject(:strategy) { described_class.new(app, auth_url: auth_url, audience: 'planner') }
+  subject(:strategy) { described_class.new(app, auth_url:, audience: 'planner') }
 
   let(:app) { ->(_env) { [200, {}, ['OK']] } }
   let(:auth_url) { 'http://localhost:3001' }
@@ -193,7 +193,7 @@ RSpec.describe OmniAuth::Strategies::Codebar do
         .with(headers: { 'User-Agent' => 'Codebar Planner/1.0' })
         .to_return(status: 200, body: {
           access_token: 'test-access-token',
-          id_token: id_token,
+          id_token:,
           token_type: 'Bearer',
           expires_in: 900
         }.to_json, headers: { 'Content-Type' => 'application/json' })

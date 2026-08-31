@@ -40,7 +40,7 @@ RSpec.feature 'viewing a Chapter', type: :feature do
       travel_to(Time.current) do
         chapter = Fabricate(:chapter)
         workshops = Array.new(2) do |n|
-          Fabricate(:workshop, chapter: chapter, date_and_time: 9.days.from_now - n.weeks)
+          Fabricate(:workshop, chapter:, date_and_time: 9.days.from_now - n.weeks)
         end
 
         visit chapter_path(chapter.slug)
@@ -68,8 +68,8 @@ RSpec.feature 'viewing a Chapter', type: :feature do
     it 'renders the most recent past workshop for the chapter' do
       travel_to(Time.current) do
         chapter = Fabricate(:chapter)
-        past_workshop = Fabricate(:workshop, chapter: chapter, date_and_time: 2.weeks.ago)
-        recent_past_workshop = Fabricate(:workshop, chapter: chapter, date_and_time: 1.week.ago)
+        past_workshop = Fabricate(:workshop, chapter:, date_and_time: 2.weeks.ago)
+        recent_past_workshop = Fabricate(:workshop, chapter:, date_and_time: 1.week.ago)
 
         visit chapter_path(chapter.slug)
         expect(page).to have_text "Workshop at #{recent_past_workshop.host.name}"
@@ -81,7 +81,7 @@ RSpec.feature 'viewing a Chapter', type: :feature do
       travel_to(Time.current) do
         chapter = Fabricate(:chapter)
         workshops = Array.new(2) do |n|
-          Fabricate(:workshop, chapter: chapter, date_and_time: n.weeks.ago)
+          Fabricate(:workshop, chapter:, date_and_time: n.weeks.ago)
         end
 
         visit chapter_path(chapter.slug)

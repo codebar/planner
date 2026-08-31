@@ -68,7 +68,7 @@ RSpec.describe Chapter do
 
   describe '#students' do
     let(:chapter) { Fabricate(:chapter) }
-    let(:student_group) { Fabricate(:group, chapter: chapter, name: 'Students') }
+    let(:student_group) { Fabricate(:group, chapter:, name: 'Students') }
 
     it 'returns only students from this chapter' do
       other_chapter = Fabricate(:chapter)
@@ -82,7 +82,7 @@ RSpec.describe Chapter do
 
   describe '#coaches' do
     let(:chapter) { Fabricate(:chapter) }
-    let(:coach_group) { Fabricate(:group, chapter: chapter, name: 'Coaches') }
+    let(:coach_group) { Fabricate(:group, chapter:, name: 'Coaches') }
 
     it 'returns only coaches from this chapter' do
       other_chapter = Fabricate(:chapter)
@@ -96,7 +96,7 @@ RSpec.describe Chapter do
 
   describe '#eligible_students' do
     let(:chapter) { Fabricate(:chapter) }
-    let(:student_group) { Fabricate(:group, chapter: chapter, name: 'Students') }
+    let(:student_group) { Fabricate(:group, chapter:, name: 'Students') }
 
     it 'includes only students with accepted TOC who are not banned' do
       eligible_student = Fabricate(:member, groups: [student_group], accepted_toc_at: Time.zone.now)
@@ -114,7 +114,7 @@ RSpec.describe Chapter do
 
   describe '#eligible_coaches' do
     let(:chapter) { Fabricate(:chapter) }
-    let(:coach_group) { Fabricate(:group, chapter: chapter, name: 'Coaches') }
+    let(:coach_group) { Fabricate(:group, chapter:, name: 'Coaches') }
 
     it 'includes only coaches with accepted TOC who are not banned' do
       eligible_coach = Fabricate(:member, groups: [coach_group], accepted_toc_at: Time.zone.now)

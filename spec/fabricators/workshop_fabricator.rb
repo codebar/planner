@@ -6,7 +6,7 @@ Fabricator(:workshop) do
   coach_spaces { |transients| transients[:coach_count] || 10 }
   after_build do |workshop, transients|
     Fabricate(:workshop_sponsor,
-              workshop: workshop,
+              workshop:,
               sponsor: Fabricate(:sponsor,
                                  seats: transients[:student_count] || 10,
                                  number_of_coaches: transients[:coach_count] || 10),
@@ -59,6 +59,6 @@ end
 
 Fabricator(:virtual_workshop_sponsored, from: :virtual_workshop) do
   after_build do |workshop|
-    Fabricate(:workshop_sponsor, workshop: workshop, sponsor: Fabricate(:sponsor), host: false)
+    Fabricate(:workshop_sponsor, workshop:, sponsor: Fabricate(:sponsor), host: false)
   end
 end

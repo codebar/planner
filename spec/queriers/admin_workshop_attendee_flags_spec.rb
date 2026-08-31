@@ -14,13 +14,13 @@ RSpec.describe AdminWorkshopAttendeeFlags do
   describe '.for_members' do
     context 'when determining if a member is a newbie' do
       it 'is true when the member has never attended a workshop' do
-        Fabricate(:attending_workshop_invitation, member: member, workshop: workshop)
+        Fabricate(:attending_workshop_invitation, member:, workshop:)
 
         expect(flags[:newbie]).to be(true)
       end
 
       it 'is false when the member has attended a workshop in the past' do
-        Fabricate(:attended_workshop_invitation, member: member)
+        Fabricate(:attended_workshop_invitation, member:)
 
         expect(flags[:newbie]).to be(false)
       end
@@ -28,21 +28,21 @@ RSpec.describe AdminWorkshopAttendeeFlags do
 
     context 'when determining the flag to organisers' do
       it 'is true when the member has multiple no-shows and two recent warnings' do
-        4.times { Fabricate(:past_attending_workshop_invitation, member: member) }
-        2.times { Fabricate(:attendance_warning, member: member) }
+        4.times { Fabricate(:past_attending_workshop_invitation, member:) }
+        2.times { Fabricate(:attendance_warning, member:) }
 
         expect(flags[:flag_to_organisers]).to be(true)
       end
 
       it 'is false when the member has few no-shows' do
-        Fabricate(:past_attending_workshop_invitation, member: member)
-        2.times { Fabricate(:attendance_warning, member: member) }
+        Fabricate(:past_attending_workshop_invitation, member:)
+        2.times { Fabricate(:attendance_warning, member:) }
 
         expect(flags[:flag_to_organisers]).to be(false)
       end
 
       it 'is false when the member has no recent warnings' do
-        4.times { Fabricate(:past_attending_workshop_invitation, member: member) }
+        4.times { Fabricate(:past_attending_workshop_invitation, member:) }
 
         expect(flags[:flag_to_organisers]).to be(false)
       end
@@ -50,15 +50,15 @@ RSpec.describe AdminWorkshopAttendeeFlags do
 
     context 'when determining recent notes' do
       it 'is true when a note exists after the member\'s fifth most recent attended workshop' do
-        5.times { Fabricate(:attended_workshop_invitation, member: member) }
+        5.times { Fabricate(:attended_workshop_invitation, member:) }
 
-        Fabricate(:member_note, member: member, created_at: 1.day.ago)
+        Fabricate(:member_note, member:, created_at: 1.day.ago)
 
         expect(flags[:recent_notes]).to be(true)
       end
 
       it 'is false when there are no notes' do
-        5.times { Fabricate(:attended_workshop_invitation, member: member) }
+        5.times { Fabricate(:attended_workshop_invitation, member:) }
 
         expect(flags[:recent_notes]).to be(false)
       end

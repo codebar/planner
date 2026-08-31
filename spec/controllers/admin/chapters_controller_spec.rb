@@ -54,7 +54,7 @@ RSpec.describe Admin::ChaptersController, type: :controller do
 
     it 'marks a chapter with a past workshop as active' do
       chapter = Fabricate(:chapter_with_groups)
-      Fabricate(:workshop, chapter: chapter, date_and_time: 2.months.ago)
+      Fabricate(:workshop, chapter:, date_and_time: 2.months.ago)
 
       get :status
 
@@ -64,7 +64,7 @@ RSpec.describe Admin::ChaptersController, type: :controller do
 
     it 'marks a chapter with only a future workshop as active' do
       chapter = Fabricate(:chapter_with_groups)
-      Fabricate(:workshop, chapter: chapter, date_and_time: 2.months.from_now)
+      Fabricate(:workshop, chapter:, date_and_time: 2.months.from_now)
 
       get :status
 
@@ -83,7 +83,7 @@ RSpec.describe Admin::ChaptersController, type: :controller do
 
     it 'flags at-risk chapters with no recent workshops' do
       chapter = Fabricate(:chapter_with_groups)
-      Fabricate(:workshop, chapter: chapter, date_and_time: 6.months.ago + 1.week)
+      Fabricate(:workshop, chapter:, date_and_time: 6.months.ago + 1.week)
 
       get :status, params: { months: '6' }
 
@@ -92,7 +92,7 @@ RSpec.describe Admin::ChaptersController, type: :controller do
 
     it 'does not flag active chapters with recent workshops as at-risk' do
       chapter = Fabricate(:chapter_with_groups)
-      Fabricate(:workshop, chapter: chapter, date_and_time: 1.month.ago)
+      Fabricate(:workshop, chapter:, date_and_time: 1.month.ago)
 
       get :status, params: { months: '6' }
 

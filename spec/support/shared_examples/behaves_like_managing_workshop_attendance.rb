@@ -156,7 +156,7 @@ RSpec.shared_examples 'managing workshop attendance' do
           let(:member) { Fabricate(:member) }
 
           before do
-            Fabricate(:attending_workshop_invitation, member: member, workshop: workshop)
+            Fabricate(:attending_workshop_invitation, member:, workshop:)
           end
 
           it 'can manage details if they are already attending' do

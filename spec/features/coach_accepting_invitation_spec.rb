@@ -1,7 +1,7 @@
 RSpec.feature 'a Coach can', type: :feature do
   describe '#workshop' do
     let(:member) { Fabricate(:member) }
-    let(:invitation) { Fabricate(:coach_workshop_invitation, member: member) }
+    let(:invitation) { Fabricate(:coach_workshop_invitation, member:) }
     let(:invitation_route) { invitation_path(invitation) }
     let(:reject_invitation_route) { reject_invitation_path(invitation) }
     let(:accept_invitation_route) { accept_invitation_path(invitation) }
@@ -16,7 +16,7 @@ RSpec.feature 'a Coach can', type: :feature do
 
       spots_to_fill.times do
         member = Fabricate(:member)
-        Fabricate(:workshop_invitation, workshop: workshop, member: member, role: 'Coach', attending: true)
+        Fabricate(:workshop_invitation, workshop:, member:, role: 'Coach', attending: true)
       end
     end
 

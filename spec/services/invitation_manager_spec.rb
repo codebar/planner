@@ -2,7 +2,7 @@ RSpec.describe InvitationManager do
   subject(:manager) { described_class.new }
 
   let(:chapter) { Fabricate(:chapter) }
-  let(:workshop) { Fabricate(:workshop, chapter: chapter) }
+  let(:workshop) { Fabricate(:workshop, chapter:) }
   let(:students) { Fabricate.times(2, :member) }
   let(:coaches) { Fabricate.times(2, :member) }
 
@@ -22,26 +22,26 @@ RSpec.describe InvitationManager do
 
   describe '#send_event_emails' do
     before do
-      Fabricate(:students, chapter: chapter, members: students)
-      Fabricate(:coaches, chapter: chapter, members: coaches)
+      Fabricate(:students, chapter:, members: students)
+      Fabricate(:coaches, chapter:, members: coaches)
     end
 
     it 'can email only students' do
       event = Fabricate(:event, chapters: [chapter], audience: 'Students')
       students.each do |student|
         allow(Invitation).to receive(:find_or_create_by!).with(
-          event: event, member: student, role: 'Student'
+          event:, member: student, role: 'Student'
         ).and_call_original
       end
 
       manager.send_event_emails(event, chapter)
 
       students.each do |student|
-        expect(Invitation).to have_received(:find_or_create_by!).with(event: event, member: student, role: 'Student')
+        expect(Invitation).to have_received(:find_or_create_by!).with(event:, member: student, role: 'Student')
       end
 
       coaches.each do |student|
-        expect(Invitation).not_to have_received(:find_or_create_by!).with(event: event, member: student, role: 'Coach')
+        expect(Invitation).not_to have_received(:find_or_create_by!).with(event:, member: student, role: 'Coach')
       end
     end
 
@@ -50,18 +50,18 @@ RSpec.describe InvitationManager do
 
       coaches.each do |student|
         allow(Invitation).to receive(:find_or_create_by!).with(
-          event: event, member: student, role: 'Coach'
+          event:, member: student, role: 'Coach'
         ).and_call_original
       end
 
       manager.send_event_emails(event, chapter)
 
       students.each do |student|
-        expect(Invitation).not_to have_received(:find_or_create_by!).with(event: event, member: student, role: 'Student')
+        expect(Invitation).not_to have_received(:find_or_create_by!).with(event:, member: student, role: 'Student')
       end
 
       coaches.each do |student|
-        expect(Invitation).to have_received(:find_or_create_by!).with(event: event, member: student, role: 'Coach')
+        expect(Invitation).to have_received(:find_or_create_by!).with(event:, member: student, role: 'Coach')
       end
     end
 
@@ -70,24 +70,24 @@ RSpec.describe InvitationManager do
 
       students.each do |student|
         allow(Invitation).to receive(:find_or_create_by!).with(
-          event: event, member: student, role: 'Student'
+          event:, member: student, role: 'Student'
         ).and_call_original
       end
 
       coaches.each do |student|
         allow(Invitation).to receive(:find_or_create_by!).with(
-          event: event, member: student, role: 'Coach'
+          event:, member: student, role: 'Coach'
         ).and_call_original
       end
 
       manager.send_event_emails(event, chapter)
 
       students.each do |student|
-        expect(Invitation).to have_received(:find_or_create_by!).with(event: event, member: student, role: 'Student')
+        expect(Invitation).to have_received(:find_or_create_by!).with(event:, member: student, role: 'Student')
       end
 
       coaches.each do |student|
-        expect(Invitation).to have_received(:find_or_create_by!).with(event: event, member: student, role: 'Coach')
+        expect(Invitation).to have_received(:find_or_create_by!).with(event:, member: student, role: 'Coach')
       end
     end
 
@@ -100,17 +100,17 @@ RSpec.describe InvitationManager do
       other_students.each do |other_student|
         allow(Invitation).to(
           receive(:find_or_create_by!)
-          .with(event: event, member: other_student, role: 'Student')
+          .with(event:, member: other_student, role: 'Student')
           .and_call_original
         )
       end
 
       manager.send_event_emails(event, chapter)
 
-      expect(Invitation).not_to have_received(:find_or_create_by!).with(event: event, member: first_student, role: 'Student')
+      expect(Invitation).not_to have_received(:find_or_create_by!).with(event:, member: first_student, role: 'Student')
 
       other_students.each do |other_student|
-        expect(Invitation).to have_received(:find_or_create_by!).with(event: event, member: other_student, role: 'Student')
+        expect(Invitation).to have_received(:find_or_create_by!).with(event:, member: other_student, role: 'Student')
       end
     end
 
@@ -123,17 +123,17 @@ RSpec.describe InvitationManager do
       other_coaches.each do |other_coach|
         allow(Invitation).to(
           receive(:find_or_create_by!)
-          .with(event: event, member: other_coach, role: 'Coach')
+          .with(event:, member: other_coach, role: 'Coach')
           .and_call_original
         )
       end
 
       manager.send_event_emails(event, chapter)
 
-      expect(Invitation).not_to have_received(:find_or_create_by!).with(event: event, member: first_coach, role: 'Coach')
+      expect(Invitation).not_to have_received(:find_or_create_by!).with(event:, member: first_coach, role: 'Coach')
 
       other_coaches.each do |other_coach|
-        expect(Invitation).to have_received(:find_or_create_by!).with(event: event, member: other_coach, role: 'Coach')
+        expect(Invitation).to have_received(:find_or_create_by!).with(event:, member: other_coach, role: 'Coach')
       end
     end
   end
@@ -141,7 +141,7 @@ RSpec.describe InvitationManager do
   describe '#send_monthly_attendance_reminder_emails' do
     it 'emails all attending members' do
       meeting = Fabricate(:meeting)
-      attendees = Fabricate.times(2, :attending_meeting_invitation, meeting: meeting).map(&:member)
+      attendees = Fabricate.times(2, :attending_meeting_invitation, meeting:).map(&:member)
 
       expect do
         manager.send_monthly_attendance_reminder_emails(meeting)
@@ -156,7 +156,7 @@ RSpec.describe InvitationManager do
   describe '#send_workshop_attendance_reminder_emails' do
     it 'emails all attending members' do
       workshop = Fabricate(:workshop)
-      invitations = Fabricate.times(2, :attending_workshop_invitation, workshop: workshop)
+      invitations = Fabricate.times(2, :attending_workshop_invitation, workshop:)
 
       expect do
         manager.send_workshop_attendance_reminders_without_delay(workshop)
@@ -174,9 +174,9 @@ RSpec.describe InvitationManager do
     # NOTE: This test is WIP because the method is async
     it 'emails everyone that hasn\'t already been reminded from the workshop\'s waitinglist' do
       workshop = Fabricate(:workshop)
-      invitations = Fabricate.times(2, :waitinglist_invitation, workshop: workshop)
+      invitations = Fabricate.times(2, :waitinglist_invitation, workshop:)
       reminded_at = 2.days.ago
-      reminded_invitations = Fabricate.times(2, :waitinglist_invitation_reminded, workshop: workshop)
+      reminded_invitations = Fabricate.times(2, :waitinglist_invitation_reminded, workshop:)
 
       expect do
         manager.send_workshop_waiting_list_reminders_without_delay(workshop)
@@ -195,7 +195,7 @@ RSpec.describe InvitationManager do
 
   describe '#send_waiting_list_emails' do
     it 'emails coaches when there are free coach spots' do
-      waitinglist_invitation = Fabricate(:waitinglist_invitation, workshop: workshop, role: 'Coach')
+      waitinglist_invitation = Fabricate(:waitinglist_invitation, workshop:, role: 'Coach')
 
       expect do
         manager.send_waiting_list_emails(workshop)
@@ -207,7 +207,7 @@ RSpec.describe InvitationManager do
 
     it 'does not email coaches when no coach spots are available' do
       workshop = Fabricate(:workshop, coach_count: 0)
-      Fabricate(:waitinglist_invitation, workshop: workshop, role: 'Coach')
+      Fabricate(:waitinglist_invitation, workshop:, role: 'Coach')
 
       expect do
         manager.send_waiting_list_emails(workshop)
@@ -215,7 +215,7 @@ RSpec.describe InvitationManager do
     end
 
     it 'emails students when there are free student spots' do
-      waitinglist_invitation = Fabricate(:waitinglist_invitation, workshop: workshop, role: 'Student')
+      waitinglist_invitation = Fabricate(:waitinglist_invitation, workshop:, role: 'Student')
 
       expect do
         manager.send_waiting_list_emails(workshop)
@@ -227,7 +227,7 @@ RSpec.describe InvitationManager do
 
     it 'does not email students when no student spots are available' do
       workshop = Fabricate(:workshop, student_count: 0)
-      Fabricate(:waitinglist_invitation, workshop: workshop, role: 'Student')
+      Fabricate(:waitinglist_invitation, workshop:, role: 'Student')
 
       expect do
         manager.send_waiting_list_emails(workshop)
@@ -238,7 +238,7 @@ RSpec.describe InvitationManager do
   describe '#send_meeting_emails' do
     it 'emails all invitees that are not banned' do
       meeting = Fabricate(:meeting, chapters: [chapter])
-      Fabricate(:students, chapter: chapter, members: students)
+      Fabricate(:students, chapter:, members: students)
 
       # Ban one member
       Fabricate(:ban, member: students.last)
@@ -251,10 +251,10 @@ RSpec.describe InvitationManager do
 
     it 'emails valid invitees only once' do
       meeting = Fabricate(:meeting, chapters: [chapter])
-      Fabricate(:students, chapter: chapter, members: students)
+      Fabricate(:students, chapter:, members: students)
 
       # Emulate a member already invited
-      MeetingInvitation.create(meeting: meeting, member: students.last, role: 'Participant')
+      MeetingInvitation.create(meeting:, member: students.last, role: 'Participant')
       expected_student_count = students.count - 1
 
       expect do
@@ -325,7 +325,7 @@ RSpec.describe InvitationManager do
     end
 
     it 'continues processing when invitation creation fails for one member' do
-      Fabricate(:students, chapter: chapter, members: students)
+      Fabricate(:students, chapter:, members: students)
       call_count = 0
 
       allow(WorkshopInvitation).to receive(:find_or_create_by!) do
@@ -347,7 +347,7 @@ RSpec.describe InvitationManager do
     let(:initiator) { Fabricate(:member) }
 
     before do
-      Fabricate(:students, chapter: chapter, members: students)
+      Fabricate(:students, chapter:, members: students)
     end
 
     it 'logs skipped entries for already invited members when re-running batch' do
@@ -375,7 +375,7 @@ RSpec.describe InvitationManager do
 
       # Add a new student
       new_student = Fabricate(:member)
-      Fabricate(:students, chapter: chapter, members: [new_student])
+      Fabricate(:students, chapter:, members: [new_student])
 
       # Second invitation round - should only email the new student
       expect do
@@ -390,8 +390,8 @@ RSpec.describe InvitationManager do
 
   describe '#send_workshop_emails async delivery' do
     it 'sends invitation emails asynchronously for all chapters' do
-      Fabricate(:students, chapter: chapter, members: students)
-      Fabricate(:coaches, chapter: chapter, members: coaches)
+      Fabricate(:students, chapter:, members: students)
+      Fabricate(:coaches, chapter:, members: coaches)
 
       expect do
         manager.send_workshop_emails_without_delay(workshop, 'everyone')
@@ -401,7 +401,7 @@ RSpec.describe InvitationManager do
 
   describe '#send_workshop_attendance_reminders async delivery' do
     it 'sends attendance reminder emails asynchronously for all chapters' do
-      invitation = Fabricate(:attending_workshop_invitation, workshop: workshop)
+      invitation = Fabricate(:attending_workshop_invitation, workshop:)
 
       expect do
         manager.send_workshop_attendance_reminders_without_delay(workshop)
@@ -417,8 +417,8 @@ RSpec.describe InvitationManager do
     describe '#chapter_students' do
       context 'when a member has multiple subscriptions to the same group type' do
         before do
-          students_group1 = Fabricate(:group, name: 'Students', chapter: chapter)
-          students_group2 = Fabricate(:group, name: 'Students', chapter: chapter)
+          students_group1 = Fabricate(:group, name: 'Students', chapter:)
+          students_group2 = Fabricate(:group, name: 'Students', chapter:)
           students_group1.members << member_in_both_groups
           students_group2.members << member_in_both_groups
         end
@@ -435,8 +435,8 @@ RSpec.describe InvitationManager do
     describe '#chapter_coaches' do
       context 'when a member has multiple subscriptions to the same group type' do
         before do
-          coaches_group1 = Fabricate(:group, name: 'Coaches', chapter: chapter)
-          coaches_group2 = Fabricate(:group, name: 'Coaches', chapter: chapter)
+          coaches_group1 = Fabricate(:group, name: 'Coaches', chapter:)
+          coaches_group2 = Fabricate(:group, name: 'Coaches', chapter:)
           coaches_group1.members << member_in_both_groups
           coaches_group2.members << member_in_both_groups
         end
@@ -451,9 +451,9 @@ RSpec.describe InvitationManager do
     end
 
     describe 'sending invitations to members in both students and coaches groups' do
-      let(:workshop) { Fabricate(:workshop, chapter: chapter) }
-      let(:students_group) { Fabricate(:group, name: 'Students', chapter: chapter) }
-      let(:coaches_group) { Fabricate(:group, name: 'Coaches', chapter: chapter) }
+      let(:workshop) { Fabricate(:workshop, chapter:) }
+      let(:students_group) { Fabricate(:group, name: 'Students', chapter:) }
+      let(:coaches_group) { Fabricate(:group, name: 'Coaches', chapter:) }
 
       before do
         students_group.members << member_in_both_groups
@@ -465,8 +465,8 @@ RSpec.describe InvitationManager do
           manager.send_workshop_emails(workshop, 'everyone')
         end.to change(WorkshopInvitation, :count).by(2)
 
-        student_invitation = WorkshopInvitation.find_by(workshop: workshop, member: member_in_both_groups, role: 'Student')
-        coach_invitation = WorkshopInvitation.find_by(workshop: workshop, member: member_in_both_groups, role: 'Coach')
+        student_invitation = WorkshopInvitation.find_by(workshop:, member: member_in_both_groups, role: 'Student')
+        coach_invitation = WorkshopInvitation.find_by(workshop:, member: member_in_both_groups, role: 'Coach')
 
         expect(student_invitation).to be_present
         expect(coach_invitation).to be_present

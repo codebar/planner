@@ -9,7 +9,7 @@ namespace :member do
 
     abort("You have to provide an email address. #{usage_example}") if email.blank?
 
-    member = Member.find_by!(email: email)
+    member = Member.find_by!(email:)
 
     $stdout.puts "Deleting #{member.name} #{member.surname}'s account..."
     $stdout.puts 'This action is irreversible.'

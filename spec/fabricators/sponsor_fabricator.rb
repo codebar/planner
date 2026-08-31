@@ -23,14 +23,14 @@ end
 Fabricator(:sponsor_with_member_contacts, from: :sponsor) do
   after_build do |sponsor, _transients|
     Fabricate.times(3, :member_contact,
-                    sponsor: sponsor)
+                    sponsor:)
   end
 end
 
 Fabricator(:sponsor_with_contacts, from: :sponsor_full) do
   after_build do |sponsor, _transients|
     Fabricate(:contact,
-              sponsor: sponsor)
+              sponsor:)
   end
 end
 

@@ -4,7 +4,7 @@ RSpec.describe ChapterPickerComponent do
   let(:chapters) { Fabricate.times(3, :chapter) }
 
   it 'renders a text input with datalist attributes' do
-    render_inline described_class.new(name: 'sponsors_search[chapter]', chapters: chapters, placeholder: 'Filter by chapter')
+    render_inline described_class.new(name: 'sponsors_search[chapter]', chapters:, placeholder: 'Filter by chapter')
 
     expect(page).to have_field('sponsors_search[chapter]')
     input = page.find('input')
@@ -14,7 +14,7 @@ RSpec.describe ChapterPickerComponent do
   end
 
   it 'renders a datalist with chapter names' do
-    render_inline described_class.new(name: 'sponsors_search[chapter]', chapters: chapters)
+    render_inline described_class.new(name: 'sponsors_search[chapter]', chapters:)
 
     expect(page).to have_css('datalist#sponsors_search-chapter-options')
     chapters.each do |chapter|
@@ -23,13 +23,13 @@ RSpec.describe ChapterPickerComponent do
   end
 
   it 'sanitises bracket characters in the datalist id' do
-    render_inline described_class.new(name: 'workshop[chapter_id]', chapters: chapters)
+    render_inline described_class.new(name: 'workshop[chapter_id]', chapters:)
 
     expect(page).to have_css('datalist#workshop-chapter_id-options')
   end
 
   it 'pre-fills the input when selected value is provided' do
-    render_inline described_class.new(name: 'sponsors_search[chapter]', chapters: chapters, selected: 'London')
+    render_inline described_class.new(name: 'sponsors_search[chapter]', chapters:, selected: 'London')
 
     input = page.find('input')
     expect(input['value']).to eq('London')

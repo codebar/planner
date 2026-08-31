@@ -36,12 +36,12 @@ class InvitationsController < ApplicationController
         EventInvitationMailer.attending(@invitation.event, @invitation.member, @invitation).deliver_now
       end
       notice = t('messages.invitations.spot_not_confirmed') if event.surveys_required
-      redirect_back fallback_location: root_path, notice: notice
+      redirect_back fallback_location: root_path, notice:
     else
       email = event.chapters.present? ? event.chapters.first.email : 'hello@codebar.io'
       redirect_back(
         fallback_location: root_path,
-        notice: t('messages.invitations.event.no_available_seats', email: email)
+        notice: t('messages.invitations.event.no_available_seats', email:)
       )
     end
   end
@@ -95,7 +95,7 @@ class InvitationsController < ApplicationController
       MeetingInvitation.find_by(token: params[:token], member: current_user)
     else
       meeting = Meeting.find_by(slug: params[:meeting_id])
-      MeetingInvitation.new(meeting: meeting, member: current_user, role: 'Participant')
+      MeetingInvitation.new(meeting:, member: current_user, role: 'Participant')
     end
   end
 end

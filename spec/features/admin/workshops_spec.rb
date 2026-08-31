@@ -10,7 +10,7 @@ RSpec.feature 'An admin managing workshops', type: :feature do
 
   describe '#views' do
     scenario 'list of all chapter workshops' do
-      workshops = Fabricate.times(2, :workshop, chapter: chapter)
+      workshops = Fabricate.times(2, :workshop, chapter:)
       visit admin_chapter_workshops_path(chapter)
 
       workshops.each do |workshop|
@@ -220,7 +220,7 @@ RSpec.feature 'An admin managing workshops', type: :feature do
   context 'with dietary restrictions' do
     scenario 'displays dietary restriction badges for attendees' do
       workshop = Fabricate(:workshop)
-      attendee = Fabricate(:attending_workshop_invitation, workshop: workshop)
+      attendee = Fabricate(:attending_workshop_invitation, workshop:)
       attendee.member.update(dietary_restrictions: %w[vegan gluten_free])
 
       visit admin_workshop_path(workshop)
@@ -259,7 +259,7 @@ RSpec.feature 'An admin managing workshops', type: :feature do
 
     scenario 'viewing a text file with all attendee emails' do
       workshop = Fabricate(:workshop)
-      attendees = Fabricate.times(2, :attending_workshop_invitation, workshop: workshop)
+      attendees = Fabricate.times(2, :attending_workshop_invitation, workshop:)
       attendees_emails = attendees.map(&:member).map(&:email)
       visit admin_workshop_attendees_emails_path(workshop, format: :text)
 
@@ -271,7 +271,7 @@ RSpec.feature 'An admin managing workshops', type: :feature do
     context 'when viewing the attendee names list' do
       scenario 'viewing a text file with all names' do
         workshop = Fabricate(:workshop)
-        attendees = Fabricate.times(2, :attending_workshop_invitation, workshop: workshop)
+        attendees = Fabricate.times(2, :attending_workshop_invitation, workshop:)
         visit admin_workshop_attendees_checklist_path(workshop, format: :text)
         attendees.map(&:member).map(&:full_name).each do |name|
           expect(page).to have_text(name)

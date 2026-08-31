@@ -25,7 +25,7 @@ class MembersController < ApplicationController
   def update
     if @member.update(member_params)
       notice = 'Your details have been updated.'
-      redirect_to profile_path, notice: notice
+      redirect_to profile_path, notice:
     else
       render 'edit'
     end
@@ -33,7 +33,7 @@ class MembersController < ApplicationController
 
   def unsubscribe
     require 'verifier'
-    member = Verifier.new(token: token).verify(Member)
+    member = Verifier.new(token:).verify(Member)
 
     session[:member_id] = member.id
 

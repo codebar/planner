@@ -8,7 +8,7 @@ class SubscriptionsController < ApplicationController
   end
 
   def create
-    subscription = Subscription.new(group_id: group_id, member: current_user)
+    subscription = Subscription.new(group_id:, member: current_user)
 
     if subscription.save
       SubscriptionMailingListService.subscribe(subscription)
@@ -23,7 +23,7 @@ class SubscriptionsController < ApplicationController
 
   def destroy
     # Don't error if subscription is not found
-    subscription = current_user.subscriptions.find_by(group_id: group_id)
+    subscription = current_user.subscriptions.find_by(group_id:)
     SubscriptionMailingListService.unsubscribe(subscription) if subscription
     subscription&.destroy
 

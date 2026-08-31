@@ -1,18 +1,18 @@
 RSpec.shared_examples 'sending workshop emails' do
   it 'creates an invitation for each student and sends emails' do
-    Fabricate(:students, chapter: chapter, members: students)
+    Fabricate(:students, chapter:, members: students)
 
     students.each do |student|
-      allow(WorkshopInvitation).to receive(:find_or_create_by!).with(workshop: workshop, member: student, role: 'Student').and_call_original
+      allow(WorkshopInvitation).to receive(:find_or_create_by!).with(workshop:, member: student, role: 'Student').and_call_original
     end
 
     expect do
       manager.send(send_email, workshop, 'students')
     end.to change { ActionMailer::Base.deliveries.count }.by(students.count)
-                                                         .and change { WorkshopInvitation.where(workshop: workshop, role: 'Student').count }.by(students.count)
+                                                         .and change { WorkshopInvitation.where(workshop:, role: 'Student').count }.by(students.count)
 
     students.each do |student|
-      expect(WorkshopInvitation).to have_received(:find_or_create_by!).with(workshop: workshop, member: student, role: 'Student')
+      expect(WorkshopInvitation).to have_received(:find_or_create_by!).with(workshop:, member: student, role: 'Student')
     end
 
     # Verify emails were sent to the right recipients
@@ -22,19 +22,19 @@ RSpec.shared_examples 'sending workshop emails' do
   end
 
   it 'creates an invitation for each coach and sends emails' do
-    Fabricate(:coaches, chapter: chapter, members: coaches)
+    Fabricate(:coaches, chapter:, members: coaches)
 
     coaches.each do |coach|
-      allow(WorkshopInvitation).to receive(:find_or_create_by!).with(workshop: workshop, member: coach, role: 'Coach').and_call_original
+      allow(WorkshopInvitation).to receive(:find_or_create_by!).with(workshop:, member: coach, role: 'Coach').and_call_original
     end
 
     expect do
       manager.send(send_email, workshop, 'coaches')
     end.to change { ActionMailer::Base.deliveries.count }.by(coaches.count)
-                                                         .and change { WorkshopInvitation.where(workshop: workshop, role: 'Coach').count }.by(coaches.count)
+                                                         .and change { WorkshopInvitation.where(workshop:, role: 'Coach').count }.by(coaches.count)
 
     coaches.each do |coach|
-      expect(WorkshopInvitation).to have_received(:find_or_create_by!).with(workshop: workshop, member: coach, role: 'Coach')
+      expect(WorkshopInvitation).to have_received(:find_or_create_by!).with(workshop:, member: coach, role: 'Coach')
     end
 
     # Verify emails were sent to the right recipients
@@ -45,23 +45,23 @@ RSpec.shared_examples 'sending workshop emails' do
 
   it 'does not invite banned coaches' do
     banned_coach = Fabricate(:banned_member)
-    Fabricate(:coaches, chapter: chapter, members: coaches + [banned_coach])
+    Fabricate(:coaches, chapter:, members: coaches + [banned_coach])
 
     coaches.each do |coach|
-      allow(WorkshopInvitation).to receive(:find_or_create_by!).with(workshop: workshop, member: coach, role: 'Coach').and_call_original
+      allow(WorkshopInvitation).to receive(:find_or_create_by!).with(workshop:, member: coach, role: 'Coach').and_call_original
     end
 
     manager.send(send_email, workshop, 'coaches')
 
     coaches.each do |coach|
-      expect(WorkshopInvitation).to have_received(:find_or_create_by!).with(workshop: workshop, member: coach, role: 'Coach')
+      expect(WorkshopInvitation).to have_received(:find_or_create_by!).with(workshop:, member: coach, role: 'Coach')
     end
-    expect(WorkshopInvitation).not_to have_received(:find_or_create_by!).with(workshop: workshop, member: banned_coach, role: 'Coach')
+    expect(WorkshopInvitation).not_to have_received(:find_or_create_by!).with(workshop:, member: banned_coach, role: 'Coach')
   end
 
   it 'sends emails when a WorkshopInvitation is created' do
-    Fabricate(:students, chapter: chapter, members: students)
-    Fabricate(:coaches, chapter: chapter, members: coaches)
+    Fabricate(:students, chapter:, members: students)
+    Fabricate(:coaches, chapter:, members: coaches)
 
     expect do
       manager.send(send_email, workshop, 'everyone')
@@ -69,7 +69,7 @@ RSpec.shared_examples 'sending workshop emails' do
   end
 
   it 'does not send emails when invitation creation returns nil' do
-    Fabricate(:students, chapter: chapter, members: students)
+    Fabricate(:students, chapter:, members: students)
 
     allow(WorkshopInvitation).to receive(:find_or_create_by!).and_return(nil).exactly(students.count)
 
@@ -81,7 +81,7 @@ RSpec.shared_examples 'sending workshop emails' do
   end
 
   it 'does not send duplicate emails when members are already invited' do
-    Fabricate(:students, chapter: chapter, members: students)
+    Fabricate(:students, chapter:, members: students)
 
     # First invitation round - creates invitations and sends emails
     manager.send(send_email, workshop, 'students')

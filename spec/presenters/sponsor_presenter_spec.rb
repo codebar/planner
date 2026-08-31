@@ -1,6 +1,6 @@
 RSpec.describe SponsorPresenter do
   let(:sponsor_presenter) { described_class.new(sponsor) }
-  let(:sponsor) { Fabricate(:sponsor, contacts: contacts) }
+  let(:sponsor) { Fabricate(:sponsor, contacts:) }
   let(:contact) { Fabricate(:contact) }
   let(:contacts) { [contact] }
 
@@ -36,8 +36,8 @@ RSpec.describe SponsorPresenter do
 
   describe '#sponsorships_count' do
     before do
-      Fabricate(:workshop_sponsor, sponsor: sponsor)
-      Fabricate.times(2, :sponsorship, sponsor: sponsor)
+      Fabricate(:workshop_sponsor, sponsor:)
+      Fabricate.times(2, :sponsorship, sponsor:)
     end
 
     it 'returns the total number of event sponsorships associated with the sponsor' do

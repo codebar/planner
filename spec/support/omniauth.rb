@@ -4,11 +4,11 @@ module OmniauthMacros
   def mock_auth_hash(name: Faker::Name.name, email: Faker::Internet.email, provider: 'codebar', uid: 'uid',
     github_id: nil)
     OmniAuth.config.mock_auth[provider.to_sym] = {
-      provider: provider,
-      uid: uid,
+      provider:,
+      uid:,
       info: {
-        name: name,
-        email: email
+        name:,
+        email:
       },
       credentials: {
         token: 'mock_token',

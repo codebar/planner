@@ -16,16 +16,16 @@ module Auditor
     end
 
     def log_with_note(note)
-      create(note: note)
+      create(note:)
     end
 
     private
 
     def create(changes)
       PublicActivity::Activity.create(trackable: model,
-                                      key: key,
+                                      key:,
                                       owner: user,
-                                      recipient: recipient,
+                                      recipient:,
                                       parameters: changes)
     end
   end

@@ -3,11 +3,11 @@ RSpec.describe EventInvitationMailer do
   let(:event) { Fabricate(:event, date_and_time: Time.zone.local(2017, 11, 12, 10, 0), name: 'Test event') }
   let(:coach_event) { Fabricate(:event, date_and_time: Time.zone.local(2017, 11, 12, 10, 0), name: 'Test event', audience: 'Coaches') }
   let(:member) { Fabricate(:member) }
-  let(:invitation) { Fabricate(:invitation, event: event, member: member) }
+  let(:invitation) { Fabricate(:invitation, event:, member:) }
 
   context 'when the member has an invalid email' do
     let(:bad_member) { Fabricate(:member) }
-    let(:bad_invitation) { Fabricate(:invitation, event: event, member: bad_member) }
+    let(:bad_invitation) { Fabricate(:invitation, event:, member: bad_member) }
 
     before { allow(bad_member).to receive(:email).and_return('invalid-email') }
 
@@ -74,7 +74,7 @@ RSpec.describe EventInvitationMailer do
                 name: 'Test event',
                 description: '<script>alert("xss")</script><p>Safe content</p>')
     end
-    let(:invitation_with_html) { Fabricate(:invitation, event: event_with_html, member: member) }
+    let(:invitation_with_html) { Fabricate(:invitation, event: event_with_html, member:) }
 
     it 'sanitizes description in invite_student email' do
       described_class.invite_student(event_with_html, member, invitation_with_html).deliver_now

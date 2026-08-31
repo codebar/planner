@@ -10,8 +10,8 @@ class ChapterCreationService
       chapter.groups.create!(name: 'Coaches')
     end
 
-    Result.new(chapter: chapter, success: true, errors: nil)
+    Result.new(chapter:, success: true, errors: nil)
   rescue ActiveRecord::RecordInvalid => e
-    Result.new(chapter: chapter, success: false, errors: e.message)
+    Result.new(chapter:, success: false, errors: e.message)
   end
 end

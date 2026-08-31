@@ -4,7 +4,7 @@ RSpec.describe 'Admin managing members', type: :feature do
                         other_dietary_restrictions: 'peanut allergy')
   end
   let(:admin) { Fabricate(:chapter_organiser) }
-  let(:invitation) { Fabricate(:attended_workshop_invitation, member: member) }
+  let(:invitation) { Fabricate(:attended_workshop_invitation, member:) }
 
   before do
     invitation
