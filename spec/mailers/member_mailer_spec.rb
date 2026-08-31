@@ -180,12 +180,20 @@ RSpec.describe MemberMailer do
       log = MemberEmailDelivery.last!
 
       expect(log.member).to eq(member)
+      expect(log.email_type).to eq('chaser')
       expect(log.subject).to eq('It’s been a while, how are you doing? ♥️')
       expect(log.to).to eq([member.email])
       # premailer-rails converts the message to multipart/alternative during
       # delivery, so the logged body must come from the html part
       expect(log.body).to be_present
       expect(log.body).to include('codebar workshop')
+    end
+
+    it 'logs one row per member even if the delivery is performed twice' do
+      expect do
+        described_class.with(member: member).chaser.deliver_now
+        described_class.with(member:).chaser.deliver_now
+      end.to change(MemberEmailDelivery, :count).by(1)
     end
   end
 end
