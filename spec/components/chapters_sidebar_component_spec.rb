@@ -1,8 +1,6 @@
 require 'rails_helper'
-require 'view_component/test_helpers'
 
 RSpec.describe ChaptersSidebarComponent do
-  include ViewComponent::TestHelpers
   include Rails.application.routes.url_helpers
 
   let(:chapters) { Fabricate.times(3, :chapter) }
