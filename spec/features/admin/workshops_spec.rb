@@ -48,7 +48,7 @@ RSpec.feature 'An admin managing workshops', type: :feature do
       scenario 'requires a host and a start and end datetime to be set' do
         visit new_admin_workshop_path
 
-        select chapter.name
+        fill_in 'workshop[chapter_id]', with: chapter.id
         fill_in 'Date', with: Date.current
         fill_in 'Begins at', with: '11:30'
         fill_in 'Ends at', with: '12:45'
@@ -82,7 +82,7 @@ RSpec.feature 'An admin managing workshops', type: :feature do
       scenario 'must have a host set' do
         visit new_admin_workshop_path
 
-        select chapter.name
+        fill_in 'workshop[chapter_id]', with: chapter.id
         fill_in 'Date', with: Date.current
         fill_in 'Begins at', with: '11:30'
 
@@ -108,7 +108,7 @@ RSpec.feature 'An admin managing workshops', type: :feature do
         chapter = Fabricate(:chapter, time_zone: 'Berlin')
         visit new_admin_workshop_path
 
-        select chapter.name
+        fill_in 'workshop[chapter_id]', with: chapter.id
         fill_in 'Date', with: Date.current
         fill_in 'Begins at', with: '18:30'
         fill_in 'Ends at', with: '20:45'
@@ -130,7 +130,7 @@ RSpec.feature 'An admin managing workshops', type: :feature do
 
         check 'Virtual'
 
-        select chapter.name
+        fill_in 'workshop[chapter_id]', with: chapter.id
         fill_in 'Date', with: Date.current
         fill_in 'Begins at', with: '11:30'
 
@@ -151,7 +151,7 @@ RSpec.feature 'An admin managing workshops', type: :feature do
         fill_in 'Student spaces', with: '10'
         fill_in 'Coach spaces', with: '5'
 
-        select chapter.name
+        fill_in 'workshop[chapter_id]', with: chapter.id
         fill_in 'Date', with: Date.current
         fill_in 'Begins at', with: '11:30'
         fill_in 'Ends at', with: '14:30'
@@ -211,7 +211,7 @@ RSpec.feature 'An admin managing workshops', type: :feature do
 
         expect(page).to have_css('h1', text: 'New Workshop')
         expect(page).to have_title('New Workshop')
-        expect(page).to have_select('workshop_chapter_id')
+        expect(page).to have_field('workshop[chapter_id]')
         expect(page).to have_no_select('workshop_organisers')
       end
     end

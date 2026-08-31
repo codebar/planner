@@ -7,10 +7,10 @@
 
     .col-12
       .row.row-cols-md-auto.align-items-center
-        = simple_form_for @sponsors_search, url: admin_sponsors_path, method: :get, wrapper: :inline_form, html: { class: 'row row-cols-1 row-cols-md-auto align-items-center' } do |f|
-          = f.collection_select :chapter, @chapters, :id, :name, { include_blank: true, prompt: 'Select a chapter' }, { class: 'chosen-select'}
-          = f.input :name, required: false, label: false, placeholder: 'Filter by sponsor name', input_html: { class: 'my-2 my-md-0' }
-          = f.button :button, 'Filter', class: 'btn btn-primary'
+        = form_with model: @sponsors_search, url: admin_sponsors_path, method: :get, class: 'row row-cols-1 row-cols-md-auto align-items-center' do |f|
+          = render(ChapterPickerComponent.new(name: 'sponsors_search[chapter]', chapters: @chapters, selected: @sponsors_search.chapter, placeholder: 'Filter by chapter'))
+          = f.text_field :name, placeholder: 'Filter by sponsor name', class: 'form-control w-auto my-2 my-md-0'
+          = f.button 'Filter', class: 'btn btn-primary'
         = link_to 'Reset form', admin_sponsors_path
 
   = render partial: 'shared/pagination', locals: { pagy: @pagy, model: 'sponsor' }

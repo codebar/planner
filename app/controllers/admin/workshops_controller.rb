@@ -25,17 +25,15 @@ class Admin::WorkshopsController < Admin::ApplicationController
   end
 
   def create
+    resolve_chapter_name_to_id
     @workshop = Workshop.new(workshop_params)
     authorize(@workshop)
-
     if workshop_type_valid? && @workshop.save
       assign_organisers_or_default
       assign_host(host_id)
-
       redirect_to admin_workshop_path(@workshop), notice: I18n.t('admin.messages.workshop.created')
     else
-      flash[:warning] = @workshop.errors.full_messages
-      render 'new'
+      flash[:warning] = @workshop.errors.full_messages; render 'new'
     end
   end
 
@@ -165,6 +163,14 @@ class Admin::WorkshopsController < Admin::ApplicationController
   end
 
   private
+
+  def resolve_chapter_name_to_id
+    chapter_value = params.dig(:workshop, :chapter_id)
+    return if chapter_value.blank? || chapter_value.match?(/\A\d+\z/)
+
+    chapter = Chapter.find_by('LOWER(name) = LOWER(?)', chapter_value.strip)
+    params[:workshop][:chapter_id] = chapter&.id
+  end
 
   def paginate_matching_invitations(query)
     eligible = @workshop.invitations
