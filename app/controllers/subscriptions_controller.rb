@@ -3,7 +3,7 @@ class SubscriptionsController < ApplicationController
 
   def index
     @mailing_list = MailingListForm.new
-    @groups = Group.includes(:chapter).references(:chapter).order('chapters.city')
+    @groups = Group.where(chapter: { active: true }).order('chapter.city')
     @member = MemberPresenter.new(current_user)
   end
 

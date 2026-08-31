@@ -5,6 +5,29 @@ RSpec.describe Admin::ChaptersController, type: :controller do
     login_as_admin(admin)
   end
 
+  describe '#create' do
+    context 'when a chapter-scoped organiser creates a chapter' do
+      let(:organiser) { Fabricate(:chapter_organiser) }
+
+      before do
+        login(organiser)
+      end
+
+      it 'is denied before anything is persisted' do
+        expect do
+          post :create, params: { chapter: {
+            name: 'codebar Brighton',
+            email: 'brighton@codebar.io',
+            city: 'Brighton',
+            time_zone: 'London'
+          } }
+        end.not_to(change { [Chapter.count, Group.count] })
+
+        expect(response).to redirect_to(root_path)
+      end
+    end
+  end
+
   describe '#status' do
     it 'renders successfully with default 6 months' do
       get :status
