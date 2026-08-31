@@ -1,5 +1,5 @@
 class ChapterCreationService
-  Result = Struct.new(:chapter, :success, :errors, keyword_init: true)
+  Result = Data.define(:chapter, :success, :errors)
 
   def self.call(params)
     chapter = Chapter.new(params)
@@ -10,7 +10,7 @@ class ChapterCreationService
       chapter.groups.create!(name: 'Coaches')
     end
 
-    Result.new(chapter: chapter, success: true)
+    Result.new(chapter: chapter, success: true, errors: nil)
   rescue ActiveRecord::RecordInvalid => e
     Result.new(chapter: chapter, success: false, errors: e.message)
   end
