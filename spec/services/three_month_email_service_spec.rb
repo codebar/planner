@@ -34,6 +34,20 @@ RSpec.describe ThreeMonthEmailService, type: :service do
       member
     end
 
+    let!(:student_with_other_email_logged) do
+      member = Fabricate(:member)
+      Fabricate(:subscription, member: member, group: students_group)
+      Fabricate(
+        :workshop_invitation,
+        member: member,
+        workshop: Fabricate(:workshop, chapter: chapter, date_and_time: 6.months.ago),
+        role: 'Student',
+        attended: true
+      )
+      Fabricate(:member_email_delivery, member: member, email_type: 'welcome_email')
+      member
+    end
+
     let!(:student_with_recent_attendance) do
       member = Fabricate(:member)
       Fabricate(:subscription, member: member, group: students_group)
@@ -92,15 +106,22 @@ RSpec.describe ThreeMonthEmailService, type: :service do
     end
 
     it 'emails only students who have not attended in the last 3 months and were not emailed before' do
-      expect { perform_enqueued_jobs { call } }.to change(MemberEmailDelivery, :count).by(2)
+      expect { perform_enqueued_jobs { call } }.to change(MemberEmailDelivery, :count).by(3)
 
       expect(MemberEmailDelivery.where(member: eligible_student)).to exist
       expect(MemberEmailDelivery.where(member: student_with_old_attendance)).to exist
+      expect(MemberEmailDelivery.where(member: student_with_other_email_logged, email_type: 'chaser')).to exist
     end
 
     it 'does not email a member already present in member_email_deliveries' do
       expect { perform_enqueued_jobs { call } }
         .not_to(change { MemberEmailDelivery.where(member: already_emailed_student).count })
+    end
+
+    it 'emails a member whose only logged delivery is of another type' do
+      expect { perform_enqueued_jobs { call } }
+        .to change { MemberEmailDelivery.where(member: student_with_other_email_logged, email_type: 'chaser').count }
+        .by(1)
     end
 
     it 'does not email students with a recent attended workshop' do
@@ -181,6 +202,13 @@ RSpec.describe ThreeMonthEmailService, type: :service do
       Fabricate(
         :workshop_invitation,
         member: student_with_old_attendance,
+        workshop: Fabricate(:workshop, chapter: chapter, date_and_time: 1.month.ago),
+        role: 'Student',
+        attended: true
+      )
+      Fabricate(
+        :workshop_invitation,
+        member: student_with_other_email_logged,
         workshop: Fabricate(:workshop, chapter: chapter, date_and_time: 1.month.ago),
         role: 'Student',
         attended: true

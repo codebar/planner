@@ -21,8 +21,7 @@ class ThreeMonthEmailService
                     .accepted_toc
                     .joins(:groups)
                     .merge(Group.students)
-                    .left_joins(:member_email_deliveries)
-                    .where(member_email_deliveries: { id: nil })
+                    .where.not(id: MemberEmailDelivery.where(email_type: 'chaser').select(:member_id))
                     .where.not(id: recent_attendee_ids)
                     .where(id: past_year_attendee_ids)
                     .distinct

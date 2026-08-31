@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_31_090000) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_31_100100) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -420,10 +420,12 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_31_090000) do
     t.text "body"
     t.text "cc", default: [], array: true
     t.datetime "created_at", null: false
+    t.string "email_type", null: false
     t.bigint "member_id"
     t.text "subject"
     t.text "to", default: [], array: true
     t.datetime "updated_at", null: false
+    t.index ["member_id", "email_type"], name: "index_member_email_deliveries_on_member_id_and_email_type", unique: true
     t.index ["member_id"], name: "index_member_email_deliveries_on_member_id"
   end
 
