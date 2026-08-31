@@ -192,7 +192,7 @@ RSpec.describe MemberMailer do
     it 'logs one row per member even if the delivery is performed twice' do
       expect do
         described_class.with(member: member).chaser.deliver_now
-        described_class.with(member: member).chaser.deliver_now
+        described_class.with(member:).chaser.deliver_now
       end.to change(MemberEmailDelivery, :count).by(1)
     end
   end
