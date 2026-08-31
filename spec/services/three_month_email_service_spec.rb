@@ -44,7 +44,7 @@ RSpec.describe ThreeMonthEmailService, type: :service do
         role: 'Student',
         attended: true
       )
-      Fabricate(:member_email_delivery, member: member, email_type: 'welcome_email')
+      Fabricate(:member_email_delivery, member:, email_type: 'welcome_email')
       member
     end
 
