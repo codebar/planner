@@ -11,7 +11,7 @@ module EmailDelivery
     MemberEmailDelivery.create!(
       member: member,
       subject: mail.subject,
-      body: mail.body.to_s,
+      body: mail.html_part ? mail.html_part.body.to_s : mail.body.to_s,
       to: Array(mail.to),
       cc: Array(mail.cc),
       bcc: Array(mail.bcc)

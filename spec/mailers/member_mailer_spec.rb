@@ -182,6 +182,10 @@ RSpec.describe MemberMailer do
       expect(log.member).to eq(member)
       expect(log.subject).to eq('It’s been a while, how are you doing? ♥️')
       expect(log.to).to eq([member.email])
+      # premailer-rails converts the message to multipart/alternative during
+      # delivery, so the logged body must come from the html part
+      expect(log.body).to be_present
+      expect(log.body).to include('codebar workshop')
     end
   end
 end
