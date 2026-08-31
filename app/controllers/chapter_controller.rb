@@ -1,6 +1,6 @@
 class ChapterController < ApplicationController
   def show
-    @chapter = ChapterPresenter.new(Chapter.active.find_by!(slug: slug))
+    @chapter = ChapterPresenter.new(Chapter.active.find_by!(slug:))
 
     upcoming_workshops = upcoming_events_by_chapter(@chapter)
     @upcoming_workshops = event_presenters_by_date(upcoming_workshops)

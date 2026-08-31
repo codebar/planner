@@ -19,7 +19,7 @@ RSpec.describe Admin::WorkshopsController, type: :controller do
 
   describe 'GET #show' do
     it 'loads the workshop attendance page with attendees' do
-      Fabricate(:workshop_invitation, workshop: workshop, attending: true)
+      Fabricate(:workshop_invitation, workshop:, attending: true)
       get :show, params: { id: workshop.id }
 
       expect(response).to have_http_status(:success)
@@ -30,11 +30,11 @@ RSpec.describe Admin::WorkshopsController, type: :controller do
       4.times { Fabricate(:past_attending_workshop_invitation, member: attendee) }
       2.times { Fabricate(:attendance_warning, member: attendee) }
       Fabricate(:member_note, member: attendee, created_at: 1.day.ago)
-      Fabricate(:workshop_invitation, workshop: workshop, member: attendee, attending: true, role: 'Student')
-      Fabricate(:workshop_invitation, workshop: workshop, attending: true, role: 'Coach')
+      Fabricate(:workshop_invitation, workshop:, member: attendee, attending: true, role: 'Student')
+      Fabricate(:workshop_invitation, workshop:, attending: true, role: 'Coach')
 
       # adds a second attendee to catch per-row scaling
-      Fabricate(:workshop_invitation, workshop: workshop, attending: true, role: 'Student')
+      Fabricate(:workshop_invitation, workshop:, attending: true, role: 'Student')
 
       count = count_queries { get :show, params: { id: workshop.id } }
 
@@ -46,7 +46,7 @@ RSpec.describe Admin::WorkshopsController, type: :controller do
       render_views
 
       it 'links to the RSVP members page instead of rendering an invitations select' do
-        Fabricate(:workshop_invitation, workshop: workshop, attending: nil)
+        Fabricate(:workshop_invitation, workshop:, attending: nil)
         get :show, params: { id: workshop.id }
 
         expect(response.body).to include(admin_workshop_rsvp_path(workshop))
@@ -60,12 +60,12 @@ RSpec.describe Admin::WorkshopsController, type: :controller do
     render_views
 
     let(:member) { Fabricate(:member, name: 'Zoe', surname: 'Searchable') }
-    let!(:matching) { Fabricate(:workshop_invitation, workshop: workshop, member: member, attending: nil) }
+    let!(:matching) { Fabricate(:workshop_invitation, workshop:, member:, attending: nil) }
 
     before do
       Fabricate(:ban, member: Fabricate(:member, name: 'Bob', surname: 'Banned'))
-      Fabricate(:workshop_invitation, workshop: workshop, attending: true) # an already-attending member (counts toward eligible)
-      Fabricate(:workshop_invitation, member: member) # an invite for a DIFFERENT workshop
+      Fabricate(:workshop_invitation, workshop:, attending: true) # an already-attending member (counts toward eligible)
+      Fabricate(:workshop_invitation, member:) # an invite for a DIFFERENT workshop
     end
 
     it 'is not accessible without organiser rights' do
@@ -103,7 +103,7 @@ RSpec.describe Admin::WorkshopsController, type: :controller do
     end
 
     it 'eager loads member so rendering does not query per row' do
-      3.times { Fabricate(:workshop_invitation, workshop: workshop, member: Fabricate(:member, name: 'Eager', surname: 'Load'), attending: nil) }
+      3.times { Fabricate(:workshop_invitation, workshop:, member: Fabricate(:member, name: 'Eager', surname: 'Load'), attending: nil) }
 
       get :rsvp, params: { workshop_id: workshop.id, q: 'Eager' }
 
@@ -112,7 +112,7 @@ RSpec.describe Admin::WorkshopsController, type: :controller do
 
     it 'paginates results at 20 per page and preserves the search term across pages' do
       21.times do |i|
-        Fabricate(:workshop_invitation, workshop: workshop, member: Fabricate(:member, name: "Page#{i}", surname: 'User'), attending: nil)
+        Fabricate(:workshop_invitation, workshop:, member: Fabricate(:member, name: "Page#{i}", surname: 'User'), attending: nil)
       end
 
       get :rsvp, params: { workshop_id: workshop.id, q: 'Page' }
@@ -129,7 +129,7 @@ RSpec.describe Admin::WorkshopsController, type: :controller do
 
     it 'renders the not-attending badge and RSVP toggle for a declined member' do
       declined = Fabricate(:member, name: 'Declined', surname: 'Member')
-      Fabricate(:workshop_invitation, workshop: workshop, member: declined, attending: false)
+      Fabricate(:workshop_invitation, workshop:, member: declined, attending: false)
 
       get :rsvp, params: { workshop_id: workshop.id, q: 'Declined' }
 
@@ -151,7 +151,7 @@ RSpec.describe Admin::WorkshopsController, type: :controller do
 
     it 'renders the not-attending toggle for an already-attending result' do
       attending_member = Fabricate(:member, name: 'Aaron', surname: 'Other')
-      Fabricate(:workshop_invitation, workshop: workshop, member: attending_member, attending: true)
+      Fabricate(:workshop_invitation, workshop:, member: attending_member, attending: true)
 
       get :rsvp, params: { workshop_id: workshop.id, q: 'Aaron' }
 
@@ -170,7 +170,7 @@ RSpec.describe Admin::WorkshopsController, type: :controller do
   describe 'DELETE #destroy' do
     context 'when workshop invitations have been sent' do
       before do
-        Fabricate(:attending_workshop_invitation, workshop: workshop)
+        Fabricate(:attending_workshop_invitation, workshop:)
       end
 
       context "when workshop deletion tried within specific time frame since it's creation" do
@@ -249,6 +249,47 @@ RSpec.describe Admin::WorkshopsController, type: :controller do
 
           expect(flash[:notice]).to eq(I18n.t('admin.workshop.destroy.failure'))
         end
+      end
+    end
+  end
+
+  describe 'GET #new' do
+    render_views
+
+    it 'renders with native date and time inputs for main and RSVP fields' do
+      get :new
+
+      expect(response.body).to include('type="date"')
+      expect(response.body).to include('type="time"')
+      expect(response.body.scan('type="date"').size).to be >= 3 # main date + RSVP open + RSVP close
+      expect(response.body.scan('type="time"').size).to be >= 3 # main time + RSVP open + RSVP close
+    end
+  end
+
+  describe 'GET #edit' do
+    render_views
+
+    it 'pre-fills main date and time values in ISO format' do
+      get :edit, params: { id: workshop.id }
+
+      expect(response.body).to include("value=\"#{workshop.date_and_time.strftime('%Y-%m-%d')}\"")
+      expect(response.body).to include("value=\"#{workshop.time.strftime('%H:%M')}\"")
+    end
+
+    context 'with RSVP windows set' do
+      let(:workshop) do
+        Fabricate(:workshop,
+                  rsvp_opens_at: 1.day.from_now,
+                  rsvp_closes_at: 2.days.from_now)
+      end
+
+      it 'pre-fills RSVP date and time values in ISO format' do
+        get :edit, params: { id: workshop.id }
+
+        expect(response.body).to include("value=\"#{workshop.rsvp_opens_at.strftime('%Y-%m-%d')}\"")
+        expect(response.body).to include("value=\"#{workshop.rsvp_opens_at.strftime('%H:%M')}\"")
+        expect(response.body).to include("value=\"#{workshop.rsvp_closes_at.strftime('%Y-%m-%d')}\"")
+        expect(response.body).to include("value=\"#{workshop.rsvp_closes_at.strftime('%H:%M')}\"")
       end
     end
   end

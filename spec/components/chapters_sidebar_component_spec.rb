@@ -1,14 +1,12 @@
 require 'rails_helper'
-require 'view_component/test_helpers'
 
 RSpec.describe ChaptersSidebarComponent do
-  include ViewComponent::TestHelpers
   include Rails.application.routes.url_helpers
 
   let(:chapters) { Fabricate.times(3, :chapter) }
 
   it 'renders chapter names as links' do
-    render_inline described_class.new(chapters: chapters)
+    render_inline described_class.new(chapters:)
 
     chapters.each do |chapter|
       expect(page).to have_link(chapter.name, href: chapter_path(chapter.slug))

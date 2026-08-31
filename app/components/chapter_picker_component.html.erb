@@ -1,0 +1,11 @@
+<%= text_field_tag @name, @selected,
+                   list: datalist_id,
+                   placeholder: @placeholder,
+                   class: 'form-control',
+                   autocomplete: 'off' %>
+
+<%= tag.datalist id: datalist_id do %>
+  <% @chapters.each do |chapter| %>
+    <%= tag.option chapter.name, value: chapter.name %>
+  <% end %>
+<% end %>

@@ -21,14 +21,13 @@ class ThreeMonthEmailService
                     .accepted_toc
                     .joins(:groups)
                     .merge(Group.students)
-                    .left_joins(:member_email_deliveries)
-                    .where(member_email_deliveries: { id: nil })
+                    .where.not(id: MemberEmailDelivery.where(email_type: 'chaser').select(:member_id))
                     .where.not(id: recent_attendee_ids)
                     .where(id: past_year_attendee_ids)
                     .distinct
 
     members.find_each do |member|
-      MemberMailer.with(member: member).chaser.deliver_later
+      MemberMailer.with(member:).chaser.deliver_later
     end
   end
 end

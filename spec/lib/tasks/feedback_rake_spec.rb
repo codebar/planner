@@ -15,7 +15,7 @@ RSpec.describe 'rake feedback:request', type: :task do
       travel_to(Time.current) do
         workshop = Fabricate(:workshop, date_and_time: 23.hours.ago)
         student = Fabricate(:member)
-        Fabricate(:attending_workshop_invitation, role: 'Student', member: student, workshop: workshop)
+        Fabricate(:attending_workshop_invitation, role: 'Student', member: student, workshop:)
 
         mailer = double(deliver_now: true)
         allow(Workshop).to receive(:completed_since_yesterday).and_return([workshop])
@@ -49,11 +49,11 @@ RSpec.describe 'rake feedback:request', type: :task do
         task.execute
 
         past_workshops.each do |workshop|
-          expect(FeedbackRequest.where(member: student, workshop: workshop, submited: false).exists?).to be(false)
+          expect(FeedbackRequest.where(member: student, workshop:, submited: false).exists?).to be(false)
         end
 
         yesterdays_workshops.each do |workshop|
-          expect(FeedbackRequest.where(member: student, workshop: workshop, submited: false).exists?).to be(true)
+          expect(FeedbackRequest.where(member: student, workshop:, submited: false).exists?).to be(true)
         end
       end
     end

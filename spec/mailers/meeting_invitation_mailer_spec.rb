@@ -1,11 +1,11 @@
 RSpec.describe MeetingInvitationMailer do
   let(:meeting) { Fabricate(:meeting) }
   let(:member) { Fabricate(:member) }
-  let(:invitation) { Fabricate(:meeting_invitation, meeting: meeting, member: member) }
+  let(:invitation) { Fabricate(:meeting_invitation, meeting:, member:) }
 
   context 'when the member has an invalid email' do
     let(:bad_member) { Fabricate(:member) }
-    let(:bad_invitation) { Fabricate(:meeting_invitation, meeting: meeting, member: bad_member) }
+    let(:bad_invitation) { Fabricate(:meeting_invitation, meeting:, member: bad_member) }
 
     before { allow(bad_member).to receive(:email).and_return('invalid-email') }
 

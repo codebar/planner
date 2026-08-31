@@ -18,9 +18,9 @@ RSpec.feature 'Member portal', type: :feature do
 
       it 'can view attending workshops' do
         workshop = Fabricate(:workshop, chapter: Fabricate(:chapter_with_groups))
-        Fabricate(:subscription, member: member, group: workshop.chapter.groups.first)
-        Fabricate(:attending_workshop_invitation, member: member,
-                                                  workshop: workshop)
+        Fabricate(:subscription, member:, group: workshop.chapter.groups.first)
+        Fabricate(:attending_workshop_invitation, member:,
+                                                  workshop:)
         presenter = WorkshopPresenter.new(workshop)
         visit dashboard_path
 
@@ -29,10 +29,10 @@ RSpec.feature 'Member portal', type: :feature do
 
       it 'can view upcoming workshops for their chapters' do
         c1_workshop = Fabricate(:workshop, chapter: Fabricate(:chapter_with_groups))
-        Fabricate(:subscription, member: member, group: c1_workshop.chapter.groups.first)
+        Fabricate(:subscription, member:, group: c1_workshop.chapter.groups.first)
 
         c2_workshop = Fabricate(:workshop, chapter: Fabricate(:chapter_with_groups))
-        Fabricate(:subscription, member: member, group: c2_workshop.chapter.groups.first)
+        Fabricate(:subscription, member:, group: c2_workshop.chapter.groups.first)
         c1_workshop_presenter = WorkshopPresenter.new(c1_workshop)
         c2_workshop_presenter = WorkshopPresenter.new(c2_workshop)
 
@@ -71,7 +71,7 @@ RSpec.feature 'Member portal', type: :feature do
     end
 
     it 'can view the invitations they RSVPed to' do
-      invitations = Array.new(2) { Fabricate(:attending_workshop_invitation, member: member) }
+      invitations = Array.new(2) { Fabricate(:attending_workshop_invitation, member:) }
       visit invitations_path
 
       expect(page).to have_text('Invitations')

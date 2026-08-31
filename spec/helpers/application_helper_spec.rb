@@ -2,7 +2,7 @@ RSpec.describe ApplicationHelper do
   describe '#contact_email' do
     it "returns the workshop chapter's email" do
       workshop = Fabricate(:workshop)
-      expect(helper.contact_email(workshop: workshop)).to eq(workshop.chapter.email)
+      expect(helper.contact_email(workshop:)).to eq(workshop.chapter.email)
     end
 
     it 'returns hello@codebar.io when no workshop is set' do

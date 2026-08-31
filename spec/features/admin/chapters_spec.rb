@@ -27,6 +27,23 @@ RSpec.feature 'Chapters', type: :feature do
       click_on 'Create chapter'
 
       expect(page).to have_text('Chapter codebar Brighton has been successfully created')
+
+      chapter = Chapter.find_by(name: 'codebar Brighton')
+      expect(chapter.groups.pluck(:name)).to match_array(%w[Students Coaches])
+    end
+
+    scenario 'an admin submitting an invalid form sees validation errors and no chapter is created' do
+      visit new_admin_chapter_path
+
+      fill_in 'Name', with: ''
+      fill_in 'Email', with: ''
+      fill_in 'City', with: 'Brighton'
+
+      click_on 'Create chapter'
+
+      expect(page).to have_text("Name can't be blank")
+      expect(page).to have_text("Email can't be blank")
+      expect(Chapter.count).to eq(0)
     end
   end
 
@@ -122,7 +139,7 @@ RSpec.feature 'Chapters', type: :feature do
 
   context 'when viewing the how you found us card' do
     let(:chapter) { Fabricate(:chapter) }
-    let(:group) { Fabricate(:group, chapter: chapter) }
+    let(:group) { Fabricate(:group, chapter:) }
 
     before do
       login_as_admin(member)
@@ -130,7 +147,7 @@ RSpec.feature 'Chapters', type: :feature do
 
     scenario 'shows the card when there are responses' do
       member_with_response = Fabricate(:member, how_you_found_us: :from_a_friend)
-      Fabricate(:subscription, member: member_with_response, group: group)
+      Fabricate(:subscription, member: member_with_response, group:)
 
       visit admin_chapter_path(chapter)
 

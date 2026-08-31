@@ -60,7 +60,7 @@ class InvitationLogger
     return unless @log
 
     @log.update!(
-      total_invitees: total_invitees,
+      total_invitees:,
       completed_at: Time.current,
       status: :completed
     )
@@ -83,7 +83,7 @@ class InvitationLogger
   end
 
   def find_or_build_entry(member, invitation, status)
-    @log.entries.find_or_create_by(member: member, invitation: invitation) do |entry|
+    @log.entries.find_or_create_by(member:, invitation:) do |entry|
       entry.status = status
     end
   end

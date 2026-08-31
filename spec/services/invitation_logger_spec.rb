@@ -4,7 +4,7 @@ RSpec.describe InvitationLogger do
   let(:workshop) { Fabricate(:workshop) }
   let(:initiator) { Fabricate(:member) }
   let(:member) { Fabricate(:member) }
-  let(:invitation) { Fabricate(:workshop_invitation, workshop: workshop, member: member) }
+  let(:invitation) { Fabricate(:workshop_invitation, workshop:, member:) }
 
   describe '#start_batch' do
     it 'creates an InvitationLog record' do
@@ -105,8 +105,8 @@ RSpec.describe InvitationLogger do
     let!(:log) { logger.start_batch }
 
     it 'updates status to completed with counts' do
-      2.times { logger.log_success(Fabricate(:member), Fabricate(:workshop_invitation, workshop: workshop)) }
-      logger.log_failure(Fabricate(:member), Fabricate(:workshop_invitation, workshop: workshop), StandardError.new('err'))
+      2.times { logger.log_success(Fabricate(:member), Fabricate(:workshop_invitation, workshop:)) }
+      logger.log_failure(Fabricate(:member), Fabricate(:workshop_invitation, workshop:), StandardError.new('err'))
 
       logger.finish_batch(5)
 

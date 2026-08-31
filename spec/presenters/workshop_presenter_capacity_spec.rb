@@ -10,7 +10,7 @@ RSpec.describe 'WorkshopPresenter capacity checks', type: :model do
         # Create 2 attending students (at capacity)
         2.times do
           member = Fabricate(:member)
-          Fabricate(:workshop_invitation, workshop: workshop, member: member, role: 'Student', attending: true)
+          Fabricate(:workshop_invitation, workshop:, member:, role: 'Student', attending: true)
         end
       end
 
@@ -26,7 +26,7 @@ RSpec.describe 'WorkshopPresenter capacity checks', type: :model do
       before do
         # Create 1 attending student (below capacity)
         member = Fabricate(:member)
-        Fabricate(:workshop_invitation, workshop: workshop, member: member, role: 'Student', attending: true)
+        Fabricate(:workshop_invitation, workshop:, member:, role: 'Student', attending: true)
       end
 
       it 'returns true when spaces are available' do
@@ -41,7 +41,7 @@ RSpec.describe 'WorkshopPresenter capacity checks', type: :model do
       let(:sponsor) { Fabricate(:sponsor, seats: 20, number_of_coaches: 10) }
       let(:workshop_with_zero_spaces) do
         Fabricate(:workshop_no_sponsor, student_spaces: 0, coach_spaces: 0).tap do |ws|
-          Fabricate(:workshop_sponsor, workshop: ws, sponsor: sponsor, host: true)
+          Fabricate(:workshop_sponsor, workshop: ws, sponsor:, host: true)
         end
       end
       let(:presenter_zero_spaces) { WorkshopPresenter.new(workshop_with_zero_spaces) }
@@ -49,7 +49,7 @@ RSpec.describe 'WorkshopPresenter capacity checks', type: :model do
       before do
         # Create 1 attending student
         member = Fabricate(:member)
-        Fabricate(:workshop_invitation, workshop: workshop_with_zero_spaces, member: member, role: 'Student', attending: true)
+        Fabricate(:workshop_invitation, workshop: workshop_with_zero_spaces, member:, role: 'Student', attending: true)
       end
 
       it 'returns true because capacity comes from sponsor, not workshop.student_spaces' do
@@ -71,7 +71,7 @@ RSpec.describe 'WorkshopPresenter capacity checks', type: :model do
         # Create 2 attending coaches (at capacity)
         2.times do
           member = Fabricate(:member)
-          Fabricate(:workshop_invitation, workshop: workshop, member: member, role: 'Coach', attending: true)
+          Fabricate(:workshop_invitation, workshop:, member:, role: 'Coach', attending: true)
         end
       end
 
@@ -86,7 +86,7 @@ RSpec.describe 'WorkshopPresenter capacity checks', type: :model do
       before do
         # Create 1 attending coach (below capacity)
         member = Fabricate(:member)
-        Fabricate(:workshop_invitation, workshop: workshop, member: member, role: 'Coach', attending: true)
+        Fabricate(:workshop_invitation, workshop:, member:, role: 'Coach', attending: true)
       end
 
       it 'returns true when coach spaces are available' do
@@ -100,7 +100,7 @@ RSpec.describe 'WorkshopPresenter capacity checks', type: :model do
       let(:sponsor) { Fabricate(:sponsor, seats: 20, number_of_coaches: 10) }
       let(:workshop_with_zero_spaces) do
         Fabricate(:workshop_no_sponsor, student_spaces: 0, coach_spaces: 0).tap do |ws|
-          Fabricate(:workshop_sponsor, workshop: ws, sponsor: sponsor, host: true)
+          Fabricate(:workshop_sponsor, workshop: ws, sponsor:, host: true)
         end
       end
       let(:presenter_zero_spaces) { WorkshopPresenter.new(workshop_with_zero_spaces) }
@@ -108,7 +108,7 @@ RSpec.describe 'WorkshopPresenter capacity checks', type: :model do
       before do
         # Create 1 attending coach
         member = Fabricate(:member)
-        Fabricate(:workshop_invitation, workshop: workshop_with_zero_spaces, member: member, role: 'Coach', attending: true)
+        Fabricate(:workshop_invitation, workshop: workshop_with_zero_spaces, member:, role: 'Coach', attending: true)
       end
 
       it 'returns true because capacity comes from sponsor, not workshop.coach_spaces' do

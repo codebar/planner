@@ -1,12 +1,10 @@
 require 'rails_helper'
-require 'view_component/test_helpers'
 
 RSpec.describe EventCardComponent, type: :component do
-  include ViewComponent::TestHelpers
   let(:chapter) { Fabricate(:chapter, active: true) }
 
   context 'with a workshop' do
-    let(:workshop) { Fabricate(:workshop, chapter: chapter) }
+    let(:workshop) { Fabricate(:workshop, chapter:) }
     let(:presenter) { WorkshopPresenter.new(workshop) }
 
     it 'renders the workshop card' do
@@ -69,19 +67,19 @@ RSpec.describe EventCardComponent, type: :component do
   end
 
   context 'with a user' do
-    let(:workshop) { Fabricate(:workshop, chapter: chapter) }
+    let(:workshop) { Fabricate(:workshop, chapter:) }
     let(:presenter) { WorkshopPresenter.new(workshop) }
     let(:member) { Fabricate(:member) }
 
     it 'renders attending badge when user is attending (as presenter)' do
-      Fabricate(:workshop_invitation, workshop: workshop, member: member, attending: true)
+      Fabricate(:workshop_invitation, workshop:, member:, attending: true)
       user_presenter = MemberPresenter.new(member)
       render_inline(described_class.new(event_card: presenter, user: user_presenter))
       expect(page).to have_text('Attending')
     end
 
     it 'renders attending badge when raw Member is passed' do
-      Fabricate(:workshop_invitation, workshop: workshop, member: member, attending: true)
+      Fabricate(:workshop_invitation, workshop:, member:, attending: true)
       render_inline(described_class.new(event_card: presenter, user: member))
       expect(page).to have_text('Attending')
     end

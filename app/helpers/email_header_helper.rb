@@ -19,9 +19,9 @@ module EmailHeaderHelper
 
     mail(from: "codebar.io <#{from_email}>",
          to: member.email,
-         cc: cc,
-         bcc: bcc,
-         subject: subject,
+         cc:,
+         bcc:,
+         subject:,
          &block)
   end
 

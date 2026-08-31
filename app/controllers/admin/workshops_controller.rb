@@ -15,22 +15,25 @@ class Admin::WorkshopsController < Admin::ApplicationController
   end
 
   def new
-    @workshop = Workshop.new
+    chapter_id = params[:chapter_id].presence
+    @workshop = if chapter_id && Chapter.exists?(chapter_id)
+      Workshop.new(chapter_id:)
+    else
+      Workshop.new
+    end
     authorize @workshop
   end
 
   def create
+    resolve_chapter_name_to_id
     @workshop = Workshop.new(workshop_params)
     authorize(@workshop)
-
     if workshop_type_valid? && @workshop.save
-      grant_organiser_access(@workshop.chapter.organisers.pluck(:id))
+      assign_organisers_or_default
       assign_host(host_id)
-
       redirect_to admin_workshop_path(@workshop), notice: I18n.t('admin.messages.workshop.created')
     else
-      flash[:warning] = @workshop.errors.full_messages
-      render 'new'
+      flash[:warning] = @workshop.errors.full_messages; render 'new'
     end
   end
 
@@ -161,6 +164,14 @@ class Admin::WorkshopsController < Admin::ApplicationController
 
   private
 
+  def resolve_chapter_name_to_id
+    chapter_value = params.dig(:workshop, :chapter_id)
+    return if chapter_value.blank? || chapter_value.match?(/\A\d+\z/)
+
+    chapter = Chapter.find_by('LOWER(name) = LOWER(?)', chapter_value.strip)
+    params[:workshop][:chapter_id] = chapter&.id
+  end
+
   def paginate_matching_invitations(query)
     eligible = @workshop.invitations
                         .joins(:member)
@@ -215,6 +226,14 @@ class Admin::WorkshopsController < Admin::ApplicationController
     revoke_organiser_access(organiser_ids)
   end
 
+  def assign_organisers_or_default
+    if organiser_ids.present?
+      assign_organisers(organiser_ids)
+    else
+      grant_organiser_access(@workshop.chapter.organisers.pluck(:id))
+    end
+  end
+
   def host_id
     params.expect(workshop: [:host])[:host]
   end
@@ -263,6 +282,6 @@ class Admin::WorkshopsController < Admin::ApplicationController
   end
 
   def workshop_sponsor(host = false)
-    @workshop_sponsor ||= WorkshopSponsor.new(workshop: @workshop, sponsor: @sponsor, host: host)
+    @workshop_sponsor ||= WorkshopSponsor.new(workshop: @workshop, sponsor: @sponsor, host:)
   end
 end

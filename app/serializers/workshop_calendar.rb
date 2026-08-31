@@ -50,7 +50,7 @@ class WorkshopCalendar
 
     event.url = invitation_url
     event.organizer = workshop.chapter.email.to_s
-    event.summary = I18n.t('workshop.calendar.summary', host_name: host_name)
+    event.summary = I18n.t('workshop.calendar.summary', host_name:)
     event.ip_class = 'PRIVATE'
   end
 

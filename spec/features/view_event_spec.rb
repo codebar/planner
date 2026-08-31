@@ -119,7 +119,7 @@ RSpec.feature 'viewing an event', type: :feature do
       end
 
       scenario 'is redirected to the event invitation page if they have RSVPed' do
-        invitation = Fabricate(:attending_event_invitation, event: open_event, member: member)
+        invitation = Fabricate(:attending_event_invitation, event: open_event, member:)
         visit event_path(open_event)
 
         expect(page).to have_current_path(event_invitation_path(open_event, invitation.token), ignore_query: true)

@@ -27,7 +27,7 @@ class EventsController < ApplicationController
 
     return unless logged_in?
 
-    invitation = Invitation.find_by(member: current_user, event: event, attending: true)
+    invitation = Invitation.find_by(member: current_user, event:, attending: true)
     redirect_to event_invitation_path(@event, invitation) if invitation
   end
 
@@ -44,7 +44,7 @@ class EventsController < ApplicationController
     ticket = Services::Ticket.new(request, params)
     member = Member.find_by(email: ticket.email)
     invitation = member.invitations.where(event: @event, role: 'Student').first
-    invitation ||= Invitation.create_or_find_by(event: @event, member: member, role: 'Student')
+    invitation ||= Invitation.create_or_find_by(event: @event, member:, role: 'Student')
 
     invitation.update(attending: true)
     head :ok
@@ -63,8 +63,8 @@ class EventsController < ApplicationController
 
   def find_invitation_and_redirect_to_event(role)
     set_event
-    invitation = Invitation.create_or_find_by(event: @event, member: current_user, role: role)
-    invitation = Invitation.find_by(event: @event, member: current_user, role: role) unless invitation.persisted?
+    invitation = Invitation.create_or_find_by(event: @event, member: current_user, role:)
+    invitation = Invitation.find_by(event: @event, member: current_user, role:) unless invitation.persisted?
     redirect_to event_invitation_path(@event, invitation)
   end
 
@@ -135,7 +135,7 @@ class EventsController < ApplicationController
     total = ActiveRecord::Base.connection.select_value(count_query.to_sql).to_i
     return nil if total.zero?
 
-    pagy_opts = { count: total, page: page, limit: 20, request: request }
+    pagy_opts = { count: total, page:, limit: 20, request: }
     pagy_opts[:request] = Pagy::Request.new(pagy_opts)
     pagy = Pagy::Offset.new(**pagy_opts)
 

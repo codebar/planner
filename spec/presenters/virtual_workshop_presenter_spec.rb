@@ -1,6 +1,6 @@
 RSpec.describe VirtualWorkshopPresenter do
   def double_workshop(attending_coaches:, attending_students:)
-    instance_double(Workshop, coach_spaces: 3, student_spaces: 5, chapter: chapter,
+    instance_double(Workshop, coach_spaces: 3, student_spaces: 5, chapter:,
                               attending_coaches: instance_double(Array, length: attending_coaches),
                               attending_students: instance_double(Array, length: attending_students))
   end

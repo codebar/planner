@@ -1,18 +1,18 @@
 RSpec.describe HowYouFoundUsPresenter do
   def add_member(group, how)
     member = Fabricate(:member, how_you_found_us: how)
-    Fabricate(:subscription, member: member, group: group)
+    Fabricate(:subscription, member:, group:)
     member
   end
 
   def add_member_without_how(group)
     member = Fabricate(:member, how_you_found_us: nil)
-    Fabricate(:subscription, member: member, group: group)
+    Fabricate(:subscription, member:, group:)
     member
   end
 
   let(:chapter) { Fabricate(:chapter_without_organisers) }
-  let(:group) { Fabricate(:group, chapter: chapter) }
+  let(:group) { Fabricate(:group, chapter:) }
   let(:presenter) { described_class.new(chapter) }
 
   describe '#by_percentage' do

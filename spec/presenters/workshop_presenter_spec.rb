@@ -1,11 +1,11 @@
 RSpec.describe WorkshopPresenter do
   let(:chapter) { Fabricate(:chapter) }
   let(:host) { Fabricate(:sponsor, seats: 5, number_of_coaches: 15) }
-  let(:workshop) { instance_double(Workshop, host: host, chapter: chapter) }
+  let(:workshop) { instance_double(Workshop, host:, chapter:) }
   let(:presenter) { described_class.new(workshop) }
 
   def double_workshop(attending_coaches:, attending_students:)
-    instance_double(Workshop, host: host, chapter: chapter,
+    instance_double(Workshop, host:, chapter:,
                               attending_coaches: instance_double(Array, count: attending_coaches),
                               attending_students: instance_double(Array, count: attending_students))
   end
@@ -135,9 +135,9 @@ RSpec.describe WorkshopPresenter do
     members = Fabricate.times(2, :member)
     members.each_with_index do |member, index|
       if index.even?
-  Fabricate(:attending_workshop_invitation, member: member, workshop: workshop)
+  Fabricate(:attending_workshop_invitation, member:, workshop:)
       else
-  Fabricate(:attending_workshop_invitation, member: member, workshop: workshop, role: 'Coach')
+  Fabricate(:attending_workshop_invitation, member:, workshop:, role: 'Coach')
       end
     end
 

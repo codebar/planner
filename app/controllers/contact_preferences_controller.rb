@@ -1,6 +1,6 @@
 class ContactPreferencesController < ApplicationController
   def show
-    @contact = Contact.find_by(token: token)
+    @contact = Contact.find_by(token:)
 
     return if @contact
 
@@ -9,7 +9,7 @@ class ContactPreferencesController < ApplicationController
 
   def update
     contact = Contact.find_by!(token: contact_preferences[:token])
-    contact.update(mailing_list_consent: mailing_list_consent)
+    contact.update(mailing_list_consent:)
     ContactMailingListService.sync(contact)
     audit_contact_subscription(contact)
 

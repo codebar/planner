@@ -25,5 +25,25 @@ RSpec.feature 'Admin filtering sponsors list', type: :feature do
         expect(page).to have_text(sponsors.first.name)
       end
     end
+
+    describe 'when filtering by chapter' do
+      let!(:chapter) { Fabricate(:chapter, name: 'London') }
+      let!(:workshop) { Fabricate(:workshop_no_sponsor, chapter:) }
+      let!(:matching_sponsor) { Fabricate(:sponsor) }
+
+      before do
+        Fabricate(:workshop_sponsor, workshop:, sponsor: matching_sponsor)
+        Fabricate(:sponsor)
+        visit admin_sponsors_path
+      end
+
+      scenario 'only sponsors for that chapter are displayed' do
+        fill_in 'sponsors_search[chapter]', with: 'London'
+        click_on 'Filter'
+
+        expect(page).to have_css('.sponsor', count: 1)
+        expect(page).to have_text(matching_sponsor.name)
+      end
+    end
   end
 end

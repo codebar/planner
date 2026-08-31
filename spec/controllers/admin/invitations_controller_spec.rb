@@ -46,7 +46,7 @@ RSpec.describe Admin::InvitationsController, type: :controller do
 
   describe 'PUT #update with attended param' do
     let(:workshop) { Fabricate(:workshop, date_and_time: Time.zone.now - 1.day) }
-    let(:invitation) { Fabricate(:workshop_invitation, workshop: workshop, attending: true) }
+    let(:invitation) { Fabricate(:workshop_invitation, workshop:, attending: true) }
     let(:admin) { Fabricate(:chapter_organiser) }
 
     before do

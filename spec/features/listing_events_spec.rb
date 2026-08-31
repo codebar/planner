@@ -4,7 +4,7 @@ RSpec.feature 'event listing', type: :feature do
     let!(:event) { Fabricate(:event) }
 
     before do
-      Fabricate(:workshop, chapter: chapter)
+      Fabricate(:workshop, chapter:)
     end
 
     scenario 'displays upcoming events page' do
@@ -21,7 +21,7 @@ RSpec.feature 'event listing', type: :feature do
     let!(:past_event) { Fabricate(:event, date_and_time: 2.weeks.ago) }
 
     before do
-      Fabricate(:workshop, date_and_time: 1.week.ago, chapter: chapter)
+      Fabricate(:workshop, date_and_time: 1.week.ago, chapter:)
     end
 
     scenario 'displays past events page' do
@@ -46,7 +46,7 @@ RSpec.feature 'event listing', type: :feature do
       travel_to(Time.current) do
         chapter = Fabricate(:chapter, active: true)
         Fabricate.times(22, :event, date_and_time: 2.weeks.ago)
-        Fabricate(:workshop, date_and_time: 3.weeks.ago, chapter: chapter)
+        Fabricate(:workshop, date_and_time: 3.weeks.ago, chapter:)
 
         visit past_events_path
         expect(page).to have_css('.card', count: 20)

@@ -79,7 +79,7 @@ RSpec.feature 'Managing meetings', type: :feature do
     let(:meeting) { Fabricate(:meeting) }
 
     scenario 'when format: :text' do
-      invitations = Fabricate.times(2, :attending_meeting_invitation, meeting: meeting)
+      invitations = Fabricate.times(2, :attending_meeting_invitation, meeting:)
       visit attendees_emails_admin_meeting_path(meeting, format: :text)
 
       invitations.each do |invitation|
@@ -109,7 +109,7 @@ RSpec.feature 'Managing meetings', type: :feature do
       chapter = Fabricate(:chapter_with_groups)
       meeting = Fabricate(:meeting, chapters: [chapter])
       chapter.members[0..1].each do |member|
-        Fabricate(:ban, member: member)
+        Fabricate(:ban, member:)
       end
       expired_ban = Fabricate.build(:ban, member: chapter.members[2], expires_at: Time.zone.today - 1.month)
       expired_ban.save(validate: false)

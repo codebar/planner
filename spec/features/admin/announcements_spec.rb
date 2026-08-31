@@ -39,6 +39,18 @@ RSpec.feature 'Announcements', type: :feature do
         expect(page).to have_text('New event coming up soon! Stay tuned.')
         expect(page).to have_current_path(admin_announcements_path, ignore_query: true)
       end
+
+      scenario 'by updating the expires at date' do
+        announcement = Fabricate(:announcement)
+        new_date = 2.weeks.from_now.to_date
+        visit edit_admin_announcement_path(announcement)
+        fill_in 'Expires at', with: new_date
+        click_on 'announcement[update]'
+
+        expect(page).to have_text('Announcement successfully updated')
+        announcement.reload
+        expect(announcement.expires_at.to_date).to eq(new_date)
+      end
     end
 
     scenario 'can view all announcements' do

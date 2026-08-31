@@ -7,7 +7,7 @@ RSpec.describe WorkshopsController do
   describe 'POST #rsvp' do
     context 'when the member already has an invitation for the workshop and role with attending nil' do
       let!(:invitation) do
-        Fabricate(:workshop_invitation, workshop: workshop, member: member, role: 'Coach', attending: nil)
+        Fabricate(:workshop_invitation, workshop:, member:, role: 'Coach', attending: nil)
       end
 
       it 'redirects to the existing invitation page' do
@@ -36,7 +36,7 @@ RSpec.describe WorkshopsController do
 
     context 'when the member is already attending' do
       before do
-        Fabricate(:attending_workshop_invitation, workshop: workshop, member: member, role: 'Coach')
+        Fabricate(:attending_workshop_invitation, workshop:, member:, role: 'Coach')
       end
 
       it 'redirects back with already wish to attend message' do

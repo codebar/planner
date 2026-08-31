@@ -2,8 +2,8 @@ RSpec.feature 'managing workshop attendances', type: :feature do
   context 'when an admin' do
     let(:member) { Fabricate(:member) }
     let(:chapter) { Fabricate(:chapter) }
-    let(:workshop) { Fabricate(:workshop, chapter: chapter) }
-    let!(:invitation) { Fabricate(:workshop_invitation, workshop: workshop, attending: true) }
+    let(:workshop) { Fabricate(:workshop, chapter:) }
+    let!(:invitation) { Fabricate(:workshop_invitation, workshop:, attending: true) }
 
     before do
       login_as_admin(member)
@@ -11,7 +11,7 @@ RSpec.feature 'managing workshop attendances', type: :feature do
     end
 
     describe '#verify_attendance' do
-      let(:workshop) { Fabricate(:workshop, chapter: chapter, date_and_time: Time.zone.now - 1.day) }
+      let(:workshop) { Fabricate(:workshop, chapter:, date_and_time: Time.zone.now - 1.day) }
 
       scenario 'can verify that a member has attended the workshop' do
         visit admin_workshop_path(workshop)
@@ -21,7 +21,7 @@ RSpec.feature 'managing workshop attendances', type: :feature do
       end
 
       scenario 'verifies and unverifies attendance with targeted row replacement', :js do
-        second_invitation = Fabricate(:workshop_invitation, workshop: workshop, attending: true)
+        second_invitation = Fabricate(:workshop_invitation, workshop:, attending: true)
 
         visit admin_workshop_path(workshop)
 
@@ -51,7 +51,7 @@ RSpec.feature 'managing workshop attendances', type: :feature do
     end
 
     scenario 'can move a member from the waiting list to the attendee list' do
-      other_invitation = Fabricate(:workshop_invitation, workshop: workshop, attending: nil)
+      other_invitation = Fabricate(:workshop_invitation, workshop:, attending: nil)
       WaitingList.add(other_invitation)
 
       visit admin_workshop_path(workshop)
@@ -65,7 +65,7 @@ RSpec.feature 'managing workshop attendances', type: :feature do
     scenario 'can rsvp an invited student to the workshop', :js do
       login_as_admin(member)
 
-      other_invitation = Fabricate(:workshop_invitation, workshop: workshop, attending: nil)
+      other_invitation = Fabricate(:workshop_invitation, workshop:, attending: nil)
       student = other_invitation.member
 
       visit admin_workshop_path(workshop)
@@ -87,7 +87,7 @@ RSpec.feature 'managing workshop attendances', type: :feature do
     end
 
     scenario 'can view the tutorial and note set by an attendee' do
-      invitation = Fabricate(:attending_workshop_invitation, workshop: workshop)
+      invitation = Fabricate(:attending_workshop_invitation, workshop:)
       login_as_admin(member)
 
       visit admin_workshop_path(workshop)
@@ -98,17 +98,17 @@ RSpec.feature 'managing workshop attendances', type: :feature do
     describe '#changes' do
       before do
         # Workshop invitations without `attending` status
-        Fabricate(:workshop_invitation, workshop: workshop, role: 'Coach')
-        Fabricate(:workshop_invitation, workshop: workshop, role: 'Student')
+        Fabricate(:workshop_invitation, workshop:, role: 'Coach')
+        Fabricate(:workshop_invitation, workshop:, role: 'Student')
 
         # Not attending
-        Fabricate(:workshop_invitation, workshop: workshop, role: 'Coach', attending: false)
-        Fabricate(:workshop_invitation, workshop: workshop, role: 'Student', attending: false)
+        Fabricate(:workshop_invitation, workshop:, role: 'Coach', attending: false)
+        Fabricate(:workshop_invitation, workshop:, role: 'Student', attending: false)
 
         # Attending, with a student having been manually added/confirmed by an organiser
-        Fabricate(:attending_workshop_invitation, workshop: workshop, role: 'Coach')
-        Fabricate(:attending_workshop_invitation, workshop: workshop, role: 'Student')
-        overridden = Fabricate(:attending_workshop_invitation, workshop: workshop, role: 'Student')
+        Fabricate(:attending_workshop_invitation, workshop:, role: 'Coach')
+        Fabricate(:attending_workshop_invitation, workshop:, role: 'Student')
+        overridden = Fabricate(:attending_workshop_invitation, workshop:, role: 'Student')
         overridden.update(last_overridden_by_id: member.id)
       end
 

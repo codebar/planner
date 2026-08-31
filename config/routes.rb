@@ -133,7 +133,7 @@ Rails.application.routes.draw do
     end
 
     resources :meeting_invitations, only: %i[create update]
-    resources :groups, only: %i[index new create show]
+    resources :groups, only: %i[show]
     resources :sponsors, except: [:destroy]
     resources :feedback, only: [:index]
     resources :contacts
@@ -173,7 +173,6 @@ Rails.application.routes.draw do
 
   resources :sponsors, only: [:index]
   resources :donations, only: %i[new]
-  resources :payments, only: %i[new create]
 
   get 'cookie-policy' => 'pages#show', id: 'cookie-policy'
   get 'privacy-policy' => 'pages#show', id: 'privacy-policy'

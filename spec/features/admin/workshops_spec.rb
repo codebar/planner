@@ -10,7 +10,7 @@ RSpec.feature 'An admin managing workshops', type: :feature do
 
   describe '#views' do
     scenario 'list of all chapter workshops' do
-      workshops = Fabricate.times(2, :workshop, chapter: chapter)
+      workshops = Fabricate.times(2, :workshop, chapter:)
       visit admin_chapter_workshops_path(chapter)
 
       workshops.each do |workshop|
@@ -48,7 +48,7 @@ RSpec.feature 'An admin managing workshops', type: :feature do
       scenario 'requires a host and a start and end datetime to be set' do
         visit new_admin_workshop_path
 
-        select chapter.name
+        fill_in 'workshop[chapter_id]', with: chapter.id
         fill_in 'Date', with: Date.current
         fill_in 'Begins at', with: '11:30'
         fill_in 'Ends at', with: '12:45'
@@ -82,7 +82,7 @@ RSpec.feature 'An admin managing workshops', type: :feature do
       scenario 'must have a host set' do
         visit new_admin_workshop_path
 
-        select chapter.name
+        fill_in 'workshop[chapter_id]', with: chapter.id
         fill_in 'Date', with: Date.current
         fill_in 'Begins at', with: '11:30'
 
@@ -108,7 +108,7 @@ RSpec.feature 'An admin managing workshops', type: :feature do
         chapter = Fabricate(:chapter, time_zone: 'Berlin')
         visit new_admin_workshop_path
 
-        select chapter.name
+        fill_in 'workshop[chapter_id]', with: chapter.id
         fill_in 'Date', with: Date.current
         fill_in 'Begins at', with: '18:30'
         fill_in 'Ends at', with: '20:45'
@@ -130,7 +130,7 @@ RSpec.feature 'An admin managing workshops', type: :feature do
 
         check 'Virtual'
 
-        select chapter.name
+        fill_in 'workshop[chapter_id]', with: chapter.id
         fill_in 'Date', with: Date.current
         fill_in 'Begins at', with: '11:30'
 
@@ -151,7 +151,7 @@ RSpec.feature 'An admin managing workshops', type: :feature do
         fill_in 'Student spaces', with: '10'
         fill_in 'Coach spaces', with: '5'
 
-        select chapter.name
+        fill_in 'workshop[chapter_id]', with: chapter.id
         fill_in 'Date', with: Date.current
         fill_in 'Begins at', with: '11:30'
         fill_in 'Ends at', with: '14:30'
@@ -162,12 +162,65 @@ RSpec.feature 'An admin managing workshops', type: :feature do
         expect(page).to have_text 'Invite'
       end
     end
+
+    context 'when creating a workshop from a chapter page' do
+      around do |example|
+        travel_to Time.zone.local(2020, 12, 0o1, 0, 0, 0)
+        example.run
+        travel_back
+      end
+
+      scenario 'pre-selects the chapter and allows organisers to be assigned' do
+        kept_organiser = Fabricate(:member)
+        removed_organiser = Fabricate(:member)
+        kept_organiser.add_role(:organiser, chapter)
+        removed_organiser.add_role(:organiser, chapter)
+
+        visit admin_chapter_path(chapter)
+
+        within('.col-12.col-lg-8') do
+          click_on 'New workshop'
+        end
+
+        expect(page).to have_css('h1', text: "New Workshop for #{chapter.name}")
+        expect(page).to have_title("New Workshop for #{chapter.name}")
+        expect(page).to have_no_select('workshop_chapter_id')
+        expect(page).to have_select('workshop_organisers', with_options: [kept_organiser.full_name, removed_organiser.full_name])
+
+        unselect removed_organiser.full_name, from: 'workshop_organisers'
+
+        fill_in 'Date', with: Date.current
+        fill_in 'Begins at', with: '11:30'
+        fill_in 'Ends at', with: '12:45'
+
+        within '#host' do
+          select sponsor.name
+        end
+
+        click_on 'Save'
+
+        expect(page).to have_text('Workshop successfully created')
+        workshop = Workshop.last
+        expect(workshop.chapter).to eq(chapter)
+        expect(workshop.organisers.map(&:id)).to include(kept_organiser.id)
+        expect(workshop.organisers.map(&:id)).not_to include(removed_organiser.id)
+      end
+
+      scenario 'falls back to the standard form when chapter_id is invalid' do
+        visit new_admin_workshop_path(chapter_id: 0)
+
+        expect(page).to have_css('h1', text: 'New Workshop')
+        expect(page).to have_title('New Workshop')
+        expect(page).to have_field('workshop[chapter_id]')
+        expect(page).to have_no_select('workshop_organisers')
+      end
+    end
   end
 
   context 'with dietary restrictions' do
     scenario 'displays dietary restriction badges for attendees' do
       workshop = Fabricate(:workshop)
-      attendee = Fabricate(:attending_workshop_invitation, workshop: workshop)
+      attendee = Fabricate(:attending_workshop_invitation, workshop:)
       attendee.member.update(dietary_restrictions: %w[vegan gluten_free])
 
       visit admin_workshop_path(workshop)
@@ -206,7 +259,7 @@ RSpec.feature 'An admin managing workshops', type: :feature do
 
     scenario 'viewing a text file with all attendee emails' do
       workshop = Fabricate(:workshop)
-      attendees = Fabricate.times(2, :attending_workshop_invitation, workshop: workshop)
+      attendees = Fabricate.times(2, :attending_workshop_invitation, workshop:)
       attendees_emails = attendees.map(&:member).map(&:email)
       visit admin_workshop_attendees_emails_path(workshop, format: :text)
 
@@ -218,7 +271,7 @@ RSpec.feature 'An admin managing workshops', type: :feature do
     context 'when viewing the attendee names list' do
       scenario 'viewing a text file with all names' do
         workshop = Fabricate(:workshop)
-        attendees = Fabricate.times(2, :attending_workshop_invitation, workshop: workshop)
+        attendees = Fabricate.times(2, :attending_workshop_invitation, workshop:)
         visit admin_workshop_attendees_checklist_path(workshop, format: :text)
         attendees.map(&:member).map(&:full_name).each do |name|
           expect(page).to have_text(name)

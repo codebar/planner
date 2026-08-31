@@ -17,12 +17,15 @@
       = simple_form_for @feedback, url: submit_feedback_path(params[:id]), html: { method: 'patch' } do |f|
         .row
           = f.hidden_field :token, value: params[:id]
-          = f.hidden_field :rating
           .mb-3
             %label.required
-              %abbr(title='required') *
+              %abbr{ title: 'required' } *
               = t('feedback_form.rating')
-            .rating{:data => {:rating_max => 5 }}
+            .rating{ data: { rating_max: 5 } }
+              - (1..5).each do |value|
+                .form-check.form-check-inline
+                  = f.radio_button :rating, value, id: "feedback_rating_#{value}", class: 'form-check-input visually-hidden'
+                  %label.form-check-label{ for: "feedback_rating_#{value}" }
           .col-lg-6
             = f.association :coach, collection: @coaches, label_method: :full_name, value_method: :id, label: t('feedback.coach')
           .col-lg-6
@@ -31,10 +34,3 @@
           = f.input :suggestions, label: t('feedback_form.suggestions'), input_html: { rows: 3 }
           .text-right
             = f.button :button, 'Submit feedback', class: 'btn btn-primary'
-
-:javascript
-  $('.rating').starRating({ minus: false });
-
-  $('button[type="submit"]').on('click', function () {
-    $('#feedback_rating').val($('.rating').data('val'))
-  });
