@@ -16,8 +16,8 @@ end
 
 Fabricator(:chapter_with_groups, from: :chapter) do
   after_create do |chapter|
-    Fabricate(:students, chapter: chapter)
-    Fabricate(:coaches, chapter: chapter)
+    Fabricate(:students, chapter:)
+    Fabricate(:coaches, chapter:)
   end
 end
 

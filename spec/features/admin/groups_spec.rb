@@ -2,7 +2,7 @@ RSpec.feature 'admin groups', type: :feature do
   describe '#show page' do
     let(:member) { Fabricate(:member) }
     let(:chapter) { Fabricate(:chapter, name: 'Brighton') }
-    let(:group) { Fabricate(:group, chapter: chapter, name: 'Students') }
+    let(:group) { Fabricate(:group, chapter:, name: 'Students') }
 
     before do
       login_as_admin(member)

@@ -1,7 +1,7 @@
 RSpec.feature 'Accepting a workshop invitation', type: :feature do
   describe '#workshop' do
     let(:member) { Fabricate(:member) }
-    let(:invitation) { Fabricate(:workshop_invitation, member: member, tutorial: tutorial.title) }
+    let(:invitation) { Fabricate(:workshop_invitation, member:, tutorial: tutorial.title) }
     let(:invitation_route) { invitation_path(invitation) }
     let(:accept_invitation_route) { accept_invitation_path(invitation) }
     let(:reject_invitation_route) { reject_invitation_path(invitation) }
@@ -15,7 +15,7 @@ RSpec.feature 'Accepting a workshop invitation', type: :feature do
 
       spots_to_fill.times do
         member = Fabricate(:member)
-        Fabricate(:workshop_invitation, workshop: workshop, member: member, role: 'Student', attending: true)
+        Fabricate(:workshop_invitation, workshop:, member:, role: 'Student', attending: true)
       end
     end
     let!(:tutorial) { Fabricate(:tutorial) }
@@ -69,7 +69,7 @@ RSpec.feature 'Accepting a workshop invitation', type: :feature do
       end
 
       context 'when a coach' do
-        let(:invitation) { Fabricate(:coach_workshop_invitation, member: member) }
+        let(:invitation) { Fabricate(:coach_workshop_invitation, member:) }
         let(:note) { 'I am most comfortable with being paired in JavaScript' }
 
         scenario 'can accept their invitation without a note' do

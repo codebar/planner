@@ -14,8 +14,8 @@ RSpec.describe 'rake mailing_list:subscribe_active_members', type: :task do
     ENV['NEWSLETTER_ID'] = 'newsletterid'
     non_subscribed = Fabricate.times(2, :member)
     subscribed = Fabricate.times(2, :member)
-    subscribed.each { |member| Fabricate(:subscription, member: member) }
-    subscribed[0...3].each { |member| Fabricate(:subscription, member: member) }
+    subscribed.each { |member| Fabricate(:subscription, member:) }
+    subscribed[0...3].each { |member| Fabricate(:subscription, member:) }
 
     newslettter = Services::MailingList.new(:id)
     allow(Services::MailingList).to receive(:new).and_return(newslettter)

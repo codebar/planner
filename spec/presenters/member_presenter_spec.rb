@@ -34,7 +34,7 @@ RSpec.describe MemberPresenter do
     let(:event) { Fabricate(:event) }
 
     it 'returns true when member is attending event' do
-      Fabricate(:invitation, member: member, event: event, attending: true)
+      Fabricate(:invitation, member:, event:, attending: true)
       expect(member_presenter.attending?(event)).to be true
     end
 
@@ -45,7 +45,7 @@ RSpec.describe MemberPresenter do
 
   describe '#event_organiser?' do
     let(:chapter) { Fabricate(:chapter) }
-    let(:workshop) { Fabricate(:workshop_no_sponsor, chapter: chapter) }
+    let(:workshop) { Fabricate(:workshop_no_sponsor, chapter:) }
 
     it 'returns true when user is admin' do
       admin = Fabricate(:member)

@@ -10,7 +10,7 @@ RSpec.feature 'Admin::Sponsors', type: :feature do
     let(:sponsor2) { Fabricate(:sponsor) }
 
     scenario 'can filter by chapter' do
-      sponsored_workshop = Fabricate(:workshop_sponsor, sponsor: sponsor).workshop
+      sponsored_workshop = Fabricate(:workshop_sponsor, sponsor:).workshop
       hosted_workshop = Fabricate(:workshop_sponsor, sponsor: sponsor2, host: true).workshop
 
       visit admin_sponsors_path
@@ -31,11 +31,11 @@ RSpec.feature 'Admin::Sponsors', type: :feature do
 
     scenario 'can filter by sponsor' do
       # Single workshop
-      Fabricate(:workshop_sponsor, sponsor: sponsor)
+      Fabricate(:workshop_sponsor, sponsor:)
       # Multiple works with the same sponsor and chapter
       chapter = Fabricate(:chapter)
       2.times do
-        Fabricate(:workshop_sponsor, sponsor: sponsor2, workshop: Fabricate(:workshop_no_sponsor, chapter: chapter))
+        Fabricate(:workshop_sponsor, sponsor: sponsor2, workshop: Fabricate(:workshop_no_sponsor, chapter:))
       end
 
       visit admin_sponsors_path
@@ -62,7 +62,7 @@ RSpec.feature 'Admin::Sponsors', type: :feature do
     end
 
     scenario 'can clear filtering form' do
-      sponsored_workshop = Fabricate(:workshop_sponsor, sponsor: sponsor).workshop
+      sponsored_workshop = Fabricate(:workshop_sponsor, sponsor:).workshop
       hosted_workshop = Fabricate(:workshop_sponsor, sponsor: sponsor2, host: true).workshop
 
       visit admin_sponsors_path
@@ -118,8 +118,8 @@ RSpec.feature 'Admin::Sponsors', type: :feature do
       end
 
       scenario 'when there are workshop sponsorships' do
-        sponsored_workshop = Fabricate(:workshop_sponsor, sponsor: sponsor).workshop
-        hosted_workshop = Fabricate(:workshop_sponsor, sponsor: sponsor, host: true).workshop
+        sponsored_workshop = Fabricate(:workshop_sponsor, sponsor:).workshop
+        hosted_workshop = Fabricate(:workshop_sponsor, sponsor:, host: true).workshop
         visit admin_sponsor_path(sponsor)
 
         within '#sponsorships' do
@@ -130,9 +130,9 @@ RSpec.feature 'Admin::Sponsors', type: :feature do
       end
 
       scenario 'when there are event sponsorships' do
-        gold_event = Fabricate(:sponsorship, sponsor: sponsor, level: 'gold').event
-        silver_event = Fabricate(:sponsorship, sponsor: sponsor, level: 'silver').event
-        standard_event = Fabricate(:sponsorship, sponsor: sponsor, level: nil).event
+        gold_event = Fabricate(:sponsorship, sponsor:, level: 'gold').event
+        silver_event = Fabricate(:sponsorship, sponsor:, level: 'silver').event
+        standard_event = Fabricate(:sponsorship, sponsor:, level: nil).event
 
         visit admin_sponsor_path(sponsor)
 
@@ -214,7 +214,7 @@ RSpec.feature 'Admin::Sponsors', type: :feature do
     end
 
     it 'can unsubscribe a contact to the sponsor newsletter', :wip do
-      contact = Fabricate(:contact, sponsor: sponsor, mailing_list_consent: true)
+      contact = Fabricate(:contact, sponsor:, mailing_list_consent: true)
       visit edit_admin_sponsor_path(sponsor)
 
       uncheck 'sponsor_contacts_attributes_0_mailing_list_consent'

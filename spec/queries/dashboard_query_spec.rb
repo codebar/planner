@@ -35,9 +35,9 @@ RSpec.describe DashboardQuery do
   describe '.upcoming_events_for_user' do
     it 'returns events for the member chapters and accepted workshops' do
       chapter = Fabricate(:chapter)
-      member = Fabricate(:member, groups: [Fabricate(:students, chapter: chapter)])
-      workshop = Fabricate(:workshop, chapter: chapter)
-      Fabricate(:attending_workshop_invitation, member: member, workshop: workshop)
+      member = Fabricate(:member, groups: [Fabricate(:students, chapter:)])
+      workshop = Fabricate(:workshop, chapter:)
+      Fabricate(:attending_workshop_invitation, member:, workshop:)
 
       result = described_class.upcoming_events_for_user(member)
 

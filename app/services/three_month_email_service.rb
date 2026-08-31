@@ -27,7 +27,7 @@ class ThreeMonthEmailService
                     .distinct
 
     members.find_each do |member|
-      MemberMailer.with(member: member).chaser.deliver_later
+      MemberMailer.with(member:).chaser.deliver_later
     end
   end
 end

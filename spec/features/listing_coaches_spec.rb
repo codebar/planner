@@ -2,7 +2,7 @@ RSpec.feature 'when visiting the coaches page', type: :feature do
   scenario 'I can see the most active coaches' do
     # Use a past workshop date in the current year to ensure the coach is counted
     workshop = Fabricate(:workshop, date_and_time: Time.zone.today.beginning_of_year + 1.month)
-    coach = Fabricate(:attended_coach, workshop: workshop).member
+    coach = Fabricate(:attended_coach, workshop:).member
     visit coaches_path
     expect(page).to have_text(coach.name, wait: 5)
   end

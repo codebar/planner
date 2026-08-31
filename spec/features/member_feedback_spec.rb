@@ -8,7 +8,7 @@ RSpec.feature 'member feedback', type: :feature do
   let!(:tutorial) { Fabricate(:tutorial, title: 'tutorial title') }
 
   before do
-    Fabricate(:feedback, coach: coach)
+    Fabricate(:feedback, coach:)
 
     Fabricate(:attended_workshop_invitation, workshop: feedback_request.workshop, member: coach, role: 'Coach')
   end
@@ -118,7 +118,7 @@ RSpec.feature 'member feedback', type: :feature do
 
       expect(page).to have_text(feedback_submited_message)
 
-      feedback = Feedback.find_by(workshop: feedback_request.workshop, coach: coach, tutorial: tutorial)
+      feedback = Feedback.find_by(workshop: feedback_request.workshop, coach:, tutorial:)
       expect(feedback).to be_present
       expect(feedback.rating).to eq(4)
     end

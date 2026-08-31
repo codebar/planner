@@ -208,6 +208,7 @@ Style/GuardClause:
 
 Style/HashSyntax:
   Enabled: true
+  EnforcedShorthandSyntax: always
 
 Style/IfUnlessModifier:
   Enabled: false

@@ -31,7 +31,7 @@ class Meeting < ApplicationRecord
   end
 
   def attending?(member)
-    invitations.accepted.where(member: member).present?
+    invitations.accepted.where(member:).present?
   end
 
   def not_full

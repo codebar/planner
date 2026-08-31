@@ -20,6 +20,6 @@ end
 
 Fabricator(:event_with_sponsorship, from: :event) do
   after_build do |event|
-    Fabricate(:sponsorship, event: event, sponsor: Fabricate(:sponsor))
+    Fabricate(:sponsorship, event:, sponsor: Fabricate(:sponsor))
   end
 end

@@ -61,7 +61,7 @@ class Chapter < ApplicationRecord
   private
 
   def members_for_group(name)
-    members.where(groups: { name: name }).distinct
+    members.where(groups: { name: }).distinct
   end
 
   def expire_chapters_sidebar_cache

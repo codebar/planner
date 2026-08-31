@@ -5,7 +5,7 @@ class Admin::MeetingInvitationsController < Admin::ApplicationController
     status = params.permit(:attendance_status)[:attendance_status]
     attended = params.permit(:attended)[:attended]
 
-    @invitation.update(attending: status, attended: attended)
+    @invitation.update(attending: status, attended:)
 
     redirect_to [:admin, @invitation.meeting],
                 notice: t('admin.messages.invitation.update_rsvp', name: @invitation.member.full_name)
@@ -15,12 +15,12 @@ class Admin::MeetingInvitationsController < Admin::ApplicationController
     member = Member.find(params[:meeting_invitations][:member])
     meeting = Meeting.find_by(slug: params[:meeting_invitations][:meeting_id])
 
-    if MeetingInvitation.accepted.where(meeting: meeting, member: member).exists?
+    if MeetingInvitation.accepted.where(meeting:, member:).exists?
       return redirect_to [:admin, meeting],
                          notice: t('admin.messages.invitation.already_on_list', name: member.full_name)
     end
 
-    invitation = meeting.invitations.find_or_create_by(member: member)
+    invitation = meeting.invitations.find_or_create_by(member:)
     invitation.assign_attributes(attending: true, role: 'Participant')
 
     if invitation.save

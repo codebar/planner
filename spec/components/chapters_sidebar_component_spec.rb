@@ -6,7 +6,7 @@ RSpec.describe ChaptersSidebarComponent do
   let(:chapters) { Fabricate.times(3, :chapter) }
 
   it 'renders chapter names as links' do
-    render_inline described_class.new(chapters: chapters)
+    render_inline described_class.new(chapters:)
 
     chapters.each do |chapter|
       expect(page).to have_link(chapter.name, href: chapter_path(chapter.slug))

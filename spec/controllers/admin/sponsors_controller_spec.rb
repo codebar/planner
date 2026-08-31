@@ -12,7 +12,7 @@ RSpec.describe Admin::SponsorsController, type: :controller do
         post :create, params: {
           sponsor: {
             name: 'name', website: 'https://example.com', seats: 40,
-            address: address, avatar: avatar, members: [1, 2]
+            address:, avatar:, members: [1, 2]
           }
         }
       end.not_to change(Sponsor, :count)
@@ -25,7 +25,7 @@ RSpec.describe Admin::SponsorsController, type: :controller do
         post :create, params: {
           sponsor: {
             name: 'name', website: 'https://example.com', seats: 40,
-            address: address, avatar: avatar
+            address:, avatar:
           }
         }
       end.not_to change(Sponsor, :count)
@@ -40,7 +40,7 @@ RSpec.describe Admin::SponsorsController, type: :controller do
           post :create, params: {
             sponsor: {
               name: 'name', website: 'https://example.com', seats: 40, number_of_coaches: 10,
-              address: address, avatar: avatar
+              address:, avatar:
             }
           }
         end.to change(Sponsor, :count).by(1)
@@ -54,7 +54,7 @@ RSpec.describe Admin::SponsorsController, type: :controller do
           post :create, params: {
             sponsor: {
               name: 'name', website: 'https://example.com', seats: 40, number_of_coaches: 10,
-              address: address, avatar: avatar, contact_ids: [member.id, member1.id]
+              address:, avatar:, contact_ids: [member.id, member1.id]
             }
           }
         end.to change(Sponsor, :count).by(1)
@@ -69,7 +69,7 @@ RSpec.describe Admin::SponsorsController, type: :controller do
             sponsor: {
               name: 'name', website: 'https://example.com', seats: 40, number_of_coaches: 10,
               address: Fabricate(:address, latitude: '54.47474', longitude: '-0.12345'),
-              avatar: avatar, members: []
+              avatar:, members: []
             }
           }
         end.to change(Sponsor, :count).by(1)

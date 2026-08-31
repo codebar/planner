@@ -263,16 +263,16 @@ RSpec.describe Workshop do
 
     context 'with attendances' do
       it '#attendee? for students' do
-        attendee_invites = Array.new(1) { Fabricate(:workshop_invitation, workshop: workshop, attending: true) }
-        nonattendee_invites = Array.new(2) { Fabricate(:workshop_invitation, workshop: workshop, attending: false) }
+        attendee_invites = Array.new(1) { Fabricate(:workshop_invitation, workshop:, attending: true) }
+        nonattendee_invites = Array.new(2) { Fabricate(:workshop_invitation, workshop:, attending: false) }
 
         attendee_invites.each { |a| expect(workshop.attendee?(a.member)).to be true }
         nonattendee_invites.each { |a| expect(workshop.attendee?(a.member)).to be false }
       end
 
       it '#attendee? for coaches' do
-        attendee_invites = Array.new(1) { Fabricate(:coach_workshop_invitation, workshop: workshop, attending: true) }
-        nonattendee_invites = Array.new(2) { Fabricate(:coach_workshop_invitation, workshop: workshop, attending: false) }
+        attendee_invites = Array.new(1) { Fabricate(:coach_workshop_invitation, workshop:, attending: true) }
+        nonattendee_invites = Array.new(2) { Fabricate(:coach_workshop_invitation, workshop:, attending: false) }
 
         attendee_invites.each { |a| expect(workshop.attendee?(a.member)).to be true }
         nonattendee_invites.each { |a| expect(workshop.attendee?(a.member)).to be false }
@@ -281,18 +281,18 @@ RSpec.describe Workshop do
 
     context 'when waitlist attendance' do
       it '#waitlisted? for students' do
-        invitations = Array.new(2) { Fabricate(:workshop_invitation, workshop: workshop) }
+        invitations = Array.new(2) { Fabricate(:workshop_invitation, workshop:) }
         invitations.each { |invitation| WaitingList.add(invitation) }
-        attendee_invites = Array.new(1) { Fabricate(:workshop_invitation, workshop: workshop, attending: true) }
+        attendee_invites = Array.new(1) { Fabricate(:workshop_invitation, workshop:, attending: true) }
 
         invitations.each { |a| expect(workshop.waitlisted?(a.member)).to be true }
         attendee_invites.each { |a| expect(workshop.waitlisted?(a.member)).to be false }
       end
 
       it '#waitlisted? for coaches' do
-        invitations = Array.new(2) { Fabricate(:coach_workshop_invitation, workshop: workshop) }
+        invitations = Array.new(2) { Fabricate(:coach_workshop_invitation, workshop:) }
         invitations.each { |invitation| WaitingList.add(invitation) }
-        attendee_invites = Array.new(1) { Fabricate(:coach_workshop_invitation, workshop: workshop, attending: true) }
+        attendee_invites = Array.new(1) { Fabricate(:coach_workshop_invitation, workshop:, attending: true) }
 
         invitations.each { |a| expect(workshop.waitlisted?(a.member)).to be true }
         attendee_invites.each { |a| expect(workshop.waitlisted?(a.member)).to be false }

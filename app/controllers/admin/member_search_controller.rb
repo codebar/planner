@@ -17,12 +17,12 @@ class Admin::MemberSearchController < Admin::ApplicationController
       redirect_to callback_url and return
     end
 
-    render 'index', locals: { members: members, callback_url: callback_url }
+    render 'index', locals: { members:, callback_url: }
   end
 
   def results
     pick_params = params.expect(member_pick: { members: [] })
     members = Member.find(pick_params[:members])
-    render 'show', locals: { members: members }
+    render 'show', locals: { members: }
   end
 end

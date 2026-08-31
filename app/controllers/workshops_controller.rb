@@ -40,7 +40,7 @@ class WorkshopsController < ApplicationController
   end
 
   def find_attending_invitation(workshop, user)
-    WorkshopInvitation.find_by(workshop: workshop, member: user, attending: true)
+    WorkshopInvitation.find_by(workshop:, member: user, attending: true)
   end
 
   def find_or_create_invitation(workshop, user, role)

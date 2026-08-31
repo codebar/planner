@@ -23,7 +23,7 @@ module WorkshopInvitationConcerns
     end
 
     def set_invitation
-      @invitation = WorkshopInvitation.includes(:workshop, :member).find_by!(token: token)
+      @invitation = WorkshopInvitation.includes(:workshop, :member).find_by!(token:)
     end
   end
 end

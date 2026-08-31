@@ -28,11 +28,11 @@ RSpec.feature 'Admin filtering sponsors list', type: :feature do
 
     describe 'when filtering by chapter' do
       let!(:chapter) { Fabricate(:chapter, name: 'London') }
-      let!(:workshop) { Fabricate(:workshop_no_sponsor, chapter: chapter) }
+      let!(:workshop) { Fabricate(:workshop_no_sponsor, chapter:) }
       let!(:matching_sponsor) { Fabricate(:sponsor) }
 
       before do
-        Fabricate(:workshop_sponsor, workshop: workshop, sponsor: matching_sponsor)
+        Fabricate(:workshop_sponsor, workshop:, sponsor: matching_sponsor)
         Fabricate(:sponsor)
         visit admin_sponsors_path
       end

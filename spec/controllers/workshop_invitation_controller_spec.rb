@@ -2,7 +2,7 @@ RSpec.describe WorkshopInvitationController, type: :controller do
   let(:member) { Fabricate(:member) }
   let(:tutorial) { Fabricate(:tutorial) }
   let(:workshop) { Fabricate(:workshop) }
-  let(:invitation) { Fabricate(:workshop_invitation, workshop: workshop, member: member, tutorial: tutorial.title) }
+  let(:invitation) { Fabricate(:workshop_invitation, workshop:, member:, tutorial: tutorial.title) }
 
   before { login(member) }
 
@@ -65,7 +65,7 @@ RSpec.describe WorkshopInvitationController, type: :controller do
         capacity = workshop.host.seats
         capacity.times do
           m = Fabricate(:member)
-          Fabricate(:workshop_invitation, workshop: workshop, member: m, role: 'Student', attending: true)
+          Fabricate(:workshop_invitation, workshop:, member: m, role: 'Student', attending: true)
         end
       end
 
@@ -81,7 +81,7 @@ RSpec.describe WorkshopInvitationController, type: :controller do
     end
 
     context 'when tutorial is missing for student' do
-      let(:invitation) { Fabricate(:workshop_invitation, workshop: workshop, member: member, tutorial: nil) }
+      let(:invitation) { Fabricate(:workshop_invitation, workshop:, member:, tutorial: nil) }
 
       it 'does not change attendance' do
         post :accept, params: { id: invitation.token }
@@ -143,7 +143,7 @@ RSpec.describe WorkshopInvitationController, type: :controller do
 
     context 'when someone is on waiting list' do
       let(:waitlisted_member) { Fabricate(:member) }
-      let(:waitlisted_invitation) { Fabricate(:workshop_invitation, workshop: workshop, member: waitlisted_member, role: 'Student') }
+      let(:waitlisted_invitation) { Fabricate(:workshop_invitation, workshop:, member: waitlisted_member, role: 'Student') }
 
       before do
         invitation.update!(attending: true)

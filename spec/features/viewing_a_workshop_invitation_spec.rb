@@ -1,5 +1,5 @@
 RSpec.feature 'Viewing a workshop invitation', :wip, type: :feature do
-  let(:invitation) { Fabricate(:workshop_invitation, workshop: workshop) }
+  let(:invitation) { Fabricate(:workshop_invitation, workshop:) }
 
   before do
     visit invitation_path(invitation)
@@ -77,7 +77,7 @@ RSpec.feature 'Viewing a workshop invitation', :wip, type: :feature do
 
     describe '#description' do
       context 'when RSVPed' do
-        let(:invitation) { Fabricate(:attending_workshop_invitation, workshop: workshop) }
+        let(:invitation) { Fabricate(:attending_workshop_invitation, workshop:) }
 
         it 'contains details about the workshop' do
           within '#info' do

@@ -282,6 +282,6 @@ class Admin::WorkshopsController < Admin::ApplicationController
   end
 
   def workshop_sponsor(host = false)
-    @workshop_sponsor ||= WorkshopSponsor.new(workshop: @workshop, sponsor: @sponsor, host: host)
+    @workshop_sponsor ||= WorkshopSponsor.new(workshop: @workshop, sponsor: @sponsor, host:)
   end
 end

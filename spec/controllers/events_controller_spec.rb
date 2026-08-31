@@ -23,7 +23,7 @@ RSpec.describe EventsController do
 
     context 'when the member already has an invitation for the event and role with attending nil' do
       let!(:invitation) do
-        Fabricate(:invitation, event: event, member: member, role: 'Student', attending: nil)
+        Fabricate(:invitation, event:, member:, role: 'Student', attending: nil)
       end
 
       it 'redirects to the existing invitation page' do
@@ -59,7 +59,7 @@ RSpec.describe EventsController do
 
     context 'when the member already has a coach invitation for the event with attending nil' do
       let!(:invitation) do
-        Fabricate(:coach_invitation, event: event, member: member, attending: nil)
+        Fabricate(:coach_invitation, event:, member:, attending: nil)
       end
 
       it 'redirects to the existing invitation page' do

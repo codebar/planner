@@ -30,11 +30,11 @@ module OmniAuth
         session['omniauth.codebar.redirect_uri'] = redirect_uri
         params = {
           client_id: 'planner',
-          redirect_uri: redirect_uri,
+          redirect_uri:,
           response_type: 'code',
-          state: state,
+          state:,
           scope: 'openid profile email',
-          code_challenge: code_challenge,
+          code_challenge:,
           code_challenge_method: 'S256'
         }
 
@@ -90,7 +90,7 @@ module OmniAuth
                                                provider: name,
                                                uid: email,
                                                info: {
-                                                 email: email,
+                                                 email:,
                                                  name: payload['name'] || email
                                                },
                                                credentials: {
@@ -141,11 +141,11 @@ module OmniAuth
         request['User-Agent'] = 'Codebar Planner/1.0'
         request.body = URI.encode_www_form({
                                              grant_type: 'authorization_code',
-                                             code: code,
+                                             code:,
                                              client_id: 'planner',
                                              redirect_uri: session.delete('omniauth.codebar.redirect_uri') ||
                                                callback_url,
-                                             code_verifier: code_verifier
+                                             code_verifier:
                                            })
 
         response = http_for(uri).request(request)
@@ -169,7 +169,7 @@ module OmniAuth
         decode = lambda { |jwks|
           JWT.decode(token, nil, true, {
                        algorithms: %w[RS256],
-                       jwks: jwks,
+                       jwks:,
                        iss: options.auth_url,
                        aud: options.audience,
                        verify_iss: true,

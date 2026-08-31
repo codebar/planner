@@ -2,11 +2,11 @@ RSpec.describe VirtualWorkshopInvitationMailer do
   let(:email) { ActionMailer::Base.deliveries.last }
   let(:workshop) { Fabricate(:workshop) }
   let(:member) { Fabricate(:member) }
-  let(:invitation) { Fabricate(:workshop_invitation, workshop: workshop, member: member) }
+  let(:invitation) { Fabricate(:workshop_invitation, workshop:, member:) }
 
   context 'when the member has an invalid email' do
     let(:bad_member) { Fabricate(:member) }
-    let(:bad_invitation) { Fabricate(:workshop_invitation, workshop: workshop, member: bad_member) }
+    let(:bad_invitation) { Fabricate(:workshop_invitation, workshop:, member: bad_member) }
 
     before { allow(bad_member).to receive(:email).and_return('invalid-email') }
 
@@ -73,8 +73,8 @@ RSpec.describe VirtualWorkshopInvitationMailer do
 
   it '#attending renders workshop description as HTML, not escaped' do
     description = '<strong>Important notice:</strong> Please bring a laptop.'
-    workshop = Fabricate(:workshop, description: description)
-    invitation = Fabricate(:workshop_invitation, workshop: workshop, member: member)
+    workshop = Fabricate(:workshop, description:)
+    invitation = Fabricate(:workshop_invitation, workshop:, member:)
 
     WorkshopInvitationMailer.attending(workshop, member, invitation).deliver_now
 

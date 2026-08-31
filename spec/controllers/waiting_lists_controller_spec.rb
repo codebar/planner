@@ -1,6 +1,6 @@
 RSpec.describe WaitingListsController do
   let(:workshop) { Fabricate(:workshop) }
-  let(:invitation) { Fabricate(:workshop_invitation, workshop: workshop) }
+  let(:invitation) { Fabricate(:workshop_invitation, workshop:) }
 
   describe 'POST #create' do
     it 'creates a waiting list entry on first submission' do
@@ -28,7 +28,7 @@ RSpec.describe WaitingListsController do
       post :create, params: { invitation_id: invitation.token }
       post :create, params: { invitation_id: invitation.token }
 
-      expect(WaitingList.where(invitation: invitation).count).to eq(1)
+      expect(WaitingList.where(invitation:).count).to eq(1)
     end
   end
 end
