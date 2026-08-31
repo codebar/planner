@@ -29,13 +29,16 @@ RSpec.configure do |config|
   config.use_transactional_fixtures = true
 
   # RSpec Rails can automatically mix in different behaviours based on the
-  # file location of the spec. This line needs to be present for ViewComponent
-  # to work with controller specs
+  # file location of the spec.
+  # Register the spec/components directory mapping BEFORE inference runs —
+  # `infer_spec_type_from_file_location!` snapshots DIRECTORY_MAPPINGS at call time.
+  RSpec::Rails::DIRECTORY_MAPPINGS[:component] = %w[spec components]
   config.infer_spec_type_from_file_location!
 
-  # Connect ViewComponent to RSpec, adding RSpec metadata type: :component.
-  # This extends Rails' own built-in (e.g. "type: :controller") metadata system.
-  RSpec::Rails::DIRECTORY_MAPPINGS[:component] = %w[spec/components]
+  # ViewComponent does not wire its RSpec helpers into RSpec itself (no
+  # lib/view_component/rspec.rb in v4), so include them for type: :component specs.
+  require 'view_component/test_helpers'
+  config.include ViewComponent::TestHelpers, type: :component
 
   # Filter lines from Rails gems in backtraces.
   config.filter_rails_from_backtrace!

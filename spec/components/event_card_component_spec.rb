@@ -1,8 +1,6 @@
 require 'rails_helper'
-require 'view_component/test_helpers'
 
 RSpec.describe EventCardComponent, type: :component do
-  include ViewComponent::TestHelpers
   let(:chapter) { Fabricate(:chapter, active: true) }
 
   context 'with a workshop' do

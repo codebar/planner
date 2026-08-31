@@ -1,9 +1,6 @@
 require 'rails_helper'
-require 'view_component/test_helpers'
 
 RSpec.describe ChapterPickerComponent do
-  include ViewComponent::TestHelpers
-
   let(:chapters) { Fabricate.times(3, :chapter) }
 
   it 'renders a text input with datalist attributes' do
