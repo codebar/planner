@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_10_091618) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_31_090000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -243,10 +243,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_10_091618) do
     t.string "token"
     t.datetime "updated_at", precision: nil
     t.integer "workshop_id"
-    t.index ["member_id"], name: "index_feedback_requests_on_member_id"
-    t.index ["workshop_id"], name: "index_feedback_requests_on_workshop_id"
     t.index ["member_id", "workshop_id"], name: "index_feedback_requests_on_member_id_and_workshop_id", unique: true
+    t.index ["member_id"], name: "index_feedback_requests_on_member_id"
     t.index ["token"], name: "index_feedback_requests_on_token", unique: true
+    t.index ["workshop_id"], name: "index_feedback_requests_on_workshop_id"
   end
 
   create_table "feedbacks", id: :serial, force: :cascade do |t|
@@ -351,9 +351,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_10_091618) do
     t.index ["event_id", "attending"], name: "index_invitations_event_attending"
     t.index ["event_id"], name: "index_invitations_on_event_id"
     t.index ["member_id", "attending"], name: "index_invitations_member_attending"
+    t.index ["member_id", "event_id", "role"], name: "index_invitations_on_member_id_and_event_id_and_role", unique: true
     t.index ["member_id"], name: "index_invitations_on_member_id"
     t.index ["verified_by_id"], name: "index_invitations_on_verified_by_id"
-    t.index ["member_id", "event_id", "role"], name: "index_invitations_on_member_id_and_event_id_and_role", unique: true
   end
 
   create_table "jobs", id: :serial, force: :cascade do |t|
@@ -394,8 +394,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_10_091618) do
     t.index ["meeting_id", "attending"], name: "index_meeting_invitations_meeting_attending"
     t.index ["meeting_id"], name: "index_meeting_invitations_on_meeting_id"
     t.index ["member_id", "attending"], name: "index_meeting_invitations_member_attending"
-    t.index ["member_id"], name: "index_meeting_invitations_on_member_id"
     t.index ["member_id", "meeting_id"], name: "index_meeting_invitations_on_member_id_and_meeting_id", unique: true
+    t.index ["member_id"], name: "index_meeting_invitations_on_member_id"
   end
 
   create_table "meetings", id: :serial, force: :cascade do |t|
@@ -421,7 +421,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_10_091618) do
     t.text "cc", default: [], array: true
     t.datetime "created_at", null: false
     t.bigint "member_id"
-    t.string "member_type"
     t.text "subject"
     t.text "to", default: [], array: true
     t.datetime "updated_at", null: false
@@ -605,9 +604,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_10_091618) do
     t.datetime "updated_at", precision: nil
     t.integer "workshop_id"
     t.index ["member_id", "attending"], name: "index_workshop_invitations_member_attending"
+    t.index ["member_id", "workshop_id", "role"], name: "idx_on_member_id_workshop_id_role_e3cea6bbfd", unique: true
     t.index ["member_id"], name: "index_workshop_invitations_on_member_id"
     t.index ["token"], name: "index_workshop_invitations_on_token", unique: true
-    t.index ["member_id", "workshop_id", "role"], name: "idx_on_member_id_workshop_id_role_e3cea6bbfd", unique: true
     t.index ["workshop_id", "attending"], name: "index_workshop_invitations_workshop_attending"
     t.index ["workshop_id"], name: "index_workshop_invitations_on_workshop_id"
   end
@@ -618,10 +617,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_10_091618) do
     t.integer "sponsor_id"
     t.datetime "updated_at", precision: nil
     t.integer "workshop_id"
+    t.index ["sponsor_id", "workshop_id"], name: "index_workshop_sponsors_on_sponsor_id_and_workshop_id", unique: true
     t.index ["sponsor_id"], name: "index_workshop_sponsors_on_sponsor_id"
     t.index ["workshop_id", "host"], name: "index_workshop_sponsors_on_workshop_id_and_host"
     t.index ["workshop_id"], name: "index_workshop_sponsors_on_workshop_id"
-    t.index ["sponsor_id", "workshop_id"], name: "index_workshop_sponsors_on_sponsor_id_and_workshop_id", unique: true
   end
 
   create_table "workshops", id: :serial, force: :cascade do |t|
