@@ -44,6 +44,29 @@ RSpec.describe SponsorsSearch do
       expect(results).to contain_exactly(matching)
     end
 
+    it 'filters by chapter name' do
+      chapter = Fabricate(:chapter, name: 'London')
+      matching = Fabricate(:sponsor)
+      Fabricate(:workshop_sponsor, workshop: Fabricate(:workshop_no_sponsor, chapter: chapter), sponsor: matching)
+      Fabricate(:sponsor)
+
+      results = described_class.new(name: nil, chapter: 'London').call
+
+      expect(results).to contain_exactly(matching)
+    end
+
+    it 'is case insensitive when filtering by chapter name' do
+      chapter = Fabricate(:chapter, name: 'London')
+      matching = Fabricate(:sponsor)
+      Fabricate(:workshop_sponsor, workshop: Fabricate(:workshop_no_sponsor, chapter: chapter), sponsor: matching)
+
+      results = described_class.new(name: nil, chapter: 'london').call
+      expect(results).to contain_exactly(matching)
+
+      results = described_class.new(name: nil, chapter: 'LONDON').call
+      expect(results).to contain_exactly(matching)
+    end
+
     it 'filters by chapter' do
       chapter = Fabricate(:chapter)
       matching = Fabricate(:sponsor)

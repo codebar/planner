@@ -3,7 +3,7 @@
     = f.hidden_field :chapter_id
   - else
     .col-12
-      = f.association :chapter, as: :select, collection: Chapter.available_to_user(current_user)
+      = render(ChapterPickerComponent.new(name: 'workshop[chapter_id]', chapters: Chapter.available_to_user(current_user), placeholder: 'Select a chapter'))
   .col-12
     = f.input :local_date, label: 'Date', required: true, input_html: { value: @workshop.date_and_time.try(:strftime, '%Y-%m-%d'), type: :date }
   .col-12.col-md-6
