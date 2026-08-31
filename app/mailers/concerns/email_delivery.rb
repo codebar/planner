@@ -11,8 +11,6 @@ module EmailDelivery
     MemberEmailDelivery.create!(
       member: member,
       subject: mail.subject,
-      # premailer-rails' interceptor empties the body container and moves the
-      # content into text/html parts during delivery, so read the html part
       body: mail.html_part ? mail.html_part.body.to_s : mail.body.to_s,
       to: Array(mail.to),
       cc: Array(mail.cc),
