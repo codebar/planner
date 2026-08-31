@@ -36,7 +36,7 @@ RSpec.describe ThreeMonthEmailService, type: :service do
 
     let!(:student_with_other_email_logged) do
       member = Fabricate(:member)
-      Fabricate(:subscription, member: member, group: students_group)
+      Fabricate(:subscription, member:, group: students_group)
       Fabricate(
         :workshop_invitation,
         member: member,
