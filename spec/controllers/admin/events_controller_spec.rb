@@ -42,4 +42,26 @@ RSpec.describe Admin::EventsController, type: :controller do
       expect(flash[:notice]).to eq('You can\'t be here')
     end
   end
+
+  describe 'GET #new' do
+    render_views
+
+    it 'renders with native date and time inputs' do
+      get :new
+
+      expect(response.body).to include('type="date"')
+      expect(response.body).to include('type="time"')
+    end
+  end
+
+  describe 'GET #edit' do
+    render_views
+
+    it 'pre-fills date and time values in ISO format' do
+      get :edit, params: { id: event.slug }
+
+      expect(response.body).to include("value=\"#{event.date_and_time.strftime('%Y-%m-%d')}\"")
+      expect(response.body).to include("value=\"#{event.time.strftime('%H:%M')}\"")
+    end
+  end
 end

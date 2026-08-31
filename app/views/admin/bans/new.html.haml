@@ -12,7 +12,7 @@
         = f.input :reason, as: :select, collection: [ 'Violated attendance policy', 'Violated code of conduct', 'Violated attendance eligibility', 'Offensive behavior' ]
         = f.input :note, input_html: { rows: 3 }
         = f.input :explanation, input_html: { rows: 3 }
-        = f.input :expires_at, as: :string, required: true, label: 'Date', input_html: { data: { value: Time.zone.now+1.month } }
+        = f.input :expires_at, as: :string, required: true, label: 'Date', input_html: { value: (Time.zone.now + 1.month).strftime('%Y-%m-%d'), type: :date }
         = f.input :permanent, as: :boolean
         .text-right
           = f.button :button, t('.create'), class: 'btn btn-primary'

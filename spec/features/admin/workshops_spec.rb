@@ -162,6 +162,59 @@ RSpec.feature 'An admin managing workshops', type: :feature do
         expect(page).to have_text 'Invite'
       end
     end
+
+    context 'when creating a workshop from a chapter page' do
+      around do |example|
+        travel_to Time.zone.local(2020, 12, 0o1, 0, 0, 0)
+        example.run
+        travel_back
+      end
+
+      scenario 'pre-selects the chapter and allows organisers to be assigned' do
+        kept_organiser = Fabricate(:member)
+        removed_organiser = Fabricate(:member)
+        kept_organiser.add_role(:organiser, chapter)
+        removed_organiser.add_role(:organiser, chapter)
+
+        visit admin_chapter_path(chapter)
+
+        within('.col-12.col-lg-8') do
+          click_on 'New workshop'
+        end
+
+        expect(page).to have_css('h1', text: "New Workshop for #{chapter.name}")
+        expect(page).to have_title("New Workshop for #{chapter.name}")
+        expect(page).to have_no_select('workshop_chapter_id')
+        expect(page).to have_select('workshop_organisers', with_options: [kept_organiser.full_name, removed_organiser.full_name])
+
+        unselect removed_organiser.full_name, from: 'workshop_organisers'
+
+        fill_in 'Date', with: Date.current
+        fill_in 'Begins at', with: '11:30'
+        fill_in 'Ends at', with: '12:45'
+
+        within '#host' do
+          select sponsor.name
+        end
+
+        click_on 'Save'
+
+        expect(page).to have_text('Workshop successfully created')
+        workshop = Workshop.last
+        expect(workshop.chapter).to eq(chapter)
+        expect(workshop.organisers.map(&:id)).to include(kept_organiser.id)
+        expect(workshop.organisers.map(&:id)).not_to include(removed_organiser.id)
+      end
+
+      scenario 'falls back to the standard form when chapter_id is invalid' do
+        visit new_admin_workshop_path(chapter_id: 0)
+
+        expect(page).to have_css('h1', text: 'New Workshop')
+        expect(page).to have_title('New Workshop')
+        expect(page).to have_select('workshop_chapter_id')
+        expect(page).to have_no_select('workshop_organisers')
+      end
+    end
   end
 
   context 'with dietary restrictions' do

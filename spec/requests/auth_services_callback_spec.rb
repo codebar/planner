@@ -74,4 +74,60 @@ RSpec.describe 'AuthServices callback' do
     expect(response).to redirect_to(edit_member_details_path)
     expect(session[:new_member]).to be_nil
   end
+
+  it 'links a codebar callback to an existing member via legacy github id when emails differ' do
+    original = Fabricate(:member, email: 'original@example.com')
+    Fabricate(:auth_service, member: original, provider: 'github', uid: '12345')
+
+    mock_auth_hash(provider: 'codebar', uid: 'different@example.com',
+                   email: 'different@example.com', github_id: '12345')
+
+    expect { post '/auth/codebar/callback' }
+      .to change { original.reload.auth_services.where(provider: 'codebar').count }.by(1)
+
+    expect(response).to redirect_to(dashboard_path)
+    expect(session[:member_id]).to eq(original.id)
+    expect(Member.where(email: 'different@example.com').count).to eq(0)
+  end
+
+  it 'creates a new member when the codebar callback has no matching github id or email' do
+    Fabricate(:member, email: 'existing@example.com')
+    Fabricate(:auth_service, provider: 'github', uid: '99999')
+
+    mock_auth_hash(provider: 'codebar', uid: 'brandnew@example.com',
+                   email: 'brandnew@example.com', github_id: '11111')
+
+    expect { post '/auth/codebar/callback' }.to change(Member, :count).by(1)
+
+    expect(response).to redirect_to(edit_member_details_path)
+  end
+
+  it 'prefers github_id over email when they resolve to different members' do
+    member_a = Fabricate(:member, email: 'a@example.com')
+    Fabricate(:auth_service, member: member_a, provider: 'github', uid: '12345')
+    member_b = Fabricate(:member, email: 'b@example.com')
+    member_b_codebar_count = member_b.auth_services.where(provider: 'codebar').count
+
+    mock_auth_hash(provider: 'codebar', uid: 'b@example.com',
+                   email: 'b@example.com', github_id: '12345')
+
+    expect { post '/auth/codebar/callback' }
+      .to change { member_a.reload.auth_services.where(provider: 'codebar').count }.by(1)
+
+    expect(session[:member_id]).to eq(member_a.id)
+    expect(member_b.reload.auth_services.where(provider: 'codebar').count).to eq(member_b_codebar_count)
+    expect(Member.count).to eq(2)
+  end
+
+  it 'falls back to email matching when the codebar callback has no github_id' do
+    existing = Fabricate(:member, email: 'fallback@example.com')
+
+    mock_auth_hash(provider: 'codebar', uid: 'fallback@example.com',
+                   email: 'fallback@example.com')
+
+    post '/auth/codebar/callback'
+
+    expect(session[:member_id]).to eq(existing.id)
+    expect(response).to redirect_to(dashboard_path)
+  end
 end
