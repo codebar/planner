@@ -40,7 +40,7 @@ RSpec.describe ThreeMonthEmailService, type: :service do
       Fabricate(
         :workshop_invitation,
         member: member,
-        workshop: Fabricate(:workshop, chapter: chapter, date_and_time: 6.months.ago),
+        workshop: Fabricate(:workshop, chapter:, date_and_time: 6.months.ago),
         role: 'Student',
         attended: true
       )
