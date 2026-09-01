@@ -1,17 +1,35 @@
+- title 'Sponsors'
+%style= ".form-control::placeholder { opacity: 0.7; }"
+
 .container.py-4.py-lg-5
   .row.mb-4
     .col-12
       %nav{'aria-label': 'breadcrumb'}
         %ol.breadcrumb.ms-0
-          %li.breadcrumb-item.active= t('admin.shared.sponsors')
+          %li.breadcrumb-item= link_to 'Admin', admin_root_path
+          %li.breadcrumb-item.active Sponsors
 
     .col-12
-      .row.row-cols-md-auto.align-items-center
-        = form_with model: @sponsors_search, url: admin_sponsors_path, method: :get, class: 'row row-cols-1 row-cols-md-auto align-items-center' do |f|
-          = render(ChapterPickerComponent.new(name: 'sponsors_search[chapter]', chapters: @chapters, selected: @sponsors_search.chapter, placeholder: 'Filter by chapter'))
-          = f.text_field :name, placeholder: 'Filter by sponsor name', class: 'form-control w-auto my-2 my-md-0'
-          = f.button 'Filter', class: 'btn btn-primary'
-        = link_to 'Reset form', admin_sponsors_path
+      %h1.mb-3 Sponsors
+
+    .col-12
+      = form_with model: @sponsors_search, url: admin_sponsors_path, method: :get do |f|
+        %fieldset.border.rounded.bg-light.p-3
+          %legend Filter sponsors
+          .row.row-cols-1.row-cols-md-auto.align-items-start.gap-1
+            - chapter_error = @sponsors_search.errors[:chapter].any?
+            .col
+              = f.label :chapter, 'Chapter', class: 'form-label'
+              = render(ChapterPickerComponent.new(name: 'sponsors_search[chapter]', chapters: @chapters, selected: @sponsors_search.chapter, placeholder: 'ex: London'))
+              - if chapter_error
+                .invalid-feedback.d-block= @sponsors_search.errors[:chapter].join(', ')
+            .col
+              = f.label :name, 'Sponsor name', class: 'form-label'
+              = f.text_field :name, placeholder: 'ex: Google', class: 'form-control w-auto'
+            .col
+              .form-label.invisible &nbsp;
+              = f.button 'Filter', class: 'btn btn-primary'
+              = link_to 'Reset form', admin_sponsors_path
 
   = render partial: 'shared/pagination', locals: { pagy: @pagy, model: 'sponsor' }
 
@@ -25,7 +43,7 @@
             %th
               Level
             %th
-              Chapter(s)
+              Chapters
             %th
               Sponsorships
         %tbody
@@ -40,5 +58,3 @@
                   = link_to chapter.name, admin_chapter_path(chapter)
               %td
                 = sponsor.sponsorships_count
-
-  = render partial: 'shared/pagination', locals: { pagy: @pagy, model: 'sponsor' }
