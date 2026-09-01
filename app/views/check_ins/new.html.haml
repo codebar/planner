@@ -1,0 +1,46 @@
+-# app/views/check_ins/new.html.haml
+
+.container.py-4.py-lg-5
+  %h1= @check_in_target.to_s
+  %p.lead
+    - if @check_in_target.respond_to?(:ends_at) && @check_in_target.ends_at.present?
+      = "#{@check_in_target.date_and_time.strftime('%A, %B %d, %Y from %H:%M')} until #{@check_in_target.ends_at.strftime('%H:%M')}"
+    - else
+      = @check_in_target.date_and_time.strftime('%A, %B %d, %Y at %H:%M')
+
+  - if @check_in_target.respond_to?(:venue) && @check_in_target.venue.present?
+    %p
+      %strong= @check_in_target.venue.name
+  - if @check_in_target.respond_to?(:chapters) && @check_in_target.chapters.any?
+    %p.text-muted Organized by #{@check_in_target.chapters.map(&:name).to_sentence}
+  - elsif @check_in_target.respond_to?(:chapter) && @check_in_target.chapter.present?
+    %p.text-muted Organized by #{@check_in_target.chapter.name}
+
+  - if @already_checked_in
+    .text-center.py-4
+      %h2.text-success ✓ Already checked in!
+      %p.lead As a #{@invitation.role}
+      = link_to "Back to Dashboard", dashboard_path, class: "btn btn-primary mt-3"
+  - else
+    %h3 Welcome, #{current_user.name}!
+
+    - if @invitation.present?
+      %p You were invited as a #{@invitation.role}. Confirm below.
+
+    - if @suggested_role
+      %p.text-muted We think you're here as a #{@suggested_role}.
+
+    .row.mt-4
+      .col-6
+        = form_tag check_in_new_path, method: :post do
+          = hidden_field_tag :role, "Student"
+          = submit_tag "I'm a Student",
+            class: "btn btn-lg btn-block #{"btn-primary" if @suggested_role == "Student"} #{"btn-outline-secondary" unless @suggested_role == "Student"}",
+            style: "width: 100%; min-height: 80px; font-size: 1.5rem;"
+
+      .col-6
+        = form_tag check_in_new_path, method: :post do
+          = hidden_field_tag :role, "Coach"
+          = submit_tag "I'm a Coach",
+            class: "btn btn-lg btn-block #{"btn-primary" if @suggested_role == "Coach"} #{"btn-outline-secondary" unless @suggested_role == "Coach"}",
+            style: "width: 100%; min-height: 80px; font-size: 1.5rem;"

@@ -1,0 +1,12 @@
+-# app/views/check_ins/confirm.html.haml
+
+.container.py-4.py-lg-5
+  .text-center.py-5
+    %h1.text-success ✓ You're checked in!
+    %p.lead As a #{@invitation.role} at #{@check_in_target.to_s}
+    %p.text-muted
+      - if @check_in_target.respond_to?(:ends_at) && @check_in_target.ends_at.present?
+        = "#{@check_in_target.date_and_time.strftime('%A, %B %d, %Y from %H:%M')} until #{@check_in_target.ends_at.strftime('%H:%M')}"
+      - else
+        = @check_in_target.date_and_time.strftime('%A, %B %d, %Y at %H:%M')
+    = link_to "Back to Dashboard", dashboard_path, class: "btn btn-primary mt-4"

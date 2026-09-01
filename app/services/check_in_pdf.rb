@@ -1,0 +1,68 @@
+# frozen_string_literal: true
+
+class CheckInPdf
+  def initialize(check_in_target)
+    @check_in_target = check_in_target
+  end
+
+  def render
+    Prawn::Document.new(page_layout: :landscape, page_size: 'A4', margin: 10) do |pdf|
+      draw_logo(pdf)
+      pdf.move_down 24
+
+      pdf.text @check_in_target.to_s, size: 28, style: :bold
+      pdf.move_down 4
+      pdf.text formatted_date, size: 16, color: '555555'
+      pdf.move_down 8
+
+      if @check_in_target.respond_to?(:venue) && @check_in_target.venue.present?
+        venue = @check_in_target.venue
+        pdf.text venue.name, size: 14, color: '555555'
+        if venue.respond_to?(:address) && venue.address.present?
+          pdf.text AddressPresenter.new(venue.address).to_s, size: 12, color: '777777'
+        end
+        pdf.move_down 4
+      end
+
+      if @check_in_target.respond_to?(:sponsors) && @check_in_target.sponsors.any?
+        pdf.text "Sponsored by: #{@check_in_target.sponsors.map(&:name).join(', ')}", size: 12, color: '777777'
+        pdf.move_down 8
+      end
+
+      qrcode = RQRCode::QRCode.new(@check_in_target.check_in_url)
+      png = qrcode.as_png(module_size: 6)
+      qr_width = 160
+
+      pdf.image StringIO.new(png.to_blob),
+                width: qr_width,
+                position: :center
+      pdf.move_down 4
+      pdf.text 'Scan to check in', size: 11, align: :center, color: '999999'
+      pdf.move_down 2
+      pdf.text @check_in_target.check_in_url,
+               size: 10, align: :center, color: '999999'
+    end.render
+  end
+
+  private
+
+  def draw_logo(pdf)
+    svg_path = Rails.root.join('app/assets/images/check_in/logo.svg')
+
+    if File.exist?(svg_path)
+      svg_content = File.read(svg_path)
+      mark_size = 120
+      x_start = (pdf.bounds.width - mark_size) / 2.0
+      pdf.bounding_box([x_start, pdf.cursor], width: mark_size, height: mark_size) do
+        pdf.svg svg_content, width: mark_size, at: [0, 0], enable_web_requests: false
+      end
+    else
+      pdf.text 'codebar', size: 24, style: :bold, align: :center
+    end
+  end
+
+  def formatted_date
+    dt = @check_in_target.date_and_time
+    dt.strftime('%A, %B %d, %Y at %H:%M')
+  end
+end

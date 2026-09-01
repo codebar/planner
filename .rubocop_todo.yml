@@ -35,6 +35,8 @@ Metrics/AbcSize:
     - 'lib/services/event_calendar.rb'
     - 'lib/tasks/setup.rake'
     - 'spec/support/select_from_tom_select.rb'
+    - 'app/services/check_in_pdf.rb'
+    - 'app/controllers/check_ins_controller.rb'
 
 # Offense count: 8
 # Configuration parameters: CountComments, Max, CountAsOne.
@@ -49,6 +51,7 @@ Metrics/ClassLength:
     - 'app/services/invitation_manager.rb'
     - 'lib/omniauth/strategies/codebar.rb'
     - 'lib/tasks/setup.rake'
+    - 'app/controllers/check_ins_controller.rb'
 
 # Offense count: 8
 # Configuration parameters: AllowedMethods, AllowedPatterns, Max.
@@ -61,6 +64,8 @@ Metrics/CyclomaticComplexity:
     - 'app/services/invitation_manager.rb'
     - 'lib/flodesk.rb'
     - 'lib/omniauth/strategies/codebar.rb'
+    - 'app/services/check_in_pdf.rb'
+    - 'app/controllers/check_ins_controller.rb'
 
 # Offense count: 40
 # Configuration parameters: CountComments, Max, CountAsOne, AllowedMethods, AllowedPatterns.
@@ -91,6 +96,9 @@ Metrics/MethodLength:
     - 'lib/flodesk.rb'
     - 'lib/omniauth/strategies/codebar.rb'
     - 'lib/tasks/setup.rake'
+    - 'app/controllers/admin/check_ins_controller.rb'
+    - 'app/services/check_in_pdf.rb'
+    - 'app/controllers/check_ins_controller.rb'
 
 # Offense count: 7
 # Configuration parameters: AllowedMethods, AllowedPatterns, Max.
@@ -102,6 +110,7 @@ Metrics/PerceivedComplexity:
     - 'app/controllers/workshop_invitation_controller.rb'
     - 'app/services/invitation_manager.rb'
     - 'lib/omniauth/strategies/codebar.rb'
+    - 'app/controllers/check_ins_controller.rb'
 
 # Offense count: 5
 Rails/HasAndBelongsToMany:
@@ -124,3 +133,8 @@ Rails/HasManyOrHasOneDependent:
     - 'app/models/sponsor.rb'
     - 'app/models/workshop.rb'
     - 'app/models/workshop_invitation.rb'
+
+# Offense count: 1
+Metrics/BlockLength:
+  Exclude:
+    - 'app/services/check_in_pdf.rb'

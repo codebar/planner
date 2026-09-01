@@ -68,6 +68,10 @@ Rails.application.configure do
   # Set host to be used by links generated in mailer templates.
   config.action_mailer.default_url_options = { host: 'codebar.io' }
 
+  config.after_initialize do
+    Rails.application.routes.default_url_options = { host: 'codebar.io' }
+  end
+
   # Host for absolute asset URLs in emails. Override for staging via ASSET_HOST env var.
   config.action_mailer.asset_host = ENV.fetch('ASSET_HOST', 'https://codebar.io')
 
