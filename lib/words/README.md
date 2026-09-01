@@ -4,4 +4,4 @@
 
 - Source file: https://www.eff.org/files/2016/07/18/eff_large_wordlist.txt
 - 7,776 words, allowing roughly 4.7×10^11 unique three-word combinations.
-- To update the list, replace `check_in_words.txt` with a new word list and ensure `CheckInCode.word_list` still filters out blank lines and comment lines.
+- To update the list, replace `check_in_words.txt` with a new word list and ensure `CheckInable.word_list` still filters out blank lines and comment lines.

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module CheckInCode
+module CheckInable
   extend ActiveSupport::Concern
 
   # Check-in codes are built from the EFF long wordlist for random passphrases.
