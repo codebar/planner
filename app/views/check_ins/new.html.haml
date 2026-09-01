@@ -1,20 +1,20 @@
 -# app/views/check_ins/new.html.haml
 
 .container.py-4.py-lg-5
-  %h1= @parent.to_s
+  %h1= @check_in_target.to_s
   %p.lead
-    - if @parent.respond_to?(:ends_at) && @parent.ends_at.present?
-      = "#{@parent.date_and_time.strftime('%A, %B %d, %Y from %H:%M')} until #{@parent.ends_at.strftime('%H:%M')}"
+    - if @check_in_target.respond_to?(:ends_at) && @check_in_target.ends_at.present?
+      = "#{@check_in_target.date_and_time.strftime('%A, %B %d, %Y from %H:%M')} until #{@check_in_target.ends_at.strftime('%H:%M')}"
     - else
-      = @parent.date_and_time.strftime('%A, %B %d, %Y at %H:%M')
+      = @check_in_target.date_and_time.strftime('%A, %B %d, %Y at %H:%M')
 
-  - if @parent.respond_to?(:venue) && @parent.venue.present?
+  - if @check_in_target.respond_to?(:venue) && @check_in_target.venue.present?
     %p
-      %strong= @parent.venue.name
-  - if @parent.respond_to?(:chapters) && @parent.chapters.any?
-    %p.text-muted Organized by #{@parent.chapters.map(&:name).to_sentence}
-  - elsif @parent.respond_to?(:chapter) && @parent.chapter.present?
-    %p.text-muted Organized by #{@parent.chapter.name}
+      %strong= @check_in_target.venue.name
+  - if @check_in_target.respond_to?(:chapters) && @check_in_target.chapters.any?
+    %p.text-muted Organized by #{@check_in_target.chapters.map(&:name).to_sentence}
+  - elsif @check_in_target.respond_to?(:chapter) && @check_in_target.chapter.present?
+    %p.text-muted Organized by #{@check_in_target.chapter.name}
 
   - if @already_checked_in
     .text-center.py-4
@@ -32,14 +32,14 @@
 
     .row.mt-4
       .col-6
-        = form_tag check_in_submit_path, method: :post do
+        = form_tag check_in_new_path, method: :post do
           = hidden_field_tag :role, "Student"
           = submit_tag "I'm a Student",
             class: "btn btn-lg btn-block #{"btn-primary" if @suggested_role == "Student"} #{"btn-outline-secondary" unless @suggested_role == "Student"}",
             style: "width: 100%; min-height: 80px; font-size: 1.5rem;"
 
       .col-6
-        = form_tag check_in_submit_path, method: :post do
+        = form_tag check_in_new_path, method: :post do
           = hidden_field_tag :role, "Coach"
           = submit_tag "I'm a Coach",
             class: "btn btn-lg btn-block #{"btn-primary" if @suggested_role == "Coach"} #{"btn-outline-secondary" unless @suggested_role == "Coach"}",

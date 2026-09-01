@@ -1,11 +1,11 @@
 -# app/views/admin/check_ins/show.html.haml
 
 .container.py-4.py-lg-5
-  %h2 Check-in for #{@parent.to_s}
+  %h2 Check-in for #{@check_in_target.to_s}
 
-  = link_to url_for([:admin, @parent]), class: 'btn btn-outline-secondary mb-3' do
+  = link_to url_for([:admin, @check_in_target]), class: 'btn btn-outline-secondary mb-3' do
     %i.fas.fa-arrow-left
-    Back to #{@parent.class.model_name.human}
+    Back to #{@check_in_target.class.model_name.human}
 
   .alert.alert-info
     %p.mb-0
@@ -16,8 +16,8 @@
   .card.mb-4
     .card-body
       %h5.card-title Check-in URL
-      %p.lead.mb-1= @parent.check_in_code
-      %p.text-muted.small= @parent.check_in_url
+      %p.lead.mb-1= @check_in_target.check_in_code
+      %p.text-muted.small= @check_in_target.check_in_url
       %p.text-muted.small Share this URL with anyone who can't scan the QR code.
 
   .card.mb-4
@@ -30,9 +30,9 @@
         %li They sign in with GitHub and select their role (Student/Coach).
         %li
           They're checked in! You can see attendance on the
-          = link_to "#{@parent.class.model_name.human} admin page", url_for([:admin, @parent])
+          = link_to "#{@check_in_target.class.model_name.human} admin page", url_for([:admin, @check_in_target])
 
-  = link_to url_for([:admin, @parent, :check_in, { format: :pdf }]),
+  = link_to url_for([:admin, @check_in_target, :check_in, { format: :pdf }]),
             class: 'btn btn-primary btn-lg' do
     %i.fas.fa-download
     Download PDF

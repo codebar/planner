@@ -3,10 +3,10 @@
 .container.py-4.py-lg-5
   .text-center.py-5
     %h1.text-success ✓ You're checked in!
-    %p.lead As a #{@invitation.role} at #{@parent.to_s}
+    %p.lead As a #{@invitation.role} at #{@check_in_target.to_s}
     %p.text-muted
-      - if @parent.respond_to?(:ends_at) && @parent.ends_at.present?
-        = "#{@parent.date_and_time.strftime('%A, %B %d, %Y from %H:%M')} until #{@parent.ends_at.strftime('%H:%M')}"
+      - if @check_in_target.respond_to?(:ends_at) && @check_in_target.ends_at.present?
+        = "#{@check_in_target.date_and_time.strftime('%A, %B %d, %Y from %H:%M')} until #{@check_in_target.ends_at.strftime('%H:%M')}"
       - else
-        = @parent.date_and_time.strftime('%A, %B %d, %Y at %H:%M')
+        = @check_in_target.date_and_time.strftime('%A, %B %d, %Y at %H:%M')
     = link_to "Back to Dashboard", dashboard_path, class: "btn btn-primary mt-4"

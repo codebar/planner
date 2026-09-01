@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class CheckInsController < ApplicationController
-  before_action :load_parent
+  before_action :load_check_in_target
   before_action :store_referer_path, only: [:new]
   before_action :authenticate_member!, only: %i[new create confirm]
 
@@ -20,17 +20,17 @@ class CheckInsController < ApplicationController
       return redirect_to check_in_new_path, alert: mismatch_role_message(existing.role) if existing.role != role
     end
 
-    unless @parent.check_in_open?
+    unless @check_in_target.check_in_open?
       return redirect_to check_in_new_path, alert: 'Check-in is not currently open.'
     end
 
-    if @parent.respond_to?(:waitlisted?) && @parent.waitlisted?(current_user)
+    if @check_in_target.respond_to?(:waitlisted?) && @check_in_target.waitlisted?(current_user)
       return redirect_to check_in_new_path, alert: 'You are on the waiting list and cannot check in.'
     end
 
     invitation = existing || find_or_create_invitation(role)
 
-    unless @parent.spaces_available_for?(role) || invitation.attending?
+    unless @check_in_target.spaces_available_for?(role) || invitation.attending?
       return redirect_to check_in_new_path, alert: "There are no #{role} spaces left."
     end
 
@@ -48,35 +48,29 @@ class CheckInsController < ApplicationController
 
   private
 
-  def load_parent
-    @parent = Event.find_by(check_in_code: params[:code]) ||
-              Workshop.find_by(check_in_code: params[:code])
-    raise ActiveRecord::RecordNotFound unless @parent
+  def load_check_in_target
+    @check_in_target = Event.find_by(check_in_code: params[:code]) ||
+                       Workshop.find_by(check_in_code: params[:code])
+    raise ActiveRecord::RecordNotFound unless @check_in_target
   end
 
-  helper_method :check_in_new_path, :check_in_submit_path, :check_in_confirm_path
+  helper_method :check_in_new_path, :check_in_confirm_path
 
   def check_in_new_path
-    if @parent.is_a?(Event)
-      check_in_e_path(code: @parent.check_in_code)
+    code = @check_in_target.check_in_code
+    if @check_in_target.is_a?(Event)
+      check_in_e_path(code:)
     else
-      check_in_w_path(code: @parent.check_in_code)
-    end
-  end
-
-  def check_in_submit_path
-    if @parent.is_a?(Event)
-      check_in_e_path(code: @parent.check_in_code)
-    else
-      check_in_w_path(code: @parent.check_in_code)
+      check_in_w_path(code:)
     end
   end
 
   def check_in_confirm_path
-    if @parent.is_a?(Event)
-      check_in_e_confirm_path(code: @parent.check_in_code)
+    code = @check_in_target.check_in_code
+    if @check_in_target.is_a?(Event)
+      check_in_e_confirm_path(code:)
     else
-      check_in_w_confirm_path(code: @parent.check_in_code)
+      check_in_w_confirm_path(code:)
     end
   end
 
@@ -87,7 +81,7 @@ class CheckInsController < ApplicationController
   def already_checked_in?(invitation)
     return false unless invitation
 
-    if @parent.is_a?(Event)
+    if @check_in_target.is_a?(Event)
       invitation.verified?
     else
       invitation.attended?
@@ -99,24 +93,24 @@ class CheckInsController < ApplicationController
   end
 
   def find_invitation
-    if @parent.is_a?(Event)
-      Invitation.find_by(event: @parent, member: current_user)
+    if @check_in_target.is_a?(Event)
+      Invitation.find_by(event: @check_in_target, member: current_user)
     else
-      WorkshopInvitation.find_by(workshop: @parent, member: current_user)
+      WorkshopInvitation.find_by(workshop: @check_in_target, member: current_user)
     end
   end
 
   def find_or_create_invitation(role)
-    if @parent.is_a?(Event)
-      Invitation.create_or_find_by(event: @parent, member: current_user, role: role)
+    if @check_in_target.is_a?(Event)
+      Invitation.create_or_find_by(event: @check_in_target, member: current_user, role: role)
     else
-      WorkshopInvitation.create_or_find_by(workshop: @parent, member: current_user, role: role)
+      WorkshopInvitation.create_or_find_by(workshop: @check_in_target, member: current_user, role: role)
     end
   end
 
   def mark_attended(invitation)
     attrs = { attending: true, source: InvitationConcerns::SOURCE_CHECK_IN }
-    if @parent.is_a?(Event)
+    if @check_in_target.is_a?(Event)
       attrs[:verified] = true
     else
       attrs[:attended] = true

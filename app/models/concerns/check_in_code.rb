@@ -51,11 +51,11 @@ module CheckInCode
   end
 
   def check_in_url
-    prefix = model_name.singular == 'event' ? 'e' : 'w'
-    route_name = :"check_in_#{prefix}_url"
-    Rails.application.routes.url_helpers.public_send(
-      route_name, check_in_code
-    )
+    if is_a?(Event)
+      Rails.application.routes.url_helpers.check_in_e_url(check_in_code)
+    else
+      Rails.application.routes.url_helpers.check_in_w_url(check_in_code)
+    end
   end
 
   private
