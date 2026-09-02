@@ -5,6 +5,12 @@ class WorkshopInvitationController < ApplicationController
   # It provides accept/reject RSVP actions for workshop attendees via token-based links.
   # Routes: /invitation/:token (legacy) and /workshop_invitation/:token
 
+  # The invitation token in the URL is the authenticator for these actions;
+  # CSRF is redundant and fails when browsers withhold the session cookie
+  # (e.g. Safari/WebKit ITP on cross-site navigation). Same rationale as
+  # FeedbackController#submit (PR #2641, Rollbar #535).
+  skip_forgery_protection only: %i[update accept]
+
   def show
     @announcements = @invitation.member.announcements.active
     @tutorial_titles = Tutorial.all_titles

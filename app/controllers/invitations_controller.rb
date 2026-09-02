@@ -1,4 +1,10 @@
 class InvitationsController < ApplicationController
+  # The invitation token in the URL is the authenticator for these actions;
+  # CSRF is redundant and fails when browsers withhold the session cookie
+  # (e.g. Safari/WebKit ITP on cross-site navigation). Same rationale as
+  # FeedbackController#submit (PR #2641, Rollbar #535).
+  skip_forgery_protection only: %i[attend reject]
+
   before_action :require_login, only: [:index]
   before_action :set_invitation, only: %i[show attend reject]
 

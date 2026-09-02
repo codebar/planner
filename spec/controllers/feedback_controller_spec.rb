@@ -63,13 +63,13 @@ RSpec.describe FeedbackController do
     end
 
     context 'without a CSRF token (browser did not send session cookie)' do
-      it 'still accepts the feedback submission' do
-        # Simulate the real-world scenario where the browser withholds the
-        # session cookie (e.g. Safari ITP, cross-site navigation, or cookie
-        # blocking). With protect_from_forgery enabled, this would normally
-        # raise ActionController::InvalidAuthenticityToken.
-        ActionController::Base.allow_forgery_protection = true
+      # Simulate the real-world scenario where the browser withholds the
+      # session cookie (e.g. Safari/WebKit ITP, cross-site navigation, or cookie
+      # blocking). With protect_from_forgery enabled, this would normally
+      # raise ActionController::InvalidAuthenticityToken.
+      include_context 'with forgery protection enforced'
 
+      it 'still accepts the feedback submission' do
         patch :submit, params: {
           id: feedback_request.token,
           feedback: {
@@ -84,8 +84,6 @@ RSpec.describe FeedbackController do
         expect(response).to redirect_to(root_path)
         expect(flash[:notice]).to eq(I18n.t('messages.feedback_saved'))
         expect(feedback_request.reload.submited).to be true
-      ensure
-        ActionController::Base.allow_forgery_protection = false
       end
     end
   end

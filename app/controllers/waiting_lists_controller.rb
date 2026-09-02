@@ -1,6 +1,12 @@
 class WaitingListsController < ApplicationController
   include WorkshopInvitationConcerns
 
+  # The invitation token in the URL is the authenticator for these actions;
+  # CSRF is redundant and fails when browsers withhold the session cookie
+  # (e.g. Safari/WebKit ITP on cross-site navigation). Same rationale as
+  # FeedbackController#submit (PR #2641, Rollbar #535).
+  skip_forgery_protection only: %i[create destroy]
+
   def create
     @invitation.assign_attributes(invitation_params)
 
