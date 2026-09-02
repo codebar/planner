@@ -6,6 +6,13 @@ RSpec.describe MembersController do
       expect(response).to redirect_to(subscriptions_path)
     end
 
+    it 'does not render twice when the member has incomplete details' do
+      member = Fabricate.build(:member, about_you: nil)
+      member.save(validate: false)
+      get :unsubscribe, params: { token: member_token(member) }
+      expect(response).to redirect_to(edit_member_details_path)
+    end
+
     it 'redirects to the root path when token is invalid' do
       get :unsubscribe, params: { token: 'foo' }
       expect(response).to redirect_to(root_path)

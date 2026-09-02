@@ -38,8 +38,7 @@ class MembersController < ApplicationController
     session[:member_id] = member.id
 
     authenticate_member!
-
-    redirect_to subscriptions_path
+    redirect_to subscriptions_path unless performed?
   rescue StandardError
     redirect_to root_path, notice: 'Your token is invalid. '
   end
