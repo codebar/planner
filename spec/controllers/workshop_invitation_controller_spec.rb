@@ -93,6 +93,19 @@ RSpec.describe WorkshopInvitationController, type: :controller do
         expect(flash[:notice].join).to include('Tutorial')
       end
     end
+
+    context 'without a CSRF token (browser did not send session cookie)' do
+      # Simulate the real-world scenario where the browser withholds the
+      # session cookie (e.g. Safari/WebKit ITP on cross-site navigation).
+      # The invitation token in the URL is the authenticator.
+      include_context 'with forgery protection enforced'
+
+      it 'still accepts the RSVP' do
+        post :accept, params: { id: invitation.token }
+
+        expect(invitation.reload.attending).to be true
+      end
+    end
   end
 
   describe 'POST #reject' do
@@ -182,6 +195,18 @@ RSpec.describe WorkshopInvitationController, type: :controller do
       it 'redirects with error message' do
         patch :update, params: { id: invitation.token, workshop_invitation: { tutorial: '' } }
         expect(flash[:notice].join).to include('Tutorial')
+      end
+    end
+
+    context 'without a CSRF token (browser did not send session cookie)' do
+      include_context 'with forgery protection enforced'
+
+      it 'still updates the invitation details' do
+        new_tutorial = Fabricate(:tutorial)
+
+        patch :update, params: { id: invitation.token, workshop_invitation: { tutorial: new_tutorial.title } }
+
+        expect(invitation.reload.tutorial).to eq(new_tutorial.title)
       end
     end
   end
