@@ -35,7 +35,7 @@ RSpec.describe CheckInsController do
 
       it 'creates an invitation with source=check_in' do
         post :create, params: { code: event.check_in_code, role: 'Student' }
-        invitation = Invitation.find_by(event: event, member: member)
+        invitation = Invitation.find_by(event:, member:)
         expect(invitation.source).to eq(InvitationConcerns::SOURCE_CHECK_IN)
         expect(invitation.attending).to be true
         expect(invitation.verified).to be true
@@ -56,20 +56,20 @@ RSpec.describe CheckInsController do
 
       it 'ignores unpermitted parameters' do
         post :create, params: { code: event.check_in_code, role: 'Student', hacker_field: 'malicious' }
-        invitation = Invitation.find_by(event: event, member: member)
+        invitation = Invitation.find_by(event:, member:)
         expect(invitation.source).to eq(InvitationConcerns::SOURCE_CHECK_IN)
         expect(response).to redirect_to(check_in_e_confirm_path(code: event.check_in_code))
       end
 
       it 'redirects to confirm when already checked in' do
-        invitation = Fabricate(:invitation, event: event, member: member, role: 'Student', attending: true, verified: true)
+        invitation = Fabricate(:invitation, event:, member:, role: 'Student', attending: true, verified: true)
         post :create, params: { code: event.check_in_code, role: 'Student' }
         expect(response).to redirect_to(check_in_e_confirm_path(code: event.check_in_code))
         expect(Invitation.find(invitation.id).verified).to be true
       end
 
       it 'rejects selecting a different role than the existing invitation' do
-        Fabricate(:invitation, event: event, member: member, role: 'Student')
+        Fabricate(:invitation, event:, member:, role: 'Student')
         post :create, params: { code: event.check_in_code, role: 'Coach' }
         expect(response).to redirect_to(check_in_e_path(code: event.check_in_code))
         expect(flash[:alert]).to include('Student')
@@ -77,7 +77,7 @@ RSpec.describe CheckInsController do
 
       it 'rejects check-in when the role is at capacity' do
         event.update!(student_spaces: 1)
-        Fabricate(:invitation, event: event, member: Fabricate(:member), role: 'Student',
+        Fabricate(:invitation, event:, member: Fabricate(:member), role: 'Student',
                                attending: true, verified: true)
         post :create, params: { code: event.check_in_code, role: 'Student' }
         expect(response).to redirect_to(check_in_e_path(code: event.check_in_code))
@@ -89,7 +89,7 @@ RSpec.describe CheckInsController do
                              date_and_time: Time.zone.now - 30.minutes,
                              ends_at: Time.zone.now + 30.minutes)
         post :create, params: { code: workshop.check_in_code, role: 'Student' }
-        invitation = WorkshopInvitation.find_by(workshop: workshop, member: member)
+        invitation = WorkshopInvitation.find_by(workshop:, member:)
         expect(invitation.source).to eq(InvitationConcerns::SOURCE_CHECK_IN)
         expect(invitation.attending).to be true
         expect(invitation.attended).to be true
@@ -101,7 +101,7 @@ RSpec.describe CheckInsController do
         workshop = Fabricate(:workshop,
                              date_and_time: Time.zone.now - 30.minutes,
                              ends_at: Time.zone.now + 30.minutes)
-        invitation = Fabricate(:workshop_invitation, workshop: workshop, member: member, role: 'Student')
+        invitation = Fabricate(:workshop_invitation, workshop:, member:, role: 'Student')
         WaitingList.add(invitation)
         post :create, params: { code: workshop.check_in_code, role: 'Student' }
         expect(response).to redirect_to(check_in_w_path(code: workshop.check_in_code))
