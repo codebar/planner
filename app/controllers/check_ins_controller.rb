@@ -102,9 +102,9 @@ class CheckInsController < ApplicationController
 
   def find_or_create_invitation(role)
     if @check_in_target.is_a?(Event)
-      Invitation.create_or_find_by(event: @check_in_target, member: current_user, role: role)
+      Invitation.create_or_find_by(event: @check_in_target, member: current_user, role:)
     else
-      WorkshopInvitation.create_or_find_by(workshop: @check_in_target, member: current_user, role: role)
+      WorkshopInvitation.create_or_find_by(workshop: @check_in_target, member: current_user, role:)
     end
   end
 
