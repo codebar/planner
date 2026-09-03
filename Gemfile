@@ -29,7 +29,12 @@ gem 'jquery-rails'
 gem 'jwt'
 
 # Use Active Storage variant
+# image_processing 2.0 made its backends soft dependencies; mini_magick is
+# required by CarrierWave::MiniMagick (avatar/image uploads). Active Storage's
+# variant processor is set to :mini_magick in config/application.rb so the
+# vips backend is never loaded.
 gem 'image_processing'
+gem 'mini_magick'
 gem 'mutex_m' # LOCKED: Added because of activesupport 7.0
 gem 'nokogiri'
 gem 'omniauth'

@@ -10,6 +10,11 @@ module Planner
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 8.1
+
+    # Active Storage variants are unused by this app; keep the mini_magick
+    # transformer (the same backend CarrierWave uses) so the vips backend and
+    # its native libvips dependency are never loaded.
+    config.active_storage.variant_processor = :mini_magick
     
     # Please, add to the `ignore` list any other `lib` subdirectories that do
     # not contain `.rb` files, or that should not be reloaded or eager loaded.
