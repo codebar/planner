@@ -1,0 +1,80 @@
+<div class="mb-1">
+  <strong class="small">Workshops and events timeline</strong>
+</div>
+<svg viewBox="0 0 1000 122" class="w-100" role="img" aria-label="Workshop and event timeline, 180 days past to 90 days future">
+  <% # 30-day ticks: 7 on the past side (180 days ago .. today), 3 ahead %>
+  <% (0..6).each do |ticks_ago| %>
+    <% tick_x = (667 - (ticks_ago * 667 / 6.0)).round(1) %>
+    <line x1="<%= tick_x %>" y1="14" x2="<%= tick_x %>" y2="70" stroke="#dee2e6" stroke-width="1" />
+    <% if (ticks_ago % 2).zero? %>
+      <text x="<%= tick_x %>" y="86" font-size="9" fill="#6c757d" text-anchor="middle">
+        <%= (range_start + (ticks_ago * 30).days).to_fs(:short) %>
+      </text>
+    <% end %>
+  <% end %>
+  <% (1..3).each do |ticks_ahead| %>
+    <% tick_x = (667 + (ticks_ahead * 333 / 3.0)).round(1) %>
+    <line x1="<%= tick_x %>" y1="14" x2="<%= tick_x %>" y2="70" stroke="#dee2e6" stroke-width="1" />
+    <text x="<%= tick_x %>" y="86" font-size="9" fill="#6c757d" text-anchor="middle">
+      <%= (Time.zone.today + (ticks_ahead * 30).days).to_fs(:short) %>
+    </text>
+  <% end %>
+
+  <line x1="667" y1="6" x2="667" y2="74" stroke="#212529" stroke-width="2" stroke-dasharray="4 3" />
+  <text x="667" y="10" font-size="9" fill="#212529" text-anchor="middle">today</text>
+
+  <% # single-chapter events, complementary colour (amber) with square-ish markers %>
+  <% stacked_markers(event_past).each do |m| %>
+    <% if m[:stack] %>
+      <text x="<%= m[:x] %>" y="<%= m[:y] - 12 %>" font-size="8" fill="#fd7e14" text-anchor="middle">x<%= m[:stack] %></text>
+    <% end %>
+    <rect x="<%= m[:x] - 5 %>" y="<%= m[:y] - 5 %>" width="10" height="10" fill="#fd7e14" class="marker">
+      <title><%= m[:date].to_date.to_fs(:iso8601) %> (event)</title>
+    </rect>
+  <% end %>
+
+  <% stacked_markers(event_future).each do |m| %>
+    <rect x="<%= m[:x] - 5 %>" y="<%= m[:y] - 5 %>" width="10" height="10" fill="white" stroke="#fd7e14" stroke-width="2" class="marker">
+      <title><%= m[:date].to_date.to_fs(:iso8601) %> (event, planned)</title>
+    </rect>
+  <% end %>
+
+  <% stacked_markers(past).each do |m| %>
+    <% if m[:stack] %>
+      <text x="<%= m[:x] %>" y="<%= m[:y] - 12 %>" font-size="8" fill="#0d6efd" text-anchor="middle">x<%= m[:stack] %></text>
+    <% end %>
+    <circle cx="<%= m[:x] %>" cy="<%= m[:y] %>" r="5" fill="#0d6efd" class="marker">
+      <title><%= m[:date].to_date.to_fs(:iso8601) %></title>
+    </circle>
+  <% end %>
+
+  <% stacked_markers(future).each do |m| %>
+    <% if m[:stack] %>
+      <text x="<%= m[:x] %>" y="<%= m[:y] - 12 %>" font-size="8" fill="#0d6efd" text-anchor="middle">x<%= m[:stack] %></text>
+    <% end %>
+    <circle cx="<%= m[:x] %>" cy="<%= m[:y] %>" r="5" fill="white" stroke="#0d6efd" stroke-width="2" class="marker">
+      <title><%= m[:date].to_date.to_fs(:iso8601) %> (planned)</title>
+    </circle>
+  <% end %>
+
+  <% # legend, inside the SVG so it scales with the axis %>
+  <% legend = [
+       { x: 40,  label: 'workshop',         marker: 'circle-filled' },
+       { x: 240, label: 'planned workshop', marker: 'circle-hollow' },
+       { x: 500, label: 'chapter event',    marker: 'rect-filled' },
+       { x: 740, label: 'planned event',    marker: 'rect-hollow' }
+     ] %>
+  <% legend.each do |item| %>
+    <% if %w[circle-filled circle-hollow].include?(m = item[:marker]) %>
+      <circle cx="<%= item[:x] %>" cy="108" r="5"
+              fill="<%= m == 'circle-filled' ? '#0d6efd' : 'white' %>"
+              stroke="<%= m == 'circle-filled' ? 'none' : '#0d6efd' %>" stroke-width="2" />
+    <% else %>
+      <rect x="<%= item[:x] - 5 %>" y="103" width="10" height="10"
+            fill="<%= m == 'rect-filled' ? '#fd7e14' : 'white' %>"
+            stroke="<%= m == 'rect-filled' ? 'none' : '#fd7e14' %>" stroke-width="2" />
+    <% end %>
+    <text x="<%= item[:x] + 12 %>" y="112" font-size="11" fill="#6c757d"><%= item[:label] %></text>
+  <% end %>
+</svg>
+
