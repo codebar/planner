@@ -47,7 +47,6 @@ module Admin
           date && ((date - Time.zone.now) / 1.day).ceil
         end
 
-        # ponytail: median math kept inline; 2 lines over the AbcSize cap.
         def median_cadence(dates) # rubocop:disable Metrics/AbcSize
           gaps = dates.sort.each_cons(2).map { |a, b| ((b - a) / 1.day).round }
           return nil if gaps.empty?
