@@ -27,6 +27,9 @@ class Admin::ChaptersController < Admin::ApplicationController
     authorize(@chapter)
 
     @workshops = @chapter.workshops.today_and_upcoming
+    @chapter_health = Admin::Dashboard::ChapterHealth.row(chapter: @chapter)
+    @past_workshop_dates, @planned_workshop_dates = timeline_dates(@chapter.workshops)
+    @past_event_dates, @planned_event_dates = timeline_dates(@chapter.events.single_chapter)
     @sponsors = @chapter.sponsors.uniq
     @groups = @chapter.groups
     @subscribers = @chapter.subscriptions.last(20).reverse
@@ -125,5 +128,10 @@ class Admin::ChaptersController < Admin::ApplicationController
         chapter.members
       end
     members.distinct.pluck(:email).join("\n")
+  end
+
+  def timeline_dates(collection)
+    [collection.where(date_and_time: ..Time.zone.now).pluck(:date_and_time),
+     collection.where(date_and_time: Time.zone.now..90.days.from_now).pluck(:date_and_time)]
   end
 end

@@ -99,4 +99,29 @@ RSpec.describe Admin::ChaptersController, type: :controller do
       expect(controller.view_assigns['at_risk_ids']).not_to include(chapter.id)
     end
   end
+
+  describe '#show health section' do
+    render_views
+
+    it 'renders the chapter health section for admins' do
+      login_as_admin(Fabricate(:member))
+      chapter = Fabricate(:chapter)
+      Fabricate(:workshop, chapter:, date_and_time: 30.days.ago)
+
+      get :show, params: { id: chapter.id }
+
+      expect(response.body).to include('Chapter Health')
+      expect(response.body).to include('Workshops and events timeline')
+    end
+
+    it 'shows the health section to chapter organisers too' do
+      organiser = Fabricate(:chapter_organiser)
+      login(organiser)
+
+      get :show, params: { id: organiser.organised_chapters.first.id }
+
+      expect(response).to be_successful
+      expect(response.body).to include('Chapter Health')
+    end
+  end
 end

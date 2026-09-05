@@ -1,0 +1,24 @@
+<div class="card border-info mb-4">
+  <div class="card-body">
+    <h3>Chapter Health</h3>
+    <div class="row">
+      <% tiles.each do |tile| %>
+        <div class="col-6 col-md-3 text-center mb-2">
+          <div class="small text-muted"><%= tile[:label] %></div>
+          <% if tile[:label] == 'Status' %>
+            <span class="badge fs-6 <%= bucket_badge_class %>"><%= health.bucket %></span>
+          <% elsif tile[:title] %>
+            <span title="<%= tile[:title] %>"><%= tile[:value] %></span>
+          <% else %>
+            <span><%= tile[:value] %></span>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+    <div class="row mt-3">
+      <div class="col-12">
+        <%= content %>
+      </div>
+    </div>
+  </div>
+</div>
