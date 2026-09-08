@@ -103,6 +103,8 @@ class ApplicationController < ActionController::Base
   end
 
   def logout!
+    member = current_user
+    MemberActivityRecorder.record(actor: member, key: 'member.logout') if member
     @current_member = nil
     reset_session
   end
