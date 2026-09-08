@@ -1,0 +1,8 @@
+// app/assets/stylesheets/partials/_activity_strip.scss
+.activity-strip {
+  .activity-cell {
+    &-empty { fill: $gray-200; }
+    &-login_only { fill: $gray-400; }
+    &-active { fill: $codebar-pink; }
+  }
+}

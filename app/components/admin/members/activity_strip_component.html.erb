@@ -1,0 +1,13 @@
+<%# app/components/admin/members/activity_strip_component.html.erb %>
+<div class="activity-strip">
+  <h5>Activity — last 12 months</h5>
+  <svg viewBox="0 0 <%= svg_width %> 32" width="100%" height="32"
+       role="img" aria-label="Weekly activity, last 12 months">
+    <% weeks.each_with_index do |week, i| %>
+      <rect x="<%= i * (CELL_WIDTH + CELL_GAP) %>" y="0"
+            width="<%= CELL_WIDTH %>" height="32" rx="2"
+            class="activity-cell activity-cell-<%= week.state %>"
+            title="<%= title_for(week) %>" />
+    <% end %>
+  </svg>
+</div>
