@@ -7,6 +7,7 @@ module Admin
       CELL_GAP = 4
 
       def initialize(weeks:)
+        super()
         @weeks = weeks
       end
 
