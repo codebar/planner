@@ -19,6 +19,16 @@ RSpec.describe Admin::Dashboard::WorkshopTimelineComponent do
     expect(page).to have_css("line[stroke-dasharray][x1='667']")
   end
 
+  it 'labels past ticks with dates counting back from today' do
+    render_inline(described_class.new(past: [], future: []))
+
+    # the tick under the today line is today; the leftmost labelled tick is
+    # 180 days back. Labels are dates only (no midnight times).
+    expect(page).to have_css('text', text: Time.zone.today.to_fs(:short))
+    expect(page).to have_css('text', text: (Time.zone.today - 180.days).to_fs(:short))
+    expect(page).to have_no_text('00:00')
+  end
+
   it 'places a filled marker for each held workshop with a date tooltip' do
     past = [5.months.ago, 2.months.ago]
 

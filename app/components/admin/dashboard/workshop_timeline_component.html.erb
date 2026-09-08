@@ -8,7 +8,7 @@
     <line x1="<%= tick_x %>" y1="14" x2="<%= tick_x %>" y2="70" stroke="#dee2e6" stroke-width="1" />
     <% if (ticks_ago % 2).zero? %>
       <text x="<%= tick_x %>" y="86" font-size="9" fill="#6c757d" text-anchor="middle">
-        <%= (range_start + (ticks_ago * 30).days).to_fs(:short) %>
+        <%= (Time.zone.today - (ticks_ago * 30).days).to_fs(:short) %>
       </text>
     <% end %>
   <% end %>

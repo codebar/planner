@@ -40,11 +40,13 @@ module Admin
         private
 
         def recency_days(date)
-          date && ((Time.zone.now - date) / 1.day).floor
+          # calendar-day difference, so "yesterday 23:00" reads as 1 day ago
+          date && (Time.zone.today - date.to_date).to_i
         end
 
         def countdown_days(date)
-          date && ((date - Time.zone.now) / 1.day).ceil
+          # calendar-day difference, so "tomorrow 18:30" reads as 1 day away
+          date && (date.to_date - Time.zone.today).to_i
         end
 
         def median_cadence(dates) # rubocop:disable Metrics/AbcSize
