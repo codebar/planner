@@ -1,4 +1,4 @@
-RSpec.feature 'Managing workshop attendance', type: :feature do
+RSpec.feature 'Managing workshop attendance' do
   let(:coach) { Fabricate(:coach) }
   let(:student) { Fabricate(:student) }
 

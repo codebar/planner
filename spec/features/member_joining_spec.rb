@@ -1,4 +1,4 @@
-RSpec.feature 'A new student signs up', type: :feature do
+RSpec.feature 'A new student signs up' do
   before do
     mock_codebar_auth
   end

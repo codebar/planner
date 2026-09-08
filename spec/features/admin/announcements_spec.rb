@@ -1,4 +1,4 @@
-RSpec.feature 'Announcements', type: :feature do
+RSpec.feature 'Announcements' do
   let(:member) { Fabricate(:member) }
   let(:chapter) { Fabricate(:chapter_with_groups) }
 

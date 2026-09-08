@@ -1,4 +1,4 @@
-RSpec.feature 'Viewing feedback', type: :feature do
+RSpec.feature 'Viewing feedback' do
   let(:member) { Fabricate(:member) }
 
   context 'when an admin' do

@@ -1,4 +1,4 @@
-RSpec.feature 'Managing organisers', type: :feature do
+RSpec.feature 'Managing organisers' do
   let(:member) { Fabricate(:member) }
   let(:chapter) { Fabricate(:chapter_with_organiser) }
 

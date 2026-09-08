@@ -1,4 +1,4 @@
-RSpec.feature 'Subscribing to the newsletter', type: :feature do
+RSpec.feature 'Subscribing to the newsletter' do
   before do
     OmniAuth.config.mock_auth[:codebar] = OmniAuth::AuthHash.new(
       provider: 'codebar',

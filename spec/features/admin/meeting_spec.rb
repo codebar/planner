@@ -1,4 +1,4 @@
-RSpec.feature 'Managing meetings', type: :feature do
+RSpec.feature 'Managing meetings' do
   let(:member) { Fabricate(:member) }
   let!(:venue) { Fabricate(:sponsor) }
   let(:today) { Time.zone.now }
