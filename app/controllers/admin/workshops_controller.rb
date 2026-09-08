@@ -24,11 +24,14 @@ class Admin::WorkshopsController < Admin::ApplicationController
     authorize @workshop
   end
 
-  def create
+  def create # rubocop:disable Metrics/MethodLength
     resolve_chapter_name_to_id
     @workshop = Workshop.new(workshop_params)
     authorize(@workshop)
     if workshop_type_valid? && @workshop.save
+      @workshop.update_column(:created_by_id, current_user.id) # rubocop:disable Rails/SkipsModelValidations
+      MemberActivityRecorder.record(actor: current_user, key: 'workshop.created',
+                                    trackable: @workshop)
       assign_organisers_or_default
       assign_host(host_id)
       redirect_to admin_workshop_path(@workshop), notice: I18n.t('admin.messages.workshop.created')
