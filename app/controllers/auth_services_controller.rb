@@ -68,10 +68,12 @@ class AuthServicesController < ApplicationController
   end
 
   def destroy
-    service = current_user.services.find(params[:id])
+    service = current_user.auth_services.find(params[:id])
     if service.respond_to?(:destroy) && service.destroy
       flash[:notice] = I18n.t('notifications.provider_unlinked',
                               provider: service.provider)
+      MemberActivityRecorder.record(actor: current_user, key: 'auth_service.removed',
+                                    trackable: service)
       redirect_to redirect_path
     end
   end
@@ -114,6 +116,6 @@ class AuthServicesController < ApplicationController
   end
 
   def redirect_path
-    :services
+    root_path
   end
 end

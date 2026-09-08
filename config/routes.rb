@@ -176,6 +176,7 @@ Rails.application.routes.draw do
   get   '/login', to: 'auth_services#new'
   match '/auth/:service/callback' => 'auth_services#create', via: %i[get post]
   match '/auth/failure' => 'auth_services#failure', via: %i[get post]
+  delete '/auth/services/:id' => 'auth_services#destroy', as: :auth_service
   match '/logout' => 'auth_sessions#destroy', via: %i[get delete], as: :logout
   match '/register' => 'auth_sessions#create', via: %i[get], as: :registration
 
