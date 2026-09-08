@@ -40,6 +40,8 @@ class Admin::InvitationsController < Admin::ApplicationController
 
   def update_to_attended
     @invitation.update(attended: true, source: Invitation::SOURCE_ADMIN)
+    MemberActivityRecorder.record(actor: current_user, key: 'invitation.rsvp_override',
+                                  trackable: @invitation, recipient: @invitation.member)
   end
 
   def update_to_unattended
@@ -54,6 +56,11 @@ class Admin::InvitationsController < Admin::ApplicationController
       last_overridden_by_id: current_user.id,
       source: Invitation::SOURCE_ADMIN
     )
+
+    if update_successful
+      MemberActivityRecorder.record(actor: current_user, key: 'invitation.rsvp_override',
+                                    trackable: @invitation, recipient: @invitation.member)
+    end
 
     {
       message: update_successful ? attending_successful : attending_failed,
@@ -74,6 +81,8 @@ class Admin::InvitationsController < Admin::ApplicationController
 
   def update_to_not_attending
     @invitation.update!(attending: false, last_overridden_by_id: current_user.id)
+    MemberActivityRecorder.record(actor: current_user, key: 'invitation.rsvp_override',
+                                  trackable: @invitation, recipient: @invitation.member)
 
     {
       message: "You have removed #{@invitation.member.full_name} from the workshop.",
