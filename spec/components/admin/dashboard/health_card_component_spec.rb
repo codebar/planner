@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Admin::Dashboard::HealthCardComponent, type: :component do
+RSpec.describe Admin::Dashboard::HealthCardComponent do
   let(:chapter) { Fabricate(:chapter) }
 
   it 'renders the six stat tiles with formatted values' do
