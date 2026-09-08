@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe Admin::BansController do
   let(:member) { Fabricate(:member) }
   let(:admin) { Fabricate(:member) }
@@ -20,6 +22,19 @@ RSpec.describe Admin::BansController do
 
       expected = (Time.zone.now + 1.month).strftime('%Y-%m-%d')
       expect(response.body).to include("value=\"#{expected}\"")
+    end
+  end
+
+  describe 'POST #create' do
+    it 'records member.banned' do
+      expect do
+        post :create, params: { member_id: member.id, ban: { reason: 'spam', note: 'banned member',
+                                                             explanation: 'test', permanent: '1',
+                                                             expires_at: 1.month.from_now.to_s } }
+      end.to change {
+               PublicActivity::Activity.exists?(owner: admin, key: 'member.banned',
+                                                recipient: member)
+             }.from(false).to(true)
     end
   end
 end
