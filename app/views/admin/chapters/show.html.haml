@@ -58,6 +58,8 @@
             %div.text-muted.small= "Based on #{pluralize(@how_you_found_us.total_responses, 'response')}"
 
     .col-12.col-lg-8
+      = render Admin::Dashboard::HealthCardComponent.new(health: @chapter_health) do
+        = render Admin::Dashboard::WorkshopTimelineComponent.new(past: @past_workshop_dates, future: @planned_workshop_dates, event_past: @past_event_dates, event_future: @planned_event_dates)
       .mb-4.mt-md-4.mt-lg-0
         .d-md-flex.justify-content-between.align-items-center
           %h3 Upcoming Workshops

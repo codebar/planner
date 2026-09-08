@@ -105,4 +105,16 @@ RSpec.describe Event do
       expect(event.verified_students.count).to eq(2)
     end
   end
+
+  describe '.single_chapter' do
+    it 'includes only events linked to exactly one chapter' do
+      single = Fabricate(:event)
+      single.chapters = [Fabricate(:chapter)]
+      multi = Fabricate(:event)
+      multi.chapters = [Fabricate(:chapter), Fabricate(:chapter)]
+
+      expect(described_class.single_chapter).to include(single)
+      expect(described_class.single_chapter).not_to include(multi)
+    end
+  end
 end

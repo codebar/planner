@@ -18,6 +18,10 @@ class Event < ApplicationRecord
   has_and_belongs_to_many :chapters, join_table: 'chapters_events'
   has_many :invitations
 
+  # Events linked to exactly one chapter — a per-chapter signal, unlike
+  # multi-chapter events which list dozens of chapters.
+  scope :single_chapter, -> { left_joins(:chapters).group(:id).having('COUNT(chapters.id) = 1') }
+
   validates :name, :slug, :info, :schedule, :description, presence: true
   validates :slug, uniqueness: true
   validate :invitability, if: :invitable?
