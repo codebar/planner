@@ -35,7 +35,7 @@ class InvitationsController < ApplicationController
     if @invitation.student_spaces? || @invitation.coach_spaces?
       @invitation.update!(attending: true)
 
-      MemberActivityRecorder.record(actor: current_user, key: 'event_invitation.rsvp',
+      MemberActivityRecorder.record(actor: @invitation.member, key: 'event_invitation.rsvp',
                                     trackable: @invitation)
 
       notice = t('messages.invitations.spot_confirmed', event: @invitation.event.name)
@@ -64,7 +64,7 @@ class InvitationsController < ApplicationController
     end
 
     @invitation.update!(attending: false)
-    MemberActivityRecorder.record(actor: current_user, key: 'event_invitation.rejected',
+    MemberActivityRecorder.record(actor: @invitation.member, key: 'event_invitation.rejected',
                                   trackable: @invitation)
     redirect_back(
       fallback_location: root_path,
