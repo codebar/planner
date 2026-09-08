@@ -6,6 +6,9 @@
   %span.d-block
     %p.lead= @member.about_you
 
+  - if @member.organiser?
+    = render Admin::Members::ActivityStripComponent.new(weeks: @activity_weeks)
+
   - if @member.skills.any?
     .mb-4
       %h5 Skills
