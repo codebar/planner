@@ -19,10 +19,7 @@ class AuthServicesController < ApplicationController
       end
       redirect_to root_path
     elsif current_service
-      session[:member_id] = current_service.member.id
-      session[:service_id]         = current_service.id
-      session[:oauth_token]        = omnihash[:credentials][:token]
-      session[:oauth_token_secret] = omnihash[:credentials][:secret]
+      sign_in!(current_service.member, current_service)
 
       finish_registration || redirect_to(referer_or_dashboard_path)
     else
@@ -59,10 +56,7 @@ class AuthServicesController < ApplicationController
           new_member = false
         end
 
-        session[:member_id]          = member.id
-        session[:service_id]         = member_service.id
-        session[:oauth_token]        = omnihash[:credentials][:token]
-        session[:oauth_token_secret] = omnihash[:credentials][:secret]
+        sign_in!(member, member_service)
 
         if member.requires_additional_details?
           session[:new_member] = new_member
@@ -88,6 +82,15 @@ class AuthServicesController < ApplicationController
   end
 
   private
+
+  def sign_in!(member, auth_service)
+    session[:member_id]          = member.id
+    session[:service_id]         = auth_service.id
+    session[:oauth_token]        = omnihash[:credentials][:token]
+    session[:oauth_token_secret] = omnihash[:credentials][:secret]
+
+    MemberActivityRecorder.record(actor: member, key: 'member.login')
+  end
 
   def member_from_github_id
     return unless omnihash[:provider] == 'codebar'
