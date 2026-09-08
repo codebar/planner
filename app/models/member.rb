@@ -104,7 +104,7 @@ class Member < ApplicationRecord
   end
 
   def name_and_surname
-    [name, surname].compact.join ' '
+    [name, surname].map(&:presence).compact.join(' ').presence || email
   end
 
   def full_name
@@ -207,7 +207,7 @@ class Member < ApplicationRecord
     # a bare '%' matches everything and a trailing backslash raises 'LIKE pattern must
     # not end with escape character'.
     escaped = name.gsub(/[%_\\]/) { |char| "\\#{char}" }
-    where("CONCAT(name, ' ', surname) ILIKE ?", "%#{escaped}%")
+    where("CONCAT(name, ' ', surname) ILIKE ? OR email ILIKE ?", "%#{escaped}%", "%#{escaped}%")
   end
 
   private
