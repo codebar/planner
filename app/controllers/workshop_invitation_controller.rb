@@ -45,6 +45,8 @@ class WorkshopInvitationController < ApplicationController
     return back_with_message(t('messages.no_available_seats')) unless available_spaces?(@workshop, @invitation)
 
     if @invitation.update(invitation_params.merge!(attending: true, rsvp_time: Time.zone.now))
+      MemberActivityRecorder.record(actor: @invitation.member, key: 'workshop_invitation.rsvp',
+                                    trackable: @invitation)
       @workshop.send_attending_email(@invitation)
       back_with_message(t('messages.accepted_invitation', name: @invitation.member.name))
     else
@@ -63,6 +65,8 @@ class WorkshopInvitationController < ApplicationController
                       notice: t('messages.not_attending_already'))
       else
         @invitation.update!(attending: false)
+        MemberActivityRecorder.record(actor: @invitation.member, key: 'workshop_invitation.rejected',
+                                      trackable: @invitation)
 
         next_spot = WaitingList.next_spot(@invitation.workshop, @invitation.role)
 
