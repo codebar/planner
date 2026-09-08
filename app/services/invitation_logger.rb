@@ -8,7 +8,7 @@ class InvitationLogger
     @log = nil
   end
 
-  def start_batch
+  def start_batch # rubocop:disable Metrics/MethodLength
     @log = InvitationLog.create!(
       loggable: @loggable,
       initiator: @initiator,
@@ -18,6 +18,10 @@ class InvitationLogger
       started_at: Time.current,
       status: :running
     )
+
+    MemberActivityRecorder.record(actor: @initiator, key: 'invitation.send_batch', trackable: @loggable)
+
+    @log
   end
 
   def log_success(member, invitation = nil)
