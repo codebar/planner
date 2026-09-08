@@ -15,6 +15,11 @@ module LoginHelpers
       mock_auth_hash(provider: member.auth_services.first.provider,
                      uid: member.auth_services.first.uid)
       visit '/auth/codebar'
+      # visit returns once the OAuth redirect chain has committed navigation, but
+      # a following request can still race the chain and resolve to its landing
+      # page instead. Wait for the member nav (only rendered when logged in) so
+      # the session is fully established before the caller navigates on.
+      expect(page).to have_css('#navbarDropdownMenuLinkMember')
     else
       ApplicationController.prepend(LoginStub) unless ApplicationController < LoginStub
       LoginStub.current_user = member
