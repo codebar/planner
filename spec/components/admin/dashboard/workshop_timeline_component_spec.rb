@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Admin::Dashboard::WorkshopTimelineComponent, type: :component do
+RSpec.describe Admin::Dashboard::WorkshopTimelineComponent do
   it 'renders a heading and legend' do
     render_inline(described_class.new(past: [], future: []))
 
