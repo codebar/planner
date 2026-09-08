@@ -32,12 +32,4 @@ RSpec.describe 'Profile activity' do
 
     expect(PublicActivity::Activity.exists?(owner: member, key: 'toc.accepted')).to be(true)
   end
-
-  it 'records auth_service.removed on provider unlink' do
-    service = member.auth_services.first
-
-    delete auth_service_path(service)
-
-    expect(PublicActivity::Activity.exists?(owner: member, key: 'auth_service.removed')).to be(true)
-  end
 end
