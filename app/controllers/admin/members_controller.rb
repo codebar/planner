@@ -24,9 +24,10 @@ class Admin::MembersController < Admin::ApplicationController
   end
 
   def show
-    @member = MemberPresenter.new(Member.find(params[:id]))
+    member = Member.find(params[:id])
+    @member = MemberPresenter.new(member)
     load_attendance_data(@member)
-
+    @activity_weeks = Admin::Members::ActivityStrip.new(member).rows
     @actions = admin_actions(@member).sort_by(&:created_at).reverse
   end
 
