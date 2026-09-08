@@ -1,0 +1,15 @@
+{
+  "timestamp": "2026-08-21T10:18:52+02:00",
+  "dry_run": false,
+  "environment": "development",
+  "merges": [
+    {
+      "dup_id": 1,
+      "orig_id": 2,
+      "strategies": "email",
+      "status": "success"
+    }
+  ],
+  "errors": [],
+  "total_merges": 1
+}

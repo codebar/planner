@@ -117,6 +117,8 @@ class CheckInsController < ApplicationController
       attrs[:automated_rsvp] = true
     end
     invitation.update!(attrs)
+    MemberActivityRecorder.record(actor: invitation.member, key: 'member.checked_in',
+                                  trackable: invitation)
   end
 
   def permitted_role

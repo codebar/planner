@@ -1,0 +1,81 @@
+{
+  "timestamp": "2026-08-21T10:38:15+02:00",
+  "dry_run": false,
+  "environment": "development",
+  "merges": [
+    {
+      "dup_id": 31262,
+      "orig_id": 553,
+      "strategies": "name+surname",
+      "status": "success"
+    },
+    {
+      "dup_id": 31263,
+      "orig_id": 655,
+      "strategies": "first-name+uid-surname",
+      "status": "success"
+    },
+    {
+      "dup_id": 31230,
+      "orig_id": 5583,
+      "strategies": "name+surname",
+      "status": "success"
+    },
+    {
+      "dup_id": 31224,
+      "orig_id": 17284,
+      "strategies": "name+surname",
+      "status": "success"
+    },
+    {
+      "dup_id": 31243,
+      "orig_id": 22921,
+      "strategies": "name+surname",
+      "status": "success"
+    },
+    {
+      "dup_id": 31233,
+      "orig_id": 24686,
+      "strategies": "name+surname",
+      "status": "success"
+    },
+    {
+      "dup_id": 31232,
+      "orig_id": 25640,
+      "strategies": "name+surname",
+      "status": "success"
+    },
+    {
+      "dup_id": 31258,
+      "orig_id": 27714,
+      "strategies": "domain+local-part",
+      "status": "success"
+    },
+    {
+      "dup_id": 31257,
+      "orig_id": 27714,
+      "strategies": "manual",
+      "status": "success"
+    },
+    {
+      "dup_id": 31261,
+      "orig_id": 29893,
+      "strategies": "email",
+      "status": "success"
+    },
+    {
+      "dup_id": 31229,
+      "orig_id": 30581,
+      "strategies": "name+surname",
+      "status": "success"
+    },
+    {
+      "dup_id": 31218,
+      "orig_id": 31192,
+      "strategies": "email",
+      "status": "success"
+    }
+  ],
+  "errors": [],
+  "total_merges": 12
+}
