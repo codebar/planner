@@ -1,4 +1,3 @@
-# spec/requests/member_login_activity_spec.rb
 require 'rails_helper'
 
 RSpec.describe 'Member login activity' do
