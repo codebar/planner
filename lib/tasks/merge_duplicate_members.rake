@@ -150,7 +150,7 @@ module MergeDuplicateMembers
 
   class Detector
     def call
-      detected = (name_matches + email_matches + firstname_uid_surname_matches + domain_local_matches)
+      detected = (name_matches + email_matches + firstname_uid_surname_matches + concatenated_name_matches + domain_local_matches)
                  .group_by(&:dup_member_id)
                  .transform_values { |matches| best_match(matches) }
 
@@ -195,6 +195,30 @@ module MergeDuplicateMembers
         .joins("JOIN auth_services original_auth ON original_auth.member_id = originals.id AND original_auth.provider = 'github'")
         .where('originals.created_at < members.created_at')
         .select("members.id AS dup_member_id, originals.id AS original_member_id, 'email' AS strategy")
+        .map { |r| Match.new(r.dup_member_id, r.original_member_id, r.strategy) }
+    end
+
+    # Catches dups who typed their whole name into one field (e.g. name
+    # "LenaKrasnova", surname blank) so exact name+surname never matches.
+    # Compares lowercased/trimmed name||surname in both orders (field swaps).
+    # Requires at least one side to have a surname, otherwise it degenerates
+    # into a first-name-only match. Low-confidence: a shared name is not proof
+    # of the same person.
+    def concatenated_name_matches
+      codebar_members
+        .joins(<<~SQL)
+          JOIN members originals
+            ON COALESCE(LOWER(TRIM(members.name)), '') || COALESCE(LOWER(TRIM(members.surname)), '') =
+               COALESCE(LOWER(TRIM(originals.name)), '') || COALESCE(LOWER(TRIM(originals.surname)), '')
+            OR COALESCE(LOWER(TRIM(members.name)), '') || COALESCE(LOWER(TRIM(members.surname)), '') =
+               COALESCE(LOWER(TRIM(originals.surname)), '') || COALESCE(LOWER(TRIM(originals.name)), '')
+        SQL
+        .joins("JOIN auth_services original_auth ON original_auth.member_id = originals.id AND original_auth.provider = 'github'")
+        .where('originals.created_at < members.created_at')
+        .where("NULLIF(TRIM(members.name), '') IS NOT NULL")
+        .where("NULLIF(TRIM(originals.name), '') IS NOT NULL")
+        .where("NULLIF(TRIM(COALESCE(members.surname, '')), '') IS NOT NULL OR NULLIF(TRIM(COALESCE(originals.surname, '')), '') IS NOT NULL")
+        .select("members.id AS dup_member_id, originals.id AS original_member_id, 'concatenated-name' AS strategy")
         .map { |r| Match.new(r.dup_member_id, r.original_member_id, r.strategy) }
     end
 
