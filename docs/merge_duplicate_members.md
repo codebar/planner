@@ -37,6 +37,11 @@ make fix_duplicate_members APPLY=1
 ```
 
 Performs the merge for real inside a transaction.
+Only high-confidence matches are merged (see below). To also merge low-confidence matches after review:
+
+```bash
+make fix_duplicate_members APPLY=1 INCLUDE_WEAK=1
+```
 A JSON log file is written to:
 
 ```
@@ -51,16 +56,23 @@ The path is printed after the run completes.
 make verify_duplicate_members
 ```
 
-Re-detects duplicates and exits `0` when none remain, or `1` with the remaining pairs.
+Re-detects duplicates and exits `0` when no high-confidence duplicates remain, or `1` with the remaining pairs.
+Low-confidence matches are reported but do not fail the check.
 
-## Detection strategies
+## Detection strategies and confidence
 
-| Strategy | Description |
-|----------|-------------|
-| `name+surname` | Exact case-insensitive match on both fields |
-| `email` | Exact case-insensitive match on email |
-| `first-name+uid-surname` | First name matches; duplicate has no surname, but the codebar auth UID contains the original’s surname |
-| `domain+local-part` | Non-generic domain; local parts overlap |
+Merges are gated by confidence. A shared name is **not** proof of the same person — two different members can register with the same name (e.g. members 31336 / 25796, who hold two different GitHub accounts). Only identity evidence merges by default.
+
+| Strategy | Description | Confidence | Merged by default |
+|----------|-------------|------------|-------------------|
+| `email` | Exact case-insensitive match on email | high | yes |
+| `manual` | Hard-coded override reviewed by a human | high | yes |
+| `name+surname` | Exact case-insensitive match on both fields | low | no — review first |
+| `first-name+uid-surname` | First name matches; duplicate has no surname, but the codebar auth UID contains the original’s surname | low | no — review first |
+| `domain+local-part` | Non-generic domain; local parts overlap | low | no — review first |
+
+`detect` lists all matches with a confidence column. `fix` merges only high-confidence matches; low-confidence matches are listed for manual review.
+To merge a reviewed low-confidence pair, add it to `MANUAL_OVERRIDES` (preferred — it records the human decision) or re-run with `INCLUDE_WEAK=1` to merge all matches.
 
 The tool also applies hard-coded manual overrides for edge cases the heuristics cannot detect.
 
