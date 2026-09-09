@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.describe AttendanceWarning do
   describe '#create' do
     let(:member) { Fabricate(:member) }

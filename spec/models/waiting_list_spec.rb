@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.describe WaitingList do
   let(:workshop) { Fabricate(:workshop) }
 

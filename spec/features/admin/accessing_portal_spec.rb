@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.feature 'admin portal', type: :feature do
   scenario 'non admin cannot access the admin portal' do
     member = Fabricate(:member)

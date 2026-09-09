@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.feature 'Chapters', type: :feature do
   let(:member) { Fabricate(:member) }
 

@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.feature 'Managing events', type: :feature do
   let(:member) { Fabricate(:member) }
   let!(:event) { Fabricate(:event, confirmation_required: true) }

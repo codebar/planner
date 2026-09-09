@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.describe Admin::MemberSearchController, type: :controller do
   let(:member) { Fabricate.build(:member) }
 

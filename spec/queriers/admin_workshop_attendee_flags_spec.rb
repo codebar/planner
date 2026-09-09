@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.describe AdminWorkshopAttendeeFlags do
   subject(:flags) { described_class.for_members([member.id])[member.id] }
 

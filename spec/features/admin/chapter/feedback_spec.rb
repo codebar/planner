@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.feature 'Chapter workshop feedback', type: :feature do
   it 'is only available to chapter organisers' do
     member = Fabricate(:member)

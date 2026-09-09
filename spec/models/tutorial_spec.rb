@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.describe Tutorial do
   subject(:tutorial) { Fabricate.build(:tutorial) }
 

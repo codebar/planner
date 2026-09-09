@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.describe ChapterPresenter do
   let(:chapter) { Fabricate(:chapter_without_organisers) }
   let(:presenter) { described_class.new(chapter) }

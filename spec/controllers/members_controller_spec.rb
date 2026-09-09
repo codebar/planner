@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.describe MembersController do
   describe 'GET unsubscribe/#token' do
     it 'redirects to the subscription path when token is valid' do

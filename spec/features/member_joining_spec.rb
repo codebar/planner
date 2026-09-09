@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.feature 'A new student signs up', type: :feature do
   before do
     mock_codebar_auth

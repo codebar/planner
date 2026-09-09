@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.describe Contact do
   subject(:contact) { Fabricate.build(:contact) }
 

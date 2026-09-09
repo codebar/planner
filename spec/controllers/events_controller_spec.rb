@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.describe EventsController do
   describe '#fetch_upcoming_events' do
     context 'when no events exist' do

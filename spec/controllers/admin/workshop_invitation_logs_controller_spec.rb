@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.describe Admin::WorkshopInvitationLogsController do
   let(:workshop) { Fabricate(:workshop) }
   let(:admin) { Fabricate(:member).tap { |m| m.add_role(:admin) } }

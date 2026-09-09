@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.describe Invitation do
   it_behaves_like InvitationConcerns, :invitation, :event
 

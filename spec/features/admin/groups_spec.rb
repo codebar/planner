@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.feature 'admin groups', type: :feature do
   describe '#show page' do
     let(:member) { Fabricate(:member) }

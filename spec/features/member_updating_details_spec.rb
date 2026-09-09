@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.feature 'Update your details', type: :feature do
   before do
     mock_codebar_auth

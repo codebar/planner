@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.describe WaitingListsController do
   let(:workshop) { Fabricate(:workshop) }
   let(:invitation) { Fabricate(:workshop_invitation, workshop:) }

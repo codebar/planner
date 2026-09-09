@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.describe InvitationPresenter do
   let(:invitation) { Fabricate(:student_workshop_invitation) }
   let(:invitation_presenter) { described_class.new(invitation) }

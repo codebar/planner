@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.describe MeetingInvitation do
   it_behaves_like InvitationConcerns, :meeting_invitation, :meeting
 

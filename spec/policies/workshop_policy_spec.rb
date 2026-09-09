@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.describe WorkshopPolicy do
   subject(:policy) { described_class.new(user, workshop) }
 

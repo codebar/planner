@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.describe Listable do
   subject(:workshop) { Fabricate(:workshop) }
 

@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.describe 'rake mailing_list:subscribe_active_members', type: :task do
   it 'preloads the Rails environment' do
     expect(task.prerequisites).to include 'environment'

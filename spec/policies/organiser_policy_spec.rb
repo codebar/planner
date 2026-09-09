@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.describe OrganiserPolicy do
   subject(:policy) { described_class.new(user, organiser) }
 
