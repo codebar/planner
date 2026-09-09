@@ -314,15 +314,16 @@ module MergeDuplicateMembers
     end
 
     def print
-      puts format('%-10s %-25s %-35s %-10s %-35s %-6s %-25s', 'Dup id', 'Dup name', 'Dup email', 'Orig id', 'Original email', 'Conf', 'Strategies')
-      puts '-' * 150
+      puts format('%-10s %-25s %-35s %-10s %-25s %-35s %-6s %-25s', 'Dup id', 'Dup name', 'Dup email', 'Orig id', 'Orig name', 'Orig email', 'Conf', 'Strategies')
+      puts '-' * 180
       @matches.each do |m|
         dup = m.dup_member
         orig = m.original_member
-        name = [dup.name, dup.surname].compact.join(' ')
-        puts format('%-10s %-25s %-35s %-10s %-35s %-6s %-25s',
-                    dup.id, MergeDuplicateMembers.truncate(name, 25), MergeDuplicateMembers.truncate(dup.email, 35),
-                    orig.id, MergeDuplicateMembers.truncate(orig.email, 35), m.confidence, m.merge_strategies)
+        dup_name = [dup.name, dup.surname].compact.join(' ')
+        orig_name = [orig.name, orig.surname].compact.join(' ')
+        puts format('%-10s %-25s %-35s %-10s %-25s %-35s %-6s %-25s',
+                    dup.id, MergeDuplicateMembers.truncate(dup_name, 25), MergeDuplicateMembers.truncate(dup.email, 35),
+                    orig.id, MergeDuplicateMembers.truncate(orig_name, 25), MergeDuplicateMembers.truncate(orig.email, 35), m.confidence, m.merge_strategies)
       end
       puts "\n#{@matches.size} match(es) detected."
     end
