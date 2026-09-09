@@ -1,4 +1,3 @@
-# spec/requests/member_logout_activity_spec.rb
 require 'rails_helper'
 
 RSpec.describe 'Member logout activity' do
