@@ -23,7 +23,7 @@ RSpec.feature 'Managing events' do
 
     find_by_id('event_chapter_ids_chosen').click
     find('.add-all-chapters', text: 'Add to all').click
-    expect(page).to have_no_css('#event_chapter_ids_chosen.chosen-with-drop')
+    expect(page).to have_css('.search-choice', count: Chapter.count)
 
     click_on 'Save'
 

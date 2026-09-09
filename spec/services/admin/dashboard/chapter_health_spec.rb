@@ -55,6 +55,15 @@ RSpec.describe Admin::Dashboard::ChapterHealth do
       expect(row.days_until_next_workshop).to eq(10)
     end
 
+    it 'counts the next workshop in calendar days, not elapsed 24-hour blocks' do
+      chapter = Fabricate(:chapter)
+      Fabricate(:workshop, chapter:, date_and_time: 1.day.from_now.change(hour: 18, min: 30))
+
+      row = described_class.row(chapter:)
+
+      expect(row.days_until_next_workshop).to eq(1)
+    end
+
     it 'returns nil days_since_last_workshop with no past workshops' do
       chapter = Fabricate(:chapter)
 
