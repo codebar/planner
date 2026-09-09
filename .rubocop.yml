@@ -21,6 +21,14 @@ plugins:
   - rubocop-rspec
   - rubocop-rspec_rails
 
+# spec/components is registered as the :component type in rails_helper.rb, so
+# an explicit `type: :component` is redundant. Inferences covers the standard
+# rspec-rails directories; ViewComponent's directory is not one of them.
+RSpecRails/InferredSpecType:
+  Enabled: true
+  Inferences:
+    components: component
+
 Layout/LineLength:
   Max: 120
   Exclude:

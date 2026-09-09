@@ -1,4 +1,4 @@
-RSpec.feature 'Internationalization', type: :feature do
+RSpec.feature 'Internationalization' do
   after do
     I18n.locale = :en
   end

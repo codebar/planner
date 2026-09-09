@@ -1,4 +1,4 @@
-RSpec.feature 'Managing events', type: :feature do
+RSpec.feature 'Managing events' do
   let(:member) { Fabricate(:member) }
   let!(:event) { Fabricate(:event, confirmation_required: true) }
 

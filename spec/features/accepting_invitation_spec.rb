@@ -1,4 +1,4 @@
-RSpec.feature 'Accepting a workshop invitation', type: :feature do
+RSpec.feature 'Accepting a workshop invitation' do
   describe '#workshop' do
     let(:member) { Fabricate(:member) }
     let(:invitation) { Fabricate(:workshop_invitation, member:, tutorial: tutorial.title) }

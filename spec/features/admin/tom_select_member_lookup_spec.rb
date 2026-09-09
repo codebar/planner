@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Admin TomSelect Member Lookup', :js, type: :feature do
+RSpec.describe 'Admin TomSelect Member Lookup', :js do
   let(:admin) { Fabricate(:member) }
   let!(:member_jane) { Fabricate(:member, name: 'Jane', surname: 'Doe', email: 'jane@example.com') }
 

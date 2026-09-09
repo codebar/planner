@@ -1,4 +1,4 @@
-RSpec.feature 'Managing sponsors', type: :feature do
+RSpec.feature 'Managing sponsors' do
   let(:member) { Fabricate(:member) }
 
   before do

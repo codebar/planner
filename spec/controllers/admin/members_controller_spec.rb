@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Admin::MembersController, type: :controller do
+RSpec.describe Admin::MembersController do
   describe 'GET #search' do
     let(:admin) { Fabricate(:member) }
     let!(:member_jane) { Fabricate(:member, name: 'Jane', surname: 'Doe', email: 'jane@example.com', pronouns: nil) }

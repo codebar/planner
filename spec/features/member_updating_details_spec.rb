@@ -1,4 +1,4 @@
-RSpec.feature 'Update your details', type: :feature do
+RSpec.feature 'Update your details' do
   before do
     mock_codebar_auth
   end

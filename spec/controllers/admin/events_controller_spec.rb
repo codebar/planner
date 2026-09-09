@@ -1,4 +1,4 @@
-RSpec.describe Admin::EventsController, type: :controller do
+RSpec.describe Admin::EventsController do
   let(:admin) { Fabricate(:member) }
   let(:event) { Fabricate(:event, chapters: [chapter]) }
   let(:chapter) { Fabricate(:chapter) }

@@ -1,4 +1,4 @@
-RSpec.feature 'a Coach can', type: :feature do
+RSpec.feature 'a Coach can' do
   describe '#workshop' do
     let(:member) { Fabricate(:member) }
     let(:invitation) { Fabricate(:coach_workshop_invitation, member:) }

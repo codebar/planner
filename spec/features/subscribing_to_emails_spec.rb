@@ -1,4 +1,4 @@
-RSpec.feature 'Managing subscriptions', type: :feature do
+RSpec.feature 'Managing subscriptions' do
   let(:member) { Fabricate(:member) }
   let!(:group) { Fabricate(:group) }
 

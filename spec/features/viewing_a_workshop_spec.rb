@@ -1,4 +1,4 @@
-RSpec.feature 'Viewing a workshop page', type: :feature do
+RSpec.feature 'Viewing a workshop page' do
   context 'when a visitor' do
     before do
       visit workshop_path(workshop)

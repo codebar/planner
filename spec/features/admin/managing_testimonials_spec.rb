@@ -1,4 +1,4 @@
-RSpec.feature 'Managing testimonials', type: :feature do
+RSpec.feature 'Managing testimonials' do
   let(:member) { Fabricate(:member) }
 
   scenario 'non admin cannot manage testimonials' do

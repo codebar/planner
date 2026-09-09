@@ -1,4 +1,4 @@
-RSpec.describe Admin::MemberNotesController, type: :controller do
+RSpec.describe Admin::MemberNotesController do
   let(:member) { Fabricate(:member) }
   let(:admin) { Fabricate(:chapter_organiser) }
   let!(:member_note) { Fabricate(:member_note) }

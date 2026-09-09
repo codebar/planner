@@ -1,4 +1,4 @@
-RSpec.feature 'Chapters', type: :feature do
+RSpec.feature 'Chapters' do
   let(:member) { Fabricate(:member) }
 
   context 'with authorization smoke test' do

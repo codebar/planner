@@ -1,4 +1,4 @@
-RSpec.feature 'A visitor to the website', type: :feature do
+RSpec.feature 'A visitor to the website' do
   scenario 'can access and view the cookie policy' do
     visit root_path
 

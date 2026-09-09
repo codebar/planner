@@ -1,4 +1,4 @@
-RSpec.describe Admin::MemberSearchController, type: :controller do
+RSpec.describe Admin::MemberSearchController do
   let(:member) { Fabricate.build(:member) }
 
   describe 'GET #index' do
