@@ -23,6 +23,9 @@
         render: {
           option: function(item, escape) {
             return '<div>' + escape(item.full_name) + ' <small class="text-muted">' + escape(item.email) + '</small></div>';
+          },
+          item: function(item, escape) {
+            return '<div>' + escape(item.full_name || item.email) + '</div>';
           }
         }
       });
@@ -54,6 +57,9 @@
           option: function(item, escape) {
             return '<div>' + escape(item.full_name) + ' <small class="text-muted">' + escape(item.email) + '</small></div>';
           },
+          item: function(item, escape) {
+            return '<div>' + escape(item.full_name || item.email) + '</div>';
+          },
           no_results: function() {
             return '<div class="no-results">No members found</div>';
           }
@@ -83,6 +89,9 @@
         render: {
           option: function(item, escape) {
             return '<div>' + escape(item.full_name) + ' <small class="text-muted">' + escape(item.email) + '</small></div>';
+          },
+          item: function(item, escape) {
+            return '<div>' + escape(item.full_name || item.email) + '</div>';
           },
           no_results: function() {
             return '<div class="no-results">No members found</div>';

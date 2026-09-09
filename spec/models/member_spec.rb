@@ -225,6 +225,12 @@ RSpec.describe Member do
       end
     end
 
+    describe 'search by email' do
+      it 'finds the member' do
+        expect(described_class.find_members_by_name(member.email).first).to eq(member)
+      end
+    end
+
     describe 'search bar is empty' do
       it 'returns no members' do
         Fabricate(:member)
@@ -244,6 +250,17 @@ RSpec.describe Member do
         result = described_class.find_members_by_name('back\\')
         expect(result.map(&:surname)).to include('Back\\')
       end
+    end
+  end
+
+  describe '#name_and_surname' do
+    it 'returns name and surname' do
+      expect(member.name_and_surname).to eq("#{member.name} #{member.surname}")
+    end
+
+    it 'falls back to email when name and surname are blank' do
+      member = Fabricate.build(:member, name: '', surname: '')
+      expect(member.name_and_surname).to eq(member.email)
     end
   end
 
