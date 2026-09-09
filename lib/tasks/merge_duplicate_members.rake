@@ -37,12 +37,37 @@ namespace :member do
         next
       end
 
+      high_confidence, low_confidence = duplicates.partition(&:high_confidence?)
+
+      targets =
+        if ENV['INCLUDE_WEAK'] == '1'
+          puts 'INCLUDE_WEAK=1 — merging ALL matches, including low-confidence ones.'
+          puts
+          duplicates
+        else
+          low_confidence.each do |m|
+            puts "Skipping low-confidence match #{m.dup_member_id} → #{m.original_member_id} " \
+                 "(#{m.merge_strategies}) — a shared name is not proof of the same person. Review manually, " \
+                 'then add a MANUAL_OVERRIDES entry or re-run with INCLUDE_WEAK=1.'
+          end
+          puts
+          high_confidence
+        end
+
+      if targets.empty?
+        puts 'No high-confidence duplicates detected.'
+        if low_confidence.any?
+          puts "#{low_confidence.size} low-confidence match(es) listed above — review before merging."
+        end
+        next
+      end
+
       puts dry_run ? 'DRY RUN — no changes will be made.' : 'APPLYING merges...'
       puts
 
       logger = MergeDuplicateMembers::RunLogger.new(dry_run: dry_run)
 
-      duplicates.each do |pair|
+      targets.each do |pair|
         begin
           MergeDuplicateMembers::Merger.new(pair, dry_run: dry_run).call
           logger.record_merge(dup_id: pair.dup_member_id, orig_id: pair.original_member_id, strategies: pair.merge_strategies, status: 'success')
@@ -54,7 +79,7 @@ namespace :member do
       end
 
       log_path = logger.flush
-      puts dry_run ? "Run with APPLY=1 to execute these #{duplicates.size} merges." : 'Done.'
+      puts dry_run ? "Run with APPLY=1 to execute these #{targets.size} merges." : 'Done.'
       puts "Log: #{log_path}" if log_path
     end
 
@@ -62,12 +87,17 @@ namespace :member do
     task verify: :environment do
       MergeDuplicateMembers.establish_connection!
       duplicates = MergeDuplicateMembers::Detector.new.call
+      high_confidence, low_confidence = duplicates.partition(&:high_confidence?)
 
-      if duplicates.empty?
-        puts 'PASS: no duplicate members detected.'
+      if high_confidence.empty?
+        puts 'PASS: no high-confidence duplicate members detected.'
+        if low_confidence.any?
+          puts "Note: #{low_confidence.size} low-confidence match(es) remain — review manually before merging:"
+          MergeDuplicateMembers::Reporter.new(low_confidence).print
+        end
       else
-        puts "FAIL: #{duplicates.size} duplicate member(s) still detected:"
-        MergeDuplicateMembers::Reporter.new(duplicates).print
+        puts "FAIL: #{high_confidence.size} high-confidence duplicate member(s) still detected:"
+        MergeDuplicateMembers::Reporter.new(high_confidence).print
         exit 1
       end
     end
@@ -89,7 +119,8 @@ module MergeDuplicateMembers
   # Hard-coded merges for cases the heuristics cannot safely detect.
   # Format: [duplicate_member_id, original_member_id]
   MANUAL_OVERRIDES = [
-    [31_257, 27_714] # Lou Alldis's third account
+    [31_257, 27_714], # Lou Alldis's third account
+    [31_292, 13_771] # Lena Krasnova — signed up with work email, name typed as one word
   ].freeze
 
   class << self
@@ -203,9 +234,10 @@ module MergeDuplicateMembers
     end
 
     def best_match(matches)
+      # A high-confidence match always beats an activity-based guess.
       matches.max_by do |m|
         orig = m.original_member
-        [orig.roles.count, orig.subscriptions.count, orig.workshop_invitations.count]
+        [m.high_confidence? ? 1 : 0, orig.roles.count, orig.subscriptions.count, orig.workshop_invitations.count]
       end
     end
 
@@ -219,12 +251,20 @@ module MergeDuplicateMembers
   end
 
   class Match
+    # Only evidence of the same identity justifies merging. A shared name is
+    # not: different people can share a name (see member 31336 / 25796).
+    HIGH_CONFIDENCE_STRATEGIES = %w[email manual].freeze
+
     attr_reader :dup_member_id, :original_member_id, :strategies
 
     def initialize(dup_member_id, original_member_id, strategy)
       @dup_member_id = dup_member_id
       @original_member_id = original_member_id
       @strategies = Set[strategy]
+    end
+
+    def high_confidence?
+      @strategies.any? { |s| HIGH_CONFIDENCE_STRATEGIES.include?(s) }
     end
 
     def dup_member
@@ -238,6 +278,10 @@ module MergeDuplicateMembers
     def merge_strategies
       @strategies.to_a.sort.join(', ')
     end
+
+    def confidence
+      high_confidence? ? 'high' : 'low'
+    end
   end
 
   class Reporter
@@ -246,17 +290,17 @@ module MergeDuplicateMembers
     end
 
     def print
-      puts format('%-10s %-25s %-35s %-10s %-35s %-25s', 'Dup id', 'Dup name', 'Dup email', 'Orig id', 'Original email', 'Strategies')
+      puts format('%-10s %-25s %-35s %-10s %-35s %-6s %-25s', 'Dup id', 'Dup name', 'Dup email', 'Orig id', 'Original email', 'Conf', 'Strategies')
       puts '-' * 150
       @matches.each do |m|
         dup = m.dup_member
         orig = m.original_member
         name = [dup.name, dup.surname].compact.join(' ')
-        puts format('%-10s %-25s %-35s %-10s %-35s %-25s',
+        puts format('%-10s %-25s %-35s %-10s %-35s %-6s %-25s',
                     dup.id, MergeDuplicateMembers.truncate(name, 25), MergeDuplicateMembers.truncate(dup.email, 35),
-                    orig.id, MergeDuplicateMembers.truncate(orig.email, 35), m.merge_strategies)
+                    orig.id, MergeDuplicateMembers.truncate(orig.email, 35), m.confidence, m.merge_strategies)
       end
-      puts "\n#{@matches.size} duplicate member(s) detected."
+      puts "\n#{@matches.size} match(es) detected."
     end
   end
 
