@@ -25,12 +25,13 @@ class SignupNudgeEmailService
           .find_each { |member| MemberMailer.with(member:).signup_nudge_followup.deliver_later }
   end
 
+  # NULL-safe NOT IN: a NULL member_id in the subquery would exclude every member
   def self.unemailed(email_type)
-    Member.where.not(id: MemberEmailDelivery.where(email_type:).select(:member_id))
+    Member.where.not(id: MemberEmailDelivery.where(email_type:).where.not(member_id: nil).select(:member_id))
   end
 
   def self.never_subscribed
-    Member.where.not(id: Subscription.select(:member_id))
+    Member.where.not(id: Subscription.where.not(member_id: nil).select(:member_id))
   end
 
   def self.nudge_window

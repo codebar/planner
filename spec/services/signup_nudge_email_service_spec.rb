@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.describe SignupNudgeEmailService, type: :service do
   describe '#send_nudges' do
     subject(:call) { described_class.send_nudges }
@@ -95,6 +97,16 @@ RSpec.describe SignupNudgeEmailService, type: :service do
         .not_to(change do
           MemberEmailDelivery.where(member: subscribed_after_nudge, email_type: 'signup_nudge_followup').count
         end)
+    end
+
+    # DB allows NULL member_id on both tables; one such row would make NOT IN exclude everyone
+    it 'still sends nudges when log or subscription rows have no member_id' do
+      Fabricate(:member_email_delivery, email_type: 'signup_nudge').update_column(:member_id, nil)
+      Fabricate(:subscription).update_column(:member_id, nil)
+
+      expect { perform_enqueued_jobs { call } }
+        .to change { MemberEmailDelivery.where(member: nudge_eligible, email_type: 'signup_nudge').count }
+        .by(1)
     end
   end
 end
