@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.describe Admin::EventsController do
   let(:admin) { Fabricate(:member) }
   let(:event) { Fabricate(:event, chapters: [chapter]) }

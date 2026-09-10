@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.describe InvitationManager do
   subject(:manager) { described_class.new }
 

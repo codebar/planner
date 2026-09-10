@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.describe 'rake feedback:request', type: :task do
   context 'when most recent workshop has attendances' do
     it 'preloads the Rails environment' do

@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 require 'verifier'
 
 RSpec.describe Verifier do

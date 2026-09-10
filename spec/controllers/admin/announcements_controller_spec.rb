@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.describe Admin::AnnouncementsController do
   let(:member) { Fabricate(:member) }
   let(:announcement) { Fabricate(:announcement) }

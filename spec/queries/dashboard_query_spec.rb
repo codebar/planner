@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.describe DashboardQuery do
   describe '.upcoming_events' do
     it 'returns an empty hash when there are no upcoming events' do

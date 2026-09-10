@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.describe Admin::BansController do
   let(:member) { Fabricate(:member) }
   let(:admin) { Fabricate(:member) }

@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.describe Group do
   subject(:group) { Fabricate.build(:group) }
 

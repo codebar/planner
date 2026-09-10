@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.feature 'Managing workshop attendance' do
   let(:coach) { Fabricate(:coach) }
   let(:student) { Fabricate(:student) }

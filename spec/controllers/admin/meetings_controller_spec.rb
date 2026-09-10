@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.describe Admin::MeetingsController do
   let(:member) { Fabricate(:member) }
   let(:meeting) { Fabricate(:meeting) }

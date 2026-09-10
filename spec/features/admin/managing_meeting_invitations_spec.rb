@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.feature 'Managing meeting invitations' do
   let(:admin) { Fabricate(:member) }
   let(:meeting) { Fabricate(:meeting) }

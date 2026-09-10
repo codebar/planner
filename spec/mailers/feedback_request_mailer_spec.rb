@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.describe FeedbackRequestMailer do
   let(:email) { ActionMailer::Base.deliveries.last }
   let(:member) { Fabricate(:member) }

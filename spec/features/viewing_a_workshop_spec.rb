@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.feature 'Viewing a workshop page' do
   context 'when a visitor' do
     before do

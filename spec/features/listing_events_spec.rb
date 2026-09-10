@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.feature 'event listing' do
   describe 'I can see upcoming events' do
     let!(:chapter) { Fabricate(:chapter, active: true) }

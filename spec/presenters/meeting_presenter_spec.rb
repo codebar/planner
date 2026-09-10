@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.describe MeetingPresenter do
   let(:meeting) { Fabricate(:meeting) }
   let(:event) { described_class.new(meeting) }

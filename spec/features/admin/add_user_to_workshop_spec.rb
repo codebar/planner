@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.describe 'Add a user to an existing workshop', :js do
   let(:member) { Fabricate(:member) }
 

@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.describe 'rake member:delete', type: :task do
   let!(:member) { Fabricate.create(:member) }
 

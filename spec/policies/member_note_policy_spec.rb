@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.describe MemberNotePolicy do
   subject(:policy) { described_class.new(user, member_note) }
 

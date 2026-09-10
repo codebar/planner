@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.describe WorkshopInvitationMailer do
   let(:email) { ActionMailer::Base.deliveries.last }
   let(:workshop) { Fabricate(:workshop, title: 'HTML & CSS') }

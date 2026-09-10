@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.describe Member do
   let(:member) { Fabricate(:member) }
 

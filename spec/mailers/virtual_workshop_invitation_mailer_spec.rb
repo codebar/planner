@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.describe VirtualWorkshopInvitationMailer do
   let(:email) { ActionMailer::Base.deliveries.last }
   let(:workshop) { Fabricate(:workshop) }

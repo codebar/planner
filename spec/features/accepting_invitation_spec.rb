@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.feature 'Accepting a workshop invitation' do
   describe '#workshop' do
     let(:member) { Fabricate(:member) }

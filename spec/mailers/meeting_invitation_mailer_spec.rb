@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.describe MeetingInvitationMailer do
   let(:meeting) { Fabricate(:meeting) }
   let(:member) { Fabricate(:member) }

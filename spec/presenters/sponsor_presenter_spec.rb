@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.describe SponsorPresenter do
   let(:sponsor_presenter) { described_class.new(sponsor) }
   let(:sponsor) { Fabricate(:sponsor, contacts:) }

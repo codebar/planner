@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.feature 'member feedback' do
   let(:feedback_request) { Fabricate(:feedback_request) }
   let(:valid_token) { feedback_request.token }

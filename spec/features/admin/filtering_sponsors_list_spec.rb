@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.feature 'Admin filtering sponsors list' do
   let(:manager) { Fabricate(:member) }
 

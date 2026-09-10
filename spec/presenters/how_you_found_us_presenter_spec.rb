@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.describe HowYouFoundUsPresenter do
   def add_member(group, how)
     member = Fabricate(:member, how_you_found_us: how)

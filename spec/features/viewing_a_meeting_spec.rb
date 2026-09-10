@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.feature 'viewing a meeting' do
   let!(:meeting) { Fabricate(:meeting) }
 
