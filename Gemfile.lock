@@ -662,6 +662,7 @@ DEPENDENCIES
   image_processing
   irb
   jquery-rails
+  json (~> 2.3)
   jwt
   launchy
   letter_opener
