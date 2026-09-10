@@ -1,0 +1,43 @@
+<% content_for :title, 'Admin stats' %>
+
+<div class="container py-4 py-lg-5">
+  <h1>Admin stats</h1>
+
+  <p class="lead">Organisation-wide monthly figures across all chapters, for the selected month range. Totals cover the selected range only.</p>
+
+  <% if @range_error.present? %>
+    <div class="alert alert-danger" role="alert"><%= @range_error %></div>
+  <% end %>
+
+  <%= form_tag admin_stats_path, method: :get, class: 'd-inline-block mb-4 me-3' do %>
+    <div class="btn-group" role="group">
+      <% active_class = ->(p) { @range_result.status == :default && @range_result.months.size == p ? ' active' : '' } %>
+      <%= button_tag '3 months', name: 'stats[preset]', value: 3, class: "btn btn-outline-primary#{active_class.call(3)}" %>
+      <%= button_tag '6 months', name: 'stats[preset]', value: 6, class: "btn btn-outline-primary#{active_class.call(6)}" %>
+      <%= button_tag '12 months', name: 'stats[preset]', value: 12, class: "btn btn-outline-primary#{active_class.call(12)}" %>
+    </div>
+  <% end %>
+
+  <%= form_tag admin_stats_path, method: :get, class: 'd-inline-flex align-items-end gap-2 mb-4' do %>
+    <div>
+      <%= label_tag :stats_start_month, 'Start month' %>
+      <%= month_field_tag 'stats[start_month]', @range_start, id: 'stats_start_month', min: Workshop.minimum(:date_and_time)&.strftime('%Y-%m'), class: 'form-control' %>
+    </div>
+    <div>
+      <%= label_tag :stats_end_month, 'End month' %>
+      <%= month_field_tag 'stats[end_month]', @range_end, id: 'stats_end_month', class: 'form-control' %>
+    </div>
+    <%= submit_tag 'Apply', class: 'btn btn-primary' %>
+  <% end %>
+
+  <% rows_by_section = @rows.group_by(&:section) %>
+  <%= render Admin::Stats::TableComponent.new(months: @months, rows: rows_by_section.fetch(:attendance, []), caption: 'Attendance') %>
+  <%= render Admin::Stats::TableComponent.new(months: @months, rows: rows_by_section.fetch(:sign_ups, []), caption: 'New sign-ups') %>
+  <%= render Admin::Stats::TableComponent.new(months: @months, rows: rows_by_section.fetch(:workshops, []), caption: 'Workshops') %>
+
+  <%= link_to 'Download CSV',
+              admin_stats_path(format: :csv,
+                               stats: { preset: params.dig(:stats, :preset),
+                                        start_month: @range_start, end_month: @range_end }.compact),
+              class: 'btn btn-primary' %>
+</div>

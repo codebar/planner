@@ -1,0 +1,25 @@
+<div class="table-responsive mb-4">
+  <table class="table table-sm table-hover align-middle">
+    <caption class="caption-top text-start"><%= caption %></caption>
+    <thead>
+      <tr>
+        <th scope="col">Metric</th>
+        <% months.each do |month| %>
+          <th scope="col" class="text-end"><%= month_header(month) %></th>
+        <% end %>
+        <th scope="col" class="text-end">Totals</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% rows.each do |row| %>
+        <tr>
+          <th scope="row"><%= row.label %></th>
+          <% months.each do |month| %>
+            <td class="text-end"><%= cell_value(row, month) %></td>
+          <% end %>
+          <td class="text-end"><%= total_value(row) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
