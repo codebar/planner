@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Admin::ChaptersController, type: :controller do
+RSpec.describe Admin::ChaptersController do
   let(:admin) { Fabricate(:member) }
 
   before do

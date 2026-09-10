@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'admin groups', type: :feature do
+RSpec.feature 'admin groups' do
   describe '#show page' do
     let(:member) { Fabricate(:member) }
     let(:chapter) { Fabricate(:chapter, name: 'Brighton') }

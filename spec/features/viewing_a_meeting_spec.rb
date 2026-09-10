@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'viewing a meeting', type: :feature do
+RSpec.feature 'viewing a meeting' do
   let!(:meeting) { Fabricate(:meeting) }
 
   context 'when a visitor' do

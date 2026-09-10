@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Admin::SponsorsController, type: :controller do
+RSpec.describe Admin::SponsorsController do
   let(:member) { Fabricate(:member) }
   let(:member1) { Fabricate(:member) }
   let(:address) { Fabricate(:address) }

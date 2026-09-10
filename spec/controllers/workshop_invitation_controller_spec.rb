@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe WorkshopInvitationController, type: :controller do
+RSpec.describe WorkshopInvitationController do
   let(:member) { Fabricate(:member) }
   let(:tutorial) { Fabricate(:tutorial) }
   let(:workshop) { Fabricate(:workshop) }

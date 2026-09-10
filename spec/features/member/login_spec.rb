@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Member logging in', type: :feature do
+RSpec.feature 'Member logging in' do
   let(:member) { Fabricate(:member) }
 
   describe 'Sign up' do

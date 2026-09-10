@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe EmailHeaderHelper, type: :helper do
+RSpec.describe EmailHeaderHelper do
   before do
     EmailHeaderHelper.module_eval { public :mail_to_member }
   end

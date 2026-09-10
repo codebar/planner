@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe EventCardComponent, type: :component do
+RSpec.describe EventCardComponent do
   let(:chapter) { Fabricate(:chapter, active: true) }
 
   context 'with a workshop' do

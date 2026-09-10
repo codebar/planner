@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'admin member search', type: :feature do
+RSpec.feature 'admin member search' do
   scenario 'search returns single member to requesting service' do
     Fabricate(:member, name: 'Romeo', surname: 'Montague')
     Fabricate(:member, name: 'Juliet', surname: 'Capulet')

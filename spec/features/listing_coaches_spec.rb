@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'when visiting the coaches page', type: :feature do
+RSpec.feature 'when visiting the coaches page' do
   scenario 'I can see the most active coaches' do
     # Use a past workshop date in the current year to ensure the coach is counted
     workshop = Fabricate(:workshop, date_and_time: Time.zone.today.beginning_of_year + 1.month)

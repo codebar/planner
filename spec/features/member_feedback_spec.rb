@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'member feedback', type: :feature do
+RSpec.feature 'member feedback' do
   let(:feedback_request) { Fabricate(:feedback_request) }
   let(:valid_token) { feedback_request.token }
   let(:submited_token) { Fabricate(:feedback_request, submited: true).token }

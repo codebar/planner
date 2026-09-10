@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Viewing a workshop invitation', :wip, type: :feature do
+RSpec.feature 'Viewing a workshop invitation', :wip do
   let(:invitation) { Fabricate(:workshop_invitation, workshop:) }
 
   before do

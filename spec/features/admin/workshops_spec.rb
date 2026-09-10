@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'An admin managing workshops', type: :feature do
+RSpec.feature 'An admin managing workshops' do
   let(:member) { Fabricate(:member) }
   let!(:chapter) { Fabricate(:chapter) }
   let!(:sponsor) { Fabricate(:sponsor) }

@@ -35,6 +35,11 @@ gem 'jwt'
 # vips backend is never loaded.
 gem 'image_processing'
 gem 'mini_magick'
+# json 3.0 breaks ActiveSupport::JSON.decode: json 3.0 made JSON.parse
+# keyword-only, so Rails' JSON.parse(json, options) positional-hash call
+# raises ArgumentError and every session-cookie read fails. Pinned until
+# Rails supports json 3.x (https://github.com/codebar/planner/pull/2864).
+gem 'json', '~> 2.3'
 gem 'mutex_m' # LOCKED: Added because of activesupport 7.0
 gem 'nokogiri'
 gem 'omniauth'

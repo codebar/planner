@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'dashboard/show.html.haml', type: :view do
+RSpec.describe 'dashboard/show.html.haml' do
   let(:chapters) { Fabricate.times(2, :chapter) }
   let(:upcoming_workshops) { {} }
   let(:testimonials) { [] }

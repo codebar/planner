@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Member portal', type: :feature do
+RSpec.feature 'Member portal' do
   subject { page }
 
   let(:member) { Fabricate(:member) }
