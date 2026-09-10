@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.describe MemberMailer do
   let(:member) { Fabricate(:member) }
 

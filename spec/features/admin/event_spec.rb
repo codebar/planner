@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.feature 'Event creation' do
   let(:member) { Fabricate(:member) }
   let(:chapter) { Fabricate(:chapter) }

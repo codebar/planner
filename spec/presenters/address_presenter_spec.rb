@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.describe AddressPresenter do
   let(:address) { Fabricate.build(:address) }
   let(:presenter) { described_class.new(address) }

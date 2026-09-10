@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.describe WorkshopInvitation do
   subject(:workshop_invitation) { Fabricate(:workshop_invitation) }
 

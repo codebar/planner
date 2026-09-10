@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.describe SponsorPolicy do
   subject(:policy) { described_class.new(user, sponsor) }
 

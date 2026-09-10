@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.feature 'Sponsors' do
   context 'when viewing the listing' do
     scenario 'can see a listing of all non expired job posts' do

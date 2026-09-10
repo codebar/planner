@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.describe Role do
   context 'with scopes' do
     let(:student_role) { Fabricate(:student_role) }

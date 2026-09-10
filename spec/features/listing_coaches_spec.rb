@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.feature 'when visiting the coaches page' do
   scenario 'I can see the most active coaches' do
     # Use a past workshop date in the current year to ensure the coach is counted

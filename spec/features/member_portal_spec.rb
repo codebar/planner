@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.feature 'Member portal' do
   subject { page }
 

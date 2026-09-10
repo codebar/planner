@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.describe WorkshopsController do
   let(:member) { Fabricate(:member) }
   let(:workshop) { Fabricate(:workshop) }

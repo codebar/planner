@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.describe FeedbackController do
   let(:feedback_request) { Fabricate(:feedback_request) }
   let(:coach) { Fabricate(:coach) }

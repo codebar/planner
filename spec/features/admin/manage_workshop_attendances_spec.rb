@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.feature 'managing workshop attendances' do
   context 'when an admin' do
     let(:member) { Fabricate(:member) }

@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.feature 'Accepting Terms and Conditions' do
   context 'when a user signs up to codebar' do
     before do

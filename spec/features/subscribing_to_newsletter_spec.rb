@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.feature 'Subscribing to the newsletter' do
   before do
     OmniAuth.config.mock_auth[:codebar] = OmniAuth::AuthHash.new(

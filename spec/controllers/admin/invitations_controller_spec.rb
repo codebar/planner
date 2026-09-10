@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.describe Admin::InvitationsController do
   let(:invitation) { Fabricate(:student_workshop_invitation) }
   let(:workshop) { invitation.workshop }

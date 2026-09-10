@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.describe Sponsor do
   subject(:sponsor) { Fabricate.build(:sponsor) }
 

@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.describe AdminPortalPolicy do
   subject(:policy) { described_class.new(user, :admin_portal) }
 

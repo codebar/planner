@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.feature 'a Coach can' do
   describe '#workshop' do
     let(:member) { Fabricate(:member) }

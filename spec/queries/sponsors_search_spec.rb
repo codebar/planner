@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.describe SponsorsSearch do
   describe 'initialization' do
     it 'configures its properties from the param hash' do

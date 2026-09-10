@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.describe ContactPresenter do
   let(:contact_presenter) { described_class.new(contact) }
   let(:contact) { Fabricate(:contact) }

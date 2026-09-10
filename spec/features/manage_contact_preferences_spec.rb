@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.feature 'Managing contact preferences' do
   context 'when a sponsor contact can manage their contact preferences' do
     let(:manager) { Fabricate(:member) }

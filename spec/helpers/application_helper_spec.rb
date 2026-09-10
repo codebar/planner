@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.describe ApplicationHelper do
   describe '#contact_email' do
     it "returns the workshop chapter's email" do

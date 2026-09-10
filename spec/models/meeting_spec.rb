@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.describe Meeting do
   include_examples 'Invitable', :meeting_invitation, :meeting
   include_examples DateTimeConcerns, :meeting

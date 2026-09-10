@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.feature 'Managing subscriptions' do
   let(:member) { Fabricate(:member) }
   let!(:group) { Fabricate(:group) }

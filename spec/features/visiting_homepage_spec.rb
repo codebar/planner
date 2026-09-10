@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.feature 'when visiting the homepage' do
   let!(:next_workshop) { Fabricate(:workshop) }
   let!(:events) { Fabricate.times(3, :event) }

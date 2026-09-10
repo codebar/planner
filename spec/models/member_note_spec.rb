@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.describe MemberNote do
   context 'with mandatory attributes' do
     it 'Requires a note' do

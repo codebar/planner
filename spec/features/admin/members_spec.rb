@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.describe 'Admin managing members' do
   let(:member) do
     Fabricate(:student, dietary_restrictions: %w[vegan other],

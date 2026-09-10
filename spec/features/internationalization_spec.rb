@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.feature 'Internationalization' do
   after do
     I18n.locale = :en
