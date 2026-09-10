@@ -2,7 +2,26 @@ class MemberMailer < ApplicationMailer
   include EmailHeaderHelper
   include EmailDelivery
 
-  after_deliver :log_sent_email, only: [:chaser]
+  after_deliver :log_sent_email, only: %i[chaser signup_nudge signup_nudge_followup]
+
+  def signup_nudge
+    @member = params[:member]
+    subject = 'Let’s get you connected with codebar!'
+
+    mail_to_member(@member, subject, 'hello@codebar.io') do |format|
+      format.html { render 'signup_nudge' }
+    end
+  end
+
+  # Same copy as the nudge until Kimberley supplies follow-up copy (issue #2384).
+  def signup_nudge_followup
+    @member = params[:member]
+    subject = 'Let’s get you connected with codebar!'
+
+    mail_to_member(@member, subject, 'hello@codebar.io') do |format|
+      format.html { render 'signup_nudge' }
+    end
+  end
 
   def chaser
     @member = params[:member]

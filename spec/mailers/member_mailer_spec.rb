@@ -198,4 +198,43 @@ RSpec.describe MemberMailer do
       end.to change(MemberEmailDelivery, :count).by(1)
     end
   end
+
+  describe 'signup nudge' do
+    let(:mail) { described_class.with(member:).signup_nudge.deliver_now }
+
+    it 'renders the headers' do
+      expect(mail.subject).to eq('Let’s get you connected with codebar!')
+      expect(mail.to).to eq([member.email])
+      expect(mail.from).to eq(['hello@codebar.io'])
+    end
+
+    it 'renders the body' do
+      expect(mail.body.encoded).to match('Find your local chapter')
+      expect(mail.body.encoded).to match(subscriptions_url)
+    end
+
+    it 'logs with its own email_type' do
+      expect { mail }
+        .to change { MemberEmailDelivery.where(member:, email_type: 'signup_nudge').count }.by(1)
+    end
+  end
+
+  describe 'signup nudge follow-up' do
+    let(:mail) { described_class.with(member:).signup_nudge_followup.deliver_now }
+
+    it 'renders the headers' do
+      expect(mail.subject).to eq('Let’s get you connected with codebar!')
+      expect(mail.to).to eq([member.email])
+      expect(mail.from).to eq(['hello@codebar.io'])
+    end
+
+    it 'renders the same body as the nudge' do
+      expect(mail.body.encoded).to match('Find your local chapter')
+    end
+
+    it 'logs with its own email_type' do
+      expect { mail }
+        .to change { MemberEmailDelivery.where(member:, email_type: 'signup_nudge_followup').count }.by(1)
+    end
+  end
 end
