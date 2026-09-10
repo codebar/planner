@@ -90,5 +90,25 @@ test: ## Run the test suite in parallel
 	bundle exec rake parallel:setup
 	bundle exec parallel_rspec spec/ -n 3
 
+detect_duplicate_members: ## Detect members duplicated by the codebar auth flow
+	DB_NAME=$(DUMP_DB) bundle exec rake member:duplicates:detect
+
+fix_duplicate_members: ## Dry-run merge of duplicate members (set APPLY=1 to execute)
+	DB_NAME=$(DUMP_DB) bundle exec rake member:duplicates:fix
+
+verify_duplicate_members: ## Verify no codebar-auth duplicate members remain
+	DB_NAME=$(DUMP_DB) bundle exec rake member:duplicates:verify
+
+detect_duplicate_members_production: ## Detect duplicates on production DB directly
+	@read -p "Connect to PRODUCTION database? [y/N] " ans && [ "$$ans" = "y" ] || exit 1
+	@DB_URL=$$(heroku config:get DATABASE_URL --app=$(DUMP_APP)) bundle exec rake member:duplicates:detect
+
+fix_duplicate_members_production: ## Dry-run merge on production DB (APPLY=1 executes)
+	@read -p "This MODIFIES the PRODUCTION database. Continue? [y/N] " ans && [ "$$ans" = "y" ] || exit 1
+	@DB_URL=$$(heroku config:get DATABASE_URL --app=$(DUMP_APP)) bundle exec rake member:duplicates:fix
+
+verify_duplicate_members_production: ## Verify no duplicates remain on production DB
+	@DB_URL=$$(heroku config:get DATABASE_URL --app=$(DUMP_APP)) bundle exec rake member:duplicates:verify
+
 check: ## Run setup checks
 	bundle exec rake setup:check
