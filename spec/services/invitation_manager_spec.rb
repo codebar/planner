@@ -30,67 +30,49 @@ RSpec.describe InvitationManager do
 
     it 'can email only students' do
       event = Fabricate(:event, chapters: [chapter], audience: 'Students')
-      students.each do |student|
-        allow(Invitation).to receive(:find_or_create_by!).with(
-          event:, member: student, role: 'Student'
-        ).and_call_original
-      end
 
-      manager.send_event_emails(event, chapter)
+      expect do
+        manager.send_event_emails(event, chapter)
+      end.to change(Invitation, :count).by(students.count)
 
-      students.each do |student|
-        expect(Invitation).to have_received(:find_or_create_by!).with(event:, member: student, role: 'Student')
-      end
-
-      coaches.each do |student|
-        expect(Invitation).not_to have_received(:find_or_create_by!).with(event:, member: student, role: 'Coach')
-      end
+      expect(event.invitations.students.map(&:member)).to match_array(students)
+      expect(event.invitations.coaches).to be_empty
     end
 
     it 'can email only coaches' do
       event = Fabricate(:event, chapters: [chapter], audience: 'Coaches')
 
-      coaches.each do |student|
-        allow(Invitation).to receive(:find_or_create_by!).with(
-          event:, member: student, role: 'Coach'
-        ).and_call_original
-      end
+      expect do
+        manager.send_event_emails(event, chapter)
+      end.to change(Invitation, :count).by(coaches.count)
 
-      manager.send_event_emails(event, chapter)
-
-      students.each do |student|
-        expect(Invitation).not_to have_received(:find_or_create_by!).with(event:, member: student, role: 'Student')
-      end
-
-      coaches.each do |student|
-        expect(Invitation).to have_received(:find_or_create_by!).with(event:, member: student, role: 'Coach')
-      end
+      expect(event.invitations.coaches.map(&:member)).to match_array(coaches)
+      expect(event.invitations.students).to be_empty
     end
 
     it 'can email both students and coaches' do
       event = Fabricate(:event, chapters: [chapter])
 
-      students.each do |student|
-        allow(Invitation).to receive(:find_or_create_by!).with(
-          event:, member: student, role: 'Student'
-        ).and_call_original
-      end
+      expect do
+        manager.send_event_emails(event, chapter)
+      end.to change(Invitation, :count).by(students.count + coaches.count)
 
-      coaches.each do |student|
-        allow(Invitation).to receive(:find_or_create_by!).with(
-          event:, member: student, role: 'Coach'
-        ).and_call_original
-      end
+      expect(event.invitations.students.map(&:member)).to match_array(students)
+      expect(event.invitations.coaches.map(&:member)).to match_array(coaches)
+    end
 
-      manager.send_event_emails(event, chapter)
+    it 'sends one invitation to a member subscribed as both student and coach' do
+      dual_member = Fabricate(:member)
+      Fabricate(:students, chapter:, members: [dual_member])
+      Fabricate(:coaches, chapter:, members: [dual_member])
+      event = Fabricate(:event, chapters: [chapter])
 
-      students.each do |student|
-        expect(Invitation).to have_received(:find_or_create_by!).with(event:, member: student, role: 'Student')
-      end
+      expect do
+        manager.send_event_emails(event, chapter)
+      end.to change { Invitation.where(event:, member: dual_member).count }.by(1)
 
-      coaches.each do |student|
-        expect(Invitation).to have_received(:find_or_create_by!).with(event:, member: student, role: 'Coach')
-      end
+      delivered = ActionMailer::Base.deliveries.count { |e| e.to.include?(dual_member.email) }
+      expect(delivered).to eq(1)
     end
 
     it 'emails only students that accepted toc' do
@@ -99,21 +81,11 @@ RSpec.describe InvitationManager do
       first_student, *other_students = students
       first_student.update(accepted_toc_at: nil)
 
-      other_students.each do |other_student|
-        allow(Invitation).to(
-          receive(:find_or_create_by!)
-          .with(event:, member: other_student, role: 'Student')
-          .and_call_original
-        )
-      end
+      expect do
+        manager.send_event_emails(event, chapter)
+      end.to change(Invitation, :count).by(other_students.count)
 
-      manager.send_event_emails(event, chapter)
-
-      expect(Invitation).not_to have_received(:find_or_create_by!).with(event:, member: first_student, role: 'Student')
-
-      other_students.each do |other_student|
-        expect(Invitation).to have_received(:find_or_create_by!).with(event:, member: other_student, role: 'Student')
-      end
+      expect(event.invitations.students.map(&:member)).to match_array(other_students)
     end
 
     it 'emails only coaches that accepted toc' do
@@ -122,21 +94,11 @@ RSpec.describe InvitationManager do
       first_coach, *other_coaches = coaches
       first_coach.update(accepted_toc_at: nil)
 
-      other_coaches.each do |other_coach|
-        allow(Invitation).to(
-          receive(:find_or_create_by!)
-          .with(event:, member: other_coach, role: 'Coach')
-          .and_call_original
-        )
-      end
+      expect do
+        manager.send_event_emails(event, chapter)
+      end.to change(Invitation, :count).by(other_coaches.count)
 
-      manager.send_event_emails(event, chapter)
-
-      expect(Invitation).not_to have_received(:find_or_create_by!).with(event:, member: first_coach, role: 'Coach')
-
-      other_coaches.each do |other_coach|
-        expect(Invitation).to have_received(:find_or_create_by!).with(event:, member: other_coach, role: 'Coach')
-      end
+      expect(event.invitations.coaches.map(&:member)).to match_array(other_coaches)
     end
   end
 
@@ -277,6 +239,16 @@ RSpec.describe InvitationManager do
       expect(invitation.workshop).to eq(workshop)
       expect(invitation.member).to eq(member)
       expect(invitation.role).to eq('Student')
+    end
+
+    it 'returns existing invitation with previously_new_record? as false when called with a different role' do
+      invitation1 = manager.send(:create_invitation, workshop, member, 'Student')
+
+      invitation2 = manager.send(:create_invitation, workshop, member, 'Coach')
+
+      expect(invitation2.previously_new_record?).to be false
+      expect(invitation2.id).to eq(invitation1.id)
+      expect(invitation2.role).to eq('Student')
     end
 
     it 'returns existing invitation with previously_new_record? as false on duplicate call' do
@@ -462,17 +434,14 @@ RSpec.describe InvitationManager do
         coaches_group.members << member_in_both_groups
       end
 
-      it 'creates one invitation per role when audience is everyone' do
+      it 'sends one invitation and one email when audience is everyone' do
         expect do
           manager.send_workshop_emails(workshop, 'everyone')
-        end.to change(WorkshopInvitation, :count).by(2)
+        end.to change(WorkshopInvitation, :count).by(1)
+           .and change { ActionMailer::Base.deliveries.count }.by(1)
 
-        student_invitation = WorkshopInvitation.find_by(workshop:, member: member_in_both_groups, role: 'Student')
-        coach_invitation = WorkshopInvitation.find_by(workshop:, member: member_in_both_groups, role: 'Coach')
-
-        expect(student_invitation).to be_present
-        expect(coach_invitation).to be_present
-        expect(student_invitation.id).not_to eq(coach_invitation.id)
+        invitation = WorkshopInvitation.find_by(workshop:, member: member_in_both_groups)
+        expect(invitation).to be_present
       end
     end
   end

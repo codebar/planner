@@ -52,6 +52,15 @@ RSpec.describe EventInvitationMailer do
       expect(email.body.encoded).to match('hello@codebar.io')
     end
 
+    it 'sends a generic invitation if the event audience is blank' do
+      blank_audience_event = Fabricate(:event, name: 'Test event', audience: '')
+      blank_invitation = Fabricate(:invitation, event: blank_audience_event, member:)
+
+      described_class.invite_coach(blank_audience_event, member, blank_invitation).deliver_now
+
+      expect(email.subject).to eq("Invitation: #{blank_audience_event.name}")
+    end
+
     it 'sends a coach invitation of the event is for coaches' do
       email_subject = "Coach Invitation: #{event.name}"
       described_class.invite_coach(coach_event, member, invitation).deliver_now
