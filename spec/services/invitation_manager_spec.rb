@@ -71,8 +71,13 @@ RSpec.describe InvitationManager do
         manager.send_event_emails(event, chapter)
       end.to change { Invitation.where(event:, member: dual_member).count }.by(1)
 
-      delivered = ActionMailer::Base.deliveries.count { |e| e.to.include?(dual_member.email) }
-      expect(delivered).to eq(1)
+      invitation = Invitation.find_by(event:, member: dual_member)
+      # Coaches are invited first for events, so the coach pass wins for dual members.
+      expect(invitation.role).to eq('Coach')
+
+      deliveries_to_dual_member = ActionMailer::Base.deliveries.select { |e| e.to.include?(dual_member.email) }
+      expect(deliveries_to_dual_member.count).to eq(1)
+      expect(deliveries_to_dual_member.first.subject).to eq("Invitation: #{event.name}")
     end
 
     it 'emails only students that accepted toc' do
@@ -441,7 +446,9 @@ RSpec.describe InvitationManager do
            .and change { ActionMailer::Base.deliveries.count }.by(1)
 
         invitation = WorkshopInvitation.find_by(workshop:, member: member_in_both_groups)
-        expect(invitation).to be_present
+        # Students are invited first for workshops, so the student pass wins for dual members.
+        expect(invitation.role).to eq('Student')
+        expect(ActionMailer::Base.deliveries.last.subject).to start_with('Workshop Invitation')
       end
     end
   end
