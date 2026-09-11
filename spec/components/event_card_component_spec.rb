@@ -71,17 +71,40 @@ RSpec.describe EventCardComponent do
     let(:presenter) { WorkshopPresenter.new(workshop) }
     let(:member) { Fabricate(:member) }
 
-    it 'renders attending badge when user is attending (as presenter)' do
+    it 'renders user-independent output even with a warm cache' do
       Fabricate(:workshop_invitation, workshop:, member:, attending: true)
-      user_presenter = MemberPresenter.new(member)
-      render_inline(described_class.new(event_card: presenter, user: user_presenter))
-      expect(page).to have_text('Attending')
+      cache = ActiveSupport::Cache::MemoryStore.new
+
+      # Regression: user-dependent badges (Attending/Manage) were rendered inside
+      # the cached fragment, so an organiser's dashboard render leaked badges to
+      # every other user, including signed-out visitors. The card must contain
+      # nothing user-specific, ever.
+      ActionController::Base.cache_store = cache
+      first = render_inline(described_class.new(event_card: presenter)).to_html
+      second = render_inline(described_class.new(event_card: presenter)).to_html
+
+      expect(first).not_to include('Attending')
+      expect(first).not_to include('Manage')
+      expect(first).to eq(second)
+
+      # The fragment key includes I18n.locale, so a render under another locale
+      # must not reuse (or poison) the :en fragment.
+      begin
+        I18n.locale = :fr
+        french = render_inline(described_class.new(event_card: presenter)).to_html
+        expect(french).not_to eq(first)
+      ensure
+        I18n.locale = :en
+      end
+    ensure
+      ActionController::Base.cache_store = :null_store
     end
 
-    it 'renders attending badge when raw Member is passed' do
-      Fabricate(:workshop_invitation, workshop:, member:, attending: true)
-      render_inline(described_class.new(event_card: presenter, user: member))
-      expect(page).to have_text('Attending')
+    it 'no longer accepts a user (card must be user-agnostic)' do
+      # Pins the fix for #2869: badges rendered behind the removed `user:` kwarg,
+      # so a reintroduction must fail loudly here.
+      expect { described_class.new(event_card: presenter, user: member) }
+        .to raise_error(ArgumentError, /unknown keyword/)
     end
   end
 end
