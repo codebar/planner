@@ -164,14 +164,16 @@ class InvitationManager
   end
 
   def create_invitation(workshop, member, role)
-    WorkshopInvitation.find_or_create_by!(workshop:, member:, role:)
+    # Identity is workshop + member; role applies only on create so a member
+    # subscribed as both student and coach gets one invite, not one per role.
+    WorkshopInvitation.find_or_create_by!(workshop:, member:) { |invitation| invitation.role = role }
   rescue StandardError => e
     log_invitation_failure(workshop, member, role, e)
     nil
   end
 
   def create_event_invitation(event, member, role)
-    Invitation.find_or_create_by!(event:, member:, role:)
+    Invitation.find_or_create_by!(event:, member:) { |invitation| invitation.role = role }
   rescue StandardError => e
     log_event_meeting_invitation_failure("event_id=#{event.id}", member, e)
     nil
