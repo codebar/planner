@@ -6,7 +6,7 @@ RSpec.describe Listable do
   context 'with scopes' do
     describe '#today_and_upcoming' do
       it 'returns a list of all today and upcoming workshops' do
-        travel_to(Time.current) do
+        travel_to(Time.current.middle_of_day) do
           Fabricate.times(2, :past_workshop)
           future_workshops = Fabricate.times(1, :workshop)
 
