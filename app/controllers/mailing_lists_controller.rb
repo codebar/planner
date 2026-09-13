@@ -4,6 +4,7 @@ class MailingListsController < ApplicationController
   before_action :require_access
 
   def create
+    MemberActivityRecorder.record(actor: current_user, key: 'mailing_list.subscribe')
     subscribe_to_newsletter(current_user)
     flash[:notice] = I18n.t('subscriptions.messages.mailing_list.subscribe')
 
@@ -11,6 +12,7 @@ class MailingListsController < ApplicationController
   end
 
   def destroy
+    MemberActivityRecorder.record(actor: current_user, key: 'mailing_list.unsubscribe')
     unsubscribe_from_newsletter(current_user)
     flash[:notice] = I18n.t('subscriptions.messages.mailing_list.unsubscribe')
 

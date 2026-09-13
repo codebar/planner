@@ -22,6 +22,7 @@ class TermsAndConditionsController < ApplicationController
       member = current_user
       member.accepted_toc_at = Time.zone.now
       member.save(validate: false)
+      MemberActivityRecorder.record(actor: member, key: 'toc.accepted')
       redirect_to previous_path
     else
       flash[notice] = I18n.t('terms_and_conditions.messages.notice')
