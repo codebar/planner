@@ -32,6 +32,10 @@ module Planner
     config.time_zone = 'London'
     config.active_record.default_timezone = :local
 
+    # Request id as a named tag so it reaches canonical JSON log lines as a
+    # field, not an anonymous array entry.
+    config.log_tags = { request_id: :request_id }
+
     # Related to https://stackoverflow.com/questions/72970170/upgrading-to-rails-6-1-6-1-causes-psychdisallowedclass-tried-to-load-unspecif
     # and https://discuss.rubyonrails.org/t/cve-2022-32224-possible-rce-escalation-bug-with-serialized-columns-in-active-record/81017
     config.active_record.yaml_column_permitted_classes = [Symbol, Date, Time, ActiveSupport::TimeWithZone, ActiveSupport::TimeZone, ActiveSupport::HashWithIndifferentAccess]
@@ -44,7 +48,7 @@ config.active_job.queue_adapter = :delayed_job
 if ENV["RAILS_LOG_TO_STDOUT"].present?
       $stdout.sync = true
       config.rails_semantic_logger.add_file_appender = false
-      config.semantic_logger.add_appender(io: $stdout, formatter: config.rails_semantic_logger.format)
+      config.semantic_logger.add_appender(io: $stdout, formatter: :json)
     end
   end
 end
