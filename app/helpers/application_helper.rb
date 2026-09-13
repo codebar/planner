@@ -60,6 +60,25 @@ module ApplicationHelper
     "#{level.humanize} sponsors"
   end
 
+  # Admin-page subject of a member activity: the entity the action was about.
+  # Returns nil when the subject is the member themselves (e.g. logins, bans).
+  def activity_subject(activity)
+    case (trackable = activity.trackable)
+    when WorkshopInvitation then trackable.workshop
+    when Invitation then trackable.event
+    when MeetingInvitation then trackable.meeting
+    when Member then nil
+    else trackable
+    end
+  end
+
+  def activity_subject_label(subject)
+    return "#{subject.chapter.name} #{subject.name}" if subject.is_a?(Group)
+    return subject.full_name if subject.respond_to?(:full_name)
+
+    subject.try(:name) || subject.to_s
+  end
+
   private
 
   def humanize_date_with_time(datetime, end_time)
