@@ -21,6 +21,7 @@ class Workshop < ApplicationRecord
   has_many :invitation_logs, as: :loggable
 
   belongs_to :chapter
+  belongs_to :created_by, class_name: 'Member', optional: true, inverse_of: false
 
   default_scope { order('date_and_time DESC') }
   scope :students, -> { joins(:invitations).where(invitation: { name: 'Student', attended: true }) }

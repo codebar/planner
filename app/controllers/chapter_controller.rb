@@ -19,8 +19,8 @@ class ChapterController < ApplicationController
   end
 
   def upcoming_events_by_chapter(chapter)
-    workshops = chapter.upcoming_workshops.includes(:sponsors)
-    events = chapter.events.upcoming
+    workshops = chapter.upcoming_workshops.eager_load(:sponsors, :organisers, :permissions, :workshop_host)
+    events = chapter.events.upcoming.eager_load(:venue, :sponsors, :sponsorships, :permissions, :organisers)
 
     [*workshops, *events].uniq.compact.sort_by(&:date_and_time).group_by(&:date)
   end

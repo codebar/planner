@@ -29,6 +29,34 @@ RSpec.feature 'Member portal' do
         expect(page).to have_text("#{presenter} at #{presenter.venue.name}", count: 1)
       end
 
+      it 'does not leak attending badges through the shared card cache' do
+        # Regression for #2869: the first member's dashboard render warms the
+        # event-card fragment; a second member viewing the same card must not
+        # see the first member's badge baked into the cached fragment.
+        chapter = Fabricate(:chapter_with_groups)
+        workshop = Fabricate(:workshop, chapter:)
+        Fabricate(:subscription, member:, group: chapter.groups.first)
+        Fabricate(:attending_workshop_invitation, member:, workshop:)
+        other_member = Fabricate(:member)
+        Fabricate(:subscription, member: other_member, group: chapter.groups.first)
+        presenter = WorkshopPresenter.new(workshop)
+
+        ActionController::Base.cache_store = ActiveSupport::Cache::MemoryStore.new
+        begin
+          visit dashboard_path
+          expect(page).to have_text("#{presenter} at #{presenter.venue.name}", count: 1)
+
+          login(other_member)
+          visit dashboard_path
+          expect(page).to have_text("#{presenter} at #{presenter.venue.name}", count: 1)
+          # 'Manage' is legitimately in the nav ("Manage subscriptions"), so only
+          # the Attending badge is asserted absent — it never appears in chrome.
+          expect(page).to have_no_text('Attending')
+        ensure
+          ActionController::Base.cache_store = :null_store
+        end
+      end
+
       it 'can view upcoming workshops for their chapters' do
         c1_workshop = Fabricate(:workshop, chapter: Fabricate(:chapter_with_groups))
         Fabricate(:subscription, member:, group: c1_workshop.chapter.groups.first)

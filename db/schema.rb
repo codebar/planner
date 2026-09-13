@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_08_31_100100) do
+ActiveRecord::Schema[8.1].define(version: 2026_09_08_085057) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -634,6 +634,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_31_100100) do
     t.string "check_in_code"
     t.integer "coach_spaces", default: 0
     t.datetime "created_at", precision: nil
+    t.integer "created_by_id"
     t.datetime "date_and_time", precision: nil
     t.text "description"
     t.datetime "ends_at", precision: nil
@@ -647,12 +648,14 @@ ActiveRecord::Schema[8.1].define(version: 2026_08_31_100100) do
     t.string "title"
     t.datetime "updated_at", precision: nil
     t.boolean "virtual", default: false
-    t.index ["check_in_code"], name: "index_workshops_on_check_in_code", unique: true
     t.index ["chapter_id"], name: "index_workshops_on_chapter_id"
+    t.index ["check_in_code"], name: "index_workshops_on_check_in_code", unique: true
+    t.index ["created_by_id"], name: "index_workshops_on_created_by_id"
     t.index ["date_and_time"], name: "index_workshops_on_date_and_time"
   end
 
   add_foreign_key "invitation_log_entries", "invitation_logs"
   add_foreign_key "invitation_logs", "members", column: "initiator_id"
   add_foreign_key "member_email_deliveries", "members"
+  add_foreign_key "workshops", "members", column: "created_by_id", on_delete: :nullify
 end
