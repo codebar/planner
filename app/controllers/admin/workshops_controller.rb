@@ -27,11 +27,10 @@ class Admin::WorkshopsController < Admin::ApplicationController
   def create
     resolve_chapter_name_to_id
     @workshop = Workshop.new(workshop_params)
+    @workshop.created_by = current_user
     authorize(@workshop)
     if workshop_type_valid? && @workshop.save
-      assign_organisers_or_default
-      assign_host(host_id)
-      redirect_to admin_workshop_path(@workshop), notice: I18n.t('admin.messages.workshop.created')
+      finish_creation
     else
       flash[:warning] = @workshop.errors.full_messages; render 'new'
     end
@@ -224,6 +223,14 @@ class Admin::WorkshopsController < Admin::ApplicationController
     organiser_ids.reject!(&:empty?)
     grant_organiser_access(organiser_ids)
     revoke_organiser_access(organiser_ids)
+  end
+
+  def finish_creation
+    MemberActivityRecorder.record(actor: current_user, key: 'workshop.created',
+                                  trackable: @workshop)
+    assign_organisers_or_default
+    assign_host(host_id)
+    redirect_to admin_workshop_path(@workshop), notice: I18n.t('admin.messages.workshop.created')
   end
 
   def assign_organisers_or_default

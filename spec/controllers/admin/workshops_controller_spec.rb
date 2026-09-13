@@ -167,6 +167,26 @@ RSpec.describe Admin::WorkshopsController do
         post :create, params: { workshop: { rsvp_close_local_date: '01/12/2020', rsvp_close_local_time: '15:00', host: '' } }
       end.not_to raise_error
     end
+
+    it 'stamps created_by and records workshop.created' do
+      post :create, params: { workshop: {
+        chapter_id: workshop.chapter.id,
+        local_date: (Time.zone.now + 1.week).strftime('%d/%m/%Y'),
+        local_time: '15:00',
+        local_end_time: '17:00',
+        virtual: '1',
+        slack_channel: '#test',
+        slack_channel_link: 'https://slack.com/test',
+        coach_spaces: 5,
+        student_spaces: 15,
+        host: nil
+      } }
+
+      created = Workshop.unscoped.order(:id).last
+      expect(created.created_by).to eq(admin)
+      expect(PublicActivity::Activity.exists?(owner: admin, key: 'workshop.created',
+                                              trackable: created)).to be(true)
+    end
   end
 
   describe 'DELETE #destroy' do
