@@ -110,4 +110,19 @@ RSpec.describe Admin::InvitationsController do
       expect(response).to redirect_to(admin_workshop_rsvp_path(workshop, q: 'Zoe', page: 2))
     end
   end
+
+  context 'when recording activity' do
+    before do
+      admin.add_role(:organiser, workshop.chapter)
+      login admin
+      request.env['HTTP_REFERER'] = '/admin/member/3'
+    end
+
+    it 'records invitation.rsvp_override when admin forces attending' do
+      put :update, params: { workshop_id: workshop.id, id: invitation.token, attending: 'true' }
+
+      expect(PublicActivity::Activity.exists?(owner: admin, key: 'invitation.rsvp_override',
+                                              recipient: invitation.member)).to be(true)
+    end
+  end
 end
