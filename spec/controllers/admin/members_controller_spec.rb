@@ -112,47 +112,79 @@ RSpec.describe Admin::MembersController do
     end
   end
 
+  describe 'GET #show' do
+  let(:admin) { Fabricate(:member) }
+  let(:chapter) { Fabricate(:chapter) }
+
+  before do
+    admin.add_role(:admin)
+    login_as_admin(admin)
+  end
+
+  describe 'activity strip' do
+    render_views
+
+    let(:organiser) { Fabricate(:member) }
+
+    before { organiser.add_role(:organiser, chapter) }
+
+    it 'renders the strip for organisers' do
+      get :show, params: { id: organiser.id }
+
+      expect(response.body).to include('activity-strip')
+    end
+
+    it 'does not render the strip for non-organisers' do
+      plain = Fabricate(:member)
+
+      get :show, params: { id: plain.id }
+
+      expect(response.body).not_to include('activity-strip')
+    end
+  end
+  end
+
   describe 'GET #send_eligibility_email' do
-    let(:member) { Fabricate(:member) }
-    let(:admin) { Fabricate(:member) }
+      let(:member) { Fabricate(:member) }
+      let(:admin) { Fabricate(:member) }
 
-    before do
-      admin.add_role(:admin)
-      login_as_admin(admin)
-    end
-
-    it 'creates an eligibility inquiry' do
-      expect do
-        get :send_eligibility_email, params: { member_id: member.id }
-      end.to change(EligibilityInquiry, :count).by(1)
-    end
-
-    it 'sends an eligibility check email' do
-      mailer = double(deliver_now: true)
-      allow(MemberMailer).to receive(:eligibility_check)
-        .with(member, member.email)
-        .and_return(mailer)
-
-      get :send_eligibility_email, params: { member_id: member.id }
-
-      expect(MemberMailer).to have_received(:eligibility_check)
-        .with(member, member.email)
-    end
-
-    it 'redirects to the member page' do
-      get :send_eligibility_email, params: { member_id: member.id }
-
-      expect(response).to redirect_to([:admin, member])
-    end
-
-    context 'when not authenticated' do
-      before { login(Fabricate(:member)) }
-
-      it 'redirects to login' do
-        get :send_eligibility_email, params: { member_id: member.id }
-
-        expect(response).to have_http_status(:found)
+      before do
+        admin.add_role(:admin)
+        login_as_admin(admin)
       end
-    end
+
+      it 'creates an eligibility inquiry' do
+        expect do
+          get :send_eligibility_email, params: { member_id: member.id }
+        end.to change(EligibilityInquiry, :count).by(1)
+      end
+
+      it 'sends an eligibility check email' do
+        mailer = double(deliver_now: true)
+        allow(MemberMailer).to receive(:eligibility_check)
+          .with(member, member.email)
+          .and_return(mailer)
+
+        get :send_eligibility_email, params: { member_id: member.id }
+
+        expect(MemberMailer).to have_received(:eligibility_check)
+          .with(member, member.email)
+      end
+
+      it 'redirects to the member page' do
+        get :send_eligibility_email, params: { member_id: member.id }
+
+        expect(response).to redirect_to([:admin, member])
+      end
+
+      context 'when not authenticated' do
+        before { login(Fabricate(:member)) }
+
+        it 'redirects to login' do
+          get :send_eligibility_email, params: { member_id: member.id }
+
+          expect(response).to have_http_status(:found)
+        end
+      end
   end
 end
