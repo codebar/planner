@@ -1,4 +1,4 @@
-<% cache @event.cache_key_with_version do %>
+<% cache [@event.cache_key_with_version, I18n.locale, :v2] do %>
   <div class="card mb-4" data-test="event">
     <div class="card-body">
       <div class="d-md-flex justify-content-md-between">
@@ -8,18 +8,7 @@
               <%= link_to @event.chapter.name, @event.chapter.slug, class: "text-light text-decoration-none" %>
             </span>
           <% end %>
-          <% if user_presenter %>
-            <% if user_presenter.attending?(@event) %>
-              <span class="badge bg-success mb-3 mb-md-0">
-                <%= link_to "Attending", @event.path, class: "text-light text-decoration-none" %>
-              </span>
-            <% end %>
-            <% if user_presenter.organiser? && user_presenter.event_organiser?(@event) %>
-              <span class="badge bg-secondary mb-3 mb-md-0">
-                <%= link_to "Manage", @event.admin_path, class: "text-light text-decoration-none" %>
-              </span>
-            <% end %>
-          <% end %>
+
         </div>
         <div class="order-md-1">
           <h3 class="h5">
