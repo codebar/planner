@@ -36,6 +36,10 @@ module Planner
     # field, not an anonymous array entry.
     config.log_tags = { request_id: :request_id }
 
+    # Canonical JSON log lines identify this app (SemanticLogger defaults to
+    # "Semantic Logger").
+    config.semantic_logger.application = "planner"
+
     # Related to https://stackoverflow.com/questions/72970170/upgrading-to-rails-6-1-6-1-causes-psychdisallowedclass-tried-to-load-unspecif
     # and https://discuss.rubyonrails.org/t/cve-2022-32224-possible-rce-escalation-bug-with-serialized-columns-in-active-record/81017
     config.active_record.yaml_column_permitted_classes = [Symbol, Date, Time, ActiveSupport::TimeWithZone, ActiveSupport::TimeZone, ActiveSupport::HashWithIndifferentAccess]
@@ -46,9 +50,13 @@ config.active_record.belongs_to_required_by_default = true
 config.active_job.queue_adapter = :delayed_job
 
 if ENV["RAILS_LOG_TO_STDOUT"].present?
+      require "canonical_json_formatter"
+
       $stdout.sync = true
-      config.rails_semantic_logger.add_file_appender = false
-      config.semantic_logger.add_appender(io: $stdout, formatter: :json)
+      # Declaring appenders here stops RSL building its default file appender.
+      config.rails_semantic_logger.appenders do |appenders|
+        appenders.add(io: $stdout, formatter: CanonicalJsonFormatter.new)
+      end
     end
   end
 end
