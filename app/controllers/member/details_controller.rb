@@ -24,6 +24,7 @@ class Member::DetailsController < ApplicationController
     return render :edit unless @member.update(attrs)
 
     @member.newsletter ? subscribe_to_newsletter(@member) : unsubscribe_from_newsletter(@member)
+    MemberActivityRecorder.record(actor: @member, key: 'profile.updated')
     redirect_to step2_member_path
   end
 

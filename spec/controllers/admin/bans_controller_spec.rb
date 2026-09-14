@@ -24,4 +24,17 @@ RSpec.describe Admin::BansController do
       expect(response.body).to include("value=\"#{expected}\"")
     end
   end
+
+  describe 'POST #create' do
+    it 'records member.banned' do
+      expect do
+        post :create, params: { member_id: member.id, ban: { reason: 'spam', note: 'banned member',
+                                                             explanation: 'test', permanent: '1',
+                                                             expires_at: 1.month.from_now.to_s } }
+      end.to change {
+               PublicActivity::Activity.exists?(owner: admin, key: 'member.banned',
+                                                recipient: member)
+             }.from(false).to(true)
+    end
+  end
 end

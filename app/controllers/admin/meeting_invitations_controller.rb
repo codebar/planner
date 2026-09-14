@@ -6,6 +6,8 @@ class Admin::MeetingInvitationsController < Admin::ApplicationController
     attended = params.permit(:attended)[:attended]
 
     @invitation.update(attending: status, attended:)
+    MemberActivityRecorder.record(actor: current_user, key: 'meeting_invitation.updated',
+                                  trackable: @invitation, recipient: @invitation.member)
 
     redirect_to [:admin, @invitation.meeting],
                 notice: t('admin.messages.invitation.update_rsvp', name: @invitation.member.full_name)
@@ -25,6 +27,8 @@ class Admin::MeetingInvitationsController < Admin::ApplicationController
 
     if invitation.save
       MeetingInvitationMailer.approve_from_waitlist(meeting, member).deliver_now
+      MemberActivityRecorder.record(actor: current_user, key: 'meeting_invitation.created',
+                                    trackable: invitation, recipient: member)
       redirect_to [:admin, meeting], notice: t('admin.messages.invitation.rsvp_member', name: member.full_name)
     else
       redirect_to [:admin, meeting], notice: t('admin.messages.invitation.rsvp_error', name: member.full_name)

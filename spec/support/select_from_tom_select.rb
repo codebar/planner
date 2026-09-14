@@ -3,10 +3,25 @@
 # Helper for interacting with TomSelect dropdowns in Capybara feature tests
 # Similar to select_from_chosen but for TomSelect remote data loading
 module SelectFromTomSelect
+  # Search query for a display name. full_name includes pronouns, e.g.
+  # "Jane Doe (she/her)", but /admin/members/search only matches
+  # CONCAT(name, ' ', surname) and email, so the parenthetical must go.
+  def tom_select_search_query(item_text)
+    item_text.sub(/\s*\([^)]*\)\z/, '')
+  end
+
+  def type_into_tom_select(input, text)
+    page.execute_script(
+      "arguments[0].value = arguments[1]; arguments[0].dispatchEvent(new Event('input', { bubbles: true }));",
+      input.native, text
+    )
+  end
+
   # Select an item from a TomSelect dropdown
   # @param item_text [String] The text to select
   # @param from [String, Symbol] The original select element ID
   def select_from_tom_select(item_text, from:)
+    search_query = tom_select_search_query(item_text)
     # Wait for the specific TomSelect to initialize - the real initialization
     # runs via the jQuery DOMContentLoaded handler in application.js, which
     # fires after the CDN script (loaded in the page head) defines the TomSelect
@@ -28,25 +43,25 @@ module SelectFromTomSelect
     # Use JS to set the value and dispatch an input event directly, instead of
     # send_keys (which can race with TomSelect's debounce timer in headless CI
     # when multiple parallel processes contend for CPU).
-    page.execute_script(
-      "arguments[0].value = arguments[1]; arguments[0].dispatchEvent(new Event('input', { bubbles: true }));",
-      input.native, item_text[0, 3]
-    )
+    type_into_tom_select(input, search_query[0, 3])
 
-    # Wait for the initial search results to load after the debounce and AJAX.
-    # Uses Capybara's adaptive wait instead of a blind sleep so slow CI environments
-    # get enough time while fast environments don't waste a fixed wait.
-    expect(wrapper).to have_css('.ts-dropdown .option', wait: 15)
-
-    # Type the rest if item_text is longer than 3 characters
-    if item_text.length > 3
-      page.execute_script(
-        "arguments[0].value = arguments[1]; arguments[0].dispatchEvent(new Event('input', { bubbles: true }));",
-        input.native, item_text[3..]
-      )
+    # Wait briefly for the initial 3-character search results after the
+    # debounce and AJAX. TomSelect caches loads per query (loadedSearches), so
+    # a failed or empty fetch poisons that query forever and options never
+    # appear no matter how long we wait. Retype the full name as a fresh query
+    # (new cache key, new fetch) instead of waiting it out.
+    if wrapper.has_css?('.ts-dropdown .option', wait: 5)
+      # Refine the search to the rest of the name if the query is longer
+      # than 3 characters
+      type_into_tom_select(input, search_query[3..]) if search_query.length > 3
+    else
+      # A 3-char query is identical to the failed query, so the retry must
+      # differ to get a fresh cache key (ILIKE search is case-insensitive)
+      retry_query = search_query.length > 3 ? search_query : search_query.upcase
+      type_into_tom_select(input, retry_query)
     end
 
-    # Wait for updated results after the refined search
+    # Wait for the matching option after the refined or retried search
     expect(wrapper).to have_css('.ts-dropdown .option', text: item_text, wait: 10)
 
     # Click the matching option

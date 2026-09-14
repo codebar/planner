@@ -8,26 +8,24 @@
     cd planner
     ```
 
-3. Setup & start the application.
+3. Setup & start the application. See the [Quick start](https://github.com/codebar/planner#quick-start) section of the README for full setup instructions (mise, PostgreSQL, ImageMagick). Once set up:
 
     ```
-    bundle
-    rake db:create db:migrate db:seed
-    rails server
+    bundle exec rails server
     ```
 
 4. Have a look around to get a feel for the app.
 5. Run the tests. We only take pull requests with passing tests, and it's great to confirm that you have a clean slate.
 
     ```
-    rake
+    bundle exec rspec
     ```
 
 6. Add a test for your change - unless you are refactoring or adjusting styles and documentation. If you are adding any functionality or fixing a bug, we need a test!
 7. Implement your change and ensure all the tests pass.
 8. Run Rubocop to ensure you are complying with the Ruby style guide. Refer to (https://rubocop.readthedocs.io/en/latest/) for cops/violation details.
     ```
-    rubocop
+    bundle exec rubocop
     ```
 9. Commit, with a meaningful & descriptive message - this is very important!
 
