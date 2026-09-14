@@ -67,3 +67,4 @@ yarn-debug.log*
 
 # Compound Engineering per-checkout overrides
 .compound-engineering/*.local.yaml
+.context/compound-engineering/
