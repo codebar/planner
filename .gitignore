@@ -64,3 +64,6 @@ yarn-debug.log*
 
 # Worktrees
 .worktrees/
+
+# Compound Engineering per-checkout overrides
+.compound-engineering/*.local.yaml
