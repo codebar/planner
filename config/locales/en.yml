@@ -59,6 +59,7 @@ en:
       full_date: "%d %B %Y"
       default_date: "%d/%m/%Y"
       website_format: "%a, %d %B %Y at %H:%M"
+      activity_log: "%A, %Y-%m-%d %H:%M"
       day_in_words: "%a"
       day: "%d"
       month: "%B"
@@ -658,6 +659,9 @@ en:
   admin:
     dashboard:
       title: "Admin"
+    members:
+      activity:
+        for: "for %{subject}"
     workshop:
       manage_rsvps:
         text: "RSVP Students and Coaches to the workshop. The attendance confirmation email will be triggered and they will be removed from the waiting list."

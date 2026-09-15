@@ -114,6 +114,8 @@ Rails.application.routes.draw do
       resources :organisers, only: %i[index create destroy], controller: 'chapters/organisers'
     end
 
+    resources :stats, only: [:index]
+
     resources :events, only: %i[new create show edit update] do
       get 'attendees_emails'
       post 'invite'

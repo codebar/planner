@@ -29,3 +29,25 @@
       .row.mt-4
         .col
           = link_to 'View all RSVPS', admin_member_events_path(@member), class: 'btn btn-primary btn-block'
+
+      .row.mt-4
+        .col
+          %h3.mt-4 Activity
+          = render Admin::Members::ActivityStripComponent.new(weeks: @activity_weeks)
+
+          %ul.list-unstyled.activity-log.mt-3
+            - @activities.group_by { |a| a.created_at.beginning_of_week.to_date }.each do |week_start, activities|
+              %li
+                %h5.mt-3
+                  #{week_start.strftime('%G-W%V')}
+                  %span.small.text-muted (week of #{week_start.strftime('%-d %b %Y')})
+                %ul.list-unstyled
+                  - activities.each do |activity|
+                    %li.pb-2.mb-2
+                      = activity.key.tr('.', ' ').humanize
+                      - if (subject = activity_subject(activity))
+                        %span.text-muted.ms-1
+                          = t('admin.members.activity.for', subject: link_to(activity_subject_label(subject), [:admin, subject])).html_safe
+                      %span.text-muted.ms-2= l(activity.created_at, format: :activity_log)
+            - if @activities.empty?
+              %li.text-muted No recorded activity yet
