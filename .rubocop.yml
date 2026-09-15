@@ -4,6 +4,9 @@ inherit_mode:
   merge:
     - Exclude
 
+require:
+  - ./lib/rubocop/cop/style/prefer_data_define
+
 # Find out more about the rubocop cops  https://github.com/bbatsov/rubocop/blob/master/config/enabled.yml
 
 AllCops:

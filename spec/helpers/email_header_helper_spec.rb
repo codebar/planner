@@ -6,7 +6,7 @@ RSpec.describe EmailHeaderHelper do
   end
 
   describe '#mail_to_member' do
-    let(:member) { Struct.new(:id, :email).new(1, 'test@example.com') }
+    let(:member) { Data.define(:id, :email).new(1, 'test@example.com') }
 
     it 'calls mail with correct arguments for valid email' do
       allow(helper).to receive(:mail).with(
@@ -38,37 +38,37 @@ RSpec.describe EmailHeaderHelper do
     end
 
     it 'returns SkippedEmail for nil email' do
-      member = Struct.new(:id, :email).new(1, nil)
+      member = Data.define(:id, :email).new(1, nil)
       result = helper.mail_to_member(member, 'Test Subject')
       expect(result).to be_a(EmailHeaderHelper::SkippedEmail)
     end
 
     it 'returns SkippedEmail for blank email' do
-      member = Struct.new(:id, :email).new(1, '')
+      member = Data.define(:id, :email).new(1, '')
       result = helper.mail_to_member(member, 'Test Subject')
       expect(result).to be_a(EmailHeaderHelper::SkippedEmail)
     end
 
     it 'returns SkippedEmail for invalid email format' do
-      member = Struct.new(:id, :email).new(1, 'invalid-email')
+      member = Data.define(:id, :email).new(1, 'invalid-email')
       result = helper.mail_to_member(member, 'Test Subject')
       expect(result).to be_a(EmailHeaderHelper::SkippedEmail)
     end
 
     it 'returns SkippedEmail for email missing @ symbol' do
-      member = Struct.new(:id, :email).new(1, 'invalidexample.com')
+      member = Data.define(:id, :email).new(1, 'invalidexample.com')
       result = helper.mail_to_member(member, 'Test Subject')
       expect(result).to be_a(EmailHeaderHelper::SkippedEmail)
     end
 
     it 'returns SkippedEmail for email missing TLD' do
-      member = Struct.new(:id, :email).new(1, 'invalid@example')
+      member = Data.define(:id, :email).new(1, 'invalid@example')
       result = helper.mail_to_member(member, 'Test Subject')
       expect(result).to be_a(EmailHeaderHelper::SkippedEmail)
     end
 
     it 'logs the skip' do
-      member = Struct.new(:id, :email).new(1, 'bad-email')
+      member = Data.define(:id, :email).new(1, 'bad-email')
       allow(Rails.logger).to receive(:info).with(/Skipped email to member 1/)
       helper.mail_to_member(member, 'Test Subject')
 
