@@ -5,7 +5,7 @@
     t('workshop.title', host: workshop.host&.name || 'codebar', date: humanize_date(workshop.date_and_time))
   end
   url = request.original_url
-  image = workshop.host.try(:image_url).presence || image_url('codebar-social.jpg')
+  image = social_image_url(workshop.host&.avatar&.url)
   description = (workshop.virtual? ? t('workshops.virtual.lead') : t('workshops.lead'))
 
 = content_for :meta_tags do

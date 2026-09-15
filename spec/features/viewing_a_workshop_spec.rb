@@ -27,6 +27,14 @@ RSpec.feature 'Viewing a workshop page' do
         end
 
         include_examples 'viewing workshop details'
+
+        scenario 'link preview meta tags' do
+          og_title = find("meta[property='og:title']", visible: false)[:content]
+          expect(og_title).to eq("Workshop at #{workshop.host.name} - #{humanize_date(workshop.date_and_time)}")
+
+          og_image = find("meta[property='og:image']", visible: false)[:content]
+          expect(og_image).to include('uploads/sponsor/')
+        end
       end
 
       describe '#actions' do
@@ -56,6 +64,11 @@ RSpec.feature 'Viewing a workshop page' do
         end
 
         include_examples 'viewing workshop details'
+
+        scenario 'link preview meta tags use the fallback image' do
+          expect(find("meta[property='og:image']", visible: false)[:content])
+            .to include('codebar-social')
+        end
       end
 
       describe '#actions' do

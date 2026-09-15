@@ -1,0 +1,20 @@
+:ruby
+  url = request.original_url
+  image = social_image_url(event.venue&.avatar&.url)
+  description = truncate(strip_tags(event.description), length: 200)
+
+= content_for :meta_tags do
+  %meta{ property: 'og:title', content: event.name }
+  %meta{ property: 'og:type', content: 'event' }
+  %meta{ property: 'og:url', content: url }
+  %meta{ property: 'og:image', content: image }
+  %meta{ property: 'og:description', content: description }
+  %meta{ property: 'og:site_name', content: 'codebar' }
+  %meta{ property: 'og:locale', content: 'en_GB' }
+
+  -# Only Twitter-specific tag needed
+  %meta{ name: 'twitter:card', content: 'summary_large_image' }
+
+  -# Event timing
+  %meta{ property: 'event:start_time', content: event.date_and_time }
+  %meta{ property: 'event:end_time', content: event.ends_at }
