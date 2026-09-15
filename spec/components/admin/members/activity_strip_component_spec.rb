@@ -7,10 +7,14 @@ RSpec.describe Admin::Members::ActivityStripComponent do
   let(:now) { Time.zone.local(2026, 9, 2, 12, 0, 0) }
   let(:rows) do
     Admin::Members::ActivityStrip.new(member, now:).tap do |_strip|
-      PublicActivity::Activity.create!(owner: member, trackable: member, key: 'member.login',
-                                       created_at: now - 1.week, updated_at: now - 1.week)
-      PublicActivity::Activity.create!(owner: member, trackable: member, key: 'event_invitation.rsvp',
-                                       created_at: now - 2.weeks, updated_at: now - 2.weeks)
+      PublicActivity::Activity.create!(
+        owner: member, trackable: member, key: 'member.login',
+        created_at: now - 1.week, updated_at: now - 1.week
+      )
+      PublicActivity::Activity.create!(
+        owner: member, trackable: member, key: 'event_invitation.rsvp',
+        created_at: now - 2.weeks, updated_at: now - 2.weeks
+      )
     end.rows
   end
 
