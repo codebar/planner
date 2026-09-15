@@ -8,7 +8,7 @@ module Admin
       WEEK_COUNT = 52
       LOGIN_ONLY_KEYS = %w[member.login member.logout].freeze
 
-      Row = Struct.new(:week_start, :state, :counts, keyword_init: true)
+      Row = Data.define(:week_start, :state, :counts)
 
       def initialize(member, now: Time.zone.now)
         @member = member
