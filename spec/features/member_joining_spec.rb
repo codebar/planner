@@ -64,6 +64,23 @@ RSpec.feature 'A new student signs up' do
     expect(page).to have_css('.badge', text: 'Peanut allergy')
   end
 
+  scenario 'groups belonging to inactive chapters are not shown' do
+    member = Fabricate(:member)
+    group = Fabricate(:group)
+    coach_group = Fabricate(:coaches)
+    inactive_chapter = Fabricate(:chapter, active: false)
+    Fabricate(:group, chapter: inactive_chapter)
+    Fabricate(:coaches, chapter: inactive_chapter)
+
+    login member
+
+    visit step2_member_path
+
+    expect(page).to have_text(group.chapter.name)
+    expect(page).to have_text(coach_group.chapter.name)
+    expect(page).to have_no_text(inactive_chapter.name)
+  end
+
   scenario 'Picking a mailing list on step 2 subscribes you to that list' do
     member = Fabricate(:member)
     group = Fabricate(:group)
