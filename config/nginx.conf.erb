@@ -36,6 +36,15 @@ http {
     set $plausible_script_url https://plausible.io/js/pa-PFruVsE_br97UUCRXE_6f.js;
     set $plausible_event_url https://plausible.io/api/event;
 
+    # Gzip: the Heroku router does not compress, and Cloudflare only re-compresses
+    # when the origin has not already. Compress proxied responses here.
+    gzip on;
+    gzip_vary on;
+    gzip_proxied any;
+    gzip_comp_level 5;
+    gzip_min_length 1024;
+    gzip_types application/xml application/json text/plain text/css application/javascript text/javascript;
+
     # Plausible: Proxy script.js (cached)
     location = /js/script.js {
       proxy_cache plausible_cache;
