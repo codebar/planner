@@ -71,6 +71,23 @@ http {
       proxy_buffering on;
     }
 
+    # Scanner junk: 404 at the edge. All of these already 404 in the app
+    # (the /:id chapter catch-all or the Rails router); blocking here keeps
+    # the load off Rails. Exact (=) locations above terminate the location
+    # search before these regex blocks are tried; the regexes in turn beat
+    # the prefix location below.
+    # Sensitive or unknown file extensions, with real asset dirs excluded.
+    # Not anchored to a single segment, so nested probes are caught too.
+    location ~* "^/(?!(?:assets|uploads|static|tom-select|packs)(?:/|$)|sitemap\.xml\.gz(?:$|/))(?:[^/]+/)*[^/]*\.(?:json|js|yml|yaml|conf|env|pem|key|p12|pfx|crt|bak|sql|sqlite|db|tfstate|swp|old|zip|tar|gz|tgz|7z|php|cgi|asp|aspx|jsp)$|(?:[^/]+/)*\.env(?:\.[^/]*)?(?:$|/)|^/\.git(?:/|$)|^/\.aws(?:/|$)|^/\.ssh(?:/|$)" {
+      return 404;
+    }
+
+    # Extension-less probes seen in the logs. Anchored to a single segment
+    # or directory prefix so real chapter pages (/london etc.) are safe.
+    location ~* "^/(?:__vite_rsc_findSourceMapURL|z9x8c7v6b5-debug-trigger-codebar\.io|debug-trigger|userfiles|wp-(?:json|content|admin|config|login|includes)|id_(?:rsa|dsa|ecdsa|ed25519)|private[-_]?key|backup|Dockerfile|__debug__)(?:$|/)" {
+      return 404;
+    }
+
     # Rails: All other requests
     location / {
       proxy_pass http://app_server;
