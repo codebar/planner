@@ -36,6 +36,12 @@ Rollbar.configure do |config|
   # and it doesn't provide useful information so let's ignore it.
   config.exception_level_filters.merge!(ActionController::RoutingError.name => 'ignore')
 
+  # Automated scanners send path-traversal strings in the Accept/Content-Type
+  # headers. Rails rescues these as 406 responses, but Rollbar's middleware
+  # still reports the handled exception, so ignore it here as well.
+  # See https://github.com/codebar/planner/issues/2873
+  config.exception_level_filters.merge!(ActionDispatch::Http::MimeNegotiation::InvalidType.name => 'ignore')
+
   # Enable asynchronous reporting (uses girl_friday or Threading if girl_friday
   # is not installed)
   # config.use_async = true
@@ -73,6 +79,6 @@ Rollbar.configure do |config|
 
   # https://docs.rollbar.com/docs/ruby#section-enabling-local-variables-in-stack-traces
   config.send_extra_frame_data = :app
-  config.locals = { :enabled => true }
+  config.locals = { enabled: true }
   config.backtrace_cleaner = ActiveSupport::BacktraceCleaner.new
 end
