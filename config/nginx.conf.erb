@@ -27,10 +27,22 @@ http {
     server unix:/tmp/nginx.socket fail_timeout=0;
   }
 
+  # Scanner probes send path-traversal strings in the Accept or Content-Type
+  # headers. Rails answers these with 406; dropping them here keeps them out
+  # of the application's access logs. See https://github.com/codebar/planner/issues/2873
+  map "$http_accept $content_type" $bad_mime {
+    default 0;
+    ~"\.\./" 1;
+  }
+
   server {
     listen <%= ENV["PORT"] %>;
     server_name _;
     keepalive_timeout 5;
+
+    if ($bad_mime) {
+      return 406;
+    }
 
     # Plausible endpoints (set inside server context)
     set $plausible_script_url https://plausible.io/js/pa-PFruVsE_br97UUCRXE_6f.js;
