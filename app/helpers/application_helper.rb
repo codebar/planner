@@ -19,6 +19,12 @@ module ApplicationHelper
     content_for?(:title) ? content_for(:title) : t(:brand)
   end
 
+  # Absolute URL for a social preview image, falling back to the codebar social image
+  def social_image_url(url = nil)
+    image = url.presence || image_url('codebar-social.jpg')
+    image.start_with?('/') ? URI.join(request.base_url, image).to_s : image
+  end
+
   def dot_markdown(text)
     # Commonmarker sanitises raw HTML; `.html_safe` prevents Rails double-escaping the result
     # rubocop:disable Rails/OutputSafety

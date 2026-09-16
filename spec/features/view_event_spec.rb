@@ -27,6 +27,13 @@ RSpec.feature 'viewing an event' do
         expect(page).to have_link('Join our community')
         expect(page).to have_no_link('Attend as a coach')
       end
+
+      scenario 'event link preview meta tags' do
+        expect(find("meta[property='og:title']", visible: false)[:content]).to eq(closed_event.name)
+        expect(find("meta[property='og:image']", visible: false)[:content]).to include('uploads/sponsor/')
+        expect(find("meta[property='og:description']", visible: false)[:content]).to eq(closed_event.description)
+        expect(find("meta[property='event:start_time']", visible: false)[:content]).to be_present
+      end
     end
 
     context 'when an authenticated user' do
