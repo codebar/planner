@@ -16,6 +16,7 @@ class SponsorLogoRestore
   DEFAULT_SOURCE_URL = 'https://codebar.io/sponsors'.freeze
   PAGE_PATH_PATTERN = %r{/uploads/sponsor/(\d+)/([^/?#]+)}
 
+  include Cache
   include Discovery
   include Http
   include Restorer

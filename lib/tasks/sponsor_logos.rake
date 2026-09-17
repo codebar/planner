@@ -9,6 +9,9 @@
 #                  copies but do not upload anything to S3
 #   AWS_ACCESS_KEY / AWS_SECRET_ACCESS_KEY   S3 credentials (same pair the
 #                  CarrierWave initializer uses); not needed for DRY_RUN
+#   REFRESH_CACHE=1  ignore the local cache (tmp/cache/sponsor_logos) and
+#                  refetch availability probes and the CDX index
+#   CACHE_TTL_MINUTES  cache freshness window in minutes (default: 360)
 namespace :sponsor_logos do
   desc 'Restore sponsor logos missing from S3 using Wayback Machine copies of the old asset host'
   task restore: :environment do

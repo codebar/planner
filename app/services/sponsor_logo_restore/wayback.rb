@@ -11,7 +11,7 @@ class SponsorLogoRestore
     RETRY_DELAY = 2
 
     def wayback_index
-      attempt_cdx(CDX_ATTEMPTS)
+      build_index(cdx_body)
     end
 
     def download_archive(entry)
@@ -27,14 +27,31 @@ class SponsorLogoRestore
 
     private
 
-    def attempt_cdx(remaining)
-      build_index(get!(cdx_url, read_timeout: CDX_READ_TIMEOUT))
+    # The CDX index is immutable historical data; cache the raw response so
+    # repeated practice runs skip the multi-minute query.
+    def cdx_body
+      cached = cache_read('cdx-index')
+      return reuse_cached_cdx(cached) if cached
+
+      report('Fetching Wayback CDX index; this can take a couple of minutes')
+      body = fetch_cdx_with_retry
+      cache_write('cdx-index', body)
+      body
+    end
+
+    def reuse_cached_cdx(cached)
+      report('Using cached CDX index (set REFRESH_CACHE=1 to refresh)')
+      cached
+    end
+
+    def fetch_cdx_with_retry(remaining = CDX_ATTEMPTS)
+      get!(cdx_url, read_timeout: CDX_READ_TIMEOUT)
     rescue StandardError
       raise if remaining <= 1
 
       report('CDX fetch failed once; retrying')
       sleep(retry_delay)
-      attempt_cdx(remaining - 1)
+      fetch_cdx_with_retry(remaining - 1)
     end
 
     def build_index(body)

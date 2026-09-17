@@ -24,7 +24,6 @@ class SponsorLogoRestore
     def load_index(missing)
       return [{}, nil] if missing.empty?
 
-      report('Fetching Wayback CDX index; this can take a couple of minutes')
       [wayback_index, nil]
     rescue StandardError => e
       [nil, "Wayback CDX index unavailable: #{e.message}"]
@@ -44,9 +43,22 @@ class SponsorLogoRestore
       @checked = @checked.to_i + 1
       report("Availability check: #{@checked}/#{total}") if (@checked % 50).zero? || @checked == total
 
-      logo_present?(logo) ? :present : :missing
+      availability_code(logo) == '200' ? :present : :missing
     rescue StandardError => e
       failure(logo, "availability check failed: #{e.message}")
+    end
+
+    # Availability results for static files are stable; cached with a TTL so
+    # repeated practice runs do not re-probe hundreds of URLs.
+    def availability_code(logo)
+      url = public_url(logo)
+      key = "availability:#{url}"
+      cached = cache_read(key)
+      return cached unless cached.nil?
+
+      code = head_status(url)
+      cache_write(key, code)
+      code
     end
 
     # Checks the public URL rather than the S3 API so the result reflects
