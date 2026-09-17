@@ -47,6 +47,46 @@ RSpec.describe SponsorLogoRestore do
     stub_request(:get, %r{web\.archive\.org/cdx}).to_return(body: cdx_body)
   end
 
+  describe '#content_type' do
+    it 'maps filename extensions to MIME types' do
+      service = described_class.new
+
+      expect(service.send(:content_type, 'logo.png')).to eq('image/png')
+      expect(service.send(:content_type, 'logo.jpg')).to eq('image/jpeg')
+      expect(service.send(:content_type, 'logo.jpeg')).to eq('image/jpeg')
+      expect(service.send(:content_type, 'logo.gif')).to eq('image/gif')
+      expect(service.send(:content_type, 'logo.svg')).to eq('image/svg+xml')
+      expect(service.send(:content_type, 'logo.webp')).to eq('application/octet-stream')
+    end
+  end
+
+  describe 'politeness pacing' do
+    it 'sleeps the politeness delay before each download and the retry delay between attempts' do
+      instance = described_class.new(s3_client:, delay: 3, retry_delay: 7)
+      allow(instance).to receive(:sleep)
+      stub_request(:get, wayback_download_url).to_return({ status: 500 }, { status: 200, body: png_bytes })
+      head_stub('/uploads/sponsor/2/missing%20logo.png', { status: 403 }, { status: 200 })
+      allow(s3_client).to receive(:put_object)
+
+      instance.call('https://codebar.io/sponsors')
+
+      expect(instance).to have_received(:sleep).with(3).twice
+      expect(instance).to have_received(:sleep).with(7).once
+    end
+
+    it 'sleeps the Retry-After interval after a 429 response' do
+      instance = described_class.new(s3_client:, delay: 3, retry_delay: 7)
+      allow(instance).to receive(:sleep)
+      stub_request(:get, wayback_download_url).to_return(status: 429, headers: { 'Retry-After' => '5' })
+      allow(s3_client).to receive(:put_object)
+
+      instance.call('https://codebar.io/sponsors')
+
+      expect(instance).to have_received(:sleep).with(3).exactly(3).times
+      expect(instance).to have_received(:sleep).with(5).exactly(2).times
+    end
+  end
+
   describe '.call' do
     it 'restores missing logos found in the Wayback Machine and reports the outcome' do
       stub_request(:get, wayback_download_url).to_return(body: png_bytes)
@@ -77,6 +117,7 @@ RSpec.describe SponsorLogoRestore do
       expect(result.skipped).to eq(3)
       expect(result.restored).to be_empty
       expect(result.failed).to be_empty
+      expect(a_request(:get, %r{web\.archive\.org/cdx})).not_to have_been_made
     end
 
     it 'retries transient archive downloads before giving up' do
@@ -160,6 +201,18 @@ RSpec.describe SponsorLogoRestore do
       expect(result.failed.map { |f| f[:sponsor_id] }).to contain_exactly(2, 3)
       expect(result.failed.map { |f| f[:reason] }.uniq.first).to start_with('Wayback CDX index unavailable')
       expect(s3_client).not_to have_received(:put_object)
+    end
+
+    it 'accepts an SVG-markup body as a restorable image' do
+      svg = '<svg xmlns="http://www.w3.org/2000/svg"><rect/></svg>'
+      stub_request(:get, wayback_download_url).to_return(body: svg)
+      head_stub('/uploads/sponsor/2/missing%20logo.png', { status: 403 }, { status: 200 })
+      allow(s3_client).to receive(:put_object)
+
+      result = call
+
+      expect(result.restored.size).to eq(1)
+      expect(s3_client).to have_received(:put_object)
     end
 
     it 'reports logos that fail to verify after upload as failed' do
