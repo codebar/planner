@@ -2,24 +2,9 @@ class SponsorLogoRestore
   # Reads the Wayback Machine CDX index and downloads archived copies of the
   # sponsor logos that used to live on assets.codebar.io.
   module Wayback
-    CDX_QUERY_URL = 'https://web.archive.org/cdx/search/cdx'.freeze
-    ARCHIVE_HOST_PREFIX = 'assets.codebar.io/b/uploads/sponsor/avatar'.freeze
     ARCHIVE_PATH_PATTERN = %r{/uploads/sponsor/avatar/(\d+)/(.+)$}
     DOWNLOAD_RETRIES = 3
-    CDX_ATTEMPTS = 3
-    CDX_READ_TIMEOUT = 180
-    CDX_RETRY_DELAY = 15
     RETRY_DELAY = 2
-
-    # Raised for non-2xx CDX responses; carries Retry-After when present.
-    class CDXFetchError < StandardError
-      attr_reader :retry_after
-
-      def initialize(response)
-        super("HTTP #{response.code} fetching CDX index")
-        @retry_after = response['retry-after']&.to_i
-      end
-    end
 
     def wayback_index
       build_index(cdx_body)
@@ -38,57 +23,40 @@ class SponsorLogoRestore
 
     private
 
-    # The CDX index is immutable historical data; cache the raw response so
-    # repeated practice runs skip the multi-minute query.
-    def cdx_body
-      cached = cache_read('cdx-index')
-      return reuse_cached_cdx(cached) if cached
-
-      report('Fetching Wayback CDX index; this can take a couple of minutes')
-      body = fetch_cdx_with_retry
-      cache_write('cdx-index', body)
-      body
-    end
-
-    def reuse_cached_cdx(cached)
-      report('Using cached CDX index (set REFRESH_CACHE=1 to refresh)')
-      cached
-    end
-
-    def fetch_cdx_with_retry(remaining = CDX_ATTEMPTS)
-      fetch_cdx_response
-    rescue StandardError => e
-      raise if remaining <= 1
-
-      report("CDX fetch failed (#{e.message}); retrying")
-      sleep(cdx_retry_wait(e))
-      fetch_cdx_with_retry(remaining - 1)
-    end
-
-    def fetch_cdx_response
-      response = get_response(URI(cdx_url), read_timeout: CDX_READ_TIMEOUT)
-      raise CDXFetchError, response unless response.code.to_i.between?(200, 299)
-
-      response.body
-    end
-
-    def cdx_retry_wait(error)
-      retry_after = error.respond_to?(:retry_after) ? error.retry_after : nil
-      retry_after || cdx_retry_delay
-    end
-
     def build_index(body)
       raise 'CDX returned a non-CDX (HTML) response' if html?(body)
 
       index = {}
       body.each_line do |line|
-        entry = parse_cdx_line(line)
-        next unless entry
-
-        key = [entry[:sponsor_id], entry[:filename].downcase]
-        index[key] = entry if index[key].nil? || entry[:timestamp] > index[key][:timestamp]
+        parse_cdx_line(line)&.then { |entry| store_entry(index, entry) }
       end
       index
+    end
+
+    def store_entry(index, entry)
+      key = [entry[:sponsor_id], entry[:filename].downcase]
+      return unless better_capture?(entry, index[key])
+
+      index[key] = entry
+    end
+
+    # Ranks complete image captures (200 + image/*) above error stubs; latest
+    # wins within a rank. The old host's final crawl stored 522 error pages
+    # for some logos, so the newest capture is not always the best one.
+    def better_capture?(entry, current)
+      return true unless current
+
+      rank = capture_rank(entry)
+      current_rank = capture_rank(current)
+      rank > current_rank || (rank == current_rank && entry[:timestamp] > current[:timestamp])
+    end
+
+    def good_capture?(entry)
+      entry && capture_rank(entry) == 1
+    end
+
+    def capture_rank(entry)
+      entry[:status] == '200' && entry[:mimetype]&.start_with?('image/') ? 1 : 0
     end
 
     # -> [:restore, image body], [:miss, nil] for a permanent 404, or
@@ -107,8 +75,8 @@ class SponsorLogoRestore
       match = columns[2]&.match(ARCHIVE_PATH_PATTERN)
       return unless match
 
-      { sponsor_id: match[1].to_i, filename: decode(match[2]),
-        timestamp: columns[1], original_url: columns[2] }
+      { sponsor_id: match[1].to_i, filename: decode(match[2]), timestamp: columns[1],
+        original_url: columns[2], mimetype: columns[3], status: columns[4] }
     end
 
     def archive_url(entry)
@@ -127,10 +95,6 @@ class SponsorLogoRestore
 
     def svg?(body)
       /\A\s*<(\?xml|svg)/i.match?(body.byteslice(0, 64))
-    end
-
-    def cdx_url
-      "#{CDX_QUERY_URL}?url=#{ARCHIVE_HOST_PREFIX}*&output=text&collapse=urlkey&limit=100000"
     end
   end
 end

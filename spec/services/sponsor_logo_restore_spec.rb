@@ -288,6 +288,48 @@ RSpec.describe SponsorLogoRestore do
       expect(result.restored.size).to eq(1)
     end
 
+    it 'prefers an intact capture over a newer error-page capture' do
+      good_ts = '20230101000000'
+      good_url = 'https://web.archive.org/web/20230101000000im_/http://assets.codebar.io/b//uploads/sponsor/avatar/2/missing%20logo.png'
+      stub_request(:get, %r{web\.archive\.org/cdx}).to_return(body: <<~CDX)
+        io,codebar,assets)/b/uploads/sponsor/avatar/2/missing%20logo.png #{good_ts} http://assets.codebar.io/b//uploads/sponsor/avatar/2/missing%20logo.png image/png 200 ABC 100
+        io,codebar,assets)/b/uploads/sponsor/avatar/2/missing%20logo.png 20250617005043 http://assets.codebar.io/b//uploads/sponsor/avatar/2/missing%20logo.png unk 522 ABC 809
+      CDX
+      stub_request(:get, good_url).to_return(body: png_bytes)
+      head_stub('/uploads/sponsor/2/missing%20logo.png', { status: 403 }, { status: 200 })
+      allow(s3_client).to receive(:put_object)
+
+      result = call
+
+      expect(result.restored.size).to eq(1)
+      expect(a_request(:get, good_url)).to have_been_made.once
+    end
+
+    it 'falls back to the thumb variant when the original capture is an error page' do
+      thumb_url = 'https://web.archive.org/web/20250215031600im_/http://assets.codebar.io/b//uploads/sponsor/avatar/4/thumb_photo.png'
+      stub_request(:get, 'https://codebar.io/sponsors').to_return(body: page_html.sub(
+        'uploads/sponsor/3/gone.png', 'uploads/sponsor/4/photo.png'
+      ))
+      head_stub('/uploads/sponsor/4/photo.png', { status: 403 }, { status: 200 })
+      stub_request(:get, %r{web\.archive\.org/cdx}).to_return(body: <<~CDX)
+        io,codebar,assets)/b/uploads/sponsor/avatar/4/photo.png 20250617005043 http://assets.codebar.io/b//uploads/sponsor/avatar/4/photo.png unk 522 ABC 809
+        io,codebar,assets)/b/uploads/sponsor/avatar/4/thumb_photo.png 20250215031600 http://assets.codebar.io/b//uploads/sponsor/avatar/4/thumb_photo.png image/png 200 ABC 5000
+      CDX
+      stub_request(:get, thumb_url).to_return(body: png_bytes)
+      allow(s3_client).to receive(:put_object).with(
+        bucket: AWS_ASSETS.fetch(:bucket),
+        key: 'uploads/sponsor/4/photo.png',
+        body: png_bytes,
+        content_type: 'image/png',
+        acl: 'public-read'
+      )
+
+      result = call
+
+      expect(result.restored.map { |l| l[:sponsor_id] }).to eq([4])
+      expect(s3_client).to have_received(:put_object)
+    end
+
     it 'reports logos that fail to verify after upload as failed' do
       stub_request(:get, wayback_download_url).to_return(body: png_bytes)
       head_stub('/uploads/sponsor/2/missing%20logo.png', status: 403)

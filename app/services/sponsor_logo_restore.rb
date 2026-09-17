@@ -17,18 +17,19 @@ class SponsorLogoRestore
   PAGE_PATH_PATTERN = %r{/uploads/sponsor/(\d+)/([^/?#]+)}
 
   include Cache
+  include CdxFetch
   include Discovery
   include Http
   include Restorer
   include Wayback
 
   def self.call(source_url: ENV['SPONSORS_URL'] || DEFAULT_SOURCE_URL, s3_client: nil,
-    delay: 1, retry_delay: Wayback::RETRY_DELAY, cdx_retry_delay: Wayback::CDX_RETRY_DELAY)
+    delay: 1, retry_delay: Wayback::RETRY_DELAY, cdx_retry_delay: CdxFetch::CDX_RETRY_DELAY)
     new(s3_client:, delay:, retry_delay:, cdx_retry_delay:).call(source_url)
   end
 
   def initialize(s3_client: nil, delay: 1, retry_delay: Wayback::RETRY_DELAY, progress: nil,
-    cdx_retry_delay: Wayback::CDX_RETRY_DELAY)
+    cdx_retry_delay: CdxFetch::CDX_RETRY_DELAY)
     @s3_client = s3_client
     @delay = delay
     @retry_delay = retry_delay

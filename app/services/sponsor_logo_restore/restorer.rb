@@ -17,9 +17,21 @@ class SponsorLogoRestore
       report("Restore progress: #{index + 1}/#{total}") if ((index + 1) % 10).zero? || index + 1 == total
     end
 
+    # Exact filename first; the CarrierWave thumb version is the fallback —
+    # the old host's final crawl stored 522 error pages for some originals,
+    # while their thumb variants were captured intact months earlier. A bad
+    # exact capture loses to a good thumb; anything beats nothing.
+    def index_entry(index, logo)
+      exact = index[[logo[:sponsor_id], logo[:filename].downcase]]
+      return exact if good_capture?(exact)
+
+      thumb = index[[logo[:sponsor_id], "thumb_#{logo[:filename]}".downcase]]
+      good_capture?(thumb) ? thumb : (exact || thumb)
+    end
+
     # -> [:restored, logo], [:rehearsed, logo], or [:failed, failure hash].
     def restore_one(logo, index)
-      entry = index[[logo[:sponsor_id], logo[:filename].downcase]]
+      entry = index_entry(index, logo)
       return [:failed, failure(logo, 'not found in Wayback Machine index')] unless entry
 
       data = download_archive(entry)
