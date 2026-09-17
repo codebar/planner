@@ -23,14 +23,16 @@ class SponsorLogoRestore
   include Wayback
 
   def self.call(source_url: ENV['SPONSORS_URL'] || DEFAULT_SOURCE_URL, s3_client: nil,
-    delay: 1, retry_delay: Wayback::RETRY_DELAY)
-    new(s3_client:, delay:, retry_delay:).call(source_url)
+    delay: 1, retry_delay: Wayback::RETRY_DELAY, cdx_retry_delay: Wayback::CDX_RETRY_DELAY)
+    new(s3_client:, delay:, retry_delay:, cdx_retry_delay:).call(source_url)
   end
 
-  def initialize(s3_client: nil, delay: 1, retry_delay: Wayback::RETRY_DELAY, progress: nil)
+  def initialize(s3_client: nil, delay: 1, retry_delay: Wayback::RETRY_DELAY, progress: nil,
+    cdx_retry_delay: Wayback::CDX_RETRY_DELAY)
     @s3_client = s3_client
     @delay = delay
     @retry_delay = retry_delay
+    @cdx_retry_delay = cdx_retry_delay
     @limit = ENV['RESTORE_LIMIT']&.to_i
     @dry_run = ENV['DRY_RUN'] == '1'
     @progress = progress || ->(message) { warn "[sponsor_logos] #{message}" }
@@ -46,7 +48,7 @@ class SponsorLogoRestore
 
   private
 
-  attr_reader :delay, :retry_delay, :limit, :dry_run
+  attr_reader :delay, :retry_delay, :cdx_retry_delay, :limit, :dry_run
 
   def report(message)
     @progress.call(message)

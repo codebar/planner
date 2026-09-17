@@ -34,7 +34,7 @@ RSpec.describe SponsorLogoRestore do
   end
 
   def call
-    described_class.call(s3_client:, delay: 0, retry_delay: 0)
+    described_class.call(s3_client:, delay: 0, retry_delay: 0, cdx_retry_delay: 0)
   end
 
   before do
@@ -188,7 +188,7 @@ RSpec.describe SponsorLogoRestore do
 
       expect(result.failed.map { |f| f[:sponsor_id] }).to contain_exactly(2, 3)
       expect(result.failed.map { |f| f[:reason] }.uniq.first).to start_with('Wayback CDX index unavailable')
-      expect(a_request(:get, %r{web\.archive\.org/cdx})).to have_been_made.twice
+      expect(a_request(:get, %r{web\.archive\.org/cdx})).to have_been_made.times(3)
       expect(s3_client).not_to have_received(:put_object)
     end
 
@@ -243,7 +243,7 @@ RSpec.describe SponsorLogoRestore do
 
     it 'reports phase progress so long batches are not silent' do
       messages = []
-      instance = described_class.new(s3_client:, delay: 0, retry_delay: 0, progress: ->(m) { messages << m })
+      instance = described_class.new(s3_client:, delay: 0, retry_delay: 0, cdx_retry_delay: 0, progress: ->(m) { messages << m })
       stub_request(:get, wayback_download_url).to_return(body: png_bytes)
       head_stub('/uploads/sponsor/2/missing%20logo.png', { status: 403 }, { status: 200 })
       allow(s3_client).to receive(:put_object)
@@ -256,9 +256,10 @@ RSpec.describe SponsorLogoRestore do
       expect(messages).to include(a_string_matching(%r{Restore progress: 2/2}))
     end
 
-    it 'reports CDX retry attempts' do
+    it 'retries a failed CDX fetch and reports it' do
       messages = []
-      instance = described_class.new(s3_client:, delay: 0, retry_delay: 0, progress: ->(m) { messages << m })
+      instance = described_class.new(s3_client:, delay: 0, retry_delay: 0, cdx_retry_delay: 0, progress: ->(m) { messages << m })
+      allow(instance).to receive(:sleep)
       stub_request(:get, %r{web\.archive\.org/cdx}).to_return({ status: 500 }, { body: cdx_body })
       stub_request(:get, wayback_download_url).to_return(body: png_bytes)
       head_stub('/uploads/sponsor/2/missing%20logo.png', { status: 403 }, { status: 200 })
@@ -266,7 +267,25 @@ RSpec.describe SponsorLogoRestore do
 
       instance.call('https://codebar.io/sponsors')
 
-      expect(messages).to include(a_string_matching(/CDX fetch failed once; retrying/))
+      expect(messages).to include(a_string_matching(/CDX fetch failed.*retrying/))
+      # one sleep(0) for the CDX backoff, one for the download's politeness tick
+      expect(instance).to have_received(:sleep).with(0).twice
+    end
+
+    it 'sleeps for Retry-After when the CDX fetch is throttled' do
+      messages = []
+      instance = described_class.new(s3_client:, delay: 0, retry_delay: 0, cdx_retry_delay: 7, progress: ->(m) { messages << m })
+      allow(instance).to receive(:sleep)
+      stub_request(:get, %r{web\.archive\.org/cdx})
+        .to_return({ status: 503, headers: { 'Retry-After' => '3' } }, { body: cdx_body })
+      stub_request(:get, wayback_download_url).to_return(body: png_bytes)
+      head_stub('/uploads/sponsor/2/missing%20logo.png', { status: 403 }, { status: 200 })
+      allow(s3_client).to receive(:put_object)
+
+      result = instance.call('https://codebar.io/sponsors')
+
+      expect(instance).to have_received(:sleep).with(3)
+      expect(result.restored.size).to eq(1)
     end
 
     it 'reports logos that fail to verify after upload as failed' do
