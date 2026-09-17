@@ -72,6 +72,8 @@ deploy_production: ## Deploy master to production
 	git push production master
 	heroku run rake db:migrate --app=codebar-production
 	heroku maintenance:off --app=codebar-production
+restore_sponsor_logos: ## Restore sponsor logos missing from S3 using Wayback Machine copies
+	bundle exec rake sponsor_logos:restore
 backup_staging: ## Capture and download a staging database backup
 	heroku pgbackups:capture --app=codebar-staging
 	curl -o pg-staging-latest.dump `heroku pgbackups:url --app=codebar-staging`
