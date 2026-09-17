@@ -5,13 +5,21 @@ class SponsorLogoRestore
       buckets = Hash.new { |h, k| h[k] = [] }
       missing.each_with_index do |logo, i|
         restore_tick(index: i, total: missing.size)
-        bucket, outcome = restore_one(logo, index)
+        bucket, outcome = restore_one_safe(logo, index)
         buckets[bucket] << outcome
       end
       [buckets[:restored], buckets[:rehearsed], buckets[:failed]]
     end
 
     private
+
+    # A network exception mid-download must not abort the batch; record the
+    # logo as failed and carry on.
+    def restore_one_safe(logo, index)
+      restore_one(logo, index)
+    rescue StandardError => e
+      [:failed, failure(logo, e.message)]
+    end
 
     def restore_tick(index:, total:)
       report("Restore progress: #{index + 1}/#{total}") if ((index + 1) % 10).zero? || index + 1 == total

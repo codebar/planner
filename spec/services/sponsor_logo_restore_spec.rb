@@ -342,6 +342,19 @@ RSpec.describe SponsorLogoRestore do
       expect(s3_client).to have_received(:put_object)
     end
 
+    it 'records a mid-download network failure instead of crashing the batch' do
+      stub_request(:get, wayback_download_url).to_raise(Errno::ECONNRESET)
+      head_stub('/uploads/sponsor/2/missing%20logo.png', status: 403)
+      allow(s3_client).to receive(:put_object)
+
+      result = call
+
+      failed = result.failed.find { |f| f[:sponsor_id] == 2 }
+      expect(failed[:reason]).to include('Connection reset')
+      expect(result.restored).to be_empty
+      expect(s3_client).not_to have_received(:put_object)
+    end
+
     it 'reports logos that fail to verify after upload as failed' do
       stub_request(:get, wayback_download_url).to_return(body: png_bytes)
       head_stub('/uploads/sponsor/2/missing%20logo.png', status: 403)
