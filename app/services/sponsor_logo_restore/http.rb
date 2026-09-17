@@ -4,15 +4,15 @@ class SponsorLogoRestore
     OPEN_TIMEOUT = 5
     READ_TIMEOUT = 30
 
-    def get!(url)
-      response = get_response(URI(url))
+    def get!(url, read_timeout: READ_TIMEOUT)
+      response = get_response(URI(url), read_timeout:)
       return response.body if response.code.to_i.between?(200, 299)
 
       raise "HTTP #{response.code} fetching #{url}"
     end
 
-    def get_response(url)
-      follow_redirects(URI(url))
+    def get_response(url, read_timeout: READ_TIMEOUT)
+      follow_redirects(URI(url), read_timeout:)
     end
 
     def head_status(url)
@@ -34,18 +34,20 @@ class SponsorLogoRestore
 
     private
 
-    def follow_redirects(uri, limit = 5)
-      response = http_for(uri).get(uri.request_uri.empty? ? '/' : uri.request_uri)
-      return follow_redirects(URI.join(uri, response['location']), limit - 1) if redirect?(response, limit)
+    def follow_redirects(uri, read_timeout: READ_TIMEOUT, limit: 5)
+      response = http_for(uri, read_timeout:).get(uri.request_uri.empty? ? '/' : uri.request_uri)
+      if redirect?(response, limit)
+        return follow_redirects(URI.join(uri, response['location']), read_timeout:, limit: limit - 1)
+      end
 
       response
     end
 
-    def http_for(uri)
+    def http_for(uri, read_timeout: READ_TIMEOUT)
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = uri.scheme == 'https'
       http.open_timeout = OPEN_TIMEOUT
-      http.read_timeout = READ_TIMEOUT
+      http.read_timeout = read_timeout
       http
     end
 

@@ -18,6 +18,7 @@ class SponsorLogoRestore
 
   include Discovery
   include Http
+  include Restorer
   include Wayback
 
   def self.call(source_url: ENV['SPONSORS_URL'] || DEFAULT_SOURCE_URL, s3_client: nil,
@@ -25,16 +26,18 @@ class SponsorLogoRestore
     new(s3_client:, delay:, retry_delay:).call(source_url)
   end
 
-  def initialize(s3_client: nil, delay: 1, retry_delay: Wayback::RETRY_DELAY)
+  def initialize(s3_client: nil, delay: 1, retry_delay: Wayback::RETRY_DELAY, progress: nil)
     @s3_client = s3_client
     @delay = delay
     @retry_delay = retry_delay
     @limit = ENV['RESTORE_LIMIT']&.to_i
     @dry_run = ENV['DRY_RUN'] == '1'
+    @progress = progress || ->(message) { warn "[sponsor_logos] #{message}" }
   end
 
   def call(source_url)
     logos = sponsor_logos(source_url)
+    report("Found #{logos.size} logo references on the page")
     missing, failed = classify(logos)
     missing, deferred = apply_limit(missing)
     run_restore(logos, missing, failed, deferred)
@@ -43,6 +46,10 @@ class SponsorLogoRestore
   private
 
   attr_reader :delay, :retry_delay, :limit, :dry_run
+
+  def report(message)
+    @progress.call(message)
+  end
 
   # -> [batch to restore, deferred remainder]
   def apply_limit(missing)
@@ -70,40 +77,6 @@ class SponsorLogoRestore
     return [missing, []] unless index_error
 
     [[], missing.map { |logo| failure(logo, index_error) }]
-  end
-
-  def restore(missing, index)
-    buckets = Hash.new { |h, k| h[k] = [] }
-    missing.each do |logo|
-      bucket, outcome = restore_one(logo, index)
-      buckets[bucket] << outcome
-    end
-    [buckets[:restored], buckets[:rehearsed], buckets[:failed]]
-  end
-
-  # -> [:ok] or [:failed, failure hash].
-  # -> [:restored, logo], [:rehearsed, logo], or [:failed, failure hash].
-  def restore_one(logo, index)
-    entry = index[[logo[:sponsor_id], logo[:filename].downcase]]
-    return [:failed, failure(logo, 'not found in Wayback Machine index')] unless entry
-
-    data = download_archive(entry)
-    return [:failed, failure(logo, 'archive download failed')] if data.nil?
-    return [:rehearsed, logo] if dry_run
-
-    upload_and_verify(logo, data)
-  end
-
-  def upload_and_verify(logo, data)
-    s3_client.put_object(
-      bucket:, key: s3_key(logo), body: data,
-      content_type: content_type(logo[:filename]), acl: 'public-read'
-    )
-    return [:failed, failure(logo, 'upload verification failed')] unless logo_present?(logo)
-
-    [:restored, logo]
-  rescue StandardError => e
-    [:failed, failure(logo, e.message)]
   end
 
   def failure(logo, reason)

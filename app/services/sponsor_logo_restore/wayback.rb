@@ -7,6 +7,7 @@ class SponsorLogoRestore
     ARCHIVE_PATH_PATTERN = %r{/uploads/sponsor/avatar/(\d+)/(.+)$}
     DOWNLOAD_RETRIES = 3
     CDX_ATTEMPTS = 2
+    CDX_READ_TIMEOUT = 180
     RETRY_DELAY = 2
 
     def wayback_index
@@ -27,10 +28,11 @@ class SponsorLogoRestore
     private
 
     def attempt_cdx(remaining)
-      build_index(get!(cdx_url))
+      build_index(get!(cdx_url, read_timeout: CDX_READ_TIMEOUT))
     rescue StandardError
       raise if remaining <= 1
 
+      report('CDX fetch failed once; retrying')
       sleep(retry_delay)
       attempt_cdx(remaining - 1)
     end

@@ -13,9 +13,9 @@ class SponsorLogoRestore
       missing = []
       failed = []
       logos.each do |logo|
-          missing << logo unless logo_present?(logo)
-      rescue StandardError => e
-          failed << failure(logo, "availability check failed: #{e.message}")
+        outcome = classify_one(logo, logos.size)
+        missing << logo if outcome == :missing
+        failed << outcome if outcome.is_a?(Hash)
       end
       [missing, failed]
     end
@@ -24,6 +24,7 @@ class SponsorLogoRestore
     def load_index(missing)
       return [{}, nil] if missing.empty?
 
+      report('Fetching Wayback CDX index; this can take a couple of minutes')
       [wayback_index, nil]
     rescue StandardError => e
       [nil, "Wayback CDX index unavailable: #{e.message}"]
@@ -36,6 +37,16 @@ class SponsorLogoRestore
       return unless match
 
       { sponsor_id: match[1].to_i, filename: decode(match[2]) }
+    end
+
+    # -> :missing, :present, or a failure hash when the check errored
+    def classify_one(logo, total)
+      @checked = @checked.to_i + 1
+      report("Availability check: #{@checked}/#{total}") if (@checked % 50).zero? || @checked == total
+
+      logo_present?(logo) ? :present : :missing
+    rescue StandardError => e
+      failure(logo, "availability check failed: #{e.message}")
     end
 
     # Checks the public URL rather than the S3 API so the result reflects
