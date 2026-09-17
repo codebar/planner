@@ -97,6 +97,7 @@ class SponsorLogoRestore
     when '.jpg', '.jpeg' then 'image/jpeg'
     when '.gif' then 'image/gif'
     when '.svg' then 'image/svg+xml'
+    when '.ico' then 'image/x-icon'
     else 'application/octet-stream'
     end
   end

@@ -90,7 +90,11 @@ class SponsorLogoRestore
       return true if [0xFF, 0x89, 0x47].include?(byte) # JPEG, PNG, GIF magic bytes
       return svg?(body) if byte == 0x3C # '<': SVG markup or an HTML error page
 
-      false
+      ico?(body)
+    end
+
+    def ico?(body)
+      body.byteslice(0, 4).bytes == [0x00, 0x00, 0x01, 0x00]
     end
 
     def svg?(body)

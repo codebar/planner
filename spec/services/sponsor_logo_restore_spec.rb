@@ -330,6 +330,18 @@ RSpec.describe SponsorLogoRestore do
       expect(s3_client).to have_received(:put_object)
     end
 
+    it 'accepts an ICO archive download and uploads it with the icon content type' do
+      ico = "\x00\x00\x01\x00\x03\x00".dup.force_encoding('ASCII-8BIT')
+      stub_request(:get, wayback_download_url).to_return(body: ico)
+      head_stub('/uploads/sponsor/2/missing%20logo.png', { status: 403 }, { status: 200 })
+      allow(s3_client).to receive(:put_object)
+
+      result = call
+
+      expect(result.restored.size).to eq(1)
+      expect(s3_client).to have_received(:put_object)
+    end
+
     it 'reports logos that fail to verify after upload as failed' do
       stub_request(:get, wayback_download_url).to_return(body: png_bytes)
       head_stub('/uploads/sponsor/2/missing%20logo.png', status: 403)
