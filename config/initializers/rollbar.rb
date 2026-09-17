@@ -77,8 +77,11 @@ Rollbar.configure do |config|
   # https://devcenter.heroku.com/articles/deploying-to-a-custom-rails-environment
   config.environment = ENV['ROLLBAR_ENV'].presence || Rails.env
 
-  # https://docs.rollbar.com/docs/ruby#section-enabling-local-variables-in-stack-traces
-  config.send_extra_frame_data = :app
-  config.locals = { enabled: true }
+  # Disables Rollbar's local-variable capture. With locals enabled, the Rollbar
+  # middleware starts a TracePoint for every request that allocates a Binding
+  # per method call. On view-heavy pages this accounts for over 90% of view
+  # runtime (see https://github.com/codebar/planner/issues/2889).
+  config.send_extra_frame_data = :none
+  config.locals = { enabled: false }
   config.backtrace_cleaner = ActiveSupport::BacktraceCleaner.new
 end
