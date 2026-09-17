@@ -192,6 +192,8 @@ Rails.application.routes.draw do
   post "check-in/w/:code" => "check_ins#create"
   get  "check-in/w/:code/confirm" => "check_ins#confirm", as: :check_in_w_confirm
 
+  get 'sitemap.xml', to: 'sitemaps#show', as: :sitemap
+
   get 'cookie-policy' => 'pages#show', id: 'cookie-policy'
   get 'privacy-policy' => 'pages#show', id: 'privacy-policy'
   get 'breach-code-of-conduct' => 'pages#show', id: 'breach-code-of-conduct'
