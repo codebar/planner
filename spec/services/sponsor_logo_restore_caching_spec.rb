@@ -58,11 +58,12 @@ RSpec.describe SponsorLogoRestore do
     new_run.call('https://codebar.io/sponsors')
 
     # exists.png: 1 classification HEAD (cached in run 2). missing logo:
-    # run 1 classification HEAD + live post-upload verification HEADs in both
-    # runs (verifications are never cached).
-    expect(a_request(:head, /#{bucket_host}/)).to have_been_made.times(4)
+    # run 1 classification HEAD + live verification HEAD, whose 200 result is
+    # then cached — so run 2 classifies the logo present without probing or
+    # re-restoring it.
+    expect(a_request(:head, /#{bucket_host}/)).to have_been_made.times(3)
     expect(a_request(:get, %r{web\.archive\.org/cdx})).to have_been_made.once
-    expect(a_request(:get, wayback_download_url)).to have_been_made.twice
+    expect(a_request(:get, wayback_download_url)).to have_been_made.once
   end
 
   it 'keeps verify-after-upload checks live even for cached URLs' do

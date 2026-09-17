@@ -48,6 +48,9 @@ class SponsorLogoRestore
       )
       return [:failed, failure(logo, 'upload verification failed')] unless logo_present?(logo)
 
+      # A verified restore means the logo is present; refresh the availability
+      # cache so later runs do not re-attempt it while the stale '403' lives on.
+      cache_write("availability:#{public_url(logo)}", '200')
       [:restored, logo]
     rescue StandardError => e
       [:failed, failure(logo, e.message)]
