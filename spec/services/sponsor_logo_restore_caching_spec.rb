@@ -34,7 +34,7 @@ RSpec.describe SponsorLogoRestore do
     allow(Rails).to receive(:root).and_return(Pathname.new(cache_root))
     stub_request(:get, 'https://codebar.io/sponsors').to_return(body: page_html)
     head_stub('/uploads/sponsor/1/exists.png', status: 200)
-    head_stub('/uploads/sponsor/2/missing%20logo.png', status: 403)
+    head_stub('/uploads/sponsor/2/missing%20logo.png', { status: 403 }, { status: 200 })
     stub_request(:get, %r{web\.archive\.org/cdx}).to_return(body: cdx_body)
   end
 
