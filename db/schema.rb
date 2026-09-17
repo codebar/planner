@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_09_17_023327) do
+ActiveRecord::Schema[8.1].define(version: 2026_09_17_090000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -615,6 +615,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_17_023327) do
     t.integer "workshop_id"
     t.index ["member_id", "attending"], name: "index_workshop_invitations_member_attending"
     t.index ["member_id", "workshop_id", "role"], name: "idx_on_member_id_workshop_id_role_e3cea6bbfd", unique: true
+    t.index ["member_id"], name: "index_workshop_invitations_coach_attended_on_member_id", where: "(attended AND ((role)::text = 'Coach'::text))"
     t.index ["member_id"], name: "index_workshop_invitations_on_member_id"
     t.index ["token"], name: "index_workshop_invitations_on_token", unique: true
     t.index ["workshop_id", "attending"], name: "index_workshop_invitations_workshop_attending"
