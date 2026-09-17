@@ -9,6 +9,19 @@ RSpec.feature 'when visiting the coaches page' do
     expect(page).to have_text(coach.name, wait: 5)
   end
 
+  scenario 'I can see the total number of volunteers across all years' do
+    workshop_last_year = Fabricate(:workshop, date_and_time: 1.year.ago)
+    workshop_three_years_ago = Fabricate(:workshop, date_and_time: 3.years.ago)
+    coach = Fabricate(:attended_coach, workshop: workshop_last_year).member
+    Fabricate(:attended_coach, member: coach, workshop: workshop_three_years_ago)
+    Fabricate(:attended_coach, workshop: workshop_three_years_ago)
+
+    visit coaches_path
+
+    # The same coach at two workshops counts once
+    expect(page).to have_text('the 2 volunteers', wait: 5)
+  end
+
   scenario 'I can see the top coaches by year' do
     travel_to(Time.current) do
       latest_workshop = Fabricate(:workshop, date_and_time: 1.year.ago)
