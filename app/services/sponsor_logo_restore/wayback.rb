@@ -6,11 +6,40 @@ class SponsorLogoRestore
     ARCHIVE_HOST_PREFIX = 'assets.codebar.io/b/uploads/sponsor/avatar'.freeze
     ARCHIVE_PATH_PATTERN = %r{/uploads/sponsor/avatar/(\d+)/(.+)$}
     DOWNLOAD_RETRIES = 3
+    CDX_ATTEMPTS = 2
     RETRY_DELAY = 2
 
     def wayback_index
+      attempt_cdx(CDX_ATTEMPTS)
+    end
+
+    def download_archive(entry)
+      DOWNLOAD_RETRIES.times do |attempt|
+        sleep(delay)
+        action, payload = attempt_download(entry)
+        return payload if %i[restore miss].include?(action)
+
+        sleep(payload) unless attempt == DOWNLOAD_RETRIES - 1
+      end
+      nil
+    end
+
+    private
+
+    def attempt_cdx(remaining)
+      build_index(get!(cdx_url))
+    rescue StandardError
+      raise if remaining <= 1
+
+      sleep(retry_delay)
+      attempt_cdx(remaining - 1)
+    end
+
+    def build_index(body)
+      raise 'CDX returned a non-CDX (HTML) response' if html?(body)
+
       index = {}
-      get!(cdx_url).each_line do |line|
+      body.each_line do |line|
         entry = parse_cdx_line(line)
         next unless entry
 
@@ -20,18 +49,16 @@ class SponsorLogoRestore
       index
     end
 
-    def download_archive(entry)
-      DOWNLOAD_RETRIES.times do |attempt|
-        sleep(delay)
-        body = fetch(archive_url(entry))
-        return body if image?(body)
+    # -> [:restore, image body], [:miss, nil] for a permanent 404, or
+    # [:retry, seconds] for a transient failure (honours Retry-After on 429s)
+    def attempt_download(entry)
+      response = get_response(archive_url(entry))
+      return [:restore, response.body] if image?(response.body)
+      return [:miss, nil] if response.code == '404'
 
-        sleep(RETRY_DELAY) unless attempt == DOWNLOAD_RETRIES - 1
-      end
-      nil
+      wait = response.code == '429' ? response['retry-after']&.to_i : retry_delay
+      [:retry, wait || retry_delay]
     end
-
-    private
 
     def parse_cdx_line(line)
       columns = line.split(' ')
@@ -47,11 +74,21 @@ class SponsorLogoRestore
     end
 
     def image?(body)
-      body&.bytesize&.positive? && [0xFF, 0x89, 0x47, 0x3C].include?(body.getbyte(0))
+      return false unless body&.bytesize&.positive?
+
+      byte = body.getbyte(0)
+      return true if [0xFF, 0x89, 0x47].include?(byte) # JPEG, PNG, GIF magic bytes
+      return svg?(body) if byte == 0x3C # '<': SVG markup or an HTML error page
+
+      false
+    end
+
+    def svg?(body)
+      /\A\s*<(\?xml|svg)/i.match?(body.byteslice(0, 64))
     end
 
     def cdx_url
-      "#{CDX_QUERY_URL}?url=#{ARCHIVE_HOST_PREFIX}*&output=text&collapse=urlkey&limit=100_000"
+      "#{CDX_QUERY_URL}?url=#{ARCHIVE_HOST_PREFIX}*&output=text&collapse=urlkey&limit=100000"
     end
   end
 end

@@ -6,81 +6,68 @@
 # files. The Wayback Machine archived the asset host's files, so the original
 # logo images can be recovered from it.
 #
-# Credentials and bucket are read from the same environment variables the
-# CarrierWave initializer uses (AWS_ACCESS_KEY, AWS_SECRET_ACCESS_KEY,
-# AWS_REGION, S3_BUCKET_NAME), so the task can run from any machine.
+# Credentials, bucket, and region come from the AWS_ASSETS constant
+# (config/initializers/aws_assets.rb), which reads the same environment
+# variables the CarrierWave initializer uses, so the task can run from any
+# machine.
 class SponsorLogoRestore
   Result = Data.define(:restored, :skipped, :failed)
 
   DEFAULT_SOURCE_URL = 'https://codebar.io/sponsors'.freeze
   PAGE_PATH_PATTERN = %r{/uploads/sponsor/(\d+)/([^/?#]+)}
 
+  include Discovery
   include Http
   include Wayback
 
-  def self.call(source_url: ENV.fetch('SPONSORS_URL', DEFAULT_SOURCE_URL), s3_client: nil, delay: 1)
-    new(s3_client:, delay:).call(source_url)
+  def self.call(source_url: ENV['SPONSORS_URL'] || DEFAULT_SOURCE_URL, s3_client: nil,
+    delay: 1, retry_delay: Wayback::RETRY_DELAY)
+    new(s3_client:, delay:, retry_delay:).call(source_url)
   end
 
-  def initialize(s3_client: nil, delay: 1)
+  def initialize(s3_client: nil, delay: 1, retry_delay: Wayback::RETRY_DELAY)
     @s3_client = s3_client
     @delay = delay
+    @retry_delay = retry_delay
   end
 
   def call(source_url)
     logos = sponsor_logos(source_url)
-    missing = logos.reject { |logo| logo_present?(logo) }
-    index = missing.empty? ? {} : wayback_index
-    restored, failed = restore(missing, index)
-    Result.new(restored:, skipped: logos.size - missing.size, failed:)
+    missing, failed = classify(logos)
+    run_restore(logos, missing, failed)
   end
 
   private
 
-  attr_reader :delay
+  attr_reader :delay, :retry_delay
 
-  def sponsor_logos(source_url)
-    Nokogiri::HTML(get!(source_url)).css('img').filter_map do |img|
-      parse_page_path(img['src'])
-    end.uniq
-  end
-
-  def parse_page_path(src)
-    match = src&.match(PAGE_PATH_PATTERN)
-    return unless match
-
-    { sponsor_id: match[1].to_i, filename: decode(match[2]) }
-  end
-
-  # Checks the public URL rather than the S3 API so the result reflects
-  # exactly what a visitor's browser can load.
-  def logo_present?(logo)
-    head_status(public_url(logo)) == '200'
-  end
-
-  def public_url(logo)
-    host = "#{bucket}.s3.#{region}.amazonaws.com"
-    path = "uploads/sponsor/#{logo[:sponsor_id]}/#{encode(logo[:filename])}"
-    "https://#{host}/#{path}"
+  # An unavailable CDX index fails every missing logo instead of crashing.
+  def run_restore(logos, missing, failed)
+    index, index_error = load_index(missing)
+    failed += missing.map { |logo| failure(logo, index_error) } if index_error
+    missing = [] if index_error
+    restored, restore_failed = restore(missing, index || {})
+    all_failed = failed + restore_failed
+    Result.new(restored:, skipped: logos.size - restored.size - all_failed.size, failed: all_failed)
   end
 
   def restore(missing, index)
     restored = []
     failed = []
     missing.each do |logo|
-      outcome = restore_one(logo, index)
-      outcome.is_a?(Hash) ? failed << outcome : restored << logo
+      status, outcome = restore_one(logo, index)
+      status == :ok ? restored << logo : failed << outcome
     end
     [restored, failed]
   end
 
-  # Returns a Hash describing the failure, or anything else on success.
+  # -> [:ok] or [:failed, failure hash].
   def restore_one(logo, index)
     entry = index[[logo[:sponsor_id], logo[:filename].downcase]]
-    return failure(logo, 'not found in Wayback Machine index') unless entry
+    return [:failed, failure(logo, 'not found in Wayback Machine index')] unless entry
 
     data = download_archive(entry)
-    return failure(logo, 'archive download failed') if data.nil?
+    return [:failed, failure(logo, 'archive download failed')] if data.nil?
 
     upload_and_verify(logo, data)
   end
@@ -90,11 +77,11 @@ class SponsorLogoRestore
       bucket:, key: s3_key(logo), body: data,
       content_type: content_type(logo[:filename]), acl: 'public-read'
     )
-    return failure(logo, 'upload verification failed') unless logo_present?(logo)
+    return [:failed, failure(logo, 'upload verification failed')] unless logo_present?(logo)
 
-    :restored
+    [:ok]
   rescue StandardError => e
-    failure(logo, e.message)
+    [:failed, failure(logo, e.message)]
   end
 
   def failure(logo, reason)
@@ -116,11 +103,11 @@ class SponsorLogoRestore
   end
 
   def bucket
-    ENV.fetch('S3_BUCKET_NAME', 'prod-sponsor-logos')
+    AWS_ASSETS.fetch(:bucket)
   end
 
   def region
-    ENV.fetch('AWS_REGION', 'eu-north-1')
+    AWS_ASSETS.fetch(:region)
   end
 
   def s3_client
