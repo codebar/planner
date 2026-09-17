@@ -11,7 +11,7 @@
 # variables the CarrierWave initializer uses, so the task can run from any
 # machine.
 class SponsorLogoRestore
-  Result = Data.define(:restored, :skipped, :failed)
+  Result = Data.define(:restored, :skipped, :failed, :rehearsed, :deferred)
 
   DEFAULT_SOURCE_URL = 'https://codebar.io/sponsors'.freeze
   PAGE_PATH_PATTERN = %r{/uploads/sponsor/(\d+)/([^/?#]+)}
@@ -29,45 +29,67 @@ class SponsorLogoRestore
     @s3_client = s3_client
     @delay = delay
     @retry_delay = retry_delay
+    @limit = ENV['RESTORE_LIMIT']&.to_i
+    @dry_run = ENV['DRY_RUN'] == '1'
   end
 
   def call(source_url)
     logos = sponsor_logos(source_url)
     missing, failed = classify(logos)
-    run_restore(logos, missing, failed)
+    missing, deferred = apply_limit(missing)
+    run_restore(logos, missing, failed, deferred)
   end
 
   private
 
-  attr_reader :delay, :retry_delay
+  attr_reader :delay, :retry_delay, :limit, :dry_run
+
+  # -> [batch to restore, deferred remainder]
+  def apply_limit(missing)
+    return [missing, []] unless limit&.positive?
+
+    [missing.first(limit), missing.drop(limit)]
+  end
 
   # An unavailable CDX index fails every missing logo instead of crashing.
-  def run_restore(logos, missing, failed)
+  def run_restore(logos, missing, failed, deferred)
     index, index_error = load_index(missing)
-    failed += missing.map { |logo| failure(logo, index_error) } if index_error
-    missing = [] if index_error
-    restored, restore_failed = restore(missing, index || {})
-    all_failed = failed + restore_failed
-    Result.new(restored:, skipped: logos.size - restored.size - all_failed.size, failed: all_failed)
+    restore_set, index_failures = partition_unavailable(index, index_error, missing)
+    restored, rehearsed, restore_failed = restore(restore_set, index || {})
+    all_failed = failed + index_failures + restore_failed
+    build_result(logos, restored, rehearsed, all_failed, deferred)
+  end
+
+  def build_result(logos, restored, rehearsed, all_failed, deferred)
+    handled = restored.size + rehearsed.size + all_failed.size + deferred.size
+    Result.new(restored:, rehearsed:, deferred:, skipped: logos.size - handled, failed: all_failed)
+  end
+
+  # -> [logos to restore, failure entries]; empty set when CDX is unavailable
+  def partition_unavailable(_index, index_error, missing)
+    return [missing, []] unless index_error
+
+    [[], missing.map { |logo| failure(logo, index_error) }]
   end
 
   def restore(missing, index)
-    restored = []
-    failed = []
+    buckets = Hash.new { |h, k| h[k] = [] }
     missing.each do |logo|
-      status, outcome = restore_one(logo, index)
-      status == :ok ? restored << logo : failed << outcome
+      bucket, outcome = restore_one(logo, index)
+      buckets[bucket] << outcome
     end
-    [restored, failed]
+    [buckets[:restored], buckets[:rehearsed], buckets[:failed]]
   end
 
   # -> [:ok] or [:failed, failure hash].
+  # -> [:restored, logo], [:rehearsed, logo], or [:failed, failure hash].
   def restore_one(logo, index)
     entry = index[[logo[:sponsor_id], logo[:filename].downcase]]
     return [:failed, failure(logo, 'not found in Wayback Machine index')] unless entry
 
     data = download_archive(entry)
     return [:failed, failure(logo, 'archive download failed')] if data.nil?
+    return [:rehearsed, logo] if dry_run
 
     upload_and_verify(logo, data)
   end
@@ -79,7 +101,7 @@ class SponsorLogoRestore
     )
     return [:failed, failure(logo, 'upload verification failed')] unless logo_present?(logo)
 
-    [:ok]
+    [:restored, logo]
   rescue StandardError => e
     [:failed, failure(logo, e.message)]
   end

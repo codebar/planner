@@ -215,6 +215,32 @@ RSpec.describe SponsorLogoRestore do
       expect(s3_client).to have_received(:put_object)
     end
 
+    it 'restores only the first N missing logos when a limit is set' do
+      allow(ENV).to receive(:[]).with('RESTORE_LIMIT').and_return('1')
+      stub_request(:get, wayback_download_url).to_return(body: png_bytes)
+      head_stub('/uploads/sponsor/2/missing%20logo.png', { status: 403 }, { status: 200 })
+      allow(s3_client).to receive(:put_object)
+
+      result = call
+
+      expect(result.restored.map { |l| l[:sponsor_id] }).to eq([2])
+      expect(result.deferred.map { |l| l[:sponsor_id] }).to eq([3])
+      expect(result.skipped).to eq(1)
+    end
+
+    it 'rehearses downloads without uploading when dry run is set' do
+      allow(ENV).to receive(:[]).with('DRY_RUN').and_return('1')
+      stub_request(:get, wayback_download_url).to_return(body: png_bytes)
+      allow(s3_client).to receive(:put_object)
+
+      result = call
+
+      expect(result.rehearsed.map { |l| l[:sponsor_id] }).to eq([2])
+      expect(result.failed.map { |f| f[:sponsor_id] }).to eq([3])
+      expect(result.skipped).to eq(1)
+      expect(s3_client).not_to have_received(:put_object)
+    end
+
     it 'reports logos that fail to verify after upload as failed' do
       stub_request(:get, wayback_download_url).to_return(body: png_bytes)
       head_stub('/uploads/sponsor/2/missing%20logo.png', status: 403)
