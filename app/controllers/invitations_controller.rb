@@ -31,6 +31,10 @@ class InvitationsController < ApplicationController
   def attend
     event = @invitation.event
     return redirect_back fallback_location: root_path, notice: t('messages.already_rsvped') if @invitation.attending?
+    unless event.rsvp_available?
+      return redirect_back fallback_location: root_path,
+                           notice: t('messages.invitations.rsvps_closed')
+    end
 
     if @invitation.student_spaces? || @invitation.coach_spaces?
       @invitation.update!(attending: true)
@@ -77,6 +81,10 @@ class InvitationsController < ApplicationController
 
     invitation = load_invitation
     meeting = invitation.meeting
+    unless meeting.rsvp_available?
+      return redirect_back fallback_location: root_path,
+                           notice: t('messages.invitations.rsvps_closed')
+    end
 
     if invitation.update(attending: true)
       MemberActivityRecorder.record(actor: current_user, key: 'meeting_invitation.rsvp',
