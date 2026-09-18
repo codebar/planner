@@ -35,9 +35,9 @@ class Workshop < ApplicationRecord
   validates :student_spaces, numericality: { greater_than: 0 }, if: :virtual?
   validates :coach_spaces, numericality: { greater_than: 0 }, if: :virtual?
 
-  before_validation :set_date_and_time, :set_end_date_and_time, if: proc { |model| model.chapter_id.present? }
-  before_validation :set_opens_at
-  before_validation :set_closes_at
+  before_validation :set_date_and_time, :set_end_date_and_time,
+                    :set_opens_at, :set_closes_at,
+                    if: proc { |model| model.chapter_id.present? }
   validate :rsvp_date_time_fields_must_be_paired
   validate :rsvp_close_before_workshop_start
 
