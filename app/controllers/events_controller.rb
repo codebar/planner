@@ -41,6 +41,8 @@ class EventsController < ApplicationController
 
   def rsvp
     set_event
+    return head :forbidden unless @event.rsvp_available?
+
     ticket = Services::Ticket.new(request, params)
     member = Member.find_by(email: ticket.email)
     invitation = member.invitations.where(event: @event, role: 'Student').first
