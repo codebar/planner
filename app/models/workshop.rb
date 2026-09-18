@@ -3,6 +3,7 @@ class Workshop < ApplicationRecord
   include Invitable
   include CheckInable
   include Listable
+  include RsvpClosable
 
   attr_accessor :local_date, :local_time, :local_end_time, :rsvp_open_local_date, :rsvp_open_local_time,
                 :rsvp_close_local_date, :rsvp_close_local_time
@@ -69,12 +70,6 @@ class Workshop < ApplicationRecord
     host? && host.address.present?
   end
 
-  def rsvp_available?
-    return rsvp_closes_at.future? if rsvp_closes_at
-
-    future?
-  end
-
   def open_for_rsvp?
     rsvp_opens_at&.past?
   end
@@ -127,6 +122,10 @@ class Workshop < ApplicationRecord
     return nil unless super
 
     super.in_time_zone(time_zone)
+  end
+
+  def effective_rsvp_closes_at
+    rsvp_closes_at || super
   end
 
   private
