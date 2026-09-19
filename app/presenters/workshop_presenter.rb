@@ -127,6 +127,6 @@ class WorkshopPresenter < EventPresenter
   end
 
   def chapter_organisers
-    model.chapter.permissions.find_by(name: 'organiser')&.members || []
+    model.chapter.permissions.to_a.find { |permission| permission.name == 'organiser' }&.members || []
   end
 end
