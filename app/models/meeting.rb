@@ -2,6 +2,7 @@ class Meeting < ApplicationRecord
   include DateTimeConcerns
   include Listable
   include Invitable
+  include RsvpClosable
 
   attr_accessor :local_date, :local_time, :local_end_time
 

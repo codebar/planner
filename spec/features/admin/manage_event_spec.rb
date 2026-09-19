@@ -25,12 +25,23 @@ RSpec.feature 'Managing events' do
 
     find_by_id('event_chapter_ids_chosen').click
     find('.add-all-chapters', text: 'Add to all').click
-    expect(page).to have_css('.search-choice', count: Chapter.count)
+    within('#event_chapter_ids_chosen') do
+      expect(page).to have_css('.search-choice', count: Chapter.count)
+    end
 
     click_on 'Save'
 
     expect(page).to have_text('You have just updated the event')
     expect(event.reload.chapter_ids).to match_array(Chapter.ids)
+  end
+
+  scenario 'editing an event keeps its existing organisers' do
+    visit edit_admin_event_path(event)
+
+    click_on 'Save'
+
+    expect(page).to have_text('You have just updated the event')
+    expect(event.reload.organisers).to include(member)
   end
 
   scenario 'verifying an attendance' do

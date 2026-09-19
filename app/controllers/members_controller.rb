@@ -13,8 +13,8 @@ class MembersController < ApplicationController
 
   def step2
     @type = cookies[:member_type]
-    @coach_groups = Group.coaches
-    @student_groups = Group.students
+    @coach_groups = Group.where(chapter: { active: true }).coaches
+    @student_groups = Group.where(chapter: { active: true }).students
   end
 
   def profile
@@ -24,6 +24,7 @@ class MembersController < ApplicationController
 
   def update
     if @member.update(member_params)
+      MemberActivityRecorder.record(actor: current_user, key: 'profile.updated')
       notice = 'Your details have been updated.'
       redirect_to profile_path, notice:
     else

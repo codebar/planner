@@ -7,12 +7,14 @@ class WaitingListsController < ApplicationController
   # FeedbackController#submit (PR #2641, Rollbar #535).
   skip_forgery_protection only: %i[create destroy]
 
-  def create
+  def create # rubocop:disable Metrics/MethodLength
     @invitation.assign_attributes(invitation_params)
 
     return back_with_message(@invitation.errors.full_messages) unless @invitation.valid?(:waitinglist)
 
     @invitation.save && WaitingList.add(@invitation, auto_rsvp)
+    MemberActivityRecorder.record(actor: @invitation.member, key: 'waiting_list.joined',
+                                  trackable: @invitation)
 
     message = if auto_rsvp
       'You have been added to the waiting list'
@@ -25,6 +27,8 @@ class WaitingListsController < ApplicationController
 
   def destroy
     WaitingList.find_by(invitation_id: @invitation.id).destroy
+    MemberActivityRecorder.record(actor: @invitation.member, key: 'waiting_list.left',
+                                  trackable: @invitation)
 
     redirect_to invitation_path(@invitation), notice: 'You have been removed from the waiting list'
   end

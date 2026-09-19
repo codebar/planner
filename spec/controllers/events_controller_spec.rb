@@ -180,6 +180,35 @@ RSpec.describe EventsController do
     end
   end
 
+  describe 'POST #rsvp' do
+    let(:member) { Fabricate(:member) }
+    let(:event) { Fabricate(:event) }
+
+    context 'when RSVPs are open' do
+      it 'creates a student invitation and marks it attending' do
+        expect do
+          post :rsvp, params: { event_id: event.slug, email: member.email }
+        end.to change(Invitation, :count).by(1)
+
+        invitation = Invitation.find_by!(event:, member:)
+        expect(invitation.attending).to be(true)
+        expect(response).to have_http_status(:ok)
+      end
+    end
+
+    context 'when RSVPs have closed' do
+      let(:event) { Fabricate(:event, date_and_time: 2.hours.from_now) }
+
+      it 'rejects the request without creating an invitation' do
+        expect do
+          post :rsvp, params: { event_id: event.slug, email: member.email }
+        end.not_to change(Invitation, :count)
+
+        expect(response).to have_http_status(:forbidden)
+      end
+    end
+  end
+
   describe '#past' do
     before { Fabricate(:event, date_and_time: 2.weeks.ago) }
 

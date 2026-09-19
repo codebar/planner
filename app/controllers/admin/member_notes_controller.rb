@@ -4,7 +4,12 @@ class Admin::MemberNotesController < Admin::ApplicationController
     authorize @note
 
     @note.author = current_user
-    flash[:error] = @note.errors.full_messages unless @note.save
+    if @note.save
+      MemberActivityRecorder.record(actor: current_user, key: 'member_note.created',
+                                    trackable: @note, recipient: @note.member)
+    else
+      flash[:error] = @note.errors.full_messages
+    end
     redirect_back fallback_location: root_path
   end
 

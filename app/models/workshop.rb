@@ -3,6 +3,7 @@ class Workshop < ApplicationRecord
   include Invitable
   include CheckInable
   include Listable
+  include RsvpClosable
 
   attr_accessor :local_date, :local_time, :local_end_time, :rsvp_open_local_date, :rsvp_open_local_time,
                 :rsvp_close_local_date, :rsvp_close_local_time
@@ -21,6 +22,7 @@ class Workshop < ApplicationRecord
   has_many :invitation_logs, as: :loggable
 
   belongs_to :chapter
+  belongs_to :created_by, class_name: 'Member', optional: true, inverse_of: false
 
   default_scope { order('date_and_time DESC') }
   scope :students, -> { joins(:invitations).where(invitation: { name: 'Student', attended: true }) }
@@ -34,9 +36,9 @@ class Workshop < ApplicationRecord
   validates :student_spaces, numericality: { greater_than: 0 }, if: :virtual?
   validates :coach_spaces, numericality: { greater_than: 0 }, if: :virtual?
 
-  before_validation :set_date_and_time, :set_end_date_and_time, if: proc { |model| model.chapter_id.present? }
-  before_validation :set_opens_at
-  before_validation :set_closes_at
+  before_validation :set_date_and_time, :set_end_date_and_time,
+                    :set_opens_at, :set_closes_at,
+                    if: proc { |model| model.chapter_id.present? }
   validate :rsvp_date_time_fields_must_be_paired
   validate :rsvp_close_before_workshop_start
 
@@ -66,12 +68,6 @@ class Workshop < ApplicationRecord
 
   def valid_host?
     host? && host.address.present?
-  end
-
-  def rsvp_available?
-    return rsvp_closes_at.future? if rsvp_closes_at
-
-    future?
   end
 
   def open_for_rsvp?
@@ -126,6 +122,10 @@ class Workshop < ApplicationRecord
     return nil unless super
 
     super.in_time_zone(time_zone)
+  end
+
+  def effective_rsvp_closes_at
+    rsvp_closes_at || super
   end
 
   private

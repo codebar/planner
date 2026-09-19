@@ -31,9 +31,16 @@ class InvitationsController < ApplicationController
   def attend
     event = @invitation.event
     return redirect_back fallback_location: root_path, notice: t('messages.already_rsvped') if @invitation.attending?
+    unless event.rsvp_available?
+      return redirect_back fallback_location: root_path,
+                           notice: t('messages.invitations.rsvps_closed')
+    end
 
     if @invitation.student_spaces? || @invitation.coach_spaces?
       @invitation.update!(attending: true)
+
+      MemberActivityRecorder.record(actor: @invitation.member, key: 'event_invitation.rsvp',
+                                    trackable: @invitation)
 
       notice = t('messages.invitations.spot_confirmed', event: @invitation.event.name)
 
@@ -61,6 +68,8 @@ class InvitationsController < ApplicationController
     end
 
     @invitation.update!(attending: false)
+    MemberActivityRecorder.record(actor: @invitation.member, key: 'event_invitation.rejected',
+                                  trackable: @invitation)
     redirect_back(
       fallback_location: root_path,
       notice: t('messages.rejected_invitation', name: @invitation.member.name)
@@ -72,8 +81,14 @@ class InvitationsController < ApplicationController
 
     invitation = load_invitation
     meeting = invitation.meeting
+    unless meeting.rsvp_available?
+      return redirect_back fallback_location: root_path,
+                           notice: t('messages.invitations.rsvps_closed')
+    end
 
     if invitation.update(attending: true)
+      MemberActivityRecorder.record(actor: current_user, key: 'meeting_invitation.rsvp',
+                                    trackable: invitation)
       MeetingInvitationMailer.attending(meeting, current_user).deliver_now
       redirect_to meeting_path(meeting, token: invitation.token),
                   notice: t('messages.invitations.meeting.rsvp')
@@ -86,6 +101,9 @@ class InvitationsController < ApplicationController
     @invitation = MeetingInvitation.find_by!(token: params[:token])
 
     @invitation.update!(attending: false)
+
+    MemberActivityRecorder.record(actor: @invitation.member, key: 'meeting_invitation.cancelled',
+                                  trackable: @invitation)
 
     redirect_back fallback_location: root_path, notice: t('messages.invitations.meeting.cancel')
   end

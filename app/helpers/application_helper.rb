@@ -19,6 +19,12 @@ module ApplicationHelper
     content_for?(:title) ? content_for(:title) : t(:brand)
   end
 
+  # Absolute URL for a social preview image, falling back to the codebar social image
+  def social_image_url(url = nil)
+    image = url.presence || image_url('codebar-social.jpg')
+    image.start_with?('/') ? URI.join(request.base_url, image).to_s : image
+  end
+
   def dot_markdown(text)
     # Commonmarker sanitises raw HTML; `.html_safe` prevents Rails double-escaping the result
     # rubocop:disable Rails/OutputSafety
@@ -58,6 +64,25 @@ module ApplicationHelper
     return t('sponsors.community_partner_title') if level === 'community'
 
     "#{level.humanize} sponsors"
+  end
+
+  # Admin-page subject of a member activity: the entity the action was about.
+  # Returns nil when the subject is the member themselves (e.g. logins, bans).
+  def activity_subject(activity)
+    case (trackable = activity.trackable)
+    when WorkshopInvitation then trackable.workshop
+    when Invitation then trackable.event
+    when MeetingInvitation then trackable.meeting
+    when Member then nil
+    else trackable
+    end
+  end
+
+  def activity_subject_label(subject)
+    return "#{subject.chapter.name} #{subject.name}" if subject.is_a?(Group)
+    return subject.full_name if subject.respond_to?(:full_name)
+
+    subject.try(:name) || subject.to_s
   end
 
   private

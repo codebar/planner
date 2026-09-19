@@ -1,23 +1,8 @@
 class MemberPresenter < BasePresenter
-  def organiser?
-    @organiser ||= has_role? :organiser, :any
-  end
-
-  def event_organiser?(event)
-    event_types = %w[Workshop Meeting Event]
-    organising_events.slice(*event_types).values.any? { |ids| ids.include?(event.id) } ||
-      (event.chapter && organising_events['Chapter']&.include?(event.chapter.id)) ||
-      admin?
-  end
-
   def newbie?
     return model.admin_workshop_flags[:newbie] if model.admin_workshop_flags
 
     !workshop_invitations.attended.exists?
-  end
-
-  def attending?(event)
-    model.attending_event_ids.include?(event.id)
   end
 
   def subscribed_to_newsletter?
@@ -37,17 +22,6 @@ class MemberPresenter < BasePresenter
   end
 
   private
-
-  def organising_events
-    @organising_events ||= roles.where(name: 'organiser')
-                                .pluck(:resource_type, :resource_id)
-                                .group_by(&:first)
-                                .transform_values { |pairs| pairs.map(&:last) }
-  end
-
-  def admin?
-    @admin ||= has_role?(:admin)
-  end
 
   def coach_pairing_details(note)
     [newbie?, full_name, 'Coach', 'N/A', note, skill_list.to_s]

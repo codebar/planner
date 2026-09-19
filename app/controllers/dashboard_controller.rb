@@ -31,7 +31,7 @@ class DashboardController < ApplicationController
   def about; end
 
   def wall_of_fame
-    @coaches_count = top_coach_query.length
+    @coaches_count = WorkshopInvitation.to_coaches.attended.distinct.count(:member_id)
     coaches = Member.where(id: top_coach_query
                                .year(year_param))
                     .includes(:skills)

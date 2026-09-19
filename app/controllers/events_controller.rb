@@ -41,6 +41,8 @@ class EventsController < ApplicationController
 
   def rsvp
     set_event
+    return head :forbidden unless @event.rsvp_available?
+
     ticket = Services::Ticket.new(request, params)
     member = Member.find_by(email: ticket.email)
     invitation = find_or_create_invitation(@event, member, 'Student')
@@ -164,12 +166,12 @@ class EventsController < ApplicationController
       (hash[row['event_type']] ||= []) << row['id'].to_i
     end
 
-    workshops = Workshop.includes(:chapter, :sponsors, :host, :permissions)
+    workshops = Workshop.eager_load(:chapter, :sponsors, :organisers, :permissions, :workshop_host)
                         .where(id: grouped['Workshop'])
                         .to_a.index_by(&:id)
-    meetings = Meeting.includes(:venue).where(id: grouped['Meeting'])
+    meetings = Meeting.eager_load(:venue, :organisers, :permissions).where(id: grouped['Meeting'])
                       .to_a.index_by(&:id)
-    events = Event.includes(:venue, :sponsors, :sponsorships, :permissions)
+    events = Event.eager_load(:venue, :sponsors, :sponsorships, :permissions, :organisers)
                   .where(id: grouped['Event'])
                   .to_a.index_by(&:id)
 

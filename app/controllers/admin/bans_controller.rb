@@ -10,6 +10,8 @@ class Admin::BansController < Admin::ApplicationController
     @ban.added_by = current_user
 
     if @ban.save
+      MemberActivityRecorder.record(actor: current_user, key: 'member.banned',
+                                    recipient: @ban.member, trackable: @ban)
       MemberMailer.ban(@ban.member, @ban).deliver_now
       redirect_to [:admin, @member], notice: t('.success')
     else

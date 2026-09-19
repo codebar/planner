@@ -35,6 +35,35 @@ RSpec.feature 'Managing meeting invitations' do
 
       expect(page).to have_text("#{attending_member.full_name} is already on the list!")
     end
+
+    scenario 'selects a member when the first search request fails', :js do
+      member = Fabricate(:member)
+      Fabricate(:attending_meeting_invitation, meeting:)
+
+      visit admin_meeting_path(meeting)
+
+      # TomSelect caches search results per query, so one failed fetch poisons
+      # that query permanently. Abort the first two search requests to simulate
+      # the CI flake where the helper's first recovery attempt fails too, then
+      # verify the helper recovers by searching again with fresh query variants.
+      searches_aborted = 0
+      search_handler = proc do |route, _request|
+        if searches_aborted < 2
+          searches_aborted += 1
+          route.abort
+        else
+          route.continue
+        end
+      end
+      page.driver.with_playwright_page do |pw_page|
+        pw_page.route('**/admin/members/search*', search_handler)
+      end
+
+      select_from_tom_select(member.full_name, from: 'meeting_invitations_member')
+      click_on 'Add'
+
+      expect(page).to have_text("#{member.full_name} has been successfully added and notified via email")
+    end
   end
 
   scenario 'Updating the attendance of an invitation' do

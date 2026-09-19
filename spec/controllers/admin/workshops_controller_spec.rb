@@ -162,10 +162,62 @@ RSpec.describe Admin::WorkshopsController do
   end
 
   describe 'POST #create' do
+    let(:sponsor) { Fabricate(:sponsor) }
+
     it 'permits rsvp_close_local_date and rsvp_close_local_time' do
       expect do
         post :create, params: { workshop: { rsvp_close_local_date: '01/12/2020', rsvp_close_local_time: '15:00', host: '' } }
       end.not_to raise_error
+    end
+
+    it 'stamps created_by and records workshop.created' do
+      post :create, params: { workshop: {
+        chapter_id: workshop.chapter.id,
+        local_date: (Time.zone.now + 1.week).strftime('%d/%m/%Y'),
+        local_time: '15:00',
+        local_end_time: '17:00',
+        virtual: '1',
+        slack_channel: '#test',
+        slack_channel_link: 'https://slack.com/test',
+        coach_spaces: 5,
+        student_spaces: 15,
+        host: nil
+      } }
+
+      created = Workshop.unscoped.order(:id).last
+      expect(created.created_by).to eq(admin)
+      expect(PublicActivity::Activity.exists?(owner: admin, key: 'workshop.created',
+                                              trackable: created)).to be(true)
+    end
+
+    context 'when no chapter is selected' do
+      render_views
+
+      def create_workshop
+        post :create, params: {
+          workshop: {
+            chapter_id: '', local_date: '2026-09-21', local_time: '18:00',
+            local_end_time: '22:00', host: sponsor.id.to_s,
+            sponsor_ids: ['', sponsor.id.to_s], description: '',
+            rsvp_open_local_date: '', rsvp_open_local_time: '',
+            rsvp_close_local_date: '2026-09-21', rsvp_close_local_time: '14:30',
+            virtual: '0', coach_spaces: '0', student_spaces: '0', invitable: '1'
+          }
+        }
+      end
+
+      it 'renders the form with a validation warning instead of raising' do
+        expect { create_workshop }.not_to raise_error
+        expect(response).to have_http_status(:ok)
+        expect(flash[:warning]).to include("Chapter can't be blank")
+      end
+
+      it 'keeps the submitted RSVP close values in the form' do
+        create_workshop
+
+        expect(response.body).to include('value="2026-09-21"')
+        expect(response.body).to include('value="14:30"')
+      end
     end
   end
 

@@ -59,6 +59,7 @@ en:
       full_date: "%d %B %Y"
       default_date: "%d/%m/%Y"
       website_format: "%a, %d %B %Y at %H:%M"
+      activity_log: "%A, %Y-%m-%d %H:%M"
       day_in_words: "%a"
       day: "%d"
       month: "%B"
@@ -196,6 +197,7 @@ en:
       spot_not_confirmed: "Your spot has not yet been confirmed. We will verify your attendance after you complete the questionnaire."
       updated_details: "Invitation details successfully updated."
       closed: "RSVPs for this workshop are now closed."
+      rsvps_closed: "RSVPs have now closed."
     invalid_format: "The requested format is invalid: %{invalid_format}"
   notifications:
     provider_already_connected: "You are already signed in!"
@@ -296,6 +298,7 @@ en:
     schedule: "Schedule"
     send_us_an_email: "send us an email"
     not_open_for_rsvp: This event is not open for RSVP yet.
+    rsvps_closed: "RSVPs for this event have closed."
     virtual: This is a virtual event.
     faq:
       experience:
@@ -658,6 +661,9 @@ en:
   admin:
     dashboard:
       title: "Admin"
+    members:
+      activity:
+        for: "for %{subject}"
     workshop:
       manage_rsvps:
         text: "RSVP Students and Coaches to the workshop. The attendance confirmation email will be triggered and they will be removed from the waiting list."

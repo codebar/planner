@@ -5,6 +5,9 @@ RSpec.describe Workshop do
 
   include_examples 'Invitable', :workshop_invitation, :workshop
   include_examples DateTimeConcerns, :workshop
+  include_examples 'RsvpClosable' do
+    before { workshop.rsvp_closes_at = nil }
+  end
 
   context 'with validates' do
     it { is_expected.to validate_presence_of(:chapter_id) }
@@ -198,6 +201,18 @@ RSpec.describe Workshop do
 
         expect(workshop.rsvp_closes_at).to eq(pacific_time)
         expect(workshop.rsvp_closes_at.zone).to eq('PDT')
+      end
+    end
+  end
+
+  describe '#effective_rsvp_closes_at' do
+    context 'when a close time is set' do
+      it 'uses the explicit close time' do
+        close_time = 5.hours.from_now
+        workshop.rsvp_closes_at = close_time
+        workshop.date_and_time = 6.hours.from_now
+
+        expect(workshop.effective_rsvp_closes_at).to eq(close_time)
       end
     end
   end

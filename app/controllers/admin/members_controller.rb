@@ -24,9 +24,11 @@ class Admin::MembersController < Admin::ApplicationController
   end
 
   def show
-    @member = MemberPresenter.new(Member.find(params[:id]))
+    member = Member.find(params[:id])
+    @member = MemberPresenter.new(member)
     load_attendance_data(@member)
-
+    @activity_weeks = Admin::Members::ActivityStrip.new(member).rows
+    @activities = PublicActivity::Activity.where(owner: member).order(created_at: :desc).limit(30)
     @actions = admin_actions(@member).sort_by(&:created_at).reverse
   end
 
@@ -39,11 +41,14 @@ class Admin::MembersController < Admin::ApplicationController
 
   def update_subscriptions
     subscription = @member.subscriptions.find_by!(group_id: params[:group])
+    group = subscription.group
     SubscriptionMailingListService.unsubscribe(subscription)
     flash[:notice] = t('.unsubscribe', member: @member.full_name,
-                                       chapter: subscription.group.chapter.city,
-                                       group: subscription.group.name)
+                                       chapter: group.chapter.city,
+                                       group: group.name)
     subscription.destroy
+    MemberActivityRecorder.record(actor: current_user, key: 'subscription.admin_updated',
+                                  trackable: group, recipient: @member)
     redirect_back fallback_location: root_path
   end
 

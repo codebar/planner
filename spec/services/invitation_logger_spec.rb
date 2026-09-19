@@ -157,4 +157,14 @@ RSpec.describe InvitationLogger do
       expect(log.reload.failure_count).to eq 0
     end
   end
+
+  describe '#activity_recording' do
+    it 'records invitation.send_batch for the initiator' do
+      described_class.new(workshop, initiator, 'all', 'invite').start_batch
+
+      expect(PublicActivity::Activity.exists?(owner: initiator,
+                                              key: 'invitation.send_batch',
+                                              trackable: workshop)).to be(true)
+    end
+  end
 end
