@@ -20,7 +20,9 @@ class EventInvitationMailer < ApplicationMailer
     @member = member
     @invitation = invitation
     @host_address = AddressPresenter.new(@event.venue.address) if @event.venue.present?
-    @everyone_is_invited = !event.audience
+    # Coach emails are labelled as such only when the event is actually for
+    # coaches; blank or missing audience means a general invitation.
+    @everyone_is_invited = !event.audience.eql?('Coaches')
 
     mail_to_member(member, @everyone_is_invited ? "Invitation: #{@event.name}" : "Coach Invitation: #{@event.name}",
                    &:html)

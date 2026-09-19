@@ -44,10 +44,13 @@ class WorkshopsController < ApplicationController
   end
 
   def find_or_create_invitation(workshop, user, role)
-    invitation = WorkshopInvitation.create_or_find_by(workshop:,
-                                                      member: user,
-                                                      role:)
-    invitation.persisted? ? invitation : WorkshopInvitation.find_by(workshop:, member: user, role:)
+    # Identity is workshop + member, matching InvitationManager; the member's
+    # role choice wins, so an existing invitation with the other role is updated.
+    invitation = WorkshopInvitation.find_or_create_by!(workshop:, member: user) { |record| record.role = role }
+    invitation.update!(role:) unless invitation.role.eql?(role)
+    invitation
+  rescue ActiveRecord::RecordNotUnique
+    WorkshopInvitation.find_by(workshop:, member: user)
   end
 
   def user_attending_or_waitlisted?(workshop, user)
