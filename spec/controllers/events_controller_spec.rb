@@ -180,7 +180,7 @@ RSpec.describe EventsController do
     end
   end
 
-  describe 'POST #rsvp' do
+  describe 'POST #rsvp (RSVP window enforcement)' do
     let(:member) { Fabricate(:member) }
     let(:event) { Fabricate(:event) }
 
