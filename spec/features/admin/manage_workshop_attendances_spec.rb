@@ -64,7 +64,7 @@ RSpec.feature 'managing workshop attendances' do
       expect(page).to have_css('i.fa-hat-wizard')
     end
 
-    scenario 'can rsvp an invited student to the workshop', :js do
+    scenario 'can rsvp an invited student to the workshop' do
       login_as_admin(member)
 
       other_invitation = Fabricate(:workshop_invitation, workshop:, attending: nil)
