@@ -25,6 +25,21 @@ RSpec.describe WorkshopsController do
       end
     end
 
+    context 'when the member has an invitation with a different role' do
+      let!(:invitation) do
+        Fabricate(:workshop_invitation, workshop:, member:, role: 'Student', attending: nil)
+      end
+
+      it 'updates the existing invitation to the requested role instead of creating a second one' do
+        expect do
+          post :rsvp, params: { id: workshop.id, role: 'Coach' }
+        end.not_to change(WorkshopInvitation, :count)
+
+        expect(invitation.reload.role).to eq('Coach')
+        expect(response).to redirect_to(invitation_path(invitation))
+      end
+    end
+
     context 'when the member does not have an invitation for the workshop and role' do
       it 'creates a new invitation and redirects' do
         expect do

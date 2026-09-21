@@ -27,6 +27,9 @@
         %strong
           = link_to "Can't make it anymore? Click here to cancel your spot.", meeting_cancel_path(meeting_id: @meeting.id, token: @invitation.token)
 
+    - elsif !@meeting.rsvp_available?
+      %p.badge.bg-warning.text-dark= t('messages.invitations.rsvps_closed')
+
     - elsif @meeting.invitable && @meeting.not_full
       = link_to meeting_invitation_path(@meeting), class: 'btn btn-primary' do
         = 'RSVP here'
