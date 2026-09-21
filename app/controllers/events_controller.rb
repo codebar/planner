@@ -8,13 +8,15 @@ class EventsController < ApplicationController
   end
 
   def upcoming
-    fresh_when(latest_model_updated, etag: latest_model_updated)
+    latest = latest_model_updated
+    fresh_when(latest, etag: latest)
 
     @events, @pagy = fetch_upcoming_events
   end
 
   def past
-    fresh_when(latest_model_updated, etag: latest_model_updated)
+    latest = latest_model_updated
+    fresh_when(latest, etag: latest)
 
     @past_events, @pagy = fetch_past_events
   end
@@ -166,7 +168,9 @@ class EventsController < ApplicationController
       (hash[row['event_type']] ||= []) << row['id'].to_i
     end
 
-    workshops = Workshop.eager_load(:chapter, :sponsors, :organisers, :permissions, :workshop_host)
+    workshops = Workshop.eager_load(:sponsors, :organisers, :permissions,
+                                    workshop_host: :sponsor,
+                                    chapter: { permissions: :members })
                         .where(id: grouped['Workshop'])
                         .to_a.index_by(&:id)
     meetings = Meeting.eager_load(:venue, :organisers, :permissions).where(id: grouped['Meeting'])

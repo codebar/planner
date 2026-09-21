@@ -35,6 +35,25 @@ RSpec.describe 'Event card render query cost' do
     expect(four_cards).to be <= one_card + 8
   end
 
+  it 'does not add per-card queries for hosted workshops on /events/upcoming' do
+    chapter = Fabricate(:chapter, active: true)
+    host_sponsor = Fabricate(:sponsor)
+    first_workshop = Fabricate(:workshop_no_sponsor, chapter:)
+    Fabricate(:workshop_sponsor, workshop: first_workshop, sponsor: host_sponsor, host: true)
+
+    get '/events/upcoming'
+    one_card = count_queries { get '/events/upcoming' }
+
+    3.times do
+      workshop = Fabricate(:workshop_no_sponsor, chapter:)
+      Fabricate(:workshop_sponsor, workshop:, sponsor: host_sponsor, host: true)
+    end
+
+    four_cards = count_queries { get '/events/upcoming' }
+
+    expect(four_cards).to eq(one_card)
+  end
+
   it 'does not add per-card queries on the chapter page as cards grow' do
     chapter = Fabricate(:chapter, active: true)
     organiser = Fabricate(:member)
