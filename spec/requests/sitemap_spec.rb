@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'Sitemap' do
   let!(:chapter) { Fabricate(:chapter) }
+  let!(:inactive_chapter) { Fabricate(:chapter, active: false) }
   let!(:workshop) { Fabricate(:workshop_no_sponsor, chapter:) }
   let!(:event) { Fabricate(:event) }
   let!(:meeting) { Fabricate(:meeting) }
@@ -27,11 +28,18 @@ RSpec.describe 'Sitemap' do
     expect(body).to include(privacy_policy_url)
   end
 
+  it 'excludes inactive chapters' do
+    get '/sitemap.xml'
+
+    expect(response.body).not_to include(chapter_url(inactive_chapter.slug))
+  end
+
   it 'includes lastmod for records' do
     get '/sitemap.xml'
 
     expect(response.body).to include("<lastmod>#{workshop.reload.updated_at.utc.iso8601}</lastmod>")
     expect(response.headers['Cache-Control']).to include('public')
+    expect(response.headers['Cache-Control']).to include('max-age=3600')
   end
 
   it 'includes new records once their section cache key changes' do
@@ -54,12 +62,25 @@ RSpec.describe 'Sitemap' do
       expect(response.body).to include(workshop_url(workshop))
 
       workshop.destroy
+
+      # The stale fragment is still served before expiry — proves caching is
+      # actually engaged, so the post-expiry assertion is meaningful.
+      get '/sitemap.xml'
+      expect(response.body).to include(workshop_url(workshop))
+
       travel 2.days do
         get '/sitemap.xml'
       end
 
       expect(response.body).not_to include(workshop_url(workshop))
     end
+  end
+
+  it 'redirects the old sitemap.xml.gz path to the new endpoint' do
+    get '/sitemap.xml.gz'
+
+    expect(response).to redirect_to('/sitemap.xml')
+    expect(response).to have_http_status(:moved_permanently)
   end
 
   def with_fragment_caching
