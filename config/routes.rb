@@ -192,6 +192,10 @@ Rails.application.routes.draw do
   post "check-in/w/:code" => "check_ins#create"
   get  "check-in/w/:code/confirm" => "check_ins#confirm", as: :check_in_w_confirm
 
+  # Consumers pinned to the old static path keep working while crawlers
+  # migrate via robots.txt (e.g. an old Search Console submission).
+  get 'sitemap.xml.gz', to: redirect('/sitemap.xml', status: 301)
+
   get 'sitemap.xml', to: 'sitemaps#show', as: :sitemap
 
   get 'cookie-policy' => 'pages#show', id: 'cookie-policy'
