@@ -56,6 +56,11 @@ Rails.application.configure do
 
   # Fake omniauth for testing
   OmniAuth.config.test_mode = true
+  # Deterministic failure handling: omniauth raises from its FailureEndpoint
+  # when ENV['RACK_ENV'] is 'development', and Puma's Capybara test server sets
+  # ENV['RACK_ENV'] ||= 'development' mid-process — so specs running after a
+  # feature spec would otherwise see raise-out instead of the redirect.
+  OmniAuth.config.failure_raise_out_environments = []
 
   config.after_initialize do
     Bullet.enable = true
