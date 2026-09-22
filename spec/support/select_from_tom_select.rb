@@ -17,6 +17,18 @@ module SelectFromTomSelect
     )
   end
 
+  # Search query variants, used to work around TomSelect's per-query load
+  # cache (loadedSearches): a query is marked as loaded the moment its
+  # debounced fetch fires, so a failed or empty fetch poisons that exact
+  # query string forever and options never appear, no matter how long we
+  # wait. Each variant here is a distinct cache key, and /admin/members/search
+  # uses ILIKE, so it matches any of them regardless of case. The full-name
+  # variants also narrow the result list, which a 3-character query may
+  # truncate at 50 rows.
+  def tom_select_query_variants(query)
+    [query[0, 3], query, query.upcase, query.downcase].uniq
+  end
+
   # Select an item from a TomSelect dropdown
   # @param item_text [String] The text to select
   # @param from [String, Symbol] The original select element ID
@@ -39,30 +51,20 @@ module SelectFromTomSelect
     # move focus to the textbox before we dispatch the input event.
     page.execute_script('arguments[0].focus();', input.native)
 
-    # Type first 3 characters to trigger search (shouldLoad requires >= 3).
-    # Use JS to set the value and dispatch an input event directly, instead of
-    # send_keys (which can race with TomSelect's debounce timer in headless CI
-    # when multiple parallel processes contend for CPU).
-    type_into_tom_select(input, search_query[0, 3])
-
-    # Wait briefly for the initial 3-character search results after the
-    # debounce and AJAX. TomSelect caches loads per query (loadedSearches), so
-    # a failed or empty fetch poisons that query forever and options never
-    # appear no matter how long we wait. Retype the full name as a fresh query
-    # (new cache key, new fetch) instead of waiting it out.
-    if wrapper.has_css?('.ts-dropdown .option', wait: 5)
-      # Refine the search to the rest of the name if the query is longer
-      # than 3 characters
-      type_into_tom_select(input, search_query[3..]) if search_query.length > 3
-    else
-      # A 3-char query is identical to the failed query, so the retry must
-      # differ to get a fresh cache key (ILIKE search is case-insensitive)
-      retry_query = search_query.length > 3 ? search_query : search_query.upcase
-      type_into_tom_select(input, retry_query)
+    # Type each query variant (first 3 characters to trigger search —
+    # shouldLoad requires >= 3 — then full-name variants for recovery) and
+    # wait for the matching option. Use JS to set the value and dispatch an
+    # input event directly, instead of send_keys (which can race with
+    # TomSelect's debounce timer in headless CI when multiple parallel
+    # processes contend for CPU).
+    matched = tom_select_query_variants(search_query).any? do |variant|
+      type_into_tom_select(input, variant)
+      wrapper.has_css?('.ts-dropdown .option', text: item_text, wait: 5)
     end
-
-    # Wait for the matching option after the refined or retried search
-    expect(wrapper).to have_css('.ts-dropdown .option', text: item_text, wait: 10)
+    unless matched
+      raise "TomSelect never displayed an option matching #{item_text.inspect} " \
+            "after #{tom_select_query_variants(search_query).size} search attempts"
+    end
 
     # Click the matching option
     # Use JavaScript click to avoid element interception issues

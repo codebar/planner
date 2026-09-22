@@ -27,10 +27,22 @@ http {
     server unix:/tmp/nginx.socket fail_timeout=0;
   }
 
+  # Scanner probes send path-traversal strings in the Accept or Content-Type
+  # headers. Rails answers these with 406; dropping them here keeps them out
+  # of the application's access logs. See https://github.com/codebar/planner/issues/2873
+  map "$http_accept $content_type" $bad_mime {
+    default 0;
+    ~"\.\./" 1;
+  }
+
   server {
     listen <%= ENV["PORT"] %>;
     server_name _;
     keepalive_timeout 5;
+
+    if ($bad_mime) {
+      return 406;
+    }
 
     # Plausible endpoints (set inside server context)
     set $plausible_script_url https://plausible.io/js/pa-PFruVsE_br97UUCRXE_6f.js;
@@ -66,6 +78,23 @@ http {
       proxy_set_header X-Forwarded-Proto $http_x_forwarded_proto;
       proxy_set_header X-Forwarded-Host $host;
       proxy_buffering on;
+    }
+
+    # Scanner junk: 404 at the edge. All of these already 404 in the app
+    # (the /:id chapter catch-all or the Rails router); blocking here keeps
+    # the load off Rails. Exact (=) locations above terminate the location
+    # search before these regex blocks are tried; the regexes in turn beat
+    # the prefix location below.
+    # Sensitive or unknown file extensions, with real asset dirs excluded.
+    # Not anchored to a single segment, so nested probes are caught too.
+    location ~* "^/(?!(?:assets|uploads|static|tom-select|packs)(?:/|$)|sitemap\.xml\.gz(?:$|/))(?:[^/]+/)*[^/]*\.(?:json|js|yml|yaml|conf|env|pem|key|p12|pfx|crt|bak|sql|sqlite|db|tfstate|swp|old|zip|tar|gz|tgz|7z|php|cgi|asp|aspx|jsp)$|(?:[^/]+/)*\.env(?:\.[^/]*)?(?:$|/)|^/\.git(?:/|$)|^/\.aws(?:/|$)|^/\.ssh(?:/|$)" {
+      return 404;
+    }
+
+    # Extension-less probes seen in the logs. Anchored to a single segment
+    # or directory prefix so real chapter pages (/london etc.) are safe.
+    location ~* "^/(?:__vite_rsc_findSourceMapURL|z9x8c7v6b5-debug-trigger-codebar\.io|debug-trigger|userfiles|wp-(?:json|content|admin|config|login|includes)|id_(?:rsa|dsa|ecdsa|ed25519)|private[-_]?key|backup|Dockerfile|__debug__)(?:$|/)" {
+      return 404;
     }
 
     # Rails: All other requests

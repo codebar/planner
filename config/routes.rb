@@ -203,7 +203,7 @@ Rails.application.routes.draw do
   get 'donate' => 'pages#show', id: 'donate'
   get 'codebar-stories-podcast' => 'pages#show', id: 'codebar-stories-podcast'
 
-  get ':id' => 'chapter#show', as: :chapter
+  get ':id' => 'chapter#show', as: :chapter, format: false, constraints: { id: /[a-z0-9_-]+/ }
 
   # Redirects
   get '/my/jobs/new', to: redirect('https://jobs.codebar.io/my/jobs/new')

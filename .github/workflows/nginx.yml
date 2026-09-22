@@ -1,0 +1,55 @@
+name: CI
+
+concurrency:
+  group: nginx-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+on:
+  pull_request:
+    branches: [ master ]
+  workflow_dispatch:
+
+jobs:
+  nginx-edge-config:
+    name: 'Nginx edge config'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Render ERB config
+        run: PORT=3000 ruby -rerb -e 'File.write("nginx-rendered.conf", ERB.new(File.read("config/nginx.conf.erb")).result)'
+
+      - name: Syntax check rendered config
+        run: docker run --rm --entrypoint nginx -v "$PWD/nginx-rendered.conf:/etc/nginx/nginx.conf:ro" nginx:alpine -t -c /etc/nginx/nginx.conf
+
+      - name: Smoke test location matching
+        run: |
+          docker run --rm -d --entrypoint nginx --name nginx-smoke -p 3000:3000 -v "$PWD/nginx-rendered.conf:/etc/nginx/nginx.conf:ro" nginx:alpine -c /etc/nginx/nginx.conf
+          for i in $(seq 1 30); do
+            curl -s -o /dev/null http://127.0.0.1:3000/ && break
+            sleep 0.5
+          done
+          fail=0
+          # Scanner junk must 404 at the edge
+          for path in /.env /.env.local /.env.production /.git/config /.aws/credentials /.ssh/id_rsa /key.pem /id_rsa /rclone.conf /docker-compose.yml /secrets.env /wp-json /backup /Dockerfile /__vite_rsc_findSourceMapURL /nested/whatever.conf; do
+            code=$(curl -s -o /dev/null -w '%{http_code}' "http://127.0.0.1:3000$path")
+            if [ "$code" != "404" ]; then
+              echo "FAIL: $path expected 404, got $code"
+              fail=1
+            fi
+          done
+          # Legitimate paths must not be edge-blocked. There is no Rails
+          # upstream in this container, so anything other than an edge 404
+          # (typically 502) proves the request was passed through.
+          # /api/event is deliberately absent: it is an exact-match proxy to
+          # plausible.io, which itself answers 404 for GET; /js/script.js
+          # already proves the = locations win over the regex blocks.
+          for path in /sitemap.xml.gz /robots.txt /favicon.ico /400.html /london /assets/app.js /tom-select/x.js /uploads/x.jpg /js/script.js; do
+            code=$(curl -s -o /dev/null -w '%{http_code}' "http://127.0.0.1:3000$path")
+            if [ "$code" == "404" ]; then
+              echo "FAIL: $path must not be edge-blocked, got 404"
+              fail=1
+            fi
+          done
+          docker rm -f nginx-smoke > /dev/null
+          exit $fail

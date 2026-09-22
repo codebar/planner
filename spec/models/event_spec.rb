@@ -5,6 +5,7 @@ RSpec.describe Event do
 
   include_examples 'Invitable', :invitation, :event
   include_examples DateTimeConcerns, :event
+  include_examples 'RsvpClosable'
 
   context 'with validates' do
     it { is_expected.to validate_presence_of(:name) }

@@ -51,6 +51,28 @@ RSpec.describe EventsController do
         expect(response).to redirect_to(event_invitation_path(event, invitation))
       end
     end
+
+    context 'when the member has a coach invitation for the event' do
+      let!(:invitation) { Fabricate(:coach_invitation, event:, member:, attending: nil) }
+
+      it 'does not create a second invitation' do
+        expect do
+          get :student, params: { event_id: event.slug }
+        end.not_to change(Invitation, :count)
+      end
+
+      it 'updates the existing invitation to the chosen role' do
+        get :student, params: { event_id: event.slug }
+
+        expect(invitation.reload.role).to eql('Student')
+      end
+
+      it 'redirects to the existing invitation page' do
+        get :student, params: { event_id: event.slug }
+
+        expect(response).to redirect_to(event_invitation_path(event, invitation.reload))
+      end
+    end
   end
 
   describe 'GET #coach' do
@@ -85,6 +107,104 @@ RSpec.describe EventsController do
 
         invitation = Invitation.last
         expect(response).to redirect_to(event_invitation_path(event, invitation))
+      end
+    end
+
+    context 'when the member has a student invitation for the event' do
+      let!(:invitation) { Fabricate(:invitation, event:, member:, role: 'Student', attending: nil) }
+
+      it 'does not create a second invitation' do
+        expect do
+          get :coach, params: { event_id: event.slug }
+        end.not_to change(Invitation, :count)
+      end
+
+      it 'updates the existing invitation to the chosen role' do
+        get :coach, params: { event_id: event.slug }
+
+        expect(invitation.reload.role).to eql('Coach')
+      end
+
+      it 'redirects to the existing invitation page' do
+        get :coach, params: { event_id: event.slug }
+
+        expect(response).to redirect_to(event_invitation_path(event, invitation.reload))
+      end
+    end
+  end
+
+  describe 'POST #rsvp' do
+    let(:event) { Fabricate(:event) }
+    let(:member) { Fabricate(:member) }
+    let(:ticket_params) { { event_id: event.slug, email: member.email } }
+
+    context 'when the member does not have an invitation for the event' do
+      it 'creates a student invitation and marks it attending' do
+        expect do
+          post :rsvp, params: ticket_params
+        end.to change(Invitation, :count).by(1)
+
+        invitation = Invitation.last
+        expect(invitation.role).to eql('Student')
+        expect(invitation.attending).to be(true)
+      end
+    end
+
+    context 'when the member has a coach invitation for the event' do
+      let!(:invitation) { Fabricate(:coach_invitation, event:, member:, attending: nil) }
+
+      it 'does not create a second invitation' do
+        expect do
+          post :rsvp, params: ticket_params
+        end.not_to change(Invitation, :count)
+      end
+
+      it 'updates the invitation to the student role and marks it attending' do
+        post :rsvp, params: ticket_params
+
+        expect(invitation.reload.role).to eql('Student')
+        expect(invitation.attending).to be(true)
+      end
+    end
+
+    context 'when the member already has a student invitation for the event' do
+      let!(:invitation) { Fabricate(:invitation, event:, member:, role: 'Student', attending: nil) }
+
+      it 'marks the existing invitation attending without creating a new one' do
+        expect do
+          post :rsvp, params: ticket_params
+        end.not_to change(Invitation, :count)
+
+        expect(invitation.reload.attending).to be(true)
+      end
+    end
+  end
+
+  describe 'POST #rsvp (RSVP window enforcement)' do
+    let(:member) { Fabricate(:member) }
+    let(:event) { Fabricate(:event) }
+
+    context 'when RSVPs are open' do
+      it 'creates a student invitation and marks it attending' do
+        expect do
+          post :rsvp, params: { event_id: event.slug, email: member.email }
+        end.to change(Invitation, :count).by(1)
+
+        invitation = Invitation.find_by!(event:, member:)
+        expect(invitation.attending).to be(true)
+        expect(response).to have_http_status(:ok)
+      end
+    end
+
+    context 'when RSVPs have closed' do
+      let(:event) { Fabricate(:event, date_and_time: 2.hours.from_now) }
+
+      it 'rejects the request without creating an invitation' do
+        expect do
+          post :rsvp, params: { event_id: event.slug, email: member.email }
+        end.not_to change(Invitation, :count)
+
+        expect(response).to have_http_status(:forbidden)
       end
     end
   end

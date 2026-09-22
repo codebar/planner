@@ -8,13 +8,15 @@ class EventsController < ApplicationController
   end
 
   def upcoming
-    fresh_when(latest_model_updated, etag: latest_model_updated)
+    latest = latest_model_updated
+    fresh_when(latest, etag: latest)
 
     @events, @pagy = fetch_upcoming_events
   end
 
   def past
-    fresh_when(latest_model_updated, etag: latest_model_updated)
+    latest = latest_model_updated
+    fresh_when(latest, etag: latest)
 
     @past_events, @pagy = fetch_past_events
   end
@@ -41,10 +43,11 @@ class EventsController < ApplicationController
 
   def rsvp
     set_event
+    return head :forbidden unless @event.rsvp_available?
+
     ticket = Services::Ticket.new(request, params)
     member = Member.find_by(email: ticket.email)
-    invitation = member.invitations.where(event: @event, role: 'Student').first
-    invitation ||= Invitation.create_or_find_by(event: @event, member:, role: 'Student')
+    invitation = find_or_create_invitation(@event, member, 'Student')
 
     invitation.update(attending: true)
     head :ok
@@ -63,9 +66,17 @@ class EventsController < ApplicationController
 
   def find_invitation_and_redirect_to_event(role)
     set_event
-    invitation = Invitation.create_or_find_by(event: @event, member: current_user, role:)
-    invitation = Invitation.find_by(event: @event, member: current_user, role:) unless invitation.persisted?
-    redirect_to event_invitation_path(@event, invitation)
+    redirect_to event_invitation_path(@event, find_or_create_invitation(@event, current_user, role))
+  end
+
+  def find_or_create_invitation(event, member, role)
+    # Identity is event + member, matching InvitationManager; the member's
+    # role choice wins, so an existing invitation with the other role is updated.
+    invitation = Invitation.find_or_create_by!(event:, member:) { |record| record.role = role }
+    invitation.update!(role:) unless invitation.role.eql?(role)
+    invitation
+  rescue ActiveRecord::RecordNotUnique
+    Invitation.find_by(event:, member:)
   end
 
   def set_event
@@ -157,7 +168,9 @@ class EventsController < ApplicationController
       (hash[row['event_type']] ||= []) << row['id'].to_i
     end
 
-    workshops = Workshop.eager_load(:chapter, :sponsors, :organisers, :permissions, :workshop_host)
+    workshops = Workshop.eager_load(:sponsors, :organisers, :permissions,
+                                    workshop_host: :sponsor,
+                                    chapter: { permissions: :members })
                         .where(id: grouped['Workshop'])
                         .to_a.index_by(&:id)
     meetings = Meeting.eager_load(:venue, :organisers, :permissions).where(id: grouped['Meeting'])

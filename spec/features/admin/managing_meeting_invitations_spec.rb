@@ -43,15 +43,16 @@ RSpec.feature 'Managing meeting invitations' do
       visit admin_meeting_path(meeting)
 
       # TomSelect caches search results per query, so one failed fetch poisons
-      # that query permanently. Abort the first search request to simulate the
-      # CI flake, then verify the helper recovers by searching again.
-      aborted_first_search = false
+      # that query permanently. Abort the first two search requests to simulate
+      # the CI flake where the helper's first recovery attempt fails too, then
+      # verify the helper recovers by searching again with fresh query variants.
+      searches_aborted = 0
       search_handler = proc do |route, _request|
-        if aborted_first_search
-          route.continue
-        else
-          aborted_first_search = true
+        if searches_aborted < 2
+          searches_aborted += 1
           route.abort
+        else
+          route.continue
         end
       end
       page.driver.with_playwright_page do |pw_page|
