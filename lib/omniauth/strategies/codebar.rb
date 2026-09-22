@@ -45,8 +45,7 @@ module OmniAuth
       def callback_phase
         error = request.params['error']
         if error
-          fail!(:auth_error, StandardError.new(error))
-          return
+          return fail!(:auth_error, StandardError.new(error))
         end
 
         # Verify state/nonce
@@ -105,7 +104,11 @@ module OmniAuth
 
         call_app!
       rescue StandardError => e
-        return if env['omniauth.error']
+        raise if @env['omniauth.auth'] # app error after successful auth: not an auth failure
+
+        # A failure must return the Rack response from on_failure — a bare return
+        # gives Rack a nil response and TempfileReaper raises `[]=' for nil`.
+        return OmniAuth.config.on_failure.call(env) if env['omniauth.error']
 
         fail!(:unknown_error, e)
       end

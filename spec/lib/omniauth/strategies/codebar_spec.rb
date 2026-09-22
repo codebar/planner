@@ -77,6 +77,17 @@ RSpec.describe OmniAuth::Strategies::Codebar do
   end
 
   describe 'callback error paths' do
+    it 'returns the failure response when the provider redirects back with error params' do
+      env = build_env('/auth/codebar/callback',
+                      query: 'error=invalid_request&error_description=pkce+is+required+for+public+clients')
+      response = strategy.call!(env)
+
+      # A nil return here crashes Rack's TempfileReaper with `[]=' for nil`.
+      expect(response).to be_a(Array)
+      expect(response[0]).to eq(302)
+      expect(env['omniauth.error.type']).to eq(:auth_error)
+    end
+
     it 'fails with csrf_detected when state is missing from session' do
       env = build_env('/auth/codebar/callback', query: 'code=abc&state=some-state')
       strategy.call!(env)
