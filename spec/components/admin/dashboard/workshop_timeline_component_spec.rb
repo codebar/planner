@@ -56,7 +56,7 @@ RSpec.describe Admin::Dashboard::WorkshopTimelineComponent do
   end
 
   it 'stacks same-day workshops with an xN count' do
-    same_day = 2.months.ago
+    same_day = 2.months.ago.noon
 
     render_inline(described_class.new(past: [same_day, same_day + 1.hour], future: []))
 
@@ -65,7 +65,8 @@ RSpec.describe Admin::Dashboard::WorkshopTimelineComponent do
   end
 
   it 'caps the stack at three markers so they stay inside the viewBox' do
-    same_day = 2.months.ago
+    # noon keeps all five markers on one date regardless of when the suite runs
+    same_day = 2.months.ago.noon
     five = (0..4).map { |i| same_day + i.hours }
 
     render_inline(described_class.new(past: five, future: []))
