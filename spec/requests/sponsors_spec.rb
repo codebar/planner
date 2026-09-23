@@ -12,10 +12,17 @@ RSpec.describe 'Sponsors' do
     Rails.cache = original_cache
   end
 
-  it 'renders the sponsors page' do
+  it 'renders the sponsors page within the application layout' do
     get '/sponsors'
 
     expect(response).to have_http_status(:ok)
+    expect(response.body).to include('<!DOCTYPE html>')
+    expect(response.body).to match(/rel="stylesheet"/)
+  end
+
+  it 'renders the sponsors content' do
+    get '/sponsors'
+
     expect(response.body).to include('Acme Corp')
   end
 
