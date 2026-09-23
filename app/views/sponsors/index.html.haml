@@ -9,12 +9,5 @@
       %p.lead.mb-0
         If you are interested in becoming a sponsor please do get in touch with us at #{mail_to "hello@codebar.io", "hello@codebar.io"}.
 
-- ['gold', 'silver', 'bronze', 'community', 'standard'].each do |level|
-  - if @sponsor_levels[level]
-    .py-4.py-lg-5.bg-light
-      .container
-        .row
-          .col
-            %h3.text-center
-              = sponsorship_level_title(level)
-        = render partial: 'shared/sponsors', object: @sponsor_levels[level].compact
+-# Markup rendered by this app's own partial, not user input
+= @sponsor_levels_html.html_safe

@@ -1,13 +1,15 @@
 class SponsorsController < ApplicationController
   def index
-    # v1: bump when the sponsors view or partials change, otherwise a deploy
-    # keeps serving the cached body until the next sponsor save.
-    key = "sponsors/index/v1/#{Sponsor.active.maximum(:updated_at)&.to_fs(:usec)}"
-    body = Rails.cache.fetch(key) do
-      @sponsor_levels = Sponsor.active.group_by(&:level)
-      render_to_string(layout: false)
+    # v2: bump when the sponsors view or partials change, otherwise a deploy
+    # keeps serving the cached fragment until the next sponsor save.
+    # Only the level listings are cached; the layout renders fresh so asset
+    # URLs and meta tags are never stale.
+    key = "sponsors/index/v2/#{Sponsor.active.maximum(:updated_at)&.to_fs(:usec)}"
+    @sponsor_levels_html = Rails.cache.fetch(key) do
+      render_to_string(
+        partial: 'sponsor_levels',
+        locals: { sponsor_levels: Sponsor.active.group_by(&:level) }
+      )
     end
-    # body is markup rendered by this app's own template, not user input
-    render html: body.html_safe # rubocop:disable Rails/OutputSafety
   end
 end
