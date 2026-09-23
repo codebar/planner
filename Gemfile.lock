@@ -551,8 +551,6 @@ GEM
       activemodel (>= 7.0)
     simplecov (1.2.0)
     simplecov-lcov (0.9.0)
-    sitemap_generator (7.1.1)
-      builder (~> 3.0)
     slop (3.6.0)
     snaky_hash (2.0.6)
       hashie (>= 0.1.0, < 6)
@@ -710,7 +708,6 @@ DEPENDENCIES
   simple_form
   simplecov
   simplecov-lcov
-  sitemap_generator (~> 7.1)
   solid_cache (~> 1.0)
   sprockets-rails
   stimulus-rails
@@ -930,7 +927,6 @@ CHECKSUMS
   simple_form (5.4.1) sha256=58c3d229034c7e5545035c3271b6f030ef730c340b9d7d8eb730e0a385b20808
   simplecov (1.2.0) sha256=ea6acd05eece5a41990e2a5171c57d15700d329326c7666c85ee8c6a0dd0977e
   simplecov-lcov (0.9.0) sha256=7a77a31e200a595ed4b0249493056efd0c920601f53d2ef135ca34ee796346cd
-  sitemap_generator (7.1.1) sha256=ab2a133d512a7b33ed713a27a9977f61d8379c9943e3b79900243fc1c4f7f81d
   slop (3.6.0) sha256=76ccab03be66bfcab4838cdc07cab019cd3e192a3538266246749e79e4788803
   snaky_hash (2.0.6) sha256=3663cae48cdef582b517025cf8a39d8789996eaf0b4ed89e2f0624836505654a
   solid_cache (1.0.10) sha256=bc05a2fb3ac78a6f43cbb5946679cf9db67dd30d22939ededc385cb93e120d41

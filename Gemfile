@@ -141,6 +141,5 @@ gem 'prawn'
 gem 'prawn-svg', '~> 0.35'
 
 gem 'carrierwave-aws', '~> 1.6'
-gem 'sitemap_generator', '~> 7.1'
 
 gem 'solid_cache', '~> 1.0'
