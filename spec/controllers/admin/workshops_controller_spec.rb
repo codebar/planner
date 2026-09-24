@@ -95,6 +95,16 @@ RSpec.describe Admin::WorkshopsController do
       expect(assigns(:accepted_counts).values).to all(eq(1))
     end
 
+    it 'renders an empty listing for an out-of-range page (global :empty_page overflow policy)' do
+      chapter = workshop.chapter
+      55.times { Fabricate(:workshop_no_sponsor, chapter:) }
+
+      get :index, params: { chapter_id: chapter.id, page: 999 }
+
+      expect(response).to have_http_status(:success)
+      expect(assigns(:workshops).size).to eq(0)
+    end
+
     it 'renders the listing in a bounded number of queries, regardless of workshop count' do
       chapter = workshop.chapter
       25.times do
