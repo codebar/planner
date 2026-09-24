@@ -83,6 +83,11 @@ RSpec.describe ThreeMonthEmailService, type: :service do
     end
 
     let!(:unsubscribed_member) { Fabricate(:member) }
+    let!(:formerly_subscribed_member) do
+      member = Fabricate(:member)
+      Fabricate(:discarded_subscription, member:, group: students_group)
+      member
+    end
     let!(:banned_student) do
       member = Fabricate(:banned_member)
       Fabricate(:subscription, member:, group: students_group)
@@ -136,6 +141,10 @@ RSpec.describe ThreeMonthEmailService, type: :service do
 
       expect(MemberEmailDelivery.where(member: coach_member)).to be_empty
       expect(MemberEmailDelivery.where(member: unsubscribed_member)).to be_empty
+
+      # Regression for #2920: a tombstoned subscription must not put the member
+      # back in the chaser audience.
+      expect(MemberEmailDelivery.where(member: formerly_subscribed_member)).to be_empty
     end
 
     it 'does not email banned students or students without accepted terms' do

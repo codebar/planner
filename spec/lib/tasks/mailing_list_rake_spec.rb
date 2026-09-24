@@ -46,4 +46,19 @@ RSpec.describe 'rake mailing_list:subscribe_active_members', type: :task do
 
     subscribed.each { |subscriber| expect(subscriber.reload.opt_in_newsletter_at).not_to be_nil }
   end
+
+  it 'excludes members whose only subscription is a tombstone' do
+    ENV['NEWSLETTER_ID'] = 'newsletterid'
+    churned = Fabricate(:member)
+    Fabricate(:discarded_subscription, member: churned)
+
+    newsletter = Services::MailingList.new(:id)
+    allow(Services::MailingList).to receive(:new).and_return(newsletter)
+    allow(newsletter).to receive(:subscribe)
+
+    task.execute
+
+    expect(newsletter).not_to have_received(:subscribe).with(churned.email, churned.name, churned.surname)
+    expect(churned.reload.opt_in_newsletter_at).to be_nil
+  end
 end

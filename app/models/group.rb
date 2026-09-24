@@ -3,7 +3,8 @@ class Group < ApplicationRecord
 
   belongs_to :chapter
   has_many :subscriptions
-  has_many :members, through: :subscriptions
+  # Kept subscriptions only: tombstoned rows record past periods, not current membership.
+  has_many :members, -> { where(subscriptions: { discarded_at: nil }) }, through: :subscriptions
   has_many :group_announcements
   has_many :announcements, through: :group_announcements
 

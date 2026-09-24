@@ -169,6 +169,17 @@ RSpec.describe Member do
 
         expect(described_class.in_group(chapter.groups)).not_to eq(group.members)
       end
+
+      # Regression for #2920: a tombstoned subscription must not target the member
+      # for invitations, email lists, or any other group-membership read.
+      it 'excludes members whose only subscription is a tombstone' do
+        chapter = Fabricate(:chapter)
+        group = Fabricate(:group, chapter:)
+        member = Fabricate(:member)
+        Fabricate(:discarded_subscription, member:, group:)
+
+        expect(described_class.in_group(chapter.groups)).not_to include(member)
+      end
     end
   end
 
