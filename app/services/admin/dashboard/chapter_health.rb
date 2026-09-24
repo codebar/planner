@@ -13,7 +13,8 @@ module Admin
 
       class << self
         # Health row for one chapter; per-chapter queries are fine on a show page.
-        # rubocop:disable Metrics/AbcSize, Metrics/MethodLength — one entry per Row field
+        # One entry per Row field
+        # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
         def row(chapter:)
           in_window = chapter.workshops
                              .exists?(date_and_time: 180.days.ago.beginning_of_day..90.days.from_now)

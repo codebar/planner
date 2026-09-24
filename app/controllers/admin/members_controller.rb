@@ -27,7 +27,9 @@ class Admin::MembersController < Admin::ApplicationController
     member = Member.find(params[:id])
     @member = MemberPresenter.new(member)
     load_attendance_data(@member)
-    @activity_weeks = Admin::Members::ActivityStrip.new(member).rows
+    strip = Admin::Members::ActivityStrip.new(member)
+    @activity_weeks = strip.rows
+    @activity_tracking_start_index = strip.tracking_start_index
     @activities = PublicActivity::Activity.where(owner: member).order(created_at: :desc).limit(30)
     @actions = admin_actions(@member).sort_by(&:created_at).reverse
   end
