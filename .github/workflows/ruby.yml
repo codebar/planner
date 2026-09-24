@@ -118,7 +118,7 @@ jobs:
       run: |
         bundle exec parallel_rspec spec/ \
           -n ${{ matrix.ci_node_total }} \
-          --only-group ${{ matrix.ci_node_index }}
+          --only-group $((${{ matrix.ci_node_index }} + 1))
 
     - name: Preserve coverage results
       run: |
