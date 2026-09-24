@@ -20,10 +20,12 @@
                 = link_to admin_workshop_path(workshop) do
                   = humanize_date(workshop.date_and_time, with_time: true, with_year: true)
               %td
-                = workshop.invitations.accepted.count
+                = @accepted_counts.fetch(workshop.id, 0)
               %td
                 - workshop.sponsors.each do |sponsor|
                   = link_to sponsor.name, sponsor.website
               %td
                 - if workshop.date_and_time.future?
                   %span.badge.bg-primary Upcoming
+
+      = render partial: 'shared/pagination', locals: { pagy: @pagy, model: 'workshop' }
