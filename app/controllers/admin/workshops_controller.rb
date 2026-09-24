@@ -11,7 +11,8 @@ class Admin::WorkshopsController < Admin::ApplicationController
   def index
     @chapter = Chapter.find(chapter_id)
     authorize @chapter
-    @workshops = @chapter.workshops.includes(:sponsors)
+    @pagy, @workshops = pagy(@chapter.workshops.includes(:sponsors))
+    @accepted_counts = WorkshopInvitation.accepted.where(workshop: @workshops).group(:workshop_id).count
   end
 
   def new
