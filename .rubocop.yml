@@ -180,6 +180,7 @@ Metrics/MethodLength:
   Max: 10
   Exclude:
     - "spec/**/*"
+    - "db/migrate/**/*"
 
 Style/AndOr:
   Enabled: true

@@ -25,6 +25,7 @@ gem 'bootstrap', '~> 5'
 gem 'friendly_id'
 gem 'haml'
 gem 'high_voltage'
+gem 'discard', '~> 2.0'
 gem 'jquery-rails'
 gem 'jwt'
 
