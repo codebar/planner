@@ -4,6 +4,19 @@ RSpec.describe SignupNudgeEmailService, type: :service do
   describe '#send_nudges' do
     subject(:call) { described_class.send_nudges }
 
+    def enqueued_nudge_recipients(action)
+      ActiveJob::Base.queue_adapter.enqueued_jobs.filter_map do |job|
+        mailer, mail_action, _delivery_method, options = job[:args]
+        next unless mailer == 'MemberMailer' && mail_action == action.to_s
+
+        options.dig('params', 'member', '_aj_globalid')
+      end
+    end
+
+    def member_gid(member)
+      "gid://planner/Member/#{member.id}"
+    end
+
     around do |example|
       original_adapter = ActiveJob::Base.queue_adapter
       ActiveJob::Base.queue_adapter = :test
@@ -97,6 +110,27 @@ RSpec.describe SignupNudgeEmailService, type: :service do
         .not_to(change do
           MemberEmailDelivery.where(member: subscribed_after_nudge, email_type: 'signup_nudge_followup').count
         end)
+    end
+
+    # Regression for #2919: merge() dropped the delivery anti-join, re-emailing members daily.
+    # Duplicate sends leave member_email_deliveries unchanged (find_or_create_by!), so these
+    # assertions look at enqueued mailer jobs, which every duplicate send does enqueue.
+    it 'does not enqueue a second nudge for a member already nudged' do
+      expect { call }.not_to change { enqueued_nudge_recipients('signup_nudge').tally[member_gid(recently_nudged)] }.from(nil)
+    end
+
+    it 'does not enqueue a second follow-up for a member whose sequence completed' do
+      expect { call }.not_to change { enqueued_nudge_recipients('signup_nudge_followup').tally[member_gid(completed_sequence)] }.from(nil)
+    end
+
+    it 'enqueues exactly one nudge per eligible member' do
+      call
+      expect(enqueued_nudge_recipients('signup_nudge').tally[member_gid(nudge_eligible)]).to eq(1)
+    end
+
+    it 'enqueues exactly one follow-up per followup-eligible member' do
+      call
+      expect(enqueued_nudge_recipients('signup_nudge_followup').tally[member_gid(followup_eligible)]).to eq(1)
     end
 
     # DB allows NULL member_id on both tables; one such row would make NOT IN exclude everyone
