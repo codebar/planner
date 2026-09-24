@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe SignupNudgeEmailService, type: :service do
@@ -34,6 +36,8 @@ RSpec.describe SignupNudgeEmailService, type: :service do
     let!(:recently_nudged) { Fabricate(:member, created_at: 10.days.ago) }
     let!(:completed_sequence) { Fabricate(:member, created_at: 7.weeks.ago) }
     let!(:subscribed_after_nudge) { Fabricate(:member, created_at: 6.weeks.ago) }
+    let!(:unsubscribed_after_signup) { Fabricate(:member, created_at: 10.days.ago) }
+    let!(:unsubscribed_after_nudge) { Fabricate(:member, created_at: 6.weeks.ago) }
 
     before do
       Fabricate(:subscription, member: subscribed_in_window)
@@ -47,6 +51,12 @@ RSpec.describe SignupNudgeEmailService, type: :service do
       Fabricate(:member_email_delivery, member: subscribed_after_nudge, email_type: 'signup_nudge',
                                         created_at: 5.weeks.ago)
       Fabricate(:subscription, member: subscribed_after_nudge)
+      Fabricate(:discarded_subscription, member: unsubscribed_after_signup,
+                                         created_at: 9.days.ago, discarded_at: 1.day.ago)
+      Fabricate(:member_email_delivery, member: unsubscribed_after_nudge, email_type: 'signup_nudge',
+                                        created_at: 5.weeks.ago)
+      Fabricate(:discarded_subscription, member: unsubscribed_after_nudge,
+                                         created_at: 6.weeks.ago, discarded_at: 4.weeks.ago)
     end
 
     it 'nudges members created 7-14 days ago who have no subscription' do
@@ -58,8 +68,9 @@ RSpec.describe SignupNudgeEmailService, type: :service do
     it 'sends the follow-up to members nudged more than a month ago' do
       expect { perform_enqueued_jobs { call } }
         .to change {
-          MemberEmailDelivery.where(member: followup_eligible, email_type: 'signup_nudge_followup').count
-        }
+              MemberEmailDelivery.where(member: followup_eligible,
+                                        email_type: 'signup_nudge_followup').count
+            }
         .by(1)
     end
 
@@ -92,7 +103,7 @@ RSpec.describe SignupNudgeEmailService, type: :service do
 
     it 'does not re-nudge a member already nudged' do
       expect { perform_enqueued_jobs { call } }
-        .not_to(change { MemberEmailDelivery.where(member: recently_nudged, email_type: 'signup_nudge').count })
+        .not_to(change { MemberEmailDelivery.where(member: recently_nudged).count })
     end
 
     it 'does not send a follow-up while the nudge is less than a month old' do
@@ -109,6 +120,20 @@ RSpec.describe SignupNudgeEmailService, type: :service do
       expect { perform_enqueued_jobs { call } }
         .not_to(change do
           MemberEmailDelivery.where(member: subscribed_after_nudge, email_type: 'signup_nudge_followup').count
+        end)
+    end
+
+    # Regression for #2920: a member who subscribed and later unsubscribed has only a
+    # tombstoned row. They must be ineligible for both the nudge and the follow-up.
+    it 'does not nudge a member who subscribed and then unsubscribed' do
+      expect { perform_enqueued_jobs { call } }
+        .not_to(change { MemberEmailDelivery.where(member: unsubscribed_after_signup, email_type: 'signup_nudge').count })
+    end
+
+    it 'does not send a follow-up to a member who subscribed and then unsubscribed' do
+      expect { perform_enqueued_jobs { call } }
+        .not_to(change do
+          MemberEmailDelivery.where(member: unsubscribed_after_nudge, email_type: 'signup_nudge_followup').count
         end)
     end
 
