@@ -58,6 +58,67 @@ RSpec.describe Admin::WorkshopsController do
     end
   end
 
+  describe 'GET #index' do
+    render_views
+
+    it 'lists the chapter workshops with accepted attendance counts' do
+      Fabricate(:workshop_invitation, workshop:, attending: true)
+      Fabricate(:workshop_invitation, workshop:, attending: true)
+      Fabricate(:workshop_invitation, workshop:, attending: false)
+
+      get :index, params: { chapter_id: workshop.chapter.id }
+
+      expect(response).to have_http_status(:success)
+      expect(assigns(:accepted_counts)[workshop.id]).to eq(2)
+    end
+
+    it 'paginates workshops at 20 per page' do
+      chapter = workshop.chapter
+      55.times { Fabricate(:workshop_no_sponsor, chapter:) }
+
+      get :index, params: { chapter_id: chapter.id }
+
+      expect(assigns(:workshops).size).to eq(20)
+      expect(assigns(:pagy).pages).to eq(3)
+    end
+
+    it 'computes accepted counts correctly past the first page' do
+      chapter = workshop.chapter
+      55.times do |i|
+        workshop = Fabricate(:workshop_no_sponsor, chapter:, date_and_time: (i + 1).days.ago)
+        Fabricate(:workshop_invitation, workshop:, attending: true)
+      end
+
+      get :index, params: { chapter_id: chapter.id, page: 2 }
+
+      expect(assigns(:workshops).size).to eq(20)
+      expect(assigns(:accepted_counts).values).to all(eq(1))
+    end
+
+    it 'renders an empty listing for an out-of-range page (global :empty_page overflow policy)' do
+      chapter = workshop.chapter
+      55.times { Fabricate(:workshop_no_sponsor, chapter:) }
+
+      get :index, params: { chapter_id: chapter.id, page: 999 }
+
+      expect(response).to have_http_status(:success)
+      expect(assigns(:workshops).size).to eq(0)
+    end
+
+    it 'renders the listing in a bounded number of queries, regardless of workshop count' do
+      chapter = workshop.chapter
+      25.times do
+        workshop = Fabricate(:workshop_no_sponsor, chapter:)
+        Fabricate(:workshop_invitation, workshop:, attending: true)
+      end
+
+      count = count_queries { get :index, params: { chapter_id: chapter.id } }
+
+      expect(response).to have_http_status(:success)
+      expect(count).to be < 30
+    end
+  end
+
   describe 'GET #rsvp' do
     render_views
 
