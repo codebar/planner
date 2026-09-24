@@ -33,7 +33,7 @@
       .row.mt-4
         .col
           %h3.mt-4 Activity
-          = render Admin::Members::ActivityStripComponent.new(weeks: @activity_weeks)
+          = render Admin::Members::ActivityStripComponent.new(weeks: @activity_weeks, tracking_start_index: @activity_tracking_start_index)
 
           %ul.list-unstyled.activity-log.mt-3
             - @activities.group_by { |a| a.created_at.beginning_of_week.to_date }.each do |week_start, activities|

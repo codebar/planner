@@ -37,6 +37,11 @@ class MemberActivityRecorder
     meeting_invitation.updated
   ].freeze
 
+  # Start of systematic member-activity collection; earlier rows are incidental and
+  # incomplete. Drives the marker line on Admin::Members::ActivityStrip. Update if
+  # historical activity is ever backfilled.
+  TRACKING_STARTED_ON = Date.new(2026, 9, 8).freeze
+
   def self.record(actor:, key:, trackable: nil, recipient: nil)
     Rails.logger.warn("MemberActivityRecorder: unregistered key '#{key}'") unless KEYS.include?(key)
     trackable ||= actor

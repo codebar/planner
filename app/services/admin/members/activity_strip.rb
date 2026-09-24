@@ -32,6 +32,12 @@ module Admin
         end
       end
 
+      # Index of the week containing TRACKING_STARTED_ON, or nil when that date
+      # is outside the 52-week window (before it, or after it scrolls off).
+      def tracking_start_index
+        weeks.index { |week_start| week_start.all_week.cover?(MemberActivityRecorder::TRACKING_STARTED_ON) }
+      end
+
       private
 
       def classify(counts)

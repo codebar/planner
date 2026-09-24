@@ -49,4 +49,28 @@ RSpec.describe Admin::Members::ActivityStrip do
 
     expect(strip.rows.first.state).to eq(:login_only)
   end
+
+  describe 'tracking start index' do
+    it 'returns the index of the week containing the tracking start date' do
+      strip = described_class.new(member, now: Time.zone.local(2026, 9, 16, 12, 0, 0))
+
+      expect(strip.tracking_start_index).to eq(50) # week of Mon 7 Sep 2026
+    end
+
+    it 'returns 0 when tracking starts in the first visible week' do
+      strip = described_class.new(member, now: Time.zone.local(2027, 9, 1, 12, 0, 0)) # window starts Mon 7 Sep 2026
+
+      expect(strip.tracking_start_index).to eq(0)
+    end
+
+    it 'is nil when tracking starts after the window' do
+      expect(strip.tracking_start_index).to be_nil # fixed now is 2 Sep, tracking starts 8 Sep
+    end
+
+    it 'is nil when tracking start has scrolled off the window' do
+      strip = described_class.new(member, now: Time.zone.local(2027, 10, 6, 12, 0, 0))
+
+      expect(strip.tracking_start_index).to be_nil
+    end
+  end
 end
