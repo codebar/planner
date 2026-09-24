@@ -35,7 +35,7 @@ class DashboardController < ApplicationController
     coaches = Member.where(id: top_coach_query
                                .year(year_param))
                     .includes(:skills)
-    @pagy, @coaches = pagy(coaches, items: 80)
+    @pagy, @coaches = pagy(coaches)
   end
 
   def participant_guide; end
