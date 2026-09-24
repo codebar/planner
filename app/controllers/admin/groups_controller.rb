@@ -7,6 +7,6 @@ class Admin::GroupsController < Admin::ApplicationController
 
     @eligible_count = @group.eligible_members.count
     @total_count = @group.members.count
-    @pagy, @members = pagy(Group.members_by_recent_rsvp(@group), items: 20)
+    @pagy, @members = pagy(Group.members_by_recent_rsvp(@group))
   end
 end

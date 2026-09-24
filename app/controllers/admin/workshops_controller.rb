@@ -179,7 +179,7 @@ class Admin::WorkshopsController < Admin::ApplicationController
     invitations = eligible.merge(Member.find_members_by_name(query))
                           .includes(:member)
                           .order('members.name, members.surname')
-    pagy(invitations, items: 20)
+    pagy(invitations)
   end
 
   def workshop_params
