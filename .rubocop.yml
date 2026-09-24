@@ -176,6 +176,10 @@ Lint/RequireParentheses:
 Lint/UriEscapeUnescape:
   Enabled: true
 
+Metrics/ClassLength:
+  Exclude:
+    - "app/services/admin/stats/monthly.rb"
+
 Metrics/MethodLength:
   Max: 10
   Exclude:
