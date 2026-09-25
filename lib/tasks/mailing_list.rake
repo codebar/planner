@@ -1,17 +1,14 @@
-namespace :mailing_list do
-  require 'services/mailing_list'
+# frozen_string_literal: true
 
+namespace :mailing_list do
   desc 'Subscribe all active members to newsletter mailing list'
   task subscribe_active_members: :environment do
-    newsletter_id = ENV['NEWSLETTER_ID'] || Rails.logger.info('NEWSLETTER_ID not set. Aborting task') && abort
-
-    # Kept subscriptions only: tombstoned rows record past periods, not current subscribers.
-    members = Member.joins(:subscriptions).where(subscriptions: { discarded_at: nil }).distinct
-    newsletter = Services::MailingList.new(newsletter_id)
-
-    members.each do |member|
-      member.update(opt_in_newsletter_at: Time.zone.now)
-      newsletter.subscribe(member.email, member.name, member.surname)
+    newsletter_id = ENV['NEWSLETTER_ID']
+    if newsletter_id.blank?
+      Rails.logger.info('NEWSLETTER_ID not set. Aborting task')
+      abort
     end
+
+    NewsletterSubscriptionService.call(newsletter_id:)
   end
 end

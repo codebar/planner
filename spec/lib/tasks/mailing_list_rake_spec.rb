@@ -5,60 +5,24 @@ RSpec.describe 'rake mailing_list:subscribe_active_members', type: :task do
     expect(task.prerequisites).to include 'environment'
   end
 
-  it 'runs gracefully' do
-    # See https://stackoverflow.com/questions/23146353/rspec-3-0-how-to-mock-a-method-replacing-the-parameter-but-with-no-return-value
+  it 'delegates to the newsletter subscription service' do
+    allow(NewsletterSubscriptionService).to receive(:call)
     allow(ENV).to receive(:[]).and_call_original
     allow(ENV).to receive(:[]).with('NEWSLETTER_ID').and_return('newsletterid')
-    expect { task.invoke }.not_to raise_error
-  end
-
-  it 'subscribes all active members to the newsletter mailing list' do
-    ENV['NEWSLETTER_ID'] = 'newsletterid'
-    non_subscribed = Fabricate.times(2, :member)
-    subscribed = Fabricate.times(2, :member)
-    subscribed.each { |member| Fabricate(:subscription, member:) }
-    subscribed[0...3].each { |member| Fabricate(:subscription, member:) }
-
-    newslettter = Services::MailingList.new(:id)
-    allow(Services::MailingList).to receive(:new).and_return(newslettter)
-
-    subscribed.each do |subscriber|
-      allow(newslettter).to receive(:subscribe).with(subscriber.email,
-                                                     subscriber.name,
-                                                     subscriber.surname).once
-    end
 
     task.execute
 
-    expect(Services::MailingList).to have_received(:new)
-
-    subscribed.each do |subscriber|
-      expect(newslettter).to have_received(:subscribe).with(subscriber.email,
-                                                            subscriber.name,
-                                                            subscriber.surname).once
-    end
-
-    non_subscribed.each do |inactive_subscriber|
-      expect(newslettter).not_to have_received(:subscribe).with(inactive_subscriber.email,
-                                                                inactive_subscriber.name,
-                                                                inactive_subscriber.surname)
-    end
-
-    subscribed.each { |subscriber| expect(subscriber.reload.opt_in_newsletter_at).not_to be_nil }
+    expect(NewsletterSubscriptionService).to have_received(:call).with(newsletter_id: 'newsletterid')
   end
 
-  it 'excludes members whose only subscription is a tombstone' do
-    ENV['NEWSLETTER_ID'] = 'newsletterid'
-    churned = Fabricate(:member)
-    Fabricate(:discarded_subscription, member: churned)
+  it 'aborts when NEWSLETTER_ID is not set' do
+    allow(NewsletterSubscriptionService).to receive(:call)
+    allow(ENV).to receive(:[]).and_call_original
+    allow(ENV).to receive(:[]).with('NEWSLETTER_ID').and_return(nil)
+    allow(Rails.logger).to receive(:info)
 
-    newsletter = Services::MailingList.new(:id)
-    allow(Services::MailingList).to receive(:new).and_return(newsletter)
-    allow(newsletter).to receive(:subscribe)
-
-    task.execute
-
-    expect(newsletter).not_to have_received(:subscribe).with(churned.email, churned.name, churned.surname)
-    expect(churned.reload.opt_in_newsletter_at).to be_nil
+    expect { task.execute }.to raise_error(SystemExit)
+    expect(Rails.logger).to have_received(:info).with('NEWSLETTER_ID not set. Aborting task')
+    expect(NewsletterSubscriptionService).not_to have_received(:call)
   end
 end
