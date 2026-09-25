@@ -67,8 +67,8 @@
       title: "Chapters"
     events:
       upcoming: "Upcoming Events"
-    donation_platforms:
-      title: "How to support us"
+    support_us_component:
+      title: "Help make coding more accessible"
   mailer:
     workshop_invitation:
       attending:
@@ -538,13 +538,13 @@
         email: Contact email
         link_to_job: Link to job post
         expiry_date: Application closing date
-  donation_platforms:
+  support_us_component:
     title: "Donate"
-    description: "Your support—whether through a one-time gift or ongoing commitment—drives our mission to create a more inclusive tech industry. It enables us to provide continuous learning opportunities and empower individuals from underrepresented groups to grow and thrive in tech."
+    description: "Your support helps create free, inclusive spaces where people can build skills, find community and take their next step in tech."
     link: "Find out how else to support us"
     donation_form:
       title: "Use the donation page"
-      text: "Make a lasting impact with codebar by giving a one-time donation or committing to a monthly contribution."
+      text: "A one-off gift or monthly donation helps codebar continue providing free workshops and opportunities for people who might otherwise struggle to access tech education."
       image_alt: "codebar logo"
     github_sponsors:
       title: "Github Sponsors"
