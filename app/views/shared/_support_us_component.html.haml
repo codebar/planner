@@ -1,38 +1,32 @@
 - title = local_assigns[:title] ? local_assigns[:title] : t("support_us_component.title")
 
 .row.justify-content-center
-  .d-flex.col-sm-12.col-md-6.col-lg-3
+  .col-12.col-md-7.text-center.mb-3
+    %h2= title
+    %p.my-4= t("support_us_component.description")
+
+.row.justify-content-center
+  .d-flex.col-sm-12.col-md-6.col-lg-3.text-center
     .card.mt-3.mt-lg-0
-      .card-header.bg-white.border-0.p-0.ratio.ratio-21x9
-        .bg-white.rounded-top.p-3.d-flex.align-items-center
-          = image_tag("logo.png", alt:t("support_us_component.donation_form.image_alt"), class: "mw-100")
       .card-body
-        %h3.h6= link_to(t("support_us_component.donation_form.title"), "https://codebar.enthuse.com/donate/")
+        %h5.card-title.mt-2.mb-3= t("support_us_component.donation_form.title")
         %p.card-text= t("support_us_component.donation_form.text")
-  .d-flex.col-sm-12.col-md-6.col-lg-3
+  .d-flex.col-sm-12.col-md-6.col-lg-3.text-center
     .card.mt-3.mt-lg-0
-      .card-header.bg-white.border-0.p-0.ratio.ratio-21x9
-        .bg-dark.rounded-top
-          = image_tag("give-as-you-live.png", alt: t("support_us_component.give_as_you_live.image_alt"), class: "mw-100 rounded-top")
       .card-body
-        %h3.h6= link_to(t("support_us_component.give_as_you_live.title"), "https://www.giveasyoulive.com/join/codebar?utm_source=charitytoolkit&utm_content=233896&utm_medium=post&utm_campaign=CTGenericCampaign")
-        %p.card-text= t("support_us_component.give_as_you_live.text")
-  .d-flex.col-sm-12.col-md-6.col-lg-3
+        %h5.card-title.mt-2.mb-3= t("support_us_component.fundraise.title")
+        %p.card-text= t("support_us_component.fundraise.text")
+  .d-flex.col-sm-12.col-md-6.col-lg-3.text-center
     .card.mt-3.mt-lg-0
-      .card-header.bg-white.border-0.p-0.ratio.ratio-21x9
-        .bg-white.rounded-top.p-3.d-flex.align-items-center
-          = image_tag("open-collective-logo.png", alt: t("support_us_component.open_collective.image_alt"), class: "mw-100")
       .card-body
-        %h3.h6= link_to(t("support_us_component.open_collective.title"), "https://opencollective.com/codebar")
-        %p.card-text= t("support_us_component.open_collective.text")
-  .d-flex.col-sm-12.col-md-6.col-lg-3
+        %h5.card-title.mt-2.mb-3= t("support_us_component.corporate.title")
+        %p.card-text= t("support_us_component.corporate.text")
+  .d-flex.col-sm-12.col-md-6.col-lg-3.text-center
     .card.mt-3.mt-lg-0
-      .card-header.bg-white.border-0.p-0.ratio.ratio-21x9
-        .bg-dark.rounded-top
-          = image_tag("GitHub_Logo_White.png", alt: t("support_us_component.github_sponsors.image_alt"), class: "mw-100")
       .card-body
-        %h3.h6= link_to(t("support_us_component.github_sponsors.title"), "https://github.com/sponsors/codebar")
-        %p.card-text= t("support_us_component.github_sponsors.text")
+        %h5.card-title.mt-2.mb-3= t("support_us_component.other.title")
+        %p.card-text= t("support_us_component.other.text")
+  
 
 - if local_assigns[:with_button]
   .d-flex.justify-content-center.mt-4
