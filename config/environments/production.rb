@@ -75,17 +75,19 @@ Rails.application.configure do
   # Host for absolute asset URLs in emails. Override for staging via ASSET_HOST env var.
   config.action_mailer.asset_host = ENV.fetch('ASSET_HOST', 'https://codebar.io')
 
-  # Specify outgoing SMTP server. Remember to add smtp/* credentials via rails credentials:edit.
+  # Outgoing SMTP settings are environment-driven so the provider can be switched
+  # (e.g. SendGrid to SES) with config vars alone. Defaults keep the current
+  # SendGrid setup when the vars are absent.
   config.action_mailer.smtp_settings = {
-     port: '587',
-     address: 'smtp.sendgrid.net',
-     user_name: ENV['SENDGRID_USERNAME'],
-     password: ENV['SENDGRID_PASSWORD'],
-     domain: 'heroku.com',
-     authentication: :plain,
-     enable_starttls_auto: true
-   }
-   ActionMailer::Base.delivery_method = :smtp
+    port: ENV.fetch('SMTP_PORT', '587'),
+    address: ENV.fetch('SMTP_ADDRESS', 'smtp.sendgrid.net'),
+    user_name: ENV.fetch('SMTP_USERNAME', ENV['SENDGRID_USERNAME']),
+    password: ENV.fetch('SMTP_PASSWORD', ENV['SENDGRID_PASSWORD']),
+    domain: ENV.fetch('SMTP_DOMAIN', 'heroku.com'),
+    authentication: :plain,
+    enable_starttls_auto: true
+  }
+  ActionMailer::Base.delivery_method = :smtp
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation cannot be found).
