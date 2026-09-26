@@ -112,6 +112,13 @@ RSpec.describe Chapter do
       Fabricate(:member, groups: [student_group], accepted_toc_at: nil)
       expect(chapter.eligible_students).to be_empty
     end
+
+    it 'excludes students whose subscription is a tombstone' do
+      student = Fabricate(:member, accepted_toc_at: Time.zone.now)
+      Fabricate(:discarded_subscription, member: student, group: student_group)
+
+      expect(chapter.eligible_students).to be_empty
+    end
   end
 
   describe '#eligible_coaches' do

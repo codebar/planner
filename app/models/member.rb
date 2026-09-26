@@ -21,7 +21,8 @@ class Member < ApplicationRecord
   has_many :auth_services
   has_many :feedbacks, foreign_key: :coach_id, inverse_of: :coach
   has_many :subscriptions
-  has_many :groups, through: :subscriptions
+  # Kept subscriptions only: tombstoned rows record past periods, not current membership.
+  has_many :groups, -> { where(subscriptions: { discarded_at: nil }) }, through: :subscriptions
   has_many :member_notes
   has_many :chapters, -> { distinct }, through: :groups
   has_many :announcements, -> { distinct }, through: :groups

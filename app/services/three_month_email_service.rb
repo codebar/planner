@@ -17,6 +17,9 @@ class ThreeMonthEmailService
                                                .where('workshops.date_and_time >= ?', one_year_cutoff)
                                                .select(:member_id)
 
+    # joins(:groups) reads the kept-scoped Member#groups association, so a
+    # tombstoned subscription drops the student out of the chaser audience
+    # (issue #2920: this join must reflect current membership).
     members = Member.not_banned
                     .accepted_toc
                     .joins(:groups)

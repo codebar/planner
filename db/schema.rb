@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_09_17_090000) do
+ActiveRecord::Schema[8.1].define(version: 2026_09_24_090000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -536,11 +536,13 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_17_090000) do
 
   create_table "subscriptions", id: :serial, force: :cascade do |t|
     t.datetime "created_at", precision: nil
+    t.datetime "discarded_at"
     t.integer "group_id"
     t.integer "member_id"
     t.datetime "updated_at", precision: nil
+    t.index ["discarded_at"], name: "index_subscriptions_on_discarded_at"
     t.index ["group_id"], name: "index_subscriptions_on_group_id"
-    t.index ["member_id", "group_id"], name: "index_subscriptions_on_member_id_group_id", unique: true
+    t.index ["member_id", "group_id"], name: "index_subscriptions_on_member_id_group_id_active", unique: true, where: "(discarded_at IS NULL)"
     t.index ["member_id"], name: "index_subscriptions_on_member_id"
   end
 
