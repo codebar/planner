@@ -1,9 +1,6 @@
 require 'faraday'
 
 module Flodesk
-  # Subscriber status
-  ACTIVE = 'active'.freeze
-
   class Client
     API_ENDPOINT = 'https://api.flodesk.com/v1/'.freeze
     DEFAULT_TIMEOUT = 60
@@ -50,23 +47,6 @@ module Flodesk
       body = { segment_ids: }
 
       request(:delete, "subscribers/#{email}/segments", body)
-    end
-
-    def subscribed?(email:, segment_ids:)
-      response = request(:get, "subscribers/#{email}")
-      response => { status:, body: }
-
-      return false if response.is_a?(FlodeskError) && status == 404
-
-      body.symbolize_keys => { status:, segments: }
-
-      # If not subscribed, stop here
-      is_active = status.to_s.eql?(ACTIVE)
-      return false unless is_active
-
-      segment_ids.all? do |segment_id|
-        segments.any? { |segment| segment_id.to_s.eql?(segment.symbolize_keys[:id]) }
-      end
     end
 
     private
