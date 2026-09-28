@@ -107,5 +107,29 @@ RSpec.describe Listable do
         expect(most_recent.sponsors).to eq(past_most_recent_workshop.sponsors)
       end
     end
+
+    it 'fetches the latest past workshop with a single-row query, not a full load' do
+      sqls = []
+      subscriber = nil
+      travel_to(Time.current) do
+        Fabricate(:workshop, date_and_time: 2.hours.ago)
+        Fabricate(:workshop, date_and_time: 5.hours.ago)
+        Fabricate(:workshop, date_and_time: 2.days.ago)
+
+        subscriber = ActiveSupport::Notifications.subscribe('sql.active_record') do |_name, _start, _finish, _id, payload|
+          sqls << payload[:sql] if payload[:name] != 'SCHEMA'
+        end
+        Workshop.most_recent
+      ensure
+        ActiveSupport::Notifications.unsubscribe(subscriber)
+      end
+
+      workshop_queries = sqls.grep(/FROM "workshops"/)
+      expect(workshop_queries).not_to be_empty
+      # Eager-load join queries carry t0_r aliases and load one joined record;
+      # every other workshops query must be row-limited (guards the old
+      # .load.first full-table load).
+      expect(workshop_queries.reject { |q| q.include?('t0_r') }).to all(match(/LIMIT/i))
+    end
   end
 end
