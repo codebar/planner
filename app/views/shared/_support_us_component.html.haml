@@ -7,27 +7,26 @@
 
 .row.justify-content-center
   .d-flex.col-sm-12.col-md-6.col-lg-3.text-center
-    .card.mt-3.mt-lg-0
-      .card-body
-        %h5.card-title.mt-2.mb-3= t("support_us_component.donation_form.title")
+    .card.mt-3.mt-lg-0.w-100.h-100
+      .card-body.d-flex.flex-column
+        %h5.card-title.mt-3.mb-3= t("support_us_component.donation_form.title")
         %p.card-text= t("support_us_component.donation_form.text")
+        = link_to(t("support_us_component.donation_form.link"), t("services.donations"), class: "btn btn-primary mt-auto mb-3 align-self-center")
   .d-flex.col-sm-12.col-md-6.col-lg-3.text-center
-    .card.mt-3.mt-lg-0
-      .card-body
+    .card.mt-3.mt-lg-0.w-100.h-100
+      .card-body.d-flex.flex-column
         %h5.card-title.mt-2.mb-3= t("support_us_component.fundraise.title")
         %p.card-text= t("support_us_component.fundraise.text")
+        = link_to(t("support_us_component.fundraise.link"), "mailto:hello@codebar.io", class: "btn btn-primary mt-auto mb-3 align-self-center")
   .d-flex.col-sm-12.col-md-6.col-lg-3.text-center
-    .card.mt-3.mt-lg-0
-      .card-body
+    .card.mt-3.mt-lg-0.w-100.h-100
+      .card-body.d-flex.flex-column
         %h5.card-title.mt-2.mb-3= t("support_us_component.corporate.title")
         %p.card-text= t("support_us_component.corporate.text")
+        = link_to(t("support_us_component.corporate.link"), "mailto:hello@codebar.io", class: "btn btn-primary mt-auto mb-3 align-self-center")
   .d-flex.col-sm-12.col-md-6.col-lg-3.text-center
-    .card.mt-3.mt-lg-0
-      .card-body
+    .card.mt-3.mt-lg-0.w-100.h-100
+      .card-body.d-flex.flex-column
         %h5.card-title.mt-2.mb-3= t("support_us_component.other.title")
         %p.card-text= t("support_us_component.other.text")
-  
-
-- if local_assigns[:with_button]
-  .d-flex.justify-content-center.mt-4
-    = link_to t("support_us_component.link"), donate_path, class: "btn btn-primary btn-lg my-4"
+        = link_to(t("support_us_component.other.link"), "mailto:hello@codebar.io", class: "btn btn-primary mt-auto mb-3 align-self-center")
