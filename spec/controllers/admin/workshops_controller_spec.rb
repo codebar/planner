@@ -304,8 +304,7 @@ RSpec.describe Admin::WorkshopsController do
 
       context "when workshop deletion tried outside specific time frame since it's creation" do
         it 'does not delete the workshop' do
-          new_current_time = 1.day + Admin::WorkshopsController::
-                                     WORKSHOP_DELETION_TIME_FRAME_SINCE_CREATION
+          new_current_time = 1.day + Workshop::DELETION_WINDOW
 
           travel new_current_time do
             expect do
@@ -315,8 +314,7 @@ RSpec.describe Admin::WorkshopsController do
         end
 
         it "displays workshop can't be deleted related flash message" do
-          new_current_time = 1.day + Admin::WorkshopsController::
-                                     WORKSHOP_DELETION_TIME_FRAME_SINCE_CREATION
+          new_current_time = 1.day + Workshop::DELETION_WINDOW
 
           travel new_current_time do
             delete :destroy, params: { id: workshop.id }
@@ -344,8 +342,7 @@ RSpec.describe Admin::WorkshopsController do
 
       context "when workshop deletion tried outside specific time frame since it's creation" do
         it 'does not delete the workshop' do
-          new_current_time = 1.day + Admin::WorkshopsController::
-                                     WORKSHOP_DELETION_TIME_FRAME_SINCE_CREATION
+          new_current_time = 1.day + Workshop::DELETION_WINDOW
 
           travel new_current_time do
             expect do
@@ -355,8 +352,7 @@ RSpec.describe Admin::WorkshopsController do
         end
 
         it "displays workshop can't be deleted related flash message" do
-          new_current_time = 1.day + Admin::WorkshopsController::
-                                     WORKSHOP_DELETION_TIME_FRAME_SINCE_CREATION
+          new_current_time = 1.day + Workshop::DELETION_WINDOW
 
           travel new_current_time do
             delete :destroy, params: { id: workshop.id }
