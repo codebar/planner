@@ -1,6 +1,5 @@
 class Admin::MemberNotesController < Admin::ApplicationController
   before_action :authorize_note, only: %i[update destroy]
-
   def create
     @note = MemberNote.new(member_note_params)
     authorize @note
@@ -19,14 +18,12 @@ class Admin::MemberNotesController < Admin::ApplicationController
     params.expect(member_note: %i[note member_id])
   end
 
-  def edit; end
-
   def update
     if @note.update(member_note_params)
       flash[:notice] = 'Note successfully updated.'
       redirect_to admin_member_path(@note.member)
     else
-      flash[:error] = @note.errors.full_messages unless @note.save
+      flash[:error] = @note.errors.full_messages
       redirect_back fallback_location: root_path
     end
   end

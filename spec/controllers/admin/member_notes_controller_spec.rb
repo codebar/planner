@@ -47,7 +47,7 @@ RSpec.describe Admin::MemberNotesController do
   end
 
   describe 'PATCH #update' do
-    let!(:member_note) { Fabricate(:member_note, member: member, author: admin, note: 'Original note') }
+    let!(:member_note) { Fabricate(:member_note, member:, author: admin, note: 'Original note') }
 
     it "Doesn't allow anonymous users to edit notes" do
       patch :update, params: { id: member_note.id, member_note: { note: 'Updated anonymously' } }
@@ -77,12 +77,12 @@ RSpec.describe Admin::MemberNotesController do
   end
 
   describe 'DELETE #destroy' do
-    let!(:member_note) { Fabricate(:member_note, member: member, author: admin, note: 'Note') }
+    let!(:member_note) { Fabricate(:member_note, member:, author: admin, note: 'Note') }
 
     it "Doesn't allow anonymous users to delete notes" do
       expect do
         delete :destroy, params: { id: member_note.id }
-      end.not_to change { MemberNote.all.count }
+      end.not_to(change { MemberNote.all.count })
     end
 
     it "Doesn't allow regular users to delete notes" do
@@ -90,7 +90,7 @@ RSpec.describe Admin::MemberNotesController do
 
       expect do
         delete :destroy, params: { id: member_note.id }
-      end.not_to change { MemberNote.all.count }
+      end.not_to(change { MemberNote.all.count })
     end
 
     it 'Allows note owner to delete notes' do
@@ -98,7 +98,7 @@ RSpec.describe Admin::MemberNotesController do
 
       expect do
         delete :destroy, params: { id: member_note.id }
-      end.to change { MemberNote.count }.by(-1)
+      end.to change(MemberNote, :count).by(-1)
     end
   end
 end
