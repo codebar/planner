@@ -6,8 +6,6 @@ class Admin::WorkshopsController < Admin::ApplicationController
   before_action :set_workshop, only: %i[sponsor destroy_sponsor host destroy_host]
   before_action :set_sponsor, only: %i[sponsor host]
 
-  WORKSHOP_DELETION_TIME_FRAME_SINCE_CREATION = 4.hours
-
   def index
     @chapter = Chapter.find(chapter_id)
     authorize @chapter
@@ -114,7 +112,7 @@ class Admin::WorkshopsController < Admin::ApplicationController
   def destroy
     authorize(@workshop)
 
-    if workshop_has_no_invitees? && workshop_created_within_specific_time_frame?
+    if @workshop.deletable?
       @workshop.destroy
 
       redirect_to admin_root_path, notice: t('admin.workshop.destroy.success')
@@ -258,15 +256,6 @@ class Admin::WorkshopsController < Admin::ApplicationController
     (@workshop.organisers.pluck(:id).map(&:to_s) - organiser_ids).each do |id|
       Member.find(id).revoke(:organiser, @workshop)
     end
-  end
-
-  def workshop_has_no_invitees?
-    @workshop.invitations.blank?
-  end
-
-  def workshop_created_within_specific_time_frame?
-    Time.zone.now.between?(@workshop.created_at,
-                           @workshop.created_at + WORKSHOP_DELETION_TIME_FRAME_SINCE_CREATION)
   end
 
   def physical_workshop_and_no_host?(workshop)
