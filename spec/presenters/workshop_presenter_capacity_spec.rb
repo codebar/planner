@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-RSpec.describe 'WorkshopPresenter capacity checks', type: :model do
+RSpec.describe WorkshopPresenter do
   describe '#event_student_spaces?' do
     let(:workshop) { Fabricate(:workshop, student_count: 2, coach_count: 2) }
-    let(:presenter) { WorkshopPresenter.new(workshop) }
+    let(:presenter) { described_class.new(workshop) }
 
     context 'when workshop is at capacity' do
       before do
@@ -44,7 +44,7 @@ RSpec.describe 'WorkshopPresenter capacity checks', type: :model do
           Fabricate(:workshop_sponsor, workshop: ws, sponsor:, host: true)
         end
       end
-      let(:presenter_zero_spaces) { WorkshopPresenter.new(workshop_with_zero_spaces) }
+      let(:presenter_zero_spaces) { described_class.new(workshop_with_zero_spaces) }
 
       before do
         # Create 1 attending student
@@ -64,7 +64,7 @@ RSpec.describe 'WorkshopPresenter capacity checks', type: :model do
 
   describe '#event_coach_spaces?' do
     let(:workshop) { Fabricate(:workshop, student_count: 2, coach_count: 2) }
-    let(:presenter) { WorkshopPresenter.new(workshop) }
+    let(:presenter) { described_class.new(workshop) }
 
     context 'when workshop is at coach capacity' do
       before do
@@ -103,7 +103,7 @@ RSpec.describe 'WorkshopPresenter capacity checks', type: :model do
           Fabricate(:workshop_sponsor, workshop: ws, sponsor:, host: true)
         end
       end
-      let(:presenter_zero_spaces) { WorkshopPresenter.new(workshop_with_zero_spaces) }
+      let(:presenter_zero_spaces) { described_class.new(workshop_with_zero_spaces) }
 
       before do
         # Create 1 attending coach

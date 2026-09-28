@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe ThreeMonthEmailService, type: :service do
+RSpec.describe ThreeMonthEmailService do
   describe '#send_chaser' do
     subject(:call) { described_class.send_chaser }
 
