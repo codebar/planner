@@ -56,4 +56,29 @@ RSpec.describe Flodesk do
       stub.verify_stubbed_calls
     end
   end
+
+  describe 'when the API call fails' do
+    # The real connection raises on error statuses; mirror that here.
+    let(:conn) do
+      Faraday.new do |b|
+        b.response :raise_error
+        b.response :json
+        b.adapter(:test, stub)
+      end
+    end
+
+    it 'raises a FlodeskError for an error status' do
+      stub.post('/subscribers') { [503, { 'Content-Type' => 'application/json' }, '{"message":"Service unavailable"}'] }
+
+      expect { client.subscribe(email: :email, first_name: :first, last_name: :last, segment_ids: [:id]) }
+        .to raise_error(Flodesk::FlodeskError, /Service unavailable/) { |e| expect(e.status_code).to eq(503) }
+    end
+
+    it 'raises a FlodeskError when the request times out' do
+      stub.delete('/subscribers/email/segments') { raise Faraday::TimeoutError }
+
+      expect { client.unsubscribe(email: :email, segment_ids: [:id]) }
+        .to raise_error(Flodesk::FlodeskError)
+    end
+  end
 end

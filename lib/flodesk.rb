@@ -11,7 +11,7 @@ module Flodesk
 
     attr_accessor :api_endpoint, :debug, :logger
 
-    # We need 3 actions:
+    # We need 2 actions:
     #
     #   1. subscribe   --> params(list_id, email, first_name, last_name)
     #      Documentation:  https://developers.flodesk.com/#tag/subscriber/operation/createOrUpdateSubscriber
@@ -20,10 +20,6 @@ module Flodesk
     #   2. unsubscribe --> params(list_id, email)
     #      Documentation:  https://developers.flodesk.com/#tag/subscriber/operation/removeSubscriberFromSegments
     #      Endpoint:       https://api.flodesk.com/v1/subscribers/{id_or_email}/segments
-    #
-    #   3. subscribed? --> params(list_id, email)
-    #      Documentation:  https://developers.flodesk.com/#tag/subscriber/operation/retrieveSubscriber
-    #      Endpoint:       https://api.flodesk.com/v1/subscribers/{id_or_email}
 
     def initialize(api_key: nil, complete_timeout: nil, open_timeout: nil)
       @api_key = api_key || self.class.api_key || ENV['FLODESK_KEY']
@@ -91,10 +87,10 @@ module Flodesk
         body: response.body
       }
     rescue Faraday::Error => e
-      FlodeskError.new(e.response_body['message'], {
-                         raw_body: e.response_body,
-                         status_code: e.response_status
-                       })
+      # Timeouts and connection failures have no response body.
+      body = e.response_body
+      message = (body['message'] if body.is_a?(Hash)) || e.message
+      raise FlodeskError.new(message, { raw_body: body, status_code: e.response_status })
     end
   end
 
