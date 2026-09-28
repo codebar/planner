@@ -3,6 +3,20 @@ class WorkshopsController < ApplicationController
   before_action :set_workshop, only: %i[show rsvp]
 
   def show
+    # Mirrors the venue/sponsors/organisers fragment keys: those records mutate
+    # without touching workshops.updated_at, so a host/address/sponsor/organiser
+    # change must rotate the etag or anonymous repeat visits get stale 304s.
+    # address lives on the host sponsor for in-person workshops; virtual
+    # workshops have no host.
+    unless logged_in?
+      fresh_when(@workshop,
+                 etag: [@workshop, @workshop.host, @workshop.host&.address,
+                        @workshop.sponsors, @workshop.organisers, I18n.locale, :v1])
+      # fresh_when renders a 304 without halting, and the virtual render below
+      # would raise DoubleRenderError on top of it.
+      return if performed?
+    end
+
     @workshop = WorkshopPresenter.decorate(@workshop)
 
     render 'virtual_workshops/show' if @workshop.virtual?

@@ -19,18 +19,22 @@
       %p.lead
         = t('workshops.virtual.intro', chapter_email: @workshop.chapter.email)
       - if @workshop.description.present?
-        %p.description
-          = sanitize(@workshop.description)
+        - cache [@workshop, I18n.locale, :virtual_workshop_description, :v1] do
+          %p.description
+            = sanitize(@workshop.description)
       = render 'workshops/actions' unless current_user&.banned?
 
-- if @workshop.sponsors.any?
-  .py-4.py-lg-5.section#sponsors
-    .container
-      .row
-        .col
-          %h2.text-center Sponsors
-      = render partial: 'shared/sponsors', object: @workshop.sponsors
+- sponsors = @workshop.sponsors.to_a
+- if sponsors.any?
+  - cache [@workshop, sponsors, I18n.locale, :virtual_workshop_sponsors, :v1] do
+    .py-4.py-lg-5.section#sponsors
+      .container
+        .row
+          .col
+            %h2.text-center Sponsors
+        = render partial: 'shared/sponsors', object: sponsors
 
-.py-4.py-lg-5.section
-  .container
-    = render partial: 'members/organisers_grid', locals: { members: @workshop.organisers, show_info: false }
+- cache [@workshop, @workshop.organisers, I18n.locale, :virtual_workshop_organisers, :v1] do
+  .py-4.py-lg-5.section
+    .container
+      = render partial: 'members/organisers_grid', locals: { members: @workshop.organisers, show_info: false }
