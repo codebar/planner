@@ -27,6 +27,20 @@ RSpec.describe 'canonical request log line' do
     expect(payload).to include(:db_runtime)
   end
 
+  it 'carries the app process rss as rss_mb', if: File.exist?('/proc/self/status') do
+    completed = events.find { |event| event.message.to_s.start_with?('Completed') }
+    expect(completed).to be_present, 'expected a Completed log event for the request'
+
+    expect(completed.payload[:rss_mb]).to be_a(Float).and be_between(1.0, 8192.0)
+  end
+
+  it 'leaves rss_mb nil off Linux', unless: File.exist?('/proc/self/status') do
+    completed = events.find { |event| event.message.to_s.start_with?('Completed') }
+    expect(completed).to be_present, 'expected a Completed log event for the request'
+
+    expect(completed.payload[:rss_mb]).to be_nil
+  end
+
   it 'carries the request id as a named tag' do
     completed = events.find { |event| event.message.to_s.start_with?('Completed') }
 

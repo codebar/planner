@@ -10,7 +10,8 @@ module Services
       return if client.disabled?
 
       client.subscribe(email:, first_name:, last_name:, segment_ids: [@list_id])
-    rescue Flodesk::FlodeskError
+    rescue Flodesk::FlodeskError => e
+      Rollbar.error(e, list_id: @list_id, email:)
       false
     end
     handle_asynchronously :subscribe
@@ -19,18 +20,11 @@ module Services
       return if client.disabled?
 
       client.unsubscribe(email:, segment_ids: [@list_id])
-    rescue Flodesk::FlodeskError
+    rescue Flodesk::FlodeskError => e
+      Rollbar.error(e, list_id: @list_id, email:)
       false
     end
     handle_asynchronously :unsubscribe
-
-    def subscribed?(email)
-      return if client.disabled?
-
-      client.subscribed?(email:, segment_ids: [@list_id])
-    rescue Flodesk::FlodeskError
-      false
-    end
 
     private
 

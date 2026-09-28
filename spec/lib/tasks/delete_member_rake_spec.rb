@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'rake member:delete', type: :task do
+RSpec.describe 'rake member:delete' do
   let!(:member) { Fabricate.create(:member) }
 
   before do

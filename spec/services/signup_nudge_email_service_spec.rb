@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe SignupNudgeEmailService, type: :service do
+RSpec.describe SignupNudgeEmailService do
   describe '#send_nudges' do
     subject(:call) { described_class.send_nudges }
 

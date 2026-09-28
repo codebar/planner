@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'rake reminders:meeting', type: :task do
+RSpec.describe 'rake reminders:meeting' do
   it 'preloads the Rails environment' do
     expect(task.prerequisites).to include 'environment'
   end

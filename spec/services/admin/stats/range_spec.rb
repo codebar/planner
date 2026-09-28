@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Admin::Stats::Range, type: :service do
+RSpec.describe Admin::Stats::Range do
   subject(:resolve) do
     described_class.resolve(preset:, start_month:, end_month:)
   end
