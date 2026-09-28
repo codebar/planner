@@ -2,7 +2,6 @@ class SubscriptionsController < ApplicationController
   before_action :require_access
 
   def index
-    @mailing_list = MailingListForm.new
     @groups = Group.where(chapter: { active: true }).order('chapter.city')
     @member = MemberPresenter.new(current_user)
   end
