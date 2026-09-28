@@ -308,6 +308,16 @@ When planning new features or architectural changes, use the `layered-rails` ski
 - **Historical migrations**: All pre-2026 migrations were removed. New databases are bootstrapped from `db/schema.rb` via `db:prepare`. The 13 migrations from 2026 onwards remain and are audited by strong_migrations.
 - **Seeds**: `db/seeds.rb` creates sample data for development
 
+### Migrations and Heroku preboot
+
+Production runs with [Heroku preboot](https://devcenter.heroku.com/articles/preboot): new web dynos boot before old ones stop, and traffic switches about 3 minutes after the deploy. The release phase (`rake db:prepare`) runs before new dynos boot, so old code serves against the new schema during that window. Migrations must therefore be forward-compatible:
+
+- Expand first, contract later. Add columns without a default, then set the default in a second migration. Backfill in batches.
+- Before `remove_column`, add the column to `ignored_columns` and deploy code that no longer reads or writes it, then remove the column in a separate deploy.
+- Rename columns in two steps: add the new column, sync data, deploy code that uses the new name, then remove the old column.
+- `safety_assured` around a destructive operation means "the old release tolerates this", not "this is fine". It does not make a migration forward-compatible.
+- A migration that cannot be made forward-compatible needs preboot temporarily disabled for its deploy: `heroku features:disable preboot`, deploy, then `heroku features:enable preboot`.
+
 ## Deployment
 
 This app uses Heroku. See `Makefile` for deployment commands (requires appropriate Heroku access):
