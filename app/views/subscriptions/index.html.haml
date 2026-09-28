@@ -11,11 +11,9 @@
           %h3= t('subscriptions.mailing_list.title')
           %p= t('subscriptions.mailing_list.summary')
           - if @member.subscribed_to_newsletter?
-            = simple_form_for @mailing_list, url: mailing_lists_path, method: :delete do |f|
-              = f.button :button, t('subscriptions.mailing_list.unsubscribe'), class: 'btn btn-success btn-lg mb-0'
+            = button_to t('subscriptions.mailing_list.unsubscribe'), mailing_lists_path, method: :delete, class: 'btn btn-success btn-lg mb-0'
           - else
-            = simple_form_for @mailing_list, url: mailing_lists_path do |f|
-              = f.button :button, t('subscriptions.mailing_list.subscribe'), class: 'btn btn-success btn-lg mb-0'
+            = button_to t('subscriptions.mailing_list.subscribe'), mailing_lists_path, method: :post, class: 'btn btn-success btn-lg mb-0'
 
   .row.mb-4
     .col.col.col-lg-8
