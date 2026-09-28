@@ -50,17 +50,23 @@ RSpec.describe Services::MailingList do
     end
   end
 
-  describe '#subscribed?' do
-    it 'checks if a user is already subscribed to the mailing list' do
-      allow(client).to receive(:subscribed?)
-        .with({ email: :email, segment_ids: [:list_id] })
-        .and_return(true)
+  describe 'when Flodesk fails' do
+    let(:error) { Flodesk::FlodeskError.new('Service unavailable', status_code: 503) }
 
-      result = mailing_list.subscribed?(:email)
+    before { allow(Rollbar).to receive(:error) }
 
-      expect(client).to have_received(:subscribed?)
-        .with({ email: :email, segment_ids: [:list_id] })
-      expect(result).to be true
+    it 'reports a failed subscribe with the list and email' do
+      allow(client).to receive(:subscribe).and_raise(error)
+
+      expect { mailing_list.subscribe(:email, :first_name, :last_name) }.not_to raise_error
+      expect(Rollbar).to have_received(:error).with(error, list_id: :list_id, email: :email)
+    end
+
+    it 'reports a failed unsubscribe with the list and email' do
+      allow(client).to receive(:unsubscribe).and_raise(error)
+
+      expect { mailing_list.unsubscribe(:email) }.not_to raise_error
+      expect(Rollbar).to have_received(:error).with(error, list_id: :list_id, email: :email)
     end
   end
 end

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'rake chaser:signup_nudges', type: :task do
+RSpec.describe 'rake chaser:signup_nudges' do
   it 'preloads the Rails environment' do
     expect(task.prerequisites).to include 'environment'
   end
