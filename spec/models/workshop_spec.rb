@@ -317,6 +317,28 @@ RSpec.describe Workshop do
     end
   end
 
+  describe '#deletable?' do
+    # Create the workshop now, so travelling moves the clock away from created_at.
+    before { workshop }
+
+    it 'is deletable just after creation when nobody has been invited' do
+      expect(workshop.deletable?).to be true
+    end
+
+    it 'is deletable until the end of the deletion window' do
+      travel(Workshop::DELETION_WINDOW - 1.minute) { expect(workshop.deletable?).to be true }
+    end
+
+    it 'is not deletable once the deletion window has passed' do
+      travel(Workshop::DELETION_WINDOW + 1.minute) { expect(workshop.deletable?).to be false }
+    end
+
+    it 'is not deletable once someone has been invited' do
+      Fabricate(:workshop_invitation, workshop:)
+      expect(workshop.deletable?).to be false
+    end
+  end
+
   describe '#invitable_yet?' do
     it 'is invitable if invitable set to true, no RSVP open time/date set' do
       workshop = Fabricate.build(:workshop, invitable: true)
