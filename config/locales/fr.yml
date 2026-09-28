@@ -185,12 +185,6 @@ fr:
     not_open_for_rsvp: Il n'est pas encore possible de s'inscrire pour cet évènement.
     virtual: This is a virtual event.
     faq:
-      experience:
-        q: "Me faut-il beaucoup d'expérience pour m'inscrire à un atelier?"
-        a:
-      contribution:
-        q: "Quel type de contributions puis-je faire?"
-        a: "Vos contributions peuvent-être, aussi simple que de corriger un faute, ou quelque chose d'incroyable. Vous pouvez aider à rédiger la documentation, corriger un bug que vous avez trouver, améliorer notre design ou même commencer des tâches encore plus grandes et ajouter de nouvelles fonctionallités. Toutes contributions compte!"
       laptop:
         q: "Dois-je amener un ordinateur portable?"
         a_html: "Oui, vous devriez amener un ordinateur. Si vous n'en avez pas %{link} pourra peut-être aider."

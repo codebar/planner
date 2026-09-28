@@ -178,12 +178,6 @@ es:
     not_open_for_rsvp: "Este evento aún no está abierto para confirmar su asistencia."
     virtual: This is a virtual event.
     faq:
-      experience:
-        q: "¿Qué experiencia necesito tener para unirme al taller?"
-        a:
-      contribution:
-        q: "¿Qué tipo de contribuciones puedo hacer?"
-        a: "Sus contribuciones pueden ser pequeñas, tan simples como arreglar un error tipográfico, a algo increíble. Puede ayudar con la documentación, solucionar un error que ha encontrado, mejorar la copia, ayudar a diseñar o incluso abordar tareas más grandes y ayudar a introducir nuevas características. Cada Poco ayuda!"
       laptop:
         q: "¿Necesito traer una computadora portátil?"
         a_html: "Sí, debe traer una computadora portátil. Si no tiene un %{link}, es posible que podamos ayudarlo."
