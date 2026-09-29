@@ -42,13 +42,13 @@ class Admin::MembersController < Admin::ApplicationController
   end
 
   def update_subscriptions
-    subscription = @member.subscriptions.find_by!(group_id: params[:group])
+    subscription = @member.subscriptions.kept.find_by!(group_id: params[:group])
     group = subscription.group
     SubscriptionMailingListService.unsubscribe(subscription)
     flash[:notice] = t('.unsubscribe', member: @member.full_name,
                                        chapter: group.chapter.city,
                                        group: group.name)
-    subscription.destroy
+    subscription.discard
     MemberActivityRecorder.record(actor: current_user, key: 'subscription.admin_updated',
                                   trackable: group, recipient: @member)
     redirect_back fallback_location: root_path

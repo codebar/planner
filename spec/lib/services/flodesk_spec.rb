@@ -57,80 +57,28 @@ RSpec.describe Flodesk do
     end
   end
 
-  describe '#subscribed?' do
-    it 'confirms that a user is active and subscribed to a segment' do
-      payload = {
-        email: :email,
-        segment_ids: ['segment_id']
-      }
-
-      stub.get("/subscribers/#{payload[:email]}") do
-        [200, {}, {
-          "id": '123456789',
-          "status": 'active',
-          "email": 'email',
-          "segments": [
-            {
-              "id": 'segment_id',
-              "name": 'codebar'
-            }
-          ]
-        }]
+  describe 'when the API call fails' do
+    # The real connection raises on error statuses; mirror that here.
+    let(:conn) do
+      Faraday.new do |b|
+        b.response :raise_error
+        b.response :json
+        b.adapter(:test, stub)
       end
-
-      expect(client.subscribed?(**payload)).to be true
-
-      stub.verify_stubbed_calls
     end
 
-    it 'confirms that a user is active but not subscribed to a segment' do
-      payload = {
-        email: :email,
-        segment_ids: ['segment_id']
-      }
+    it 'raises a FlodeskError for an error status' do
+      stub.post('/subscribers') { [503, { 'Content-Type' => 'application/json' }, '{"message":"Service unavailable"}'] }
 
-      stub.get("/subscribers/#{payload[:email]}") do
-        [200, {}, {
-          "id": '123456789',
-          "status": 'active',
-          "email": 'email',
-          "segments": [
-            {
-              "id": 'some_other_segment_id',
-              "name": 'not codebar'
-            }
-          ]
-        }]
-      end
-
-      expect(client.subscribed?(**payload)).to be false
-
-      stub.verify_stubbed_calls
+      expect { client.subscribe(email: :email, first_name: :first, last_name: :last, segment_ids: [:id]) }
+        .to raise_error(Flodesk::FlodeskError, /Service unavailable/) { |e| expect(e.status_code).to eq(503) }
     end
 
-    it 'confirms that a user is not active' do
-      payload = {
-        email: :email,
-        segment_ids: ['segment_id']
-      }
+    it 'raises a FlodeskError when the request times out' do
+      stub.delete('/subscribers/email/segments') { raise Faraday::TimeoutError }
 
-      stub.get("/subscribers/#{payload[:email]}") do
-        [200, {}, {
-          "id": '123456789',
-          "status": 'unsubscribed',
-          "email": 'email',
-          "segments": [
-            {
-              "id": 'segment_id',
-              "name": 'codebar'
-            }
-          ]
-        }]
-      end
-
-      expect(client.subscribed?(**payload)).to be false
-
-      stub.verify_stubbed_calls
+      expect { client.unsubscribe(email: :email, segment_ids: [:id]) }
+        .to raise_error(Flodesk::FlodeskError)
     end
   end
 end

@@ -67,9 +67,11 @@ RSpec.describe 'Admin managing members' do
       within '#subscriptions > li:first-child' do
         expect do
           accept_confirm { find('.fa-times').click }
-        end.to change { member.subscriptions.count }.by(-1)
+        end.to change { member.subscriptions.kept.count }.by(-1)
       end
 
+      # The row survives as a tombstone so nudge eligibility can see the unsubscribe (#2920).
+      expect(member.subscriptions.count).to eq(2)
       expect(page).to have_text "Successfully unsubscribed #{member.full_name}"
     end
 

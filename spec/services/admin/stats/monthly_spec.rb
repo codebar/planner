@@ -114,6 +114,25 @@ RSpec.describe Admin::Stats::Monthly do
       expect(cell(:sign_ups, 'Total new members', [2026, 5])).to eq(1)
     end
 
+    it 'lands a tombstoned-only member in uncategorised and the total' do
+      member = Fabricate(:member, created_at: Time.zone.local(2026, 5, 14, 12, 0))
+      Fabricate(:discarded_subscription, member:, group: Fabricate(:students))
+
+      expect(cell(:sign_ups, 'Uncategorised', [2026, 5])).to eq(1)
+      expect(cell(:sign_ups, 'Total new members', [2026, 5])).to eq(1)
+      expect(cell(:sign_ups, 'New students', [2026, 5])).to eq(0)
+    end
+
+    it 'counts a member holding both a kept and a tombstoned subscription once in the role row' do
+      member = Fabricate(:member, created_at: Time.zone.local(2026, 6, 3, 12, 0))
+      Fabricate(:discarded_subscription, member:, group: Fabricate(:students))
+      Fabricate(:subscription, member:, group: Fabricate(:students))
+
+      expect(cell(:sign_ups, 'New students', [2026, 6])).to eq(1)
+      expect(cell(:sign_ups, 'Uncategorised', [2026, 6])).to eq(0)
+      expect(cell(:sign_ups, 'Total new members', [2026, 6])).to eq(1)
+    end
+
     it 'counts banned members and members without accepted terms (D8: no status filter)' do
       Fabricate(:banned_member, created_at: Time.zone.local(2026, 5, 2, 10, 0))
       Fabricate(:member_without_toc, created_at: Time.zone.local(2026, 5, 3, 10, 0))

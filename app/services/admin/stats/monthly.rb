@@ -83,18 +83,22 @@ module Admin
           SIGN_UP_LABELS.map { |key, label| row(:sign_ups, label, months, counts[key]) }
         end
 
-        # Left join keeps members with no group subscription in the
-        # uncategorised row; distinct counts keep dual-group members in
-        # both role rows but once in the total.
+        # Manual LEFT JOINs (Group's default_scope turns left_joins(:groups) into an
+        # inner join). Tombstoned-only members land in uncategorised (#2920).
         def grouped_sign_ups(months)
           Member.where(created_at: window(months))
-                .left_joins(:groups)
+                .joins(sign_ups_joins)
                 .group(month_bucket('members.created_at'))
                 .pluck(month_bucket('members.created_at'),
                        Arel.sql('COUNT(DISTINCT members.id)'),
                        Arel.sql("COUNT(DISTINCT CASE WHEN groups.name = 'Students' THEN members.id END)"),
                        Arel.sql("COUNT(DISTINCT CASE WHEN groups.name = 'Coaches' THEN members.id END)"),
                        Arel.sql('COUNT(DISTINCT CASE WHEN groups.name IS NULL THEN members.id END)'))
+        end
+
+        def sign_ups_joins
+          'LEFT JOIN subscriptions ON subscriptions.member_id = members.id AND subscriptions.discarded_at IS NULL ' \
+            'LEFT JOIN groups ON groups.id = subscriptions.group_id'
         end
 
         def workshop_row(months)
@@ -131,8 +135,7 @@ module Admin
           months.first.beginning_of_day..months.last.end_of_month.end_of_day
         end
 
-        # Calendar-month bucket in the app time zone, cast to a
-        # first-of-month date so it matches the months list.
+        # Calendar-month bucket in the app time zone, cast to a first-of-month date.
         def month_bucket(column)
           Arel.sql("DATE_TRUNC('month', #{column} AT TIME ZONE '#{Time.zone.tzinfo.identifier}')::date")
         end

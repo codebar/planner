@@ -22,6 +22,12 @@ RSpec.feature 'Managing subscriptions' do
 
       click_on 'Subscribed'
       expect(page).to have_text("You have unsubscribed from #{group.chapter.city}'s #{group.name} group")
+
+      # The row survives as a tombstone so nudge eligibility can read the past period (#2920).
+      member.reload
+      expect(member.subscriptions.count).to eq(1)
+      expect(member.subscriptions.kept.count).to eq(0)
+      expect(member.subscriptions.first.discarded_at).to be_present
     end
 
     scenario 'groups belonging to inactive chapters are not shown' do

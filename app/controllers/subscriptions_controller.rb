@@ -2,7 +2,6 @@ class SubscriptionsController < ApplicationController
   before_action :require_access
 
   def index
-    @mailing_list = MailingListForm.new
     @groups = Group.where(chapter: { active: true }).order('chapter.city')
     @member = MemberPresenter.new(current_user)
   end
@@ -25,9 +24,9 @@ class SubscriptionsController < ApplicationController
 
   def destroy # rubocop:disable Metrics/MethodLength
     # Don't error if subscription is not found
-    subscription = current_user.subscriptions.find_by(group_id:)
+    subscription = current_user.subscriptions.kept.find_by(group_id:)
     SubscriptionMailingListService.unsubscribe(subscription) if subscription
-    subscription&.destroy
+    subscription&.discard
 
     group = Group.find(group_id)
     if subscription

@@ -182,6 +182,8 @@ GEM
       activerecord (>= 3.0, < 9.0)
       delayed_job (>= 3.0, < 5)
     diff-lcs (1.6.2)
+    discard (2.0.0)
+      activerecord (>= 7.0, < 9.0)
     drb (2.2.3)
     email_validator (2.2.4)
       activemodel
@@ -645,6 +647,7 @@ DEPENDENCIES
   database_cleaner
   delayed_job
   delayed_job_active_record
+  discard (~> 2.0)
   drb
   email_validator
   fabrication
@@ -781,6 +784,7 @@ CHECKSUMS
   delayed_job (4.2.0) sha256=51dc1f68bb9084398317884c2178debd38c13a7eb48d8aa4ff4775465d7713ef
   delayed_job_active_record (4.1.11) sha256=64f34a6d50316dd7a7df1daf7c6e04ad888c0e86938762318f6f52522b7c1ba8
   diff-lcs (1.6.2) sha256=9ae0d2cba7d4df3075fe8cd8602a8604993efc0dfa934cff568969efb1909962
+  discard (2.0.0) sha256=0fc520786b4d7b9b1ea8b2b3dadbb13c3e41d2ce7d297d04869baf1c9e30d2c0
   drb (2.2.3) sha256=0b00d6fdb50995fe4a45dea13663493c841112e4068656854646f418fda13373
   email_validator (2.2.4) sha256=5ab238095bec7aef9389f230e9e0c64c5081cdf91f19d6c5cecee0a93af20604
   erb (6.0.7) sha256=c5ca6dc25b0ef974a44dc8f59fe847577122483b1968a38dec305c60bf91ee92

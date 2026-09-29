@@ -28,6 +28,13 @@ RSpec.describe Group do
       Fabricate(:member, groups: [group], accepted_toc_at: nil)
       expect(group.eligible_members).to be_empty
     end
+
+    it 'excludes members whose subscription is a tombstone' do
+      member = Fabricate(:member, accepted_toc_at: Time.zone.now)
+      Fabricate(:discarded_subscription, member:, group:)
+
+      expect(group.eligible_members).to be_empty
+    end
   end
 
   describe '.members_by_recent_rsvp' do

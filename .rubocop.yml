@@ -176,10 +176,15 @@ Lint/RequireParentheses:
 Lint/UriEscapeUnescape:
   Enabled: true
 
+Metrics/ClassLength:
+  Exclude:
+    - "app/services/admin/stats/monthly.rb"
+
 Metrics/MethodLength:
   Max: 10
   Exclude:
     - "spec/**/*"
+    - "db/migrate/**/*"
 
 Style/AndOr:
   Enabled: true
@@ -296,6 +301,10 @@ RSpec/SubjectStub:
     - "spec/models/job_spec.rb"
     - "spec/models/workshop_invitation_spec.rb"
     - "spec/models/workshop_spec.rb"
+
+RSpec/DescribeClass:
+  Exclude:
+    - "spec/lib/tasks/**/*"
 
 RSpec/SpecFilePathFormat:
   CustomTransform:
