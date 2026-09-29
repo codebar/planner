@@ -105,6 +105,15 @@ RSpec.describe Admin::MemberNotesController do
       patch :update, params: { id: member_note.id, member_note: { note: '' } }
       expect(member_note.reload.note).to eq('Original note')
     end
+
+    it "Doesn't allow member_id to be changed on update" do
+      other_member = Fabricate(:member)
+      login organiser
+
+      patch :update, params: { id: member_note.id, member_note: { note: 'Updated by organiser', member_id: other_member.id } }
+      expect(member_note.reload.member).to eq(member)
+      expect(member_note.reload.note).to eq('Updated by organiser')
+    end
   end
 
   describe 'DELETE #destroy' do

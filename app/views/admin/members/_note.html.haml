@@ -1,13 +1,15 @@
-.modal.fade{ id: "#{note.persisted? ? "edit-note-modal-#{note.id}" : 'note-modal'}", 'aria-labelledby': 'modal-title', 'aria-hidden': 'true', role: 'dialog' }
+- modal_id = note.persisted? ? "edit-note-modal-#{note.id}" : 'note-modal'
+.modal.fade{ id: modal_id, 'aria-labelledby': "#{modal_id}-title", 'aria-hidden': 'true', role: 'dialog' }
   .modal-dialog
     .modal-content
       .modal-header
-        %h5.modal-title#modal-title
+        %h5.modal-title{ id: "#{modal_id}-title" }
           = note.persisted? ? "Update note for #{member.full_name}" : "Add a note for #{member.full_name}"
         %button.btn-close{ type: 'button', 'data-bs-dismiss': 'modal', 'aria-label': 'Close' }
       .modal-body
         = simple_form_for [:admin, note], html: { class: 'form-inline' } do |f|
-          = f.input :note, label: false, input_html: { rows: 3 }, placeholder: 'e.g. very enthusiastic student.'
+          - input_id = note.persisted? ? "member_note_note_#{note.id}" : 'member_note_note'
+          = f.input :note, label: false, input_html: { rows: 3, id: input_id }, placeholder: 'e.g. very enthusiastic student.'
           = f.hidden_field :member_id, value: @member.id
           .text-right
             = f.button :button, 'Save note', class: 'btn btn-primary mb-0'
