@@ -67,8 +67,8 @@ en-AU:
       title: "Chapters"
     events:
       upcoming: "Upcoming Events"
-    donation_platforms:
-      title: "How to support us"
+    support_us_component:
+      title: "Help make coding more accessible"
   mailer:
     workshop_invitation:
       attending:
@@ -531,23 +531,22 @@ en-AU:
         email: Contact email
         link_to_job: Link to job post
         expiry_date: Application closing date
-  donation_platforms:
+  support_us_component:
     title: "Donate"
-    description: "Your support—whether through a one-time gift or ongoing commitment—drives our mission to create a more inclusive tech industry. It enables us to provide continuous learning opportunities and empower individuals from underrepresented groups to grow and thrive in tech."
-    link: "Find out how else to support us"
+    description: "Your support helps create free, inclusive spaces where people can build skills, find community and take their next step in tech."
     donation_form:
-      title: "Use the donation page"
-      text: "Make a lasting impact with codebar by giving a one-time donation or committing to a monthly contribution."
-      image_alt: "codebar logo"
-    github_sponsors:
-      title: "Github Sponsors"
-      text: "Support codebar’s mission directly through GitHub Sponsors and help shape the future of technology with your generous donation."
-      image_alt: "Github Sponsors logo"
-    open_collective:
-      title: "Open Collective"
-      text: "Setup a recurring contribution or make a one-time donation through Open Collective."
-      image_alt: "Open Collective logo"
-    give_as_you_live:
-      title: "Give as you Live"
-      text: "Give as you Live is a platform enabling you to raise funds for your favourite charity with your everyday online shopping."
-      image_alt: "Give as you Live logo"
+      title: "Give"
+      text: "A one-off gift or monthly donation helps codebar continue providing free workshops and opportunities for people who might otherwise struggle to access tech education."
+      link: "Donate to codebar"
+    fundraise:
+      title: "Fundraise"
+      text: "Take on one of our many challenge events (with support every step of the way from our fundraising team) or raise money your own way so that more people can learn, belong and thrive in tech."
+      link: "Start fundraising"
+    corporate:
+      title: "Corporate support"
+      text: "From sponsoring a single workshop, to partnering on a bigger event or sponsoring our podcast. There are so many ways for companies to partner with us to help build a more inclusive tech industry."
+      link: "Partner with us"
+    other:
+      title: "Other ways"
+      text: "Our supporters all play a role in creating change. Whether you’re volunteering, shopping online or giving through your workplace, every contribution helps us reach more people and create more opportunities."
+      link: "Email us to help"
