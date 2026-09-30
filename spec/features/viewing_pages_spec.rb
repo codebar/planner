@@ -15,6 +15,14 @@ RSpec.feature 'A visitor to the website' do
     expect(page).to have_text('Your privacy means a lot to us')
   end
 
+  scenario 'can access and view the corporate support page' do
+    visit corporate_support_path
+
+    expect(page).to have_css('h1', text: 'Corporate partnership')
+    expect(page).to have_css("a[href='#{sponsors_path}']")
+    expect(page).to have_css("a[href='#{donate_path}']")
+  end
+
   scenario 'can access page not found' do
     visit '/does_not_exist'
 

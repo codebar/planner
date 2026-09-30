@@ -203,6 +203,7 @@ Rails.application.routes.draw do
   get 'breach-code-of-conduct' => 'pages#show', id: 'breach-code-of-conduct'
   get 'how-to-support-us' => redirect('/volunteer')
   get 'volunteer' => 'pages#show', id: 'volunteer'
+  get 'corporate-support' => 'pages#show', id: 'corporate-support'
   get 'fundraise' => 'pages#show', id: 'fundraise'
   get 'donate' => 'pages#show', id: 'donate'
   get 'codebar-stories-podcast' => 'pages#show', id: 'codebar-stories-podcast'

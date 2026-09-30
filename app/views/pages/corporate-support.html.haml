@@ -1,0 +1,46 @@
+.py-4.py-lg-5.bg-primary
+  .container
+    .row.align-items-center
+      .col-12.col-lg-6
+        %h1.display-2.text-white.lh-1.mb-4
+          Corporate
+          %br
+          partnership
+        %p.text-white.lead.mb-4
+          = t('pages.how_to_support_us.corporate_support.description')
+        %ul.list-inline.mb-0
+          %li.list-inline-item
+            = mail_to 'hello@codebar.io', t('pages.how_to_support_us.corporate_support.get_in_touch'), subject: "I'd like to work with codebar", class: 'btn btn-lg btn-light text-decoration-none'
+      .col-12.col-md-6
+        = image_tag 'bristol.jpeg', alt: 'A photo of a Bristol workhop happening at Immersive Labs.', class: 'mw-100 rounded'
+
+.py-4.py-lg-5
+  .container
+    .row.mb-5
+      .col-12.col-lg-9
+        %p.lead= t('pages.how_to_support_us.corporate_support.introduction')
+
+    .row
+      .col-12.col-md-6.col-lg-4.mb-4
+        %h2.h4= t('pages.how_to_support_us.corporate_support.host.title')
+        %p= t('pages.how_to_support_us.corporate_support.host.description')
+        %p= link_to t('pages.how_to_support_us.corporate_support.host_a_workshop'), sponsors_path, class: 'btn btn-outline-primary'
+      .col-12.col-md-6.col-lg-4.mb-4
+        %h2.h4= t('pages.how_to_support_us.corporate_support.sponsor.title')
+        %p= t('pages.how_to_support_us.corporate_support.sponsor.description')
+        %p= link_to t('pages.how_to_support_us.corporate_support.sponsor.link'), sponsors_path, class: 'btn btn-outline-primary'
+      .col-12.col-md-6.col-lg-4.mb-4
+        %h2.h4= t('pages.how_to_support_us.corporate_support.donate.title')
+        %p= t('pages.how_to_support_us.corporate_support.donate.description')
+        %p= link_to t('pages.how_to_support_us.corporate_support.donate.link'), donate_path, class: 'btn btn-outline-primary'
+
+.py-4.py-lg-5.bg-light
+  .container
+    .row.mb-5
+      .col
+        %h2.h1.text-center= t('pages.how_to_support_us.corporate_support.impact.title')
+    .row.justify-content-center
+      .col-12.col-lg-9
+        %p.lead.text-center.mb-5= t('pages.how_to_support_us.corporate_support.impact.description')
+        .text-center
+          = link_to t('navigation.impact_report'), 'https://impact-report.codebar.io/', class: 'btn btn-primary btn-lg text-decoration-none', target: '_blank', rel: 'noopener noreferrer'

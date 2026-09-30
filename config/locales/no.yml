@@ -125,6 +125,7 @@
     buy_us_a_coffee: "Buy us a coffee"
     job_board: "Jobbørs"
     codebar_courses: "codebar Courses"
+    impact_report: "Påvirkningsrapport"
 
   dashboard:
     join_workshops_in: "Join our <i>free</i> workshops in"
@@ -480,6 +481,25 @@
           title: Other skills
           description: Your skills could be the missing piece in the codebar puzzle. Having a diverse range of skills, and extra help, in our team is necessary to enrich our community. From fundraising and event coordination to marketing, we always welcome extra help to support our community members.
           link: Take a look at our Volunteer Opportunities here
+      corporate_support:
+        description: Codebar wouldn't be possible without the support of our partners. They provide us with essential resources like space, food, drinks, internet, or financial support for our operational costs.
+        introduction: Whether you want to host a local workshop, invest in a longer-term partnership or get your employees involved, there are lots of ways your organisation can help us.
+        get_in_touch: Get in touch
+        host_a_workshop: Host a workshop
+        host:
+          title: Host a workshop
+          description: Our hosts provide free, inclusive spaces where people can learn coding, connect with others, access support and build the confidence and skills they need to move forward.
+        sponsor:
+          title: Become a longterm partner
+          description: Whether you want to partner with us on one of our big events, sponsor our podcast, encourage your employees to volunteer, or create opportunities for people entering tech, we can build a partnership around your organisation’s goals.
+          link: See our sponsors
+        donate:
+          title: Donate
+          description: It costs £30 a month to run a chapter. A one-off or regular contribution goes straight towards keeping our workshops free for people from groups underrepresented in tech.
+          link: Donate to codebar
+        impact:
+          title: See the impact
+          description: Our annual impact report covers how many people we've taught, what happened to them afterwards, and what your support made possible.
       fundraise:
         title: Fundraise
         description_html: "Join the codebar team with a physical challenge event. Whether you are a runner, swimmer, or cyclist, sign up with our registration form for your desired event and raise vital funds to help keep our events running. If your event does not appear below, feel free to <a href='mailto:%{email}'>drop us an email</a> and we would be happy to coordinate with you."
