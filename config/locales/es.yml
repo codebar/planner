@@ -548,8 +548,24 @@ es:
           link: Take a look at our Volunteer Opportunities here
       fundraise:
         title: Fundraise
-        description_html: "Join the codebar team with a physical challenge event. Whether you are a runner, swimmer, or cyclist, sign up with our registration form for your desired event and raise vital funds to help keep our events running. If your event does not appear below, feel free to <a href='mailto:%{email}'>drop us an email</a> and we would be happy to coordinate with you."
-        image_alt: A Black British woman crosses the finish line at the Hackney Half Marathon in London in a shower of confetti while spectators cheer her on.
+        headline: Take on a challenge for codebar
+        tagline: "Run it. Ride it. Swim it. Walk it. Climb it. Whatever your challenge, you can turn it into support for a more inclusive tech industry."
+        description_html: "Join the codebar team with a physical challenge event. Whether you are a runner, swimmer, or cyclist, drop us an email for your desired event and raise vital funds to help keep our workshops running. If your event does not appear below, please <a href='mailto:%{email}'>drop us an email</a> and we would be happy to coordinate with you."
+        image_alt: Ilona holding her London Marathon medal after running
+        email_us: Email us
+        own_challenge:
+          title: "Got your own challenge?"
+          description_html: 'Running, cycling, swimming or climbing something of your own? We would love to support you, so get in touch and we will help you set up your fundraising page.'
+        why_fundraise:
+          title: 'Why fundraise for codebar?'
+          description_html: 'All of our workshops and events are completely free for everyone who attends. Fundraising with us means more people from underrepresented groups get a safe, practical way into tech, wherever they happen to be.'
+        impact:
+          - heading: "85% of codebar community members say the skills they've learnt have helped them find a job in tech."
+            body: Your fundraising creates real pathways into tech.
+          - heading: 73% of codebar students did not work in tech before they found us.
+            body: "When you fundraise for codebar, you're not just crossing a finish line - you're helping someone else cross theirs."
+          - heading: Over 27,500 people across 36 global locations are now part of the codebar community.
+            body: Every pound you raise helps us reach more people in more places, and keeps our doors open for people who might never have had another route into tech.
     codebar_stories_podcast:
       image_alt: codebar stories banner
       opening: codebar Stories is a new podcast brought to you by codebar, we'll be smashing down the belief that tech isn't for you by sharing real-life stories from members of our community who have transitioned into a new career in tech.
