@@ -38,16 +38,18 @@
               = render EventCardComponent.with_collection(workshops)
 
 - if @recent_sponsors.any?
-  .py-4.py-lg-5.bg-light
-    .container
-      .row
-        .col
-          %h2.text-center Sponsors
-      = render partial: 'shared/sponsors', object: @recent_sponsors
+  - cache [@chapter, @recent_sponsors, I18n.locale, :chapter_sponsors, :v1] do
+    .py-4.py-lg-5.bg-light
+      .container
+        .row
+          .col
+            %h2.text-center Sponsors
+        = render partial: 'shared/sponsors', object: @recent_sponsors
 
 .container.py-4.py-lg-5
   - if @chapter.organisers.any?
-    = render partial: 'members/organisers_grid', locals: { members: @chapter.organisers.shuffle, show_info: false, title: t('chapters.team') }
+    - cache [@chapter, @chapter.organisers, I18n.locale, :chapter_organisers, :v1] do
+      = render partial: 'members/organisers_grid', locals: { members: @chapter.organisers.shuffle, show_info: false, title: t('chapters.team') }
 
   .mt-5
     .alert.alert-primary.mb-0
@@ -57,5 +59,7 @@
   .container
     = render partial: 'shared/support_us_component', locals: { title: t('homepage.support_us_component.title'), with_button: true }
 
+-# Not fragment-cached: the partial registers the Flodesk loader through
+-# content_for(:head), which a cache hit would swallow.
 .container.py-4.py-lg-5
   = render partial: 'shared/newsletter'

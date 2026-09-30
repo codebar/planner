@@ -23,8 +23,22 @@ module Listable
       unscoped.upcoming.load.first
     end
 
+    # Returns the latest past record in a single-row query. Eager-loads what
+    # the event card partial renders so callers (chapter show etag/fragment
+    # keys) read the rendered records without extra queries. Sponsors and
+    # workshop_host both go through workshop_sponsors: eager-loading them
+    # together in one join loses the host, so the host is preloaded instead.
     def most_recent
-      past.includes(:sponsors).load.first
+      # id as the tie-breaker keeps the picked record deterministic when two
+      # past records share a date_and_time.
+      scope = past.reorder(date_and_time: :desc, id: :desc)
+      if reflect_on_association(:workshop_host)
+        scope.eager_load(:sponsors, :organisers).preload(workshop_host: :sponsor).first
+      elsif reflect_on_association(:venue)
+        scope.eager_load(:sponsors, :organisers).includes(:venue).first
+      else
+        scope.eager_load(:sponsors, :organisers).first
+      end
     end
   end
 end

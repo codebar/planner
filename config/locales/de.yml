@@ -194,12 +194,6 @@ de:
     not_open_for_rsvp: Die Anmeldung für diese Veranstaltung ist noch nicht geöffnet.
     virtual: This is a virtual event.
     faq:
-      experience:
-        q: "Wie erfahren sollte ich sein, um am Workshop teilnehmen?"
-        a:
-      contribution:
-        q: "Welche Beiträge kann ich leisten?"
-        a: "Dein Beitrag kann klein sein, zum Beispiel kannst du einen Rechtschreibfehler korrigieren, aber auch riesig. Du kannst bei der Dokumentation helfen, einen Bug den du gefunden hast beheben, mit dem Design helfen oder sogar größere Aufgaben angehen und dabei helfen neue Funktionen einzubauen. Jedes kleine bisschen hilft!"
       laptop:
         q: "Soll ich einen Laptop mitbringen?"
         a_html: "Ja, Du solltest einen Laptop mitbringen. Wenn du keinen besitzt %{link}, da wir möglicherweise in der Lage sind zu helfen."
