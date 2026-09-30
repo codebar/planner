@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe SubscriptionTombstoneBackfill, type: :service do
+RSpec.describe SubscriptionTombstoneBackfill do
   subject(:backfill) { described_class.call(dry_run:) }
 
   let(:dry_run) { false }

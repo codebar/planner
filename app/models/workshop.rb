@@ -10,6 +10,8 @@ class Workshop < ApplicationRecord
 
   resourcify :permissions, role_cname: 'Permission', role_table_name: :permission
 
+  DELETION_WINDOW = 4.hours
+
   has_many :invitations, class_name: 'WorkshopInvitation'
   has_many :workshop_sponsors
   has_many :sponsors, through: :workshop_sponsors
@@ -96,6 +98,12 @@ class Workshop < ApplicationRecord
     raise ArgumentError, 'Person should be a Member' unless person.is_a?(Member)
 
     WaitingList.by_workshop(self).joins(:invitation).where(workshop_invitations: { member_id: person.id }).exists?
+  end
+
+  # A workshop can be deleted within DELETION_WINDOW of being created, as long
+  # as nobody has been invited to it yet.
+  def deletable?
+    invitations.blank? && Time.zone.now.between?(created_at, created_at + DELETION_WINDOW)
   end
 
   def to_s

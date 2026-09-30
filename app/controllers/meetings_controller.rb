@@ -6,7 +6,7 @@ class MeetingsController < ApplicationController
       MeetingInvitation.find_by(token: params[:token], member: current_user)
     end
     @host_address = AddressPresenter.new(@meeting.venue.address)
-    @attendees = @meeting.invitations.where(attending: true)
+    @attendees = @meeting.invitations.where(attending: true).includes(:member)
   end
 
   private

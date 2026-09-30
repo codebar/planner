@@ -12,7 +12,7 @@ module TaskExampleGroup
 end
 
 RSpec.configure do |config|
-  config.define_derived_metadata(file_path: %r{/spec/tasks/}) do |metadata|
+  config.define_derived_metadata(file_path: %r{/spec/lib/tasks/}) do |metadata|
     metadata[:type] = :task
   end
 

@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe NewsletterSubscriptionService, type: :service do
+RSpec.describe NewsletterSubscriptionService do
   subject(:subscribe_members) { described_class.call(newsletter_id:) }
 
   let(:newsletter_id) { 'newsletterid' }
