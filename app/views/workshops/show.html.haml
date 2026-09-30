@@ -17,24 +17,29 @@
       %p.lead
         = t('workshops.lead')
       - if @workshop.description.present?
-        %p
-          = sanitize(@workshop.description)
+        - cache [@workshop, I18n.locale, :workshop_description, :v1] do
+          %p
+            = sanitize(@workshop.description)
       = render 'actions' unless current_user&.banned?
 
-.py-4.py-lg-5.bg-light
-  .container
-    = render partial: 'shared/venue', locals: { venue: @workshop.host, address: @workshop.address}
+- cache [@workshop, @workshop.host, @workshop.address, I18n.locale, :workshop_venue, :v1] do
+  .py-4.py-lg-5.bg-light
+    .container
+      = render partial: 'shared/venue', locals: { venue: @workshop.host, address: @workshop.address}
 
-.container.py-4.py-lg-5#sponsors
-  .row
-    .col
-      %h2.text-center Sponsors
-  = render partial: 'shared/sponsors', object: @workshop.sponsors
+- cache [@workshop, @workshop.sponsors, I18n.locale, :workshop_sponsors, :v1] do
+  .container.py-4.py-lg-5#sponsors
+    .row
+      .col
+        %h2.text-center Sponsors
+    = render partial: 'shared/sponsors', object: @workshop.sponsors
 
-.py-4.py-lg-5.bg-light
-  .container
-    = render partial: 'members/organisers_grid', locals: { members: @workshop.organisers, show_info: false }
+- cache [@workshop, @workshop.organisers, I18n.locale, :workshop_organisers, :v1] do
+  .py-4.py-lg-5.bg-light
+    .container
+      = render partial: 'members/organisers_grid', locals: { members: @workshop.organisers, show_info: false }
 
-.py-4.py-lg-5
-  .container
-    = render partial: 'shared/newsletter'
+- cache [:shared_newsletter, I18n.locale, :v1] do
+  .py-4.py-lg-5
+    .container
+      = render partial: 'shared/newsletter'
