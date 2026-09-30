@@ -43,3 +43,16 @@ Syntax guidelines:
 * `a = b` and not `a=b`.
 * Aim for 1.9 hash syntax - `{ dog: "Akira", cat: "Rocky" }` rather than `{ :dog => "Akira", :pug => "Rocky" }`
 * Follow the conventions you see used in the source already.
+
+## Deploys and preboot
+
+Production runs with [Heroku preboot](https://devcenter.heroku.com/articles/preboot). New web dynos start before the old ones stop, which avoids the brief 503 window of a normal restart deploy, provided the new dynos boot successfully. Traffic switches to the new dynos about 3 minutes after the deploy completes (whether or not they boot cleanly), and the old dynos shut down then.
+
+What this means when you deploy:
+
+* New code starts serving about 3 minutes after the deploy. Wait for the switchover before you verify a fix on production.
+* During the overlap two code versions run side by side, but only one serves traffic. `heroku ps` shows only the new dynos; the still-serving old dynos do not appear in it. Watch `heroku logs --tail` to see the old dynos shut down after the switch.
+* To stop a bad dyno immediately, use `heroku ps:stop`. With preboot, a plain `heroku restart` only fully takes effect after restarts have stopped for about 3 minutes.
+* A migration that cannot run against the old code needs preboot temporarily disabled: `heroku features:disable preboot`, deploy, then `heroku features:enable preboot`. See the migration guidance in `AGENTS.md`.
+
+Only the `web` process type is affected. One-off dynos and scheduled jobs behave as before.
