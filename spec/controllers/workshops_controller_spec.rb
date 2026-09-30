@@ -4,9 +4,57 @@ RSpec.describe WorkshopsController do
   let(:member) { Fabricate(:member) }
   let(:workshop) { Fabricate(:workshop) }
 
-  before { login(member) }
+  describe 'GET #show' do
+    context 'when a visitor (not logged in)' do
+      render_views
+
+      it 'responds with conditional GET headers' do
+        get :show, params: { id: workshop.id }
+
+        expect(response).to have_http_status(:ok)
+        expect(response.headers['etag']).to be_present
+        expect(response.headers['last-modified']).to be_present
+      end
+
+      it 'returns 304 for a conditional repeat request' do
+        get :show, params: { id: workshop.id }
+        etag = response.headers['etag']
+
+        request.headers['HTTP_IF_NONE_MATCH'] = etag
+        get :show, params: { id: workshop.id }
+
+        expect(response).to have_http_status(:not_modified)
+      end
+
+      it 'renders the page again when the workshop has changed' do
+        get :show, params: { id: workshop.id }
+        etag = response.headers['etag']
+
+        workshop.update!(description: '<p>Updated description</p>')
+
+        request.headers['HTTP_IF_NONE_MATCH'] = etag
+        get :show, params: { id: workshop.id }
+
+        expect(response).to have_http_status(:ok)
+        expect(response.body).to include('Updated description')
+      end
+    end
+
+    context 'when logged in' do
+      before { login(member) }
+
+      it 'renders without conditional GET headers' do
+        get :show, params: { id: workshop.id }
+
+        expect(response).to have_http_status(:ok)
+        expect(response.headers['Last-Modified']).to be_nil
+      end
+    end
+  end
 
   describe 'POST #rsvp' do
+    before { login(member) }
+
     context 'when the member already has an invitation for the workshop and role with attending nil' do
       let!(:invitation) do
         Fabricate(:workshop_invitation, workshop:, member:, role: 'Coach', attending: nil)
