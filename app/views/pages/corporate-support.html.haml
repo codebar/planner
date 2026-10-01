@@ -8,9 +8,7 @@
           partnership
         %p.text-white.lead.mb-4
           = t('pages.how_to_support_us.corporate_support.description')
-        %ul.list-inline.mb-0
-          %li.list-inline-item
-            = mail_to 'hello@codebar.io', t('pages.how_to_support_us.corporate_support.get_in_touch'), subject: "I'd like to work with codebar", class: 'btn btn-lg btn-light text-decoration-none'
+        = mail_to 'hello@codebar.io', t('pages.how_to_support_us.corporate_support.get_in_touch'), subject: "I'd like to work with codebar", class: 'btn btn-lg btn-light text-decoration-none'
       .col-12.col-md-6
         = image_tag 'bristol.jpeg', alt: 'A photo of a Bristol workhop happening at Immersive Labs.', class: 'mw-100 rounded'
 
@@ -22,25 +20,89 @@
 
     .row
       .col-12.col-md-6.col-lg-4.mb-4
-        %h2.h4= t('pages.how_to_support_us.corporate_support.host.title')
-        %p= t('pages.how_to_support_us.corporate_support.host.description')
-        %p= link_to t('pages.how_to_support_us.corporate_support.host_a_workshop'), sponsors_path, class: 'btn btn-outline-primary'
+        .card.h-100
+          .card-body.d-flex.flex-column
+            %h2.h5= t('pages.how_to_support_us.corporate_support.host.title')
+            %p= t('pages.how_to_support_us.corporate_support.host.description')
+            %p.mt-auto= mail_to 'hello@codebar.io', t('pages.how_to_support_us.corporate_support.host_a_workshop'), subject: "I'd like to host a workshop", class: 'btn btn-outline-primary'
       .col-12.col-md-6.col-lg-4.mb-4
-        %h2.h4= t('pages.how_to_support_us.corporate_support.sponsor.title')
-        %p= t('pages.how_to_support_us.corporate_support.sponsor.description')
-        %p= link_to t('pages.how_to_support_us.corporate_support.sponsor.link'), sponsors_path, class: 'btn btn-outline-primary'
+        .card.h-100
+          .card-body.d-flex.flex-column
+            %h2.h5= t('pages.how_to_support_us.corporate_support.sponsor.title')
+            %p= t('pages.how_to_support_us.corporate_support.sponsor.description')
+            %p.mt-auto= mail_to 'hello@codebar.io', t('pages.how_to_support_us.corporate_support.sponsor.link'), subject: "I'd like to create a longterm partnership with codebar", class: 'btn btn-outline-primary'
       .col-12.col-md-6.col-lg-4.mb-4
-        %h2.h4= t('pages.how_to_support_us.corporate_support.donate.title')
-        %p= t('pages.how_to_support_us.corporate_support.donate.description')
-        %p= link_to t('pages.how_to_support_us.corporate_support.donate.link'), donate_path, class: 'btn btn-outline-primary'
+        .card.h-100
+          .card-body.d-flex.flex-column
+            %h2.h5= t('pages.how_to_support_us.corporate_support.donate.title')
+            %p= t('pages.how_to_support_us.corporate_support.donate.description')
+            %p.mt-auto= link_to t('pages.how_to_support_us.corporate_support.donate.link'), 'https://codebar.enthuse.com/donate#!/', class: 'btn btn-outline-primary'
 
 .py-4.py-lg-5.bg-light
   .container
-    .row.mb-5
-      .col
-        %h2.h1.text-center= t('pages.how_to_support_us.corporate_support.impact.title')
-    .row.justify-content-center
-      .col-12.col-lg-9
-        %p.lead.text-center.mb-5= t('pages.how_to_support_us.corporate_support.impact.description')
-        .text-center
-          = link_to t('navigation.impact_report'), 'https://impact-report.codebar.io/', class: 'btn btn-primary btn-lg text-decoration-none', target: '_blank', rel: 'noopener noreferrer'
+    %h2.mb-5= t('pages.how_to_support_us.corporate_support.why_partner.title')
+    %ul.list-unstyled.row.mt-4
+      %li.col-12.col-lg-6.mb-4
+        %h5 👥 #{t('pages.how_to_support_us.corporate_support.why_partner.points.support_your_people.title')}
+        %p.mb-0= t('pages.how_to_support_us.corporate_support.why_partner.points.support_your_people.description')
+      %li.col-12.col-lg-6.mb-4
+        %h5 🌈 #{t('pages.how_to_support_us.corporate_support.why_partner.points.inclusion_into_action.title')}
+        %p.mb-0= t('pages.how_to_support_us.corporate_support.why_partner.points.inclusion_into_action.description')
+      %li.col-12.col-lg-6.mb-4
+        %h5 🌱 #{t('pages.how_to_support_us.corporate_support.why_partner.points.future_tech_talent.title')}
+        %p.mb-0= t('pages.how_to_support_us.corporate_support.why_partner.points.future_tech_talent.description')
+      %li.col-12.col-lg-6.mb-4
+        %h5 🎓 #{t('pages.how_to_support_us.corporate_support.why_partner.points.share_your_expertise.title')}
+        %p.mb-0= t('pages.how_to_support_us.corporate_support.why_partner.points.share_your_expertise.description')
+      %li.col-12.col-lg-6.mb-4
+        %h5 🤝 #{t('pages.how_to_support_us.corporate_support.why_partner.points.meaningful_connections.title')}
+        %p.mb-0= t('pages.how_to_support_us.corporate_support.why_partner.points.meaningful_connections.description')
+      %li.col-12.col-lg-6.mb-4
+        %h5 🌍 #{t('pages.how_to_support_us.corporate_support.why_partner.points.csr_esg_goals.title')}
+        %p.mb-0= t('pages.how_to_support_us.corporate_support.why_partner.points.csr_esg_goals.description')
+
+  .container
+    .row.justify-content-center.mt-4
+      .col-12.col-md-8
+        = image_tag 'brighton-group-shot.jpg', alt: 'A group photo from a Brighton workshop', class: 'mw-100'
+
+.py-4.py-lg-5
+  .container
+    %h2.mb-5= t('pages.how_to_support_us.corporate_support.did_you_know.title')
+    %ul.row.mt-4
+      %li.col-12.col-lg-6.mb-4
+        %p.mb-0= t('pages.how_to_support_us.corporate_support.did_you_know.points.community_size.text')
+      %li.col-12.col-lg-6.mb-4
+        %p.mb-0= t('pages.how_to_support_us.corporate_support.did_you_know.points.skills_to_job.text')
+      %li.col-12.col-lg-6.mb-4
+        %p.mb-0= t('pages.how_to_support_us.corporate_support.did_you_know.points.new_to_tech.text')
+      %li.col-12.col-lg-6.mb-4
+        %p.mb-0= t('pages.how_to_support_us.corporate_support.did_you_know.points.industry_partners.text')
+      %li.col-12.col-lg-6.mb-4
+        %p.mb-0= t('pages.how_to_support_us.corporate_support.did_you_know.points.repeat_hosts.text')
+    .text-center
+      = link_to t('pages.how_to_support_us.corporate_support.did_you_know.link'), 'https://impact-report.codebar.io/', class: 'btn btn-pink btn-lg text-decoration-none', target: '_blank', rel: 'noopener noreferrer'
+
+.py-4.py-lg-5.bg-light
+  .container
+    %h2.mb-4= t('pages.how_to_support_us.corporate_support.support_us_your_way.title')
+    %p.lead.mb-5= t('pages.how_to_support_us.corporate_support.support_us_your_way.description')
+    .row
+      .col-12.col-md-6.col-lg-4.mb-4
+        .card.h-100
+          .card-body.d-flex.flex-column
+            %h5= t('pages.how_to_support_us.corporate_support.support_us_your_way.cards.donate.title')
+            %p= t('pages.how_to_support_us.corporate_support.support_us_your_way.cards.donate.description')
+            %p.mt-auto= link_to t('pages.how_to_support_us.corporate_support.support_us_your_way.cards.donate.link'), 'https://codebar.enthuse.com/donate#!/', class: 'btn btn-outline-primary'
+      .col-12.col-md-6.col-lg-4.mb-4
+        .card.h-100
+          .card-body.d-flex.flex-column
+            %h5= t('pages.how_to_support_us.corporate_support.support_us_your_way.cards.challenge_event.title')
+            %p= t('pages.how_to_support_us.corporate_support.support_us_your_way.cards.challenge_event.description')
+            %p.mt-auto= link_to t('pages.how_to_support_us.corporate_support.support_us_your_way.cards.challenge_event.link'), fundraise_path, class: 'btn btn-outline-primary'
+      .col-12.col-md-6.col-lg-4.mb-4
+        .card.h-100
+          .card-body.d-flex.flex-column
+            %h5= t('pages.how_to_support_us.corporate_support.support_us_your_way.cards.volunteer.title')
+            %p= t('pages.how_to_support_us.corporate_support.support_us_your_way.cards.volunteer.description')
+            %p.mt-auto= link_to t('pages.how_to_support_us.corporate_support.support_us_your_way.cards.volunteer.link'), volunteer_path, class: 'btn btn-outline-primary'
