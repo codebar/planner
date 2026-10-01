@@ -10,6 +10,9 @@ class EventsController < ApplicationController
   def upcoming
     latest = latest_model_updated
     fresh_when(latest, etag: latest)
+    # fresh_when renders a 304 without halting; skip the pipeline on top of it
+    # (mirrors workshops#show).
+    return if performed?
 
     @events, @pagy = fetch_upcoming_events
   end
@@ -17,6 +20,7 @@ class EventsController < ApplicationController
   def past
     latest = latest_model_updated
     fresh_when(latest, etag: latest)
+    return if performed?
 
     @past_events, @pagy = fetch_past_events
   end
