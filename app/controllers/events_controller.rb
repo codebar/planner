@@ -175,11 +175,6 @@ class EventsController < ApplicationController
       (hash[row['event_type']] ||= []) << row['id'].to_i
     end
 
-    # :permissions and :sponsorships are not read on the render path: organisers
-    # is a through-permissions association (its join already covers permissions),
-    # sponsors goes through sponsorships, and the chapter-organisers fallback
-    # reads chapter.permissions (kept below). Dropping them shrinks the
-    # cartesian join fan-out per workshop row.
     workshops = Workshop.eager_load(:sponsors, :organisers,
                                     workshop_host: :sponsor,
                                     chapter: { permissions: :members })
