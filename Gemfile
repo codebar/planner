@@ -4,7 +4,6 @@ ruby file: '.ruby-version'
 gem 'rails', '~> 8.1.3' # LOCKED: It is Rails.
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem 'sprockets-rails'
-gem 'amazing_print' # colourful output (suggested by rails_semantic_logger)
 gem 'rails_semantic_logger' # condense log lines: https://github.com/codebar/planner/issues/2339
 gem 'strong_migrations'
 
@@ -100,6 +99,7 @@ group :development do
 end
 
 group :development, :test do
+  gem 'amazing_print' # pretty-prints log payloads for SemanticLogger's colour formatter
   gem 'bundler-audit', require: false
   gem 'fabrication'
   gem 'faker'

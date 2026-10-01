@@ -30,7 +30,7 @@ class EventPresenter < BasePresenter
   end
 
   def organisers
-    @organisers ||= model.organisers.to_a
+    @organisers ||= model.organisers.to_a.sort_by { |organiser| organiser.name.to_s }
   end
 
   def month
@@ -72,11 +72,11 @@ class EventPresenter < BasePresenter
   end
 
   def coach_spaces?
-    venue.present? && (venue.coach_spots > attending_coaches.length)
+    venue.present? && (venue.coach_spots > attending_coaches.count)
   end
 
   def student_spaces?
-    venue.present? && (venue.seats > attending_students.length)
+    venue.present? && (venue.seats > attending_students.count)
   end
 
   def event_coach_spaces?

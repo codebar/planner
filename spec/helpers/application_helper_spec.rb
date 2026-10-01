@@ -63,6 +63,54 @@ RSpec.describe ApplicationHelper do
     end
   end
 
+  describe '#stylesheet_link_tag and #javascript_include_tag' do
+    around do |example|
+      ApplicationHelper::HEAD_ASSET_TAG_CACHE.clear
+      example.run
+      ApplicationHelper::HEAD_ASSET_TAG_CACHE.clear
+    end
+
+    it 'renders distinct tags for sequential stylesheet and javascript calls' do
+      stylesheet = helper.stylesheet_link_tag('application', media: 'all')
+      javascript = helper.javascript_include_tag('application')
+
+      expect(stylesheet).to include('stylesheet')
+      expect(javascript).to include('<script')
+      expect(stylesheet).not_to eq(javascript)
+    end
+
+    it 'returns the memoised tag for a repeat call with identical arguments' do
+      first = helper.stylesheet_link_tag('application', media: 'all')
+
+      expect(helper.stylesheet_link_tag('application', media: 'all')).to eq(first)
+      expect(ApplicationHelper::HEAD_ASSET_TAG_CACHE[[:stylesheet, ['application', { media: 'all' }]]]).to eq(first)
+    end
+
+    it 're-renders on every call in development, bypassing the cache' do
+      ApplicationHelper::HEAD_ASSET_TAG_CACHE[[:stylesheet, ['application']]] = '<cached-tag>'
+      allow(Rails).to receive(:env).and_return(ActiveSupport::StringInquirer.new('development'))
+
+      rendered = helper.stylesheet_link_tag('application')
+
+      expect(rendered).not_to eq('<cached-tag>')
+      expect(ApplicationHelper::HEAD_ASSET_TAG_CACHE[[:stylesheet, ['application']]]).to eq('<cached-tag>')
+    end
+  end
+
+  describe '#social_image_url' do
+    before do
+      allow(helper).to receive(:request).and_return(double(base_url: 'https://codebar.io'))
+    end
+
+    it 'prefixes the base URL to a leading-slash path' do
+      expect(helper.social_image_url('/uploads/avatar.png')).to eq('https://codebar.io/uploads/avatar.png')
+    end
+
+    it 'returns an absolute URL unchanged' do
+      expect(helper.social_image_url('https://example.com/image.jpg')).to eq('https://example.com/image.jpg')
+    end
+  end
+
   describe '#md5_of' do
     it 'returns MD5 hash of lowercase string' do
       expect(helper.md5_of('Test@Example.COM')).to eq(Digest::MD5.hexdigest('test@example.com'))

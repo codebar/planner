@@ -40,6 +40,28 @@ RSpec.shared_examples DateTimeConcerns do |date_time_type|
     end
   end
 
+  describe 'memo invalidation on attribute writers' do
+    it '#date_and_time= invalidates the memo so a re-read returns the reassigned value' do
+      date_time_able = Fabricate(date_time_type, date_and_time: Time.zone.local(2018, 8, 22, 18, 30))
+
+      expect(date_time_able.date_and_time).to eq(Time.zone.local(2018, 8, 22, 18, 30))
+
+      date_time_able.date_and_time = Time.zone.local(2019, 3, 14, 10, 0, 0)
+      expect(date_time_able.date_and_time).to eq(Time.zone.local(2019, 3, 14, 10, 0, 0))
+    end
+
+    it '#ends_at= invalidates the memo so a re-read returns the reassigned value' do
+      date_time_able = Fabricate(date_time_type,
+                                 date_and_time: Time.zone.local(2018, 8, 22, 18, 30),
+                                 ends_at: Time.zone.local(2018, 8, 22, 21, 0, 0))
+
+      expect(date_time_able.ends_at).to eq(Time.zone.local(2018, 8, 22, 21, 0, 0))
+
+      date_time_able.ends_at = Time.zone.local(2019, 3, 14, 13, 30, 0)
+      expect(date_time_able.ends_at).to eq(Time.zone.local(2019, 3, 14, 13, 30, 0))
+    end
+  end
+
   describe '#past?' do
     it 'returns true for object with datetime before today' do
       travel_to Time.zone.local(2010, 12, 31, 23, 59, 42) do

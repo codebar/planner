@@ -244,4 +244,65 @@ RSpec.describe EventsController do
       expect(response).to have_http_status(:ok)
     end
   end
+
+  describe '#load_events' do
+    let(:chapter) { Fabricate(:chapter) }
+    let(:host_sponsor) { Fabricate(:sponsor, name: 'Zulu GmbH') }
+    let(:extra_sponsor) { Fabricate(:sponsor, name: 'Alpha AG') }
+
+    def rows_for(workshops)
+      workshops.map { |w| { 'event_type' => 'Workshop', 'id' => w.id } }
+    end
+
+    it 'loads the host sponsor as workshop_host for every workshop' do
+      workshops = Fabricate.times(6, :workshop_no_sponsor, chapter:)
+      workshops.each do |workshop|
+        Fabricate(:workshop_sponsor, workshop:, sponsor: host_sponsor, host: true)
+        Fabricate(:workshop_sponsor, workshop:, sponsor: extra_sponsor, host: false)
+      end
+
+      loaded = controller.send(:load_events, rows_for(workshops))
+
+      expect(loaded.map { |e| e.workshop_host&.sponsor&.id }).to all(eq(host_sponsor.id))
+    end
+
+    it 'lists all sponsors of a workshop' do
+      workshop = Fabricate(:workshop_no_sponsor, chapter:)
+      Fabricate(:workshop_sponsor, workshop:, sponsor: host_sponsor, host: true)
+      Fabricate(:workshop_sponsor, workshop:, sponsor: extra_sponsor, host: false)
+
+      loaded = controller.send(:load_events, rows_for([workshop]))
+
+      expect(loaded.first.sponsors).to contain_exactly(host_sponsor, extra_sponsor)
+    end
+
+    it 'renders sponsors and organisers in name order' do
+      workshop = Fabricate(:workshop_no_sponsor, chapter:)
+      Fabricate(:workshop_sponsor, workshop:, sponsor: host_sponsor, host: true)
+      Fabricate(:workshop_sponsor, workshop:, sponsor: extra_sponsor, host: false)
+      anton = Fabricate(:member, name: 'Anton')
+      zora = Fabricate(:member, name: 'Zora')
+      anton.add_role :organiser, workshop
+      zora.add_role :organiser, workshop
+
+      loaded = controller.send(:load_events, rows_for([workshop]))
+      presenter = EventPresenter.decorate(loaded.first)
+
+      expect(presenter.sponsors.map(&:name)).to eq(['Alpha AG', 'Zulu GmbH'])
+      expect(presenter.organisers.map(&:name)).to eq(%w[Anton Zora])
+    end
+
+    it 'sorts organisers with blank names without raising' do
+      workshop = Fabricate(:workshop_no_sponsor, chapter:)
+      anton = Fabricate(:member, name: 'Anton')
+      anton.update_column(:name, nil)
+      anton.add_role :organiser, workshop
+      Fabricate(:member, name: 'Zora').add_role :organiser, workshop
+
+      loaded = controller.send(:load_events, rows_for([workshop]))
+      presenter = EventPresenter.decorate(loaded.first)
+
+      expect(presenter.organisers.map(&:name)).to eq([nil, 'Zora'])
+    end
+  end
 end
