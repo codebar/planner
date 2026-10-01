@@ -83,5 +83,31 @@ RSpec.describe DashboardController do
       expect(Rails.cache.read("#{base_key}/2024/1/en")).to be_present
       expect(Rails.cache.read("#{base_key}/#{Time.zone.now.year}/2/en")).to be_present
     end
+
+    it 'coerces non-numeric page values into the integer page for the cache key' do
+      get :wall_of_fame, params: { page: '3/de' }
+
+      base_key = "coaches/wall_of_fame/v1/#{Time.zone.today}"
+      expect(Rails.cache.read("#{base_key}/#{Time.zone.now.year}/3/en")).to be_present
+      # A page string cannot place one locale's body under another locale's key.
+      expect(Rails.cache.read("#{base_key}/#{Time.zone.now.year}/3/de")).to be_nil
+    end
+
+    it 'keeps unrelated query params out of the cached pagination links' do
+      21.times do |i|
+        Fabricate(:attended_coach,
+                  member: Fabricate(:member, name: "Wall#{i}", surname: 'Coach'),
+                  workshop:)
+      end
+
+      get :wall_of_fame, params: { fbclid: 'spam' }
+
+      # The layout's og:url mirrors the request URL and is never cached, so
+      # assert against the cached body itself.
+      base_key = "coaches/wall_of_fame/v1/#{Time.zone.today}"
+      cached = Rails.cache.read("#{base_key}/#{Time.zone.now.year}/1/en")
+      expect(cached).to include('page=2')
+      expect(cached).not_to include('fbclid')
+    end
   end
 end

@@ -31,15 +31,7 @@ class DashboardController < ApplicationController
   def about; end
 
   def wall_of_fame
-    key = "coaches/wall_of_fame/v1/#{Time.zone.today}/#{year_param}/#{params[:page] || 1}/#{I18n.locale}"
-    body = Rails.cache.fetch(key, expires_in: 24.hours) do
-      @coaches_count = WorkshopInvitation.to_coaches.attended.distinct.count(:member_id)
-      coaches = Member.where(id: top_coach_query
-                                 .year(year_param))
-                      .includes(:skills)
-      @pagy, @coaches = pagy(coaches)
-      render_to_string(layout: false)
-    end
+    body = Rails.cache.fetch(wall_of_fame_cache_key, expires_in: 24.hours) { render_wall_of_fame_body }
     # The layout renders fresh so asset URLs and meta tags are never stale;
     # bump v1 when the wall_of_fame view or its partials change.
     # The cached body is fully rendered template output; `.html_safe` prevents
@@ -52,6 +44,25 @@ class DashboardController < ApplicationController
   def participant_guide; end
 
   private
+
+  def wall_of_fame_cache_key
+    # Match pagy's page coercion so the cache key and the rendered page always
+    # agree, and arbitrary strings cannot expand the key space.
+    page = [params[:page].to_s.to_i, 1].max
+    "coaches/wall_of_fame/v1/#{Time.zone.today}/#{year_param}/#{page}/#{I18n.locale}"
+  end
+
+  def render_wall_of_fame_body
+    @coaches_count = WorkshopInvitation.to_coaches.attended.distinct.count(:member_id)
+    coaches = Member.where(id: top_coach_query
+                               .year(year_param))
+                    .includes(:skills)
+    # pagy copies every request param into pagination links; keep only the
+    # year the links must preserve so the filling request's junk params are
+    # not frozen into the cached body.
+    @pagy, @coaches = pagy(coaches, querify: ->(params) { params.keep_if { |k, _| %w[year page].include?(k) } })
+    render_to_string(layout: false)
+  end
 
   def year_param
     params.permit(:year)[:year]&.to_i || Time.zone.today.year
