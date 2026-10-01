@@ -22,7 +22,18 @@ class EventsController < ApplicationController
     fresh_when(latest, etag: latest)
     return if performed?
 
+    key = past_page_cache_key(latest)
+    @past_events_page_html = read_fragment(key)
+    # A hit skips the COUNT, eager loads, decoration and render; the view
+    # outputs the stored page. Deletions do not bump MAX(updated_at), so the
+    # key alone cannot see them — the short expiry bounds that staleness.
+    return if @past_events_page_html
+
     @past_events, @pagy = fetch_past_events
+    # Only mint a key for a page that exists: bogus page numbers would
+    # otherwise flood the cache store with garbage keys, and Solid Cache
+    # evicts oldest entries globally when over max_size.
+    @past_events_cache_key = key if @pagy.nil? || requested_page <= @pagy.pages
   end
 
   def show
@@ -58,6 +69,17 @@ class EventsController < ApplicationController
   end
 
   private
+
+  def requested_page
+    # Clamp to >= 1 (mirrors Pagy's own resolve_page); .to_s also handles array params
+    [1, params[:page].to_s.to_i].max
+  end
+
+  def past_page_cache_key(latest)
+    # .to_f: a raw Time in a cache key is stringified with subsecond precision
+    # that differs between the write and the read (see sitemaps/show.xml.builder).
+    [:events_past_page, I18n.locale, requested_page, latest.to_f]
+  end
 
   def latest_model_updated
     sql = <<~SQL.squish
@@ -119,8 +141,7 @@ class EventsController < ApplicationController
   # for the current page. Only the 20 visible rows come back from the DB.
   def paginated_events(upcoming:)
     now = Time.zone.now
-    # Clamp to >= 1 (mirrors Pagy's own resolve_page); .to_s also handles array params
-    page = [1, params[:page].to_s.to_i].max
+    page = requested_page
     direction = upcoming ? 'ASC' : 'DESC'
     comparator = upcoming ? :gteq : :lt
 
