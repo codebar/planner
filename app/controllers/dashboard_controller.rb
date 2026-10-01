@@ -31,9 +31,12 @@ class DashboardController < ApplicationController
   def about; end
 
   def wall_of_fame
-    body = Rails.cache.fetch(wall_of_fame_cache_key, expires_in: 24.hours) { render_wall_of_fame_body }
+    options = past_year? ? {} : { expires_in: 24.hours }
+    body = Rails.cache.fetch(wall_of_fame_cache_key, **options) { render_wall_of_fame_body }
     # The layout renders fresh so asset URLs and meta tags are never stale;
-    # bump v1 when the wall_of_fame view or its partials change.
+    # bump v2 when the wall_of_fame view or its partials change.
+    # Past-year entries carry no explicit expires_in and age out via Solid
+    # Cache's max_age (2 weeks by default); current-year entries expire daily.
     # The cached body is fully rendered template output; `.html_safe` prevents
     # double-escaping it. `render html:` escapes the string otherwise.
     # rubocop:disable Rails/OutputSafety
@@ -45,11 +48,16 @@ class DashboardController < ApplicationController
 
   private
 
+  def past_year?
+    (2013...Time.zone.today.year).cover?(year_param)
+  end
+
   def wall_of_fame_cache_key
     # Match pagy's page coercion so the cache key and the rendered page always
     # agree, and arbitrary strings cannot expand the key space.
     page = [params[:page].to_s.to_i, 1].max
-    "coaches/wall_of_fame/v1/#{Time.zone.today}/#{year_param}/#{page}/#{I18n.locale}"
+    date_segment = past_year? ? nil : "#{Time.zone.today}/"
+    "coaches/wall_of_fame/v2/#{date_segment}#{year_param}/#{page}/#{I18n.locale}"
   end
 
   def render_wall_of_fame_body
