@@ -291,5 +291,18 @@ RSpec.describe EventsController do
       expect(presenter.sponsors.map(&:name)).to eq(['Alpha AG', 'Zulu GmbH'])
       expect(presenter.organisers.map(&:name)).to eq(%w[Anton Zora])
     end
+
+    it 'sorts organisers with blank names without raising' do
+      workshop = Fabricate(:workshop_no_sponsor, chapter:)
+      anton = Fabricate(:member, name: 'Anton')
+      anton.update_column(:name, nil)
+      anton.add_role :organiser, workshop
+      Fabricate(:member, name: 'Zora').add_role :organiser, workshop
+
+      loaded = controller.send(:load_events, rows_for([workshop]))
+      presenter = EventPresenter.decorate(loaded.first)
+
+      expect(presenter.organisers.map(&:name)).to eq([nil, 'Zora'])
+    end
   end
 end
