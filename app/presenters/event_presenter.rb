@@ -72,11 +72,11 @@ class EventPresenter < BasePresenter
   end
 
   def coach_spaces?
-    venue.present? && (venue.coach_spots > attending_coaches.length)
+    venue.present? && (venue.coach_spots > attending_coaches.count)
   end
 
   def student_spaces?
-    venue.present? && (venue.seats > attending_students.length)
+    venue.present? && (venue.seats > attending_students.count)
   end
 
   def event_coach_spaces?
