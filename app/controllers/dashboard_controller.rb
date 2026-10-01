@@ -33,12 +33,6 @@ class DashboardController < ApplicationController
   def wall_of_fame
     options = past_year? ? {} : { expires_in: 24.hours }
     body = Rails.cache.fetch(wall_of_fame_cache_key, **options) { render_wall_of_fame_body }
-    # The layout renders fresh so asset URLs and meta tags are never stale;
-    # bump v2 when the wall_of_fame view or its partials change.
-    # Past-year entries carry no explicit expires_in and age out via Solid
-    # Cache's max_age (2 weeks by default); current-year entries expire daily.
-    # The cached body is fully rendered template output; `.html_safe` prevents
-    # double-escaping it. `render html:` escapes the string otherwise.
     # rubocop:disable Rails/OutputSafety
     render html: body.html_safe, layout: 'application'
     # rubocop:enable Rails/OutputSafety
