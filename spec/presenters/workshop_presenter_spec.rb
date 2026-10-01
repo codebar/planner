@@ -171,8 +171,8 @@ RSpec.describe WorkshopPresenter do
 
     def double_workshop(attending_coaches:, attending_students:)
       instance_double(Workshop, coach_spaces: 0, student_spaces: 0, host: sponsor,
-                                attending_coaches: instance_double(Array, length: attending_coaches),
-                                attending_students: instance_double(Array, length: attending_students))
+                                attending_coaches: instance_double(Array, count: attending_coaches),
+                                attending_students: instance_double(Array, count: attending_students))
     end
 
     context 'when the host has more available spots' do

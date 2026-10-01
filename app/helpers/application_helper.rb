@@ -1,6 +1,27 @@
 module ApplicationHelper
   include DigestHelper
 
+  # Rendered head asset tags are request-independent: the digest path depends
+  # only on the asset manifest, which is frozen for the process lifetime when
+  # the pipeline does not compile on demand (production sets
+  # config.assets.compile = false). Memoizing the tag HTML skips the
+  # per-request digest lookup and tag construction. Development compiles at
+  # runtime and digests change without a restart, so it renders uncached.
+  # Mutable by design: cross-request memo keyed by helper + arguments.
+  HEAD_ASSET_TAG_CACHE = {} # rubocop:disable Style/MutableConstant
+
+  def stylesheet_link_tag(*args)
+    head_asset_tag([:stylesheet, args]) { super }
+  end
+
+  def javascript_include_tag(*args)
+    head_asset_tag([:javascript, args]) { super }
+  end
+
+  def favicon_link_tag(*args)
+    head_asset_tag([:favicon, args]) { super }
+  end
+
   def humanize_date(datetime, end_time = nil, with_time: false, with_year: false)
     return I18n.l(datetime, format: :humanised_with_year) if with_year
     return humanize_date_with_time(datetime, end_time) if with_time
@@ -22,7 +43,15 @@ module ApplicationHelper
   # Absolute URL for a social preview image, falling back to the codebar social image
   def social_image_url(url = nil)
     image = url.presence || image_url('codebar-social.jpg')
-    image.start_with?('/') ? URI.join(request.base_url, image).to_s : image
+    # URI.join on an absolute path always yields base_url + path, and base_url
+    # carries scheme/host/port only, so plain interpolation is equivalent.
+    image.start_with?('/') ? "#{request.base_url}#{image}" : image
+  end
+
+  def head_asset_tag(key)
+    return yield if Rails.env.development?
+
+    HEAD_ASSET_TAG_CACHE[key] ||= yield
   end
 
   def dot_markdown(text)
