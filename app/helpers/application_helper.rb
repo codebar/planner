@@ -8,7 +8,7 @@ module ApplicationHelper
   # per-request digest lookup and tag construction. Development compiles at
   # runtime and digests change without a restart, so it renders uncached.
   # Mutable by design: cross-request memo keyed by helper + arguments.
-  HEAD_ASSET_TAG_CACHE = {}
+  HEAD_ASSET_TAG_CACHE = {} # rubocop:disable Style/MutableConstant
 
   def stylesheet_link_tag(*args)
     head_asset_tag([:stylesheet, args]) { super }
@@ -47,8 +47,6 @@ module ApplicationHelper
     # carries scheme/host/port only, so plain interpolation is equivalent.
     image.start_with?('/') ? "#{request.base_url}#{image}" : image
   end
-
-  private
 
   def head_asset_tag(key)
     return yield if Rails.env.development?
