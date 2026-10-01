@@ -55,13 +55,18 @@ class EventsController < ApplicationController
 
   private
 
+  # One round trip instead of four MAX queries; same nil-when-empty semantics
+  # as the compact.max form it replaces.
   def latest_model_updated
-    [
-      Workshop.maximum(:updated_at),
-      Meeting.maximum(:updated_at),
-      Event.maximum(:updated_at),
-      Member.maximum(:updated_at)
-    ].compact.max
+    sql = <<~SQL.squish
+      SELECT MAX(latest) FROM (
+        SELECT MAX(updated_at) AS latest FROM "workshops"
+        UNION ALL SELECT MAX(updated_at) FROM "meetings"
+        UNION ALL SELECT MAX(updated_at) FROM "events"
+        UNION ALL SELECT MAX(updated_at) FROM "members"
+      ) t
+    SQL
+    ActiveRecord::Base.connection.select_value(sql)
   end
 
   def find_invitation_and_redirect_to_event(role)
