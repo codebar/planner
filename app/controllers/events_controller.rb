@@ -175,9 +175,13 @@ class EventsController < ApplicationController
       (hash[row['event_type']] ||= []) << row['id'].to_i
     end
 
+    # workshop_host must be preloaded: eager_loading it alongside :sponsors
+    # routes both through the workshop_sponsors table in one join, and the
+    # host scope then binds to the wrong table alias — the host comes back
+    # nil or points at a non-host sponsor. Same pattern as Listable.most_recent.
     workshops = Workshop.eager_load(:sponsors, :organisers,
-                                    workshop_host: :sponsor,
                                     chapter: { permissions: :members })
+                        .preload(workshop_host: :sponsor)
                         .where(id: grouped['Workshop'])
                         .to_a.index_by(&:id)
     meetings = Meeting.eager_load(:venue, :organisers).where(id: grouped['Meeting'])

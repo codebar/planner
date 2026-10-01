@@ -30,7 +30,7 @@ class EventPresenter < BasePresenter
   end
 
   def organisers
-    @organisers ||= model.organisers.to_a
+    @organisers ||= model.organisers.to_a.sort_by(&:name)
   end
 
   def month

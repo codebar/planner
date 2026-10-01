@@ -31,11 +31,12 @@ class WorkshopPresenter < EventPresenter
     @venue ||= model.host
   end
 
+  def sponsors
+    model.sponsors.sort_by(&:name)
+  end
+
   def organisers
-    @organisers ||= begin
-      orgs = model.organisers.to_a
-      orgs.any? ? orgs : chapter_organisers
-    end
+    @organisers ||= (model.organisers.to_a.presence || chapter_organisers).sort_by(&:name)
   end
 
   def attendees_checklist
