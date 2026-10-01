@@ -59,8 +59,6 @@ class EventsController < ApplicationController
 
   private
 
-  # One round trip instead of four MAX queries; same nil-when-empty semantics
-  # as the compact.max form it replaces.
   def latest_model_updated
     sql = <<~SQL.squish
       SELECT MAX(latest) FROM (
