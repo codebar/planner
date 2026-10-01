@@ -10,6 +10,9 @@ class EventsController < ApplicationController
   def upcoming
     latest = latest_model_updated
     fresh_when(latest, etag: latest)
+    # fresh_when renders a 304 without halting; skip the pipeline on top of it
+    # (mirrors workshops#show).
+    return if performed?
 
     @events, @pagy = fetch_upcoming_events
   end
@@ -17,6 +20,7 @@ class EventsController < ApplicationController
   def past
     latest = latest_model_updated
     fresh_when(latest, etag: latest)
+    return if performed?
 
     @past_events, @pagy = fetch_past_events
   end
@@ -56,12 +60,15 @@ class EventsController < ApplicationController
   private
 
   def latest_model_updated
-    [
-      Workshop.maximum(:updated_at),
-      Meeting.maximum(:updated_at),
-      Event.maximum(:updated_at),
-      Member.maximum(:updated_at)
-    ].compact.max
+    sql = <<~SQL.squish
+      SELECT MAX(latest) FROM (
+        SELECT MAX(updated_at) AS latest FROM "workshops"
+        UNION ALL SELECT MAX(updated_at) FROM "meetings"
+        UNION ALL SELECT MAX(updated_at) FROM "events"
+        UNION ALL SELECT MAX(updated_at) FROM "members"
+      ) t
+    SQL
+    ActiveRecord::Base.connection.select_value(sql)
   end
 
   def find_invitation_and_redirect_to_event(role)
@@ -168,14 +175,14 @@ class EventsController < ApplicationController
       (hash[row['event_type']] ||= []) << row['id'].to_i
     end
 
-    workshops = Workshop.eager_load(:sponsors, :organisers, :permissions,
+    workshops = Workshop.eager_load(:sponsors, :organisers,
                                     workshop_host: :sponsor,
                                     chapter: { permissions: :members })
                         .where(id: grouped['Workshop'])
                         .to_a.index_by(&:id)
-    meetings = Meeting.eager_load(:venue, :organisers, :permissions).where(id: grouped['Meeting'])
+    meetings = Meeting.eager_load(:venue, :organisers).where(id: grouped['Meeting'])
                       .to_a.index_by(&:id)
-    events = Event.eager_load(:venue, :sponsors, :sponsorships, :permissions, :organisers)
+    events = Event.eager_load(:venue, :sponsors, :organisers)
                   .where(id: grouped['Event'])
                   .to_a.index_by(&:id)
 
