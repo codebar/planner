@@ -237,4 +237,38 @@ RSpec.describe MemberMailer do
         .to change { MemberEmailDelivery.where(member:, email_type: 'signup_nudge_followup').count }.by(1)
     end
   end
+
+  describe '#coach_milestone' do
+    let(:mail) { described_class.with(member:, milestone: 5).coach_milestone.deliver_now }
+
+    it 'renders the headers' do
+      expect(mail.subject).to eq('You’ve attended 5 codebar workshops — amazing 🎉')
+      expect(mail.to).to eq([member.email])
+      expect(mail.from).to eq(['hello@codebar.io'])
+    end
+
+    it 'renders the body' do
+      expect(mail.body.encoded).to match("Hi #{member.name}")
+      expect(mail.body.encoded).to match('attended 5 codebar workshops as a coach')
+    end
+
+    it 'logs with the milestone in the email_type' do
+      expect { mail }
+        .to change { MemberEmailDelivery.where(member:, email_type: 'coach_milestone_5').count }.by(1)
+    end
+
+    it 'logs each milestone separately' do
+      described_class.with(member:, milestone: 5).coach_milestone.deliver_now
+      described_class.with(member:, milestone: 10).coach_milestone.deliver_now
+
+      expect(MemberEmailDelivery.where(member:).pluck(:email_type)).to contain_exactly('coach_milestone_5', 'coach_milestone_10')
+    end
+
+    it 'logs one row per milestone even if the delivery is performed twice' do
+      expect do
+        described_class.with(member:, milestone: 5).coach_milestone.deliver_now
+        described_class.with(member:, milestone: 5).coach_milestone.deliver_now
+      end.to change(MemberEmailDelivery, :count).by(1)
+    end
+  end
 end
