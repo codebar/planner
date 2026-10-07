@@ -83,8 +83,15 @@ module OmniAuth
           return fail!(:invalid_jwt, StandardError.new('JWT verification failed'))
         end
 
+        # The planner resolves members by email; a token without an email claim
+        # must not fall back to `sub` (the better-auth user id) — keying a member
+        # on it creates an account with no subscriptions or roles.
+        email = payload['email']
+        if email.blank?
+          return fail!(:missing_email, StandardError.new('id_token has no email claim'))
+        end
+
         # Build omniauth.auth hash
-        email = payload['email'] || payload['sub']
         @env['omniauth.auth'] = AuthHash.new({
                                                provider: name,
                                                uid: email,

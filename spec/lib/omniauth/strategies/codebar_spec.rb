@@ -190,13 +190,25 @@ RSpec.describe OmniAuth::Strategies::Codebar do
   describe 'successful callback' do
     let(:rsa_key) { OpenSSL::PKey::RSA.generate(2048) }
     let(:jwk) { JWT::JWK.new(rsa_key, { kid: 'test-key-1' }) }
+    let(:token_payload) do
+      {
+        'sub' => 'better-auth-user-id',
+        'email' => email,
+        'name' => name,
+        'iss' => auth_url,
+        'aud' => 'planner',
+        'iat' => Time.now.to_i,
+        'exp' => Time.now.to_i + 3600
+      }
+    end
     let(:id_token) do
-      JWT.encode(
-        { 'sub' => email, 'name' => name, 'iss' => auth_url, 'aud' => 'planner', 'iat' => Time.now.to_i, 'exp' => Time.now.to_i + 3600 },
-        rsa_key,
-        'RS256',
-        { kid: 'test-key-1' }
-      )
+      JWT.encode(token_payload, rsa_key, 'RS256', { kid: 'test-key-1' })
+    end
+
+    let(:callback_env) do
+      build_env('/auth/codebar/callback',
+                query: 'code=abc&state=some-state',
+                session: { 'omniauth.codebar.state' => 'some-state', 'omniauth.codebar.code_verifier' => 'verifier', 'omniauth.codebar.redirect_uri' => 'http://localhost:3000/auth/codebar/callback' })
     end
 
     before do
@@ -215,19 +227,79 @@ RSpec.describe OmniAuth::Strategies::Codebar do
     end
 
     it 'builds the auth hash with correct data' do
-      env = build_env('/auth/codebar/callback',
-                      query: 'code=abc&state=some-state',
-                      session: { 'omniauth.codebar.state' => 'some-state', 'omniauth.codebar.code_verifier' => 'verifier', 'omniauth.codebar.redirect_uri' => 'http://localhost:3000/auth/codebar/callback' })
-      strategy.call!(env)
+      strategy.call!(callback_env)
 
-      auth_hash = env['omniauth.auth']
+      auth_hash = callback_env['omniauth.auth']
       expect(auth_hash).to be_present
       expect(auth_hash[:provider]).to eq('codebar')
       expect(auth_hash[:uid]).to eq(email)
       expect(auth_hash[:info][:email]).to eq(email)
       expect(auth_hash[:info][:name]).to eq(name)
       expect(auth_hash[:credentials][:token]).to eq('test-access-token')
-      expect(auth_hash[:extra][:raw_info]).to include('sub' => email, 'name' => name)
+      expect(auth_hash[:extra][:raw_info]).to include('sub' => 'better-auth-user-id', 'email' => email, 'name' => name)
+    end
+
+    describe 'with no name claim' do
+      let(:token_payload) do
+        {
+          'sub' => 'better-auth-user-id',
+          'email' => email,
+          'iss' => auth_url,
+          'aud' => 'planner',
+          'iat' => Time.now.to_i,
+          'exp' => Time.now.to_i + 3600
+        }
+      end
+
+      it 'falls back to the email for name' do
+        strategy.call!(callback_env)
+
+        expect(callback_env['omniauth.error.type']).to be_nil
+        expect(callback_env['omniauth.auth'][:info][:name]).to eq(email)
+      end
+    end
+
+    describe 'with no email claim' do
+      let(:token_payload) do
+        {
+          'sub' => 'better-auth-user-id',
+          'name' => name,
+          'iss' => auth_url,
+          'aud' => 'planner',
+          'iat' => Time.now.to_i,
+          'exp' => Time.now.to_i + 3600
+        }
+      end
+
+      it 'fails with missing_email and builds no auth hash' do
+        strategy.call!(callback_env)
+
+        expect(callback_env['omniauth.error.type']).to eq(:missing_email)
+        expect(callback_env['omniauth.auth']).to be_nil
+      end
+
+      it 'returns the failure response from the middleware instead of a nil Rack response' do
+        response = strategy.call(callback_env)
+
+        expect(response).to be_a(Array)
+        expect(response[0]).to eq(302)
+        expect(response[1]['Location']).to start_with('/auth/failure?')
+      end
+
+      it 'also fails when the email claim is present but blank' do
+        stub_request(:post, token_url)
+          .to_return(status: 200, body: {
+            access_token: 'test-access-token',
+            id_token: JWT.encode(token_payload.merge('email' => ''), rsa_key, 'RS256', { kid: 'test-key-1' }),
+            token_type: 'Bearer',
+            expires_in: 900
+          }.to_json, headers: { 'Content-Type' => 'application/json' })
+
+        strategy.call!(callback_env)
+
+        expect(callback_env['omniauth.error.type']).to eq(:missing_email)
+        expect(callback_env['omniauth.auth']).to be_nil
+      end
     end
   end
 
