@@ -3,27 +3,70 @@
     .row.align-items-center
       .col-12.col-md-7
         %h1.display-2.text-white.lh-1.mb-4
-          Fundraise
-          %br
-          for codebar
-        %p.text-white.lead.mb-4
-          Take on a physical challenge with codebar and raise the vital funds needed to keep all of our workshops and events free and accessible.
-      .col-12.col-md-5
+          = t('pages.how_to_support_us.fundraise.headline')
+        %p.text-white.lead
+          = t('pages.how_to_support_us.fundraise.tagline')
+      .col-12.col-md-4
         = image_tag 'how-to-support-us/ilona-london-marathon.jpeg', alt: t('pages.how_to_support_us.fundraise.image_alt'), class: 'mw-100 rounded'
 
 .py-4.py-lg-5
   .container
+    :ruby
+      fundraising_events = [
+        {
+          name: 'Barcelona Marathon',
+          blurb: 'A stunning 26.2 miles, finishing on the beach with the sea as your backdrop. A brilliant first overseas challenge for #TeamCodebar.',
+          date: Date.new(2027, 3, 14)
+        },
+        {
+          name: 'HOKA Hackney Half',
+          blurb: "Our biggest team of the year, taking on the London's most electric half marathon. Bring friends, family and plenty of energy.",
+          date: Date.new(2027, 5, 16)
+        },
+        {
+          name: 'Southampton Running Festival 10k',
+          blurb: 'Beginning and ending in the Southampton Common. It’s the perfect route for a PB featuring woodland, grassland, ponds, wetlands, lakes and parkland in the centre of the city.',
+          date: Date.new(2027, 5, 30)
+        },
+        {
+          name: 'Great South Run 2027',
+          blurb: 'The flat, fast coastal ten miles in Portsmouth. Every place you take helps us keep our workshops free.',
+          date: Date.new(2027, 10, 17)
+        }
+      ]
+
     .row.mb-5
       .col-12.col-lg-9
         %p.lead
           = t('pages.how_to_support_us.fundraise.description_html', email: 'hello@codebar.io')
-    .row
-      .col-12.col-lg-4
-        .ratio.shadow{style: '--bs-aspect-ratio: 150%;'}
-          %iframe{title: 'Great South Run', src: 'https://runforcharity.com/charity-registration/codebar/great-south-run/corporate-events'}
-      .col-12.col-lg-4
-        .ratio.shadow{style: '--bs-aspect-ratio: 150%;'}
-          %iframe{title: 'London Landmarks Half Marathon 2027', src: 'https://runforcharity.com/charity-registration/codebar/london-landmarks-half-marathon-2026/codebar-london-landmarks-half-marathon-second-reg-1'}
-      .col-12.col-lg-4
-        .ratio.shadow{style: '--bs-aspect-ratio: 150%;'}
-          %iframe{title: 'Hackney Half May 2027', src: 'https://runforcharity.com/charity-registration/codebar/hoka-hackney-half/corporate-events'}
+
+    .row{ 'data-test': 'fundraising-events' }
+      - fundraising_events.each do |fundraising_event|
+        .col-12.col-lg-4.mb-4
+          .card.mt-3.mt-lg-0.h-100
+            .card-body.d-flex.flex-column
+              %h4= fundraising_event[:name]
+              %p.card-text= fundraising_event[:blurb]
+              %p.card-text.text-muted.mb-3= l(fundraising_event[:date], format: :date)
+              .mt-auto
+                = link_to t('pages.how_to_support_us.fundraise.email_us'), 'mailto:hello@codebar.io', class: 'btn btn-primary'
+
+    .row.mt-5
+      .col-12
+        %h2= t('pages.how_to_support_us.fundraise.own_challenge.title')
+        %p.lead.mt-3.mb-0
+          = t('pages.how_to_support_us.fundraise.own_challenge.description_html')
+
+    .row.mt-5
+      .col-12
+        %h2= t('pages.how_to_support_us.fundraise.why_fundraise.title')
+        %p.lead.mt-3.mb-0
+          = t('pages.how_to_support_us.fundraise.why_fundraise.description_html')
+
+    .row.mt-5{ 'data-test': 'fundraising-impact' }
+      - t('pages.how_to_support_us.fundraise.impact').each do |impact_stat|
+        .col-12.col-lg-4.mb-4
+          .card.mt-3.mt-lg-0.h-100
+            .card-body.d-flex.flex-column
+              %h5= impact_stat[:heading]
+              %p.card-text.mb-0= impact_stat[:body]
