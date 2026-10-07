@@ -83,12 +83,14 @@ module OmniAuth
           return fail!(:invalid_jwt, StandardError.new('JWT verification failed'))
         end
 
-        # The planner resolves members by email; a token without an email claim
-        # must not fall back to `sub` (the better-auth user id) — keying a member
-        # on it creates an account with no subscriptions or roles.
-        email = payload['email']
+        # The planner resolves members by email, and since better-auth 1.7 the
+        # id_token is sparse: only the UserInfo response carries the email. A
+        # blank one must fail the callback — keying a member on `sub` (the
+        # better-auth user id) creates an account with no subscriptions or roles.
+        userinfo = fetch_userinfo(tokens['access_token'])
+        email = userinfo&.dig('email')
         if email.blank?
-          return fail!(:missing_email, StandardError.new('id_token has no email claim'))
+          return fail!(:missing_email, StandardError.new('UserInfo response has no email'))
         end
 
         # Build omniauth.auth hash
@@ -97,7 +99,7 @@ module OmniAuth
                                                uid: email,
                                                info: {
                                                  email:,
-                                                 name: payload['name'] || email
+                                                 name: userinfo['name'].presence || payload['name'].presence || email
                                                },
                                                credentials: {
                                                  token: tokens['access_token'],
@@ -168,6 +170,28 @@ module OmniAuth
         end
       rescue Net::OpenTimeout, Net::ReadTimeout, SocketError, Errno::ECONNREFUSED, JSON::ParserError => e
         Rails.logger.warn "Codebar auth: exchange failed: #{e.class}: #{e.message}"
+        nil
+      end
+
+      # Fetch the OIDC UserInfo response for an access token. The scope-gated
+      # claims there (`email`, `name`) are the planner's identity source because
+      # the id_token no longer carries them.
+      def fetch_userinfo(access_token)
+        uri = URI("#{options.auth_url}/api/auth/oauth2/userinfo")
+        request = Net::HTTP::Get.new(uri.path)
+        request['Authorization'] = "Bearer #{access_token}"
+        request['User-Agent'] = 'Codebar Planner/1.0'
+
+        response = http_for(uri).request(request)
+
+        if response.code.to_i == 200
+          JSON.parse(response.body)
+        else
+          Rails.logger.warn "Codebar auth: userinfo fetch returned HTTP #{response.code}"
+          nil
+        end
+      rescue Net::OpenTimeout, Net::ReadTimeout, SocketError, Errno::ECONNREFUSED, JSON::ParserError => e
+        Rails.logger.warn "Codebar auth: userinfo fetch failed: #{e.class}: #{e.message}"
         nil
       end
 
