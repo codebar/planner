@@ -83,12 +83,17 @@ module OmniAuth
           return fail!(:invalid_jwt, StandardError.new('JWT verification failed'))
         end
 
-        # The planner resolves members by email, and since better-auth 1.7 the
-        # id_token is sparse: only the UserInfo response carries the email. A
-        # blank one must fail the callback — keying a member on `sub` (the
-        # better-auth user id) creates an account with no subscriptions or roles.
+        # The planner resolves members by email, and since better-auth 1.7 only
+        # the UserInfo response carries it. A failed request fails the callback
+        # as :userinfo_failed (provider trouble) and a blank email as
+        # :missing_email: keying a member on `sub` (the better-auth user id)
+        # creates an account with no subscriptions or roles.
         userinfo = fetch_userinfo(tokens['access_token'])
-        email = userinfo&.dig('email')
+        if userinfo.nil?
+          return fail!(:userinfo_failed, StandardError.new('UserInfo request failed'))
+        end
+
+        email = userinfo['email']
         if email.blank?
           return fail!(:missing_email, StandardError.new('UserInfo response has no email'))
         end
@@ -185,12 +190,17 @@ module OmniAuth
         response = http_for(uri).request(request)
 
         if response.code.to_i == 200
-          JSON.parse(response.body)
+          parsed = JSON.parse(response.body)
+          return parsed if parsed.is_a?(Hash)
+
+          Rails.logger.warn 'Codebar auth: userinfo response is not a JSON object'
         else
           Rails.logger.warn "Codebar auth: userinfo fetch returned HTTP #{response.code}"
-          nil
         end
-      rescue Net::OpenTimeout, Net::ReadTimeout, SocketError, Errno::ECONNREFUSED, JSON::ParserError => e
+        nil
+      rescue Net::OpenTimeout, Net::ReadTimeout, SocketError, Errno::ECONNREFUSED,
+             Errno::ECONNRESET, Errno::EHOSTUNREACH, Errno::ENETUNREACH, Errno::ETIMEDOUT,
+             Errno::EPIPE, EOFError, OpenSSL::SSL::SSLError, Net::HTTPBadResponse, JSON::ParserError => e
         Rails.logger.warn "Codebar auth: userinfo fetch failed: #{e.class}: #{e.message}"
         nil
       end
