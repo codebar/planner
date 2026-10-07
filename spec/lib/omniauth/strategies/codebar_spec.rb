@@ -341,30 +341,66 @@ RSpec.describe OmniAuth::Strategies::Codebar do
     end
 
     describe 'when the userinfo request fails' do
-      it 'fails with missing_email when userinfo returns 500' do
+      it 'fails with userinfo_failed when userinfo returns 500' do
         stub_request(:get, userinfo_url).to_return(status: 500)
 
         strategy.call!(callback_env)
 
-        expect(callback_env['omniauth.error.type']).to eq(:missing_email)
+        expect(callback_env['omniauth.error.type']).to eq(:userinfo_failed)
         expect(callback_env['omniauth.auth']).to be_nil
       end
 
-      it 'fails with missing_email when userinfo times out' do
+      it 'fails with userinfo_failed when userinfo rejects the access token' do
+        stub_request(:get, userinfo_url).to_return(status: 401)
+
+        strategy.call!(callback_env)
+
+        expect(callback_env['omniauth.error.type']).to eq(:userinfo_failed)
+        expect(callback_env['omniauth.auth']).to be_nil
+      end
+
+      it 'fails with userinfo_failed when userinfo times out' do
         stub_request(:get, userinfo_url).to_timeout
 
         strategy.call!(callback_env)
 
-        expect(callback_env['omniauth.error.type']).to eq(:missing_email)
+        expect(callback_env['omniauth.error.type']).to eq(:userinfo_failed)
         expect(callback_env['omniauth.auth']).to be_nil
       end
 
-      it 'fails with missing_email when userinfo returns invalid JSON' do
+      it 'fails with userinfo_failed when the connection resets' do
+        stub_request(:get, userinfo_url).to_raise(Errno::ECONNRESET)
+
+        strategy.call!(callback_env)
+
+        expect(callback_env['omniauth.error.type']).to eq(:userinfo_failed)
+        expect(callback_env['omniauth.auth']).to be_nil
+      end
+
+      it 'fails with userinfo_failed when userinfo returns invalid JSON' do
         stub_request(:get, userinfo_url).to_return(status: 200, body: 'not json')
 
         strategy.call!(callback_env)
 
-        expect(callback_env['omniauth.error.type']).to eq(:missing_email)
+        expect(callback_env['omniauth.error.type']).to eq(:userinfo_failed)
+        expect(callback_env['omniauth.auth']).to be_nil
+      end
+
+      it 'fails with userinfo_failed when the userinfo body is an array instead of an object' do
+        stub_request(:get, userinfo_url).to_return(status: 200, body: '[]', headers: { 'Content-Type' => 'application/json' })
+
+        strategy.call!(callback_env)
+
+        expect(callback_env['omniauth.error.type']).to eq(:userinfo_failed)
+        expect(callback_env['omniauth.auth']).to be_nil
+      end
+
+      it 'fails with userinfo_failed when the userinfo body is null instead of an object' do
+        stub_request(:get, userinfo_url).to_return(status: 200, body: 'null', headers: { 'Content-Type' => 'application/json' })
+
+        strategy.call!(callback_env)
+
+        expect(callback_env['omniauth.error.type']).to eq(:userinfo_failed)
         expect(callback_env['omniauth.auth']).to be_nil
       end
 
