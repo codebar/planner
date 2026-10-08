@@ -65,6 +65,23 @@ namespace :member do
       puts dry_run ? 'DRY RUN — no changes will be made.' : 'APPLYING merges...'
       puts
 
+      # A pair whose original is itself a merge target would strand live data
+      # on a deactivated tombstone once the earlier pair runs: the codebar
+      # auth service and subscriptions would land on an account that no
+      # longer signs in. Refuse and report instead.
+      chain_pairs = []
+      dup_ids = Set.new(targets.map(&:dup_member_id))
+      targets, chain_pairs = targets.partition do |pair|
+        next true unless dup_ids.include?(pair.original_member_id)
+
+        chain_pairs << pair
+        false
+      end
+      chain_pairs.each do |pair|
+        warn "CHAIN: duplicate #{pair.dup_member_id} targets #{pair.original_member_id}, which is itself a merge target this run. Skipping — resolve the chain manually (or in a second ordered run)."
+      end
+      puts if chain_pairs.any?
+
       logger = MergeDuplicateMembers::RunLogger.new(dry_run: dry_run)
 
       targets.each do |pair|
@@ -72,7 +89,10 @@ namespace :member do
           MergeDuplicateMembers::Merger.new(pair, dry_run: dry_run).call
           logger.record_merge(dup_id: pair.dup_member_id, orig_id: pair.original_member_id, strategies: pair.merge_strategies, status: 'success')
         rescue StandardError => e
+          # The log must be written even on failure: pairs already merged are
+          # committed production changes that only the log can account for.
           logger.record_error(e)
+          logger.flush
           raise
         end
         puts
@@ -355,7 +375,7 @@ module MergeDuplicateMembers
     def record_error(error)
       return if @dry_run
 
-      @errors << { message: error.message, backtrace: error.backtrace.first(5) }
+      @errors << { message: error.message, backtrace: error.backtrace.to_a.first(5) }
     end
 
     def flush
@@ -536,8 +556,17 @@ module MergeDuplicateMembers
     end
 
     def merge_feedback_requests(dup, orig)
-      count = FeedbackRequest.where(member_id: dup.id).update_all(member_id: orig.id)
-      puts "  #{dry_run_label}Moved #{count} feedback request(s)" if count.positive?
+      # Like member_email_deliveries, feedback requests carry a UNIQUE
+      # (member_id, workshop_id) index. A colliding row stays on the renamed
+      # duplicate instead of violating the constraint mid-merge.
+      FeedbackRequest.where(member_id: dup.id).find_each do |request|
+        if FeedbackRequest.exists?(member_id: orig.id, workshop_id: request.workshop_id)
+          puts "  #{dry_run_label}Keeping feedback request #{request.id} on the renamed member (original already has one for workshop #{request.workshop_id})"
+        else
+          puts "  #{dry_run_label}Moving feedback request #{request.id}"
+          request.update!(member_id: orig.id)
+        end
+      end
     end
 
     def update_invitation_logs(dup, orig)

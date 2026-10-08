@@ -53,6 +53,39 @@ RSpec.describe 'rake member:duplicates', type: :task do
       expect(dup.reload.email).to eq(old_email)
       expect(dup.auth_services).not_to be_empty
     end
+
+    it 'writes the run log when a pair fails mid-run' do
+      create_duplicate
+      create_original
+      failing_pair = MergeDuplicateMembers::Match.new(-1, -2, 'email')
+
+      # The task constructs its own Detector and Merger internally, so
+      # instance-level stubbing is the only seam into that flow.
+      # rubocop:disable RSpec/AnyInstance
+      allow_any_instance_of(MergeDuplicateMembers::Detector)
+        .to receive(:call).and_return([failing_pair])
+      allow_any_instance_of(MergeDuplicateMembers::Merger).to receive(:call)
+        .and_raise(ActiveRecord::RecordNotFound)
+      # rubocop:enable RSpec/AnyInstance
+
+      # Safe recovery: the task re-raises after logging, so the spec rescues
+      # and asserts on the side effect.
+      ENV['APPLY'] = '1'
+      begin
+        task.execute
+      rescue ActiveRecord::RecordNotFound
+        nil
+      ensure
+        ENV.delete('APPLY')
+      end
+
+      logs = Dir.glob(Rails.root.join('log/merge_duplicate_members/run_*.json').to_s)
+      expect(logs).not_to be_empty
+      content = JSON.parse(File.read(logs.max_by { |f| File.mtime(f) }))
+      expect(content['errors']).not_to be_empty
+
+      File.delete(logs.max_by { |f| File.mtime(f) })
+    end
   end
 
   describe 'Merger member_email_deliveries' do
@@ -143,6 +176,29 @@ RSpec.describe 'rake member:duplicates', type: :task do
       expect(dup.reload.email).to eq("duplicate.#{dup.id}.merged-into.#{orig.id}@codebar.io")
       expect(dup.auth_services).to be_empty
       expect(orig.auth_services.where(provider: 'codebar').pluck(:uid)).to include(old_uid)
+    end
+  end
+
+  describe 'Merger feedback_requests' do
+    it 'moves the duplicate request when the original has none for that workshop' do
+      dup = create_duplicate
+      orig = create_original
+      request = Fabricate(:feedback_request, member: dup)
+
+      merge!(dup, orig)
+
+      expect(request.reload.member_id).to eq(orig.id)
+    end
+
+    it 'keeps the duplicate request on the renamed member when the original already has one for that workshop' do
+      dup = create_duplicate
+      orig = create_original
+      request = Fabricate(:feedback_request, member: dup)
+      Fabricate(:feedback_request, member: orig, workshop: request.workshop, token: 'orig_token')
+
+      merge!(dup, orig)
+
+      expect(request.reload.member_id).to eq(dup.id)
     end
   end
 
