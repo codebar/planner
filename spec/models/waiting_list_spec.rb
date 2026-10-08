@@ -24,6 +24,17 @@ RSpec.describe WaitingList do
 
         expect(described_class.next_spot(workshop, 'Student').invitation).to eq(invitation)
       end
+
+      it 'ignores an older entry for another role' do
+        # A freed seat of one role must not promote an entry of the other role,
+        # even when it is the oldest on the list.
+        coach_invitation = Fabricate(:coach_workshop_invitation, workshop:, member: Fabricate(:coach))
+        described_class.add(coach_invitation)
+
+        expect(described_class.next_spot(workshop, 'Student')).to be_nil
+        expect(coach_invitation.reload.attending).to be_nil
+        expect(described_class.by_workshop(workshop).count).to eq(1)
+      end
     end
   end
 
