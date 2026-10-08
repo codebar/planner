@@ -68,6 +68,12 @@ class WorkshopInvitationController < ApplicationController
         MemberActivityRecorder.record(actor: @invitation.member, key: 'workshop_invitation.rejected',
                                       trackable: @invitation)
 
+        # A cancelling member must drop out of the waiting list. Otherwise their
+        # own entry could be picked as the next spot for the seat they just
+        # freed (or auto-promote them later). Do this before computing the
+        # next spot so the rejection cannot list the member back in.
+        WaitingList.find_by(invitation_id: @invitation.id)&.destroy
+
         next_spot = WaitingList.next_spot(@invitation.workshop, @invitation.role)
 
         if next_spot.present?

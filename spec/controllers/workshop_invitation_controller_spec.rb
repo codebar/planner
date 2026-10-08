@@ -223,6 +223,39 @@ RSpec.describe WorkshopInvitationController do
           .not_to change(WaitingList, :count)
       end
     end
+
+    context 'when the rejecting member is on the waiting list' do
+      # Rejecting cancels the RSVP, so the member must not keep a waiting-list
+      # entry that could later auto-promote them onto a seat they declined.
+      before do
+        invitation.update!(attending: true)
+        WaitingList.add(invitation, auto_rsvp: true)
+      end
+
+      it 'removes their own waiting-list entry' do
+        post :reject, params: { id: invitation.token }
+
+        expect(WaitingList.where(invitation:)).to be_empty
+      end
+
+      it 'does not redeliver the seat to the cancelling member' do
+        post :reject, params: { id: invitation.token }
+
+        expect(invitation.reload.attending).to be false
+      end
+
+      it 'promotes the next student on the waiting list instead' do
+        member_behind = Fabricate(:member)
+        invitation_behind = Fabricate(:workshop_invitation, workshop:, member: member_behind, role: 'Student')
+        WaitingList.add(invitation_behind, auto_rsvp: true)
+
+        post :reject, params: { id: invitation.token }
+
+        expect(invitation_behind.reload.attending).to be true
+        expect(invitation.reload.attending).to be false
+        expect(WaitingList.where(invitation:)).to be_empty
+      end
+    end
   end
 
   describe 'PATCH #update' do
