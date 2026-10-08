@@ -229,6 +229,9 @@ module MergeDuplicateMembers
         .where('NULLIF(TRIM(members.name), \'\') IS NOT NULL')
         .where("members.surname IS NULL OR TRIM(members.surname) = ''")
         .where('originals.created_at < members.created_at')
+        # An empty-string surname must not degenerate the LIKE into a no-op
+        # first-name-only match ('%' || '' || '%').
+        .where("NULLIF(TRIM(originals.surname), '') IS NOT NULL")
         .where("LOWER(auth_services.uid) LIKE '%' || LOWER(originals.surname) || '%'")
         .select("members.id AS dup_member_id, originals.id AS original_member_id, 'first-name+uid-surname' AS strategy")
         .map { |r| Match.new(r.dup_member_id, r.original_member_id, r.strategy) }
@@ -443,8 +446,11 @@ module MergeDuplicateMembers
     end
 
     def merge_subscriptions(dup, orig)
-      dup.subscriptions.find_each do |sub|
-        if orig.subscriptions.exists?(group_id: sub.group_id)
+      # Discarded subscriptions are tombstones (issue #2920): the original may
+      # have unsubscribed long ago, which must not count as "same subscription
+      # exists" — an active duplicate subscription moves, it is not destroyed.
+      dup.subscriptions.kept.find_each do |sub|
+        if orig.subscriptions.kept.exists?(group_id: sub.group_id)
           puts "  #{dry_run_label}Deleting duplicate subscription for group #{sub.group_id}"
           sub.destroy!
         else
@@ -468,7 +474,7 @@ module MergeDuplicateMembers
 
     def merge_invitations(dup, orig)
       dup.invitations.find_each do |inv|
-        if orig.invitations.exists?(event_id: inv.event_id)
+        if orig.invitations.exists?(event_id: inv.event_id, role: inv.role)
           puts "  #{dry_run_label}Deleting duplicate invitation for event #{inv.event_id}"
           inv.destroy!
         else
@@ -509,7 +515,17 @@ module MergeDuplicateMembers
     end
 
     def merge_member_email_deliveries(dup, orig)
-      dup.member_email_deliveries.update_all(member_id: orig.id)
+      # Deliveries are an immutable log with a UNIQUE (member_id, email_type)
+      # index (PR #2832). A colliding type stays on the renamed duplicate —
+      # destroying it would erase history, and moving it would violate the index.
+      dup.member_email_deliveries.find_each do |delivery|
+        if orig.member_email_deliveries.exists?(email_type: delivery.email_type)
+          puts "  #{dry_run_label}Keeping delivery #{delivery.email_type} on the renamed member (type already on original)"
+        else
+          puts "  #{dry_run_label}Moving email delivery #{delivery.email_type}"
+          delivery.update!(member_id: orig.id)
+        end
+      end
     end
 
     def merge_testimonials(dup, orig)
