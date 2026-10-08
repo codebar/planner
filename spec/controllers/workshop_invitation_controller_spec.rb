@@ -163,6 +163,18 @@ RSpec.describe WorkshopInvitationController do
       end
     end
 
+    context 'without a session (the invitation token is the only credential)' do
+      include_context 'with forgery protection enforced'
+
+      before { LoginHelpers::LoginStub.current_user = nil }
+
+      it 'still rejects the RSVP with the token alone' do
+        post :reject, params: { id: invitation.token }
+
+        expect(invitation.reload.attending).to be false
+      end
+    end
+
     context 'when someone is on waiting list' do
       let(:waitlisted_member) { Fabricate(:member) }
       let(:waitlisted_invitation) { Fabricate(:workshop_invitation, workshop:, member: waitlisted_member, role: 'Student') }
