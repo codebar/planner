@@ -48,6 +48,23 @@ RSpec.describe WaitingListsController do
   end
 
   describe 'DELETE #destroy' do
+    # Replaying a stale "Remove from the waiting list" link (double-click, or
+    # a bookmarked URL after the entry was consumed) must not raise.
+    context 'when the waiting-list entry is already gone' do
+      it 'redirects with a notice instead of raising' do
+        delete :destroy, params: { invitation_id: invitation.token }
+
+        expect(response).to redirect_to(invitation_path(invitation))
+        expect(flash[:notice]).to eq('You are not on the waiting list')
+      end
+
+      it 'does not record a "waiting_list.left" activity' do
+        delete :destroy, params: { invitation_id: invitation.token }
+
+        expect(PublicActivity::Activity.where(key: 'waiting_list.left')).to be_empty
+      end
+    end
+
     context 'without a CSRF token (browser did not send session cookie)' do
       include_context 'with forgery protection enforced'
 
