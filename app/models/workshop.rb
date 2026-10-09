@@ -136,6 +136,21 @@ class Workshop < ApplicationRecord
     rsvp_closes_at || super
   end
 
+  # The last moment a member may join or leave the waiting list. The waitlist
+  # goes to security at the RSVP close time, so both lists must be stable
+  # after that point, and member actions freeze 3.5 hours before the start.
+  def waitlist_closes_at
+    [rsvp_closes_at, rsvp_freezes_at].compact.min
+  end
+
+  def waitlist_open?
+    waitlist_closes_at > Time.zone.now
+  end
+
+  def cancellations_open?
+    rsvp_freezes_at > Time.zone.now
+  end
+
   private
 
   def set_opens_at
