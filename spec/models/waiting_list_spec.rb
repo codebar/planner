@@ -34,6 +34,58 @@ RSpec.describe WaitingList do
         expect(described_class.by_workshop(workshop).count).to eq(1)
       end
     end
+
+    describe '#promote_next' do
+      it 'confirms the next auto-RSVP invitation and removes its waitlist entry' do
+        invitation = Fabricate(:workshop_invitation, workshop:)
+        described_class.add(invitation)
+
+        promoted = described_class.promote_next(workshop, 'Student')
+
+        expect(promoted).to eq(invitation)
+        expect(invitation.reload.attending).to be(true)
+        expect(invitation.automated_rsvp).to be(true)
+        expect(described_class.by_workshop(workshop)).to be_empty
+      end
+
+      it 'promotes the FIFO head - the entry with the earliest created_at' do
+        later_invitation = Fabricate(:workshop_invitation, workshop:)
+        earlier_invitation = Fabricate(:workshop_invitation, workshop:)
+        described_class.add(later_invitation)
+        described_class.add(earlier_invitation).update!(created_at: 1.hour.ago)
+
+        promoted = described_class.promote_next(workshop, 'Student')
+
+        expect(promoted).to eq(earlier_invitation)
+        expect(earlier_invitation.reload.attending).to be(true)
+        expect(later_invitation.reload.attending).to be_nil
+        expect(described_class.by_workshop(workshop).map(&:invitation)).to eq([later_invitation])
+      end
+
+      it 'returns nil and promotes nothing for an empty waitlist' do
+        expect(described_class.promote_next(workshop, 'Student')).to be_nil
+      end
+
+      it 'does not promote entries without auto_rsvp' do
+        invitation = Fabricate(:workshop_invitation, workshop:)
+        described_class.add(invitation)
+
+        waiting = described_class.by_workshop(workshop).first
+        waiting.update!(auto_rsvp: false)
+
+        expect(described_class.promote_next(workshop, 'Student')).to be_nil
+        expect(invitation.reload.attending).to be_nil
+      end
+
+      it 'ignores an older entry for another role' do
+        coach_invitation = Fabricate(:coach_workshop_invitation, workshop:, member: Fabricate(:coach))
+        described_class.add(coach_invitation)
+
+        expect(described_class.promote_next(workshop, 'Student')).to be_nil
+        expect(coach_invitation.reload.attending).to be_nil
+        expect(described_class.by_workshop(workshop).count).to eq(1)
+      end
+    end
   end
 
   describe '#add' do
