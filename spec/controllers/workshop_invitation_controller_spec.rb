@@ -163,6 +163,18 @@ RSpec.describe WorkshopInvitationController do
       end
     end
 
+    context 'without a session (the invitation token is the only credential)' do
+      include_context 'with forgery protection enforced'
+
+      before { LoginHelpers::LoginStub.current_user = nil }
+
+      it 'still rejects the RSVP with the token alone' do
+        post :reject, params: { id: invitation.token }
+
+        expect(invitation.reload.attending).to be false
+      end
+    end
+
     context 'when someone is on waiting list' do
       let(:waitlisted_member) { Fabricate(:member) }
       let(:waitlisted_invitation) { Fabricate(:workshop_invitation, workshop:, member: waitlisted_member, role: 'Student') }
@@ -196,6 +208,27 @@ RSpec.describe WorkshopInvitationController do
         expect do
           post :reject, params: { id: invitation.token }
         end.to change { ActionMailer::Base.deliveries.count }.by(1)
+      end
+    end
+
+    context 'when a coach is waitlisted and a student seat frees up' do
+      let(:coach) { Fabricate(:coach) }
+      let(:coach_invitation) { Fabricate(:coach_workshop_invitation, workshop:, member: coach) }
+
+      before do
+        invitation.update!(attending: true)
+        WaitingList.add(coach_invitation, auto_rsvp: true)
+      end
+
+      it 'does not promote the coach invitation' do
+        post :reject, params: { id: invitation.token }
+
+        expect(coach_invitation.reload.attending).to be_nil
+      end
+
+      it 'leaves the waiting list unchanged' do
+        expect { post :reject, params: { id: invitation.token } }
+          .not_to change(WaitingList, :count)
       end
     end
   end
