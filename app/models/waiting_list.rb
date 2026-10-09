@@ -22,10 +22,6 @@ class WaitingList < ApplicationRecord
     by_workshop(workshop).where_role('Coach').where(auto_rsvp: true).map(&:member)
   end
 
-  def self.next_spot(workshop, role)
-    by_workshop(workshop).where_role(role).where(auto_rsvp: true).first
-  end
-
   # Pops the next auto-RSVP waitlist entry and confirms its invitation. The
   # caller sends the attendance email for the promoted invitation.
   def self.promote_next(workshop, role)

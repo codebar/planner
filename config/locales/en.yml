@@ -198,6 +198,8 @@ en:
       updated_details: "Invitation details successfully updated."
       closed: "RSVPs for this workshop are now closed."
       rsvps_closed: "RSVPs have now closed."
+    waiting_list:
+      closed: "You can no longer join or leave the waiting list. RSVPs have now closed for this workshop."
     invalid_format: "The requested format is invalid: %{invalid_format}"
   notifications:
     provider_already_connected: "You are already signed in!"
