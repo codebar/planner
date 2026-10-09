@@ -33,7 +33,7 @@ class WaitingList < ApplicationRecord
       return unless next_spot
 
       invitation = next_spot.invitation
-      next_spot.destroy
+      next_spot.destroy!
       invitation.update!(attending: true, rsvp_time: Time.zone.now, automated_rsvp: true)
       invitation
     end
