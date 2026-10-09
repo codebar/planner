@@ -373,4 +373,46 @@ RSpec.describe Workshop do
       expect(codes.uniq.length).to eq(3)
     end
   end
+
+  describe '#waitlist_closes_at' do
+    it 'is the earlier of the custom close time and the freeze' do
+      workshop = Fabricate.build(:workshop, date_and_time: 4.hours.from_now, rsvp_closes_at: 3.6.hours.from_now)
+
+      expect(workshop.waitlist_closes_at).to eq(workshop.rsvp_freezes_at)
+    end
+
+    it 'is the custom close time when it is before the freeze' do
+      workshop = Fabricate.build(:workshop, date_and_time: 4.hours.from_now, rsvp_closes_at: 20.minutes.from_now)
+
+      expect(workshop.waitlist_closes_at).to eq(workshop.rsvp_closes_at)
+    end
+  end
+
+  describe '#waitlist_open?' do
+    it 'is open more than 3.5 hours before the start with no custom close time' do
+      workshop = Fabricate.build(:workshop, date_and_time: 2.days.from_now, rsvp_closes_at: nil)
+
+      expect(workshop.waitlist_open?).to be(true)
+    end
+
+    it 'is closed at exactly the freeze time' do
+      workshop = Fabricate.build(:workshop, date_and_time: 3.5.hours.from_now, rsvp_closes_at: nil)
+
+      expect(workshop.waitlist_open?).to be(false)
+    end
+  end
+
+  describe '#cancellations_open?' do
+    it 'stays open after a custom close time that falls before the freeze' do
+      workshop = Fabricate.build(:workshop, date_and_time: 4.hours.from_now, rsvp_closes_at: 3.hours.ago)
+
+      expect(workshop.cancellations_open?).to be(true)
+    end
+
+    it 'closes at exactly the freeze time' do
+      workshop = Fabricate.build(:workshop, date_and_time: 3.5.hours.from_now, rsvp_closes_at: 1.hour.from_now)
+
+      expect(workshop.cancellations_open?).to be(false)
+    end
+  end
 end
