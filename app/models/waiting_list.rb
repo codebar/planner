@@ -26,6 +26,23 @@ class WaitingList < ApplicationRecord
     by_workshop(workshop).where_role(role).where(auto_rsvp: true).first
   end
 
+  # Pops the next auto-RSVP waitlist entry and confirms its invitation. The
+  # caller sends the attendance email for the promoted invitation.
+  def self.promote_next(workshop, role)
+    transaction do
+      # SKIP LOCKED lets a concurrent promoter that holds another freed seat
+      # take the next entry instead of racing on this one.
+      next_spot = by_workshop(workshop).where_role(role).where(auto_rsvp: true)
+                                       .order(:created_at).lock('FOR UPDATE SKIP LOCKED').first
+      return unless next_spot
+
+      invitation = next_spot.invitation
+      next_spot.destroy
+      invitation.update!(attending: true, rsvp_time: Time.zone.now, automated_rsvp: true)
+      invitation
+    end
+  end
+
   def self.coaches_for(workshop)
     by_workshop(workshop).where_role('Coach').order(:created_at)
   end
