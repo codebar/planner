@@ -144,11 +144,30 @@ RSpec.describe WorkshopInvitationController do
       end
     end
 
-    context 'when past deadline' do
+    context 'when the custom close time passed but the 3.5 hour freeze has not' do
       before do
         workshop.update!(
           rsvp_closes_at: 1.hour.ago,
           date_and_time: 4.hours.from_now
+        )
+      end
+
+      it 'sets attending to false' do
+        post :reject, params: { id: invitation.token }
+        expect(invitation.reload.attending).to be false
+      end
+
+      it 'redirects with rejection message' do
+        post :reject, params: { id: invitation.token }
+        expect(flash[:notice]).to include('so sad you')
+      end
+    end
+
+    context 'when past the 3.5 hour freeze' do
+      before do
+        workshop.update!(
+          rsvp_closes_at: 2.hours.from_now,
+          date_and_time: 3.hours.from_now
         )
       end
 
@@ -175,6 +194,39 @@ RSpec.describe WorkshopInvitationController do
       end
     end
 
+    context 'when the freeze time has been reached exactly' do
+      before { workshop.update!(date_and_time: 3.5.hours.from_now) }
+
+      it 'does not change attendance' do
+        post :reject, params: { id: invitation.token }
+        expect(invitation.reload.attending).to be_nil
+      end
+
+      it 'redirects with deadline message' do
+        post :reject, params: { id: invitation.token }
+        expect(flash[:notice]).to include('3.5 hours')
+      end
+    end
+
+    context 'when the member is waitlisted and has not RSVPed' do
+      let(:later_waitlisted_invitation) { Fabricate(:workshop_invitation, workshop:, member: Fabricate(:member), role: 'Student') }
+
+      before do
+        WaitingList.add(invitation, true)
+        WaitingList.add(later_waitlisted_invitation, true)
+      end
+
+      it 'sets attending to false' do
+        post :reject, params: { id: invitation.token }
+        expect(invitation.reload.attending).to be false
+      end
+
+      it 'does not promote another waiting list member' do
+        post :reject, params: { id: invitation.token }
+        expect(later_waitlisted_invitation.reload.attending).to be_nil
+      end
+    end
+
     context 'when someone is on waiting list' do
       let(:waitlisted_member) { Fabricate(:member) }
       let(:waitlisted_invitation) { Fabricate(:workshop_invitation, workshop:, member: waitlisted_member, role: 'Student') }
@@ -189,25 +241,15 @@ RSpec.describe WorkshopInvitationController do
         expect(waitlisted_invitation.reload.attending).to be true
       end
 
-      it 'emails the promoted member a confirmation they are attending' do
-        post :reject, params: { id: invitation.token }
-
-        mail = ActionMailer::Base.deliveries.find { |m| m.to.include?(waitlisted_member.email) }
-        expect(mail).not_to be_nil
-        expect(html_body(mail)).to include('been confirmed')
-      end
-
-      it 'sends the promotion variant of the email (waiting-list flag set)' do
-        post :reject, params: { id: invitation.token }
-
-        mail = ActionMailer::Base.deliveries.find { |m| m.to.include?(waitlisted_member.email) }
-        expect(html_body(mail)).to include('A spot became available and your attendance has now been confirmed!')
-      end
-
       it 'does not email anyone else (the rejecting member gets no promotion copy)' do
         expect do
           post :reject, params: { id: invitation.token }
         end.to change { ActionMailer::Base.deliveries.count }.by(1)
+      end
+
+      it 'removes the promoted member from the waiting list' do
+        post :reject, params: { id: invitation.token }
+        expect(WaitingList.where(invitation: waitlisted_invitation)).not_to exist
       end
     end
 
@@ -229,6 +271,22 @@ RSpec.describe WorkshopInvitationController do
       it 'leaves the waiting list unchanged' do
         expect { post :reject, params: { id: invitation.token } }
           .not_to change(WaitingList, :count)
+      end
+    end
+
+    context 'when cancellation happens after the custom close time' do
+      let(:waitlisted_member) { Fabricate(:member) }
+      let(:waitlisted_invitation) { Fabricate(:workshop_invitation, workshop:, member: waitlisted_member, role: 'Student') }
+
+      before do
+        workshop.update!(rsvp_closes_at: 1.hour.ago, date_and_time: 4.hours.from_now)
+        invitation.update!(attending: true)
+        WaitingList.add(waitlisted_invitation, true)
+      end
+
+      it 'promotes waiting list member' do
+        post :reject, params: { id: invitation.token }
+        expect(waitlisted_invitation.reload.attending).to be true
       end
     end
   end

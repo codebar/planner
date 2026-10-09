@@ -87,14 +87,15 @@ RSpec.shared_examples 'invitation route' do
       WaitingList.add(waitinglisted)
       invitation.update_attribute(:attending, true)
       visit invitation_route
-      expect(WaitingList.next_spot(invitation.workshop, invitation.role).present?).to be(true)
+      expect(WaitingList.by_workshop(invitation.workshop).count).to eq(1)
 
       click_on 'I can no longer attend'
 
       expect(page).to have_text(I18n.t('messages.rejected_invitation', name: invitation.member.name))
+      expect(waitinglisted.reload.attending).to be(true)
       expect(waitinglisted.reload.automated_rsvp).to be(true)
       expect(waitinglisted.reload.rsvp_time).not_to be_nil
-      expect(WaitingList.next_spot(invitation.workshop, invitation.role).present?).to be(false)
+      expect(WaitingList.by_workshop(invitation.workshop).count).to be_zero
     end
 
     scenario 'when they are successful by accessing the link directly' do
@@ -151,6 +152,17 @@ RSpec.shared_examples 'invitation route' do
       expect(page).to have_text('You can only change your RSVP status up to 3.5 hours before the workshop')
       expect(page).to have_current_path(invitation_route, ignore_query: true)
     end
+
+    scenario 'when the custom RSVP close time passed but the workshop is more than 3.5 hours away' do
+      invitation.workshop.update!(rsvp_closes_at: 1.hour.ago, date_and_time: Time.zone.now + 4.hours)
+      invitation.update_attribute(:attending, true)
+      visit invitation_route
+
+      expect(page).to have_link 'I can no longer attend'
+
+      click_on 'I can no longer attend'
+      expect(page).to have_text(I18n.t('messages.rejected_invitation', name: invitation.member.name))
+    end
   end
 
   context 'when waiting list' do
@@ -163,6 +175,16 @@ RSpec.shared_examples 'invitation route' do
 
       click_on 'Remove from the waiting list'
       expect(page).to have_text('You have been removed from the waiting list')
+    end
+
+    scenario 'is closed after the RSVP close time' do
+      invitation.workshop.update!(rsvp_closes_at: 1.hour.ago, date_and_time: Time.zone.now + 4.hours)
+      set_no_available_slots
+      visit invitation_route
+
+      expect(page).to have_text('RSVPs have now closed for this workshop')
+      expect(page).to have_no_button 'Join the waiting list'
+      expect(page).to have_no_link 'Remove from the waiting list'
     end
   end
 end

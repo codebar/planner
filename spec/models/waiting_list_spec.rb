@@ -17,24 +17,6 @@ RSpec.describe WaitingList do
       end
     end
 
-    describe '#next_spot' do
-      it 'returns the next spot to be allocated' do
-        invitation = Fabricate(:workshop_invitation, workshop:)
-        described_class.add(invitation)
-
-        expect(described_class.next_spot(workshop, 'Student').invitation).to eq(invitation)
-      end
-
-      it 'ignores an older entry for another role' do
-        coach_invitation = Fabricate(:coach_workshop_invitation, workshop:, member: Fabricate(:coach))
-        described_class.add(coach_invitation)
-
-        expect(described_class.next_spot(workshop, 'Student')).to be_nil
-        expect(coach_invitation.reload.attending).to be_nil
-        expect(described_class.by_workshop(workshop).count).to eq(1)
-      end
-    end
-
     describe '#promote_next' do
       it 'confirms the next auto-RSVP invitation and removes its waitlist entry' do
         invitation = Fabricate(:workshop_invitation, workshop:)
