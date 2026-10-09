@@ -170,6 +170,27 @@ RSpec.describe WorkshopInvitationController do
         expect(waitlisted_invitation.reload.attending).to be true
       end
     end
+
+    context 'when a coach is waitlisted and a student seat frees up' do
+      let(:coach) { Fabricate(:coach) }
+      let(:coach_invitation) { Fabricate(:coach_workshop_invitation, workshop:, member: coach) }
+
+      before do
+        invitation.update!(attending: true)
+        WaitingList.add(coach_invitation, auto_rsvp: true)
+      end
+
+      it 'does not promote the coach invitation' do
+        post :reject, params: { id: invitation.token }
+
+        expect(coach_invitation.reload.attending).to be_nil
+      end
+
+      it 'leaves the waiting list unchanged' do
+        expect { post :reject, params: { id: invitation.token } }
+          .not_to change(WaitingList, :count)
+      end
+    end
   end
 
   describe 'PATCH #update' do
