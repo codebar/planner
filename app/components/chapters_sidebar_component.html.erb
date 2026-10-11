@@ -1,4 +1,4 @@
-<% cache "chapters-sidebar" do %>
+<% cache ['chapters-sidebar', title, I18n.locale, :v2], skip_digest: true, expires_in: 10.minutes do %>
   <% if title %>
     <h3><%= title %></h3>
   <% end %>
