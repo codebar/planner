@@ -26,7 +26,13 @@ class WaitingListsController < ApplicationController
   end
 
   def destroy
-    WaitingList.find_by(invitation_id: @invitation.id).destroy
+    entry = WaitingList.find_by(invitation_id: @invitation.id)
+    unless entry
+      return redirect_to(invitation_path(@invitation),
+                         notice: 'You are not on the waiting list')
+    end
+
+    entry.destroy
     MemberActivityRecorder.record(actor: @invitation.member, key: 'waiting_list.left',
                                   trackable: @invitation)
 
