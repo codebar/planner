@@ -9,7 +9,7 @@ class WorkshopInvitationController < ApplicationController
   # CSRF is redundant and fails when browsers withhold the session cookie
   # (e.g. Safari/WebKit ITP on cross-site navigation). Same rationale as
   # FeedbackController#submit (PR #2641, Rollbar #535).
-  skip_forgery_protection only: %i[update accept]
+  skip_forgery_protection only: %i[update accept reject]
 
   def show
     @announcements = @invitation.member.announcements.active
@@ -67,6 +67,8 @@ class WorkshopInvitationController < ApplicationController
         @invitation.update!(attending: false)
         MemberActivityRecorder.record(actor: @invitation.member, key: 'workshop_invitation.rejected',
                                       trackable: @invitation)
+
+        WaitingList.find_by(invitation_id: @invitation.id)&.destroy
 
         next_spot = WaitingList.next_spot(@invitation.workshop, @invitation.role)
 

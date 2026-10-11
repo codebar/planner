@@ -8,6 +8,13 @@ RSpec.describe WorkshopInvitationController do
 
   before { login(member) }
 
+  # The invitation mailer sends multipart/mixed > multipart/alternative > text/html;
+  # the root body is empty, so read the nested html part.
+  def html_body(mail)
+    parts = mail.parts.flat_map { |part| part.multipart? ? part.parts : [part] }
+    parts.find { |part| part.content_type.match?('text/html') }&.body&.decoded
+  end
+
   describe 'GET #show' do
     it 'returns http success' do
       get :show, params: { id: invitation.token }
@@ -156,6 +163,18 @@ RSpec.describe WorkshopInvitationController do
       end
     end
 
+    context 'without a session (the invitation token is the only credential)' do
+      include_context 'with forgery protection enforced'
+
+      before { LoginHelpers::LoginStub.current_user = nil }
+
+      it 'still rejects the RSVP with the token alone' do
+        post :reject, params: { id: invitation.token }
+
+        expect(invitation.reload.attending).to be false
+      end
+    end
+
     context 'when someone is on waiting list' do
       let(:waitlisted_member) { Fabricate(:member) }
       let(:waitlisted_invitation) { Fabricate(:workshop_invitation, workshop:, member: waitlisted_member, role: 'Student') }
@@ -168,6 +187,79 @@ RSpec.describe WorkshopInvitationController do
       it 'promotes waiting list member' do
         post :reject, params: { id: invitation.token }
         expect(waitlisted_invitation.reload.attending).to be true
+      end
+
+      it 'emails the promoted member a confirmation they are attending' do
+        post :reject, params: { id: invitation.token }
+
+        mail = ActionMailer::Base.deliveries.find { |m| m.to.include?(waitlisted_member.email) }
+        expect(mail).not_to be_nil
+        expect(html_body(mail)).to include('been confirmed')
+      end
+
+      it 'sends the promotion variant of the email (waiting-list flag set)' do
+        post :reject, params: { id: invitation.token }
+
+        mail = ActionMailer::Base.deliveries.find { |m| m.to.include?(waitlisted_member.email) }
+        expect(html_body(mail)).to include('A spot became available and your attendance has now been confirmed!')
+      end
+
+      it 'does not email anyone else (the rejecting member gets no promotion copy)' do
+        expect do
+          post :reject, params: { id: invitation.token }
+        end.to change { ActionMailer::Base.deliveries.count }.by(1)
+      end
+    end
+
+    context 'when a coach is waitlisted and a student seat frees up' do
+      let(:coach) { Fabricate(:coach) }
+      let(:coach_invitation) { Fabricate(:coach_workshop_invitation, workshop:, member: coach) }
+
+      before do
+        invitation.update!(attending: true)
+        WaitingList.add(coach_invitation, auto_rsvp: true)
+      end
+
+      it 'does not promote the coach invitation' do
+        post :reject, params: { id: invitation.token }
+
+        expect(coach_invitation.reload.attending).to be_nil
+      end
+
+      it 'leaves the waiting list unchanged' do
+        expect { post :reject, params: { id: invitation.token } }
+          .not_to change(WaitingList, :count)
+      end
+    end
+
+    context 'when the rejecting member is on the waiting list' do
+      before do
+        invitation.update!(attending: true)
+        WaitingList.add(invitation, auto_rsvp: true)
+      end
+
+      it 'removes their own waiting-list entry' do
+        post :reject, params: { id: invitation.token }
+
+        expect(WaitingList.where(invitation:)).to be_empty
+      end
+
+      it 'does not redeliver the seat to the cancelling member' do
+        post :reject, params: { id: invitation.token }
+
+        expect(invitation.reload.attending).to be false
+      end
+
+      it 'promotes the next student on the waiting list instead' do
+        member_behind = Fabricate(:member)
+        invitation_behind = Fabricate(:workshop_invitation, workshop:, member: member_behind, role: 'Student')
+        WaitingList.add(invitation_behind, auto_rsvp: true)
+
+        post :reject, params: { id: invitation.token }
+
+        expect(invitation_behind.reload.attending).to be true
+        expect(invitation.reload.attending).to be false
+        expect(WaitingList.where(invitation:)).to be_empty
       end
     end
   end
