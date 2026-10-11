@@ -68,6 +68,8 @@ class WorkshopInvitationController < ApplicationController
         MemberActivityRecorder.record(actor: @invitation.member, key: 'workshop_invitation.rejected',
                                       trackable: @invitation)
 
+        WaitingList.find_by(invitation_id: @invitation.id)&.destroy
+
         next_spot = WaitingList.next_spot(@invitation.workshop, @invitation.role)
 
         if next_spot.present?
