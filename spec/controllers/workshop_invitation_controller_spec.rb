@@ -8,13 +8,6 @@ RSpec.describe WorkshopInvitationController do
 
   before { login(member) }
 
-  # The invitation mailer sends multipart/mixed > multipart/alternative > text/html;
-  # the root body is empty, so read the nested html part.
-  def html_body(mail)
-    parts = mail.parts.flat_map { |part| part.multipart? ? part.parts : [part] }
-    parts.find { |part| part.content_type.match?('text/html') }&.body&.decoded
-  end
-
   describe 'GET #show' do
     it 'returns http success' do
       get :show, params: { id: invitation.token }
@@ -192,16 +185,16 @@ RSpec.describe WorkshopInvitationController do
       it 'emails the promoted member a confirmation they are attending' do
         post :reject, params: { id: invitation.token }
 
-        mail = ActionMailer::Base.deliveries.find { |m| m.to.include?(waitlisted_member.email) }
+        mail = delivered_emails_to(waitlisted_member).last
         expect(mail).not_to be_nil
-        expect(html_body(mail)).to include('been confirmed')
+        expect(email_html(mail)).to include('been confirmed')
       end
 
       it 'sends the promotion variant of the email (waiting-list flag set)' do
         post :reject, params: { id: invitation.token }
 
-        mail = ActionMailer::Base.deliveries.find { |m| m.to.include?(waitlisted_member.email) }
-        expect(html_body(mail)).to include('A spot became available and your attendance has now been confirmed!')
+        expect(email_html(delivered_emails_to(waitlisted_member).last))
+          .to include('A spot became available and your attendance has now been confirmed!')
       end
 
       it 'does not email anyone else (the rejecting member gets no promotion copy)' do
