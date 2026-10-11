@@ -139,7 +139,7 @@ gem 'rollbar'
 gem 'scout_apm'
 gem 'rqrcode'
 gem 'prawn'
-gem 'prawn-svg', '~> 0.35'
+gem 'prawn-svg', '~> 0.40'
 
 gem 'carrierwave-aws', '~> 1.6'
 
