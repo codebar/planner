@@ -735,7 +735,15 @@ en:
         failure: "Workshop cannot be deleted. This is because it has invitees and/or workshop information is on the website for a while long enough that it cannot be deleted."
       form:
         virtual_info: To create a virtual workshop you must check the box and fill in the below fields. The slack channel will be available on the invitation page for anyone who successfuly RSVPs.
-        rsvp_details: Set a date and time (in the chapter's timezone) for RSVPs to open and close automatically. Leave blank to handle manually.
+        rsvp_details: Set a date and time (in the chapter's timezone) for RSVPs to open and close. Leave the close fields blank and RSVPs close 3.5 hours before the workshop starts.
+        rsvp_close_summary: What happens around the close time
+        rsvp_close_after: New RSVPs stop once the close time passes, or 3.5 hours before the start if the close fields are blank.
+        rsvp_close_cancel: Members with a seat can still cancel until 3.5 hours before the start, even after RSVPs have closed. A cancelled seat goes to the first person on the waiting list for the same role, who is confirmed and emailed automatically.
+        rsvp_close_waitlist: Members can join or leave the waiting list only until the close time, or until 3.5 hours before the start, whichever is earlier. The waiting list handed to security is fixed from that point. A member who cancels keeps their name on that list but is never promoted again; members who already hold a seat are also skipped.
+        rsvp_close_prefill_summary: Why the close fields changed
+        rsvp_close_prefill: Changing Date or Begins at sets close fields that are empty, or that this form filled in itself earlier, to 3.5 hours before the new start. Values you type, or that are saved with the workshop, are never overwritten.
+      invitation_management:
+        removal_promotes_waitlist: If you remove an attendee from this page while the workshop has not started, their seat is automatically given to the top waiting-list member for the same role, who is confirmed and emailed. You can add and remove members here regardless of the RSVP close times.
       not_invitable: "The workshop is not invitable"
       virtual:
         details:
