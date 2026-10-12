@@ -55,6 +55,9 @@ Style/ClassAndModuleChildren:
 Style/OptionalBooleanParameter:
   Enabled: false
 
+Style/OptionHash:
+  Enabled: true
+
 Rails/Date:
   Enabled: true
 

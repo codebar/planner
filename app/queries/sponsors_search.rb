@@ -3,9 +3,9 @@ class SponsorsSearch
 
   attr_accessor :name, :chapter
 
-  def initialize(params = {})
-    @name = params.fetch(:name)
-    @chapter = params.fetch(:chapter)
+  def initialize(name:, chapter:)
+    @name = name
+    @chapter = chapter
   end
 
   def call
