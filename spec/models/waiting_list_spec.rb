@@ -65,7 +65,7 @@ RSpec.describe WaitingList do
 
         expect(promoted).to be_nil
         expect(invitation.reload.attending).to be_nil
-        expect(described_class.where(invitation: invitation)).to exist
+        expect(described_class.where(invitation:)).to exist
       end
 
       it 'returns nil and promotes nothing for an empty waitlist' do

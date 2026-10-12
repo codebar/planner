@@ -312,7 +312,7 @@ RSpec.describe WorkshopInvitationController do
 
         expect(invitation_behind.reload.attending).to be true
         expect(invitation.reload.attending).to be false
-        expect(WaitingList.where(invitation: invitation)).to exist
+        expect(WaitingList.where(invitation:)).to exist
       end
     end
 
