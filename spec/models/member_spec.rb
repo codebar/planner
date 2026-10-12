@@ -321,4 +321,10 @@ RSpec.describe Member do
       expect(managers.size).to eq(managers.distinct.size)
     end
   end
+
+  describe 'legacy columns' do
+    it 'does not expose the legacy unsubscribed attribute' do
+      expect(described_class.new).not_to respond_to(:unsubscribed)
+    end
+  end
 end
