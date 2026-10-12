@@ -44,6 +44,30 @@ RSpec.describe WaitingList do
         expect(described_class.by_workshop(workshop).map(&:invitation)).to eq([later_invitation])
       end
 
+      it 'skips the excluded entry and promotes the next one' do
+        own_invitation = Fabricate(:workshop_invitation, workshop:)
+        next_invitation = Fabricate(:workshop_invitation, workshop:, member: Fabricate(:member))
+        described_class.add(own_invitation)
+        described_class.add(next_invitation)
+
+        promoted = described_class.promote_next(workshop, 'Student', excluding: own_invitation)
+
+        expect(promoted).to eq(next_invitation)
+        expect(own_invitation.reload.attending).to be_nil
+        expect(described_class.where(invitation: own_invitation)).to exist
+      end
+
+      it 'returns nil when the only entry is excluded' do
+        invitation = Fabricate(:workshop_invitation, workshop:)
+        described_class.add(invitation)
+
+        promoted = described_class.promote_next(workshop, 'Student', excluding: invitation)
+
+        expect(promoted).to be_nil
+        expect(invitation.reload.attending).to be_nil
+        expect(described_class.where(invitation: invitation)).to exist
+      end
+
       it 'returns nil and promotes nothing for an empty waitlist' do
         expect(described_class.promote_next(workshop, 'Student')).to be_nil
       end

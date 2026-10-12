@@ -286,12 +286,15 @@ RSpec.describe WorkshopInvitationController do
       before do
         invitation.update!(attending: true)
         WaitingList.add(invitation, auto_rsvp: true)
+        # Master (PR #2997): a cancelling member's own entry must not be
+        # promoted into the seat they just freed.
+        WaitingList.find_by(invitation_id: invitation.id).update_column(:created_at, 1.hour.ago)
       end
 
-      it 'removes their own waiting-list entry' do
-        post :reject, params: { id: invitation.token }
-
-        expect(WaitingList.where(invitation:)).to be_empty
+      it 'does not remove their own waiting-list entry' do
+        expect do
+          post :reject, params: { id: invitation.token }
+        end.not_to change(WaitingList, :count)
       end
 
       it 'does not redeliver the seat to the cancelling member' do
@@ -309,7 +312,7 @@ RSpec.describe WorkshopInvitationController do
 
         expect(invitation_behind.reload.attending).to be true
         expect(invitation.reload.attending).to be false
-        expect(WaitingList.where(invitation:)).to be_empty
+        expect(WaitingList.where(invitation: invitation)).to exist
       end
     end
 
