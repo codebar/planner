@@ -16,10 +16,7 @@ module WaitlistPromotionConcerns
   end
 
   def promote_next_waitlist_member
-    # Skip the cancelling member's own entry: promote_next must hand the freed
-    # seat to the next member, not redeliver it to the person who just gave it up.
-    promoted = WaitingList.promote_next(@invitation.workshop, @invitation.role,
-                                        excluding: @invitation)
+    promoted = WaitingList.promote_next(@invitation.workshop, @invitation.role)
     @workshop.send_attending_email(promoted, true) if promoted
   end
 end
