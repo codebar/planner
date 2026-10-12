@@ -248,7 +248,7 @@ class Admin::WorkshopsController < Admin::ApplicationController
     params[:workshop][:organisers]
   end
 
-  def grant_organiser_access(organiser_ids = [])
+  def grant_organiser_access(organiser_ids)
     organiser_ids.each { |id| Member.find(id).add_role(:organiser, @workshop) }
   end
 
