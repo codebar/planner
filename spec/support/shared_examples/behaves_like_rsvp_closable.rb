@@ -38,4 +38,12 @@ RSpec.shared_examples 'RsvpClosable' do
       expect(subject.rsvp_available?).to be(false)
     end
   end
+
+  describe '#rsvp_freezes_at' do
+    it 'is 3.5 hours before the start' do
+      subject.date_and_time = Time.zone.local(2026, 3, 1, 18, 30)
+
+      expect(subject.rsvp_freezes_at).to eq(Time.zone.local(2026, 3, 1, 15, 0))
+    end
+  end
 end

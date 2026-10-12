@@ -1,5 +1,6 @@
 class Admin::InvitationsController < Admin::ApplicationController
   include Admin::WorkshopConcerns
+  include WaitlistPromotionConcerns
 
   def update
     set_and_decorate_workshop
@@ -80,9 +81,11 @@ class Admin::InvitationsController < Admin::ApplicationController
   end
 
   def update_to_not_attending
-    @invitation.update!(attending: false, last_overridden_by_id: current_user.id)
+    freed_seat = release_seat(last_overridden_by_id: current_user.id)
     MemberActivityRecorder.record(actor: current_user, key: 'invitation.rsvp_override',
                                   trackable: @invitation, recipient: @invitation.member)
+
+    promote_next_waitlist_member if freed_seat && @workshop.future?
 
     {
       message: "You have removed #{@invitation.member.full_name} from the workshop.",
