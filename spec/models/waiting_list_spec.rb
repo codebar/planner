@@ -44,28 +44,42 @@ RSpec.describe WaitingList do
         expect(described_class.by_workshop(workshop).map(&:invitation)).to eq([later_invitation])
       end
 
-      it 'skips the excluded entry and promotes the next one' do
-        own_invitation = Fabricate(:workshop_invitation, workshop:)
+      it 'skips a declined member and promotes the next eager one' do
+        declined_invitation = Fabricate(:workshop_invitation, workshop:)
         next_invitation = Fabricate(:workshop_invitation, workshop:, member: Fabricate(:member))
-        described_class.add(own_invitation)
+        described_class.add(declined_invitation)
         described_class.add(next_invitation)
+        declined_invitation.update!(attending: false)
 
-        promoted = described_class.promote_next(workshop, 'Student', excluding: own_invitation)
+        promoted = described_class.promote_next(workshop, 'Student')
 
         expect(promoted).to eq(next_invitation)
-        expect(own_invitation.reload.attending).to be_nil
-        expect(described_class.where(invitation: own_invitation)).to exist
+        expect(declined_invitation.reload.attending).to be(false)
+        expect(described_class.where(invitation: declined_invitation)).to exist
       end
 
-      it 'returns nil when the only entry is excluded' do
+      it 'returns nil when every eligible entry is declined' do
         invitation = Fabricate(:workshop_invitation, workshop:)
         described_class.add(invitation)
+        invitation.update!(attending: false)
 
-        promoted = described_class.promote_next(workshop, 'Student', excluding: invitation)
+        promoted = described_class.promote_next(workshop, 'Student')
 
         expect(promoted).to be_nil
-        expect(invitation.reload.attending).to be_nil
+        expect(invitation.reload.attending).to be(false)
         expect(described_class.where(invitation:)).to exist
+      end
+
+      it 'skips an accepted member whose entry lingers on the waiting list' do
+        accepted_invitation = Fabricate(:workshop_invitation, workshop:)
+        next_invitation = Fabricate(:workshop_invitation, workshop:, member: Fabricate(:member))
+        described_class.add(accepted_invitation)
+        described_class.add(next_invitation)
+        accepted_invitation.update!(attending: true)
+
+        promoted = described_class.promote_next(workshop, 'Student')
+
+        expect(promoted).to eq(next_invitation)
       end
 
       it 'returns nil and promotes nothing for an empty waitlist' do

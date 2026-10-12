@@ -23,16 +23,17 @@ class WaitingList < ApplicationRecord
   end
 
   # Pops the next auto-RSVP waitlist entry and confirms its invitation. The
-  # caller sends the attendance email for the promoted invitation. `excluding`
-  # keeps a member's own entry out of the pick, so a cancelling member never
-  # receives back the seat they just freed.
-  def self.promote_next(workshop, role, excluding: nil)
+  # caller sends the attendance email for the promoted invitation. Only
+  # undecided invitations are eligible: a member who declines the workshop
+  # keeps their entry on the printed list but is never auto-promoted, so a
+  # later freed seat always reaches a member who still wants it.
+  def self.promote_next(workshop, role)
     transaction do
       # SKIP LOCKED lets a concurrent promoter that holds another freed seat
       # take the next entry instead of racing on this one.
-      scope = by_workshop(workshop).where_role(role).where(auto_rsvp: true)
-      scope = scope.where.not(invitation: excluding) if excluding
-      next_spot = scope.order(:created_at).lock('FOR UPDATE SKIP LOCKED').first
+      next_spot = by_workshop(workshop).where_role(role).where(auto_rsvp: true)
+                                       .where('workshop_invitations.attending IS NULL')
+                                       .order(:created_at).lock('FOR UPDATE SKIP LOCKED').first
       return unless next_spot
 
       invitation = next_spot.invitation
