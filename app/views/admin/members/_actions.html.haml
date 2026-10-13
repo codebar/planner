@@ -17,4 +17,4 @@
     = link_to new_admin_member_ban_path(@member), class: 'btn btn-primary d-block py-4 rounded-0' do
       %i.fas.fa-ban.warning.me-2
       Suspend
-  = render 'note'
+  = render partial: 'note', locals: { note: MemberNote.new, member: @member }

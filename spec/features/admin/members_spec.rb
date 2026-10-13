@@ -95,4 +95,53 @@ RSpec.describe 'Admin managing members' do
       end
     end
   end
+
+  describe 'editing and deleting member notes' do
+    let(:global_admin) { Fabricate(:member).tap { |m| m.add_role(:admin) } }
+    let(:other_chapter_organiser) { Fabricate(:chapter_organiser) }
+    let!(:member_note) do
+      Fabricate(:member_note, member:, author: Fabricate(:member), note: 'Original note text')
+    end
+
+    before do
+      login(global_admin)
+      visit admin_member_path(member)
+    end
+
+    it 'can edit an existing note via the modal', :js do
+      within '.note' do
+        find("a[data-bs-target='#edit-note-modal-#{member_note.id}']").click
+      end
+      fill_in "member_note_note_#{member_note.id}", with: 'Revised note text'
+      click_on 'Save note'
+
+      expect(page).to have_text 'Note successfully updated.'
+      within '.note' do
+        expect(page).to have_text 'Revised note text'
+      end
+    end
+
+    it 'can delete an existing note', :js do
+      expect do
+        accept_confirm do
+          within '.note' do
+            find('a.btn-outline-danger').click
+          end
+        end
+      end.to change { member.member_notes.count }.by(-1)
+
+      expect(page).to have_text 'Note successfully deleted.'
+      expect(page).not_to have_text 'Original note text'
+    end
+
+    it 'hides edit and delete controls from organisers who may not modify the note' do
+      login(other_chapter_organiser)
+      visit admin_member_path(member)
+
+      within '.note' do
+        expect(page).not_to have_css("a[data-bs-target='#edit-note-modal-#{member_note.id}']")
+        expect(page).not_to have_css('a.btn-outline-danger')
+      end
+    end
+  end
 end
