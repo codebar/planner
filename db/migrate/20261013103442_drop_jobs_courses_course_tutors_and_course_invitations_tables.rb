@@ -1,9 +1,11 @@
 class DropJobsCoursesCourseTutorsAndCourseInvitationsTables < ActiveRecord::Migration[7.0]
   def up
-    drop_table :course_tutors
-    drop_table :course_invitations
-    drop_table :courses
-    drop_table :jobs
+    safety_assured do
+      drop_table :course_tutors
+      drop_table :course_invitations
+      drop_table :courses
+      drop_table :jobs
+    end
   end
 
   def down
