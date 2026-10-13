@@ -92,3 +92,23 @@ test: ## Run the test suite in parallel
 
 check: ## Run setup checks
 	bundle exec rake setup:check
+
+detect_subkeyed_members: ## List sub-keyed members from a local production dump
+	DB_NAME=$(DUMP_DB) bundle exec rake member:subkeyed:detect
+
+fix_subkeyed_members: ## Dry-run sub-keyed member deactivation on the dump (EXECUTE=1 executes)
+	DB_NAME=$(DUMP_DB) bundle exec rake member:subkeyed:deactivate
+
+verify_subkeyed_members: ## Verify no unhandled sub-keyed members remain in the dump
+	DB_NAME=$(DUMP_DB) bundle exec rake member:subkeyed:verify
+
+detect_subkeyed_members_production: ## List sub-keyed members on the PRODUCTION database
+	@read -p "Connect to PRODUCTION database? [y/N] " ans && [ "$$ans" = "y" ] || exit 1
+	@DB_URL=$$(heroku config:get DATABASE_URL --app=$(DUMP_APP)) bundle exec rake member:subkeyed:detect
+
+fix_subkeyed_members_production: ## Dry-run deactivation on PRODUCTION (EXECUTE=1 executes)
+	@read -p "This can MODIFY the PRODUCTION database. Continue? [y/N] " ans && [ "$$ans" = "y" ] || exit 1
+	@DB_URL=$$(heroku config:get DATABASE_URL --app=$(DUMP_APP)) bundle exec rake member:subkeyed:deactivate
+
+verify_subkeyed_members_production: ## Verify no unhandled sub-keyed members remain on PRODUCTION
+	@DB_URL=$$(heroku config:get DATABASE_URL --app=$(DUMP_APP)) bundle exec rake member:subkeyed:verify

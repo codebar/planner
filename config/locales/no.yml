@@ -67,8 +67,8 @@
       title: "Chapters"
     events:
       upcoming: "Upcoming Events"
-    donation_platforms:
-      title: "How to support us"
+    support_us_component:
+      title: "Help make coding more accessible"
   mailer:
     workshop_invitation:
       attending:
@@ -480,6 +480,73 @@
           title: Other skills
           description: Your skills could be the missing piece in the codebar puzzle. Having a diverse range of skills, and extra help, in our team is necessary to enrich our community. From fundraising and event coordination to marketing, we always welcome extra help to support our community members.
           link: Take a look at our Volunteer Opportunities here
+      corporate_support:
+        description: Codebar wouldn't be possible without the support of our partners. They provide us with essential resources like space, food, drinks, internet, or financial support for our operational costs.
+        introduction: Whether you want to host a local workshop, invest in a longer-term partnership or get your employees involved, there are lots of ways your organisation can help us.
+        get_in_touch: Get in touch
+        host_a_workshop: Host a workshop
+        host:
+          title: Host a workshop
+          description: Our hosts provide free, inclusive spaces where people can learn coding, connect with others, access support and build the confidence and skills they need to move forward.
+        sponsor:
+          title: Become a longterm partner
+          description: Whether you want to partner with us on one of our big events, sponsor our podcast, encourage your employees to volunteer, or create opportunities for people entering tech, we can build a partnership around your organisation’s goals.
+          link: Partner with codebar
+        donate:
+          title: Donate
+          description: It costs £30 a month to run a chapter. A one-off or regular contribution goes straight towards keeping our workshops free for people from groups underrepresented in tech.
+          link: Donate to codebar
+        why_partner:
+          title: Why partner with us?
+          points:
+            support_your_people:
+              title: SUPPORT YOUR PEOPLE
+              description: Give your employees opportunities to volunteer, coach, share their skills and connect with a community beyond their workplace.
+            inclusion_into_action:
+              title: PUT INCLUSION INTO ACTION
+              description: Turn your organisation's commitment to a more inclusive tech industry into practical support.
+            future_tech_talent:
+              title: MEET FUTURE TECH TALENT
+              description: Build connections with people learning new skills, changing careers and finding their way into tech.
+            share_your_expertise:
+              title: SHARE YOUR EXPERTISE
+              description: Your developers and tech professionals can contribute as coaches, speakers, mentors and volunteers.
+            meaningful_connections:
+              title: BUILD MEANINGFUL CONNECTIONS
+              description: Create relationships with our community through workshops, events, careers activity and longer-term collaboration.
+            csr_esg_goals:
+              title: SUPPORT YOUR CSR / ESG GOALS
+              description: A partnership can form part of your organisation's wider approach to community investment, employee volunteering and inclusion.
+        did_you_know:
+          title: "Did you know…"
+          points:
+            community_size:
+              text: 27,500+ people in the codebar community
+            skills_to_job:
+              text: 85% say the skills they've learnt through codebar have helped them find a job in tech
+            new_to_tech:
+              text: 73% of codebar's community didn't work in tech before they found us
+            industry_partners:
+              text: 726 industry partners over 12 years
+            repeat_hosts:
+              text: 75%+ of codebar's industry partners have hosted more than one workshop
+          link: "Still unsure? See more of our impact here"
+        support_us_your_way:
+          title: Support us your way
+          description: Corporate support not for you? No problem.
+          cards:
+            donate:
+              title: Donate as a one-off or monthly
+              description: Whether through a one-off or monthly donation, an in-memory donation or workplace giving, your gift helps us build a tech community that includes a broader range of people and perspectives.
+              link: Give to codebar
+            challenge_event:
+              title: Take part in a challenge event
+              description: Help keep codebar free by taking on one of our challenge events or fundraising in your own way (with our support) for us.
+              link: Fundraise for codebar
+            volunteer:
+              title: Become a codebar volunteer
+              description: codebar can be a supportive village for people navigating learning, careers and difficult periods in their lives. Our volunteers help us to create that crucial community.
+              link: Volunteer
       fundraise:
         title: Fundraise
         headline: Take on a challenge for codebar
@@ -548,23 +615,22 @@
         email: Contact email
         link_to_job: Link to job post
         expiry_date: Application closing date
-  donation_platforms:
+  support_us_component:
     title: "Donate"
-    description: "Your support—whether through a one-time gift or ongoing commitment—drives our mission to create a more inclusive tech industry. It enables us to provide continuous learning opportunities and empower individuals from underrepresented groups to grow and thrive in tech."
-    link: "Find out how else to support us"
+    description: "Your support helps create free, inclusive spaces where people can build skills, find community and take their next step in tech."
     donation_form:
-      title: "Use the donation page"
-      text: "Make a lasting impact with codebar by giving a one-time donation or committing to a monthly contribution."
-      image_alt: "codebar logo"
-    github_sponsors:
-      title: "Github Sponsors"
-      text: "Support codebar’s mission directly through GitHub Sponsors and help shape the future of technology with your generous donation."
-      image_alt: "Github Sponsors logo"
-    open_collective:
-      title: "Open Collective"
-      text: "Setup a recurring contribution or make a one-time donation through Open Collective."
-      image_alt: "Open Collective logo"
-    give_as_you_live:
-      title: "Give as you Live"
-      text: "Give as you Live is a platform enabling you to raise funds for your favourite charity with your everyday online shopping."
-      image_alt: "Give as you Live logo"
+      title: "Give"
+      text: "A one-off gift or monthly donation helps codebar continue providing free workshops and opportunities for people who might otherwise struggle to access tech education."
+      link: "Donate to codebar"
+    fundraise:
+      title: "Fundraise"
+      text: "Take on one of our many challenge events (with support every step of the way from our fundraising team) or raise money your own way so that more people can learn, belong and thrive in tech."
+      link: "Start fundraising"
+    corporate:
+      title: "Corporate support"
+      text: "From sponsoring a single workshop, to partnering on a bigger event or sponsoring our podcast. There are so many ways for companies to partner with us to help build a more inclusive tech industry."
+      link: "Partner with us"
+    other:
+      title: "Other ways"
+      text: "Our supporters all play a role in creating change. Whether you’re volunteering, shopping online or giving through your workplace, every contribution helps us reach more people and create more opportunities."
+      link: "Email us to help"

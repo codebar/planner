@@ -31,16 +31,40 @@ class DashboardController < ApplicationController
   def about; end
 
   def wall_of_fame
-    @coaches_count = WorkshopInvitation.to_coaches.attended.distinct.count(:member_id)
-    coaches = Member.where(id: top_coach_query
-                               .year(year_param))
-                    .includes(:skills)
-    @pagy, @coaches = pagy(coaches)
+    options = past_year? ? {} : { expires_in: 24.hours }
+    body = Rails.cache.fetch(wall_of_fame_cache_key, **options) { render_wall_of_fame_body }
+    # rubocop:disable Rails/OutputSafety
+    render html: body.html_safe, layout: 'application'
+    # rubocop:enable Rails/OutputSafety
   end
 
   def participant_guide; end
 
   private
+
+  def past_year?
+    (2013...Time.zone.today.year).cover?(year_param)
+  end
+
+  def wall_of_fame_cache_key
+    # Match pagy's page coercion so the cache key and the rendered page always
+    # agree, and arbitrary strings cannot expand the key space.
+    page = [params[:page].to_s.to_i, 1].max
+    date_segment = past_year? ? nil : "#{Time.zone.today}/"
+    "coaches/wall_of_fame/v2/#{date_segment}#{year_param}/#{page}/#{I18n.locale}"
+  end
+
+  def render_wall_of_fame_body
+    @coaches_count = WorkshopInvitation.to_coaches.attended.distinct.count(:member_id)
+    coaches = Member.where(id: top_coach_query
+                               .year(year_param))
+                    .includes(:skills)
+    # pagy copies every request param into pagination links; keep only the
+    # year the links must preserve so the filling request's junk params are
+    # not frozen into the cached body.
+    @pagy, @coaches = pagy(coaches, querify: ->(params) { params.keep_if { |k, _| %w[year page].include?(k) } })
+    render_to_string(layout: false)
+  end
 
   def year_param
     params.permit(:year)[:year]&.to_i || Time.zone.today.year

@@ -25,7 +25,7 @@ class WorkshopInvitationMailer < ApplicationMailer
     reminder_setup(workshop, member, invitation, subject)
   end
 
-  def invite_coach(workshop, member, invitation)
+  def invite_coach(workshop, member, invitation, _log_context = {})
     @workshop = workshop
     @member = member
     @invitation = invitation
@@ -36,7 +36,7 @@ class WorkshopInvitationMailer < ApplicationMailer
     mail_to_member(member, subject, 'no-reply@codebar.io', &:html)
   end
 
-  def invite_student(workshop, member, invitation)
+  def invite_student(workshop, member, invitation, _log_context = {})
     @workshop = WorkshopPresenter.new(workshop)
     @member = member
     @invitation = invitation

@@ -8,6 +8,10 @@ class WaitingListsController < ApplicationController
   skip_forgery_protection only: %i[create destroy]
 
   def create # rubocop:disable Metrics/MethodLength
+    # Joins and leaves stop at the earlier of the RSVP close time and the
+    # 3.5-hour freeze, so the waitlist handed to security stays stable.
+    return back_with_message(t('messages.waiting_list.closed')) if waitlist_closed?
+
     @invitation.assign_attributes(invitation_params)
 
     return back_with_message(@invitation.errors.full_messages) unless @invitation.valid?(:waitinglist)
@@ -26,7 +30,15 @@ class WaitingListsController < ApplicationController
   end
 
   def destroy
-    WaitingList.find_by(invitation_id: @invitation.id).destroy
+    return back_with_message(t('messages.waiting_list.closed')) if waitlist_closed?
+
+    entry = WaitingList.find_by(invitation_id: @invitation.id)
+    unless entry
+      return redirect_to(invitation_path(@invitation),
+                         notice: 'You are not on the waiting list')
+    end
+
+    entry.destroy
     MemberActivityRecorder.record(actor: @invitation.member, key: 'waiting_list.left',
                                   trackable: @invitation)
 
@@ -34,6 +46,10 @@ class WaitingListsController < ApplicationController
   end
 
   private
+
+  def waitlist_closed?
+    !@invitation.workshop.waitlist_open?
+  end
 
   def token
     params.permit(:invitation_id)[:invitation_id]

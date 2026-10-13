@@ -1,5 +1,6 @@
 class WorkshopInvitationController < ApplicationController
   include WorkshopInvitationConcerns
+  include WaitlistPromotionConcerns
 
   # NOTE: This controller handles workshop invitations (WorkshopInvitation model).
   # It provides accept/reject RSVP actions for workshop attendees via token-based links.
@@ -9,7 +10,7 @@ class WorkshopInvitationController < ApplicationController
   # CSRF is redundant and fails when browsers withhold the session cookie
   # (e.g. Safari/WebKit ITP on cross-site navigation). Same rationale as
   # FeedbackController#submit (PR #2641, Rollbar #535).
-  skip_forgery_protection only: %i[update accept]
+  skip_forgery_protection only: %i[update accept reject]
 
   def show
     @announcements = @invitation.member.announcements.active
@@ -57,25 +58,16 @@ class WorkshopInvitationController < ApplicationController
   # Inline reject from InvitationControllerConcerns
   def reject
     @workshop = WorkshopPresenter.decorate(@invitation.workshop)
-    closes_at = @invitation.workshop.rsvp_closes_at
-    rsvp_deadline = [@invitation.workshop.date_and_time - 3.5.hours, closes_at].compact.min
-    if rsvp_deadline >= Time.zone.now
+    if @invitation.workshop.cancellations_open?
       if @invitation.attending.eql? false
         redirect_back(fallback_location: invitation_path(@invitation),
                       notice: t('messages.not_attending_already'))
       else
-        @invitation.update!(attending: false)
+        freed_seat = release_seat
         MemberActivityRecorder.record(actor: @invitation.member, key: 'workshop_invitation.rejected',
                                       trackable: @invitation)
 
-        next_spot = WaitingList.next_spot(@invitation.workshop, @invitation.role)
-
-        if next_spot.present?
-          invitation = next_spot.invitation
-          next_spot.destroy
-          invitation.update(attending: true, rsvp_time: Time.zone.now, automated_rsvp: true)
-          @workshop.send_attending_email(invitation, true)
-        end
+        promote_next_waitlist_member if freed_seat
 
         redirect_back(
           fallback_location: invitation_path(@invitation),

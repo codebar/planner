@@ -90,7 +90,7 @@ class Admin::EventsController < Admin::ApplicationController
     params[:event][:organisers]
   end
 
-  def grant_organiser_access(organiser_ids = [])
+  def grant_organiser_access(organiser_ids)
     organiser_ids.each { |id| Member.find(id).add_role(:organiser, @event) }
   end
 

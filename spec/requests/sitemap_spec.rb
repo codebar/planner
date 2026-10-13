@@ -28,6 +28,12 @@ RSpec.describe 'Sitemap' do
     expect(body).to include(privacy_policy_url)
   end
 
+  it 'lists the corporate support page' do
+    get '/sitemap.xml'
+
+    expect(response.body).to include(corporate_support_url)
+  end
+
   it 'excludes inactive chapters' do
     get '/sitemap.xml'
 

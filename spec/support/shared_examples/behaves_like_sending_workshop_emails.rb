@@ -80,6 +80,50 @@ RSpec.shared_examples 'sending workshop emails' do
     expect(WorkshopInvitation).to have_received(:find_or_create_by!).exactly(students.count).times
   end
 
+  it 'passes chapter_id and workshop_date to the mailer so job log lines carry them' do
+    Fabricate(:students, chapter:, members: students)
+    Fabricate(:coaches, chapter:, members: coaches)
+
+    context_hash = { chapter_id: workshop.chapter_id, workshop_date: workshop.date_and_time.utc.to_date.iso8601 }
+
+    allow(mailer).to receive(:invite_student).and_call_original
+    allow(mailer).to receive(:invite_coach).and_call_original
+
+    manager.send(send_email, workshop, 'everyone')
+
+    expect(mailer).to have_received(:invite_student).with(workshop, anything, anything, context_hash).at_least(:once)
+    expect(mailer).to have_received(:invite_coach).with(workshop, anything, anything, context_hash).at_least(:once)
+  end
+
+  it 'keeps log_context intact through the enqueued delivery job' do
+    student = Fabricate(:member)
+    invitation = Fabricate(:workshop_invitation, workshop:, member: student)
+
+    context_hash = { chapter_id: workshop.chapter_id, workshop_date: workshop.date_and_time.utc.to_date.iso8601 }
+
+    begin
+      original = Delayed::Worker.delay_jobs
+      Delayed::Worker.delay_jobs = true
+
+      mailer.invite_student(workshop, student, invitation, context_hash).deliver_later
+
+      job_rows = Delayed::Job.all
+      expect(job_rows).not_to be_empty
+
+      job_rows.each do |row|
+        arguments = row.payload_object.job_data['arguments']
+
+        expect(arguments.first).to eq(mailer.name)
+        expect(arguments[1]).to eq('invite_student')
+
+        deserialized_mail_args = ActiveJob::Arguments.deserialize(arguments[3]['args'])
+        expect(deserialized_mail_args.last).to eq(context_hash)
+      end
+    ensure
+      Delayed::Worker.delay_jobs = original
+    end
+  end
+
   it 'does not send duplicate emails when members are already invited' do
     Fabricate(:students, chapter:, members: students)
 

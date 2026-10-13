@@ -1,0 +1,18 @@
+// app/assets/stylesheets/partials/_buttons.scss
+// codebar brand pink button variant, using Bootstrap 5's button CSS variables
+// so hover/active/disabled states come for free.
+.btn-pink {
+  --bs-btn-color: #{$white};
+  --bs-btn-bg: #{$codebar-pink};
+  --bs-btn-border-color: #{$codebar-pink};
+  --bs-btn-hover-color: #{$white};
+  --bs-btn-hover-bg: #{$dark-codebar-pink};
+  --bs-btn-hover-border-color: #{$dark-codebar-pink};
+  --bs-btn-active-color: #{$white};
+  --bs-btn-active-bg: #{$dark-codebar-pink};
+  --bs-btn-active-border-color: #{$dark-codebar-pink};
+  --bs-btn-disabled-color: #{$white};
+  --bs-btn-disabled-bg: #{$codebar-pink};
+  --bs-btn-disabled-border-color: #{$codebar-pink};
+  --bs-btn-focus-shadow-rgb: #{red($codebar-pink)}, #{green($codebar-pink)}, #{blue($codebar-pink)};
+}

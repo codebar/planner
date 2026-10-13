@@ -54,6 +54,33 @@ RSpec.describe 'Event card render query cost' do
     expect(four_cards).to eq(one_card)
   end
 
+  it 'does not add per-card queries on /events/past as mixed card types grow' do
+    chapter = Fabricate(:chapter, active: true)
+    organiser = Fabricate(:member)
+    first_workshop = Fabricate(:past_workshop, chapter:)
+    organiser.add_role(:organiser, first_workshop)
+    first_meeting = Fabricate(:meeting, date_and_time: 2.weeks.ago)
+    organiser.add_role(:organiser, first_meeting)
+    first_event = Fabricate(:event_with_sponsorship, date_and_time: 2.weeks.ago)
+    organiser.add_role(:organiser, first_event)
+
+    get '/events/past'
+    three_cards = count_queries { get '/events/past' }
+
+    3.times do
+      workshop = Fabricate(:past_workshop, chapter:)
+      organiser.add_role(:organiser, workshop)
+      meeting = Fabricate(:meeting, date_and_time: 2.weeks.ago)
+      organiser.add_role(:organiser, meeting)
+      event = Fabricate(:event_with_sponsorship, date_and_time: 2.weeks.ago)
+      organiser.add_role(:organiser, event)
+    end
+
+    twelve_cards = count_queries { get '/events/past' }
+
+    expect(twelve_cards).to eq(three_cards)
+  end
+
   it 'does not add per-card queries on the chapter page as cards grow' do
     chapter = Fabricate(:chapter, active: true)
     organiser = Fabricate(:member)

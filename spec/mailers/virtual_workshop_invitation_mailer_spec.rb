@@ -102,6 +102,20 @@ RSpec.describe VirtualWorkshopInvitationMailer do
     expect(email.body.encoded).to match(workshop.chapter.email)
   end
 
+  it '#invite_coach accepts log context without breaking delivery' do
+    expect do
+      described_class.invite_coach(workshop, member, invitation,
+                                   { chapter_id: workshop.chapter_id, workshop_date: '2026-10-13' }).deliver_now
+    end.to change { ActionMailer::Base.deliveries.count }.by(1)
+  end
+
+  it '#invite_student accepts log context without breaking delivery' do
+    expect do
+      described_class.invite_student(workshop, member, invitation,
+                                     { chapter_id: workshop.chapter_id, workshop_date: '2026-10-13' }).deliver_now
+    end.to change { ActionMailer::Base.deliveries.count }.by(1)
+  end
+
   it '#waitlist_reminder' do
     email_subject = "Reminder: you're on the codebar waiting list " \
                     "(#{humanize_date(workshop.date_and_time, with_time: true)})"

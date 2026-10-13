@@ -50,6 +50,7 @@ ActiveRecord::Migration.check_all_pending! if defined?(ActiveRecord::Migration)
 RSpec.configure do |config|
   config.include ActiveJob::TestHelper
   config.include ApplicationHelper
+  config.include EmailHelpers
   config.include LoginHelpers
   config.include ActiveSupport::Testing::TimeHelpers
   config.include SelectFromChosen, type: :feature

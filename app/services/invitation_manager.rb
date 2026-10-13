@@ -179,6 +179,11 @@ class InvitationManager
     nil
   end
 
+  def invitation_log_context(workshop)
+    { chapter_id: workshop.chapter_id,
+      workshop_date: workshop.date_and_time&.utc&.to_date&.iso8601 }
+  end
+
   def log_invitation_failure(workshop, member, role, error)
     Rails.logger.error(
       '[InvitationManager] Failed to create invitation: ' \
@@ -190,25 +195,28 @@ class InvitationManager
 
   def invite_coaches_to_virtual_workshop(workshop, logger = nil)
     invite_members(workshop, logger, chapter_coaches(workshop.chapter)) do |coach, invitation|
-      VirtualWorkshopInvitationMailer.invite_coach(workshop, coach, invitation).deliver_later
+      VirtualWorkshopInvitationMailer.invite_coach(workshop, coach, invitation,
+                                                   invitation_log_context(workshop)).deliver_later
     end
   end
 
   def invite_coaches_to_workshop(workshop, logger = nil)
     invite_members(workshop, logger, chapter_coaches(workshop.chapter)) do |coach, invitation|
-      WorkshopInvitationMailer.invite_coach(workshop, coach, invitation).deliver_later
+      WorkshopInvitationMailer.invite_coach(workshop, coach, invitation, invitation_log_context(workshop)).deliver_later
     end
   end
 
   def invite_students_to_virtual_workshop(workshop, logger = nil)
     invite_members(workshop, logger, chapter_students(workshop.chapter), 'Student') do |student, invitation|
-      VirtualWorkshopInvitationMailer.invite_student(workshop, student, invitation).deliver_later
+      VirtualWorkshopInvitationMailer.invite_student(workshop, student, invitation,
+                                                     invitation_log_context(workshop)).deliver_later
     end
   end
 
   def invite_students_to_workshop(workshop, logger = nil)
     invite_members(workshop, logger, chapter_students(workshop.chapter), 'Student') do |member, invitation|
-      WorkshopInvitationMailer.invite_student(workshop, member, invitation).deliver_later
+      WorkshopInvitationMailer.invite_student(workshop, member, invitation,
+                                              invitation_log_context(workshop)).deliver_later
     end
   end
 

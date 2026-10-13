@@ -2,7 +2,7 @@ module SitemapsHelper
   def sitemap_static_urls
     [root_url, code_of_conduct_url, coaches_url, teaching_guide_url, faq_url,
      attendance_policy_url, student_guide_url, privacy_policy_url, cookie_policy_url,
-     breach_code_of_conduct_url, volunteer_url, fundraise_url, donate_url,
+     breach_code_of_conduct_url, volunteer_url, corporate_support_url, fundraise_url, donate_url,
      codebar_stories_podcast_url]
   end
 

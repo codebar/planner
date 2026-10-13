@@ -26,7 +26,7 @@ class VirtualWorkshopInvitationMailer < ApplicationMailer
     mail_to_member(member, subject, @workshop.chapter.email, &:html)
   end
 
-  def invite_coach(workshop, member, invitation)
+  def invite_coach(workshop, member, invitation, _log_context = {})
     setup(workshop, invitation, member)
     subject = t('mailer.workshop_invitation.virtual.invite_coach.subject',
                 date_time: humanize_date(@workshop.date_and_time, with_time: true))
@@ -34,7 +34,7 @@ class VirtualWorkshopInvitationMailer < ApplicationMailer
     mail_to_member(member, subject, 'no-reply@codebar.io', &:html)
   end
 
-  def invite_student(workshop, member, invitation)
+  def invite_student(workshop, member, invitation, _log_context = {})
     setup(workshop, invitation, member)
     subject = t('mailer.workshop_invitation.virtual.invite_student.subject',
                 date_time: humanize_date(@workshop.date_and_time, with_time: true))

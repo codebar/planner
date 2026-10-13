@@ -190,13 +190,35 @@ RSpec.describe OmniAuth::Strategies::Codebar do
   describe 'successful callback' do
     let(:rsa_key) { OpenSSL::PKey::RSA.generate(2048) }
     let(:jwk) { JWT::JWK.new(rsa_key, { kid: 'test-key-1' }) }
+    let(:userinfo_url) { "#{auth_url}/api/auth/oauth2/userinfo" }
+    # Sparse id_token: since better-auth 1.7 the email and name live in the
+    # UserInfo response, not in the token.
+    let(:token_payload) do
+      {
+        'sub' => 'better-auth-user-id',
+        'github_id' => '4242',
+        'iss' => auth_url,
+        'aud' => 'planner',
+        'iat' => Time.now.to_i,
+        'exp' => Time.now.to_i + 3600
+      }
+    end
+    let(:userinfo_body) do
+      {
+        'sub' => 'better-auth-user-id',
+        'email' => email,
+        'email_verified' => true,
+        'name' => name
+      }
+    end
     let(:id_token) do
-      JWT.encode(
-        { 'sub' => email, 'name' => name, 'iss' => auth_url, 'aud' => 'planner', 'iat' => Time.now.to_i, 'exp' => Time.now.to_i + 3600 },
-        rsa_key,
-        'RS256',
-        { kid: 'test-key-1' }
-      )
+      JWT.encode(token_payload, rsa_key, 'RS256', { kid: 'test-key-1' })
+    end
+
+    let(:callback_env) do
+      build_env('/auth/codebar/callback',
+                query: 'code=abc&state=some-state',
+                session: { 'omniauth.codebar.state' => 'some-state', 'omniauth.codebar.code_verifier' => 'verifier', 'omniauth.codebar.redirect_uri' => 'http://localhost:3000/auth/codebar/callback' })
     end
 
     before do
@@ -212,22 +234,185 @@ RSpec.describe OmniAuth::Strategies::Codebar do
       stub_request(:get, jwks_url)
         .with(headers: { 'User-Agent' => 'Codebar Planner/1.0' })
         .to_return(status: 200, body: { keys: [jwk.export] }.to_json, headers: { 'Content-Type' => 'application/json' })
+
+      stub_request(:get, userinfo_url)
+        .with(headers: { 'Authorization' => 'Bearer test-access-token', 'User-Agent' => 'Codebar Planner/1.0' })
+        .to_return(status: 200, body: userinfo_body.to_json, headers: { 'Content-Type' => 'application/json' })
     end
 
-    it 'builds the auth hash with correct data' do
-      env = build_env('/auth/codebar/callback',
-                      query: 'code=abc&state=some-state',
-                      session: { 'omniauth.codebar.state' => 'some-state', 'omniauth.codebar.code_verifier' => 'verifier', 'omniauth.codebar.redirect_uri' => 'http://localhost:3000/auth/codebar/callback' })
-      strategy.call!(env)
+    it 'builds the auth hash from the userinfo response' do
+      strategy.call!(callback_env)
 
-      auth_hash = env['omniauth.auth']
+      auth_hash = callback_env['omniauth.auth']
       expect(auth_hash).to be_present
       expect(auth_hash[:provider]).to eq('codebar')
       expect(auth_hash[:uid]).to eq(email)
       expect(auth_hash[:info][:email]).to eq(email)
       expect(auth_hash[:info][:name]).to eq(name)
       expect(auth_hash[:credentials][:token]).to eq('test-access-token')
-      expect(auth_hash[:extra][:raw_info]).to include('sub' => email, 'name' => name)
+      expect(auth_hash[:extra][:raw_info]).to include('sub' => 'better-auth-user-id', 'github_id' => '4242')
+    end
+
+    describe 'email source' do
+      it 'takes the email from userinfo even when the id_token carries a different one' do
+        stub_request(:post, token_url)
+          .to_return(status: 200, body: {
+            access_token: 'test-access-token',
+            id_token: JWT.encode(token_payload.merge('email' => 'token-level@example.com'), rsa_key, 'RS256', { kid: 'test-key-1' }),
+            token_type: 'Bearer',
+            expires_in: 900
+          }.to_json, headers: { 'Content-Type' => 'application/json' })
+
+        strategy.call!(callback_env)
+
+        expect(callback_env['omniauth.auth'][:uid]).to eq(email)
+        expect(callback_env['omniauth.auth'][:info][:email]).to eq(email)
+      end
+
+      it 'fails with missing_email when userinfo has no email, ignoring the id_token claim' do
+        stub_request(:post, token_url)
+          .to_return(status: 200, body: {
+            access_token: 'test-access-token',
+            id_token: JWT.encode(token_payload.merge('email' => 'token-level@example.com'), rsa_key, 'RS256', { kid: 'test-key-1' }),
+            token_type: 'Bearer',
+            expires_in: 900
+          }.to_json, headers: { 'Content-Type' => 'application/json' })
+        stub_request(:get, userinfo_url)
+          .to_return(status: 200, body: { 'sub' => 'better-auth-user-id' }.to_json, headers: { 'Content-Type' => 'application/json' })
+
+        strategy.call!(callback_env)
+
+        expect(callback_env['omniauth.error.type']).to eq(:missing_email)
+        expect(callback_env['omniauth.auth']).to be_nil
+      end
+
+      it 'fails with missing_email when the userinfo email is blank' do
+        stub_request(:get, userinfo_url)
+          .to_return(status: 200, body: userinfo_body.merge('email' => '').to_json, headers: { 'Content-Type' => 'application/json' })
+
+        strategy.call!(callback_env)
+
+        expect(callback_env['omniauth.error.type']).to eq(:missing_email)
+        expect(callback_env['omniauth.auth']).to be_nil
+      end
+    end
+
+    describe 'name source' do
+      it 'falls back to the id_token name when userinfo has none' do
+        stub_request(:post, token_url)
+          .to_return(status: 200, body: {
+            access_token: 'test-access-token',
+            id_token: JWT.encode(token_payload.merge('name' => name), rsa_key, 'RS256', { kid: 'test-key-1' }),
+            token_type: 'Bearer',
+            expires_in: 900
+          }.to_json, headers: { 'Content-Type' => 'application/json' })
+        stub_request(:get, userinfo_url)
+          .to_return(status: 200, body: userinfo_body.except('name').to_json, headers: { 'Content-Type' => 'application/json' })
+
+        strategy.call!(callback_env)
+
+        expect(callback_env['omniauth.auth'][:info][:name]).to eq(name)
+      end
+
+      it 'falls back to the email when neither carries a name' do
+        stub_request(:get, userinfo_url)
+          .to_return(status: 200, body: userinfo_body.except('name').to_json, headers: { 'Content-Type' => 'application/json' })
+
+        strategy.call!(callback_env)
+
+        expect(callback_env['omniauth.auth'][:info][:name]).to eq(email)
+      end
+
+      it 'treats a blank userinfo name as missing' do
+        stub_request(:post, token_url)
+          .to_return(status: 200, body: {
+            access_token: 'test-access-token',
+            id_token: JWT.encode(token_payload.merge('name' => name), rsa_key, 'RS256', { kid: 'test-key-1' }),
+            token_type: 'Bearer',
+            expires_in: 900
+          }.to_json, headers: { 'Content-Type' => 'application/json' })
+        stub_request(:get, userinfo_url)
+          .to_return(status: 200, body: userinfo_body.merge('name' => '').to_json, headers: { 'Content-Type' => 'application/json' })
+
+        strategy.call!(callback_env)
+
+        expect(callback_env['omniauth.auth'][:info][:name]).to eq(name)
+      end
+    end
+
+    describe 'when the userinfo request fails' do
+      it 'fails with userinfo_failed when userinfo returns 500' do
+        stub_request(:get, userinfo_url).to_return(status: 500)
+
+        strategy.call!(callback_env)
+
+        expect(callback_env['omniauth.error.type']).to eq(:userinfo_failed)
+        expect(callback_env['omniauth.auth']).to be_nil
+      end
+
+      it 'fails with userinfo_failed when userinfo rejects the access token' do
+        stub_request(:get, userinfo_url).to_return(status: 401)
+
+        strategy.call!(callback_env)
+
+        expect(callback_env['omniauth.error.type']).to eq(:userinfo_failed)
+        expect(callback_env['omniauth.auth']).to be_nil
+      end
+
+      it 'fails with userinfo_failed when userinfo times out' do
+        stub_request(:get, userinfo_url).to_timeout
+
+        strategy.call!(callback_env)
+
+        expect(callback_env['omniauth.error.type']).to eq(:userinfo_failed)
+        expect(callback_env['omniauth.auth']).to be_nil
+      end
+
+      it 'fails with userinfo_failed when the connection resets' do
+        stub_request(:get, userinfo_url).to_raise(Errno::ECONNRESET)
+
+        strategy.call!(callback_env)
+
+        expect(callback_env['omniauth.error.type']).to eq(:userinfo_failed)
+        expect(callback_env['omniauth.auth']).to be_nil
+      end
+
+      it 'fails with userinfo_failed when userinfo returns invalid JSON' do
+        stub_request(:get, userinfo_url).to_return(status: 200, body: 'not json')
+
+        strategy.call!(callback_env)
+
+        expect(callback_env['omniauth.error.type']).to eq(:userinfo_failed)
+        expect(callback_env['omniauth.auth']).to be_nil
+      end
+
+      it 'fails with userinfo_failed when the userinfo body is an array instead of an object' do
+        stub_request(:get, userinfo_url).to_return(status: 200, body: '[]', headers: { 'Content-Type' => 'application/json' })
+
+        strategy.call!(callback_env)
+
+        expect(callback_env['omniauth.error.type']).to eq(:userinfo_failed)
+        expect(callback_env['omniauth.auth']).to be_nil
+      end
+
+      it 'fails with userinfo_failed when the userinfo body is null instead of an object' do
+        stub_request(:get, userinfo_url).to_return(status: 200, body: 'null', headers: { 'Content-Type' => 'application/json' })
+
+        strategy.call!(callback_env)
+
+        expect(callback_env['omniauth.error.type']).to eq(:userinfo_failed)
+        expect(callback_env['omniauth.auth']).to be_nil
+      end
+
+      it 'returns the failure response from the middleware instead of a nil Rack response' do
+        stub_request(:get, userinfo_url).to_return(status: 500)
+
+        response = strategy.call(callback_env)
+
+        expect(response).to be_a(Array)
+        expect(response[0]).to eq(302)
+        expect(response[1]['Location']).to start_with('/auth/failure?')
+      end
     end
   end
 

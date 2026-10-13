@@ -59,3 +59,7 @@
   .py-4.py-lg-5.section
     .container
       = render partial: 'members/organisers_grid', locals: { members: @event.organisers, show_info: false }
+
+.py-4.py-lg-5
+  .container
+    = render partial: 'shared/support_us_component', locals: { title: t('homepage.support_us_component.title'), with_button: true }

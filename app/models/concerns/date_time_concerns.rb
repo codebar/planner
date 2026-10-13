@@ -26,16 +26,31 @@ module DateTimeConcerns
       date_and_time&.time
     end
 
+    # The timezone conversion is a pure function of the attribute value and
+    # the chapter time zone, and views read these several times per request
+    # (title, header, meta tags, actions partial), so memoize per instance.
+    # The attribute writers invalidate the memo so any assignment path
+    # (attribute writer, update, set_date_and_time) stays consistent.
     def date_and_time
-      return nil unless super
+      return @date_and_time if defined?(@date_and_time)
 
-      super.in_time_zone(time_zone)
+      @date_and_time = super&.in_time_zone(time_zone)
     end
 
     def ends_at
-      return nil unless super
+      return @ends_at if defined?(@ends_at)
 
-      super.in_time_zone(time_zone)
+      @ends_at = super&.in_time_zone(time_zone)
+    end
+
+    def date_and_time=(value)
+      clear_datetime_memo
+      super
+    end
+
+    def ends_at=(value)
+      clear_datetime_memo
+      super
     end
 
     def past?
@@ -43,6 +58,11 @@ module DateTimeConcerns
     end
 
     private
+
+    def clear_datetime_memo
+      remove_instance_variable(:@date_and_time) if defined?(@date_and_time)
+      remove_instance_variable(:@ends_at) if defined?(@ends_at)
+    end
 
     def datetime_from_fields(date_string, time_string)
       return nil if date_string.blank? || time_string.blank? || !time_zone
