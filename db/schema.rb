@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_12_090000) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_13_100000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -410,7 +410,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_12_090000) do
     t.text "description"
     t.datetime "ends_at", precision: nil
     t.boolean "invitable"
-    t.boolean "invites_sent", default: false
     t.string "name"
     t.string "slug"
     t.integer "spaces"
