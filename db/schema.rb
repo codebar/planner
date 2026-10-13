@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_13_100000) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_13_152754) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -205,7 +205,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_13_100000) do
     t.boolean "announce_only"
     t.string "audience"
     t.string "check_in_code"
-    t.text "coach_description"
     t.string "coach_questionnaire"
     t.integer "coach_spaces"
     t.boolean "confirmation_required", default: false
