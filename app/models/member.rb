@@ -1,5 +1,5 @@
 class Member < ApplicationRecord
-  self.ignored_columns += ['can_log_in']
+  self.ignored_columns += %w[can_log_in unsubscribed]
 
   include DigestHelper
 
