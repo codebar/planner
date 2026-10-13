@@ -286,6 +286,13 @@ Rails/FilePath:
   Exclude:
     - "spec/rails_helper.rb"
 
+# find_each is an ActiveRecord batch-loading API. In Capybara specs, `page.all`
+# returns a plain Array of elements, so this cop can only produce false positives.
+Rails/FindEach:
+  Enabled: true
+  Exclude:
+    - "spec/**/*"
+
 RSpec/MultipleExpectations:
   Max: 8
 
