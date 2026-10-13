@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_09_24_090000) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_12_090000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -462,7 +462,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_24_090000) do
     t.boolean "received_coach_welcome_email", default: false
     t.boolean "received_student_welcome_email", default: false
     t.string "surname"
-    t.boolean "unsubscribed"
     t.datetime "updated_at", precision: nil
     t.index ["email"], name: "index_members_on_email", unique: true
   end

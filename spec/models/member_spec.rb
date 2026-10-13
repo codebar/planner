@@ -326,5 +326,9 @@ RSpec.describe Member do
     it 'does not expose the legacy unsubscribed attribute' do
       expect(described_class.new).not_to respond_to(:unsubscribed)
     end
+
+    it 'has dropped the legacy unsubscribed column from the database' do
+      expect(ActiveRecord::Base.connection.column_exists?(:members, :unsubscribed)).to be(false)
+    end
   end
 end
