@@ -1,4 +1,6 @@
 class Meeting < ApplicationRecord
+  self.ignored_columns += %w[invites_sent]
+
   include DateTimeConcerns
   include Listable
   include Invitable
