@@ -86,5 +86,9 @@ RSpec.describe Meeting do
     it 'does not expose the legacy invites_sent attribute' do
       expect(described_class.new).not_to respond_to(:invites_sent)
     end
+
+    it 'has dropped the legacy invites_sent column from the database' do
+      expect(ActiveRecord::Base.connection.column_exists?(:meetings, :invites_sent)).to be(false)
+    end
   end
 end
