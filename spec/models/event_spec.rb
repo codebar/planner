@@ -120,4 +120,10 @@ RSpec.describe Event do
       expect(described_class.single_chapter).not_to include(multi)
     end
   end
+
+  describe 'legacy columns' do
+    it 'does not expose the legacy coach_description attribute' do
+      expect(described_class.new).not_to respond_to(:coach_description)
+    end
+  end
 end
