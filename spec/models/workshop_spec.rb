@@ -415,4 +415,10 @@ RSpec.describe Workshop do
       expect(workshop.cancellations_open?).to be(false)
     end
   end
+
+  describe 'legacy columns' do
+    it 'does not expose the legacy sign_up_url attribute' do
+      expect(described_class.new).not_to respond_to(:sign_up_url)
+    end
+  end
 end
