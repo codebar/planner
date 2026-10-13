@@ -1,6 +1,4 @@
 class Member < ApplicationRecord
-  self.ignored_columns += %w[can_log_in unsubscribed]
-
   include DigestHelper
 
   rolify role_cname: 'Permission', role_table_name: :permission, role_join_table_name: :members_permissions
