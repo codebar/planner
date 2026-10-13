@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_13_100000) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_13_110000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -646,7 +646,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_13_100000) do
     t.boolean "invitable", default: true
     t.datetime "rsvp_closes_at", precision: nil
     t.datetime "rsvp_opens_at", precision: nil
-    t.string "sign_up_url"
     t.string "slack_channel"
     t.string "slack_channel_link"
     t.integer "student_spaces", default: 0
