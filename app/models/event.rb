@@ -5,6 +5,8 @@ class Event < ApplicationRecord
   include CheckInable
   include RsvpClosable
 
+  self.ignored_columns += [:coach_description]
+
   attr_accessor :local_date, :local_time, :local_end_time
 
   resourcify :permissions, role_cname: 'Permission', role_table_name: :permission
