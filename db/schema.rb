@@ -645,7 +645,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_13_120000) do
     t.boolean "invitable", default: true
     t.datetime "rsvp_closes_at", precision: nil
     t.datetime "rsvp_opens_at", precision: nil
-    t.string "sign_up_url"
     t.string "slack_channel"
     t.string "slack_channel_link"
     t.integer "student_spaces", default: 0
