@@ -1,4 +1,6 @@
 class Workshop < ApplicationRecord
+  self.ignored_columns += %w[sign_up_url]
+
   include DateTimeConcerns
   include Invitable
   include CheckInable
