@@ -18,28 +18,6 @@ RSpec.describe EventsFeedQuery do
         expect(result).to eq([{}, nil])
       end
 
-      it 'returns events from each type in reverse date order and excludes inactive chapters' do
-        now = Time.zone.now
-        meeting = Fabricate(:meeting, date_and_time: now - 1.day)
-        workshop = Fabricate(:workshop, date_and_time: now - 2.days, ends_at: now - 2.days + 2.hours)
-        event = Fabricate(:event, date_and_time: now - 3.days)
-        Fabricate(:event, date_and_time: now + 1.day)
-        Fabricate(:workshop, chapter: Fabricate(:chapter, active: false),
-                             date_and_time: now - 4.days,
-                             ends_at: now - 4.days + 2.hours)
-
-        events, pagy = described_class.new(upcoming: false, page: 1, request:).call
-        listed_events =
-          events
-          .values
-          .flat_map { |day_events| day_events }
-          .map { |listed_event| [listed_event.class_string, listed_event.id] }
-
-        expect(listed_events).to eq([['meeting', meeting.id], ['workshop', workshop.id], ['event', event.id]])
-        expect(events.keys).to eq([meeting.date, workshop.date, event.date])
-        expect(pagy.count).to eq(3)
-      end
-
       it 'paginates in reverse chronological order and builds links for the past path' do
         venue = Fabricate(:sponsor)
         meetings = Array.new(21) do |index|
@@ -69,7 +47,7 @@ RSpec.describe EventsFeedQuery do
         expect(result).to eq([{}, nil])
       end
 
-      it 'returns events from each type in date order and excludes inactive chapters' do
+      it 'returns decorated events from each type grouped by date' do
         now = Time.zone.now
         meeting = Fabricate(:meeting, date_and_time: now + 1.day, ends_at: now + 1.day + 2.hours)
         workshop = Fabricate(:workshop, date_and_time: now + 2.days, ends_at: now + 2.days + 2.hours)
@@ -84,6 +62,7 @@ RSpec.describe EventsFeedQuery do
 
         expect(listed_events).to eq([['meeting', meeting.id], ['workshop', workshop.id], ['event', event.id]])
         expect(events.keys).to eq([meeting.date, workshop.date, event.date])
+        events.each_value { |day_events| expect(day_events).to all(be_a(EventPresenter)) }
         expect(pagy.count).to eq(3)
       end
 
