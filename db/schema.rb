@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_13_103442) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_13_120000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -163,7 +163,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_13_103442) do
     t.boolean "announce_only"
     t.string "audience"
     t.string "check_in_code"
-    t.text "coach_description"
     t.string "coach_questionnaire"
     t.integer "coach_spaces"
     t.boolean "confirmation_required", default: false
@@ -343,7 +342,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_13_103442) do
     t.text "description"
     t.datetime "ends_at", precision: nil
     t.boolean "invitable"
-    t.boolean "invites_sent", default: false
     t.string "name"
     t.string "slug"
     t.integer "spaces"
@@ -580,7 +578,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_13_103442) do
     t.boolean "invitable", default: true
     t.datetime "rsvp_closes_at", precision: nil
     t.datetime "rsvp_opens_at", precision: nil
-    t.string "sign_up_url"
     t.string "slack_channel"
     t.string "slack_channel_link"
     t.integer "student_spaces", default: 0
