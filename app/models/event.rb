@@ -1,6 +1,4 @@
 class Event < ApplicationRecord
-  self.ignored_columns += %w[coach_description]
-
   include DateTimeConcerns
   include Listable
   include Invitable
