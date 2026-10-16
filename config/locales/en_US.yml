@@ -544,6 +544,29 @@ en-US:
               title: Become a codebar volunteer
               description: codebar can be a supportive village for people navigating learning, careers and difficult periods in their lives. Our volunteers help us to create that crucial community.
               link: Volunteer
+      other_ways_to_support:
+        headline: Other ways you can support codebar
+        tagline: "Whether you're volunteering, shopping online or giving through your workplace, every contribution helps us reach more people and create more opportunities."
+        volunteer:
+          title: Volunteer with us
+          description: "Use your skills to help people from underrepresented backgrounds break into tech. From coaching at workshops to organising events, marketing and fundraising, our volunteers help us create the supportive, welcoming community that makes codebar what it is."
+          link: Find out how to volunteer
+        give_as_you_live:
+          title: Give as you live
+          description: "If you shop online, you can raise free funds for codebar without spending a penny extra. Sign up to Give as you Live and a percentage of every purchase you make with thousands of retailers goes directly to us (at no cost to you)."
+          link: Start raising with Give as you Live
+        workplace_giving:
+          title: Workplace giving
+          description: "Many employers offer payroll giving schemes that let you donate to charity directly from your salary before tax, meaning your gift goes further. Check with your HR team whether your workplace offers a scheme, and nominate codebar as your chosen charity. Or your company may be using Benevity, for every hour that you volunteer for codebar they make a small donation to us. Again, ask your HR team."
+        gift_matching:
+          title: Gift matching
+          description: "Does your employer match charitable donations? Many do, particularly in the tech sector. If you donate to codebar or fundraise for us, ask your employer whether they'll match your contribution. It's one of the simplest ways to double your impact."
+        leave_a_legacy:
+          title: Leave a legacy
+          description_html: "A gift in your will is one of the most meaningful ways to support codebar's future. If you'd like to find out more about leaving a legacy, please get in touch at <a href='mailto:hello@codebar.io'>hello@codebar.io</a>."
+        support_your_way:
+          title: Support your way
+          description_html: "Not sure which of these feels right? Drop us a message at <a href='mailto:hello@codebar.io'>hello@codebar.io</a> and we'll help you find the best way to get involved."
       fundraise:
         title: Fundraise
         headline: Take on a challenge for codebar
