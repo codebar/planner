@@ -21,7 +21,7 @@
       = render partial: 'shared/announcements', locals: { announcements: @announcements }
 
   .row
-    .col-12.col-md-7.col-lg-8
+    .col-12.col-md-6
       %p#introduction
         Hi #{@invitation.member.name},
       = render partial: @invitation.role.downcase
@@ -44,7 +44,7 @@
                 %li= t('workshop.virtual.invitation.info.line_5')
                 %li= t('workshop.virtual.invitation.info.line_6')
 
-    .col-12.col-md-5.col-lg-4
+    .col-12.col-md-6
       .card.border-info.mb-3
         - if @workshop.past?
           .card-body
