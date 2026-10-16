@@ -31,7 +31,10 @@ RSpec.describe CheckInsController do
     end
 
     context 'when logged in' do
-      before { login(member) }
+      before do
+        login(member)
+        Fabricate(:subscription, member:, group: Fabricate(:group, name: 'Students'))
+      end
 
       it 'creates an invitation with source=check_in' do
         post :create, params: { code: event.check_in_code, role: 'Student' }
@@ -46,6 +49,16 @@ RSpec.describe CheckInsController do
         post :create, params: { code: future_event.check_in_code, role: 'Student' }
         expect(response).to redirect_to(check_in_e_path(code: future_event.check_in_code))
         expect(flash[:alert]).to eq('Check-in is not currently open.')
+      end
+
+      it 'keeps the role when check-in is refused' do
+        Fabricate(:invitation, event: future_event, member:, role: 'Student')
+        Fabricate(:subscription, member:, group: Fabricate(:group, name: 'Coaches'))
+
+        post :create, params: { code: future_event.check_in_code, role: 'Coach' }
+
+        expect(flash[:alert]).to eq('Check-in is not currently open.')
+        expect(Invitation.find_by(event: future_event, member:).role).to eq('Student')
       end
 
       it 'rejects an invalid role' do
@@ -68,11 +81,62 @@ RSpec.describe CheckInsController do
         expect(Invitation.find(invitation.id).verified).to be true
       end
 
-      it 'rejects selecting a different role than the existing invitation' do
+      it 'checks in an undecided invitation in the chosen role' do
         Fabricate(:invitation, event:, member:, role: 'Student')
+        Fabricate(:subscription, member:, group: Fabricate(:group, name: 'Coaches'))
+        post :create, params: { code: event.check_in_code, role: 'Coach' }
+        invitation = Invitation.find_by(event:, member:)
+        expect(invitation.role).to eq('Coach')
+        expect(invitation.verified).to be true
+        expect(response).to redirect_to(check_in_e_confirm_path(code: event.check_in_code))
+      end
+
+      it 'rejects a role change when the member already accepted' do
+        Fabricate(:invitation, event:, member:, role: 'Student', attending: true)
         post :create, params: { code: event.check_in_code, role: 'Coach' }
         expect(response).to redirect_to(check_in_e_path(code: event.check_in_code))
         expect(flash[:alert]).to include('Student')
+        expect(Invitation.find_by(event:, member:).role).to eq('Student')
+      end
+
+      it 'rejects a role change when the member is on the waiting list' do
+        workshop = Fabricate(:workshop,
+                             date_and_time: Time.zone.now - 30.minutes,
+                             ends_at: Time.zone.now + 30.minutes)
+        invitation = Fabricate(:workshop_invitation, workshop:, member:, role: 'Student')
+        WaitingList.add(invitation)
+        post :create, params: { code: workshop.check_in_code, role: 'Coach' }
+        expect(response).to redirect_to(check_in_w_path(code: workshop.check_in_code))
+        expect(flash[:alert]).to include('Student')
+        expect(invitation.reload.role).to eq('Student')
+      end
+
+      it 'refuses check-in in a role the member is not subscribed to' do
+        post :create, params: { code: event.check_in_code, role: 'Coach' }
+
+        expect(response).to redirect_to(check_in_e_path(code: event.check_in_code))
+        expect(flash[:alert]).to eq('You are not subscribed as a Coach.')
+      end
+
+      it 'refuses a role change to a role the member is not subscribed to' do
+        Fabricate(:invitation, event:, member:, role: 'Student')
+
+        post :create, params: { code: event.check_in_code, role: 'Coach' }
+
+        expect(flash[:alert]).to eq('You are not subscribed as a Coach.')
+        expect(Invitation.find_by(event:, member:).role).to eq('Student')
+      end
+
+      it 'checks in an unsubscribed member in the role of their invitation' do
+        other = Fabricate(:member)
+        Fabricate(:invitation, event:, member: other, role: 'Coach')
+        login(other)
+
+        post :create, params: { code: event.check_in_code, role: 'Coach' }
+
+        invitation = Invitation.find_by(event:, member: other)
+        expect(invitation.role).to eq('Coach')
+        expect(invitation.verified).to be true
       end
 
       it 'rejects check-in when the role is at capacity' do
