@@ -40,7 +40,7 @@ class InvitationsController < ApplicationController
 
     role = chosen_role(@invitation)
 
-    if (role.eql?('Student') && event.student_spaces?) || (role.eql?('Coach') && event.coach_spaces?)
+    if (role == 'Student' && event.student_spaces?) || (role == 'Coach' && event.coach_spaces?)
       @invitation.update!(attending: true, role:)
 
       MemberActivityRecorder.record(actor: @invitation.member, key: 'event_invitation.rsvp',

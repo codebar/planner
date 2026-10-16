@@ -28,7 +28,7 @@ module RoleChoiceConcerns
   # both student and coach can therefore choose, and the choice is open on the
   # server for anyone the views already offer it to.
   def role_permitted?(member, role)
-    role.eql?('Student') ? member.student? : member.coach?
+    role == 'Student' ? member.student? : member.coach?
   end
 
   def not_subscribed_role_message(role)

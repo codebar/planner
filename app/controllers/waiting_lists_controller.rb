@@ -42,8 +42,11 @@ class WaitingListsController < ApplicationController
 
   def join_waiting_list
     @invitation.save && WaitingList.add(@invitation, auto_rsvp)
-    MemberActivityRecorder.record(actor: @invitation.member, key: 'waiting_list.joined',
-                                  trackable: @invitation)
+    MemberActivityRecorder.record(
+      actor: @invitation.member,
+      key: 'waiting_list.joined',
+      trackable: @invitation
+    )
   end
 
   def waiting_list_message

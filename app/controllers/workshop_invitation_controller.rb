@@ -97,8 +97,8 @@ class WorkshopInvitationController < ApplicationController
   end
 
   def available_spaces?(workshop, role)
-    (role.eql?('Student') && workshop.event_student_spaces?) ||
-      (role.eql?('Coach') && workshop.event_coach_spaces?)
+    (role == 'Student' && workshop.event_student_spaces?) ||
+      (role == 'Coach' && workshop.event_coach_spaces?)
   end
 
   # Inline from InvitationControllerConcerns

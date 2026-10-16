@@ -6,7 +6,7 @@
   %hr
   - if @workshop.waitlist_open?
     = simple_form_for @invitation, url: invitation_waiting_list_path(@invitation), method: :post do |f|
-      - if role.eql?('Student')
+      - if role == 'Student'
         = f.input :tutorial, collection: @tutorial_titles, include_blank: true
         = f.input :note, required: false, input_html: { rows: 3, maxlength: 100 }, hint: 'Anything else we should know?', placeholder: 'e.g. I need help understanding selectors'
       - else
