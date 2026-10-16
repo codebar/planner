@@ -1,6 +1,7 @@
 class WorkshopInvitationController < ApplicationController
   include WorkshopInvitationConcerns
   include WaitlistPromotionConcerns
+  include RoleChoiceConcerns
 
   # NOTE: This controller handles workshop invitations (WorkshopInvitation model).
   # It provides accept/reject RSVP actions for workshop attendees via token-based links.
@@ -17,6 +18,7 @@ class WorkshopInvitationController < ApplicationController
     @tutorial_titles = Tutorial.all_titles
 
     @workshop = WorkshopPresenter.decorate(@invitation.workshop)
+    @role_choice = role_choice_available?(@invitation)
 
     render plain: @workshop.attendees_csv if request.format.csv?
   end
@@ -42,10 +44,12 @@ class WorkshopInvitationController < ApplicationController
 
     return back_with_message(t('messages.already_invited')) if attending_or_waitlisted?(workshop, user)
 
-    @workshop = WorkshopPresenter.decorate(@invitation.workshop)
-    return back_with_message(t('messages.no_available_seats')) unless available_spaces?(@workshop, @invitation)
+    role = chosen_role(@invitation)
 
-    if @invitation.update(invitation_params.merge!(attending: true, rsvp_time: Time.zone.now))
+    @workshop = WorkshopPresenter.decorate(@invitation.workshop)
+    return back_with_message(t('messages.no_available_seats')) unless available_spaces?(@workshop, role)
+
+    if @invitation.update(invitation_params.merge!(attending: true, rsvp_time: Time.zone.now, role:))
       MemberActivityRecorder.record(actor: @invitation.member, key: 'workshop_invitation.rsvp',
                                     trackable: @invitation)
       @workshop.send_attending_email(@invitation)
@@ -92,9 +96,9 @@ class WorkshopInvitationController < ApplicationController
     end
   end
 
-  def available_spaces?(workshop, invitation)
-    (invitation.role.eql?('Student') && workshop.event_student_spaces?) ||
-      (invitation.role.eql?('Coach') && workshop.event_coach_spaces?)
+  def available_spaces?(workshop, role)
+    (role.eql?('Student') && workshop.event_student_spaces?) ||
+      (role.eql?('Coach') && workshop.event_coach_spaces?)
   end
 
   # Inline from InvitationControllerConcerns

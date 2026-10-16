@@ -1,5 +1,6 @@
 class WaitingListsController < ApplicationController
   include WorkshopInvitationConcerns
+  include RoleChoiceConcerns
 
   # The invitation token in the URL is the authenticator for these actions;
   # CSRF is redundant and fails when browsers withhold the session cookie
@@ -7,26 +8,18 @@ class WaitingListsController < ApplicationController
   # FeedbackController#submit (PR #2641, Rollbar #535).
   skip_forgery_protection only: %i[create destroy]
 
-  def create # rubocop:disable Metrics/MethodLength
+  def create
     # Joins and leaves stop at the earlier of the RSVP close time and the
     # 3.5-hour freeze, so the waitlist handed to security stays stable.
     return back_with_message(t('messages.waiting_list.closed')) if waitlist_closed?
 
-    @invitation.assign_attributes(invitation_params)
+    @invitation.assign_attributes(invitation_params.merge(role: chosen_role(@invitation)))
 
     return back_with_message(@invitation.errors.full_messages) unless @invitation.valid?(:waitinglist)
 
-    @invitation.save && WaitingList.add(@invitation, auto_rsvp)
-    MemberActivityRecorder.record(actor: @invitation.member, key: 'waiting_list.joined',
-                                  trackable: @invitation)
+    join_waiting_list
 
-    message = if auto_rsvp
-      'You have been added to the waiting list'
-    else
-      'We will send you an email if any spots become available'
-    end
-
-    back_with_message(message)
+    back_with_message(waiting_list_message)
   end
 
   def destroy
@@ -46,6 +39,20 @@ class WaitingListsController < ApplicationController
   end
 
   private
+
+  def join_waiting_list
+    @invitation.save && WaitingList.add(@invitation, auto_rsvp)
+    MemberActivityRecorder.record(actor: @invitation.member, key: 'waiting_list.joined',
+                                  trackable: @invitation)
+  end
+
+  def waiting_list_message
+    if auto_rsvp
+      'You have been added to the waiting list'
+    else
+      'We will send you an email if any spots become available'
+    end
+  end
 
   def waitlist_closed?
     !@invitation.workshop.waitlist_open?

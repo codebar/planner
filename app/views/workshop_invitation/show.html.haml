@@ -79,7 +79,29 @@
                 - else
                   = @invitation.member.bans.active.first.reason
             - else
-              - if @invitation.for_coach?
+              - if @role_choice
+                %p
+                  You are subscribed as both a student and a coach.
+                  %strong Choose how you would like to attend.
+                .row
+                  .col-12.col-md-6
+                    %h4 As a student
+                    - if @workshop.event_student_spaces?
+                      = simple_form_for @invitation, url: accept_invitation_path(@invitation), method: :post do |f|
+                        = f.input :tutorial, collection: @tutorial_titles, include_blank: true
+                        = f.input :note, required: false, input_html: { rows: 3, maxlength: 100 }, hint: 'Anything else we should know?', placeholder: 'e.g. I need help understanding selectors'
+                        = f.button :button, 'Attend as a student', name: 'role', value: 'Student', class: 'btn btn-primary w-100 mb-0'
+                    - else
+                      = render partial: 'workshop_invitation/waiting_list', locals: { invitation: @invitation, role: 'Student', button_label: 'Join the student waiting list' }
+                  .col-12.col-md-6
+                    %h4 As a coach
+                    - if @workshop.event_coach_spaces?
+                      = simple_form_for @invitation, url: accept_invitation_path(@invitation), method: :post do |f|
+                        = f.input :note, required: false, input_html: { rows: 3, maxlength: 100 }
+                        = f.button :button, 'Attend as a coach', name: 'role', value: 'Coach', class: 'btn btn-primary w-100 mb-0'
+                    - else
+                      = render partial: 'workshop_invitation/waiting_list', locals: { invitation: @invitation, role: 'Coach', button_label: 'Join the coach waiting list' }
+              - elsif @invitation.for_coach?
                 - if @workshop.event_coach_spaces?
                   = link_to 'Keep your skills up-to-date!', edit_member_path
                   %span.d-block

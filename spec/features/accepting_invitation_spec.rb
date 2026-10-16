@@ -24,6 +24,48 @@ RSpec.feature 'Accepting a workshop invitation' do
 
     it_behaves_like 'invitation route'
 
+    context 'when the member is subscribed as both student and coach' do
+      before do
+        Fabricate(:subscription, member:, group: Fabricate(:group, name: 'Students'))
+        Fabricate(:subscription, member:, group: Fabricate(:group, name: 'Coaches'))
+      end
+
+      scenario 'offers the choice of role' do
+        visit invitation_route
+
+        expect(page).to have_text('Choose how you would like to attend')
+        expect(page).to have_button('Attend as a student')
+        expect(page).to have_button('Attend as a coach')
+      end
+
+      scenario 'accepts in the chosen role' do
+        visit invitation_route
+        click_on 'Attend as a coach'
+
+        expect(invitation.reload.role).to eq('Coach')
+        expect(invitation.attending).to be true
+      end
+
+      scenario 'joins the waiting list for the chosen role when that role is full' do
+        set_no_available_slots
+
+        visit invitation_route
+        click_on 'Join the student waiting list'
+
+        expect(invitation.reload.role).to eq('Student')
+        expect(invitation.waiting_list).to be_present
+      end
+    end
+
+    context 'when the member is subscribed in one role' do
+      scenario 'shows no role choice' do
+        visit invitation_route
+
+        expect(page).to have_button('Attend')
+        expect(page).to have_no_text('Choose how you would like to attend')
+      end
+    end
+
     context 'when workshop is full' do
       scenario 'shows waiting list option when there are no available seats' do
         set_no_available_slots

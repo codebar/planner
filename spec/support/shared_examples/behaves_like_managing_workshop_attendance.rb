@@ -61,7 +61,7 @@ RSpec.shared_examples 'managing workshop attendance' do
             click_on 'Attend as a student'
 
             select tutorial.title, from: :workshop_invitation_tutorial
-            click_on 'Attend'
+            click_on 'Attend as a student'
 
             expect(page).to have_text('See you at the workshop')
 
@@ -71,7 +71,7 @@ RSpec.shared_examples 'managing workshop attendance' do
 
           it 'can get to the RSVP as a coach page' do
             click_on 'Attend as a coach'
-            click_on 'Attend'
+            click_on 'Attend as a coach'
 
             expect(page).to have_text('See you at the workshop')
 
@@ -93,7 +93,7 @@ RSpec.shared_examples 'managing workshop attendance' do
             visit workshop_path(workshop)
 
             click_on 'Attend as a coach'
-            click_on 'Attend'
+            click_on 'Attend as a coach'
 
             visit workshop_path(workshop)
 
