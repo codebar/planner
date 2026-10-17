@@ -96,13 +96,15 @@ module ApplicationHelper
   end
 
   # Admin-page subject of a member activity: the entity the action was about.
-  # Returns nil when the subject is the member themselves (e.g. logins, bans).
+  # Returns nil when the subject is the member themselves (e.g. logins).
+  # Ban and MemberNote records have no admin show route, so link their member.
   def activity_subject(activity)
     case (trackable = activity.trackable)
     when WorkshopInvitation then trackable.workshop
     when Invitation then trackable.event
     when MeetingInvitation then trackable.meeting
     when Member then nil
+    when Ban, MemberNote then trackable.member
     else trackable
     end
   end

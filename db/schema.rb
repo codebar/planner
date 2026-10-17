@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_13_100000) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_13_120000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -135,48 +135,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_13_100000) do
     t.index ["sponsor_id"], name: "index_contacts_on_sponsor_id"
   end
 
-  create_table "course_invitations", id: :serial, force: :cascade do |t|
-    t.boolean "attended"
-    t.boolean "attending"
-    t.integer "course_id"
-    t.datetime "created_at", precision: nil
-    t.integer "member_id"
-    t.text "note"
-    t.string "token"
-    t.datetime "updated_at", precision: nil
-    t.index ["course_id"], name: "index_course_invitations_on_course_id"
-    t.index ["member_id"], name: "index_course_invitations_on_member_id"
-  end
-
-  create_table "course_tutors", id: :serial, force: :cascade do |t|
-    t.integer "course_id"
-    t.datetime "created_at", precision: nil
-    t.integer "tutor_id"
-    t.datetime "updated_at", precision: nil
-    t.index ["course_id"], name: "index_course_tutors_on_course_id"
-    t.index ["tutor_id"], name: "index_course_tutors_on_tutor_id"
-  end
-
-  create_table "courses", id: :serial, force: :cascade do |t|
-    t.integer "chapter_id"
-    t.datetime "created_at", precision: nil
-    t.datetime "date_and_time", precision: nil
-    t.text "description"
-    t.datetime "ends_at", precision: nil
-    t.integer "seats", default: 0
-    t.string "short_description"
-    t.string "slug"
-    t.integer "sponsor_id"
-    t.string "ticket_url"
-    t.string "title"
-    t.integer "tutor_id"
-    t.datetime "updated_at", precision: nil
-    t.string "url"
-    t.index ["chapter_id"], name: "index_courses_on_chapter_id"
-    t.index ["sponsor_id"], name: "index_courses_on_sponsor_id"
-    t.index ["tutor_id"], name: "index_courses_on_tutor_id"
-  end
-
   create_table "delayed_jobs", id: :serial, force: :cascade do |t|
     t.integer "attempts", default: 0, null: false
     t.datetime "created_at", precision: nil
@@ -205,7 +163,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_13_100000) do
     t.boolean "announce_only"
     t.string "audience"
     t.string "check_in_code"
-    t.text "coach_description"
     t.string "coach_questionnaire"
     t.integer "coach_spaces"
     t.boolean "confirmation_required", default: false
@@ -359,31 +316,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_13_100000) do
     t.index ["member_id"], name: "index_invitations_on_member_id"
     t.index ["token"], name: "index_invitations_on_token", unique: true
     t.index ["verified_by_id"], name: "index_invitations_on_verified_by_id"
-  end
-
-  create_table "jobs", id: :serial, force: :cascade do |t|
-    t.boolean "approved", default: false
-    t.integer "approved_by_id"
-    t.string "company"
-    t.string "company_address"
-    t.string "company_postcode"
-    t.string "company_website"
-    t.datetime "created_at", precision: nil
-    t.integer "created_by_id"
-    t.text "description"
-    t.string "email"
-    t.datetime "expiry_date", precision: nil
-    t.string "link_to_job"
-    t.string "location"
-    t.datetime "published_on", precision: nil
-    t.boolean "remote"
-    t.integer "salary"
-    t.string "slug"
-    t.integer "status", default: 0
-    t.boolean "submitted", default: false
-    t.string "title"
-    t.datetime "updated_at", precision: nil
-    t.index ["created_by_id"], name: "index_jobs_on_created_by_id"
   end
 
   create_table "meeting_invitations", id: :serial, force: :cascade do |t|
@@ -646,7 +578,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_13_100000) do
     t.boolean "invitable", default: true
     t.datetime "rsvp_closes_at", precision: nil
     t.datetime "rsvp_opens_at", precision: nil
-    t.string "sign_up_url"
     t.string "slack_channel"
     t.string "slack_channel_link"
     t.integer "student_spaces", default: 0
