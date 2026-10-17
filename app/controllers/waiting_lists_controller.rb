@@ -41,7 +41,8 @@ class WaitingListsController < ApplicationController
   private
 
   def join_waiting_list
-    @invitation.save && WaitingList.add(@invitation, auto_rsvp)
+    @invitation.save!
+    WaitingList.add(@invitation, auto_rsvp)
     MemberActivityRecorder.record(
       actor: @invitation.member,
       key: 'waiting_list.joined',
