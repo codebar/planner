@@ -60,6 +60,8 @@ RSpec.describe WorkshopsController do
         Fabricate(:workshop_invitation, workshop:, member:, role: 'Coach', attending: nil)
       end
 
+      before { Fabricate(:subscription, member:, group: Fabricate(:group, name: 'Coaches')) }
+
       it 'redirects to the existing invitation page' do
         post :rsvp, params: { id: workshop.id, role: 'Coach' }
 
@@ -78,6 +80,8 @@ RSpec.describe WorkshopsController do
         Fabricate(:workshop_invitation, workshop:, member:, role: 'Student', attending: nil)
       end
 
+      before { Fabricate(:subscription, member:, group: Fabricate(:group, name: 'Coaches')) }
+
       it 'updates the existing invitation to the requested role instead of creating a second one' do
         expect do
           post :rsvp, params: { id: workshop.id, role: 'Coach' }
@@ -89,6 +93,8 @@ RSpec.describe WorkshopsController do
     end
 
     context 'when the member does not have an invitation for the workshop and role' do
+      before { Fabricate(:subscription, member:, group: Fabricate(:group, name: 'Coaches')) }
+
       it 'creates a new invitation and redirects' do
         expect do
           post :rsvp, params: { id: workshop.id, role: 'Coach' }
@@ -96,6 +102,19 @@ RSpec.describe WorkshopsController do
 
         invitation = WorkshopInvitation.last
         expect(response).to redirect_to(invitation_path(invitation))
+      end
+    end
+
+    context 'when the member is not subscribed to the requested role' do
+      let!(:invitation) do
+        Fabricate(:workshop_invitation, workshop:, member:, role: 'Student', attending: nil)
+      end
+
+      it 'keeps the invitation role' do
+        post :rsvp, params: { id: workshop.id, role: 'Coach' }
+
+        expect(invitation.reload.role).to eq('Student')
+        expect(flash[:notice]).to eq('You are not subscribed as a Coach.')
       end
     end
 
