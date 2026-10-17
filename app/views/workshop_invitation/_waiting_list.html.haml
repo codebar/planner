@@ -1,6 +1,6 @@
--# locals: invitation:, role: (defaults to the invitation role), button_label: (optional)
-- role = local_assigns.fetch(:role, invitation.role)
-- button_label = local_assigns.fetch(:button_label, 'Join the waiting list')
+-# locals: (invitation:, role: nil, button_label: nil)
+- role ||= invitation.role
+- button_label ||= 'Join the waiting list'
 - if invitation.waiting_list.blank?
   %span.badge.bg-danger The workshop is full.
   %hr
