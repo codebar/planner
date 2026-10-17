@@ -2,7 +2,7 @@ class MemberMailer < ApplicationMailer
   include EmailHeaderHelper
   include EmailDelivery
 
-  after_deliver :log_sent_email, only: %i[chaser signup_nudge signup_nudge_followup]
+  after_deliver :log_sent_email, only: %i[chaser signup_nudge signup_nudge_followup coach_milestone]
 
   def signup_nudge
     @member = params[:member]
@@ -28,6 +28,15 @@ class MemberMailer < ApplicationMailer
     subject = 'It’s been a while, how are you doing? ♥️'
     mail_to_member(@member, subject, 'hello@codebar.io', 'hello@codebar.io') do |format|
       format.html { render 'three_month_chaser' }
+    end
+  end
+
+  def coach_milestone
+    @member = params[:member]
+    @milestone = params[:milestone]
+    subject = "You’ve attended #{@milestone} codebar workshops — amazing 🎉"
+    mail_to_member(@member, subject, 'hello@codebar.io', 'hello@codebar.io') do |format|
+      format.html { render 'coach_milestone' }
     end
   end
 
@@ -98,5 +107,15 @@ class MemberMailer < ApplicationMailer
     mail_to_member(member, @reason, 'hello@codebar.io', 'hello@codebar.io') do |format|
       format.html { render 'ban' }
     end.deliver
+  end
+
+  private
+
+  # One action serves every milestone, so the delivery log is keyed per
+  # milestone rather than per action (see EmailDelivery#email_type_for_log).
+  def email_type_for_log
+    return super unless action_name == 'coach_milestone'
+
+    "coach_milestone_#{params[:milestone]}"
   end
 end
