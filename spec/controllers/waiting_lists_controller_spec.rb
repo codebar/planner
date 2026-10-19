@@ -33,6 +33,25 @@ RSpec.describe WaitingListsController do
       expect(WaitingList.where(invitation:).count).to eq(1)
     end
 
+    context 'when the member chooses a role' do
+      before { Fabricate(:subscription, member: invitation.member, group: Fabricate(:group, name: 'Coaches')) }
+
+      it 'joins the waiting list for the chosen role' do
+        post :create, params: { invitation_id: invitation.token, role: 'Coach' }
+
+        expect(invitation.reload.role).to eq('Coach')
+        expect(invitation.waiting_list).to be_present
+      end
+
+      it 'does not change the role of an invitation already on the waiting list' do
+        post :create, params: { invitation_id: invitation.token }
+
+        post :create, params: { invitation_id: invitation.token, role: 'Coach' }
+
+        expect(invitation.reload.role).to eq('Student')
+      end
+    end
+
     context 'without a CSRF token (browser did not send session cookie)' do
       # Simulate the real-world scenario where the browser withholds the
       # session cookie (e.g. Safari/WebKit ITP on cross-site navigation).
