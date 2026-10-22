@@ -219,7 +219,7 @@ class Admin::WorkshopsController < Admin::ApplicationController
   end
 
   def assign_organisers(organiser_ids)
-    WorkshopOrganiserAssigner.new(@workshop, organiser_ids, @workshop.chapter).call
+    WorkshopOrganiserAssigner.new(@workshop, organiser_ids).call
   end
 
   def finish_creation
@@ -231,7 +231,7 @@ class Admin::WorkshopsController < Admin::ApplicationController
   end
 
   def assign_organisers_or_default
-    WorkshopOrganiserAssigner.new(@workshop, organiser_ids, @workshop.chapter).call
+    WorkshopOrganiserAssigner.new(@workshop, organiser_ids, default_to_chapter: true).call
   end
 
   def host_id
