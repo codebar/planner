@@ -19,6 +19,43 @@ RSpec.describe Admin::WorkshopsController do
     controller.instance_variable_get("@#{symbol}")
   end
 
+  describe 'POST #invite' do
+    let(:manager) { instance_spy(InvitationManager) }
+
+    before { allow(InvitationManager).to receive(:new).and_return(manager) }
+
+    it 'enqueues the invitation emails and sets a notice' do
+      post :invite, params: { workshop_id: workshop.id, for: 'students' }
+
+      expect(manager).to have_received(:send_workshop_emails).with(workshop, 'students', admin.id)
+      expect(response).to redirect_to(admin_workshop_path(workshop))
+      expect(flash[:notice]).to eq('Invitations to students are being emailed out.')
+    end
+
+    it 'enqueues the virtual invitation emails for a virtual workshop' do
+      virtual_workshop = Fabricate(:virtual_workshop, chapter: workshop.chapter)
+
+      post :invite, params: { workshop_id: virtual_workshop.id, for: 'students' }
+
+      expect(manager).to have_received(:send_virtual_workshop_emails).with(virtual_workshop, 'students', admin.id)
+      expect(manager).not_to have_received(:send_workshop_emails)
+    end
+
+    context 'when the workshop is not invitable' do
+      before { workshop.update_column(:invitable, false) }
+
+      it 'warns instead of claiming invitations are on their way, and enqueues nothing' do
+        post :invite, params: { workshop_id: workshop.id, for: 'students' }
+
+        expect(manager).not_to have_received(:send_workshop_emails)
+        expect(manager).not_to have_received(:send_virtual_workshop_emails)
+        expect(response).to redirect_to(admin_workshop_path(workshop))
+        expect(flash[:warning]).to eq('The workshop is not invitable')
+        expect(flash[:notice]).to be_nil
+      end
+    end
+  end
+
   describe 'GET #show' do
     it 'loads the workshop attendance page with attendees' do
       Fabricate(:workshop_invitation, workshop:, attending: true)

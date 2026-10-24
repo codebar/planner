@@ -31,6 +31,22 @@ RSpec.describe Admin::EventsController do
 
       expect(flash[:notice]).to eq('Invitations will be emailed out soon.')
     end
+
+    context 'when the event is not invitable' do
+      before { event.update_column(:invitable, false) }
+
+      it 'warns instead of claiming invitations are on their way, and enqueues nothing' do
+        manager = instance_spy(InvitationManager)
+        allow(InvitationManager).to receive(:new).and_return(manager)
+
+        post :invite, params: { event_id: event.slug }
+
+        expect(manager).not_to have_received(:send_event_emails)
+        expect(response).to redirect_to(admin_event_path(event))
+        expect(flash[:warning]).to eq('The event is not invitable')
+        expect(flash[:notice]).to be_nil
+      end
+    end
   end
 
   describe 'POST #invite with unauthorised user' do
