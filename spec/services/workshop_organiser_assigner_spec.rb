@@ -33,6 +33,17 @@ RSpec.describe WorkshopOrganiserAssigner, type: :service do
         workshop.reload
         expect(workshop.organisers).to include(chapter_organiser)
       end
+
+      it 'preserves existing workshop organisers when falling back to chapter' do
+        chapter_organiser = Fabricate(:member)
+        chapter_organiser.add_role(:organiser, chapter)
+        existing_organiser = Fabricate(:member)
+        existing_organiser.add_role(:organiser, workshop)
+        described_class.new(workshop, [], default_to_chapter: true).call
+        workshop.reload
+        expect(workshop.organisers).to include(existing_organiser)
+        expect(workshop.organisers).to include(chapter_organiser)
+      end
     end
 
     context 'when organiser_ids contain only blank values (update path)' do
