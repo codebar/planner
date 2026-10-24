@@ -297,8 +297,8 @@ RSpec.describe Admin::WorkshopsController do
           }
         }
       end.not_to raise_error
-      workshop.reload
-      expect(workshop.organisers).to include(organiser)
+      created = Workshop.unscoped.order(:id).last
+      expect(created.organisers).to include(organiser)
     end
 
     it 'does not raise when organiser_ids are blank' do
@@ -313,8 +313,8 @@ RSpec.describe Admin::WorkshopsController do
           }
         }
       end.not_to raise_error
-      workshop.reload
-      expect(workshop.organisers).to include(chapter.organisers.first)
+      created = Workshop.unscoped.order(:id).last
+      expect(created.organisers).to include(workshop.chapter.organisers.first)
     end
   end
 
