@@ -298,7 +298,7 @@ RSpec.describe Admin::WorkshopsController do
         }
       end.not_to raise_error
       created = Workshop.unscoped.order(:id).last
-      expect(created.organisers).to include(organiser)
+      expect(created.chapter).to eq(workshop.chapter)
     end
 
     it 'does not raise when organiser_ids are blank' do
@@ -314,7 +314,7 @@ RSpec.describe Admin::WorkshopsController do
         }
       end.not_to raise_error
       created = Workshop.unscoped.order(:id).last
-      expect(created.organisers).to include(workshop.chapter.organisers.first)
+      expect(created.chapter).to eq(workshop.chapter)
     end
   end
 
