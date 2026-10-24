@@ -282,6 +282,64 @@ RSpec.describe Admin::WorkshopsController do
     end
   end
 
+  describe 'POST #create organiser assignment' do
+    let(:organiser) { Fabricate(:member) }
+
+    it 'does not raise when organiser_ids are provided' do
+      expect do
+        post :create, params: {
+          workshop: {
+            chapter_id: workshop.chapter.id,
+            local_date: (Time.zone.now + 1.week).strftime('%d/%m/%Y'),
+            local_time: '15:00', local_end_time: '17:00',
+            virtual: '1', coach_spaces: 5, student_spaces: 15,
+            host: nil, organisers: [organiser.id.to_s]
+          }
+        }
+      end.not_to raise_error
+      created = Workshop.unscoped.order(:id).last
+      expect(created.chapter).to eq(workshop.chapter)
+    end
+
+    it 'does not raise when organiser_ids are blank' do
+      expect do
+        post :create, params: {
+          workshop: {
+            chapter_id: workshop.chapter.id,
+            local_date: (Time.zone.now + 1.week).strftime('%d/%m/%Y'),
+            local_time: '15:00', local_end_time: '17:00',
+            virtual: '1', coach_spaces: 5, student_spaces: 15,
+            host: nil
+          }
+        }
+      end.not_to raise_error
+      created = Workshop.unscoped.order(:id).last
+      expect(created.chapter).to eq(workshop.chapter)
+    end
+  end
+
+  describe 'PATCH #update organiser revocation' do
+    let(:existing_organiser) { Fabricate(:member) }
+    let(:new_organiser) { Fabricate(:member) }
+
+    it 'revokes removed organisers after update' do
+      existing_organiser.add_role(:organiser, workshop)
+      patch :update, params: {
+        id: workshop.id,
+        workshop: {
+          local_date: workshop.date_and_time.strftime('%d/%m/%Y'),
+          local_time: workshop.date_and_time.strftime('%H:%M'),
+          local_end_time: (workshop.date_and_time + 2.hours).strftime('%H:%M'),
+          host: workshop.host&.id || '',
+          organisers: [new_organiser.id.to_s]
+        }
+      }
+      workshop.reload
+      expect(workshop.organisers).to include(new_organiser)
+      expect(workshop.organisers).not_to include(existing_organiser)
+    end
+  end
+
   describe 'DELETE #destroy' do
     context 'when workshop invitations have been sent' do
       before do

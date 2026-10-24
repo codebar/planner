@@ -219,9 +219,7 @@ class Admin::WorkshopsController < Admin::ApplicationController
   end
 
   def assign_organisers(organiser_ids)
-    organiser_ids.reject!(&:empty?)
-    grant_organiser_access(organiser_ids)
-    revoke_organiser_access(organiser_ids)
+    WorkshopOrganiserAssigner.new(@workshop, organiser_ids).call
   end
 
   def finish_creation
@@ -233,11 +231,7 @@ class Admin::WorkshopsController < Admin::ApplicationController
   end
 
   def assign_organisers_or_default
-    if organiser_ids.present?
-      assign_organisers(organiser_ids)
-    else
-      grant_organiser_access(@workshop.chapter.organisers.pluck(:id))
-    end
+    WorkshopOrganiserAssigner.new(@workshop, organiser_ids, default_to_chapter: true).call
   end
 
   def host_id
@@ -246,16 +240,6 @@ class Admin::WorkshopsController < Admin::ApplicationController
 
   def organiser_ids
     params[:workshop][:organisers]
-  end
-
-  def grant_organiser_access(organiser_ids)
-    organiser_ids.each { |id| Member.find(id).add_role(:organiser, @workshop) }
-  end
-
-  def revoke_organiser_access(organiser_ids)
-    (@workshop.organisers.pluck(:id).map(&:to_s) - organiser_ids).each do |id|
-      Member.find(id).revoke(:organiser, @workshop)
-    end
   end
 
   def physical_workshop_and_no_host?(workshop)
