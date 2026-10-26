@@ -21,6 +21,8 @@ Fabricator(:workshop_no_sponsor, class_name: :workshop) do
   date_and_time { Time.zone.now + 2.days }
   ends_at { |attrs| attrs[:date_and_time] + 2.hours }
   chapter
+  before_create { |workshop| workshop.selected_host_id = 'fixture-host' }
+  after_create { |workshop| workshop.selected_host_id = nil }
 end
 
 Fabricator(:workshop_auto_rsvp_in_past, from: :workshop) do

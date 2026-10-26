@@ -231,6 +231,21 @@ RSpec.describe Admin::WorkshopsController do
       end.not_to raise_error
     end
 
+    it 'does not create a physical workshop without a host' do
+      expect do
+        post :create, params: { workshop: {
+          chapter_id: workshop.chapter.id,
+          local_date: (Time.zone.now + 1.week).strftime('%d/%m/%Y'),
+          local_time: '15:00',
+          local_end_time: '17:00',
+          virtual: '0',
+          host: ''
+        } }
+      end.not_to change(Workshop, :count)
+
+      expect(flash[:warning]).to include("Host can't be blank")
+    end
+
     it 'stamps created_by and records workshop.created' do
       post :create, params: { workshop: {
         chapter_id: workshop.chapter.id,

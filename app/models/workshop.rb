@@ -6,7 +6,7 @@ class Workshop < ApplicationRecord
   include RsvpClosable
 
   attr_accessor :local_date, :local_time, :local_end_time, :rsvp_open_local_date, :rsvp_open_local_time,
-                :rsvp_close_local_date, :rsvp_close_local_time
+                :rsvp_close_local_date, :rsvp_close_local_time, :selected_host_id
 
   resourcify :permissions, role_cname: 'Permission', role_table_name: :permission
 
@@ -43,6 +43,7 @@ class Workshop < ApplicationRecord
                     if: proc { |model| model.chapter_id.present? }
   validate :rsvp_date_time_fields_must_be_paired
   validate :rsvp_close_before_workshop_start
+  validate :physical_workshop_requires_host
 
   def host
     workshop_host&.sponsor
@@ -186,5 +187,16 @@ class Workshop < ApplicationRecord
     return if rsvp_closes_at < date_and_time
 
     errors.add(:rsvp_close_local_date, 'must be before the workshop start time')
+  end
+
+  def physical_workshop_requires_host
+    return if virtual?
+
+    host_selected = if selected_host_id.nil?
+      host.present? || workshop_sponsors.any? { |link| link.host && link.sponsor.present? }
+    else
+      selected_host_id.present?
+    end
+    errors.add(:host, "can't be blank") unless host_selected
   end
 end
