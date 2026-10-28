@@ -193,7 +193,7 @@ class Workshop < ApplicationRecord
     return if virtual?
 
     host_selected = if selected_host_id.nil?
-      host.present? || workshop_sponsors.any? { |link| link.host && link.sponsor.present? }
+      workshop_sponsors.any? { |link| link.host && link.sponsor.present? }
     else
       selected_host_id.present?
     end
