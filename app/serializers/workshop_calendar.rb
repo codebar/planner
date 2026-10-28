@@ -25,7 +25,7 @@ class WorkshopCalendar
 
   def setup_event
     calendar.event do |e|
-      configure(e, host_name: workshop.host&.name || 'TBA')
+      configure(e, host_name: workshop.host.name)
 
       e.location = address(workshop)
       e.description = I18n.t('workshop.calendar.description', invitation_link: invitation_url)
@@ -55,7 +55,7 @@ class WorkshopCalendar
   end
 
   def address(workshop)
-    workshop.host&.address ? AddressPresenter.new(workshop.host.address).to_s : 'TBA'
+    AddressPresenter.new(workshop.host.address).to_s
   end
 
   def start_and_end_time(event)
