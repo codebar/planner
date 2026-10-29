@@ -56,7 +56,7 @@ gem 'simple_form'
 
 gem 'terser'
 
-gem 'pagy', '~> 43.7'
+gem 'pagy', '~> 43.8'
 
 gem 'icalendar'
 gem 'tzinfo-data'
