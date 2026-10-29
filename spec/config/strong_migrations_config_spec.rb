@@ -15,16 +15,30 @@ RSpec.describe 'StrongMigrations configuration' do # rubocop:disable RSpec/Descr
       expect(message).to end_with("disable preboot for this deploy.\n")
     end
 
-    it 'carries the note exactly once on each destructive-operation message' do
-      counts = preboot_keys.index_with do |key|
-        StrongMigrations.error_messages.fetch(key).scan('disable preboot for this deploy').size
-      end
+    it 'carries the note exactly once, after the gem text, on each destructive-operation message' do
+      preboot_keys.each do |key|
+        message = StrongMigrations.error_messages.fetch(key)
 
-      expect(counts.values).to all(eq(1))
+        expect(message.scan('disable preboot for this deploy').size).to eq(1)
+        expect(message).not_to start_with('Heroku preboot')
+      end
     end
 
     it 'leaves messages for other checks unchanged' do
-      expect(StrongMigrations.error_messages[:add_index]).not_to include('Heroku preboot')
+      untouched_keys = StrongMigrations.error_messages.keys.map(&:to_sym) - preboot_keys
+
+      expect(untouched_keys).not_to be_empty
+      untouched_keys.each do |key|
+        expect(StrongMigrations.error_messages.fetch(key)).not_to include('Heroku preboot')
+      end
+    end
+
+    it 'fails loudly when a future gem version drops a listed key' do
+      allow(StrongMigrations).to receive(:error_messages)
+        .and_return(StrongMigrations.error_messages.except(:rename_column))
+
+      expect { load Rails.root.join('config/initializers/strong_migrations.rb').to_s }
+        .to raise_error(KeyError, /rename_column/)
     end
   end
 end
