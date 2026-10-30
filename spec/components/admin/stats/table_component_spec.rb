@@ -41,7 +41,7 @@ RSpec.describe Admin::Stats::TableComponent do
 
     render_inline(described_class.new(months: [Date.new(2026, 6, 1)], rows: [workshops_row], caption: 'Workshops'))
 
-    expect(attendance_table).to have_no_selector('td[colspan]')
+    expect(attendance_table).to have_no_css('td[colspan]')
     expect(page).to have_css('caption', text: 'Workshops')
   end
 
