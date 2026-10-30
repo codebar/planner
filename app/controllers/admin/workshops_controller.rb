@@ -26,9 +26,10 @@ class Admin::WorkshopsController < Admin::ApplicationController
   def create
     resolve_chapter_name_to_id
     @workshop = Workshop.new(workshop_params)
+    @workshop.selected_host_id = host_id
     @workshop.created_by = current_user
     authorize(@workshop)
-    if workshop_type_valid? && @workshop.save
+    if @workshop.save
       finish_creation
     else
       flash[:warning] = @workshop.errors.full_messages; render 'new'
@@ -53,9 +54,9 @@ class Admin::WorkshopsController < Admin::ApplicationController
   def update
     authorize @workshop
 
-    @workshop.assign_attributes(workshop_params)
+    @workshop.assign_attributes(workshop_params.merge(selected_host_id: host_id))
 
-    if workshop_type_valid? && @workshop.valid?
+    if @workshop.valid?
       @workshop.save
       update_workshop_details
 
@@ -256,17 +257,6 @@ class Admin::WorkshopsController < Admin::ApplicationController
     (@workshop.organisers.pluck(:id).map(&:to_s) - organiser_ids).each do |id|
       Member.find(id).revoke(:organiser, @workshop)
     end
-  end
-
-  def physical_workshop_and_no_host?(workshop)
-    !workshop.virtual && host_id.empty?
-  end
-
-  def workshop_type_valid?
-    return true unless physical_workshop_and_no_host?(@workshop)
-
-    @workshop.errors.add(:host, "can't be blank")
-    false
   end
 
   def update_workshop_details
