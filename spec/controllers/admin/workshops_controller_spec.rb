@@ -312,6 +312,7 @@ RSpec.describe Admin::WorkshopsController do
           }
         }
       end.not_to raise_error
+      expect(Workshop.unscoped.order(:id).last.organisers).to include(organiser)
       created = Workshop.unscoped.order(:id).last
       expect(created.chapter).to eq(workshop.chapter)
     end
