@@ -36,7 +36,11 @@ class ContactPreferencesController < ApplicationController
   end
 
   def audit_contact_subscription(contact)
-    Auditor::Audit.new(contact.sponsor, subscription_preference(contact), contact)
-                  .log_with_note(contact.email)
+    MemberActivityRecorder.record(
+      actor: contact,
+      key: subscription_preference(contact),
+      trackable: contact.sponsor,
+      contact_email: contact.email
+    )
   end
 end

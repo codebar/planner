@@ -42,10 +42,16 @@ class MemberActivityRecorder
   # historical activity is ever backfilled.
   TRACKING_STARTED_ON = Date.new(2026, 9, 8).freeze
 
-  def self.record(actor:, key:, trackable: nil, recipient: nil)
+  def self.record(actor:, key:, trackable: nil, recipient: nil, contact_email: nil)
     Rails.logger.warn("MemberActivityRecorder: unregistered key '#{key}'") unless KEYS.include?(key)
     trackable ||= actor
-    PublicActivity::Activity.create!(owner: actor, key:, trackable:, recipient:)
+    PublicActivity::Activity.create!(
+      owner: actor,
+      key:,
+      trackable:,
+      recipient:,
+      parameters: contact_email ? { note: contact_email } : {}
+    )
   rescue StandardError => e
     Rails.logger.warn("MemberActivityRecorder failed (#{key}): #{e.class}: #{e.message}")
   end
