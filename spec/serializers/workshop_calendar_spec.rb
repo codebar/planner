@@ -53,6 +53,17 @@ RSpec.describe WorkshopCalendar do
       end
     end
 
+    context 'with a physical workshop that has no host' do
+      let(:workshop) { Fabricate(:workshop_no_sponsor, virtual: false) }
+
+      it 'falls back to TBA for host name and address' do
+        event = calendar.events.first
+
+        expect(event.summary.to_s).to eq('codebar @ TBA')
+        expect(event.location.to_s).to eq('TBA')
+      end
+    end
+
     context 'with a virtual workshop' do
       let(:workshop) { Fabricate(:virtual_workshop) }
 
