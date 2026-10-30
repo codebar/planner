@@ -307,13 +307,15 @@ RSpec.describe Admin::WorkshopsController do
             chapter_id: workshop.chapter.id,
             local_date: (Time.zone.now + 1.week).strftime('%d/%m/%Y'),
             local_time: '15:00', local_end_time: '17:00',
-            virtual: '1', coach_spaces: 5, student_spaces: 15,
+            virtual: '1', slack_channel: 'workshop-channel',
+            slack_channel_link: 'https://codebar.slack.link/workshop-channel',
+            coach_spaces: 5, student_spaces: 15,
             host: nil, organisers: [organiser.id.to_s]
           }
         }
       end.not_to raise_error
-      expect(Workshop.unscoped.order(:id).last.organisers).to include(organiser)
       created = Workshop.unscoped.order(:id).last
+      expect(created.organisers).to include(organiser)
       expect(created.chapter).to eq(workshop.chapter)
     end
 
