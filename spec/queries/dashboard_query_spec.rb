@@ -139,53 +139,72 @@ RSpec.describe DashboardQuery do
       expect(result.values.flatten).to include(workshop)
     end
 
-    it 'preloads workshop hosts without adding per-workshop queries' do
-      chapter = Fabricate(:chapter)
-      member = Fabricate(:member, groups: [Fabricate(:students, chapter:)])
+    it 'preloads workshop hosts for accepted invitations without growing query count with workshop count' do
+      member = Fabricate(:member)
       host = Fabricate(:sponsor)
       extra_sponsor = Fabricate(:sponsor)
-      organiser = Fabricate(:member)
 
-      3.times do
-        workshop = Fabricate(:workshop_no_sponsor, chapter:)
-        Fabricate(:workshop_sponsor, workshop:, sponsor: extra_sponsor)
-        Fabricate(:workshop_sponsor, workshop:, sponsor: host, host: true)
-        organiser.add_role(:organiser, workshop)
-        Fabricate(:attending_workshop_invitation, member:, workshop:)
+      build_invited_workshops = lambda do |count|
+        count.times do
+          workshop = Fabricate(:workshop_no_sponsor)
+          Fabricate(:workshop_sponsor, workshop:, sponsor: extra_sponsor)
+          Fabricate(:workshop_sponsor, workshop:, sponsor: host, host: true)
+          Fabricate(:attending_workshop_invitation, member:, workshop:)
+        end
       end
 
-      result = nil
-      queries = count_queries { result = described_class.upcoming_events_for_user(member) }
+      build_invited_workshops.call(1)
+      expect(member.chapters).to be_empty
+      result_one = nil
+      one_workshop_queries = count_queries do
+        result_one = described_class.upcoming_events_for_user(member)
+        workshops = result_one.values.flatten.select { |event| event.is_a?(Workshop) }
+        expect(workshops.map(&:host)).to all(eq(host))
+      end
 
-      expect(queries).to be_positive
-      expect(result.values.flatten.map { |event| event.host if event.is_a?(Workshop) }).to all(eq(host))
+      expect(result_one.values.flatten.select { |event| event.is_a?(Workshop) }.count).to eq(1)
+      expect(one_workshop_queries).to be_positive
+
+      build_invited_workshops.call(3)
+      result_four = nil
+      four_workshop_queries = count_queries do
+        result_four = described_class.upcoming_events_for_user(member)
+        workshops = result_four.values.flatten.select { |event| event.is_a?(Workshop) }
+        expect(workshops.map(&:host)).to all(eq(host))
+      end
+
+      expect(result_four.values.flatten.select { |event| event.is_a?(Workshop) }.count).to eq(4)
+      expect(four_workshop_queries).to be_positive
+      expect(four_workshop_queries).to eq(one_workshop_queries)
     end
 
     it 'resolves the host for accepted workshops with multiple sponsors' do
-      chapter = Fabricate(:chapter)
-      member = Fabricate(:member, groups: [Fabricate(:students, chapter:)])
+      member = Fabricate(:member)
       host = Fabricate(:sponsor)
       extra_sponsor = Fabricate(:sponsor)
-      workshop = Fabricate(:workshop_no_sponsor, chapter:)
+      workshop = Fabricate(:workshop_no_sponsor)
       Fabricate(:workshop_sponsor, workshop:, sponsor: extra_sponsor)
       Fabricate(:workshop_sponsor, workshop:, sponsor: host, host: true)
       Fabricate(:attending_workshop_invitation, member:, workshop:)
 
       result = described_class.upcoming_events_for_user(member)
+      loaded = result.values.flatten.find { |event| event == workshop }
 
-      expect(result.values.flatten.find { |event| event == workshop }.host).to eq(host)
+      expect(loaded).to eq(workshop)
+      expect(loaded.host).to eq(host)
     end
 
     it 'resolves host to nil for accepted workshops with only non-host sponsors' do
-      chapter = Fabricate(:chapter)
-      member = Fabricate(:member, groups: [Fabricate(:students, chapter:)])
-      workshop = Fabricate(:workshop_no_sponsor, chapter:)
+      member = Fabricate(:member)
+      workshop = Fabricate(:workshop_no_sponsor)
       Fabricate(:workshop_sponsor, workshop:, sponsor: Fabricate(:sponsor), host: false)
       Fabricate(:attending_workshop_invitation, member:, workshop:)
 
       result = described_class.upcoming_events_for_user(member)
+      loaded = result.values.flatten.find { |event| event == workshop }
 
-      expect(result.values.flatten.find { |event| event == workshop }.host).to be_nil
+      expect(loaded).to eq(workshop)
+      expect(loaded.host).to be_nil
     end
 
     it 'returns an empty hash when the member has no upcoming events' do
