@@ -1,6 +1,36 @@
 require 'rails_helper'
 
 RSpec.describe DashboardQuery do
+  def count_queries(&block)
+    queries = 0
+    callback = lambda do |_name, _start, _finish, _id, payload|
+      next if payload[:name] == 'SCHEMA' || payload[:cached]
+      next if payload[:sql].nil? || payload[:sql].match?(/\A(BEGIN|COMMIT|ROLLBACK|SAVEPOINT|RELEASE)/)
+
+      queries += 1
+    end
+    ActiveSupport::Notifications.subscribed(callback, 'sql.active_record', &block)
+    queries
+  end
+
+  def read_card_attributes
+    described_class.upcoming_events.values.flatten.each do |event|
+      read_chapter(event)
+      read_venue(event)
+      event.sponsors.each(&:name) if event.respond_to?(:sponsors)
+      event.organisers.each(&:name)
+      event.host if event.is_a?(Workshop)
+    end
+  end
+
+  def read_chapter(event)
+    event.chapter&.name if event.respond_to?(:chapter)
+  end
+
+  def read_venue(event)
+    event.venue&.name if event.respond_to?(:venue)
+  end
+
   describe '.upcoming_events' do
     it 'returns an empty hash when there are no upcoming events' do
       expect(described_class.upcoming_events).to eq({})
@@ -33,6 +63,50 @@ RSpec.describe DashboardQuery do
 
       expect(result.values.flatten.select { |event| event.is_a?(Workshop) }.map(&:host))
         .to all(eq(host))
+    end
+
+    it 'does not add per-card queries as the number of workshops grows' do
+      chapter = Fabricate(:chapter)
+      host = Fabricate(:sponsor)
+      additional_sponsor = Fabricate(:sponsor)
+      organiser = Fabricate(:member)
+
+      build_workshops = lambda do |count|
+        count.times do
+          workshop = Fabricate(:workshop_no_sponsor, chapter:)
+          Fabricate(:workshop_sponsor, workshop:, sponsor: additional_sponsor)
+          Fabricate(:workshop_sponsor, workshop:, sponsor: host, host: true)
+          organiser.add_role(:organiser, workshop)
+        end
+      end
+
+      build_workshops.call(1)
+      read_card_attributes
+      one_card = count_queries { read_card_attributes }
+
+      build_workshops.call(3)
+      four_cards = count_queries { read_card_attributes }
+
+      expect(one_card).to be_positive
+      expect(four_cards).to eq(one_card)
+    end
+
+    it 'resolves host to nil when the workshop only has non-host sponsors' do
+      workshop = Fabricate(:workshop_no_sponsor)
+      Fabricate(:workshop_sponsor, workshop:, sponsor: Fabricate(:sponsor), host: false)
+
+      loaded = described_class.upcoming_events.values.flatten.find { |event| event == workshop }
+
+      expect(loaded.host).to be_nil
+    end
+
+    it 'includes a workshop with no sponsors and resolves its host to nil' do
+      workshop = Fabricate(:workshop_no_sponsor)
+
+      loaded = described_class.upcoming_events.values.flatten.find { |event| event == workshop }
+
+      expect(loaded).to eq(workshop)
+      expect(loaded.host).to be_nil
     end
 
     it 'limits to exactly 3 distinct dates' do
