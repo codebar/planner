@@ -24,6 +24,7 @@ class DashboardQuery
   def self.upcoming_events_for_user(member)
     chapter_workshops = Workshop.upcoming
                                 .eager_load(:chapter, :sponsors, :organisers, :permissions)
+                                .preload(workshop_host: :sponsor)
                                 .where(chapter: member.chapters)
                                 .to_a
 
@@ -31,6 +32,7 @@ class DashboardQuery
                                .joins(:workshop)
                                .merge(Workshop.upcoming)
                                .eager_load(workshop: %i[chapter sponsors organisers permissions])
+                               .preload(workshop: { workshop_host: :sponsor })
                                .map(&:workshop)
 
     all_events(chapter_workshops + accepted_workshops)
