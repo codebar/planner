@@ -3,10 +3,7 @@ class DashboardQuery
   MAX_WORKSHOP_QUERY = 10
 
   def self.upcoming_events
-    workshops = Workshop.eager_load(:chapter, :sponsors, :organisers, :permissions, :workshop_host)
-                        .today_and_upcoming
-                        .limit(MAX_WORKSHOP_QUERY)
-                        .to_a
+    workshops = upcoming_workshops
     sorted_events = all_events(workshops).sort_by(&:date_and_time)
 
     limited_events = []
@@ -57,4 +54,13 @@ class DashboardQuery
     [*workshops, *events, meeting].uniq.compact
   end
   private_class_method :all_events
+
+  def self.upcoming_workshops
+    Workshop.eager_load(:chapter, :sponsors, :organisers, :permissions)
+            .preload(workshop_host: :sponsor)
+            .today_and_upcoming
+            .limit(MAX_WORKSHOP_QUERY)
+            .to_a
+  end
+  private_class_method :upcoming_workshops
 end

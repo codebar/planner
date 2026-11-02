@@ -16,6 +16,25 @@ RSpec.describe DashboardQuery do
       expect(result.values.flatten).to include(workshop, event, meeting)
     end
 
+    it 'loads each workshop host when workshops have multiple sponsors and organisers' do
+      chapter = Fabricate(:chapter)
+      additional_sponsor = Fabricate(:sponsor)
+      host = Fabricate(:sponsor)
+      organisers = Fabricate.times(2, :member)
+      workshops = Fabricate.times(16, :workshop_no_sponsor, chapter:)
+
+      workshops.each do |workshop|
+        Fabricate(:workshop_sponsor, workshop:, sponsor: additional_sponsor)
+        Fabricate(:workshop_sponsor, workshop:, sponsor: host, host: true)
+        organisers.each { |organiser| organiser.add_role(:organiser, workshop) }
+      end
+
+      result = described_class.upcoming_events
+
+      expect(result.values.flatten.select { |event| event.is_a?(Workshop) }.map(&:host))
+        .to all(eq(host))
+    end
+
     it 'limits to exactly 3 distinct dates' do
       Fabricate(:workshop, date_and_time: 1.day.from_now)
       Fabricate(:workshop, date_and_time: 2.days.from_now)
