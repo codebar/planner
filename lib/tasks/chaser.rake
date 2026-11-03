@@ -8,4 +8,9 @@ namespace :chaser do
   task signup_nudges: :environment do
     SendSignupNudgeEmailJob.perform_later
   end
+
+  desc 'Send thank-you emails to coaches who reached an attendance milestone'
+  task coach_milestones: :environment do
+    SendCoachMilestoneEmailJob.perform_later
+  end
 end
