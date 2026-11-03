@@ -220,9 +220,7 @@ class Admin::WorkshopsController < Admin::ApplicationController
   end
 
   def assign_organisers(organiser_ids)
-    organiser_ids.reject!(&:empty?)
-    grant_organiser_access(organiser_ids)
-    revoke_organiser_access(organiser_ids)
+    WorkshopOrganiserAssigner.new(@workshop, organiser_ids).call
   end
 
   def finish_creation
@@ -234,11 +232,7 @@ class Admin::WorkshopsController < Admin::ApplicationController
   end
 
   def assign_organisers_or_default
-    if organiser_ids.present?
-      assign_organisers(organiser_ids)
-    else
-      grant_organiser_access(@workshop.chapter.organisers.pluck(:id))
-    end
+    WorkshopOrganiserAssigner.new(@workshop, organiser_ids, default_to_chapter: true).call
   end
 
   def host_id
