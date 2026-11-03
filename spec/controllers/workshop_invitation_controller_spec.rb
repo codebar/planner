@@ -80,6 +80,16 @@ RSpec.describe WorkshopInvitationController do
         post :accept, params: { id: invitation.token }
         expect(flash[:notice]).to include('no more spots left')
       end
+
+      it 'keeps the invitation role when the chosen role is full' do
+        Fabricate(:subscription, member:, group: Fabricate(:group, name: 'Students'))
+        invitation.update!(role: 'Coach')
+
+        post :accept, params: { id: invitation.token, role: 'Student' }
+
+        expect(invitation.reload.role).to eq('Coach')
+        expect(invitation.attending).to be_nil
+      end
     end
 
     context 'when tutorial is missing for student' do
@@ -106,6 +116,52 @@ RSpec.describe WorkshopInvitationController do
         post :accept, params: { id: invitation.token }
 
         expect(invitation.reload.attending).to be true
+      end
+    end
+
+    context 'when the member chooses a role' do
+      before { Fabricate(:subscription, member:, group: Fabricate(:group, name: 'Coaches')) }
+
+      it 'accepts in the chosen role' do
+        post :accept, params: { id: invitation.token, role: 'Coach' }
+
+        expect(invitation.reload.role).to eq('Coach')
+        expect(invitation.attending).to be true
+      end
+
+      it 'ignores an unknown role and keeps the invitation role' do
+        post :accept, params: { id: invitation.token, role: 'Hacker' }
+
+        expect(invitation.reload.role).to eq('Student')
+        expect(invitation.attending).to be true
+      end
+
+      it 'does not change the role of an invitation that is already accepted' do
+        invitation.update!(attending: true)
+
+        post :accept, params: { id: invitation.token, role: 'Coach' }
+
+        expect(invitation.reload.role).to eq('Student')
+      end
+
+      it 'keeps the chosen role when the accept is invalid' do
+        Fabricate(:subscription, member:, group: Fabricate(:group, name: 'Students'))
+        invitation.update!(tutorial: nil, role: 'Coach')
+
+        post :accept, params: { id: invitation.token, role: 'Student' }
+
+        expect(invitation.reload.role).to eq('Coach')
+        expect(invitation.attending).to be_nil
+        expect(flash[:notice].join).to include('Tutorial')
+      end
+    end
+
+    context 'when the member is not subscribed to the chosen role' do
+      it 'keeps the invitation role and accepts' do
+        post :accept, params: { id: invitation.token, role: 'Coach' }
+
+        expect(invitation.reload.role).to eq('Student')
+        expect(invitation.attending).to be true
       end
     end
   end
