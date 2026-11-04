@@ -85,8 +85,14 @@ class Admin::SponsorsController < Admin::ApplicationController
     return unless contact.previous_changes.key?(:mailing_list_consent)
 
     contact_audit_key = contact.mailing_list_consent ? 'subscribe' : 'unsubscribe'
-    Auditor::Audit.new(@sponsor, "sponsor.admin_contact_#{contact_audit_key}", current_user, contact)
-                  .log_with_note(contact.email)
+
+    MemberActivityRecorder.record(
+      actor: current_user,
+      key: "sponsor.admin_contact_#{contact_audit_key}",
+      trackable: @sponsor,
+      recipient: contact,
+      contact_email: contact.email
+    )
   end
 
   def filter_search_params
