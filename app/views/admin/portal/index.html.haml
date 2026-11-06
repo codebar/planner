@@ -22,17 +22,3 @@
       = link_to 'Members Directory', admin_members_path, class: 'btn btn-primary btn-lg mb-3'
       = link_to 'Chapter Status', status_admin_chapters_path, class: 'btn btn-primary btn-lg mb-3'
       = link_to 'Stats', admin_stats_path, class: 'btn btn-primary btn-lg mb-3'
-    %hr
-
-  .row
-    .col-12.col-md-3
-      %h3.mb-3 Groups
-      %ul.list-unstyled.m-0
-        - @groups.each do |group|
-          %li.border-bottom.border-dark.pb-2.mb-3
-            = link_to [:admin, group] do
-              #{group.name} (#{group.chapter.name})
-
-    .col-12.col-md-9
-      %h3.mb-3 Latest Subscribers
-      = render partial: 'admin/subscriptions/index', locals: { subscribers: @subscribers }
