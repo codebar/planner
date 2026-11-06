@@ -125,5 +125,28 @@ RSpec.describe Admin::ChaptersController do
       expect(response).to be_successful
       expect(response.body).to include('Chapter Health')
     end
+
+    it 'shows new sign-ups split across the last 3 months' do
+      travel_to(Time.zone.local(2026, 11, 6, 12, 0)) do
+        login_as_admin(Fabricate(:member))
+        chapter = Fabricate(:chapter)
+        students = Fabricate(:group, name: 'Students', chapter:)
+        coaches = Fabricate(:group, name: 'Coaches', chapter:)
+        Fabricate(:subscription, group: students, created_at: Time.zone.local(2026, 9, 10))
+        Fabricate(:subscription, group: coaches, created_at: Time.zone.local(2026, 10, 10))
+        Fabricate(:subscription, group: students, created_at: Time.zone.local(2026, 11, 2))
+        Fabricate(:subscription, group: students, created_at: Time.zone.local(2026, 8, 20))
+
+        get :show, params: { id: chapter.id }
+
+        expect(response.body).to include('New sign-ups (last 3 months)')
+        expected = [
+          { month: Date.new(2026, 9, 1), students: 1, coaches: 0 },
+          { month: Date.new(2026, 10, 1), students: 0, coaches: 1 },
+          { month: Date.new(2026, 11, 1), students: 1, coaches: 0 }
+        ]
+        expect(controller.view_assigns['new_sign_ups']).to eq(expected)
+      end
+    end
   end
 end
