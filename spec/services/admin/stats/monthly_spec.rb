@@ -86,6 +86,136 @@ RSpec.describe Admin::Stats::Monthly do
     end
   end
 
+  describe 'returning member rows' do
+    it 'counts a member attending in a later month as a returning student' do
+      member = Fabricate(:member)
+      may = Fabricate(:workshop_no_sponsor, date_and_time: Time.zone.local(2026, 5, 6, 18, 30))
+      june = Fabricate(:workshop_no_sponsor, date_and_time: Time.zone.local(2026, 6, 10, 18, 30))
+      Fabricate(:attended_workshop_invitation, workshop: may, member:, role: 'Student')
+      Fabricate(:attended_workshop_invitation, workshop: june, member:, role: 'Student')
+
+      expect(cell(:attendance, 'Returning students', [2026, 5])).to eq(0)
+      expect(cell(:attendance, 'Returning students', [2026, 6])).to eq(1)
+    end
+
+    it 'counts returning coaches on the coach row' do
+      member = Fabricate(:member)
+      may = Fabricate(:workshop_no_sponsor, date_and_time: Time.zone.local(2026, 5, 6, 18, 30))
+      june = Fabricate(:workshop_no_sponsor, date_and_time: Time.zone.local(2026, 6, 10, 18, 30))
+      Fabricate(:attended_workshop_invitation, workshop: may, member:, role: 'Coach')
+      Fabricate(:attended_workshop_invitation, workshop: june, member:, role: 'Coach')
+
+      expect(cell(:attendance, 'Returning coaches', [2026, 6])).to eq(1)
+      expect(cell(:attendance, 'Returning students', [2026, 6])).to eq(0)
+    end
+
+    it 'counts prior attendance before the selected range as returning (any prior ever)' do
+      member = Fabricate(:member)
+      april = Fabricate(:workshop_no_sponsor, date_and_time: Time.zone.local(2026, 4, 8, 18, 30))
+      may = Fabricate(:workshop_no_sponsor, date_and_time: Time.zone.local(2026, 5, 6, 18, 30))
+      Fabricate(:attended_workshop_invitation, workshop: april, member:, role: 'Student')
+      Fabricate(:attended_workshop_invitation, workshop: may, member:, role: 'Student')
+
+      expect(cell(:attendance, 'Returning students', [2026, 5])).to eq(1)
+    end
+
+    it 'does not count attendance in the same month as returning' do
+      member = Fabricate(:member)
+      first = Fabricate(:workshop_no_sponsor, date_and_time: Time.zone.local(2026, 6, 3, 18, 30))
+      second = Fabricate(:workshop_no_sponsor, date_and_time: Time.zone.local(2026, 6, 17, 18, 30))
+      Fabricate(:attended_workshop_invitation, workshop: first, member:, role: 'Student')
+      Fabricate(:attended_workshop_invitation, workshop: second, member:, role: 'Student')
+
+      expect(cell(:attendance, 'Returning students', [2026, 6])).to eq(0)
+    end
+
+    it 'counts a member once per month even with multiple attendances' do
+      member = Fabricate(:member)
+      may = Fabricate(:workshop_no_sponsor, date_and_time: Time.zone.local(2026, 5, 6, 18, 30))
+      june_one = Fabricate(:workshop_no_sponsor, date_and_time: Time.zone.local(2026, 6, 3, 18, 30))
+      june_two = Fabricate(:workshop_no_sponsor, date_and_time: Time.zone.local(2026, 6, 17, 18, 30))
+      Fabricate(:attended_workshop_invitation, workshop: may, member:, role: 'Student')
+      Fabricate(:attended_workshop_invitation, workshop: june_one, member:, role: 'Student')
+      Fabricate(:attended_workshop_invitation, workshop: june_two, member:, role: 'Student')
+
+      expect(cell(:attendance, 'Returning students', [2026, 6])).to eq(1)
+    end
+
+    it 'treats prior attendance in another role as returning' do
+      member = Fabricate(:member)
+      may = Fabricate(:workshop_no_sponsor, date_and_time: Time.zone.local(2026, 5, 6, 18, 30))
+      june = Fabricate(:workshop_no_sponsor, date_and_time: Time.zone.local(2026, 6, 10, 18, 30))
+      Fabricate(:attended_workshop_invitation, workshop: may, member:, role: 'Coach')
+      Fabricate(:attended_workshop_invitation, workshop: june, member:, role: 'Student')
+
+      expect(cell(:attendance, 'Returning students', [2026, 6])).to eq(1)
+    end
+
+    it 'leaves the check-in rows counting attendances' do
+      member = Fabricate(:member)
+      may = Fabricate(:workshop_no_sponsor, date_and_time: Time.zone.local(2026, 5, 6, 18, 30))
+      june = Fabricate(:workshop_no_sponsor, date_and_time: Time.zone.local(2026, 6, 10, 18, 30))
+      Fabricate(:attended_workshop_invitation, workshop: may, member:, role: 'Student')
+      Fabricate(:attended_workshop_invitation, workshop: june, member:, role: 'Student')
+
+      expect(cell(:attendance, 'Student check-ins', [2026, 6])).to eq(1)
+      expect(total_for(:attendance, 'Student check-ins')).to eq(2)
+    end
+  end
+
+  describe 'student to coach rows' do
+    let(:students_group) { Fabricate(:group, name: 'Students') }
+    let(:coaches_group) { Fabricate(:group, name: 'Coaches') }
+
+    def subscribe(member, group, at)
+      Fabricate(:subscription, member:, group:, created_at: at)
+    end
+
+    it 'counts a member in the month of their first coaching subscription' do
+      member = Fabricate(:member)
+      subscribe(member, students_group, Time.zone.local(2026, 5, 10))
+      subscribe(member, coaches_group, Time.zone.local(2026, 6, 10))
+
+      expect(cell(:transitions, 'Students who became coaches', [2026, 5])).to eq(0)
+      expect(cell(:transitions, 'Students who became coaches', [2026, 6])).to eq(1)
+      expect(total_for(:transitions, 'Students who became coaches')).to eq(1)
+    end
+
+    it 'counts members who kept their student subscription (across chapters)' do
+      member = Fabricate(:member)
+      subscribe(member, students_group, Time.zone.local(2026, 5, 10))
+      subscribe(member, coaches_group, Time.zone.local(2026, 6, 10))
+
+      expect(students_group.chapter_id).not_to eq(coaches_group.chapter_id)
+      expect(cell(:transitions, 'Students who became coaches', [2026, 6])).to eq(1)
+    end
+
+    it 'only counts the first coaching subscription' do
+      member = Fabricate(:member)
+      subscribe(member, students_group, Time.zone.local(2026, 4, 10))
+      subscribe(member, coaches_group, Time.zone.local(2026, 6, 10))
+      subscribe(member, Fabricate(:group, name: 'Coaches'), Time.zone.local(2026, 7, 10))
+
+      expect(cell(:transitions, 'Students who became coaches', [2026, 6])).to eq(1)
+      expect(cell(:transitions, 'Students who became coaches', [2026, 7])).to eq(0)
+    end
+
+    it 'does not count coaches who never had a student subscription' do
+      member = Fabricate(:member)
+      subscribe(member, coaches_group, Time.zone.local(2026, 6, 10))
+
+      expect(cell(:transitions, 'Students who became coaches', [2026, 6])).to eq(0)
+    end
+
+    it 'does not count a coaching subscription created before the student one' do
+      member = Fabricate(:member)
+      subscribe(member, coaches_group, Time.zone.local(2026, 5, 10))
+      subscribe(member, students_group, Time.zone.local(2026, 6, 10))
+
+      expect(total_for(:transitions, 'Students who became coaches')).to eq(0)
+    end
+  end
+
   describe 'sign-up rows (R4, D8)' do
     it 'Covers AE3. assigns a members-only-coaches group member to the coaches row' do
       member = Fabricate(:member, created_at: Time.zone.local(2026, 6, 10, 14, 0))

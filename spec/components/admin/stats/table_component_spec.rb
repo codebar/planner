@@ -32,6 +32,36 @@ RSpec.describe Admin::Stats::TableComponent do
     expect(page).to have_css('td.text-end', text: '1,241') # totals cell
   end
 
+  it 'shows each cell as a percentage of the row total in brackets for returning rows' do
+    returning_row = Admin::Stats::Monthly::Row.new(section: :attendance, label: 'Returning students',
+                                                   cells: { Date.new(2026, 6, 1) => 1234, Date.new(2026, 7, 1) => 7,
+                                                            Date.new(2026, 8, 1) => 0 },
+                                                   total: 1241)
+
+    render_inline(described_class.new(months:, rows: [returning_row], caption: 'Attendance'))
+
+    expect(page).to have_css('td.text-end', text: '1,234 (99%)')
+    expect(page).to have_css('td.text-end', text: '7 (1%)')
+    expect(page).to have_css('td.text-end', text: '0 (0%)')
+  end
+
+  it 'does not show percentages for other metric rows' do
+    render_inline(described_class.new(months:, rows: [row], caption: 'Attendance'))
+
+    expect(page).to have_css('td.text-end', text: '7')
+    expect(page).to have_no_css('td.text-end', text: '7 (')
+  end
+
+  it 'shows 0% when a returning row has a zero total' do
+    zero_row = Admin::Stats::Monthly::Row.new(section: :attendance, label: 'Returning coaches',
+                                              cells: { Date.new(2026, 6, 1) => 0 }, total: 0)
+
+    render_inline(described_class.new(months: [Date.new(2026, 6, 1)], rows: [zero_row], caption: 'Attendance'))
+
+    expect(page).to have_css('td.text-end', text: '0 (0%)')
+    expect(page).to have_css('td.text-end', text: '0') # totals cell
+  end
+
   it 'renders one table per metric group, with no section banner rows' do
     workshops_row = Admin::Stats::Monthly::Row.new(section: :workshops, label: 'Workshops',
                                                    cells: { Date.new(2026, 6, 1) => 2 }, total: 2)
