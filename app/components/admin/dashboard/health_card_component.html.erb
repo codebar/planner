@@ -1,6 +1,6 @@
 <div class="card border-info mb-4">
   <div class="card-body">
-    <h3>Chapter Health</h3>
+    <h3 class="mb-4">Chapter Health</h3>
     <div class="row">
       <% tiles.each do |tile| %>
         <div class="col-6 col-md-3 text-center mb-2">
@@ -18,6 +18,32 @@
     <div class="row mt-3">
       <div class="col-12">
         <%= content %>
+      </div>
+      <div class="col-12 mt-4">
+        <strong class="small mb-2 d-block">New sign-ups (last 3 months)</strong>
+        <table class="table table-sm align-middle mb-0">
+          <thead>
+            <tr>
+              <th scope="col" class="small fw-normal text-muted">Month</th>
+              <th scope="col" class="small fw-normal text-muted text-end">Students</th>
+              <th scope="col" class="small fw-normal text-muted text-end">Coaches</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% new_sign_ups.each do |row| %>
+              <tr>
+                <th scope="row" class="fw-normal"><%= sign_up_month_label(row[:month]) %></th>
+                <td class="text-end"><%= number_value(row[:students]) %></td>
+                <td class="text-end"><%= number_value(row[:coaches]) %></td>
+              </tr>
+            <% end %>
+            <tr class="fw-bold">
+              <th scope="row">Total</th>
+              <td class="text-end"><%= number_value(sign_up_totals[:students]) %></td>
+              <td class="text-end"><%= number_value(sign_up_totals[:coaches]) %></td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>

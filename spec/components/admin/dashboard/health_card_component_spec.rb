@@ -38,6 +38,24 @@ RSpec.describe Admin::Dashboard::HealthCardComponent do
     expect(page).to have_css('.badge', text: 'inactive')
   end
 
+  it 'renders new sign-ups split across the last 3 months' do
+    health = Admin::Dashboard::ChapterHealth.row(chapter:)
+    sign_ups = [
+      { month: Date.new(2026, 9, 1), students: 5, coaches: 3 },
+      { month: Date.new(2026, 10, 1), students: 8, coaches: 4 },
+      { month: Date.new(2026, 11, 1), students: 2, coaches: 1 }
+    ]
+
+    render_inline(described_class.new(health:, new_sign_ups: sign_ups))
+
+    expect(page).to have_text('New sign-ups (last 3 months)')
+    expect(page).to have_css('th', text: 'Sep 2026')
+    expect(page).to have_css('th', text: 'Oct 2026')
+    expect(page).to have_css('th', text: 'Nov 2026')
+    expect(page).to have_css('tr', text: /Sep 2026\s+5\s+3/)
+    expect(page).to have_css('tr.fw-bold', text: /Total\s+15\s+8/)
+  end
+
   it 'renders the yielded content inside the card' do
     health = Admin::Dashboard::ChapterHealth.row(chapter:)
 
