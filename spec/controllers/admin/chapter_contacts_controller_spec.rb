@@ -33,6 +33,22 @@ RSpec.describe Admin::ChapterContactsController do
       expect(confirmation.expires_at).to be_within(1.second).of(30.minutes.from_now)
       expect(confirmation.token_digest).to eq(Digest::SHA256.hexdigest(token))
     end
+
+    it 'restricts a custom list to current members of the chapter' do
+      outsider = Fabricate(:member)
+
+      post :preview, params: {
+        chapter_id: chapter.id,
+        chapter_contact: {
+          audience: 'custom_list',
+          member_ids: [member.id, outsider.id],
+          subject: 'Update',
+          message: 'Hello selected members'
+        }
+      }
+
+      expect(ChapterContactConfirmation.last.recipient_ids).to eq([member.id])
+    end
   end
 
   describe 'POST #create' do

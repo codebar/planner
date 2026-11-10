@@ -34,6 +34,19 @@ class Chapter < ApplicationRecord
     @organisers ||= Member.with_role(:organiser, self)
   end
 
+  def contact_members
+    members.distinct.order(:name, :surname)
+  end
+
+  def contact_recipients(audience, member_ids = [])
+    case audience
+    when 'all_members' then members.distinct
+    when 'chapter_organisers' then organisers
+    when 'custom_list' then members.where(id: member_ids).distinct
+    else Member.none
+    end
+  end
+
   # All members subscribed to this chapter's Students group, regardless of ban or TOC status.
   # Use #eligible_students when building invitation lists.
   def students

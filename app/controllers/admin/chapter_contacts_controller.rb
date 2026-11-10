@@ -9,8 +9,10 @@ class Admin::ChapterContactsController < Admin::ApplicationController
 
   def new
     authorize @chapter, :contact?
+    @chapter_members = @chapter.contact_members
     @audience = 'all_members'
-    @recipient_count = recipients(@audience).count
+    @recipient_count = @chapter.contact_recipients(@audience).count
+    @selected_member_ids = []
   end
 
   def preview
@@ -18,7 +20,9 @@ class Admin::ChapterContactsController < Admin::ApplicationController
     attributes = preview_params
     @subject, @message = attributes.values_at(:subject, :message)
     @audience = attributes[:audience].presence || 'all_members'
-    recipient_ids = recipients(@audience).pluck(:id)
+    @selected_member_ids = Array(attributes[:member_ids])
+    @chapter_members = @chapter.contact_members
+    recipient_ids = @chapter.contact_recipients(@audience, @selected_member_ids).pluck(:id)
     return render_new unless valid_contact?(recipient_ids)
 
     create_confirmation(recipient_ids)
@@ -42,24 +46,16 @@ class Admin::ChapterContactsController < Admin::ApplicationController
   private
 
   def preview_params
-    params.expect(chapter_contact: %i[subject message audience])
+    params.expect(chapter_contact: [:subject, :message, :audience, { member_ids: [] }])
   end
 
   def confirmation_token
     params[:chapter_contact]&.[](:confirmation_token)
   end
 
-  def recipients(audience)
-    case audience
-    when 'all_members' then @chapter.members.distinct
-    when 'chapter_organisers' then @chapter.organisers
-    else Member.none
-    end
-  end
-
   def valid_contact?(recipient_ids)
     @recipient_count = recipient_ids.size
-    return true if @audience.in?(%w[all_members chapter_organisers]) &&
+    return true if @audience.in?(%w[all_members chapter_organisers custom_list]) &&
                    @subject.present? && @message.present? && recipient_ids.any?
 
     flash.now[:alert] = contact_error
@@ -99,8 +95,9 @@ class Admin::ChapterContactsController < Admin::ApplicationController
 
   def contact_error
     return 'Subject and message are required.' if @subject.blank? || @message.blank?
-    return 'Choose a valid audience.' unless @audience.in?(%w[all_members chapter_organisers])
+    return 'Choose a valid audience.' unless @audience.in?(%w[all_members chapter_organisers custom_list])
     return 'There are no chapter organisers to email.' if @audience == 'chapter_organisers'
+    return 'Select at least one current chapter member.' if @audience == 'custom_list'
 
     'There are no current chapter subscribers to email.'
   end
