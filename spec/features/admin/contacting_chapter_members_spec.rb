@@ -73,6 +73,42 @@ RSpec.feature 'Contacting chapter members' do
         message: 'A message for chapter organisers.'
       )
     end
+
+    scenario 'previews and emails only selected members for a custom list' do
+      login(organiser)
+      visit new_admin_chapter_contact_path(chapter)
+      select 'Custom list', from: 'Audience'
+      check coach.full_name
+      fill_in 'Subject', with: 'Coach update'
+      fill_in 'Message', with: 'A message for one selected coach.'
+      ActionMailer::Base.deliveries.clear
+
+      click_on 'Preview recipients'
+
+      expect_preview([coach])
+      click_on 'Confirm and send'
+
+      expect(page).to have_text('Email sent to 1 chapter members')
+      expect_email_fanout(
+        recipients: [coach],
+        excluded: [student, both, former_member, other_chapter_member],
+        subject: 'Coach update',
+        message: 'A message for one selected coach.'
+      )
+    end
+
+    scenario 'requires at least one member for a custom list' do
+      login(organiser)
+      visit new_admin_chapter_contact_path(chapter)
+      select 'Custom list', from: 'Audience'
+      fill_in 'Subject', with: 'Coach update'
+      fill_in 'Message', with: 'A message for selected members.'
+
+      click_on 'Preview recipients'
+
+      expect(page).to have_text('Select at least one current chapter member.')
+      expect(ActionMailer::Base.deliveries).to be_empty
+    end
   end
 
   scenario 'admin can access any chapter contact form' do
@@ -149,7 +185,7 @@ RSpec.feature 'Contacting chapter members' do
   end
 
   def expect_preview_count(count)
-    expect(page).to have_text("#{count} recipients will receive this email")
+    expect(page).to have_text("#{count} #{'recipient'.pluralize(count)} will receive this email")
   end
 
   def expect_recipient_names(recipients)

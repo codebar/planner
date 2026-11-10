@@ -8,7 +8,14 @@
   = form_with scope: :chapter_contact, url: preview_admin_chapter_contact_path(@chapter) do |form|
     .mb-3
       = form.label :audience, 'Audience', class: 'form-label'
-      = form.select :audience, options_for_select([['All chapter members', 'all_members'], ['Chapter organisers', 'chapter_organisers']], @audience), {}, class: 'form-select'
+      = form.select :audience, options_for_select([['All chapter members', 'all_members'], ['Chapter organisers', 'chapter_organisers'], ['Custom list', 'custom_list']], @audience), {}, class: 'form-select'
+    .mb-3
+      %fieldset
+        %legend.fs-6 Select members for a custom list
+        = form.collection_check_boxes :member_ids, @chapter_members, :id, :full_name do |checkbox|
+          .form-check
+            = checkbox.check_box(class: 'form-check-input')
+            = checkbox.label(class: 'form-check-label')
     .mb-3
       = form.label :subject, class: 'form-label'
       = form.text_field :subject, class: 'form-control', required: true, value: @subject
