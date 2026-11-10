@@ -25,6 +25,25 @@ RSpec.feature 'Contacting chapter members' do
       Fabricate(:subscription, member: other_chapter_member, group: other_group)
     end
 
+    scenario 'shows only controls for the selected audience', :js do
+      login(organiser)
+      visit new_admin_chapter_contact_path(chapter)
+
+      expect_audience_fields(custom_list: false, event_rsvp: false, activity_period: false)
+
+      select 'Custom list', from: 'Audience'
+      expect_audience_fields(custom_list: true, event_rsvp: false, activity_period: false)
+
+      select 'Active in the last month', from: 'Audience'
+      expect_audience_fields(custom_list: false, event_rsvp: false, activity_period: true)
+
+      select 'Inactive for the last month', from: 'Audience'
+      expect_audience_fields(custom_list: false, event_rsvp: false, activity_period: true)
+
+      select 'Event RSVP status', from: 'Audience'
+      expect_audience_fields(custom_list: false, event_rsvp: true, activity_period: false)
+    end
+
     scenario 'previews current subscribers and emails each individually after confirmation' do
       login(organiser)
       open_contact_menu
@@ -292,6 +311,17 @@ RSpec.feature 'Contacting chapter members' do
     visit root_path
     click_on 'Menu'
     click_on 'Contact chapter'
+  end
+
+  def expect_audience_fields(custom_list:, event_rsvp:, activity_period:)
+    { custom_list:, event_rsvp:, activity_period: }.each do |audience, shown|
+      selector = "[data-contact-audience-fields='#{audience}']"
+      if shown
+        expect(page).to have_no_css("#{selector}.d-none", visible: :all)
+      else
+        expect(page).to have_css("#{selector}.d-none", visible: :all)
+      end
+    end
   end
 
   def record_activity(member, created_at)
