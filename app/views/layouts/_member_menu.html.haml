@@ -14,6 +14,10 @@
   %li
     = link_to invitations_path, class: 'dropdown-item' do
       Invitations
+  - if current_user.is_admin? || current_user.has_role?(:organiser, :any)
+    %li
+      = link_to admin_chapter_contacts_path, class: 'dropdown-item' do
+        Contact chapter
   %li
     = link_to subscriptions_path, class: 'dropdown-item' do
       Manage subscriptions

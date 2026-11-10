@@ -1,0 +1,15 @@
+.container.py-4
+  %h1 Contact #{@chapter.name} members
+  %p= "#{@recipient_count} recipients"
+
+  - if flash[:alert]
+    .alert.alert-danger= flash[:alert]
+
+  = form_with scope: :chapter_contact, url: admin_chapter_contact_path(@chapter) do |form|
+    .mb-3
+      = form.label :subject, class: 'form-label'
+      = form.text_field :subject, class: 'form-control', required: true
+    .mb-3
+      = form.label :message, class: 'form-label'
+      = form.text_area :message, class: 'form-control', rows: 8, required: true
+    = form.submit 'Send email', class: 'btn btn-primary'

@@ -1,0 +1,142 @@
+require 'rails_helper'
+
+RSpec.feature 'Contacting chapter members' do
+  let(:organiser) { Fabricate(:member) }
+  let(:chapter) { Fabricate(:chapter) }
+
+  context 'when a chapter organiser' do
+    let(:students) { Fabricate(:group, name: 'Students', chapter:) }
+    let(:coaches) { Fabricate(:group, name: 'Coaches', chapter:) }
+    let(:student) { Fabricate(:member) }
+    let(:coach) { Fabricate(:member) }
+    let(:both) { Fabricate(:member) }
+    let(:former_member) { Fabricate(:member) }
+    let(:other_chapter) { Fabricate(:chapter) }
+    let(:other_chapter_member) { Fabricate(:member) }
+
+    before do
+      organiser.add_role(:organiser, chapter)
+      Fabricate(:subscription, member: student, group: students)
+      Fabricate(:subscription, member: coach, group: coaches)
+      Fabricate(:subscription, member: both, group: students)
+      Fabricate(:subscription, member: both, group: coaches)
+      Fabricate(:discarded_subscription, member: former_member, group: students)
+      other_group = Fabricate(:group, name: 'Students', chapter: other_chapter)
+      Fabricate(:subscription, member: other_chapter_member, group: other_group)
+    end
+
+    scenario 'emails current chapter subscribers individually' do
+      login(organiser)
+      open_contact_menu
+      expect(page).to have_no_link('Contact members', href: new_admin_chapter_contact_path(other_chapter))
+      click_on 'Contact members'
+      expect(page).to have_text('3 recipients')
+      fill_in 'Subject', with: 'Workshop update'
+      fill_in 'Message', with: 'The workshop starts at 6pm.'
+      ActionMailer::Base.deliveries.clear
+
+      click_on 'Send email'
+
+      expect(page).to have_text('Email sent to 3 chapter members')
+      expect_email_fanout(
+        recipients: [student, coach, both],
+        excluded: [former_member, other_chapter_member]
+      )
+    end
+  end
+
+  scenario 'admin can access any chapter contact form' do
+    admin = Fabricate(:member)
+    Fabricate(:group, name: 'Students', chapter:)
+    login_as_admin(admin)
+
+    visit root_path
+    click_on 'Menu'
+    click_on 'Contact chapter'
+    click_on 'Contact members'
+
+    expect(page).to have_current_path(new_admin_chapter_contact_path(chapter))
+  end
+
+  scenario 'regular members cannot see or directly access chapter contact' do
+    member = Fabricate(:member)
+    Fabricate(:group, name: 'Students', chapter:)
+    login(member)
+    ActionMailer::Base.deliveries.clear
+
+    visit root_path
+    click_on 'Menu'
+    expect(page).to have_no_link('Contact chapter')
+
+    visit new_admin_chapter_contact_path(chapter)
+    expect(current_url).to eq(root_url)
+    expect(ActionMailer::Base.deliveries).to be_empty
+  end
+
+  scenario 'organiser of another chapter cannot access this chapter contact' do
+    other_chapter = Fabricate(:chapter)
+    other_organiser = Fabricate(:member)
+    other_organiser.add_role(:organiser, other_chapter)
+    login(other_organiser)
+
+    visit new_admin_chapter_contact_path(chapter)
+
+    expect(current_url).to eq(root_url)
+  end
+
+  scenario 'does not send when the chapter has no current subscribers' do
+    organiser.add_role(:organiser, chapter)
+    login(organiser)
+    visit new_admin_chapter_contact_path(chapter)
+    fill_in 'Subject', with: 'Workshop update'
+    fill_in 'Message', with: 'The workshop starts at 6pm.'
+    ActionMailer::Base.deliveries.clear
+
+    click_on 'Send email'
+
+    expect(page).to have_text('There are no current chapter subscribers to email.')
+    expect(ActionMailer::Base.deliveries).to be_empty
+  end
+
+  def open_contact_menu
+    visit root_path
+    click_on 'Menu'
+    click_on 'Contact chapter'
+  end
+
+  def expect_email_fanout(recipients:, excluded:)
+    expect_delivered_to(recipients)
+    expect_no_delivery_to(excluded)
+    expect_individual_emails(recipients.size)
+  end
+
+  def expect_delivered_to(recipients)
+    recipients.each { |member| expect(delivered_emails_to(member).one?).to be(true) }
+  end
+
+  def expect_no_delivery_to(members)
+    members.each { |member| expect(delivered_emails_to(member)).to be_empty }
+  end
+
+  def expect_individual_emails(count)
+    emails = ActionMailer::Base.deliveries
+    expect(emails.size).to eq(count)
+    emails.each { |email| expect_individual_email(email) }
+  end
+
+  def expect_individual_email(email)
+    expect_mail_privacy(email)
+    expect_mail_content(email)
+  end
+
+  def expect_mail_privacy(email)
+    expect(email.to.size).to eq(1)
+    expect(email.cc).to be_empty
+    expect(email.bcc).to be_empty
+  end
+
+  def expect_mail_content(email)
+    expect(email.subject).to eq('Workshop update')
+    expect(email.body.encoded).to include('The workshop starts at 6pm.')
+  end
+end
