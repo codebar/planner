@@ -9,13 +9,16 @@ class Admin::ChapterContactsController < Admin::ApplicationController
 
   def new
     authorize @chapter, :contact?
-    @recipient_count = recipients.count
+    @audience = 'all_members'
+    @recipient_count = recipients(@audience).count
   end
 
   def preview
     authorize @chapter, :contact?
-    @subject, @message = preview_params.values_at(:subject, :message)
-    recipient_ids = recipients.pluck(:id)
+    attributes = preview_params
+    @subject, @message = attributes.values_at(:subject, :message)
+    @audience = attributes[:audience].presence || 'all_members'
+    recipient_ids = recipients(@audience).pluck(:id)
     return render_new unless valid_contact?(recipient_ids)
 
     create_confirmation(recipient_ids)
@@ -39,20 +42,25 @@ class Admin::ChapterContactsController < Admin::ApplicationController
   private
 
   def preview_params
-    params.expect(chapter_contact: %i[subject message])
+    params.expect(chapter_contact: %i[subject message audience])
   end
 
   def confirmation_token
     params[:chapter_contact]&.[](:confirmation_token)
   end
 
-  def recipients
-    @chapter.members.distinct
+  def recipients(audience)
+    case audience
+    when 'all_members' then @chapter.members.distinct
+    when 'chapter_organisers' then @chapter.organisers
+    else Member.none
+    end
   end
 
   def valid_contact?(recipient_ids)
     @recipient_count = recipient_ids.size
-    return true if @subject.present? && @message.present? && recipient_ids.any?
+    return true if @audience.in?(%w[all_members chapter_organisers]) &&
+                   @subject.present? && @message.present? && recipient_ids.any?
 
     flash.now[:alert] = contact_error
     false
@@ -91,6 +99,8 @@ class Admin::ChapterContactsController < Admin::ApplicationController
 
   def contact_error
     return 'Subject and message are required.' if @subject.blank? || @message.blank?
+    return 'Choose a valid audience.' unless @audience.in?(%w[all_members chapter_organisers])
+    return 'There are no chapter organisers to email.' if @audience == 'chapter_organisers'
 
     'There are no current chapter subscribers to email.'
   end
