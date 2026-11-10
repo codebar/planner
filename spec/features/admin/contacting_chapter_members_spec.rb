@@ -109,6 +109,54 @@ RSpec.feature 'Contacting chapter members' do
       expect(page).to have_text('Select at least one current chapter member.')
       expect(ActionMailer::Base.deliveries).to be_empty
     end
+
+    scenario 'previews and emails members active in the last month' do
+      record_activity(coach, 2.weeks.ago)
+      record_activity(both, 2.months.ago)
+      login(organiser)
+      visit new_admin_chapter_contact_path(chapter)
+      select 'Active in the last month', from: 'Audience'
+      fill_in 'Subject', with: 'Active member update'
+      fill_in 'Message', with: 'A message for recently active members.'
+      ActionMailer::Base.deliveries.clear
+
+      click_on 'Preview recipients'
+
+      expect_preview([coach])
+      click_on 'Confirm and send'
+
+      expect(page).to have_text('Email sent to 1 chapter member')
+      expect_email_fanout(
+        recipients: [coach],
+        excluded: [student, both, former_member, other_chapter_member],
+        subject: 'Active member update',
+        message: 'A message for recently active members.'
+      )
+    end
+
+    scenario 'previews and emails members inactive for the last month' do
+      record_activity(coach, 2.weeks.ago)
+      record_activity(both, 2.months.ago)
+      login(organiser)
+      visit new_admin_chapter_contact_path(chapter)
+      select 'Inactive for the last month', from: 'Audience'
+      fill_in 'Subject', with: 'Inactive member update'
+      fill_in 'Message', with: 'A message for members with no recent activity.'
+      ActionMailer::Base.deliveries.clear
+
+      click_on 'Preview recipients'
+
+      expect_preview([student, both])
+      click_on 'Confirm and send'
+
+      expect(page).to have_text('Email sent to 2 chapter members')
+      expect_email_fanout(
+        recipients: [student, both],
+        excluded: [coach, former_member, other_chapter_member],
+        subject: 'Inactive member update',
+        message: 'A message for members with no recent activity.'
+      )
+    end
   end
 
   scenario 'admin can access any chapter contact form' do
@@ -168,6 +216,16 @@ RSpec.feature 'Contacting chapter members' do
     visit root_path
     click_on 'Menu'
     click_on 'Contact chapter'
+  end
+
+  def record_activity(member, created_at)
+    PublicActivity::Activity.create!(
+      owner: member,
+      key: 'event_invitation.rsvp',
+      trackable: member,
+      created_at:,
+      updated_at: created_at
+    )
   end
 
   def expect_email_fanout(recipients:, excluded:, subject: 'Workshop update',
