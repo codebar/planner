@@ -69,6 +69,22 @@ RSpec.describe Admin::ChapterContactsController do
       expect(response.body).to include('No current chapter members match that event RSVP status.')
       expect(ChapterContactConfirmation.count).to eq(0)
     end
+
+    it 'rejects unsupported activity periods' do
+      post :preview, params: {
+        chapter_id: chapter.id,
+        chapter_contact: {
+          audience: 'active_last_month',
+          activity_months: '9',
+          subject: 'Update',
+          message: 'Hello recently active members'
+        }
+      }
+
+      expect(response).to have_http_status(:unprocessable_content)
+      expect(response.body).to include('Choose a valid activity period.')
+      expect(ChapterContactConfirmation.count).to eq(0)
+    end
   end
 
   describe 'POST #create' do

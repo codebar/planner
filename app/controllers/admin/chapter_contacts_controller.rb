@@ -9,8 +9,7 @@ class Admin::ChapterContactsController < Admin::ApplicationController
 
   def new
     authorize @chapter, :contact?
-    @chapter_members = @chapter.contact_members
-    @chapter_events = @chapter.contact_events
+    load_form_collections
     @audience = 'all_members'
     @recipient_count = @chapter.contact_recipients(@audience).count
     @selected_member_ids = []
@@ -27,10 +26,9 @@ class Admin::ChapterContactsController < Admin::ApplicationController
 
   def create
     authorize @chapter, :contact?
-    token = confirmation_token
-    return reject_confirmation unless token
-
-    confirmation = ChapterContactConfirmation.find_for(chapter: @chapter, sender: current_user, token:)
+    confirmation = ChapterContactConfirmation.find_for(
+      chapter: @chapter, sender: current_user, token: params[:chapter_contact]&.[](:confirmation_token)
+    )
     return reject_confirmation unless confirmation&.consume! { |record| send_contact_emails(record) }
 
     count = confirmation.recipient_ids.size
@@ -40,32 +38,28 @@ class Admin::ChapterContactsController < Admin::ApplicationController
 
   private
 
-  def preview_params
-    params.expect(chapter_contact: [:subject, :message, :audience, :event_id, :rsvp_status, { member_ids: [] }])
-  end
-
-  def confirmation_token
-    token = params[:chapter_contact]&.[](:confirmation_token)
-    token if token.is_a?(String) && token.present?
-  end
-
-  def preview_recipient_ids
-    attributes = preview_params
-    @subject, @message = attributes.values_at(:subject, :message)
-    @audience = attributes[:audience].presence || 'all_members'
+  def preview_recipient_ids # rubocop:disable Metrics/MethodLength
+    attributes = params.expect(
+      chapter_contact: %i[subject message audience event_id rsvp_status activity_months] + [{ member_ids: [] }]
+    )
+    @subject, @message, @audience, @event_id, @rsvp_status = attributes.values_at(
+      :subject, :message, :audience, :event_id, :rsvp_status
+    )
+    @audience ||= 'all_members'
     @selected_member_ids = Array(attributes[:member_ids])
-    @event_id, @rsvp_status = attributes.values_at(:event_id, :rsvp_status)
-    @chapter_members = @chapter.contact_members
-    @chapter_events = @chapter.contact_events
+    @activity_months = attributes[:activity_months].presence || '1'
+    load_form_collections
     @chapter.contact_recipients(
-      @audience, @selected_member_ids, event_id: @event_id, rsvp_status: @rsvp_status
+      @audience, @selected_member_ids,
+      event_id: @event_id, rsvp_status: @rsvp_status, activity_months: @activity_months
     ).pluck(:id)
   end
 
   def valid_contact?(recipient_ids)
     @recipient_count = recipient_ids.size
     return true if @audience.in?(Chapter::CONTACT_AUDIENCES) &&
-                   @subject.present? && @message.present? && recipient_ids.any?
+                   @subject.present? && @message.present? &&
+                   Chapter.valid_contact_activity_months?(@audience, @activity_months) && recipient_ids.any?
 
     flash.now[:alert] = contact_error
     false
@@ -94,14 +88,15 @@ class Admin::ChapterContactsController < Admin::ApplicationController
   def contact_error
     return 'Subject and message are required.' if @subject.blank? || @message.blank?
     return 'Choose a valid audience.' unless @audience.in?(Chapter::CONTACT_AUDIENCES)
+    return 'Choose a valid activity period.' unless
+      Chapter.valid_contact_activity_months?(@audience, @activity_months)
 
-    {
-      'chapter_organisers' => 'There are no chapter organisers to email.',
-      'custom_list' => 'Select at least one current chapter member.',
-      'active_last_month' => 'There are no members active in the last month to email.',
-      'inactive_last_month' => 'There are no members inactive for the last month to email.',
-      'event_rsvp' => 'No current chapter members match that event RSVP status.'
-    }.fetch(@audience, 'There are no current chapter subscribers to email.')
+    Chapter::CONTACT_AUDIENCE_ERRORS.fetch(@audience, 'There are no current chapter subscribers to email.')
+  end
+
+  def load_form_collections
+    @chapter_members = @chapter.contact_members
+    @chapter_events = @chapter.contact_events
   end
 
   def reject_confirmation

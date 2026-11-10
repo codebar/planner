@@ -11,6 +11,8 @@ class ChapterContactConfirmation < ApplicationRecord
   attr_accessor :token
 
   def self.find_for(chapter:, sender:, token:)
+    return unless token.is_a?(String) && token.present?
+
     find_by(chapter:, sender:, token_digest: Digest::SHA256.hexdigest(token))
   end
 

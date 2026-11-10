@@ -23,6 +23,9 @@
       = form.label :rsvp_status, 'RSVP status', class: 'form-label'
       = form.select :rsvp_status, options_for_select([['Attending', 'attending'], ['Declined', 'declined'], ['No response', 'unanswered']], @rsvp_status), { include_blank: 'Select an RSVP status' }, class: 'form-select'
     .mb-3
+      = form.label :activity_months, 'Activity period', class: 'form-label'
+      = form.select :activity_months, options_for_select([['1 month', '1'], ['3 months', '3'], ['6 months', '6'], ['12 months', '12']], @activity_months), {}, class: 'form-select'
+    .mb-3
       = form.label :subject, class: 'form-label'
       = form.text_field :subject, class: 'form-control', required: true, value: @subject
     .mb-3
