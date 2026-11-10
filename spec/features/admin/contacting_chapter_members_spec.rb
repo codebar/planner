@@ -158,6 +158,31 @@ RSpec.feature 'Contacting chapter members' do
       )
     end
 
+    scenario 'uses the selected three-month activity window' do
+      record_activity(coach, 2.weeks.ago)
+      record_activity(both, 2.months.ago)
+      login(organiser)
+      visit new_admin_chapter_contact_path(chapter)
+      select 'Active in the last month', from: 'Audience'
+      select '3 months', from: 'Activity period'
+      fill_in 'Subject', with: 'Recent activity update'
+      fill_in 'Message', with: 'A message for members active in the last three months.'
+      ActionMailer::Base.deliveries.clear
+
+      click_on 'Preview recipients'
+
+      expect_preview([coach, both])
+      click_on 'Confirm and send'
+
+      expect(page).to have_text('Email sent to 2 chapter members')
+      expect_email_fanout(
+        recipients: [coach, both],
+        excluded: [student, former_member, other_chapter_member],
+        subject: 'Recent activity update',
+        message: 'A message for members active in the last three months.'
+      )
+    end
+
     scenario 'previews and emails current chapter members attending a selected event' do
       event = event_with_rsvps
       login(organiser)
