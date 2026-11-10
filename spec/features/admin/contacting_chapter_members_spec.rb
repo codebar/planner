@@ -49,6 +49,30 @@ RSpec.feature 'Contacting chapter members' do
         excluded: [former_member, other_chapter_member]
       )
     end
+
+    scenario 'previews and emails chapter organisers when leadership is selected' do
+      another_organiser = Fabricate(:member)
+      another_organiser.add_role(:organiser, chapter)
+      login(organiser)
+      visit new_admin_chapter_contact_path(chapter)
+      select 'Chapter organisers', from: 'Audience'
+      fill_in 'Subject', with: 'Leadership update'
+      fill_in 'Message', with: 'A message for chapter organisers.'
+      ActionMailer::Base.deliveries.clear
+
+      click_on 'Preview recipients'
+
+      expect_preview([organiser, another_organiser])
+      click_on 'Confirm and send'
+
+      expect(page).to have_text('Email sent to 2 chapter members')
+      expect_email_fanout(
+        recipients: [organiser, another_organiser],
+        excluded: [student, coach, both, former_member, other_chapter_member],
+        subject: 'Leadership update',
+        message: 'A message for chapter organisers.'
+      )
+    end
   end
 
   scenario 'admin can access any chapter contact form' do
@@ -110,10 +134,11 @@ RSpec.feature 'Contacting chapter members' do
     click_on 'Contact chapter'
   end
 
-  def expect_email_fanout(recipients:, excluded:)
+  def expect_email_fanout(recipients:, excluded:, subject: 'Workshop update',
+    message: 'The workshop starts at 6pm.')
     expect_delivered_to(recipients)
     expect_no_delivery_to(excluded)
-    expect_individual_emails(recipients.size)
+    expect_individual_emails(recipients.size, subject:, message:)
   end
 
   def expect_preview(recipients)
@@ -147,15 +172,15 @@ RSpec.feature 'Contacting chapter members' do
     members.each { |member| expect(delivered_emails_to(member)).to be_empty }
   end
 
-  def expect_individual_emails(count)
+  def expect_individual_emails(count, subject:, message:)
     emails = ActionMailer::Base.deliveries
     expect(emails.size).to eq(count)
-    emails.each { |email| expect_individual_email(email) }
+    emails.each { |email| expect_individual_email(email, subject:, message:) }
   end
 
-  def expect_individual_email(email)
+  def expect_individual_email(email, subject:, message:)
     expect_mail_privacy(email)
-    expect_mail_content(email)
+    expect_mail_content(email, subject:, message:)
   end
 
   def expect_mail_privacy(email)
@@ -164,8 +189,8 @@ RSpec.feature 'Contacting chapter members' do
     expect(email.bcc).to be_empty
   end
 
-  def expect_mail_content(email)
-    expect(email.subject).to eq('Workshop update')
-    expect(email.body.encoded).to include('The workshop starts at 6pm.')
+  def expect_mail_content(email, subject:, message:)
+    expect(email.subject).to eq(subject)
+    expect(email.body.encoded).to include(message)
   end
 end
