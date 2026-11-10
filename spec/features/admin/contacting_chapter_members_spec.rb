@@ -25,7 +25,7 @@ RSpec.feature 'Contacting chapter members' do
       Fabricate(:subscription, member: other_chapter_member, group: other_group)
     end
 
-    scenario 'emails current chapter subscribers individually' do
+    scenario 'previews current subscribers and emails each individually after confirmation' do
       login(organiser)
       open_contact_menu
       expect(page).to have_no_link('Contact members', href: new_admin_chapter_contact_path(other_chapter))
@@ -35,7 +35,10 @@ RSpec.feature 'Contacting chapter members' do
       fill_in 'Message', with: 'The workshop starts at 6pm.'
       ActionMailer::Base.deliveries.clear
 
-      click_on 'Send email'
+      click_on 'Preview recipients'
+
+      expect_preview([student, coach, both])
+      click_on 'Confirm and send'
 
       expect(page).to have_text('Email sent to 3 chapter members')
       expect_email_fanout(
@@ -92,7 +95,7 @@ RSpec.feature 'Contacting chapter members' do
     fill_in 'Message', with: 'The workshop starts at 6pm.'
     ActionMailer::Base.deliveries.clear
 
-    click_on 'Send email'
+    click_on 'Preview recipients'
 
     expect(page).to have_text('There are no current chapter subscribers to email.')
     expect(ActionMailer::Base.deliveries).to be_empty
@@ -108,6 +111,29 @@ RSpec.feature 'Contacting chapter members' do
     expect_delivered_to(recipients)
     expect_no_delivery_to(excluded)
     expect_individual_emails(recipients.size)
+  end
+
+  def expect_preview(recipients)
+    expect_preview_count(recipients.size)
+    expect_recipient_names(recipients)
+    expect_recipient_addresses_hidden(recipients)
+    expect_no_preview_delivery
+  end
+
+  def expect_preview_count(count)
+    expect(page).to have_text("#{count} recipients will receive this email")
+  end
+
+  def expect_recipient_names(recipients)
+    recipients.each { |recipient| expect(page).to have_text(recipient.full_name) }
+  end
+
+  def expect_recipient_addresses_hidden(recipients)
+    recipients.each { |recipient| expect(page).to have_no_text(recipient.email) }
+  end
+
+  def expect_no_preview_delivery
+    expect(ActionMailer::Base.deliveries).to be_empty
   end
 
   def expect_delivered_to(recipients)
