@@ -14,35 +14,69 @@ class Admin::ChapterContactsController < Admin::ApplicationController
 
   def preview
     authorize @chapter, :contact?
-    @subject, @message = contact_params.values_at(:subject, :message)
-    @recipient_count = recipients.count
+    @subject, @message = preview_params.values_at(:subject, :message)
+    recipient_ids = recipients.pluck(:id)
+    return render_new unless valid_contact?(recipient_ids)
 
-    return render_new unless valid_contact?
-
-    @recipients = recipients.order(:name, :surname)
+    create_confirmation(recipient_ids)
     render :preview
   end
 
   def create
     authorize @chapter, :contact?
-    @subject, @message = contact_params.values_at(:subject, :message)
-    @recipient_count = recipients.count
+    token = confirmation_token
+    return reject_confirmation unless token.is_a?(String) && token.present?
 
-    return render_new unless valid_contact?
+    confirmation = find_confirmation(token)
+    return reject_confirmation unless confirmation
 
-    send_contact_emails
+    return reject_confirmation unless confirmation.consume! { |record| send_contact_emails(record) }
+
     redirect_to new_admin_chapter_contact_path(@chapter),
-                notice: "Email sent to #{@recipient_count} chapter members"
+                notice: "Email sent to #{confirmation.recipient_ids.size} chapter members"
   end
 
   private
 
-  def contact_params
+  def preview_params
     params.expect(chapter_contact: %i[subject message])
+  end
+
+  def confirmation_token
+    params[:chapter_contact]&.[](:confirmation_token)
   end
 
   def recipients
     @chapter.members.distinct
+  end
+
+  def valid_contact?(recipient_ids)
+    @recipient_count = recipient_ids.size
+    return true if @subject.present? && @message.present? && recipient_ids.any?
+
+    flash.now[:alert] = contact_error
+    false
+  end
+
+  def create_confirmation(recipient_ids)
+    confirmation = ChapterContactConfirmation.create_for!(
+      chapter: @chapter,
+      sender: current_user,
+      subject: @subject,
+      message: @message,
+      recipient_ids:
+    )
+    @confirmation_token = confirmation.token
+    @recipient_count = confirmation.recipient_ids.size
+    @recipients = Member.where(id: confirmation.recipient_ids).order(:name, :surname)
+  end
+
+  def find_confirmation(token)
+    ChapterContactConfirmation.find_by(
+      chapter: @chapter,
+      sender: current_user,
+      token_digest: Digest::SHA256.hexdigest(token)
+    )
   end
 
   def accessible_chapters
@@ -55,24 +89,23 @@ class Admin::ChapterContactsController < Admin::ApplicationController
     current_user.roles.where(name: 'organiser', resource_type: nil, resource_id: nil).exists?
   end
 
-  def valid_contact?
-    return true if @subject.present? && @message.present? && @recipient_count.positive?
-
-    flash.now[:alert] = contact_error
-    false
-  end
-
   def contact_error
     return 'Subject and message are required.' if @subject.blank? || @message.blank?
 
     'There are no current chapter subscribers to email.'
   end
 
+  def reject_confirmation
+    redirect_to new_admin_chapter_contact_path(@chapter),
+                alert: 'Email preview expired or already used; please preview again.'
+  end
+
   def render_new = render :new, status: :unprocessable_entity
 
-  def send_contact_emails
-    recipients.find_each do |member|
-      ChapterContactMailer.with(chapter: @chapter, recipient: member, subject: @subject, message: @message)
+  def send_contact_emails(confirmation)
+    Member.where(id: confirmation.recipient_ids).find_each do |member|
+      ChapterContactMailer.with(chapter: confirmation.chapter, recipient: member,
+                                subject: confirmation.subject, message: confirmation.message)
                           .contact.deliver_later
     end
   end
