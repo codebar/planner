@@ -1,5 +1,5 @@
 class Admin::ChapterContactsController < Admin::ApplicationController
-  before_action :set_chapter, only: %i[new create]
+  before_action :set_chapter, only: %i[new preview create]
   after_action :verify_authorized
 
   def index
@@ -10,6 +10,17 @@ class Admin::ChapterContactsController < Admin::ApplicationController
   def new
     authorize @chapter, :contact?
     @recipient_count = recipients.count
+  end
+
+  def preview
+    authorize @chapter, :contact?
+    @subject, @message = contact_params.values_at(:subject, :message)
+    @recipient_count = recipients.count
+
+    return render_new unless valid_contact?
+
+    @recipients = recipients.order(:name, :surname)
+    render :preview
   end
 
   def create
@@ -57,9 +68,7 @@ class Admin::ChapterContactsController < Admin::ApplicationController
     'There are no current chapter subscribers to email.'
   end
 
-  def render_new
-    render :new, status: :unprocessable_entity
-  end
+  def render_new = render :new, status: :unprocessable_entity
 
   def send_contact_emails
     recipients.find_each do |member|

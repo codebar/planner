@@ -113,7 +113,9 @@ Rails.application.routes.draw do
       resources :workshops, only: [:index]
       resources :feedback, only: [:index], controller: 'chapters/feedback'
       resources :organisers, only: %i[index create destroy], controller: 'chapters/organisers'
-      resource :contact, only: %i[new create], controller: 'chapter_contacts'
+      resource :contact, only: %i[new create], controller: 'chapter_contacts' do
+        post :preview, on: :collection
+      end
     end
 
     resources :stats, only: [:index]

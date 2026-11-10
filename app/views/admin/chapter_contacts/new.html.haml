@@ -5,11 +5,11 @@
   - if flash[:alert]
     .alert.alert-danger= flash[:alert]
 
-  = form_with scope: :chapter_contact, url: admin_chapter_contact_path(@chapter) do |form|
+  = form_with scope: :chapter_contact, url: preview_admin_chapter_contact_path(@chapter) do |form|
     .mb-3
       = form.label :subject, class: 'form-label'
-      = form.text_field :subject, class: 'form-control', required: true
+      = form.text_field :subject, class: 'form-control', required: true, value: @subject
     .mb-3
       = form.label :message, class: 'form-label'
-      = form.text_area :message, class: 'form-control', rows: 8, required: true
-    = form.submit 'Send email', class: 'btn btn-primary'
+      = form.text_area :message, class: 'form-control', rows: 8, required: true, value: @message
+    = form.submit 'Preview recipients', class: 'btn btn-primary'
