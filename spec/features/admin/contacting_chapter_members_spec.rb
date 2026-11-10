@@ -38,6 +38,9 @@ RSpec.feature 'Contacting chapter members' do
       click_on 'Preview recipients'
 
       expect_preview([student, coach, both])
+      expect(page).to have_field('chapter_contact[confirmation_token]', type: 'hidden')
+      expect(page).to have_no_field('chapter_contact[subject]')
+      expect(page).to have_no_field('chapter_contact[message]')
       click_on 'Confirm and send'
 
       expect(page).to have_text('Email sent to 3 chapter members')

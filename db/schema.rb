@@ -92,6 +92,23 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_21_163000) do
     t.index ["member_id"], name: "index_bans_on_member_id"
   end
 
+  create_table "chapter_contact_confirmations", force: :cascade do |t|
+    t.bigint "chapter_id", null: false
+    t.bigint "sender_id", null: false
+    t.string "token_digest", null: false
+    t.string "subject", null: false
+    t.text "message", null: false
+    t.jsonb "recipient_ids", default: [], null: false
+    t.datetime "expires_at", null: false
+    t.datetime "consumed_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["chapter_id"], name: "index_chapter_contact_confirmations_on_chapter_id"
+    t.index ["expires_at"], name: "index_chapter_contact_confirmations_on_expires_at"
+    t.index ["sender_id"], name: "index_chapter_contact_confirmations_on_sender_id"
+    t.index ["token_digest"], name: "index_chapter_contact_confirmations_on_token_digest", unique: true
+  end
+
   create_table "chapters", id: :serial, force: :cascade do |t|
     t.boolean "active", default: true
     t.string "city"
@@ -610,6 +627,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_21_163000) do
     t.index ["updated_at"], name: "index_workshops_on_updated_at"
   end
 
+  add_foreign_key "chapter_contact_confirmations", "chapters"
+  add_foreign_key "chapter_contact_confirmations", "members", column: "sender_id"
   add_foreign_key "invitation_log_entries", "invitation_logs"
   add_foreign_key "invitation_logs", "members", column: "initiator_id"
   add_foreign_key "member_email_deliveries", "members"

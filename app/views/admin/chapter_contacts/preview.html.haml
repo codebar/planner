@@ -1,11 +1,10 @@
 .container.py-4
   %h1 Confirm email to #{@chapter.name}
-  %p= "#{@recipient_count} #{'recipient'.pluralize(@recipient_count)} will receive this email"
+  %p #{@recipient_count} #{'recipient'.pluralize(@recipient_count)} will receive this email
   %ul
     - @recipients.each do |recipient|
       %li= recipient.full_name
 
   = form_with scope: :chapter_contact, url: admin_chapter_contact_path(@chapter) do |form|
-    = form.hidden_field :subject, value: @subject
-    = form.hidden_field :message, value: @message
+    = form.hidden_field :confirmation_token, value: @confirmation_token
     = form.submit 'Confirm and send', class: 'btn btn-primary'
