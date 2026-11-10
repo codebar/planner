@@ -8,7 +8,7 @@
   = form_with scope: :chapter_contact, url: preview_admin_chapter_contact_path(@chapter) do |form|
     .mb-3
       = form.label :audience, 'Audience', class: 'form-label'
-      = form.select :audience, options_for_select([['All chapter members', 'all_members'], ['Chapter organisers', 'chapter_organisers'], ['Custom list', 'custom_list']], @audience), {}, class: 'form-select'
+      = form.select :audience, options_for_select([['All chapter members', 'all_members'], ['Chapter organisers', 'chapter_organisers'], ['Custom list', 'custom_list'], ['Active in the last month', 'active_last_month'], ['Inactive for the last month', 'inactive_last_month']], @audience), {}, class: 'form-select'
     .mb-3
       %fieldset
         %legend.fs-6 Select members for a custom list

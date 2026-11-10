@@ -46,6 +46,14 @@ class Member < ApplicationRecord
   scope :accepted_toc, -> { where.not(accepted_toc_at: nil) }
   scope :order_by_email, -> { order(:email) }
   scope :subscribers, -> { joins(:subscriptions).order('created_at desc').uniq }
+  scope :with_activity_since, lambda { |time|
+    where(id: PublicActivity::Activity.where(owner_type: 'Member').where(created_at: time..)
+                                      .where.not(owner_id: nil).select(:owner_id))
+  }
+  scope :without_activity_since, lambda { |time|
+    where.not(id: PublicActivity::Activity.where(owner_type: 'Member').where(created_at: time..)
+                                          .where.not(owner_id: nil).select(:owner_id))
+  }
   scope :not_banned, lambda {
                        joins('LEFT OUTER JOIN bans ON members.id = bans.member_id')
                          .where('bans.id is NULL or bans.expires_at < CURRENT_DATE')

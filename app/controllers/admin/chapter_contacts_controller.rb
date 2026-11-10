@@ -23,7 +23,7 @@ class Admin::ChapterContactsController < Admin::ApplicationController
     @selected_member_ids = Array(attributes[:member_ids])
     @chapter_members = @chapter.contact_members
     recipient_ids = @chapter.contact_recipients(@audience, @selected_member_ids).pluck(:id)
-    return render_new unless valid_contact?(recipient_ids)
+    return render(:new, status: :unprocessable_entity) unless valid_contact?(recipient_ids)
 
     create_confirmation(recipient_ids)
     render :preview
@@ -55,7 +55,7 @@ class Admin::ChapterContactsController < Admin::ApplicationController
 
   def valid_contact?(recipient_ids)
     @recipient_count = recipient_ids.size
-    return true if @audience.in?(%w[all_members chapter_organisers custom_list]) &&
+    return true if @audience.in?(Chapter::CONTACT_AUDIENCES) &&
                    @subject.present? && @message.present? && recipient_ids.any?
 
     flash.now[:alert] = contact_error
@@ -95,19 +95,20 @@ class Admin::ChapterContactsController < Admin::ApplicationController
 
   def contact_error
     return 'Subject and message are required.' if @subject.blank? || @message.blank?
-    return 'Choose a valid audience.' unless @audience.in?(%w[all_members chapter_organisers custom_list])
-    return 'There are no chapter organisers to email.' if @audience == 'chapter_organisers'
-    return 'Select at least one current chapter member.' if @audience == 'custom_list'
+    return 'Choose a valid audience.' unless @audience.in?(Chapter::CONTACT_AUDIENCES)
 
-    'There are no current chapter subscribers to email.'
+    {
+      'chapter_organisers' => 'There are no chapter organisers to email.',
+      'custom_list' => 'Select at least one current chapter member.',
+      'active_last_month' => 'There are no members active in the last month to email.',
+      'inactive_last_month' => 'There are no members inactive for the last month to email.'
+    }.fetch(@audience, 'There are no current chapter subscribers to email.')
   end
 
   def reject_confirmation
     redirect_to new_admin_chapter_contact_path(@chapter),
                 alert: 'Email preview expired or already used; please preview again.'
   end
-
-  def render_new = render :new, status: :unprocessable_entity
 
   def send_contact_emails(confirmation)
     Member.where(id: confirmation.recipient_ids).find_each do |member|

@@ -1,4 +1,6 @@
 class Chapter < ApplicationRecord
+  CONTACT_AUDIENCES = %w[all_members chapter_organisers custom_list active_last_month inactive_last_month].freeze
+
   resourcify :permissions, role_cname: 'Permission', role_table_name: :permission
 
   validates :name, :email, uniqueness: true, presence: true
@@ -39,12 +41,15 @@ class Chapter < ApplicationRecord
   end
 
   def contact_recipients(audience, member_ids = [])
-    case audience
-    when 'all_members' then members.distinct
-    when 'chapter_organisers' then organisers
-    when 'custom_list' then members.where(id: member_ids).distinct
-    else Member.none
+    recipients = case audience
+                 when 'all_members' then members
+                 when 'chapter_organisers' then organisers
+                 when 'custom_list' then members.where(id: member_ids)
+                 when 'active_last_month' then members.with_activity_since(1.month.ago)
+                 when 'inactive_last_month' then members.without_activity_since(1.month.ago)
+                 else Member.none
     end
+    recipients.distinct
   end
 
   # All members subscribed to this chapter's Students group, regardless of ban or TOC status.
