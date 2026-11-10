@@ -10,6 +10,7 @@ class Admin::ChapterContactsController < Admin::ApplicationController
   def new
     authorize @chapter, :contact?
     @chapter_members = @chapter.contact_members
+    @chapter_events = @chapter.contact_events
     @audience = 'all_members'
     @recipient_count = @chapter.contact_recipients(@audience).count
     @selected_member_ids = []
@@ -17,12 +18,7 @@ class Admin::ChapterContactsController < Admin::ApplicationController
 
   def preview
     authorize @chapter, :contact?
-    attributes = preview_params
-    @subject, @message = attributes.values_at(:subject, :message)
-    @audience = attributes[:audience].presence || 'all_members'
-    @selected_member_ids = Array(attributes[:member_ids])
-    @chapter_members = @chapter.contact_members
-    recipient_ids = @chapter.contact_recipients(@audience, @selected_member_ids).pluck(:id)
+    recipient_ids = preview_recipient_ids
     return render(:new, status: :unprocessable_entity) unless valid_contact?(recipient_ids)
 
     create_confirmation(recipient_ids)
@@ -32,25 +28,38 @@ class Admin::ChapterContactsController < Admin::ApplicationController
   def create
     authorize @chapter, :contact?
     token = confirmation_token
-    return reject_confirmation unless token.is_a?(String) && token.present?
+    return reject_confirmation unless token
 
-    confirmation = find_confirmation(token)
-    return reject_confirmation unless confirmation
+    confirmation = ChapterContactConfirmation.find_for(chapter: @chapter, sender: current_user, token:)
+    return reject_confirmation unless confirmation&.consume! { |record| send_contact_emails(record) }
 
-    return reject_confirmation unless confirmation.consume! { |record| send_contact_emails(record) }
-
+    count = confirmation.recipient_ids.size
     redirect_to new_admin_chapter_contact_path(@chapter),
-                notice: "Email sent to #{confirmation.recipient_ids.size} chapter members"
+                notice: "Email sent to #{count} chapter #{'member'.pluralize(count)}"
   end
 
   private
 
   def preview_params
-    params.expect(chapter_contact: [:subject, :message, :audience, { member_ids: [] }])
+    params.expect(chapter_contact: [:subject, :message, :audience, :event_id, :rsvp_status, { member_ids: [] }])
   end
 
   def confirmation_token
-    params[:chapter_contact]&.[](:confirmation_token)
+    token = params[:chapter_contact]&.[](:confirmation_token)
+    token if token.is_a?(String) && token.present?
+  end
+
+  def preview_recipient_ids
+    attributes = preview_params
+    @subject, @message = attributes.values_at(:subject, :message)
+    @audience = attributes[:audience].presence || 'all_members'
+    @selected_member_ids = Array(attributes[:member_ids])
+    @event_id, @rsvp_status = attributes.values_at(:event_id, :rsvp_status)
+    @chapter_members = @chapter.contact_members
+    @chapter_events = @chapter.contact_events
+    @chapter.contact_recipients(
+      @audience, @selected_member_ids, event_id: @event_id, rsvp_status: @rsvp_status
+    ).pluck(:id)
   end
 
   def valid_contact?(recipient_ids)
@@ -75,22 +84,11 @@ class Admin::ChapterContactsController < Admin::ApplicationController
     @recipients = Member.where(id: confirmation.recipient_ids).order(:name, :surname)
   end
 
-  def find_confirmation(token)
-    ChapterContactConfirmation.find_by(
-      chapter: @chapter,
-      sender: current_user,
-      token_digest: Digest::SHA256.hexdigest(token)
-    )
-  end
-
   def accessible_chapters
-    return Chapter.order(:name) if current_user.is_admin? || global_organiser?
+    global_organiser = current_user.roles.where(name: 'organiser', resource_type: nil, resource_id: nil).exists?
+    return Chapter.order(:name) if current_user.is_admin? || global_organiser
 
     current_user.organised_chapters.order(:name)
-  end
-
-  def global_organiser?
-    current_user.roles.where(name: 'organiser', resource_type: nil, resource_id: nil).exists?
   end
 
   def contact_error
@@ -101,7 +99,8 @@ class Admin::ChapterContactsController < Admin::ApplicationController
       'chapter_organisers' => 'There are no chapter organisers to email.',
       'custom_list' => 'Select at least one current chapter member.',
       'active_last_month' => 'There are no members active in the last month to email.',
-      'inactive_last_month' => 'There are no members inactive for the last month to email.'
+      'inactive_last_month' => 'There are no members inactive for the last month to email.',
+      'event_rsvp' => 'No current chapter members match that event RSVP status.'
     }.fetch(@audience, 'There are no current chapter subscribers to email.')
   end
 

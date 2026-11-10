@@ -1,5 +1,8 @@
 class Chapter < ApplicationRecord
-  CONTACT_AUDIENCES = %w[all_members chapter_organisers custom_list active_last_month inactive_last_month].freeze
+  CONTACT_AUDIENCES = %w[
+    all_members chapter_organisers custom_list active_last_month inactive_last_month event_rsvp
+  ].freeze
+  CONTACT_RSVP_STATUSES = %w[attending declined unanswered].freeze
 
   resourcify :permissions, role_cname: 'Permission', role_table_name: :permission
 
@@ -40,13 +43,18 @@ class Chapter < ApplicationRecord
     members.distinct.order(:name, :surname)
   end
 
-  def contact_recipients(audience, member_ids = [])
+  def contact_events
+    events.order(date_and_time: :desc)
+  end
+
+  def contact_recipients(audience, member_ids = [], event_id: nil, rsvp_status: nil)
     recipients = case audience
                  when 'all_members' then members
                  when 'chapter_organisers' then organisers
                  when 'custom_list' then members.where(id: member_ids)
                  when 'active_last_month' then members.with_activity_since(1.month.ago)
                  when 'inactive_last_month' then members.without_activity_since(1.month.ago)
+                 when 'event_rsvp' then recipients_by_event_rsvp(event_id, rsvp_status)
                  else Member.none
     end
     recipients.distinct
@@ -75,6 +83,16 @@ class Chapter < ApplicationRecord
   end
 
   private
+
+  def recipients_by_event_rsvp(event_id, rsvp_status)
+    return Member.none unless CONTACT_RSVP_STATUSES.include?(rsvp_status)
+
+    event = contact_events.find_by(id: event_id)
+    return Member.none unless event
+
+    attending = { 'attending' => true, 'declined' => false, 'unanswered' => nil }.fetch(rsvp_status)
+    members.where(id: event.invitations.where(attending:).select(:member_id))
+  end
 
   def members_for_group(name)
     members.where(groups: { name: }).distinct
