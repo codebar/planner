@@ -1,17 +1,4 @@
 class Chapter < ApplicationRecord
-  CONTACT_AUDIENCES = %w[
-    all_members chapter_organisers custom_list active_last_month inactive_last_month event_rsvp
-  ].freeze
-  CONTACT_RSVP_STATUSES = %w[attending declined unanswered].freeze
-  CONTACT_ACTIVITY_MONTHS = %w[1 3 6 12].freeze
-  CONTACT_AUDIENCE_ERRORS = {
-    'chapter_organisers' => 'There are no chapter organisers to email.',
-    'custom_list' => 'Select at least one current chapter member.',
-    'active_last_month' => 'There are no members active in the selected period.',
-    'inactive_last_month' => 'There are no members inactive for the selected period.',
-    'event_rsvp' => 'No current chapter members match that event RSVP status.'
-  }.freeze
-
   resourcify :permissions, role_cname: 'Permission', role_table_name: :permission
 
   validates :name, :email, uniqueness: true, presence: true
@@ -56,20 +43,10 @@ class Chapter < ApplicationRecord
   end
 
   def contact_recipients(audience, member_ids = [], event_id: nil, rsvp_status: nil, activity_months: '1')
-    recipients = case audience
-                 when 'all_members' then members
-                 when 'chapter_organisers' then organisers
-                 when 'custom_list' then members.where(id: member_ids)
-                 when 'active_last_month' then activity_recipients(:active, activity_months)
-                 when 'inactive_last_month' then activity_recipients(:inactive, activity_months)
-                 when 'event_rsvp' then recipients_by_event_rsvp(event_id, rsvp_status)
-                 else Member.none
-    end
-    recipients.distinct
-  end
+    config = ChapterContactAudience::CONFIG[audience]
+    return Member.none unless config
 
-  def self.valid_contact_activity_months?(audience, months)
-    !audience.in?(%w[active_last_month inactive_last_month]) || CONTACT_ACTIVITY_MONTHS.include?(months)
+    contact_recipient_scope(config[:query], member_ids, event_id, rsvp_status, activity_months).distinct
   end
 
   # All members subscribed to this chapter's Students group, regardless of ban or TOC status.
@@ -96,15 +73,27 @@ class Chapter < ApplicationRecord
 
   private
 
+  def contact_recipient_scope(query, member_ids, event_id, rsvp_status, activity_months)
+    case query
+    when :members then members
+    when :organisers then organisers
+    when :selected_members then members.where(id: member_ids)
+    when :active_members then activity_recipients(:active, activity_months)
+    when :inactive_members then activity_recipients(:inactive, activity_months)
+    when :event_rsvp then recipients_by_event_rsvp(event_id, rsvp_status)
+    else Member.none
+    end
+  end
+
   def activity_recipients(state, months)
-    return Member.none if CONTACT_ACTIVITY_MONTHS.exclude?(months)
+    return Member.none if ChapterContactAudience::ACTIVITY_MONTHS.exclude?(months)
 
     cutoff = months.to_i.months.ago
     state == :active ? members.with_activity_since(cutoff) : members.without_activity_since(cutoff)
   end
 
   def recipients_by_event_rsvp(event_id, rsvp_status)
-    return Member.none unless CONTACT_RSVP_STATUSES.include?(rsvp_status)
+    return Member.none unless ChapterContactAudience::RSVP_STATUSES.key?(rsvp_status)
 
     event = contact_events.find_by(id: event_id)
     return Member.none unless event

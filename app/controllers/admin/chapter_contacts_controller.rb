@@ -57,9 +57,9 @@ class Admin::ChapterContactsController < Admin::ApplicationController
 
   def valid_contact?(recipient_ids)
     @recipient_count = recipient_ids.size
-    return true if @audience.in?(Chapter::CONTACT_AUDIENCES) &&
+    return true if @audience.in?(ChapterContactAudience::AUDIENCES) &&
                    @subject.present? && @message.present? &&
-                   Chapter.valid_contact_activity_months?(@audience, @activity_months) && recipient_ids.any?
+                   ChapterContactAudience.valid_activity_months?(@audience, @activity_months) && recipient_ids.any?
 
     flash.now[:alert] = contact_error
     false
@@ -87,11 +87,12 @@ class Admin::ChapterContactsController < Admin::ApplicationController
 
   def contact_error
     return 'Subject and message are required.' if @subject.blank? || @message.blank?
-    return 'Choose a valid audience.' unless @audience.in?(Chapter::CONTACT_AUDIENCES)
+    return 'Choose a valid audience.' unless @audience.in?(ChapterContactAudience::AUDIENCES)
     return 'Choose a valid activity period.' unless
-      Chapter.valid_contact_activity_months?(@audience, @activity_months)
+      ChapterContactAudience.valid_activity_months?(@audience, @activity_months)
 
-    Chapter::CONTACT_AUDIENCE_ERRORS.fetch(@audience, 'There are no current chapter subscribers to email.')
+    ChapterContactAudience::CONFIG.dig(@audience, :error) ||
+      'There are no current chapter subscribers to email.'
   end
 
   def load_form_collections
@@ -106,9 +107,10 @@ class Admin::ChapterContactsController < Admin::ApplicationController
 
   def send_contact_emails(confirmation)
     Member.where(id: confirmation.recipient_ids).find_each do |member|
-      ChapterContactMailer.with(chapter: confirmation.chapter, recipient: member,
-                                subject: confirmation.subject, message: confirmation.message)
-                          .contact.deliver_later
+      delivery = ChapterContactMailer.with(
+        chapter: confirmation.chapter, recipient: member, subject: confirmation.subject, message: confirmation.message
+      ).contact.deliver_later
+      raise ActiveJob::EnqueueError, 'Chapter contact email could not be enqueued' unless delivery
     end
   end
 

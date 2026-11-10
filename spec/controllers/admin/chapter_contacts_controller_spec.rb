@@ -123,6 +123,32 @@ RSpec.describe Admin::ChapterContactsController do
       expect(flash[:alert]).to include('expired or already used')
     end
 
+    it 'rolls back queued emails and keeps the confirmation reusable if enqueuing fails' do
+      another_member = Fabricate(:member)
+      Fabricate(:subscription, member: another_member, group:)
+      post :preview, params: {
+        chapter_id: chapter.id,
+        chapter_contact: { subject: 'Update', message: 'Hello chapter' }
+      }
+      token = confirmation_token
+      original_delay_jobs = Delayed::Worker.delay_jobs
+      Delayed::Worker.delay_jobs = true
+      enqueue_count = 0
+      allow(Delayed::Job).to receive(:enqueue).and_wrap_original do |original, *args|
+        enqueue_count += 1
+        raise ActiveJob::EnqueueError if enqueue_count == 2
+
+        original.call(*args)
+      end
+      queued_jobs = Delayed::Job.count
+
+      expect { confirm(token) }.to raise_error(ActiveJob::EnqueueError, 'Chapter contact email could not be enqueued')
+      expect(Delayed::Job.count).to eq(queued_jobs)
+      expect(ChapterContactConfirmation.last.reload.consumed_at).to be_nil
+    ensure
+      Delayed::Worker.delay_jobs = original_delay_jobs
+    end
+
     it 'rejects an expired confirmation' do
       post :preview, params: {
         chapter_id: chapter.id,
