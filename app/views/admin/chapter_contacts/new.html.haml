@@ -8,7 +8,7 @@
   = form_with scope: :chapter_contact, url: preview_admin_chapter_contact_path(@chapter) do |form|
     .mb-3
       = form.label :audience, 'Audience', class: 'form-label'
-      = form.select :audience, options_for_select([['All chapter members', 'all_members'], ['Chapter organisers', 'chapter_organisers'], ['Custom list', 'custom_list'], ['Active in the last month', 'active_last_month'], ['Inactive for the last month', 'inactive_last_month']], @audience), {}, class: 'form-select'
+      = form.select :audience, options_for_select([['All chapter members', 'all_members'], ['Chapter organisers', 'chapter_organisers'], ['Custom list', 'custom_list'], ['Active in the last month', 'active_last_month'], ['Inactive for the last month', 'inactive_last_month'], ['Event RSVP status', 'event_rsvp']], @audience), {}, class: 'form-select'
     .mb-3
       %fieldset
         %legend.fs-6 Select members for a custom list
@@ -16,6 +16,12 @@
           .form-check
             = checkbox.check_box(class: 'form-check-input')
             = checkbox.label(class: 'form-check-label')
+    .mb-3
+      = form.label :event_id, 'Event', class: 'form-label'
+      = form.select :event_id, options_from_collection_for_select(@chapter_events, :id, :name, @event_id), { include_blank: 'Select an event' }, class: 'form-select'
+    .mb-3
+      = form.label :rsvp_status, 'RSVP status', class: 'form-label'
+      = form.select :rsvp_status, options_for_select([['Attending', 'attending'], ['Declined', 'declined'], ['No response', 'unanswered']], @rsvp_status), { include_blank: 'Select an RSVP status' }, class: 'form-select'
     .mb-3
       = form.label :subject, class: 'form-label'
       = form.text_field :subject, class: 'form-control', required: true, value: @subject

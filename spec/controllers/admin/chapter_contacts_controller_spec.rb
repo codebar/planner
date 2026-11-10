@@ -49,6 +49,26 @@ RSpec.describe Admin::ChapterContactsController do
 
       expect(ChapterContactConfirmation.last.recipient_ids).to eq([member.id])
     end
+
+    it 'rejects RSVP audiences for events outside the chapter' do
+      other_event = Fabricate(:event)
+      Fabricate(:invitation, event: other_event, member:, attending: true)
+
+      post :preview, params: {
+        chapter_id: chapter.id,
+        chapter_contact: {
+          audience: 'event_rsvp',
+          event_id: other_event.id,
+          rsvp_status: 'attending',
+          subject: 'Update',
+          message: 'Hello event attendees'
+        }
+      }
+
+      expect(response).to have_http_status(:unprocessable_content)
+      expect(response.body).to include('No current chapter members match that event RSVP status.')
+      expect(ChapterContactConfirmation.count).to eq(0)
+    end
   end
 
   describe 'POST #create' do

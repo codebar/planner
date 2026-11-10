@@ -88,7 +88,7 @@ RSpec.feature 'Contacting chapter members' do
       expect_preview([coach])
       click_on 'Confirm and send'
 
-      expect(page).to have_text('Email sent to 1 chapter members')
+      expect(page).to have_text('Email sent to 1 chapter member')
       expect_email_fanout(
         recipients: [coach],
         excluded: [student, both, former_member, other_chapter_member],
@@ -155,6 +155,57 @@ RSpec.feature 'Contacting chapter members' do
         excluded: [coach, former_member, other_chapter_member],
         subject: 'Inactive member update',
         message: 'A message for members with no recent activity.'
+      )
+    end
+
+    scenario 'previews and emails current chapter members attending a selected event' do
+      event = event_with_rsvps
+      login(organiser)
+      visit new_admin_chapter_contact_path(chapter)
+      select 'Event RSVP status', from: 'Audience'
+      select event.name, from: 'Event'
+      select 'Attending', from: 'RSVP status'
+      fill_in 'Subject', with: 'Attendee update'
+      fill_in 'Message', with: 'A message for event attendees.'
+      ActionMailer::Base.deliveries.clear
+
+      click_on 'Preview recipients'
+
+      expect_preview([student])
+      click_on 'Confirm and send'
+
+      expect(page).to have_text('Email sent to 1 chapter member')
+      expect_email_fanout(
+        recipients: [student],
+        excluded: [coach, both, former_member, other_chapter_member],
+        subject: 'Attendee update',
+        message: 'A message for event attendees.'
+      )
+    end
+
+    scenario 'selects declined RSVPs for a chapter event' do
+      event = event_with_rsvps
+      login(organiser)
+      expect_rsvp_campaign(
+        event:,
+        selection: {
+          status: 'Declined', recipient: coach, subject: 'Declined RSVP update',
+          message: 'A message for members who declined.'
+        },
+        excluded: [student, both, former_member, other_chapter_member]
+      )
+    end
+
+    scenario 'selects chapter members with no response to an event' do
+      event = event_with_rsvps
+      login(organiser)
+      expect_rsvp_campaign(
+        event:,
+        selection: {
+          status: 'No response', recipient: both, subject: 'Unanswered RSVP update',
+          message: 'A message for members who have not responded.'
+        },
+        excluded: [student, coach, former_member, other_chapter_member]
       )
     end
   end
@@ -226,6 +277,40 @@ RSpec.feature 'Contacting chapter members' do
       created_at:,
       updated_at: created_at
     )
+  end
+
+  def event_with_rsvps
+    event = Fabricate(:event, chapters: [chapter])
+    Fabricate(:invitation, member: student, event:, attending: true)
+    Fabricate(:invitation, member: coach, event:, attending: false)
+    Fabricate(:invitation, member: both, event:, attending: nil)
+    Fabricate(:invitation, member: former_member, event:, attending: true)
+    Fabricate(:invitation, member: other_chapter_member, event:, attending: true)
+    event
+  end
+
+  def expect_rsvp_campaign(event:, selection:, excluded:)
+    status, recipient, subject, message = selection.values_at(:status, :recipient, :subject, :message)
+    prepare_rsvp_contact(event:, status:)
+    fill_contact_form(subject:, message:)
+    click_on 'Preview recipients'
+    expect_preview([recipient])
+    click_on 'Confirm and send'
+    expect(page).to have_text('Email sent to 1 chapter member')
+    expect_email_fanout(recipients: [recipient], excluded:, subject:, message:)
+  end
+
+  def prepare_rsvp_contact(event:, status:)
+    visit new_admin_chapter_contact_path(chapter)
+    select 'Event RSVP status', from: 'Audience'
+    select event.name, from: 'Event'
+    select status, from: 'RSVP status'
+  end
+
+  def fill_contact_form(subject:, message:)
+    fill_in 'Subject', with: subject
+    fill_in 'Message', with: message
+    ActionMailer::Base.deliveries.clear
   end
 
   def expect_email_fanout(recipients:, excluded:, subject: 'Workshop update',

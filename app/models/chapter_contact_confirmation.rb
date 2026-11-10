@@ -10,6 +10,10 @@ class ChapterContactConfirmation < ApplicationRecord
 
   attr_accessor :token
 
+  def self.find_for(chapter:, sender:, token:)
+    find_by(chapter:, sender:, token_digest: Digest::SHA256.hexdigest(token))
+  end
+
   def self.create_for!(chapter:, sender:, subject:, message:, recipient_ids:)
     token = SecureRandom.urlsafe_base64(32)
     create!(
