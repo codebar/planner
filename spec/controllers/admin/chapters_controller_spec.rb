@@ -146,6 +146,24 @@ RSpec.describe Admin::ChaptersController do
           { month: Date.new(2026, 11, 1), students: 1, coaches: 0 }
         ]
         expect(controller.view_assigns['new_sign_ups']).to eq(expected)
+
+        table = Capybara.string(response.body).find('table#chapter-new-sign-ups')
+        expect(table.text.squish).to include('Sep 2026', 'Oct 2026', 'Nov 2026')
+        expect(table.find('tr.fw-bold').text.squish).to eq('Total 2 1')
+      end
+    end
+
+    it 'does not count backfilled tombstones as sign-ups' do
+      travel_to(Time.zone.local(2026, 11, 6, 12, 0)) do
+        login_as_admin(Fabricate(:member))
+        chapter = Fabricate(:chapter)
+        students = Fabricate(:group, name: 'Students', chapter:)
+        removed_at = Time.zone.local(2026, 10, 3)
+        Fabricate(:subscription, group: students, created_at: removed_at, discarded_at: removed_at)
+
+        get :show, params: { id: chapter.id }
+
+        expect(controller.view_assigns['new_sign_ups'].sum { |row| row[:students] }).to eq(0)
       end
     end
   end

@@ -19,32 +19,34 @@
       <div class="col-12">
         <%= content %>
       </div>
-      <div class="col-12 mt-4">
-        <strong class="small mb-2 d-block">New sign-ups (last 3 months)</strong>
-        <table class="table table-sm align-middle mb-0">
-          <thead>
-            <tr>
-              <th scope="col" class="small fw-normal text-muted">Month</th>
-              <th scope="col" class="small fw-normal text-muted text-end">Students</th>
-              <th scope="col" class="small fw-normal text-muted text-end">Coaches</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% new_sign_ups.each do |row| %>
+      <% if new_sign_ups.any? %>
+        <div class="col-12 mt-4">
+          <strong class="small mb-2 d-block">New sign-ups (last 3 months)</strong>
+          <table id="chapter-new-sign-ups" class="table table-sm align-middle mb-0">
+            <thead>
               <tr>
-                <th scope="row" class="fw-normal"><%= sign_up_month_label(row[:month]) %></th>
-                <td class="text-end"><%= number_value(row[:students]) %></td>
-                <td class="text-end"><%= number_value(row[:coaches]) %></td>
+                <th scope="col" class="small fw-normal text-muted">Month</th>
+                <th scope="col" class="small fw-normal text-muted text-end">Students</th>
+                <th scope="col" class="small fw-normal text-muted text-end">Coaches</th>
               </tr>
-            <% end %>
-            <tr class="fw-bold">
-              <th scope="row">Total</th>
-              <td class="text-end"><%= number_value(sign_up_totals[:students]) %></td>
-              <td class="text-end"><%= number_value(sign_up_totals[:coaches]) %></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+            </thead>
+            <tbody>
+              <% new_sign_ups.each do |row| %>
+                <tr>
+                  <th scope="row" class="fw-normal"><%= sign_up_month_label(row[:month]) %></th>
+                  <td class="text-end"><%= number_value(row[:students]) %></td>
+                  <td class="text-end"><%= number_value(row[:coaches]) %></td>
+                </tr>
+              <% end %>
+              <tr class="fw-bold">
+                <th scope="row">Total</th>
+                <td class="text-end"><%= number_value(sign_up_totals[:students]) %></td>
+                <td class="text-end"><%= number_value(sign_up_totals[:coaches]) %></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      <% end %>
     </div>
   </div>
 </div>

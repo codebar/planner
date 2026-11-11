@@ -56,6 +56,14 @@ RSpec.describe Admin::Dashboard::HealthCardComponent do
     expect(page).to have_css('tr.fw-bold', text: /Total\s+15\s+8/)
   end
 
+  it 'hides the sign-up table when given no rows' do
+    health = Admin::Dashboard::ChapterHealth.row(chapter:)
+
+    render_inline(described_class.new(health:))
+
+    expect(page).to have_text('New sign-ups (last 3 months)', count: 0)
+  end
+
   it 'renders the yielded content inside the card' do
     health = Admin::Dashboard::ChapterHealth.row(chapter:)
 
