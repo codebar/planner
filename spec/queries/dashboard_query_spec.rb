@@ -174,17 +174,14 @@ RSpec.describe DashboardQuery do
       extra_sponsor = Fabricate(:sponsor)
 
       create_chapter_workshops(chapter:, count: 1, host:, extra_sponsor:)
-      result_one = described_class.upcoming_events_for_user(member)
-      one_query_count = count_queries { described_class.upcoming_events_for_user(member) }
+      result_one, one_query_count = load_user_events_and_count_host_queries(member:, host:)
+      expect(result_one.values.flatten.count { |event| event.is_a?(Workshop) }).to eq(1)
 
       create_chapter_workshops(chapter:, count: 3, host:, extra_sponsor:)
-      result_four = nil
-      four_query_count = count_queries { result_four = described_class.upcoming_events_for_user(member) }
-
+      result_four, four_query_count = load_user_events_and_count_host_queries(member:, host:)
       expect(result_four.values.flatten.count { |event| event.is_a?(Workshop) }).to eq(4)
-      expect(result_four.values.flatten.select { |event| event.is_a?(Workshop) }.map(&:host)).to all(eq(host))
-      expect(four_query_count).to be <= one_query_count + 2
-      expect(result_one.values.flatten.select { |event| event.is_a?(Workshop) }.map(&:host)).to all(eq(host))
+
+      expect(four_query_count).to eq(one_query_count)
     end
 
     it 'preloads workshop hosts for accepted invitations without growing query count with workshop count' do
@@ -202,7 +199,7 @@ RSpec.describe DashboardQuery do
       result_four, four_workshop_queries = load_user_events_and_count_host_queries(member:, host:)
       expect(result_four.values.flatten.count { |event| event.is_a?(Workshop) }).to eq(4)
       expect(four_workshop_queries).to be_positive
-      expect(four_workshop_queries).to be <= one_workshop_queries + 2
+      expect(four_workshop_queries).to eq(one_workshop_queries)
     end
 
     it 'resolves host to nil for accepted workshops with only non-host sponsors' do
