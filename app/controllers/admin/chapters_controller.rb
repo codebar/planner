@@ -34,6 +34,7 @@ class Admin::ChaptersController < Admin::ApplicationController
     @groups = @chapter.groups
     @subscribers = @chapter.subscriptions.kept.last(20).reverse
     @how_you_found_us = HowYouFoundUsPresenter.new(@chapter)
+    @new_sign_ups = ChapterSignUpsPresenter.new(@chapter).by_month
   end
 
   def edit
