@@ -99,6 +99,33 @@ RSpec.describe ChapterSignUpsPresenter do
     expect(students_in(Date.new(2026, 10, 1))).to eq(1)
   end
 
+  it 'ignores sign-ups from groups that are neither students nor coaches' do
+    mentors = Fabricate(:group, name: 'Students', chapter:)
+    mentors.update_column(:name, 'Mentors')
+    Fabricate(:subscription, group: mentors, created_at: Time.zone.local(2026, 10, 5))
+
+    expect(by_month.sum { |row| row[:students] + row[:coaches] }).to eq(0)
+  end
+
+  it 'ignores a group without a name instead of raising' do
+    unnamed = Fabricate(:group, name: 'Students', chapter:)
+    unnamed.update_column(:name, nil)
+    Fabricate(:subscription, group: unnamed, created_at: Time.zone.local(2026, 10, 5))
+
+    expect(by_month.sum { |row| row[:students] + row[:coaches] }).to eq(0)
+  end
+
+  it 'starts the window at the first moment of the oldest month in the chapter zone' do
+    berlin = Fabricate(:chapter, time_zone: 'Berlin')
+    group = Fabricate(:group, name: 'Students', chapter: berlin)
+    # 23:30 in London on 31 August is 00:30 in Berlin on 1 September.
+    Fabricate(:subscription, group:, created_at: Time.zone.local(2026, 8, 31, 23, 30))
+
+    rows = described_class.new(berlin).by_month.to_h { |row| [row[:month], row[:students]] }
+
+    expect(rows[Date.new(2026, 9, 1)]).to eq(1)
+  end
+
   it 'falls back to the app time zone when the chapter time zone no longer resolves' do
     chapter.update_column(:time_zone, 'Invalid/Zone')
     Fabricate(:subscription, group: students, created_at: Time.zone.local(2026, 10, 5))

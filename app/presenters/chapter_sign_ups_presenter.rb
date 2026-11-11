@@ -50,7 +50,7 @@ class ChapterSignUpsPresenter
   def counts_by_month_and_group
     members = Hash.new { |hash, key| hash[key] = Set.new }
     subscriptions_in_window.each do |member_id, signed_up_at, group_name|
-      column = GROUPS[group_name.downcase]
+      column = GROUPS[group_name.to_s.downcase]
       next unless column
 
       members[[month_of(signed_up_at), column]] << member_id
