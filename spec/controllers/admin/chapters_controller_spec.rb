@@ -125,5 +125,58 @@ RSpec.describe Admin::ChaptersController do
       expect(response).to be_successful
       expect(response.body).to include('Chapter Health')
     end
+
+    it 'shows new sign-ups split across the last 3 months' do
+      travel_to(Time.zone.local(2026, 11, 6, 12, 0)) do
+        login_as_admin(Fabricate(:member))
+        chapter = Fabricate(:chapter)
+        students = Fabricate(:group, name: 'Students', chapter:)
+        coaches = Fabricate(:group, name: 'Coaches', chapter:)
+        Fabricate(:subscription, group: students, created_at: Time.zone.local(2026, 9, 10))
+        Fabricate(:subscription, group: coaches, created_at: Time.zone.local(2026, 10, 10))
+        Fabricate(:subscription, group: students, created_at: Time.zone.local(2026, 11, 2))
+        Fabricate(:subscription, group: students, created_at: Time.zone.local(2026, 8, 20))
+
+        get :show, params: { id: chapter.id }
+
+        expect(response.body).to include('New sign-ups (last 3 months)')
+        expected = [
+          { month: Date.new(2026, 9, 1), students: 1, coaches: 0 },
+          { month: Date.new(2026, 10, 1), students: 0, coaches: 1 },
+          { month: Date.new(2026, 11, 1), students: 1, coaches: 0 }
+        ]
+        expect(controller.view_assigns['new_sign_ups']).to eq(expected)
+
+        table = Capybara.string(response.body).find('table#chapter-new-sign-ups')
+        expect(table.text.squish).to include('Sep 2026', 'Oct 2026', 'Nov 2026')
+        expect(table.find('tr.fw-bold').text.squish).to eq('Total 2 1')
+      end
+    end
+
+    it 'renders zero rows for a chapter without sign-ups' do
+      travel_to(Time.zone.local(2026, 11, 6, 12, 0)) do
+        login_as_admin(Fabricate(:member))
+        chapter = Fabricate(:chapter)
+
+        get :show, params: { id: chapter.id }
+
+        table = Capybara.string(response.body).find('table#chapter-new-sign-ups')
+        expect(table.find('tr.fw-bold').text.squish).to eq('Total 0 0')
+      end
+    end
+
+    it 'does not count backfilled tombstones as sign-ups' do
+      travel_to(Time.zone.local(2026, 11, 6, 12, 0)) do
+        login_as_admin(Fabricate(:member))
+        chapter = Fabricate(:chapter)
+        students = Fabricate(:group, name: 'Students', chapter:)
+        removed_at = Time.zone.local(2026, 10, 3)
+        Fabricate(:subscription, group: students, created_at: removed_at, discarded_at: removed_at)
+
+        get :show, params: { id: chapter.id }
+
+        expect(controller.view_assigns['new_sign_ups'].sum { |row| row[:students] }).to eq(0)
+      end
+    end
   end
 end
