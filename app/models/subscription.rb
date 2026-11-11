@@ -10,7 +10,6 @@ class Subscription < ApplicationRecord
   # 'subscribed then unsubscribed' (issue #2920). The partial unique index
   # (index_subscriptions_on_member_id_group_id_active) enforces this at the DB level.
   validates :group, uniqueness: { scope: :member_id, conditions: -> { kept } }
-  scope :ordered, -> { order(created_at: :desc) }
 
   # Tombstone rows created by SubscriptionTombstoneBackfill carry the
   # unsubscribe time in created_at, so they are not sign-ups for that month.
