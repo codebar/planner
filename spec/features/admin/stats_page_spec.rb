@@ -20,8 +20,8 @@ RSpec.feature 'admin stats page' do
       expect(page).to have_css('caption', text: 'New sign-ups')
       expect(page).to have_css('caption', text: 'Workshops')
       expect(page).to have_css('th', text: 'August 2026')
-      expect(page).to have_no_selector('th', text: 'September 2026')
-      expect(page).to have_no_selector('th', text: 'May 2026')
+      expect(page).to have_no_css('th', text: 'September 2026')
+      expect(page).to have_no_css('th', text: 'May 2026')
       expect(page).to have_css('.btn-outline-primary.active', text: '3 months')
       expect(page).to have_link('Download CSV')
     end
@@ -38,7 +38,7 @@ RSpec.feature 'admin stats page' do
       expect(page).to have_css('th', text: 'June 2026')
       expect(page).to have_css('th', text: 'July 2026')
       expect(page).to have_css('th', text: 'August 2026')
-      expect(page).to have_no_selector('th', text: 'May 2026')
+      expect(page).to have_no_css('th', text: 'May 2026')
     end
   end
 
@@ -50,8 +50,8 @@ RSpec.feature 'admin stats page' do
       visit admin_stats_path(stats: { start_month: '2026-06', end_month: '2026-06' })
 
       expect(page).to have_css('th', text: 'June 2026')
-      expect(page).to have_no_selector('th', text: 'May 2026')
-      expect(page).to have_no_selector('th', text: 'July 2026')
+      expect(page).to have_no_css('th', text: 'May 2026')
+      expect(page).to have_no_css('th', text: 'July 2026')
 
       expect(find('tr', text: 'New coaches')).to have_text('1')
       expect(find('tr', text: 'New students')).to have_text('0')

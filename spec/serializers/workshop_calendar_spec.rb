@@ -53,6 +53,39 @@ RSpec.describe WorkshopCalendar do
       end
     end
 
+    context 'with a physical workshop that has no host' do
+      let(:workshop) { Fabricate(:workshop_no_sponsor, virtual: false) }
+
+      it 'falls back to TBA for host name and address' do
+        event = calendar.events.first
+
+        expect(event.summary.to_s).to eq('codebar @ TBA')
+        expect(event.location.to_s).to eq('TBA')
+        expect(event.organizer.to_s).to eq(workshop.chapter.email)
+        expect(event.description).to include(invitation_url)
+      end
+
+      it 'serialises the fallback into the iCalendar output' do
+        expect(described_class.new(workshop, invitation_url).ical).to include('TBA')
+      end
+    end
+
+    context 'with a host whose address record has been removed' do
+      let(:workshop) do
+        Fabricate(:workshop).tap do |w|
+          w.host.address.destroy
+          w.reload
+        end
+      end
+
+      it 'keeps the host name and falls back to TBA for the address' do
+        event = calendar.events.first
+
+        expect(event.summary.to_s).to eq("codebar @ #{workshop.host.name}")
+        expect(event.location.to_s).to eq('TBA')
+      end
+    end
+
     context 'with a virtual workshop' do
       let(:workshop) { Fabricate(:virtual_workshop) }
 

@@ -12,6 +12,45 @@ RSpec.describe Workshop do
   context 'with validates' do
     it { is_expected.to validate_presence_of(:chapter_id) }
 
+    describe 'physical workshop host validation' do
+      let(:workshop) { Fabricate.build(:workshop_no_sponsor, virtual: false) }
+
+      it 'requires a host for physical workshops' do
+        expect(workshop.valid?).to be(false)
+
+        expect(workshop.errors[:host]).to include("can't be blank")
+      end
+
+      it 'does not require a host for virtual workshops' do
+        workshop = Fabricate.build(:virtual_workshop)
+
+        workshop.valid?
+        expect(workshop.errors[:host]).to be_empty
+      end
+
+      it 'does not add a host error when a host is submitted' do
+        workshop.selected_host_id = '1'
+
+        workshop.valid?
+        expect(workshop.errors[:host]).to be_empty
+      end
+
+      it 'does not add a host error for an existing host without a new selection' do
+        workshop = Fabricate.build(:workshop)
+
+        workshop.valid?
+        expect(workshop.errors[:host]).to be_empty
+      end
+
+      it 'requires a host when an existing host is explicitly cleared' do
+        workshop = Fabricate.build(:workshop)
+        workshop.selected_host_id = ''
+
+        expect(workshop.valid?).to be(false)
+        expect(workshop.errors[:host]).to include("can't be blank")
+      end
+    end
+
     describe '#date_and_time' do
       it 'does not validate if chapter_id blank' do
         workshop.chapter_id = nil

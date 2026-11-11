@@ -3,10 +3,7 @@ class DashboardQuery
   MAX_WORKSHOP_QUERY = 10
 
   def self.upcoming_events
-    workshops = Workshop.eager_load(:chapter, :sponsors, :organisers, :permissions, :workshop_host)
-                        .today_and_upcoming
-                        .limit(MAX_WORKSHOP_QUERY)
-                        .to_a
+    workshops = upcoming_workshops
     sorted_events = all_events(workshops).sort_by(&:date_and_time)
 
     limited_events = []
@@ -25,18 +22,7 @@ class DashboardQuery
   end
 
   def self.upcoming_events_for_user(member)
-    chapter_workshops = Workshop.upcoming
-                                .eager_load(:chapter, :sponsors, :organisers, :permissions)
-                                .where(chapter: member.chapters)
-                                .to_a
-
-    accepted_workshops = member.workshop_invitations.accepted
-                               .joins(:workshop)
-                               .merge(Workshop.upcoming)
-                               .eager_load(workshop: %i[chapter sponsors organisers permissions])
-                               .map(&:workshop)
-
-    all_events(chapter_workshops + accepted_workshops)
+    all_events(chapter_workshops_for(member) + accepted_workshops_for(member))
       .sort_by(&:date_and_time)
       .group_by(&:date)
   end
@@ -57,4 +43,32 @@ class DashboardQuery
     [*workshops, *events, meeting].uniq.compact
   end
   private_class_method :all_events
+
+  def self.upcoming_workshops
+    Workshop.eager_load(:chapter, :sponsors, :organisers, :permissions)
+            .preload(workshop_host: :sponsor)
+            .today_and_upcoming
+            .limit(MAX_WORKSHOP_QUERY)
+            .to_a
+  end
+  private_class_method :upcoming_workshops
+
+  def self.chapter_workshops_for(member)
+    Workshop.upcoming
+            .eager_load(:chapter, :sponsors, :organisers, :permissions)
+            .preload(workshop_host: :sponsor)
+            .where(chapter: member.chapters)
+            .to_a
+  end
+  private_class_method :chapter_workshops_for
+
+  def self.accepted_workshops_for(member)
+    member.workshop_invitations.accepted
+          .joins(:workshop)
+          .merge(Workshop.upcoming)
+          .eager_load(workshop: %i[chapter sponsors organisers permissions])
+          .preload(workshop: { workshop_host: :sponsor })
+          .map(&:workshop)
+  end
+  private_class_method :accepted_workshops_for
 end
