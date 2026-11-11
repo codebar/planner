@@ -153,6 +153,18 @@ RSpec.describe Admin::ChaptersController do
       end
     end
 
+    it 'renders zero rows for a chapter without sign-ups' do
+      travel_to(Time.zone.local(2026, 11, 6, 12, 0)) do
+        login_as_admin(Fabricate(:member))
+        chapter = Fabricate(:chapter)
+
+        get :show, params: { id: chapter.id }
+
+        table = Capybara.string(response.body).find('table#chapter-new-sign-ups')
+        expect(table.find('tr.fw-bold').text.squish).to eq('Total 0 0')
+      end
+    end
+
     it 'does not count backfilled tombstones as sign-ups' do
       travel_to(Time.zone.local(2026, 11, 6, 12, 0)) do
         login_as_admin(Fabricate(:member))

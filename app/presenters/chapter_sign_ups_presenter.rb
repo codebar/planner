@@ -5,30 +5,32 @@
 # Months are bucketed in the chapter's own time zone, and the timestamps are
 # converted in Ruby: the database session time zone is not pinned, so doing the
 # arithmetic in SQL shifts sign-ups made in the first hour of a BST month into
-# the previous month.
+# the previous month. A member counts once per group per month, so leaving and
+# rejoining within a month does not count twice.
 class ChapterSignUpsPresenter
   MONTHS = 3
+  GROUPS = { 'students' => :students, 'coaches' => :coaches }.freeze
 
-  def initialize(chapter, months: MONTHS)
+  def initialize(chapter)
     @chapter = chapter
-    @months = months
   end
 
   def by_month
     counts = counts_by_month_and_group
     month_starts.map do |month|
       { month:,
-        students: counts.fetch([month, 'Students'], 0),
-        coaches: counts.fetch([month, 'Coaches'], 0) }
+        students: counts.fetch([month, :students], 0),
+        coaches: counts.fetch([month, :coaches], 0) }
     end
   end
 
   private
 
-  attr_reader :chapter, :months
+  attr_reader :chapter
 
+  # Legacy rows can carry a zone string that no longer resolves.
   def zone
-    ActiveSupport::TimeZone[chapter.time_zone]
+    ActiveSupport::TimeZone[chapter.time_zone] || Time.zone
   end
 
   def now
@@ -36,17 +38,28 @@ class ChapterSignUpsPresenter
   end
 
   def month_starts
-    @month_starts ||= (0...months).map { |n| (now - n.months).to_date.beginning_of_month }.reverse
+    @month_starts ||= (0...MONTHS).map { |n| (now - n.months).to_date.beginning_of_month }.reverse
   end
 
+  # Ends at now, not at the end of the month: a row with a future created_at
+  # is not a sign-up yet.
   def window
-    month_starts.first.in_time_zone(zone)...month_starts.last.next_month.in_time_zone(zone)
+    month_starts.first.in_time_zone(zone)...now
   end
 
   def counts_by_month_and_group
-    subscriptions_in_window.each_with_object(Hash.new(0)) do |(signed_up_at, group_name), counts|
-      counts[[signed_up_at.in_time_zone(zone).to_date.beginning_of_month, group_name]] += 1
+    members = Hash.new { |hash, key| hash[key] = Set.new }
+    subscriptions_in_window.each do |member_id, signed_up_at, group_name|
+      column = GROUPS[group_name.downcase]
+      next unless column
+
+      members[[month_of(signed_up_at), column]] << member_id
     end
+    members.transform_values(&:size)
+  end
+
+  def month_of(time)
+    time.in_time_zone(zone).to_date.beginning_of_month
   end
 
   def subscriptions_in_window
@@ -55,6 +68,6 @@ class ChapterSignUpsPresenter
       .where(created_at: window)
       .joins(:group)
       .where(groups: { chapter_id: chapter.id })
-      .pluck(:created_at, 'groups.name')
+      .pluck(:member_id, :created_at, 'groups.name')
   end
 end

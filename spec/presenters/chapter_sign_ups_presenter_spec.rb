@@ -40,9 +40,11 @@ RSpec.describe ChapterSignUpsPresenter do
 
   it 'ignores sign-ups from other chapters' do
     other_chapter = Fabricate(:chapter_with_groups)
-    Fabricate(:subscription, group: other_chapter.groups.first, created_at: Time.zone.local(2026, 10, 5))
+    other_chapter.groups.each do |group|
+      Fabricate(:subscription, group:, created_at: Time.zone.local(2026, 10, 5))
+    end
 
-    expect(by_month.sum { |row| row[:students] }).to eq(0)
+    expect(by_month.sum { |row| row[:students] + row[:coaches] }).to eq(0)
   end
 
   it 'ignores sign-ups older than the window' do
@@ -55,6 +57,53 @@ RSpec.describe ChapterSignUpsPresenter do
     Fabricate(:subscription, group: students, created_at: Time.zone.local(2026, 12, 1, 0, 30))
 
     expect(by_month.sum { |row| row[:students] }).to eq(0)
+  end
+
+  it 'counts a sign-up on the first instant of the oldest month' do
+    Fabricate(:subscription, group: students, created_at: Time.zone.local(2026, 9, 1, 0, 0))
+
+    expect(students_in(Date.new(2026, 9, 1))).to eq(1)
+  end
+
+  it 'ignores rows dated after now' do
+    Fabricate(:subscription, group: students, created_at: Time.zone.local(2026, 11, 6, 11, 59))
+    Fabricate(:subscription, group: students, created_at: Time.zone.local(2026, 11, 6, 12, 1))
+
+    expect(students_in(Date.new(2026, 11, 1))).to eq(1)
+  end
+
+  it 'counts a member who left and rejoined in the same month once' do
+    member = Fabricate(:member)
+    Fabricate(:subscription, member:, group: students, created_at: Time.zone.local(2026, 9, 3),
+                             discarded_at: Time.zone.local(2026, 9, 20))
+    Fabricate(:subscription, member:, group: students, created_at: Time.zone.local(2026, 9, 25))
+
+    expect(students_in(Date.new(2026, 9, 1))).to eq(1)
+  end
+
+  it 'counts a member who rejoined in a later month in both months' do
+    member = Fabricate(:member)
+    Fabricate(:subscription, member:, group: students, created_at: Time.zone.local(2026, 9, 3),
+                             discarded_at: Time.zone.local(2026, 9, 20))
+    Fabricate(:subscription, member:, group: students, created_at: Time.zone.local(2026, 10, 2))
+
+    expect(students_in(Date.new(2026, 9, 1))).to eq(1)
+    expect(students_in(Date.new(2026, 10, 1))).to eq(1)
+  end
+
+  it 'matches group names case-insensitively' do
+    group = Fabricate(:group, name: 'Students', chapter:)
+    group.update_column(:name, 'students')
+    Fabricate(:subscription, group:, created_at: Time.zone.local(2026, 10, 5))
+
+    expect(students_in(Date.new(2026, 10, 1))).to eq(1)
+  end
+
+  it 'falls back to the app time zone when the chapter time zone no longer resolves' do
+    chapter.update_column(:time_zone, 'Invalid/Zone')
+    Fabricate(:subscription, group: students, created_at: Time.zone.local(2026, 10, 5))
+
+    expect(students_in(Date.new(2026, 10, 1))).to eq(1)
   end
 
   it 'counts a sign-up in the first hour of a BST month in that month' do
