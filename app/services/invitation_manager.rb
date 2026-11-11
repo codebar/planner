@@ -1,6 +1,6 @@
 class InvitationManager
   def send_event_emails(event, chapter, initiator_id = nil) # rubocop:disable Metrics/AbcSize
-    return 'The event is not invitable' unless event.invitable?
+    return unless event.invitable?
 
     audience = event_audience(event)
     logger = invitation_logger(event, initiator_id, audience, chapter.id)
@@ -51,7 +51,7 @@ class InvitationManager
   handle_asynchronously :send_workshop_attendance_reminders
 
   def send_workshop_emails(workshop, audience, initiator_id = nil)
-    return 'The workshop is not invitable' unless workshop.invitable?
+    return unless workshop.invitable?
 
     logger = invitation_logger(workshop, initiator_id, audience, workshop.chapter_id)
     result = start_invitation_batch(logger)
@@ -70,7 +70,7 @@ class InvitationManager
   handle_asynchronously :send_workshop_emails
 
   def send_virtual_workshop_emails(workshop, audience, initiator_id = nil)
-    return 'The workshop is not invitable' unless workshop.invitable?
+    return unless workshop.invitable?
 
     logger = invitation_logger(workshop, initiator_id, audience, workshop.chapter_id)
     result = start_invitation_batch(logger)
