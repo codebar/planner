@@ -59,6 +59,18 @@ RSpec.describe Subscription do
   end
 
   describe 'history scopes' do
+    it 'excluding_backfilled_tombstones drops rows dated at their unsubscribe time' do
+      removed_at = 3.days.ago
+      backfilled = Fabricate(:discarded_subscription, created_at: removed_at, discarded_at: removed_at)
+      churned = Fabricate(:discarded_subscription, created_at: 2.months.ago, discarded_at: 3.days.ago)
+      active = Fabricate(:subscription)
+
+      scoped = described_class.excluding_backfilled_tombstones
+
+      expect(scoped).to include(active, churned)
+      expect(scoped).not_to include(backfilled)
+    end
+
     it 'kept excludes tombstones while all includes them' do
       subscription = Fabricate(:subscription)
       tombstone = Fabricate(:discarded_subscription, member: Fabricate(:member),

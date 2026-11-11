@@ -4,9 +4,6 @@ class Admin::PortalController < Admin::ApplicationController
 
     @chapters = Chapter.active.all.order(name: :asc)
     @workshops = Workshop.upcoming
-    @groups = Group.joins(:chapter).merge(@chapters)
-    @subscribers = Subscription.kept.joins(:chapter).merge(@chapters)
-                               .ordered.limit(20).includes(:member, :group)
   end
 
   def guide; end
