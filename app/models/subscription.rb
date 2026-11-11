@@ -12,6 +12,12 @@ class Subscription < ApplicationRecord
   validates :group, uniqueness: { scope: :member_id, conditions: -> { kept } }
   scope :ordered, -> { order(created_at: :desc) }
 
+  # Tombstone rows created by SubscriptionTombstoneBackfill carry the
+  # unsubscribe time in created_at, so they are not sign-ups for that month.
+  # Genuine churned subscriptions keep their own created_at and do count.
+  scope :excluding_backfilled_tombstones,
+        -> { where('subscriptions.discarded_at IS NULL OR subscriptions.discarded_at <> subscriptions.created_at') }
+
   def student?
     group.name.casecmp('students').zero?
   end

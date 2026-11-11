@@ -34,7 +34,7 @@ class Admin::ChaptersController < Admin::ApplicationController
     @groups = @chapter.groups
     @subscribers = @chapter.subscriptions.kept.last(20).reverse
     @how_you_found_us = HowYouFoundUsPresenter.new(@chapter)
-    @new_sign_ups = new_sign_ups(@chapter)
+    @new_sign_ups = ChapterSignUpsPresenter.new(@chapter).by_month
   end
 
   def edit
@@ -116,33 +116,6 @@ class Admin::ChaptersController < Admin::ApplicationController
 
   def set_chapter
     @chapter = Chapter.find(params[:id])
-  end
-
-  def new_sign_ups(chapter)
-    months = new_sign_up_months
-    counts = sign_up_counts(chapter, months)
-    months.map do |month|
-      { month: month.to_date,
-        students: counts.fetch([month.to_date, 'Students'], 0),
-        coaches: counts.fetch([month.to_date, 'Coaches'], 0) }
-    end
-  end
-
-  def sign_up_counts(chapter, months)
-    chapter.subscriptions
-           .where(created_at: months.first.beginning_of_day..)
-           .joins(:group)
-           .group(month_bucket, 'groups.name')
-           .pluck(month_bucket, 'groups.name', Arel.sql('COUNT(*)'))
-           .to_h { |month, name, count| [[month, name], count] }
-  end
-
-  def new_sign_up_months
-    [2.months.ago, 1.month.ago, Time.current].map(&:beginning_of_month)
-  end
-
-  def month_bucket
-    Arel.sql("DATE_TRUNC('month', subscriptions.created_at AT TIME ZONE '#{Time.zone.tzinfo.identifier}')::date")
   end
 
   def member_emails(chapter, type)
