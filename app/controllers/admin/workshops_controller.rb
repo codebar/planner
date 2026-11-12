@@ -246,16 +246,6 @@ class Admin::WorkshopsController < Admin::ApplicationController
     params[:workshop][:organisers]
   end
 
-  def grant_organiser_access(organiser_ids)
-    organiser_ids.each { |id| Member.find(id).add_role(:organiser, @workshop) }
-  end
-
-  def revoke_organiser_access(organiser_ids)
-    (@workshop.organisers.pluck(:id).map(&:to_s) - organiser_ids).each do |id|
-      Member.find(id).revoke(:organiser, @workshop)
-    end
-  end
-
   def update_workshop_details
     assign_organisers(organiser_ids) if params[:workshop].key?(:organisers)
     assign_host(host_id)
