@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe WorkshopOrganiserAssigner, type: :service do
+RSpec.describe WorkshopOrganiserAssigner do
   let(:workshop) { Fabricate(:workshop) }
   let(:chapter) { workshop.chapter }
 

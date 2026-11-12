@@ -358,6 +358,9 @@ RSpec.describe Admin::WorkshopsController do
     end
 
     it 'does not raise when organiser_ids are blank' do
+      chapter_organiser = Fabricate(:member)
+      chapter_organiser.add_role(:organiser, workshop.chapter)
+
       expect do
         post :create, params: {
           workshop: {
@@ -372,7 +375,7 @@ RSpec.describe Admin::WorkshopsController do
         }
       end.not_to raise_error
       created = Workshop.unscoped.order(:id).last
-      expect(created.chapter).to eq(workshop.chapter)
+      expect(created.reload.organisers).to include(chapter_organiser)
     end
 
     it 'defaults to chapter organisers when the form sends only the blank sentinel' do
