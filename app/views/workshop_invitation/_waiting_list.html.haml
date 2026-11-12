@@ -1,17 +1,18 @@
--# locals: (invitation:)
+-# locals: (invitation:, role: nil, button_label: nil)
+- role ||= invitation.role
+- button_label ||= 'Join the waiting list'
 - if invitation.waiting_list.blank?
   %span.badge.bg-danger The workshop is full.
   %hr
   - if @workshop.waitlist_open?
-    - if @invitation.for_student?
-      = simple_form_for @invitation, url: invitation_waiting_list_path(@invitation), method: :post do |f|
+    = simple_form_for @invitation, url: invitation_waiting_list_path(@invitation), method: :post do |f|
+      - if role == 'Student'
         = f.input :tutorial, collection: @tutorial_titles, include_blank: true
         = f.input :note, required: false, input_html: { rows: 3, maxlength: 100 }, hint: 'Anything else we should know?', placeholder: 'e.g. I need help understanding selectors'
-        = f.button :button, 'Join the waiting list', class: 'btn btn-primary w-100 mb-0'
-    - else
-      = simple_form_for @invitation, url: invitation_waiting_list_path(@invitation), method: :post do |f|
+      - else
         = f.input :note, required: false, input_html: { rows: 3, maxlength: 100 }
-        = f.button :button, 'Join the waiting list', class: 'btn btn-primary w-100 mb-0'
+      = hidden_field_tag :role, role
+      = f.button :button, button_label, class: 'btn btn-primary w-100 mb-0'
   - else
     %p= t('messages.waiting_list.closed')
 - else

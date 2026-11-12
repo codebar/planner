@@ -1,4 +1,5 @@
 class InvitationsController < ApplicationController
+  include RoleChoiceConcerns
   # The invitation token in the URL is the authenticator for these actions;
   # CSRF is redundant and fails when browsers withhold the session cookie
   # (e.g. Safari/WebKit ITP on cross-site navigation). Same rationale as
@@ -26,6 +27,7 @@ class InvitationsController < ApplicationController
     @event = EventPresenter.new(@invitation.event)
     @host_address = AddressPresenter.new(@event.venue.address) if @event.venue.present?
     @member = @invitation.member
+    @role_choice = role_choice_available?(@invitation) && !@member.already_attending(@event)
   end
 
   def attend
@@ -36,8 +38,10 @@ class InvitationsController < ApplicationController
                            notice: t('messages.invitations.rsvps_closed')
     end
 
-    if @invitation.student_spaces? || @invitation.coach_spaces?
-      @invitation.update!(attending: true)
+    role = chosen_role(@invitation)
+
+    if (role == 'Student' && event.student_spaces?) || (role == 'Coach' && event.coach_spaces?)
+      @invitation.update!(attending: true, role:)
 
       MemberActivityRecorder.record(actor: @invitation.member, key: 'event_invitation.rsvp',
                                     trackable: @invitation)
