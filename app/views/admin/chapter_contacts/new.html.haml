@@ -1,0 +1,35 @@
+.container.py-4
+  %h1 Contact #{@chapter.name} members
+  %p #{@recipient_count} recipients
+
+  - if flash[:alert]
+    .alert.alert-danger= flash[:alert]
+
+  = form_with scope: :chapter_contact, url: preview_admin_chapter_contact_path(@chapter) do |form|
+    .mb-3
+      = form.label :audience, 'Audience', class: 'form-label'
+      = form.select :audience, options_for_select(ChapterContactAudience.options, @audience), {}, class: 'form-select', data: { chapter_contact_audience: true, contact_audience_field_map: ChapterContactAudience::FIELD_AUDIENCES.to_json }
+    .mb-3{ data: { contact_audience_fields: 'custom_list' } }
+      %fieldset
+        %legend.fs-6 Select members for a custom list
+        = form.collection_check_boxes :member_ids, @chapter_members, :id, :full_name do |checkbox|
+          .form-check
+            = checkbox.check_box(class: 'form-check-input')
+            = checkbox.label(class: 'form-check-label')
+    .mb-3{ data: { contact_audience_fields: 'event_rsvp' } }
+      .mb-3
+        = form.label :event_id, 'Event', class: 'form-label'
+        = form.select :event_id, options_from_collection_for_select(@chapter_events, :id, :name, @event_id), { include_blank: 'Select an event' }, class: 'form-select'
+      .mb-3
+        = form.label :rsvp_status, 'RSVP status', class: 'form-label'
+        = form.select :rsvp_status, options_for_select(ChapterContactAudience::RSVP_STATUSES.map { |value, label| [label, value] }, @rsvp_status), { include_blank: 'Select an RSVP status' }, class: 'form-select'
+    .mb-3{ data: { contact_audience_fields: 'activity_period' } }
+      = form.label :activity_months, 'Activity period', class: 'form-label'
+      = form.select :activity_months, options_for_select(ChapterContactAudience.activity_period_options, @activity_months), {}, class: 'form-select'
+    .mb-3
+      = form.label :subject, class: 'form-label'
+      = form.text_field :subject, class: 'form-control', required: true, value: @subject
+    .mb-3
+      = form.label :message, class: 'form-label'
+      = form.text_area :message, class: 'form-control', rows: 8, required: true, value: @message
+    = form.submit 'Preview recipients', class: 'btn btn-primary'

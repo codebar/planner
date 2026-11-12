@@ -94,6 +94,7 @@ Rails.application.routes.draw do
     get '/guide' => 'portal#guide', as: :guide
 
     resources :announcements, only: %i[new index create edit update]
+    resources :chapter_contacts, only: [:index]
 
     resources :members, only: %i[show index] do
       get :search, on: :collection
@@ -112,6 +113,9 @@ Rails.application.routes.draw do
       resources :workshops, only: [:index]
       resources :feedback, only: [:index], controller: 'chapters/feedback'
       resources :organisers, only: %i[index create destroy], controller: 'chapters/organisers'
+      resource :contact, only: %i[new create], controller: 'chapter_contacts' do
+        post :preview, on: :collection
+      end
     end
 
     resources :stats, only: [:index]

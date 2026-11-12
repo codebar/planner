@@ -34,6 +34,21 @@ class Chapter < ApplicationRecord
     @organisers ||= Member.with_role(:organiser, self)
   end
 
+  def contact_members
+    members.distinct.order(:name, :surname)
+  end
+
+  def contact_events
+    events.order(date_and_time: :desc)
+  end
+
+  def contact_recipients(audience, member_ids = [], event_id: nil, rsvp_status: nil, activity_months: '1')
+    config = ChapterContactAudience::CONFIG[audience]
+    return Member.none unless config
+
+    contact_recipient_scope(config[:query], member_ids, event_id, rsvp_status, activity_months).distinct
+  end
+
   # All members subscribed to this chapter's Students group, regardless of ban or TOC status.
   # Use #eligible_students when building invitation lists.
   def students
@@ -57,6 +72,35 @@ class Chapter < ApplicationRecord
   end
 
   private
+
+  def contact_recipient_scope(query, member_ids, event_id, rsvp_status, activity_months)
+    case query
+    when :members then members
+    when :organisers then organisers
+    when :selected_members then members.where(id: member_ids)
+    when :active_members then activity_recipients(:active, activity_months)
+    when :inactive_members then activity_recipients(:inactive, activity_months)
+    when :event_rsvp then recipients_by_event_rsvp(event_id, rsvp_status)
+    else Member.none
+    end
+  end
+
+  def activity_recipients(state, months)
+    return Member.none if ChapterContactAudience::ACTIVITY_MONTHS.exclude?(months)
+
+    cutoff = months.to_i.months.ago
+    state == :active ? members.with_activity_since(cutoff) : members.without_activity_since(cutoff)
+  end
+
+  def recipients_by_event_rsvp(event_id, rsvp_status)
+    return Member.none unless ChapterContactAudience::RSVP_STATUSES.key?(rsvp_status)
+
+    event = contact_events.find_by(id: event_id)
+    return Member.none unless event
+
+    attending = { 'attending' => true, 'declined' => false, 'unanswered' => nil }.fetch(rsvp_status)
+    members.where(id: event.invitations.where(attending:).select(:member_id))
+  end
 
   def members_for_group(name)
     members.where(groups: { name: }).distinct

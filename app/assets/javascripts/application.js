@@ -18,6 +18,7 @@
 //= require chosen.jquery
 //= require feedback-rating
 //= require subscriptions-toggle
+//= require chapter-contact-audience
 //= require add-all-chapters
 //= require invitations
 //= require rsvp-close-time
@@ -35,7 +36,7 @@ $(function() {
   // This fix places "the original input behind the Chosen input, matching the
   // height and width so that the warning appears in the correct position."
   // https://github.com/harvesthq/chosen/issues/515#issuecomment-474588057
-  $('select').not('#member_lookup_id, #meeting_invitations_member, #meeting_organisers').on('chosen:ready', function () {
+  $('select').not('#member_lookup_id, #meeting_invitations_member, #meeting_organisers, #chapter_contact_audience').on('chosen:ready', function () {
     var height = $(this).next('.chosen-container').height();
     var width = $(this).next('.chosen-container').width();
 
@@ -47,7 +48,7 @@ $(function() {
     }).show();
   });
 
-  $('select').not('#member_lookup_id, #meeting_invitations_member, #meeting_organisers').chosen({
+  $('select').not('#member_lookup_id, #meeting_invitations_member, #meeting_organisers, #chapter_contact_audience').chosen({
     allow_single_deselect: true,
     no_results_text: 'No results matched'
   });

@@ -23,6 +23,14 @@ class ChapterPolicy < ApplicationPolicy
     admin_or_organiser?
   end
 
+  def contact?
+    user.is_admin? || user.has_role?(:organiser, record)
+  end
+
+  def contact_index?
+    user.is_admin? || user.has_role?(:organiser, :any)
+  end
+
   private
 
   def admin_or_organiser?
