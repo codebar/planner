@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 ruby file: '.ruby-version'
 
-gem 'rails', '~> 8.1.3' # LOCKED: It is Rails.
+gem 'rails', '~> 8.1.4.1' # LOCKED: It is Rails.
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem 'sprockets-rails'
 gem 'rails_semantic_logger' # condense log lines: https://github.com/codebar/planner/issues/2339
@@ -68,7 +68,7 @@ gem 'commonmarker'
 gem 'faraday'
 gem 'msgpack'
 
-gem 'rails-html-sanitizer', '~> 1.7.1'
+gem 'rails-html-sanitizer', '~> 1.7.2'
 
 # Use the Puma web server [https://github.com/puma/puma]
 gem 'puma', '~> 8.0'
