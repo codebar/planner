@@ -469,12 +469,13 @@ RSpec.describe Admin::WorkshopsController do
       expect(workshop.reload.organisers).to include(existing_organiser)
     end
 
-    it 'rejects a scalar organiser value before saving workshop changes' do
-      update_workshop(organisers: new_organiser.id.to_s, description: 'Should not save')
+    it 'rejects a blank scalar organiser value before saving workshop changes' do
+      existing_organiser.add_role(:organiser, workshop)
+      update_workshop(organisers: '', description: 'Should not save')
 
       expect(response).to have_http_status(:unprocessable_content)
       expect(workshop.reload.description).not_to eq('Should not save')
-      expect(workshop.organisers).to be_empty
+      expect(workshop.organisers).to include(existing_organiser)
     end
 
     it 'rejects an unknown organiser ID before saving workshop changes' do
