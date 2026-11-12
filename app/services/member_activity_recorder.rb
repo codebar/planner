@@ -35,6 +35,10 @@ class MemberActivityRecorder
     workshop.created
     meeting_invitation.created
     meeting_invitation.updated
+    sponsor.admin_contact_subscribe
+    sponsor.admin_contact_unsubscribe
+    sponsor.contact_subscribe
+    sponsor.contact_unsubscribe
   ].freeze
 
   # Start of systematic member-activity collection; earlier rows are incidental and
@@ -45,13 +49,8 @@ class MemberActivityRecorder
   def self.record(actor:, key:, trackable: nil, recipient: nil, contact_email: nil)
     Rails.logger.warn("MemberActivityRecorder: unregistered key '#{key}'") unless KEYS.include?(key)
     trackable ||= actor
-    PublicActivity::Activity.create!(
-      owner: actor,
-      key:,
-      trackable:,
-      recipient:,
-      parameters: contact_email ? { note: contact_email } : {}
-    )
+    params = contact_email ? { note: contact_email } : {}
+    PublicActivity::Activity.create!(owner: actor, key:, trackable:, recipient:, parameters: params)
   rescue StandardError => e
     Rails.logger.warn("MemberActivityRecorder failed (#{key}): #{e.class}: #{e.message}")
   end

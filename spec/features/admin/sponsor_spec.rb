@@ -161,11 +161,10 @@ RSpec.feature 'Admin::Sponsors' do
     context 'with activities' do
       scenario 'when there are activities' do
         contact = sponsor.contacts.first
-        contact_audit_key = contact.mailing_list_consent ? 'subscribe' : 'unsubscribe'
 
         MemberActivityRecorder.record(
           actor: manager,
-          key: "sponsor.admin_contact_#{contact_audit_key}",
+          key: 'sponsor.admin_contact_subscribe',
           trackable: sponsor,
           recipient: contact,
           contact_email: contact.email
@@ -180,11 +179,10 @@ RSpec.feature 'Admin::Sponsors' do
 
       scenario 'when an activity is associated with a deleted contact' do
         contact = sponsor.contacts.first
-        contact_audit_key = contact.mailing_list_consent ? 'subscribe' : 'unsubscribe'
 
         MemberActivityRecorder.record(
           actor: manager,
-          key: "sponsor.admin_contact_#{contact_audit_key}",
+          key: 'sponsor.admin_contact_subscribe',
           trackable: sponsor,
           recipient: contact,
           contact_email: contact.email

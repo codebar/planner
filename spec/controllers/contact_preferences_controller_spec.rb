@@ -25,19 +25,6 @@ RSpec.describe ContactPreferencesController do
   end
 
   describe 'PATCH #update' do
-    it 'passes the contact and email to the activity recorder' do
-      expect(MemberActivityRecorder).to receive(:record).with(
-        actor: contact,
-        key: 'sponsor.contact_subscribe',
-        trackable: contact.sponsor,
-        contact_email: contact.email
-      )
-
-      patch :update, params: {
-        contact: { token: contact.token, mailing_list_consent: '1' }
-      }
-    end
-
     it 'subscribes the contact and records the consent activity' do
       patch :update, params: {
         contact: { token: contact.token, mailing_list_consent: '1' }
@@ -52,6 +39,7 @@ RSpec.describe ContactPreferencesController do
       activity = PublicActivity::Activity.find_by!(key: 'sponsor.contact_subscribe')
       expect(activity.owner).to eq(contact)
       expect(activity.trackable).to eq(contact.sponsor)
+      expect(activity.recipient).to be_nil
       expect(activity.parameters).to include(note: contact.email)
     end
 
