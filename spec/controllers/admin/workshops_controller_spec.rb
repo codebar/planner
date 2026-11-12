@@ -334,6 +334,167 @@ RSpec.describe Admin::WorkshopsController do
     end
   end
 
+  describe 'POST #create organiser assignment' do
+    let(:organiser) { Fabricate(:member) }
+
+    it 'does not raise when organiser_ids are provided' do
+      organiser.add_role(:organiser, workshop.chapter)
+      expect do
+        post :create, params: {
+          workshop: {
+            chapter_id: workshop.chapter.id,
+            local_date: (Time.zone.now + 1.week).strftime('%d/%m/%Y'),
+            local_time: '15:00', local_end_time: '17:00',
+            virtual: '1', slack_channel: 'workshop-channel',
+            slack_channel_link: 'https://codebar.slack.link/workshop-channel',
+            coach_spaces: 5, student_spaces: 15,
+            host: nil, organisers: [organiser.id.to_s]
+          }
+        }
+      end.not_to raise_error
+      created = Workshop.unscoped.order(:id).last
+      expect(created.organisers).to include(organiser)
+      expect(created.chapter).to eq(workshop.chapter)
+    end
+
+    it 'does not raise when organiser_ids are blank' do
+      chapter_organiser = Fabricate(:member)
+      chapter_organiser.add_role(:organiser, workshop.chapter)
+
+      expect do
+        post :create, params: {
+          workshop: {
+            chapter_id: workshop.chapter.id,
+            local_date: (Time.zone.now + 1.week).strftime('%d/%m/%Y'),
+            local_time: '15:00', local_end_time: '17:00',
+            virtual: '1', slack_channel: 'workshop-channel',
+            slack_channel_link: 'https://codebar.slack.link/workshop-channel',
+            coach_spaces: 5, student_spaces: 15,
+            host: nil
+          }
+        }
+      end.not_to raise_error
+      created = Workshop.unscoped.order(:id).last
+      expect(created.reload.organisers).to include(chapter_organiser)
+    end
+
+    it 'defaults to chapter organisers when the form sends only the blank sentinel' do
+      chapter_organiser = Fabricate(:member)
+      chapter_organiser.add_role(:organiser, workshop.chapter)
+
+      post :create, params: {
+        workshop: {
+          chapter_id: workshop.chapter.id,
+          local_date: (Time.zone.now + 1.week).strftime('%d/%m/%Y'),
+          local_time: '15:00', local_end_time: '17:00',
+          virtual: '1', slack_channel: 'workshop-channel',
+          slack_channel_link: 'https://codebar.slack.link/workshop-channel',
+          coach_spaces: 5, student_spaces: 15,
+          host: nil, organisers: ['']
+        }
+      }
+
+      created = Workshop.unscoped.order(:id).last
+      expect(flash[:warning]).to be_nil
+      expect(response).to redirect_to(admin_workshop_path(created))
+      expect(created.organisers).to include(chapter_organiser)
+    end
+
+    it 'rejects a scalar organiser value before creating the workshop' do
+      expect do
+        post :create, params: {
+          workshop: {
+            chapter_id: workshop.chapter.id,
+            local_date: (Time.zone.now + 1.week).strftime('%d/%m/%Y'),
+            local_time: '15:00', local_end_time: '17:00',
+            virtual: '1', slack_channel: 'workshop-channel',
+            slack_channel_link: 'https://codebar.slack.link/workshop-channel',
+            coach_spaces: 5, student_spaces: 15,
+            host: nil, organisers: 'not-an-array'
+          }
+        }
+      end.not_to change(Workshop, :count)
+
+      expect(response).to have_http_status(:unprocessable_content)
+      expect(flash[:warning]).to include('organiser_ids must be an array of ids')
+    end
+  end
+
+  describe 'PATCH #update organiser revocation' do
+    let(:existing_organiser) { Fabricate(:member) }
+    let(:new_organiser) { Fabricate(:member) }
+
+    def update_workshop(organisers: :omitted, **attributes)
+      submitted_organisers = organisers == :omitted ? {} : { organisers: }
+      patch :update, params: { id: workshop.id, workshop: workshop_update_attributes.merge(attributes, submitted_organisers) }
+    end
+
+    def workshop_update_attributes
+      date = workshop.date_and_time
+      {
+        local_date: date.strftime('%d/%m/%Y'),
+        local_time: date.strftime('%H:%M'),
+        local_end_time: (date + 2.hours).strftime('%H:%M'),
+        host: workshop.host&.id || ''
+      }
+    end
+
+    it 'revokes removed organisers after update' do
+      existing_organiser.add_role(:organiser, workshop)
+      new_organiser.add_role(:organiser, workshop.chapter)
+      update_workshop(organisers: [new_organiser.id.to_s])
+      workshop.reload
+      expect(workshop.organisers).to include(new_organiser)
+      expect(workshop.organisers).not_to include(existing_organiser)
+    end
+
+    it 'clears organisers when the form submits only its blank sentinel' do
+      chapter_organiser = Fabricate(:member)
+      chapter_organiser.add_role(:organiser, workshop.chapter)
+      existing_organiser.add_role(:organiser, workshop)
+
+      update_workshop(organisers: [''])
+
+      expect(response).to redirect_to(admin_workshop_path(workshop))
+      expect(workshop.reload.organisers).to be_empty
+      expect(workshop.organisers).not_to include(chapter_organiser)
+    end
+
+    it 'preserves organisers when the request omits the organisers parameter' do
+      existing_organiser.add_role(:organiser, workshop)
+
+      update_workshop
+
+      expect(response).to redirect_to(admin_workshop_path(workshop))
+      expect(workshop.reload.organisers).to include(existing_organiser)
+    end
+
+    it 'rejects a blank scalar organiser value before saving workshop changes' do
+      existing_organiser.add_role(:organiser, workshop)
+      update_workshop(organisers: '', description: 'Should not save')
+
+      expect(response).to have_http_status(:unprocessable_content)
+      expect(workshop.reload.description).not_to eq('Should not save')
+      expect(workshop.organisers).to include(existing_organiser)
+    end
+
+    it 'rejects an unknown organiser ID before saving workshop changes' do
+      update_workshop(organisers: ['999999999'], description: 'Should not save')
+
+      expect(response).to have_http_status(:unprocessable_content)
+      expect(workshop.reload.description).not_to eq('Should not save')
+    end
+
+    it 'rejects a non-chapter organiser before saving workshop changes' do
+      outsider = Fabricate(:member)
+      update_workshop(organisers: [outsider.id.to_s], description: 'Should not save')
+
+      expect(response).to have_http_status(:unprocessable_content)
+      expect(workshop.reload.description).not_to eq('Should not save')
+      expect(workshop.organisers).to be_empty
+    end
+  end
+
   describe 'DELETE #destroy' do
     context 'when workshop invitations have been sent' do
       before do
@@ -431,6 +592,13 @@ RSpec.describe Admin::WorkshopsController do
 
   describe 'GET #edit' do
     render_views
+
+    it 'includes a blank organiser value so deselecting all submits an empty selection' do
+      get :edit, params: { id: workshop.id }
+
+      html = Nokogiri::HTML(response.body)
+      expect(html.css('input[type="hidden"][name="workshop[organisers][]"][value=""]')).to be_present
+    end
 
     it 'pre-fills main date and time values in ISO format' do
       get :edit, params: { id: workshop.id }

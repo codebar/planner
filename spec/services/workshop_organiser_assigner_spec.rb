@@ -1,0 +1,117 @@
+require 'rails_helper'
+
+RSpec.describe WorkshopOrganiserAssigner do
+  let(:workshop) { Fabricate(:workshop) }
+  let(:chapter) { workshop.chapter }
+
+  describe '#call' do
+    context 'when organiser_ids are provided' do
+      let(:organiser) { Fabricate(:member) }
+
+      it 'grants organiser role to members in the list' do
+        organiser.add_role(:organiser, chapter)
+        expect do
+          described_class.new(workshop, [organiser.id.to_s], default_to_chapter: false).call
+          workshop.reload
+        end.to change { workshop.organisers.include?(organiser) }.from(false).to(true)
+      end
+
+      it 'revokes organiser role from members not in the list' do
+        existing_organiser = Fabricate(:member)
+        organiser.add_role(:organiser, chapter)
+        existing_organiser.add_role(:organiser, workshop)
+        workshop.reload
+        described_class.new(workshop, [organiser.id.to_s], default_to_chapter: false).call
+        workshop.reload
+        expect(workshop.organisers).not_to include(existing_organiser)
+      end
+    end
+
+    context 'when organiser_ids are blank with default_to_chapter' do
+      it 'defaults to the chapter organisers' do
+        chapter_organiser = Fabricate(:member)
+        chapter_organiser.add_role(:organiser, chapter)
+        described_class.new(workshop, [], default_to_chapter: true).call
+        workshop.reload
+        expect(workshop.organisers).to include(chapter_organiser)
+      end
+
+      it 'defaults to the chapter organisers when only the form sentinel is submitted' do
+        chapter_organiser = Fabricate(:member)
+        chapter_organiser.add_role(:organiser, chapter)
+        described_class.new(workshop, [''], default_to_chapter: true).call
+
+        expect(workshop.reload.organisers).to include(chapter_organiser)
+      end
+
+      it 'preserves existing workshop organisers when falling back to chapter' do
+        chapter_organiser = Fabricate(:member)
+        chapter_organiser.add_role(:organiser, chapter)
+        existing_organiser = Fabricate(:member)
+        existing_organiser.add_role(:organiser, workshop)
+        described_class.new(workshop, [], default_to_chapter: true).call
+        workshop.reload
+        expect(workshop.organisers).to include(existing_organiser)
+        expect(workshop.organisers).to include(chapter_organiser)
+      end
+    end
+
+    context 'when organiser_ids contain only blank values (update path)' do
+      it 'revokes all and does not fall back to chapter' do
+        chapter_organiser = Fabricate(:member)
+        chapter_organiser.add_role(:organiser, chapter)
+        existing_organiser = Fabricate(:member)
+        existing_organiser.add_role(:organiser, workshop)
+        described_class.new(workshop, [''], default_to_chapter: false).call
+        workshop.reload
+        expect(workshop.organisers).not_to include(existing_organiser)
+        expect(workshop.organisers).to eq([])
+      end
+    end
+
+    context 'when organiser_ids is nil' do
+      it 'raises ArgumentError' do
+        expect do
+          described_class.new(workshop, nil, default_to_chapter: false).call
+        end.to raise_error(ArgumentError, 'organiser_ids is required')
+      end
+    end
+
+    context 'when organiser_ids contain a non-chapter organiser' do
+      it 'rejects the selection before changing workshop roles' do
+        organiser = Fabricate(:member)
+
+        expect do
+          described_class.new(workshop, [organiser.id.to_s]).call
+        end.to raise_error(ArgumentError, 'Select organisers from this chapter.')
+        expect(workshop.reload.organisers).to be_empty
+      end
+    end
+
+    context 'when organiser_ids include a stale member ID' do
+      it 'rejects all requested IDs before granting any roles' do
+        chapter_organiser = Fabricate(:member)
+        chapter_organiser.add_role(:organiser, chapter)
+        allow(described_class).to receive(:validation_error).and_return(nil)
+
+        expect do
+          described_class.new(workshop, [chapter_organiser.id.to_s, '999999999']).call
+        end.to raise_error(ArgumentError, 'Unknown organiser IDs: 999999999')
+        expect(workshop.reload.organisers).to be_empty
+      end
+    end
+
+    it 'rolls back grants if a later roster change fails' do
+      chapter_organiser = Fabricate(:member)
+      chapter_organiser.add_role(:organiser, chapter)
+      existing_organiser = Fabricate(:member)
+      existing_organiser.add_role(:organiser, workshop)
+      assigner = described_class.new(workshop, [chapter_organiser.id.to_s])
+      allow(assigner).to receive(:revoke_other_organisers).and_raise(StandardError, 'revoke failed')
+
+      expect { assigner.call }.to raise_error(StandardError, 'revoke failed')
+      expect(workshop.reload.organisers).to include(existing_organiser)
+      expect(workshop.organisers).not_to include(chapter_organiser)
+    end
+  end
+end
