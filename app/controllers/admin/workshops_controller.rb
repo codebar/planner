@@ -29,11 +29,10 @@ class Admin::WorkshopsController < Admin::ApplicationController
     @workshop.selected_host_id = host_id
     @workshop.created_by = current_user
     authorize(@workshop)
-    if @workshop.save
-      finish_creation
-    else
-      flash[:warning] = @workshop.errors.full_messages; render 'new'
-    end
+    return if render_organiser_selection_error('new', default_to_chapter: true)
+    return finish_creation if @workshop.save
+
+    flash[:warning] = @workshop.errors.full_messages; render 'new'
   end
 
   def edit
@@ -55,16 +54,13 @@ class Admin::WorkshopsController < Admin::ApplicationController
     authorize @workshop
 
     @workshop.assign_attributes(workshop_params.merge(selected_host_id: host_id))
+    return if params[:workshop].key?(:organisers) && render_organiser_selection_error('edit')
 
-    if @workshop.valid?
-      @workshop.save
-      update_workshop_details
+    return render_update_error unless @workshop.valid?
 
-      redirect_to admin_workshop_path(@workshop), notice: I18n.t('admin.messages.workshop.updated')
-    else
-      flash[:warning] = @workshop.errors.full_messages
-      render 'edit'
-    end
+    @workshop.save
+    update_workshop_details
+    redirect_to admin_workshop_path(@workshop), notice: I18n.t('admin.messages.workshop.updated')
   end
 
   def send_invites; end
@@ -263,6 +259,25 @@ class Admin::WorkshopsController < Admin::ApplicationController
   def update_workshop_details
     assign_organisers(organiser_ids) if params[:workshop].key?(:organisers)
     assign_host(host_id)
+  end
+
+  def render_organiser_selection_error(template, default_to_chapter: false)
+    error = WorkshopOrganiserAssigner.validation_error(@workshop, organiser_ids, default_to_chapter:)
+    return false unless error
+
+    render_with_organiser_error(template, error)
+    true
+  end
+
+  def render_with_organiser_error(template, error)
+    @workshop.errors.add(:base, error)
+    flash.now[:warning] = @workshop.errors.full_messages
+    render template, status: :unprocessable_content
+  end
+
+  def render_update_error
+    flash[:warning] = @workshop.errors.full_messages
+    render 'edit'
   end
 
   def set_sponsor

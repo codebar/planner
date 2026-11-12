@@ -338,6 +338,7 @@ RSpec.describe Admin::WorkshopsController do
     let(:organiser) { Fabricate(:member) }
 
     it 'does not raise when organiser_ids are provided' do
+      organiser.add_role(:organiser, workshop.chapter)
       expect do
         post :create, params: {
           workshop: {
@@ -363,7 +364,9 @@ RSpec.describe Admin::WorkshopsController do
             chapter_id: workshop.chapter.id,
             local_date: (Time.zone.now + 1.week).strftime('%d/%m/%Y'),
             local_time: '15:00', local_end_time: '17:00',
-            virtual: '1', coach_spaces: 5, student_spaces: 15,
+            virtual: '1', slack_channel: 'workshop-channel',
+            slack_channel_link: 'https://codebar.slack.link/workshop-channel',
+            coach_spaces: 5, student_spaces: 15,
             host: nil
           }
         }
@@ -371,15 +374,56 @@ RSpec.describe Admin::WorkshopsController do
       created = Workshop.unscoped.order(:id).last
       expect(created.chapter).to eq(workshop.chapter)
     end
+
+    it 'defaults to chapter organisers when the form sends only the blank sentinel' do
+      chapter_organiser = Fabricate(:member)
+      chapter_organiser.add_role(:organiser, workshop.chapter)
+
+      post :create, params: {
+        workshop: {
+          chapter_id: workshop.chapter.id,
+          local_date: (Time.zone.now + 1.week).strftime('%d/%m/%Y'),
+          local_time: '15:00', local_end_time: '17:00',
+          virtual: '1', slack_channel: 'workshop-channel',
+          slack_channel_link: 'https://codebar.slack.link/workshop-channel',
+          coach_spaces: 5, student_spaces: 15,
+          host: nil, organisers: ['']
+        }
+      }
+
+      created = Workshop.unscoped.order(:id).last
+      expect(flash[:warning]).to be_nil
+      expect(response).to redirect_to(admin_workshop_path(created))
+      expect(created.organisers).to include(chapter_organiser)
+    end
+
+    it 'rejects a scalar organiser value before creating the workshop' do
+      expect do
+        post :create, params: {
+          workshop: {
+            chapter_id: workshop.chapter.id,
+            local_date: (Time.zone.now + 1.week).strftime('%d/%m/%Y'),
+            local_time: '15:00', local_end_time: '17:00',
+            virtual: '1', slack_channel: 'workshop-channel',
+            slack_channel_link: 'https://codebar.slack.link/workshop-channel',
+            coach_spaces: 5, student_spaces: 15,
+            host: nil, organisers: 'not-an-array'
+          }
+        }
+      end.not_to change(Workshop, :count)
+
+      expect(response).to have_http_status(:unprocessable_content)
+      expect(flash[:warning]).to include('organiser_ids must be an array of ids')
+    end
   end
 
   describe 'PATCH #update organiser revocation' do
     let(:existing_organiser) { Fabricate(:member) }
     let(:new_organiser) { Fabricate(:member) }
 
-    def update_workshop(organisers: :omitted)
+    def update_workshop(organisers: :omitted, **attributes)
       submitted_organisers = organisers == :omitted ? {} : { organisers: }
-      patch :update, params: { id: workshop.id, workshop: workshop_update_attributes.merge(submitted_organisers) }
+      patch :update, params: { id: workshop.id, workshop: workshop_update_attributes.merge(attributes, submitted_organisers) }
     end
 
     def workshop_update_attributes
@@ -394,6 +438,7 @@ RSpec.describe Admin::WorkshopsController do
 
     it 'revokes removed organisers after update' do
       existing_organiser.add_role(:organiser, workshop)
+      new_organiser.add_role(:organiser, workshop.chapter)
       update_workshop(organisers: [new_organiser.id.to_s])
       workshop.reload
       expect(workshop.organisers).to include(new_organiser)
@@ -419,6 +464,30 @@ RSpec.describe Admin::WorkshopsController do
 
       expect(response).to redirect_to(admin_workshop_path(workshop))
       expect(workshop.reload.organisers).to include(existing_organiser)
+    end
+
+    it 'rejects a scalar organiser value before saving workshop changes' do
+      update_workshop(organisers: new_organiser.id.to_s, description: 'Should not save')
+
+      expect(response).to have_http_status(:unprocessable_content)
+      expect(workshop.reload.description).not_to eq('Should not save')
+      expect(workshop.organisers).to be_empty
+    end
+
+    it 'rejects an unknown organiser ID before saving workshop changes' do
+      update_workshop(organisers: ['999999999'], description: 'Should not save')
+
+      expect(response).to have_http_status(:unprocessable_content)
+      expect(workshop.reload.description).not_to eq('Should not save')
+    end
+
+    it 'rejects a non-chapter organiser before saving workshop changes' do
+      outsider = Fabricate(:member)
+      update_workshop(organisers: [outsider.id.to_s], description: 'Should not save')
+
+      expect(response).to have_http_status(:unprocessable_content)
+      expect(workshop.reload.description).not_to eq('Should not save')
+      expect(workshop.organisers).to be_empty
     end
   end
 

@@ -9,6 +9,7 @@ RSpec.describe WorkshopOrganiserAssigner, type: :service do
       let(:organiser) { Fabricate(:member) }
 
       it 'grants organiser role to members in the list' do
+        organiser.add_role(:organiser, chapter)
         expect do
           described_class.new(workshop, [organiser.id.to_s], default_to_chapter: false).call
           workshop.reload
@@ -17,6 +18,7 @@ RSpec.describe WorkshopOrganiserAssigner, type: :service do
 
       it 'revokes organiser role from members not in the list' do
         existing_organiser = Fabricate(:member)
+        organiser.add_role(:organiser, chapter)
         existing_organiser.add_role(:organiser, workshop)
         workshop.reload
         described_class.new(workshop, [organiser.id.to_s], default_to_chapter: false).call
@@ -32,6 +34,14 @@ RSpec.describe WorkshopOrganiserAssigner, type: :service do
         described_class.new(workshop, [], default_to_chapter: true).call
         workshop.reload
         expect(workshop.organisers).to include(chapter_organiser)
+      end
+
+      it 'defaults to the chapter organisers when only the form sentinel is submitted' do
+        chapter_organiser = Fabricate(:member)
+        chapter_organiser.add_role(:organiser, chapter)
+        described_class.new(workshop, [''], default_to_chapter: true).call
+
+        expect(workshop.reload.organisers).to include(chapter_organiser)
       end
 
       it 'preserves existing workshop organisers when falling back to chapter' do
@@ -64,6 +74,17 @@ RSpec.describe WorkshopOrganiserAssigner, type: :service do
         expect do
           described_class.new(workshop, nil, default_to_chapter: false).call
         end.to raise_error(ArgumentError, 'organiser_ids is required')
+      end
+    end
+
+    context 'when organiser_ids contain a non-chapter organiser' do
+      it 'rejects the selection before changing workshop roles' do
+        organiser = Fabricate(:member)
+
+        expect do
+          described_class.new(workshop, [organiser.id.to_s]).call
+        end.to raise_error(ArgumentError, 'Select organisers from this chapter.')
+        expect(workshop.reload.organisers).to be_empty
       end
     end
   end
