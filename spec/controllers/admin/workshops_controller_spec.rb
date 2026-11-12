@@ -377,21 +377,48 @@ RSpec.describe Admin::WorkshopsController do
     let(:existing_organiser) { Fabricate(:member) }
     let(:new_organiser) { Fabricate(:member) }
 
+    def update_workshop(organisers: :omitted)
+      submitted_organisers = organisers == :omitted ? {} : { organisers: }
+      patch :update, params: { id: workshop.id, workshop: workshop_update_attributes.merge(submitted_organisers) }
+    end
+
+    def workshop_update_attributes
+      date = workshop.date_and_time
+      {
+        local_date: date.strftime('%d/%m/%Y'),
+        local_time: date.strftime('%H:%M'),
+        local_end_time: (date + 2.hours).strftime('%H:%M'),
+        host: workshop.host&.id || ''
+      }
+    end
+
     it 'revokes removed organisers after update' do
       existing_organiser.add_role(:organiser, workshop)
-      patch :update, params: {
-        id: workshop.id,
-        workshop: {
-          local_date: workshop.date_and_time.strftime('%d/%m/%Y'),
-          local_time: workshop.date_and_time.strftime('%H:%M'),
-          local_end_time: (workshop.date_and_time + 2.hours).strftime('%H:%M'),
-          host: workshop.host&.id || '',
-          organisers: [new_organiser.id.to_s]
-        }
-      }
+      update_workshop(organisers: [new_organiser.id.to_s])
       workshop.reload
       expect(workshop.organisers).to include(new_organiser)
       expect(workshop.organisers).not_to include(existing_organiser)
+    end
+
+    it 'clears organisers when the form submits only its blank sentinel' do
+      chapter_organiser = Fabricate(:member)
+      chapter_organiser.add_role(:organiser, workshop.chapter)
+      existing_organiser.add_role(:organiser, workshop)
+
+      update_workshop(organisers: [''])
+
+      expect(response).to redirect_to(admin_workshop_path(workshop))
+      expect(workshop.reload.organisers).to be_empty
+      expect(workshop.organisers).not_to include(chapter_organiser)
+    end
+
+    it 'preserves organisers when the request omits the organisers parameter' do
+      existing_organiser.add_role(:organiser, workshop)
+
+      update_workshop
+
+      expect(response).to redirect_to(admin_workshop_path(workshop))
+      expect(workshop.reload.organisers).to include(existing_organiser)
     end
   end
 
@@ -492,6 +519,13 @@ RSpec.describe Admin::WorkshopsController do
 
   describe 'GET #edit' do
     render_views
+
+    it 'includes a blank organiser value so deselecting all submits an empty selection' do
+      get :edit, params: { id: workshop.id }
+
+      html = Nokogiri::HTML(response.body)
+      expect(html.css('input[type="hidden"][name="workshop[organisers][]"][value=""]')).to be_present
+    end
 
     it 'pre-fills main date and time values in ISO format' do
       get :edit, params: { id: workshop.id }

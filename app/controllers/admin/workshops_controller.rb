@@ -261,7 +261,7 @@ class Admin::WorkshopsController < Admin::ApplicationController
   end
 
   def update_workshop_details
-    assign_organisers(organiser_ids)
+    assign_organisers(organiser_ids) if params[:workshop].key?(:organisers)
     assign_host(host_id)
   end
 
