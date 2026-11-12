@@ -19,6 +19,10 @@ module Admin
                             coach_check_ins: 'Coach check-ins',
                             student_rsvps: 'Student RSVPs',
                             coach_rsvps: 'Coach RSVPs' }.freeze
+      RETURNING_LABELS = { returning_students: 'Returning students',
+                           returning_coaches: 'Returning coaches' }.freeze
+      RETURNING_KEYS = { 'Student' => :returning_students, 'Coach' => :returning_coaches }.freeze
+      TRANSITION_LABEL = 'Students who became coaches'
       SIGN_UP_LABELS = { students: 'New students',
                          coaches: 'New coaches',
                          uncategorised: 'Uncategorised',
@@ -32,7 +36,7 @@ module Admin
           return Result.new(months: [], rows: []) if months.empty?
 
           @month_keys = months.index_by(&:itself)
-          rows = attendance_rows(months) + sign_up_rows(months) + [workshop_row(months)]
+          rows = attendance_rows(months) + sign_up_rows(months) + [workshop_row(months), *transition_rows(months)]
           Result.new(months:, rows:)
         end
 
@@ -40,13 +44,53 @@ module Admin
 
         def attendance_rows(months)
           counts = blank_counts(months, ATTENDANCE_LABELS.keys)
-          grouped_attendance(months).each do |month, role, attended, attending, count|
+          tally_attendance(counts, grouped_attendance(months))
+          ATTENDANCE_LABELS.map { |key, label| row(:attendance, label, months, counts[key]) } + returning_rows(months)
+        end
+
+        def tally_attendance(counts, rows)
+          rows.each do |month, role, attended, attending, count|
             key = @month_keys[month]
             next unless key
 
             attendance_keys(role, attended, attending).each { |row_key| counts[row_key][key] += count }
           end
-          ATTENDANCE_LABELS.map { |key, label| row(:attendance, label, months, counts[key]) }
+        end
+
+        # A returning member attended at least one workshop in an earlier
+        # calendar month than the one being counted, so the same-month repeat
+        # does not count. Distinct per month and role.
+        def returning_rows(months)
+          counts = blank_counts(months, RETURNING_LABELS.keys)
+          grouped_returning(months).each do |month, role, count|
+            key = @month_keys[month]
+            next unless key
+
+            row_key = RETURNING_KEYS[role]
+            counts[row_key][key] += count if row_key
+          end
+          RETURNING_LABELS.map { |key, label| row(:attendance, label, months, counts[key]) }
+        end
+
+        def grouped_returning(months)
+          WorkshopInvitation.joins(:workshop)
+                            .where(workshops: { date_and_time: window(months) }, attended: true)
+                            .where(prior_attendance_exists)
+                            .group(month_bucket('workshops.date_and_time'), :role)
+                            .pluck(month_bucket('workshops.date_and_time'), :role,
+                                   Arel.sql('COUNT(DISTINCT workshop_invitations.member_id)'))
+        end
+
+        def prior_attendance_exists
+          Arel.sql(<<~SQL.squish)
+            EXISTS (
+              SELECT 1 FROM workshop_invitations AS prior_invitations
+              INNER JOIN workshops AS prior_workshops ON prior_workshops.id = prior_invitations.workshop_id
+              WHERE prior_invitations.member_id = workshop_invitations.member_id
+                AND prior_invitations.attended = TRUE
+                AND #{month_bucket('prior_workshops.date_and_time')} < #{month_bucket('workshops.date_and_time')}
+            )
+          SQL
         end
 
         def grouped_attendance(months)
@@ -67,6 +111,50 @@ module Admin
             selected << keys[:check_in] if attended && keys[:check_in]
             selected << keys[:rsvp] if attending && keys[:rsvp]
           end
+        end
+
+        # Bucketed by the month of the member's first Coaches subscription.
+        # Subscriptions are append-only (unsubscribes set discarded_at), so a
+        # Students subscription created earlier marks the transition. Chapter is
+        # ignored and a still-kept Students subscription does not disqualify.
+        def transition_rows(months)
+          counts = default_cells(months)
+          grouped_transitions(months).each do |month, count|
+            key = @month_keys[month]
+            counts[key] += count if key
+          end
+          [row(:transitions, TRANSITION_LABEL, months, counts)]
+        end
+
+        def grouped_transitions(months)
+          Subscription.from("(#{first_coach_sql}) first_coaches")
+                      .where('first_coaches.first_coach_at BETWEEN ? AND ?',
+                             window(months).begin, window(months).end)
+                      .where(prior_student_exists)
+                      .group(month_bucket('first_coaches.first_coach_at'))
+                      .pluck(month_bucket('first_coaches.first_coach_at'), Arel.sql('COUNT(*)'))
+        end
+
+        def first_coach_sql
+          <<~SQL.squish
+            SELECT s.member_id, MIN(s.created_at) AS first_coach_at
+            FROM subscriptions s
+            INNER JOIN groups g ON g.id = s.group_id
+            WHERE g.name = 'Coaches'
+            GROUP BY s.member_id
+          SQL
+        end
+
+        def prior_student_exists
+          Arel.sql(<<~SQL.squish)
+            EXISTS (
+              SELECT 1 FROM subscriptions student_subs
+              INNER JOIN groups student_groups ON student_groups.id = student_subs.group_id
+              WHERE student_subs.member_id = first_coaches.member_id
+                AND student_groups.name = 'Students'
+                AND student_subs.created_at < first_coaches.first_coach_at
+            )
+          SQL
         end
 
         def sign_up_rows(months) # rubocop:disable Metrics/AbcSize

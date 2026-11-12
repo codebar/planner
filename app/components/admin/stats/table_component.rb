@@ -23,7 +23,20 @@ module Admin
       end
 
       def cell_value(row, month)
-        number_with_delimiter(row.cells.fetch(month, 0))
+        value = row.cells.fetch(month, 0)
+        return number_with_delimiter(value) unless percentage_row?(row)
+
+        "#{number_with_delimiter(value)} (#{percentage_of_total(value, row.total)}%)"
+      end
+
+      def percentage_row?(row)
+        Admin::Stats::Monthly::RETURNING_LABELS.value?(row.label)
+      end
+
+      def percentage_of_total(value, total)
+        return 0 if total.zero?
+
+        (value.to_f / total * 100).round
       end
 
       def total_value(row)
