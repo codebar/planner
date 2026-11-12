@@ -87,5 +87,31 @@ RSpec.describe WorkshopOrganiserAssigner, type: :service do
         expect(workshop.reload.organisers).to be_empty
       end
     end
+
+    context 'when organiser_ids include a stale member ID' do
+      it 'rejects all requested IDs before granting any roles' do
+        chapter_organiser = Fabricate(:member)
+        chapter_organiser.add_role(:organiser, chapter)
+        allow(described_class).to receive(:validation_error).and_return(nil)
+
+        expect do
+          described_class.new(workshop, [chapter_organiser.id.to_s, '999999999']).call
+        end.to raise_error(ArgumentError, 'Unknown organiser IDs: 999999999')
+        expect(workshop.reload.organisers).to be_empty
+      end
+    end
+
+    it 'rolls back grants if a later roster change fails' do
+      chapter_organiser = Fabricate(:member)
+      chapter_organiser.add_role(:organiser, chapter)
+      existing_organiser = Fabricate(:member)
+      existing_organiser.add_role(:organiser, workshop)
+      assigner = described_class.new(workshop, [chapter_organiser.id.to_s])
+      allow(assigner).to receive(:revoke_other_organisers).and_raise(StandardError, 'revoke failed')
+
+      expect { assigner.call }.to raise_error(StandardError, 'revoke failed')
+      expect(workshop.reload.organisers).to include(existing_organiser)
+      expect(workshop.organisers).not_to include(chapter_organiser)
+    end
   end
 end

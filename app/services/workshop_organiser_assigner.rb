@@ -46,21 +46,34 @@ class WorkshopOrganiserAssigner
     error = self.class.validation_error(@workshop, @organiser_ids, default_to_chapter: @default_to_chapter)
     raise ArgumentError, error if error
 
-    if @default_to_chapter && self.class.default_selection?(@organiser_ids)
-      grant(@workshop.chapter.organisers.pluck(:id))
-    else
-      raise ArgumentError, 'organiser_ids must be an array of ids' unless @organiser_ids.is_a?(Array)
-
-      desired_ids = @organiser_ids.reject(&:blank?).map(&:to_s)
-      grant(desired_ids)
-      revoke_other_organisers(desired_ids)
-    end
+    default_selection = @default_to_chapter && self.class.default_selection?(@organiser_ids)
+    Member.transaction { assign_roles(default_selection) }
   end
 
   private
 
-  def grant(organiser_ids)
-    organiser_ids.each { |id| Member.find(id).add_role(:organiser, @workshop) }
+  def assign_roles(default_selection)
+    desired_ids = organiser_ids_for(default_selection)
+    grant(resolve_members(desired_ids))
+    revoke_other_organisers(desired_ids) unless default_selection
+  end
+
+  def organiser_ids_for(default_selection)
+    return @workshop.chapter.organisers.pluck(:id).map(&:to_s) if default_selection
+
+    @organiser_ids.reject(&:blank?).map(&:to_s)
+  end
+
+  def resolve_members(desired_ids)
+    members = Member.where(id: desired_ids.map(&:to_i)).index_by { |member| member.id.to_s }
+    missing_ids = desired_ids.uniq - members.keys
+    raise ArgumentError, "Unknown organiser IDs: #{missing_ids.join(', ')}" if missing_ids.any?
+
+    members.values
+  end
+
+  def grant(organisers)
+    organisers.each { |organiser| organiser.add_role(:organiser, @workshop) }
   end
 
   def revoke_other_organisers(desired_ids)
