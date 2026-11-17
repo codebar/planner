@@ -766,6 +766,8 @@ en:
     members:
       activity:
         for: "for %{subject}"
+    event:
+      not_invitable: "The event is not invitable"
     workshop:
       manage_rsvps:
         text: "RSVP Students and Coaches to the workshop. The attendance confirmation email will be triggered and they will be removed from the waiting list."

@@ -128,6 +128,34 @@ RSpec.describe DashboardQuery do
   end
 
   describe '.upcoming_events_for_user' do
+    def create_invited_workshops(member:, count:, host:, extra_sponsor:)
+      count.times do
+        workshop = Fabricate(:workshop_no_sponsor)
+        Fabricate(:workshop_sponsor, workshop:, sponsor: extra_sponsor)
+        Fabricate(:workshop_sponsor, workshop:, sponsor: host, host: true)
+        Fabricate(:attending_workshop_invitation, member:, workshop:)
+      end
+    end
+
+    def create_chapter_workshops(chapter:, count:, host:, extra_sponsor:)
+      count.times do
+        workshop = Fabricate(:workshop_no_sponsor, chapter:)
+        Fabricate(:workshop_sponsor, workshop:, sponsor: extra_sponsor)
+        Fabricate(:workshop_sponsor, workshop:, sponsor: host, host: true)
+      end
+    end
+
+    def load_user_events_and_count_host_queries(member:, host:)
+      result = nil
+      queries = count_queries do
+        result = described_class.upcoming_events_for_user(member)
+        workshops = result.values.flatten.select { |event| event.is_a?(Workshop) }
+        expect(workshops.map(&:host)).to all(eq(host))
+      end
+
+      [result, queries]
+    end
+
     it 'returns events for the member chapters and accepted workshops' do
       chapter = Fabricate(:chapter)
       member = Fabricate(:member, groups: [Fabricate(:students, chapter:)])
@@ -137,6 +165,54 @@ RSpec.describe DashboardQuery do
       result = described_class.upcoming_events_for_user(member)
 
       expect(result.values.flatten).to include(workshop)
+    end
+
+    it 'preloads workshop hosts for chapter workshops without growing query count' do
+      chapter = Fabricate(:chapter)
+      member = Fabricate(:member, groups: [Fabricate(:students, chapter:)])
+      host = Fabricate(:sponsor)
+      extra_sponsor = Fabricate(:sponsor)
+
+      create_chapter_workshops(chapter:, count: 1, host:, extra_sponsor:)
+      result_one, one_query_count = load_user_events_and_count_host_queries(member:, host:)
+      expect(result_one.values.flatten.count { |event| event.is_a?(Workshop) }).to eq(1)
+
+      create_chapter_workshops(chapter:, count: 3, host:, extra_sponsor:)
+      result_four, four_query_count = load_user_events_and_count_host_queries(member:, host:)
+      expect(result_four.values.flatten.count { |event| event.is_a?(Workshop) }).to eq(4)
+
+      expect(four_query_count).to eq(one_query_count)
+    end
+
+    it 'preloads workshop hosts for accepted invitations without growing query count with workshop count' do
+      member = Fabricate(:member)
+      host = Fabricate(:sponsor)
+      extra_sponsor = Fabricate(:sponsor)
+      expect(member.chapters).to be_empty
+
+      create_invited_workshops(member:, count: 1, host:, extra_sponsor:)
+      result_one, one_workshop_queries = load_user_events_and_count_host_queries(member:, host:)
+      expect(result_one.values.flatten.count { |event| event.is_a?(Workshop) }).to eq(1)
+      expect(one_workshop_queries).to be_positive
+
+      create_invited_workshops(member:, count: 3, host:, extra_sponsor:)
+      result_four, four_workshop_queries = load_user_events_and_count_host_queries(member:, host:)
+      expect(result_four.values.flatten.count { |event| event.is_a?(Workshop) }).to eq(4)
+      expect(four_workshop_queries).to be_positive
+      expect(four_workshop_queries).to eq(one_workshop_queries)
+    end
+
+    it 'resolves host to nil for accepted workshops with only non-host sponsors' do
+      member = Fabricate(:member)
+      workshop = Fabricate(:workshop_no_sponsor)
+      Fabricate(:workshop_sponsor, workshop:, sponsor: Fabricate(:sponsor), host: false)
+      Fabricate(:attending_workshop_invitation, member:, workshop:)
+
+      result = described_class.upcoming_events_for_user(member)
+      loaded = result.values.flatten.find { |event| event == workshop }
+
+      expect(loaded).to eq(workshop)
+      expect(loaded.host).to be_nil
     end
 
     it 'returns an empty hash when the member has no upcoming events' do

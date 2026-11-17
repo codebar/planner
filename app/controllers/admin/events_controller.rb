@@ -43,6 +43,9 @@ class Admin::EventsController < Admin::ApplicationController
   def invite
     @event = Event.find_by(slug: params[:event_id])
     authorize @event
+    unless @event.invitable?
+      return redirect_to admin_event_path(@event), flash: { warning: t('admin.event.not_invitable') }
+    end
 
     @event.chapters.each do |chapter|
       InvitationManager.new.send_event_emails(@event, chapter, current_user.id)
