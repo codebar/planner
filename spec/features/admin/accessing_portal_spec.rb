@@ -17,17 +17,12 @@ RSpec.feature 'admin portal' do
     end
 
     scenario 'can view all active chapters listed' do
-      chapter = Fabricate(:chapter_with_groups)
-      inactive_chapter = Fabricate(:chapter_with_groups, active: false)
+      chapter = Fabricate(:chapter, name: 'Manchester')
+      inactive_chapter = Fabricate(:chapter, name: 'Dormant', active: false)
       visit admin_root_path
 
-      chapter.groups.each do |group|
-        expect(page).to have_text(group.to_s)
-      end
-
-      inactive_chapter.groups.each do |group|
-        expect(page).to have_no_text(group.to_s)
-      end
+      expect(page).to have_text(chapter.name)
+      expect(page).to have_no_text(inactive_chapter.name)
     end
 
     scenario 'can access sponsor contacts' do

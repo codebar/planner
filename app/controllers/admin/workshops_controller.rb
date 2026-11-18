@@ -85,13 +85,12 @@ class Admin::WorkshopsController < Admin::ApplicationController
   def invite
     set_workshop
     authorize @workshop
-    audience = params[:for]
-
-    if @workshop.virtual?
-      InvitationManager.new.send_virtual_workshop_emails(@workshop, audience, current_user.id)
-    else
-      InvitationManager.new.send_workshop_emails(@workshop, audience, current_user.id)
+    unless @workshop.invitable?
+      return redirect_to admin_workshop_path(@workshop), flash: { warning: t('admin.workshop.not_invitable') }
     end
+
+    audience = params[:for]
+    send_workshop_invitations(audience)
 
     redirect_to admin_workshop_path(@workshop), notice: "Invitations to #{audience} are being emailed out."
   end
@@ -162,6 +161,14 @@ class Admin::WorkshopsController < Admin::ApplicationController
   end
 
   private
+
+  def send_workshop_invitations(audience)
+    if @workshop.virtual?
+      InvitationManager.new.send_virtual_workshop_emails(@workshop, audience, current_user.id)
+    else
+      InvitationManager.new.send_workshop_emails(@workshop, audience, current_user.id)
+    end
+  end
 
   def resolve_chapter_name_to_id
     chapter_value = params.dig(:workshop, :chapter_id)
