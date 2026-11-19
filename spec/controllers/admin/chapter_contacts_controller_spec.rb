@@ -13,6 +13,20 @@ RSpec.describe Admin::ChapterContactsController do
     ActionMailer::Base.deliveries.clear
   end
 
+  describe 'GET #recipient_count' do
+    it 'counts only selected current chapter members' do
+      outsider = Fabricate(:member)
+
+      get :recipient_count, params: {
+        chapter_id: chapter.id,
+        chapter_contact: { audience: 'custom_list', member_ids: [member.id, outsider.id] }
+      }, as: :json
+
+      expect(response).to have_http_status(:ok)
+      expect(JSON.parse(response.body)).to eq('count' => 1)
+    end
+  end
+
   describe 'POST #preview' do
     render_views
 
