@@ -1,6 +1,11 @@
 class Admin::ChapterContactsController < Admin::ApplicationController
-  before_action :set_chapter, only: %i[new preview create]
+  before_action :set_chapter, only: %i[new preview create recipient_count]
   after_action :verify_authorized
+
+  def recipient_count
+    authorize @chapter, :contact?
+    render json: { count: contact_recipient_ids.size }
+  end
 
   def index
     authorize Chapter, :contact_index?
@@ -12,12 +17,11 @@ class Admin::ChapterContactsController < Admin::ApplicationController
     load_form_collections
     @audience = 'all_members'
     @recipient_count = @chapter.contact_recipients(@audience).count
-    @selected_member_ids = []
   end
 
   def preview
     authorize @chapter, :contact?
-    recipient_ids = preview_recipient_ids
+    recipient_ids = contact_recipient_ids
     return render(:new, status: :unprocessable_entity) unless valid_contact?(recipient_ids)
 
     create_confirmation(recipient_ids)
@@ -38,7 +42,7 @@ class Admin::ChapterContactsController < Admin::ApplicationController
 
   private
 
-  def preview_recipient_ids # rubocop:disable Metrics/MethodLength
+  def contact_recipient_ids # rubocop:disable Metrics/MethodLength
     attributes = params.expect(
       chapter_contact: %i[subject message audience event_id rsvp_status activity_months] + [{ member_ids: [] }]
     )
@@ -46,11 +50,10 @@ class Admin::ChapterContactsController < Admin::ApplicationController
       :subject, :message, :audience, :event_id, :rsvp_status
     )
     @audience ||= 'all_members'
-    @selected_member_ids = Array(attributes[:member_ids])
     @activity_months = attributes[:activity_months].presence || '1'
     load_form_collections
     @chapter.contact_recipients(
-      @audience, @selected_member_ids,
+      @audience, Array(attributes[:member_ids]),
       event_id: @event_id, rsvp_status: @rsvp_status, activity_months: @activity_months
     ).pluck(:id)
   end
@@ -114,7 +117,5 @@ class Admin::ChapterContactsController < Admin::ApplicationController
     end
   end
 
-  def set_chapter
-    @chapter = Chapter.find(params[:chapter_id])
-  end
+  def set_chapter = @chapter = Chapter.find(params[:chapter_id])
 end

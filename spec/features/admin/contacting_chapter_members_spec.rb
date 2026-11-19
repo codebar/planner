@@ -26,22 +26,17 @@ RSpec.feature 'Contacting chapter members' do
     end
 
     scenario 'shows only controls for the selected audience', :js do
+      record_activity(coach, 2.weeks.ago)
+      record_activity(both, 2.months.ago)
+      event = event_with_rsvps
       login(organiser)
       visit new_admin_chapter_contact_path(chapter)
 
+      expect_recipient_count(3)
+      expect(page).to have_css('select[data-chapter-contact-audience][data-recipient-count-filter]')
       expect_audience_fields(custom_list: false, event_rsvp: false, activity_period: false)
 
-      select 'Custom list', from: 'Audience'
-      expect_audience_fields(custom_list: true, event_rsvp: false, activity_period: false)
-
-      select 'Active in the last month', from: 'Audience'
-      expect_audience_fields(custom_list: false, event_rsvp: false, activity_period: true)
-
-      select 'Inactive for the last month', from: 'Audience'
-      expect_audience_fields(custom_list: false, event_rsvp: false, activity_period: true)
-
-      select 'Event RSVP status', from: 'Audience'
-      expect_audience_fields(custom_list: false, event_rsvp: true, activity_period: false)
+      expect_live_counts_for_audience_filters(event)
     end
 
     scenario 'previews current subscribers and emails each individually after confirmation' do
@@ -307,6 +302,25 @@ RSpec.feature 'Contacting chapter members' do
     expect(ActionMailer::Base.deliveries).to be_empty
   end
 
+  def expect_live_counts_for_audience_filters(event)
+    select_audience_with_count('Custom list', 0, custom_list: true, event_rsvp: false, activity_period: false)
+    check coach.full_name
+    expect_recipient_count(1)
+
+    select_audience_with_count('Active in the last month', 1, custom_list: false, event_rsvp: false, activity_period: true)
+    expect_select_width_to_be_usable('chapter_contact_activity_months')
+
+    select_audience_with_count('Inactive for the last month', 2, custom_list: false, event_rsvp: false, activity_period: true)
+    expect_select_width_to_be_usable('chapter_contact_activity_months')
+
+    select_audience_with_count('Event RSVP status', 0, custom_list: false, event_rsvp: true, activity_period: false)
+    select event.name, from: 'Event'
+    select 'Attending', from: 'RSVP status'
+    expect_recipient_count(1)
+    expect_select_width_to_be_usable('chapter_contact_event_id')
+    expect_select_width_to_be_usable('chapter_contact_rsvp_status')
+  end
+
   def open_contact_menu
     visit root_path
     click_on 'Menu'
@@ -322,6 +336,22 @@ RSpec.feature 'Contacting chapter members' do
         expect(page).to have_css("#{selector}.d-none", visible: :all)
       end
     end
+  end
+
+  def expect_select_width_to_be_usable(id)
+    width = page.evaluate_script("document.getElementById('#{id}').getBoundingClientRect().width")
+    expect(width).to be > 100
+  end
+
+  def expect_recipient_count(count)
+    text = "#{count} #{'recipient'.pluralize(count)}"
+    expect(page).to have_css('[data-chapter-contact-recipient-count]', text:)
+  end
+
+  def select_audience_with_count(audience, count, custom_list:, event_rsvp:, activity_period:)
+    select audience, from: 'Audience'
+    expect_recipient_count(count)
+    expect_audience_fields(custom_list:, event_rsvp:, activity_period:)
   end
 
   def record_activity(member, created_at)

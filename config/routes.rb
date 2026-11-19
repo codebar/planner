@@ -115,6 +115,7 @@ Rails.application.routes.draw do
       resources :organisers, only: %i[index create destroy], controller: 'chapters/organisers'
       resource :contact, only: %i[new create], controller: 'chapter_contacts' do
         post :preview, on: :collection
+        get :recipient_count, on: :collection
       end
     end
 

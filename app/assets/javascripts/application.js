@@ -30,13 +30,16 @@
 $(function() {
   $("body").removeClass("no-js");
 
-  // Chosen for all other selects (exclude TomSelect fields)
+  // Chosen for all other selects (exclude TomSelect and conditional native fields)
   // Chosen hides inputs and selects, which becomes problematic when they are
   // required: browser validation doesn't get shown to the user.
   // This fix places "the original input behind the Chosen input, matching the
   // height and width so that the warning appears in the correct position."
   // https://github.com/harvesthq/chosen/issues/515#issuecomment-474588057
-  $('select').not('#member_lookup_id, #meeting_invitations_member, #meeting_organisers, #chapter_contact_audience').on('chosen:ready', function () {
+  const chosenSelects = $('select').not(
+    '#member_lookup_id, #meeting_invitations_member, #meeting_organisers, #chapter_contact_audience, [data-no-chosen]'
+  );
+  chosenSelects.on('chosen:ready', function () {
     var height = $(this).next('.chosen-container').height();
     var width = $(this).next('.chosen-container').width();
 
@@ -48,7 +51,7 @@ $(function() {
     }).show();
   });
 
-  $('select').not('#member_lookup_id, #meeting_invitations_member, #meeting_organisers, #chapter_contact_audience').chosen({
+  chosenSelects.chosen({
     allow_single_deselect: true,
     no_results_text: 'No results matched'
   });
