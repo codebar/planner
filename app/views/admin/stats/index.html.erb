@@ -31,9 +31,10 @@
   <% end %>
 
   <% rows_by_section = @rows.group_by(&:section) %>
-  <%= render Admin::Stats::TableComponent.new(months: @months, rows: rows_by_section.fetch(:attendance, []), caption: 'Attendance') %>
-  <%= render Admin::Stats::TableComponent.new(months: @months, rows: rows_by_section.fetch(:sign_ups, []), caption: 'New sign-ups') %>
-  <%= render Admin::Stats::TableComponent.new(months: @months, rows: rows_by_section.fetch(:workshops, []), caption: 'Workshops') %>
+  <%= render Admin::Stats::TableComponent.new(months: @months, rows: rows_by_section.fetch(:attendance, []), caption: 'Attendance per month') %>
+  <%= render Admin::Stats::TableComponent.new(months: @months, rows: rows_by_section.fetch(:sign_ups, []), caption: 'New sign-ups per month') %>
+  <%= render Admin::Stats::TableComponent.new(months: @months, rows: rows_by_section.fetch(:workshops, []), caption: 'Workshops per month') %>
+  <%= render Admin::Stats::TableComponent.new(months: @months, rows: rows_by_section.fetch(:transitions, []), caption: 'Students who became coaches') %>
 
   <%= link_to 'Download CSV',
               admin_stats_path(format: :csv,
