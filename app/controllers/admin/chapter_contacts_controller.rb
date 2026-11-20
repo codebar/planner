@@ -16,6 +16,7 @@ class Admin::ChapterContactsController < Admin::ApplicationController
     authorize @chapter, :contact?
     load_form_collections
     @audience = 'all_members'
+    @message = ChapterContactMailer::DEFAULT_MESSAGE
     @recipient_count = @chapter.contact_recipients(@audience).count
   end
 

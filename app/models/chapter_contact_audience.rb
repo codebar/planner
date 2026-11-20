@@ -3,6 +3,8 @@ module ChapterContactAudience
     'all_members' => { label: 'All chapter members', fields: [], query: :members },
     'chapter_organisers' => { label: 'Chapter organisers', fields: [], query: :organisers,
                               error: 'There are no chapter organisers to email.' },
+    'leadership_team' => { label: 'Leadership team', fields: [], query: :leadership_team,
+                           error: 'There are no chapter or event organisers to email.' },
     'custom_list' => { label: 'Custom list', fields: %w[custom_list], query: :selected_members,
                        error: 'Select at least one current chapter member.' },
     'active_last_month' => { label: 'Active in the last month', fields: %w[activity_period], query: :active_members,

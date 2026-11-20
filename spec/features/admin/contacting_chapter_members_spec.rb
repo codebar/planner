@@ -25,6 +25,26 @@ RSpec.feature 'Contacting chapter members' do
       Fabricate(:subscription, member: other_chapter_member, group: other_group)
     end
 
+    scenario 'starts the message with the HTML template' do
+      login(organiser)
+      visit new_admin_chapter_contact_path(chapter)
+
+      expect(page).to have_field('Message', with: ChapterContactMailer::DEFAULT_MESSAGE)
+    end
+
+    scenario 'previews sanitized HTML using the app font stack' do
+      login(organiser)
+      visit new_admin_chapter_contact_path(chapter)
+      fill_in 'Subject', with: 'HTML update'
+      fill_in 'Message', with: '<p><strong>Hello</strong></p><script>alert("xss")</script>'
+
+      click_on 'Preview recipients'
+
+      expect(page).to have_css('.chapter-contact-message strong', text: 'Hello')
+      expect(page).to have_no_css('.chapter-contact-message script')
+      expect(page).to have_css('.chapter-contact-message[style*="font-family: system-ui"]')
+    end
+
     scenario 'shows only controls for the selected audience', :js do
       record_activity(coach, 2.weeks.ago)
       record_activity(both, 2.months.ago)
@@ -85,6 +105,34 @@ RSpec.feature 'Contacting chapter members' do
         excluded: [student, coach, both, former_member, other_chapter_member],
         subject: 'Leadership update',
         message: 'A message for chapter organisers.'
+      )
+    end
+
+    scenario 'previews and emails the leadership team, including linked event organisers' do
+      event = Fabricate(:event, chapters: [chapter])
+      event_organiser = Fabricate(:member)
+      event_organiser.add_role(:organiser, event)
+      organiser.add_role(:organiser, event)
+      unrelated_event_organiser = Fabricate(:member)
+      unrelated_event_organiser.add_role(:organiser, Fabricate(:event))
+      login(organiser)
+      visit new_admin_chapter_contact_path(chapter)
+      select 'Leadership team', from: 'Audience'
+      fill_in 'Subject', with: 'Leadership update'
+      fill_in 'Message', with: 'A message for the leadership team.'
+      ActionMailer::Base.deliveries.clear
+
+      click_on 'Preview recipients'
+
+      expect_preview([organiser, event_organiser])
+      click_on 'Confirm and send'
+
+      expect(page).to have_text('Email sent to 2 chapter members')
+      expect_email_fanout(
+        recipients: [organiser, event_organiser],
+        excluded: [student, coach, both, former_member, other_chapter_member, unrelated_event_organiser],
+        subject: 'Leadership update',
+        message: 'A message for the leadership team.'
       )
     end
 

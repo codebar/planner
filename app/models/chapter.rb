@@ -76,13 +76,27 @@ class Chapter < ApplicationRecord
   def contact_recipient_scope(query, member_ids, event_id, rsvp_status, activity_months)
     case query
     when :members then members
-    when :organisers then organisers
+    when :organisers, :leadership_team then organiser_recipients(query)
     when :selected_members then members.where(id: member_ids)
     when :active_members then activity_recipients(:active, activity_months)
     when :inactive_members then activity_recipients(:inactive, activity_months)
     when :event_rsvp then recipients_by_event_rsvp(event_id, rsvp_status)
     else Member.none
     end
+  end
+
+  def leadership_team
+    event_organiser_ids = Permission.joins(:members)
+                                    .where(
+                                      name: 'organiser',
+                                      resource_type: Event.name,
+                                      resource_id: events.select(:id)
+                                    ).select('members.id')
+    Member.where(id: organisers.select(:id)).or(Member.where(id: event_organiser_ids))
+  end
+
+  def organiser_recipients(query)
+    query == :leadership_team ? leadership_team : organisers
   end
 
   def activity_recipients(state, months)
