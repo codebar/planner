@@ -86,6 +86,16 @@ class Member < ApplicationRecord
     organised_chapters.present?
   end
 
+  def manages_chapters?
+    is_admin? || has_role?(:organiser, :any)
+  end
+
+  def contactable_chapters
+    return Chapter.all if is_admin? || has_role?(:organiser) || has_role?(:organiser, Chapter)
+
+    Chapter.where(id: contactable_chapter_ids)
+  end
+
   def admin_or_organiser?
     has_role?(:admin) || organiser?
   end
@@ -219,5 +229,12 @@ class Member < ApplicationRecord
     [invitations.joins(:event),
      workshop_invitations.joins(:workshop).includes(workshop: :chapter),
      meeting_invitations.joins(:meeting)].map(&time_period.to_sym).inject(:+).sort_by { |i| i.event.date_and_time }
+  end
+
+  def contactable_chapter_ids
+    organised_chapters.pluck(:id) +
+      Workshop.with_role(:organiser, self).pluck(:chapter_id) +
+      Event.with_role(:organiser, self).joins(:chapters).pluck('chapters.id') +
+      Meeting.with_role(:organiser, self).joins(:chapters).pluck('chapters.id')
   end
 end

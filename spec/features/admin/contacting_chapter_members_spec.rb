@@ -325,6 +325,58 @@ RSpec.feature 'Contacting chapter members' do
     expect(ActionMailer::Base.deliveries).to be_empty
   end
 
+  scenario 'organisers must accept the terms and conditions before contacting a chapter' do
+    organiser = Fabricate(:member_without_toc)
+    organiser.add_role(:organiser, chapter)
+    login(organiser)
+
+    visit new_admin_chapter_contact_path(chapter)
+
+    expect(page).to have_current_path(terms_and_conditions_path)
+  end
+
+  scenario 'banned organisers cannot see or directly access chapter contact' do
+    banned_organiser = Fabricate(:member)
+    banned_organiser.add_role(:organiser, chapter)
+    Fabricate(:ban, member: banned_organiser)
+    login(banned_organiser)
+
+    visit root_path
+    click_on 'Menu'
+    expect(page).to have_no_link('Contact chapter')
+
+    visit new_admin_chapter_contact_path(chapter)
+    expect(current_url).to eq(root_url)
+  end
+
+  scenario 'logged out visitors cannot see or directly access chapter contact' do
+    visit new_admin_chapter_contact_path(chapter)
+    expect(current_url).to eq(root_url)
+    expect(page).to have_no_link('Contact chapter')
+
+    visit admin_chapter_contacts_path
+    expect(current_url).to eq(root_url)
+  end
+
+  scenario 'workshop organisers can contact members of their workshop chapter only' do
+    workshop = Fabricate(:workshop, chapter:)
+    workshop_organiser = Fabricate(:member)
+    workshop_organiser.add_role(:organiser, workshop)
+    login(workshop_organiser)
+
+    visit root_path
+    click_on 'Menu'
+    click_on 'Contact chapter'
+    expect(page).to have_text(chapter.name)
+
+    click_on 'Contact members'
+    expect(page).to have_current_path(new_admin_chapter_contact_path(chapter))
+
+    other_chapter = Fabricate(:chapter)
+    visit new_admin_chapter_contact_path(other_chapter)
+    expect(current_url).to eq(root_url)
+  end
+
   scenario 'organiser of another chapter cannot access this chapter contact' do
     other_chapter = Fabricate(:chapter)
     other_organiser = Fabricate(:member)

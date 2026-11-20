@@ -24,11 +24,11 @@ class ChapterPolicy < ApplicationPolicy
   end
 
   def contact?
-    user.is_admin? || user.has_role?(:organiser, record)
+    !user.banned? && user.contactable_chapters.where(id: record.id).exists?
   end
 
   def contact_index?
-    user.is_admin? || user.has_role?(:organiser, :any)
+    !user.banned? && user.manages_chapters?
   end
 
   private

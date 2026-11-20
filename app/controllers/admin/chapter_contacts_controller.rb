@@ -83,10 +83,7 @@ class Admin::ChapterContactsController < Admin::ApplicationController
   end
 
   def accessible_chapters
-    global_organiser = current_user.roles.where(name: 'organiser', resource_type: nil, resource_id: nil).exists?
-    return Chapter.order(:name) if current_user.is_admin? || global_organiser
-
-    current_user.organised_chapters.order(:name)
+    current_user.contactable_chapters.order(:name)
   end
 
   def contact_error
