@@ -5,6 +5,9 @@
     - @recipients.each do |recipient|
       %li= recipient.full_name
 
+  %h2 Message preview
+  = render 'shared/chapter_contact_message', message: @message
+
   = form_with scope: :chapter_contact, url: admin_chapter_contact_path(@chapter) do |form|
     = form.hidden_field :confirmation_token, value: @confirmation_token
     = form.submit 'Confirm and send', class: 'btn btn-primary'
