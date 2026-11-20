@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 ruby file: '.ruby-version'
 
-gem 'rails', '~> 8.1.3' # LOCKED: It is Rails.
+gem 'rails', '~> 8.1.4.1' # LOCKED: It is Rails.
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem 'sprockets-rails'
 gem 'rails_semantic_logger' # condense log lines: https://github.com/codebar/planner/issues/2339
@@ -35,11 +35,7 @@ gem 'jwt'
 # vips backend is never loaded.
 gem 'image_processing'
 gem 'mini_magick'
-# json 3.0 breaks ActiveSupport::JSON.decode: json 3.0 made JSON.parse
-# keyword-only, so Rails' JSON.parse(json, options) positional-hash call
-# raises ArgumentError and every session-cookie read fails. Pinned until
-# Rails supports json 3.x (https://github.com/codebar/planner/pull/2864).
-gem 'json', '~> 2.3'
+gem 'json', '~> 3.1'
 gem 'mutex_m' # LOCKED: Added because of activesupport 7.0
 gem 'nokogiri'
 gem 'omniauth'
@@ -60,7 +56,7 @@ gem 'simple_form'
 
 gem 'terser'
 
-gem 'pagy', '~> 43.6'
+gem 'pagy', '~> 43.8'
 
 gem 'icalendar'
 gem 'tzinfo-data'
@@ -72,7 +68,7 @@ gem 'commonmarker'
 gem 'faraday'
 gem 'msgpack'
 
-gem 'rails-html-sanitizer', '~> 1.7.1'
+gem 'rails-html-sanitizer', '~> 1.7.2'
 
 # Use the Puma web server [https://github.com/puma/puma]
 gem 'puma', '~> 8.0'

@@ -9,13 +9,14 @@ module Admin
       BUCKET_CLASSES = { inactive: 'bg-secondary', dormant: 'bg-warning text-dark',
                          active: 'bg-success' }.freeze
 
-      def initialize(health:) # rubocop:disable Lint/MissingSuper
+      def initialize(health:, new_sign_ups: []) # rubocop:disable Lint/MissingSuper
         @health = health
+        @new_sign_ups = new_sign_ups
       end
 
       private
 
-      attr_reader :health
+      attr_reader :health, :new_sign_ups
 
       def bucket_badge_class = BUCKET_CLASSES.fetch(health.bucket)
 
@@ -52,6 +53,15 @@ module Admin
 
       def eligible_members_value
         number_value(health.eligible_students + health.eligible_coaches)
+      end
+
+      def sign_up_month_label(month)
+        month.strftime('%b %Y')
+      end
+
+      def sign_up_totals
+        { students: new_sign_ups.sum { |row| row[:students] },
+          coaches: new_sign_ups.sum { |row| row[:coaches] } }
       end
 
       def number_value(value)

@@ -5,7 +5,6 @@ Fabricator(:event) do
   ends_at { |attrs| attrs[:date_and_time] + 8.hours }
   name Faker::Lorem.sentence
   description Faker::Lorem.sentence
-  coach_description Faker::Lorem.sentence
   schedule Faker::Lorem.sentence
   venue { Fabricate(:sponsor) }
   coach_spaces 2

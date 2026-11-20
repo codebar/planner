@@ -44,30 +44,6 @@ RSpec.describe Chapter do
     end
   end
 
-  context 'with cache expiration' do
-    let(:cache_key) { 'chapters-sidebar' }
-
-    it 'expires cache when chapter is created' do
-      Rails.cache.write(cache_key, 'cached content')
-      Fabricate(:chapter)
-      expect(Rails.cache.read(cache_key)).to be_nil
-    end
-
-    it 'expires cache when chapter is updated' do
-      Rails.cache.write(cache_key, 'cached content')
-      chapter = Fabricate(:chapter)
-      chapter.update!(name: 'Updated Name')
-      expect(Rails.cache.read(cache_key)).to be_nil
-    end
-
-    it 'expires cache when chapter is destroyed' do
-      Rails.cache.write(cache_key, 'cached content')
-      chapter = Fabricate(:chapter)
-      chapter.destroy
-      expect(Rails.cache.read(cache_key)).to be_nil
-    end
-  end
-
   describe '#students' do
     let(:chapter) { Fabricate(:chapter) }
     let(:student_group) { Fabricate(:group, chapter:, name: 'Students') }

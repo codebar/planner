@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe SponsorsSearch do
   describe 'initialization' do
-    it 'configures its properties from the param hash' do
+    it 'configures its properties from keyword arguments' do
       search = described_class.new(name: 'Acme', chapter: 'London')
 
       expect(search.name).to eq('Acme')

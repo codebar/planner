@@ -8,20 +8,13 @@ codebar planner is a Rails 8.1 application for managing [codebar.io](https://cod
 
 ## Development Workflow
 
-**CRITICAL**: Never work directly on the `master` branch. All changes must be made via pull requests from feature branches.
+Never work directly on the `master` branch. All changes land through a pull request from a feature branch:
 
-### Branching Strategy
+1. Branch: `git checkout -b feature/descriptive-name`
+2. Commit, push the branch, open a pull request
+3. Wait for approval before merging to `master`
 
-1. **Create a feature branch** from `master`: `git checkout -b feature/descriptive-name`
-2. **Make your changes** and commit them to the feature branch
-3. **Push the branch** to the remote repository
-4. **Create a pull request** for review
-5. **Wait for approval** before merging to `master`
-
-**Never:**
-- Commit directly to `master`
-- Push directly to `master`
-- Merge without review
+Never commit or push to `master` directly, and never merge without review.
 
 ## Development Setup
 
@@ -64,59 +57,18 @@ Managed by `mise` via `mise.toml` (shared, committed) and `mise.local.toml` (sec
 
 Create GitHub OAuth app at https://github.com/settings/applications/new with callback URL `http://localhost:3000/auth/github`.
 
-### Docker Setup (Not Used)
-
-Docker setup exists in this repository (`bin/d*` commands) but is **not used** for development work with Claude Code, OpenCode, etc.
-
 ## Architecture & Domain Model
 
 ### Core Domain Concepts
 
-**Members**: Users of the system. Can be students, coaches, both, or neither. Authenticated via GitHub OAuth (stored in `auth_services` table). Members have roles managed by Rolify (`admin`, `organiser` for chapters/workshops).
+- **Members**: students, coaches, both, or neither. GitHub OAuth via `auth_services`; roles via Rolify (`admin`, `organiser` per chapter or workshop).
+- **Chapters**: local organisations (e.g. "London") with organisers; they host workshops.
+- **Workshops**: belong to one chapter; invitations go to chapter subscribers; attendance is first-come-first-served up to venue capacity, with an automatic waiting list (`WaitingList`, `auto_rsvp`) promoted when spaces free up.
+- **Events**: multi-chapter; attendance requires admin approval after RSVP.
+- **Sponsors**: venues with addresses and member contacts; one sponsor is the workshop `host`.
+- **Invitations**: `WorkshopInvitation` (auto-accepted up to capacity) for workshops, `Invitation` (needs admin verification) for events.
 
-**Chapters**: Local codebar organizations (e.g., "London", "Berlin"). Chapters have organisers and host workshops/events.
-
-**Workshops**: Regular coding workshops. Belong to one chapter. Send invitations to chapter subscribers. Attendance is first-come-first-served up to venue capacity, with automatic waiting list management.
-
-**Events**: Multi-chapter events. Attendance requires admin verification/approval after RSVP.
-
-**Sponsors**: Organizations providing venue space. Have addresses and member contacts. One sponsor acts as "host" (venue) for each workshop.
-
-**Invitations**: Track member attendance status for workshops/events. Different classes:
-- `WorkshopInvitation` - for workshops (auto-accepted up to capacity)
-- `Invitation` - for events (require admin verification)
-
-**Waiting Lists**: When workshops are full, members can join waiting list (`WaitingList` model with `auto_rsvp` flag). Automatically promoted when spaces become available.
-
-### Key Model Relationships
-
-```
-Chapter
-  has_many :workshops
-  has_many :groups (for subscriptions)
-  has_many :organisers (via permissions)
-
-Workshop
-  belongs_to :chapter
-  has_many :workshop_sponsors
-  has_many :invitations (WorkshopInvitation)
-  has_one :host (sponsor where workshop_sponsors.host = true)
-
-Member
-  has_many :workshop_invitations
-  has_many :invitations (for events)
-  has_many :subscriptions
-  has_many :groups, through: :subscriptions
-  has_many :chapters, through: :groups
-  has_many :auth_services
-
-Sponsor
-  has_one :address
-  has_many :workshop_sponsors
-  has_many member_contacts
-```
-
-See `app/models/README.md` for detailed data model documentation.
+Association overview and the full data model: `app/models/README.md`.
 
 ## Authorization & Authentication
 
@@ -155,7 +107,7 @@ See `app/models/README.md` for detailed data model documentation.
   - Use `PLAYWRIGHT_BROWSER=firefox` or `webkit` for cross-browser testing
 - **Matchers**: Shoulda Matchers, RSpec Collection Matchers
 
-Run single test: `bundle exec rspec spec/path/to/file_spec.rb:42`
+Run single test: `bundle exec rspec spec/path/to/file_spec.rb:42` (load the project environment first: `mise`, `direnv`, or plain exports all work).
 
 ## Code Style
 
@@ -172,100 +124,9 @@ Key RuboCop exclusions:
 
 ## Parameter Handling
 
-This application uses Rails 8.0 `params.expect` for parameter filtering and validation.
+This application uses Rails 8.0 `params.expect` for parameter filtering and validation. Full patterns: `docs/parameter-handling.md`.
 
-### Basic Pattern
-
-Use `params.expect` instead of `params.require().permit()`:
-
-```ruby
-def resource_params
-  params.expect(resource: [
-    :field1, :field2, :field3
-  ])
-end
-```
-
-### Type Safety
-
-Controllers using `params.expect` raise `ActionController::ParameterMissing` when:
-- Parameter type is tampered (e.g., string sent instead of hash)
-- Required parameters are missing
-- Nested parameter structure is invalid
-
-This makes parameter validation failures explicit and easier to handle at the application level.
-
-### Nested Arrays
-
-Use hash syntax for array parameters:
-
-```ruby
-params.expect(workshop: [
-  :name, :date,
-  { sponsor_ids: [] }
-])
-```
-
-### Nested Attributes
-
-**IMPORTANT:** `params.expect` does NOT work with `accepts_nested_attributes_for`.
-
-Rails forms with nested attributes send hash-with-numeric-keys like `{'0' => {...}, '1' => {...}}`, which params.expect cannot handle. For controllers using `accepts_nested_attributes_for`, continue using the old syntax:
-
-```ruby
-# Use require().permit() for nested attributes
-params.require(:sponsor).permit(
-  :name, :website,
-  address_attributes: [:id, :street, :city, :postal_code],
-  contacts_attributes: [:id, :name, :email, :_destroy]
-)
-```
-
-Note: `_destroy` is permitted like any other field for deletion.
-
-### Conditional Parameters
-
-When parameters are optional:
-
-```ruby
-def index
-  search_params = if params.key?(:member_search)
-                    params.expect(member_search: [:name, :callback_url])
-                  else
-                    {}
-                  end
-  # use search_params
-end
-```
-
-### Return Value
-
-`params.expect(key: [...])` returns the **inner permitted parameters**, not wrapped:
-
-```ruby
-result = params.expect(member: [:name, :email])
-# Access as: result[:name], NOT result[:member][:name]
-```
-
-### Testing
-
-Controller specs should verify parameter filtering works:
-
-```ruby
-it 'filters unpermitted parameters' do
-  post :create, params: { resource: valid_attrs, hacker_field: 'malicious' }
-  expect(response).to be_successful # hacker_field is filtered out
-end
-```
-
-
-### For planning agents
-
-When planning new features or architectural changes, use the `layered-rails` skill for analysis:
-- `/layered-rails:plan` — plan incremental adoption of layered patterns
-- `/layered-rails:analyze` — full codebase architecture analysis
-- `/layered-rails:review` — review code from a layered architecture perspective
-- `/layered-rails:spec-test` — apply the specification test to evaluate layer placement
+**The trap:** `params.expect` does not work with `accepts_nested_attributes_for`; the fix is in `docs/parameter-handling.md` (Nested Attributes).
 
 ## Important Patterns
 

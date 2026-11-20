@@ -3,9 +3,11 @@ require 'active_support'
 class Verifier
   attr_reader :id, :token
 
-  def initialize(hash)
-    @id = hash.fetch(:id) { nil }
-    @token = hash.fetch(:token) { nil }
+  def initialize(id: nil, token: nil)
+    raise ArgumentError, 'id or token is required' if id.nil? && token.nil?
+
+    @id = id
+    @token = token
   end
 
   def access_token

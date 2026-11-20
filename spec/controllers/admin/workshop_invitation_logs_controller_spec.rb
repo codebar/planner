@@ -22,6 +22,19 @@ RSpec.describe Admin::WorkshopInvitationLogsController do
 
       expect(response).to have_http_status(:redirect)
     end
+
+    context 'when logs span more than one page' do
+      render_views
+
+      it 'renders the pagination nav' do
+        Fabricate.times(21, :invitation_log, loggable: workshop, status: 'completed')
+
+        get :index, params: { workshop_id: workshop.id }
+
+        expect(response).to have_http_status(:success)
+        expect(response.body).to include('pagy-bootstrap')
+      end
+    end
   end
 
   describe 'GET #show' do

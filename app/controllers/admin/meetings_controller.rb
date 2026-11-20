@@ -76,7 +76,7 @@ class Admin::MeetingsController < Admin::ApplicationController
     params[:meeting][:chapters]
   end
 
-  def grant_organiser_access(organiser_ids = [])
+  def grant_organiser_access(organiser_ids)
     organiser_ids.each { |id| Member.find(id).add_role(:organiser, @meeting) }
   end
 

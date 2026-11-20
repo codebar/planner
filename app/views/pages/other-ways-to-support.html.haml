@@ -1,0 +1,59 @@
+.py-4.py-lg-5.bg-primary
+  .container
+    .row.align-items-center
+      .col-12.col-md-7
+        %h1.display-2.text-white.lh-1.mb-4
+          = t('pages.how_to_support_us.other_ways_to_support.headline')
+        %p.text-white.lead
+          = t('pages.how_to_support_us.other_ways_to_support.tagline')
+      .col-12.col-md-4
+        = image_tag 'how-to-support-us/pat-uncodebar.jpg', alt: t('pages.how_to_support_us.fundraise.image_alt'), class: 'mw-100 rounded'
+
+.py-4.py-lg-5
+  .container.mt-4
+    .row.justify-content-center
+      .col-12.col-md-9
+        %h3= t('pages.how_to_support_us.other_ways_to_support.volunteer.title')
+        %p.mb-4= t('pages.how_to_support_us.other_ways_to_support.volunteer.description')
+        = link_to t('pages.how_to_support_us.other_ways_to_support.volunteer.link'), volunteer_path, class: 'btn btn-primary'
+        .row.mt-4
+          .col-12.col-md-6
+            = image_tag 'how-to-support-us/scotland-team.jpg', alt: 'A photo of the Scotland team at uncodebar - 8 people together laughing and pulling funny faces.', class: 'mw-100 rounded'
+          .col-12.col-md-6
+            = image_tag 'how-to-support-us/kim-festival.jpg', alt: 'Kimberley, a speaker during codebar Festival', class: 'mw-100 rounded'
+        %hr.mt-4
+
+  .container.mt-3
+    .row.justify-content-center
+      .col-12.col-md-9
+        %h3= t('pages.how_to_support_us.other_ways_to_support.give_as_you_live.title')
+        %p.mb-4= t('pages.how_to_support_us.other_ways_to_support.give_as_you_live.description')
+        = link_to t('pages.how_to_support_us.other_ways_to_support.give_as_you_live.link'), 'https://www.giveasyoulive.com/refer/R9UrYwk2i3hKlO3HYon7rA7ahUq9Od8dNAIS', class: 'btn btn-primary', target: '_blank', rel: 'noopener noreferrer'
+        %hr.mt-4
+
+  .container.mt-3
+    .row.justify-content-center
+      .col-12.col-md-9
+        %h3= t('pages.how_to_support_us.other_ways_to_support.workplace_giving.title')
+        %p.mb-4= t('pages.how_to_support_us.other_ways_to_support.workplace_giving.description')
+        %hr.mt-4
+
+  .container.mt-3
+    .row.justify-content-center
+      .col-12.col-md-9
+        %h3= t('pages.how_to_support_us.other_ways_to_support.gift_matching.title')
+        %p.mb-4= t('pages.how_to_support_us.other_ways_to_support.gift_matching.description')
+        %hr.mt-4
+
+  .container.mt-3
+    .row.justify-content-center
+      .col-12.col-md-9
+        %h3= t('pages.how_to_support_us.other_ways_to_support.leave_a_legacy.title')
+        %p.mb-4= t('pages.how_to_support_us.other_ways_to_support.leave_a_legacy.description_html')
+        %hr.mt-4
+
+  .container.mt-3
+    .row.justify-content-center
+      .col-12.col-md-9
+        %h3= t('pages.how_to_support_us.other_ways_to_support.support_your_way.title')
+        %p.mb-4= t('pages.how_to_support_us.other_ways_to_support.support_your_way.description_html')

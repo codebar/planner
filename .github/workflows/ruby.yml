@@ -25,6 +25,32 @@ jobs:
     - name: Run RuboCop
       run: bundle exec rubocop
 
+  assets-precompile:
+    name: 'Assets Precompile'
+    runs-on: ubuntu-latest
+    env:
+      RAILS_ENV: production
+      # The task boots the app but never connects to a database; the URL only
+      # needs to resolve to a configured adapter. Initializers run at boot read
+      # PLANNER_SECRET (config/initializers/secret_token.rb) and AWS
+      # credentials (config/initializers/carrier_wave.rb); nothing connects to
+      # S3 during precompile, so fake values are enough.
+      DATABASE_URL: postgres://u:p@localhost:5432/planner_placeholder
+      PLANNER_SECRET: fake
+      AWS_ACCESS_KEY: fake
+      AWS_SECRET_ACCESS_KEY: fake
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v7
+
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        bundler-cache: true
+
+    - name: Precompile assets
+      run: bundle exec rake assets:precompile
+
   test:
     name: 'Tests (Group ${{ matrix.ci_node_index }})'
     runs-on: ubuntu-latest

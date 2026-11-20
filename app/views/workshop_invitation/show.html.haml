@@ -65,7 +65,7 @@
                 = simple_form_for @invitation, url: :invitation, method: :put do |f|
                   = f.input :note, required: false, input_html: { rows: 3, maxlength: 100 }
                   = f.button :button, 'Update note', class: 'btn btn-primary w-100 mb-2'
-              - if @workshop.rsvp_available?
+              - if @workshop.cancellations_open?
                 = link_to 'I can no longer attend', reject_invitation_url(@invitation), class: 'btn btn-danger w-100', role: 'button'
               - else
                 %p= t('workshop.invitation.cant_make_it_note', email: @workshop.chapter.email)

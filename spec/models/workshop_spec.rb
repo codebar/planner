@@ -12,6 +12,45 @@ RSpec.describe Workshop do
   context 'with validates' do
     it { is_expected.to validate_presence_of(:chapter_id) }
 
+    describe 'physical workshop host validation' do
+      let(:workshop) { Fabricate.build(:workshop_no_sponsor, virtual: false) }
+
+      it 'requires a host for physical workshops' do
+        expect(workshop.valid?).to be(false)
+
+        expect(workshop.errors[:host]).to include("can't be blank")
+      end
+
+      it 'does not require a host for virtual workshops' do
+        workshop = Fabricate.build(:virtual_workshop)
+
+        workshop.valid?
+        expect(workshop.errors[:host]).to be_empty
+      end
+
+      it 'does not add a host error when a host is submitted' do
+        workshop.selected_host_id = '1'
+
+        workshop.valid?
+        expect(workshop.errors[:host]).to be_empty
+      end
+
+      it 'does not add a host error for an existing host without a new selection' do
+        workshop = Fabricate.build(:workshop)
+
+        workshop.valid?
+        expect(workshop.errors[:host]).to be_empty
+      end
+
+      it 'requires a host when an existing host is explicitly cleared' do
+        workshop = Fabricate.build(:workshop)
+        workshop.selected_host_id = ''
+
+        expect(workshop.valid?).to be(false)
+        expect(workshop.errors[:host]).to include("can't be blank")
+      end
+    end
+
     describe '#date_and_time' do
       it 'does not validate if chapter_id blank' do
         workshop.chapter_id = nil
@@ -371,6 +410,48 @@ RSpec.describe Workshop do
     it 'generates a unique check_in_code' do
       codes = Array.new(3) { Fabricate(:workshop).check_in_code }
       expect(codes.uniq.length).to eq(3)
+    end
+  end
+
+  describe '#waitlist_closes_at' do
+    it 'is the earlier of the custom close time and the freeze' do
+      workshop = Fabricate.build(:workshop, date_and_time: 4.hours.from_now, rsvp_closes_at: 3.6.hours.from_now)
+
+      expect(workshop.waitlist_closes_at).to eq(workshop.rsvp_freezes_at)
+    end
+
+    it 'is the custom close time when it is before the freeze' do
+      workshop = Fabricate.build(:workshop, date_and_time: 4.hours.from_now, rsvp_closes_at: 20.minutes.from_now)
+
+      expect(workshop.waitlist_closes_at).to eq(workshop.rsvp_closes_at)
+    end
+  end
+
+  describe '#waitlist_open?' do
+    it 'is open more than 3.5 hours before the start with no custom close time' do
+      workshop = Fabricate.build(:workshop, date_and_time: 2.days.from_now, rsvp_closes_at: nil)
+
+      expect(workshop.waitlist_open?).to be(true)
+    end
+
+    it 'is closed at exactly the freeze time' do
+      workshop = Fabricate.build(:workshop, date_and_time: 3.5.hours.from_now, rsvp_closes_at: nil)
+
+      expect(workshop.waitlist_open?).to be(false)
+    end
+  end
+
+  describe '#cancellations_open?' do
+    it 'stays open after a custom close time that falls before the freeze' do
+      workshop = Fabricate.build(:workshop, date_and_time: 4.hours.from_now, rsvp_closes_at: 3.hours.ago)
+
+      expect(workshop.cancellations_open?).to be(true)
+    end
+
+    it 'closes at exactly the freeze time' do
+      workshop = Fabricate.build(:workshop, date_and_time: 3.5.hours.from_now, rsvp_closes_at: 1.hour.from_now)
+
+      expect(workshop.cancellations_open?).to be(false)
     end
   end
 end

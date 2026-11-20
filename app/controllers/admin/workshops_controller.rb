@@ -26,9 +26,10 @@ class Admin::WorkshopsController < Admin::ApplicationController
   def create
     resolve_chapter_name_to_id
     @workshop = Workshop.new(workshop_params)
+    @workshop.selected_host_id = host_id
     @workshop.created_by = current_user
     authorize(@workshop)
-    if workshop_type_valid? && @workshop.save
+    if @workshop.save
       finish_creation
     else
       flash[:warning] = @workshop.errors.full_messages; render 'new'
@@ -53,9 +54,9 @@ class Admin::WorkshopsController < Admin::ApplicationController
   def update
     authorize @workshop
 
-    @workshop.assign_attributes(workshop_params)
+    @workshop.assign_attributes(workshop_params.merge(selected_host_id: host_id))
 
-    if workshop_type_valid? && @workshop.valid?
+    if @workshop.valid?
       @workshop.save
       update_workshop_details
 
@@ -84,13 +85,12 @@ class Admin::WorkshopsController < Admin::ApplicationController
   def invite
     set_workshop
     authorize @workshop
-    audience = params[:for]
-
-    if @workshop.virtual?
-      InvitationManager.new.send_virtual_workshop_emails(@workshop, audience, current_user.id)
-    else
-      InvitationManager.new.send_workshop_emails(@workshop, audience, current_user.id)
+    unless @workshop.invitable?
+      return redirect_to admin_workshop_path(@workshop), flash: { warning: t('admin.workshop.not_invitable') }
     end
+
+    audience = params[:for]
+    send_workshop_invitations(audience)
 
     redirect_to admin_workshop_path(@workshop), notice: "Invitations to #{audience} are being emailed out."
   end
@@ -161,6 +161,14 @@ class Admin::WorkshopsController < Admin::ApplicationController
   end
 
   private
+
+  def send_workshop_invitations(audience)
+    if @workshop.virtual?
+      InvitationManager.new.send_virtual_workshop_emails(@workshop, audience, current_user.id)
+    else
+      InvitationManager.new.send_workshop_emails(@workshop, audience, current_user.id)
+    end
+  end
 
   def resolve_chapter_name_to_id
     chapter_value = params.dig(:workshop, :chapter_id)
@@ -248,7 +256,7 @@ class Admin::WorkshopsController < Admin::ApplicationController
     params[:workshop][:organisers]
   end
 
-  def grant_organiser_access(organiser_ids = [])
+  def grant_organiser_access(organiser_ids)
     organiser_ids.each { |id| Member.find(id).add_role(:organiser, @workshop) }
   end
 
@@ -256,17 +264,6 @@ class Admin::WorkshopsController < Admin::ApplicationController
     (@workshop.organisers.pluck(:id).map(&:to_s) - organiser_ids).each do |id|
       Member.find(id).revoke(:organiser, @workshop)
     end
-  end
-
-  def physical_workshop_and_no_host?(workshop)
-    !workshop.virtual && host_id.empty?
-  end
-
-  def workshop_type_valid?
-    return true unless physical_workshop_and_no_host?(@workshop)
-
-    @workshop.errors.add(:host, "can't be blank")
-    false
   end
 
   def update_workshop_details

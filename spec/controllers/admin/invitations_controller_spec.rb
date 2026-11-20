@@ -101,6 +101,51 @@ RSpec.describe Admin::InvitationsController do
       expect(response).to redirect_to(admin_workshop_rsvp_url(workshop))
     end
 
+    it 'promotes the next waitlisted member when the workshop is in the future' do
+      invitation.update!(attending: true)
+      waitlisted_invitation = Fabricate(:workshop_invitation, workshop:, tutorial: nil)
+      WaitingList.add(waitlisted_invitation, true)
+      request.env['HTTP_REFERER'] = admin_workshop_rsvp_url(workshop)
+
+      put :update, params: { workshop_id: workshop.id, id: invitation.token, attending: 'false' }
+
+      expect(waitlisted_invitation.reload.attending).to be(true)
+    end
+
+    it 'does not promote when the removed invitation never held a seat' do
+      invitation.update!(attending: nil)
+      waitlisted_invitation = Fabricate(:workshop_invitation, workshop:, tutorial: nil)
+      WaitingList.add(waitlisted_invitation, true)
+      request.env['HTTP_REFERER'] = admin_workshop_rsvp_url(workshop)
+
+      put :update, params: { workshop_id: workshop.id, id: invitation.token, attending: 'false' }
+
+      expect(waitlisted_invitation.reload.attending).to be_nil
+    end
+
+    it 'does not promote when the removed invitation already declined' do
+      invitation.update!(attending: false)
+      waitlisted_invitation = Fabricate(:workshop_invitation, workshop:, tutorial: nil)
+      WaitingList.add(waitlisted_invitation, true)
+      request.env['HTTP_REFERER'] = admin_workshop_rsvp_url(workshop)
+
+      put :update, params: { workshop_id: workshop.id, id: invitation.token, attending: 'false' }
+
+      expect(waitlisted_invitation.reload.attending).to be_nil
+    end
+
+    it 'does not promote from the waiting list when the workshop has started' do
+      workshop.update!(date_and_time: 1.hour.ago, ends_at: 1.hour.ago + 2.hours)
+      invitation.update!(attending: true)
+      waitlisted_invitation = Fabricate(:workshop_invitation, workshop:, tutorial: nil)
+      WaitingList.add(waitlisted_invitation, true)
+      request.env['HTTP_REFERER'] = admin_workshop_rsvp_url(workshop)
+
+      put :update, params: { workshop_id: workshop.id, id: invitation.token, attending: 'false' }
+
+      expect(waitlisted_invitation.reload.attending).to be_nil
+    end
+
     it 'redirects back preserving the search term and page' do
       request.env['HTTP_REFERER'] = admin_workshop_rsvp_url(workshop, q: 'Zoe', page: 2)
 

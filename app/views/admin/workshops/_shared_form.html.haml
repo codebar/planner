@@ -25,6 +25,16 @@
       .card-body
         %h6.card-title RSVP Timing
         %p.small.text-muted= t('admin.workshop.form.rsvp_details')
+        %details.mt-2
+          %summary.text-muted.small= t('admin.workshop.form.rsvp_close_summary')
+          .text-muted.small
+            %p.mb-1= t('admin.workshop.form.rsvp_close_after')
+            %p.mb-1= t('admin.workshop.form.rsvp_close_cancel')
+            %p.mb-1= t('admin.workshop.form.rsvp_close_waitlist')
+        %details.mt-2
+          %summary.text-muted.small= t('admin.workshop.form.rsvp_close_prefill_summary')
+          .text-muted.small
+            %p.mb-1= t('admin.workshop.form.rsvp_close_prefill')
         .row
           .col-12.col-md-6
             = f.input :rsvp_open_local_date, label: 'Open date', input_html: { value: @workshop.rsvp_open_local_date.presence || @workshop.rsvp_opens_at.try(:strftime, '%Y-%m-%d'), type: :date }

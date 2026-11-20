@@ -198,6 +198,8 @@ en:
       updated_details: "Invitation details successfully updated."
       closed: "RSVPs for this workshop are now closed."
       rsvps_closed: "RSVPs have now closed."
+    waiting_list:
+      closed: "You can no longer join or leave the waiting list. RSVPs have now closed for this workshop."
     invalid_format: "The requested format is invalid: %{invalid_format}"
   notifications:
     provider_already_connected: "You are already signed in!"
@@ -219,7 +221,7 @@ en:
     stats: "Stats"
     cookies: "Cookies"
     privacy-policy: "Privacy Policy"
-    how_to_support_us: "How to support us"
+    how_to_support_us: "Support codebar"
     volunteer: "Volunteer"
     fundraise: "Fundraise"
     donate: "Donate"
@@ -710,10 +712,49 @@ en:
               title: Become a codebar volunteer
               description: codebar can be a supportive village for people navigating learning, careers and difficult periods in their lives. Our volunteers help us to create that crucial community.
               link: Volunteer
+      other_ways_to_support:
+        headline: Other ways you can support codebar
+        tagline: "Whether you're volunteering, shopping online or giving through your workplace, every contribution helps us reach more people and create more opportunities."
+        volunteer:
+          title: Volunteer with us
+          description: "Use your skills to help people from underrepresented backgrounds break into tech. From coaching at workshops to organising events, marketing and fundraising, our volunteers help us create the supportive, welcoming community that makes codebar what it is."
+          link: Find out how to volunteer
+        give_as_you_live:
+          title: Give as you live
+          description: "If you shop online, you can raise free funds for codebar without spending a penny extra. Sign up to Give as you Live and a percentage of every purchase you make with thousands of retailers goes directly to us (at no cost to you)."
+          link: Start raising with Give as you Live
+        workplace_giving:
+          title: Workplace giving
+          description: "Many employers offer payroll giving schemes that let you donate to charity directly from your salary before tax, meaning your gift goes further. Check with your HR team whether your workplace offers a scheme, and nominate codebar as your chosen charity. Or your company may be using Benevity, for every hour that you volunteer for codebar they make a small donation to us. Again, ask your HR team."
+        gift_matching:
+          title: Gift matching
+          description: "Does your employer match charitable donations? Many do, particularly in the tech sector. If you donate to codebar or fundraise for us, ask your employer whether they'll match your contribution. It's one of the simplest ways to double your impact."
+        leave_a_legacy:
+          title: Leave a legacy
+          description_html: "A gift in your will is one of the most meaningful ways to support codebar's future. If you'd like to find out more about leaving a legacy, please get in touch at <a href='mailto:hello@codebar.io'>hello@codebar.io</a>."
+        support_your_way:
+          title: Support your way
+          description_html: "Not sure which of these feels right? Drop us a message at <a href='mailto:hello@codebar.io'>hello@codebar.io</a> and we'll help you find the best way to get involved."
       fundraise:
         title: Fundraise
-        description_html: "Join the codebar team with a physical challenge event. Whether you are a runner, swimmer, or cyclist, sign up with our registration form for your desired event and raise vital funds to help keep our events running. If your event does not appear below, feel free to <a href='mailto:%{email}'>drop us an email</a> and we would be happy to coordinate with you."
-        image_alt: A Black British woman crosses the finish line at the Hackney Half Marathon in London in a shower of confetti while spectators cheer her on.
+        headline: Take on a challenge for codebar
+        tagline: "Run it. Ride it. Swim it. Walk it. Climb it. Whatever your challenge, you can turn it into support for a more inclusive tech industry."
+        description_html: "Join the codebar team with a physical challenge event. Whether you are a runner, swimmer, or cyclist, drop us an email for your desired event and raise vital funds to help keep our workshops running. If your event does not appear below, please <a href='mailto:%{email}'>drop us an email</a> and we would be happy to coordinate with you."
+        image_alt: Ilona holding her London Marathon medal after running
+        email_us: Email us
+        own_challenge:
+          title: "Got your own challenge?"
+          description_html: 'Running, cycling, swimming or climbing something of your own? We would love to support you, so get in touch and we will help you set up your fundraising page.'
+        why_fundraise:
+          title: 'Why fundraise for codebar?'
+          description_html: 'All of our workshops and events are completely free for everyone who attends. Fundraising with us means more people from underrepresented groups get a safe, practical way into tech, wherever they happen to be.'
+        impact:
+          - heading: "85% of codebar community members say the skills they've learnt have helped them find a job in tech."
+            body: Your fundraising creates real pathways into tech.
+          - heading: 73% of codebar students did not work in tech before they found us.
+            body: "When you fundraise for codebar, you're not just crossing a finish line - you're helping someone else cross theirs."
+          - heading: Over 27,500 people across 36 global locations are now part of the codebar community.
+            body: Every pound you raise helps us reach more people in more places, and keeps our doors open for people who might never have had another route into tech.
     codebar_stories_podcast:
       image_alt: codebar stories banner
       opening: codebar Stories is a new podcast brought to you by codebar, we'll be smashing down the belief that tech isn't for you by sharing real-life stories from members of our community who have transitioned into a new career in tech.
@@ -725,6 +766,8 @@ en:
     members:
       activity:
         for: "for %{subject}"
+    event:
+      not_invitable: "The event is not invitable"
     workshop:
       manage_rsvps:
         text: "RSVP Students and Coaches to the workshop. The attendance confirmation email will be triggered and they will be removed from the waiting list."
@@ -733,7 +776,15 @@ en:
         failure: "Workshop cannot be deleted. This is because it has invitees and/or workshop information is on the website for a while long enough that it cannot be deleted."
       form:
         virtual_info: To create a virtual workshop you must check the box and fill in the below fields. The slack channel will be available on the invitation page for anyone who successfuly RSVPs.
-        rsvp_details: Set a date and time (in the chapter's timezone) for RSVPs to open and close automatically. Leave blank to handle manually.
+        rsvp_details: Set a date and time (in the chapter's timezone) for RSVPs to open and close. Leave the close fields blank and RSVPs close 3.5 hours before the workshop starts.
+        rsvp_close_summary: What happens around the close time
+        rsvp_close_after: New RSVPs stop once the close time passes, or 3.5 hours before the start if the close fields are blank.
+        rsvp_close_cancel: Members with a seat can still cancel until 3.5 hours before the start, even after RSVPs have closed. A cancelled seat goes to the first person on the waiting list for the same role, who is confirmed and emailed automatically.
+        rsvp_close_waitlist: Members can join or leave the waiting list only until the close time, or until 3.5 hours before the start, whichever is earlier. The waiting list handed to security is fixed from that point. A member who cancels keeps their name on that list but is never promoted again; members who already hold a seat are also skipped.
+        rsvp_close_prefill_summary: Why the close fields changed
+        rsvp_close_prefill: Changing Date or Begins at sets close fields that are empty, or that this form filled in itself earlier, to 3.5 hours before the new start. Values you type, or that are saved with the workshop, are never overwritten.
+      invitation_management:
+        removal_promotes_waitlist: If you remove an attendee from this page while the workshop has not started, their seat is automatically given to the top waiting-list member for the same role, who is confirmed and emailed. You can add and remove members here regardless of the RSVP close times.
       not_invitable: "The workshop is not invitable"
       virtual:
         details:

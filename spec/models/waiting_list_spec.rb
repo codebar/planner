@@ -17,12 +17,93 @@ RSpec.describe WaitingList do
       end
     end
 
-    describe '#next_spot' do
-      it 'returns the next spot to be allocated' do
+    describe '#promote_next' do
+      it 'confirms the next auto-RSVP invitation and removes its waitlist entry' do
         invitation = Fabricate(:workshop_invitation, workshop:)
         described_class.add(invitation)
 
-        expect(described_class.next_spot(workshop, 'Student').invitation).to eq(invitation)
+        promoted = described_class.promote_next(workshop, 'Student')
+
+        expect(promoted).to eq(invitation)
+        expect(invitation.reload.attending).to be(true)
+        expect(invitation.automated_rsvp).to be(true)
+        expect(described_class.by_workshop(workshop)).to be_empty
+      end
+
+      it 'promotes the FIFO head - the entry with the earliest created_at' do
+        later_invitation = Fabricate(:workshop_invitation, workshop:)
+        earlier_invitation = Fabricate(:workshop_invitation, workshop:)
+        described_class.add(later_invitation)
+        described_class.add(earlier_invitation).update!(created_at: 1.hour.ago)
+
+        promoted = described_class.promote_next(workshop, 'Student')
+
+        expect(promoted).to eq(earlier_invitation)
+        expect(earlier_invitation.reload.attending).to be(true)
+        expect(later_invitation.reload.attending).to be_nil
+        expect(described_class.by_workshop(workshop).map(&:invitation)).to eq([later_invitation])
+      end
+
+      it 'skips a declined member and promotes the next eager one' do
+        declined_invitation = Fabricate(:workshop_invitation, workshop:)
+        next_invitation = Fabricate(:workshop_invitation, workshop:, member: Fabricate(:member))
+        described_class.add(declined_invitation)
+        described_class.add(next_invitation)
+        declined_invitation.update!(attending: false)
+
+        promoted = described_class.promote_next(workshop, 'Student')
+
+        expect(promoted).to eq(next_invitation)
+        expect(declined_invitation.reload.attending).to be(false)
+        expect(described_class.where(invitation: declined_invitation)).to exist
+      end
+
+      it 'returns nil when every eligible entry is declined' do
+        invitation = Fabricate(:workshop_invitation, workshop:)
+        described_class.add(invitation)
+        invitation.update!(attending: false)
+
+        promoted = described_class.promote_next(workshop, 'Student')
+
+        expect(promoted).to be_nil
+        expect(invitation.reload.attending).to be(false)
+        expect(described_class.where(invitation:)).to exist
+      end
+
+      it 'skips an accepted member whose entry lingers on the waiting list' do
+        accepted_invitation = Fabricate(:workshop_invitation, workshop:)
+        next_invitation = Fabricate(:workshop_invitation, workshop:, member: Fabricate(:member))
+        described_class.add(accepted_invitation)
+        described_class.add(next_invitation)
+        accepted_invitation.update!(attending: true)
+
+        promoted = described_class.promote_next(workshop, 'Student')
+
+        expect(promoted).to eq(next_invitation)
+      end
+
+      it 'returns nil and promotes nothing for an empty waitlist' do
+        expect(described_class.promote_next(workshop, 'Student')).to be_nil
+      end
+
+      it 'does not promote entries without auto_rsvp' do
+        invitation = Fabricate(:workshop_invitation, workshop:)
+        described_class.add(invitation)
+
+        waiting = described_class.by_workshop(workshop).first
+        waiting.update!(auto_rsvp: false)
+
+        expect(described_class.promote_next(workshop, 'Student')).to be_nil
+        expect(invitation.reload.attending).to be_nil
+      end
+
+      it 'ignores an older entry for another role' do
+        coach_invitation = Fabricate(:coach_workshop_invitation, workshop:, member: Fabricate(:coach))
+        described_class.add(coach_invitation)
+
+        expect(described_class.promote_next(workshop, 'Student')).to be_nil
+        expect(coach_invitation.reload.attending).to be_nil
+        expect(described_class.by_workshop(workshop).count).to eq(1)
       end
     end
   end

@@ -6,7 +6,7 @@ class Admin::SponsorsController < Admin::ApplicationController
 
     @chapters = Chapter.all
 
-    @sponsors_search = SponsorsSearch.new(search_params)
+    @sponsors_search = SponsorsSearch.new(**search_params)
     sponsors = @sponsors_search.call
     @pagy, paginated_sponsors = pagy(sponsors)
 

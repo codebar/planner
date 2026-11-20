@@ -63,6 +63,30 @@ RSpec.describe ApplicationHelper do
     end
   end
 
+  describe '#activity_subject' do
+    def activity_with(trackable)
+      PublicActivity::Activity.new(key: 'test', trackable:)
+    end
+
+    it 'returns the banned member for a ban, since bans have no admin route' do
+      ban = Fabricate(:ban, member: Fabricate(:member))
+
+      expect(helper.activity_subject(activity_with(ban))).to eq(ban.member)
+    end
+
+    it 'returns the noted member for a member note, since notes have no admin route' do
+      note = Fabricate(:member_note)
+
+      expect(helper.activity_subject(activity_with(note))).to eq(note.member)
+    end
+
+    it 'returns nil when the trackable is the member themselves' do
+      member = Fabricate(:member)
+
+      expect(helper.activity_subject(activity_with(member))).to be_nil
+    end
+  end
+
   describe '#stylesheet_link_tag and #javascript_include_tag' do
     around do |example|
       ApplicationHelper::HEAD_ASSET_TAG_CACHE.clear

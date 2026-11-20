@@ -171,6 +171,27 @@ RSpec.describe Admin::MembersController do
 
         expect(response.body).to include("href=\"#{admin_event_path(invitation.event)}\"")
       end
+
+      it 'links the banned member for a ban activity' do
+        banned = Fabricate(:member)
+        ban = Fabricate(:ban, member: banned)
+        MemberActivityRecorder.record(actor: member, key: 'member.banned',
+                                      trackable: ban, recipient: banned)
+
+        get :show, params: { id: member.id }
+
+        expect(response.body).to include("href=\"#{admin_member_path(banned)}\"")
+      end
+
+      it 'links the noted member for a member-note activity' do
+        note = Fabricate(:member_note, author: member)
+        MemberActivityRecorder.record(actor: member, key: 'member_note.created',
+                                      trackable: note, recipient: note.member)
+
+        get :show, params: { id: member.id }
+
+        expect(response.body).to include("href=\"#{admin_member_path(note.member)}\"")
+      end
     end
   end
 
