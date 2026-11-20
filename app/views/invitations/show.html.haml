@@ -12,7 +12,17 @@
 
   .row.mt-4
     .col-12.col-md-9
-      - if @invitation.for_student?
+      - if @role_choice && @event.tito_url.blank?
+        %p
+          You are subscribed as both a student and a coach.
+          %strong Choose how you would like to attend.
+        - if @event.event_student_spaces?
+          = link_to 'RSVP as a student', event_attend_path(role: 'Student'), class: 'btn btn-primary', method: :post
+        - if @event.event_coach_spaces?
+          = link_to 'RSVP as a coach', event_attend_path(role: 'Coach'), class: 'btn btn-primary', method: :post
+        - unless @event.event_student_spaces? || @event.event_coach_spaces?
+          %p Unfortunately there are no spots left. Send us an email at #{@event.email} to be added to the waiting list.
+      - elsif @invitation.for_student?
         - if !@invitation.attending
           - if @member.already_attending(@event)
             %p You have already RSVP'd to this event as a coach! Please cancel through the email confirmation you received if you wish to join us as a student instead.
@@ -30,7 +40,7 @@
           = link_to event_reject_path, class: 'btn btn-danger', method: :post, 'data-confirm' => "Are you sure you won't be able to attend the event? There may not be any spots available later on." do
             Cancel my spot
 
-      - if @invitation.for_coach?
+      - elsif @invitation.for_coach?
         - if !@invitation.attending
           - if @member.already_attending(@event)
             %p You have already RSVP'd to this event as a student! Please cancel through the email confirmation you received if you wish to sign up as a coach instead.

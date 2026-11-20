@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class CheckInsController < ApplicationController
+  include RoleChoiceConcerns
   before_action :load_check_in_target
   before_action :store_referer_path, only: [:new]
   before_action :authenticate_member!, only: %i[new create confirm]
@@ -17,7 +18,17 @@ class CheckInsController < ApplicationController
 
     if existing
       return redirect_to check_in_confirm_path if already_checked_in?(existing)
-      return redirect_to check_in_new_path, alert: mismatch_role_message(existing.role) if existing.role != role
+
+      if existing.role != role
+        unless role_changeable?(existing)
+          return redirect_to check_in_new_path, alert: mismatch_role_message(existing.role)
+        end
+        unless role_permitted?(current_user, role)
+          return redirect_to check_in_new_path, alert: not_subscribed_role_message(role)
+        end
+      end
+    elsif !role_permitted?(current_user, role)
+      return redirect_to check_in_new_path, alert: not_subscribed_role_message(role)
     end
 
     unless @check_in_target.check_in_open?
@@ -34,7 +45,7 @@ class CheckInsController < ApplicationController
       return redirect_to check_in_new_path, alert: "There are no #{role} spaces left."
     end
 
-    mark_attended(invitation)
+    mark_attended(invitation, role)
     redirect_to check_in_confirm_path
   rescue ActionController::ParameterMissing
     redirect_to check_in_new_path, alert: 'Please select a valid role (Student or Coach).'
@@ -108,8 +119,8 @@ class CheckInsController < ApplicationController
     end
   end
 
-  def mark_attended(invitation)
-    attrs = { attending: true, source: InvitationConcerns::SOURCE_CHECK_IN }
+  def mark_attended(invitation, role)
+    attrs = { role:, attending: true, source: InvitationConcerns::SOURCE_CHECK_IN }
     if @check_in_target.is_a?(Event)
       attrs[:verified] = true
     else

@@ -1,4 +1,6 @@
 class WorkshopsController < ApplicationController
+  include RoleChoiceConcerns
+
   before_action :authenticate_member!, except: [:show]
   before_action :set_workshop, only: %i[show rsvp]
 
@@ -35,6 +37,10 @@ class WorkshopsController < ApplicationController
     else
       if user_attending_or_waitlisted?(@workshop, current_user)
         return redirect_back fallback_location: root_path, notice: t('workshops.already_wish_to_attend')
+      end
+
+      unless role_permitted?(current_user, role_params)
+        return redirect_back fallback_location: root_path, notice: not_subscribed_role_message(role_params)
       end
 
       @invitation = find_or_create_invitation(@workshop, current_user, role_params)
