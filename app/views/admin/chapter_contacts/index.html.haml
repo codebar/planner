@@ -1,0 +1,10 @@
+.container.py-4
+  %h1 Contact a chapter
+  - if @chapters.any?
+    %ul.list-group
+      - @chapters.each do |chapter|
+        %li.list-group-item.d-flex.justify-content-between.align-items-center
+          = chapter.name
+          = link_to 'Contact members', new_admin_chapter_contact_path(chapter), class: 'btn btn-primary'
+  - else
+    %p You are not an organiser for any chapters.
