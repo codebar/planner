@@ -113,5 +113,49 @@ RSpec.describe ChapterPolicy do
         expect(policy.members?).to be false
       end
     end
+
+    describe '#contact?' do
+      context 'when user organises this chapter' do
+        let(:user) { Fabricate(:member).tap { |member| member.add_role(:organiser, chapter) } }
+
+        it 'permits access' do
+          expect(policy.contact?).to be(true)
+        end
+      end
+
+      context 'when user organises another chapter' do
+        let(:user) { Fabricate(:member).tap { |member| member.add_role(:organiser, Fabricate(:chapter)) } }
+
+        it 'denies access' do
+          expect(policy.contact?).to be(false)
+        end
+      end
+
+      context 'when user is admin' do
+        let(:user) { admin }
+
+        it 'permits access' do
+          expect(policy.contact?).to be(true)
+        end
+      end
+    end
+
+    describe '#contact_index?' do
+      context 'when user is an organiser' do
+        let(:user) { Fabricate(:member).tap { |member| member.add_role(:organiser, Fabricate(:chapter)) } }
+
+        it 'permits access' do
+          expect(policy.contact_index?).to be(true)
+        end
+      end
+
+      context 'when user is a regular member' do
+        let(:user) { regular_member }
+
+        it 'denies access' do
+          expect(policy.contact_index?).to be(false)
+        end
+      end
+    end
   end
 end
