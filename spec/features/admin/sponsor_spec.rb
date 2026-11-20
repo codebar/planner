@@ -161,8 +161,14 @@ RSpec.feature 'Admin::Sponsors' do
     context 'with activities' do
       scenario 'when there are activities' do
         contact = sponsor.contacts.first
-        audit = Auditor::Audit.new(sponsor, 'sponsor.admin_contact_subscribe', manager, contact)
-        audit.log_with_note(contact.email)
+
+        MemberActivityRecorder.record(
+          actor: manager,
+          key: 'sponsor.admin_contact_subscribe',
+          trackable: sponsor,
+          recipient: contact,
+          contact_email: contact.email
+        )
 
         visit admin_sponsor_path(sponsor)
 
@@ -173,8 +179,14 @@ RSpec.feature 'Admin::Sponsors' do
 
       scenario 'when an activity is associated with a deleted contact' do
         contact = sponsor.contacts.first
-        audit = Auditor::Audit.new(sponsor, 'sponsor.admin_contact_subscribe', manager, contact)
-        audit.log_with_note(contact.email)
+
+        MemberActivityRecorder.record(
+          actor: manager,
+          key: 'sponsor.admin_contact_subscribe',
+          trackable: sponsor,
+          recipient: contact,
+          contact_email: contact.email
+        )
 
         contact.delete
 
