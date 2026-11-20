@@ -1,13 +1,13 @@
 .container.py-4
-  %h1 Confirm email to #{@chapter.name}
-  %p #{@recipient_count} #{'recipient'.pluralize(@recipient_count)} will receive this email
+  %h1= t('admin.chapter_contacts.confirm_title', chapter: @chapter.name)
+  %p= t('admin.chapter_contacts.recipients_will_receive', count: @recipient_count)
   %ul
     - @recipients.each do |recipient|
       %li= recipient.full_name
 
-  %h2 Message preview
+  %h2= t('admin.chapter_contacts.message_preview')
   = render 'shared/chapter_contact_message', message: @message
 
   = form_with scope: :chapter_contact, url: admin_chapter_contact_path(@chapter) do |form|
     = form.hidden_field :confirmation_token, value: @confirmation_token
-    = form.submit 'Confirm and send', class: 'btn btn-primary'
+    = form.submit t('admin.chapter_contacts.confirm_and_send'), class: 'btn btn-primary'

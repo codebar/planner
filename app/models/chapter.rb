@@ -107,7 +107,7 @@ class Chapter < ApplicationRecord
   end
 
   def recipients_by_event_rsvp(event_id, rsvp_status)
-    return Member.none unless ChapterContactAudience::RSVP_STATUSES.key?(rsvp_status)
+    return Member.none unless ChapterContactAudience::RSVP_STATUSES.include?(rsvp_status)
 
     event = contact_events.find_by(id: event_id)
     return Member.none unless event
