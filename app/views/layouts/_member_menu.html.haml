@@ -14,7 +14,7 @@
   %li
     = link_to invitations_path, class: 'dropdown-item' do
       Invitations
-  - if current_user.is_admin? || current_user.has_role?(:organiser, :any)
+  - if policy(Chapter).contact_index?
     %li
       = link_to admin_chapter_contacts_path, class: 'dropdown-item' do
         Contact chapter

@@ -222,6 +222,128 @@ RSpec.describe Admin::ChapterContactsController do
     end
   end
 
+  describe 'access control' do
+    render_views
+
+    it 'blocks an organiser of another chapter' do
+      other_chapter = Fabricate(:chapter)
+
+      get :new, params: { chapter_id: other_chapter.id }
+
+      expect(response).to redirect_to(root_path)
+    end
+
+    it 'lets workshop organisers access the index' do
+      workshop_organiser = Fabricate(:member)
+      workshop_organiser.add_role(:organiser, Fabricate(:workshop, chapter:))
+      login(workshop_organiser)
+
+      get :index
+
+      expect(response).to have_http_status(:ok)
+      expect(response.body).to include(chapter.name)
+    end
+
+    it 'lets workshop organisers contact their workshop chapter' do
+      workshop_organiser = Fabricate(:member)
+      workshop_organiser.add_role(:organiser, Fabricate(:workshop, chapter:))
+      login(workshop_organiser)
+
+      get :new, params: { chapter_id: chapter.id }
+
+      expect(response).to have_http_status(:ok)
+    end
+
+    it 'blocks workshop organisers from a chapter their workshop is not in' do
+      workshop_organiser = Fabricate(:member)
+      workshop_organiser.add_role(:organiser, Fabricate(:workshop, chapter:))
+      login(workshop_organiser)
+
+      get :new, params: { chapter_id: Fabricate(:chapter).id }
+
+      expect(response).to redirect_to(root_path)
+    end
+
+    it 'blocks regular members from the index' do
+      login(member)
+
+      get :index
+
+      expect(response).to redirect_to(root_path)
+    end
+
+    shared_examples 'blocked from every chapter contact action' do |redirect_target = :root_path|
+      {
+        index: -> { get :index },
+        new: -> { get :new, params: { chapter_id: chapter.id } },
+        recipient_count: -> { get :recipient_count, params: { chapter_id: chapter.id } },
+        preview: -> { post :preview, params: { chapter_id: chapter.id, chapter_contact: { subject: 's' } } },
+        create: -> { post :create, params: { chapter_id: chapter.id, chapter_contact: { confirmation_token: 'x' } } }
+      }.each do |action, request|
+        it "redirects #{action} to #{redirect_target} and sends nothing" do
+          instance_exec(&request)
+
+          expect(response).to redirect_to(public_send(redirect_target))
+          expect(ActionMailer::Base.deliveries).to be_empty
+          expect(ChapterContactConfirmation.count).to eq(0)
+        end
+      end
+    end
+
+    context 'with a regular member' do
+      before { login(member) }
+
+      include_examples 'blocked from every chapter contact action'
+    end
+
+    context 'with an organiser who has not accepted the terms and conditions' do
+      before { organiser.update!(accepted_toc_at: nil) }
+
+      include_examples 'blocked from every chapter contact action', :terms_and_conditions_path
+    end
+
+    context 'with a banned organiser' do
+      before { Fabricate(:ban, member: organiser) }
+
+      include_examples 'blocked from every chapter contact action'
+    end
+
+    context 'with a banned admin' do
+      before do
+        organiser.add_role(:admin)
+        Fabricate(:ban, member: organiser)
+      end
+
+      include_examples 'blocked from every chapter contact action'
+    end
+
+    context 'with a logged out visitor' do
+      before { LoginHelpers::LoginStub.current_user = nil }
+
+      include_examples 'blocked from every chapter contact action'
+    end
+
+    it 'lists only the chapters the organiser manages' do
+      other_chapter = Fabricate(:chapter)
+
+      get :index
+
+      expect(response.body).to include(chapter.name)
+      expect(response.body).not_to include(other_chapter.name)
+    end
+
+    it 'lists every chapter for a global organiser' do
+      global_organiser = Fabricate(:member)
+      global_organiser.add_role(:organiser)
+      other_chapter = Fabricate(:chapter)
+      login(global_organiser)
+
+      get :index
+
+      expect(response.body).to include(chapter.name, other_chapter.name)
+    end
+  end
+
   def confirmation_token
     Nokogiri::HTML(response.body).at_css('input[name="chapter_contact[confirmation_token]"]')['value']
   end
