@@ -40,7 +40,8 @@ $(() => {
         return response.json();
       })
       .then(({ count: recipientCount }) => {
-        count.textContent = `${recipientCount} ${recipientCount === 1 ? 'recipient' : 'recipients'}`;
+        const message = recipientCount === 1 ? count.dataset.recipientCountSingular : count.dataset.recipientCountPlural;
+        count.textContent = message.replace('%{count}', recipientCount);
       })
       .catch((error) => {
         if (error.name === 'AbortError') return;

@@ -38,7 +38,7 @@ class Admin::ChapterContactsController < Admin::ApplicationController
 
     count = confirmation.recipient_ids.size
     redirect_to new_admin_chapter_contact_path(@chapter),
-                notice: "Email sent to #{count} chapter #{'member'.pluralize(count)}"
+                notice: I18n.t('admin.chapter_contacts.email_sent', count:)
   end
 
   private
@@ -90,13 +90,13 @@ class Admin::ChapterContactsController < Admin::ApplicationController
   end
 
   def contact_error
-    return 'Subject and message are required.' if @subject.blank? || @message.blank?
-    return 'Choose a valid audience.' unless @audience.in?(ChapterContactAudience::AUDIENCES)
-    return 'Choose a valid activity period.' unless
+    return I18n.t('admin.chapter_contacts.errors.subject_and_message_required') if @subject.blank? || @message.blank?
+    return I18n.t('admin.chapter_contacts.errors.invalid_audience') unless
+      @audience.in?(ChapterContactAudience::AUDIENCES)
+    return I18n.t('admin.chapter_contacts.errors.invalid_activity_period') unless
       ChapterContactAudience.valid_activity_months?(@audience, @activity_months)
 
-    ChapterContactAudience::CONFIG.dig(@audience, :error) ||
-      'There are no current chapter subscribers to email.'
+    ChapterContactAudience.error(@audience)
   end
 
   def load_form_collections
