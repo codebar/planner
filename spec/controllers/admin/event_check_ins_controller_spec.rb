@@ -16,8 +16,8 @@ RSpec.describe Admin::EventCheckInsController do
   end
 
   describe 'POST #create' do
-    it 'checks in the invitation and returns pairing metadata and board HTML on XHR' do
-      post :create, params: { event_id: event.slug, invitation_id: student.id }, xhr: true
+    it 'checks in the invitation and returns pairing metadata and board HTML on JSON XHR' do
+      post :create, params: { event_id: event.slug, invitation_id: student.id }, format: :json, xhr: true
 
       expect(response).to have_http_status(:ok)
       body = response.parsed_body

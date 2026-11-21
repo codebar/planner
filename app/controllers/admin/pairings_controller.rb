@@ -42,7 +42,8 @@ class Admin::PairingsController < Admin::ApplicationController
   end
 
   def sync_payload(pairings)
-    board_html = render_to_string(partial: 'admin/events/pairing', locals: { event: @event, pairings: }, layout: false)
+    board_html = render_to_string(partial: 'admin/events/pairing', locals: { event: @event, pairings: },
+                                  layout: false, formats: [:html])
     {
       board_html:,
       checked_in_ids: verified_invitations.pluck(:id),

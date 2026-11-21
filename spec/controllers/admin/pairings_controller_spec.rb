@@ -24,15 +24,15 @@ RSpec.describe Admin::PairingsController do
       expect(response).to redirect_to(admin_event_path(event))
     end
 
-    it 'returns board HTML, checked-in IDs, and 304 Not Modified on matching ETag for XHR sync' do
-      get :index, params: { event_id: event.slug }, xhr: true
+    it 'returns board HTML, checked-in IDs, and 304 Not Modified on matching ETag for JSON XHR sync' do
+      get :index, params: { event_id: event.slug }, format: :json, xhr: true
       expect(response).to have_http_status(:ok)
       body = response.parsed_body
       expect(body['board_html']).to include('pairing-board')
       expect(body['checked_in_ids']).to include(student.id, coach.id, second_student.id)
 
       request.headers['If-None-Match'] = response.headers['ETag']
-      get :index, params: { event_id: event.slug }, xhr: true
+      get :index, params: { event_id: event.slug }, format: :json, xhr: true
       expect(response).to have_http_status(:not_modified)
     end
   end
