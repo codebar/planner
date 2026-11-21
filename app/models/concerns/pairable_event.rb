@@ -9,11 +9,11 @@ module PairableEvent
   end
 
   def expected_students
-    attendances.where(role: 'Student', verified: [false, nil]).order('members.name, members.surname')
+    expected_by_role('Student')
   end
 
   def expected_coaches
-    attendances.where(role: 'Coach', verified: [false, nil]).order('members.name, members.surname')
+    expected_by_role('Coach')
   end
 
   def synced_pairings
@@ -37,5 +37,12 @@ module PairableEvent
       [pairing.id, pairing.position, pairing.updated_at.to_i, pairing.pairing_invitations.map(&:invitation_id).sort]
     end
     [id, expected_students.count, expected_coaches.count, group_keys]
+  end
+
+  private
+
+  def expected_by_role(role)
+    attendances.where(role:, verified: [false, nil])
+               .order(Arel.sql('LOWER(members.name), LOWER(members.surname)'))
   end
 end

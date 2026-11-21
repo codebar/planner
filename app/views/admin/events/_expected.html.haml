@@ -5,9 +5,9 @@
       %span.badge.rounded-pill.bg-white.text-dark.border{ data: { expected_remaining_badge: true } }
         #{pluralize(students.size, 'student')} · #{pluralize(coaches.size, 'coach')} left
       %span.badge.rounded-pill.expected-badge--checked-in.d-none{ data: { expected_checked_in_badge: true } }
-    = link_to admin_event_pairings_path(event), class: 'btn btn-sm btn-outline-primary' do
-      %i.fas.fa-user-friends.me-1{ aria: { hidden: 'true' } }
-      Open full-screen pairing board →
+    %span.badge.rounded-pill.bg-white.text-muted.border.fw-normal{ data: { pairing_live_badge: true } }
+      %span.pairing-live-dot
+      Live sync · updates every 15s
   %p.text-muted.small.mb-3
     Invited and RSVP'd attendees. Rows stay settled in place when checked in so nothing shifts under your cursor.
 
