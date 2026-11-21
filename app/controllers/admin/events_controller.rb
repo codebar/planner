@@ -26,6 +26,7 @@ class Admin::EventsController < Admin::ApplicationController
     @address = AddressPresenter.new(@event.venue.address) if @event.venue.present?
     @attending_students = InvitationPresenter.decorate_collection(@original_event.attending_students)
     @attending_coaches = InvitationPresenter.decorate_collection(@original_event.attending_coaches)
+    load_pairing_board
 
     render plain: @event.attendees_csv if request.format.csv?
   end
@@ -72,6 +73,12 @@ class Admin::EventsController < Admin::ApplicationController
   def set_event
     @original_event = Event.find_by!(slug: params[:id])
     @event = EventPresenter.new(@original_event)
+  end
+
+  def load_pairing_board
+    @expected_students = InvitationPresenter.decorate_collection(@original_event.expected_students)
+    @expected_coaches = InvitationPresenter.decorate_collection(@original_event.expected_coaches)
+    @pairings = @original_event.synced_pairings
   end
 
   def event_params
