@@ -1,16 +1,6 @@
 - pairings_by_inv = pairings.each_with_object({}) { |p, h| p.pairing_invitations.each { |pi| h[pi.invitation_id] = p } }
 .expected-section.mb-4{ data: { expected_section: true } }
-  .d-flex.flex-wrap.justify-content-between.align-items-center.gap-2.mb-1
-    .d-flex.flex-wrap.align-items-center.gap-2
-      %h4.mb-0 Attendees
-      %span.badge.rounded-pill.bg-white.text-muted.border.fw-normal #{counts[:invited]} invited
-      %span.badge.rounded-pill.bg-white.text-dark.border{ data: { students_checked_in_badge: true } }
-        #{counts[:students_checked_in]}/#{counts[:students_total]} students checked in
-      %span.badge.rounded-pill.bg-white.text-dark.border{ data: { coaches_checked_in_badge: true } }
-        #{counts[:coaches_checked_in]}/#{counts[:coaches_total]} coaches checked in
-    %span.badge.rounded-pill.bg-white.text-muted.border.fw-normal{ data: { pairing_live_badge: true } }
-      %span.pairing-live-dot
-      Live sync · updates every 15s
+  %h5.mb-1 Check-in
   %p.text-muted.small.mb-3
     Alphabetical attendance list (use browser Find to jump straight to a name). Checked-in rows stay in place so nothing shifts under your cursor.
 

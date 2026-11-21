@@ -50,3 +50,10 @@
         Undo
       %button.btn.btn-sm.btn-outline-primary{ type: 'button', data: { pairing_jump_btn: true, target_group_id: pairing&.id } }
         View ↓
+      = link_to admin_event_invitation_cancel_path(event, invitation),
+                class: 'btn btn-sm btn-outline-secondary pairing-slot__action pairing-slot__action--cancel',
+                method: :post,
+                title: 'Cancel attendance',
+                aria: { label: "Cancel attendance for #{invitation.member.full_name}" },
+                data: { confirm: "Cancel attendance for #{invitation.member.full_name}?" } do
+        %i.fas.fa-times{ aria: { hidden: 'true' } }
