@@ -4,6 +4,7 @@
   var dragState = null;
   var requestInFlight = false;
   var lastSyncEtag = null;
+  var syncVersion = 0;
   var POLL_INTERVAL_MS = 15000;
 
   function csrfToken() {
@@ -107,6 +108,7 @@
     var board = currentBoard();
     if (!board || requestInFlight) return;
 
+    syncVersion += 1;
     requestInFlight = true;
     board.dataset.loading = 'true';
 
@@ -151,6 +153,7 @@
     var board = currentBoard();
     if (!board || requestInFlight) return;
 
+    syncVersion += 1;
     var invId = form.dataset.invitationId;
     requestInFlight = true;
     board.dataset.loading = 'true';
@@ -190,6 +193,7 @@
     if (!board || requestInFlight || (dragState && !force) || (document.hidden && !force)) return;
 
     initializeEtag();
+    var version = ++syncVersion;
     var headers = { 'X-Requested-With': 'XMLHttpRequest', 'Accept': 'application/json' };
     if (lastSyncEtag && !force) headers['If-None-Match'] = lastSyncEtag;
 
@@ -203,7 +207,7 @@
         });
       })
       .then(function (result) {
-        if (!result) return;
+        if (!result || version !== syncVersion || requestInFlight || dragState) return;
         if (result.etag) lastSyncEtag = result.etag;
         replaceBoardHtml(result.data.board_html, true);
         replaceInvitationsHtml(result.data.invitations_html);
@@ -318,6 +322,13 @@
     if (uncheckForm) {
       event.preventDefault();
       sendUndoCheckIn(uncheckForm);
+    }
+  });
+
+  document.addEventListener('ajax:beforeSend', function (event) {
+    var target = event.target;
+    if (target && target.closest && target.closest('.verify_attendance')) {
+      syncVersion += 1;
     }
   });
 
