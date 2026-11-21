@@ -102,7 +102,7 @@
   }
 
   .expected-table-header {
-    grid-template-columns: minmax(260px, 1.45fr) minmax(200px, 2fr) 150px;
+    grid-template-columns: minmax(250px, 1.4fr) minmax(200px, 1.9fr) 190px;
     gap: 0.75rem;
     align-items: center;
     padding: 0.55rem 0.9rem;
@@ -112,7 +112,7 @@
 
   .expected-table-row {
     display: grid;
-    grid-template-columns: minmax(260px, 1.45fr) minmax(200px, 2fr) 150px;
+    grid-template-columns: minmax(250px, 1.4fr) minmax(200px, 1.9fr) 190px;
     gap: 0.75rem;
     align-items: center;
 

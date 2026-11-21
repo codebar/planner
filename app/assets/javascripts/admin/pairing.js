@@ -117,15 +117,15 @@
   }
 
   function updateCheckInHeaderBadges(counts) {
-    var section = document.querySelector('[data-expected-section]');
-    if (!section || !counts) return;
+    var workspace = document.querySelector('[data-attendance-workspace]') || document;
+    if (!counts) return;
 
-    var studentsEl = section.querySelector('[data-students-checked-in-badge]');
+    var studentsEl = workspace.querySelector('[data-students-checked-in-badge]');
     if (studentsEl) {
       studentsEl.textContent = counts.students_checked_in + '/' + counts.students_total + ' students checked in';
     }
 
-    var coachesEl = section.querySelector('[data-coaches-checked-in-badge]');
+    var coachesEl = workspace.querySelector('[data-coaches-checked-in-badge]');
     if (coachesEl) {
       coachesEl.textContent = counts.coaches_checked_in + '/' + counts.coaches_total + ' coaches checked in';
     }

@@ -2,7 +2,7 @@
 .pairing-board{ id: 'pairing-board', data: { pairing_create_url: admin_event_pairings_path(event), pairing_sync_url: admin_event_pairings_path(event) } }
   .d-flex.flex-wrap.justify-content-between.align-items-center.gap-2.mb-1
     .d-flex.flex-wrap.align-items-center.gap-2
-      %h4.mb-0 Pairings
+      %h5.mb-0 Pairings
       - if summary.groups_count.positive?
         %span.badge.rounded-pill.bg-primary= pluralize(summary.groups_count, 'group')
         %span.badge.rounded-pill.bg-white.text-dark.border
