@@ -9,8 +9,17 @@ module PairableEvent
   end
 
   def expected_attendees
-    attendances.where(verified: [false, nil])
-               .order(Arel.sql('LOWER(members.name), LOWER(members.surname)'))
+    attendances.order(Arel.sql('LOWER(members.name), LOWER(members.surname)'))
+  end
+
+  def check_in_counts
+    {
+      invited: invitations.count,
+      students_checked_in: attendances.where(role: 'Student', verified: true).count,
+      students_total: attendances.where(role: 'Student').count,
+      coaches_checked_in: attendances.where(role: 'Coach', verified: true).count,
+      coaches_total: attendances.where(role: 'Coach').count
+    }
   end
 
   def expected_students

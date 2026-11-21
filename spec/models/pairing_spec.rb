@@ -52,19 +52,21 @@ RSpec.describe Pairing do
       expect(target.reload.invitations).to contain_exactly(student_one, student_two, coach_one)
     end
 
-    it 'sorts expected students and coaches alphabetically by member name' do
+    it 'sorts expected students and coaches alphabetically and includes checked-in attendees' do
       Fabricate(:invitation, event:, member: Fabricate(:member, name: 'Zara', surname: 'Zulu'),
                              attending: true, verified: false)
       Fabricate(:invitation, event:, member: Fabricate(:member, name: 'amara', surname: 'Alpha'),
-                             attending: true, verified: false)
+                             attending: true, verified: true)
       Fabricate(:coach_invitation, event:, member: Fabricate(:member, name: 'Marcus', surname: 'Lee'),
                                    attending: true, verified: false)
       Fabricate(:coach_invitation, event:, member: Fabricate(:member, name: 'ben', surname: 'Coyle'),
-                                   attending: true, verified: false)
+                                   attending: true, verified: true)
 
-      expect(event.expected_students.map { |i| i.member.name }).to eq(%w[amara Zara])
-      expect(event.expected_coaches.map { |i| i.member.name }).to eq(%w[ben Marcus])
+      expect(event.expected_students.map { |i| i.member.name }).to eq(%w[Zara])
+      expect(event.expected_coaches.map { |i| i.member.name }).to eq(%w[Marcus])
       expect(event.expected_attendees.map { |i| i.member.name }).to eq(%w[amara ben Marcus Zara])
+      expect(event.check_in_counts).to include(students_checked_in: 1, students_total: 2,
+                                               coaches_checked_in: 1, coaches_total: 2)
     end
 
     it 'safely no-ops when dropping a solo member onto their own pairing' do

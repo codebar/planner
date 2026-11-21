@@ -1,13 +1,17 @@
-- role_class = invitation.for_student? ? 'pairing-badge--student' : 'pairing-badge--coach'
-.expected-row{ data: { expected_row: true, state: 'expected', invitation_id: invitation.id, role: invitation.role, full_name: invitation.member.full_name } }
+:ruby
+  state = invitation.verified? ? 'settled' : 'expected'
+  role_class = invitation.for_student? ? 'pairing-badge--student' : 'pairing-badge--coach'
+  partners = pairing ? pairing.pairing_invitations.map(&:invitation).reject { |i| i.id == invitation.id }.map { |i| i.member.full_name } : []
+  waiting_for = invitation.for_student? ? 'a coach' : 'a student'
+  settled_text = partners.any? ? "Checked in · Paired with #{partners.join(', ')}" : "Checked in · Waiting for #{waiting_for}"
+.expected-row{ data: { expected_row: true, state:, invitation_id: invitation.id, pairing_id: pairing&.id, role: invitation.role, full_name: invitation.member.full_name } }
   .expected-row__pending.expected-table-row
     .expected-cell__name.min-w-0
       .d-flex.flex-wrap.align-items-center.gap-2
         = link_to invitation.member.full_name, admin_member_path(invitation.member), class: 'pairing-slot__name'
+        %span.badge.rounded-pill{ class: role_class }= invitation.role
         - if MemberPresenter.new(invitation.member).newbie?
           %span.badge.rounded-pill.pairing-badge--newbie New
-    .expected-cell__role
-      %span.badge.rounded-pill{ class: role_class }= invitation.role
     .expected-cell__note.min-w-0
       - if invitation.note.present?
         %span.pairing-slot__note= invitation.note
@@ -30,13 +34,13 @@
         %i.fas.fa-times{ aria: { hidden: 'true' } }
   .expected-row__settled.expected-table-row
     .expected-cell__name.min-w-0
-      %span.fw-semibold.text-success
-        %i.fas.fa-check-circle.me-1{ aria: { hidden: 'true' } }
-        = invitation.member.full_name
-    .expected-cell__role
-      %span.badge.rounded-pill{ class: role_class }= invitation.role
+      .d-flex.flex-wrap.align-items-center.gap-2
+        %span.fw-semibold.text-success
+          %i.fas.fa-check-circle.me-1{ aria: { hidden: 'true' } }
+          = invitation.member.full_name
+        %span.badge.rounded-pill{ class: role_class }= invitation.role
     .expected-cell__note.min-w-0
-      %span.small.text-success{ data: { settled_status: true } } Checked in
+      %span.small.text-success{ data: { settled_status: true } }= settled_text
     .expected-cell__actions.d-flex.align-items-center.justify-content-md-end.gap-1
       = button_to admin_event_invitation_check_in_path(event, invitation_id: invitation.id),
                   method: :delete,
@@ -44,5 +48,5 @@
                   title: 'Undo check-in',
                   form: { class: 'd-inline', data: { pairing_undo_form: true } } do
         Undo
-      %button.btn.btn-sm.btn-outline-primary{ type: 'button', data: { pairing_jump_btn: true } }
+      %button.btn.btn-sm.btn-outline-primary{ type: 'button', data: { pairing_jump_btn: true, target_group_id: pairing&.id } }
         View ↓
