@@ -38,7 +38,12 @@ class Admin::EventCheckInsController < Admin::ApplicationController
   end
 
   def respond_to_check_in(invitation)
-    return redirect_back(fallback_location: admin_event_path(@event)) unless request.xhr?
+    unless request.xhr?
+      return redirect_back(
+        fallback_location: admin_event_path(@event),
+        notice: "You have verified #{invitation.member.full_name}'s spot at the event!"
+      )
+    end
 
     pairings = @event.pairings.with_members
     pairing = pairings.find { |p| p.pairing_invitations.any? { |pi| pi.invitation_id == invitation.id } }

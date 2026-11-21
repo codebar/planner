@@ -78,6 +78,15 @@
 
   // Derive each settled Expected row's partner status directly from the live
   // pairing board DOM (single source of truth).
+  function setRowState(row, nextState) {
+    if (!row) return;
+    row.dataset.state = nextState;
+    var pending = row.querySelector('.expected-row__pending');
+    var settled = row.querySelector('.expected-row__settled');
+    if (pending) pending.hidden = nextState === 'settled';
+    if (settled) settled.hidden = nextState !== 'settled';
+  }
+
   function syncSettledRowsFromBoard(board) {
     if (!board) return;
     document.querySelectorAll('.expected-row[data-state="settled"]').forEach(function (row) {
@@ -89,7 +98,7 @@
       var jumpBtn = row.querySelector('[data-pairing-jump-btn]');
 
       if (!group) {
-        row.dataset.state = 'expected';
+        setRowState(row, 'expected');
         delete row.dataset.pairingId;
         return;
       }
@@ -239,7 +248,7 @@
       })
       .then(function (data) {
         lastSyncEtag = null;
-        row.dataset.state = nextState;
+        setRowState(row, nextState);
         replaceBoardHtml(board, data.board_html, true);
         updateCheckInHeaderBadges(data.check_in_counts);
       })
@@ -256,7 +265,7 @@
     if (!Array.isArray(checkedInIds)) return;
     var checkedSet = new Set(checkedInIds.map(String));
     document.querySelectorAll('.expected-row[data-invitation-id]').forEach(function (row) {
-      row.dataset.state = checkedSet.has(row.dataset.invitationId) ? 'settled' : 'expected';
+      setRowState(row, checkedSet.has(row.dataset.invitationId) ? 'settled' : 'expected');
     });
   }
 
