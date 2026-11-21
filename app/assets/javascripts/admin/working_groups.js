@@ -76,6 +76,15 @@
     });
   }
 
+  function updateSignedInBadges(counts) {
+    if (!counts) return;
+    var root = document.querySelector('[data-invitation-management]');
+    if (!root) return;
+    var badges = root.querySelectorAll('.badge.bg-success');
+    if (badges[0]) badges[0].textContent = counts.checked_in_students + ' students have been signed in';
+    if (badges[1]) badges[1].textContent = counts.checked_in_coaches + ' coaches have been signed in';
+  }
+
   function replaceInvitationsHtml(html) {
     var container = document.querySelector('[data-invitation-management]');
     if (!container || !html) return;
@@ -188,7 +197,7 @@
       });
   }
 
-  function pollLiveBoard(force) {
+  function pollLiveBoard(force, boardOnly) {
     var board = currentBoard();
     if (!board || requestInFlight || (dragState && !force) || (document.hidden && !force)) return;
 
@@ -210,7 +219,11 @@
         if (!result || version !== syncVersion || requestInFlight || dragState) return;
         if (result.etag) lastSyncEtag = result.etag;
         replaceBoardHtml(result.data.board_html, true);
-        replaceInvitationsHtml(result.data.invitations_html);
+        if (boardOnly) {
+          updateSignedInBadges(result.data.counts);
+        } else {
+          replaceInvitationsHtml(result.data.invitations_html);
+        }
       })
       .catch(function () {
         // Silent retry on transient network hiccups during background sync
@@ -339,7 +352,7 @@
   document.addEventListener('ajax:success', function (event) {
     var target = event.target;
     if (target && target.closest && target.closest('.verify_attendance')) {
-      pollLiveBoard(true);
+      pollLiveBoard(true, true);
     }
   });
 
