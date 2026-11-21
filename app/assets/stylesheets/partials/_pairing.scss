@@ -1,3 +1,117 @@
+.pairing-section-header {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #6c757d;
+}
+
+.pairing-badge--newbie {
+  background-color: #e7f5ff;
+  color: $dark-codebar-blue;
+  border: 1px solid #b6dcfe;
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+.pairing-empty-state {
+  border: 1px dashed #ced4da;
+  border-radius: 0.5rem;
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.pairing-slot__name {
+  font-weight: 600;
+  color: $dark-codebar-blue;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.pairing-slot__note {
+  font-size: 0.82rem;
+  color: #596677;
+  line-height: 1.35;
+}
+
+.pairing-slot__action {
+  border-color: #dee2e6;
+  color: #6c757d;
+  padding: 0.2rem 0.45rem;
+  line-height: 1.1;
+
+  &:hover {
+    color: $dark-codebar-blue;
+    border-color: $codebar-blue;
+    background-color: #eef6ff;
+  }
+
+  &--cancel:hover {
+    color: #dc3545;
+    border-color: #f1aeb5;
+    background-color: #fff5f5;
+  }
+}
+
+.pairing-live-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #198754;
+  margin-right: 0.35rem;
+  vertical-align: middle;
+}
+
+.expected-section {
+  .expected-badge--checked-in {
+    background-color: #d1e7dd;
+    color: #0f5132;
+    border: 1px solid #badbcc;
+    font-weight: 500;
+  }
+
+  .expected-list-card {
+    background: $white;
+    border: 1px solid #dee2e6;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+  }
+
+  .expected-row {
+    padding: 0.65rem 0.85rem;
+    border-bottom: 1px solid #f1f3f5;
+    transition: background-color 0.2s ease, opacity 0.15s ease;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    &[data-loading="true"] {
+      opacity: 0.6;
+      pointer-events: none;
+    }
+
+    &[data-state="expected"] {
+      .expected-row__settled {
+        display: none !important;
+      }
+    }
+
+    &[data-state="settled"] {
+      background-color: #f0fdf4;
+      border-left: 3px solid #198754;
+
+      .expected-row__pending {
+        display: none !important;
+      }
+    }
+  }
+}
+
 .pairing-board {
   transition: opacity 0.15s ease;
 
@@ -6,33 +120,11 @@
     pointer-events: none;
   }
 
-  .pairing-board__headers {
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    color: #6c757d;
-  }
-
   .pairing-badge--waiting {
     background-color: #fff3cd;
     color: #664d03;
     border: 1px solid #ffe69c;
     font-weight: 500;
-  }
-
-  .pairing-badge--newbie {
-    background-color: #e7f5ff;
-    color: $dark-codebar-blue;
-    border: 1px solid #b6dcfe;
-    font-size: 0.7rem;
-    font-weight: 600;
-  }
-
-  .pairing-empty-state {
-    border: 1px dashed #ced4da;
-    border-radius: 0.5rem;
-    background: rgba(255, 255, 255, 0.7);
   }
 
   .pairing-group {
@@ -43,7 +135,7 @@
     overflow: hidden;
     background: $white;
     box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
-    transition: border-color 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
 
     @media (max-width: 767px) {
       flex-direction: column;
@@ -60,11 +152,12 @@
       box-shadow: none;
     }
 
-    &[data-drop-hover="true"] {
+    &[data-drop-hover="true"],
+    &[data-pulse="true"] {
       border-style: solid;
       border-color: $dark-codebar-blue;
       background-color: #f0f7ff;
-      box-shadow: 0 0 0 3px rgba($dark-codebar-blue, 0.16);
+      box-shadow: 0 0 0 3px rgba($dark-codebar-blue, 0.18);
     }
   }
 
@@ -123,41 +216,6 @@
   .pairing-slot__grip {
     color: #adb5bd;
     font-size: 0.85rem;
-  }
-
-  .pairing-slot__name {
-    font-weight: 600;
-    color: $dark-codebar-blue;
-    text-decoration: none;
-
-    &:hover {
-      text-decoration: underline;
-    }
-  }
-
-  .pairing-slot__note {
-    font-size: 0.82rem;
-    color: #596677;
-    line-height: 1.35;
-  }
-
-  .pairing-slot__action {
-    border-color: #dee2e6;
-    color: #6c757d;
-    padding: 0.2rem 0.45rem;
-    line-height: 1.1;
-
-    &:hover {
-      color: $dark-codebar-blue;
-      border-color: $codebar-blue;
-      background-color: #eef6ff;
-    }
-
-    &--cancel:hover {
-      color: #dc3545;
-      border-color: #f1aeb5;
-      background-color: #fff5f5;
-    }
   }
 
   .pairing-unpair-zone {

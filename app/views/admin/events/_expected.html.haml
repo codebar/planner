@@ -1,0 +1,32 @@
+.expected-section.mb-4{ data: { expected_section: true } }
+  .d-flex.flex-wrap.justify-content-between.align-items-center.gap-2.mb-1
+    .d-flex.flex-wrap.align-items-center.gap-2
+      %h4.mb-0 Expected
+      %span.badge.rounded-pill.bg-white.text-dark.border{ data: { expected_remaining_badge: true } }
+        #{pluralize(students.size, 'student')} · #{pluralize(coaches.size, 'coach')} left
+      %span.badge.rounded-pill.expected-badge--checked-in.d-none{ data: { expected_checked_in_badge: true } }
+    = link_to admin_event_pairings_path(event), class: 'btn btn-sm btn-outline-primary' do
+      %i.fas.fa-user-friends.me-1{ aria: { hidden: 'true' } }
+      Open full-screen pairing board →
+  %p.text-muted.small.mb-3
+    Invited and RSVP'd attendees. Rows stay settled in place when checked in so nothing shifts under your cursor.
+
+  .alert.alert-danger.py-2.px-3.small.d-none{ role: 'alert', data: { expected_error: true } }
+
+  .row
+    .col-12.col-md-6.mb-3
+      .pairing-section-header.px-2.mb-2 Students
+      - if students.empty?
+        .pairing-empty-state.text-center.text-muted.small.py-3.px-3 All students have checked in.
+      - else
+        .expected-list-card{ data: { expected_list: 'Student' } }
+          - students.each do |invitation|
+            = render partial: 'admin/events/expected_row', locals: { event:, invitation: }
+    .col-12.col-md-6.mb-3
+      .pairing-section-header.px-2.mb-2 Coaches
+      - if coaches.empty?
+        .pairing-empty-state.text-center.text-muted.small.py-3.px-3 All coaches have checked in.
+      - else
+        .expected-list-card{ data: { expected_list: 'Coach' } }
+          - coaches.each do |invitation|
+            = render partial: 'admin/events/expected_row', locals: { event:, invitation: }

@@ -1,5 +1,5 @@
 - state_class = pairing.mixed? ? 'pairing-group--paired' : 'pairing-group--waiting'
-.pairing-group.mb-3{ class: state_class, data: { pairing_id: pairing.id, pairing_dropzone: 'group' } }
+.pairing-group.mb-3{ id: "pairing-group-#{pairing.id}", class: state_class, data: { pairing_id: pairing.id, pairing_dropzone: 'group' } }
   .pairing-group__side
     - if pairing.student_invitations.any?
       - pairing.student_invitations.each do |invitation|
