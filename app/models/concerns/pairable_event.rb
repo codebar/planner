@@ -8,6 +8,11 @@ module PairableEvent
     has_many :pairings, dependent: :destroy
   end
 
+  def expected_attendees
+    attendances.where(verified: [false, nil])
+               .order(Arel.sql('LOWER(members.name), LOWER(members.surname)'))
+  end
+
   def expected_students
     expected_by_role('Student')
   end

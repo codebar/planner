@@ -64,6 +64,7 @@ RSpec.describe Pairing do
 
       expect(event.expected_students.map { |i| i.member.name }).to eq(%w[amara Zara])
       expect(event.expected_coaches.map { |i| i.member.name }).to eq(%w[ben Marcus])
+      expect(event.expected_attendees.map { |i| i.member.name }).to eq(%w[amara ben Marcus Zara])
     end
 
     it 'safely no-ops when dropping a solo member onto their own pairing' do

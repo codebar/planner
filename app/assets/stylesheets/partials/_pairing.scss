@@ -7,11 +7,29 @@
 }
 
 .pairing-badge--newbie {
+  --bs-badge-color: #495057;
+  background-color: #f1f3f5;
+  color: #495057;
+  border: 1px solid #dee2e6;
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+.pairing-badge--student {
   --bs-badge-color: #{$dark-codebar-blue};
   background-color: #e7f5ff;
   color: $dark-codebar-blue;
   border: 1px solid #b6dcfe;
-  font-size: 0.7rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
+.pairing-badge--coach {
+  --bs-badge-color: #5b21b6;
+  background-color: #f3e8ff;
+  color: #5b21b6;
+  border: 1px solid #d8b4fe;
+  font-size: 0.72rem;
   font-weight: 600;
 }
 
@@ -83,10 +101,44 @@
     box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
   }
 
+  .expected-table-header {
+    grid-template-columns: minmax(210px, 1.35fr) 92px minmax(180px, 2fr) 150px;
+    gap: 0.75rem;
+    align-items: center;
+    padding: 0.55rem 0.9rem;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+  }
+
+  .expected-table-row {
+    display: grid;
+    grid-template-columns: minmax(210px, 1.35fr) 92px minmax(180px, 2fr) 150px;
+    gap: 0.75rem;
+    align-items: center;
+
+    @media (max-width: 767px) {
+      grid-template-columns: 1fr auto;
+      gap: 0.4rem 0.75rem;
+
+      .expected-cell__note {
+        grid-column: 1 / -1;
+      }
+
+      .expected-cell__actions {
+        grid-column: 1 / -1;
+        margin-top: 0.25rem;
+      }
+    }
+  }
+
   .expected-row {
-    padding: 0.65rem 0.85rem;
+    padding: 0.6rem 0.9rem;
     border-bottom: 1px solid #f1f3f5;
     transition: background-color 0.2s ease, opacity 0.15s ease;
+
+    &:hover {
+      background-color: #f8fafc;
+    }
 
     &:last-child {
       border-bottom: none;

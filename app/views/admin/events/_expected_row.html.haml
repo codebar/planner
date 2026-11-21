@@ -1,13 +1,19 @@
+- role_class = invitation.for_student? ? 'pairing-badge--student' : 'pairing-badge--coach'
 .expected-row{ data: { expected_row: true, state: 'expected', invitation_id: invitation.id, role: invitation.role, full_name: invitation.member.full_name } }
-  .expected-row__pending.d-flex.justify-content-between.align-items-start.gap-2
-    .min-w-0
+  .expected-row__pending.expected-table-row
+    .expected-cell__name.min-w-0
       .d-flex.flex-wrap.align-items-center.gap-2
         = link_to invitation.member.full_name, admin_member_path(invitation.member), class: 'pairing-slot__name'
         - if MemberPresenter.new(invitation.member).newbie?
-          %span.badge.rounded-pill.pairing-badge--newbie New attendee
+          %span.badge.rounded-pill.pairing-badge--newbie New
+    .expected-cell__role
+      %span.badge.rounded-pill{ class: role_class }= invitation.role
+    .expected-cell__note.min-w-0
       - if invitation.note.present?
-        %p.pairing-slot__note.mb-0.mt-1= invitation.note
-    .d-flex.align-items-center.gap-1.flex-shrink-0
+        %span.pairing-slot__note= invitation.note
+      - else
+        %span.text-muted.small —
+    .expected-cell__actions.d-flex.align-items-center.justify-content-md-end.gap-1
       - if event.confirmation_required
         = button_to admin_event_invitation_check_in_path(event, invitation_id: invitation.id),
                     method: :post,
@@ -22,13 +28,16 @@
                 aria: { label: "Cancel attendance for #{invitation.member.full_name}" },
                 data: { confirm: "Cancel attendance for #{invitation.member.full_name}?" } do
         %i.fas.fa-times{ aria: { hidden: 'true' } }
-  .expected-row__settled.d-flex.justify-content-between.align-items-center.gap-2
-    .min-w-0
+  .expected-row__settled.expected-table-row
+    .expected-cell__name.min-w-0
       %span.fw-semibold.text-success
         %i.fas.fa-check-circle.me-1{ aria: { hidden: 'true' } }
         = invitation.member.full_name
-      %p.mb-0.mt-1.small.text-success{ data: { settled_status: true } } Checked in
-    .d-flex.align-items-center.gap-1.flex-shrink-0
+    .expected-cell__role
+      %span.badge.rounded-pill{ class: role_class }= invitation.role
+    .expected-cell__note.min-w-0
+      %span.small.text-success{ data: { settled_status: true } } Checked in
+    .expected-cell__actions.d-flex.align-items-center.justify-content-md-end.gap-1
       = button_to admin_event_invitation_check_in_path(event, invitation_id: invitation.id),
                   method: :delete,
                   class: 'btn btn-sm btn-outline-secondary',
