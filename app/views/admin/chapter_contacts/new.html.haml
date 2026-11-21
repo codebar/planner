@@ -4,7 +4,7 @@
   - if flash[:alert]
     .alert.alert-danger= flash[:alert]
 
-  = form_with scope: :chapter_contact, url: preview_admin_chapter_contact_path(@chapter) do |form|
+  = form_with scope: :chapter_contact, url: preview_admin_chapter_contact_path(@chapter), class: 'col-12 col-lg-6' do |form|
     %p{ data: { chapter_contact_recipient_count: true, url: recipient_count_admin_chapter_contact_path(@chapter), recipient_count_singular: t('admin.chapter_contacts.recipients_count.one'), recipient_count_plural: t('admin.chapter_contacts.recipients_count.other') }, aria: { live: 'polite' } }
       = t('admin.chapter_contacts.recipients_count', count: @recipient_count)
     .mb-3

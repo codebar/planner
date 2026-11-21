@@ -25,6 +25,13 @@ RSpec.feature 'Contacting chapter members' do
       Fabricate(:subscription, member: other_chapter_member, group: other_group)
     end
 
+    scenario 'uses a full-width form on mobile and half-width form on large screens' do
+      login(organiser)
+      visit new_admin_chapter_contact_path(chapter)
+
+      expect(page).to have_css('form.col-12.col-lg-6')
+    end
+
     scenario 'starts the message with the HTML template' do
       login(organiser)
       visit new_admin_chapter_contact_path(chapter)
