@@ -1,13 +1,5 @@
-.row.mb-4
-  .col
-    .card.border-info
-      .card-body
-        %p.mb-0
-          <strong>#{@event.invitations.count}</strong> members have been invited to this event.
-          %br
-          <strong>#{@attending_students.count}</strong> are attending as students and <strong>#{@attending_coaches.count}</strong> as coaches.
-
 = render partial: 'admin/events/expected',
          locals: { event: @original_event, attendees: @expected_attendees,
+                   invited_count: @event.invitations.count,
                    students_count: @expected_students.size, coaches_count: @expected_coaches.size }
 = render partial: 'admin/events/pairing', locals: { event: @original_event, pairings: @pairings }
