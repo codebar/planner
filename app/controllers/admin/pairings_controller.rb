@@ -1,9 +1,20 @@
 class Admin::PairingsController < Admin::ApplicationController
   before_action :set_event
+  before_action :authorize_event
+
+  def index
+    @pairings = @event.synced_pairings
+    @expected_count = @event.expected_students.count + @event.expected_coaches.count
+
+    if request.xhr?
+      response.headers['Cache-Control'] = 'no-cache'
+      return unless stale?(etag: @event.pairing_board_etag(@pairings))
+
+      render partial: 'admin/events/pairing', locals: { event: @event, pairings: @pairings }, layout: false
+    end
+  end
 
   def create
-    authorize @event, :show?, policy_class: EventPolicy
-
     invitation = verified_invitations.find(params[:invitation_id])
     pairing = @event.pairings.find(params[:pairing_id])
 
@@ -12,8 +23,6 @@ class Admin::PairingsController < Admin::ApplicationController
   end
 
   def destroy
-    authorize @event, :show?, policy_class: EventPolicy
-
     invitation = verified_invitations.find(params[:invitation_id])
 
     Pairing.pull_out!(invitation)
@@ -24,6 +33,10 @@ class Admin::PairingsController < Admin::ApplicationController
 
   def set_event
     @event = Event.find_by!(slug: params[:event_id])
+  end
+
+  def authorize_event
+    authorize @event, :show?, policy_class: EventPolicy
   end
 
   def verified_invitations

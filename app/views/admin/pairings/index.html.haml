@@ -1,0 +1,14 @@
+.py-4.py-lg-5.bg-light
+  .container
+    .d-flex.flex-wrap.justify-content-between.align-items-center.gap-2.mb-4.pb-3.border-bottom
+      %div
+        = link_to admin_event_path(@event), class: 'text-muted small text-decoration-none' do
+          %i.fas.fa-arrow-left.me-1
+          Back to #{@event.name}
+        %h2.mb-0.mt-1 #{@event.name} — Pairings
+      .d-flex.align-items-center.gap-2
+        %span.badge.rounded-pill.bg-white.text-muted.border.fw-normal.px-3.py-2
+          %span.pairing-live-dot
+          Live sync · #{pluralize(@expected_count, 'attendee')} awaiting check-in
+    = render partial: 'admin/events/pairing', locals: { event: @event, pairings: @pairings }
+    = javascript_include_tag 'admin/pairing'
