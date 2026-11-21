@@ -1,15 +1,18 @@
-.row.mb-4
-  .col
-    .card.border-info
-      .card-body
-        %p.mb-0
-          <strong>#{@event.invitations.count}</strong> members have been invited to this event.
-          %br
-          <strong>#{@attending_students.count}</strong> are attending as students and <strong>#{@attending_coaches.count}</strong> as coaches.
-.row
-  .col-12.col-md-6
-    %h4 Students
-    = render partial: 'admin/events/attendances', locals: { invitations: @attending_students }
-  .col-12.col-md-6
-    %h4 Coaches
-    = render partial: 'admin/events/attendances', locals: { invitations: @attending_coaches }
+.attendance-pairings-workspace{ data: { attendance_workspace: true } }
+  .d-flex.flex-wrap.justify-content-between.align-items-center.gap-2.pb-3.mb-4.border-bottom
+    .d-flex.flex-wrap.align-items-center.gap-2
+      %h3.mb-0 Attendance &amp; Pairings
+      %span.badge.rounded-pill.bg-white.text-muted.border.fw-normal #{@check_in_counts[:invited]} invited
+      %span.badge.rounded-pill.bg-white.text-dark.border{ data: { students_checked_in_badge: true } }
+        #{@check_in_counts[:students_checked_in]}/#{@check_in_counts[:students_total]} students checked in
+      %span.badge.rounded-pill.bg-white.text-dark.border{ data: { coaches_checked_in_badge: true } }
+        #{@check_in_counts[:coaches_checked_in]}/#{@check_in_counts[:coaches_total]} coaches checked in
+    - unless @original_event.past_event?
+      %span.badge.rounded-pill.bg-white.text-muted.border.fw-normal{ data: { pairing_live_badge: true } }
+        %span.pairing-live-dot
+        Live sync · updates every 15s
+
+  = render partial: 'admin/events/expected',
+           locals: { event: @original_event, attendees: @expected_attendees, pairings: @pairings }
+  - if !@original_event.past_event? || @pairings.any?
+    = render partial: 'admin/events/pairing', locals: { event: @original_event, pairings: @pairings }

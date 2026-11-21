@@ -1,5 +1,6 @@
 class Invitation < ApplicationRecord
   include InvitationConcerns
+  include PairableInvitation
 
   belongs_to :event
   belongs_to :member

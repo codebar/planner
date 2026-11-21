@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_13_120000) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_16_010000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -410,6 +410,24 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_13_120000) do
     t.index ["member_id"], name: "index_members_roles_on_member_id"
   end
 
+  create_table "pairing_invitations", force: :cascade do |t|
+    t.bigint "pairing_id", null: false
+    t.bigint "invitation_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["invitation_id"], name: "index_pairing_invitations_on_invitation_id", unique: true
+    t.index ["pairing_id"], name: "index_pairing_invitations_on_pairing_id"
+  end
+
+  create_table "pairings", force: :cascade do |t|
+    t.bigint "event_id", null: false
+    t.integer "position", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["event_id", "position"], name: "index_pairings_on_event_id_and_position"
+    t.index ["event_id"], name: "index_pairings_on_event_id"
+  end
+
   create_table "permissions", id: :serial, force: :cascade do |t|
     t.datetime "created_at", precision: nil
     t.string "name"
@@ -594,5 +612,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_13_120000) do
   add_foreign_key "invitation_log_entries", "invitation_logs"
   add_foreign_key "invitation_logs", "members", column: "initiator_id"
   add_foreign_key "member_email_deliveries", "members"
+  add_foreign_key "pairing_invitations", "invitations"
+  add_foreign_key "pairing_invitations", "pairings"
+  add_foreign_key "pairings", "events"
   add_foreign_key "workshops", "members", column: "created_by_id", on_delete: :nullify
 end

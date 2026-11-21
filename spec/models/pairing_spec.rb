@@ -1,0 +1,141 @@
+require 'rails_helper'
+
+RSpec.describe Pairing do
+  let(:event) { Fabricate(:event, confirmation_required: true) }
+  let(:student_one) { Fabricate(:invitation, event:, attending: true, verified: false) }
+  let(:student_two) { Fabricate(:invitation, event:, attending: true, verified: false) }
+  let(:coach_one)   { Fabricate(:coach_invitation, event:, attending: true, verified: false) }
+  let(:coach_two)   { Fabricate(:coach_invitation, event:, attending: true, verified: false) }
+
+  describe 'automatic pairing on invitation state changes' do
+    it 'auto-pairs checked-in students and coaches in FIFO order' do
+      student_one.update!(verified: true)
+      student_two.update!(verified: true)
+
+      expect(event.pairings.ordered.count).to eq(2)
+      expect(event.pairings.ordered.first).not_to be_mixed
+
+      coach_one.update!(verified: true)
+
+      first, second = event.pairings.with_members
+      expect(first.invitations).to contain_exactly(student_one, coach_one)
+      expect(first).to be_mixed
+      expect(second.invitations).to contain_exactly(student_two)
+      expect(second).not_to be_mixed
+    end
+
+    it 'removes a member from their pairing when attendance is cancelled' do
+      student_one.update!(verified: true)
+      coach_one.update!(verified: true)
+
+      student_one.update!(attending: false)
+
+      expect(event.pairings.count).to eq(1)
+      expect(event.pairings.first.invitations).to contain_exactly(coach_one)
+
+      coach_one.update!(attending: false)
+
+      expect(event.pairings.count).to eq(0)
+    end
+  end
+
+  describe '.add!' do
+    it 'moves a member into another pairing to form a multi-student group' do
+      student_one.update!(verified: true)
+      coach_one.update!(verified: true)
+      student_two.update!(verified: true)
+
+      target = event.pairings.ordered.first
+      described_class.add!(student_two, target)
+
+      expect(event.pairings.count).to eq(1)
+      expect(target.reload.invitations).to contain_exactly(student_one, student_two, coach_one)
+    end
+
+    it 'sorts expected students and coaches alphabetically and includes checked-in attendees' do
+      Fabricate(:invitation, event:, member: Fabricate(:member, name: 'Zara', surname: 'Zulu'),
+                             attending: true, verified: false)
+      Fabricate(:invitation, event:, member: Fabricate(:member, name: 'amara', surname: 'Alpha'),
+                             attending: true, verified: true)
+      Fabricate(:coach_invitation, event:, member: Fabricate(:member, name: 'Marcus', surname: 'Lee'),
+                                   attending: true, verified: false)
+      Fabricate(:coach_invitation, event:, member: Fabricate(:member, name: 'ben', surname: 'Coyle'),
+                                   attending: true, verified: true)
+
+      expect(event.expected_students.map { |i| i.member.name }).to eq(%w[Zara])
+      expect(event.expected_coaches.map { |i| i.member.name }).to eq(%w[Marcus])
+      expect(event.expected_attendees.map { |i| i.member.name }).to eq(%w[amara ben Marcus Zara])
+      expect(event.check_in_counts).to include(students_checked_in: 1, students_total: 2,
+                                               coaches_checked_in: 1, coaches_total: 2)
+    end
+
+    it 'safely no-ops when dropping a solo member onto their own pairing' do
+      student_one.update!(verified: true)
+      solo = event.pairings.first
+
+      expect { described_class.add!(student_one, solo) }.not_to raise_error
+      expect(event.pairings.count).to eq(1)
+      expect(solo.reload.invitations).to contain_exactly(student_one)
+    end
+  end
+
+  describe '.pull_out!' do
+    it 'splits a member out into a fresh solo pairing' do
+      student_one.update!(verified: true)
+      coach_one.update!(verified: true)
+
+      described_class.pull_out!(student_one)
+
+      pairings = event.pairings.with_members
+      expect(pairings.size).to eq(2)
+      expect(pairings.first.invitations).to contain_exactly(coach_one)
+      expect(pairings.last.invitations).to contain_exactly(student_one)
+    end
+
+    it 'does not reorder an already-solo member' do
+      student_one.update!(verified: true)
+      student_two.update!(verified: true)
+      original_ids = event.pairings.ordered.pluck(:id)
+
+      described_class.pull_out!(student_one)
+
+      expect(event.pairings.ordered.pluck(:id)).to eq(original_ids)
+    end
+  end
+
+  describe '.sync!' do
+    it 'backfills pairings for pre-existing verified invitations' do
+      student_one.update_column(:verified, true)
+      coach_one.update_column(:verified, true)
+
+      expect(event.pairings.count).to eq(0)
+
+      described_class.sync!(event)
+
+      expect(event.pairings.count).to eq(1)
+      expect(event.pairings.first.invitations).to contain_exactly(student_one, coach_one)
+    end
+
+    it 'does not fabricate pairings when loading synced_pairings for a past event' do
+      past_event = Fabricate(:event, date_and_time: 2.weeks.ago, ends_at: 2.weeks.ago + 2.hours,
+                                     confirmation_required: true)
+      student = Fabricate(:invitation, event: past_event, attending: true, verified: false)
+      coach = Fabricate(:coach_invitation, event: past_event, attending: true, verified: false)
+      student.update_column(:verified, true)
+      coach.update_column(:verified, true)
+
+      expect(past_event.synced_pairings).to be_empty
+      expect(past_event.pairings.count).to eq(0)
+    end
+  end
+
+  describe 'cascading deletes' do
+    it 'deletes pairings when the event is destroyed' do
+      student_one.update!(verified: true)
+      coach_two.update!(verified: true)
+
+      expect { event.destroy! }.not_to raise_error
+      expect(described_class.where(event_id: event.id)).to be_empty
+    end
+  end
+end

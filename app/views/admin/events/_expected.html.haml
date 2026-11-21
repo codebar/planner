@@ -1,0 +1,19 @@
+- pairings_by_inv = pairings.each_with_object({}) { |p, h| p.pairing_invitations.each { |pi| h[pi.invitation_id] = p } }
+.expected-section.mb-4{ data: { expected_section: true } }
+  %h5.mb-1 Check-in
+  %p.text-muted.small.mb-3
+    Alphabetical attendance list (use browser Find to jump straight to a name). Checked-in rows stay in place so nothing shifts under your cursor.
+
+  .alert.alert-danger.py-2.px-3.small.d-none{ role: 'alert', data: { expected_error: true } }
+
+  - if attendees.empty?
+    .pairing-empty-state.text-center.text-muted.small.py-3.px-3 No confirmed RSVPs yet.
+  - else
+    .expected-list-card
+      .expected-table-header.d-none.d-md-grid.pairing-section-header
+        %span Attendee
+        %span Note
+        %span.text-end Actions
+      - attendees.each do |invitation|
+        = render partial: 'admin/events/expected_row',
+                 locals: { event:, invitation:, pairing: pairings_by_inv[invitation.id] }
