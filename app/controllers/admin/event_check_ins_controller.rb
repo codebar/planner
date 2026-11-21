@@ -76,7 +76,8 @@ class Admin::EventCheckInsController < Admin::ApplicationController
   end
 
   def render_board_html(pairings)
-    render_to_string(partial: 'admin/events/pairing', locals: { event: @event, pairings: }, layout: false)
+    render_to_string(partial: 'admin/events/pairing', locals: { event: @event, pairings: },
+                     layout: false, formats: [:html])
   end
 
   def expected_counts
