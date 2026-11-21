@@ -15,11 +15,13 @@ module WorkingGroups
     def with_session_lock(&) = @workshop.with_lock(&)
 
     def visible?
-      !@workshop.virtual? && (check_in_window_open? || @workshop.workshop_working_groups.exists?)
+      return @visible unless @visible.nil?
+
+      @visible = !@workshop.virtual? && (check_in_window_open? || @workshop.workshop_working_groups.exists?)
     end
 
-    def load_board_and_entries
-      entries = checked_in_entries
+    def load_board_and_entries(preload_flags: true)
+      entries = checked_in_entries(preload_flags:)
       entries_by_id = entries.index_by(&:id)
       grouped_ids = Set.new
       groups = build_groups(entries_by_id, grouped_ids)
@@ -55,11 +57,11 @@ module WorkingGroups
       @workshop.date_and_time.present? && (@workshop.date_and_time - CHECK_IN_WINDOW_LEAD).past?
     end
 
-    def checked_in_entries
+    def checked_in_entries(preload_flags: true)
       entries = @workshop.invitations.accepted.attended
                          .joins(:member).merge(Member.not_banned)
                          .includes(:member).to_a
-      preload_member_flags(entries)
+      preload_member_flags(entries) if preload_flags
       entries
     end
 
@@ -67,14 +69,8 @@ module WorkingGroups
       members = entries.map(&:member).uniq(&:id)
       return if members.empty?
 
-      flags = AdminWorkshopAttendeeFlags.for_members(members.map(&:id))
-      prior = prior_attended_member_ids(members.map(&:id))
-      members.each { |m| m.admin_workshop_flags = flags[m.id].merge(newbie: !prior.include?(m.id)) }
-    end
-
-    def prior_attended_member_ids(member_ids)
-      WorkshopInvitation.where(member_id: member_ids, attended: true)
-                        .where.not(workshop_id: @workshop.id).distinct.pluck(:member_id).to_set
+      flags = AdminWorkshopAttendeeFlags.for_members(members.map(&:id), exclude_workshop_id: @workshop.id)
+      members.each { |m| m.admin_workshop_flags = flags[m.id] }
     end
 
     def build_groups(entries_by_id, grouped_ids)

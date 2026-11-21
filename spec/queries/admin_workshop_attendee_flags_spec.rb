@@ -26,6 +26,13 @@ RSpec.describe AdminWorkshopAttendeeFlags do
 
         expect(flags[:newbie]).to be(false)
       end
+
+      it 'remains true when the only attended workshop is excluded' do
+        Fabricate(:attended_workshop_invitation, member:, workshop:)
+
+        scoped = described_class.for_members([member.id], exclude_workshop_id: workshop.id)[member.id]
+        expect(scoped[:newbie]).to be(true)
+      end
     end
 
     context 'when determining the flag to organisers' do

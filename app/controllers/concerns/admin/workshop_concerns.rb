@@ -25,7 +25,7 @@ module Admin::WorkshopConcerns
 
     def inject_attendance_flags(*collections)
       members = collections.flat_map { |collection| collection.map(&:member) }.uniq(&:id)
-      flags = AdminWorkshopAttendeeFlags.for_members(members.map(&:id))
+      flags = AdminWorkshopAttendeeFlags.for_members(members.map(&:id), exclude_workshop_id: @workshop&.id)
       members.each { |member| member.admin_workshop_flags = flags[member.id] }
     end
 

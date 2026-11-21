@@ -189,7 +189,7 @@
 
   function pollLiveBoard(force) {
     var board = currentBoard();
-    if (!board || requestInFlight || (dragState && !force)) return;
+    if (!board || requestInFlight || (dragState && !force) || (document.hidden && !force)) return;
 
     initializeEtag();
     var headers = { 'X-Requested-With': 'XMLHttpRequest', 'Accept': 'application/json' };
@@ -331,5 +331,8 @@
   });
 
   document.addEventListener('DOMContentLoaded', initializeEtag);
+  document.addEventListener('visibilitychange', function () {
+    if (!document.hidden) pollLiveBoard(false);
+  });
   window.setInterval(function () { pollLiveBoard(false); }, POLL_INTERVAL_MS);
 })();

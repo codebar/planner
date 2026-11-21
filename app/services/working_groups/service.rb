@@ -63,7 +63,7 @@ module WorkingGroups
 
     def mutate_board
       @adapter.with_session_lock do
-        before_board, = @adapter.load_board_and_entries
+        before_board, = @adapter.load_board_and_entries(preload_flags: false)
         after_board = yield(before_board)
         @adapter.persist_diff!(before_board, after_board)
       end
