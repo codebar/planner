@@ -349,6 +349,8 @@ Run `bundle exec rake db:create db:prepare`.
 
 Run `bundle install` again.
 
+If it fails with a list of gems and the words "in locally installed gems", check whether this checkout's Ruby changed since you last installed gems. Gems live inside each Ruby version, so after a `.ruby-version` bump the new Ruby starts with none of them. `gem env home` shows which Ruby's gems you are using, and `mise install` then `bundle install` fixes it.
+
 ### "role does not exist" when creating the database
 
 PostgreSQL does not have a user matching your computer username. Create it:
