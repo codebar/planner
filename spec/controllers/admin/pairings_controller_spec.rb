@@ -18,19 +18,20 @@ RSpec.describe Admin::PairingsController do
   end
 
   describe 'GET #index' do
-    it 'renders the dedicated pairings view for HTML requests' do
+    it 'redirects HTML requests back to the event page' do
       get :index, params: { event_id: event.slug }
 
-      expect(response).to have_http_status(:ok)
-      expect(response.body).to include('pairing-board')
+      expect(response).to redirect_to(admin_event_path(event))
     end
 
-    it 'returns 304 Not Modified on matching ETag for XHR live sync' do
+    it 'returns board HTML, checked-in IDs, and 304 Not Modified on matching ETag for XHR sync' do
       get :index, params: { event_id: event.slug }, xhr: true
       expect(response).to have_http_status(:ok)
-      etag = response.headers['ETag']
+      body = response.parsed_body
+      expect(body['board_html']).to include('pairing-board')
+      expect(body['checked_in_ids']).to include(student.id, coach.id, second_student.id)
 
-      request.headers['If-None-Match'] = etag
+      request.headers['If-None-Match'] = response.headers['ETag']
       get :index, params: { event_id: event.slug }, xhr: true
       expect(response).to have_http_status(:not_modified)
     end

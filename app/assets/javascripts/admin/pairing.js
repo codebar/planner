@@ -7,7 +7,7 @@
   var dragState = null;
   var requestInFlight = false;
   var lastSyncEtag = null;
-  var POLL_INTERVAL_MS = 5000;
+  var POLL_INTERVAL_MS = 15000;
 
   function csrfToken() {
     var meta = document.querySelector('meta[name="csrf-token"]');
@@ -258,12 +258,20 @@
       });
   }
 
+  function syncExpectedRowsFromIds(checkedInIds) {
+    if (!Array.isArray(checkedInIds)) return;
+    var checkedSet = new Set(checkedInIds.map(String));
+    document.querySelectorAll('.expected-row[data-invitation-id]').forEach(function (row) {
+      row.dataset.state = checkedSet.has(row.dataset.invitationId) ? 'settled' : 'expected';
+    });
+  }
+
   function pollLiveBoard() {
     var board = currentBoard();
     if (!board || !board.dataset.pairingSyncUrl) return;
     if (dragState || requestInFlight || document.hidden) return;
 
-    var headers = { 'X-Requested-With': 'XMLHttpRequest', 'Accept': 'text/html' };
+    var headers = { 'X-Requested-With': 'XMLHttpRequest', 'Accept': 'application/json' };
     if (lastSyncEtag) headers['If-None-Match'] = lastSyncEtag;
 
     fetch(board.dataset.pairingSyncUrl, { headers: headers, cache: 'no-cache' })
@@ -271,8 +279,8 @@
         if (response.status === 304) return null;
         if (!response.ok) return null;
         var nextEtag = response.headers.get('ETag');
-        return response.text().then(function (html) {
-          return { html: html, etag: nextEtag };
+        return response.json().then(function (payload) {
+          return { payload: payload, etag: nextEtag };
         });
       })
       .then(function (result) {
@@ -281,7 +289,11 @@
         lastSyncEtag = result.etag;
         if (hadEtag) {
           var liveBoard = currentBoard();
-          if (liveBoard) replaceBoardHtml(liveBoard, result.html, true);
+          syncExpectedRowsFromIds(result.payload.checked_in_ids);
+          if (liveBoard && result.payload.board_html) {
+            replaceBoardHtml(liveBoard, result.payload.board_html, true);
+          }
+          updateExpectedHeaderBadges(result.payload.expected_counts);
         }
       })
       .catch(function () {

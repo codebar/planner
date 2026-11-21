@@ -3,15 +3,13 @@ class Admin::PairingsController < Admin::ApplicationController
   before_action :authorize_event
 
   def index
-    @pairings = @event.synced_pairings
-    @expected_count = @event.expected_students.count + @event.expected_coaches.count
+    return redirect_to(admin_event_path(@event)) unless request.xhr?
 
-    if request.xhr?
-      response.headers['Cache-Control'] = 'no-cache'
-      return unless stale?(etag: @event.pairing_board_etag(@pairings))
+    pairings = @event.synced_pairings
+    response.headers['Cache-Control'] = 'no-cache'
+    return unless stale?(etag: @event.pairing_board_etag(pairings))
 
-      render partial: 'admin/events/pairing', locals: { event: @event, pairings: @pairings }, layout: false
-    end
+    render json: sync_payload(pairings)
   end
 
   def create
@@ -41,6 +39,18 @@ class Admin::PairingsController < Admin::ApplicationController
 
   def verified_invitations
     @event.invitations.accepted.verified
+  end
+
+  def sync_payload(pairings)
+    board_html = render_to_string(partial: 'admin/events/pairing', locals: { event: @event, pairings: }, layout: false)
+    {
+      board_html:,
+      checked_in_ids: verified_invitations.pluck(:id),
+      expected_counts: {
+        students: @event.expected_students.count,
+        coaches: @event.expected_coaches.count
+      }
+    }
   end
 
   def respond_with_board
