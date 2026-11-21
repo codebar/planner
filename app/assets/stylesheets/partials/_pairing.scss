@@ -7,6 +7,7 @@
 }
 
 .pairing-badge--newbie {
+  --bs-badge-color: #{$dark-codebar-blue};
   background-color: #e7f5ff;
   color: $dark-codebar-blue;
   border: 1px solid #b6dcfe;
@@ -67,6 +68,7 @@
 
 .expected-section {
   .expected-badge--checked-in {
+    --bs-badge-color: #0f5132;
     background-color: #d1e7dd;
     color: #0f5132;
     border: 1px solid #badbcc;
@@ -121,6 +123,7 @@
   }
 
   .pairing-badge--waiting {
+    --bs-badge-color: #664d03;
     background-color: #fff3cd;
     color: #664d03;
     border: 1px solid #ffe69c;
