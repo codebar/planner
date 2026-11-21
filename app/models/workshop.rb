@@ -22,6 +22,7 @@ class Workshop < ApplicationRecord
   has_many :organisers, -> { where('permissions.name' => 'organiser') }, through: :permissions, source: :members
   has_many :feedbacks
   has_many :invitation_logs, as: :loggable
+  has_many :workshop_working_groups, dependent: :destroy
 
   belongs_to :chapter
   belongs_to :created_by, class_name: 'Member', optional: true, inverse_of: false
