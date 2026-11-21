@@ -112,15 +112,7 @@ class CheckInsController < ApplicationController
     invitation.update!(check_in_attributes(invitation))
     MemberActivityRecorder.record(actor: invitation.member, key: 'member.checked_in',
                                   trackable: invitation)
-    sync_workshop_working_group(invitation)
-  end
-
-  def sync_workshop_working_group(invitation)
-    return unless @check_in_target.is_a?(Workshop)
-
-    WorkingGroups::Service.for(@check_in_target).on_check_in(invitation)
-  rescue ActiveRecord::ActiveRecordError => e
-    Rails.logger.error("Working group auto-pair failed for invitation #{invitation.id}: #{e.message}")
+    WorkingGroups::Service.for(@check_in_target).safe_on_check_in(invitation) if @check_in_target.is_a?(Workshop)
   end
 
   def check_in_attributes(invitation)

@@ -11,6 +11,7 @@ class Admin::InvitationsController < Admin::ApplicationController
 
     if request.xhr?
       if params[:attended].present?
+        inject_attendance_flags([@invitation])
         render partial: 'admin/workshop/attendance_row',
                locals: { invitation: InvitationPresenter.new(@invitation), workshop: @workshop }
       else
@@ -48,18 +49,12 @@ class Admin::InvitationsController < Admin::ApplicationController
 
     MemberActivityRecorder.record(actor: current_user, key: 'invitation.rsvp_override',
                                   trackable: @invitation, recipient: @invitation.member)
-    sync_working_group_check_in
-  end
-
-  def sync_working_group_check_in
-    WorkingGroups::Service.for(@workshop).on_check_in(@invitation)
-  rescue ActiveRecord::ActiveRecordError => e
-    Rails.logger.error("Working group auto-pair failed for invitation #{@invitation.id}: #{e.message}")
+    WorkingGroups::Service.for(@workshop).safe_on_check_in(@invitation)
   end
 
   def update_to_unattended
     @invitation.update(attended: nil, checked_in_at: nil)
-    WorkingGroups::Service.for(@workshop).on_check_out(@invitation)
+    WorkingGroups::Service.for(@workshop).safe_on_check_out(@invitation)
   end
 
   def update_to_attending
@@ -95,7 +90,7 @@ class Admin::InvitationsController < Admin::ApplicationController
 
   def update_to_not_attending
     freed_seat = release_seat(last_overridden_by_id: current_user.id)
-    WorkingGroups::Service.for(@workshop).on_check_out(@invitation)
+    WorkingGroups::Service.for(@workshop).safe_on_check_out(@invitation)
     MemberActivityRecorder.record(actor: current_user, key: 'invitation.rsvp_override',
                                   trackable: @invitation, recipient: @invitation.member)
 

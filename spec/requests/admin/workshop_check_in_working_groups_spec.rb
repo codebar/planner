@@ -76,17 +76,36 @@ RSpec.describe 'Workshop check-in working group transitions' do
     expect(student_invitation.reload.checked_in_at.to_i).to eq(original_time.to_i)
   end
 
+  it 'keeps the newbie paw icon in the XHR attendance row returned after ticking a first-timer' do
+    put admin_workshop_invitation_path(workshop, student_invitation, attended: true), xhr: true
+
+    expect(response).to have_http_status(:ok)
+    expect(response.body).to include('fa-paw')
+  end
+
   it 'still confirms QR check-in and records activity if auto-pairing raises an ActiveRecord error' do
     put admin_workshop_invitation_path(workshop, student_invitation, attended: true), xhr: true
-    failing_service = instance_double(WorkingGroups::Service)
-    allow(failing_service).to receive(:on_check_in).and_raise(ActiveRecord::RecordNotUnique, 'duplicate')
-    allow(WorkingGroups::Service).to receive(:for).and_return(failing_service)
+    real_service = WorkingGroups::Service.for(workshop)
+    allow(real_service).to receive(:on_check_in).and_raise(ActiveRecord::RecordNotUnique, 'duplicate')
+    allow(WorkingGroups::Service).to receive(:for).and_return(real_service)
 
     login(coach_invitation.member)
     post check_in_w_path(code: workshop.check_in_code), params: { role: 'Coach' }
 
     expect(response).to redirect_to(check_in_w_confirm_path(code: workshop.check_in_code))
     expect(coach_invitation.reload.attended).to be true
+  end
+
+  it 'still completes uncheck-in if working group check-out raises an ActiveRecord error' do
+    put admin_workshop_invitation_path(workshop, student_invitation, attended: true), xhr: true
+    real_service = WorkingGroups::Service.for(workshop)
+    allow(real_service).to receive(:on_check_out).and_raise(ActiveRecord::LockWaitTimeout, 'locked')
+    allow(WorkingGroups::Service).to receive(:for).and_return(real_service)
+
+    put admin_workshop_invitation_path(workshop, student_invitation, attended: false), xhr: true
+
+    expect(response).to have_http_status(:ok)
+    expect(student_invitation.reload.attended).to be_nil
   end
 
   it 'FIFO-pairs when an attendee checks in via QR self check-in' do

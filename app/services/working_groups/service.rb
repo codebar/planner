@@ -21,7 +21,25 @@ module WorkingGroups
 
     def board
       board_state, entries_by_id = @adapter.load_board_and_entries
-      BoardView.build(session_id: @adapter.session_id, visible: visible?, board: board_state, entries_by_id:)
+      BoardView.build(
+        session_id: @adapter.session_id,
+        visible: visible?,
+        board: board_state,
+        entries_by_id:,
+        attendance_signature: @adapter.attendance_signature
+      )
+    end
+
+    def safe_on_check_in(entry)
+      on_check_in(entry)
+    rescue ActiveRecord::ActiveRecordError => e
+      Rails.logger.error("Working group auto-pair failed for entry #{entry.id}: #{e.message}")
+    end
+
+    def safe_on_check_out(entry)
+      on_check_out(entry)
+    rescue ActiveRecord::ActiveRecordError => e
+      Rails.logger.error("Working group check-out cleanup failed for entry #{entry.id}: #{e.message}")
     end
 
     def on_check_in(entry)

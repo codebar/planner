@@ -139,5 +139,24 @@ RSpec.describe WorkingGroups::Service do
       expect(board.groups.first.students).to eq([s1])
       expect(board.groups.first.coaches).to eq([c2])
     end
+
+    it 'sweeps stale links inside a retained 3-person group on the next write' do
+      s1 = create_checked_in(role: 'Student', checked_in_at: 10.minutes.ago)
+      s2 = create_checked_in(role: 'Student', checked_in_at: 9.minutes.ago)
+      c1 = create_checked_in(role: 'Coach', checked_in_at: 8.minutes.ago)
+      s3 = create_checked_in(role: 'Student', checked_in_at: 6.minutes.ago)
+      c2 = create_checked_in(role: 'Coach', checked_in_at: 5.minutes.ago)
+      service.on_check_in(s1)
+      service.on_check_in(c1)
+      service.assign(entry_id: s2.id, target_group_id: service.board.groups.first.id)
+
+      # s2 drops out without on_check_out while Group 1 retains [s1, c1]; another write sweeps s2's stale link
+      s2.update!(attended: nil, checked_in_at: nil)
+      service.on_check_in(s3)
+      service.on_check_in(c2)
+
+      expect(WorkshopInvitationWorkingGroup.exists?(workshop_invitation_id: s2.id)).to be false
+      expect(service.board.groups.size).to eq(2)
+    end
   end
 end

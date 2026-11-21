@@ -214,6 +214,10 @@
       })
       .catch(function () {
         // Silent retry on transient network hiccups during background sync
+      })
+      .finally(function () {
+        var liveBoard = currentBoard();
+        if (liveBoard && !requestInFlight) delete liveBoard.dataset.loading;
       });
   }
 

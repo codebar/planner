@@ -6,10 +6,7 @@ module WorkingGroups
   class WorkshopAdapter
     CHECK_IN_WINDOW_LEAD = 30.minutes
 
-    def initialize(workshop)
-      @workshop = workshop
-    end
-
+    def initialize(workshop) = @workshop = workshop
     def session_id = @workshop.id
     def enabled? = !@workshop.virtual?
     def with_session_lock(&) = @workshop.with_lock(&)
@@ -34,8 +31,14 @@ module WorkingGroups
 
       before_by_id = before_board.groups.index_by(&:id)
       destroy_unretained_groups!(after_board.groups.filter_map(&:id))
+      sweep_stale_memberships!(after_board.groups)
       update_existing_groups!(before_by_id, after_board.groups)
       create_new_groups!(after_board.groups)
+    end
+
+    def attendance_signature
+      count, max_updated = @workshop.invitations.accepted.pick(Arel.sql('COUNT(*), MAX(updated_at)'))
+      [count.to_i, max_updated&.to_i]
     end
 
     def remove_entry_membership!(entry_id)
@@ -58,9 +61,7 @@ module WorkingGroups
     end
 
     def checked_in_entries(preload_flags: true)
-      entries = @workshop.invitations.accepted.attended
-                         .joins(:member).merge(Member.not_banned)
-                         .includes(:member).to_a
+      entries = @workshop.invitations.accepted.attended.joins(:member).merge(Member.not_banned).includes(:member).to_a
       preload_member_flags(entries) if preload_flags
       entries
     end
@@ -92,8 +93,14 @@ module WorkingGroups
 
     def destroy_unretained_groups!(retained_ids)
       scope = @workshop.workshop_working_groups
-      scope = scope.where.not(id: retained_ids) if retained_ids.any?
-      scope.destroy_all
+      (retained_ids.any? ? scope.where.not(id: retained_ids) : scope).destroy_all
+    end
+
+    def sweep_stale_memberships!(after_groups)
+      active_ids = after_groups.flat_map { |g| g.participants.map(&:entry_id) }
+      scope = WorkshopInvitationWorkingGroup.joins(:workshop_working_group)
+                                            .where(workshop_working_groups: { workshop_id: @workshop.id })
+      (active_ids.any? ? scope.where.not(workshop_invitation_id: active_ids) : scope).delete_all
     end
 
     def update_existing_groups!(before_by_id, after_groups)
@@ -112,8 +119,7 @@ module WorkingGroups
 
     def create_new_groups!(after_groups)
       after_groups.select { |g| g.id.nil? }.each do |group|
-        record = @workshop.workshop_working_groups.create!(position: group.position)
-        attach_memberships!(record, group.participants)
+        attach_memberships!(@workshop.workshop_working_groups.create!(position: group.position), group.participants)
       end
     end
 

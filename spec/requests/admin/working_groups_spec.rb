@@ -64,6 +64,15 @@ RSpec.describe 'Admin::WorkingGroups' do
       get admin_workshop_working_groups_path(workshop), headers: { 'If-None-Match' => etag }, as: :json
       expect(response).to have_http_status(:not_modified)
     end
+
+    it 'invalidates the ETag when a new accepted RSVP is added so check-in lists stay synced' do
+      get admin_workshop_working_groups_path(workshop), as: :json
+      etag = response.headers['ETag']
+
+      Fabricate(:workshop_invitation, workshop:, role: 'Coach', attending: true, attended: nil, automated_rsvp: true)
+      get admin_workshop_working_groups_path(workshop), headers: { 'If-None-Match' => etag }, as: :json
+      expect(response).to have_http_status(:ok)
+    end
   end
 
   describe 'POST create and DELETE destroy' do
