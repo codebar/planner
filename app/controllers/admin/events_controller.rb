@@ -77,9 +77,8 @@ class Admin::EventsController < Admin::ApplicationController
 
   def load_pairing_board
     @expected_attendees = InvitationPresenter.decorate_collection(@original_event.expected_attendees)
-    @expected_students = InvitationPresenter.decorate_collection(@original_event.expected_students)
-    @expected_coaches = InvitationPresenter.decorate_collection(@original_event.expected_coaches)
     @pairings = @original_event.synced_pairings
+    @check_in_counts = @original_event.check_in_counts
   end
 
   def event_params

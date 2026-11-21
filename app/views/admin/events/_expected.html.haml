@@ -1,27 +1,29 @@
+- pairings_by_inv = pairings.each_with_object({}) { |p, h| p.pairing_invitations.each { |pi| h[pi.invitation_id] = p } }
 .expected-section.mb-4{ data: { expected_section: true } }
   .d-flex.flex-wrap.justify-content-between.align-items-center.gap-2.mb-1
     .d-flex.flex-wrap.align-items-center.gap-2
-      %h4.mb-0 Expected
-      %span.badge.rounded-pill.bg-white.text-muted.border.fw-normal #{invited_count} invited
-      %span.badge.rounded-pill.bg-white.text-dark.border{ data: { expected_remaining_badge: true } }
-        #{pluralize(students_count, 'student')} · #{pluralize(coaches_count, 'coach')} left
-      %span.badge.rounded-pill.expected-badge--checked-in.d-none{ data: { expected_checked_in_badge: true } }
+      %h4.mb-0 Attendees
+      %span.badge.rounded-pill.bg-white.text-muted.border.fw-normal #{counts[:invited]} invited
+      %span.badge.rounded-pill.bg-white.text-dark.border{ data: { students_checked_in_badge: true } }
+        #{counts[:students_checked_in]}/#{counts[:students_total]} students checked in
+      %span.badge.rounded-pill.bg-white.text-dark.border{ data: { coaches_checked_in_badge: true } }
+        #{counts[:coaches_checked_in]}/#{counts[:coaches_total]} coaches checked in
     %span.badge.rounded-pill.bg-white.text-muted.border.fw-normal{ data: { pairing_live_badge: true } }
       %span.pairing-live-dot
       Live sync · updates every 15s
   %p.text-muted.small.mb-3
-    Alphabetical check-in list (use browser Find to jump straight to a name). Checked-in rows stay settled in place so nothing shifts under your cursor.
+    Alphabetical attendance list (use browser Find to jump straight to a name). Checked-in rows stay in place so nothing shifts under your cursor.
 
   .alert.alert-danger.py-2.px-3.small.d-none{ role: 'alert', data: { expected_error: true } }
 
   - if attendees.empty?
-    .pairing-empty-state.text-center.text-muted.small.py-3.px-3 All RSVP'd attendees have checked in.
+    .pairing-empty-state.text-center.text-muted.small.py-3.px-3 No confirmed RSVPs yet.
   - else
     .expected-list-card
       .expected-table-header.d-none.d-md-grid.pairing-section-header
         %span Attendee
-        %span Role
         %span Note
         %span.text-end Actions
       - attendees.each do |invitation|
-        = render partial: 'admin/events/expected_row', locals: { event:, invitation: }
+        = render partial: 'admin/events/expected_row',
+                 locals: { event:, invitation:, pairing: pairings_by_inv[invitation.id] }

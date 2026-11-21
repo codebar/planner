@@ -102,7 +102,7 @@
   }
 
   .expected-table-header {
-    grid-template-columns: minmax(210px, 1.35fr) 92px minmax(180px, 2fr) 150px;
+    grid-template-columns: minmax(260px, 1.45fr) minmax(200px, 2fr) 150px;
     gap: 0.75rem;
     align-items: center;
     padding: 0.55rem 0.9rem;
@@ -112,20 +112,15 @@
 
   .expected-table-row {
     display: grid;
-    grid-template-columns: minmax(210px, 1.35fr) 92px minmax(180px, 2fr) 150px;
+    grid-template-columns: minmax(260px, 1.45fr) minmax(200px, 2fr) 150px;
     gap: 0.75rem;
     align-items: center;
 
     @media (max-width: 767px) {
-      grid-template-columns: 1fr auto;
-      gap: 0.4rem 0.75rem;
-
-      .expected-cell__note {
-        grid-column: 1 / -1;
-      }
+      grid-template-columns: 1fr;
+      gap: 0.35rem;
 
       .expected-cell__actions {
-        grid-column: 1 / -1;
         margin-top: 0.25rem;
       }
     }

@@ -47,10 +47,7 @@ class Admin::PairingsController < Admin::ApplicationController
     {
       board_html:,
       checked_in_ids: verified_invitations.pluck(:id),
-      expected_counts: {
-        students: @event.expected_students.count,
-        coaches: @event.expected_coaches.count
-      }
+      check_in_counts: @event.check_in_counts
     }
   end
 

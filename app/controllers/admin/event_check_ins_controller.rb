@@ -52,7 +52,7 @@ class Admin::EventCheckInsController < Admin::ApplicationController
     render json: {
       invitation_id: invitation.id,
       board_html: render_board_html(pairings),
-      expected_counts:
+      check_in_counts: @event.check_in_counts
     }
   end
 
@@ -64,7 +64,7 @@ class Admin::EventCheckInsController < Admin::ApplicationController
       partner_names: partners,
       role: invitation.role,
       board_html: render_board_html(pairings),
-      expected_counts:
+      check_in_counts: @event.check_in_counts
     }
   end
 
@@ -78,9 +78,5 @@ class Admin::EventCheckInsController < Admin::ApplicationController
   def render_board_html(pairings)
     render_to_string(partial: 'admin/events/pairing', locals: { event: @event, pairings: },
                      layout: false, formats: [:html])
-  end
-
-  def expected_counts
-    { students: @event.expected_students.count, coaches: @event.expected_coaches.count }
   end
 end
