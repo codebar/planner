@@ -57,6 +57,7 @@ RSpec.describe 'Admin::WorkingGroups' do
 
       payload = response.parsed_body
       expect(payload['board_html']).to include('Pairings')
+      expect(payload['invitations_html']).to include('students have been signed in')
       expect(payload['counts']['checked_in_students']).to eq(2)
       expect(payload['counts']['checked_in_coaches']).to eq(1)
 

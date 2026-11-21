@@ -1,4 +1,6 @@
 class Admin::WorkingGroupsController < Admin::ApplicationController
+  include Admin::WorkshopConcerns
+
   before_action :set_workshop_and_authorize
   before_action :ensure_working_groups_enabled
 
@@ -28,7 +30,7 @@ class Admin::WorkingGroupsController < Admin::ApplicationController
   private
 
   def set_workshop_and_authorize
-    @workshop = Workshop.find(params[:workshop_id])
+    @workshop = WorkshopPresenter.decorate(Workshop.find(params[:workshop_id]))
     authorize @workshop, :update?
   end
 
@@ -55,14 +57,17 @@ class Admin::WorkingGroupsController < Admin::ApplicationController
   end
 
   def board_payload(board, etag)
+    set_admin_workshop_data
     {
-      board_html: render_to_string(
-        partial: 'admin/workshops/working_groups',
-        formats: [:html],
-        locals: { workshop: @workshop, board: }
-      ),
+      board_html: render_board_html(board),
+      invitations_html: render_to_string(partial: 'admin/workshops/invitation_management', formats: [:html]),
       etag:,
       counts: board.counts.to_h
     }
+  end
+
+  def render_board_html(board)
+    render_to_string(partial: 'admin/workshops/working_groups', formats: [:html],
+                     locals: { workshop: @workshop, board: })
   end
 end

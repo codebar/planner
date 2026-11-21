@@ -1,5 +1,5 @@
 // Declarative working groups ("Pairings") board: drag-and-drop *:* grouping,
-// unlink & undo-check-in actions, signed-in badge updates, and 15s ETag polling.
+// unlink & undo-check-in actions, and 15s ETag re-render of check-ins + pairings.
 (function () {
   var dragState = null;
   var requestInFlight = false;
@@ -68,16 +68,18 @@
     }, 1800);
   }
 
-  function updateSignedInBadges(counts) {
-    if (!counts) return;
-    var studentsBadge = document.querySelector('[data-checked-in-students-badge]');
-    if (studentsBadge) {
-      studentsBadge.textContent = counts.checked_in_students + ' students have been signed in';
-    }
-    var coachesBadge = document.querySelector('[data-checked-in-coaches-badge]');
-    if (coachesBadge) {
-      coachesBadge.textContent = counts.checked_in_coaches + ' coaches have been signed in';
-    }
+  function initTooltips(root) {
+    if (!root || !window.bootstrap || !window.bootstrap.Tooltip) return;
+    root.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(function (el) {
+      new window.bootstrap.Tooltip(el);
+    });
+  }
+
+  function replaceInvitationsHtml(html) {
+    var container = document.querySelector('[data-invitation-management]');
+    if (!container || !html) return;
+    container.innerHTML = html;
+    initTooltips(container);
   }
 
   function replaceBoardHtml(html, highlightChanges) {
@@ -91,11 +93,7 @@
     if (!nextBoard) return;
 
     liveBoard.replaceWith(nextBoard);
-    nextBoard.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(function (el) {
-      if (window.bootstrap && window.bootstrap.Tooltip) {
-        new window.bootstrap.Tooltip(el);
-      }
-    });
+    initTooltips(nextBoard);
 
     if (highlightChanges) {
       var nextSigs = groupSignatures(nextBoard);
@@ -137,7 +135,7 @@
       .then(function (result) {
         if (result.etag) lastSyncEtag = result.etag;
         replaceBoardHtml(result.data.board_html, true);
-        updateSignedInBadges(result.data.counts);
+        replaceInvitationsHtml(result.data.invitations_html);
       })
       .catch(function (err) {
         var liveBoard = currentBoard();
@@ -208,7 +206,7 @@
         if (!result) return;
         if (result.etag) lastSyncEtag = result.etag;
         replaceBoardHtml(result.data.board_html, true);
-        updateSignedInBadges(result.data.counts);
+        replaceInvitationsHtml(result.data.invitations_html);
       })
       .catch(function () {
         // Silent retry on transient network hiccups during background sync
