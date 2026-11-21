@@ -1,14 +1,17 @@
 - summary = event.pairing_summary(pairings)
-.pairing-board{ data: { pairing_create_url: admin_event_pairings_path(event) } }
+.pairing-board{ id: 'pairing-board', data: { pairing_create_url: admin_event_pairings_path(event), pairing_sync_url: admin_event_pairings_path(event) } }
   .d-flex.flex-wrap.justify-content-between.align-items-center.gap-2.mb-1
     .d-flex.flex-wrap.align-items-center.gap-2
-      %h4.mb-0 Checked in
+      %h4.mb-0 Checked in &amp; Pairings
       - if summary.groups_count.positive?
         %span.badge.rounded-pill.bg-primary= pluralize(summary.groups_count, 'group')
         %span.badge.rounded-pill.bg-white.text-dark.border
           #{pluralize(summary.students_count, 'student')} · #{pluralize(summary.coaches_count, 'coach')}
         - if summary.waiting_count.positive?
           %span.badge.rounded-pill.pairing-badge--waiting #{summary.waiting_count} waiting
+    %span.badge.rounded-pill.bg-white.text-muted.border.fw-normal{ data: { pairing_live_badge: true } }
+      %span.pairing-live-dot
+      Live sync · updates automatically
   %p.text-muted.small.mb-3
     Attendees auto-pair on check-in. Drag anyone onto a group to re-pair, or drop into the zone below to start a new group.
 
@@ -17,9 +20,9 @@
   - if pairings.empty?
     .pairing-empty-state.text-center.text-muted.py-4.px-3
       %i.fas.fa-user-friends.fa-lg.mb-2.d-block.opacity-50
-      No one has checked in yet. Verify an attendee below to start pairing.
+      No one has checked in yet. Check in an attendee to start pairing.
   - else
-    .row.d-none.d-md-flex.mb-2.px-2.pairing-board__headers
+    .row.d-none.d-md-flex.mb-2.px-2.pairing-section-header
       .col-md-6 Students
       .col-md-6 Coaches
     - pairings.each do |pairing|
