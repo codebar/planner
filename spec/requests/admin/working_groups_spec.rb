@@ -97,7 +97,7 @@ RSpec.describe 'Admin::WorkingGroups' do
 
       delete admin_workshop_invitation_working_group_path(workshop, student_b.id), as: :json
       expect(response).to have_http_status(:ok)
-      expect(response.parsed_body['counts']).to include('groups_count' => 2, 'waiting_count' => 1)
+      expect(response.parsed_body['counts']).to include('groups_count' => 1, 'waiting_count' => 1)
     end
   end
 end

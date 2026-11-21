@@ -43,8 +43,8 @@ module WorkingGroups
 
     def self.build_counts(groups, waiting, all_entries)
       Counts.new(
-        groups_count: groups.size + waiting.size,
-        waiting_count: waiting.size + groups.count { |g| !g.mixed? },
+        groups_count: groups.size,
+        waiting_count: waiting.size,
         checked_in_students: all_entries.count(&:for_student?),
         checked_in_coaches: all_entries.count(&:for_coach?)
       )

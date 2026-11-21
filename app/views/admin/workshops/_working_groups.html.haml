@@ -6,8 +6,9 @@
   .d-flex.flex-wrap.justify-content-between.align-items-center.gap-2.mb-1
     .d-flex.flex-wrap.align-items-center.gap-2
       %h4.mb-0 Pairings
-      - if board.counts.groups_count.positive?
-        %span.badge.rounded-pill.bg-primary= pluralize(board.counts.groups_count, 'group')
+      - unless board.empty?
+        - if board.counts.groups_count.positive?
+          %span.badge.rounded-pill.bg-primary= pluralize(board.counts.groups_count, 'group')
         %span.badge.rounded-pill.bg-white.text-dark.border
           #{pluralize(board.counts.checked_in_students, 'student')} &middot; #{pluralize(board.counts.checked_in_coaches, 'coach')}
         - if board.counts.waiting_count.positive?

@@ -81,7 +81,7 @@ RSpec.describe 'Managing workshop working groups' do
       find("button[aria-label^='Move Alice Beta']").click
     end
 
-    expect(page).to have_text('2 groups')
+    expect(page).to have_text('1 group')
     expect(page).to have_text('1 unpaired')
     expect(inv_alice.reload.workshop_working_group).to be_nil
     expect(inv_zara.reload.workshop_working_group).to be_present
