@@ -6,7 +6,7 @@
         .d-flex.flex-wrap.align-items-center.gap-2
           = link_to invitation.member.full_name, admin_member_path(invitation.member), class: 'pairing-slot__name'
           - if MemberPresenter.new(invitation.member).newbie?
-            %span.badge.rounded-pill.pairing-badge--newbie New attendee
+            %span.badge.rounded-pill.pairing-badge--newbie New
         - if invitation.note.present?
           %p.pairing-slot__note.mb-0.mt-1= invitation.note
     .pairing-slot__actions.d-flex.align-items-center.gap-1.flex-shrink-0
@@ -18,10 +18,10 @@
                     aria: { label: "Move #{invitation.member.full_name} into a new solo group" },
                     form: { class: 'd-inline', data: { pairing_split_form: true } } do
           %i.fas.fa-unlink{ aria: { hidden: 'true' } }
-      = link_to admin_event_invitation_cancel_path(event, invitation),
-                class: 'btn btn-sm btn-outline-secondary pairing-slot__action pairing-slot__action--cancel',
-                method: :post,
-                title: 'Cancel attendance',
-                aria: { label: "Cancel attendance for #{invitation.member.full_name}" },
-                data: { confirm: "Cancel attendance for #{invitation.member.full_name}?" } do
-        %i.fas.fa-times{ aria: { hidden: 'true' } }
+      = button_to admin_event_invitation_check_in_path(event, invitation_id: invitation.id),
+                  method: :delete,
+                  class: 'btn btn-sm btn-outline-secondary pairing-slot__action pairing-slot__action--cancel',
+                  title: 'Uncheck in',
+                  aria: { label: "Uncheck in #{invitation.member.full_name}" },
+                  form: { class: 'd-inline', data: { pairing_uncheck_form: true, invitation_id: invitation.id } } do
+        %i.fas.fa-undo{ aria: { hidden: 'true' } }

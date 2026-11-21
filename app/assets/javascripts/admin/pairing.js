@@ -116,27 +116,18 @@
     });
   }
 
-  function updateExpectedHeaderBadges(counts) {
+  function updateCheckInHeaderBadges(counts) {
     var section = document.querySelector('[data-expected-section]');
-    if (!section) return;
+    if (!section || !counts) return;
 
-    if (counts) {
-      var remainingEl = section.querySelector('[data-expected-remaining-badge]');
-      if (remainingEl) {
-        remainingEl.textContent =
-          pluralize(counts.students, 'student') + ' · ' + pluralize(counts.coaches, 'coach', 'coaches') + ' left';
-      }
+    var studentsEl = section.querySelector('[data-students-checked-in-badge]');
+    if (studentsEl) {
+      studentsEl.textContent = counts.students_checked_in + '/' + counts.students_total + ' students checked in';
     }
 
-    var settledCount = section.querySelectorAll('.expected-row[data-state="settled"]').length;
-    var checkedInEl = section.querySelector('[data-expected-checked-in-badge]');
-    if (checkedInEl) {
-      if (settledCount > 0) {
-        checkedInEl.textContent = settledCount + ' checked in';
-        checkedInEl.classList.remove('d-none');
-      } else {
-        checkedInEl.classList.add('d-none');
-      }
+    var coachesEl = section.querySelector('[data-coaches-checked-in-badge]');
+    if (coachesEl) {
+      coachesEl.textContent = counts.coaches_checked_in + '/' + counts.coaches_total + ' coaches checked in';
     }
   }
 
@@ -221,9 +212,9 @@
       });
   }
 
-  function submitCheckInToggle(form, method, nextState) {
-    var row = form.closest('[data-expected-row]');
-    var section = form.closest('[data-expected-section]');
+  function submitCheckInToggle(form, method, nextState, targetRow) {
+    var row = targetRow || form.closest('[data-expected-row]');
+    var section = (row && row.closest('[data-expected-section]')) || document.querySelector('[data-expected-section]');
     var board = currentBoard();
     if (!row || !board) return;
 
@@ -247,7 +238,7 @@
         lastSyncEtag = null;
         row.dataset.state = nextState;
         replaceBoardHtml(board, data.board_html, true);
-        updateExpectedHeaderBadges(data.expected_counts);
+        updateCheckInHeaderBadges(data.check_in_counts);
       })
       .catch(function (err) {
         showAlert(section, '[data-expected-error]', err.message || 'Unable to update check-in right now.');
@@ -293,7 +284,7 @@
           if (liveBoard && result.payload.board_html) {
             replaceBoardHtml(liveBoard, result.payload.board_html, true);
           }
-          updateExpectedHeaderBadges(result.payload.expected_counts);
+          updateCheckInHeaderBadges(result.payload.check_in_counts);
         }
       })
       .catch(function () {
@@ -373,6 +364,37 @@
     if (undoForm) {
       event.preventDefault();
       submitCheckInToggle(undoForm, 'DELETE', 'expected');
+      return;
+    }
+
+    var uncheckForm = event.target.closest('form[data-pairing-uncheck-form]');
+    if (uncheckForm) {
+      var targetBoard = currentBoard();
+      if (!targetBoard || !targetBoard.contains(uncheckForm)) return;
+      event.preventDefault();
+      var invId = uncheckForm.dataset.invitationId;
+      var matchingRow = document.querySelector('.expected-row[data-invitation-id="' + invId + '"]');
+      if (matchingRow) {
+        submitCheckInToggle(uncheckForm, 'DELETE', 'expected', matchingRow);
+      } else {
+        requestInFlight = true;
+        targetBoard.dataset.loading = 'true';
+        fetch(uncheckForm.action, {
+          method: 'DELETE',
+          headers: { 'X-CSRF-Token': csrfToken(), 'X-Requested-With': 'XMLHttpRequest', 'Accept': 'application/json' }
+        })
+          .then(function (r) { if (!r.ok) throw new Error('Unable to uncheck in right now.'); return r.json(); })
+          .then(function (data) {
+            lastSyncEtag = null;
+            replaceBoardHtml(targetBoard, data.board_html, true);
+            updateCheckInHeaderBadges(data.check_in_counts);
+          })
+          .catch(function (err) {
+            delete targetBoard.dataset.loading;
+            showAlert(targetBoard, '[data-pairing-error]', err.message);
+          })
+          .finally(function () { requestInFlight = false; });
+      }
     }
   });
 
