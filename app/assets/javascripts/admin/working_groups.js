@@ -1,5 +1,5 @@
 // Declarative working groups ("Pairings") board: drag-and-drop *:* grouping,
-// unlink & undo-check-in actions, attendance-list live sync, and 15s ETag polling.
+// unlink & undo-check-in actions, signed-in badge updates, and 15s ETag polling.
 (function () {
   var dragState = null;
   var requestInFlight = false;

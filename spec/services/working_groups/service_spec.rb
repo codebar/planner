@@ -121,5 +121,23 @@ RSpec.describe WorkingGroups::Service do
       expect(unassigned.groups.first.students).to eq([s1])
       expect(unassigned.waiting).to eq([s2])
     end
+
+    it 'cleans up stale <2-member group links so remaining attendees can be re-paired without unique errors' do
+      s1 = create_checked_in(role: 'Student', checked_in_at: 10.minutes.ago)
+      c1 = create_checked_in(role: 'Coach', checked_in_at: 9.minutes.ago)
+      c2 = create_checked_in(role: 'Coach', checked_in_at: 5.minutes.ago)
+      service.on_check_in(s1)
+      service.on_check_in(c1)
+
+      # Simulate c1 dropping out without on_check_out running (e.g. concurrent uncheck or ban)
+      c1.update!(attended: nil, checked_in_at: nil)
+
+      expect { service.on_check_in(c2) }.not_to raise_error
+
+      board = service.board
+      expect(board.groups.size).to eq(1)
+      expect(board.groups.first.students).to eq([s1])
+      expect(board.groups.first.coaches).to eq([c2])
+    end
   end
 end

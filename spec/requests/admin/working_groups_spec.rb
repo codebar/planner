@@ -22,12 +22,24 @@ RSpec.describe 'Admin::WorkingGroups' do
     organiser.add_role(:organiser, workshop.chapter)
   end
 
-  describe 'authorization' do
+  describe 'authorization and guards' do
     it 'redirects non-organisers away from working groups endpoints' do
       login(member)
 
       get admin_workshop_working_groups_path(workshop), as: :json
       expect(response).to have_http_status(:found)
+    end
+
+    it 'rejects working group requests for virtual workshops' do
+      virtual = Fabricate(:virtual_workshop, date_and_time: 10.minutes.from_now, ends_at: 2.hours.from_now)
+      organiser.add_role(:organiser, virtual.chapter)
+      login(organiser)
+
+      post admin_workshop_working_groups_path(virtual),
+           params: { invitation_id: student_a.id, target_invitation_id: coach_a.id },
+           as: :json
+      expect(response).to have_http_status(:unprocessable_content)
+      expect(virtual.workshop_working_groups).to be_empty
     end
   end
 

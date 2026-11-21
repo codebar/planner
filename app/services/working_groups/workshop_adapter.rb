@@ -31,7 +31,7 @@ module WorkingGroups
       return if before_board == after_board
 
       before_by_id = before_board.groups.index_by(&:id)
-      destroy_removed_groups!(before_by_id.keys - after_board.groups.filter_map(&:id))
+      destroy_unretained_groups!(after_board.groups.filter_map(&:id))
       update_existing_groups!(before_by_id, after_board.groups)
       create_new_groups!(after_board.groups)
     end
@@ -94,8 +94,10 @@ module WorkingGroups
       end
     end
 
-    def destroy_removed_groups!(removed_ids)
-      @workshop.workshop_working_groups.where(id: removed_ids).destroy_all if removed_ids.any?
+    def destroy_unretained_groups!(retained_ids)
+      scope = @workshop.workshop_working_groups
+      scope = scope.where.not(id: retained_ids) if retained_ids.any?
+      scope.destroy_all
     end
 
     def update_existing_groups!(before_by_id, after_groups)

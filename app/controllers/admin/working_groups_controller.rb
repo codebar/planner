@@ -1,5 +1,6 @@
 class Admin::WorkingGroupsController < Admin::ApplicationController
   before_action :set_workshop_and_authorize
+  before_action :ensure_working_groups_enabled
 
   def index
     board = service.board
@@ -31,6 +32,10 @@ class Admin::WorkingGroupsController < Admin::ApplicationController
     authorize @workshop, :update?
   end
 
+  def ensure_working_groups_enabled
+    head :unprocessable_content unless service.enabled?
+  end
+
   def service
     @service ||= WorkingGroups::Service.for(@workshop)
   end
@@ -57,8 +62,7 @@ class Admin::WorkingGroupsController < Admin::ApplicationController
         locals: { workshop: @workshop, board: }
       ),
       etag:,
-      counts: board.counts.to_h,
-      checked_in_ids: board.checked_in_ids
+      counts: board.counts.to_h
     }
   end
 end

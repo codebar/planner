@@ -40,10 +40,21 @@ class Admin::InvitationsController < Admin::ApplicationController
   end
 
   def update_to_attended
-    @invitation.update(attended: true, checked_in_at: Time.zone.now, source: Invitation::SOURCE_ADMIN)
-    WorkingGroups::Service.for(@workshop).on_check_in(@invitation)
+    return unless @invitation.update(
+      attended: true,
+      checked_in_at: @invitation.checked_in_at || Time.zone.now,
+      source: Invitation::SOURCE_ADMIN
+    )
+
     MemberActivityRecorder.record(actor: current_user, key: 'invitation.rsvp_override',
                                   trackable: @invitation, recipient: @invitation.member)
+    sync_working_group_check_in
+  end
+
+  def sync_working_group_check_in
+    WorkingGroups::Service.for(@workshop).on_check_in(@invitation)
+  rescue ActiveRecord::ActiveRecordError => e
+    Rails.logger.error("Working group auto-pair failed for invitation #{@invitation.id}: #{e.message}")
   end
 
   def update_to_unattended

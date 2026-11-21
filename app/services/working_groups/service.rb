@@ -17,7 +17,7 @@ module WorkingGroups
       @adapter = adapter
     end
 
-    delegate :visible?, to: :@adapter
+    delegate :visible?, :enabled?, to: :@adapter
 
     def board
       board_state, entries_by_id = @adapter.load_board_and_entries
@@ -41,6 +41,8 @@ module WorkingGroups
     end
 
     def assign(entry_id:, target_group_id: nil, target_entry_id: nil)
+      return board unless @adapter.enabled?
+
       action = Board::Assign.new(
         entry_id: entry_id.to_i,
         target_group_id: target_group_id&.to_i,
@@ -51,6 +53,8 @@ module WorkingGroups
     end
 
     def unassign(entry_id:)
+      return board unless @adapter.enabled?
+
       mutate_board { |board_state| board_state.reduce(Board::Unassign.new(entry_id: entry_id.to_i)) }
       board
     end

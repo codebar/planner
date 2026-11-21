@@ -1,7 +1,7 @@
 require 'digest'
 
 module WorkingGroups
-  class BoardView < Data.define(:visible, :groups, :waiting, :counts, :etag, :checked_in_ids)
+  class BoardView < Data.define(:visible, :groups, :waiting, :counts, :etag)
     Group = Data.define(:id, :position, :students, :coaches, :participants) do
       def mixed? = students.any? && coaches.any?
       def solo? = participants.one?
@@ -27,7 +27,7 @@ module WorkingGroups
       counts = build_counts(groups, waiting, all_entries)
       etag = compute_etag(session_id, all_entries, board)
 
-      new(visible:, groups:, waiting:, counts:, etag:, checked_in_ids: entries_by_id.keys.sort)
+      new(visible:, groups:, waiting:, counts:, etag:)
     end
 
     def self.build_group(group, entries_by_id)

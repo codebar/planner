@@ -109,17 +109,25 @@ class CheckInsController < ApplicationController
   end
 
   def mark_attended(invitation)
-    invitation.update!(check_in_attributes)
-    WorkingGroups::Service.for(@check_in_target).on_check_in(invitation) if @check_in_target.is_a?(Workshop)
+    invitation.update!(check_in_attributes(invitation))
     MemberActivityRecorder.record(actor: invitation.member, key: 'member.checked_in',
                                   trackable: invitation)
+    sync_workshop_working_group(invitation)
   end
 
-  def check_in_attributes
+  def sync_workshop_working_group(invitation)
+    return unless @check_in_target.is_a?(Workshop)
+
+    WorkingGroups::Service.for(@check_in_target).on_check_in(invitation)
+  rescue ActiveRecord::ActiveRecordError => e
+    Rails.logger.error("Working group auto-pair failed for invitation #{invitation.id}: #{e.message}")
+  end
+
+  def check_in_attributes(invitation)
     attrs = { attending: true, source: InvitationConcerns::SOURCE_CHECK_IN }
     return attrs.merge(verified: true) if @check_in_target.is_a?(Event)
 
-    attrs.merge(attended: true, checked_in_at: Time.zone.now, automated_rsvp: true)
+    attrs.merge(attended: true, checked_in_at: invitation.checked_in_at || Time.zone.now, automated_rsvp: true)
   end
 
   def permitted_role

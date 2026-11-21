@@ -67,6 +67,28 @@ RSpec.describe 'Workshop check-in working group transitions' do
     expect(virtual.workshop_working_groups).to be_empty
   end
 
+  it 'preserves original checked_in_at when an already checked-in attendee is ticked again' do
+    original_time = 15.minutes.ago.change(usec: 0)
+    student_invitation.update!(attended: true, checked_in_at: original_time)
+
+    put admin_workshop_invitation_path(workshop, student_invitation, attended: true), xhr: true
+
+    expect(student_invitation.reload.checked_in_at.to_i).to eq(original_time.to_i)
+  end
+
+  it 'still confirms QR check-in and records activity if auto-pairing raises an ActiveRecord error' do
+    put admin_workshop_invitation_path(workshop, student_invitation, attended: true), xhr: true
+    failing_service = instance_double(WorkingGroups::Service)
+    allow(failing_service).to receive(:on_check_in).and_raise(ActiveRecord::RecordNotUnique, 'duplicate')
+    allow(WorkingGroups::Service).to receive(:for).and_return(failing_service)
+
+    login(coach_invitation.member)
+    post check_in_w_path(code: workshop.check_in_code), params: { role: 'Coach' }
+
+    expect(response).to redirect_to(check_in_w_confirm_path(code: workshop.check_in_code))
+    expect(coach_invitation.reload.attended).to be true
+  end
+
   it 'FIFO-pairs when an attendee checks in via QR self check-in' do
     put admin_workshop_invitation_path(workshop, student_invitation, attended: true), xhr: true
 
