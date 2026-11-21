@@ -1,0 +1,27 @@
+.pairing-slot{ draggable: 'true', data: { pairing_invitation_id: invitation.id, pairing_source_group_id: pairing.id, pairing_unpair_url: admin_event_invitation_pairing_path(event, invitation_id: invitation.id) } }
+  .d-flex.justify-content-between.align-items-start.gap-2
+    .d-flex.align-items-start.min-w-0
+      %i.fas.fa-grip-vertical.pairing-slot__grip.me-2.mt-1{ aria: { hidden: 'true' } }
+      .min-w-0
+        .d-flex.flex-wrap.align-items-center.gap-2
+          = link_to invitation.member.full_name, admin_member_path(invitation.member), class: 'pairing-slot__name'
+          - if MemberPresenter.new(invitation.member).newbie?
+            %span.badge.rounded-pill.pairing-badge--newbie New attendee
+        - if invitation.note.present?
+          %p.pairing-slot__note.mb-0.mt-1= invitation.note
+    .pairing-slot__actions.d-flex.align-items-center.gap-1.flex-shrink-0
+      - unless solo
+        = button_to admin_event_invitation_pairing_path(event, invitation_id: invitation.id),
+                    method: :delete,
+                    class: 'btn btn-sm btn-outline-secondary pairing-slot__action',
+                    title: 'Move into a new solo group',
+                    aria: { label: "Move #{invitation.member.full_name} into a new solo group" },
+                    form: { class: 'd-inline', data: { pairing_split_form: true } } do
+          %i.fas.fa-unlink{ aria: { hidden: 'true' } }
+      = link_to admin_event_invitation_cancel_path(event, invitation),
+                class: 'btn btn-sm btn-outline-secondary pairing-slot__action pairing-slot__action--cancel',
+                method: :post,
+                title: 'Cancel attendance',
+                aria: { label: "Cancel attendance for #{invitation.member.full_name}" },
+                data: { confirm: "Cancel attendance for #{invitation.member.full_name}?" } do
+        %i.fas.fa-times{ aria: { hidden: 'true' } }
