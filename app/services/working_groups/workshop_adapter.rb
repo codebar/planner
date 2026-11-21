@@ -58,7 +58,7 @@ module WorkingGroups
     def checked_in_entries
       entries = @workshop.invitations.accepted.attended
                          .joins(:member).merge(Member.not_banned)
-                         .with_notes_and_their_authors.to_a
+                         .includes(:member).to_a
       preload_member_flags(entries)
       entries
     end

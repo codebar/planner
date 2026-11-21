@@ -323,8 +323,11 @@
     }
   });
 
-  document.addEventListener('workshop:attendance-updated', function () {
-    pollLiveBoard(true);
+  document.addEventListener('ajax:success', function (event) {
+    var target = event.target;
+    if (target && target.closest && target.closest('.verify_attendance')) {
+      pollLiveBoard(true);
+    }
   });
 
   document.addEventListener('DOMContentLoaded', initializeEtag);
