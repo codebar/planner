@@ -123,6 +123,8 @@ Rails.application.routes.draw do
         post 'verify'
         post 'cancel'
       end
+      resources :pairings, only: %i[create]
+      delete 'invitations/:invitation_id/pairing', to: 'pairings#destroy', as: :invitation_pairing
     end
 
     resources :invitation, only: [:update]
