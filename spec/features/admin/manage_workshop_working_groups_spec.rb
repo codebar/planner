@@ -82,8 +82,27 @@ RSpec.describe 'Managing workshop working groups' do
     end
 
     expect(page).to have_text('2 groups')
-    expect(page).to have_text('1 waiting')
+    expect(page).to have_text('1 unpaired')
     expect(inv_alice.reload.workshop_working_group).to be_nil
     expect(inv_zara.reload.workshop_working_group).to be_present
+  end
+
+  it 'shows the New badge for first-time attendees even after they check in' do
+    newbie = Fabricate(:member, name: 'First', surname: 'Timer')
+    returning_member = Fabricate(:member, name: 'Regular', surname: 'Attendee')
+    past_workshop = Fabricate(:past_workshop)
+    Fabricate(:workshop_invitation, workshop: past_workshop, member: returning_member,
+                                    role: 'Student', attending: true, attended: true, automated_rsvp: true)
+
+    newbie_inv = Fabricate(:workshop_invitation, workshop:, member: newbie, role: 'Student', attending: true,
+                                                 attended: true, checked_in_at: 5.minutes.ago, automated_rsvp: true)
+    returning_inv = Fabricate(:workshop_invitation, workshop:, member: returning_member, role: 'Student',
+                                                    attending: true, attended: true,
+                                                    checked_in_at: 2.minutes.ago, automated_rsvp: true)
+
+    visit admin_workshop_path(workshop)
+
+    within("#working-group-waiting-#{newbie_inv.id}") { expect(page).to have_text('New') }
+    within("#working-group-waiting-#{returning_inv.id}") { expect(page).to have_no_text('New') }
   end
 end

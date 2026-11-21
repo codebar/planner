@@ -11,12 +11,12 @@
         %span.badge.rounded-pill.bg-white.text-dark.border
           #{pluralize(board.counts.checked_in_students, 'student')} &middot; #{pluralize(board.counts.checked_in_coaches, 'coach')}
         - if board.counts.waiting_count.positive?
-          %span.badge.rounded-pill.working-groups-badge--waiting #{board.counts.waiting_count} waiting
+          %span.badge.rounded-pill.working-groups-badge--waiting #{board.counts.waiting_count} unpaired
     .small.text-muted
       %span.working-groups-live-dot
-      Live sync
+      Live sync (every 15s)
   %p.text-muted.small.mb-3
-    Attendees auto-pair on check-in (FIFO by check-in time). Drag anyone onto a group to re-pair, or drop into the zone below to start a new group.
+    Attendees auto-pair on check-in (FIFO by check-in time). Drag anyone onto a group for 1:1 or multi-person groups, or drop below to start a new group.
 
   .alert.alert-danger.py-2.px-3.small.d-none{ role: 'alert', data: { working_groups_error: true } }
 

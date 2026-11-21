@@ -14,7 +14,9 @@
                     admin_member_path(invitation.member),
                     class: 'working-group-slot__name'
           - if member.newbie?
-            %span.badge.rounded-pill.working-groups-badge--newbie New attendee
+            %span.badge.rounded-pill.working-groups-badge--newbie{ title: 'First-time attendee', data: { bs_toggle: 'tooltip' } }
+              %i.fas.fa-paw.me-1{ aria: { hidden: 'true' } }
+              New
           - elsif member.flag_to_organisers?
             %span.ms-1{ data: { bs_toggle: 'tooltip', bs_placement: 'bottom' },
                         title: 'Multiple no shows and attendance warnings in the last six months' }

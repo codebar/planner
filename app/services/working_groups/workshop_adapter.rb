@@ -68,7 +68,13 @@ module WorkingGroups
       return if members.empty?
 
       flags = AdminWorkshopAttendeeFlags.for_members(members.map(&:id))
-      members.each { |member| member.admin_workshop_flags = flags[member.id] }
+      prior = prior_attended_member_ids(members.map(&:id))
+      members.each { |m| m.admin_workshop_flags = flags[m.id].merge(newbie: !prior.include?(m.id)) }
+    end
+
+    def prior_attended_member_ids(member_ids)
+      WorkshopInvitation.where(member_id: member_ids, attended: true)
+                        .where.not(workshop_id: @workshop.id).distinct.pluck(:member_id).to_set
     end
 
     def build_groups(entries_by_id, grouped_ids)
