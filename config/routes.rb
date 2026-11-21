@@ -155,6 +155,8 @@ Rails.application.routes.draw do
       resource :invitations, only: [:update]
       resources :invitations, only: [:update]
       resources :invitation_logs, only: %i[index show], controller: 'workshop_invitation_logs'
+      resources :working_groups, only: %i[index create]
+      delete 'invitations/:invitation_id/working_group', to: 'working_groups#destroy', as: :invitation_working_group
     end
 
     resources :testimonials, only: %i[index]

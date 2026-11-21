@@ -1,0 +1,35 @@
+-# locals: (workshop:, invitation:, source_group_id:)
+- if invitation.present?
+  - role_modifier = invitation.for_student? ? 'student' : 'coach'
+  - member = MemberPresenter.new(invitation.member)
+  .working-group-slot{ draggable: 'true',
+                       class: "working-group-slot--#{role_modifier}",
+                       data: { entry_id: invitation.id,
+                               role: invitation.role,
+                               source_group_id: source_group_id.to_s,
+                               unpair_url: admin_workshop_invitation_working_group_path(workshop, invitation.id) } }
+    .d-flex.justify-content-between.align-items-center.gap-2
+      %span.badge.working-groups-pill{ class: "working-groups-pill--#{role_modifier}" }= invitation.role
+      - if invitation.checked_in_at.present?
+        %span.badge.working-groups-pill.working-groups-pill--time
+          = invitation.checked_in_at.in_time_zone(workshop.time_zone).strftime('%H:%M')
+    .fw-semibold.mt-1.working-group-slot__name
+      %i.fas.fa-grip-vertical.working-group-slot__grip.me-1{ aria: { hidden: 'true' } }
+      = member.full_name.presence || member.email
+      - if member.newbie?
+        %span.ms-1{ data: { bs_toggle: 'tooltip', bs_placement: 'bottom' }, title: 'New attendee' }
+          %i.fas.fa-paw.text-muted
+      - elsif member.flag_to_organisers?
+        %span.ms-1{ data: { bs_toggle: 'tooltip', bs_placement: 'bottom' }, title: 'Multiple no shows and attendance warnings in the last six months' }
+          %i.fas.fa-exclamation-circle.text-warning
+    - if invitation.tutorial.present?
+      .working-group-slot__meta
+        %strong Tutorial:
+        = invitation.tutorial
+    - if invitation.note.present?
+      .working-group-slot__meta
+        %strong Note:
+        = invitation.note
+- else
+  .working-group-slot.working-group-slot--empty
+    Waiting for partner

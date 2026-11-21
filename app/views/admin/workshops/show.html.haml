@@ -104,6 +104,8 @@
 - if @workshop.invitations.any?
   .py-4.py-lg-5.bg-light
     .container#invitations
+      - if @working_groups_board&.visible?
+        = render partial: 'admin/workshops/working_groups', locals: { workshop: @workshop, board: @working_groups_board }
       = render partial: 'invitation_management'
 
   .py-4.py-lg-5

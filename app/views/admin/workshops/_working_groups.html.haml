@@ -1,0 +1,74 @@
+-# locals: (workshop:, board:)
+.working-groups-board.card.mb-4{ data: { board_url: admin_workshop_working_groups_path(workshop),
+                                         assign_url: admin_workshop_working_groups_path(workshop),
+                                         board_etag: %("#{board.etag}") } }
+  .card-body
+    .d-flex.flex-wrap.justify-content-between.align-items-start.gap-2.mb-3
+      %div
+        %h4.mb-1
+          Pairings
+          %span.badge.rounded-pill.bg-success.ms-1= pluralize(board.counts.pairs, 'pair')
+          %span.badge.rounded-pill.bg-secondary.ms-1 #{board.counts.waiting_total} waiting
+        %p.small.text-muted.mb-0
+          Auto-paired FIFO by check-in time &middot; Drag any student or coach to swap or pair &middot; Syncs every 15s
+      .small.text-muted
+        %span.badge.bg-light.text-dark.border
+          %span.working-groups-live-dot
+          Live sync
+
+    .alert.alert-danger.d-none.mb-3{ role: 'alert', data: { working_groups_error: true } }
+
+    - if board.empty?
+      %p.text-muted.mb-0
+        No one has checked in yet. Tick attendees in the list below (or let them scan the QR code) to pair them automatically.
+    - else
+      - if board.groups.any?
+        .working-groups-grid
+          - board.groups.each_with_index do |group, idx|
+            .working-group-card{ id: "working-group-#{group.id}",
+                                 data: { working_group_id: group.id, dropzone: 'group' } }
+              .working-group-card__side
+                = render partial: 'admin/workshops/working_group_slot',
+                         locals: { workshop:, invitation: group.student, source_group_id: group.id }
+              .working-group-card__center
+                %span.small.fw-bold.text-muted ##{idx + 1}
+                - unpair_entry = group.student || group.coach
+                - if unpair_entry
+                  = button_to 'Unpair',
+                              admin_workshop_invitation_working_group_path(workshop, unpair_entry.id),
+                              method: :delete,
+                              class: 'btn btn-link btn-sm text-muted p-0 working-groups-unpair-btn',
+                              form: { data: { working_groups_unpair_form: true } }
+              .working-group-card__side
+                = render partial: 'admin/workshops/working_group_slot',
+                         locals: { workshop:, invitation: group.coach, source_group_id: group.id }
+
+        .working-groups-unpair-zone.mt-3{ data: { dropzone: 'unpair' } }
+          Drop here to unpair back to waiting
+
+      - if board.waiting.any?
+        .working-groups-waiting{ class: (board.groups.any? ? 'mt-3 pt-3 border-top' : nil) }
+          .small.fw-semibold.text-muted.mb-2
+            Waiting to be paired (check-in order)
+          .working-groups-waiting-list
+            - board.waiting.each do |entry|
+              - opposite_waiting = board.waiting.reject { |candidate| candidate.role == entry.role }
+              .working-group-waiting-card{ data: { entry_id: entry.id,
+                                                   role: entry.role,
+                                                   source_group_id: '',
+                                                   dropzone: 'waiting',
+                                                   target_entry_id: entry.id } }
+                = render partial: 'admin/workshops/working_group_slot',
+                         locals: { workshop:, invitation: entry, source_group_id: nil }
+                - if opposite_waiting.any?
+                  = form_with url: admin_workshop_working_groups_path(workshop),
+                              method: :post,
+                              local: true,
+                              class: 'd-flex align-items-center gap-2 mt-2 pt-2 border-top',
+                              data: { working_groups_pair_form: true } do
+                    = hidden_field_tag :invitation_id, entry.id
+                    = select_tag :target_invitation_id,
+                                 options_for_select(opposite_waiting.map { |c| [c.member.full_name.presence || c.member.email, c.id] }),
+                                 class: 'form-select form-select-sm working-groups-select',
+                                 aria: { label: "Pair #{entry.member.full_name} with" }
+                    = submit_tag 'Pair', class: 'btn btn-sm btn-outline-primary'

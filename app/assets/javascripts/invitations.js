@@ -8,6 +8,7 @@ $(document).ready(function() {
       var rowId = $row.attr('id');
       $row.replaceWith(xhr.responseText);
       $(".row.attendee[id='" + rowId + "']").find('[data-bs-toggle="tooltip"]').tooltip();
+      document.dispatchEvent(new CustomEvent('workshop:attendance-updated'));
     }
   });
 });
