@@ -217,7 +217,7 @@
       })
       .then(function (result) {
         if (!result || version !== syncVersion || requestInFlight || dragState) return;
-        if (result.etag) lastSyncEtag = result.etag;
+        if (result.etag && !boardOnly) lastSyncEtag = result.etag;
         replaceBoardHtml(result.data.board_html, true);
         if (boardOnly) {
           updateSignedInBadges(result.data.counts);
