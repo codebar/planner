@@ -61,6 +61,25 @@ RSpec.describe Admin::EventsController do
     end
   end
 
+  describe 'GET #show' do
+    render_views
+
+    it 'renders past events without fabricating pairings or enabling live sync' do
+      past_event = Fabricate(:event, chapters: [chapter], date_and_time: 2.weeks.ago,
+                                     ends_at: 2.weeks.ago + 2.hours, confirmation_required: true)
+      admin.add_role(:organiser, past_event)
+      inv = Fabricate(:invitation, event: past_event, attending: true, verified: false)
+      inv.update_column(:verified, true)
+
+      get :show, params: { id: past_event.slug }
+
+      expect(response).to have_http_status(:ok)
+      expect(past_event.pairings.count).to eq(0)
+      expect(response.body).not_to include('Live sync')
+      expect(response.body).not_to include('pairing-board')
+    end
+  end
+
   describe 'GET #new' do
     render_views
 

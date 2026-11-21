@@ -115,6 +115,18 @@ RSpec.describe Pairing do
       expect(event.pairings.count).to eq(1)
       expect(event.pairings.first.invitations).to contain_exactly(student_one, coach_one)
     end
+
+    it 'does not fabricate pairings when loading synced_pairings for a past event' do
+      past_event = Fabricate(:event, date_and_time: 2.weeks.ago, ends_at: 2.weeks.ago + 2.hours,
+                                     confirmation_required: true)
+      student = Fabricate(:invitation, event: past_event, attending: true, verified: false)
+      coach = Fabricate(:coach_invitation, event: past_event, attending: true, verified: false)
+      student.update_column(:verified, true)
+      coach.update_column(:verified, true)
+
+      expect(past_event.synced_pairings).to be_empty
+      expect(past_event.pairings.count).to eq(0)
+    end
   end
 
   describe 'cascading deletes' do
