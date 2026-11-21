@@ -10,11 +10,11 @@ class Pairing < ApplicationRecord
   validate :at_least_one_member
 
   def student_invitations
-    sort_by_member_name(member_invitations.select(&:for_student?))
+    member_invitations.select(&:for_student?)
   end
 
   def coach_invitations
-    sort_by_member_name(member_invitations.select(&:for_coach?))
+    member_invitations.select(&:for_coach?)
   end
 
   # A pairing with members on only one side is still "waiting" on its
@@ -97,10 +97,6 @@ class Pairing < ApplicationRecord
 
   def member_invitations
     pairing_invitations.map(&:invitation)
-  end
-
-  def sort_by_member_name(list)
-    list.sort_by { |inv| [inv.member.name.to_s.downcase, inv.member.surname.to_s.downcase] }
   end
 
   def set_position

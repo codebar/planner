@@ -2,16 +2,13 @@
 .pairing-board{ id: 'pairing-board', data: { pairing_create_url: admin_event_pairings_path(event), pairing_sync_url: admin_event_pairings_path(event) } }
   .d-flex.flex-wrap.justify-content-between.align-items-center.gap-2.mb-1
     .d-flex.flex-wrap.align-items-center.gap-2
-      %h4.mb-0 Checked in &amp; Pairings
+      %h4.mb-0 Pairings
       - if summary.groups_count.positive?
         %span.badge.rounded-pill.bg-primary= pluralize(summary.groups_count, 'group')
         %span.badge.rounded-pill.bg-white.text-dark.border
           #{pluralize(summary.students_count, 'student')} · #{pluralize(summary.coaches_count, 'coach')}
         - if summary.waiting_count.positive?
           %span.badge.rounded-pill.pairing-badge--waiting #{summary.waiting_count} waiting
-    %span.badge.rounded-pill.bg-white.text-muted.border.fw-normal{ data: { pairing_live_badge: true } }
-      %span.pairing-live-dot
-      Live sync · updates automatically
   %p.text-muted.small.mb-3
     Attendees auto-pair on check-in. Drag anyone onto a group to re-pair, or drop into the zone below to start a new group.
 

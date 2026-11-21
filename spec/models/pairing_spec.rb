@@ -52,16 +52,18 @@ RSpec.describe Pairing do
       expect(target.reload.invitations).to contain_exactly(student_one, student_two, coach_one)
     end
 
-    it 'returns students and coaches sorted alphabetically by member name' do
-      zara = Fabricate(:invitation, event:, member: Fabricate(:member, name: 'Zara', surname: 'Zulu'),
-                                    attending: true, verified: true)
-      amara = Fabricate(:invitation, event:, member: Fabricate(:member, name: 'Amara', surname: 'Alpha'),
-                                     attending: true, verified: true)
-      target = event.pairings.ordered.first
-      described_class.add!(amara, target)
+    it 'sorts expected students and coaches alphabetically by member name' do
+      Fabricate(:invitation, event:, member: Fabricate(:member, name: 'Zara', surname: 'Zulu'),
+                             attending: true, verified: false)
+      Fabricate(:invitation, event:, member: Fabricate(:member, name: 'amara', surname: 'Alpha'),
+                             attending: true, verified: false)
+      Fabricate(:coach_invitation, event:, member: Fabricate(:member, name: 'Marcus', surname: 'Lee'),
+                                   attending: true, verified: false)
+      Fabricate(:coach_invitation, event:, member: Fabricate(:member, name: 'ben', surname: 'Coyle'),
+                                   attending: true, verified: false)
 
-      expect(target.reload.student_invitations.map { |i| i.member.name }).to eq(%w[Amara Zara])
-      expect(zara).to be_verified
+      expect(event.expected_students.map { |i| i.member.name }).to eq(%w[amara Zara])
+      expect(event.expected_coaches.map { |i| i.member.name }).to eq(%w[ben Marcus])
     end
 
     it 'safely no-ops when dropping a solo member onto their own pairing' do
