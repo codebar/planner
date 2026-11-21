@@ -48,7 +48,7 @@ RSpec.feature 'Managing events' do
     invitation = Fabricate(:invitation, event:, attending: true)
     visit admin_event_path(event)
 
-    click_on 'Verify'
+    click_on 'Check in'
 
     expect(page).to have_text "You have verified #{invitation.member.full_name}'s spot at the event!"
     expect(invitation.reload.verified_by).to eq(member)
