@@ -1,0 +1,19 @@
+- state_class = pairing.mixed? ? 'pairing-group--paired' : 'pairing-group--waiting'
+.pairing-group.mb-3{ class: state_class, data: { pairing_id: pairing.id, pairing_dropzone: 'group' } }
+  .pairing-group__side
+    - if pairing.student_invitations.any?
+      - pairing.student_invitations.each do |invitation|
+        = render partial: 'admin/events/pairing_slot', locals: { event:, pairing:, invitation:, solo: pairing.solo? }
+    - else
+      .pairing-slot.pairing-slot--empty
+        %i.fas.fa-user-plus.me-2.opacity-50
+        Drop a student here
+  .pairing-group__divider
+  .pairing-group__side
+    - if pairing.coach_invitations.any?
+      - pairing.coach_invitations.each do |invitation|
+        = render partial: 'admin/events/pairing_slot', locals: { event:, pairing:, invitation:, solo: pairing.solo? }
+    - else
+      .pairing-slot.pairing-slot--empty
+        %i.fas.fa-user-plus.me-2.opacity-50
+        Drop a coach here

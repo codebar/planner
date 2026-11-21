@@ -6,10 +6,21 @@
           <strong>#{@event.invitations.count}</strong> members have been invited to this event.
           %br
           <strong>#{@attending_students.count}</strong> are attending as students and <strong>#{@attending_coaches.count}</strong> as coaches.
-.row
+= render partial: 'admin/events/pairing', locals: { event: @original_event, pairings: @pairings }
+
+.row.mt-4
+  .col-12
+    %h4 Expected
+    %p.text-muted Invited and RSVP'd, but not yet checked in.
   .col-12.col-md-6
-    %h4 Students
-    = render partial: 'admin/events/attendances', locals: { invitations: @attending_students }
+    %h5 Students
+    - if @expected_students.empty?
+      %p.text-muted.small All students have checked in.
+    - else
+      = render partial: 'admin/events/attendances', locals: { invitations: @expected_students }
   .col-12.col-md-6
-    %h4 Coaches
-    = render partial: 'admin/events/attendances', locals: { invitations: @attending_coaches }
+    %h5 Coaches
+    - if @expected_coaches.empty?
+      %p.text-muted.small All coaches have checked in.
+    - else
+      = render partial: 'admin/events/attendances', locals: { invitations: @expected_coaches }
