@@ -17,6 +17,25 @@ RSpec.describe Admin::PairingsController do
     second_student
   end
 
+  describe 'GET #index' do
+    it 'renders the dedicated pairings view for HTML requests' do
+      get :index, params: { event_id: event.slug }
+
+      expect(response).to have_http_status(:ok)
+      expect(response.body).to include('pairing-board')
+    end
+
+    it 'returns 304 Not Modified on matching ETag for XHR live sync' do
+      get :index, params: { event_id: event.slug }, xhr: true
+      expect(response).to have_http_status(:ok)
+      etag = response.headers['ETag']
+
+      request.headers['If-None-Match'] = etag
+      get :index, params: { event_id: event.slug }, xhr: true
+      expect(response).to have_http_status(:not_modified)
+    end
+  end
+
   describe 'POST #create' do
     it 'moves the invitation into the target pairing and redirects on HTML requests' do
       target = event.pairings.ordered.first

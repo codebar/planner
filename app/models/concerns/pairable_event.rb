@@ -31,4 +31,11 @@ module PairableEvent
       coaches_count: loaded_pairings.sum { |p| p.coach_invitations.size }
     )
   end
+
+  def pairing_board_etag(loaded_pairings = pairings.with_members)
+    group_keys = loaded_pairings.map do |pairing|
+      [pairing.id, pairing.position, pairing.updated_at.to_i, pairing.pairing_invitations.map(&:invitation_id).sort]
+    end
+    [id, expected_students.count, expected_coaches.count, group_keys]
+  end
 end

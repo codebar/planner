@@ -23,6 +23,9 @@
   = link_to admin_event_check_in_path(@event), class: 'btn btn-primary py-3' do
     %i.fas.fa-qrcode
     %label.text-white Check-in
+  = link_to admin_event_pairings_path(@event), class: 'btn btn-primary py-3' do
+    %i.fas.fa-user-friends
+    %label.text-white Pairings
 
 .container.py-4.py-lg-5
   .row.mb-4
