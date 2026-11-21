@@ -4,6 +4,7 @@ class Event < ApplicationRecord
   include Invitable
   include CheckInable
   include RsvpClosable
+  include PairableEvent
 
   attr_accessor :local_date, :local_time, :local_end_time
 
