@@ -30,8 +30,12 @@ module PairableEvent
     expected_by_role('Coach')
   end
 
+  def past_event?
+    (ends_at || date_and_time)&.past? || false
+  end
+
   def synced_pairings
-    Pairing.sync!(self)
+    Pairing.sync!(self) unless past_event?
     pairings.with_members
   end
 

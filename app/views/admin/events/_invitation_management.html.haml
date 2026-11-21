@@ -7,10 +7,12 @@
         #{@check_in_counts[:students_checked_in]}/#{@check_in_counts[:students_total]} students checked in
       %span.badge.rounded-pill.bg-white.text-dark.border{ data: { coaches_checked_in_badge: true } }
         #{@check_in_counts[:coaches_checked_in]}/#{@check_in_counts[:coaches_total]} coaches checked in
-    %span.badge.rounded-pill.bg-white.text-muted.border.fw-normal{ data: { pairing_live_badge: true } }
-      %span.pairing-live-dot
-      Live sync · updates every 15s
+    - unless @original_event.past_event?
+      %span.badge.rounded-pill.bg-white.text-muted.border.fw-normal{ data: { pairing_live_badge: true } }
+        %span.pairing-live-dot
+        Live sync · updates every 15s
 
   = render partial: 'admin/events/expected',
            locals: { event: @original_event, attendees: @expected_attendees, pairings: @pairings }
-  = render partial: 'admin/events/pairing', locals: { event: @original_event, pairings: @pairings }
+  - if !@original_event.past_event? || @pairings.any?
+    = render partial: 'admin/events/pairing', locals: { event: @original_event, pairings: @pairings }

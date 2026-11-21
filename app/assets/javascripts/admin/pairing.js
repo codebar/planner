@@ -95,7 +95,10 @@
       }
 
       row.dataset.pairingId = group.dataset.pairingId;
-      if (jumpBtn) jumpBtn.dataset.targetGroupId = group.dataset.pairingId;
+      if (jumpBtn) {
+        jumpBtn.dataset.targetGroupId = group.dataset.pairingId;
+        jumpBtn.classList.remove('d-none');
+      }
 
       var partners = Array.from(group.querySelectorAll('[data-pairing-invitation-id]'))
         .filter(function (s) { return s.dataset.pairingInvitationId !== invId; })

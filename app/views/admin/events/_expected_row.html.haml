@@ -3,7 +3,13 @@
   role_class = invitation.for_student? ? 'pairing-badge--student' : 'pairing-badge--coach'
   partners = pairing ? pairing.pairing_invitations.map(&:invitation).reject { |i| i.id == invitation.id }.map { |i| i.member.full_name } : []
   waiting_for = invitation.for_student? ? 'a coach' : 'a student'
-  settled_text = partners.any? ? "Checked in · Paired with #{partners.join(', ')}" : "Checked in · Waiting for #{waiting_for}"
+  settled_text = if pairing.nil?
+    'Checked in'
+  elsif partners.any?
+    "Checked in · Paired with #{partners.join(', ')}"
+  else
+    "Checked in · Waiting for #{waiting_for}"
+  end
 .expected-row{ data: { expected_row: true, state:, invitation_id: invitation.id, pairing_id: pairing&.id, role: invitation.role, full_name: invitation.member.full_name } }
   .expected-row__pending.expected-table-row
     .expected-cell__name.min-w-0
@@ -48,7 +54,7 @@
                   title: 'Undo check-in',
                   form: { class: 'd-inline', data: { pairing_undo_form: true } } do
         Undo
-      %button.btn.btn-sm.btn-outline-primary{ type: 'button', data: { pairing_jump_btn: true, target_group_id: pairing&.id } }
+      %button.btn.btn-sm.btn-outline-primary{ type: 'button', class: ('d-none' unless pairing), data: { pairing_jump_btn: true, target_group_id: pairing&.id } }
         View ↓
       = link_to admin_event_invitation_cancel_path(event, invitation),
                 class: 'btn btn-sm btn-outline-secondary pairing-slot__action pairing-slot__action--cancel',
