@@ -101,23 +101,25 @@ RSpec.describe WorkingGroups::Service do
   end
 
   describe '#assign and #unassign' do
-    it 'supports swapping across groups and unassigning back to waiting' do
+    it 'supports 2:1 multi-student working groups and pulling a student back into solo waiting' do
       s1 = create_checked_in(role: 'Student', checked_in_at: 10.minutes.ago)
       c1 = create_checked_in(role: 'Coach', checked_in_at: 9.minutes.ago)
       s2 = create_checked_in(role: 'Student', checked_in_at: 8.minutes.ago)
-      c2 = create_checked_in(role: 'Coach', checked_in_at: 7.minutes.ago)
-      [s1, c1, s2, c2].each { |inv| service.on_check_in(inv) }
+      [s1, c1, s2].each { |inv| service.on_check_in(inv) }
 
       initial = service.board
-      second_group_id = initial.groups.last.id
+      first_group_id = initial.groups.first.id
 
-      swapped = service.assign(entry_id: s1.id, target_group_id: second_group_id)
-      expect(swapped.groups.first.student).to eq(s2)
-      expect(swapped.groups.last.student).to eq(s1)
+      grouped = service.assign(entry_id: s2.id, target_group_id: first_group_id)
+      expect(grouped.groups.size).to eq(1)
+      expect(grouped.groups.first.students).to contain_exactly(s1, s2)
+      expect(grouped.groups.first.coaches).to eq([c1])
+      expect(grouped.waiting).to be_empty
 
-      unassigned = service.unassign(entry_id: s1.id)
+      unassigned = service.unassign(entry_id: s2.id)
       expect(unassigned.groups.size).to eq(1)
-      expect(unassigned.waiting).to eq([s1, c2])
+      expect(unassigned.groups.first.students).to eq([s1])
+      expect(unassigned.waiting).to eq([s2])
     end
   end
 end

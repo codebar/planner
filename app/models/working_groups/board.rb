@@ -1,6 +1,10 @@
 module WorkingGroups
   # Pure functional state representation and deterministic FIFO reducer for
   # session working groups (presented as "Pairings" in the organiser UI).
+  #
+  # Supports *:* working groups (e.g. 2 students + 1 coach). Groups stay fixed
+  # in position once formed, while solo waiting participants stay ordered
+  # strictly by check-in time.
   class Board
     CheckIn = Data.define(:entry_id, :role, :checked_in_at)
     Assign = Data.define(:entry_id, :target_group_id, :target_entry_id)
@@ -44,48 +48,26 @@ module WorkingGroups
       source = find_participant(action.entry_id)
       return self unless source
       return pair_with_waiting(source, action.target_entry_id) if action.target_entry_id.present?
-      return assign_to_group(source, action.target_group_id) if action.target_group_id.present?
+      return move_into_group(source, action.target_group_id) if action.target_group_id.present?
 
       self
     end
 
     def pair_with_waiting(source, target_entry_id)
       target = waiting.find { |p| p.entry_id == target_entry_id }
-      return self unless target && target.role != source.role
+      return self unless target && target.entry_id != source.entry_id
 
       next_groups, next_waiting = detach(source.entry_id)
       pair_participants(next_groups, without_entry(next_waiting, target.entry_id), target, source)
     end
 
-    def assign_to_group(source, target_group_id)
+    def move_into_group(source, target_group_id)
       target_group = groups.find { |g| g.id == target_group_id }
       return self unless target_group && !target_group.contains?(source.entry_id)
 
-      source_group = group_for(source.entry_id)
-      displaced = target_group.participant_with_role(source.role)
-      return swap_across_groups(source, source_group, displaced, target_group) if source_group && displaced
-
-      move_into_group(source, target_group, displaced)
-    end
-
-    def swap_across_groups(source, source_group, displaced, target_group)
-      updated = groups.map do |g|
-        next g.replace_participant(source.entry_id, displaced) if g.id == source_group.id
-        next g.replace_participant(displaced.entry_id, source) if g.id == target_group.id
-
-        g
-      end
-      self.class.new(groups: updated, waiting:)
-    end
-
-    def move_into_group(source, target_group, displaced)
       next_groups, next_waiting = detach(source.entry_id)
-      updated = next_groups.map do |g|
-        next g unless g.id == target_group.id
-
-        displaced ? g.replace_participant(displaced.entry_id, source) : g.add_participant(source)
-      end
-      self.class.new(groups: updated, waiting: next_waiting + Array(displaced))
+      updated = next_groups.map { |g| g.id == target_group.id ? g.add_participant(source) : g }
+      self.class.new(groups: updated, waiting: next_waiting)
     end
 
     def reduce_unassign(action)
@@ -114,14 +96,13 @@ module WorkingGroups
       [replace_group(source_group.id, remaining), waiting]
     end
 
-    def replace_group(group_id, replacement) = groups.map { |g| g.id == group_id ? replacement : g }
-
     def pair_participants(current_groups, current_waiting, first, second)
       next_pos = (current_groups.map(&:position).max || 0) + 1
       self.class.new(groups: current_groups + [Group.new(id: nil, position: next_pos, participants: [first, second])],
                      waiting: current_waiting)
     end
 
+    def replace_group(group_id, replacement) = groups.map { |g| g.id == group_id ? replacement : g }
     def group_for(entry_id) = groups.find { |g| g.contains?(entry_id) }
     def grouped_participant(entry_id) = groups.lazy.flat_map(&:participants).find { |p| p.entry_id == entry_id }
     def first_opposite_role(list, participant) = list.find { |p| p.role == participant.opposite_role }

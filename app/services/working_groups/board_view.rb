@@ -2,23 +2,18 @@ require 'digest'
 
 module WorkingGroups
   class BoardView < Data.define(:visible, :groups, :waiting, :counts, :etag, :checked_in_ids)
-    Group = Data.define(:id, :position, :student, :coach, :participants) do
-      def paired?
-        student.present? && coach.present?
-      end
+    Group = Data.define(:id, :position, :students, :coaches, :participants) do
+      def mixed? = students.any? && coaches.any?
+      def solo? = participants.one?
+      def student = students.first
+      def coach = coaches.first
     end
 
-    Counts = Data.define(:pairs, :waiting_students, :waiting_coaches, :checked_in_students, :checked_in_coaches) do
-      def waiting_total
-        waiting_students + waiting_coaches
-      end
-
+    Counts = Data.define(:groups_count, :waiting_count, :checked_in_students, :checked_in_coaches) do
       def to_h
         {
-          pairs:,
-          waiting_students:,
-          waiting_coaches:,
-          waiting_total:,
+          groups_count:,
+          waiting_count:,
           checked_in_students:,
           checked_in_coaches:
         }
@@ -40,17 +35,16 @@ module WorkingGroups
       Group.new(
         id: group.id,
         position: group.position,
-        student: entries.find(&:for_student?),
-        coach: entries.find(&:for_coach?),
+        students: entries.select(&:for_student?),
+        coaches: entries.select(&:for_coach?),
         participants: entries
       )
     end
 
-    def self.build_counts(group_views, waiting_entries, all_entries)
+    def self.build_counts(groups, waiting, all_entries)
       Counts.new(
-        pairs: group_views.count(&:paired?),
-        waiting_students: waiting_entries.count(&:for_student?),
-        waiting_coaches: waiting_entries.count(&:for_coach?),
+        groups_count: groups.size + waiting.size,
+        waiting_count: waiting.size + groups.count { |g| !g.mixed? },
         checked_in_students: all_entries.count(&:for_student?),
         checked_in_coaches: all_entries.count(&:for_coach?)
       )
@@ -62,12 +56,7 @@ module WorkingGroups
       Digest::SHA256.hexdigest([session_id, entry_sig, group_sig].to_json)
     end
 
-    def visible?
-      visible
-    end
-
-    def empty?
-      groups.empty? && waiting.empty?
-    end
+    def visible? = visible
+    def empty? = groups.empty? && waiting.empty?
   end
 end

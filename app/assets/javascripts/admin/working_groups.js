@@ -1,5 +1,5 @@
-// Declarative working groups ("Pairings") board: drag-and-drop swap/pair,
-// form fallback, immediate refresh on attendance checkbox toggle, and 15s ETag sync.
+// Declarative working groups ("Pairings") board: drag-and-drop *:* grouping,
+// unlink & undo-check-in actions, attendance-list live sync, and 15s ETag polling.
 (function () {
   var dragState = null;
   var requestInFlight = false;
@@ -149,6 +149,44 @@
       });
   }
 
+  function sendUndoCheckIn(form) {
+    var board = currentBoard();
+    if (!board || requestInFlight) return;
+
+    var invId = form.dataset.invitationId;
+    requestInFlight = true;
+    board.dataset.loading = 'true';
+
+    fetch(form.action, {
+      method: 'PUT',
+      headers: {
+        'X-CSRF-Token': csrfToken(),
+        'X-Requested-With': 'XMLHttpRequest',
+        'Accept': 'text/html'
+      }
+    })
+      .then(function (response) {
+        if (!response.ok) throw new Error('Unable to undo check-in right now.');
+        return response.text();
+      })
+      .then(function (rowHtml) {
+        var row = document.getElementById('attendee-row-' + invId);
+        if (row && rowHtml) {
+          var tmp = document.createElement('div');
+          tmp.innerHTML = rowHtml.trim();
+          if (tmp.firstElementChild) row.replaceWith(tmp.firstElementChild);
+        }
+        requestInFlight = false;
+        pollLiveBoard(true);
+      })
+      .catch(function (err) {
+        requestInFlight = false;
+        var liveBoard = currentBoard();
+        if (liveBoard) delete liveBoard.dataset.loading;
+        showBoardError(err.message);
+      });
+  }
+
   function pollLiveBoard(force) {
     var board = currentBoard();
     if (!board || requestInFlight || (dragState && !force)) return;
@@ -196,11 +234,7 @@
     }
 
     var waitingZone = target.closest('[data-dropzone="waiting"]');
-    if (
-      waitingZone &&
-      waitingZone.dataset.targetEntryId !== activeState.entryId &&
-      waitingZone.dataset.role !== activeState.role
-    ) {
+    if (waitingZone && waitingZone.dataset.targetEntryId !== activeState.entryId) {
       return {
         url: board.dataset.assignUrl,
         method: 'POST',
@@ -247,8 +281,7 @@
 
     if (!dropEl) return;
     if (dropEl.dataset.dropzone === 'group' && dropEl.dataset.workingGroupId === dragState.sourceGroupId) return;
-    if (dropEl.dataset.dropzone === 'waiting' &&
-        (dropEl.dataset.targetEntryId === dragState.entryId || dropEl.dataset.role === dragState.role)) return;
+    if (dropEl.dataset.dropzone === 'waiting' && dropEl.dataset.targetEntryId === dragState.entryId) return;
     if (dropEl.dataset.dropzone === 'unpair' && !dragState.sourceGroupId) return;
 
     dropEl.dataset.dropHover = 'true';
@@ -283,12 +316,10 @@
       return;
     }
 
-    var pairForm = event.target.closest('form[data-working-groups-pair-form]');
-    if (pairForm) {
+    var uncheckForm = event.target.closest('form[data-working-groups-uncheck-form]');
+    if (uncheckForm) {
       event.preventDefault();
-      var invId = pairForm.querySelector('[name="invitation_id"]').value;
-      var targetInvId = pairForm.querySelector('[name="target_invitation_id"]').value;
-      sendMutation(pairForm.action, 'POST', { invitation_id: invId, target_invitation_id: targetInvId });
+      sendUndoCheckIn(uncheckForm);
     }
   });
 

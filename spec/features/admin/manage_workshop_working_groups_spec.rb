@@ -32,7 +32,7 @@ RSpec.describe 'Managing workshop working groups' do
     expect(page).to have_no_css('.working-groups-board')
   end
 
-  it 'orders waiting pairings by check-in time while keeping the check-in list alphabetical' do
+  it 'orders solo waiting rows by check-in time while keeping the check-in list alphabetical' do
     zara = Fabricate(:member, name: 'Zara', surname: 'Alpha')
     alice = Fabricate(:member, name: 'Alice', surname: 'Beta')
 
@@ -44,12 +44,13 @@ RSpec.describe 'Managing workshop working groups' do
 
     visit admin_workshop_path(workshop)
 
-    within('.working-groups-waiting-list') do
-      waiting_names = all('.working-group-slot__name').map(&:text)
+    within('.working-groups-board') do
+      waiting_names = all('.working-group--waiting .working-group-slot__name').map(&:text)
       expect(waiting_names.first).to include('Zara Alpha')
       expect(waiting_names.second).to include('Alice Beta')
       expect(page).to have_text('Ruby Lesson 2')
       expect(page).to have_text('Needs help with hashes')
+      expect(page).to have_text('Drop a coach here')
     end
 
     student_list_names = all('.attendances .row.attendee .col-5 a').map(&:text)
@@ -58,7 +59,7 @@ RSpec.describe 'Managing workshop working groups' do
     expect(alice_index).to be < zara_index
   end
 
-  it 'supports unpairing and manually re-pairing via form fallback' do
+  it 'renders multi-student working groups and lets organisers unlink a member into a solo row' do
     inv_zara = Fabricate(:workshop_invitation, workshop:, member: Fabricate(:member, name: 'Zara', surname: 'Alpha'),
                                                role: 'Student', attending: true, attended: true,
                                                checked_in_at: 10.minutes.ago, automated_rsvp: true)
@@ -68,22 +69,21 @@ RSpec.describe 'Managing workshop working groups' do
     inv_coach = Fabricate(:workshop_invitation, workshop:, member: Fabricate(:member, name: 'Bob', surname: 'Coach'),
                                                 role: 'Coach', attending: true, attended: true,
                                                 checked_in_at: 1.minute.ago, automated_rsvp: true)
-    WorkingGroups::Service.for(workshop).on_check_in(inv_coach)
+    service = WorkingGroups::Service.for(workshop)
+    service.on_check_in(inv_coach)
+    service.assign(entry_id: inv_alice.id, target_group_id: service.board.groups.first.id)
 
     visit admin_workshop_path(workshop)
-    within('.working-groups-grid') { click_button 'Unpair' }
-    expect(page).to have_text('3 waiting')
-
-    within(".working-group-waiting-card[data-entry-id='#{inv_alice.id}']") do
-      select 'Bob Coach', from: 'target_invitation_id'
-      click_button 'Pair'
-    end
-
-    within('.working-groups-grid') do
+    within('.working-group--paired') do
+      expect(page).to have_text('Zara Alpha')
       expect(page).to have_text('Alice Beta')
       expect(page).to have_text('Bob Coach')
+      find("button[aria-label^='Move Alice Beta']").click
     end
-    expect(inv_zara.reload.workshop_working_group).to be_nil
-    expect(inv_alice.reload.workshop_working_group).to be_present
+
+    expect(page).to have_text('2 groups')
+    expect(page).to have_text('1 waiting')
+    expect(inv_alice.reload.workshop_working_group).to be_nil
+    expect(inv_zara.reload.workshop_working_group).to be_present
   end
 end

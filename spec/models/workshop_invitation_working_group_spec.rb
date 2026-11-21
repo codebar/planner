@@ -50,13 +50,13 @@ RSpec.describe WorkshopInvitationWorkingGroup do
     expect(duplicate.errors[:workshop_invitation_id]).to be_present
   end
 
-  it 'prevents adding two invitations of the same role to one working group' do
+  it 'supports multiple attendees of the same role in one working group' do
     first_student = checked_in_invitation(role: 'Student')
     second_student = checked_in_invitation(role: 'Student')
     described_class.create!(workshop_working_group: group, workshop_invitation: first_student)
 
-    duplicate_role = described_class.new(workshop_working_group: group, workshop_invitation: second_student)
-    expect(duplicate_role).not_to be_valid
-    expect(duplicate_role.errors[:workshop_invitation].first).to include('already filled')
+    second = described_class.create!(workshop_working_group: group, workshop_invitation: second_student)
+    expect(second).to be_persisted
+    expect(group.workshop_invitations).to contain_exactly(first_student, second_student)
   end
 end

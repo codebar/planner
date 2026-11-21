@@ -17,10 +17,6 @@ RSpec.describe 'Admin::WorkingGroups' do
     Fabricate(:workshop_invitation, workshop:, role: 'Student', attending: true, attended: true,
                                     checked_in_at: 5.minutes.ago, automated_rsvp: true)
   end
-  let!(:coach_b) do
-    Fabricate(:workshop_invitation, workshop:, role: 'Coach', attending: true, attended: true,
-                                    checked_in_at: 4.minutes.ago, automated_rsvp: true)
-  end
 
   before do
     organiser.add_role(:organiser, workshop.chapter)
@@ -50,7 +46,7 @@ RSpec.describe 'Admin::WorkingGroups' do
       payload = response.parsed_body
       expect(payload['board_html']).to include('Pairings')
       expect(payload['counts']['checked_in_students']).to eq(2)
-      expect(payload['counts']['checked_in_coaches']).to eq(2)
+      expect(payload['counts']['checked_in_coaches']).to eq(1)
 
       get admin_workshop_working_groups_path(workshop), headers: { 'If-None-Match' => etag }, as: :json
       expect(response).to have_http_status(:not_modified)
@@ -60,27 +56,26 @@ RSpec.describe 'Admin::WorkingGroups' do
   describe 'POST create and DELETE destroy' do
     before { login(organiser) }
 
-    it 'pairs waiting attendees, swaps across groups, and unpairs back to waiting' do
+    it 'pairs waiting attendees, adds a second student to a group, and unlinks back to waiting' do
       post admin_workshop_working_groups_path(workshop),
            params: { invitation_id: student_a.id, target_invitation_id: coach_a.id },
            as: :json
-      post admin_workshop_working_groups_path(workshop),
-           params: { invitation_id: student_b.id, target_invitation_id: coach_b.id },
-           as: :json
-      groups = workshop.workshop_working_groups.ordered
-      expect(groups.count).to eq(2)
+      expect(response).to have_http_status(:ok)
+
+      group = workshop.workshop_working_groups.ordered.first
 
       post admin_workshop_working_groups_path(workshop),
-           params: { invitation_id: student_a.id, target_group_id: groups.second.id },
+           params: { invitation_id: student_b.id, target_group_id: group.id },
            as: :json
       expect(response).to have_http_status(:ok)
 
       board = WorkingGroups::Service.for(workshop).board
-      expect([board.groups.first.student, board.groups.second.student]).to eq([student_b, student_a])
+      expect(board.groups.first.students).to contain_exactly(student_a, student_b)
+      expect(board.groups.first.coaches).to eq([coach_a])
 
-      delete admin_workshop_invitation_working_group_path(workshop, student_a.id), as: :json
+      delete admin_workshop_invitation_working_group_path(workshop, student_b.id), as: :json
       expect(response).to have_http_status(:ok)
-      expect(response.parsed_body['counts']).to include('pairs' => 1, 'waiting_total' => 2)
+      expect(response.parsed_body['counts']).to include('groups_count' => 2, 'waiting_count' => 1)
     end
   end
 end
