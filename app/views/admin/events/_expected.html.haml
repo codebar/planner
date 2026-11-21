@@ -2,6 +2,7 @@
   .d-flex.flex-wrap.justify-content-between.align-items-center.gap-2.mb-1
     .d-flex.flex-wrap.align-items-center.gap-2
       %h4.mb-0 Expected
+      %span.badge.rounded-pill.bg-white.text-muted.border.fw-normal #{invited_count} invited
       %span.badge.rounded-pill.bg-white.text-dark.border{ data: { expected_remaining_badge: true } }
         #{pluralize(students_count, 'student')} · #{pluralize(coaches_count, 'coach')} left
       %span.badge.rounded-pill.expected-badge--checked-in.d-none{ data: { expected_checked_in_badge: true } }
