@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe EventCardComponent do
+  include Rails.application.routes.url_helpers
+
   let(:chapter) { Fabricate(:chapter, active: true) }
 
   context 'with a workshop' do
@@ -20,9 +22,9 @@ RSpec.describe EventCardComponent do
       expect(page).to have_no_text('Manage')
     end
 
-    it 'renders chapter badge' do
+    it 'renders chapter badge linking to the chapter path' do
       render_inline(described_class.new(event_card: presenter))
-      expect(page).to have_link(chapter.name)
+      expect(page).to have_link(chapter.name, href: chapter_path(chapter.slug))
     end
   end
 
