@@ -78,7 +78,7 @@ class EventsController < ApplicationController
   def past_page_cache_key(latest)
     # .to_f: a raw Time in a cache key is stringified with subsecond precision
     # that differs between the write and the read (see sitemaps/show.xml.builder).
-    [:events_past_page, I18n.locale, requested_page, latest.to_f]
+    [:events_past_page, :v2, I18n.locale, requested_page, latest.to_f]
   end
 
   def latest_model_updated

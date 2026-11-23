@@ -1,11 +1,11 @@
-<% cache [@event.cache_key_with_version, I18n.locale, :v3] do %>
+<% cache [@event.cache_key_with_version, I18n.locale, :v4] do %>
   <div class="card mb-4" data-test="event">
     <div class="card-body">
       <div class="d-md-flex justify-content-md-between">
         <div class="order-md-2">
           <% if @event.chapter %>
             <span class="badge bg-primary mb-3 mb-md-0">
-              <%= link_to @event.chapter.name, @event.chapter.slug, class: "text-light text-decoration-none" %>
+              <%= link_to @event.chapter.name, chapter_path(@event.chapter.slug), class: "text-light text-decoration-none" %>
             </span>
           <% end %>
 
