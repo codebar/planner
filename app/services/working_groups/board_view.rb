@@ -9,16 +9,7 @@ module WorkingGroups
       def coach = coaches.first
     end
 
-    Counts = Data.define(:groups_count, :waiting_count, :checked_in_students, :checked_in_coaches) do
-      def to_h
-        {
-          groups_count:,
-          waiting_count:,
-          checked_in_students:,
-          checked_in_coaches:
-        }
-      end
-    end
+    Counts = Data.define(:groups_count, :waiting_count, :checked_in_students, :checked_in_coaches)
 
     def self.build(session_id:, visible:, board:, entries_by_id:, attendance_signature: nil)
       groups = board.groups.map { |group| build_group(group, entries_by_id) }

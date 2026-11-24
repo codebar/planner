@@ -5,17 +5,17 @@ module WorkingGroups
   # Supports *:* working groups (e.g. 2 students + 1 coach). Groups stay fixed
   # in position once formed, while solo waiting participants stay ordered
   # strictly by check-in time.
-  class Board
+  class Board < Data.define(:groups, :waiting)
     CheckIn = Data.define(:entry_id, :role, :checked_in_at)
     Assign = Data.define(:entry_id, :target_group_id, :target_entry_id)
     Unassign = Data.define(:entry_id)
     CheckOut = Data.define(:entry_id)
 
-    attr_reader :groups, :waiting
-
     def initialize(groups: [], waiting: [])
-      @groups = groups.sort_by { |g| [g.position, g.id || Float::INFINITY] }.freeze
-      @waiting = waiting.sort_by(&:sort_key).freeze
+      super(
+        groups: groups.sort_by { |g| [g.position, g.id || Float::INFINITY] }.freeze,
+        waiting: waiting.sort_by(&:sort_key).freeze
+      )
     end
 
     def reduce(action)
@@ -29,7 +29,6 @@ module WorkingGroups
     end
 
     def find_participant(entry_id) = waiting.find { |p| p.entry_id == entry_id } || grouped_participant(entry_id)
-    def ==(other) = other.is_a?(self.class) && groups == other.groups && waiting == other.waiting
 
     private
 
@@ -41,7 +40,7 @@ module WorkingGroups
       partner = first_opposite_role(others, incoming)
       return pair_participants(groups, without_entry(others, partner.entry_id), partner, incoming) if partner
 
-      self.class.new(groups:, waiting: others + [incoming])
+      with(waiting: others + [incoming])
     end
 
     def reduce_assign(action)
@@ -67,7 +66,7 @@ module WorkingGroups
 
       next_groups, next_waiting = detach(source.entry_id)
       updated = next_groups.map { |g| g.id == target_group.id ? g.add_participant(source) : g }
-      self.class.new(groups: updated, waiting: next_waiting)
+      with(groups: updated, waiting: next_waiting)
     end
 
     def reduce_unassign(action)
@@ -76,14 +75,14 @@ module WorkingGroups
 
       source = source_group.participants.find { |p| p.entry_id == action.entry_id }
       next_groups, next_waiting = detach(source.entry_id)
-      self.class.new(groups: next_groups, waiting: next_waiting + [source])
+      with(groups: next_groups, waiting: next_waiting + [source])
     end
 
     def reduce_check_out(action)
       return self unless find_participant(action.entry_id)
 
       next_groups, next_waiting = detach(action.entry_id)
-      self.class.new(groups: next_groups, waiting: next_waiting)
+      with(groups: next_groups, waiting: next_waiting)
     end
 
     def detach(entry_id)
@@ -98,8 +97,10 @@ module WorkingGroups
 
     def pair_participants(current_groups, current_waiting, first, second)
       next_pos = (current_groups.map(&:position).max || 0) + 1
-      self.class.new(groups: current_groups + [Group.new(id: nil, position: next_pos, participants: [first, second])],
-                     waiting: current_waiting)
+      with(
+        groups: current_groups + [Group.new(id: nil, position: next_pos, participants: [first, second])],
+        waiting: current_waiting
+      )
     end
 
     def replace_group(group_id, replacement) = groups.map { |g| g.id == group_id ? replacement : g }

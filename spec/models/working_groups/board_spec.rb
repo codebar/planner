@@ -73,7 +73,7 @@ RSpec.describe WorkingGroups::Board do
 
     it 'pairs two waiting solo attendees into a new working group' do
       waiting_coach = WorkingGroups::Participant.new(entry_id: 6, role: 'Coach', checked_in_at: t0 + 6.minutes)
-      with_coach = described_class.new(groups: board.groups, waiting: [student_c, waiting_coach])
+      with_coach = board.with(waiting: [student_c, waiting_coach])
 
       updated = with_coach.reduce(described_class::Assign.new(entry_id: 5, target_group_id: nil, target_entry_id: 6))
 
