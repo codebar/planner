@@ -1,6 +1,9 @@
 class ChapterController < ApplicationController
   def show
-    @chapter = ChapterPresenter.new(Chapter.active.find_by!(slug:))
+    # The organiser permission is read by the organisers section, the ETag and
+    # the card fragment keys (workshops without organisers of their own fall
+    # back to the chapter's), so load it once here instead of per reader.
+    @chapter = ChapterPresenter.new(Chapter.active.preload(permissions: :members).find_by!(slug:))
 
     upcoming_workshops = upcoming_events_by_chapter(@chapter)
     @upcoming_workshops = event_presenters_by_date(upcoming_workshops)
