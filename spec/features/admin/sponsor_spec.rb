@@ -187,6 +187,7 @@ RSpec.feature 'Admin::Sponsors' do
           recipient: contact,
           contact_email: contact.email
         )
+        expect(PublicActivity::Activity.where(key: 'sponsor.admin_contact_subscribe', recipient: contact)).to exist
 
         contact.delete
 
