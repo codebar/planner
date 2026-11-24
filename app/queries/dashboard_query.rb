@@ -35,18 +35,28 @@ class DashboardQuery
     workshop_count + event_count + meeting_exists
   end
 
+  # The loads below cover exactly what the event card renders and keys its
+  # fragment on: venue/host, sponsors and organisers. :sponsors already joins
+  # through :sponsorships, and :organisers through :permissions, so neither
+  # is loaded on its own. Workshops without organisers of their own show the
+  # chapter's organisers, which the card reads through chapter.permissions.
+  WORKSHOP_CARD_PRELOADS = { workshop_host: :sponsor, chapter: { permissions: :members } }.freeze
+
   def self.all_events(workshops)
-    meeting = Meeting.eager_load(:venue, :organisers, :permissions).next
-    events = Event.eager_load(:venue, :sponsors, :sponsorships, :permissions,
-                              :organisers).upcoming.take(DEFAULT_UPCOMING_EVENTS)
+    # Not Listable.next: it goes through unscoped, which dropped the eager load
+    # that used to sit here, and it loaded every upcoming meeting to keep one.
+    # For a single row, the venue and organisers each load lazily in one query,
+    # which costs less than the two-step query an eager load with a limit runs.
+    meeting = Meeting.upcoming.first
+    events = Event.eager_load(:venue, :sponsors, :organisers).upcoming.take(DEFAULT_UPCOMING_EVENTS)
 
     [*workshops, *events, meeting].uniq.compact
   end
   private_class_method :all_events
 
   def self.upcoming_workshops
-    Workshop.eager_load(:chapter, :sponsors, :organisers, :permissions)
-            .preload(workshop_host: :sponsor)
+    Workshop.eager_load(:chapter, :sponsors, :organisers)
+            .preload(WORKSHOP_CARD_PRELOADS)
             .today_and_upcoming
             .limit(MAX_WORKSHOP_QUERY)
             .to_a
@@ -55,8 +65,8 @@ class DashboardQuery
 
   def self.chapter_workshops_for(member)
     Workshop.upcoming
-            .eager_load(:chapter, :sponsors, :organisers, :permissions)
-            .preload(workshop_host: :sponsor)
+            .eager_load(:chapter, :sponsors, :organisers)
+            .preload(WORKSHOP_CARD_PRELOADS)
             .where(chapter: member.chapters)
             .to_a
   end
@@ -66,8 +76,8 @@ class DashboardQuery
     member.workshop_invitations.accepted
           .joins(:workshop)
           .merge(Workshop.upcoming)
-          .eager_load(workshop: %i[chapter sponsors organisers permissions])
-          .preload(workshop: { workshop_host: :sponsor })
+          .eager_load(workshop: %i[chapter sponsors organisers])
+          .preload(workshop: WORKSHOP_CARD_PRELOADS)
           .map(&:workshop)
   end
   private_class_method :accepted_workshops_for

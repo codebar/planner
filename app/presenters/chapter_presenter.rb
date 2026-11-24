@@ -4,6 +4,6 @@ class ChapterPresenter < BasePresenter
   end
 
   def organisers
-    @organisers ||= model.permissions.find_by(name: 'organiser')&.members.to_a
+    @organisers ||= model.permissions.to_a.find { |permission| permission.name == 'organiser' }&.members.to_a
   end
 end

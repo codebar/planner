@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe EventCardComponent do
+  include Rails.application.routes.url_helpers
+
   let(:chapter) { Fabricate(:chapter, active: true) }
 
   context 'with a workshop' do
@@ -20,9 +22,9 @@ RSpec.describe EventCardComponent do
       expect(page).to have_no_text('Manage')
     end
 
-    it 'renders chapter badge' do
+    it 'renders chapter badge linking to the chapter path' do
       render_inline(described_class.new(event_card: presenter))
-      expect(page).to have_link(chapter.name)
+      expect(page).to have_link(chapter.name, href: chapter_path(chapter.slug))
     end
   end
 
@@ -63,6 +65,112 @@ RSpec.describe EventCardComponent do
       event.sponsors << sponsor
       render_inline(described_class.new(event_card: presenter))
       expect(page).to have_css(%(img[alt="#{sponsor.name}"]))
+    end
+  end
+
+  context 'with caching on' do
+    let(:fragment_store) { ActiveSupport::Cache::MemoryStore.new }
+
+    around do |example|
+      old_perform_caching = ActionController::Base.perform_caching
+      old_cache_store = ActionController::Base.cache_store
+
+      ActionController::Base.perform_caching = true
+      ActionController::Base.cache_store = fragment_store
+
+      example.run
+    ensure
+      ActionController::Base.perform_caching = old_perform_caching
+      ActionController::Base.cache_store = old_cache_store
+    end
+
+    def render_card(record)
+      render_inline(described_class.new(event_card: EventPresenter.decorate(record.reload))).to_html
+    end
+
+    # None of these records touch the event row when they change, so a key on
+    # the event alone kept serving the old fragment until the event itself was
+    # edited. Each example pins that the event's own key did not move.
+    it 'busts the fragment when the host is renamed without touching the workshop' do
+      workshop = Fabricate(:workshop, chapter:)
+      before = workshop.reload.cache_key_with_version
+      expect(render_card(workshop)).to include(workshop.host.name)
+
+      workshop.host.update!(name: 'Renamed Host')
+
+      expect(workshop.reload.cache_key_with_version).to eq(before)
+      expect(render_card(workshop)).to include('Renamed Host')
+    end
+
+    it 'busts the fragment when a sponsor is renamed without touching the event' do
+      event = Fabricate(:event)
+      sponsor = Fabricate(:sponsor)
+      event.sponsors << sponsor
+      before = event.reload.cache_key_with_version
+      expect(render_card(event)).to include(%(alt="#{sponsor.name}"))
+
+      sponsor.update!(name: 'Renamed Sponsor')
+
+      expect(event.reload.cache_key_with_version).to eq(before)
+      expect(render_card(event)).to include('alt="Renamed Sponsor"')
+    end
+
+    it 'busts the fragment when a sponsor is removed without touching the event' do
+      event = Fabricate(:event)
+      sponsor = Fabricate(:sponsor)
+      event.sponsors << sponsor
+      before = event.reload.cache_key_with_version
+      expect(render_card(event)).to include(%(alt="#{sponsor.name}"))
+
+      event.sponsors.delete(sponsor)
+
+      expect(event.reload.cache_key_with_version).to eq(before)
+      expect(render_card(event)).not_to include(%(alt="#{sponsor.name}"))
+    end
+
+    it 'busts the fragment when the chapter is renamed without touching the workshop' do
+      workshop = Fabricate(:workshop, chapter:)
+      before = workshop.reload.cache_key_with_version
+      expect(render_card(workshop)).to include(chapter.name)
+
+      chapter.update!(name: 'Renamed Chapter')
+
+      expect(workshop.reload.cache_key_with_version).to eq(before)
+      expect(render_card(workshop)).to include('Renamed Chapter')
+    end
+
+    it 'busts the fragment when an organiser is added without touching the workshop' do
+      workshop = Fabricate(:workshop, chapter:)
+      before = workshop.reload.cache_key_with_version
+      render_card(workshop)
+
+      organiser = Fabricate(:member, name: 'Newly', surname: 'Added')
+      organiser.add_role(:organiser, workshop)
+
+      expect(workshop.reload.cache_key_with_version).to eq(before)
+      expect(render_card(workshop)).to include('Newly Added')
+    end
+
+    it 'busts the fragment when the meeting venue is renamed without touching the meeting' do
+      meeting = Fabricate(:meeting)
+      before = meeting.reload.cache_key_with_version
+      expect(render_card(meeting)).to include(meeting.venue.name)
+
+      meeting.venue.update!(name: 'Renamed Venue')
+
+      expect(meeting.reload.cache_key_with_version).to eq(before)
+      expect(render_card(meeting)).to include('Renamed Venue')
+    end
+
+    it 'reuses the fragment while nothing rendered has changed' do
+      workshop = Fabricate(:workshop, chapter:)
+      render_card(workshop)
+      written = fragment_store.instance_variable_get(:@data).keys.size
+      expect(written).to be_positive
+
+      render_card(workshop)
+
+      expect(fragment_store.instance_variable_get(:@data).keys.size).to eq(written)
     end
   end
 

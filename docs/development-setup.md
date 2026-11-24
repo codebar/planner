@@ -227,7 +227,7 @@ bundle exec rake db:create db:prepare db:test:prepare
 
 This command does three things:
 - `db:create` — creates the development and test databases in PostgreSQL
-- `db:prepare` — loads `db/schema.rb` if the database is empty, or runs pending migrations if it already exists
+- `db:prepare` — loads `db/schema.rb` if the database is empty, or runs pending migrations if it already exists. On an empty database it loads the sample data too, which takes several minutes
 - `db:test:prepare` — makes sure the test database is ready for running tests
 
 ---
@@ -309,6 +309,8 @@ PLAYWRIGHT_HEADLESS=false bundle exec rspec
 
 ## Optional: Add sample data
 
+The first `db:prepare` on an empty database already does this. Run the task yourself when you want the sample data again, for example after `db:schema:load` or after restoring a database dump.
+
 To populate the database with fake workshops, members, and events for local testing:
 
 ```bash
@@ -348,6 +350,8 @@ Run `bundle exec rake db:create db:prepare`.
 ### "Bundler::GemNotFound" or "Could not find gem"
 
 Run `bundle install` again.
+
+If it fails with a list of gems and the words "in locally installed gems", check whether this checkout's Ruby changed since you last installed gems. Gems live inside each Ruby version, so after a `.ruby-version` bump the new Ruby starts with none of them. `gem env home` shows which Ruby's gems you are using, and `mise install` then `bundle install` fixes it.
 
 ### "role does not exist" when creating the database
 

@@ -4,6 +4,6 @@ class WaitingListPresenter < BasePresenter
   end
 
   def list
-    model.where(auto_rsvp: true)
+    @list ||= model.where(auto_rsvp: true)
   end
 end

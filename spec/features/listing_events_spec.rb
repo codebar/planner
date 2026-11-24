@@ -16,6 +16,16 @@ RSpec.feature 'event listing' do
         expect(page).to have_text event.name
       end
     end
+
+    scenario 'chapter badge links to the chapter page' do
+      travel_to(Time.current) do
+        visit upcoming_events_path
+        click_link chapter.name
+
+        expect(page).to have_current_path(chapter_path(chapter.slug))
+        expect(page).to have_css('h1', text: chapter.name)
+      end
+    end
   end
 
   describe 'I can see past events' do
@@ -31,6 +41,16 @@ RSpec.feature 'event listing' do
         visit past_events_path
         expect(page).to have_text 'Past Events'
         expect(page).to have_text past_event.name
+      end
+    end
+
+    scenario 'chapter badge links to the chapter page' do
+      travel_to(Time.current) do
+        visit past_events_path
+        click_link chapter.name
+
+        expect(page).to have_current_path(chapter_path(chapter.slug))
+        expect(page).to have_css('h1', text: chapter.name)
       end
     end
   end

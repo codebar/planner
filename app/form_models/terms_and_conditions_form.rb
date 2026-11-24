@@ -3,5 +3,5 @@ class TermsAndConditionsForm
 
   attr_accessor :terms
 
-  validates :terms, acceptance: true
+  validates :terms, acceptance: { allow_nil: false }
 end

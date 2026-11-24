@@ -7,6 +7,7 @@ class SetupChecker
     check_mise
     check_postgresql
     check_imagemagick
+    check_playwright
     check_github_credentials
     check_bundle
     check_database_connection
@@ -117,6 +118,30 @@ class SetupChecker
       error('ImageMagick', 'not found (convert command missing)',
             'Install: brew install imagemagick (macOS) or see docs/development-setup.md')
     end
+  end
+
+  # Presence only: browser revisions can drift inside a playwright version and the
+  # gem carries no offline revision map, so a stale cache still reports as installed.
+  def check_playwright
+    require 'playwright'
+
+    patterns = [
+      'chromium_headless_shell-*/**/headless_shell',           # Linux, as in spec/support/capybara.rb
+      'chromium_headless_shell-*/**/chrome-headless-shell'     # macOS
+    ]
+    cache = File.expand_path('~/.cache/ms-playwright')
+    found = patterns.flat_map { |pattern| Dir.glob(File.join(cache, pattern)) }
+                    .find { |path| File.executable?(path) }
+
+    if found
+      ok('Playwright browser', 'chromium headless shell installed')
+    else
+      error('Playwright browser', 'chromium headless shell not found',
+            "Run: npx --yes playwright@#{Playwright::COMPATIBLE_PLAYWRIGHT_VERSION} install chromium-headless-shell")
+    end
+  rescue LoadError
+    warn('Playwright browser', 'playwright gem not loaded here',
+         'Only needed to run the JavaScript feature specs.')
   end
 
   def check_github_credentials
