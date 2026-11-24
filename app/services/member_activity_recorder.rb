@@ -54,5 +54,6 @@ class MemberActivityRecorder
     PublicActivity::Activity.create!(owner: actor, key:, trackable:, recipient:, parameters: params)
   rescue StandardError => e
     Rails.logger.warn("MemberActivityRecorder failed (#{key}): #{e.class}: #{e.message}")
+    nil
   end
 end
