@@ -23,6 +23,20 @@ RSpec.describe MemberActivityRecorder do
     expect(activity.trackable).to eq(member)
   end
 
+  it 'stores the contact email in activity parameters' do
+    email = 'organiser@example.com'
+
+    activity = described_class.record(actor: member, key: 'sponsor.contact_subscribe', contact_email: email)
+
+    expect(activity.parameters).to eq(note: email)
+  end
+
+  it 'stores empty parameters when no contact email is provided' do
+    activity = described_class.record(actor: member, key: 'member.login')
+
+    expect(activity.parameters).to eq({})
+  end
+
   it 'never raises on persistence failure' do
     allow(PublicActivity::Activity).to receive(:create!)
       .and_raise(ActiveRecord::RecordInvalid)
