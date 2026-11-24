@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'Chapter show page caching' do
   let(:chapter) { Fabricate(:chapter, active: true) }
-  let(:fragment_store) { ActiveSupport::Cache::MemoryStore.new }
+  let(:fragment_store) { CountingCacheStore.new }
 
   around do |example|
     old_perform_caching = ActionController::Base.perform_caching
@@ -27,12 +27,22 @@ RSpec.describe 'Chapter show page caching' do
 
   # Every record the page and the card fragment keys read is loaded in the
   # controller, so a fragment hit saves render work but no queries: the repeat
-  # visit must not issue a single query the first one did not.
-  it 'issues no extra queries on a repeat visit' do
+  # visit must not issue a single query the first one did not. The comparison
+  # stays at `<=` because a one-time per-process query in the first request
+  # would break an equality pin without saying anything about caching. The hit
+  # and zero-write assertions pin the reuse, which a query count cannot: a cache
+  # that saves nothing issues the same queries as the visit before it.
+  it 'serves the repeat visit from the fragment cache without extra queries' do
     first_visit_queries = count_queries { get "/#{chapter.slug}" }
+    expect(fragment_store.misses).to be_positive
+    expect(fragment_store.writes).to be_positive
+
+    fragment_store.reset_counts!
     repeat_visit_queries = count_queries { get "/#{chapter.slug}" }
 
     expect(response).to have_http_status(:ok)
+    expect(fragment_store.hits).to be_positive
+    expect(fragment_store.writes).to be_zero
     expect(repeat_visit_queries).to be <= first_visit_queries
   end
 
