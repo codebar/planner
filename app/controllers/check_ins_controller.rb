@@ -109,16 +109,17 @@ class CheckInsController < ApplicationController
   end
 
   def mark_attended(invitation)
-    attrs = { attending: true, source: InvitationConcerns::SOURCE_CHECK_IN }
-    if @check_in_target.is_a?(Event)
-      attrs[:verified] = true
-    else
-      attrs[:attended] = true
-      attrs[:automated_rsvp] = true
-    end
-    invitation.update!(attrs)
+    invitation.update!(check_in_attributes(invitation))
     MemberActivityRecorder.record(actor: invitation.member, key: 'member.checked_in',
                                   trackable: invitation)
+    WorkingGroups::Service.for(@check_in_target).safe_on_check_in(invitation) if @check_in_target.is_a?(Workshop)
+  end
+
+  def check_in_attributes(invitation)
+    attrs = { attending: true, source: InvitationConcerns::SOURCE_CHECK_IN }
+    return attrs.merge(verified: true) if @check_in_target.is_a?(Event)
+
+    attrs.merge(attended: true, checked_in_at: invitation.checked_in_at || Time.zone.now, automated_rsvp: true)
   end
 
   def permitted_role

@@ -11,6 +11,7 @@ class Admin::InvitationsController < Admin::ApplicationController
 
     if request.xhr?
       if params[:attended].present?
+        inject_attendance_flags([@invitation])
         render partial: 'admin/workshop/attendance_row',
                locals: { invitation: InvitationPresenter.new(@invitation), workshop: @workshop }
       else
@@ -40,13 +41,20 @@ class Admin::InvitationsController < Admin::ApplicationController
   end
 
   def update_to_attended
-    @invitation.update(attended: true, source: Invitation::SOURCE_ADMIN)
+    return unless @invitation.update(
+      attended: true,
+      checked_in_at: @invitation.checked_in_at || Time.zone.now,
+      source: Invitation::SOURCE_ADMIN
+    )
+
     MemberActivityRecorder.record(actor: current_user, key: 'invitation.rsvp_override',
                                   trackable: @invitation, recipient: @invitation.member)
+    WorkingGroups::Service.for(@workshop).safe_on_check_in(@invitation)
   end
 
   def update_to_unattended
-    @invitation.update(attended: nil)
+    @invitation.update(attended: nil, checked_in_at: nil)
+    WorkingGroups::Service.for(@workshop).safe_on_check_out(@invitation)
   end
 
   def update_to_attending
@@ -82,6 +90,7 @@ class Admin::InvitationsController < Admin::ApplicationController
 
   def update_to_not_attending
     freed_seat = release_seat(last_overridden_by_id: current_user.id)
+    WorkingGroups::Service.for(@workshop).safe_on_check_out(@invitation)
     MemberActivityRecorder.record(actor: current_user, key: 'invitation.rsvp_override',
                                   trackable: @invitation, recipient: @invitation.member)
 

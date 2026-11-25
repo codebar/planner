@@ -49,6 +49,8 @@ class Admin::WorkshopsController < Admin::ApplicationController
     end
 
     set_admin_workshop_data
+    working_groups_service = WorkingGroups::Service.for(@workshop)
+    @working_groups_board = working_groups_service.board if working_groups_service.visible?
   end
 
   def update

@@ -1,0 +1,48 @@
+-# locals: (workshop:, invitation:, source_group_id:, solo:)
+- member = MemberPresenter.new(invitation.member)
+.working-group-slot{ draggable: 'true',
+                     data: { entry_id: invitation.id,
+                             role: invitation.role,
+                             source_group_id: source_group_id.to_s,
+                             unpair_url: admin_workshop_invitation_working_group_path(workshop, invitation.id) } }
+  .d-flex.justify-content-between.align-items-start.gap-2
+    .d-flex.align-items-start.min-w-0
+      %i.fas.fa-grip-vertical.working-group-slot__grip.me-2.mt-1{ aria: { hidden: 'true' } }
+      .min-w-0
+        .d-flex.flex-wrap.align-items-center.gap-2
+          = link_to (member.full_name.presence || member.email),
+                    admin_member_path(invitation.member),
+                    class: 'working-group-slot__name'
+          - if member.newbie?
+            %span.badge.rounded-pill.working-groups-badge--newbie{ title: 'First-time attendee', data: { bs_toggle: 'tooltip' } }
+              %i.fas.fa-paw.me-1{ aria: { hidden: 'true' } }
+              New
+          - elsif member.flag_to_organisers?
+            %span.ms-1{ data: { bs_toggle: 'tooltip', bs_placement: 'bottom' },
+                        title: 'Multiple no shows and attendance warnings in the last six months' }
+              %i.fas.fa-exclamation-circle.text-warning{ aria: { hidden: 'true' } }
+          - if invitation.checked_in_at.present?
+            %span.badge.rounded-pill.working-groups-badge--time
+              = invitation.checked_in_at.in_time_zone(workshop.time_zone).strftime('%H:%M')
+        - if invitation.tutorial.present?
+          %p.working-group-slot__meta.mb-0.mt-1
+            %strong Tutorial:
+            = invitation.tutorial
+        - if invitation.note.present?
+          %p.working-group-slot__meta.mb-0.mt-1= invitation.note
+    .working-group-slot__actions.d-flex.align-items-center.gap-1.flex-shrink-0
+      - unless solo
+        = button_to admin_workshop_invitation_working_group_path(workshop, invitation.id),
+                    method: :delete,
+                    class: 'btn btn-sm btn-outline-secondary working-group-slot__action',
+                    title: 'Move into a new solo group',
+                    aria: { label: "Move #{member.full_name} into a new solo group" },
+                    form: { class: 'd-inline', data: { working_groups_unpair_form: true } } do
+          %i.fas.fa-unlink{ aria: { hidden: 'true' } }
+      = button_to admin_workshop_invitation_path(workshop, invitation, attended: false),
+                  method: :put,
+                  class: 'btn btn-sm btn-outline-secondary working-group-slot__action working-group-slot__action--cancel',
+                  title: 'Undo check-in',
+                  aria: { label: "Undo check-in for #{member.full_name}" },
+                  form: { class: 'd-inline', data: { working_groups_uncheck_form: true, invitation_id: invitation.id } } do
+        %i.fas.fa-times{ aria: { hidden: 'true' } }

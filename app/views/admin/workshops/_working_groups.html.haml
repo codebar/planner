@@ -1,0 +1,43 @@
+-# locals: (workshop:, board:)
+.working-groups-board.mb-5{ id: 'working-groups-board',
+                            data: { board_url: admin_workshop_working_groups_path(workshop),
+                                    assign_url: admin_workshop_working_groups_path(workshop),
+                                    board_etag: %("#{board.etag}") } }
+  .d-flex.flex-wrap.justify-content-between.align-items-center.gap-2.mb-1
+    .d-flex.flex-wrap.align-items-center.gap-2
+      %h4.mb-0 Pairings
+      - unless board.empty?
+        - if board.counts.groups_count.positive?
+          %span.badge.rounded-pill.bg-primary= pluralize(board.counts.groups_count, 'group')
+        %span.badge.rounded-pill.bg-white.text-dark.border
+          #{pluralize(board.counts.checked_in_students, 'student')} &middot; #{pluralize(board.counts.checked_in_coaches, 'coach')}
+        - if board.counts.waiting_count.positive?
+          %span.badge.rounded-pill.working-groups-badge--waiting #{board.counts.waiting_count} unpaired
+    .small.text-muted
+      %span.working-groups-live-dot
+      Live sync (every 15s)
+  %p.text-muted.small.mb-3
+    Attendees auto-pair on check-in (FIFO by check-in time). Drag anyone onto a group for 1:1 or multi-person groups, or drop below to start a new group.
+
+  .alert.alert-danger.py-2.px-3.small.d-none{ role: 'alert', data: { working_groups_error: true } }
+
+  - if board.empty?
+    .working-groups-empty-state.text-center.text-muted.py-4.px-3
+      %i.fas.fa-user-friends.fa-lg.mb-2.d-block.opacity-50{ aria: { hidden: 'true' } }
+      No one has checked in yet. Tick attendees in the list above (or let them scan the QR code) to start pairing.
+  - else
+    .row.d-none.d-md-flex.mb-2.px-2.working-groups-section-header
+      .col-md-6 Students
+      .col-md-6 Coaches
+
+    - board.groups.each do |group|
+      = render partial: 'admin/workshops/working_group_row',
+               locals: { workshop:, group:, waiting_entry: nil }
+
+    - board.waiting.each do |entry|
+      = render partial: 'admin/workshops/working_group_row',
+               locals: { workshop:, group: nil, waiting_entry: entry }
+
+    .working-groups-unpair-zone{ data: { dropzone: 'unpair' } }
+      %i.fas.fa-plus-circle.me-2{ aria: { hidden: 'true' } }
+      Drop someone here to move them into a new solo group

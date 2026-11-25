@@ -3,12 +3,13 @@
 # Replaces per-row N+1 queries (Member#flag_to_organisers?, #recent_notes and
 # MemberPresenter#newbie?) with a small set of aggregate queries.
 class AdminWorkshopAttendeeFlags
-  def self.for_members(member_ids)
-    new(member_ids).to_h
+  def self.for_members(member_ids, exclude_workshop_id: nil)
+    new(member_ids, exclude_workshop_id:).to_h
   end
 
-  def initialize(member_ids)
+  def initialize(member_ids, exclude_workshop_id: nil)
     @member_ids = member_ids
+    @exclude_workshop_id = exclude_workshop_id
   end
 
   def to_h
@@ -30,7 +31,9 @@ class AdminWorkshopAttendeeFlags
   end
 
   def attended_ever
-    WorkshopInvitation.where(member_id: @member_ids, attended: true).distinct.pluck(:member_id)
+    scope = WorkshopInvitation.where(member_id: @member_ids, attended: true)
+    scope = scope.where.not(workshop_id: @exclude_workshop_id) if @exclude_workshop_id
+    scope.distinct.pluck(:member_id)
   end
 
   def flag_for?(member_id)

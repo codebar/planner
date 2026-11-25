@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_13_120000) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_21_163000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -529,6 +529,15 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_13_120000) do
     t.index ["invitation_id"], name: "index_waiting_lists_on_invitation_id", unique: true
   end
 
+  create_table "workshop_invitation_working_groups", force: :cascade do |t|
+    t.bigint "workshop_working_group_id", null: false
+    t.bigint "workshop_invitation_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["workshop_invitation_id"], name: "index_wi_working_groups_on_invitation_id", unique: true
+    t.index ["workshop_working_group_id"], name: "index_wi_working_groups_on_working_group_id"
+  end
+
   create_table "workshop_invitations", id: :serial, force: :cascade do |t|
     t.boolean "attended"
     t.boolean "attending"
@@ -545,6 +554,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_13_120000) do
     t.text "tutorial"
     t.datetime "updated_at", precision: nil
     t.integer "workshop_id"
+    t.datetime "checked_in_at"
     t.index ["member_id", "attending"], name: "index_workshop_invitations_member_attending"
     t.index ["member_id", "workshop_id", "role"], name: "idx_on_member_id_workshop_id_role_e3cea6bbfd", unique: true
     t.index ["member_id"], name: "index_workshop_invitations_coach_attended_on_member_id", where: "(attended AND ((role)::text = 'Coach'::text))"
@@ -564,6 +574,15 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_13_120000) do
     t.index ["sponsor_id"], name: "index_workshop_sponsors_on_sponsor_id"
     t.index ["workshop_id", "host"], name: "index_workshop_sponsors_on_workshop_id_and_host"
     t.index ["workshop_id"], name: "index_workshop_sponsors_on_workshop_id"
+  end
+
+  create_table "workshop_working_groups", force: :cascade do |t|
+    t.bigint "workshop_id", null: false
+    t.integer "position", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["workshop_id", "position"], name: "index_workshop_working_groups_on_workshop_id_and_position"
+    t.index ["workshop_id"], name: "index_workshop_working_groups_on_workshop_id"
   end
 
   create_table "workshops", id: :serial, force: :cascade do |t|
@@ -594,5 +613,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_13_120000) do
   add_foreign_key "invitation_log_entries", "invitation_logs"
   add_foreign_key "invitation_logs", "members", column: "initiator_id"
   add_foreign_key "member_email_deliveries", "members"
+  add_foreign_key "workshop_invitation_working_groups", "workshop_invitations"
+  add_foreign_key "workshop_invitation_working_groups", "workshop_working_groups"
+  add_foreign_key "workshop_working_groups", "workshops"
   add_foreign_key "workshops", "members", column: "created_by_id", on_delete: :nullify
 end

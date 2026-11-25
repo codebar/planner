@@ -1,0 +1,132 @@
+module WorkingGroups
+  # Persistence adapter backing WorkingGroups::Service with strong-FK workshop
+  # tables (workshop_working_groups + workshop_invitation_working_groups).
+  # Storage details stay encapsulated here so polymorphic or Event adapters can
+  # be added later without changing callers or the Board reducer.
+  class WorkshopAdapter
+    CHECK_IN_WINDOW_LEAD = 30.minutes
+
+    def initialize(workshop) = @workshop = workshop
+    def session_id = @workshop.id
+    def enabled? = !@workshop.virtual?
+    def with_session_lock(&) = @workshop.with_lock(&)
+
+    def visible?
+      return @visible unless @visible.nil?
+
+      @visible = !@workshop.virtual? && (check_in_window_open? || @workshop.workshop_working_groups.exists?)
+    end
+
+    def load_board_and_entries(preload_flags: true)
+      entries = checked_in_entries(preload_flags:)
+      entries_by_id = entries.index_by(&:id)
+      grouped_ids = Set.new
+      groups = build_groups(entries_by_id, grouped_ids)
+      waiting = entries.reject { |e| grouped_ids.include?(e.id) }.map { |e| participant_for(e) }
+      [Board.new(groups:, waiting:), entries_by_id]
+    end
+
+    def persist_diff!(before_board, after_board)
+      return if before_board == after_board
+
+      before_by_id = before_board.groups.index_by(&:id)
+      destroy_unretained_groups!(after_board.groups.filter_map(&:id))
+      sweep_stale_memberships!(after_board.groups)
+      update_existing_groups!(before_by_id, after_board.groups)
+      create_new_groups!(after_board.groups)
+    end
+
+    def attendance_signature
+      count, max_updated = @workshop.invitations.accepted.pick(Arel.sql('COUNT(*), MAX(updated_at)'))
+      [count.to_i, max_updated&.to_i]
+    end
+
+    def remove_entry_membership!(entry_id)
+      link = WorkshopInvitationWorkingGroup.find_by(workshop_invitation_id: entry_id)
+      return unless link
+
+      group = link.workshop_working_group
+      link.destroy!
+      group.destroy! if group.workshop_invitation_working_groups.count < 2
+    end
+
+    def participant_for(entry)
+      WorkingGroups::Participant.new(entry_id: entry.id, role: entry.role, checked_in_at: entry.checked_in_at)
+    end
+
+    private
+
+    def check_in_window_open?
+      @workshop.date_and_time.present? && (@workshop.date_and_time - CHECK_IN_WINDOW_LEAD).past?
+    end
+
+    def checked_in_entries(preload_flags: true)
+      entries = @workshop.invitations.accepted.attended.joins(:member).merge(Member.not_banned).includes(:member).to_a
+      preload_member_flags(entries) if preload_flags
+      entries
+    end
+
+    def preload_member_flags(entries)
+      members = entries.map(&:member).uniq(&:id)
+      return if members.empty?
+
+      flags = AdminWorkshopAttendeeFlags.for_members(members.map(&:id), exclude_workshop_id: @workshop.id)
+      members.each { |m| m.admin_workshop_flags = flags[m.id] }
+    end
+
+    def build_groups(entries_by_id, grouped_ids)
+      @workshop.workshop_working_groups.ordered.includes(:workshop_invitation_working_groups).filter_map do |record|
+        participants = active_participants_for(record, entries_by_id)
+        next if participants.size < 2
+
+        participants.each { |p| grouped_ids.add(p.entry_id) }
+        WorkingGroups::Group.new(id: record.id, position: record.position, participants:)
+      end
+    end
+
+    def active_participants_for(record, entries_by_id)
+      record.workshop_invitation_working_groups.filter_map do |link|
+        entry = entries_by_id[link.workshop_invitation_id]
+        participant_for(entry) if entry
+      end
+    end
+
+    def destroy_unretained_groups!(retained_ids)
+      scope = @workshop.workshop_working_groups
+      (retained_ids.any? ? scope.where.not(id: retained_ids) : scope).destroy_all
+    end
+
+    def sweep_stale_memberships!(after_groups)
+      active_ids = after_groups.flat_map { |g| g.participants.map(&:entry_id) }
+      scope = WorkshopInvitationWorkingGroup.joins(:workshop_working_group)
+                                            .where(workshop_working_groups: { workshop_id: @workshop.id })
+      (active_ids.any? ? scope.where.not(workshop_invitation_id: active_ids) : scope).delete_all
+    end
+
+    def update_existing_groups!(before_by_id, after_groups)
+      changed = after_groups.select { |g| g.id && before_by_id[g.id] != g }
+      return if changed.empty?
+
+      WorkshopInvitationWorkingGroup.where(workshop_working_group_id: changed.map(&:id)).delete_all
+      changed.each { |group| sync_group_record!(group) }
+    end
+
+    def sync_group_record!(group)
+      record = @workshop.workshop_working_groups.find(group.id)
+      record.update!(position: group.position) if record.position != group.position
+      attach_memberships!(record, group.participants)
+    end
+
+    def create_new_groups!(after_groups)
+      after_groups.select { |g| g.id.nil? }.each do |group|
+        attach_memberships!(@workshop.workshop_working_groups.create!(position: group.position), group.participants)
+      end
+    end
+
+    def attach_memberships!(record, participants)
+      participants.each do |p|
+        WorkshopInvitationWorkingGroup.create!(workshop_working_group: record, workshop_invitation_id: p.entry_id)
+      end
+    end
+  end
+end
