@@ -13,8 +13,13 @@ class EventCardComponent < ViewComponent::Base
   # sponsor rename, a venue swap or an organiser change. The listing
   # controllers eager-load all of these, so building the key reads loaded
   # associations only.
+  #
+  # Sponsors are ordered before they reach the key: Event#sponsors has no order
+  # clause, so a different join order would write a second fragment for an
+  # unchanged card.
   def fragment_cache_key
-    [@event, @event.chapter, @event.venue, *@event.sponsors, *@event.organisers]
+    sponsors = @event.sponsors.to_a.sort_by(&:id)
+    [@event, @event.chapter, @event.venue, *sponsors, *@event.organisers]
       .compact.map(&:cache_key_with_version) + [I18n.locale, :v4]
   end
 end

@@ -69,7 +69,7 @@ RSpec.describe EventCardComponent do
   end
 
   context 'with caching on' do
-    let(:fragment_store) { ActiveSupport::Cache::MemoryStore.new }
+    let(:fragment_store) { CountingCacheStore.new }
 
     around do |example|
       old_perform_caching = ActionController::Base.perform_caching
@@ -151,6 +151,31 @@ RSpec.describe EventCardComponent do
       expect(render_card(workshop)).to include('Newly Added')
     end
 
+    it 'busts the fragment when a chapter organiser is added to a workshop with none of its own' do
+      chapter_organiser = Fabricate(:member, name: 'Chapter', surname: 'Organiser')
+      chapter_organiser.add_role(:organiser, chapter)
+      workshop = Fabricate(:workshop, chapter:)
+      before = workshop.reload.cache_key_with_version
+      expect(render_card(workshop)).to include('Chapter Organiser')
+
+      added = Fabricate(:member, name: 'Added', surname: 'Organiser')
+      added.add_role(:organiser, chapter)
+
+      expect(workshop.reload.cache_key_with_version).to eq(before)
+      expect(render_card(workshop)).to include('Added Organiser')
+    end
+
+    it 'busts the fragment when a chapter organiser is removed and no workshop organiser remains' do
+      chapter_organiser = Fabricate(:member, name: 'Chapter', surname: 'Organiser')
+      chapter_organiser.add_role(:organiser, chapter)
+      workshop = Fabricate(:workshop, chapter:)
+      expect(render_card(workshop)).to include('Chapter Organiser')
+
+      chapter_organiser.remove_role(:organiser, chapter)
+
+      expect(render_card(workshop)).not_to include('Chapter Organiser')
+    end
+
     it 'busts the fragment when the meeting venue is renamed without touching the meeting' do
       meeting = Fabricate(:meeting)
       before = meeting.reload.cache_key_with_version
@@ -165,12 +190,31 @@ RSpec.describe EventCardComponent do
     it 'reuses the fragment while nothing rendered has changed' do
       workshop = Fabricate(:workshop, chapter:)
       render_card(workshop)
-      written = fragment_store.instance_variable_get(:@data).keys.size
-      expect(written).to be_positive
+      expect(fragment_store.writes).to be_positive
 
+      fragment_store.reset_counts!
       render_card(workshop)
 
-      expect(fragment_store.instance_variable_get(:@data).keys.size).to eq(written)
+      expect(fragment_store.hits).to be_positive
+      expect(fragment_store.writes).to be_zero
+    end
+
+    it 'keys an event on its sponsors regardless of the order the association returns them' do
+      event = Fabricate(:event)
+      first = Fabricate(:sponsor)
+      second = Fabricate(:sponsor)
+      event.sponsors << first << second
+
+      presenter = EventPresenter.decorate(event.reload)
+      allow(presenter).to receive(:sponsors).and_return([first, second])
+      render_inline(described_class.new(event_card: presenter)).to_html
+
+      allow(presenter).to receive(:sponsors).and_return([second, first])
+      fragment_store.reset_counts!
+      render_inline(described_class.new(event_card: presenter)).to_html
+
+      expect(fragment_store.hits).to be_positive
+      expect(fragment_store.writes).to be_zero
     end
   end
 
