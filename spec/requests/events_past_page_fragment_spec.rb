@@ -75,6 +75,21 @@ RSpec.describe 'Past events page fragment' do
     expect(response.body).to include('Brand new past event')
   end
 
+  # The venue is a sponsor row the card renders; renaming it leaves the event
+  # row untouched, so only a page key covering the sponsors table can see it.
+  it 'serves fresh content once a venue sponsor is renamed' do
+    venue = Fabricate(:sponsor, name: 'Original Venue')
+    Fabricate(:event, date_and_time: 5.weeks.ago, name: 'Hosted workshop', venue:)
+    get '/events/past'
+    expect(response.body).to include('Original Venue')
+
+    venue.update!(name: 'Renamed Venue', updated_at: 1.second.from_now)
+
+    get '/events/past'
+
+    expect(response.body).to include('Renamed Venue')
+  end
+
   it 'expires the fragment so a deleted event self-heals within the horizon' do
     get '/events/past'
     deleted = Event.find_by(name: 'Ancient workshop')

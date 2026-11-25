@@ -3,6 +3,13 @@ require 'services/ticket'
 class EventsController < ApplicationController
   before_action :require_login, only: %i[student coach]
 
+  # Every table a listing card reads; keep in step with EventCardComponent#fragment_cache_key.
+  LISTING_TABLES = %w[workshops meetings events members chapters sponsors sponsorships
+                      workshop_sponsors permissions].freeze
+  LATEST_MODEL_UPDATED_SQL = "SELECT MAX(latest) FROM (#{LISTING_TABLES.map do |table|
+    %(SELECT MAX(updated_at) AS latest FROM "#{table}")
+  end.join(' UNION ALL ')}) t".freeze
+
   def index
     redirect_to upcoming_events_path
   end
@@ -82,15 +89,7 @@ class EventsController < ApplicationController
   end
 
   def latest_model_updated
-    sql = <<~SQL.squish
-      SELECT MAX(latest) FROM (
-        SELECT MAX(updated_at) AS latest FROM "workshops"
-        UNION ALL SELECT MAX(updated_at) FROM "meetings"
-        UNION ALL SELECT MAX(updated_at) FROM "events"
-        UNION ALL SELECT MAX(updated_at) FROM "members"
-      ) t
-    SQL
-    ActiveRecord::Base.connection.select_value(sql)
+    ActiveRecord::Base.connection.select_value(LATEST_MODEL_UPDATED_SQL)
   end
 
   def find_invitation_and_redirect_to_event(role)
