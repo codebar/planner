@@ -59,6 +59,17 @@ RSpec.describe ContactPreferencesController do
       expect(activity.parameters).to include(note: contact.email)
     end
 
+    it 'records the activity against the contact when the contact has no sponsor' do
+      sponsorless = Fabricate(:contact, sponsor: nil, mailing_list_consent: false)
+
+      patch :update, params: {
+        contact: { token: sponsorless.token, mailing_list_consent: '1' }
+      }
+
+      activity = PublicActivity::Activity.find_by!(key: 'sponsor.contact_subscribe')
+      expect(activity.trackable).to eq(sponsorless)
+    end
+
     it 'returns not found when the submitted token is unknown' do
       patch :update, params: {
         contact: { token: 'unknown-token', mailing_list_consent: '1' }

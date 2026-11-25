@@ -42,7 +42,7 @@ RSpec.describe MemberActivityRecorder do
       .and_raise(ActiveRecord::RecordInvalid)
     allow(Rails.logger).to receive(:warn)
 
-    expect { described_class.record(actor: member, key: 'member.login') }.not_to raise_error
+    expect(described_class.record(actor: member, key: 'member.login')).to be_nil
     expect(Rails.logger).to have_received(:warn).with(/MemberActivityRecorder failed/)
   end
 

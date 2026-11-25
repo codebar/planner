@@ -48,10 +48,12 @@ class MemberActivityRecorder
 
   def self.record(actor:, key:, trackable: nil, recipient: nil, contact_email: nil)
     Rails.logger.warn("MemberActivityRecorder: unregistered key '#{key}'") unless KEYS.include?(key)
+    # PublicActivity validates trackable presence, so a nil one would drop the row.
     trackable ||= actor
     params = contact_email ? { note: contact_email } : {}
     PublicActivity::Activity.create!(owner: actor, key:, trackable:, recipient:, parameters: params)
   rescue StandardError => e
     Rails.logger.warn("MemberActivityRecorder failed (#{key}): #{e.class}: #{e.message}")
+    nil
   end
 end
