@@ -46,6 +46,14 @@ class Member < ApplicationRecord
   scope :accepted_toc, -> { where.not(accepted_toc_at: nil) }
   scope :order_by_email, -> { order(:email) }
   scope :subscribers, -> { joins(:subscriptions).order('created_at desc').uniq }
+  scope :with_activity_since, lambda { |time|
+    where(id: PublicActivity::Activity.where(owner_type: 'Member').where(created_at: time..)
+                                      .where.not(owner_id: nil).select(:owner_id))
+  }
+  scope :without_activity_since, lambda { |time|
+    where.not(id: PublicActivity::Activity.where(owner_type: 'Member').where(created_at: time..)
+                                          .where.not(owner_id: nil).select(:owner_id))
+  }
   scope :not_banned, lambda {
                        joins('LEFT OUTER JOIN bans ON members.id = bans.member_id')
                          .where('bans.id is NULL or bans.expires_at < CURRENT_DATE')
@@ -76,6 +84,16 @@ class Member < ApplicationRecord
 
   def organiser?
     organised_chapters.present?
+  end
+
+  def manages_chapters?
+    is_admin? || has_role?(:organiser, :any)
+  end
+
+  def contactable_chapters
+    return Chapter.all if is_admin? || has_role?(:organiser) || has_role?(:organiser, Chapter)
+
+    Chapter.where(id: contactable_chapter_ids)
   end
 
   def admin_or_organiser?
@@ -211,5 +229,12 @@ class Member < ApplicationRecord
     [invitations.joins(:event),
      workshop_invitations.joins(:workshop).includes(workshop: :chapter),
      meeting_invitations.joins(:meeting)].map(&time_period.to_sym).inject(:+).sort_by { |i| i.event.date_and_time }
+  end
+
+  def contactable_chapter_ids
+    organised_chapters.pluck(:id) +
+      Workshop.with_role(:organiser, self).pluck(:chapter_id) +
+      Event.with_role(:organiser, self).joins(:chapters).pluck('chapters.id') +
+      Meeting.with_role(:organiser, self).joins(:chapters).pluck('chapters.id')
   end
 end

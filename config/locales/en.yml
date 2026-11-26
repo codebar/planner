@@ -763,6 +763,55 @@ en:
   admin:
     dashboard:
       title: "Admin"
+    chapter_contacts:
+      title: "Contact %{chapter} members"
+      confirm_title: "Confirm email to %{chapter}"
+      audience: "Audience"
+      audiences:
+        all_members: "All chapter members"
+        chapter_organisers: "Chapter organisers"
+        leadership_team: "Leadership team"
+        custom_list: "Custom list"
+        active_last_month: "Active in the last month"
+        inactive_last_month: "Inactive for the last month"
+        event_rsvp: "Event RSVP status"
+      custom_list_legend: "Select members for a custom list"
+      event: "Event"
+      select_event: "Select an event"
+      rsvp_status: "RSVP status"
+      select_rsvp_status: "Select an RSVP status"
+      rsvp_statuses:
+        attending: "Attending"
+        declined: "Declined"
+        unanswered: "No response"
+      activity_period_label: "Activity period"
+      activity_period:
+        one: "%{count} month"
+        other: "%{count} months"
+      message_html_hint: "HTML is supported. Scripts, styles, and unsupported markup are removed before sending."
+      preview_recipients: "Preview recipients"
+      message_preview: "Message preview"
+      confirm_and_send: "Confirm and send"
+      recipients_count:
+        one: "%{count} recipient"
+        other: "%{count} recipients"
+      recipients_will_receive:
+        one: "%{count} recipient will receive this email"
+        other: "%{count} recipients will receive this email"
+      email_sent:
+        one: "Email sent to %{count} chapter member"
+        other: "Email sent to %{count} chapter members"
+      errors:
+        no_recipients: "There are no current chapter subscribers to email."
+        chapter_organisers: "There are no chapter organisers to email."
+        leadership_team: "There are no chapter or event organisers to email."
+        custom_list: "Select at least one current chapter member."
+        active_last_month: "There are no members active in the selected period."
+        inactive_last_month: "There are no members inactive in the selected period."
+        event_rsvp: "No current chapter members match that event RSVP status."
+        subject_and_message_required: "Subject and message are required."
+        invalid_audience: "Choose a valid audience."
+        invalid_activity_period: "Choose a valid activity period."
     members:
       activity:
         for: "for %{subject}"
