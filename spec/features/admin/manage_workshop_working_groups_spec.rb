@@ -112,7 +112,7 @@ RSpec.describe 'Managing workshop working groups' do
     visit admin_workshop_path(workshop)
     within("#working-group-#{group_id}") do
       click_button 'Add someone to this group'
-      fill_in 'Search checked-in attendees to add to this group', with: 'DOM events'
+      find('[data-group-picker-search]').set('DOM events')
       expect(page).to have_text('Fatima Wait')
       expect(page).to have_text('Tutorial: JavaScript')
       find('.working-group-picker__option', text: 'Fatima Wait').click
