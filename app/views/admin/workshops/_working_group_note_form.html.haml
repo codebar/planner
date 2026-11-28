@@ -1,0 +1,21 @@
+-# locals: (workshop:, invitation:)
+= form_with url: admin_workshop_invitation_path(workshop, invitation),
+            method: :put,
+            local: true,
+            class: 'invitation-note-form mt-2 d-none',
+            data: { invitation_note_form: true, invitation_id: invitation.id } do
+  .mb-2
+    %label.form-label.small.mb-0.text-muted{ for: "invitation-note-pairing-#{invitation.id}" } Note
+    %input.form-control.form-control-sm{ id: "invitation-note-pairing-#{invitation.id}",
+                                         type: 'text',
+                                         name: 'workshop_invitation[note]',
+                                         value: invitation.note,
+                                         maxlength: 100,
+                                         aria: { describedby: "invitation-note-hint-pairing-#{invitation.id}" },
+                                         placeholder: invitation.for_student? ? 'What do they want to work on?' : 'Skills or pairing note' }
+    .form-text.small{ id: "invitation-note-hint-pairing-#{invitation.id}" }
+      Visible to attendees on the workshop page (max 100 characters).
+  .text-danger.small.mb-1.d-none{ role: 'alert', data: { invitation_note_error: true } }
+  .d-flex.align-items-center.gap-1
+    %button.btn.btn-sm.btn-primary{ type: 'submit' } Save
+    %button.btn.btn-sm.btn-outline-secondary{ type: 'button', data: { cancel_invitation_note: true } } Cancel

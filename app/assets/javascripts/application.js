@@ -20,6 +20,7 @@
 //= require subscriptions-toggle
 //= require add-all-chapters
 //= require invitations
+//= require admin/invitation_note
 //= require admin/working_groups
 //= require rsvp-close-time
 //= require dietary-restrictions

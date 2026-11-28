@@ -1,11 +1,13 @@
 class Admin::InvitationsController < Admin::ApplicationController
   include Admin::WorkshopConcerns
+  include Admin::InvitationNoteConcern
   include WaitlistPromotionConcerns
 
   def update
     set_and_decorate_workshop
     authorize @workshop
     set_invitation
+    return handle_note_update if params[:workshop_invitation].present?
 
     message = update_attendance(attending: params[:attending], attended: params[:attended])
 
