@@ -125,6 +125,22 @@ RSpec.describe 'Managing workshop working groups' do
     expect(inv_fatima.reload.workshop_working_group.id).to eq(group_id)
   end
 
+  it 'selects the focused option when pressing Enter after tabbing in the picker', :js do
+    group_id, = seed_picker_scenario(workshop)
+    inv_second = create_picker_invite(workshop, role: 'Student', mins_ago: 2, name: 'Zara', surname: 'Second',
+                                                tutorial: 'Python', note: 'Dictionaries')
+    WorkingGroups::Service.for(workshop).on_check_in(inv_second)
+
+    visit admin_workshop_path(workshop)
+    within("#working-group-#{group_id}") do
+      click_button 'Add someone to this group'
+      find('.working-group-picker__option', text: 'Zara Second').send_keys(:enter)
+    end
+
+    within("#working-group-#{group_id}") { expect(page).to have_text('Zara Second', wait: 5) }
+    expect(inv_second.reload.workshop_working_group.id).to eq(group_id)
+  end
+
   def seed_picker_scenario(target_workshop)
     service = WorkingGroups::Service.for(target_workshop)
     amara = create_picker_invite(target_workshop, role: 'Student', mins_ago: 10, name: 'Amara', surname: 'One', tutorial: 'CSS')

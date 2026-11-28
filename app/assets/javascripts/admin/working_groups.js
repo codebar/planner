@@ -548,7 +548,9 @@
       event.preventDefault();
       movePickerSelection(panel, -1);
     } else if (event.key === 'Enter') {
-      var selected = panel.querySelector('.working-group-picker__option[aria-selected="true"]');
+      var selected =
+        (event.target.closest && event.target.closest('.working-group-picker__option')) ||
+        panel.querySelector('.working-group-picker__option[aria-selected="true"]');
       if (selected) {
         event.preventDefault();
         selectPickerOption(panel.closest('[data-group-picker]'), selected.dataset.pickerEntryId);
