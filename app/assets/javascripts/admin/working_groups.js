@@ -5,7 +5,16 @@
   var requestInFlight = false;
   var lastSyncEtag = null;
   var syncVersion = 0;
+  var autoScrollVelocity = 0;
+  var autoScrollFrameId = null;
+  var autoScrollLastTime = null;
   var POLL_INTERVAL_MS = 15000;
+  var SCROLL_TOP_ZONE_PX = 140;
+  var SCROLL_BOTTOM_ZONE_PX = 100;
+  var SCROLL_MIN_PX_PER_SEC = 260;
+  var SCROLL_MAX_PX_PER_SEC = 960;
+  var BOARD_TOP_MARGIN_PX = 110;
+  var BOARD_BOTTOM_MARGIN_PX = 24;
 
   function csrfToken() {
     var meta = document.querySelector('meta[name="csrf-token"]');
@@ -30,7 +39,64 @@
     });
   }
 
+  function computeAutoScrollVelocity(clientY, viewportHeight) {
+    if (clientY < SCROLL_TOP_ZONE_PX) {
+      var upRatio = Math.min(1, Math.max(0, (SCROLL_TOP_ZONE_PX - clientY) / SCROLL_TOP_ZONE_PX));
+      return -(SCROLL_MIN_PX_PER_SEC + upRatio * (SCROLL_MAX_PX_PER_SEC - SCROLL_MIN_PX_PER_SEC));
+    }
+    var bottomThreshold = viewportHeight - SCROLL_BOTTOM_ZONE_PX;
+    if (clientY > bottomThreshold) {
+      var downRatio = Math.min(1, Math.max(0, (clientY - bottomThreshold) / SCROLL_BOTTOM_ZONE_PX));
+      return SCROLL_MIN_PX_PER_SEC + downRatio * (SCROLL_MAX_PX_PER_SEC - SCROLL_MIN_PX_PER_SEC);
+    }
+    return 0;
+  }
+
+  function stopAutoScroll() {
+    autoScrollVelocity = 0;
+    autoScrollLastTime = null;
+    if (autoScrollFrameId !== null) {
+      window.cancelAnimationFrame(autoScrollFrameId);
+      autoScrollFrameId = null;
+    }
+  }
+
+  function stepAutoScroll(now) {
+    autoScrollFrameId = null;
+    var board = currentBoard();
+    if (!dragState || !board || autoScrollVelocity === 0) {
+      autoScrollLastTime = null;
+      return;
+    }
+
+    var rect = board.getBoundingClientRect();
+    if (autoScrollVelocity < 0 && rect.top >= BOARD_TOP_MARGIN_PX) {
+      stopAutoScroll();
+      return;
+    }
+    if (autoScrollVelocity > 0 && rect.bottom <= window.innerHeight - BOARD_BOTTOM_MARGIN_PX) {
+      stopAutoScroll();
+      return;
+    }
+
+    var dtSec = autoScrollLastTime === null ? 0.016 : Math.min(0.05, (now - autoScrollLastTime) / 1000);
+    autoScrollLastTime = now;
+    window.scrollBy(0, Math.round(autoScrollVelocity * dtSec));
+    autoScrollFrameId = window.requestAnimationFrame(stepAutoScroll);
+  }
+
+  function updateAutoScroll(event) {
+    if (event.clientX === 0 && event.clientY === 0) return;
+    autoScrollVelocity = computeAutoScrollVelocity(event.clientY, window.innerHeight);
+    if (autoScrollVelocity === 0) {
+      stopAutoScroll();
+    } else if (autoScrollFrameId === null) {
+      autoScrollFrameId = window.requestAnimationFrame(stepAutoScroll);
+    }
+  }
+
   function clearDragVisuals(board) {
+    stopAutoScroll();
     if (!board) return;
     delete board.dataset.dragging;
     clearHoverTargets(board);
@@ -287,7 +353,18 @@
 
   document.addEventListener('dragover', function (event) {
     var board = currentBoard();
-    if (!dragState || !board || !board.contains(event.target)) return;
+    if (!dragState || !board) return;
+
+    updateAutoScroll(event);
+
+    if (!board.contains(event.target)) {
+      if (autoScrollVelocity !== 0) {
+        event.preventDefault();
+        event.dataTransfer.dropEffect = 'move';
+      }
+      clearHoverTargets(board);
+      return;
+    }
 
     event.preventDefault();
     event.dataTransfer.dropEffect = 'move';
@@ -307,6 +384,7 @@
   });
 
   document.addEventListener('drop', function (event) {
+    stopAutoScroll();
     var board = currentBoard();
     if (!dragState || !board || !board.contains(event.target)) return;
 
@@ -323,6 +401,8 @@
     dragState = null;
     clearDragVisuals(currentBoard());
   });
+
+  window.addEventListener('blur', stopAutoScroll);
 
   document.addEventListener('submit', function (event) {
     var board = currentBoard();

@@ -105,4 +105,52 @@ RSpec.describe 'Managing workshop working groups' do
     within("#working-group-waiting-#{newbie_inv.id}") { expect(page).to have_text('New') }
     within("#working-group-waiting-#{returning_inv.id}") { expect(page).to have_no_text('New') }
   end
+
+  it 'auto-scrolls upward when dragging near the top viewport edge on a long Pairings list', :js do
+    seed_long_pairings_board(workshop, pairs: 10)
+    visit admin_workshop_path(workshop)
+    page.execute_script('document.querySelector(".working-groups-unpair-zone").scrollIntoView({ block: "end" })')
+    start_y = page.evaluate_script('window.scrollY')
+
+    page.execute_script(<<~JS)
+      const slot = document.querySelector('.working-group--waiting .working-group-slot[data-entry-id]');
+      const dt = new DataTransfer();
+      window.__scrollTestDt = dt;
+      slot.dispatchEvent(new DragEvent('dragstart', { bubbles: true, cancelable: true, dataTransfer: dt }));
+      document.dispatchEvent(new DragEvent('dragover', { bubbles: true, cancelable: true, clientX: 200, clientY: 40, dataTransfer: dt }));
+    JS
+
+    expect(page).to have_css('.working-groups-board[data-dragging="true"]')
+    scrolled_y = wait_for_scroll_change(start_y)
+    expect(scrolled_y).to be < start_y
+
+    page.execute_script(<<~JS)
+      const slot = document.querySelector('.working-group--waiting .working-group-slot[data-entry-id]');
+      slot.dispatchEvent(new DragEvent('dragend', { bubbles: true, cancelable: true, dataTransfer: window.__scrollTestDt }));
+    JS
+  end
+
+  def seed_long_pairings_board(target_workshop, pairs:)
+    service = WorkingGroups::Service.for(target_workshop)
+    pairs.times do |idx|
+      base = (30 - (idx * 2)).minutes.ago
+      student = Fabricate(:workshop_invitation, workshop: target_workshop, role: 'Student', attending: true,
+                                                attended: true, checked_in_at: base, automated_rsvp: true)
+      coach = Fabricate(:workshop_invitation, workshop: target_workshop, role: 'Coach', attending: true,
+                                              attended: true, checked_in_at: base + 10.seconds, automated_rsvp: true)
+      service.on_check_in(student)
+      service.on_check_in(coach)
+    end
+    Fabricate(:workshop_invitation, workshop: target_workshop, role: 'Student', attending: true, attended: true,
+                                    checked_in_at: 1.minute.ago, automated_rsvp: true)
+  end
+
+  def wait_for_scroll_change(start_y)
+    Timeout.timeout(3) do
+      loop do
+        current_y = page.evaluate_script('window.scrollY')
+        return current_y if current_y < start_y - 40
+      end
+    end
+  end
 end
