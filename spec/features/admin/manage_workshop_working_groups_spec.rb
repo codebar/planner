@@ -105,4 +105,68 @@ RSpec.describe 'Managing workshop working groups' do
     within("#working-group-waiting-#{newbie_inv.id}") { expect(page).to have_text('New') }
     within("#working-group-waiting-#{returning_inv.id}") { expect(page).to have_no_text('New') }
   end
+
+  it 'auto-scrolls upward and downward when dragging near viewport edges on a long Pairings list', :js do
+    seed_long_pairings_board(workshop, pairs: 14)
+    page.current_window.resize_to(1280, 640)
+    visit admin_workshop_path(workshop)
+    page.execute_script('document.querySelector(".working-groups-unpair-zone").scrollIntoView({ block: "end", behavior: "instant" })')
+    start_y = page.evaluate_script('window.scrollY')
+    expect(start_y).to be > 200
+
+    dispatch_drag_edge_hover(client_y: 40, start_drag: true)
+    expect(page).to have_css('.working-groups-board[data-dragging="true"]')
+    up_y = wait_for_scroll_delta(start_y, direction: :up, min_delta: 120)
+    expect(up_y).to be < start_y - 100
+
+    dispatch_drag_edge_hover(client_y: 620, start_drag: false)
+    down_y = wait_for_scroll_delta(up_y, direction: :down, min_delta: 40)
+    expect(down_y).to be > up_y + 40
+
+    page.execute_script(<<~JS)
+      const slot = document.querySelector('.working-group--waiting .working-group-slot[data-entry-id]');
+      slot.dispatchEvent(new DragEvent('dragend', { bubbles: true, cancelable: true, dataTransfer: window.__scrollTestDt }));
+    JS
+  end
+
+  def dispatch_drag_edge_hover(client_y:, start_drag:)
+    page.execute_script(<<~JS)
+      const slot = document.querySelector('.working-group--waiting .working-group-slot[data-entry-id]');
+      if (#{start_drag ? 'true' : 'false'}) {
+        window.__scrollTestDt = new DataTransfer();
+        slot.dispatchEvent(new DragEvent('dragstart', { bubbles: true, cancelable: true, dataTransfer: window.__scrollTestDt }));
+      }
+      document.dispatchEvent(new DragEvent('dragover', { bubbles: true, cancelable: true, clientX: 200, clientY: #{client_y.to_i}, dataTransfer: window.__scrollTestDt }));
+    JS
+  end
+
+  def seed_long_pairings_board(target_workshop, pairs:)
+    service = WorkingGroups::Service.for(target_workshop)
+    pairs.times do |idx|
+      base = (35 - (idx * 2)).minutes.ago
+      student = Fabricate(:workshop_invitation, workshop: target_workshop, role: 'Student', attending: true,
+                                                attended: true, checked_in_at: base, automated_rsvp: true,
+                                                tutorial: "Ruby Lesson #{idx}", note: "Working on exercises #{idx}")
+      coach = Fabricate(:workshop_invitation, workshop: target_workshop, role: 'Coach', attending: true,
+                                              attended: true, checked_in_at: base + 10.seconds, automated_rsvp: true,
+                                              note: "Ruby & JavaScript #{idx}")
+      service.on_check_in(student)
+      service.on_check_in(coach)
+    end
+    Fabricate(:workshop_invitation, workshop: target_workshop, role: 'Student', attending: true, attended: true,
+                                    checked_in_at: 1.minute.ago, automated_rsvp: true,
+                                    tutorial: 'JavaScript DOM', note: 'Building an interactive form')
+  end
+
+  def wait_for_scroll_delta(origin_y, direction:, min_delta:)
+    Timeout.timeout(5) do
+      loop do
+        current_y = page.evaluate_script('window.scrollY')
+        return current_y if direction == :up && current_y < origin_y - min_delta
+        return current_y if direction == :down && current_y > origin_y + min_delta
+
+        sleep 0.05
+      end
+    end
+  end
 end
