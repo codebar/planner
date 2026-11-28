@@ -105,4 +105,26 @@ RSpec.describe 'Managing workshop working groups' do
     within("#working-group-waiting-#{newbie_inv.id}") { expect(page).to have_text('New') }
     within("#working-group-waiting-#{returning_inv.id}") { expect(page).to have_no_text('New') }
   end
+
+  it 'lets organisers edit an attendee note inline on Pairings and keeps Check-in in sync', :js do
+    student_inv = Fabricate(:workshop_invitation, workshop:, role: 'Student', attending: true, attended: true,
+                                                  checked_in_at: 5.minutes.ago, automated_rsvp: true,
+                                                  tutorial: 'Python', note: 'Loops')
+
+    visit admin_workshop_path(workshop)
+
+    within("#working-group-waiting-#{student_inv.id}") do
+      click_button 'Edit note'
+      fill_in 'Note', with: 'Switched to JavaScript today'
+      click_button 'Save'
+    end
+
+    within("#working-group-waiting-#{student_inv.id}") do
+      expect(page).to have_text('Tutorial: Python', wait: 5)
+      expect(page).to have_text('Switched to JavaScript today')
+    end
+    within("#attendee-row-#{student_inv.id}") do
+      expect(page).to have_text('Note: Switched to JavaScript today', wait: 5)
+    end
+  end
 end

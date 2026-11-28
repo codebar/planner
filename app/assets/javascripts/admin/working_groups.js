@@ -197,9 +197,13 @@
       });
   }
 
+  function isEditingNote() {
+    return !!document.querySelector('[data-invitation-note-form]:not(.d-none)');
+  }
+
   function pollLiveBoard(force, boardOnly) {
     var board = currentBoard();
-    if (!board || requestInFlight || (dragState && !force) || (document.hidden && !force)) return;
+    if (!board || requestInFlight || (dragState && !force) || (document.hidden && !force) || (isEditingNote() && !force)) return;
 
     initializeEtag();
     var version = ++syncVersion;
@@ -354,6 +358,10 @@
     if (target && target.closest && target.closest('.verify_attendance')) {
       pollLiveBoard(true, true);
     }
+  });
+
+  document.addEventListener('invitation-note:updated', function () {
+    pollLiveBoard(true, true);
   });
 
   document.addEventListener('DOMContentLoaded', initializeEtag);

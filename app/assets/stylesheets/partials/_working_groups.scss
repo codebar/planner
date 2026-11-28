@@ -131,6 +131,10 @@
       background-color: #eef6ff;
     }
 
+    &[data-editing-note="true"] {
+      cursor: default;
+    }
+
     &--empty {
       cursor: default;
       color: #868e96;
