@@ -170,4 +170,62 @@ RSpec.describe Admin::InvitationsController do
                                               recipient: invitation.member)).to be(true)
     end
   end
+
+  describe 'PUT #update (attendee pairing note)' do
+    let(:student_invitation) do
+      Fabricate(:workshop_invitation, workshop:, role: 'Student', attending: true, attended: true,
+                                      checked_in_at: 5.minutes.ago, tutorial: 'Python', note: 'Loops')
+    end
+    let(:coach_invitation) do
+      Fabricate(:workshop_invitation, workshop:, role: 'Coach', attending: true, attended: true,
+                                      checked_in_at: 4.minutes.ago, tutorial: nil, note: 'Ruby & Rails')
+    end
+
+    before do
+      admin.add_role(:organiser, workshop.chapter)
+      login admin
+    end
+
+    it 'updates a student note via XHR without sending emails or altering tutorial or check-in state' do
+      original_checked_in_at = student_invitation.checked_in_at
+      expect do
+        put :update,
+            params: { workshop_id: workshop.id, id: student_invitation.token,
+                      workshop_invitation: { tutorial: 'Should be ignored', note: 'Switched to JavaScript today' } },
+            xhr: true
+      end.not_to(change { ActionMailer::Base.deliveries.count })
+
+      expect(response).to have_http_status(:success)
+      student_invitation.reload
+      expect(student_invitation.tutorial).to eq('Python')
+      expect(student_invitation.note).to eq('Switched to JavaScript today')
+      expect(student_invitation.attended).to be(true)
+      expect(student_invitation.checked_in_at.to_i).to eq(original_checked_in_at.to_i)
+      expect(PublicActivity::Activity.exists?(owner: admin, key: 'invitation.note_updated',
+                                              recipient: student_invitation.member)).to be(true)
+    end
+
+    it 'updates a coach note via XHR and records who updated it' do
+      put :update,
+          params: { workshop_id: workshop.id, id: coach_invitation.token,
+                    workshop_invitation: { note: 'JavaScript & React' } },
+          xhr: true
+
+      expect(response).to have_http_status(:success)
+      coach_invitation.reload
+      expect(coach_invitation.note).to eq('JavaScript & React')
+      expect(PublicActivity::Activity.exists?(owner: admin, key: 'invitation.note_updated',
+                                              recipient: coach_invitation.member)).to be(true)
+    end
+
+    it 'clears a note when submitted blank' do
+      put :update,
+          params: { workshop_id: workshop.id, id: student_invitation.token,
+                    workshop_invitation: { note: '   ' } },
+          xhr: true
+
+      expect(response).to have_http_status(:success)
+      expect(student_invitation.reload.note).to be_nil
+    end
+  end
 end
