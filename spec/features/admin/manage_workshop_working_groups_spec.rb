@@ -105,4 +105,54 @@ RSpec.describe 'Managing workshop working groups' do
     within("#working-group-waiting-#{newbie_inv.id}") { expect(page).to have_text('New') }
     within("#working-group-waiting-#{returning_inv.id}") { expect(page).to have_no_text('New') }
   end
+
+  it 'lets organisers pull any checked-in attendee into a group via the searchable picker', :js do
+    group_id, inv_fatima = seed_picker_scenario(workshop)
+
+    visit admin_workshop_path(workshop)
+    within("#working-group-#{group_id}") do
+      click_button 'Add someone to this group'
+      find('[data-group-picker-search]').set('DOM events')
+      expect(page).to have_text('Fatima Wait')
+      expect(page).to have_text('Tutorial: JavaScript')
+      find('.working-group-picker__option', text: 'Fatima Wait').click
+    end
+
+    within("#working-group-#{group_id}") do
+      expect(page).to have_text('Fatima Wait', wait: 5)
+      expect(page).to have_text('Amara One')
+    end
+    expect(inv_fatima.reload.workshop_working_group.id).to eq(group_id)
+  end
+
+  it 'selects the focused option when pressing Enter after tabbing in the picker', :js do
+    group_id, = seed_picker_scenario(workshop)
+    inv_second = create_picker_invite(workshop, role: 'Student', mins_ago: 2, name: 'Zara', surname: 'Second',
+                                                tutorial: 'Python', note: 'Dictionaries')
+    WorkingGroups::Service.for(workshop).on_check_in(inv_second)
+
+    visit admin_workshop_path(workshop)
+    within("#working-group-#{group_id}") do
+      click_button 'Add someone to this group'
+      find('.working-group-picker__option', text: 'Zara Second').send_keys(:enter)
+    end
+
+    within("#working-group-#{group_id}") { expect(page).to have_text('Zara Second', wait: 5) }
+    expect(inv_second.reload.workshop_working_group.id).to eq(group_id)
+  end
+
+  def seed_picker_scenario(target_workshop)
+    service = WorkingGroups::Service.for(target_workshop)
+    amara = create_picker_invite(target_workshop, role: 'Student', mins_ago: 10, name: 'Amara', surname: 'One', tutorial: 'CSS')
+    ben = create_picker_invite(target_workshop, role: 'Coach', mins_ago: 9, name: 'Ben', surname: 'Coach', note: 'CSS & JS')
+    fatima = create_picker_invite(target_workshop, role: 'Student', mins_ago: 5, name: 'Fatima', surname: 'Wait', tutorial: 'JavaScript', note: 'DOM events')
+    [amara, ben, fatima].each { |inv| service.on_check_in(inv) }
+    [service.board.groups.first.id, fatima]
+  end
+
+  def create_picker_invite(target_workshop, role:, mins_ago:, **attrs)
+    member = Fabricate(:member, name: attrs.delete(:name), surname: attrs.delete(:surname))
+    Fabricate(:workshop_invitation, workshop: target_workshop, member:, role:, attending: true, attended: true,
+                                    checked_in_at: mins_ago.minutes.ago, automated_rsvp: true, **attrs)
+  end
 end

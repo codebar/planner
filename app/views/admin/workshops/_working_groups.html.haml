@@ -2,7 +2,8 @@
 .working-groups-board.mb-5{ id: 'working-groups-board',
                             data: { board_url: admin_workshop_working_groups_path(workshop),
                                     assign_url: admin_workshop_working_groups_path(workshop),
-                                    board_etag: %("#{board.etag}") } }
+                                    board_etag: %("#{board.etag}"),
+                                    board_participants: board.participant_options.to_json } }
   .d-flex.flex-wrap.justify-content-between.align-items-center.gap-2.mb-1
     .d-flex.flex-wrap.align-items-center.gap-2
       %h4.mb-0 Pairings
@@ -32,11 +33,11 @@
 
     - board.groups.each do |group|
       = render partial: 'admin/workshops/working_group_row',
-               locals: { workshop:, group:, waiting_entry: nil }
+               locals: { workshop:, group:, waiting_entry: nil, total_checked_in: board.total_checked_in }
 
     - board.waiting.each do |entry|
       = render partial: 'admin/workshops/working_group_row',
-               locals: { workshop:, group: nil, waiting_entry: entry }
+               locals: { workshop:, group: nil, waiting_entry: entry, total_checked_in: board.total_checked_in }
 
     .working-groups-unpair-zone{ data: { dropzone: 'unpair' } }
       %i.fas.fa-plus-circle.me-2{ aria: { hidden: 'true' } }

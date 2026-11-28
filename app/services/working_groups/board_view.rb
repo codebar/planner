@@ -49,5 +49,44 @@ module WorkingGroups
 
     def visible? = visible
     def empty? = groups.empty? && waiting.empty?
+    def total_checked_in = counts.checked_in_students + counts.checked_in_coaches
+
+    def participant_options
+      waiting_options + paired_options
+    end
+
+    private
+
+    def waiting_options
+      waiting.map { |entry| participant_option_hash(entry, group_id: nil, group_summary: nil) }
+    end
+
+    def paired_options
+      groups.flat_map { |group| group_options(group) }
+    end
+
+    def group_options(group)
+      names_by_id = group.participants.to_h { |p| [p.id, display_name_for(p)] }
+      group.participants.map do |entry|
+        summary = names_by_id.except(entry.id).values.join(', ')
+        participant_option_hash(entry, group_id: group.id, group_summary: summary)
+      end
+    end
+
+    def display_name_for(entry)
+      MemberPresenter.new(entry.member).full_name.presence || entry.member.email
+    end
+
+    def participant_option_hash(entry, group_id:, group_summary:)
+      {
+        entry_id: entry.id,
+        name: display_name_for(entry),
+        role: entry.role,
+        tutorial: entry.tutorial.to_s,
+        note: entry.note.to_s,
+        group_id:,
+        group_summary:
+      }
+    end
   end
 end

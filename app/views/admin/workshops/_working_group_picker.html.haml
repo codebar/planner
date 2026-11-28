@@ -1,0 +1,16 @@
+-# locals: (target_group_id:, target_entry_id:, search_label:)
+.working-group__footer{ data: { group_picker: true,
+                                target_group_id:,
+                                target_entry_id: }.compact }
+  %button.btn.btn-link.btn-sm.p-0.text-decoration-none.working-group-picker__toggle{ type: 'button',
+                                                                                     data: { group_picker_toggle: true },
+                                                                                     aria: { expanded: 'false' } }
+    %i.fas.fa-user-plus.me-1{ aria: { hidden: 'true' } }
+    Add someone to this group
+  .working-group-picker__panel.d-none.mt-2{ data: { group_picker_panel: true } }
+    %input.form-control.form-control-sm.working-group-picker__search{ type: 'search',
+                                                                      placeholder: 'Search by name, role, tutorial, or note…',
+                                                                      autocomplete: 'off',
+                                                                      aria: { label: search_label },
+                                                                      data: { group_picker_search: true } }
+    .working-group-picker__list.mt-1{ role: 'listbox', data: { group_picker_list: true } }
