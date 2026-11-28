@@ -159,4 +159,22 @@ RSpec.describe WorkingGroups::Service do
       expect(service.board.groups.size).to eq(2)
     end
   end
+
+  describe 'BoardView#participant_options' do
+    it 'lists unpaired attendees first followed by paired attendees with tutorial, note, and partner summary' do
+      s1 = create_checked_in(role: 'Student', checked_in_at: 10.minutes.ago)
+      c1 = create_checked_in(role: 'Coach', checked_in_at: 9.minutes.ago)
+      s2 = create_checked_in(role: 'Student', checked_in_at: 5.minutes.ago)
+      s2.update!(tutorial: 'JavaScript', note: 'Interview prep')
+      [s1, c1, s2].each { |inv| service.on_check_in(inv) }
+
+      options = service.board.participant_options
+
+      expect(options.first).to include(entry_id: s2.id, role: 'Student', tutorial: 'JavaScript',
+                                       note: 'Interview prep', group_id: nil, group_summary: nil)
+      paired_student = options.find { |opt| opt[:entry_id] == s1.id }
+      expect(paired_student[:group_id]).to eq(service.board.groups.first.id)
+      expect(paired_student[:group_summary]).to include(c1.member.name)
+    end
+  end
 end

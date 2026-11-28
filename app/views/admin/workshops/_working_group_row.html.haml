@@ -1,47 +1,59 @@
--# locals: (workshop:, group:, waiting_entry:)
+-# locals: (workshop:, group:, waiting_entry:, total_checked_in: 0)
 - if group.present?
   - state_class = group.mixed? ? 'working-group--paired' : 'working-group--waiting'
   .working-group.mb-3{ id: "working-group-#{group.id}",
                        class: state_class,
                        data: { working_group_id: group.id, dropzone: 'group' } }
-    .working-group__side
-      - if group.students.any?
-        - group.students.each do |invitation|
-          = render partial: 'admin/workshops/working_group_slot',
-                   locals: { workshop:, invitation:, source_group_id: group.id, solo: group.solo? }
-      - else
-        .working-group-slot.working-group-slot--empty
-          %i.fas.fa-user-plus.me-2.opacity-50{ aria: { hidden: 'true' } }
-          Drop a student here
-    .working-group__divider
-    .working-group__side
-      - if group.coaches.any?
-        - group.coaches.each do |invitation|
-          = render partial: 'admin/workshops/working_group_slot',
-                   locals: { workshop:, invitation:, source_group_id: group.id, solo: group.solo? }
-      - else
-        .working-group-slot.working-group-slot--empty
-          %i.fas.fa-user-plus.me-2.opacity-50{ aria: { hidden: 'true' } }
-          Drop a coach here
+    .working-group__body
+      .working-group__side
+        - if group.students.any?
+          - group.students.each do |invitation|
+            = render partial: 'admin/workshops/working_group_slot',
+                     locals: { workshop:, invitation:, source_group_id: group.id, solo: group.solo? }
+        - else
+          .working-group-slot.working-group-slot--empty
+            %i.fas.fa-user-plus.me-2.opacity-50{ aria: { hidden: 'true' } }
+            Drop a student here
+      .working-group__divider
+      .working-group__side
+        - if group.coaches.any?
+          - group.coaches.each do |invitation|
+            = render partial: 'admin/workshops/working_group_slot',
+                     locals: { workshop:, invitation:, source_group_id: group.id, solo: group.solo? }
+        - else
+          .working-group-slot.working-group-slot--empty
+            %i.fas.fa-user-plus.me-2.opacity-50{ aria: { hidden: 'true' } }
+            Drop a coach here
+    - if total_checked_in > group.participants.size
+      = render partial: 'admin/workshops/working_group_picker',
+               locals: { target_group_id: group.id,
+                         target_entry_id: nil,
+                         search_label: 'Search checked-in attendees to add to this group' }
 - elsif waiting_entry.present?
   .working-group.working-group--waiting.mb-3{ id: "working-group-waiting-#{waiting_entry.id}",
                                               data: { dropzone: 'waiting',
                                                       target_entry_id: waiting_entry.id,
                                                       role: waiting_entry.role } }
-    .working-group__side
-      - if waiting_entry.for_student?
-        = render partial: 'admin/workshops/working_group_slot',
-                 locals: { workshop:, invitation: waiting_entry, source_group_id: nil, solo: true }
-      - else
-        .working-group-slot.working-group-slot--empty
-          %i.fas.fa-user-plus.me-2.opacity-50{ aria: { hidden: 'true' } }
-          Drop a student here
-    .working-group__divider
-    .working-group__side
-      - if waiting_entry.for_coach?
-        = render partial: 'admin/workshops/working_group_slot',
-                 locals: { workshop:, invitation: waiting_entry, source_group_id: nil, solo: true }
-      - else
-        .working-group-slot.working-group-slot--empty
-          %i.fas.fa-user-plus.me-2.opacity-50{ aria: { hidden: 'true' } }
-          Drop a coach here
+    .working-group__body
+      .working-group__side
+        - if waiting_entry.for_student?
+          = render partial: 'admin/workshops/working_group_slot',
+                   locals: { workshop:, invitation: waiting_entry, source_group_id: nil, solo: true }
+        - else
+          .working-group-slot.working-group-slot--empty
+            %i.fas.fa-user-plus.me-2.opacity-50{ aria: { hidden: 'true' } }
+            Drop a student here
+      .working-group__divider
+      .working-group__side
+        - if waiting_entry.for_coach?
+          = render partial: 'admin/workshops/working_group_slot',
+                   locals: { workshop:, invitation: waiting_entry, source_group_id: nil, solo: true }
+        - else
+          .working-group-slot.working-group-slot--empty
+            %i.fas.fa-user-plus.me-2.opacity-50{ aria: { hidden: 'true' } }
+            Drop a coach here
+    - if total_checked_in > 1
+      = render partial: 'admin/workshops/working_group_picker',
+               locals: { target_group_id: nil,
+                         target_entry_id: waiting_entry.id,
+                         search_label: 'Search checked-in attendees to pair with' }
