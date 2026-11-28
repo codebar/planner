@@ -115,6 +115,7 @@ RSpec.describe 'Managing workshop working groups' do
 
     within("#working-group-waiting-#{student_inv.id}") do
       click_button 'Edit note'
+      expect(page).to have_text('Visible to attendees on the workshop page')
       fill_in 'Note', with: 'Switched to JavaScript today'
       click_button 'Save'
     end

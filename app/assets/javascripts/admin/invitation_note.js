@@ -81,7 +81,9 @@
     })
       .then(function (response) {
         return response.text().then(function (text) {
-          if (!response.ok) throw new Error(text || 'Could not save note. Please try again.');
+          if (!response.ok) {
+            throw new Error(response.status === 422 && text ? text : 'Could not save note. Please try again.');
+          }
           return text;
         });
       })

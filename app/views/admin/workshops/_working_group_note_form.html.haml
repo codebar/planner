@@ -10,7 +10,11 @@
                                          type: 'text',
                                          name: 'workshop_invitation[note]',
                                          value: invitation.note,
+                                         maxlength: 100,
+                                         aria: { describedby: "invitation-note-hint-pairing-#{invitation.id}" },
                                          placeholder: invitation.for_student? ? 'What do they want to work on?' : 'Skills or pairing note' }
+    .form-text.small{ id: "invitation-note-hint-pairing-#{invitation.id}" }
+      Visible to attendees on the workshop page (max 100 characters).
   .text-danger.small.mb-1.d-none{ role: 'alert', data: { invitation_note_error: true } }
   .d-flex.align-items-center.gap-1
     %button.btn.btn-sm.btn-primary{ type: 'submit' } Save
