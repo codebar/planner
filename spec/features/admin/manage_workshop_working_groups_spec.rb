@@ -110,8 +110,9 @@ RSpec.describe 'Managing workshop working groups' do
     seed_long_pairings_board(workshop, pairs: 14)
     page.current_window.resize_to(1280, 640)
     visit admin_workshop_path(workshop)
-    page.execute_script('document.querySelector(".working-groups-unpair-zone").scrollIntoView({ block: "end" })')
+    page.execute_script('document.querySelector(".working-groups-unpair-zone").scrollIntoView({ block: "end", behavior: "instant" })')
     start_y = page.evaluate_script('window.scrollY')
+    expect(start_y).to be > 200
 
     dispatch_drag_edge_hover(client_y: 40, start_drag: true)
     expect(page).to have_css('.working-groups-board[data-dragging="true"]')

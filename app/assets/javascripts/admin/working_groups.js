@@ -81,7 +81,7 @@
 
     var dtSec = autoScrollLastTime === null ? 0.016 : Math.min(0.05, (now - autoScrollLastTime) / 1000);
     autoScrollLastTime = now;
-    window.scrollBy(0, Math.round(autoScrollVelocity * dtSec));
+    window.scrollBy({ top: Math.round(autoScrollVelocity * dtSec), left: 0, behavior: 'instant' });
     autoScrollFrameId = window.requestAnimationFrame(stepAutoScroll);
   }
 
