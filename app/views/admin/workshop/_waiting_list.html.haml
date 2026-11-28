@@ -14,10 +14,14 @@
             - invitation = list.invitation
             %tr
               %td
-                = link_to admin_workshop_invitation_path(@workshop, invitation, attending: true), class: 'waiting_list border-0', method: :put, remote: true, title: 'Add to attendees' do
+                = link_to admin_workshop_invitation_path(@workshop, invitation, attending: true),
+                          class: 'waiting_list border-0', method: :put, remote: true, title: 'Add to attendees',
+                          data: { disable_with: "<i class='fa fa-spinner spin'></i>" } do
                   %i.far.fa-plus-square
               %td
-                = link_to admin_workshop_invitation_path(@workshop, invitation, attending: false), class: 'waiting_list_remove border-0', method: :put, remote: true, title: 'Remove from waitlist' do
+                = link_to admin_workshop_invitation_path(@workshop, invitation, attending: false),
+                          class: 'waiting_list_remove border-0', method: :put, remote: true, title: 'Remove from waitlist',
+                          data: { disable_with: "<i class='fa fa-spinner spin'></i>" } do
                   %i.far.fa-minus-square
               %td
                 - if MemberPresenter.new(invitation.member).newbie?

@@ -7,7 +7,7 @@ class Admin::InvitationsController < Admin::ApplicationController
     authorize @workshop
     set_invitation
 
-    message = update_attendance(attending: params[:attending], attended: params[:attended])
+    result = update_attendance(attending: params[:attending], attended: params[:attended])
 
     if request.xhr?
       if params[:attended].present?
@@ -16,10 +16,10 @@ class Admin::InvitationsController < Admin::ApplicationController
                locals: { invitation: InvitationPresenter.new(@invitation), workshop: @workshop }
       else
         set_admin_workshop_data
-        render partial: 'admin/workshops/invitation_management'
+        render partial: 'admin/workshops/invitation_management', locals: { feedback: result }
       end
     else
-      redirect_back fallback_location: root_path, notice: message
+      redirect_back fallback_location: root_path, notice: (result[:message] if result.is_a?(Hash))
     end
   end
 
@@ -29,15 +29,12 @@ class Admin::InvitationsController < Admin::ApplicationController
     return update_to_attended if attended.to_s == 'true'
     return update_to_unattended if attended.to_s == 'false'
 
-    result = attending.eql?('true') ? update_to_attending : update_to_not_attending
-    message, error = result.values_at(:message, :error)
+    waiting_listed = WaitingList.find_by(invitation: @invitation)
+    result = attending.eql?('true') ? update_to_attending : update_to_not_attending(waiting_listed:)
 
-    unless error
-      waiting_listed = WaitingList.find_by(invitation: @invitation)
-      waiting_listed&.destroy
-    end
+    waiting_listed&.destroy unless result[:error]
 
-    message
+    result
   end
 
   def update_to_attended
@@ -88,7 +85,7 @@ class Admin::InvitationsController < Admin::ApplicationController
       "#{@invitation.errors.full_messages.to_sentence}."
   end
 
-  def update_to_not_attending
+  def update_to_not_attending(waiting_listed: nil)
     freed_seat = release_seat(last_overridden_by_id: current_user.id)
     WorkingGroups::Service.for(@workshop).safe_on_check_out(@invitation)
     MemberActivityRecorder.record(actor: current_user, key: 'invitation.rsvp_override',
@@ -96,8 +93,9 @@ class Admin::InvitationsController < Admin::ApplicationController
 
     promote_next_waitlist_member if freed_seat && @workshop.future?
 
+    target = !freed_seat && waiting_listed ? 'the waiting list' : 'the workshop'
     {
-      message: "You have removed #{@invitation.member.full_name} from the workshop.",
+      message: "You have removed #{@invitation.member.full_name} from #{target}.",
       error: false
     }
   end

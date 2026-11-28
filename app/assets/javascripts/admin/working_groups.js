@@ -342,16 +342,18 @@
     }
   });
 
+  var ATTENDANCE_ACTION_SELECTOR = '.verify_attendance, .waiting_list, .waiting_list_remove, .cancel_attendance';
+
   document.addEventListener('ajax:beforeSend', function (event) {
     var target = event.target;
-    if (target && target.closest && target.closest('.verify_attendance')) {
+    if (target && target.closest && target.closest(ATTENDANCE_ACTION_SELECTOR)) {
       syncVersion += 1;
     }
   });
 
   document.addEventListener('ajax:success', function (event) {
     var target = event.target;
-    if (target && target.closest && target.closest('.verify_attendance')) {
+    if (target && target.closest && target.closest(ATTENDANCE_ACTION_SELECTOR)) {
       pollLiveBoard(true, true);
     }
   });

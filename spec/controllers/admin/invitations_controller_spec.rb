@@ -76,6 +76,52 @@ RSpec.describe Admin::InvitationsController do
     end
   end
 
+  describe 'PUT #update via XHR for waiting list changes' do
+    render_views
+
+    before do
+      admin.add_role(:organiser, workshop.chapter)
+      login admin
+    end
+
+    it 'returns updated attendance lists and success feedback when promoting from the waiting list' do
+      WaitingList.add(invitation)
+
+      put :update, params: { id: invitation.token, workshop_id: workshop.id, attending: 'true' }, xhr: true
+
+      expect(response).to have_http_status(:success)
+      expect(invitation.reload.attending).to be(true)
+      expect(WaitingList.find_by(invitation:)).to be_nil
+      expect(response.body).to include("You have added #{invitation.member.full_name} to the workshop")
+      expect(response.body).to include('alert-success')
+    end
+
+    it 'returns updated waiting list and success feedback when removing from the waiting list' do
+      WaitingList.add(invitation)
+
+      put :update, params: { id: invitation.token, workshop_id: workshop.id, attending: 'false' }, xhr: true
+
+      expect(response).to have_http_status(:success)
+      expect(WaitingList.find_by(invitation:)).to be_nil
+      expect(response.body).to include("You have removed #{invitation.member.full_name} from the waiting list.")
+      expect(response.body).to include('alert-success')
+    end
+
+    it 'returns error feedback and preserves the waiting list entry when updating fails' do
+      WaitingList.add(invitation)
+      allow(Workshop).to receive(:find).with(workshop.id.to_s).and_return(workshop)
+      allow(workshop.invitations).to receive(:find_by!).with(token: invitation.token).and_return(invitation)
+      allow(invitation).to receive(:update).and_return(false)
+
+      put :update, params: { id: invitation.token, workshop_id: workshop.id, attending: 'true' }, xhr: true
+
+      expect(response).to have_http_status(:success)
+      expect(WaitingList.find_by(invitation:)).to be_present
+      expect(response.body).to include("Error adding #{invitation.member.full_name}")
+      expect(response.body).to include('alert-danger')
+    end
+  end
+
   describe 'PUT #update (RSVP page toggle)' do
     before do
       admin.add_role(:organiser, workshop.chapter)

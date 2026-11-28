@@ -4,6 +4,12 @@
   margin-top: 96px;
 }
 
+.alert.invitation-management-feedback {
+  position: sticky;
+  top: 5.5rem;
+  z-index: 1020;
+}
+
 .main-footer {
   background-color: $dark-codebar-blue;
   color: $white;

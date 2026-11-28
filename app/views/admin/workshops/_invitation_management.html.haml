@@ -16,6 +16,14 @@
 
 %p.small.text-muted= t('admin.workshop.invitation_management.removal_promotes_waitlist')
 
+- feedback = local_assigns[:feedback]
+- if feedback && feedback[:message].present?
+  .alert.alert-dismissible.fade.show.shadow-sm.invitation-management-feedback{ class: feedback[:error] ? 'alert-danger' : 'alert-success',
+                                                                               role: feedback[:error] ? 'alert' : 'status',
+                                                                               data: { invitation_management_feedback: true } }
+    = feedback[:message]
+    %button.btn-close{ type: 'button', data: { bs_dismiss: 'alert' }, aria: { label: 'Close' } }
+
 .row
   .col-12.col-md-6
     %h4

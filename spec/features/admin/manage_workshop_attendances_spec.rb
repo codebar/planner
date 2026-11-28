@@ -64,6 +64,26 @@ RSpec.feature 'managing workshop attendances' do
       expect(page).to have_css('i.fa-hat-wizard')
     end
 
+    scenario 'updates lists and shows feedback immediately when promoting or removing from the waiting list', :js do
+      promoted = Fabricate(:workshop_invitation, workshop:, attending: nil)
+      removed = Fabricate(:workshop_invitation, workshop:, attending: nil)
+      WaitingList.add(promoted)
+      WaitingList.add(removed)
+
+      visit admin_workshop_path(workshop)
+      page.execute_script('window.__waitlistNoReload = true')
+
+      first('.waiting_list').click
+      expect(page).to have_text("You have added #{promoted.member.full_name} to the workshop", wait: 5)
+      expect(page).to have_text('2 are attending as students')
+      expect(page.evaluate_script('window.__waitlistNoReload')).to be(true)
+
+      first('.waiting_list_remove').click
+      expect(page).to have_text("You have removed #{removed.member.full_name} from the waiting list.", wait: 5)
+      expect(page).to have_no_css('.waiting_list_remove')
+      expect(page.evaluate_script('window.__waitlistNoReload')).to be(true)
+    end
+
     scenario 'can rsvp an invited student to the workshop' do
       login_as_admin(member)
 
