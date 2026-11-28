@@ -122,7 +122,7 @@ RSpec.describe 'Managing workshop working groups' do
       expect(page).to have_text('Fatima Wait', wait: 5)
       expect(page).to have_text('Amara One')
     end
-    expect(inv_fatima.reload.workshop_working_group_id).to eq(group_id)
+    expect(inv_fatima.reload.workshop_working_group.id).to eq(group_id)
   end
 
   def seed_picker_scenario(target_workshop)
